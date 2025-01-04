@@ -27,7 +27,7 @@ export const OverlayContext = createContext<OverlayContextInterface>(
 export const useOverlay = () => useContext(OverlayContext)
 
 export const OverlayProvider = ({ children }: { children: ReactNode }) => {
-  // Store the modal status.
+  // Store the modal status
   const [openOverlayInstances, setOpenOverlayInstancesState] =
     useState<number>(0)
 
@@ -43,33 +43,33 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Store the currently active overlay instance.
+  // Store the currently active overlay instance
   const [activeOverlayInstance, setActiveOverlayInstance] =
     useState<ActiveOverlayInstance>(null)
 
-  // Store the modal status.
+  // Store the modal status
   const [modalStatus, setModalStatusState] = useState<ModalStatus>('closed')
   const modalStatusRef = useRef(modalStatus)
 
-  // Store modal configuration.
+  // Store modal configuration
   const [modalConfig, setModalConfigState] =
     useState<ModalConfig>(defaultModalConfig)
   const modalConfigRef = useRef(modalConfig)
 
-  // Store the modal's current height.
+  // Store the modal's current height
   const [modalHeight, setModalHeightState] = useState<number>(0)
 
-  // Store the modal's resize counter.
+  // Store the modal's resize counter
   const [modalResizeCounter, setModalResizeCounterState] = useState<number>(0)
 
-  // Store the ref to the modal height container. Used for controlling whether height is transitionable.
+  // Store the ref to the modal height container. Used for controlling whether height is transitionable
   const [modalRef, setModalRef] = useState<RefObject<HTMLDivElement>>()
 
-  // Store the ref to the modal height container. Used for controlling whether height is transitionable.
+  // Store the ref to the modal height container. Used for controlling whether height is transitionable
   const [modalHeightRef, setModalHeightRef] =
     useState<RefObject<HTMLDivElement>>()
 
-  // The maximum allowed height for the modal.
+  // The maximum allowed height for the modal
   const modalMaxHeight = window.innerHeight * 0.8
 
   const setModalConfig = (config: ModalConfig) => {
@@ -92,7 +92,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Closes one modal and opens another.
+  // Closes one modal and opens another
   const replaceModal = ({ key, size = 'lg', options = {} }: ModalConfig) => {
     setModalStatus('replacing')
     setTimeout(() => {
@@ -112,14 +112,14 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
       return
     }
 
-    // Ensure transition class is removed if not transitioning. Otherwise, ensure class exists.
+    // Ensure transition class is removed if not transitioning. Otherwise, ensure class exists
     if (transition) {
       transitionOn()
     } else {
       transitionOff()
     }
 
-    // Limit maximum height to 80% of window height, or 90% if window width <= 600.
+    // Limit maximum height to 80% of window height, or 90% if window width <= 600
     const maxHeight =
       window.innerWidth <= 600
         ? window.innerHeight * 0.9
@@ -128,23 +128,23 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
       height = maxHeight
     }
 
-    // Update height state.
+    // Update height state
     setModalHeightState(height)
 
-    // If transitioning, remove after enough time to finish transition.
+    // If transitioning, remove after enough time to finish transition
     if (transition) {
       setTimeout(() => transitionOff(), 500)
     }
   }
 
-  // Increments modal resize to trigger a height transition.
+  // Increments modal resize to trigger a height transition
   const setModalResize = () => {
     transitionOn()
     setModalResizeCounterState(modalResizeCounter + 1)
     setTimeout(() => transitionOff(), 500)
   }
 
-  // Helper to set the transition height class of the modal.
+  // Helper to set the transition height class of the modal
   const transitionOn = () => {
     if (modalHeightRef?.current) {
       modalHeightRef.current.style.transition =
@@ -152,7 +152,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Helper to remove the transition height class of the modal.
+  // Helper to remove the transition height class of the modal
   const transitionOff = () => {
     if (modalHeightRef?.current) {
       modalHeightRef.current.style.transition = 'height 0s'
@@ -162,14 +162,14 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
   // Store canvas status
   const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>('closed')
 
-  // Store config options of the canvas.
+  // Store config options of the canvas
   const [canvasConfig, setCanvasConfig] = useState<CanvasConfig>({
     key: '',
     scroll: true,
     options: {},
   })
 
-  // Open the canvas.
+  // Open the canvas
   const openCanvas = ({
     key,
     size = 'lg',
@@ -186,12 +186,12 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
-  // Close the canvas.
+  // Close the canvas
   const closeCanvas = () => {
     setCanvasStatus('closing')
   }
 
-  // Update modal height and open modal once refs are initialised.
+  // Update modal height and open modal once refs are initialised
   useEffectIgnoreInitial(() => {
     const height = modalRef?.current?.clientHeight || 0
     if (modalStatusRef.current === 'opening') {
@@ -202,7 +202,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [modalStatusRef.current, modalRef?.current])
 
-  // When canvas fade out completes, reset config.
+  // When canvas fade out completes, reset config
   useEffectIgnoreInitial(() => {
     if (canvasStatus === 'closed') {
       setCanvasConfig(defaultCanvasConfig)

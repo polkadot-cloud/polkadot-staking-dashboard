@@ -4,8 +4,8 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import commonClasses from '../../common.module.scss'
 import type { ModalScrollProps } from '../../types'
+import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
 export const ModalScroll = forwardRef(

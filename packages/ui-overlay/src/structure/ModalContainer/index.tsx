@@ -3,9 +3,9 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import commonClasses from '../../common.module.scss'
 import { useOverlay } from '../../Provider'
 import type { ModalAnimationProps } from '../../types'
+import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
 export const ModalContainer = ({ children, ...rest }: ModalAnimationProps) => {

@@ -46,7 +46,7 @@ export const Canvas = ({
     }
   }
 
-  // Control dim help status change.
+  // Control dim help status change
   useEffect(() => {
     if (externalOverlayStatus === 'open' && status === 'open') {
       onOut(false)
@@ -60,7 +60,7 @@ export const Canvas = ({
     }
   }, [externalOverlayStatus])
 
-  // Control fade in and out on opening and closing states.
+  // Control fade in and out on opening and closing states
   useEffect(() => {
     if (status === 'open') {
       onIn()

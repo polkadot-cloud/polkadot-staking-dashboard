@@ -70,7 +70,7 @@ export const Modal = ({
     setModalHeight(modalRef.current?.clientHeight || 0)
   }
 
-  // Control on modal status change.
+  // Control on modal status change
   useEffect(() => {
     if (activeOverlayInstance === 'modal' && status === 'open') {
       onIn()
@@ -80,13 +80,13 @@ export const Modal = ({
     }
   }, [status])
 
-  // Control on canvas status change.
+  // Control on canvas status change
   useEffect(() => {
-    // fade out modal if canvas has been opened.
+    // fade out modal if canvas has been opened
     if (canvasStatus === 'open' && status === 'open') {
       onOut()
     }
-    // fade in modal if its open & canvas is closing.
+    // fade in modal if its open & canvas is closing
     if (canvasStatus === 'closing') {
       if (status === 'open') {
         onIn()
@@ -94,13 +94,13 @@ export const Modal = ({
     }
   }, [canvasStatus])
 
-  // Control dim external overlay change.
+  // Control dim external overlay change
   useEffect(() => {
-    // fade out modal if external overlay has been opened.
+    // fade out modal if external overlay has been opened
     if (externalOverlayStatus === 'open' && status === 'open') {
       onOut()
     }
-    // fade in modal if its open & external overlay is closing.
+    // fade in modal if its open & external overlay is closing
     if (
       externalOverlayStatus === 'closing' &&
       activeOverlayInstance === 'modal'
@@ -109,10 +109,10 @@ export const Modal = ({
     }
   }, [externalOverlayStatus])
 
-  // Resize modal on status or resize change.
+  // Resize modal on status or resize change
   useEffect(() => handleResize(), [modalResizeCounter, status])
 
-  // Resize modal on window size change.
+  // Resize modal on window size change
   useEffect(() => {
     windowResize()
     return () => {
@@ -120,7 +120,7 @@ export const Modal = ({
     }
   })
 
-  // Update the modal's content ref as they are initialised.
+  // Update the modal's content ref as they are initialised
   useEffect(() => {
     setModalRef(modalRef)
     setModalHeightRef(heightRef)

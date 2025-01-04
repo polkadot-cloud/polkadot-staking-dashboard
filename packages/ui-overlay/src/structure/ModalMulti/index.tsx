@@ -4,7 +4,7 @@
 import type { ComponentBase } from '@w3ux/types'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import commonClasses from '../../common.module.scss'
+import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
 export const ModalMulti = ({ children }: ComponentBase) => {

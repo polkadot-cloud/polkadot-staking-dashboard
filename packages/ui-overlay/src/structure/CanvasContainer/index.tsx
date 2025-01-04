@@ -3,8 +3,8 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import commonClasses from '../../common.module.scss'
 import type { ModalAnimationProps } from '../../types'
+import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
 export const CanvasContainer = ({ children, ...rest }: ModalAnimationProps) => {
