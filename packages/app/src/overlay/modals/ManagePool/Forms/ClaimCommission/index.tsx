@@ -17,8 +17,8 @@ import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
+import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const ClaimCommission = ({

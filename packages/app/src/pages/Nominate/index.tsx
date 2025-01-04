@@ -4,7 +4,7 @@
 import { usePlugins } from 'contexts/Plugins'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageTitle } from 'ui-structure'
+import { PageTitle } from 'ui-core/base'
 import { Active } from './Active'
 import { NominationGeo } from './NominationGeo'
 import { Wrapper } from './Wrappers'

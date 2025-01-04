@@ -16,11 +16,7 @@ import { DefaultLocale } from 'locales'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
-import {
-  CanvasContainer,
-  CanvasScroll,
-  ModalContent,
-} from 'ui-overlay/structure'
+import { CanvasContainer, CanvasScroll, ModalContent } from 'ui-core/overlay'
 import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'

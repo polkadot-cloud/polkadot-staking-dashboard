@@ -9,8 +9,8 @@ import { useHelp } from 'contexts/Help'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { CSSProperties } from 'styled-components'
 import { ButtonHelp } from 'ui-buttons'
+import { ModalTitle } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalTitle } from 'ui-overlay/structure'
 import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {

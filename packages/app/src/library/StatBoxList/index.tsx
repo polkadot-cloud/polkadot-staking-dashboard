@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react'
-import { StatBoxRow } from 'ui-structure'
+import { StatBoxRow } from 'ui-core/base'
 import { ListWrapper } from './Wrapper'
 
 export const StatBoxList = ({ children }: { children: ReactNode }) => (

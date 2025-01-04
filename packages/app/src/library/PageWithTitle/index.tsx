@@ -4,7 +4,7 @@
 import type { PageItem } from 'common-types'
 import { Helmet } from 'react-helmet'
 import { useTranslation } from 'react-i18next'
-import { Page } from 'ui-structure'
+import { Page } from 'ui-core/base'
 
 export const PageWithTitle = ({ page }: { page: PageItem }) => {
   const { t } = useTranslation()

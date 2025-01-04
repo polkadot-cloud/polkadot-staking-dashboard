@@ -24,8 +24,8 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
+import { ModalAddressHeader, ModalPadding } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalAddressHeader, ModalPadding } from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const ValidatorMetrics = () => {

@@ -9,8 +9,8 @@ import { useBatchCall } from 'hooks/useBatchCall'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
+import { ModalPadding, ModalTitle } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding, ModalTitle } from 'ui-overlay/structure'
 
 export const BalanceTest = () => {
   const {

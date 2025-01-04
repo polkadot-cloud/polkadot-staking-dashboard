@@ -7,7 +7,7 @@ import DiscordOutlineSvg from 'assets/svg/discordOutline.svg?react'
 import { DiscordSupportUrl } from 'consts'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding } from 'ui-overlay/structure'
+import { ModalPadding } from 'ui-core/overlay'
 import { SupportWrapper } from './Wrapper'
 
 export const DiscordSupport = () => {

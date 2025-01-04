@@ -30,7 +30,7 @@ import {
   useLocation,
 } from 'react-router-dom'
 import { StakingApi } from 'StakingApi'
-import { Body, Main } from 'ui-structure'
+import { Body, Main } from 'ui-core/base'
 
 const RouterInner = () => {
   const { network } = useNetwork()
