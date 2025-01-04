@@ -12,7 +12,6 @@ export const ModalContainer = ({ children, ...rest }: ModalAnimationProps) => {
   const {
     modal: { setModalStatus },
   } = useOverlay()
-
   const allClasses = classNames(
     commonClasses.fixedPosition,
     classes.modalContainer

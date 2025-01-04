@@ -1,0 +1,9 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.overlayBackground {
+  background: var(--modal-background-color);
+  transition: backdrop-filter 0.5s;
+  backdrop-filter: blur(4px);
+  z-index: 9;
+}

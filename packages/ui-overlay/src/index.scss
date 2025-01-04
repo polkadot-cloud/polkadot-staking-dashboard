@@ -3,14 +3,6 @@
 
 /* Mixins */
 
-@mixin modal-position {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-
 @mixin modal-motion-sections {
   display: flex;
   height: auto;
@@ -343,15 +335,6 @@
   > p {
     color: var(--text-color-secondary);
   }
-}
-
-.modal-overlay {
-  @include modal-position;
-
-  background: var(--modal-background-color);
-  transition: backdrop-filter 0.5s;
-  backdrop-filter: blur(4px);
-  z-index: 9;
 }
 
 .modal-scroll {
