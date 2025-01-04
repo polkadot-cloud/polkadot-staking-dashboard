@@ -21,7 +21,12 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-overlay/structure'
+import {
+  ModalNotes,
+  ModalPadding,
+  ModalTitle,
+  ModalWarnings,
+} from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const ManageFastUnstake = () => {
@@ -142,9 +147,7 @@ export const ManageFastUnstake = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">
-          {t('fastUnstake', { context: 'title' })}
-        </h2>
+        <ModalTitle>{t('fastUnstake', { context: 'title' })}</ModalTitle>
         {warnings.length > 0 ? (
           <ModalWarnings>
             {warnings.map((text, i) => (

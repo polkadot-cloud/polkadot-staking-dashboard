@@ -19,7 +19,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
+import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const Bond = () => {
@@ -147,7 +147,7 @@ export const Bond = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{t('addToBond')}</h2>
+        <ModalTitle>{t('addToBond')}</ModalTitle>
         {pendingRewards > 0n && bondFor === 'pool' ? (
           <ModalWarnings>
             <Warning

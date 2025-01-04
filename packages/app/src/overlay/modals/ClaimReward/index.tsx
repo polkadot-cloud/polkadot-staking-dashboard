@@ -16,7 +16,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
+import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-overlay/structure'
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals')
@@ -84,9 +84,9 @@ export const ClaimReward = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">
+        <ModalTitle>
           {claimType === 'bond' ? t('compound') : t('withdraw')} {t('rewards')}
-        </h2>
+        </ModalTitle>
         {warnings.length > 0 ? (
           <ModalWarnings>
             {warnings.map((text, i) => (

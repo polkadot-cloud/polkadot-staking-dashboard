@@ -26,7 +26,12 @@ import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-overlay/structure'
+import {
+  ModalNotes,
+  ModalPadding,
+  ModalTitle,
+  ModalWarnings,
+} from 'ui-overlay/structure'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const Unbond = () => {
@@ -194,7 +199,7 @@ export const Unbond = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{t('removeBond')}</h2>
+        <ModalTitle>{t('removeBond')}</ModalTitle>
         {warnings.length > 0 ? (
           <ModalWarnings>
             {warnings.map((text, i) => (

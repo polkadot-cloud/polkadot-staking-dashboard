@@ -37,6 +37,16 @@ export const Modal = ({
   const modalRef = useRef<HTMLDivElement>(null)
   const heightRef = useRef<HTMLDivElement>(null)
 
+  // Whether the modal card is currently dimmed
+  const dimmed = externalOverlayStatus === 'open' || canvasStatus === 'open'
+
+  // Determine modal overflow behaviour based on scroll and height
+  const overflow = options?.disableScroll
+    ? 'hidden'
+    : modalHeight >= modalMaxHeight
+      ? 'scroll'
+      : 'hidden'
+
   const onOutClose = async () => {
     setOpenOverlayInstances('dec', 'modal')
     setActiveOverlayInstance(null)
@@ -145,21 +155,10 @@ export const Modal = ({
         size={size}
         style={{
           height: modalHeight,
-          overflow: options?.disableScroll
-            ? 'hidden'
-            : modalHeight >= modalMaxHeight
-              ? 'scroll'
-              : 'hidden',
+          overflow,
         }}
       >
-        <ModalCard
-          ref={modalRef}
-          className={
-            externalOverlayStatus === 'open' || canvasStatus === 'open'
-              ? 'dimmed'
-              : undefined
-          }
-        >
+        <ModalCard ref={modalRef} className={dimmed ? 'dimmed' : undefined}>
           <ErrorBoundary FallbackComponent={Fallback || null}>
             {ActiveModal && <ActiveModal />}
           </ErrorBoundary>

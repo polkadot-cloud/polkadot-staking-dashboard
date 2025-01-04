@@ -10,7 +10,7 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding } from 'ui-overlay/structure'
+import { ModalPadding, ModalTitle } from 'ui-overlay/structure'
 
 export const BalanceTest = () => {
   const {
@@ -56,7 +56,7 @@ export const BalanceTest = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">Balance Test</h2>
+        <ModalTitle>Balance Test</ModalTitle>
       </ModalPadding>
       <SubmitTx valid {...submitExtrinsic} />
     </>

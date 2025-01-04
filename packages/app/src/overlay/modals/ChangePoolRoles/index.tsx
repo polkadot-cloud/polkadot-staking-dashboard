@@ -10,7 +10,7 @@ import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding } from 'ui-overlay/structure'
+import { ModalPadding, ModalTitle } from 'ui-overlay/structure'
 import { RoleChange } from './RoleChange'
 import { Wrapper } from './Wrapper'
 
@@ -49,7 +49,7 @@ export const ChangePoolRoles = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{t('changePoolRoles')}</h2>
+        <ModalTitle>{t('changePoolRoles')}</ModalTitle>
         <Wrapper>
           <RoleChange
             roleName={t('root')}

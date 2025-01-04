@@ -23,7 +23,7 @@ import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
+import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-overlay/structure'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const Unstake = () => {
@@ -113,7 +113,7 @@ export const Unstake = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{t('unstake')} </h2>
+        <ModalTitle>{t('unstake')} </ModalTitle>
         {warnings.length > 0 ? (
           <ModalWarnings>
             {warnings.map((text, i) => (

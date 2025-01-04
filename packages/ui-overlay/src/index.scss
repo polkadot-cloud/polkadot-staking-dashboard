@@ -38,20 +38,6 @@
     opacity: 0;
   }
 
-  h2 {
-    margin: 1rem 0;
-
-    &.unbounded {
-      font-family: Poppins700, sans-serif;
-      font-weight: 700;
-    }
-
-    &.title {
-      font-size: 1.5rem;
-      margin: 1.25rem 0 0;
-    }
-  }
-
   a {
     color: var(--accent-color-primary);
   }

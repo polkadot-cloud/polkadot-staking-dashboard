@@ -11,11 +11,9 @@
   max-width: 800px;
   -ms-overflow-style: none;
   scrollbar-width: none;
-
   &::-webkit-scrollbar {
     display: none;
   }
-
   &.xl {
     max-width: 1250px;
   }
