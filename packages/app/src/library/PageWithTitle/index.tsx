@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PageItem } from 'common-types'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 

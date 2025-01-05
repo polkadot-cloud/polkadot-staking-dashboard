@@ -11,7 +11,6 @@ import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { CardHeaderWrapper } from 'library/Card/Wrappers'
-import { Close } from 'library/Modal/Close'
 import { Title } from 'library/Modal/Title'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'overlay/modals/ManagePool/Wrappers'
@@ -59,83 +58,80 @@ export const UpdateReserve = () => {
   }
 
   return (
-    <>
-      <Close />
-      <ModalPadding>
-        <Title
-          title={t('reserveBalance')}
-          helpKey="Reserve Balance"
-          style={{ padding: '0.5rem 0 0 0' }}
-        />
-        <SliderWrapper style={{ marginTop: '1rem' }}>
-          <p>{t('reserveText', { unit })}</p>
-          <div>
-            <StyledSlider
-              classNaame="no-padding"
-              min={0}
-              max={maxReserve.toNumber()}
-              value={sliderReserve}
-              step={0.01}
-              onChange={(val) => {
-                if (typeof val === 'number' && val >= minReserve.toNumber()) {
-                  handleChange(new BigNumber(val))
-                }
-              }}
-            />
-          </div>
+    <ModalPadding>
+      <Title
+        title={t('reserveBalance')}
+        helpKey="Reserve Balance"
+        style={{ padding: '0.5rem 0 0 0' }}
+      />
+      <SliderWrapper style={{ marginTop: '1rem' }}>
+        <p>{t('reserveText', { unit })}</p>
+        <div>
+          <StyledSlider
+            classNaame="no-padding"
+            min={0}
+            max={maxReserve.toNumber()}
+            value={sliderReserve}
+            step={0.01}
+            onChange={(val) => {
+              if (typeof val === 'number' && val >= minReserve.toNumber()) {
+                handleChange(new BigNumber(val))
+              }
+            }}
+          />
+        </div>
 
-          <div className="stats">
-            <CardHeaderWrapper>
-              <h4>
-                {t('reserveForExistentialDeposit')}
-                <FontAwesomeIcon
-                  icon={faLock}
-                  transform="shrink-3"
-                  style={{ marginLeft: '0.5rem' }}
-                />
-              </h4>
-              <h2>
-                {minReserve.isZero() ? (
-                  <>
-                    {t('none')}
-                    <ButtonHelp
-                      onClick={() =>
-                        openHelp('Reserve Balance For Existential Deposit')
-                      }
-                      style={{ marginLeft: '0.65rem' }}
-                    />
-                  </>
-                ) : (
-                  `${minReserve.decimalPlaces(4).toString()} ${unit}`
-                )}
-              </h2>
-            </CardHeaderWrapper>
+        <div className="stats">
+          <CardHeaderWrapper>
+            <h4>
+              {t('reserveForExistentialDeposit')}
+              <FontAwesomeIcon
+                icon={faLock}
+                transform="shrink-3"
+                style={{ marginLeft: '0.5rem' }}
+              />
+            </h4>
+            <h2>
+              {minReserve.isZero() ? (
+                <>
+                  {t('none')}
+                  <ButtonHelp
+                    onClick={() =>
+                      openHelp('Reserve Balance For Existential Deposit')
+                    }
+                    style={{ marginLeft: '0.65rem' }}
+                  />
+                </>
+              ) : (
+                `${minReserve.decimalPlaces(4).toString()} ${unit}`
+              )}
+            </h2>
+          </CardHeaderWrapper>
 
-            <CardHeaderWrapper>
-              <h4>{t('reserveForTxFees')}</h4>
-              <h2>
-                {BigNumber.max(
-                  new BigNumber(sliderReserve)
-                    .minus(minReserve)
-                    .decimalPlaces(4)
-                    .toString(),
-                  0
-                ).toString()}
-                &nbsp;
-                {unit}
-              </h2>
-            </CardHeaderWrapper>
-          </div>
+          <CardHeaderWrapper>
+            <h4>{t('reserveForTxFees')}</h4>
+            <h2>
+              {BigNumber.max(
+                new BigNumber(sliderReserve)
+                  .minus(minReserve)
+                  .decimalPlaces(4)
+                  .toString(),
+                0
+              ).toString()}
+              &nbsp;
+              {unit}
+            </h2>
+          </CardHeaderWrapper>
+        </div>
 
-          <div className="done">
-            <ButtonPrimaryInvert
-              text={t('done')}
-              onClick={() => setModalStatus('closing')}
-              disabled={!accountHasSigner(activeAccount)}
-            />
-          </div>
-        </SliderWrapper>
-      </ModalPadding>
-    </>
+        <div className="done">
+          <ButtonPrimaryInvert
+            text={t('done')}
+            onClick={() => setModalStatus('closing')}
+            disabled={!accountHasSigner(activeAccount)}
+          />
+        </div>
+      </SliderWrapper>
+    </ModalPadding>
   )
 }

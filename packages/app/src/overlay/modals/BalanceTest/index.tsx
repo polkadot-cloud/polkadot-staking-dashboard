@@ -7,10 +7,9 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { ModalPadding, ModalTitle } from 'ui-core/overlay'
-import { useOverlay } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 
 export const BalanceTest = () => {
   const {

@@ -9,6 +9,7 @@
     "inactive": "Inactive",
     "network": "Network",
     "nominate": "Nominate",
+    "offline": "Connection appears to be offline",
     "overview": "Overview",
     "payee": {
       "account": {

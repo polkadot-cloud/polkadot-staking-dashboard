@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OnlineStatus } from 'controllers/OnlineStatus'
 import { isCustomEvent } from 'controllers/utils'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { OfflineLabel } from 'ui-core/base'
 import { useEventListener } from 'usehooks-ts'
-import { Wrapper } from './Wrapper'
 
 export const Offline = () => {
-  // Whether the app is offline.
+  const { t } = useTranslation('base')
   const [offline, setOffline] = useState<boolean>(false)
 
-  // Handle incoming online status updates.
   const handleOnlineStatus = (e: Event): void => {
     if (isCustomEvent(e)) {
       const { online } = e.detail
@@ -21,9 +21,7 @@ export const Offline = () => {
     }
   }
 
-  // Listen for online status updates.
   useEffect(() => {
-    // Start listening for online / offline events.
     OnlineStatus.initOnlineEvents()
   }, [])
 
@@ -37,9 +35,9 @@ export const Offline = () => {
     return null
   }
   return (
-    <Wrapper>
+    <OfflineLabel>
       <FontAwesomeIcon icon={faWarning} transform="grow-4" />
-      <h3>Connection appears to be offline</h3>
-    </Wrapper>
+      <h3>{t('offline')}</h3>
+    </OfflineLabel>
   )
 }

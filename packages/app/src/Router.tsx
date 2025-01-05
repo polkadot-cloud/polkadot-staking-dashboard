@@ -16,14 +16,15 @@ import { MainFooter } from 'library/MainFooter'
 import { Disclaimer } from 'library/MainFooter/Disclaimer'
 import { Menu } from 'library/Menu'
 import { NotificationPrompts } from 'library/NotificationPrompts'
-import { Offline } from 'library/Offline'
 import { PageWithTitle } from 'library/PageWithTitle'
 import { Prompt } from 'library/Prompt'
 import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
+import { Offline } from 'Offline'
 import { Overlays } from 'overlay'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { HelmetProvider } from 'react-helmet-async'
 import {
   HashRouter,
   Navigate,
@@ -90,24 +91,26 @@ const RouterInner = () => {
         <Prompt />
         <SideMenu />
         <Main ref={mainInterfaceRef}>
-          <Headers />
-          <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
-            <Routes>
-              {PagesConfig.map((page, i) => (
+          <HelmetProvider>
+            <Headers />
+            <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
+              <Routes>
+                {PagesConfig.map((page, i) => (
+                  <Route
+                    key={`main_interface_page_${i}`}
+                    path={page.hash}
+                    element={<PageWithTitle page={page} />}
+                  />
+                ))}
                 <Route
-                  key={`main_interface_page_${i}`}
-                  path={page.hash}
-                  element={<PageWithTitle page={page} />}
+                  key="main_interface_navigate"
+                  path="*"
+                  element={<Navigate to="/overview" />}
                 />
-              ))}
-              <Route
-                key="main_interface_navigate"
-                path="*"
-                element={<Navigate to="/overview" />}
-              />
-            </Routes>
-          </ErrorBoundary>
-          <MainFooter />
+              </Routes>
+            </ErrorBoundary>
+            <MainFooter />
+          </HelmetProvider>
         </Main>
       </Body>
       <Offline />
