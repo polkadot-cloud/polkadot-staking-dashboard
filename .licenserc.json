@@ -7,5 +7,5 @@
     "/* Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors",
     "SPDX-License-Identifier: GPL-3.0-only */"
   ],
-  "ignore": ["testdata", "npm", "public/", "Dockerfile", "src/config/validators/"]
+  "ignore": ["testdata", "npm", "public/", "Dockerfile", "packages/app/src/config/validators/"]
 }
