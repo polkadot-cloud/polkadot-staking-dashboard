@@ -111,26 +111,6 @@ export const NetworkButton = styled.button<{ $connected: boolean }>`
   }
 `
 
-export const BraveWarning = styled.div`
-  border: 1px solid var(--border-primary-color);
-  display: flex;
-  border-radius: 0.75rem;
-  padding: 1rem;
-
-  .brave-text {
-    color: var(--text-color-primary);
-    width: 90%;
-    padding-left: 1rem;
-    font-size: 1.2rem;
-    align-self: center;
-
-    .learn-more {
-      color: var(--text-color-secondary);
-      text-decoration: underline var(--border-primary-color);
-    }
-  }
-`
-
 export const ConnectionsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
