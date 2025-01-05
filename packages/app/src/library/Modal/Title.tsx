@@ -4,7 +4,7 @@
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
-import CrossSVG from 'assets/svg/cross.svg?react'
+import CrossSVG from 'assets/svg/icons/cross.svg?react'
 import { useHelp } from 'contexts/Help'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { CSSProperties } from 'styled-components'

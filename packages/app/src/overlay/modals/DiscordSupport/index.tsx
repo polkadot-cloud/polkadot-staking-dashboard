@@ -3,7 +3,7 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import DiscordOutlineSvg from 'assets/svg/discordOutline.svg?react'
+import DiscordOutlineSvg from 'assets/svg/brands/discordOutline.svg?react'
 import { DiscordSupportUrl } from 'consts'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'

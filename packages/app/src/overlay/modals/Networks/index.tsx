@@ -4,7 +4,6 @@
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { capitalizeFirstLetter } from '@w3ux/utils'
-import BraveIconSVG from 'assets/svg/braveLogo.svg?react'
 import type { NetworkId } from 'common-types'
 import { NetworkList } from 'config/networks'
 import { useApi } from 'contexts/Api'
@@ -13,13 +12,12 @@ import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
 import { ModalPadding } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
 import { ProvidersPrompt } from './ProvidersPrompt'
 import {
-  BraveWarning,
   ConnectionButton,
   ConnectionsWrapper,
   ContentWrapper,
@@ -127,18 +125,6 @@ export const Networks = () => {
               </div>
             </div>
           </ConnectionsWrapper>
-
-          {isBraveBrowser ? (
-            <BraveWarning>
-              <BraveIconSVG />
-              <div className="brave-text">
-                <Trans
-                  defaults={t('braveText')}
-                  components={{ b: <b />, i: <i /> }}
-                />
-              </div>
-            </BraveWarning>
-          ) : null}
         </ContentWrapper>
       </ModalPadding>
     </>
