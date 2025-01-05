@@ -4998,7 +4998,6 @@ __metadata:
     "@dotlottie/player-component": "npm:^2.7.12"
     "@fortawesome/free-brands-svg-icons": "npm:^6.7.2"
     "@fortawesome/free-regular-svg-icons": "npm:^6.7.2"
-    "@fortawesome/free-solid-svg-icons": "npm:^6.7.2"
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
@@ -5052,6 +5051,7 @@ __metadata:
     xxhash-wasm: "npm:^1.0.2"
   peerDependencies:
     "@fortawesome/fontawesome-svg-core": "*"
+    "@fortawesome/free-solid-svg-icons": "*"
     "@tanstack/react-query": "*"
     eslint: "*"
     react: "*"
@@ -9817,6 +9817,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.17.0"
     "@fortawesome/fontawesome-svg-core": "npm:^6.7.2"
+    "@fortawesome/free-solid-svg-icons": "npm:^6.7.2"
     "@ledgerhq/logs": "npm:^6.12.0"
     "@tanstack/react-query": "npm:^5.62.15"
     "@types/chroma-js": "npm:^2.4.5"
