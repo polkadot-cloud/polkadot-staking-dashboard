@@ -20,7 +20,6 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback'
 import { Warning } from 'library/Form/Warning'
-import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
@@ -31,7 +30,7 @@ import {
   ModalTitle,
   ModalWarnings,
 } from 'ui-core/overlay'
-import { useOverlay } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const Unbond = () => {

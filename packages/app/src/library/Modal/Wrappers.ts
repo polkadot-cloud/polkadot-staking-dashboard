@@ -44,18 +44,6 @@ export const TitleWrapper = styled.div<{ $fixed: boolean }>`
         margin-right: 0.9rem;
       }
     }
-
-    &:last-child {
-      button {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        opacity: 0.25;
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
   }
 `
 
@@ -103,22 +91,6 @@ export const StatWrapper = styled.div`
     h3,
     h4 {
       color: var(--text-color-secondary);
-    }
-  }
-`
-
-export const CloseWrapper = styled.div`
-  position: absolute;
-  right: 1.5rem;
-  top: 1.5rem;
-  z-index: 2;
-
-  > button {
-    opacity: 0.4;
-    transition: opacity var(--transition-duration) ease-in-out;
-
-    &:hover {
-      opacity: 1;
     }
   }
 `
