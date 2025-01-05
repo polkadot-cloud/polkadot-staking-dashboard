@@ -12,7 +12,6 @@ import {
   CanvasTitleWrapper,
 } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
-import { Element } from 'react-scroll'
 import { ButtonPrimary } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 
@@ -44,22 +43,18 @@ export const NominatorSetup = () => {
       </CanvasTitleWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="payee" style={{ position: 'absolute' }} />
         <Payee section={1} />
       </CardWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="nominate" style={{ position: 'absolute' }} />
         <Nominate bondFor="nominator" section={2} />
       </CardWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="bond" style={{ position: 'absolute' }} />
         <Bond section={3} />
       </CardWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="summary" style={{ position: 'absolute' }} />
         <Summary section={4} />
       </CardWrapper>
     </CanvasFullScreenWrapper>
