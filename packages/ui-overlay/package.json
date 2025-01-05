@@ -7,11 +7,15 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
-  "dependencies": {
-    "ui-core": "workspace:*"
-  },
   "exports": {
     ".": "./src/index.tsx",
     "./types": "./src/types.ts"
+  },
+  "dependencies": {
+    "ui-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "@fortawesome/fontawesome-svg-core": "*",
+    "react": "*"
   }
 }

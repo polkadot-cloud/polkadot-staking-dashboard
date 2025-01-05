@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@dotlottie/player-component": "^2.7.12",
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -65,12 +64,18 @@
     "xxhash-wasm": "^1.0.2"
   },
   "devDependencies": {
-    "vite": "^6.0.2",
     "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-checker": "^0.8.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "@fortawesome/fontawesome-svg-core": "*",
+    "@tanstack/react-query": "*",
+    "eslint": "*",
+    "react": "*",
+    "vite": "*"
   }
 }

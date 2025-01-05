@@ -3879,6 +3879,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.62.15":
+  version: 5.62.15
+  resolution: "@tanstack/query-core@npm:5.62.15"
+  checksum: 10c0/e79ce47749e7ed3cb09b1d489a8688baa6b2b1af389032178dd39b64e9627b4a5a88ca1add5f7ceddf60e65603562f8ba55297c43796104f0fc2c15a893019ea
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.62.15":
+  version: 5.62.15
+  resolution: "@tanstack/react-query@npm:5.62.15"
+  dependencies:
+    "@tanstack/query-core": "npm:5.62.15"
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 10c0/e9cedd69590d2f011196988bd13f9e10e1fc0a0722cf7c3a041ddc1a887c011f0ff951683085ff9ba2a936432752391fb404e3d4978cb21b38fe38fc31d5312b
+  languageName: node
+  linkType: hard
+
 "@types/bn.js@npm:^5.1.5, @types/bn.js@npm:^5.1.6":
   version: 5.1.6
   resolution: "@types/bn.js@npm:5.1.6"
@@ -4978,7 +4996,6 @@ __metadata:
   resolution: "app@workspace:packages/app"
   dependencies:
     "@dotlottie/player-component": "npm:^2.7.12"
-    "@fortawesome/fontawesome-svg-core": "npm:^6.7.2"
     "@fortawesome/free-brands-svg-icons": "npm:^6.7.2"
     "@fortawesome/free-regular-svg-icons": "npm:^6.7.2"
     "@fortawesome/free-solid-svg-icons": "npm:^6.7.2"
@@ -5025,7 +5042,6 @@ __metadata:
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
     viem: "npm:^2.22.1"
-    vite: "npm:^6.0.2"
     vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.8.0"
     vite-plugin-eslint: "npm:^1.8.1"
@@ -5034,6 +5050,12 @@ __metadata:
     vitest: "npm:^2.1.8"
     wagmi: "npm:^2.12.25"
     xxhash-wasm: "npm:^1.0.2"
+  peerDependencies:
+    "@fortawesome/fontawesome-svg-core": "*"
+    "@tanstack/react-query": "*"
+    eslint: "*"
+    react: "*"
+    vite: "*"
   languageName: unknown
   linkType: soft
 
@@ -9794,7 +9816,9 @@ __metadata:
   resolution: "polkadot-staking-dashboard@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.17.0"
+    "@fortawesome/fontawesome-svg-core": "npm:^6.7.2"
     "@ledgerhq/logs": "npm:^6.12.0"
+    "@tanstack/react-query": "npm:^5.62.15"
     "@types/chroma-js": "npm:^2.4.5"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.2.25"
@@ -9828,6 +9852,7 @@ __metadata:
     sass: "npm:1.77.6"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.16.0"
+    vite: "npm:^6.0.2"
   languageName: unknown
   linkType: soft
 
@@ -11919,6 +11944,9 @@ __metadata:
   resolution: "ui-buttons@workspace:packages/ui-buttons"
   dependencies:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
+  peerDependencies:
+    "@fortawesome/fontawesome-svg-core": "*"
+    react: "*"
   languageName: unknown
   linkType: soft
 
@@ -11927,6 +11955,9 @@ __metadata:
   resolution: "ui-core@workspace:packages/ui-core"
   dependencies:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
+  peerDependencies:
+    "@fortawesome/fontawesome-svg-core": "*"
+    react: "*"
   languageName: unknown
   linkType: soft
 
@@ -11935,6 +11966,9 @@ __metadata:
   resolution: "ui-overlay@workspace:packages/ui-overlay"
   dependencies:
     ui-core: "workspace:*"
+  peerDependencies:
+    "@fortawesome/fontawesome-svg-core": "*"
+    react: "*"
   languageName: unknown
   linkType: soft
 
