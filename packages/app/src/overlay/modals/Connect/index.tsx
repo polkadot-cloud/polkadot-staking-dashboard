@@ -8,7 +8,6 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
 import type { AnyFunction } from '@w3ux/types'
 import { ActionItem } from 'library/ActionItem'
-import { Close } from 'library/Modal/Close'
 import { SelectItems } from 'library/SelectItems'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +20,7 @@ import {
   ModalPadding,
   ModalSection,
 } from 'ui-core/overlay'
-import { useOverlay } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
 import { Ledger } from './Ledger'
 import { Proxies } from './Proxies'

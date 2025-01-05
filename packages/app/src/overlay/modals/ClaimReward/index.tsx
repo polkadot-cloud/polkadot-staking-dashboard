@@ -11,12 +11,11 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
-import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-core/overlay'
-import { useOverlay } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals')
