@@ -8,6 +8,7 @@
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
   "exports": {
-    "./svg/*": "./src/svg/*"
+    "./svg/*": "./src/svg/*",
+    "./tsx/*": "./src/tsx/*"
   }
 }

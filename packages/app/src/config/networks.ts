@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import KusamaIconSVG from 'assets/svg/kusamaIcon.svg?react'
-import KusamaInlineSVG from 'assets/svg/kusamaInline.svg?react'
-import PolkadotIconSVG from 'assets/svg/polkadotIcon.svg?react'
-import PolkadotInlineSVG from 'assets/svg/polkadotInline.svg?react'
+import KusamaIconSVG from 'assets/svg/chains/kusamaIcon.svg?react'
+import KusamaInlineSVG from 'assets/svg/chains/kusamaInline.svg?react'
+import PolkadotIconSVG from 'assets/svg/chains/polkadotIcon.svg?react'
+import PolkadotInlineSVG from 'assets/svg/chains/polkadotInline.svg?react'
+import WestendIconSVG from 'assets/svg/chains/westendIcon.svg?react'
+import WestendInlineSVG from 'assets/svg/chains/westendInline.svg?react'
 import PolkadotTokenSVG from 'assets/svg/token/dot.svg?react'
 import KusamaTokenSVG from 'assets/svg/token/ksm.svg?react'
 import WestendTokenSVG from 'assets/svg/token/wnd.svg?react'
-import WestendIconSVG from 'assets/svg/westendIcon.svg?react'
-import WestendInlineSVG from 'assets/svg/westendInline.svg?react'
 import BigNumber from 'bignumber.js'
 import type { Networks, SystemChain } from 'common-types'
 
