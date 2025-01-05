@@ -8,12 +8,12 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/svg/brands/discord.svg?react'
 import LogoGithubSVG from 'assets/svg/brands/github.svg?react'
 import BookSVG from 'assets/svg/icons/book.svg?react'
-import CogOutlineSVG from 'assets/svg/icons/cogOutline.svg?react'
+import CogSVG from 'assets/svg/icons/cog.svg?react'
 import EnvelopeSVG from 'assets/svg/icons/envelope.svg?react'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import LogoSVG from 'assets/svg/icons/logo.svg?react'
-import MoonOutlineSVG from 'assets/svg/icons/moonOutline.svg?react'
-import SunnyOutlineSVG from 'assets/svg/icons/sunnyOutline.svg?react'
+import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
+import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
 import { PageWidthMediumThreshold, SideMenuMaximisedWidth } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
@@ -176,7 +176,7 @@ export const SideMenu = () => {
             onClick={() => openModal({ key: 'Settings' })}
             aria-label="Settings"
           >
-            <CogOutlineSVG width="1.3em" height="1.3em" />
+            <CogSVG width="1.3em" height="1.3em" />
           </button>
           <button
             type="button"

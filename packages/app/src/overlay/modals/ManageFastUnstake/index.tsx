@@ -16,7 +16,6 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
-import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,7 +25,7 @@ import {
   ModalTitle,
   ModalWarnings,
 } from 'ui-core/overlay'
-import { useOverlay } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
 export const ManageFastUnstake = () => {

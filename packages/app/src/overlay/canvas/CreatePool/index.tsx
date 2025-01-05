@@ -13,7 +13,6 @@ import {
   CanvasTitleWrapper,
 } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
-import { Element } from 'react-scroll'
 import { ButtonPrimary } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 
@@ -45,27 +44,22 @@ export const CreatePool = () => {
       </CanvasTitleWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="metadata" style={{ position: 'absolute' }} />
         <PoolName section={1} />
       </CardWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="nominate" style={{ position: 'absolute' }} />
         <Nominate bondFor="pool" section={2} />
       </CardWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="roles" style={{ position: 'absolute' }} />
         <PoolRoles section={3} />
       </CardWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="bond" style={{ position: 'absolute' }} />
         <Bond section={4} />
       </CardWrapper>
 
       <CardWrapper className="canvas">
-        <Element name="summary" style={{ position: 'absolute' }} />
         <Summary section={5} />
       </CardWrapper>
     </CanvasFullScreenWrapper>
