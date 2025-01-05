@@ -4,11 +4,11 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "build": "npx tsc && vite build --base '/'",
+    "build": "npx tsc && npx vite build --base '/'",
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
-    "dev": "vite",
-    "preview": "vite preview",
+    "dev": "npx vite",
+    "preview": "npx vite preview",
     "test": "vitest",
     "visualizer": "vite-bundle-visualizer"
   },
