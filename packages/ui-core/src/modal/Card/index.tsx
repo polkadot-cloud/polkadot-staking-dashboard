@@ -4,12 +4,12 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import type { ModalCardProps } from '../types'
+import type { CardProps } from '../types'
 import classes from './index.module.scss'
 
 export const Card = forwardRef(
   (
-    { children, dimmed, style }: ModalCardProps,
+    { children, dimmed, style }: CardProps,
     ref?: ForwardedRef<HTMLDivElement | null>
   ) => {
     const allClasses = classNames(classes.card, {

@@ -3,10 +3,10 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import type { ModalContentProps } from '../types'
+import type { ContentProps } from '../types'
 import classes from './index.module.scss'
 
-export const Content = ({ children, canvas, style }: ModalContentProps) => {
+export const Content = ({ children, canvas, style }: ContentProps) => {
   const allClasses = classNames(classes.content, {
     [classes.canvas]: canvas,
   })

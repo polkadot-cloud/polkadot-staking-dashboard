@@ -4,14 +4,10 @@
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
 import commonClasses from '../../common.module.scss'
-import type { ModalContainerProps } from '../types'
+import type { ContainerProps } from '../types'
 import classes from './index.module.scss'
 
-export const Container = ({
-  children,
-  onClose,
-  ...rest
-}: ModalContainerProps) => {
+export const Container = ({ children, onClose, ...rest }: ContainerProps) => {
   const allClasses = classNames(commonClasses.fixedPosition, classes.container)
   return (
     <motion.div className={allClasses} {...rest}>

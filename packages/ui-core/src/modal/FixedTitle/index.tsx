@@ -4,12 +4,12 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import type { ModalFixedTitleProps } from '../types'
+import type { FixedTitleProps } from '../types'
 import classes from './index.module.scss'
 
 export const FixedTitle = forwardRef(
   (
-    { children, style, withStyle }: ModalFixedTitleProps,
+    { children, style, withStyle }: FixedTitleProps,
     ref?: ForwardedRef<HTMLDivElement>
   ) => {
     const allClasses = classNames(classes.fixedTitle, {

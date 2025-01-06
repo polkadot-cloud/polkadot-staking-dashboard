@@ -4,7 +4,7 @@
 import type { ComponentBase } from '@w3ux/types'
 import type { AnimationProps } from 'framer-motion'
 
-export type CanvasScrollProps = ComponentBase &
+export type ScrollProps = ComponentBase &
   AnimationProps & {
     size?: 'lg' | 'xl'
   }

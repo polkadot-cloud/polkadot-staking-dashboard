@@ -4,36 +4,36 @@
 import type { ComponentBase } from '@w3ux/types'
 import type { AnimationProps } from 'framer-motion'
 
-export type ModalAnimationProps = ComponentBase & AnimationProps
+export type BaseWithAnimation = ComponentBase & AnimationProps
 
-export type ModalCardProps = ComponentBase & {
+export type CardProps = ComponentBase & {
   dimmed?: boolean
 }
-export type ModalContentProps = ModalAnimationProps & {
+export type ContentProps = BaseWithAnimation & {
   canvas?: boolean
 }
 
-export type ModalFixedTitleProps = ComponentBase & {
+export type FixedTitleProps = ComponentBase & {
   withStyle?: boolean
 }
 
-export type ModalNotesProps = ComponentBase & {
+export type NotesProps = ComponentBase & {
   withPadding?: boolean
 }
 
-export type ModalPaddingProps = ComponentBase & {
+export type PaddingProps = ComponentBase & {
   verticalOnly?: boolean
   horizontalOnly?: boolean
 }
 
-export type ModalScrollProps = ComponentBase & {
+export type ScrollProps = ComponentBase & {
   size: string
 }
 
-export type ModalSectionProps = ComponentBase & {
+export type SectionProps = ComponentBase & {
   type: 'tab' | 'carousel'
 }
 
-export type ModalContainerProps = ModalAnimationProps & {
+export type ContainerProps = BaseWithAnimation & {
   onClose: () => void
 }

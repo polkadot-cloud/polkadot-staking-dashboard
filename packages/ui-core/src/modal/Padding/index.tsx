@@ -4,12 +4,12 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import type { ModalPaddingProps } from '../types'
+import type { PaddingProps } from '../types'
 import classes from './index.module.scss'
 
 export const Padding = forwardRef(
   (
-    { children, style, verticalOnly, horizontalOnly }: ModalPaddingProps,
+    { children, style, verticalOnly, horizontalOnly }: PaddingProps,
     ref?: ForwardedRef<HTMLDivElement | null>
   ) => {
     const allClasses = classNames(classes.padding, {
