@@ -13,13 +13,13 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert, ButtonTab } from 'ui-buttons'
 import {
-  ModalCustomHeader,
-  ModalFixedTitle,
-  ModalMulti,
-  ModalMultiThree,
-  ModalPadding,
-  ModalSection,
-} from 'ui-core/overlay'
+  CustomHeader,
+  FixedTitle,
+  Multi,
+  MultiThree,
+  Padding,
+  Section,
+} from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
 import { Ledger } from './Ledger'
@@ -154,10 +154,10 @@ export const Connect = () => {
   )
 
   return (
-    <ModalSection type="carousel">
+    <Section type="carousel">
       <Close />
-      <ModalFixedTitle ref={headerRef} withStyle>
-        <ModalCustomHeader>
+      <FixedTitle ref={headerRef} withStyle>
+        <CustomHeader>
           <div>
             <h1>{t('connect')}</h1>
             <ButtonPrimaryInvert
@@ -168,7 +168,7 @@ export const Connect = () => {
               marginLeft
             />
           </div>
-          <ModalSection type="tab">
+          <Section type="tab">
             <ButtonTab
               title={t('extensions')}
               onClick={() => setSection(0)}
@@ -184,11 +184,11 @@ export const Connect = () => {
               onClick={() => setSection(2)}
               active={section === 2}
             />
-          </ModalSection>
-        </ModalCustomHeader>
-      </ModalFixedTitle>
+          </Section>
+        </CustomHeader>
+      </FixedTitle>
 
-      <ModalMultiThree
+      <MultiThree
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -212,8 +212,8 @@ export const Connect = () => {
           },
         }}
       >
-        <ModalMulti>
-          <ModalPadding horizontalOnly ref={homeRef}>
+        <Multi>
+          <Padding horizontalOnly ref={homeRef}>
             {ConnectCombinedJSX}
             {!inMobileWallet && (
               <>
@@ -232,19 +232,19 @@ export const Connect = () => {
                 </ExtensionsWrapper>
               </>
             )}
-          </ModalPadding>
-        </ModalMulti>
-        <ModalMulti>
-          <ModalPadding horizontalOnly ref={readOnlyRef}>
+          </Padding>
+        </Multi>
+        <Multi>
+          <Padding horizontalOnly ref={readOnlyRef}>
             <ReadOnly setInputOpen={setReadOnlyOpen} inputOpen={readOnlyOpen} />
-          </ModalPadding>
-        </ModalMulti>
-        <ModalMulti>
-          <ModalPadding horizontalOnly ref={proxiesRef}>
+          </Padding>
+        </Multi>
+        <Multi>
+          <Padding horizontalOnly ref={proxiesRef}>
             <Proxies setInputOpen={setNewProxyOpen} inputOpen={newProxyOpen} />
-          </ModalPadding>
-        </ModalMulti>
-      </ModalMultiThree>
-    </ModalSection>
+          </Padding>
+        </Multi>
+      </MultiThree>
+    </Section>
   )
 }

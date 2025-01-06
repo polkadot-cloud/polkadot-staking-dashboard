@@ -21,7 +21,7 @@ import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
-import { ModalPadding, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
@@ -98,13 +98,13 @@ export const LeavePool = ({
 
   return (
     <>
-      <ModalPadding horizontalOnly>
+      <Padding horizontalOnly>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         <ActionItem
           text={`${t('unbond')} ${freeToUnbond.toString()} ${unit}`}
@@ -115,7 +115,7 @@ export const LeavePool = ({
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </ModalPadding>
+      </Padding>
       <SubmitTx
         valid={paramsValid}
         buttons={

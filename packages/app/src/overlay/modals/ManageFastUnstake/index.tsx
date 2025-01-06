@@ -19,12 +19,7 @@ import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  ModalNotes,
-  ModalPadding,
-  ModalTitle,
-  ModalWarnings,
-} from 'ui-core/overlay'
+import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
@@ -145,14 +140,14 @@ export const ManageFastUnstake = () => {
   return (
     <>
       <Close />
-      <ModalPadding>
-        <ModalTitle>{t('fastUnstake', { context: 'title' })}</ModalTitle>
+      <Padding>
+        <Title>{t('fastUnstake', { context: 'title' })}</Title>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning_${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
 
         {exposed ? (
@@ -162,7 +157,7 @@ export const ManageFastUnstake = () => {
                 count: lastExposedAgo.toNumber(),
               })}
             />
-            <ModalNotes>
+            <Notes>
               <p>
                 {t('fastUnstakeNote1', {
                   bondDuration: bondDuration.toString(),
@@ -171,12 +166,12 @@ export const ManageFastUnstake = () => {
               <p>
                 {t('fastUnstakeNote2', { count: erasRemaining.toNumber() })}
               </p>
-            </ModalNotes>
+            </Notes>
           </>
         ) : !isFastUnstaking ? (
           <>
             <ActionItem text={t('fastUnstake', { context: 'register' })} />
-            <ModalNotes>
+            <Notes>
               <p>
                 {t('registerFastUnstake')}{' '}
                 {planckToUnitBn(fastUnstakeDeposit, units).toString()} {unit}.{' '}
@@ -185,20 +180,20 @@ export const ManageFastUnstake = () => {
               <p>
                 {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue || 0}</b>
               </p>
-            </ModalNotes>
+            </Notes>
           </>
         ) : (
           <>
             <ActionItem text={t('fastUnstakeRegistered')} />
-            <ModalNotes>
+            <Notes>
               <p>
                 {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue || 0}</b>
               </p>
               <p>{t('fastUnstakeUnorderedNote')}</p>
-            </ModalNotes>
+            </Notes>
           </>
         )}
-      </ModalPadding>
+      </Padding>
       {!exposed ? (
         <SubmitTx
           fromController

@@ -5,9 +5,7 @@ import { useAnimation } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { ModalCard } from '../../ui-core/src/overlay/ModalCard'
-import { ModalContainer } from '../../ui-core/src/overlay/ModalContainer'
-import { ModalScroll } from '../../ui-core/src/overlay/ModalScroll'
+import { Card, Container, Scroll } from 'ui-core/modal'
 import { useOverlay } from './Provider'
 import type { ModalProps } from './Provider/types'
 
@@ -129,7 +127,7 @@ export const Modal = ({
   const ActiveModal: FC | null = modals?.[key] || null
 
   return status === 'closed' ? null : status !== 'replacing' ? (
-    <ModalContainer
+    <Container
       initial={{
         opacity: 0,
         scale: 0.9,
@@ -151,7 +149,7 @@ export const Modal = ({
       style={{ opacity: status === 'opening' ? 0 : 1 }}
       onClose={() => setModalStatus('closing')}
     >
-      <ModalScroll
+      <Scroll
         ref={heightRef}
         size={size}
         style={{
@@ -159,12 +157,12 @@ export const Modal = ({
           overflow,
         }}
       >
-        <ModalCard ref={modalRef} dimmed={dimmed}>
+        <Card ref={modalRef} dimmed={dimmed}>
           <ErrorBoundary FallbackComponent={Fallback || null}>
             {ActiveModal && <ActiveModal />}
           </ErrorBoundary>
-        </ModalCard>
-      </ModalScroll>
-    </ModalContainer>
+        </Card>
+      </Scroll>
+    </Container>
   ) : null
 }

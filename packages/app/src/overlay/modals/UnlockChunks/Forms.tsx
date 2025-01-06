@@ -24,7 +24,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { forwardRef, useEffect, useState, type ForwardedRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
-import { ModalPadding, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import type { FormsProps } from './types'
@@ -144,13 +144,13 @@ export const Forms = forwardRef(
     return (
       <ContentWrapper>
         <div ref={ref}>
-          <ModalPadding horizontalOnly>
+          <Padding horizontalOnly>
             {warnings.length > 0 ? (
-              <ModalWarnings>
+              <Warnings>
                 {warnings.map((text, i) => (
                   <Warning key={`warning${i}`} text={text} />
                 ))}
-              </ModalWarnings>
+              </Warnings>
             ) : null}
             <div style={{ marginBottom: '2rem' }}>
               {task === 'rebond' && (
@@ -176,7 +176,7 @@ export const Forms = forwardRef(
                 </>
               )}
             </div>
-          </ModalPadding>
+          </Padding>
           <SubmitTx
             fromController={isStaking}
             valid={valid}

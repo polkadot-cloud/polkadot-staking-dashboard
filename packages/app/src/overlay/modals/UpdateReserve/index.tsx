@@ -18,7 +18,7 @@ import 'rc-slider/assets/index.css'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
-import { ModalPadding } from 'ui-core/overlay'
+import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
@@ -58,7 +58,7 @@ export const UpdateReserve = () => {
   }
 
   return (
-    <ModalPadding>
+    <Padding>
       <Title
         title={t('reserveBalance')}
         helpKey="Reserve Balance"
@@ -132,6 +132,6 @@ export const UpdateReserve = () => {
           />
         </div>
       </SliderWrapper>
-    </ModalPadding>
+    </Padding>
   )
 }

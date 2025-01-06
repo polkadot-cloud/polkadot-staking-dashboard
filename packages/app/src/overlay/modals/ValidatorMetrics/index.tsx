@@ -24,7 +24,7 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { ModalAddressHeader, ModalPadding } from 'ui-core/overlay'
+import { AddressHeader, Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
@@ -94,15 +94,15 @@ export const ValidatorMetrics = () => {
   return (
     <>
       <Title title={t('validatorMetrics')} />
-      <ModalAddressHeader>
+      <AddressHeader>
         <Polkicon address={address} fontSize="2.75rem" />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}
         </h2>
-      </ModalAddressHeader>
+      </AddressHeader>
 
-      <ModalPadding horizontalOnly>
+      <Padding horizontalOnly>
         <StatsWrapper>
           {stats.map((s, i) => (
             <StatWrapper key={`metrics_stat_${i}`}>
@@ -116,7 +116,7 @@ export const ValidatorMetrics = () => {
             </StatWrapper>
           ))}
         </StatsWrapper>
-      </ModalPadding>
+      </Padding>
       <div
         style={{ position: 'relative', marginTop: '0.5rem', padding: '1rem' }}
       >

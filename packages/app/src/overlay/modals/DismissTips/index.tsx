@@ -6,7 +6,7 @@ import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
 import { ButtonRow } from 'ui-core/base'
-import { ModalPadding } from 'ui-core/overlay'
+import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const DismissTips = () => {
@@ -17,7 +17,7 @@ export const DismissTips = () => {
   return (
     <>
       <Title title={t('module.dismissTips')} />
-      <ModalPadding horizontalOnly>
+      <Padding horizontalOnly>
         <div
           style={{
             padding: '0 0.5rem 1.25rem 0.5rem',
@@ -39,7 +39,7 @@ export const DismissTips = () => {
             />
           </ButtonRow>
         </div>
-      </ModalPadding>
+      </Padding>
     </>
   )
 }

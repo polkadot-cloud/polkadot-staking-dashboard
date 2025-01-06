@@ -8,7 +8,7 @@ import { useNetwork } from 'contexts/Network'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { SubmitTx } from 'library/SubmitTx'
-import { ModalPadding, ModalTitle } from 'ui-core/overlay'
+import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const BalanceTest = () => {
@@ -54,9 +54,9 @@ export const BalanceTest = () => {
   return (
     <>
       <Close />
-      <ModalPadding>
-        <ModalTitle>Balance Test</ModalTitle>
-      </ModalPadding>
+      <Padding>
+        <Title>Balance Test</Title>
+      </Padding>
       <SubmitTx valid {...submitExtrinsic} />
     </>
   )

@@ -7,7 +7,7 @@ import DiscordOutlineSvg from 'assets/svg/brands/discordOutline.svg?react'
 import { DiscordSupportUrl } from 'consts'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding } from 'ui-core/overlay'
+import { Padding } from 'ui-core/modal'
 import { SupportWrapper } from './Wrapper'
 
 export const DiscordSupport = () => {
@@ -15,7 +15,7 @@ export const DiscordSupport = () => {
   return (
     <>
       <Title />
-      <ModalPadding verticalOnly>
+      <Padding verticalOnly>
         <SupportWrapper>
           <DiscordOutlineSvg />
           <h4>{t('supportDiscord')}</h4>
@@ -26,7 +26,7 @@ export const DiscordSupport = () => {
             </a>
           </h1>
         </SupportWrapper>
-      </ModalPadding>
+      </Padding>
     </>
   )
 }

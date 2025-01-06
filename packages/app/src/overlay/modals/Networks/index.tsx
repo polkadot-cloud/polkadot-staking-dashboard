@@ -14,7 +14,7 @@ import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
-import { ModalPadding } from 'ui-core/overlay'
+import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ProvidersPrompt } from './ProvidersPrompt'
 import {
@@ -41,7 +41,7 @@ export const Networks = () => {
   return (
     <>
       <Title title={t('networks')} icon={faGlobe} />
-      <ModalPadding>
+      <Padding>
         <ContentWrapper>
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
@@ -126,7 +126,7 @@ export const Networks = () => {
             </div>
           </ConnectionsWrapper>
         </ContentWrapper>
-      </ModalPadding>
+      </Padding>
     </>
   )
 }

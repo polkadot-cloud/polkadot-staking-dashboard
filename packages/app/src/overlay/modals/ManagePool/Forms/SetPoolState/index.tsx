@@ -16,7 +16,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
-import { ModalPadding, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const SetPoolState = ({
@@ -136,17 +136,17 @@ export const SetPoolState = ({
 
   return (
     <>
-      <ModalPadding horizontalOnly>
+      <Padding horizontalOnly>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         {content.title}
         {content.message}
-      </ModalPadding>
+      </Padding>
       <SubmitTx
         valid={valid}
         buttons={[

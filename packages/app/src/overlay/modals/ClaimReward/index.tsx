@@ -14,7 +14,7 @@ import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const ClaimReward = () => {
@@ -82,16 +82,16 @@ export const ClaimReward = () => {
   return (
     <>
       <Close />
-      <ModalPadding>
-        <ModalTitle>
+      <Padding>
+        <Title>
           {claimType === 'bond' ? t('compound') : t('withdraw')} {t('rewards')}
-        </ModalTitle>
+        </Title>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
@@ -104,7 +104,7 @@ export const ClaimReward = () => {
         ) : (
           <p>{t('claimReward2')}</p>
         )}
-      </ModalPadding>
+      </Padding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   )
