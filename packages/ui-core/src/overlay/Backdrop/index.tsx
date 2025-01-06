@@ -4,10 +4,10 @@
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
 import commonClasses from '../../common.module.scss'
-import type { ModalOverlayProps } from '../../modal/types'
+import type { BackdropProps } from '../types'
 import classes from './index.module.scss'
 
-export const Backdrop = ({ children, blur, ...rest }: ModalOverlayProps) => {
+export const Backdrop = ({ children, blur, ...rest }: BackdropProps) => {
   const allClasses = classNames(commonClasses.fixedPosition, classes.backdrop)
   return (
     <motion.div

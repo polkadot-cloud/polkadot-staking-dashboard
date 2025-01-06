@@ -21,10 +21,6 @@ export type ModalNotesProps = ComponentBase & {
   withPadding?: boolean
 }
 
-export type ModalOverlayProps = ModalAnimationProps & {
-  blur?: string
-}
-
 export type ModalPaddingProps = ComponentBase & {
   verticalOnly?: boolean
   horizontalOnly?: boolean
