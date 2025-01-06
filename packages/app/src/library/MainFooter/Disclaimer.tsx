@@ -1,12 +1,12 @@
 // Copyright 2023 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 
 import { Title } from 'library/Prompt/Title'
-import { ModalPadding } from 'ui-core/overlay'
+import { Padding } from 'ui-core/modal'
 
 export const Disclaimer = () => (
   <>
     <Title title="Disclaimer" />
-    <ModalPadding>
+    <Padding>
       <p>
         This Polkadot Staking Dashboard (“Dashboard”) is made available free of
         charge by JKRB Investments Limited and its affiliates (&quot;Web3
@@ -72,6 +72,6 @@ export const Disclaimer = () => (
         loss or damage as a result of the dashboard, content or third party acts
         is to cease using the dashboard.
       </p>
-    </ModalPadding>
+    </Padding>
   </>
 )
