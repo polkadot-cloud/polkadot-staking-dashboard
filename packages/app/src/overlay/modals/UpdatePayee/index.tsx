@@ -20,7 +20,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
-import { ModalPadding, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const UpdatePayee = () => {
@@ -129,13 +129,13 @@ export const UpdatePayee = () => {
         title={t('updatePayoutDestination')}
         helpKey="Payout Destination"
       />
-      <ModalPadding horizontalOnly>
+      <Padding horizontalOnly>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         <div style={{ width: '100%', padding: '0 0.5rem' }}>
           <PayeeInput
@@ -157,7 +157,7 @@ export const UpdatePayee = () => {
             />
           ))}
         </SelectItems>
-      </ModalPadding>
+      </Padding>
       <SubmitTx fromController valid={isComplete()} {...submitExtrinsic} />
     </>
   )

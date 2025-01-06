@@ -17,7 +17,7 @@ import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
@@ -145,14 +145,14 @@ export const Bond = () => {
   return (
     <>
       <Close />
-      <ModalPadding>
-        <ModalTitle>{t('addToBond')}</ModalTitle>
+      <Padding>
+        <Title>{t('addToBond')}</Title>
         {pendingRewards > 0n && bondFor === 'pool' ? (
-          <ModalWarnings>
+          <Warnings>
             <Warning
               text={`${t('bondingWithdraw')} ${pendingRewardsUnit} ${unit}.`}
             />
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         <BondFeedback
           syncing={largestTxFee.isZero()}
@@ -167,7 +167,7 @@ export const Bond = () => {
           txFees={BigInt(largestTxFee.toString())}
         />
         <p>{t('newlyBondedFunds')}</p>
-      </ModalPadding>
+      </Padding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   )

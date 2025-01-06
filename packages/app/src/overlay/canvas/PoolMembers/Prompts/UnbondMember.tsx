@@ -20,7 +20,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-core/overlay'
+import { Notes, Padding, Warnings } from 'ui-core/modal'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const UnbondMember = ({
@@ -84,19 +84,19 @@ export const UnbondMember = ({
   return (
     <>
       <Title title={t('unbondPoolMember')} />
-      <ModalPadding>
+      <Padding>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         <h3 style={{ display: 'flex', alignItems: 'center' }}>
           <Polkicon address={who} transform="grow-3" />
           &nbsp; {ellipsisFn(who, 7)}
         </h3>
-        <ModalNotes>
+        <Notes>
           <p>
             {t('amountWillBeUnbonded', { bond: freeToUnbond.toString(), unit })}
           </p>
@@ -106,8 +106,8 @@ export const UnbondMember = ({
             valueKey="bondDurationFormatted"
             deps={[bondDuration]}
           />
-        </ModalNotes>
-      </ModalPadding>
+        </Notes>
+      </Padding>
       <SubmitTx noMargin valid={paramsValid} {...submitExtrinsic} />
     </>
   )

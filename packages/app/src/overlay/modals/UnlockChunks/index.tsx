@@ -10,12 +10,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  ModalFixedTitle,
-  ModalMulti,
-  ModalMultiTwo,
-  ModalSection,
-} from 'ui-core/overlay'
+import { FixedTitle, Multi, MultiTwo, Section } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { Forms } from './Forms'
 import { Overview } from './Overview'
@@ -102,11 +97,11 @@ export const UnlockChunks = () => {
   }, [])
 
   return (
-    <ModalSection type="carousel">
-      <ModalFixedTitle ref={headerRef}>
+    <Section type="carousel">
+      <FixedTitle ref={headerRef}>
         <Title title={t('unlocks')} fixed />
-      </ModalFixedTitle>
-      <ModalMultiTwo
+      </FixedTitle>
+      <MultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -125,7 +120,7 @@ export const UnlockChunks = () => {
           },
         }}
       >
-        <ModalMulti>
+        <Multi>
           <Overview
             unlocking={unlocking}
             bondFor={bondFor}
@@ -134,8 +129,8 @@ export const UnlockChunks = () => {
             setTask={setTask}
             ref={overviewRef}
           />
-        </ModalMulti>
-        <ModalMulti>
+        </Multi>
+        <Multi>
           <Forms
             incrementCalculateHeight={incrementCalculateHeight}
             setSection={setSection}
@@ -144,8 +139,8 @@ export const UnlockChunks = () => {
             ref={formsRef}
             onResize={onResize}
           />
-        </ModalMulti>
-      </ModalMultiTwo>
-    </ModalSection>
+        </Multi>
+      </MultiTwo>
+    </Section>
   )
 }

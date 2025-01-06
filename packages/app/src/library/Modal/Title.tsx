@@ -8,7 +8,7 @@ import { useHelp } from 'contexts/Help'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { CSSProperties } from 'styled-components'
 import { ButtonHelp } from 'ui-buttons'
-import { ModalTitle } from 'ui-core/overlay'
+import { Title as Wrapper } from 'ui-core/modal'
 import { Close } from 'ui-overlay'
 import { TitleWrapper } from './Wrappers'
 
@@ -44,12 +44,12 @@ export const Title = ({
         <div>
           {graphic}
           {title && (
-            <ModalTitle>
+            <Wrapper>
               {title}
               {helpKey ? (
                 <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
               ) : null}
-            </ModalTitle>
+            </Wrapper>
           )}
         </div>
       </TitleWrapper>

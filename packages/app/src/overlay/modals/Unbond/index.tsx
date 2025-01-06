@@ -24,12 +24,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  ModalNotes,
-  ModalPadding,
-  ModalTitle,
-  ModalWarnings,
-} from 'ui-core/overlay'
+import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
@@ -197,14 +192,14 @@ export const Unbond = () => {
   return (
     <>
       <Close />
-      <ModalPadding>
-        <ModalTitle>{t('removeBond')}</ModalTitle>
+      <Padding>
+        <Title>{t('removeBond')}</Title>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         <UnbondFeedback
           bondFor={bondFor}
@@ -215,7 +210,7 @@ export const Unbond = () => {
           setters={[handleSetBond]}
           txFees={fee}
         />
-        <ModalNotes withPadding>
+        <Notes withPadding>
           {bondFor === 'pool' ? (
             isDepositor() ? (
               <p>
@@ -241,8 +236,8 @@ export const Unbond = () => {
             valueKey="bondDurationFormatted"
             deps={[bondDuration]}
           />
-        </ModalNotes>
-      </ModalPadding>
+        </Notes>
+      </Padding>
       <SubmitTx
         noMargin
         fromController={isStaking}

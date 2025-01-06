@@ -8,9 +8,11 @@
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
   "exports": {
-    "./types": "./src/types.ts",
     "./base": "./src/base/index.tsx",
-    "./overlay": "./src/overlay/index.tsx"
+    "./canvas": "./src/canvas/index.tsx",
+    "./modal": "./src/modal/index.tsx",
+    "./overlay": "./src/overlay/index.tsx",
+    "./types": "./src/types.ts"
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.2"

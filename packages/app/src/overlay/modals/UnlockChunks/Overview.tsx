@@ -17,7 +17,7 @@ import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
 import { ButtonSubmit } from 'ui-buttons'
-import { ModalNotes, ModalPadding } from 'ui-core/overlay'
+import { Notes, Padding } from 'ui-core/modal'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 import { Chunk } from './Chunk'
 import { ContentWrapper } from './Wrappers'
@@ -73,7 +73,7 @@ export const Overview = forwardRef(
 
     return (
       <ContentWrapper>
-        <ModalPadding horizontalOnly ref={ref}>
+        <Padding horizontalOnly ref={ref}>
           <StatsWrapper>
             <StatWrapper>
               <div className="inner">
@@ -144,7 +144,7 @@ export const Overview = forwardRef(
               onRebond={onRebondHandler}
             />
           ))}
-          <ModalNotes withPadding>
+          <Notes withPadding>
             <StaticNote
               value={bondDurationFormatted}
               tKey="unlockTake"
@@ -153,8 +153,8 @@ export const Overview = forwardRef(
             />
             <p> {isStaking ? ` ${t('rebondUnlock')}` : null}</p>
             {!isStaking ? <p>{t('unlockChunk')}</p> : null}
-          </ModalNotes>
-        </ModalPadding>
+          </Notes>
+        </Padding>
       </ContentWrapper>
     )
   }

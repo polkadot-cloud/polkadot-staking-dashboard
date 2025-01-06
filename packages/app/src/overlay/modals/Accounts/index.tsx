@@ -14,7 +14,7 @@ import { Fragment, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
 import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
-import { ModalCustomHeader, ModalPadding } from 'ui-core/overlay'
+import { CustomHeader, Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { AccountButton } from './Account'
 import { Delegates } from './Delegates'
@@ -164,8 +164,8 @@ export const Accounts = () => {
   ])
 
   return (
-    <ModalPadding>
-      <ModalCustomHeader>
+    <Padding>
+      <CustomHeader>
         <div>
           <h1>{t('accounts')}</h1>
           <ButtonPrimaryInvert
@@ -193,7 +193,7 @@ export const Accounts = () => {
             />
           )}
         </div>
-      </ModalCustomHeader>
+      </CustomHeader>
       {!activeAccount && !accounts.length && (
         <AccountWrapper style={{ marginTop: '1.5rem' }}>
           <div>
@@ -278,6 +278,6 @@ export const Accounts = () => {
           ))}
         </>
       ) : null}
-    </ModalPadding>
+    </Padding>
   )
 }
