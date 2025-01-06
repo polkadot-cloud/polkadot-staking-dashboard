@@ -3,17 +3,15 @@
 
 import type { DotLottie } from '@lottiefiles/dotlottie-react'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
-import type { AnyJson } from '@w3ux/types'
 import { useTheme } from 'contexts/Themes'
 import { useEffect, useRef } from 'react'
 
 export const useDotLottieButton = (
   filename: string,
-  options: { autoLoop?: boolean } = {}
+  options?: { autoLoop?: boolean }
 ) => {
   const { mode } = useTheme()
-  const lottieRef = useRef<AnyJson>(null)
-  const refsInitialised = useRef<boolean>(false)
+  const lottieRef = useRef<DotLottie>()
 
   const lottieRefCallback = (dotLottie: DotLottie) => {
     lottieRef.current = dotLottie
@@ -29,12 +27,11 @@ export const useDotLottieButton = (
     }
   }
   useEffect(() => {
-    if (!lottieRef.current || refsInitialised.current) {
+    if (!lottieRef.current) {
       return
     }
-    refsInitialised.current = true
     lottieRef.current.addEventListener('loop', () => handleComplete())
-  }, [lottieRef.current, refsInitialised.current])
+  }, [lottieRef.current])
 
   const icon = (
     <button
