@@ -21,7 +21,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
@@ -111,14 +111,14 @@ export const Unstake = () => {
   return (
     <>
       <Close />
-      <ModalPadding>
-        <ModalTitle>{t('unstake')} </ModalTitle>
+      <Padding>
+        <Title>{t('unstake')} </Title>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         {freeToUnbond.isGreaterThan(0) ? (
           <ActionItem
@@ -139,7 +139,7 @@ export const Unstake = () => {
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </ModalPadding>
+      </Padding>
       <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
     </>
   )

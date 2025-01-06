@@ -6,12 +6,7 @@ import { usePayouts } from 'contexts/Payouts'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  ModalFixedTitle,
-  ModalMulti,
-  ModalMultiTwo,
-  ModalSection,
-} from 'ui-core/overlay'
+import { FixedTitle, Multi, MultiTwo, Section } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { Forms } from './Forms'
 import { Overview } from './Overview'
@@ -68,11 +63,11 @@ export const ClaimPayouts = () => {
   }
 
   return (
-    <ModalSection type="carousel">
-      <ModalFixedTitle ref={headerRef}>
+    <Section type="carousel">
+      <FixedTitle ref={headerRef}>
         <Title title={t('claimPayouts')} fixed />
-      </ModalFixedTitle>
-      <ModalMultiTwo
+      </FixedTitle>
+      <MultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -91,14 +86,14 @@ export const ClaimPayouts = () => {
           },
         }}
       >
-        <ModalMulti>
+        <Multi>
           <Overview
             setSection={setSection}
             setPayouts={setPayouts}
             ref={overviewRef}
           />
-        </ModalMulti>
-        <ModalMulti>
+        </Multi>
+        <Multi>
           <Forms
             ref={formsRef}
             payouts={payouts}
@@ -106,8 +101,8 @@ export const ClaimPayouts = () => {
             setSection={setSection}
             onResize={onResize}
           />
-        </ModalMulti>
-      </ModalMultiTwo>
-    </ModalSection>
+        </Multi>
+      </MultiTwo>
+    </Section>
   )
 }

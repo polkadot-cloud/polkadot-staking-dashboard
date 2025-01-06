@@ -6,13 +6,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  ModalFixedTitle,
-  ModalMulti,
-  ModalMultiTwo,
-  ModalPadding,
-  ModalSection,
-} from 'ui-core/overlay'
+import { FixedTitle, Multi, MultiTwo, Padding, Section } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { Forms } from './Forms'
 import { Tasks } from './Tasks'
@@ -67,11 +61,11 @@ export const ManagePool = () => {
   }, [])
 
   return (
-    <ModalSection type="carousel">
-      <ModalFixedTitle ref={headerRef}>
+    <Section type="carousel">
+      <FixedTitle ref={headerRef}>
         <Title title={`${t('managePool')}`} fixed />
-      </ModalFixedTitle>
-      <ModalMultiTwo
+      </FixedTitle>
+      <MultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -90,13 +84,13 @@ export const ManagePool = () => {
           },
         }}
       >
-        <ModalMulti>
-          <ModalPadding horizontalOnly>
+        <Multi>
+          <Padding horizontalOnly>
             <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
-          </ModalPadding>
-        </ModalMulti>
+          </Padding>
+        </Multi>
 
-        <ModalMulti>
+        <Multi>
           <Forms
             onResize={onResize}
             setSection={setSection}
@@ -105,8 +99,8 @@ export const ManagePool = () => {
             ref={formsRef}
             incrementCalculateHeight={incrementCalculateHeight}
           />
-        </ModalMulti>
-      </ModalMultiTwo>
-    </ModalSection>
+        </Multi>
+      </MultiTwo>
+    </Section>
   )
 }

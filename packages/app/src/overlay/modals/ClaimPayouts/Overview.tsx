@@ -6,7 +6,7 @@ import { usePayouts } from 'contexts/Payouts'
 import type { Ref } from 'react'
 import { Fragment, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalNotes, ModalPadding } from 'ui-core/overlay'
+import { Notes, Padding } from 'ui-core/modal'
 import { Item } from './Item'
 import type { OverviewProps } from './types'
 import { ContentWrapper } from './Wrappers'
@@ -18,7 +18,7 @@ export const Overview = forwardRef(
 
     return (
       <ContentWrapper>
-        <ModalPadding horizontalOnly ref={ref}>
+        <Padding horizontalOnly ref={ref}>
           {unclaimedRewards.entries.map(({ era, reward, validators }, i) =>
             new BigNumber(reward).isZero() ? (
               <Fragment key={`unclaimed_payout_${i}`} />
@@ -32,11 +32,11 @@ export const Overview = forwardRef(
               />
             )
           )}
-          <ModalNotes withPadding>
+          <Notes withPadding>
             <p>{t('claimsOnBehalf')}</p>
             <p>{t('notToClaim')}</p>
-          </ModalNotes>
-        </ModalPadding>
+          </Notes>
+        </Padding>
       </ContentWrapper>
     )
   }

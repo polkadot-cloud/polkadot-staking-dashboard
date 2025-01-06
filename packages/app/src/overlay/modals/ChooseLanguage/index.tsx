@@ -5,7 +5,7 @@ import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import { Title } from 'library/Modal/Title'
 import { changeLanguage, locales } from 'locales'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding } from 'ui-core/overlay'
+import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ContentWrapper, LocaleButton } from './Wrapper'
 
@@ -16,7 +16,7 @@ export const ChooseLanguage = () => {
   return (
     <>
       <Title title={t('chooseLanguage')} Svg={LanguageSVG} />
-      <ModalPadding>
+      <Padding>
         <ContentWrapper>
           <div className="item">
             {Object.entries(locales).map(([code, { label }], i) => (
@@ -38,7 +38,7 @@ export const ChooseLanguage = () => {
             ))}
           </div>
         </ContentWrapper>
-      </ModalPadding>
+      </Padding>
     </>
   )
 }

@@ -5,7 +5,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { Title } from 'library/Modal/Title'
 import { StatusButton } from 'library/StatusButton'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding } from 'ui-core/overlay'
+import { Padding } from 'ui-core/modal'
 import { ContentWrapper } from '../Networks/Wrapper'
 
 export const Settings = () => {
@@ -15,7 +15,7 @@ export const Settings = () => {
   return (
     <>
       <Title title={t('settings')} />
-      <ModalPadding>
+      <Padding>
         <ContentWrapper>
           <h4>{t('togglePlugins')}</h4>
           <StatusButton
@@ -42,7 +42,7 @@ export const Settings = () => {
             onClick={() => togglePlugin('tips')}
           />
         </ContentWrapper>
-      </ModalPadding>
+      </Padding>
     </>
   )
 }

@@ -5,10 +5,8 @@ import { useAnimation } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { CanvasContainer } from '../../ui-core/src/overlay/CanvasContainer'
-import { CanvasContent } from '../../ui-core/src/overlay/CanvasContent'
-import { CanvasScroll } from '../../ui-core/src/overlay/CanvasScroll'
-import { ModalContent } from '../../ui-core/src/overlay/ModalContent'
+import { Container, Content, Scroll } from 'ui-core/canvas'
+import { Content as ModalContent } from 'ui-core/modal'
 import { useOverlay } from './Provider'
 import type { CanvasProps } from './Provider/types'
 
@@ -73,7 +71,7 @@ export const Canvas = ({
   const ActiveCanvas: FC | null = canvas?.[key] || null
 
   return status === 'closed' ? null : (
-    <CanvasContainer
+    <Container
       initial={{
         opacity: 0,
       }}
@@ -90,15 +88,15 @@ export const Canvas = ({
         },
       }}
     >
-      <CanvasScroll size={size}>
+      <Scroll size={size}>
         <ModalContent canvas>
-          <CanvasContent>
+          <Content>
             <ErrorBoundary FallbackComponent={Fallback}>
               {ActiveCanvas && <ActiveCanvas />}
             </ErrorBoundary>
-          </CanvasContent>
+          </Content>
         </ModalContent>
-      </CanvasScroll>
-    </CanvasContainer>
+      </Scroll>
+    </Container>
   )
 }

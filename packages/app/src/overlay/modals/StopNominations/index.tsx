@@ -14,7 +14,7 @@ import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-core/overlay'
+import { Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const StopNominations = () => {
@@ -93,19 +93,19 @@ export const StopNominations = () => {
   return (
     <>
       <Close />
-      <ModalPadding>
-        <ModalTitle>
+      <Padding>
+        <Title>
           {t('stop')} {t('allNominations')}
-        </ModalTitle>
+        </Title>
         {warnings.length ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning_${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
         <p>{t('changeNomination')}</p>
-      </ModalPadding>
+      </Padding>
       <SubmitTx fromController={isStaking} valid={valid} {...submitExtrinsic} />
     </>
   )

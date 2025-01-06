@@ -7,7 +7,7 @@ import { OnlineStatus } from 'controllers/OnlineStatus'
 import { isCustomEvent } from 'controllers/utils'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { OfflineLabel } from 'ui-core/base'
+import { Offline as Wrapper } from 'ui-core/base'
 import { useEventListener } from 'usehooks-ts'
 
 export const Offline = () => {
@@ -35,9 +35,9 @@ export const Offline = () => {
     return null
   }
   return (
-    <OfflineLabel>
+    <Wrapper>
       <FontAwesomeIcon icon={faWarning} transform="grow-4" />
       <h3>{t('offline')}</h3>
-    </OfflineLabel>
+    </Wrapper>
   )
 }
