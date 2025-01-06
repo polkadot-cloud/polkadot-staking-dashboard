@@ -1,27 +1,27 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { DotLottie } from '@lottiefiles/dotlottie-react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import type { AnyJson } from '@w3ux/types'
 import { useTheme } from 'contexts/Themes'
-import type { Theme } from 'contexts/Themes/types'
-import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
   const { mode } = useTheme()
 
-  const refLight = useRef<AnyJson>(null)
-  const refDark = useRef<AnyJson>(null)
+  const lottieRef = useRef<AnyJson>(null)
   const refsInitialised = useRef<boolean>(false)
 
-  const getRef = (m: Theme) =>
-    m === 'light' ? refLight.current : refDark.current
+  const lottieRefCallback = (dotLottie: DotLottie) => {
+    lottieRef.current = dotLottie
+  }
 
   const handlePlayAnimation = async () => {
-    if (!getRef(mode)) {
+    if (!lottieRef.current) {
       return
     }
-    getRef(mode).play()
+    lottieRef.current.play()
   }
 
   const handleComplete = (r: AnyJson) => {
@@ -30,74 +30,41 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
     }
   }
   useEffect(() => {
-    if (!getRef('light') || !getRef('dark') || refsInitialised.current) {
+    if (!lottieRef.current || refsInitialised.current) {
       return
     }
     refsInitialised.current = true
-
-    getRef('light').addEventListener('loop', () =>
-      handleComplete(getRef('light'))
+    lottieRef.current.addEventListener('loop', () =>
+      handleComplete(lottieRef.current)
     )
-    getRef('dark').addEventListener('loop', () =>
-      handleComplete(getRef('dark'))
-    )
-  }, [getRef('light'), getRef('dark'), refsInitialised.current])
+  }, [lottieRef.current, refsInitialised.current])
 
   useEffect(() => {
     refsInitialised.current = false
   }, [options?.deps])
 
-  const autoPlay = options?.autoLoop ?? undefined
-
-  const [iconLight] = useState<ReactNode>(
-    <dotlottie-player
-      ref={refLight}
-      loop
-      autoPlay={autoPlay}
-      src={`${import.meta.env.BASE_URL}lottie/${filename}-light.lottie`}
-      style={{ height: 'inherit', width: 'inherit' }}
-    />
-  )
-
-  const [iconDark] = useState<ReactNode>(
-    <dotlottie-player
-      ref={refDark}
-      loop
-      autoPlay={autoPlay}
-      src={`${import.meta.env.BASE_URL}lottie/${filename}-dark.lottie`}
-      style={{ height: 'inherit', width: 'inherit' }}
-    />
-  )
+  const autoplay = options?.autoLoop ? true : undefined
 
   const icon = (
-    <>
-      <button
-        type="button"
-        style={{
-          ...options?.style,
-          display: mode === 'light' ? 'block' : 'none',
-          height: 'inherit',
-          width: 'inherit',
+    <button
+      type="button"
+      style={{
+        ...options?.style,
+        height: 'inherit',
+        width: 'inherit',
+      }}
+      onClick={() => handlePlayAnimation()}
+    >
+      <DotLottieReact
+        dotLottieRefCallback={lottieRefCallback}
+        loop
+        autoplay={autoplay}
+        src={`${import.meta.env.BASE_URL}lottie/${filename}-${mode}.lottie`}
+        renderConfig={{
+          autoResize: true,
         }}
-        onClick={() => handlePlayAnimation()}
-      >
-        {iconLight}
-      </button>
-      <button
-        type="button"
-        style={{
-          ...options?.style,
-          display: mode === 'dark' ? 'block' : 'none',
-          height: 'inherit',
-          width: 'inherit',
-        }}
-        onClick={() => {
-          handlePlayAnimation()
-        }}
-      >
-        {iconDark}
-      </button>
-    </>
+      />
+    </button>
   )
 
   return { icon, play: handlePlayAnimation }
