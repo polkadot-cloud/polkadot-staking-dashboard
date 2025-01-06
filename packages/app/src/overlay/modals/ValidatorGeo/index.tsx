@@ -20,7 +20,7 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { ModalAddressHeader } from 'ui-core/overlay'
+import { AddressHeader } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const ValidatorGeo = () => {
@@ -71,13 +71,13 @@ export const ValidatorGeo = () => {
   return (
     <>
       <Title title={t('validatorDecentralization')} />
-      <ModalAddressHeader>
+      <AddressHeader>
         <Polkicon address={address} fontSize="2.75rem" />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}
         </h2>
-      </ModalAddressHeader>
+      </AddressHeader>
       <div
         style={{ position: 'relative', marginTop: '0.5rem', padding: '1rem' }}
       >

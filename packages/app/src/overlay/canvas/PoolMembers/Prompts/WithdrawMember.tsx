@@ -19,7 +19,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import type { RefObject } from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-core/overlay'
+import { Notes, Padding, Warnings } from 'ui-core/modal'
 import { planckToUnitBn } from 'utils'
 
 export const WithdrawMember = ({
@@ -95,13 +95,13 @@ export const WithdrawMember = ({
   return (
     <>
       <Title title={t('withdrawPoolMember')} />
-      <ModalPadding>
+      <Padding>
         {warnings.length > 0 ? (
-          <ModalWarnings>
+          <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </ModalWarnings>
+          </Warnings>
         ) : null}
 
         <h3 style={{ display: 'flex', alignItems: 'center' }}>
@@ -109,15 +109,15 @@ export const WithdrawMember = ({
           &nbsp; {ellipsisFn(who, 7)}
         </h3>
 
-        <ModalNotes>
+        <Notes>
           <p>
             <p>
               {t('amountWillBeWithdrawn', { bond: bonded.toString(), unit })}
             </p>{' '}
           </p>
           <p>{t('withdrawRemoveNote')}</p>
-        </ModalNotes>
-      </ModalPadding>
+        </Notes>
+      </Padding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   )

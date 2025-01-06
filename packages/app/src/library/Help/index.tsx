@@ -16,7 +16,8 @@ import { DefaultLocale } from 'locales'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
-import { CanvasContainer, CanvasScroll, ModalContent } from 'ui-core/overlay'
+import { Container, Scroll } from 'ui-core/canvas'
+import { Content } from 'ui-core/modal'
 import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'
@@ -134,7 +135,7 @@ export const Help = () => {
   })
 
   return (
-    <CanvasContainer
+    <Container
       initial={{
         opacity: 0,
         scale: 1.05,
@@ -157,8 +158,8 @@ export const Help = () => {
         zIndex: 20,
       }}
     >
-      <CanvasScroll>
-        <ModalContent>
+      <Scroll>
+        <Content>
           <div className="buttons">
             <ButtonPrimaryInvert
               lg
@@ -207,11 +208,11 @@ export const Help = () => {
               ))}
             </>
           )}
-        </ModalContent>
-      </CanvasScroll>
+        </Content>
+      </Scroll>
       <button type="button" className="close" onClick={() => closeHelp()}>
         &nbsp;
       </button>
-    </CanvasContainer>
+    </Container>
   )
 }
