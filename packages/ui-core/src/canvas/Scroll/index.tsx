@@ -7,7 +7,7 @@ import classes from './index.module.scss'
 
 export const Scroll = ({ children, size, ...rest }: CanvasScrollProps) => (
   <motion.div
-    className={`${classes.canvasScroll} ${size === 'xl' ? classes.xl : ''}`}
+    className={`${classes.scroll} ${size === 'xl' ? classes.xl : ''}`}
     {...rest}
   >
     {children}
