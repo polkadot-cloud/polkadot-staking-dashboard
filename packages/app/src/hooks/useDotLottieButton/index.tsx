@@ -7,9 +7,11 @@ import type { AnyJson } from '@w3ux/types'
 import { useTheme } from 'contexts/Themes'
 import { useEffect, useRef } from 'react'
 
-export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
+export const useDotLottieButton = (
+  filename: string,
+  options: { autoLoop?: boolean } = {}
+) => {
   const { mode } = useTheme()
-
   const lottieRef = useRef<AnyJson>(null)
   const refsInitialised = useRef<boolean>(false)
 
@@ -18,15 +20,12 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
   }
 
   const handlePlayAnimation = async () => {
-    if (!lottieRef.current) {
-      return
-    }
-    lottieRef.current.play()
+    lottieRef.current?.play()
   }
 
-  const handleComplete = (r: AnyJson) => {
+  const handleComplete = () => {
     if (options?.autoLoop !== true) {
-      r?.stop()
+      lottieRef.current?.stop()
     }
   }
   useEffect(() => {
@@ -34,22 +33,13 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       return
     }
     refsInitialised.current = true
-    lottieRef.current.addEventListener('loop', () =>
-      handleComplete(lottieRef.current)
-    )
+    lottieRef.current.addEventListener('loop', () => handleComplete())
   }, [lottieRef.current, refsInitialised.current])
-
-  useEffect(() => {
-    refsInitialised.current = false
-  }, [options?.deps])
-
-  const autoplay = options?.autoLoop ? true : undefined
 
   const icon = (
     <button
       type="button"
       style={{
-        ...options?.style,
         height: 'inherit',
         width: 'inherit',
       }}
@@ -58,7 +48,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       <DotLottieReact
         dotLottieRefCallback={lottieRefCallback}
         loop
-        autoplay={autoplay}
+        autoplay={options?.autoLoop ? true : undefined}
         src={`${import.meta.env.BASE_URL}lottie/${filename}-${mode}.lottie`}
         renderConfig={{
           autoResize: true,
