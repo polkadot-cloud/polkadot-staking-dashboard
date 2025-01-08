@@ -3,7 +3,11 @@
 
 import type BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
-import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
+import type {
+  NominatorReward,
+  PoolReward,
+  ValidatorEraPoints,
+} from 'plugin-staking-api/types'
 
 export interface BondedProps {
   active: BigNumber
@@ -14,7 +18,7 @@ export interface BondedProps {
 }
 
 export interface EraPointsProps {
-  items: AnyApi
+  items: ValidatorEraPoints[]
   height: number
 }
 

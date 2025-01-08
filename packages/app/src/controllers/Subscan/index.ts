@@ -3,16 +3,10 @@
 
 import { poolMembersPerPage } from 'library/List/defaults'
 import type { PoolMember } from 'types'
-import type {
-  SubscanEraPoints,
-  SubscanPoolMember,
-  SubscanRequestBody,
-} from './types'
+import type { SubscanPoolMember, SubscanRequestBody } from './types'
 
 export class Subscan {
-  // List of endpoints to be used for Subscan API calls
   static ENDPOINTS = {
-    eraStat: '/api/scan/staking/era_stat',
     poolMembers: '/api/scan/nomination_pool/pool/members',
   }
 
@@ -21,9 +15,6 @@ export class Subscan {
 
   // Subscan pool data, keyed by `<network>-<poolId>-<key1>-<key2>...`
   static poolData: Record<string, PoolMember[]> = {}
-
-  // Subscan era points data, keyed by `<network>-<address>-<era>`
-  static eraPointsData: Record<string, SubscanEraPoints[]> = {}
 
   // Set the network to use for Subscan API calls
   set network(network: string) {
@@ -52,35 +43,6 @@ export class Subscan {
       .reverse()
   }
 
-  // Fetch a pool's era points from Subscan
-  static fetchEraPoints = async (
-    address: string,
-    era: number
-  ): Promise<SubscanEraPoints[]> => {
-    const result = await this.makeRequest(this.ENDPOINTS.eraStat, {
-      page: 0,
-      row: 100,
-      address,
-    })
-    if (!result) {
-      return []
-    }
-
-    // Format list to just contain reward points
-    const list = []
-    for (let i = era; i > era - 100; i--) {
-      list.push({
-        era: i,
-        reward_point:
-          result.list.find(
-            ({ era: resultEra }: { era: number }) => resultEra === i
-          )?.reward_point ?? 0,
-      })
-    }
-    // Removes last zero item and return
-    return list.reverse().splice(0, list.length - 1)
-  }
-
   // Handle fetching pool members
   static handleFetchPoolMembers = async (poolId: number, page: number) => {
     const dataKey = `${this.network}-${poolId}-${page}-members}`
@@ -92,20 +54,6 @@ export class Subscan {
       const result = await this.fetchPoolMembers(poolId, page)
       this.poolData[dataKey] = result
 
-      return result
-    }
-  }
-
-  // Handle fetching era point history
-  static handleFetchEraPoints = async (address: string, era: number) => {
-    const dataKey = `${this.network}-${address}-${era}}`
-    const currentValue = this.eraPointsData[dataKey]
-
-    if (currentValue) {
-      return currentValue
-    } else {
-      const result = await this.fetchEraPoints(address, era)
-      this.eraPointsData[dataKey] = result
       return result
     }
   }
