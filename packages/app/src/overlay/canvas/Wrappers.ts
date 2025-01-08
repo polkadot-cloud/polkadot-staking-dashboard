@@ -62,39 +62,6 @@ export const CanvasTitleWrapper = styled.div`
             width: 100%;
           }
         }
-
-        > .labels {
-          display: flex;
-          margin-top: 1.1rem;
-
-          > h3 {
-            color: var(--text-color-secondary);
-            font-family: Inter, sans-serif;
-            margin: 0;
-
-            > svg {
-              margin: 0 0 0 0.2rem;
-            }
-
-            > span {
-              border: 1px solid var(--border-secondary-color);
-              border-radius: 0.5rem;
-              padding: 0.4rem 0.6rem;
-              margin-left: 1rem;
-              font-size: 1.1rem;
-
-              &.blocked {
-                color: var(--accent-color-secondary);
-                border-color: var(--accent-color-secondary);
-              }
-
-              &.destroying {
-                color: var(--status-danger-color);
-                border-color: var(--status-danger-color);
-              }
-            }
-          }
-        }
       }
     }
   }

@@ -11,9 +11,10 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
+import type { PoolState } from 'types'
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
 import { PageTitleTabs } from 'ui-core/base'
-import { Head } from 'ui-core/canvas'
+import { Head, HeadTags } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import type { JoinPoolHeaderProps } from './types'
 export const Header = ({
@@ -39,6 +40,18 @@ export const Header = ({
     // Randomly select a filtered bonded pool and set it as the selected pool.
     const index = Math.ceil(Math.random() * filteredPools.length - 1)
     setSelectedPoolId(filteredPools[index].id)
+  }
+
+  // Pool state to tag class
+  const getTagClass = (state: PoolState) => {
+    switch (state) {
+      case 'Blocked':
+        return 'warning'
+      case 'Destroying':
+        return 'danger'
+      default:
+        return ''
+    }
   }
 
   return (
@@ -78,13 +91,13 @@ export const Header = ({
                 )}
               </h1>
             </div>
-            <div className="labels">
+            <HeadTags>
               <h3>
                 {t('pool', { ns: 'library' })}{' '}
                 <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
                 {bondedPool.id}
                 {['Blocked', 'Destroying'].includes(bondedPool.state) && (
-                  <span className={bondedPool.state.toLowerCase()}>
+                  <span className={getTagClass(bondedPool.state)}>
                     {t(bondedPool.state.toLowerCase(), { ns: 'library' })}
                   </span>
                 )}
@@ -95,7 +108,7 @@ export const Header = ({
                   <span>{t('autoSelected', { ns: 'library' })}</span>
                 </h3>
               )}
-            </div>
+            </HeadTags>
           </div>
         </div>
 
