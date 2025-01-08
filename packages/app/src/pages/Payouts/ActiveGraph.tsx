@@ -10,12 +10,7 @@ import { getUnixTime } from 'date-fns'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { removeNonZeroAmountAndSort } from 'library/Graphs/Utils'
-import {
-  ApolloProvider,
-  client,
-  usePoolRewards,
-  useRewards,
-} from 'plugin-staking-api'
+import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
@@ -25,11 +20,7 @@ interface Props {
   setPayoutLists: (payouts: AnyApi[]) => void
 }
 
-export const ActiveGraphInner = ({
-  nominating,
-  inPool,
-  setPayoutLists,
-}: Props) => {
+export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
@@ -87,9 +78,3 @@ export const ActiveGraphInner = ({
     </>
   )
 }
-
-export const ActiveGraph = (props: Props) => (
-  <ApolloProvider client={client}>
-    <ActiveGraphInner {...props} />
-  </ApolloProvider>
-)

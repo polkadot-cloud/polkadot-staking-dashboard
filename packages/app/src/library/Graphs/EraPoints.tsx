@@ -65,6 +65,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
         grid: {
           color: graphColors.grid[mode],
         },
+        min: 0,
         ticks: {
           display: true,
           beginAtZero: false,
@@ -100,13 +101,11 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
   }
 
   const data = {
-    labels: items.map(({ era }: { era: string }) => era),
+    labels: items.map(({ era }) => era),
     datasets: [
       {
         label: t('points'),
-        data: items.map(
-          ({ reward_point }: { reward_point: string }) => reward_point
-        ),
+        data: items.map(({ points }) => points),
         borderColor: colors.primary[mode],
         backgroundColor: colors.primary[mode],
         pointStyle: undefined,

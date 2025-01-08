@@ -3,7 +3,6 @@
 
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useStaking } from 'contexts/Staking'
-import { ApolloProvider, client } from 'plugin-staking-api'
 import { useEffect } from 'react'
 import { FastUnstakeApi } from './FastUnstakeApi'
 import type { Props } from './types'
@@ -20,9 +19,9 @@ export const StakingApi = (props: Props) => {
   }, [isBonding()])
 
   return (
-    <ApolloProvider client={client}>
+    <>
       <UnclaimedRewardsApi {...props} />
       {isBonding() && <FastUnstakeApi {...props} />}
-    </ApolloProvider>
+    </>
   )
 }
