@@ -12,7 +12,7 @@ export const CanvasTitleWrapper = styled.div`
   padding-bottom: 0.1rem;
 
   &.padding {
-    padding-bottom: 0.75rem;
+    padding-bottom: 1rem;
   }
 
   > .inner {
@@ -49,6 +49,10 @@ export const CanvasTitleWrapper = styled.div`
           position: relative;
           padding-top: 2rem;
           flex: 1;
+
+          &.padding {
+            padding-bottom: 0.75rem;
+          }
 
           > h1 {
             position: absolute;

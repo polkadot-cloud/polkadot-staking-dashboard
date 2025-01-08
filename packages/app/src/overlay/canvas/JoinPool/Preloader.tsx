@@ -12,6 +12,7 @@ import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool, PoolRewardPointsKey } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
+import { Head } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { JoinPoolInterfaceWrapper } from './Wrappers'
@@ -42,7 +43,7 @@ export const Preloader = ({
 
   return (
     <>
-      <div className="head">
+      <Head>
         <ButtonPrimary
           text={t('pools.back', { ns: 'pages' })}
           lg
@@ -50,12 +51,12 @@ export const Preloader = ({
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
+      </Head>
       <CanvasTitleWrapper className="padding">
         <div className="inner">
           <div className="empty"></div>
           <div className="standalone">
-            <div className="title">
+            <div className="title padding">
               <h1>{t('pools.pools')}</h1>
             </div>
             <div className="labels">
