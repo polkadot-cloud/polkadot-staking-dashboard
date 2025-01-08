@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking'
 import { GraphLayoutWrapper } from '../Wrappers'
 import type { OverviewSectionProps } from '../types'
 import { Addresses } from './Addresses'
-import { PerformanceGraph } from './PerformanceGraph'
+import { Performance } from './Performance'
 import { Roles } from './Roles'
 import { Stats } from './Stats'
 
@@ -28,7 +28,7 @@ export const Overview = (props: OverviewSectionProps) => {
       <div className="main">
         <GraphLayoutWrapper>
           <Stats {...props} />
-          <PerformanceGraph {...props} />
+          <Performance {...props} />
         </GraphLayoutWrapper>
         <Addresses {...props} />
         <Roles {...props} />
