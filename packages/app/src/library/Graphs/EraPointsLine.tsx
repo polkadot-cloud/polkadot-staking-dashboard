@@ -70,7 +70,7 @@ export const EraPointsLine = ({
     ? `${t('era', { ns: 'library' })} ${Object.keys(pointsByEra)[labels.length - 1]}`
     : ''
 
-  // Use primary color for bars
+  // Use primary color for line
   const color = colors.primary[mode]
 
   const options = {
