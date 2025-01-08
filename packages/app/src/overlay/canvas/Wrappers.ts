@@ -70,3 +70,34 @@ export const CanvasTitleWrapper = styled.div`
     }
   }
 `
+
+export const CanvasTitleOnlyWrapper = styled.div`
+  border-bottom: 1px solid var(--border-secondary-color);
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  flex: 1;
+  display: flex;
+
+  > h1 {
+    margin: 0;
+    line-height: 2.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    margin: 0.75rem 0;
+  }
+
+  > h3 {
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    > button {
+      margin-left: 0.75rem;
+    }
+  }
+`

@@ -7,7 +7,7 @@ import { Nominate } from 'library/SetupSteps/Nominate'
 import { Bond } from 'overlay/canvas/NominatorSetup/Bond'
 import { Payee } from 'overlay/canvas/NominatorSetup/Payee'
 import { Summary } from 'overlay/canvas/NominatorSetup/Summary'
-import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
+import { CanvasTitleOnlyWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { Head, Main } from 'ui-core/canvas'
@@ -28,16 +28,9 @@ export const NominatorSetup = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
-      <CanvasTitleWrapper>
-        <div className="inner standalone">
-          <div className="empty"></div>
-          <div className="standalone">
-            <div className="title">
-              <h1>{t('nominate.startNominating')}</h1>
-            </div>
-          </div>
-        </div>
-      </CanvasTitleWrapper>
+      <CanvasTitleOnlyWrapper>
+        <h1>{t('nominate.startNominating')}</h1>
+      </CanvasTitleOnlyWrapper>
       <CardWrapper className="canvas">
         <Payee section={1} />
       </CardWrapper>

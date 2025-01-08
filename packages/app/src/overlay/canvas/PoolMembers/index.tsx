@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { Head, Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
+import { CanvasTitleOnlyWrapper } from '../Wrappers'
 
 export const PoolMembers = () => {
   const { t } = useTranslation()
@@ -23,7 +24,9 @@ export const PoolMembers = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
-      <h1>{t('poolMembers', { ns: 'modals' })}</h1>
+      <CanvasTitleOnlyWrapper>
+        <h1>{t('poolMembers', { ns: 'modals' })}</h1>
+      </CanvasTitleOnlyWrapper>
       <Members />
     </Main>
   )

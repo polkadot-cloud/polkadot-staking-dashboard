@@ -8,7 +8,7 @@ import { Bond } from 'overlay/canvas/CreatePool/Bond'
 import { PoolName } from 'overlay/canvas/CreatePool/PoolName'
 import { PoolRoles } from 'overlay/canvas/CreatePool/PoolRoles'
 import { Summary } from 'overlay/canvas/CreatePool/Summary'
-import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
+import { CanvasTitleOnlyWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { Head, Main } from 'ui-core/canvas'
@@ -30,16 +30,9 @@ export const CreatePool = () => {
         />
       </Head>
 
-      <CanvasTitleWrapper>
-        <div className="inner standalone">
-          <div className="empty"></div>
-          <div className="standalone">
-            <div className="title">
-              <h1>{t('pools.createAPool', { ns: 'pages' })}</h1>
-            </div>
-          </div>
-        </div>
-      </CanvasTitleWrapper>
+      <CanvasTitleOnlyWrapper>
+        <h1>{t('pools.createAPool', { ns: 'pages' })}</h1>
+      </CanvasTitleOnlyWrapper>
 
       <CardWrapper className="canvas">
         <PoolName section={1} />

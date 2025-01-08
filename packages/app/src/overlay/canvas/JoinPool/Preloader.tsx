@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { PoolSyncBar } from 'library/PoolSync/Bar'
-import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
+import { CanvasTitleOnlyWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool, PoolRewardPointsKey } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
@@ -52,26 +52,17 @@ export const Preloader = ({
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
-      <CanvasTitleWrapper className="padding">
-        <div className="inner">
-          <div className="empty"></div>
-          <div className="standalone">
-            <div className="title padding">
-              <h1>{t('pools.pools')}</h1>
-            </div>
-            <div className="labels">
-              <h3>
-                {t('pools.joinPoolHeading', {
-                  totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
-                  totalPoolPoints: totalPoolPointsUnit,
-                  unit,
-                  network: capitalizeFirstLetter(network),
-                })}
-              </h3>
-            </div>
-          </div>
-        </div>
-      </CanvasTitleWrapper>
+      <CanvasTitleOnlyWrapper>
+        <h1>{t('pools.pools')}</h1>
+        <h3>
+          {t('pools.joinPoolHeading', {
+            totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
+            totalPoolPoints: totalPoolPointsUnit,
+            unit,
+            network: capitalizeFirstLetter(network),
+          })}
+        </h3>
+      </CanvasTitleOnlyWrapper>
 
       <JoinPoolInterfaceWrapper>
         <div className="content" style={{ flexDirection: 'column' }}>
