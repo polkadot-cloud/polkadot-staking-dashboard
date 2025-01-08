@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
@@ -23,21 +24,23 @@ import { AddressHeader, Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
+import { InactiveGraph } from './InactiveGraph'
 
 export const ValidatorMetrics = () => {
-  const { t } = useTranslation('modals')
+  const { t } = useTranslation()
   const {
     network,
     networkData: { units, unit },
   } = useNetwork()
-  const { activeEra } = useApi()
-  const { containerRefs } = useUi()
-  const { options } = useOverlay().modal.config
-  const { address, identity } = options
   const {
     eraStakers: { stakers },
   } = useStaking()
+  const { activeEra } = useApi()
   const { openHelp } = useHelp()
+  const { containerRefs } = useUi()
+  const { pluginEnabled } = usePlugins()
+  const { options } = useOverlay().modal.config
+  const { address, identity } = options
 
   // is the validator in the active era
   const validatorInEra = stakers.find((s) => s.address === address) || null
@@ -63,19 +66,19 @@ export const ValidatorMetrics = () => {
 
   const stats = [
     {
-      label: t('selfStake'),
+      label: t('selfStake', { ns: 'modals' }),
       value: `${planckToUnitBn(validatorOwnStake, units).toFormat()} ${unit}`,
       help: 'Self Stake',
     },
     {
-      label: t('nominatorStake'),
+      label: t('nominatorStake', { ns: 'modals' }),
       value: `${planckToUnitBn(otherStake, units).toFormat()} ${unit}`,
       help: 'Nominator Stake',
     },
   ]
   return (
     <>
-      <Title title={t('validatorMetrics')} />
+      <Title title={t('validatorMetrics', { ns: 'modals' })} />
       <AddressHeader>
         <Polkicon address={address} fontSize="2.75rem" />
         <h2>
@@ -111,27 +114,37 @@ export const ValidatorMetrics = () => {
         >
           <CardHeaderWrapper $withMargin>
             <h4>
-              {t('recentEraPoints')}{' '}
+              {t('recentEraPoints', { ns: 'modals' })}{' '}
               <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
             </h4>
           </CardHeaderWrapper>
           <div ref={ref} style={{ minHeight }}>
-            <StatusLabel
-              status="active_service"
-              statusFor="subscan"
-              title={t('subscanDisabled')}
-            />
             <GraphWrapper
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
               }}
             >
-              <ActiveGraph
-                network={network}
-                validator={address}
-                fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
-              />
+              {pluginEnabled('staking_api') ? (
+                <ActiveGraph
+                  network={network}
+                  validator={address}
+                  fromEra={BigNumber.max(
+                    activeEra.index.minus(1),
+                    0
+                  ).toNumber()}
+                />
+              ) : (
+                <>
+                  <StatusLabel
+                    status="active_service"
+                    statusFor="staking_api"
+                    title={t('common.stakingApiDisabled', { ns: 'pages' })}
+                    topOffset="37%"
+                  />
+                  <InactiveGraph />
+                </>
+              )}
             </GraphWrapper>
           </div>
         </CardWrapper>
