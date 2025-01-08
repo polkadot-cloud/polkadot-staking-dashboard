@@ -7,12 +7,7 @@ import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
-import {
-  ApolloProvider,
-  client,
-  usePoolRewards,
-  useRewards,
-} from 'plugin-staking-api'
+import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type {
   NominatorReward,
   RewardResult,
@@ -26,7 +21,7 @@ interface Props {
   lineMarginTop: string
   setLastReward: (reward: RewardResult | undefined) => void
 }
-export const ActiveGraphInner = ({
+export const ActiveGraph = ({
   nominating,
   inPool,
   lineMarginTop,
@@ -94,9 +89,3 @@ export const ActiveGraphInner = ({
     </>
   )
 }
-
-export const ActiveGraph = (props: Props) => (
-  <ApolloProvider client={client}>
-    <ActiveGraphInner {...props} />
-  </ApolloProvider>
-)

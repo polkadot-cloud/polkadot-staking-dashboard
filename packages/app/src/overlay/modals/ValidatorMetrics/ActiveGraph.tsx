@@ -3,18 +3,14 @@
 
 import type { NetworkId } from 'common-types'
 import { EraPoints } from 'library/Graphs/EraPoints'
-import {
-  ApolloProvider,
-  client,
-  useValidatorEraPoints,
-} from 'plugin-staking-api'
+import { useValidatorEraPoints } from 'plugin-staking-api'
 
 interface Props {
   network: NetworkId
   validator: string
   fromEra: number
 }
-export const Inner = ({ network, validator, fromEra }: Props) => {
+export const ActiveGraph = ({ network, validator, fromEra }: Props) => {
   const { data, loading, error } = useValidatorEraPoints({
     chain: network,
     validator,
@@ -30,9 +26,3 @@ export const Inner = ({ network, validator, fromEra }: Props) => {
 
   return <EraPoints items={sorted} height={250} />
 }
-
-export const ActiveGraph = (props: Props) => (
-  <ApolloProvider client={client}>
-    <Inner {...props} />
-  </ApolloProvider>
-)
