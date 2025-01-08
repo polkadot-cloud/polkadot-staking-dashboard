@@ -9,12 +9,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
-import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
 import { PageTitleTabs } from 'ui-core/base'
-import { Head, HeadTags } from 'ui-core/canvas'
+import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import type { JoinPoolHeaderProps } from './types'
 export const Header = ({
@@ -72,8 +71,8 @@ export const Header = ({
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
-      <CanvasTitleWrapper>
-        <div className="inner">
+      <AccountTitle>
+        <div>
           <div>
             <Polkicon
               address={bondedPool?.addresses.stash || ''}
@@ -101,7 +100,6 @@ export const Header = ({
                   </span>
                 )}
               </h3>
-
               {autoSelected && (
                 <h3>
                   <span>{t('autoSelected', { ns: 'library' })}</span>
@@ -129,7 +127,7 @@ export const Header = ({
           inline={true}
           colorSecondary={true}
         />
-      </CanvasTitleWrapper>
+      </AccountTitle>
     </>
   )
 }
