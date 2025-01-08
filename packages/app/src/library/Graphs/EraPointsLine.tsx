@@ -52,7 +52,7 @@ export const EraPointsLine = ({
     ? []
     : Object.values(
         Object.fromEntries(
-          Object.entries(pointsByEra).map(([k, v]: AnyJson) => [
+          Object.entries(pointsByEra).map(([k, v]) => [
             k,
             new BigNumber(v).toString(),
           ])
