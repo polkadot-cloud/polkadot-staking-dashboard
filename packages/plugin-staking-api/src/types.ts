@@ -71,6 +71,12 @@ export type CanFastUnstakeResult = Query & {
   }
 }
 
+export type ValidatorEraPointsResult = Query & {
+  data: {
+    validatorEraPoints: ValidatorEraPoints[]
+  }
+}
+
 export interface UnclaimedRewards {
   total: string
   entries: EraUnclaimedReward[]
@@ -85,6 +91,11 @@ export interface ValidatorUnclaimedReward {
   validator: string
   reward: string
   page: number | null
+}
+
+export interface ValidatorEraPoints {
+  era: number
+  points: string
 }
 
 export interface PoolReward {

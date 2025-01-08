@@ -4,16 +4,11 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useNetwork } from 'contexts/Network'
 import { isCustomEvent } from 'controllers/utils'
-import {
-  ApolloProvider,
-  client,
-  formatTokenPrice,
-  useTokenPrice,
-} from 'plugin-staking-api'
+import { formatTokenPrice, useTokenPrice } from 'plugin-staking-api'
 import { useRef } from 'react'
 import { useEventListener } from 'usehooks-ts'
 
-export const TokenPriceInner = () => {
+export const TokenPrice = () => {
   const {
     networkData: {
       api: { unit },
@@ -68,9 +63,3 @@ export const TokenPriceInner = () => {
     </>
   )
 }
-
-export const TokenPrice = () => (
-  <ApolloProvider client={client}>
-    <TokenPriceInner />
-  </ApolloProvider>
-)
