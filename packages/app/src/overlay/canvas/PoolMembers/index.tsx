@@ -3,9 +3,9 @@
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Members } from 'overlay/canvas/PoolMembers/Members'
-import { CanvasFullScreenWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
 export const PoolMembers = () => {
@@ -13,7 +13,7 @@ export const PoolMembers = () => {
   const { closeCanvas } = useOverlay().canvas
 
   return (
-    <CanvasFullScreenWrapper>
+    <Main>
       <div className="head">
         <ButtonPrimary
           text={t('cancel', { ns: 'library' })}
@@ -25,6 +25,6 @@ export const PoolMembers = () => {
       </div>
       <h1>{t('poolMembers', { ns: 'modals' })}</h1>
       <Members />
-    </CanvasFullScreenWrapper>
+    </Main>
   )
 }

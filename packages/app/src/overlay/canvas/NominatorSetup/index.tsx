@@ -7,12 +7,10 @@ import { Nominate } from 'library/SetupSteps/Nominate'
 import { Bond } from 'overlay/canvas/NominatorSetup/Bond'
 import { Payee } from 'overlay/canvas/NominatorSetup/Payee'
 import { Summary } from 'overlay/canvas/NominatorSetup/Summary'
-import {
-  CanvasFullScreenWrapper,
-  CanvasTitleWrapper,
-} from 'overlay/canvas/Wrappers'
+import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
 export const NominatorSetup = () => {
@@ -20,7 +18,7 @@ export const NominatorSetup = () => {
   const { closeCanvas } = useOverlay().canvas
 
   return (
-    <CanvasFullScreenWrapper>
+    <Main>
       <div className="head">
         <ButtonPrimary
           text={t('pools.back')}
@@ -57,6 +55,6 @@ export const NominatorSetup = () => {
       <CardWrapper className="canvas">
         <Summary section={4} />
       </CardWrapper>
-    </CanvasFullScreenWrapper>
+    </Main>
   )
 }

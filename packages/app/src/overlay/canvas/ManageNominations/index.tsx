@@ -24,8 +24,8 @@ import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { Footer, Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
-import { CanvasFullScreenWrapper, CanvasSubmitTxFooter } from '../Wrappers'
 import { RevertPrompt } from './Prompts/RevertPrompt'
 
 export const ManageNominations = () => {
@@ -147,7 +147,7 @@ export const ManageNominations = () => {
 
   return (
     <>
-      <CanvasFullScreenWrapper>
+      <Main>
         <div className="head">
           <ButtonPrimaryInvert
             text={t('revertChanges', { ns: 'modals' })}
@@ -194,8 +194,8 @@ export const ManageNominations = () => {
           ]}
           nominations={newNominations}
         />
-      </CanvasFullScreenWrapper>
-      <CanvasSubmitTxFooter>
+      </Main>
+      <Footer>
         <SubmitTx
           noMargin
           fromController={!isPool}
@@ -203,7 +203,7 @@ export const ManageNominations = () => {
           displayFor="canvas"
           {...submitExtrinsic}
         />
-      </CanvasSubmitTxFooter>
+      </Footer>
     </>
   )
 }

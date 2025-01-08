@@ -3,4 +3,6 @@
 
 export * from './Container'
 export * from './Content'
+export * from './Footer'
+export * from './Main'
 export * from './Scroll'

@@ -8,12 +8,10 @@ import { Bond } from 'overlay/canvas/CreatePool/Bond'
 import { PoolName } from 'overlay/canvas/CreatePool/PoolName'
 import { PoolRoles } from 'overlay/canvas/CreatePool/PoolRoles'
 import { Summary } from 'overlay/canvas/CreatePool/Summary'
-import {
-  CanvasFullScreenWrapper,
-  CanvasTitleWrapper,
-} from 'overlay/canvas/Wrappers'
+import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
 export const CreatePool = () => {
@@ -21,7 +19,7 @@ export const CreatePool = () => {
   const { closeCanvas } = useOverlay().canvas
 
   return (
-    <CanvasFullScreenWrapper>
+    <Main>
       <div className="head">
         <ButtonPrimary
           text={t('pools.back', { ns: 'pages' })}
@@ -62,6 +60,6 @@ export const CreatePool = () => {
       <CardWrapper className="canvas">
         <Summary section={5} />
       </CardWrapper>
-    </CanvasFullScreenWrapper>
+    </Main>
   )
 }
