@@ -119,7 +119,6 @@ export const JoinPool = () => {
             filteredBondedPools={filteredBondedPools}
             providedPoolId={providedPoolId}
           />
-
           <JoinPoolInterfaceWrapper>
             <div className="content">
               {activeTab === 0 && (

@@ -24,7 +24,7 @@ import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
-import { Footer, Main } from 'ui-core/canvas'
+import { Footer, Head, Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { RevertPrompt } from './Prompts/RevertPrompt'
 
@@ -148,7 +148,7 @@ export const ManageNominations = () => {
   return (
     <>
       <Main>
-        <div className="head">
+        <Head>
           <ButtonPrimaryInvert
             text={t('revertChanges', { ns: 'modals' })}
             lg
@@ -166,7 +166,7 @@ export const ManageNominations = () => {
             iconLeft={faTimes}
             style={{ marginLeft: '1.1rem' }}
           />
-        </div>
+        </Head>
         <h1>{t('manageNominations', { ns: 'modals' })}</h1>
         <Subheading>
           <h3 style={{ marginBottom: '1.5rem' }}>

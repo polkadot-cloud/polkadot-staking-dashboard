@@ -5,7 +5,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Members } from 'overlay/canvas/PoolMembers/Members'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { Main } from 'ui-core/canvas'
+import { Head, Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
 export const PoolMembers = () => {
@@ -14,7 +14,7 @@ export const PoolMembers = () => {
 
   return (
     <Main>
-      <div className="head">
+      <Head>
         <ButtonPrimary
           text={t('cancel', { ns: 'library' })}
           lg
@@ -22,7 +22,7 @@ export const PoolMembers = () => {
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
+      </Head>
       <h1>{t('poolMembers', { ns: 'modals' })}</h1>
       <Members />
     </Main>

@@ -11,7 +11,7 @@ import { Summary } from 'overlay/canvas/CreatePool/Summary'
 import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { Main } from 'ui-core/canvas'
+import { Head, Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
 export const CreatePool = () => {
@@ -20,7 +20,7 @@ export const CreatePool = () => {
 
   return (
     <Main>
-      <div className="head">
+      <Head>
         <ButtonPrimary
           text={t('pools.back', { ns: 'pages' })}
           lg
@@ -28,7 +28,7 @@ export const CreatePool = () => {
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
+      </Head>
 
       <CanvasTitleWrapper>
         <div className="inner standalone">

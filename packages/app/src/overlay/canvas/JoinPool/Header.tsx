@@ -13,9 +13,9 @@ import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
 import { PageTitleTabs } from 'ui-core/base'
+import { Head } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import type { JoinPoolHeaderProps } from './types'
-
 export const Header = ({
   activeTab,
   bondedPool,
@@ -43,7 +43,7 @@ export const Header = ({
 
   return (
     <>
-      <div className="head">
+      <Head>
         {providedPoolId === null && (
           <ButtonPrimaryInvert
             text={t('chooseAnotherPool', { ns: 'library' })}
@@ -59,7 +59,7 @@ export const Header = ({
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
+      </Head>
       <CanvasTitleWrapper>
         <div className="inner">
           <div>

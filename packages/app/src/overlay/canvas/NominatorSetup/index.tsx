@@ -10,7 +10,7 @@ import { Summary } from 'overlay/canvas/NominatorSetup/Summary'
 import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { Main } from 'ui-core/canvas'
+import { Head, Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
 export const NominatorSetup = () => {
@@ -19,7 +19,7 @@ export const NominatorSetup = () => {
 
   return (
     <Main>
-      <div className="head">
+      <Head>
         <ButtonPrimary
           text={t('pools.back')}
           lg
@@ -27,8 +27,7 @@ export const NominatorSetup = () => {
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
-
+      </Head>
       <CanvasTitleWrapper>
         <div className="inner standalone">
           <div className="empty"></div>
@@ -39,7 +38,6 @@ export const NominatorSetup = () => {
           </div>
         </div>
       </CanvasTitleWrapper>
-
       <CardWrapper className="canvas">
         <Payee section={1} />
       </CardWrapper>

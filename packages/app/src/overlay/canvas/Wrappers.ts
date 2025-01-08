@@ -50,7 +50,7 @@ export const CanvasTitleWrapper = styled.div`
           padding-top: 2rem;
           flex: 1;
 
-          h1 {
+          > h1 {
             position: absolute;
             top: 0;
             left: 0;
