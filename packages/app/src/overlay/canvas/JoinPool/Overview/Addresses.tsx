@@ -11,7 +11,6 @@ export const Addresses = ({
   bondedPool: { addresses },
 }: OverviewSectionProps) => {
   const { t } = useTranslation('library')
-
   return (
     <CardWrapper className="canvas secondary">
       <HeadingWrapper>

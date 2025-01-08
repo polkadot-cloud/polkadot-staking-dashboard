@@ -15,7 +15,6 @@ export const AddressSection = ({
   helpKey,
 }: AddressSectionProps) => {
   const { openHelp } = useHelp()
-
   return (
     <section>
       <HeadingWrapper>
@@ -26,7 +25,6 @@ export const AddressSection = ({
           )}
         </h4>
       </HeadingWrapper>
-
       <div>
         <Polkicon
           address={address}

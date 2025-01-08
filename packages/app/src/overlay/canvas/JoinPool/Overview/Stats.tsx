@@ -85,7 +85,6 @@ export const Stats = ({
             {rawEraRewardPoints.length === MaxEraRewardPointsEras && (
               <span className="active">{t('activelyNominating')}</span>
             )}
-
             <span className="balance">
               <Token className="icon" />
               {!poolBalance

@@ -55,16 +55,16 @@ export const PerformanceGraph = ({
   const poolRewardPoints = getPoolRewardPoints(performanceKey)
   const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {}
 
-  // Ref to the graph container.
+  // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement>(null)
 
-  // Get the size of the graph container.
+  // Get the size of the graph container
   const size = useSize(graphInnerRef, {
     outerElement: containerRefs?.mainInterface,
   })
   const { width, height } = formatSize(size, 150)
 
-  // Format reward points as an array of strings, or an empty array if syncing.
+  // Format reward points as an array of strings, or an empty array if syncing
   const dataset = graphSyncing
     ? []
     : Object.values(
@@ -76,7 +76,7 @@ export const PerformanceGraph = ({
         )
       )
 
-  // Format labels, only displaying the first and last era.
+  // Format labels, only displaying the first and last era
   const labels = Object.keys(rawEraRewardPoints).map(() => '')
 
   const firstEra = Object.keys(rawEraRewardPoints)[0]
@@ -89,7 +89,7 @@ export const PerformanceGraph = ({
     ? `${t('era', { ns: 'library' })} ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`
     : ''
 
-  // Use primary color for bars.
+  // Use primary color for bars
   const color = colors.primary[mode]
 
   const options = {

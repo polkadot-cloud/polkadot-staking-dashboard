@@ -22,7 +22,6 @@ export const Roles = ({ bondedPool }: OverviewSectionProps) => {
             <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
           </h3>
         </HeadingWrapper>
-
         <AddressesWrapper>
           {bondedPool.roles.root && (
             <AddressSection
