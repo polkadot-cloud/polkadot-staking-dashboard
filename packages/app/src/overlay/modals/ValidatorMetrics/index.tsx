@@ -15,7 +15,6 @@ import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { Title } from 'library/Modal/Title'
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers'
-import { PluginLabel } from 'library/PluginLabel'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -103,7 +102,6 @@ export const ValidatorMetrics = () => {
       <div
         style={{ position: 'relative', marginTop: '0.5rem', padding: '1rem' }}
       >
-        <PluginLabel plugin="subscan" />
         <CardWrapper
           className="transparent"
           style={{
