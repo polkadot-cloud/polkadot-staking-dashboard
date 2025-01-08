@@ -5,9 +5,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Members } from 'overlay/canvas/PoolMembers/Members'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { Head, Main } from 'ui-core/canvas'
+import { Head, Main, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
-import { CanvasTitleOnlyWrapper } from '../Wrappers'
 
 export const PoolMembers = () => {
   const { t } = useTranslation()
@@ -24,9 +23,9 @@ export const PoolMembers = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
-      <CanvasTitleOnlyWrapper>
+      <Title>
         <h1>{t('poolMembers', { ns: 'modals' })}</h1>
-      </CanvasTitleOnlyWrapper>
+      </Title>
       <Members />
     </Main>
   )

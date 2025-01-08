@@ -8,11 +8,10 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { PoolSyncBar } from 'library/PoolSync/Bar'
-import { CanvasTitleOnlyWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool, PoolRewardPointsKey } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
-import { Head } from 'ui-core/canvas'
+import { Head, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { JoinPoolInterfaceWrapper } from './Wrappers'
@@ -52,7 +51,7 @@ export const Preloader = ({
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
-      <CanvasTitleOnlyWrapper>
+      <Title>
         <h1>{t('pools.pools')}</h1>
         <h3>
           {t('pools.joinPoolHeading', {
@@ -62,8 +61,7 @@ export const Preloader = ({
             network: capitalizeFirstLetter(network),
           })}
         </h3>
-      </CanvasTitleOnlyWrapper>
-
+      </Title>
       <JoinPoolInterfaceWrapper>
         <div className="content" style={{ flexDirection: 'column' }}>
           <h2 className="tip">

@@ -23,9 +23,8 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
-import { Footer, Head, Main } from 'ui-core/canvas'
+import { Footer, Head, Main, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
-import { CanvasTitleOnlyWrapper } from '../Wrappers'
 import { RevertPrompt } from './Prompts/RevertPrompt'
 
 export const ManageNominations = () => {
@@ -167,7 +166,7 @@ export const ManageNominations = () => {
             style={{ marginLeft: '1.1rem' }}
           />
         </Head>
-        <CanvasTitleOnlyWrapper>
+        <Title>
           <h1>{t('manageNominations', { ns: 'modals' })}</h1>
           <h3>
             {t('chooseValidators', {
@@ -180,7 +179,7 @@ export const ManageNominations = () => {
               outline
             />
           </h3>
-        </CanvasTitleOnlyWrapper>
+        </Title>
 
         <GenerateNominations
           displayFor="canvas"
