@@ -5,7 +5,8 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
-import { HeadingWrapper, NominationsWrapper } from '../Wrappers'
+import { Subheading } from 'ui-core/canvas'
+import { NominationsWrapper } from '../Wrappers'
 import type { NominationsProps } from '../types'
 
 export const Nominations = ({ stash, poolId }: NominationsProps) => {
@@ -21,13 +22,13 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
 
   return (
     <NominationsWrapper>
-      <HeadingWrapper>
+      <Subheading>
         <h3>
           {!targets.length
             ? t('nominate.noNominationsSet', { ns: 'pages' })
             : `${targets.length} ${t('nominations', { ns: 'library', count: targets.length })}`}
         </h3>
-      </HeadingWrapper>
+      </Subheading>
 
       {targets.length > 0 && (
         <ValidatorList

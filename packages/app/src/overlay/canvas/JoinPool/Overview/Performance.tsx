@@ -21,8 +21,9 @@ import { formatSize } from 'library/Graphs/Utils'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
+import { Subheading } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
-import { GraphWrapper, HeadingWrapper } from '../Wrappers'
+import { GraphWrapper } from '../Wrappers'
 
 ChartJS.register(
   CategoryScale,
@@ -59,7 +60,7 @@ export const Performance = ({
 
   return (
     <div>
-      <HeadingWrapper>
+      <Subheading>
         <h3>
           {t('recentPerformance', { ns: 'library' })}
           <ButtonHelp
@@ -68,7 +69,7 @@ export const Performance = ({
             onClick={() => openHelp('Era Points')}
           />
         </h3>
-      </HeadingWrapper>
+      </Subheading>
 
       <GraphWrapper ref={graphInnerRef} style={{ height }}>
         <EraPointsLine

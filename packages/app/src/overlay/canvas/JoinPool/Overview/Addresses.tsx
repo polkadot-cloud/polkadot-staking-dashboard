@@ -3,8 +3,9 @@
 
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { Subheading } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
-import { AddressesWrapper, HeadingWrapper } from '../Wrappers'
+import { AddressesWrapper } from '../Wrappers'
 import { AddressSection } from './AddressSection'
 
 export const Addresses = ({
@@ -13,9 +14,9 @@ export const Addresses = ({
   const { t } = useTranslation('library')
   return (
     <CardWrapper className="canvas secondary">
-      <HeadingWrapper>
+      <Subheading>
         <h3>{t('addresses')}</h3>
-      </HeadingWrapper>
+      </Subheading>
 
       <AddressesWrapper>
         <AddressSection address={addresses.stash} label="Stash" />

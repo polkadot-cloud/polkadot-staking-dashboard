@@ -6,8 +6,8 @@ import { ellipsisFn } from '@w3ux/utils'
 import { useHelp } from 'contexts/Help'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { ButtonHelp } from 'ui-buttons'
+import { Subheading } from 'ui-core/canvas'
 import type { AddressSectionProps } from '../types'
-import { HeadingWrapper } from '../Wrappers'
 
 export const AddressSection = ({
   address,
@@ -17,14 +17,14 @@ export const AddressSection = ({
   const { openHelp } = useHelp()
   return (
     <section>
-      <HeadingWrapper>
+      <Subheading>
         <h4 className="heading">
           {label}
           {!!helpKey && (
             <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
           )}
         </h4>
-      </HeadingWrapper>
+      </Subheading>
       <div>
         <Polkicon
           address={address}
