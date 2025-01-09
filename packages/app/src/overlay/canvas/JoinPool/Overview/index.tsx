@@ -6,8 +6,7 @@ import { JoinForm } from './JoinForm'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
-import { Interface } from 'ui-core/canvas'
-import { GraphLayoutWrapper } from '../Wrappers'
+import { GraphContainer, Interface } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
 import { Addresses } from './Addresses'
 import { Performance } from './Performance'
@@ -28,10 +27,10 @@ export const Overview = (props: OverviewSectionProps) => {
     <Interface
       Main={
         <>
-          <GraphLayoutWrapper>
+          <GraphContainer>
             <Stats {...props} />
             <Performance {...props} />
-          </GraphLayoutWrapper>
+          </GraphContainer>
           <Addresses {...props} />
           <Roles {...props} />
         </>

@@ -151,33 +151,6 @@ export const GraphWrapper = styled.div`
   }
 `
 
-// Element used to wrap graph and pool stats, allowing flex ordering on smaller screens.
-// TODO: abstract this into shared GraphContainer component.
-export const GraphLayoutWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-
-  @media (min-width: 1001px) {
-    > div:last-child {
-      margin-top: 1.25rem;
-    }
-  }
-
-  @media (max-width: 1000px) {
-    > div {
-      &:first-child {
-        order: 2;
-        margin-top: 1.5rem;
-        margin-bottom: 0;
-      }
-      &:last-child {
-        order: 1;
-      }
-    }
-  }
-`
-
 export const NominationsWrapper = styled.div`
   flex: 1;
   display: flex;

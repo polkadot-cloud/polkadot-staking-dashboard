@@ -4,11 +4,19 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Polkicon } from '@w3ux/react-polkicon'
 import BigNumber from 'bignumber.js'
+import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useTranslation } from 'react-i18next'
-import { ButtonPrimary } from 'ui-buttons'
-import { AccountTitle, Head, Main, Stat, Subheading } from 'ui-core/canvas'
+import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import {
+  AccountTitle,
+  GraphContainer,
+  Head,
+  Main,
+  Stat,
+  Subheading,
+} from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
@@ -28,6 +36,7 @@ export const ValidatorMetrics = () => {
       brand: { token: Token },
     },
   } = useNetwork()
+  const { openHelp } = useHelp()
   const validator = options!.validator
   const identity = options!.identity
 
@@ -74,22 +83,35 @@ export const ValidatorMetrics = () => {
           </div>
         </div>
       </AccountTitle>
-      <Subheading>
-        <h4>
-          <Stat withIcon>
-            <Token />
-            {t('selfStake', { ns: 'modals' })}:{' '}
-            {planckToUnitBn(validatorOwnStake, units).toFormat()} {unit}
-          </Stat>
-
-          <Stat withIcon>
-            <Token />
-            {t('nominatorStake', { ns: 'modals' })}:{' '}
-            {planckToUnitBn(otherStake, units).decimalPlaces(0).toFormat()}{' '}
-            {unit}
-          </Stat>
-        </h4>
-      </Subheading>
+      <GraphContainer>
+        <Subheading>
+          <h4>
+            <Stat withIcon>
+              <Token />
+              {t('selfStake', { ns: 'modals' })}:{' '}
+              {planckToUnitBn(validatorOwnStake, units).toFormat()} {unit}
+            </Stat>
+            <Stat withIcon>
+              <Token />
+              {t('nominatorStake', { ns: 'modals' })}:{' '}
+              {planckToUnitBn(otherStake, units).decimalPlaces(0).toFormat()}{' '}
+              {unit}
+            </Stat>
+          </h4>
+        </Subheading>
+        <div>
+          <Subheading>
+            <h3>
+              {t('recentPerformance', { ns: 'library' })}
+              <ButtonHelp
+                outline
+                marginLeft
+                onClick={() => openHelp('Era Points')}
+              />
+            </h3>
+          </Subheading>
+        </div>
+      </GraphContainer>
     </Main>
   )
 }
