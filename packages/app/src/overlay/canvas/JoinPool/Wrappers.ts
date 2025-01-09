@@ -8,7 +8,7 @@ export const JoinPoolInterfaceWrapper = styled.div`
   flex-flow: row wrap;
   flex-grow: 1;
   width: 100%;
-  flex-wrap: wrap;
+
   > div {
     display: flex;
     &.main {

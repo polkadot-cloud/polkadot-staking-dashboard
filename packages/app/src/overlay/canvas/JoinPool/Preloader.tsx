@@ -14,7 +14,6 @@ import { ButtonPrimary } from 'ui-buttons'
 import { Head, Preload, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { JoinPoolInterfaceWrapper } from './Wrappers'
 
 export const Preloader = ({
   performanceKey,
@@ -73,12 +72,10 @@ export const Preloader = ({
           })}
         </h3>
       </Title>
-      <JoinPoolInterfaceWrapper style={{ flexDirection: 'column' }}>
-        <Preload
-          title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
-          percentPassed={percentPassed.toString()}
-        />
-      </JoinPoolInterfaceWrapper>
+      <Preload
+        title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
+        percentPassed={percentPassed.toString()}
+      />
     </>
   )
 }
