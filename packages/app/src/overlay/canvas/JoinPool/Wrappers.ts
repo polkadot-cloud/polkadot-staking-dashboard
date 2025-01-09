@@ -127,30 +127,6 @@ export const AddressesWrapper = styled.div`
   }
 `
 
-// Wrapper that houses the chart, allowing it to be responsive.
-export const GraphWrapper = styled.div`
-  flex: 1;
-  position: relative;
-  padding: 0 4rem 0 1rem;
-  margin-top: 2rem;
-
-  @media (max-width: 1000px) {
-    padding: 0 0 0 1rem;
-  }
-
-  > .inner {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding-left: 1rem;
-    padding-right: 4rem;
-
-    @media (max-width: 1000px) {
-      padding-right: 1.5rem;
-    }
-  }
-`
-
 export const NominationsWrapper = styled.div`
   flex: 1;
   display: flex;

@@ -21,9 +21,8 @@ import { formatSize } from 'library/Graphs/Utils'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { Subheading } from 'ui-core/canvas'
+import { GraphInner, Subheading } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
-import { GraphWrapper } from '../Wrappers'
 
 ChartJS.register(
   CategoryScale,
@@ -50,7 +49,7 @@ export const Performance = ({
     getPoolRewardPoints(performanceKey)?.[bondedPool.addresses.stash] || {}
 
   // Ref to the graph container
-  const graphInnerRef = useRef<HTMLDivElement>(null)
+  const graphInnerRef = useRef<HTMLDivElement | null>(null)
 
   // Get the size of the graph container
   const size = useSize(graphInnerRef, {
@@ -71,14 +70,14 @@ export const Performance = ({
         </h3>
       </Subheading>
 
-      <GraphWrapper ref={graphInnerRef} style={{ height }}>
+      <GraphInner ref={graphInnerRef} width={width} height={height}>
         <EraPointsLine
           syncing={graphSyncing}
           pointsByEra={pointsByEra}
           width={width}
           height={height}
         />
-      </GraphWrapper>
+      </GraphInner>
     </div>
   )
 }
