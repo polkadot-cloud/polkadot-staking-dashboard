@@ -5,42 +5,33 @@ import styled from 'styled-components'
 
 export const JoinPoolInterfaceWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
+  flex-grow: 1;
   width: 100%;
-
-  > .content {
+  flex-wrap: wrap;
+  > div {
     display: flex;
-    flex-grow: 1;
-
-    @media (max-width: 1000px) {
-      flex-flow: row wrap;
-    }
-
-    > div {
+    &.main {
+      flex-grow: 1;
       display: flex;
-      &.main {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
+      flex-direction: column;
 
-        @media (max-width: 1000px) {
-          flex-basis: 100%;
-        }
+      @media (max-width: 1000px) {
+        flex-basis: 100%;
       }
-      &.side {
-        min-width: 460px;
-        padding-left: 2.5rem;
+    }
+    &.side {
+      min-width: 460px;
+      padding-left: 2.5rem;
 
-        @media (max-width: 1000px) {
-          flex-grow: 1;
-          flex-basis: 100%;
-          margin-top: 0.5rem;
-          padding-left: 0;
-        }
-
-        > div {
-          width: 100%;
-        }
+      @media (max-width: 1000px) {
+        flex-grow: 1;
+        flex-basis: 100%;
+        margin-top: 0.5rem;
+        padding-left: 0;
+      }
+      > div {
+        width: 100%;
       }
     }
   }

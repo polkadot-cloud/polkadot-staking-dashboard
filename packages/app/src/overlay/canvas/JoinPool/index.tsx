@@ -120,24 +120,21 @@ export const JoinPool = () => {
             providedPoolId={providedPoolId}
           />
           <JoinPoolInterfaceWrapper>
-            <div className="content">
-              {activeTab === 0 && (
-                <Overview
-                  bondedPool={bondedPool}
-                  performanceKey={performanceKey}
-                  graphSyncing={
-                    providedPoolId &&
-                    poolJoinPerformanceTask.status !== 'synced'
-                  }
-                />
-              )}
-              {activeTab === 1 && (
-                <Nominations
-                  poolId={bondedPool.id}
-                  stash={bondedPool.addresses.stash}
-                />
-              )}
-            </div>
+            {activeTab === 0 && (
+              <Overview
+                bondedPool={bondedPool}
+                performanceKey={performanceKey}
+                graphSyncing={
+                  providedPoolId && poolJoinPerformanceTask.status !== 'synced'
+                }
+              />
+            )}
+            {activeTab === 1 && (
+              <Nominations
+                poolId={bondedPool.id}
+                stash={bondedPool.addresses.stash}
+              />
+            )}
           </JoinPoolInterfaceWrapper>
         </>
       )}

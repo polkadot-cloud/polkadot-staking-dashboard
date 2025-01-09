@@ -73,13 +73,11 @@ export const Preloader = ({
           })}
         </h3>
       </Title>
-      <JoinPoolInterfaceWrapper>
-        <div className="content" style={{ flexDirection: 'column' }}>
-          <Preload
-            title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
-            percentPassed={percentPassed.toString()}
-          />
-        </div>
+      <JoinPoolInterfaceWrapper style={{ flexDirection: 'column' }}>
+        <Preload
+          title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
+          percentPassed={percentPassed.toString()}
+        />
       </JoinPoolInterfaceWrapper>
     </>
   )
