@@ -13,7 +13,6 @@ import { Header } from './Header'
 import { Nominations } from './Nominations'
 import { Overview } from './Overview'
 import { Preloader } from './Preloader'
-import { JoinPoolInterfaceWrapper } from './Wrappers'
 
 export const JoinPool = () => {
   const {
@@ -119,23 +118,21 @@ export const JoinPool = () => {
             filteredBondedPools={filteredBondedPools}
             providedPoolId={providedPoolId}
           />
-          <JoinPoolInterfaceWrapper>
-            {activeTab === 0 && (
-              <Overview
-                bondedPool={bondedPool}
-                performanceKey={performanceKey}
-                graphSyncing={
-                  providedPoolId && poolJoinPerformanceTask.status !== 'synced'
-                }
-              />
-            )}
-            {activeTab === 1 && (
-              <Nominations
-                poolId={bondedPool.id}
-                stash={bondedPool.addresses.stash}
-              />
-            )}
-          </JoinPoolInterfaceWrapper>
+          {activeTab === 0 && (
+            <Overview
+              bondedPool={bondedPool}
+              performanceKey={performanceKey}
+              graphSyncing={
+                providedPoolId && poolJoinPerformanceTask.status !== 'synced'
+              }
+            />
+          )}
+          {activeTab === 1 && (
+            <Nominations
+              poolId={bondedPool.id}
+              stash={bondedPool.addresses.stash}
+            />
+          )}
         </>
       )}
     </Main>

@@ -3,48 +3,6 @@
 
 import styled from 'styled-components'
 
-export const JoinPoolInterfaceWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  flex-grow: 1;
-  width: 100%;
-
-  > div {
-    display: flex;
-    &.main {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-
-      @media (max-width: 1000px) {
-        flex-basis: 100%;
-      }
-    }
-    &.side {
-      min-width: 460px;
-      padding-left: 2.5rem;
-
-      @media (max-width: 1000px) {
-        flex-grow: 1;
-        flex-basis: 100%;
-        margin-top: 0.5rem;
-        padding-left: 0;
-      }
-      > div {
-        width: 100%;
-      }
-    }
-  }
-`
-
-export const PreloaderWrapper = styled.div`
-  background-color: var(--background-floating-card);
-  width: 100%;
-  height: 2rem;
-  border-radius: 2rem;
-  opacity: 0.4;
-`
-
 export const JoinFormWrapper = styled.div`
   background: var(--background-canvas-card);
   border: 0.75px solid var(--border-primary-color);
