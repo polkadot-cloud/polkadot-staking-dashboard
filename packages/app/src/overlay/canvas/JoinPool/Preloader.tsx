@@ -7,11 +7,11 @@ import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { PoolSyncBar } from 'library/PoolSync/Bar'
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool, PoolRewardPointsKey } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
-import { Head, Title } from 'ui-core/canvas'
+import { Head, Preload, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { JoinPoolInterfaceWrapper } from './Wrappers'
@@ -27,6 +27,7 @@ export const Preloader = ({
     networkData: { units, unit },
   } = useNetwork()
   const { bondedPools } = useBondedPools()
+  const { getPoolPerformanceTask } = usePoolPerformance()
   const {
     poolsConfig: { counterForPoolMembers },
   } = useApi()
@@ -39,6 +40,16 @@ export const Preloader = ({
   const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
     .decimalPlaces(0)
     .toFormat()
+
+  // Get the pool performance task to determine if performance data is ready.
+  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey)
+  // Calculate syncing status.
+  const { startEra, currentEra, endEra } = poolJoinPerformanceTask
+  const totalEras = startEra.minus(endEra)
+  const erasPassed = startEra.minus(currentEra)
+  const percentPassed = erasPassed.isEqualTo(0)
+    ? new BigNumber(0)
+    : erasPassed.dividedBy(totalEras).multipliedBy(100)
 
   return (
     <>
@@ -64,13 +75,10 @@ export const Preloader = ({
       </Title>
       <JoinPoolInterfaceWrapper>
         <div className="content" style={{ flexDirection: 'column' }}>
-          <h2 className="tip">
-            {t('analyzingPoolPerformance', { ns: 'library' })}...
-          </h2>
-
-          <h2 className="tip">
-            <PoolSyncBar performanceKey={performanceKey} />
-          </h2>
+          <Preload
+            title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
+            percentPassed={percentPassed.toString()}
+          />
         </div>
       </JoinPoolInterfaceWrapper>
     </>

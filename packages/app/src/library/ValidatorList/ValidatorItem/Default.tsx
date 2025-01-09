@@ -36,6 +36,7 @@ export const Default = ({
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
+  const { openCanvas } = useOverlay().canvas
   const { validatorIdentities, validatorSupers } = useValidators()
 
   const { address, prefs, validatorStatus, totalStake } = validator
@@ -53,12 +54,13 @@ export const Default = ({
     wrap: null,
     title: `${t('viewMetrics')}`,
     cb: () => {
-      openModal({
+      openCanvas({
         key: 'ValidatorMetrics',
         options: {
-          address,
+          validator: address,
           identity,
         },
+        size: 'xl',
       })
     },
   })

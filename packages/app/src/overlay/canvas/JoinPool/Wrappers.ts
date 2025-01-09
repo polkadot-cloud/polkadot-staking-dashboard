@@ -8,11 +8,6 @@ export const JoinPoolInterfaceWrapper = styled.div`
   flex-direction: column;
   width: 100%;
 
-  > .header {
-    display: flex;
-    margin-bottom: 2rem;
-  }
-
   > .content {
     display: flex;
     flex-grow: 1;
@@ -23,7 +18,6 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
     > div {
       display: flex;
-
       &.main {
         flex-grow: 1;
         display: flex;
@@ -33,7 +27,6 @@ export const JoinPoolInterfaceWrapper = styled.div`
           flex-basis: 100%;
         }
       }
-
       &.side {
         min-width: 460px;
         padding-left: 2.5rem;
@@ -47,44 +40,6 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
         > div {
           width: 100%;
-        }
-      }
-    }
-
-    > .tip {
-      color: var(--accent-color-primary);
-      margin-bottom: 1.25rem;
-      font-family: Inter, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-
-      > .loader {
-        background-color: var(--background-canvas-card-secondary);
-        color: var(--accent-color-primary);
-        width: 100%;
-        height: 0.5rem;
-        border-radius: 1rem;
-        position: relative;
-
-        > div {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          border-radius: 1rem;
-
-          > .progress {
-            background-color: var(--accent-color-primary);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            border-radius: 2rem;
-            transition: width 1s cubic-bezier(0.1, 1, 0.1, 1);
-          }
         }
       }
     }
@@ -248,6 +203,7 @@ export const GraphWrapper = styled.div`
 `
 
 // Element used to wrap graph and pool stats, allowing flex ordering on smaller screens.
+// TODO: abstract this into shared GraphContainer component.
 export const GraphLayoutWrapper = styled.div`
   flex: 1;
   display: flex;
