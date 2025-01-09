@@ -5,12 +5,14 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
-import { EraPointsLine } from 'library/Graphs/EraPointsLine'
 import { formatSize } from 'library/Graphs/Utils'
+import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
@@ -25,6 +27,8 @@ import {
 } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
+import { ActiveGraph } from './ActiveGraph'
+import { InactiveGraph } from './InactiveGraph'
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation()
@@ -36,14 +40,18 @@ export const ValidatorMetrics = () => {
     config: { options },
   } = useOverlay().canvas
   const {
+    network,
     networkData: {
       units,
       unit,
       brand: { token: Token },
     },
   } = useNetwork()
+  const { activeEra } = useApi()
   const { openHelp } = useHelp()
   const { containerRefs } = useUi()
+  const { pluginEnabled } = usePlugins()
+
   const validator = options!.validator
   const identity = options!.identity
 
@@ -70,7 +78,7 @@ export const ValidatorMetrics = () => {
   const size = useSize(graphInnerRef, {
     outerElement: containerRefs?.mainInterface,
   })
-  const { width, height } = formatSize(size, 150)
+  const { width, height } = formatSize(size, 250)
 
   return (
     <Main>
@@ -127,12 +135,25 @@ export const ValidatorMetrics = () => {
             </h3>
           </Subheading>
           <GraphInner ref={graphInnerRef} width={width} height={height}>
-            <EraPointsLine
-              syncing={false}
-              pointsByEra={[]}
-              width={width}
-              height={height}
-            />
+            {pluginEnabled('staking_api') ? (
+              <ActiveGraph
+                network={network}
+                validator={validator}
+                fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+                width={width}
+                height={height}
+              />
+            ) : (
+              <>
+                <StatusLabel
+                  status="active_service"
+                  statusFor="staking_api"
+                  title={t('common.stakingApiDisabled', { ns: 'pages' })}
+                  topOffset="37%"
+                />
+                <InactiveGraph width={width} height={height} />
+              </>
+            )}
           </GraphInner>
         </div>
       </GraphContainer>
