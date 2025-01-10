@@ -16,7 +16,7 @@ import {
 import { useHelp } from 'contexts/Help'
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useUi } from 'contexts/UI'
-import { EraPointsLine } from 'library/Graphs/EraPointsLine'
+import { LegacyEraPoints } from 'library/Graphs/LegacyEraPoints'
 import { formatSize } from 'library/Graphs/Utils'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -71,7 +71,7 @@ export const Performance = ({
       </Subheading>
 
       <GraphInner ref={graphInnerRef} width={width} height={height}>
-        <EraPointsLine
+        <LegacyEraPoints
           syncing={graphSyncing}
           pointsByEra={pointsByEra}
           width={width}

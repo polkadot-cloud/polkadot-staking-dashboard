@@ -10,10 +10,5 @@ export const InactiveGraph = ({
   width: string | number
   height: string | number
 }) => (
-  <EraPointsLine
-    syncing={false}
-    pointsByEra={{}}
-    width={width}
-    height={height}
-  />
+  <EraPointsLine syncing={false} entries={[]} width={width} height={height} />
 )

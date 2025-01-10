@@ -16,12 +16,10 @@ import {
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
-import { format, fromUnixTime } from 'date-fns'
-import { DefaultLocale, locales } from 'locales'
-import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
+import type { PointsByEra } from 'types'
 
 ChartJS.register(
   CategoryScale,
@@ -34,25 +32,43 @@ ChartJS.register(
   Legend
 )
 
-export const EraPointsLine = ({
-  entries,
+export const LegacyEraPoints = ({
+  pointsByEra,
   syncing,
   width,
   height,
 }: {
-  entries: ValidatorEraPoints[]
+  pointsByEra: PointsByEra
   syncing: boolean
   width: string | number
   height: string | number
 }) => {
-  const { i18n, t } = useTranslation()
+  const { t } = useTranslation()
   const { mode } = useTheme()
   const { colors } = useNetwork().networkData
 
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
     ? []
-    : entries.map((entry) => new BigNumber(entry.points).toString())
+    : Object.values(
+        Object.fromEntries(
+          Object.entries(pointsByEra).map(([k, v]) => [
+            k,
+            new BigNumber(v).toString(),
+          ])
+        )
+      )
+
+  // Format labels, only displaying the first and last era
+  const labels = Object.keys(pointsByEra).map(() => '')
+  const firstEra = Object.keys(pointsByEra)[0]
+  labels[0] = firstEra
+    ? `${t('era', { ns: 'library' })} ${Object.keys(pointsByEra)[0]}`
+    : ''
+  const lastEra = Object.keys(pointsByEra)[labels.length - 1]
+  labels[labels.length - 1] = lastEra
+    ? `${t('era', { ns: 'library' })} ${Object.keys(pointsByEra)[labels.length - 1]}`
+    : ''
 
   // Use primary color for line
   const color = colors.primary[mode]
@@ -122,12 +138,7 @@ export const EraPointsLine = ({
   }
 
   const data = {
-    labels: entries.map(({ start }: { start: number }) => {
-      const dateObj = format(fromUnixTime(start), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
-      })
-      return `${dateObj}`
-    }),
+    labels,
     datasets: [
       {
         label: t('era', { ns: 'library' }),

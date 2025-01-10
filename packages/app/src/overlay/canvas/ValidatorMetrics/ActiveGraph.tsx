@@ -4,7 +4,6 @@
 import type { NetworkId } from 'common-types'
 import { EraPointsLine } from 'library/Graphs/EraPointsLine'
 import { useValidatorEraPoints } from 'plugin-staking-api'
-import type { PointsByEra } from 'types'
 
 interface Props {
   network: NetworkId
@@ -31,16 +30,12 @@ export const ActiveGraph = ({
       ? []
       : data.validatorEraPoints
 
-  const sorted: PointsByEra = Object.fromEntries(
-    [...list]
-      .sort((a, b) => a.era - b.era)
-      .map((item) => [item.era, item.points])
-  )
+  const sorted = [...list].sort((a, b) => a.era - b.era)
 
   return (
     <EraPointsLine
       syncing={false}
-      pointsByEra={sorted}
+      entries={sorted}
       width={width}
       height={height}
     />
