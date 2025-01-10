@@ -7,12 +7,9 @@ import { Nominate } from 'library/SetupSteps/Nominate'
 import { Bond } from 'overlay/canvas/NominatorSetup/Bond'
 import { Payee } from 'overlay/canvas/NominatorSetup/Payee'
 import { Summary } from 'overlay/canvas/NominatorSetup/Summary'
-import {
-  CanvasFullScreenWrapper,
-  CanvasTitleWrapper,
-} from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { Head, Main, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
 export const NominatorSetup = () => {
@@ -20,8 +17,8 @@ export const NominatorSetup = () => {
   const { closeCanvas } = useOverlay().canvas
 
   return (
-    <CanvasFullScreenWrapper>
-      <div className="head">
+    <Main>
+      <Head>
         <ButtonPrimary
           text={t('pools.back')}
           lg
@@ -29,34 +26,22 @@ export const NominatorSetup = () => {
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
-
-      <CanvasTitleWrapper>
-        <div className="inner standalone">
-          <div className="empty"></div>
-          <div className="standalone">
-            <div className="title">
-              <h1>{t('nominate.startNominating')}</h1>
-            </div>
-          </div>
-        </div>
-      </CanvasTitleWrapper>
-
+      </Head>
+      <Title>
+        <h1>{t('nominate.startNominating')}</h1>
+      </Title>
       <CardWrapper className="canvas">
         <Payee section={1} />
       </CardWrapper>
-
       <CardWrapper className="canvas">
         <Nominate bondFor="nominator" section={2} />
       </CardWrapper>
-
       <CardWrapper className="canvas">
         <Bond section={3} />
       </CardWrapper>
-
       <CardWrapper className="canvas">
         <Summary section={4} />
       </CardWrapper>
-    </CanvasFullScreenWrapper>
+    </Main>
   )
 }

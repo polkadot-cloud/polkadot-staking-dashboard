@@ -6,14 +6,13 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useJoinPools } from 'contexts/Pools/JoinPools'
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useStaking } from 'contexts/Staking'
-import { CanvasFullScreenWrapper } from 'overlay/canvas/Wrappers'
 import { useEffect, useMemo, useState } from 'react'
+import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { Header } from './Header'
 import { Nominations } from './Nominations'
 import { Overview } from './Overview'
 import { Preloader } from './Preloader'
-import { JoinPoolInterfaceWrapper } from './Wrappers'
 
 export const JoinPool = () => {
   const {
@@ -103,7 +102,7 @@ export const JoinPool = () => {
   }, [performanceDataReady])
 
   return (
-    <CanvasFullScreenWrapper>
+    <Main>
       {(!providedPoolId && poolJoinPerformanceTask.status !== 'synced') ||
       !bondedPool ? (
         <Preloader performanceKey={performanceKey} />
@@ -119,29 +118,23 @@ export const JoinPool = () => {
             filteredBondedPools={filteredBondedPools}
             providedPoolId={providedPoolId}
           />
-
-          <JoinPoolInterfaceWrapper>
-            <div className="content">
-              {activeTab === 0 && (
-                <Overview
-                  bondedPool={bondedPool}
-                  performanceKey={performanceKey}
-                  graphSyncing={
-                    providedPoolId &&
-                    poolJoinPerformanceTask.status !== 'synced'
-                  }
-                />
-              )}
-              {activeTab === 1 && (
-                <Nominations
-                  poolId={bondedPool.id}
-                  stash={bondedPool.addresses.stash}
-                />
-              )}
-            </div>
-          </JoinPoolInterfaceWrapper>
+          {activeTab === 0 && (
+            <Overview
+              bondedPool={bondedPool}
+              performanceKey={performanceKey}
+              graphSyncing={
+                providedPoolId && poolJoinPerformanceTask.status !== 'synced'
+              }
+            />
+          )}
+          {activeTab === 1 && (
+            <Nominations
+              poolId={bondedPool.id}
+              stash={bondedPool.addresses.stash}
+            />
+          )}
         </>
       )}
-    </CanvasFullScreenWrapper>
+    </Main>
   )
 }

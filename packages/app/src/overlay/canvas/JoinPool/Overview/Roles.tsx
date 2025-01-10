@@ -5,8 +5,9 @@ import { useHelp } from 'contexts/Help'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
+import { Subheading } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
-import { AddressesWrapper, HeadingWrapper } from '../Wrappers'
+import { AddressesWrapper } from '../Wrappers'
 import { AddressSection } from './AddressSection'
 
 export const Roles = ({ bondedPool }: OverviewSectionProps) => {
@@ -16,13 +17,12 @@ export const Roles = ({ bondedPool }: OverviewSectionProps) => {
   return (
     <div>
       <CardWrapper className="canvas secondary">
-        <HeadingWrapper>
+        <Subheading>
           <h3>
             {t('pools.roles')}
             <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
           </h3>
-        </HeadingWrapper>
-
+        </Subheading>
         <AddressesWrapper>
           {bondedPool.roles.root && (
             <AddressSection
