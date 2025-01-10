@@ -7,7 +7,7 @@
         "Connect your accounts to begin using Polkadot Staking Dashboard.",
         "Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.",
         "Connect your wallets from the Connect button at the top right of the dashboard, and select the account you wish to stake with to continue.",
-        "Staking dashboard supports a range of extensions and wallets."
+        "Staking Dashboard supports a range of extensions and wallets."
       ]
     ],
     "howToStake": [
@@ -60,7 +60,7 @@
     },
     "monitoringPool": [
       "Managing Pool Membership",
-      "It's  a good idea to check regularly whether your pool is actively earning rewards.",
+      "It's a good idea to check regularly whether your pool is actively earning rewards.",
       [
         "Pools will manage nominations on your behalf, but it is still a good idea to check regularly whether your pool is actively earning rewards.",
         "Monitor your pool's status to ensure that it is performing well regularly, and consider joining another pool if you are not receiving any rewards."
@@ -95,7 +95,7 @@
       "Various factors affect how much validators are rewarded.",
       [
         "Various factors affect how much validators are rewarded, such as the amount of era points it generates and how many nominators are backing it.",
-        "All these metrics change over time, sometimes in an unpredictable manner.It is therefore important that nominators actively monitor validators and their performance.",
+        "All these metrics change over time, sometimes in an unpredictable manner. It is therefore important that nominators actively monitor validators and their performance.",
         "Staking dashboard provides a range of metrics to help you understand how a validator is performing."
       ]
     ]
