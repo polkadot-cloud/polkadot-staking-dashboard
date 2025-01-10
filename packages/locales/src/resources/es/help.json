@@ -1,0 +1,432 @@
+{
+  "help": {
+    "definitions": {
+      "activeNominators": [
+        "Nominadores Activos",
+        ["Nominadores que están activos en la sesión actual."]
+      ],
+      "activePools": [
+        "Pools Activos",
+        ["La cantidad actual de pools de nominación activos en {NETWORK_NAME}."]
+      ],
+      "activeStakeThreshold": [
+        "Umbral de Stake Activo",
+        [
+          "La cantidad de {NETWORK_UNIT} necesaria para estar nominando activamente en una era.",
+          "Este valor se aplica tanto a nominadores como a pools. En el caso de los pools, es importante unirse a un pool con una cantidad total de bono de al menos este valor.",
+          "Estar por encima de esta métrica simplemente garantiza que estarás presente en el conjunto de nominadores activos para la era.",
+          "Puedes hacer seguimiento de estas métricas desde el dashboard y modificar tu posición de staking si es necesario, ya sea aumentando tus {NETWORK_UNIT} vinculados, cambiando tus nominaciones, o uniéndote a otro pool."
+        ]
+      ],
+      "activeValidator": [
+        "Validador Activo",
+        [
+          "Un validador que está validando bloques activamente. Las recompensas se acumulan según la actividad del validador.",
+          "Se elige un nuevo conjunto de validadores para cada era, por lo que no hay garantía de que el mismo validador esté activo en eras posteriores.",
+          "{NETWORK_NAME} permite que un nominador nomine hasta 16 validadores, maximizando tus posibilidades de nominar un validador activo en cada era."
+        ]
+      ],
+      "averageCommission": [
+        "Comisión Promedio",
+        [
+          "La tasa de comisión promedio de los validadores en {NETWORK_NAME}.",
+          "Esta métrica excluye a los validadores que tienen una comisión del 100%, ya que estos nodos generalmente bloquean nominaciones y se ejecutan con fines de staking en plataformas de intercambio centralizadas."
+        ]
+      ],
+      "averageRewardRate": [
+        "Tasa Promedio de Recompensa",
+        [
+          "La Tasa Promedio de Recompensa es un retorno anual estimado de las recompensas de staking.",
+          "Se calcula tomando el pago promedio del validador durante los últimos {AVERAGE_REWARD_RATE_DAYS} días, y calcula un incremento anual estimado basado en este promedio y la emisión total actual de {NETWORK_UNIT}."
+        ]
+      ],
+      "blockedNominations": [
+        "Nominaciones Bloqueadas",
+        [
+          "Cuando un validador ha bloqueado las nominaciones, los nominadores no pueden nominarlos."
+        ]
+      ],
+      "bondedInPool": [
+        "Vinculado en Pool",
+        [
+          "La cantidad de {NETWORK_UNIT} actualmente vinculada en un pool.",
+          "A diferencia de la nominación directa, donde tus fondos vinculados permanecen en tu cuenta pero se bloquean, los {NETWORK_UNIT} que vinculas a un pool se transfieren a la cuenta stash del pool. Sin embargo, los miembros del pool aún tienen acceso para desvincular sus fondos en cualquier momento."
+        ]
+      ],
+      "bonding": [
+        "Vinculación",
+        [
+          "La vinculación de fondos es el proceso de 'bloquear' (o hacer stake) de {NETWORK_UNIT}. Los {NETWORK_UNIT} vinculados serán asignados automáticamente a uno o más de tus validadores nominados.",
+          "Como nominador, asignas las nominaciones tú mismo. En un pool, el propietario del pool o el nominador del pool asignará nominaciones en tu nombre, y tus fondos vinculados respaldarán esas nominaciones.",
+          "TLa estadística mínima para ganar recompensas es la cantidad mínima de {NETWORK_UNIT} que está siendo vinculada por un nominador para la era actual. Este valor es también la cantidad mínima requerida para recibir recompensas."
+        ]
+      ],
+      "commission": [
+        "Comisión",
+        [
+          "Los validadores pueden tomar un porcentaje de las recompensas que ganan. Esta porción se llama su comisión.",
+          "Nominar validadores con comisiones bajas significa que recibirás una mayor parte de las recompensas que generan.",
+          "Muchos validadores tendrán una tasa de comisión del 100%, lo que significa que no recibirás recompensas al nominar a estos validadores.",
+          "Ejemplos de tales validadores incluyen aquellos que operan en nombre de exchanges, donde la nominación y la distribución de recompensas se realiza de manera centralizada en el exchange en cuestión.",
+          "Un validador puede actualizar sus tasas de comisión cuando lo desee, y tales cambios tendrán un impacto en tu rentabilidad. Asegúrate de monitorear tus nominaciones en este panel para mantenerte actualizado sobre sus tasas de comisión."
+        ]
+      ],
+      "decentralizationAnalyticsPeriod": [
+        "Período de Análisis de Descentralización",
+        [
+          "La descentralización de tu nominación se calcula analizando las recompensas pagadas en los últimos 30 días. Dependiendo de la red, esto se traducirá en un número de Eras.",
+          "30 días proporciona suficiente información para que la agregación sea significativa, y es también lo suficientemente corto para que los cambios en las nominaciones comiencen a impactar este análisis después de unos días."
+        ]
+      ],
+      "epoch": [
+        "Época",
+        [
+          "Una época es otro nombre para una sesión en {NETWORK_NAME}. Cada era se divide en 6 épocas durante las cuales los validadores son asignados como productores de bloques a marcos de tiempo o slots específicos.",
+          "1 época es actualmente 4 horas en Polkadot."
+        ]
+      ],
+      "era": [
+        "Era",
+        [
+          "Al final de cada era, los validadores son recompensados con {NETWORK_UNIT} basado en cuántos puntos de era acumularon en esa era. Esta recompensa de {NETWORK_UNIT} se distribuye entonces entre los nominadores del validador a través de un pago.",
+          "1 era es actualmente 24 horas en Polkadot."
+        ]
+      ],
+      "eraPoints": [
+        "Puntos de Era",
+        [
+          "Los Puntos de Era son acumulados por los validadores durante cada era, y dependen del rendimiento del validador.",
+          "Como staker, no necesitas preocuparte por los Puntos de Era. En general, los validadores con mejor rendimiento producen más Puntos de Era, lo que a su vez lleva a mayores recompensas de staking."
+        ]
+      ],
+      "geolocationOfEachNomination": [
+        "Geolocalización de Cada Nominación",
+        [
+          "Cada validador nominado opera en un centro de datos que puede ser geolocalizado por su dirección IP.",
+          "La tabla muestra la última región, país y red donde cada validador nominado fue geolocalizado.",
+          "Cuando el validador ha sido localizado en más de una ubicación durante el período de análisis, se mostrará un signo ++.",
+          "El porcentaje mostrado es la proporción de recompensas pagadas por este validador en el período de análisis."
+        ]
+      ],
+      "idealStaked": [
+        "Stake Ideal",
+        ["El porcentaje de suministro total en stake en condiciones ideales de red."]
+      ],
+      "inactiveNominations": [
+        "Nominaciones Inactivas",
+        [
+          "Nominaciones que están en el conjunto de validadores activos para la era actual, pero los fondos vinculados no han sido asignados a estas nominaciones."
+        ]
+      ],
+      "inflation": [
+        "Inflación",
+        [
+          "{NETWORK_UNIT} es inflacionario; no hay un número máximo de {NETWORK_UNIT}.",
+          "La inflación está diseñada para ser aproximadamente 10% anual, con las recompensas del validador siendo una función de la cantidad en stake y el resto yendo a la tesorería.",
+          "La cifra de la Última Tasa de Inflación para Stakers representa cuánto de la inflación se contabiliza para los stakers. La inflación restante se desvía a la tesorería."
+        ]
+      ],
+      "lastEraPayout": [
+        "Último Pago de Era",
+        [
+          "La cantidad total de {NETWORK_UNIT} pagada por la última era activa.",
+          "Los pagos se distribuyen equitativamente entre los validadores activos para esa era, y luego se distribuyen entre los nominadores activos que participaron en esa era.",
+          "Las cantidades de pago recibidas dependen de cuántos {NETWORK_UNIT} tenían vinculados los nominadores, y los validadores mismos, para esa era."
+        ]
+      ],
+      "ledgerAppNotOnLatestRuntimeVersion": [
+        "App de Ledger No Está en la Última Versión Runtime",
+        [
+          "Este mensaje aparece cuando tu app de Ledger no está configurada con los últimos metadatos runtime. Aún puedes intentar enviar tu transacción, pero podría fallar.",
+          "Para prevenir esta advertencia, actualiza tu dispositivo Ledger a la última versión.",
+          "Usualmente hay un retraso entre las actualizaciones runtime y las actualizaciones de la app Ledger. Cuando una actualización de la app esté disponible, podrás actualizar tu app en Ledger Live."
+        ]
+      ],
+      "ledgerHardwareWallets": [
+        "Carteras Hardware Ledger",
+        [
+          "Los dispositivos Ledger compatibles están completamente soportados en el Staking Dashboard. Usa tu Ledger para gestionar tu actividad de staking en {NETWORK_NAME}.",
+          "Usar una cartera hardware asegura una experiencia segura, donde tus claves permanecen en el dispositivo hardware en todo momento. Esto también se conoce como almacenamiento en frío, ya que no hay conexión activa a internet con tu cartera.",
+          "Para importar y firmar transacciones con tu dispositivo Ledger, tu dispositivo debe tener la app Ledger de {NETWORK_NAME} instalada. La app de {NETWORK_NAME} puede ser instalada a través de la aplicación Ledger Live.",
+          "Encuentra más información sobre Ledger en su sitio web oficial, ledger.com."
+        ]
+      ],
+      "ledgerRejectedTransaction": [
+        "Transacción Rechazada por Ledger",
+        [
+          "La transacción fue rechazada en el dispositivo Ledger y no será enviada.",
+          "Envía una transacción aprobándola en el dispositivo Ledger."
+        ]
+      ],
+      "ledgerRequestTimeout": [
+        "Tiempo de Espera Agotado en Solicitud de Ledger",
+        [
+          "Los errores de tiempo de espera pueden ocurrir cuando el dispositivo Ledger está ocupado, o cuando una operación no se completa a tiempo.",
+          "Intenta realizar la operación nuevamente, y si el error persiste, intenta reiniciar el dispositivo Ledger."
+        ]
+      ],
+      "lockedBalance": [
+        "Balance Comprometido",
+        [
+          "En {NETWORK_NAME}, algunas acciones requieren que tu balance esté comprometido, como hacer staking o votar en gobernanza. Si parte de tu balance está comprometido, no puede ser transferido.",
+          "La cantidad de balance comprometido mostrado en el Staking Dashboard representa todos tus compromisos aparte del compromiso de staking - por lo tanto muestra todo el balance comprometido a tu disposición que puedes usar para nominar.",
+          "Puedes nominar con cualquier balance comprometido restante, pero no puedes unirte a un pool con él, ya que hacerlo requiere una transferencia a la cuenta del pool."
+        ]
+      ],
+      "minimumToCreatePool": [
+        "Mínimo Para Crear Pool",
+        [
+          "La cantidad mínima de {NETWORK_UNIT} necesaria para vincular para crear un pool.",
+          "Crear un pool requiere un depósito mayor que unirse a un pool."
+        ]
+      ],
+      "minimumToJoinPool": [
+        "Mínimo Para Unirse al Pool",
+        [
+          "La cantidad mínima de {NETWORK_UNIT} necesaria para vincular para unirse a un pool.",
+          "Esta cantidad es diferente del bono necesario para crear un pool."
+        ]
+      ],
+      "nominating": [
+        "Nominando",
+        [
+          "Nominar es el proceso de seleccionar validadores a los que deseas hacer stake de tus {NETWORK_UNIT}. Puedes elegir nominar hasta 16 validadores para cada una de tus cuentas.",
+          "Una vez que hayas nominado tus validadores seleccionados, se convierten en tus nominaciones."
+        ]
+      ],
+      "nominationPayoutDistribution": [
+        "Distribución de Pagos de Nominación",
+        [
+          "La descentralización de tu nominación.",
+          "Los siguientes gráficos muestran la distribución de recompensas agregadas por región, país y red IP del validador que pagó la recompensa."
+        ]
+      ],
+      "nominationPools": [
+        "Pools de Nominación",
+        [
+          "Los pools de nominación permiten a los usuarios contribuir {NETWORK_UNIT} y ganar recompensas de staking.",
+          "A diferencia de la nominación directa, hacer staking usando pools requiere una pequeña cantidad de {NETWORK_UNIT}, y el pool gestiona los nominados en tu nombre."
+        ]
+      ],
+      "nominationStatus": [
+        "Estado de Nominación",
+        [
+          "El estado de tus nominaciones de un vistazo.",
+          "Un conjunto de nominaciones estará inactivo cuando ninguno de los nominados está participando en el conjunto actual de validadores (el conjunto de validadores actualmente elegidos para validar la red).",
+          "Cuando al menos uno de tus nominados está activo, este estado de nominación se mostrará como nominando activamente."
+        ]
+      ],
+      "nominations": [
+        "Nominaciones",
+        [
+          "Las nominaciones son los validadores que un staker elige nominar. Puedes nominar hasta {MAX_NOMINATIONS} validadores en {NETWORK_NAME}.",
+          "Para los pools de nominación, el propietario del pool y el nominador del pool están a cargo de nominar validadores en nombre de todos los miembros del pool.",
+          "Una vez que las nominaciones han sido enviadas, los fondos vinculados se distribuyen automáticamente a los nominados que están activos en la era actual",
+          "Mientras al menos una de tus nominaciones esté validando activamente en una sesión, tus fondos estarán respaldando a ese validador."
+        ]
+      ],
+      "nominatorStake": [
+        "Stake del Nominador",
+        [
+          "La cantidad de {NETWORK_UNIT} respaldando al validador de sus nominadores.",
+          "Este valor se añade al stake propio del validador para formar el stake total del validador. Ten en cuenta que este valor cambia cada era cuando los fondos vinculados de los nominadores se redistribuyen a los validadores activos de esa sesión."
+        ]
+      ],
+      "openAppOnLedger": [
+        "Abrir App en Ledger",
+        [
+          "Este mensaje aparece cuando la app {NETWORK_NAME} de Ledger no está actualmente abierta en el dispositivo conectado.",
+          "Abre la app de Polkadot en el dispositivo Ledger e inténtalo de nuevo"
+        ]
+      ],
+      "payout": [
+        "Pago",
+        [
+          "Los pagos son recompensas de staking en {NETWORK_NAME}. Dependen de cuántos 'Puntos de Era' acumulan tus validadores nominados a lo largo del tiempo. Las recompensas se determinan al final de cada Era (períodos de 24 horas).",
+          "Para recibir recompensas de staking, se debe solicitar un Pago. Cualquier nominador que respalde al validador en cuestión puede solicitar un Pago.",
+          "Una solicitud de pago activa el pago de recompensas para todos los nominadores."
+        ]
+      ],
+      "payoutDestination": [
+        "Destino de Pago",
+        [
+          "Tu destino de pago determina a qué cuenta se envían tus pagos",
+          "Los pagos pueden ser vinculados automáticamente sobre tu vínculo actual, o pueden ser enviados a tu cuenta stash, controlador, o una cuenta externa de tu elección."
+        ]
+      ],
+      "payoutHistory": [
+        "Historial de Pagos",
+        [
+          "Registros históricos de pagos realizados por ser un nominador activo.",
+          "Solicitar pagos es un proceso manual, por lo que puedes recibir pagos de múltiples eras en rápida sucesión o de manera esporádica. Por lo tanto, tus gráficos de pagos pueden tener múltiples pagos ocurriendo en el mismo día, o tener días donde no hubo pagos.",
+          "Esto no significa que no estuvieras nominando o generando recompensas en ese período - solo que el pago para ese período aún no se ha realizado."
+        ]
+      ],
+      "polkadotVault": [
+        "Polkadot Vault",
+        [
+          "Polkadot Vault (anteriormente Parity Signer) es una solución de almacenamiento en frío que te permite usar un teléfono en modo avión como una cartera air-gapped.",
+          "La app Vault no es técnicamente una cartera, ya que no permite transferir fondos.",
+          "Es más una herramienta de llavero que te permitirá crear, gestionar y restaurar cuentas."
+        ]
+      ],
+      "poolCommissionChangeRate": [
+        "Tasa de Cambio de Comisión del Pool",
+        [
+          "La tasa de cambio de comisión es establecida por el Root del pool, y dicta cuánto y con qué frecuencia se puede aumentar la comisión.",
+          "El aumento máximo de la tasa de cambio dicta cuánto puede aumentarse la tasa de comisión en una sola actualización. El retraso mínimo dicta cuántos bloques deben pasar antes de que la tasa de comisión pueda aumentarse nuevamente.",
+          "Una vez que se establece una tasa de cambio inicial, solo se pueden establecer valores más restrictivos a partir de entonces. Los valores más restrictivos comprenden un aumento máximo menor y un retraso mínimo mayor."
+        ]
+      ],
+      "poolCommissionRate": [
+        "Tasa de Comisión del Pool",
+        [
+          "La tasa de comisión del pool. Este valor es establecido por el Root del pool, y es el porcentaje de recompensas que el pool tomará de sus miembros.",
+          "También se debe proporcionar una cuenta de beneficiario para recibir la comisión.",
+          "La tasa de comisión se toma de las recompensas del pool antes de que se distribuyan a sus miembros."
+        ]
+      ],
+      "poolMaxCommission": [
+        "Comisión Máxima del Pool",
+        [
+          "La tasa de comisión máxima que un propietario del pool puede establecer para el pool.",
+          "Este valor es establecido por el Root del pool, y es el porcentaje máximo de recompensas que el pool tomará de sus miembros.",
+          "Una vez que se establece una comisión máxima inicial, solo se pueden establecer valores más restrictivos a partir de entonces."
+        ]
+      ],
+      "poolMembership": [
+        "Membresía del Pool",
+        [
+          "Tu estado de membresía del pool refleja si eres miembro de un pool.",
+          "Las membresías de pool pueden ser de miembro del pool o propietario del pool.",
+          "Actualmente en {NETWORK_NAME}, las cuentas solo pueden unirse a un pool a la vez. Si deseas unirte a otro pool, primero debes abandonar tu pool actual.",
+          "Para dejar un pool, simplemente necesitas desvincular y retirar todos tus {NETWORK_UNIT} vinculados. El Staking Dashboard proporciona un botón específico de Salir para desvincular del pool."
+        ]
+      ],
+      "poolRewards": [
+        "Recompensas del Pool",
+        [
+          "La cantidad de {NETWORK_UNIT} generada por ser un participante activo en un pool.",
+          "Los miembros del pool deben reclamar sus recompensas para que sean transferidas a su balance.",
+          "Los usuarios tienen 2 opciones para reclamar recompensas. Pueden ser vinculadas nuevamente al pool, lo que aumentará tu participación en el pool y acumulará más recompensas. Las recompensas también pueden ser retiradas del pool a tu cuenta como {NETWORK_UNIT} libre."
+        ]
+      ],
+      "poolRoles": [
+        "Roles del Pool",
+        [
+          "Un pool consiste en 4 roles, cada uno con diferentes responsabilidades en la gestión del funcionamiento del pool.",
+          "Root: Puede cambiar el nominador, bouncer, o a sí mismo. Además, puede realizar cualquiera de las acciones que el nominador o bouncer pueden hacer.",
+          "Depositante: Crea el pool y es el miembro inicial. El depositante solo puede abandonar el pool una vez que todos los demás miembros se hayan ido. Una vez que se van retirando, el pool se elimina completamente del sistema.",
+          "Nominador: Puede seleccionar los validadores que el pool nomina.",
+          "Bouncer: Puede cambiar el estado del pool y expulsar (desvincular/retirar sin permiso) miembros si el pool está bloqueado"
+        ]
+      ],
+      "proxyAccounts": [
+        "Cuentas Proxy",
+        [
+          "Las cuentas proxy son cuentas que actúan en nombre de otra cuenta.",
+          "En términos de cuentas proxy, la cuenta proxy se llama cuenta delegada, y la cuenta representada se llama cuenta delegadora.",
+          "El Staking Dashboard permite a los delegados firmar transacciones en nombre de un delegador. Si existe un delegado en el panel sin su delegador, el delegador se importa automáticamente como una cuenta de solo lectura."
+        ]
+      ],
+      "readOnlyAccounts": [
+        "Cuentas de Solo Lectura",
+        [
+          "Las cuentas de solo lectura son cuentas que pueden ser importadas, pero no pueden firmar transacciones. Esto significa que puedes ver el balance de la cuenta y la información de staking, pero no puedes realizar ninguna acción de staking con ella."
+        ]
+      ],
+      "reserveBalance": [
+        "Balance de Reserva",
+        [
+          "En {NETWORK_NAME}, debes tener un balance superior a cierta cantidad para que tu cuenta exista en la cadena. Esta cantidad se llama tu 'depósito existencial'.",
+          "El Staking Dashboard asegura que esta cantidad de {NETWORK_UNIT} nunca se toque."
+        ]
+      ],
+      "reserveBalanceForExistentialDeposit": [
+        "Balance de Reserva para Depósito Existencial",
+        [
+          "Si tu cuenta ya tiene un balance inmovilizado que cubre el depósito existencial de tu cuenta, como el balance inmovilizado para nominar, entonces el Staking Dashboard no inmovilizará ningún balance libre adicional.",
+          "En este escenario, se muestra \"Ninguno\" bajo la sección \"Reserva Para Depósito Existencial\" en tus ajustes de Balance de Reserva."
+        ]
+      ],
+      "rewardsByCountryAndNetwork": [
+        "Recompensas Por País y Red",
+        [
+          "Muestra el porcentaje estimado de recompensas que se generan desde diferentes países y redes IP.",
+          "Los análisis de descentralización de Polkawatch se calculan agregando recompensas según la Geolocalización IP del Validador. El período de muestra es los últimos 60 días."
+        ]
+      ],
+      "selfStake": [
+        "Stake Propio",
+        [
+          "La cantidad de {NETWORK_UNIT} que el validador ha vinculado por sí mismo.",
+          "Este valor se suma a la cantidad de {NETWORK_UNIT} vinculada por los nominadores para formar el stake total del validador"
+        ]
+      ],
+      "supplyStaked": [
+        "Suministro en Stake",
+        [
+          "El suministro acumulado actual de {NETWORK_UNIT} en stake globalmente.",
+          "El porcentaje de {NETWORK_UNIT} en stake es relativo al suministro total de {NETWORK_UNIT}."
+        ]
+      ],
+      "totalNominators": [
+        "Total de Nominadores",
+        [
+          "Cuentas que están haciendo stake en la red, independientemente de si están activas o inactivas en la sesión actual.",
+          "Para hacer stake con {NETWORK_UNIT}, puedes convertirte en nominador o unirte a un pool - que actúan como nominadores por sí mismos."
+        ]
+      ],
+      "totalPayoutsAnalysed": [
+        "Total de Pagos Analizados",
+        [
+          "Las recompensas de {NETWORK_UNIT} agregadas pagadas por los validadores nominados en los últimos 30 días",
+          "Estos pagos se utilizaron para calcular la descentralización de tu nominación."
+        ]
+      ],
+      "validator": [
+        "Validador",
+        [
+          "Una entidad que valida bloques para la Relay Chain de {NETWORK_NAME}. Los validadores juegan un papel clave en {NETWORK_NAME} para asegurar la red y producir bloques.",
+          "Como nominador, eliges qué validadores deseas respaldar, y recibes recompensas por hacerlo."
+        ]
+      ],
+      "wrongTransaction": [
+        "Transacción Incorrecta",
+        [
+          "Este error ocurre cuando un dispositivo Ledger firmó o está en proceso de firmar una transacción diferente a la actualmente activa en el Staking Dashboard.",
+          "Asegúrate de que no haya transacciones pendientes en el dispositivo Ledger e inténtalo de nuevo."
+        ]
+      ],
+      "yourBalance": [
+        "Tu Balance",
+        [
+          "Tu balance representa el total de {NETWORK_UNIT} que tienes disponible además de tu cantidad total en stake, que incluye la cantidad que has vinculado en un pool.",
+          "A diferencia de tu balance en stake, tu balance vinculado en el pool se mantiene y está comprometido en el pool mismo."
+        ]
+      ]
+    },
+    "externals": {
+      "bondMore": "Vincular Más Tokens a Tu Stake Existente",
+      "changeAccount": "Cambiar tu Cuenta Controladora",
+      "changeDestination": "Cambiar Tu Destino de Pago",
+      "changeNominations": "Cambiar Tus Nominaciones",
+      "chooseValidators": "¿Cómo Sé Qué Validadores Elegir?",
+      "claimRewards": "Reclamar Recompensas del Pool de Nominación",
+      "connectAccounts": "Cómo Conectar Tus Cuentas",
+      "createPools": "Crear Pools de Nominación",
+      "howToUse": "Cómo Usar el Staking Dashboard: Overview",
+      "polkawatchAnalytics": "Análisis de Descentralización por Polkawatch: Introducción",
+      "rebonding": "Revincular",
+      "stakeDot": "Hacer Stake con tus DOT",
+      "unbondingTokens": "Desvincular Tus Tokens"
+    },
+    "modal": {
+      "articles": "Artículos",
+      "close": "Cerrar",
+      "definitions": "Definiciones",
+      "helpResources": "Recursos de Ayudas",
+      "related": "Relacionado"
+    }
+  }
+}

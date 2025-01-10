@@ -1,0 +1,103 @@
+{
+  "tips": {
+    "connectExtensions": [
+      "Conectar Extensiones",
+      "Conecta tus cuentas para comenzar a usar Polkadot Staking Dashboard.",
+      [
+        "Conecta tus cuentas para comenzar a usar Polkadot Staking Dashboard.",
+        "Las cuentas se acceden a través de extensiones web, que actúan como billeteras. Tu billetera se usa para firmar las transacciones que envías dentro del dashboard.",
+        "Conecta tus billeteras desde el botón Conectar en la parte superior derecha del dashboard, y selecciona la cuenta con la que deseas hacer staking para continuar.",
+        "Staking Dashboard soporta una amplia gama de extensiones y billeteras."
+      ]
+    ],
+    "howToStake": [
+      "¿Cómo te gustaría hacer staking?",
+      "Puedes convertirte en nominador o hacerte miembro de un Pool.",
+      [
+        "Hay múltiples formas de hacer staking en {NETWORK_NAME}.",
+        "Puedes convertirte en nominador o hacerte miembro de un Pool.",
+        "Nominar directamente requiere que vincules {NETWORK_UNIT} y elijas los validadores que deseas respaldar, pudiendo nominar hasta {MAX_NOMINATIONS} de ellos. Para ganar recompensas como nominador, actualmente necesitas vincular al menos {MIN_ACTIVE_STAKE} {NETWORK_UNIT}.",
+        "Unirse a un Pool es mucho más económico, requiriendo un depósito mínimo de {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. La nominación de validadores se hace en tu nombre, y simplemente reclamas recompensas del Pool.",
+        "También es posible crear un Pool, requiriendo un mínimo de {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
+      ]
+    ],
+    "joinAnotherPool": [
+      "Unirse a otro Pool",
+      "Cambia a una cuenta diferente para unirte a otro Pool.",
+      [
+        "Solo se puede unir a un Pool por cuenta en {NETWORK_NAME}. Para unirte a más Pools, primero cambia a otra cuenta."
+      ]
+    ],
+    "keepPoolNominating": [
+      "Gestionando tu Pool",
+      "Es importante mantener tu Pool nominando activamente.",
+      [
+        "Es importante mantener tu Pool nominando activamente.",
+        "Si tu Pool no está ganando recompensas, los miembros estarán tentados a irse y unirse a otro Pool.",
+        "Tus roles de root y nominador son importantes para gestionar tus nominaciones. Si las nominaciones no están funcionando bien, elige diferentes para aumentar las posibilidades de que tu Pool gane recompensas."
+      ]
+    ],
+    "managingNominations": [
+      "Gestionando nominaciones",
+      "Asegúrate de revisar el rendimiento de tus nominaciones regularmente.",
+      [
+        "Asegúrate de revisar el rendimiento de tus nominaciones regularmente.",
+        "Para maximizar la variedad y una mezcla descentralizada de validadores, elige validadores de diferentes entidades."
+      ]
+    ],
+    "module": {
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "disableTips": "Desactivar consejos del Dashboard",
+      "dismissResult": "Descartar los consejos los eliminará de tu resumen.",
+      "dismissTips": "Descartar consejos",
+      "more": "Más",
+      "of": "de",
+      "oneMoment": "Un momento por favor",
+      "reEnable": "Los consejos pueden reactivarse desde los ajustes del dashboard, que se pueden acceder a través del icono de engranaje en la esquina inferior izquierda del menú lateral.",
+      "syncingWith": "Sincronizando con {{network}}",
+      "tips": "Consejos"
+    },
+    "monitoringPool": [
+      "Gestionando membresía del Pool",
+      "Es buena idea verificar regularmente si tu Pool está ganando recompensas activamente.",
+      [
+        "Los Pools gestionarán las nominaciones en tu nombre, pero sigue siendo buena idea verificar regularmente si tu Pool está ganando recompensas activamente.",
+        "Monitorea el estado de tu Pool regularmente para asegurarte de que está funcionando bien, y considera unirte a otro Pool si no estás recibiendo recompensas."
+      ]
+    ],
+    "recommendedJoinPool": [
+      "Recomendado: Únete a un Pool",
+      "Tu cuenta es más adecuada para unirse a un Pool.",
+      [
+        "Basado en la cantidad de {NETWORK_UNIT} que tu cuenta tiene actualmente, unirse a un Pool es la mejor manera de comenzar a hacer staking.",
+        "Unirse a un Pool requiere un depósito mínimo de {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
+      ]
+    ],
+    "recommendedNominator": [
+      "Recomendado: Conviértete en nominador",
+      "Tienes suficiente {NETWORK_UNIT} para convertirte en nominador.",
+      [
+        "Tienes suficiente {NETWORK_UNIT} para convertirte en nominador y comenzar a ganar recompensas.",
+        "Sin embargo, nominar directamente requiere que revises activamente tus validadores respaldados."
+      ]
+    ],
+    "reviewingPayouts": [
+      "Revisando pagos",
+      "Revisar regularmente tus pagos es una buena manera de medir qué tan bien están funcionando tus nominaciones.",
+      [
+        "Revisar regularmente tus pagos es una buena manera de medir qué tan bien están funcionando tus nominaciones.",
+        "Ve a la página de Pagos para obtener un desglose detallado de cada pago que recibes, y de qué validador (o Pool) provino el pago."
+      ]
+    ],
+    "understandingValidatorPerformance": [
+      "Midiendo el rendimiento del validador",
+      "Varios factores afectan cuánto se recompensa a los validadores.",
+      [
+        "Varios factores afectan cuánto se recompensa a los validadores, como la cantidad de puntos de era que genera y cuántos nominadores lo respaldan.",
+        "Todas estas métricas cambian con el tiempo, a veces de manera impredecible. Por lo tanto, es importante que los nominadores monitoreen activamente los validadores y su rendimiento.",
+        "Staking Dashboard proporciona una variedad de métricas para ayudarte a entender cómo está funcionando un validador."
+      ]
+    ]
+  }
+}
