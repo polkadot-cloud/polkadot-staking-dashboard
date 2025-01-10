@@ -2,15 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { NetworkId } from 'common-types'
-import { EraPoints } from 'library/Graphs/EraPoints'
+import { EraPointsLine } from 'library/Graphs/EraPointsLine'
 import { useValidatorEraPoints } from 'plugin-staking-api'
 
 interface Props {
   network: NetworkId
   validator: string
   fromEra: number
+  width: string | number
+  height: string | number
 }
-export const ActiveGraph = ({ network, validator, fromEra }: Props) => {
+export const ActiveGraph = ({
+  network,
+  validator,
+  fromEra,
+  width,
+  height,
+}: Props) => {
   const { data, loading, error } = useValidatorEraPoints({
     chain: network,
     validator,
@@ -24,5 +32,12 @@ export const ActiveGraph = ({ network, validator, fromEra }: Props) => {
 
   const sorted = [...list].sort((a, b) => a.era - b.era)
 
-  return <EraPoints items={sorted} height={250} />
+  return (
+    <EraPointsLine
+      syncing={false}
+      entries={sorted}
+      width={width}
+      height={height}
+    />
+  )
 }

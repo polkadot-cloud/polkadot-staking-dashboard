@@ -96,6 +96,7 @@ export interface ValidatorUnclaimedReward {
 export interface ValidatorEraPoints {
   era: number
   points: string
+  start: number
 }
 
 export interface PoolReward {

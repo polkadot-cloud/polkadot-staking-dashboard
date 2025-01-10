@@ -13,9 +13,9 @@ import { StyledLoader } from 'library/PoolSync/Loader'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { CSSProperties } from 'styled-components'
+import { Stat, Subheading } from 'ui-core/canvas'
 import { planckToUnitBn } from 'utils'
 import type { OverviewSectionProps } from '../types'
-import { HeadingWrapper } from '../Wrappers'
 
 export const Stats = ({
   bondedPool,
@@ -72,32 +72,32 @@ export const Stats = ({
   } as CSSProperties
 
   return (
-    <HeadingWrapper>
+    <Subheading>
       <h4>
         {graphSyncing ? (
-          <span>
+          <Stat>
             {t('syncing')}
             <StyledLoader style={{ ...vars, marginRight: '1.25rem' }} />
             <PoolSync performanceKey={performanceKey} />
-          </span>
+          </Stat>
         ) : (
           <>
             {rawEraRewardPoints.length === MaxEraRewardPointsEras && (
-              <span className="active">{t('activelyNominating')}</span>
+              <Stat>{t('activelyNominating')}</Stat>
             )}
-
-            <span className="balance">
-              <Token className="icon" />
-              {!poolBalance
-                ? `...`
-                : planckToUnitBn(poolBalance, units)
-                    .decimalPlaces(3)
-                    .toFormat()}{' '}
-              {unit} {t('bonded')}
-            </span>
+            <Stat withIcon>
+              <Token />
+              <span>
+                {!poolBalance
+                  ? `...`
+                  : `${planckToUnitBn(poolBalance, units)
+                      .decimalPlaces(3)
+                      .toFormat()} ${unit} ${t('bonded')}`}
+              </span>
+            </Stat>
           </>
         )}
       </h4>
-    </HeadingWrapper>
+    </Subheading>
   )
 }
