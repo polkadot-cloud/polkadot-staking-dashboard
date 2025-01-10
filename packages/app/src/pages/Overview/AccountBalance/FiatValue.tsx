@@ -4,18 +4,13 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
-import {
-  ApolloProvider,
-  client,
-  formatTokenPrice,
-  useTokenPrice,
-} from 'plugin-staking-api'
+import { formatTokenPrice, useTokenPrice } from 'plugin-staking-api'
 
 interface FiatValueProps {
   totalBalance: BigNumber
 }
 
-export const FiatValueInner = ({ totalBalance }: FiatValueProps) => {
+export const FiatValue = ({ totalBalance }: FiatValueProps) => {
   const {
     networkData: {
       api: { unit },
@@ -47,9 +42,3 @@ export const FiatValueInner = ({ totalBalance }: FiatValueProps) => {
 
   return <>{usdFormatter.format(freeFiat.toNumber())}</>
 }
-
-export const FiatValue = (props: FiatValueProps) => (
-  <ApolloProvider client={client}>
-    <FiatValueInner {...props} />
-  </ApolloProvider>
-)

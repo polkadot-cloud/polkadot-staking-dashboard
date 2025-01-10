@@ -9,13 +9,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
-import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
+import type { PoolState } from 'types'
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
 import { PageTitleTabs } from 'ui-core/base'
+import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import type { JoinPoolHeaderProps } from './types'
-
 export const Header = ({
   activeTab,
   bondedPool,
@@ -29,21 +29,32 @@ export const Header = ({
   const { t } = useTranslation()
   const { closeCanvas } = useOverlay().canvas
 
-  // Randomly select a new pool to display.
+  // Randomly select a new pool to display
   const handleChooseNewPool = () => {
-    // Remove current pool from filtered so it is not selected again.
+    // Remove current pool from filtered so it is not selected again
     const filteredPools = filteredBondedPools.filter(
       (pool) => String(pool.id) !== String(bondedPool.id)
     )
-
-    // Randomly select a filtered bonded pool and set it as the selected pool.
+    // Randomly select a filtered bonded pool and set it as the selected pool
     const index = Math.ceil(Math.random() * filteredPools.length - 1)
     setSelectedPoolId(filteredPools[index].id)
   }
 
+  // Pool state to tag class
+  const getTagClass = (state: PoolState) => {
+    switch (state) {
+      case 'Blocked':
+        return 'warning'
+      case 'Destroying':
+        return 'danger'
+      default:
+        return ''
+    }
+  }
+
   return (
     <>
-      <div className="head">
+      <Head>
         {providedPoolId === null && (
           <ButtonPrimaryInvert
             text={t('chooseAnotherPool', { ns: 'library' })}
@@ -59,9 +70,9 @@ export const Header = ({
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
-      <CanvasTitleWrapper>
-        <div className="inner">
+      </Head>
+      <AccountTitle>
+        <div>
           <div>
             <Polkicon
               address={bondedPool?.addresses.stash || ''}
@@ -78,24 +89,23 @@ export const Header = ({
                 )}
               </h1>
             </div>
-            <div className="labels">
+            <HeadTags>
               <h3>
                 {t('pool', { ns: 'library' })}{' '}
                 <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
                 {bondedPool.id}
                 {['Blocked', 'Destroying'].includes(bondedPool.state) && (
-                  <span className={bondedPool.state.toLowerCase()}>
+                  <span className={getTagClass(bondedPool.state)}>
                     {t(bondedPool.state.toLowerCase(), { ns: 'library' })}
                   </span>
                 )}
               </h3>
-
               {autoSelected && (
                 <h3>
                   <span>{t('autoSelected', { ns: 'library' })}</span>
                 </h3>
               )}
-            </div>
+            </HeadTags>
           </div>
         </div>
 
@@ -117,7 +127,7 @@ export const Header = ({
           inline={true}
           colorSecondary={true}
         />
-      </CanvasTitleWrapper>
+      </AccountTitle>
     </>
   )
 }

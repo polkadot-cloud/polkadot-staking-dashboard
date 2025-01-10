@@ -20,12 +20,11 @@ import type {
   NominationSelectionWithResetCounter,
 } from 'library/GenerateNominations/types'
 import { SubmitTx } from 'library/SubmitTx'
-import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { Footer, Head, Main, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
-import { CanvasFullScreenWrapper, CanvasSubmitTxFooter } from '../Wrappers'
 import { RevertPrompt } from './Prompts/RevertPrompt'
 
 export const ManageNominations = () => {
@@ -147,8 +146,8 @@ export const ManageNominations = () => {
 
   return (
     <>
-      <CanvasFullScreenWrapper>
-        <div className="head">
+      <Main>
+        <Head>
           <ButtonPrimaryInvert
             text={t('revertChanges', { ns: 'modals' })}
             lg
@@ -166,10 +165,10 @@ export const ManageNominations = () => {
             iconLeft={faTimes}
             style={{ marginLeft: '1.1rem' }}
           />
-        </div>
-        <h1>{t('manageNominations', { ns: 'modals' })}</h1>
-        <Subheading>
-          <h3 style={{ marginBottom: '1.5rem' }}>
+        </Head>
+        <Title>
+          <h1>{t('manageNominations', { ns: 'modals' })}</h1>
+          <h3>
             {t('chooseValidators', {
               ns: 'library',
               maxNominations: maxNominations.toString(),
@@ -180,7 +179,8 @@ export const ManageNominations = () => {
               outline
             />
           </h3>
-        </Subheading>
+        </Title>
+
         <GenerateNominations
           displayFor="canvas"
           setters={[
@@ -194,8 +194,8 @@ export const ManageNominations = () => {
           ]}
           nominations={newNominations}
         />
-      </CanvasFullScreenWrapper>
-      <CanvasSubmitTxFooter>
+      </Main>
+      <Footer>
         <SubmitTx
           noMargin
           fromController={!isPool}
@@ -203,7 +203,7 @@ export const ManageNominations = () => {
           displayFor="canvas"
           {...submitExtrinsic}
         />
-      </CanvasSubmitTxFooter>
+      </Footer>
     </>
   )
 }

@@ -22,6 +22,7 @@ import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
 import { Offline } from 'Offline'
 import { Overlays } from 'overlay'
+import { ApolloProvider, client } from 'plugin-staking-api'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { HelmetProvider } from 'react-helmet-async'
@@ -79,41 +80,43 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {pluginEnabled('staking_api') && activeAccount && (
-        <StakingApi activeAccount={activeAccount} network={network} />
-      )}
-      <NotificationPrompts />
-      <Body>
-        <Help />
-        <Overlays />
-        <Menu />
-        <Tooltip />
-        <Prompt />
-        <SideMenu />
-        <Main ref={mainInterfaceRef}>
-          <HelmetProvider>
-            <Headers />
-            <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
-              <Routes>
-                {PagesConfig.map((page, i) => (
+      <ApolloProvider client={client}>
+        {pluginEnabled('staking_api') && activeAccount && (
+          <StakingApi activeAccount={activeAccount} network={network} />
+        )}
+        <NotificationPrompts />
+        <Body>
+          <Help />
+          <Overlays />
+          <Menu />
+          <Tooltip />
+          <Prompt />
+          <SideMenu />
+          <Main ref={mainInterfaceRef}>
+            <HelmetProvider>
+              <Headers />
+              <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
+                <Routes>
+                  {PagesConfig.map((page, i) => (
+                    <Route
+                      key={`main_interface_page_${i}`}
+                      path={page.hash}
+                      element={<PageWithTitle page={page} />}
+                    />
+                  ))}
                   <Route
-                    key={`main_interface_page_${i}`}
-                    path={page.hash}
-                    element={<PageWithTitle page={page} />}
+                    key="main_interface_navigate"
+                    path="*"
+                    element={<Navigate to="/overview" />}
                   />
-                ))}
-                <Route
-                  key="main_interface_navigate"
-                  path="*"
-                  element={<Navigate to="/overview" />}
-                />
-              </Routes>
-            </ErrorBoundary>
-            <MainFooter />
-          </HelmetProvider>
-        </Main>
-      </Body>
-      <Offline />
+                </Routes>
+              </ErrorBoundary>
+              <MainFooter />
+            </HelmetProvider>
+          </Main>
+        </Body>
+        <Offline />
+      </ApolloProvider>
     </ErrorBoundary>
   )
 }

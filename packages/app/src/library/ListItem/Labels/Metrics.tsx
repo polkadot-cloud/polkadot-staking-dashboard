@@ -7,19 +7,20 @@ import { useOverlay } from 'ui-overlay'
 import type { MetricsProps } from '../types'
 
 export const Metrics = ({ display, address }: MetricsProps) => {
-  const { openModal } = useOverlay().modal
+  const { openCanvas } = useOverlay().canvas
 
   return (
     <div className="label">
       <button
         type="button"
         onClick={() =>
-          openModal({
+          openCanvas({
             key: 'ValidatorMetrics',
             options: {
-              address,
+              validator: address,
               identity: display,
             },
+            size: 'xl',
           })
         }
       >

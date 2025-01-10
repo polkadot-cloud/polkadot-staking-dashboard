@@ -14,5 +14,15 @@
   "grid": {
     "light": "#e8e8e8",
     "dark": "rgb(64,55,64)"
+  },
+  "canvas": {
+    "axis": {
+      "light": "#222",
+      "dark": "#eee"
+    },
+    "grid": {
+      "light": "#ccc",
+      "dark": "#444"
+    }
   }
 }

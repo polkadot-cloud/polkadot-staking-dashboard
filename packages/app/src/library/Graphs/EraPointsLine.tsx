@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types'
+import BigNumber from 'bignumber.js'
 import {
+  BarElement,
   CategoryScale,
   Chart as ChartJS,
   Legend,
@@ -14,60 +16,80 @@ import {
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
+import { format, fromUnixTime } from 'date-fns'
+import { DefaultLocale, locales } from 'locales'
+import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
-import type { EraPointsProps } from './types'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 )
 
-export const EraPoints = ({ items = [], height }: EraPointsProps) => {
-  const { t } = useTranslation('library')
+export const EraPointsLine = ({
+  entries,
+  syncing,
+  width,
+  height,
+}: {
+  entries: ValidatorEraPoints[]
+  syncing: boolean
+  width: string | number
+  height: string | number
+}) => {
+  const { i18n, t } = useTranslation()
   const { mode } = useTheme()
   const { colors } = useNetwork().networkData
+
+  // Format reward points as an array of strings, or an empty array if syncing
+  const dataset = syncing
+    ? []
+    : entries.map((entry) => new BigNumber(entry.points).toString())
+
+  // Use primary color for line
+  const color = colors.primary[mode]
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    barPercentage: 0.3,
+    maxBarThickness: 13,
     scales: {
       x: {
-        border: {
+        stacked: true,
+        grid: {
           display: false,
         },
-        grid: {
-          color: 'rgba(0,0,0,0)',
-        },
         ticks: {
-          display: true,
-          maxTicksLimit: 30,
+          color: graphColors.canvas.axis[mode],
+          font: {
+            size: 10,
+          },
           autoSkip: true,
         },
-        title: {
-          display: true,
-          text: 'Era',
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        ticks: {
+          color: graphColors.canvas.axis[mode],
           font: {
             size: 10,
           },
         },
-      },
-      y: {
         border: {
           display: false,
         },
         grid: {
-          color: graphColors.grid[mode],
-        },
-        ticks: {
-          display: true,
-          beginAtZero: false,
+          color: graphColors.canvas.grid[mode],
         },
       },
     },
@@ -77,7 +99,6 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
       },
       title: {
         display: false,
-        text: t('eraPoints'),
       },
       tooltip: {
         displayColors: false,
@@ -89,7 +110,8 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
         },
         callbacks: {
           title: () => [],
-          label: (context: AnyJson) => `${context.parsed.y}`,
+          label: (context: AnyJson) =>
+            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints', { ns: 'library' })}`,
         },
         intersect: false,
         interaction: {
@@ -100,26 +122,30 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
   }
 
   const data = {
-    labels: items.map(({ era }: { era: string }) => era),
+    labels: entries.map(({ start }: { start: number }) => {
+      const dateObj = format(fromUnixTime(start), 'do MMM', {
+        locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+      })
+      return `${dateObj}`
+    }),
     datasets: [
       {
-        label: t('points'),
-        data: items.map(
-          ({ reward_point }: { reward_point: string }) => reward_point
-        ),
-        borderColor: colors.primary[mode],
-        backgroundColor: colors.primary[mode],
-        pointStyle: undefined,
+        label: t('era', { ns: 'library' }),
+        data: dataset,
+        borderColor: color,
+        backgroundColor: color,
         pointRadius: 0,
-        borderWidth: 2,
+        borderRadius: 3,
       },
     ],
   }
 
   return (
     <div
+      className="inner"
       style={{
-        height: height || 'auto',
+        width,
+        height,
       }}
     >
       <Line options={options} data={data} />

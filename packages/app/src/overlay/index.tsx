@@ -9,6 +9,7 @@ import { JoinPool } from './canvas/JoinPool'
 import { ManageNominations } from './canvas/ManageNominations'
 import { NominatorSetup } from './canvas/NominatorSetup'
 import { PoolMembers } from './canvas/PoolMembers'
+import { ValidatorMetrics } from './canvas/ValidatorMetrics'
 import { Accounts } from './modals/Accounts'
 import { Bio } from './modals/Bio'
 import { Bond } from './modals/Bond'
@@ -34,7 +35,6 @@ import { Unstake } from './modals/Unstake'
 import { UpdatePayee } from './modals/UpdatePayee'
 import { UpdateReserve } from './modals/UpdateReserve'
 import { ValidatorGeo } from './modals/ValidatorGeo'
-import { ValidatorMetrics } from './modals/ValidatorMetrics'
 
 export const Overlays = () => {
   const { status } = useHelp()
@@ -62,7 +62,6 @@ export const Overlays = () => {
         ManageFastUnstake,
         Networks,
         Settings,
-        ValidatorMetrics,
         ValidatorGeo,
         UnlockChunks,
         Unstake,
@@ -76,6 +75,7 @@ export const Overlays = () => {
         JoinPool,
         CreatePool,
         NominatorSetup,
+        ValidatorMetrics,
       }}
     />
   )
