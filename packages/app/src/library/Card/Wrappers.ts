@@ -20,12 +20,25 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   padding: 0rem 0.25rem;
   width: 100%;
 
-  h2 {
+  > h2 {
     font-family: InterBold, sans-serif;
     margin-bottom: 1rem;
+
+    > svg {
+      width: 1.9rem;
+      height: 1.9rem;
+      margin-right: 0.5rem;
+    }
+    > .label {
+      color: var(--text-color-secondary);
+      font-family: InterSemiBold, sans-serif;
+      font-size: 1.1rem;
+      margin-top: 0.2rem;
+      margin-left: 0.4rem;
+    }
   }
-  h2,
-  h3 {
+  > h2,
+  > h3 {
     color: var(--text-color-primary);
     display: flex;
     flex-flow: row wrap;
@@ -36,34 +49,17 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
       margin-top: 0.5rem;
     }
   }
-  h3,
-  h4 {
+  > h3,
+  > h4 {
     font-family: InterSemiBold, sans-serif;
   }
-  h4 {
+  > h4 {
     margin-top: 0;
     margin-bottom: 0.4rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
-  }
-  .note {
-    color: var(--text-color-secondary);
-    font-family: InterSemiBold, sans-serif;
-    font-size: 1.1rem;
-    margin-top: 0.2rem;
-    margin-left: 0.4rem;
-  }
-  .networkIcon {
-    width: 1.9rem;
-    height: 1.9rem;
-    margin-right: 0.5rem;
-  }
-
-  > div {
-    display: flex;
-    align-items: center;
   }
 `
 

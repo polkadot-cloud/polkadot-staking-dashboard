@@ -17,6 +17,7 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { RolesWrapper } from '../ManagePool/Wrappers'
 import { PoolAccount } from '../PoolAccount'
@@ -152,33 +153,29 @@ export const Roles = ({
         )}
 
         {!(isOwner() === true || setters.length) ? null : (
-          <>
+          <ButtonRow>
             {isEditing && (
-              <div>
-                <ButtonType
-                  iconLeft={faTimesCircle}
-                  iconTransform="grow-1"
-                  text={t('pools.cancel')}
-                  disabled={syncing || isReadOnlyAccount(activeAccount)}
-                  onClick={() => cancelHandler()}
-                />
-              </div>
+              <ButtonType
+                iconLeft={faTimesCircle}
+                iconTransform="grow-1"
+                text={t('pools.cancel')}
+                disabled={syncing || isReadOnlyAccount(activeAccount)}
+                onClick={() => cancelHandler()}
+              />
             )}
             &nbsp;&nbsp;
-            <div>
-              <ButtonType
-                iconLeft={isEditing ? faCheckCircle : faEdit}
-                iconTransform="grow-1"
-                text={isEditing ? t('pools.save') : t('pools.edit')}
-                disabled={
-                  syncing ||
-                  isReadOnlyAccount(activeAccount) ||
-                  !isRoleEditsValid()
-                }
-                onClick={() => (isEditing ? saveHandler() : editHandler())}
-              />
-            </div>
-          </>
+            <ButtonType
+              iconLeft={isEditing ? faCheckCircle : faEdit}
+              iconTransform="grow-1"
+              text={isEditing ? t('pools.save') : t('pools.edit')}
+              disabled={
+                syncing ||
+                isReadOnlyAccount(activeAccount) ||
+                !isRoleEditsValid()
+              }
+              onClick={() => (isEditing ? saveHandler() : editHandler())}
+            />
+          </ButtonRow>
         )}
       </CardHeaderWrapper>
       <RolesWrapper>

@@ -9,7 +9,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { PageRow } from 'ui-core/base'
+import { ButtonRow, PageRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const ManagePool = () => {
@@ -43,7 +43,7 @@ export const ManagePool = () => {
                   onClick={() => openHelp('Nominations')}
                 />
               </h3>
-              <div>
+              <ButtonRow>
                 <ButtonPrimary
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
@@ -62,7 +62,7 @@ export const ManagePool = () => {
                     })
                   }
                 />
-              </div>
+              </ButtonRow>
             </CardHeaderWrapper>
             <h4>{t('notNominating', { ns: 'library' })}.</h4>
           </>

@@ -68,7 +68,7 @@ export const Payouts = () => {
       <CardHeaderWrapper>
         <h4>{t('overview.recentPayouts')}</h4>
         <h2>
-          <Token className="networkIcon" />
+          <Token />
           <Odometer
             value={minDecimalPlaces(
               lastReward === undefined
@@ -80,7 +80,7 @@ export const Payouts = () => {
               2
             )}
           />
-          <span className="note">
+          <span className="label">
             {lastReward === undefined ? (
               ''
             ) : (

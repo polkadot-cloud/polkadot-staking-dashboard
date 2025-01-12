@@ -136,19 +136,18 @@ export const BalanceChart = () => {
       <CardHeaderWrapper>
         <h4>{t('overview.balance')}</h4>
         <h2>
-          <Token className="networkIcon" />
+          <Token />
           <Odometer
             value={minDecimalPlaces(totalBalance.toFormat(), 2)}
             zeroDecimals={2}
           />
-          <span className="note">
+          <span className="label">
             {plugins.includes('staking_api') ? (
               <FiatValue totalBalance={totalBalance} />
             ) : null}
           </span>
         </h2>
       </CardHeaderWrapper>
-
       <BarChartWrapper>
         <Legend>
           {isNominating ? (
