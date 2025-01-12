@@ -274,7 +274,7 @@
         "Pool Commission Change Rate",
         [
           "The commission change rate is set by the pool Root, and dictates by how much and how often commission can be increased.",
-          "The maximum increase of the change rate dictates how much the commission rate can be increaesd in a single update. The minimum delay dictates how many blocks must pass before the commission rate can be increased again.",
+          "The maximum increase of the change rate dictates how much the commission rate can be increased in a single update. The minimum delay dictates how many blocks must pass before the commission rate can be increased again.",
           "Once an initial change rate is set, only more restrictive values can be set thereafter. More restrictive values comprise of a smaller max increase and larger minimum delay."
         ]
       ],
