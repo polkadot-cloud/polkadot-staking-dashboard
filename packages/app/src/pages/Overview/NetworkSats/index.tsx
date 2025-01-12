@@ -48,7 +48,7 @@ export const NetworkStats = () => {
 
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
-      <CardHeaderWrapper $withMargin>
+      <CardHeaderWrapper className="margin">
         <h3>{t('overview.networkStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>

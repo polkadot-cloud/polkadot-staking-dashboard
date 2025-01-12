@@ -89,7 +89,7 @@ export const ValidatorGeo = () => {
             height: 350,
           }}
         >
-          <CardHeaderWrapper $withMargin>
+          <CardHeaderWrapper className="margin">
             <h4>
               {t('rewardsByCountryAndNetwork')}{' '}
               <ButtonHelp

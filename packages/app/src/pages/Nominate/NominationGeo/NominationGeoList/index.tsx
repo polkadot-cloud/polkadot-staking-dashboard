@@ -33,7 +33,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
       <ListWrapper>
         <Header className="noBorder">
           <div>
-            <CardHeaderWrapper $withAction $withMargin>
+            <CardHeaderWrapper className="action margin">
               <h3>
                 {title}
                 <ButtonHelp

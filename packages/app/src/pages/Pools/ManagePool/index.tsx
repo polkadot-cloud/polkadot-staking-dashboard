@@ -35,7 +35,7 @@ export const ManagePool = () => {
       <CardWrapper>
         {canNominate && !isNominating && state !== 'Destroying' ? (
           <>
-            <CardHeaderWrapper $withAction $withMargin>
+            <CardHeaderWrapper className="action margin">
               <h3>
                 {t('nominate.nominations', { ns: 'pages' })}
                 <ButtonHelp

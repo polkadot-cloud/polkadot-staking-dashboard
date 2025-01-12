@@ -144,7 +144,7 @@ export const Roles = ({
 
   return (
     <>
-      <CardHeaderWrapper $withAction $withMargin>
+      <CardHeaderWrapper className="action margin">
         {!inline && (
           <h3>
             {t('pools.roles')}

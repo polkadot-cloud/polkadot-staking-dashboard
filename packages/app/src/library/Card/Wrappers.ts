@@ -3,7 +3,7 @@
 
 import { PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
-import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types'
+import type { CardWrapperProps } from '../Graphs/types'
 
 /* CardHeaderWrapper
  *
@@ -11,14 +11,22 @@ import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types'
  * with a h2. withAction allows a full-width header with a right-side
  * button.
  */
-export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
+export const CardHeaderWrapper = styled.div`
   display: flex;
-  flex-flow: ${(props) => (props.$withAction ? 'row' : 'column')} wrap;
-  align-items: ${(props) => (props.$withAction ? 'center' : 'none')};
-  justify-content: ${(props) => (props.$withAction ? 'none' : 'center')};
-  margin-bottom: ${(props) => (props.$withMargin ? '1rem' : 0)};
+  flex-flow: column wrap;
+  justify-content: center;
   padding: 0rem 0.25rem;
   width: 100%;
+
+  &.action {
+    flex-direction: row;
+    align-items: center;
+    justify-content: none;
+  }
+
+  &.margin {
+    margin-bottom: 1rem;
+  }
 
   > h2 {
     font-family: InterBold, sans-serif;
@@ -43,7 +51,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
+    flex-grow: 1;
 
     @media (max-width: ${PageWidthMediumThreshold}px) {
       margin-top: 0.5rem;
@@ -59,7 +67,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
+    flex-grow: 1;
   }
 `
 

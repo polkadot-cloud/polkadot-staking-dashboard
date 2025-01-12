@@ -84,7 +84,7 @@ export const Nominations = ({
 
   return (
     <Wrapper>
-      <CardHeaderWrapper $withAction $withMargin>
+      <CardHeaderWrapper className="action margin">
         <h3>
           {isPool ? t('nominate.poolNominations') : t('nominate.nominations')}
           <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
