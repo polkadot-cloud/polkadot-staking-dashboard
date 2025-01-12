@@ -10,7 +10,6 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { Title } from 'library/Modal/Title'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'overlay/modals/ManagePool/Wrappers'
@@ -18,6 +17,7 @@ import 'rc-slider/assets/index.css'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
+import { CardHeader } from 'ui-core/base'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
@@ -80,9 +80,8 @@ export const UpdateReserve = () => {
             }}
           />
         </div>
-
         <div className="stats">
-          <CardHeaderWrapper>
+          <CardHeader>
             <h4>
               {t('reserveForExistentialDeposit')}
               <FontAwesomeIcon
@@ -106,9 +105,8 @@ export const UpdateReserve = () => {
                 `${minReserve.decimalPlaces(4).toString()} ${unit}`
               )}
             </h2>
-          </CardHeaderWrapper>
-
-          <CardHeaderWrapper>
+          </CardHeader>
+          <CardHeader>
             <h4>{t('reserveForTxFees')}</h4>
             <h2>
               {BigNumber.max(
@@ -121,9 +119,8 @@ export const UpdateReserve = () => {
               &nbsp;
               {unit}
             </h2>
-          </CardHeaderWrapper>
+          </CardHeader>
         </div>
-
         <div className="done">
           <ButtonPrimaryInvert
             text={t('done')}

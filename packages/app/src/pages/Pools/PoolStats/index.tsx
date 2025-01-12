@@ -10,8 +10,9 @@ import { usePoolCommission } from 'hooks/usePoolCommission'
 import { Header } from 'library/Announcements/Header'
 import type { PoolStatLabel } from 'library/Announcements/types'
 import { Wrapper } from 'library/Announcements/Wrappers'
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { Announcements } from './Announcements'
@@ -87,9 +88,9 @@ export const PoolStats = () => {
 
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
-      <CardHeaderWrapper $withMargin>
+      <CardHeader margin>
         <h3>{t('pools.poolStats')}</h3>
-      </CardHeaderWrapper>
+      </CardHeader>
       <Wrapper>
         <Header items={items} />
         <Announcements />

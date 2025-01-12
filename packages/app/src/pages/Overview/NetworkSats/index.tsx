@@ -7,8 +7,9 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Header } from 'library/Announcements/Header'
 import { Wrapper } from 'library/Announcements/Wrappers'
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { CardHeader } from 'ui-core/base'
 import { Announcements } from './Announcements'
 
 export const NetworkStats = () => {
@@ -48,9 +49,9 @@ export const NetworkStats = () => {
 
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
-      <CardHeaderWrapper $withMargin>
+      <CardHeader margin>
         <h3>{t('overview.networkStats')}</h3>
-      </CardHeaderWrapper>
+      </CardHeader>
       <Wrapper>
         <Header items={items} />
         <Announcements />
