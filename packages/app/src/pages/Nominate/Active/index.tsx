@@ -9,14 +9,14 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { Nominations } from 'library/Nominations'
 import { StatBoxList } from 'library/StatBoxList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { PageRow, RowSection } from 'ui-core/base'
+import { CardHeader, PageRow, RowSection } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
@@ -67,7 +67,7 @@ export const Active = () => {
             <Nominations bondFor="nominator" nominator={activeAccount} />
           ) : (
             <>
-              <CardHeaderWrapper $withAction $withMargin>
+              <CardHeader action margin>
                 <h3>
                   {t('nominate.nominate', { ns: 'pages' })}
                   <ButtonHelp
@@ -95,7 +95,7 @@ export const Active = () => {
                     }
                   />
                 </div>
-              </CardHeaderWrapper>
+              </CardHeader>
               <ListStatusHeader>
                 {t('notNominating', { ns: 'library' })}.
               </ListStatusHeader>

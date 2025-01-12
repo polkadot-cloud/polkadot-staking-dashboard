@@ -15,9 +15,9 @@ import { useSyncing } from 'hooks/useSyncing'
 import { BarSegment } from 'library/BarChart/BarSegment'
 import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
-import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
+import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { FiatValue } from './FiatValue'
@@ -133,22 +133,21 @@ export const BalanceChart = () => {
 
   return (
     <>
-      <CardHeaderWrapper>
+      <CardHeader>
         <h4>{t('overview.balance')}</h4>
         <h2>
-          <Token className="networkIcon" />
+          <Token />
           <Odometer
             value={minDecimalPlaces(totalBalance.toFormat(), 2)}
             zeroDecimals={2}
           />
-          <span className="note">
+          <h5>
             {plugins.includes('staking_api') ? (
               <FiatValue totalBalance={totalBalance} />
             ) : null}
-          </span>
+          </h5>
         </h2>
-      </CardHeaderWrapper>
-
+      </CardHeader>
       <BarChartWrapper>
         <Legend>
           {isNominating ? (

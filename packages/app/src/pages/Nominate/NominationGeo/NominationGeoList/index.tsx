@@ -6,11 +6,10 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
-import { Separator } from 'ui-core/base'
+import { CardHeader, Separator } from 'ui-core/base'
 import type { NomninationGeoListProps } from '../types'
 import { Node } from './Node'
 
@@ -33,7 +32,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
       <ListWrapper>
         <Header className="noBorder">
           <div>
-            <CardHeaderWrapper $withAction $withMargin>
+            <CardHeader action margin>
               <h3>
                 {title}
                 <ButtonHelp
@@ -41,7 +40,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
                   onClick={() => openHelp('Geolocation of Each Nomination')}
                 />
               </h3>
-            </CardHeaderWrapper>
+            </CardHeader>
           </div>
         </Header>
         <List $flexBasisLarge={'33.33%'}>

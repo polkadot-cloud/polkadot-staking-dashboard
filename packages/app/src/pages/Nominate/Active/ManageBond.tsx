@@ -15,10 +15,9 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { BondedChart } from 'library/BarChart/BondedChart'
-import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { ButtonRow } from 'ui-core/base'
+import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
@@ -49,13 +48,13 @@ export const ManageBond = () => {
 
   return (
     <>
-      <CardHeaderWrapper>
+      <CardHeader>
         <h4>
           {t('nominate.bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
         <h2>
-          <Token className="networkIcon" />
+          <Token />
           <Odometer
             value={minDecimalPlaces(
               planckToUnitBn(active, units).toFormat(),
@@ -117,7 +116,7 @@ export const ManageBond = () => {
             text={String(totalUnlockChunks ?? 0)}
           />
         </ButtonRow>
-      </CardHeaderWrapper>
+      </CardHeader>
       <BondedChart
         active={planckToUnitBn(active, units)}
         unlocking={planckToUnitBn(totalUnlocking, units)}
