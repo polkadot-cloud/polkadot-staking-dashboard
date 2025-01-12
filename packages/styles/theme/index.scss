@@ -98,11 +98,9 @@ input {
   padding: 0.7rem 0;
   background: none;
   border: none;
-
   &::placeholder {
     color: #aaa;
   }
-
   &.underline {
     border-bottom: 1px solid #ddd;
   }
@@ -123,12 +121,10 @@ ellipse.primary {
 .page-padding {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-
   @media (min-width: $page-width-small-threshold) {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
   }
-
   @media (min-width: $page-width-small-threshold) {
     padding: 0 5rem 0 2.5rem;
   }
