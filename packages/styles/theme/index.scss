@@ -81,6 +81,7 @@ a {
 }
 
 button {
+  color: var(--text-color-secondary);
   -webkit-tap-highlight-color: transparent;
   font-family: Inter, sans-serif;
   background: none;
@@ -88,7 +89,6 @@ button {
   cursor: pointer;
   margin: 0;
   padding: 0;
-  color: var(--text-color-secondary);
 }
 
 input {
