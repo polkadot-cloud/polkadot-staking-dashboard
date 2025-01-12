@@ -9,7 +9,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useSyncing } from 'hooks/useSyncing'
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import {
   formatSize,
   getPayoutsFromDate,
@@ -23,7 +23,7 @@ import type { RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { PageRow, PageTitle } from 'ui-core/base'
+import { CardHeader, PageRow, PageTitle } from 'ui-core/base'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 import { PayoutList } from './PayoutList'
@@ -73,7 +73,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
       </StatBoxList>
       <PageRow>
         <CardWrapper>
-          <CardHeaderWrapper>
+          <CardHeader>
             <h4>
               {t('payouts.payoutHistory', { ns: 'pages' })}
               <ButtonHelp
@@ -93,7 +93,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 t('payouts.none', { ns: 'pages' })
               )}
             </h2>
-          </CardHeaderWrapper>
+          </CardHeader>
           <div ref={ref} className="inner" style={{ minHeight }}>
             {!pluginEnabled('staking_api') ? (
               <StatusLabel

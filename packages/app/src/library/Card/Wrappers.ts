@@ -3,69 +3,7 @@
 
 import { PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
-import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types'
-
-/* CardHeaderWrapper
- *
- * Used as headers for individual cards. Usually a h4 accompanied
- * with a h2. withAction allows a full-width header with a right-side
- * button.
- */
-export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
-  display: flex;
-  flex-flow: ${(props) => (props.$withAction ? 'row' : 'column')} wrap;
-  align-items: ${(props) => (props.$withAction ? 'center' : 'none')};
-  justify-content: ${(props) => (props.$withAction ? 'none' : 'center')};
-  margin-bottom: ${(props) => (props.$withMargin ? '1rem' : 0)};
-  padding: 0rem 0.25rem;
-  width: 100%;
-
-  h2 {
-    font-family: InterBold, sans-serif;
-    margin-bottom: 1rem;
-  }
-  h2,
-  h3 {
-    color: var(--text-color-primary);
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
-
-    @media (max-width: ${PageWidthMediumThreshold}px) {
-      margin-top: 0.5rem;
-    }
-  }
-  h3,
-  h4 {
-    font-family: InterSemiBold, sans-serif;
-  }
-  h4 {
-    margin-top: 0;
-    margin-bottom: 0.4rem;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
-  }
-  .note {
-    color: var(--text-color-secondary);
-    font-family: InterSemiBold, sans-serif;
-    font-size: 1.1rem;
-    margin-top: 0.2rem;
-    margin-left: 0.4rem;
-  }
-  .networkIcon {
-    width: 1.9rem;
-    height: 1.9rem;
-    margin-right: 0.5rem;
-  }
-
-  > div {
-    display: flex;
-    align-items: center;
-  }
-`
+import type { CardWrapperProps } from '../Graphs/types'
 
 /* CardWrapper
  *

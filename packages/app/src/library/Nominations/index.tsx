@@ -11,12 +11,12 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
-import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Wrapper } from './Wrapper'
 
@@ -83,53 +83,51 @@ export const Nominations = ({
 
   return (
     <Wrapper>
-      <CardHeaderWrapper $withAction $withMargin>
+      <CardHeader action margin>
         <h3>
           {isPool ? t('nominate.poolNominations') : t('nominate.nominations')}
           <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
         </h3>
-        <div>
-          {displayBtns && (
-            <>
-              <ButtonPrimary
-                text={t('nominate.stop')}
-                iconLeft={faStopCircle}
-                iconTransform="grow-1"
-                disabled={btnsDisabled}
-                onClick={() =>
-                  openModal({
-                    key: 'StopNominations',
-                    options: {
-                      nominations: [],
-                      bondFor,
-                    },
-                    size: 'sm',
-                  })
-                }
-              />
-              <ButtonPrimary
-                text={t('nominate.manage')}
-                iconLeft={faCog}
-                iconTransform="grow-1"
-                disabled={btnsDisabled}
-                marginLeft
-                onClick={() =>
-                  openCanvas({
-                    key: 'ManageNominations',
-                    scroll: false,
-                    options: {
-                      bondFor,
-                      nominator,
-                      nominated,
-                    },
-                    size: 'xl',
-                  })
-                }
-              />
-            </>
-          )}
-        </div>
-      </CardHeaderWrapper>
+        {displayBtns && (
+          <ButtonRow>
+            <ButtonPrimary
+              text={t('nominate.stop')}
+              iconLeft={faStopCircle}
+              iconTransform="grow-1"
+              disabled={btnsDisabled}
+              onClick={() =>
+                openModal({
+                  key: 'StopNominations',
+                  options: {
+                    nominations: [],
+                    bondFor,
+                  },
+                  size: 'sm',
+                })
+              }
+            />
+            <ButtonPrimary
+              text={t('nominate.manage')}
+              iconLeft={faCog}
+              iconTransform="grow-1"
+              disabled={btnsDisabled}
+              marginLeft
+              onClick={() =>
+                openCanvas({
+                  key: 'ManageNominations',
+                  scroll: false,
+                  options: {
+                    bondFor,
+                    nominator,
+                    nominated,
+                  },
+                  size: 'xl',
+                })
+              }
+            />
+          </ButtonRow>
+        )}
+      </CardHeader>
       {!isPool && syncing ? (
         <ListStatusHeader>{`${t('nominate.syncing')}...`}</ListStatusHeader>
       ) : !nominator ? (
