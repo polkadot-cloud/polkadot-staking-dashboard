@@ -10,7 +10,7 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
 import { PolkaWatch } from 'controllers/PolkaWatch'
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { GeoDonut } from 'library/Graphs/GeoDonut'
 import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
@@ -20,6 +20,7 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
+import { CardHeader } from 'ui-core/base'
 import { AddressHeader } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
@@ -89,7 +90,7 @@ export const ValidatorGeo = () => {
             height: 350,
           }}
         >
-          <CardHeaderWrapper className="margin">
+          <CardHeader margin>
             <h4>
               {t('rewardsByCountryAndNetwork')}{' '}
               <ButtonHelp
@@ -97,7 +98,7 @@ export const ValidatorGeo = () => {
                 onClick={() => openHelp('Rewards By Country And Network')}
               />
             </h4>
-          </CardHeaderWrapper>
+          </CardHeader>
           <div
             ref={ref}
             style={{
@@ -135,7 +136,6 @@ export const ValidatorGeo = () => {
                 maxLabelLen={10}
               />
             </GraphWrapper>
-
             <div style={{ display: isSmallScreen ? 'none' : 'block' }}>
               <GraphWrapper
                 style={{

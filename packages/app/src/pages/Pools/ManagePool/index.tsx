@@ -5,11 +5,11 @@ import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, PageRow } from 'ui-core/base'
+import { ButtonRow, CardHeader, PageRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const ManagePool = () => {
@@ -35,7 +35,7 @@ export const ManagePool = () => {
       <CardWrapper>
         {canNominate && !isNominating && state !== 'Destroying' ? (
           <>
-            <CardHeaderWrapper className="action margin">
+            <CardHeader action margin>
               <h3>
                 {t('nominate.nominations', { ns: 'pages' })}
                 <ButtonHelp
@@ -63,7 +63,7 @@ export const ManagePool = () => {
                   }
                 />
               </ButtonRow>
-            </CardHeaderWrapper>
+            </CardHeader>
             <h4>{t('notNominating', { ns: 'library' })}.</h4>
           </>
         ) : (

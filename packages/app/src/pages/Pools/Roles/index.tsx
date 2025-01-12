@@ -13,11 +13,10 @@ import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSyncing } from 'hooks/useSyncing'
-import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
-import { ButtonRow } from 'ui-core/base'
+import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { RolesWrapper } from '../ManagePool/Wrappers'
 import { PoolAccount } from '../PoolAccount'
@@ -144,7 +143,7 @@ export const Roles = ({
 
   return (
     <>
-      <CardHeaderWrapper className="action margin">
+      <CardHeader action margin>
         {!inline && (
           <h3>
             {t('pools.roles')}
@@ -177,7 +176,7 @@ export const Roles = ({
             />
           </ButtonRow>
         )}
-      </CardHeaderWrapper>
+      </CardHeader>
       <RolesWrapper>
         <section>
           <div className="inner">
