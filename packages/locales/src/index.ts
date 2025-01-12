@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { enGB, zhCN } from 'date-fns/locale'
+import { enGB, es, zhCN } from 'date-fns/locale'
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import baseEn from './resources/en/base.json'
@@ -20,6 +20,7 @@ export const DefaultLocale = 'en'
 export const locales: Record<string, LocaleEntry> = {
   en: { dateFormat: enGB, label: 'English' },
   cn: { dateFormat: zhCN, label: '中文' },
+  es: { dateFormat: es, label: 'Español' },
 }
 
 // Supported namespaces.
