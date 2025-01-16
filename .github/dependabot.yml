@@ -13,12 +13,12 @@ updates:
           - '@typescript-eslint/*'
         automerge: true
         commit-message:
-          prefix: 'chore'
+          prefix: 'deps'
       prettier:
         patterns:
           - 'prettier*'
         commit-message:
-          prefix: 'style'
+          prefix: 'deps'
       react:
         patterns:
           - 'react*'
