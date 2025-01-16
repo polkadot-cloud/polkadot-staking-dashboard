@@ -11,14 +11,9 @@ updates:
         patterns:
           - 'eslint*'
           - '@typescript-eslint/*'
-        automerge: true
-        commit-message:
-          prefix: 'deps'
       prettier:
         patterns:
           - 'prettier*'
-        commit-message:
-          prefix: 'deps'
       react:
         patterns:
           - 'react*'
@@ -26,9 +21,6 @@ updates:
           - '@fortawesome/*'
           - 'react-helmet-async'
           - 'react-router-dom'
-        commit-message:
-          prefix: 'deps'
-          include: scope
       utils-and-qrcode:
         patterns:
           - 'classnames'
