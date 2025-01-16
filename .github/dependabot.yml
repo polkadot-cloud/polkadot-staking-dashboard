@@ -65,9 +65,7 @@ updates:
       testing:
         patterns:
           - 'vitest'
-          - 'vite-plugin-checker'
           - 'vite-bundle-visualizer'
-          - 'vite-plugin-svgr'
     commit-message:
       prefix: 'deps'
 
