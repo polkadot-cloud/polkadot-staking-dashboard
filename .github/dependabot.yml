@@ -4,23 +4,21 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: monthly
-    open-pull-requests-limit: 30
+      interval: weekly
+    open-pull-requests-limit: 20
     groups:
       eslint:
         patterns:
           - 'eslint*'
           - '@typescript-eslint/*'
+        automerge: true
+        commit-message:
+          prefix: 'chore'
       prettier:
         patterns:
           - 'prettier*'
-      types:
-        patterns:
-          - '@types/*'
-      vite:
-        patterns:
-          - 'vite*'
-          - 'vite-plugin-*'
+        commit-message:
+          prefix: 'style'
       react:
         patterns:
           - 'react*'
@@ -28,16 +26,10 @@ updates:
           - '@fortawesome/*'
           - 'react-helmet-async'
           - 'react-router-dom'
-      charts:
-        patterns:
-          - 'chart.js'
-          - 'react-chartjs-2'
-      polkadot:
-        patterns:
-          - '@polkadot/*'
-          - '@zondax/ledger-substrate'
-          - 'polkadot-api'
-      utils:
+        commit-message:
+          prefix: 'deps'
+          include: scope
+      utils-and-qrcode:
         patterns:
           - 'classnames'
           - 'date-fns'
@@ -48,6 +40,21 @@ updates:
           - 'rxjs'
           - 'chroma-js'
           - 'xxhash-wasm'
+          - 'html5-qrcode'
+          - 'qrcode-generator'
+      vite:
+        patterns:
+          - 'vite*'
+          - 'vite-plugin-*'
+      charts:
+        patterns:
+          - 'chart.js'
+          - 'react-chartjs-2'
+      polkadot:
+        patterns:
+          - '@polkadot/*'
+          - '@zondax/ledger-substrate'
+          - 'polkadot-api'
       ui:
         patterns:
           - '@w3ux/*'
@@ -59,17 +66,6 @@ updates:
         patterns:
           - '@dotlottie/*'
           - '@lottiefiles/*'
-      plugin:
-        patterns:
-          - 'plugin-*'
-      i18n:
-        patterns:
-          - 'i18next*'
-          - 'i18next-browser-languagedetector'
-      qrcode:
-        patterns:
-          - 'html5-qrcode'
-          - 'qrcode-generator'
       wagmi:
         patterns:
           - 'viem'
@@ -80,8 +76,13 @@ updates:
           - 'vite-plugin-checker'
           - 'vite-bundle-visualizer'
           - 'vite-plugin-svgr'
+    commit-message:
+      prefix: 'deps'
 
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
-      interval: monthly
+      interval: weekly
+    automerge: true
+    commit-message:
+      prefix: 'ci'
