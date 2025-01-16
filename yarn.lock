@@ -1374,24 +1374,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/sdk-install-modal-web@npm:0.31.2":
-  version: 0.31.2
-  resolution: "@metamask/sdk-install-modal-web@npm:0.31.2"
+"@metamask/sdk-install-modal-web@npm:0.31.5":
+  version: 0.31.5
+  resolution: "@metamask/sdk-install-modal-web@npm:0.31.5"
   dependencies:
     "@paulmillr/qr": "npm:^0.2.1"
-  checksum: 10c0/c409d1dfa1c43b8cb6ab0772905f5bb3031b558865fbaced9dddffcc2e2971da3aa8f50e0f90b46e25a9b9a4d8bc8d50867e843712d11a86d5500d4a95133ddc
+  checksum: 10c0/acdf5382371b1b50e576a8120ce056e83a9e4fb9ea14f9b9cc9442348796d0eb81ebf5675c5b46b004b849fd5db9a7442c0a8e55b26aef9d805cb7636e02bbc0
   languageName: node
   linkType: hard
 
-"@metamask/sdk@npm:0.31.4":
-  version: 0.31.4
-  resolution: "@metamask/sdk@npm:0.31.4"
+"@metamask/sdk@npm:0.31.5":
+  version: 0.31.5
+  resolution: "@metamask/sdk@npm:0.31.5"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
     "@metamask/onboarding": "npm:^1.0.1"
     "@metamask/providers": "npm:16.1.0"
     "@metamask/sdk-communication-layer": "npm:0.31.0"
-    "@metamask/sdk-install-modal-web": "npm:0.31.2"
+    "@metamask/sdk-install-modal-web": "npm:0.31.5"
     "@paulmillr/qr": "npm:^0.2.1"
     bowser: "npm:^2.9.0"
     cross-fetch: "npm:^4.0.0"
@@ -1406,7 +1406,7 @@ __metadata:
     tslib: "npm:^2.6.0"
     util: "npm:^0.12.4"
     uuid: "npm:^8.3.2"
-  checksum: 10c0/cca824079c80124feffe68f25b1e76cb6cc638f3253790782558c6f8831110fc33d4d255309c0eebcbfdfafb36c93416fe9350cb395d383392f3935c85f15d66
+  checksum: 10c0/96d4e57f78c55f9afb4a4ecc9864f3ad3734d33792153b6a7da58c1effe54203fde329440d119c6905f3be20aa0541e1e3067e2f11421805444b436706dfb237
   languageName: node
   linkType: hard
 
@@ -3925,12 +3925,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wagmi/connectors@npm:5.7.3":
-  version: 5.7.3
-  resolution: "@wagmi/connectors@npm:5.7.3"
+"@wagmi/connectors@npm:5.7.4":
+  version: 5.7.4
+  resolution: "@wagmi/connectors@npm:5.7.4"
   dependencies:
     "@coinbase/wallet-sdk": "npm:4.2.3"
-    "@metamask/sdk": "npm:0.31.4"
+    "@metamask/sdk": "npm:0.31.5"
     "@safe-global/safe-apps-provider": "npm:0.18.5"
     "@safe-global/safe-apps-sdk": "npm:9.1.0"
     "@walletconnect/ethereum-provider": "npm:2.17.0"
@@ -3942,7 +3942,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/0e8a7e58722b3a596449322ca1910bd8e48379d2dafe17ac346398a4dcca75f789a2ca089bccaa8d9eae4863d4de21f46fb24f3ed08ea805940225995fd3673b
+  checksum: 10c0/d12ca3e1f29e53abf582a2e8fcd41e26e295d9bf5c419d99e0e35f39de8a5c09b28f64d4b44138803a3ef36aa2fbe4d096e95313eb86924b32af775131ba6fe1
   languageName: node
   linkType: hard
 
@@ -4527,14 +4527,14 @@ __metadata:
     ui-overlay: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
-    viem: "npm:^2.22.1"
+    viem: "npm:^2.22.9"
     vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.8.0"
     vite-plugin-eslint: "npm:^1.8.1"
     vite-plugin-svgr: "npm:^4.3.0"
     vite-tsconfig-paths: "npm:^5.1.4"
     vitest: "npm:^2.1.8"
-    wagmi: "npm:^2.12.25"
+    wagmi: "npm:^2.14.8"
     xxhash-wasm: "npm:^1.0.2"
   peerDependencies:
     "@fortawesome/fontawesome-svg-core": "*"
@@ -8735,6 +8735,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ox@npm:0.6.5":
+  version: 0.6.5
+  resolution: "ox@npm:0.6.5"
+  dependencies:
+    "@adraffy/ens-normalize": "npm:^1.10.1"
+    "@noble/curves": "npm:^1.6.0"
+    "@noble/hashes": "npm:^1.5.0"
+    "@scure/bip32": "npm:^1.5.0"
+    "@scure/bip39": "npm:^1.4.0"
+    abitype: "npm:^1.0.6"
+    eventemitter3: "npm:5.0.1"
+  peerDependencies:
+    typescript: ">=5.4.0"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/72a59bfb983395c19c56c93997dd80e3addad92830772534c8fd0667369352a94fde5880949351b5a651d5efd67ec37d6e2bc96fbd72cc5fd7791b463155cac8
+  languageName: node
+  linkType: hard
+
 "p-limit@npm:^2.2.0":
   version: 2.3.0
   resolution: "p-limit@npm:2.3.0"
@@ -11362,6 +11382,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-sync-external-store@npm:1.4.0":
+  version: 1.4.0
+  resolution: "use-sync-external-store@npm:1.4.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/ec011a5055962c0f6b509d6e78c0b143f8cd069890ae370528753053c55e3b360d3648e76cfaa854faa7a59eb08d6c5fb1015e60ffde9046d32f5b2a295acea5
+  languageName: node
+  linkType: hard
+
 "usehooks-ts@npm:^3.0.2":
   version: 3.1.0
   resolution: "usehooks-ts@npm:3.1.0"
@@ -11462,7 +11491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.1.1, viem@npm:^2.22.1":
+"viem@npm:^2.1.1":
   version: 2.22.2
   resolution: "viem@npm:2.22.2"
   dependencies:
@@ -11481,6 +11510,27 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/6f585331731a1f1a7762b41ae6fcafc0e18fe365e5db80638610aee6e290e14bbc02c5d2c2f4262557b166a50f45e32b4037d3022891590d9feed607e0025dad
+  languageName: node
+  linkType: hard
+
+"viem@npm:^2.22.9":
+  version: 2.22.9
+  resolution: "viem@npm:2.22.9"
+  dependencies:
+    "@noble/curves": "npm:1.7.0"
+    "@noble/hashes": "npm:1.6.1"
+    "@scure/bip32": "npm:1.6.0"
+    "@scure/bip39": "npm:1.5.0"
+    abitype: "npm:1.0.7"
+    isows: "npm:1.0.6"
+    ox: "npm:0.6.5"
+    ws: "npm:8.18.0"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/5fe8e34b839bc68eeac82dc85c431f03cbc91e286f7d9dc34afe7a81a0472b6f42f68d3f960eb3ad9ff66c195cd200cc5dcf98fb8ec27b57e9e36a0fea9c46ea
   languageName: node
   linkType: hard
 
@@ -11820,13 +11870,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wagmi@npm:^2.12.25":
-  version: 2.14.6
-  resolution: "wagmi@npm:2.14.6"
+"wagmi@npm:^2.14.8":
+  version: 2.14.8
+  resolution: "wagmi@npm:2.14.8"
   dependencies:
-    "@wagmi/connectors": "npm:5.7.3"
+    "@wagmi/connectors": "npm:5.7.4"
     "@wagmi/core": "npm:2.16.3"
-    use-sync-external-store: "npm:1.2.0"
+    use-sync-external-store: "npm:1.4.0"
   peerDependencies:
     "@tanstack/react-query": ">=5.0.0"
     react: ">=18"
@@ -11835,7 +11885,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/4f748f4028768cf82360b33d1767c986479f8c69afb964083f3be1eef5b9c7e35549334f0a11a767773a447de391b8ed61693a2e860d868a9fded315c515a4ec
+  checksum: 10c0/bc56925920f1c32e98aff688a7975635a5a552ad512f0e905f4c33f27cfda1833e1212247dc4ba477c1cc36af9552b83ea01be451a19ab2827eb4f15d99859e9
   languageName: node
   linkType: hard
 
