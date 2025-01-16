@@ -75,6 +75,5 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
-    automerge: true
     commit-message:
       prefix: 'ci'
