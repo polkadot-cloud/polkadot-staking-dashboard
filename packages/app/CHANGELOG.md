@@ -1,5 +1,53 @@
 # Changelog
 
+## [1.8.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.7.0...app-v1.8.0) (2025-01-16)
+
+
+### Features
+
+* Add 100% validator commission prompt. ([#2358](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2358)) ([01294ae](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/01294aed9a437a26fe5543f8abb48ae5a0023cec))
+* Disable dual staking ([#2368](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2368)) ([e94d92d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e94d92d27fee4739a1f349a4c5ed897cae24fa1a))
+* **fix:** Abstract `LeavePool`, use as depositor unbond ([#2370](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2370)) ([a97eaaf](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a97eaaf1591a0306d6de760ee6f74875fb4d52de))
+* **fix:** Ensure unclaimed payouts are ints ([#2336](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2336)) ([9b59277](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9b59277365ae06a88ad9f8ce8d70de113169717d))
+* **fix:** Fix prettier organize imports, lint. ([#2340](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2340)) ([441caf7](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/441caf7069b7d9a59116c05a88e82748e7b31388))
+* **fix:** Remove left pool from state ([#2373](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2373)) ([4b823b9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/4b823b9108b7502f0a40ed4c08da3197dd4f343c))
+* **fix:** use compact prefix ([#2374](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2374)) ([f923419](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f923419f04637b8fcf8e1026ce394cbc3dc0b58c))
+* Historical pool rewards to Staking API, replace Subscan ([#2376](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2376)) ([9233131](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9233131dfc4cb2781f719b80c825adc4fbc6c94c))
+* init `ui-structure`, `consts`, `styles` packages, migrate Structure kit ([#2330](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2330)) ([6d15f49](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6d15f49460315940ec7a2502a2dca238f72c401f))
+* Init monorepo, `app` and `ui-buttons` packages ([#2327](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2327)) ([09c8daa](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/09c8daa701596e65143799497c1116242358560f))
+* Init Staking API GraphQL Plugin, discontinue Binance Spot ([#2332](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2332)) ([297b1d4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/297b1d463a770fcd213d9e9083e85446ce6fa834))
+* **light client:** Use wss boot nodes only ([#2345](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2345)) ([02e778d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/02e778d1731c405cb9ff955b49fc6a91645f3cdc))
+* Nominator Rewards from Staking API, discontinue Subscan nominator rewards ([#2365](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2365)) ([5e36d3a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/5e36d3ae97177b19fc4875a891958b70186b0781))
+* normalise title w. polkadot ([e163a0f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e163a0fa411764e335e9e5a858f8ba1bc2140f62))
+* **refactor:** `ui-structure` to `ui-core`, handle multiple exports ([#2411](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2411)) ([21d6d87](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/21d6d876826cdea76cc85ea1db1ad0df56afe3c8))
+* **refactor:** Add assets package, move svgs to package ([#2361](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2361)) ([15c08b1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/15c08b1f224cad6578575eae67cc03fe0947d938))
+* **refactor:** Initialise `ui-overlay` package, restructure components ([#2409](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2409)) ([70a81bf](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/70a81bfafbe0dff74b4a6c5053b9842d86d43dea))
+* **refactor:** Locales to package, fixes and structural improvements. ([#2338](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2338)) ([b9efa04](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b9efa04f90839b13d6276c2209229d6adfe330f4))
+* **refactor:** Migrate to ESLint 9 ([#2342](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2342)) ([43db0c0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/43db0c0259de34f7ce989de4b7596011e8a22000))
+* **refactor:** Modal close refactor, helmet async, rm react-scroll ([#2412](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2412)) ([7977231](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/797723187060e8e32e696c81cc8aa0c899507708))
+* **refactor:** Move CardHeader to `core-ui` ([#2423](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2423)) ([8793f3a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8793f3a4f6c1aed50797df4b7d493ffa5a43b8fc))
+* **refactor:** Pool rewards to controller, pool types to `types` package ([#2344](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2344)) ([437ffe4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/437ffe4cca9ac23fe412cec68f59ee095f1e195f))
+* **refactor:** Remove semi ([#2356](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2356)) ([4c10b19](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/4c10b192612f557128b3eb23af68a24a993f41e7))
+* **refactor:** Rm `useSize` hook, `lodash` deps ([#2341](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2341)) ([a03169b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a03169bab77b74f1d2dc1b16aef7405babb30185))
+* **refactor:** Simplify `ui-core` structure ([#2414](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2414))t ([b9f42d2](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b9f42d2c3c776fbc833e4fea36aefba0cdbbb737))
+* **refactor:** Use `@lottiefiles/dotlottie-react` ([#2413](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2413)) ([01fbcd8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/01fbcd815db5fa51b2facecbf2f8be302a4264b6))
+* **refactor:** Use Staking API for validator era points ([#2417](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2417)) ([9e1b37f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9e1b37f1f032173700ce8cfacb18460143070db0))
+* Refetch token price if online status is true ([#2337](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2337)) ([c87a8f2](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c87a8f2d6cff43b72c817c170fa83ced6d2786b9))
+* Revise footer ([#2408](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2408)) ([30e739e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/30e739ed1ca7bebcc2ca6c4b4ebee2e54b2d2e77))
+* Support options refresh with Discord and Mail ([#2331](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2331)) ([0700594](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/07005940dc45a1921d530e18c5c49efd0f4c4d61))
+* Tx subscriptions to `TxSubmission` ([#2372](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2372)) ([04308d4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/04308d45f9d8bec4ef29695767b2b982485c1ffc))
+* Use `useCanFastUnstake` query ([#2377](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2377)) ([0d99cbb](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0d99cbb7156c30a047b4db32187977c1bc7b42c4))
+* use latest validator assets ([#2375](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2375)) ([b2a8af1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b2a8af1ff57fa8412efe67d08e1233e6eeea50ac))
+* Use pool points for unbonding / leaving pool ([#2369](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2369)) ([e1c3a08](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e1c3a085b458a34f4559a9f43e947fbe610ef600))
+
+
+### Bug Fixes
+
+* average dip ([374e07f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/374e07f27530b3b1de8e04615c89d3e91c6ce9c8))
+* Manage pools formatting error ([#2363](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2363)) ([eedef20](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/eedef2048720e31f6bf51d5bc36239eeb071f6bf))
+* Proxy support logic for Polkadot API ([#2359](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2359)) ([a6a37f1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a6a37f1ff061d82de42a54dcd504f6b80b62e739))
+* theme Selectable buttons ([#2334](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2334)) ([20b33e5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/20b33e5ef485dde1b2d92f57ddf3044e7add9afe))
+
 ## [1.7.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v1.6.0...v1.7.0) (2024-11-08)
 
 
