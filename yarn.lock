@@ -22,9 +22,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.12.4":
-  version: 3.12.4
-  resolution: "@apollo/client@npm:3.12.4"
+"@apollo/client@npm:^3.12.6":
+  version: 3.12.6
+  resolution: "@apollo/client@npm:3.12.6"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -55,7 +55,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/6b30b14d576230cb56b0bb9b328c81f33631640e3d97a1185a20ede7e200dfa79502d695c347920e8c930a36e50870a41f5244ae2167d0123ad56973642528e6
+  checksum: 10c0/817d45433bdaff12e8f0a7f880f205d7ebcef1322442493aabc22f551084a3d6a5545431b5fa6fe1c8a451abc32b68f99d37a09946926c0cdded8d7fb948fedc
   languageName: node
   linkType: hard
 
@@ -8981,7 +8981,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "plugin-staking-api@workspace:packages/plugin-staking-api"
   dependencies:
-    "@apollo/client": "npm:^3.12.4"
+    "@apollo/client": "npm:^3.12.6"
     graphql: "npm:^16.10.0"
   languageName: unknown
   linkType: soft
