@@ -1,0 +1,85 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 20
+    groups:
+      eslint:
+        patterns:
+          - 'eslint*'
+          - '@eslint/*'
+          - '@typescript-eslint/*'
+          - 'typescript-eslint'
+      prettier:
+        patterns:
+          - 'prettier*'
+      react:
+        patterns:
+          - 'react*'
+          - 'styled-components'
+          - '@fortawesome/*'
+          - 'react-helmet-async'
+          - 'react-router-dom'
+      types:
+        patterns:
+          - '@types/*'
+
+      utils-and-qrcode:
+        patterns:
+          - 'classnames'
+          - 'date-fns'
+          - 'bn.js'
+          - 'buffer'
+          - 'compare-versions'
+          - '@ledgerhq/*'
+          - 'rxjs'
+          - 'chroma-js'
+          - 'xxhash-wasm'
+          - 'html5-qrcode'
+          - 'qrcode-generator'
+          - 'chroma-js'
+          - 'framer-motion'
+      vite:
+        patterns:
+          - 'vite*'
+          - 'vite-plugin-*'
+      charts:
+        patterns:
+          - 'chart.js'
+          - 'react-chartjs-2'
+      polkadot:
+        patterns:
+          - '@polkadot/*'
+          - '@zondax/ledger-substrate'
+          - 'polkadot-api'
+      ui:
+        patterns:
+          - '@w3ux/*'
+          - 'ui-*'
+          - 'locales'
+          - 'styles'
+          - 'assets'
+      lottie:
+        patterns:
+          - '@dotlottie/*'
+          - '@lottiefiles/*'
+      wagmi:
+        patterns:
+          - 'viem'
+          - 'wagmi'
+      testing:
+        patterns:
+          - 'vitest'
+          - 'vite-bundle-visualizer'
+    commit-message:
+      prefix: 'deps'
+
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: 'ci'
