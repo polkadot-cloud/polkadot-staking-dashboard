@@ -10,7 +10,9 @@ updates:
       eslint:
         patterns:
           - 'eslint*'
+          - '@eslint/*'
           - '@typescript-eslint/*'
+          - 'typescript-eslint'
       prettier:
         patterns:
           - 'prettier*'
@@ -21,6 +23,10 @@ updates:
           - '@fortawesome/*'
           - 'react-helmet-async'
           - 'react-router-dom'
+      types:
+        patterns:
+          - '@types/*'
+
       utils-and-qrcode:
         patterns:
           - 'classnames'
@@ -34,6 +40,8 @@ updates:
           - 'xxhash-wasm'
           - 'html5-qrcode'
           - 'qrcode-generator'
+          - 'chroma-js'
+          - 'framer-motion'
       vite:
         patterns:
           - 'vite*'
