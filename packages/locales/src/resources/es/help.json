@@ -110,9 +110,7 @@
       ],
       "idealStaked": [
         "Stake Ideal",
-        [
-          "El porcentaje de suministro total en stake en condiciones ideales de red."
-        ]
+        ["El porcentaje de suministro total en stake en condiciones ideales de red."]
       ],
       "inactiveNominations": [
         "Nominaciones Inactivas",
