@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
-import { enGB, zhCN, es } from 'date-fns/locale'
+import { enGB, es, zhCN } from 'date-fns/locale'
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import baseEn from './resources/en/base.json'
