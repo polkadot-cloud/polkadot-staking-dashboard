@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-
 import { enGB, es, zhCN } from 'date-fns/locale'
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
