@@ -17,6 +17,7 @@ const QUERY = gql`
     ) {
       era
       points
+      start
     }
   }
 `

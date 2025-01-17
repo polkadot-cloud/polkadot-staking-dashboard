@@ -12,7 +12,6 @@ import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
 import { useSyncing } from 'hooks/useSyncing'
-import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
@@ -20,6 +19,7 @@ import { DefaultLocale, locales } from 'locales'
 import type { RewardResult } from 'plugin-staking-api/types'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
@@ -65,10 +65,10 @@ export const Payouts = () => {
 
   return (
     <>
-      <CardHeaderWrapper>
+      <CardHeader>
         <h4>{t('overview.recentPayouts')}</h4>
         <h2>
-          <Token className="networkIcon" />
+          <Token />
           <Odometer
             value={minDecimalPlaces(
               lastReward === undefined
@@ -80,15 +80,15 @@ export const Payouts = () => {
               2
             )}
           />
-          <span className="note">
+          <h5>
             {lastReward === undefined ? (
               ''
             ) : (
               <>&nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}</>
             )}
-          </span>
+          </h5>
         </h2>
-      </CardHeaderWrapper>
+      </CardHeader>
       <div className="inner" ref={graphInnerRef} style={{ minHeight }}>
         {!pluginEnabled('staking_api') ? (
           <StatusLabel

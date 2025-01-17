@@ -19,13 +19,13 @@ import { AnalyzedPayouts } from './Stats/AnalyzedPayouts'
 
 import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { GeoDonut } from 'library/Graphs/GeoDonut'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { PluginLabel } from 'library/PluginLabel'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
-import { PageRow } from 'ui-core/base'
+import { CardHeader, PageRow } from 'ui-core/base'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -122,7 +122,7 @@ export const NominationGeo = () => {
       <PageRow>
         <CardWrapper>
           <PluginLabel plugin="polkawatch" />
-          <CardHeaderWrapper>
+          <CardHeader>
             <h4>
               {t('decentralization.payoutDistribution', { ns: 'pages' })}
               <ButtonHelp
@@ -133,8 +133,7 @@ export const NominationGeo = () => {
             <h2>
               {t('decentralization.byRegionCountryNetwork', { ns: 'pages' })}
             </h2>
-          </CardHeaderWrapper>
-
+          </CardHeader>
           <GraphsWrapper style={{ minHeight: graphContainerMinHeight }}>
             {showDisabledLabel && (
               <StatusLabel

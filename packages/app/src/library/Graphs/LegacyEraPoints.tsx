@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useSize } from '@w3ux/hooks'
 import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
 import {
@@ -15,19 +14,12 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useTheme } from 'contexts/Themes'
-import { useUi } from 'contexts/UI'
-import { formatSize } from 'library/Graphs/Utils'
-import { useRef } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
-import { ButtonHelp } from 'ui-buttons'
-import type { OverviewSectionProps } from '../types'
-import { GraphWrapper, HeadingWrapper } from '../Wrappers'
+import type { PointsByEra } from 'types'
 
 ChartJS.register(
   CategoryScale,
@@ -40,56 +32,45 @@ ChartJS.register(
   Legend
 )
 
-export const PerformanceGraph = ({
-  bondedPool,
-  performanceKey,
-  graphSyncing,
-}: OverviewSectionProps) => {
+export const LegacyEraPoints = ({
+  pointsByEra,
+  syncing,
+  width,
+  height,
+}: {
+  pointsByEra: PointsByEra
+  syncing: boolean
+  width: string | number
+  height: string | number
+}) => {
   const { t } = useTranslation()
   const { mode } = useTheme()
-  const { openHelp } = useHelp()
-  const { containerRefs } = useUi()
   const { colors } = useNetwork().networkData
-  const { getPoolRewardPoints } = usePoolPerformance()
 
-  const poolRewardPoints = getPoolRewardPoints(performanceKey)
-  const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {}
-
-  // Ref to the graph container.
-  const graphInnerRef = useRef<HTMLDivElement>(null)
-
-  // Get the size of the graph container.
-  const size = useSize(graphInnerRef, {
-    outerElement: containerRefs?.mainInterface,
-  })
-  const { width, height } = formatSize(size, 150)
-
-  // Format reward points as an array of strings, or an empty array if syncing.
-  const dataset = graphSyncing
+  // Format reward points as an array of strings, or an empty array if syncing
+  const dataset = syncing
     ? []
     : Object.values(
         Object.fromEntries(
-          Object.entries(rawEraRewardPoints).map(([k, v]: AnyJson) => [
+          Object.entries(pointsByEra).map(([k, v]) => [
             k,
             new BigNumber(v).toString(),
           ])
         )
       )
 
-  // Format labels, only displaying the first and last era.
-  const labels = Object.keys(rawEraRewardPoints).map(() => '')
-
-  const firstEra = Object.keys(rawEraRewardPoints)[0]
+  // Format labels, only displaying the first and last era
+  const labels = Object.keys(pointsByEra).map(() => '')
+  const firstEra = Object.keys(pointsByEra)[0]
   labels[0] = firstEra
-    ? `${t('era', { ns: 'library' })} ${Object.keys(rawEraRewardPoints)[0]}`
+    ? `${t('era', { ns: 'library' })} ${Object.keys(pointsByEra)[0]}`
     : ''
-
-  const lastEra = Object.keys(rawEraRewardPoints)[labels.length - 1]
+  const lastEra = Object.keys(pointsByEra)[labels.length - 1]
   labels[labels.length - 1] = lastEra
-    ? `${t('era', { ns: 'library' })} ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`
+    ? `${t('era', { ns: 'library' })} ${Object.keys(pointsByEra)[labels.length - 1]}`
     : ''
 
-  // Use primary color for bars.
+  // Use primary color for line
   const color = colors.primary[mode]
 
   const options = {
@@ -104,6 +85,7 @@ export const PerformanceGraph = ({
           display: false,
         },
         ticks: {
+          color: graphColors.canvas.axis[mode],
           font: {
             size: 10,
           },
@@ -114,6 +96,7 @@ export const PerformanceGraph = ({
         stacked: true,
         beginAtZero: true,
         ticks: {
+          color: graphColors.canvas.axis[mode],
           font: {
             size: 10,
           },
@@ -122,7 +105,7 @@ export const PerformanceGraph = ({
           display: false,
         },
         grid: {
-          color: graphColors.grid[mode],
+          color: graphColors.canvas.grid[mode],
         },
       },
     },
@@ -169,29 +152,14 @@ export const PerformanceGraph = ({
   }
 
   return (
-    <div>
-      <HeadingWrapper>
-        <h3>
-          {t('recentPerformance', { ns: 'library' })}
-          <ButtonHelp
-            outline
-            marginLeft
-            onClick={() => openHelp('Era Points')}
-          />
-        </h3>
-      </HeadingWrapper>
-
-      <GraphWrapper ref={graphInnerRef} style={{ height }}>
-        <div
-          className="inner"
-          style={{
-            width,
-            height,
-          }}
-        >
-          <Line options={options} data={data} />
-        </div>
-      </GraphWrapper>
+    <div
+      className="inner"
+      style={{
+        width,
+        height,
+      }}
+    >
+      <Line options={options} data={data} />
     </div>
   )
 }

@@ -7,14 +7,13 @@ import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { PoolSyncBar } from 'library/PoolSync/Bar'
-import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool, PoolRewardPointsKey } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
+import { Head, Preload, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { JoinPoolInterfaceWrapper } from './Wrappers'
 
 export const Preloader = ({
   performanceKey,
@@ -27,6 +26,7 @@ export const Preloader = ({
     networkData: { units, unit },
   } = useNetwork()
   const { bondedPools } = useBondedPools()
+  const { getPoolPerformanceTask } = usePoolPerformance()
   const {
     poolsConfig: { counterForPoolMembers },
   } = useApi()
@@ -40,9 +40,19 @@ export const Preloader = ({
     .decimalPlaces(0)
     .toFormat()
 
+  // Get the pool performance task to determine if performance data is ready.
+  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey)
+  // Calculate syncing status.
+  const { startEra, currentEra, endEra } = poolJoinPerformanceTask
+  const totalEras = startEra.minus(endEra)
+  const erasPassed = startEra.minus(currentEra)
+  const percentPassed = erasPassed.isEqualTo(0)
+    ? new BigNumber(0)
+    : erasPassed.dividedBy(totalEras).multipliedBy(100)
+
   return (
     <>
-      <div className="head">
+      <Head>
         <ButtonPrimary
           text={t('pools.back', { ns: 'pages' })}
           lg
@@ -50,39 +60,22 @@ export const Preloader = ({
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </div>
-      <CanvasTitleWrapper className="padding">
-        <div className="inner">
-          <div className="empty"></div>
-          <div className="standalone">
-            <div className="title">
-              <h1>{t('pools.pools')}</h1>
-            </div>
-            <div className="labels">
-              <h3>
-                {t('pools.joinPoolHeading', {
-                  totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
-                  totalPoolPoints: totalPoolPointsUnit,
-                  unit,
-                  network: capitalizeFirstLetter(network),
-                })}
-              </h3>
-            </div>
-          </div>
-        </div>
-      </CanvasTitleWrapper>
-
-      <JoinPoolInterfaceWrapper>
-        <div className="content" style={{ flexDirection: 'column' }}>
-          <h2 className="tip">
-            {t('analyzingPoolPerformance', { ns: 'library' })}...
-          </h2>
-
-          <h2 className="tip">
-            <PoolSyncBar performanceKey={performanceKey} />
-          </h2>
-        </div>
-      </JoinPoolInterfaceWrapper>
+      </Head>
+      <Title>
+        <h1>{t('pools.pools')}</h1>
+        <h3>
+          {t('pools.joinPoolHeading', {
+            totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
+            totalPoolPoints: totalPoolPointsUnit,
+            unit,
+            network: capitalizeFirstLetter(network),
+          })}
+        </h3>
+      </Title>
+      <Preload
+        title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
+        percentPassed={percentPassed.toString()}
+      />
     </>
   )
 }
