@@ -1,12 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars, faChartLine, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
 import { useMenu } from 'contexts/Menu'
 import { usePlugins } from 'contexts/Plugins'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
+import { Metrics } from 'library/ListItem/Labels/Metrics'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
@@ -36,7 +37,6 @@ export const Default = ({
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
-  const { openCanvas } = useOverlay().canvas
   const { validatorIdentities, validatorSupers } = useValidators()
 
   const { address, prefs, validatorStatus, totalStake } = validator
@@ -49,21 +49,6 @@ export const Default = ({
 
   // Configure menu.
   const menuItems: AnyJson[] = []
-  menuItems.push({
-    icon: <FontAwesomeIcon icon={faChartLine} transform="shrink-3" />,
-    wrap: null,
-    title: `${t('viewMetrics')}`,
-    cb: () => {
-      openCanvas({
-        key: 'ValidatorMetrics',
-        options: {
-          validator: address,
-          identity,
-        },
-        size: 'xl',
-      })
-    },
-  })
 
   if (pluginEnabled('polkawatch')) {
     menuItems.push({
@@ -99,7 +84,13 @@ export const Default = ({
             <Labels className={displayFor}>
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
-
+              <Metrics
+                address={address}
+                display={getIdentityDisplay(
+                  validatorIdentities[address],
+                  validatorSupers[address]
+                )}
+              />
               {/* restrict opening modal within a canvas */}
               {displayFor === 'default' && showMenu && (
                 <div className="label">
