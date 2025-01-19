@@ -84,14 +84,15 @@ export const Default = ({
             <Labels className={displayFor}>
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
-              <Metrics
-                address={address}
-                display={getIdentityDisplay(
-                  validatorIdentities[address],
-                  validatorSupers[address]
-                )}
-              />
-              {/* restrict opening modal within a canvas */}
+              {displayFor === 'default' && (
+                <Metrics
+                  address={address}
+                  display={getIdentityDisplay(
+                    validatorIdentities[address],
+                    validatorSupers[address]
+                  )}
+                />
+              )}
               {displayFor === 'default' && showMenu && (
                 <div className="label">
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>
