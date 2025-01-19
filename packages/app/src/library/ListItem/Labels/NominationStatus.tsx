@@ -26,6 +26,7 @@ export const NominationStatus = ({
   } = useStaking()
   const { syncing } = useSyncing(['era-stakers'])
 
+  // determine staked amount
   let stakedAmount = new BigNumber(0)
   if (bondFor === 'nominator') {
     // bonded amount within the validator.
@@ -43,19 +44,10 @@ export const NominationStatus = ({
     }
   }
 
-  let statusTKey
-  if (status === 'active') {
-    statusTKey = 'backing'
-  } else if (status === 'inactive') {
-    statusTKey = 'notBacking'
-  } else {
-    statusTKey = 'waiting'
-  }
-
   return (
     <ValidatorStatusWrapper $status={status || 'waiting'} $noMargin={noMargin}>
       <h5>
-        {t(statusTKey)}
+        {t(`${status || 'waiting'}`)}
         {stakedAmount.isGreaterThan(0)
           ? ` / ${syncing ? '...' : `${stakedAmount.toFormat()} ${unit}`}`
           : null}
