@@ -1,12 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  faArrowsRotate,
-  faHashtag,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowsRotate, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTranslation } from 'react-i18next'
@@ -91,9 +86,7 @@ export const Header = ({
             </div>
             <HeadTags>
               <h3>
-                {t('pool', { ns: 'library' })}{' '}
-                <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
-                {bondedPool.id}
+                {t('pool', { ns: 'library' })} {bondedPool.id}
                 {['Blocked', 'Destroying'].includes(bondedPool.state) && (
                   <span className={getTagClass(bondedPool.state)}>
                     {t(bondedPool.state.toLowerCase(), { ns: 'library' })}
