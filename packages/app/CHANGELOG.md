@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.9.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.8.0...app-v1.9.0) (2025-01-19)
+
+
+### Features
+
+* Backing terminology for nomination list items ([#2449](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2449)) ([adcbc97](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/adcbc9784e31588e92d81cce56ff3554bf9b7895))
+* Easier access to validator metrics ([#2450](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2450)) ([12379a5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/12379a5f041d742b67a70672fa093379ee8cf397))
+
+
+### Bug Fixes
+
+* batch call test ([#2447](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2447)) ([6f4f9ae](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6f4f9ae861bca36e4252cf76301ee6633b434acd))
+
 ## [1.8.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.7.0...app-v1.8.0) (2025-01-16)
 
 

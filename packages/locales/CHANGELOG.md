@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.1.0...locales-v1.2.0) (2025-01-19)
+
+
+### Features
+
+* Backing terminology for nomination list items ([#2449](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2449)) ([adcbc97](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/adcbc9784e31588e92d81cce56ff3554bf9b7895))
+* Easier access to validator metrics ([#2450](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2450)) ([12379a5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/12379a5f041d742b67a70672fa093379ee8cf397))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.0.0...locales-v1.1.0) (2025-01-16)
 
 
