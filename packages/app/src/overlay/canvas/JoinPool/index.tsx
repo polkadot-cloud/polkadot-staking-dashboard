@@ -48,6 +48,7 @@ export const JoinPool = () => {
   // Filter bonded pools to only those that are open and that have active daily rewards for the last
   // `MaxEraRewardPointsEras` eras. The second filter checks if the pool is in `eraStakers` for the
   // active era.
+  // TODO: Replace with pool candidates query.
   const filteredBondedPools = useMemo(
     () =>
       poolsForJoin
