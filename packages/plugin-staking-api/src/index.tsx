@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/client'
 
 export * from './Client'
 export * from './queries/useCanFastUnstake'
+export * from './queries/usePoolEraPoints'
 export * from './queries/usePoolRewards'
 export * from './queries/useRewards'
 export * from './queries/useTokenPrice'

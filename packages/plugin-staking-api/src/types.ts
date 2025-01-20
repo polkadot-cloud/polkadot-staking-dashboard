@@ -106,6 +106,18 @@ export interface PoolReward {
   poolId: number
 }
 
+export type PoolEraPointsResult = Query & {
+  data: {
+    poolEraPoints: PoolEraPoints[]
+  }
+}
+
+export interface PoolEraPoints {
+  era: number
+  points: string
+  start: number
+}
+
 export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
 
 export type RewardResult = NominatorReward | PoolReward
