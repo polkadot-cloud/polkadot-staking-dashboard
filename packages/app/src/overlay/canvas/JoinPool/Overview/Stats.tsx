@@ -20,8 +20,10 @@ import type { OverviewSectionProps } from '../types'
 export const Stats = ({
   bondedPool,
   performanceKey,
-  graphSyncing,
-}: OverviewSectionProps) => {
+  graphSyncing = false,
+}: OverviewSectionProps & {
+  graphSyncing?: boolean
+}) => {
   const { t } = useTranslation('library')
   const {
     network,

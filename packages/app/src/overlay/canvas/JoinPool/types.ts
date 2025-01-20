@@ -29,5 +29,4 @@ export interface AddressSectionProps {
 export interface OverviewSectionProps {
   bondedPool: BondedPool
   performanceKey: PoolRewardPointsKey
-  graphSyncing: boolean
 }

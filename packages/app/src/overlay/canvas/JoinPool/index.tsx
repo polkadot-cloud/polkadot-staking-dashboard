@@ -31,10 +31,13 @@ export const JoinPool = () => {
       ? providedPool?.performanceBatchKey
       : 'pool_join'
 
-  // Get the pool performance task to determine if performance data is ready.
+  // Get the pool performance task to determine if performance data is ready
   const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey)
 
-  const performanceDataReady = poolJoinPerformanceTask.status === 'synced'
+  // Whether performance data is ready. Data is already ready (Staking API) if providedPoolId is not
+  // null. Otherwise, wait for the performance task to sync
+  const performanceDataReady =
+    providedPoolId || poolJoinPerformanceTask.status === 'synced'
 
   // Get performance data: Assumed to be fetched now.
   const poolRewardPoints = getPoolRewardPoints(performanceKey)
@@ -103,8 +106,7 @@ export const JoinPool = () => {
 
   return (
     <Main>
-      {(!providedPoolId && poolJoinPerformanceTask.status !== 'synced') ||
-      !bondedPool ? (
+      {(!providedPoolId && !performanceDataReady) || !bondedPool ? (
         <Preloader performanceKey={performanceKey} />
       ) : (
         <>
@@ -114,18 +116,12 @@ export const JoinPool = () => {
             setSelectedPoolId={setSelectedPoolId}
             bondedPool={bondedPool}
             metadata={poolsMetaData[selectedPoolId]}
-            autoSelected={providedPoolId === undefined}
+            autoSelected={!!providedPoolId}
             filteredBondedPools={filteredBondedPools}
             providedPoolId={providedPoolId}
           />
           {activeTab === 0 && (
-            <Overview
-              bondedPool={bondedPool}
-              performanceKey={performanceKey}
-              graphSyncing={
-                providedPoolId && poolJoinPerformanceTask.status !== 'synced'
-              }
-            />
+            <Overview bondedPool={bondedPool} performanceKey={performanceKey} />
           )}
           {activeTab === 1 && (
             <Nominations

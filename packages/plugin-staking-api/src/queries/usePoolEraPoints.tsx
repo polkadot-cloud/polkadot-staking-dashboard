@@ -5,7 +5,7 @@ import { gql, useQuery } from '@apollo/client'
 import type { PoolEraPointsResult } from '../types'
 
 const QUERY = gql`
-  query PoolEraPoints($chain: String!, $poolId: String!, $fromEra: Int!) {
+  query PoolEraPoints($chain: String!, $poolId: Int!, $fromEra: Int!) {
     poolEraPoints(chain: $chain, poolId: $poolId, fromEra: $fromEra) {
       era
       points
@@ -26,5 +26,6 @@ export const usePoolEraPoints = ({
   const { loading, error, data, refetch } = useQuery(QUERY, {
     variables: { chain, poolId, fromEra },
   })
+  console.log(error)
   return { loading, error, data, refetch }
 }

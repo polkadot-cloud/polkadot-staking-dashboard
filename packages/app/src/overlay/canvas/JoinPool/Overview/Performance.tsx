@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
+import BigNumber from 'bignumber.js'
 import {
   BarElement,
   CategoryScale,
@@ -13,11 +14,11 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useUi } from 'contexts/UI'
-import { LegacyEraPoints } from 'library/Graphs/LegacyEraPoints'
 import { formatSize } from 'library/Graphs/Utils'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
@@ -25,6 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { GraphInner, Subheading } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
+import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 
 ChartJS.register(
@@ -38,19 +40,13 @@ ChartJS.register(
   Legend
 )
 
-export const Performance = ({
-  bondedPool,
-  performanceKey,
-  graphSyncing,
-}: OverviewSectionProps) => {
+export const Performance = ({ bondedPool }: OverviewSectionProps) => {
+  const { activeEra } = useApi()
   const { t } = useTranslation()
   const { openHelp } = useHelp()
+  const { network } = useNetwork()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
-  const { getPoolRewardPoints } = usePoolPerformance()
-
-  const pointsByEra =
-    getPoolRewardPoints(performanceKey)?.[bondedPool.addresses.stash] || {}
 
   // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement | null>(null)
@@ -59,7 +55,7 @@ export const Performance = ({
   const size = useSize(graphInnerRef, {
     outerElement: containerRefs?.mainInterface,
   })
-  const { width, height } = formatSize(size, 150)
+  const { width, height } = formatSize(size, 250)
 
   return (
     <div>
@@ -73,12 +69,12 @@ export const Performance = ({
           />
         </h3>
       </Subheading>
-
       <GraphInner ref={graphInnerRef} width={width} height={height}>
         {pluginEnabled('staking_api') ? (
-          <LegacyEraPoints
-            syncing={graphSyncing}
-            pointsByEra={pointsByEra}
+          <ActiveGraph
+            network={network}
+            poolId={Number(bondedPool.id)}
+            fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
             width={width}
             height={height}
           />
