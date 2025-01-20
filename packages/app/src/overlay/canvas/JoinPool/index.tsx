@@ -37,7 +37,7 @@ export const JoinPool = () => {
   // Whether performance data is ready. Data is already ready (Staking API) if providedPoolId is not
   // null. Otherwise, wait for the performance task to sync
   const performanceDataReady =
-    providedPoolId || poolJoinPerformanceTask.status === 'synced'
+    !!providedPoolId || poolJoinPerformanceTask.status === 'synced'
 
   // Get performance data: Assumed to be fetched now.
   const poolRewardPoints = getPoolRewardPoints(performanceKey)
@@ -90,7 +90,7 @@ export const JoinPool = () => {
   // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
   // pool otherwise. Re-fetches when the selected pool count is incremented.
   const bondedPool = useMemo(
-    () => bondedPools.find(({ id }) => id === selectedPoolId),
+    () => bondedPools.find(({ id }) => Number(id) === Number(selectedPoolId)),
     [selectedPoolId]
   )
 
