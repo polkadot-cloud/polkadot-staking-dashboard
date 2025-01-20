@@ -118,6 +118,12 @@ export interface PoolEraPoints {
   start: number
 }
 
+export type PoolCandidatesResult = Query & {
+  data: {
+    poolCandidates: number[]
+  }
+}
+
 export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
 
 export type RewardResult = NominatorReward | PoolReward
