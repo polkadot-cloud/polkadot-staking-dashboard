@@ -14,15 +14,18 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useHelp } from 'contexts/Help'
+import { usePlugins } from 'contexts/Plugins'
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useUi } from 'contexts/UI'
 import { LegacyEraPoints } from 'library/Graphs/LegacyEraPoints'
 import { formatSize } from 'library/Graphs/Utils'
+import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { GraphInner, Subheading } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
+import { InactiveGraph } from './InactiveGraph'
 
 ChartJS.register(
   CategoryScale,
@@ -43,6 +46,7 @@ export const Performance = ({
   const { t } = useTranslation()
   const { openHelp } = useHelp()
   const { containerRefs } = useUi()
+  const { pluginEnabled } = usePlugins()
   const { getPoolRewardPoints } = usePoolPerformance()
 
   const pointsByEra =
@@ -71,12 +75,24 @@ export const Performance = ({
       </Subheading>
 
       <GraphInner ref={graphInnerRef} width={width} height={height}>
-        <LegacyEraPoints
-          syncing={graphSyncing}
-          pointsByEra={pointsByEra}
-          width={width}
-          height={height}
-        />
+        {pluginEnabled('staking_api') ? (
+          <LegacyEraPoints
+            syncing={graphSyncing}
+            pointsByEra={pointsByEra}
+            width={width}
+            height={height}
+          />
+        ) : (
+          <>
+            <StatusLabel
+              status="active_service"
+              statusFor="staking_api"
+              title={t('common.stakingApiDisabled', { ns: 'pages' })}
+              topOffset="37%"
+            />
+            <InactiveGraph width={width} height={height} />
+          </>
+        )}
       </GraphInner>
     </div>
   )
