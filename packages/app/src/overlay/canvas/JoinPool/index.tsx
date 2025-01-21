@@ -1,12 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { MaxEraRewardPointsEras } from 'consts'
+import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useJoinPools } from 'contexts/Pools/JoinPools'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
-import { useStaking } from 'contexts/Staking'
+import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
+import type { BondedPool } from 'types'
 import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { Header } from './Header'
@@ -18,10 +17,11 @@ export const JoinPool = () => {
   const {
     config: { options },
   } = useOverlay().canvas
-  const { eraStakers } = useStaking()
-  const { poolsForJoin } = useJoinPools()
+  const { network } = useNetwork()
   const { poolsMetaData, bondedPools } = useBondedPools()
-  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance()
+
+  // Store latest pool candidates
+  const [poolCandidates, setPoolCandidates] = useState<number[]>([])
 
   // Get the provided pool id and performance batch key from options, if available.
   const providedPool = options?.providedPool
@@ -31,53 +31,37 @@ export const JoinPool = () => {
       ? providedPool?.performanceBatchKey
       : 'pool_join'
 
-  // Get the pool performance task to determine if performance data is ready
-  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey)
-
-  // Whether performance data is ready. Data is already ready (Staking API) if providedPoolId is not
-  // null. Otherwise, wait for the performance task to sync
-  const performanceDataReady =
-    !!providedPoolId || poolJoinPerformanceTask.status === 'synced'
-
-  // Get performance data: Assumed to be fetched now.
-  const poolRewardPoints = getPoolRewardPoints(performanceKey)
+  // Whether performance data is ready
+  const performanceDataReady = !!providedPoolId || poolCandidates.length > 0
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0)
 
+  // Gets pool candidates for joining pool
+  const getPoolCandidates = async () => {
+    const result = await fetchPoolCandidates(network)
+    return result?.poolCandidates || []
+  }
+
   // Filter bonded pools to only those that are open and that have active daily rewards for the last
   // `MaxEraRewardPointsEras` eras. The second filter checks if the pool is in `eraStakers` for the
   // active era.
-  // TODO: Replace with pool candidates query.
-  const filteredBondedPools = useMemo(
+  const shuffledCandidates: BondedPool[] = useMemo(
     () =>
-      poolsForJoin
-        .filter((pool) => {
-          // Fetch reward point data for the pool.
-          const rawEraRewardPoints =
-            poolRewardPoints[pool.addresses.stash] || {}
-          const rewardPoints = Object.values(rawEraRewardPoints)
-
-          // Ensure pool has been active for every era in performance data.
-          const activeDaily =
-            rewardPoints.every((points) => Number(points) > 0) &&
-            rewardPoints.length === MaxEraRewardPointsEras
-
-          return activeDaily
-        })
-        // Ensure the pool is currently in the active set of backers.
-        .filter((pool) =>
-          eraStakers.stakers.find((staker) =>
-            staker.others.find(({ who }) => who !== pool.addresses.stash)
+      poolCandidates
+        .map((poolId) =>
+          bondedPools.find(
+            (bondedPool) => Number(bondedPool.id) === Number(poolId)
           )
-        ),
-    [poolsForJoin, poolRewardPoints, performanceDataReady]
+        )
+        .filter((entry) => entry !== undefined),
+    [poolCandidates]
   )
 
   const initialSelectedPoolId = useMemo(
     () =>
       providedPoolId ||
-      filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0]
+      shuffledCandidates[(shuffledCandidates.length * Math.random()) << 0]
         ?.id ||
       0,
     []
@@ -95,15 +79,15 @@ export const JoinPool = () => {
     [selectedPoolId]
   )
 
-  // If syncing completes within the canvas, assign a selected pool.
+  // Fetch pool candidates if provided pool is not available
   useEffect(() => {
-    if (performanceDataReady && selectedPoolId === 0) {
-      setSelectedPoolId(
-        filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0]
-          ?.id || 0
-      )
+    if (!providedPoolId) {
+      getPoolCandidates().then((candidates) => {
+        setPoolCandidates(candidates)
+        setSelectedPoolId(candidates[(candidates.length * Math.random()) << 0])
+      })
     }
-  }, [performanceDataReady])
+  }, [])
 
   return (
     <Main>
@@ -118,7 +102,7 @@ export const JoinPool = () => {
             bondedPool={bondedPool}
             metadata={poolsMetaData[selectedPoolId]}
             autoSelected={!!providedPoolId}
-            filteredBondedPools={filteredBondedPools}
+            poolCandidates={shuffledCandidates}
             providedPoolId={providedPoolId}
           />
           {activeTab === 0 && (

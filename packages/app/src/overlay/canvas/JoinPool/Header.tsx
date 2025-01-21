@@ -14,7 +14,7 @@ import type { JoinPoolHeaderProps } from './types'
 export const Header = ({
   activeTab,
   bondedPool,
-  filteredBondedPools,
+  poolCandidates,
   metadata,
   autoSelected,
   setActiveTab,
@@ -27,12 +27,12 @@ export const Header = ({
   // Randomly select a new pool to display
   const handleChooseNewPool = () => {
     // Remove current pool from filtered so it is not selected again
-    const filteredPools = filteredBondedPools.filter(
-      (pool) => String(pool.id) !== String(bondedPool.id)
+    const filteredPools = poolCandidates.filter(
+      (pool) => Number(pool.id) !== Number(bondedPool.id)
     )
-    // Randomly select a filtered bonded pool and set it as the selected pool
-    const index = Math.ceil(Math.random() * filteredPools.length - 1)
-    setSelectedPoolId(filteredPools[index].id)
+    const newCandidate =
+      filteredPools[(filteredPools.length * Math.random()) << 0]?.id
+    setSelectedPoolId(newCandidate)
   }
 
   // Pool state to tag class

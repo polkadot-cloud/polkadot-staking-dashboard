@@ -7,7 +7,7 @@ import type { BondedPool, PoolRewardPointsKey } from 'types'
 export interface JoinPoolHeaderProps {
   activeTab: number
   bondedPool: BondedPool
-  filteredBondedPools: BondedPool[]
+  poolCandidates: BondedPool[]
   metadata: string
   autoSelected: boolean
   setActiveTab: (tab: number) => void
