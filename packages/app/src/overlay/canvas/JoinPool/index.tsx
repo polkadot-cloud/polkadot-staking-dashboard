@@ -107,7 +107,7 @@ export const JoinPool = () => {
             setSelectedPoolId={setSelectedPoolId}
             bondedPool={bondedPool}
             metadata={poolsMetaData[selectedPoolId]}
-            autoSelected={!!providedPoolId}
+            autoSelected={!providedPoolId}
             poolCandidates={shuffledCandidates}
             providedPoolId={providedPoolId}
           />
