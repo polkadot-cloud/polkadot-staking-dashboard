@@ -26,10 +26,6 @@ export const JoinPool = () => {
   // Get the provided pool id and performance batch key from options, if available.
   const providedPool = options?.providedPool
   const providedPoolId = providedPool?.id || null
-  const performanceKey =
-    providedPoolId && providedPool?.performanceBatchKey
-      ? providedPool?.performanceBatchKey
-      : 'pool_join'
 
   // Whether performance data is ready
   const performanceDataReady = !!providedPoolId || poolCandidates.length > 0
@@ -92,7 +88,7 @@ export const JoinPool = () => {
   return (
     <Main>
       {(!providedPoolId && !performanceDataReady) || !bondedPool ? (
-        <Preloader performanceKey={performanceKey} />
+        <Preloader />
       ) : (
         <>
           <Header

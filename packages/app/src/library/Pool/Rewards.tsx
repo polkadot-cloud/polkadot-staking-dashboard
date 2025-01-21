@@ -1,11 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
 import { MaxEraRewardPointsEras } from 'consts'
 import { useApi } from 'contexts/Api'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import {
@@ -19,29 +17,22 @@ import {
 import { useTranslation } from 'react-i18next'
 import type { RewardProps, RewardsGraphProps } from './types'
 
-export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
+export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
   const { t } = useTranslation('library')
   const { isReady } = useApi()
   const { setTooltipTextAndOpen } = useTooltip()
   const { eraPointsBoundaries } = useValidators()
-  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance()
 
-  const poolRewardPoints = getPoolRewardPoints('pool_page')
-
-  const eraRewardPoints = Object.fromEntries(
-    Object.entries(poolRewardPoints[address] || {}).map(([k, v]: AnyJson) => [
-      k,
-      new BigNumber(v),
-    ])
-  )
+  // NOTE: Component currently not in use. Pool performance data is no longer being fetched.
+  const poolRewardPoints = {}
+  const eraRewardPoints = {}
 
   const high = eraPointsBoundaries?.high || new BigNumber(1)
   const normalisedPoints = normaliseEraPoints(eraRewardPoints, high)
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
 
   const empty = Object.values(poolRewardPoints).length === 0
-  const syncing =
-    !isReady || getPoolPerformanceTask('pool_page').status !== 'synced'
+  const syncing = !isReady
   const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`
 
   return (

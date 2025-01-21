@@ -3,7 +3,6 @@
 
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { useOverlay } from 'ui-overlay'
@@ -19,9 +18,7 @@ export const More = ({
 }) => {
   const { t } = useTranslation('tips')
   const { openCanvas } = useOverlay().canvas
-  const { startPoolRewardPointsFetch } = usePoolPerformance()
-
-  const { id, addresses } = pool
+  const { id } = pool
 
   // Define a unique pool performance data key
   const performanceKey = `pool_page_standalone_${id}`
@@ -31,7 +28,6 @@ export const More = ({
       <button
         type="button"
         onClick={() => {
-          startPoolRewardPointsFetch(performanceKey, [addresses.stash])
           openCanvas({
             key: 'JoinPool',
             options: {

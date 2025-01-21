@@ -31,7 +31,6 @@ import { ActivePoolProvider } from 'contexts/Pools/ActivePool'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
-import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance'
 import { PromptProvider } from 'contexts/Prompt'
 import { ProxiesProvider } from 'contexts/Proxies'
 import { SetupProvider } from 'contexts/Setup'
@@ -89,7 +88,6 @@ export const Providers = () => {
       FavoriteValidatorsProvider,
       FastUnstakeProvider,
       PayoutsProvider,
-      PoolPerformanceProvider,
       SetupProvider,
       MenuProvider,
       TooltipProvider,

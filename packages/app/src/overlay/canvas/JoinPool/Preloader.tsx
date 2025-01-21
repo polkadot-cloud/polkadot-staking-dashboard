@@ -7,26 +7,20 @@ import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useTranslation } from 'react-i18next'
-import type { BondedPool, PoolRewardPointsKey } from 'types'
+import type { BondedPool } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Head, Preload, Title } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
-export const Preloader = ({
-  performanceKey,
-}: {
-  performanceKey: PoolRewardPointsKey
-}) => {
+export const Preloader = () => {
   const { t } = useTranslation('pages')
   const {
     network,
     networkData: { units, unit },
   } = useNetwork()
   const { bondedPools } = useBondedPools()
-  const { getPoolPerformanceTask } = usePoolPerformance()
   const {
     poolsConfig: { counterForPoolMembers },
   } = useApi()
@@ -39,16 +33,6 @@ export const Preloader = ({
   const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
     .decimalPlaces(0)
     .toFormat()
-
-  // Get the pool performance task to determine if performance data is ready.
-  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey)
-  // Calculate syncing status.
-  const { startEra, currentEra, endEra } = poolJoinPerformanceTask
-  const totalEras = startEra.minus(endEra)
-  const erasPassed = startEra.minus(currentEra)
-  const percentPassed = erasPassed.isEqualTo(0)
-    ? new BigNumber(0)
-    : erasPassed.dividedBy(totalEras).multipliedBy(100)
 
   return (
     <>
@@ -74,8 +58,6 @@ export const Preloader = ({
       </Title>
       <Preload
         title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
-        percentPassed={percentPassed.toString()}
-        continuous
       />
     </>
   )

@@ -5,17 +5,15 @@ import { Loader } from '../Loader'
 import classes from './index.module.scss'
 
 export const Preload = ({
-  percentPassed,
+  percentPassed = '0',
   title,
-  continuous = false,
 }: {
-  percentPassed: string
+  percentPassed?: string
   title: string
-  continuous?: boolean
 }) => (
   <div className={classes.preload}>
     <h2>{title}</h2>
-    {continuous ? (
+    {!percentPassed ? (
       <Loader />
     ) : (
       <div className={classes.loader}>
