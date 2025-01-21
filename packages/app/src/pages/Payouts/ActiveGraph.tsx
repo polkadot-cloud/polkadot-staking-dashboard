@@ -25,7 +25,7 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
   const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
 
-  const { data: nominatorRewardsData } = useRewards({
+  const { data: nominatorRewardsData, loading: rewardsLoading } = useRewards({
     chain: network,
     who: activeAccount || '',
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
@@ -35,11 +35,13 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
   fromDate.setDate(fromDate.getDate() - MaxPayoutDays)
   fromDate.setHours(0, 0, 0, 0)
 
-  const { data: poolRewardsData } = usePoolRewards({
-    chain: network,
-    who: activeAccount || '',
-    from: getUnixTime(fromDate),
-  })
+  const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
+    {
+      chain: network,
+      who: activeAccount || '',
+      from: getUnixTime(fromDate),
+    }
+  )
 
   const allRewards = nominatorRewardsData?.allRewards ?? []
   const payouts =
@@ -66,6 +68,7 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
         data={{ payouts, unclaimedPayouts, poolClaims }}
         nominating={nominating}
         inPool={inPool}
+        syncing={rewardsLoading || poolRewardsLoading}
       />
       <PayoutLine
         days={MaxPayoutDays}

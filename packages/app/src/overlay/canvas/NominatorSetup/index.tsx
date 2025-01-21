@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominate } from 'library/SetupSteps/Nominate'
 import { Bond } from 'overlay/canvas/NominatorSetup/Bond'
@@ -20,10 +19,9 @@ export const NominatorSetup = () => {
     <Main>
       <Head>
         <ButtonPrimary
-          text={t('pools.back')}
+          text={t('close', { ns: 'modals' })}
           lg
           onClick={() => closeCanvas()}
-          iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>

@@ -3,32 +3,32 @@
 
 import type { NetworkId } from 'common-types'
 import { EraPointsLine } from 'library/Graphs/EraPointsLine'
-import { useValidatorEraPoints } from 'plugin-staking-api'
+import { usePoolEraPoints } from 'plugin-staking-api'
 
 interface Props {
   network: NetworkId
-  validator: string
+  poolId: number
   fromEra: number
   width: string | number
   height: string | number
 }
 export const ActiveGraph = ({
   network,
-  validator,
+  poolId,
   fromEra,
   width,
   height,
 }: Props) => {
-  const { data, loading, error } = useValidatorEraPoints({
+  const { data, loading, error } = usePoolEraPoints({
     chain: network,
-    validator,
+    poolId,
     fromEra,
   })
 
   const list =
-    loading || error || data?.validatorEraPoints === undefined
+    loading || error || data?.poolEraPoints === undefined
       ? []
-      : data.validatorEraPoints
+      : data.poolEraPoints
 
   const sorted = [...list].sort((a, b) => a.era - b.era)
 

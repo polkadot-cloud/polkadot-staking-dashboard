@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faArrowsRotate, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +14,7 @@ import type { JoinPoolHeaderProps } from './types'
 export const Header = ({
   activeTab,
   bondedPool,
-  filteredBondedPools,
+  poolCandidates,
   metadata,
   autoSelected,
   setActiveTab,
@@ -27,12 +27,12 @@ export const Header = ({
   // Randomly select a new pool to display
   const handleChooseNewPool = () => {
     // Remove current pool from filtered so it is not selected again
-    const filteredPools = filteredBondedPools.filter(
-      (pool) => String(pool.id) !== String(bondedPool.id)
+    const filteredPools = poolCandidates.filter(
+      (pool) => Number(pool.id) !== Number(bondedPool.id)
     )
-    // Randomly select a filtered bonded pool and set it as the selected pool
-    const index = Math.ceil(Math.random() * filteredPools.length - 1)
-    setSelectedPoolId(filteredPools[index].id)
+    const newCandidate =
+      filteredPools[(filteredPools.length * Math.random()) << 0]?.id
+    setSelectedPoolId(newCandidate)
   }
 
   // Pool state to tag class
@@ -59,10 +59,9 @@ export const Header = ({
           />
         )}
         <ButtonPrimary
-          text={t('pools.back', { ns: 'pages' })}
+          text={t('close', { ns: 'modals' })}
           lg
           onClick={() => closeCanvas()}
-          iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
