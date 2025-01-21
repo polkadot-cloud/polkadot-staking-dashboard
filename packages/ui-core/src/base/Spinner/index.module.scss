@@ -1,9 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
-
-const StyledSpinner = styled.div`
+.spinner {
   font-size: 10px;
   margin: 0;
   text-indent: -9999em;
@@ -69,6 +67,4 @@ const StyledSpinner = styled.div`
       transform: rotate(360deg);
     }
   }
-`
-
-export const Spinner = () => <StyledSpinner />
+}
