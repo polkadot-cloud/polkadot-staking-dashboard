@@ -2,69 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .spinner {
-  font-size: 10px;
-  margin: 0;
-  text-indent: -9999em;
   width: 2rem;
-  height: 2rem;
+  aspect-ratio: 1;
   border-radius: 50%;
-  background: #ccc;
-  background: -moz-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(
-    left,
-    #ccc 10%,
-    rgba(255, 255, 255, 0) 42%
-  );
-  background: -o-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-  position: relative;
-  -webkit-animation: load3 0.7s infinite linear;
-  animation: load3 0.7s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  &:before {
-    width: 50%;
-    height: 50%;
-    background: #ccc;
-    border-radius: 100% 0 0 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
-  }
-  &:after {
-    background: var(--background-primary);
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-    content: '';
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
-  @-webkit-keyframes load3 {
-    0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes load3 {
-    0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
+  background: 
+    radial-gradient(farthest-side,#bbb 94%,#0000) top/0.4em 0.4em no-repeat,
+    conic-gradient(#0000 30%,#bbb);
+  mask: radial-gradient(farthest-side,#0000 calc(100% - 0.4em),#000 0);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 0.4em),#000 0);
+  animation: spin 1s infinite linear;
+}
+@keyframes spin{ 
+  100%{transform: rotate(1turn)}
 }
