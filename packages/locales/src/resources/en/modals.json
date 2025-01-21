@@ -53,6 +53,7 @@
     "claimsOnBehalf": "Claiming a payout claims on behalf of every nominator backing the validator for the era you are claiming for. For this reason transaction fees are usually higher, and most nominators rely on the validator to claim on their behalf.",
     "commission": "Commission",
     "commissionRate": "Commission Rate",
+    "close": "Close",
     "compound": "Compound",
     "confirmReset": "Confirm Reset",
     "connect": "Connect",

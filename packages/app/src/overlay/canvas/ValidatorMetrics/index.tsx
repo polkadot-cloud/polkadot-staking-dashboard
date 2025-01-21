@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChartPie, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faChartPie } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
@@ -90,10 +90,9 @@ export const ValidatorMetrics = () => {
     <Main>
       <Head>
         <ButtonPrimary
-          text={t('pools.back', { ns: 'pages' })}
+          text={t('close', { ns: 'modals' })}
           lg
           onClick={() => closeCanvas()}
-          iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>

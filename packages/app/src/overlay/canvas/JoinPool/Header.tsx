@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faArrowsRotate, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTranslation } from 'react-i18next'
@@ -59,10 +59,9 @@ export const Header = ({
           />
         )}
         <ButtonPrimary
-          text={t('pools.back', { ns: 'pages' })}
+          text={t('close', { ns: 'modals' })}
           lg
           onClick={() => closeCanvas()}
-          iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>

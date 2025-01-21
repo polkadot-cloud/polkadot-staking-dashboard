@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { capitalizeFirstLetter, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
@@ -38,10 +37,9 @@ export const Preloader = () => {
     <>
       <Head>
         <ButtonPrimary
-          text={t('pools.back', { ns: 'pages' })}
+          text={t('close', { ns: 'modals' })}
           lg
           onClick={() => closeCanvas()}
-          iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
