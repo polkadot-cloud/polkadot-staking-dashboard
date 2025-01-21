@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useStaking } from 'contexts/Staking'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
-import { PoolSync } from 'library/PoolSync'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { usePoolsTabs } from '../context'
@@ -50,7 +49,6 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                   >
                     {t('pools.joinPool', { ns: 'pages' })}
                     <FontAwesomeIcon icon={faUserPlus} />
-                    <PoolSync performanceKey="pool_join" />
                   </button>
                 </div>
               </div>

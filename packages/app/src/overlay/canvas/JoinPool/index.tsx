@@ -105,9 +105,7 @@ export const JoinPool = () => {
             poolCandidates={shuffledCandidates}
             providedPoolId={providedPoolId}
           />
-          {activeTab === 0 && (
-            <Overview bondedPool={bondedPool} performanceKey={performanceKey} />
-          )}
+          {activeTab === 0 && <Overview bondedPool={bondedPool} />}
           {activeTab === 1 && (
             <Nominations
               poolId={bondedPool.id}

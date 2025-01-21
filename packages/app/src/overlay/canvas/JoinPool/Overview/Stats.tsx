@@ -3,24 +3,18 @@
 
 import { PoolPointsToBalance } from 'api/runtimeApi/poolPointsToBalance'
 import BigNumber from 'bignumber.js'
-import { MaxEraRewardPointsEras } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
+import { useStaking } from 'contexts/Staking'
 import { Apis } from 'controllers/Apis'
-import { PoolSync } from 'library/PoolSync'
-import { StyledLoader } from 'library/PoolSync/Loader'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { CSSProperties } from 'styled-components'
 import { Stat, Subheading } from 'ui-core/canvas'
 import { planckToUnitBn } from 'utils'
 import type { OverviewSectionProps } from '../types'
 
 export const Stats = ({
   bondedPool,
-  performanceKey,
-  graphSyncing = false,
 }: OverviewSectionProps & {
   graphSyncing?: boolean
 }) => {
@@ -34,10 +28,10 @@ export const Stats = ({
     },
   } = useNetwork()
   const { isReady } = useApi()
-  const { getPoolRewardPoints } = usePoolPerformance()
-  const poolRewardPoints = getPoolRewardPoints(performanceKey)
-  const rawEraRewardPoints = Object.values(
-    poolRewardPoints[bondedPool.addresses.stash] || {}
+  const { eraStakers } = useStaking()
+
+  const isActive = eraStakers.stakers.find((staker) =>
+    staker.others.find((other) => other.who === bondedPool.addresses.stash)
   )
 
   // Store the pool balance.
@@ -69,36 +63,20 @@ export const Stats = ({
     }
   }, [bondedPool.id, bondedPool.points, isReady])
 
-  const vars = {
-    '--loader-color': 'var(--text-color-secondary)',
-  } as CSSProperties
-
   return (
     <Subheading>
       <h4>
-        {graphSyncing ? (
-          <Stat>
-            {t('syncing')}
-            <StyledLoader style={{ ...vars, marginRight: '1.25rem' }} />
-            <PoolSync performanceKey={performanceKey} />
-          </Stat>
-        ) : (
-          <>
-            {rawEraRewardPoints.length === MaxEraRewardPointsEras && (
-              <Stat>{t('activelyNominating')}</Stat>
-            )}
-            <Stat withIcon>
-              <Token />
-              <span>
-                {!poolBalance
-                  ? `...`
-                  : `${planckToUnitBn(poolBalance, units)
-                      .decimalPlaces(3)
-                      .toFormat()} ${unit} ${t('bonded')}`}
-              </span>
-            </Stat>
-          </>
-        )}
+        {isActive && <Stat>{t('activelyNominating')}</Stat>}
+        <Stat withIcon>
+          <Token />
+          <span>
+            {!poolBalance
+              ? `...`
+              : `${planckToUnitBn(poolBalance, units)
+                  .decimalPlaces(3)
+                  .toFormat()} ${unit} ${t('bonded')}`}
+          </span>
+        </Stat>
       </h4>
     </Subheading>
   )

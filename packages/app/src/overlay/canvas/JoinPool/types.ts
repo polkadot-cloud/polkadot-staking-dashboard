@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Dispatch, SetStateAction } from 'react'
-import type { BondedPool, PoolRewardPointsKey } from 'types'
+import type { BondedPool } from 'types'
 
 export interface JoinPoolHeaderProps {
   activeTab: number
@@ -28,5 +28,4 @@ export interface AddressSectionProps {
 
 export interface OverviewSectionProps {
   bondedPool: BondedPool
-  performanceKey: PoolRewardPointsKey
 }
