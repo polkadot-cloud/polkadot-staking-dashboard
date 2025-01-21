@@ -26,6 +26,5 @@ export const usePoolEraPoints = ({
   const { loading, error, data, refetch } = useQuery(QUERY, {
     variables: { chain, poolId, fromEra },
   })
-  console.log(error)
   return { loading, error, data, refetch }
 }
