@@ -13,6 +13,7 @@ export const InactiveGraph = () => (
       data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
       nominating={false}
       inPool={false}
+      syncing={false}
     />
     <PayoutLine
       days={MaxPayoutDays}

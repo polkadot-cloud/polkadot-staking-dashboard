@@ -5,7 +5,7 @@ import { Loader } from '../Loader'
 import classes from './index.module.scss'
 
 export const Preload = ({
-  percentPassed = '0',
+  percentPassed,
   title,
 }: {
   percentPassed?: string

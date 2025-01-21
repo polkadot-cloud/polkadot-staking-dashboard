@@ -22,6 +22,7 @@ import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
+import { Spinner } from 'ui-core/base'
 
 ChartJS.register(
   CategoryScale,
@@ -148,6 +149,11 @@ export const EraPointsLine = ({
         height,
       }}
     >
+      {syncing && (
+        <Spinner
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
+        />
+      )}
       <Line options={options} data={data} />
     </div>
   )

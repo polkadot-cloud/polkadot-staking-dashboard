@@ -28,6 +28,7 @@ export interface PayoutBarProps {
   data: GraphPayoutData
   nominating: boolean
   inPool: boolean
+  syncing: boolean
 }
 
 export interface PayoutLineProps {

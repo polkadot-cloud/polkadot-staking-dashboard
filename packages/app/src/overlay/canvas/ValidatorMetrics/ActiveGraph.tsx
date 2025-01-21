@@ -34,7 +34,7 @@ export const ActiveGraph = ({
 
   return (
     <EraPointsLine
-      syncing={false}
+      syncing={loading}
       entries={sorted}
       width={width}
       height={height}
