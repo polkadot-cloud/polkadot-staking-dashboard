@@ -33,7 +33,8 @@ export const fetchPoolCandidates = async (
 
     return result.data
   } catch (error) {
-    console.error('Error fetching data:', error)
-    throw error
+    return {
+      poolCandidates: [],
+    }
   }
 }
