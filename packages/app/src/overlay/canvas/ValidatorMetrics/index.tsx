@@ -1,7 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faChartPie } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import BigNumber from 'bignumber.js'
@@ -11,6 +12,7 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatSize } from 'library/Graphs/Utils'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
@@ -21,6 +23,7 @@ import {
   GraphContainer,
   GraphInner,
   Head,
+  HeadTags,
   Main,
   Stat,
   Subheading,
@@ -50,6 +53,7 @@ export const ValidatorMetrics = () => {
   const { activeEra } = useApi()
   const { openHelp } = useHelp()
   const { containerRefs } = useUi()
+  const { validators } = useValidators()
   const { pluginEnabled } = usePlugins()
 
   const validator = options!.validator
@@ -62,7 +66,6 @@ export const ValidatorMetrics = () => {
   let otherStake = new BigNumber(0)
   if (validatorInEra) {
     const { others, own } = validatorInEra
-
     others.forEach(({ value }) => {
       otherStake = otherStake.plus(value)
     })
@@ -70,6 +73,9 @@ export const ValidatorMetrics = () => {
       validatorOwnStake = new BigNumber(own)
     }
   }
+
+  const prefs = validators.find((entry) => entry.address === validator)?.prefs
+  const commission = prefs?.commission ?? 0
 
   // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement | null>(null)
@@ -84,10 +90,9 @@ export const ValidatorMetrics = () => {
     <Main>
       <Head>
         <ButtonPrimary
-          text={t('pools.back', { ns: 'pages' })}
+          text={t('close', { ns: 'modals' })}
           lg
           onClick={() => closeCanvas()}
-          iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
@@ -104,6 +109,12 @@ export const ValidatorMetrics = () => {
             <div className="title">
               <h1>{identity}</h1>
             </div>
+            <HeadTags>
+              <h3>
+                <FontAwesomeIcon icon={faChartPie} transform="shrink-1" />
+                {t('commission', { ns: 'modals' })}: {commission}%
+              </h3>
+            </HeadTags>
           </div>
         </div>
       </AccountTitle>

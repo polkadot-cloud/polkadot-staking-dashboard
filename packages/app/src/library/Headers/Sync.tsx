@@ -7,7 +7,7 @@ import { useTxMeta } from 'contexts/TxMeta'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useLocation } from 'react-router-dom'
-import { Spinner } from './Spinner'
+import { Spinner } from 'ui-core/base'
 
 export const Sync = () => {
   const { uids } = useTxMeta()

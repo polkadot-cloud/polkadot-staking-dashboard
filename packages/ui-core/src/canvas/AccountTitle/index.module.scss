@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .accountTitle {
+  --account-title-height: 2.75rem;
   border-bottom: 1px solid var(--border-secondary-color);
   flex: 1;
   display: flex;
@@ -21,10 +22,15 @@
       &:nth-child(2) {
         padding-left: 1rem;
         flex-direction: column;
-        > .title {
-          position: relative;
+        position: relative;
+        > div:first-child {
+          height: var(--account-title-height);
+          position: absolute;
           padding-top: 2rem;
           flex: 1;
+          top: 0;
+          left: 0.75rem;
+          width: 100%;
           > h1 {
             position: absolute;
             top: 0;
@@ -36,6 +42,9 @@
             white-space: nowrap;
             width: 100%;
           }
+        }
+        > div:last-child {
+          margin-top: var(--account-title-height);
         }
       }
     }
