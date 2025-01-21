@@ -6,9 +6,10 @@
   flex-direction: column;
   position: relative;
   > h2 {
-    color: var(--accent-color-primary);
+    color: var(--text-color-tertiary);
     font-family: Inter, sans-serif;
     display: flex;
+    margin-top: 0.25rem;
     margin-bottom: 1.25rem;
     align-items: center;
   }

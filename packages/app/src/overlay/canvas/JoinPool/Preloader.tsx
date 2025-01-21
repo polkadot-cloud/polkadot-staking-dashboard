@@ -75,6 +75,7 @@ export const Preloader = ({
       <Preload
         title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
         percentPassed={percentPassed.toString()}
+        continuous
       />
     </>
   )
