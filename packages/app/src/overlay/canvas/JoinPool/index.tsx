@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
@@ -18,12 +19,13 @@ export const JoinPool = () => {
     config: { options },
   } = useOverlay().canvas
   const { network } = useNetwork()
+  const { pluginEnabled } = usePlugins()
   const { poolsMetaData, bondedPools } = useBondedPools()
 
   // Store latest pool candidates
   const [poolCandidates, setPoolCandidates] = useState<number[]>([])
 
-  // Get the provided pool id and performance batch key from options, if available.
+  // Get the provided pool id and performance batch key from options, if available
   const providedPool = options?.providedPool
   const providedPoolId = providedPool?.id || null
 
@@ -33,15 +35,23 @@ export const JoinPool = () => {
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0)
 
-  // Gets pool candidates for joining pool
+  // Gets pool candidates for joining pool. If Staking API is disabled, fall back to subset of open
+  // pools
   const getPoolCandidates = async () => {
-    const result = await fetchPoolCandidates(network)
-    return result?.poolCandidates || []
+    if (pluginEnabled('staking_api')) {
+      const result = await fetchPoolCandidates(network)
+      return result?.poolCandidates || []
+    } else {
+      return bondedPools
+        .filter(({ state }) => state === 'Open')
+        .map(({ id }) => Number(id))
+        .sort(() => Math.random() - 0.5)
+    }
   }
 
   // Filter bonded pools to only those that are open and that have active daily rewards for the last
   // `MaxEraRewardPointsEras` eras. The second filter checks if the pool is in `eraStakers` for the
-  // active era.
+  // active era
   const shuffledCandidates: BondedPool[] = useMemo(
     () =>
       poolCandidates
@@ -63,13 +73,13 @@ export const JoinPool = () => {
     []
   )
 
-  // The selected bonded pool id. Assigns a random id if one is not provided.
+  // The selected bonded pool id. Assigns a random id if one is not provided
   const [selectedPoolId, setSelectedPoolId] = useState<number>(
     initialSelectedPoolId
   )
 
   // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
-  // pool otherwise. Re-fetches when the selected pool count is incremented.
+  // pool otherwise. Re-fetches when the selected pool count is incremented
   const bondedPool = useMemo(
     () => bondedPools.find(({ id }) => Number(id) === Number(selectedPoolId)),
     [selectedPoolId]
