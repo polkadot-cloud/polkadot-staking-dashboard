@@ -10,7 +10,7 @@ import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
 import { PageTitleTabs } from 'ui-core/base'
 import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
-import type { JoinPoolHeaderProps } from './types'
+import type { HeaderProps } from './types'
 export const Header = ({
   activeTab,
   bondedPool,
@@ -20,7 +20,7 @@ export const Header = ({
   setActiveTab,
   setSelectedPoolId,
   providedPoolId,
-}: JoinPoolHeaderProps) => {
+}: HeaderProps) => {
   const { t } = useTranslation()
   const { closeCanvas } = useOverlay().canvas
 

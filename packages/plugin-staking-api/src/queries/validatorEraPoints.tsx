@@ -9,11 +9,13 @@ const QUERY = gql`
     $chain: String!
     $validator: String!
     $fromEra: Int!
+    $depth: Int
   ) {
     validatorEraPoints(
       chain: $chain
       validator: $validator
       fromEra: $fromEra
+      depth: $depth
     ) {
       era
       points
@@ -26,13 +28,15 @@ export const useValidatorEraPoints = ({
   chain,
   validator,
   fromEra,
+  depth,
 }: {
   chain: string
   validator: string
   fromEra: number
+  depth?: number
 }): ValidatorEraPointsResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain, validator, fromEra },
+    variables: { chain, validator, fromEra, depth },
   })
   return { loading, error, data, refetch }
 }
