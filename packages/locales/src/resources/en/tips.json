@@ -48,7 +48,6 @@
     "module": {
       "cancel": "Cancel",
       "close": "Close",
-      "disableTips": "Disable Dashboard Tips",
       "dismissResult": "Dismissing tips will remove them from your overview.",
       "dismissTips": "Dismiss Tips",
       "more": "More",

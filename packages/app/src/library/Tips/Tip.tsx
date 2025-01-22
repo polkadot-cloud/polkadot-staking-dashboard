@@ -2,19 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { usePlugins } from 'contexts/Plugins'
 import { usePrompt } from 'contexts/Prompt'
 import { Title } from 'library/Prompt/Title'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ButtonPrimary, ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons'
+import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
 import type { TipProps } from './types'
 
 export const Tip = ({ title, description, page }: TipProps) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { togglePlugin } = usePlugins()
   const { closePrompt } = usePrompt()
 
   const [disabling, setDisabling] = useState<boolean>(false)
@@ -27,14 +25,6 @@ export const Tip = ({ title, description, page }: TipProps) => {
         <h4>{t('module.reEnable', { ns: 'tips' })}</h4>
 
         <div style={{ display: 'flex', marginTop: '1.5rem' }}>
-          <ButtonPrimary
-            marginRight
-            text={t('module.disableTips', { ns: 'tips' })}
-            onClick={() => {
-              togglePlugin('tips')
-              closePrompt()
-            }}
-          />
           <ButtonPrimaryInvert
             text={t('module.cancel', { ns: 'tips' })}
             onClick={() => setDisabling(false)}
@@ -67,13 +57,6 @@ export const Tip = ({ title, description, page }: TipProps) => {
               iconTransform="shrink-1"
             />
           )}
-          <ButtonSecondary
-            marginRight
-            text={t('module.disableTips', { ns: 'tips' })}
-            onClick={() => {
-              setDisabling(true)
-            }}
-          />
         </div>
       </div>
     </>

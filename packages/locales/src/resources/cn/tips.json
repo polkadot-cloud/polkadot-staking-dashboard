@@ -48,7 +48,6 @@
     "module": {
       "cancel": "取消",
       "close": "关闭",
-      "disableTips": "取消提示",
       "dismissResult": "在该页面中取消提示窗口",
       "dismissTips": "解除提示",
       "more": "更多",
