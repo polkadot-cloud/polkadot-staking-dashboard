@@ -33,7 +33,7 @@
     },
     "payouts": "Payouts",
     "plugin": {
-      "Polkawatch": "Polkawatch",
+      "polkawatch": "Polkawatch",
       "staking_api": "Staking API",
       "subscan": "Subscan"
     },
