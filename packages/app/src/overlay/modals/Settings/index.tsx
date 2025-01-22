@@ -21,7 +21,7 @@ export const Settings = () => {
           <h4>{t('togglePlugins', { ns: 'modals' })}</h4>
           {PluginsList.map((plugin) => {
             if (
-              import.meta.env.NODE_ENV === 'production' &&
+              import.meta.env.PROD &&
               CompulsoryPluginsProd.includes(plugin)
             ) {
               return null
