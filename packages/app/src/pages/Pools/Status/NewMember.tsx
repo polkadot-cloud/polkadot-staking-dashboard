@@ -40,7 +40,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                   <button
                     onClick={() => {
                       openCanvas({
-                        key: 'JoinPool',
+                        key: 'Pool',
                         options: {},
                         size: 'xl',
                       })
