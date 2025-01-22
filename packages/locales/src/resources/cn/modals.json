@@ -243,7 +243,6 @@
     "supportEmail": "我们为 Staking Dashboard 用户提供专用电子邮件支持。联系我们，我们的团队将尽力及时回复并为您提供帮助.",
     "thisMinimumDelay": "这个最小延迟近似等于{{count}}个块",
     "titleExtensionConnected": "{{title}} 扩展已连接",
-    "toggleFeatures": "功能切换",
     "togglePlugins": "切换插件",
     "total": "总共",
     "transactionRejectedPending": "交易被拒后等待处理中",

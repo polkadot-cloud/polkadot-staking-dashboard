@@ -256,7 +256,6 @@
     "thisMinimumDelay_one": "This minimum delay is the approximate equivalent of {{count}} block.",
     "thisMinimumDelay_other": "This minimum delay is the approximate equivalent of {{count}} blocks.",
     "titleExtensionConnected": "The {{title}} extension has been connected.",
-    "toggleFeatures": "Toggle Features",
     "togglePlugins": "Toggle Plugins",
     "total": "Total",
     "transactionRejectedPending": "Transaction was rejected and is still pending.",

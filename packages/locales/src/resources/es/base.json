@@ -51,6 +51,12 @@
       "second_other": "segundos"
     },
     "title": "Polkadot Staking Dashboard",
-    "validators": "Validadores"
+    "validators": "Validadores",
+    "plugin": {
+      "staking_api": "Staking API",
+      "tips": "Tips",
+      "subscan": "Subscan",
+      "Polkawatch": "Polkawatch"
+    }
   }
 }

@@ -45,6 +45,12 @@
       "second": "秒"
     },
     "title": "Polkadot抵押平台",
-    "validators": "验证人"
+    "validators": "验证人",
+    "plugin": {
+      "staking_api": "Staking API",
+      "tips": "Tips",
+      "subscan": "Subscan",
+      "Polkawatch": "Polkawatch"
+    }
   }
 }
