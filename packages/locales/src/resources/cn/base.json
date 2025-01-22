@@ -32,6 +32,11 @@
       }
     },
     "payouts": "收益",
+    "plugin": {
+      "Polkawatch": "Polkawatch",
+      "staking_api": "Staking API",
+      "subscan": "Subscan"
+    },
     "pools": "提名池",
     "resources": "信息",
     "stake": "抵押",
@@ -45,12 +50,6 @@
       "second": "秒"
     },
     "title": "Polkadot抵押平台",
-    "validators": "验证人",
-    "plugin": {
-      "staking_api": "Staking API",
-      "tips": "Tips",
-      "subscan": "Subscan",
-      "Polkawatch": "Polkawatch"
-    }
+    "validators": "验证人"
   }
 }

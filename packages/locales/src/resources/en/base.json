@@ -32,6 +32,11 @@
       }
     },
     "payouts": "Payouts",
+    "plugin": {
+      "Polkawatch": "Polkawatch",
+      "staking_api": "Staking API",
+      "subscan": "Subscan"
+    },
     "pools": "Pools",
     "resources": "Resources",
     "stake": "Stake",
@@ -51,12 +56,6 @@
       "second_other": "seconds"
     },
     "title": "Polkadot Staking Dashboard",
-    "validators": "Validators",
-    "plugin": {
-      "staking_api": "Staking API",
-      "tips": "Tips",
-      "subscan": "Subscan",
-      "Polkawatch": "Polkawatch"
-    }
+    "validators": "Validators"
   }
 }
