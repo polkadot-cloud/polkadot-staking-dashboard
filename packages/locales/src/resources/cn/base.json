@@ -32,6 +32,11 @@
       }
     },
     "payouts": "收益",
+    "plugin": {
+      "polkawatch": "Polkawatch",
+      "staking_api": "Staking API",
+      "subscan": "Subscan"
+    },
     "pools": "提名池",
     "resources": "信息",
     "stake": "抵押",
