@@ -230,6 +230,14 @@
       "withdrawFunds": "Withdraw Funds",
       "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
     },
+    "rewards": {
+      "title": "Rewards",
+      "rewardsCalculator": "Rewards Calculator",
+      "currentBalance": "Your Current Balance",
+      "projectedRewards": "Your Projected Rewards",
+      "payoutHistory": "Your Payout History",
+      "averageRewardRate": "Current Average Reward Rate"
+    },
     "validators": {
       "activeValidators": "Active Validators",
       "allValidators": "All Validators",

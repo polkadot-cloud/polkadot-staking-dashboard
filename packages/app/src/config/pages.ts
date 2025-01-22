@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PageCategoryItems, PagesConfigItems } from 'common-types'
@@ -7,6 +7,7 @@ import { Nominate } from 'pages/Nominate'
 import { Overview } from 'pages/Overview'
 import { Payouts } from 'pages/Payouts'
 import { Pools } from 'pages/Pools'
+import { Rewards } from 'pages/Rewards'
 import { Validators } from 'pages/Validators'
 
 const BASE_URL = import.meta.env.BASE_URL
@@ -56,6 +57,14 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${BASE_URL}payouts`,
     hash: '/payouts',
     Entry: Payouts,
+    lottie: 'analytics',
+  },
+  {
+    category: 2,
+    key: 'rewards',
+    uri: `${BASE_URL}rewards`,
+    hash: '/rewards',
+    Entry: Rewards,
     lottie: 'analytics',
   },
   {
