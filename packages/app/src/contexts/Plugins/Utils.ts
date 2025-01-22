@@ -13,7 +13,7 @@ export const getAvailablePlugins = () => {
     true
   ) as Plugin[]
   // In production, add compulsory plugins to `localPlugins` if they do not exist.
-  if (import.meta.env.NODE_ENV === 'production') {
+  if (import.meta.env.PROD) {
     CompulsoryPluginsProd.forEach((plugin) => {
       if (!localPlugins.includes(plugin)) {
         localPlugins.push(plugin)
