@@ -48,12 +48,9 @@
     "module": {
       "cancel": "Cancelar",
       "close": "Cerrar",
-      "dismissResult": "Descartar los consejos los eliminará de tu resumen.",
-      "dismissTips": "Descartar consejos",
       "more": "Más",
       "of": "de",
       "oneMoment": "Un momento por favor",
-      "reEnable": "Los consejos pueden reactivarse desde los ajustes del dashboard, que se pueden acceder a través del icono de engranaje en la esquina inferior izquierda del menú lateral.",
       "syncingWith": "Sincronizando con {{network}}",
       "tips": "Consejos"
     },

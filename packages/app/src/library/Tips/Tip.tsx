@@ -4,10 +4,9 @@
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { usePrompt } from 'contexts/Prompt'
 import { Title } from 'library/Prompt/Title'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonPrimary } from 'ui-buttons'
 import type { TipProps } from './types'
 
 export const Tip = ({ title, description, page }: TipProps) => {
@@ -15,25 +14,7 @@ export const Tip = ({ title, description, page }: TipProps) => {
   const navigate = useNavigate()
   const { closePrompt } = usePrompt()
 
-  const [disabling, setDisabling] = useState<boolean>(false)
-
-  return disabling ? (
-    <>
-      <Title title={t('module.dismissTips', { ns: 'tips' })} hideDone />
-      <div className="body">
-        <h4>{t('module.dismissResult', { ns: 'tips' })}</h4>
-        <h4>{t('module.reEnable', { ns: 'tips' })}</h4>
-
-        <div style={{ display: 'flex', marginTop: '1.5rem' }}>
-          <ButtonPrimaryInvert
-            text={t('module.cancel', { ns: 'tips' })}
-            onClick={() => setDisabling(false)}
-            style={{ marginLeft: '0.5rem' }}
-          />
-        </div>
-      </div>
-    </>
-  ) : (
+  return (
     <>
       <Title title={title} />
       <div className="body">

@@ -48,12 +48,9 @@
     "module": {
       "cancel": "取消",
       "close": "关闭",
-      "dismissResult": "在该页面中取消提示窗口",
-      "dismissTips": "解除提示",
       "more": "更多",
       "of": "/",
       "oneMoment": "请稍等",
-      "reEnable": "提示可以通过侧菜单左下角的齿轮图标访问从设置中重新启用",
       "syncingWith": "同步 {{network}}",
       "tips": "提示"
     },
