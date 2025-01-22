@@ -4,7 +4,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { BondedPool } from 'types'
 
-export interface JoinPoolHeaderProps {
+export interface HeaderProps {
   activeTab: number
   bondedPool: BondedPool
   poolCandidates: BondedPool[]

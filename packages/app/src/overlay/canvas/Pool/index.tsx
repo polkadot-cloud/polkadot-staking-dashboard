@@ -14,7 +14,7 @@ import { Nominations } from './Nominations'
 import { Overview } from './Overview'
 import { Preloader } from './Preloader'
 
-export const JoinPool = () => {
+export const Pool = () => {
   const {
     config: { options },
   } = useOverlay().canvas

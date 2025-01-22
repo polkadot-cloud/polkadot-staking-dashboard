@@ -29,7 +29,7 @@ export const More = ({
         type="button"
         onClick={() => {
           openCanvas({
-            key: 'JoinPool',
+            key: 'Pool',
             options: {
               providedPool: {
                 id,
