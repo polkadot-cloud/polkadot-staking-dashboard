@@ -4,7 +4,7 @@
 import { PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
 
-export const StatusWrapper = styled.div<{ $borderBottom: boolean }>`
+export const StatusWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 1.5rem 1.5rem 0 1.5rem;
@@ -30,8 +30,7 @@ export const StatusWrapper = styled.div<{ $borderBottom: boolean }>`
     }
 
     > section {
-      border-bottom: ${(props) =>
-        props.$borderBottom ? '1px solid var(--border-primary-color)' : 'none'};
+      border-bottom: 1px solid var(--border-primary-color);
       padding-bottom: 0.75rem;
       @media (max-width: ${PageWidthMediumThreshold}px) {
         padding-bottom: 0.5rem;

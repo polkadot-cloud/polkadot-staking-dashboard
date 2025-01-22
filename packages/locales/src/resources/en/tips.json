@@ -48,13 +48,9 @@
     "module": {
       "cancel": "Cancel",
       "close": "Close",
-      "disableTips": "Disable Dashboard Tips",
-      "dismissResult": "Dismissing tips will remove them from your overview.",
-      "dismissTips": "Dismiss Tips",
       "more": "More",
       "of": "of",
       "oneMoment": "One moment please",
-      "reEnable": "Tips can be re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.",
       "syncingWith": "Syncing with {{network}}",
       "tips": "Tips"
     },
