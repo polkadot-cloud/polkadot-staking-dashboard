@@ -66,6 +66,7 @@ export const PayoutLine = ({
     size: 11,
   }
   const titleStyle = {
+    color: graphColors.title[mode],
     display: true,
     padding: 6,
     font: titleFontSpec,
