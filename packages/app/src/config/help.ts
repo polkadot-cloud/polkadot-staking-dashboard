@@ -100,6 +100,7 @@ export const HelpConfig: HelpItems = [
       'Pool Commission Rate',
       'Pool Max Commission',
       'Pool Commission Change Rate',
+      'Pool Reward History',
     ],
     external: [
       [
@@ -144,6 +145,7 @@ export const HelpConfig: HelpItems = [
       'Commission',
       'Blocked Nominations',
       'Rewards By Country And Network',
+      'Validator Reward History',
     ],
     external: [
       [

@@ -184,7 +184,14 @@ export const ValidatorMetrics = () => {
           </GraphInner>
 
           <Subheading style={{ marginTop: '2rem' }}>
-            <h3>Reward History</h3>
+            <h3>
+              Reward History
+              <ButtonHelp
+                outline
+                marginLeft
+                onClick={() => openHelp('Validator Reward History')}
+              />
+            </h3>
           </Subheading>
           <GraphInner
             ref={graphRewardsRef}
