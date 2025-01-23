@@ -71,6 +71,6 @@ export interface GeoDonutProps {
 
 export interface PayoutLineEntry {
   era: number
-  amount: string
+  reward: string
   start: number
 }

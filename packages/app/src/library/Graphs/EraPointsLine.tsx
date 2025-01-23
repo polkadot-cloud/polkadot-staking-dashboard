@@ -3,6 +3,7 @@
 
 import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
+import type { FontSpec } from 'chart.js'
 import {
   BarElement,
   CategoryScale,
@@ -58,6 +59,19 @@ export const EraPointsLine = ({
   // Use primary color for line
   const color = colors.primary[mode]
 
+  // Styling of axis titles
+  const titleFontSpec: Partial<FontSpec> = {
+    family: "'Inter', 'sans-serif'",
+    weight: 'lighter',
+    size: 11,
+  }
+  const titleStyle = {
+    color: graphColors.title[mode],
+    display: true,
+    padding: 6,
+    font: titleFontSpec,
+  }
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -76,6 +90,10 @@ export const EraPointsLine = ({
           },
           autoSkip: true,
         },
+        title: {
+          ...titleStyle,
+          text: 'Date',
+        },
       },
       y: {
         stacked: true,
@@ -91,6 +109,10 @@ export const EraPointsLine = ({
         },
         grid: {
           color: graphColors.canvas.grid[mode],
+        },
+        title: {
+          ...titleStyle,
+          text: `${t('eraPoints', { ns: 'library' })}`,
         },
       },
     },

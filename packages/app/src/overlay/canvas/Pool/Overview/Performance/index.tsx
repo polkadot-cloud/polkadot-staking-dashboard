@@ -60,7 +60,7 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
   return (
     <div>
       <Subheading>
-        <h3>{t('recentPerformance', { ns: 'library' })}</h3>
+        <h3>Reward History</h3>
       </Subheading>
       <GraphInner ref={graphInnerRef} width={width} height={height}>
         {pluginEnabled('staking_api') && bondedPool ? (

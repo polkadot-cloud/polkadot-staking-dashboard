@@ -54,7 +54,7 @@ export const PayoutLine = ({
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
     ? []
-    : entries.map((entry) => new BigNumber(entry.amount).toString())
+    : entries.map((entry) => new BigNumber(entry.reward).toString())
 
   // Use primary color for line
   const color = colors.primary[mode]
@@ -71,7 +71,6 @@ export const PayoutLine = ({
     padding: 6,
     font: titleFontSpec,
   }
-
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -112,7 +111,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${unit} Earned`,
+          text: `${unit} Reward`,
         },
       },
     },
