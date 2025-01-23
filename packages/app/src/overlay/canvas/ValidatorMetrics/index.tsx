@@ -185,7 +185,7 @@ export const ValidatorMetrics = () => {
 
           <Subheading style={{ marginTop: '2rem' }}>
             <h3>
-              Reward History
+              {t('rewardHistory', { ns: 'library' })}
               <ButtonHelp
                 outline
                 marginLeft

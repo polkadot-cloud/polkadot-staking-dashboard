@@ -92,7 +92,7 @@ export const EraPointsLine = ({
         },
         title: {
           ...titleStyle,
-          text: 'Date',
+          text: `${t('date', { ns: 'base' })}`,
         },
       },
       y: {

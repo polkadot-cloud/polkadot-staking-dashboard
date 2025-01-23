@@ -91,7 +91,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: 'Date',
+          text: `${t('date', { ns: 'base' })}`,
         },
       },
       y: {
@@ -111,7 +111,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${unit} Reward`,
+          text: `${unit} ${t('reward', { ns: 'modals' })}`,
         },
       },
     },
