@@ -19,7 +19,7 @@ import { DefaultLocale, locales } from 'locales'
 import type { RewardResult } from 'plugin-staking-api/types'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CardHeader } from 'ui-core/base'
+import { CardHeader, CardLabel } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
@@ -80,13 +80,13 @@ export const Payouts = () => {
               2
             )}
           />
-          <h5>
+          <CardLabel>
             {lastReward === undefined ? (
               ''
             ) : (
               <>&nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}</>
             )}
-          </h5>
+          </CardLabel>
         </h2>
       </CardHeader>
       <div className="inner" ref={graphInnerRef} style={{ minHeight }}>

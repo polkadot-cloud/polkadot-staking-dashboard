@@ -3,38 +3,40 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import type { NetworkId } from 'common-types'
+import { useNetwork } from 'contexts/Network'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
-import { useRewards } from 'plugin-staking-api'
+import { useValidatorRewards } from 'plugin-staking-api'
 
 interface Props {
   network: NetworkId
-  stash: string
+  validator: string
   fromEra: number
   width: string | number
   height: string | number
-  units: number
 }
 export const ActiveGraph = ({
   network,
-  stash,
+  validator,
   fromEra,
   width,
   height,
-  units,
 }: Props) => {
-  const { data, loading, error } = useRewards({
+  const {
+    networkData: { units },
+  } = useNetwork()
+  const { data, loading, error } = useValidatorRewards({
     chain: network,
-    who: stash,
+    validator,
     fromEra,
   })
 
   const list =
-    loading || error || data?.allRewards === undefined
+    loading || error || data?.validatorRewards === undefined
       ? []
-      : data.allRewards.map((reward) => ({
+      : data.validatorRewards.map((reward) => ({
           era: reward.era,
           reward: planckToUnit(reward.reward, units),
-          start: reward.timestamp,
+          start: reward.start,
         }))
 
   const sorted = [...list].sort((a, b) => a.era - b.era)

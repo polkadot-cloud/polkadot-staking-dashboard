@@ -30,8 +30,10 @@ import {
 } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { ActiveGraph } from './ActiveGraph'
-import { InactiveGraph } from './InactiveGraph'
+import { ActiveGraph as ActiveGraphEraPoints } from './EraPoints/ActiveGraph'
+import { InactiveGraph as InactiveGraphEraPoints } from './EraPoints/InactiveGraph'
+import { ActiveGraph as ActiveGraphRewards } from './Rewards/ActiveGraph'
+import { InactiveGraph as InactiveGraphRewards } from './Rewards/InactiveGraph'
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation()
@@ -74,17 +76,24 @@ export const ValidatorMetrics = () => {
     }
   }
 
+  const GRAPH_HEIGHT = 250
+
   const prefs = validators.find((entry) => entry.address === validator)?.prefs
   const commission = prefs?.commission ?? 0
 
-  // Ref to the graph container
-  const graphInnerRef = useRef<HTMLDivElement | null>(null)
-
-  // Get the size of the graph container
-  const size = useSize(graphInnerRef, {
+  // Era points graph ref & sizing
+  const graphEraPointsRef = useRef<HTMLDivElement | null>(null)
+  const sizeEraPoints = useSize(graphEraPointsRef, {
     outerElement: containerRefs?.mainInterface,
   })
-  const { width, height } = formatSize(size, 250)
+  const graphSizeEraPoints = formatSize(sizeEraPoints, GRAPH_HEIGHT)
+
+  // token earned graph ref & sizing
+  const graphRewardsRef = useRef<HTMLDivElement | null>(null)
+  const sizeRewards = useSize(graphRewardsRef, {
+    outerElement: containerRefs?.mainInterface,
+  })
+  const graphSizeRewards = formatSize(sizeRewards, GRAPH_HEIGHT)
 
   return (
     <Main>
@@ -145,14 +154,18 @@ export const ValidatorMetrics = () => {
               />
             </h3>
           </Subheading>
-          <GraphInner ref={graphInnerRef} width={width} height={height}>
+          <GraphInner
+            ref={graphEraPointsRef}
+            width={graphSizeEraPoints.width}
+            height={graphSizeEraPoints.height}
+          >
             {pluginEnabled('staking_api') ? (
-              <ActiveGraph
+              <ActiveGraphEraPoints
                 network={network}
                 validator={validator}
                 fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
-                width={width}
-                height={height}
+                width={graphSizeEraPoints.width}
+                height={graphSizeEraPoints.height}
               />
             ) : (
               <>
@@ -162,7 +175,49 @@ export const ValidatorMetrics = () => {
                   title={t('common.stakingApiDisabled', { ns: 'pages' })}
                   topOffset="37%"
                 />
-                <InactiveGraph width={width} height={height} />
+                <InactiveGraphEraPoints
+                  width={graphSizeEraPoints.width}
+                  height={graphSizeEraPoints.height}
+                />
+              </>
+            )}
+          </GraphInner>
+
+          <Subheading style={{ marginTop: '2rem' }}>
+            <h3>
+              {t('rewardHistory', { ns: 'library' })}
+              <ButtonHelp
+                outline
+                marginLeft
+                onClick={() => openHelp('Validator Reward History')}
+              />
+            </h3>
+          </Subheading>
+          <GraphInner
+            ref={graphRewardsRef}
+            width={graphSizeRewards.width}
+            height={graphSizeRewards.height}
+          >
+            {pluginEnabled('staking_api') ? (
+              <ActiveGraphRewards
+                network={network}
+                validator={validator}
+                fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+                width={graphSizeRewards.width}
+                height={graphSizeRewards.height}
+              />
+            ) : (
+              <>
+                <StatusLabel
+                  status="active_service"
+                  statusFor="staking_api"
+                  title={t('common.stakingApiDisabled', { ns: 'pages' })}
+                  topOffset="37%"
+                />
+                <InactiveGraphRewards
+                  width={graphSizeRewards.width}
+                  height={graphSizeRewards.height}
+                />
               </>
             )}
           </GraphInner>

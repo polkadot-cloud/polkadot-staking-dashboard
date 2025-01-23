@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { camelize } from '@w3ux/utils'
 import { HelpConfig } from 'config/help'
 import { useHelp } from 'contexts/Help'
@@ -160,11 +159,16 @@ export const Help = () => {
     >
       <Scroll>
         <Content>
-          <div className="buttons">
+          <div
+            style={{
+              padding: '0 0.1rem',
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
             <ButtonPrimaryInvert
               lg
               text={t('modal.close')}
-              iconLeft={faTimes}
               onClick={() => closeHelp()}
             />
           </div>
