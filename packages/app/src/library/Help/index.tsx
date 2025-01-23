@@ -160,7 +160,7 @@ export const Help = () => {
     >
       <Scroll>
         <Content>
-          <div className="buttons">
+          <div style={{ padding: '0 0.1rem' }}>
             <ButtonPrimaryInvert
               lg
               text={t('modal.close')}
