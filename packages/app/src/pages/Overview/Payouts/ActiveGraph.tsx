@@ -5,8 +5,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
+import { AveragePayoutLine } from 'library/Graphs/AveragePayoutLine'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type {
   NominatorReward,
@@ -80,7 +80,7 @@ export const ActiveGraph = ({
         syncing={rewardsLoading || poolRewardsLoading}
       />
       <div style={{ marginTop: lineMarginTop }}>
-        <PayoutLine
+        <AveragePayoutLine
           days={days}
           average={10}
           height="65px"

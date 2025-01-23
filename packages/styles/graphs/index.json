@@ -7,6 +7,10 @@
     "light": "#333",
     "dark": "#ddd"
   },
+  "title": {
+    "light": "#666",
+    "dark": "#bbb"
+  },
   "label": {
     "light": "#fafafa",
     "dark": "#0e0e0e"

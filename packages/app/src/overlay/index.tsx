@@ -5,9 +5,9 @@ import { useHelp } from 'contexts/Help'
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
 import { Overlay } from 'ui-overlay'
 import { CreatePool } from './canvas/CreatePool'
-import { JoinPool } from './canvas/JoinPool'
 import { ManageNominations } from './canvas/ManageNominations'
 import { NominatorSetup } from './canvas/NominatorSetup'
+import { Pool } from './canvas/Pool'
 import { PoolMembers } from './canvas/PoolMembers'
 import { ValidatorMetrics } from './canvas/ValidatorMetrics'
 import { Accounts } from './modals/Accounts'
@@ -72,7 +72,7 @@ export const Overlays = () => {
       canvas={{
         ManageNominations,
         PoolMembers,
-        JoinPool,
+        Pool,
         CreatePool,
         NominatorSetup,
         ValidatorMetrics,

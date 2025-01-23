@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { EraPointsLine } from 'library/Graphs/EraPointsLine'
+import { PayoutLine } from 'library/Graphs/PayoutLine'
 
 export const InactiveGraph = ({
   width,
@@ -9,6 +9,4 @@ export const InactiveGraph = ({
 }: {
   width: string | number
   height: string | number
-}) => (
-  <EraPointsLine syncing={false} entries={[]} width={width} height={height} />
-)
+}) => <PayoutLine syncing={false} entries={[]} width={width} height={height} />

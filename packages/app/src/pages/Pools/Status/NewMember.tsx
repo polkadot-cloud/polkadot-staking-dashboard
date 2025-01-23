@@ -47,7 +47,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                       )
 
                       openCanvas({
-                        key: 'JoinPool',
+                        key: 'Pool',
                         options: {},
                         size: 'xl',
                       })

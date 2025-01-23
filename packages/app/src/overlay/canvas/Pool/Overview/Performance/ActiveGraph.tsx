@@ -1,39 +1,46 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { planckToUnit } from '@w3ux/utils'
 import type { NetworkId } from 'common-types'
-import { EraPointsLine } from 'library/Graphs/EraPointsLine'
-import { usePoolEraPoints } from 'plugin-staking-api'
+import { PayoutLine } from 'library/Graphs/PayoutLine'
+import { useRewards } from 'plugin-staking-api'
 
 interface Props {
   network: NetworkId
-  poolId: number
+  stash: string
   fromEra: number
   width: string | number
   height: string | number
+  units: number
 }
 export const ActiveGraph = ({
   network,
-  poolId,
+  stash,
   fromEra,
   width,
   height,
+  units,
 }: Props) => {
-  const { data, loading, error } = usePoolEraPoints({
+  const { data, loading, error } = useRewards({
     chain: network,
-    poolId,
+    who: stash,
     fromEra,
   })
 
   const list =
-    loading || error || data?.poolEraPoints === undefined
+    loading || error || data?.allRewards === undefined
       ? []
-      : data.poolEraPoints
+      : data.allRewards.map((reward) => ({
+          era: reward.era,
+          reward: planckToUnit(reward.reward, units),
+          start: reward.timestamp,
+        }))
 
   const sorted = [...list].sort((a, b) => a.era - b.era)
 
   return (
-    <EraPointsLine
+    <PayoutLine
       syncing={loading}
       entries={sorted}
       width={width}

@@ -1,8 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { useOverlay } from 'ui-overlay'
@@ -29,7 +27,7 @@ export const More = ({
         type="button"
         onClick={() => {
           openCanvas({
-            key: 'JoinPool',
+            key: 'Pool',
             options: {
               providedPool: {
                 id,
@@ -43,7 +41,6 @@ export const More = ({
         disabled={disabled}
       >
         {t('module.more')}
-        <FontAwesomeIcon icon={faCaretRight} transform="shrink-2" />
       </button>
     </div>
   )
