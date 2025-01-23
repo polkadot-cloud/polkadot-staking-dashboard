@@ -95,8 +95,7 @@
       "eraPoints": [
         "Puntos de Era",
         [
-          "Los Puntos de Era son acumulados por los validadores durante cada era, y dependen del rendimiento del validador.",
-          "Como staker, no necesitas preocuparte por los Puntos de Era. En general, los validadores con mejor rendimiento producen más Puntos de Era, lo que a su vez lleva a mayores recompensas de staking."
+          "Los Puntos de Era son una medida del desempeño de un validador durante la era actual. Cuantos más Puntos de Era tenga un validador, más recompensas recibirá al final de la era."
         ]
       ],
       "geolocationOfEachNomination": [
@@ -305,6 +304,12 @@
           "Para dejar un pool, simplemente necesitas desvincular y retirar todos tus {NETWORK_UNIT} vinculados. El Staking Dashboard proporciona un botón específico de Salir para desvincular del pool."
         ]
       ],
+      "poolRewardHistory": [
+        "Pool Reward History",
+        [
+          "La recompensa total generada por el grupo por era. Estas recompensas se distribuyen entre los miembros del grupo según la participación de cada miembro en el grupo."
+        ]
+      ],
       "poolRewards": [
         "Recompensas del Pool",
         [
@@ -391,6 +396,12 @@
         [
           "Una entidad que valida bloques para la Relay Chain de {NETWORK_NAME}. Los validadores juegan un papel clave en {NETWORK_NAME} para asegurar la red y producir bloques.",
           "Como nominador, eliges qué validadores deseas respaldar, y recibes recompensas por hacerlo."
+        ]
+      ],
+      "validatorRewardHistory": [
+        "Validator Reward History",
+        [
+          "La recompensa total generada por el validador por era. La recompensa total es la suma de la recompensa del validador más la recompensa de cada nominador que respalda al validador."
         ]
       ],
       "wrongTransaction": [

@@ -48,6 +48,19 @@ export type UnclaimedRewardsResult = Query & {
     unclaimedRewards: UnclaimedRewards
   }
 }
+
+export type ValidatorRewardsResult = Query & {
+  data: {
+    validatorRewards: ValidatorReward[]
+  }
+}
+
+export interface ValidatorReward {
+  era: number
+  reward: string
+  start: number
+}
+
 export type PoolRewardResults = Query & {
   data: {
     poolRewards: PoolReward[]

@@ -144,10 +144,7 @@ export const Labels = styled.div`
       margin-right: 0.25rem;
     }
     &.button-with-text {
-      margin: 0.25rem 0 0 0;
-
       button {
-        color: var(--accent-color-secondary);
         font-family: InterSemiBold, sans-serif;
         font-size: 0.95rem;
         display: flex;
@@ -156,11 +153,7 @@ export const Labels = styled.div`
         width: auto;
         height: auto;
         border-radius: 0.75rem;
-        padding: 0.25rem 0.75rem;
-
-        &:hover {
-          opacity: 1;
-        }
+        padding: 0.4rem 0.75rem;
 
         &:disabled {
           &:hover {
@@ -168,7 +161,8 @@ export const Labels = styled.div`
           }
         }
         > svg {
-          margin-left: 0.3rem;
+          margin-left: 0.2rem;
+          margin-right: 0.5rem;
         }
       }
     }

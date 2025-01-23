@@ -43,8 +43,11 @@ ChartJS.register(
 export const Performance = ({ bondedPool }: OverviewSectionProps) => {
   const { activeEra } = useApi()
   const { t } = useTranslation()
+  const {
+    network,
+    networkData: { units },
+  } = useNetwork()
   const { openHelp } = useHelp()
-  const { network } = useNetwork()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
 
@@ -56,27 +59,27 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
     outerElement: containerRefs?.mainInterface,
   })
   const { width, height } = formatSize(size, 250)
-
   return (
     <div>
       <Subheading>
         <h3>
-          {t('recentPerformance', { ns: 'library' })}
+          {t('rewardHistory', { ns: 'library' })}
           <ButtonHelp
             outline
             marginLeft
-            onClick={() => openHelp('Era Points')}
+            onClick={() => openHelp('Pool Reward History')}
           />
         </h3>
       </Subheading>
       <GraphInner ref={graphInnerRef} width={width} height={height}>
-        {pluginEnabled('staking_api') ? (
+        {pluginEnabled('staking_api') && bondedPool ? (
           <ActiveGraph
             network={network}
-            poolId={Number(bondedPool.id)}
+            stash={bondedPool.addresses.stash}
             fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
             width={width}
             height={height}
+            units={units}
           />
         ) : (
           <>

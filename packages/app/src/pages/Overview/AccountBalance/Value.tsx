@@ -6,11 +6,11 @@ import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { formatTokenPrice, useTokenPrice } from 'plugin-staking-api'
 
-interface FiatValueProps {
+interface CardLabelProps {
   totalBalance: BigNumber
 }
 
-export const FiatValue = ({ totalBalance }: FiatValueProps) => {
+export const Value = ({ totalBalance }: CardLabelProps) => {
   const {
     networkData: {
       api: { unit },
@@ -21,18 +21,18 @@ export const FiatValue = ({ totalBalance }: FiatValueProps) => {
   })
   const { price } = formatTokenPrice(loading, error, data)
 
-  // Convert balance to fiat value.
+  // Convert balance to fiat value
   const freeFiat = totalBalance.multipliedBy(
     new BigNumber(price).decimalPlaces(2)
   )
 
-  // Formatter for price feed.
+  // Formatter for price feed
   const usdFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   })
 
-  // Initiate interval to refetch token price every 30 seconds.
+  // Initiate interval to refetch token price every 30 seconds
   useEffectIgnoreInitial(() => {
     const interval = setInterval(() => {
       refetch()

@@ -84,6 +84,13 @@ export const Default = ({
             <Labels className={displayFor}>
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
+              {displayFor === 'default' && showMenu && (
+                <div className="label">
+                  <button type="button" onClick={(ev) => toggleMenu(ev)}>
+                    <FontAwesomeIcon icon={faBars} transform="shrink-2" />
+                  </button>
+                </div>
+              )}
               {displayFor === 'default' && (
                 <Metrics
                   address={address}
@@ -92,13 +99,6 @@ export const Default = ({
                     validatorSupers[address]
                   )}
                 />
-              )}
-              {displayFor === 'default' && showMenu && (
-                <div className="label">
-                  <button type="button" onClick={(ev) => toggleMenu(ev)}>
-                    <FontAwesomeIcon icon={faBars} transform="shrink-2" />
-                  </button>
-                </div>
               )}
             </Labels>
           </div>
