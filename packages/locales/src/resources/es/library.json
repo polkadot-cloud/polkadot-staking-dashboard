@@ -119,6 +119,7 @@
     "manualSelectionSubtitle": "Añade validadores desde cero.",
     "manual_selection": "Selección manual",
     "max": "Máximo",
+    "metrics": "Métricas",
     "minimumBond": "Se requiere un vínculo mínimo de {{minBondUnit}} {{unit}}",
     "missingIdentity": "Identidad faltante",
     "moreThanBalance": "El monto vinculado supera tu saldo libre.",
