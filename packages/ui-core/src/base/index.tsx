@@ -4,6 +4,7 @@
 export * from './Body'
 export * from './ButtonRow'
 export * from './CardHeader'
+export * from './CardLabel'
 export * from './Entry'
 export * from './Footer'
 export * from './Main'
