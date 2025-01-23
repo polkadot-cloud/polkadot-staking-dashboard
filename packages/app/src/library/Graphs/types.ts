@@ -31,7 +31,7 @@ export interface PayoutBarProps {
   syncing: boolean
 }
 
-export interface PayoutLineProps {
+export interface AveragePayoutLineProps {
   days: number
   average: number
   height: string
@@ -67,4 +67,10 @@ export interface GeoDonutProps {
   height?: string | number
   legendHeight?: number
   maxLabelLen?: number
+}
+
+export interface PayoutLineEntry {
+  era: number
+  amount: string
+  start: number
 }

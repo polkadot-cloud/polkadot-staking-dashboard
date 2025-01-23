@@ -15,7 +15,6 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useApi } from 'contexts/Api'
-import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
@@ -23,7 +22,6 @@ import { formatSize } from 'library/Graphs/Utils'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import { GraphInner, Subheading } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../../types'
 import { ActiveGraph } from './ActiveGraph'
@@ -43,8 +41,10 @@ ChartJS.register(
 export const Performance = ({ bondedPool }: OverviewSectionProps) => {
   const { activeEra } = useApi()
   const { t } = useTranslation()
-  const { openHelp } = useHelp()
-  const { network } = useNetwork()
+  const {
+    network,
+    networkData: { units },
+  } = useNetwork()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
 
@@ -56,27 +56,21 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
     outerElement: containerRefs?.mainInterface,
   })
   const { width, height } = formatSize(size, 250)
-
+  console.log(bondedPool)
   return (
     <div>
       <Subheading>
-        <h3>
-          {t('recentPerformance', { ns: 'library' })}
-          <ButtonHelp
-            outline
-            marginLeft
-            onClick={() => openHelp('Era Points')}
-          />
-        </h3>
+        <h3>{t('recentPerformance', { ns: 'library' })}</h3>
       </Subheading>
       <GraphInner ref={graphInnerRef} width={width} height={height}>
-        {pluginEnabled('staking_api') ? (
+        {pluginEnabled('staking_api') && bondedPool ? (
           <ActiveGraph
             network={network}
-            poolId={Number(bondedPool.id)}
+            stash={bondedPool.addresses.stash}
             fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
             width={width}
             height={height}
+            units={units}
           />
         ) : (
           <>
