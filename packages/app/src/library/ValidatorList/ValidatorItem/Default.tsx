@@ -43,6 +43,9 @@ export const Default = ({
   const { address, prefs, validatorStatus, totalStake } = validator
   const commission = prefs?.commission ?? null
 
+  // Whether buttons should be styled as outline.
+  const outline = displayFor === 'canvas'
+
   const identity = getIdentityDisplay(
     validatorIdentities[address],
     validatorSupers[address]
@@ -82,9 +85,11 @@ export const Default = ({
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels className={displayFor}>
-              <CopyAddress address={address} />
-              {toggleFavorites && <FavoriteValidator address={address} />}
+            <Labels>
+              <CopyAddress address={address} outline={outline} />
+              {toggleFavorites && (
+                <FavoriteValidator address={address} outline={outline} />
+              )}
               {displayFor === 'default' && showMenu && (
                 <HeaderButton>
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>

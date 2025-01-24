@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { HeaderButton } from 'ui-core/list'
 import type { CopyAddressProps } from '../types'
 
-export const CopyAddress = ({ address }: CopyAddressProps) => {
+export const CopyAddress = ({ address, outline }: CopyAddressProps) => {
   const { t } = useTranslation('library')
   const { setTooltipTextAndOpen } = useTooltip()
 
@@ -26,7 +26,7 @@ export const CopyAddress = ({ address }: CopyAddressProps) => {
         }
 
   return (
-    <HeaderButton>
+    <HeaderButton outline={outline}>
       <button
         type="button"
         className="tooltip-trigger-element"

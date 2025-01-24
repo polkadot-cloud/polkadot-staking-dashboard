@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { HeaderButton } from 'ui-core/list'
 import type { FavoriteProps } from '../types'
 
-export const FavoritePool = ({ address }: FavoriteProps) => {
+export const FavoritePool = ({ address, outline }: FavoriteProps) => {
   const { t } = useTranslation('library')
   const { setTooltipTextAndOpen } = useTooltip()
   const { favorites, addFavorite, removeFavorite } = useFavoritePools()
@@ -34,7 +34,7 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
   )}`
 
   return (
-    <HeaderButton>
+    <HeaderButton outline={outline}>
       <TooltipTrigger
         className="tooltip-trigger-element pointer"
         data-tooltip-text={tooltipText}

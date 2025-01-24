@@ -29,9 +29,11 @@ export const Nomination = ({
 }: ValidatorItemProps) => {
   const { selectActive } = useList()
   const { validatorIdentities, validatorSupers } = useValidators()
-
   const { address, prefs } = validator
   const commission = prefs?.commission ?? null
+
+  // Whether buttons should be styled as outline.
+  const outline = displayFor === 'canvas'
 
   return (
     <Wrapper>
@@ -40,9 +42,11 @@ export const Nomination = ({
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels className={displayFor}>
-              <CopyAddress address={address} />
-              {toggleFavorites && <FavoriteValidator address={address} />}
+            <Labels>
+              <CopyAddress address={address} outline={outline} />
+              {toggleFavorites && (
+                <FavoriteValidator address={address} outline={outline} />
+              )}
               {displayFor !== 'canvas' && (
                 <Metrics
                   address={address}
@@ -50,6 +54,7 @@ export const Nomination = ({
                     validatorIdentities[address],
                     validatorSupers[address]
                   )}
+                  outline={outline}
                 />
               )}
             </Labels>

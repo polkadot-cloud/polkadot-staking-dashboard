@@ -12,3 +12,8 @@ export type CheckboxProps = ComponentBase & {
   onClick: () => void
   checked: boolean
 }
+
+export type HeaderButtonProps = ComponentBase & {
+  outline?: boolean
+  withText?: boolean
+}

@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SmallFontSizeMaxWidth } from 'consts'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
@@ -97,38 +96,6 @@ export const Labels = styled.div`
   flex-grow: 1;
   padding: 0 0 0 0.25rem;
   height: inherit;
-
-  &.yMargin {
-    margin-bottom: 0.9rem;
-  }
-
-  button {
-    background: var(--shimmer-foreground);
-    padding: 0 0.1rem;
-    font-size: 1rem;
-    border-radius: 50%;
-    width: 1.9rem;
-    height: 1.9rem;
-
-    @media (min-width: ${SmallFontSizeMaxWidth}px) {
-      padding: 0 0.2rem;
-    }
-    color: var(--text-color-secondary);
-    &:hover {
-      opacity: 0.75;
-    }
-    &.active {
-      color: var(--accent-color-primary);
-    }
-    &:disabled {
-      opacity: var(--opacity-disabled);
-    }
-  }
-
-  &.canvas button {
-    border: 1px solid var(--border-secondary-color);
-    background: none;
-  }
 `
 
 export const ValidatorStatusWrapper = styled.div<{
