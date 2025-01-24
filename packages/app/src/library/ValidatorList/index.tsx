@@ -21,6 +21,8 @@ import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
 import { Selectable } from 'library/List/Selectable'
 import { ValidatorItem } from 'library/ValidatorList/ValidatorItem'
+import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
+import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -73,6 +75,7 @@ export const ValidatorListInner = ({
   const { mode } = useTheme()
   const listProvider = useList()
   const { syncing } = useSyncing()
+  const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
   const { injectValidatorListData } = useValidators()
@@ -157,6 +160,11 @@ export const ValidatorListInner = ({
   // Store whether the search bar is being used
   const [isSearching, setIsSearching] = useState<boolean>(false)
 
+  // Store performance data, keyed by address
+  const [performances, setPerformances] = useState<ValidatorEraPointsBatch[]>(
+    []
+  )
+
   // Pagination
   const totalPages = Math.ceil(validators.length / validatorsPerPage)
   const pageEnd = page * validatorsPerPage - 1
@@ -180,7 +188,11 @@ export const ValidatorListInner = ({
   }
 
   // Get subset for page display
-  const listValidators = validators.slice(pageStart).slice(0, validatorsPerPage)
+  const listItems = validators.slice(pageStart).slice(0, validatorsPerPage)
+  // A unique key for the current page of items
+  const pageKey = JSON.stringify(
+    listItems.map(({ address }, i) => `${i}${address}`)
+  )
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
@@ -198,13 +210,11 @@ export const ValidatorListInner = ({
     }
     filteredValidators = applyFilter(includes, excludes, filteredValidators)
     filteredValidators = applySearch(filteredValidators, newValue)
-
-    // ensure no duplicates
+    // Ensure no duplicates
     filteredValidators = filteredValidators.filter(
       (value: Validator, index: number, self: Validator[]) =>
         index === self.findIndex((i) => i.address === value.address)
     )
-
     setPage(1)
     setValidators(filteredValidators)
     setIsSearching(e.currentTarget.value !== '')
@@ -216,6 +226,20 @@ export const ValidatorListInner = ({
     setValidatorsDefault(prepareInitialValidators())
     setValidators(prepareInitialValidators())
     setFetched(true)
+  }
+
+  // Fetch performance data
+  const getPerformanceData = async (key: string) => {
+    const results = await fetchValidatorEraPointsBatch(
+      network,
+      listItems.map(({ address }) => address),
+      activeEra.index.toNumber(),
+      30
+    )
+    // Update performance if key still matches current page key
+    if (key === pageKey) {
+      setPerformances(results.validatorEraPointsBatch)
+    }
   }
 
   // Set default filters. Should re-render if era stakers re-syncs as era points effect the
@@ -266,6 +290,13 @@ export const ValidatorListInner = ({
       setFetched(false)
     }
   }, [initialValidators, nominator])
+
+  // Fetch performance queries when validator list changes
+  useEffect(() => {
+    // Reset performance immediately
+    setPerformances([])
+    getPerformanceData(pageKey)
+  }, [pageKey])
 
   // Configure validator list when network is ready to fetch
   useEffect(() => {
@@ -330,13 +361,13 @@ export const ValidatorListInner = ({
         </FilterHeaderWrapper>
         {allowFilters && <FilterBadges />}
 
-        {listValidators.length > 0 && pagination && (
+        {listItems.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
 
         {selectable ? (
           <Selectable
-            canSelect={listValidators.length > 0}
+            canSelect={listItems.length > 0}
             actionsAll={actionsAll}
             actionsSelected={actionsSelected}
             displayFor={displayFor}
@@ -344,9 +375,9 @@ export const ValidatorListInner = ({
         ) : null}
 
         <MotionContainer>
-          {listValidators.length ? (
+          {listItems.length ? (
             <>
-              {listValidators.map((validator, index) => (
+              {listItems.map((validator, index) => (
                 <motion.div
                   key={`nomination_${index}`}
                   className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
@@ -369,6 +400,11 @@ export const ValidatorListInner = ({
                     showMenu={showMenu}
                     bondFor={bondFor}
                     displayFor={displayFor}
+                    performance={
+                      performances.find(
+                        (entry) => entry.validator === validator.address
+                      )?.points || []
+                    }
                     nominationStatus={
                       nominationStatus.current[validator.address]
                     }

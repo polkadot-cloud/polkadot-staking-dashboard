@@ -4,6 +4,7 @@
 import type { MaybeAddress } from '@w3ux/react-connect-kit/types'
 import type { DisplayFor } from '@w3ux/types'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
+import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import type { BondFor } from 'types'
 
 export interface ValidatorItemProps {
@@ -15,6 +16,7 @@ export interface ValidatorItemProps {
   showMenu?: boolean
   toggleFavorites?: boolean
   nominationStatus?: NominationStatus
+  performance: ValidatorEraPoints[]
 }
 
 export interface PulseProps {
