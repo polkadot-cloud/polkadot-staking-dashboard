@@ -45,8 +45,7 @@ export const Default = ({
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
   const { validatorIdentities, validatorSupers } = useValidators()
-
-  const { address, prefs, validatorStatus, totalStake } = validator
+  const { address, prefs, validatorStatus } = validator
   const commission = prefs?.commission ?? null
 
   // Whether buttons should be styled as outline.
@@ -131,12 +130,7 @@ export const Default = ({
               <Commission commission={commission} />
               <ParaValidator address={address} />
             </LabelRow>
-            <EraStatus
-              address={address}
-              status={validatorStatus}
-              totalStake={totalStake}
-              noMargin
-            />
+            <EraStatus address={address} status={validatorStatus} noMargin />
           </div>
         </div>
       </div>

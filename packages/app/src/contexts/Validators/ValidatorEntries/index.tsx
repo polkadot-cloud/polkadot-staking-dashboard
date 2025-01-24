@@ -452,26 +452,38 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         const inEra =
           stakers.find(({ address }) => address === entry.address) || false
 
-        let totalStake = new BigNumber(0)
         let validatorStatus: ValidatorStatus = 'waiting'
         if (inEra) {
           validatorStatus = 'active'
-          const { others, own } = inEra
-          if (own) {
-            totalStake = totalStake.plus(own)
-          }
-          others.forEach(({ value }) => {
-            totalStake = totalStake.plus(value)
-          })
         }
         return {
           ...entry,
-          totalStake,
           validatorStatus,
         }
       }) || []
 
     return injected
+  }
+
+  // Gets a validator's total stake, if any
+  const getValidatorTotalStake = (address: string): bigint => {
+    const entry = validators.find((v) => v.address === address)
+    if (!entry) {
+      return 0n
+    }
+    const inEra = stakers.find((staker) => staker.address === entry.address)
+    if (!inEra) {
+      return 0n
+    }
+    let totalStake = 0n
+    const { others, own } = inEra
+    if (own) {
+      totalStake = totalStake + BigInt(own)
+    }
+    others.forEach(({ value }) => {
+      totalStake = totalStake + BigInt(value)
+    })
+    return totalStake
   }
 
   // Gets average validator reward for provided number of days
@@ -599,6 +611,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         erasRewardPointsFetched,
         averageEraValidatorReward,
         formatWithPrefs,
+        getValidatorTotalStake,
       }}
     >
       {children}

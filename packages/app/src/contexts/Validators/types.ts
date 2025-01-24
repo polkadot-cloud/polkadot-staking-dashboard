@@ -25,6 +25,7 @@ export interface ValidatorsContextInterface {
   erasRewardPointsFetched: Sync
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]
+  getValidatorTotalStake: (address: string) => bigint
 }
 
 export type ValidatorStatus = 'waiting' | 'active'
@@ -75,7 +76,6 @@ export type EraPointsBoundaries = {
 
 export type ValidatorListEntry = Validator & {
   validatorStatus: ValidatorStatus
-  totalStake: BigNumber
 }
 
 export interface ValidatorEraPointHistory {
