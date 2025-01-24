@@ -36,7 +36,14 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
         data-tooltip-text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
-      <TokenIcon />
+
+      <TokenIcon
+        style={{
+          maxWidth: '1.25rem',
+          height: '1.25rem',
+          marginRight: '0.25rem',
+        }}
+      />
       {bonded.decimalPlaces(0).toFormat()}
     </Label>
   )
