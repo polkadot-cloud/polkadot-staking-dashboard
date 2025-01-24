@@ -7,6 +7,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useTheme } from 'contexts/Themes'
 import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
@@ -76,6 +77,7 @@ export const ValidatorListInner = ({
   const listProvider = useList()
   const { syncing } = useSyncing()
   const { network } = useNetwork()
+  const { pluginEnabled } = usePlugins()
   const { activeAccount } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
   const { injectValidatorListData } = useValidators()
@@ -230,6 +232,11 @@ export const ValidatorListInner = ({
 
   // Fetch performance data
   const getPerformanceData = async (key: string) => {
+    if (!pluginEnabled('staking_api')) {
+      return
+    }
+    // Delete stale performance data immediately
+    setPerformances([])
     const results = await fetchValidatorEraPointsBatch(
       network,
       listItems.map(({ address }) => address),
@@ -293,8 +300,6 @@ export const ValidatorListInner = ({
 
   // Fetch performance queries when validator list changes
   useEffect(() => {
-    // Reset performance immediately
-    setPerformances([])
     getPerformanceData(pageKey)
   }, [pageKey])
 
