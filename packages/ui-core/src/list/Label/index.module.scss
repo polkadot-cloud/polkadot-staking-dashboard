@@ -9,7 +9,9 @@
   justify-content: center;
   font-size: inherit;
   margin: 0 0.4em;
-  > .token {
+  > svg {
     margin-right: 0.25rem;
+    max-width: 1.25rem;
+    height: 1.25rem;
   }
 }

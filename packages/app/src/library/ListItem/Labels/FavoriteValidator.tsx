@@ -36,7 +36,7 @@ export const FavoriteValidator = ({ address }: FavoriteProps) => {
   return (
     <HeaderButton>
       <TooltipTrigger
-        className="tooltip-trigger-element as-button"
+        className="tooltip-trigger-element pointer"
         data-tooltip-text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
         onClick={() => {

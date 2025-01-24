@@ -195,7 +195,7 @@ export const TooltipTrigger = styled.div`
   top: -10%;
   left: -10%;
 
-  &.as-button {
+  &.pointer {
     cursor: pointer;
   }
 `
