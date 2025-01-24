@@ -8,4 +8,7 @@
   overflow: hidden;
   flex-grow: 1;
   padding-right: 0.25rem;
+  > div:last-child {
+    margin-right: 0
+  }
 }
