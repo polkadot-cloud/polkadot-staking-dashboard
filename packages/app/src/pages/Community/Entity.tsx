@@ -92,7 +92,6 @@ export const Entity = () => {
                 pagination
                 toggleFavorites
                 allowFilters
-                refetchOnListUpdate
               />
             )}
           </>

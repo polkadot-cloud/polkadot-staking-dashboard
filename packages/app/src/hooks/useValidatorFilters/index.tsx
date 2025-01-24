@@ -10,10 +10,10 @@ import { useTranslation } from 'react-i18next'
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library')
   const {
-    sessionValidators,
-    sessionParaValidators,
-    validatorIdentities,
     validatorSupers,
+    sessionValidators,
+    validatorIdentities,
+    sessionParaValidators,
     validatorEraPointsHistory,
   } = useValidators()
 

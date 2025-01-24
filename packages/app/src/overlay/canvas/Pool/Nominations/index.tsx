@@ -40,7 +40,6 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
           displayFor="canvas"
           allowListFormat={false}
           allowMoreCols={true}
-          refetchOnListUpdate
         />
       )}
     </NominationsWrapper>

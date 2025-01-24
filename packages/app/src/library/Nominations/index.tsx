@@ -138,7 +138,6 @@ export const Nominations = ({
           validators={nominated || []}
           nominator={nominator}
           format="nomination"
-          refetchOnListUpdate
           allowMoreCols
           allowListFormat={false}
         />

@@ -28,5 +28,4 @@ export interface ValidatorListProps {
   defaultOrder?: string
   selectActive?: boolean
   selectToggleable?: boolean
-  refetchOnListUpdate?: boolean
 }
