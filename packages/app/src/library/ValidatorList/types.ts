@@ -23,7 +23,6 @@ export interface ValidatorListProps {
   displayFor?: DisplayFor
   allowSearch?: boolean
   allowListFormat?: boolean
-  alwaysRefetchValidators?: boolean
   defaultFilters?: AnyJson
   defaultOrder?: string
   selectActive?: boolean

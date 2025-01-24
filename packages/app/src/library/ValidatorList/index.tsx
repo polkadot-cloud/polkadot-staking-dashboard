@@ -55,8 +55,6 @@ export const ValidatorListInner = ({
   allowListFormat = true,
   defaultOrder = undefined,
   defaultFilters = undefined,
-  // Re-fetching.
-  alwaysRefetchValidators = false,
 }: ValidatorListProps) => {
   const { t } = useTranslation('library')
   const {
@@ -289,16 +287,7 @@ export const ValidatorListInner = ({
 
   // Reset list when validator list changes
   useEffect(() => {
-    if (alwaysRefetchValidators) {
-      if (
-        JSON.stringify(initialValidators.map((v) => v.address)) !==
-        JSON.stringify(validatorsDefault.map((v) => v.address))
-      ) {
-        setFetched(false)
-      }
-    } else {
-      setFetched(false)
-    }
+    setFetched(false)
   }, [initialValidators, nominator])
 
   // Fetch performance queries when validator list changes
