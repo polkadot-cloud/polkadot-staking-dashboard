@@ -27,7 +27,7 @@
     left: 0;
     background: var(--shimmer-foreground);
     background-image: linear-gradient(
-      to right,
+      to left,
       var(--shimmer-foreground) 0%,
       var(--shimmer-background) 20%,
       var(--shimmer-foreground) 40%,
@@ -47,10 +47,10 @@
 
     @keyframes shimmer {
       0% {
-        background-position: -50% 0;
+        background-position: 200% 0;
       }
       100% {
-        background-position: 200% 0;
+        background-position: -50% 0;
       }
     }
   }
