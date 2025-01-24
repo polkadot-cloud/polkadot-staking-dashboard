@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
 import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { Label } from 'ui-core/list'
 
 export const RewardShare = ({ share }: { share: number }) => {
   const { t } = useTranslation('pages')
@@ -14,7 +15,7 @@ export const RewardShare = ({ share }: { share: number }) => {
   const tooltipText = t('decentralization.nominationShareInRewards')
 
   return (
-    <div className="label">
+    <Label>
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
@@ -22,6 +23,6 @@ export const RewardShare = ({ share }: { share: number }) => {
       />
       <FontAwesomeIcon icon={faChartPie} style={{ marginRight: '0.25rem' }} />
       {share}%{' '}
-    </div>
+    </Label>
   )
 }

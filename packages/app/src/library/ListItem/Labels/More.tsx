@@ -3,6 +3,7 @@
 
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
+import { HeaderButton } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
 
 export const More = ({
@@ -22,7 +23,7 @@ export const More = ({
   const performanceKey = `pool_page_standalone_${id}`
 
   return (
-    <div className="label button-with-text">
+    <HeaderButton withText>
       <button
         type="button"
         onClick={() => {
@@ -42,6 +43,6 @@ export const More = ({
       >
         {t('module.more')}
       </button>
-    </div>
+    </HeaderButton>
   )
 }

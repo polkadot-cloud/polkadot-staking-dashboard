@@ -129,51 +129,6 @@ export const Labels = styled.div`
     border: 1px solid var(--border-secondary-color);
     background: none;
   }
-
-  .label {
-    color: var(--text-color-secondary);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: inherit;
-    margin: 0 0.4em;
-
-    > .token {
-      margin-right: 0.25rem;
-    }
-    &.button-with-text {
-      button {
-        font-family: InterSemiBold, sans-serif;
-        font-size: 0.95rem;
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        width: auto;
-        height: auto;
-        border-radius: 0.75rem;
-        padding: 0.4rem 0.75rem;
-
-        &:disabled {
-          &:hover {
-            opacity: var(--opacity-disabled);
-          }
-        }
-        > svg {
-          margin-left: 0.2rem;
-          margin-right: 0.5rem;
-        }
-      }
-    }
-
-    &.warning {
-      color: #d2545d;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      padding-right: 0.35rem;
-    }
-  }
 `
 
 export const ValidatorStatusWrapper = styled.div<{

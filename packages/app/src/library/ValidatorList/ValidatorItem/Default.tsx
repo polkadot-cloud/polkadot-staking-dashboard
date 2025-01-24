@@ -13,7 +13,7 @@ import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Labels, Wrapper } from 'library/ListItem/Wrappers'
 import { MenuList } from 'library/Menu/List'
 import { useTranslation } from 'react-i18next'
-import { Separator } from 'ui-core/list'
+import { HeaderButton, Separator } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries'
 import { useList } from '../../List/context'
@@ -86,11 +86,11 @@ export const Default = ({
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
               {displayFor === 'default' && showMenu && (
-                <div className="label">
+                <HeaderButton>
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>
                     <FontAwesomeIcon icon={faBars} transform="shrink-2" />
                   </button>
-                </div>
+                </HeaderButton>
               )}
               {displayFor === 'default' && (
                 <Metrics

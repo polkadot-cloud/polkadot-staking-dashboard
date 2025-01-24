@@ -4,6 +4,7 @@
 import { useTooltip } from 'contexts/Tooltip'
 import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { Label } from 'ui-core/list'
 
 export const PoolCommission = ({ commission }: { commission: string }) => {
   const { t } = useTranslation('library')
@@ -16,13 +17,13 @@ export const PoolCommission = ({ commission }: { commission: string }) => {
   }
 
   return (
-    <div className="label">
+    <Label>
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       {commission}
-    </div>
+    </Label>
   )
 }

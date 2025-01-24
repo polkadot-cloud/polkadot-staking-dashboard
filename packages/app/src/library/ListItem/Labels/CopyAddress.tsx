@@ -7,6 +7,7 @@ import { useTooltip } from 'contexts/Tooltip'
 import { Notifications } from 'controllers/Notifications'
 import type { NotificationText } from 'controllers/Notifications/types'
 import { useTranslation } from 'react-i18next'
+import { HeaderButton } from 'ui-core/list'
 import type { CopyAddressProps } from '../types'
 
 export const CopyAddress = ({ address }: CopyAddressProps) => {
@@ -25,7 +26,7 @@ export const CopyAddress = ({ address }: CopyAddressProps) => {
         }
 
   return (
-    <div className="label">
+    <HeaderButton>
       <button
         type="button"
         className="tooltip-trigger-element"
@@ -40,6 +41,6 @@ export const CopyAddress = ({ address }: CopyAddressProps) => {
       >
         <FontAwesomeIcon icon={faCopy} transform="shrink-1" />
       </button>
-    </div>
+    </HeaderButton>
   )
 }

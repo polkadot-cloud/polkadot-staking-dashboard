@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
 import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { Label } from 'ui-core/list'
 
 export const PoolId = ({ id }: { id: number }) => {
   const { t } = useTranslation('library')
@@ -14,7 +15,7 @@ export const PoolId = ({ id }: { id: number }) => {
   const tooltipText = t('poolId')
 
   return (
-    <div className="label pool">
+    <Label>
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
@@ -22,6 +23,6 @@ export const PoolId = ({ id }: { id: number }) => {
       />
       <FontAwesomeIcon icon={faHashtag} />
       &nbsp;{id}
-    </div>
+    </Label>
   )
 }

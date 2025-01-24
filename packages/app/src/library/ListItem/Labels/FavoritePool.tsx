@@ -9,6 +9,7 @@ import { useTooltip } from 'contexts/Tooltip'
 import { Notifications } from 'controllers/Notifications'
 import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { HeaderButton } from 'ui-core/list'
 import type { FavoriteProps } from '../types'
 
 export const FavoritePool = ({ address }: FavoriteProps) => {
@@ -33,7 +34,7 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
   )}`
 
   return (
-    <div className="label">
+    <HeaderButton>
       <TooltipTrigger
         className="tooltip-trigger-element as-button"
         data-tooltip-text={tooltipText}
@@ -53,6 +54,6 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
           transform="shrink-2"
         />
       </button>
-    </div>
+    </HeaderButton>
   )
 }

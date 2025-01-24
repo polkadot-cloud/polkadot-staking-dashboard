@@ -7,6 +7,7 @@ import { useNetwork } from 'contexts/Network'
 import { useTooltip } from 'contexts/Tooltip'
 import type { Pool } from 'library/Pool/types'
 import { useTranslation } from 'react-i18next'
+import { Label } from 'ui-core/list'
 import { planckToUnitBn } from 'utils'
 import { TooltipTrigger } from '../Wrappers'
 
@@ -29,7 +30,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const bonded = planckToUnitBn(new BigNumber(rmCommas(points)), units)
 
   return (
-    <div className="label pool">
+    <Label>
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
@@ -41,6 +42,6 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
         className="token"
       />
       {bonded.decimalPlaces(0).toFormat()}
-    </div>
+    </Label>
   )
 }
