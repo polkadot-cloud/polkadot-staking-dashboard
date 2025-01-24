@@ -6,12 +6,10 @@ import { MaxEraRewardPointsEras } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import {
-  TooltipTrigger,
-  ValidatorPulseWrapper,
-} from 'library/ListItem/Wrappers'
+import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Graph } from 'ui-core/list'
 import { normaliseEraPoints, prefillEraPoints } from './Utils'
 import type { PulseGraphProps, PulseProps } from './types'
 
@@ -34,8 +32,7 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
   })
 
   return (
-    <ValidatorPulseWrapper className={displayFor}>
-      {syncing && <div className="preload" />}
+    <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
@@ -46,7 +43,7 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
         syncing={syncing}
         displayFor={displayFor}
       />
-    </ValidatorPulseWrapper>
+    </Graph>
   )
 }
 
