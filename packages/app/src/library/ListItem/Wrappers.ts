@@ -277,41 +277,6 @@ export const PoolStatusWrapper = styled.div<{
   }
 `
 
-export const SelectWrapper = styled.button`
-  background: var(--background-input);
-  margin: 0 0.75rem 0 0.25rem;
-  overflow: hidden;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  border-radius: 0.25rem;
-  width: 1.1rem;
-  height: 1.1rem;
-  padding: 0;
-  * {
-    cursor: pointer;
-    width: 100%;
-    padding: 0;
-  }
-
-  span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  svg {
-    color: var(--text-color-primary);
-    width: 1rem;
-    height: 1rem;
-  }
-  .select-checkbox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-  }
-`
-
 export const TooltipTrigger = styled.div`
   z-index: 1;
   width: 130%;

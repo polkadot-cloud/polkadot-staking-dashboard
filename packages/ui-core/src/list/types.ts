@@ -7,3 +7,8 @@ export type GraphProps = ComponentBase & {
   syncing: boolean
   canvas?: boolean
 }
+
+export type CheckboxProps = ComponentBase & {
+  onClick: () => void
+  checked: boolean
+}
