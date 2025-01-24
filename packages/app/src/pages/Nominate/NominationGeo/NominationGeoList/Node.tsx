@@ -5,7 +5,8 @@ import type { RewardsByValidationNode } from '@polkawatch/ddp-client'
 import { motion } from 'framer-motion'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { RewardShare } from 'library/ListItem/Labels/RewardShare'
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
+import { Wrapper } from 'library/ListItem/Wrappers'
+import { LabelRow, Separator } from 'ui-core/list'
 
 export const Node = ({
   node,
@@ -44,9 +45,9 @@ export const Node = ({
               </h4>
             </div>
 
-            <Labels>
+            <LabelRow>
               <RewardShare share={rewardShare} />
-            </Labels>
+            </LabelRow>
           </div>
         </div>
       </Wrapper>

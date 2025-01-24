@@ -4,7 +4,8 @@
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
+import { Wrapper } from 'library/ListItem/Wrappers'
+import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { useList } from '../../List/context'
 import { Blocked } from '../../ListItem/Labels/Blocked'
 import { Commission } from '../../ListItem/Labels/Commission'
@@ -28,9 +29,11 @@ export const Nomination = ({
 }: ValidatorItemProps) => {
   const { selectActive } = useList()
   const { validatorIdentities, validatorSupers } = useValidators()
-
   const { address, prefs } = validator
   const commission = prefs?.commission ?? null
+
+  // Whether buttons should be styled as outline.
+  const outline = displayFor === 'canvas'
 
   return (
     <Wrapper>
@@ -39,9 +42,11 @@ export const Nomination = ({
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels className={displayFor}>
-              <CopyAddress address={address} />
-              {toggleFavorites && <FavoriteValidator address={address} />}
+            <HeaderButtonRow>
+              <CopyAddress address={address} outline={outline} />
+              {toggleFavorites && (
+                <FavoriteValidator address={address} outline={outline} />
+              )}
               {displayFor !== 'canvas' && (
                 <Metrics
                   address={address}
@@ -49,9 +54,10 @@ export const Nomination = ({
                     validatorIdentities[address],
                     validatorSupers[address]
                   )}
+                  outline={outline}
                 />
               )}
-            </Labels>
+            </HeaderButtonRow>
           </div>
         </div>
         <Separator />
@@ -60,12 +66,12 @@ export const Nomination = ({
             <Pulse address={address} displayFor={displayFor} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.9rem' }}>
+            <LabelRow inline>
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />
-            </Labels>
+            </LabelRow>
             <NominationStatus
               address={address}
               bondFor={bondFor}

@@ -10,9 +10,15 @@ import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { Metrics } from 'library/ListItem/Labels/Metrics'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
+import { Wrapper } from 'library/ListItem/Wrappers'
 import { MenuList } from 'library/Menu/List'
 import { useTranslation } from 'react-i18next'
+import {
+  HeaderButton,
+  HeaderButtonRow,
+  LabelRow,
+  Separator,
+} from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries'
 import { useList } from '../../List/context'
@@ -41,6 +47,9 @@ export const Default = ({
 
   const { address, prefs, validatorStatus, totalStake } = validator
   const commission = prefs?.commission ?? null
+
+  // Whether buttons should be styled as outline.
+  const outline = displayFor === 'canvas'
 
   const identity = getIdentityDisplay(
     validatorIdentities[address],
@@ -81,15 +90,17 @@ export const Default = ({
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels className={displayFor}>
-              <CopyAddress address={address} />
-              {toggleFavorites && <FavoriteValidator address={address} />}
+            <HeaderButtonRow>
+              <CopyAddress address={address} outline={outline} />
+              {toggleFavorites && (
+                <FavoriteValidator address={address} outline={outline} />
+              )}
               {displayFor === 'default' && showMenu && (
-                <div className="label">
+                <HeaderButton>
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>
                     <FontAwesomeIcon icon={faBars} transform="shrink-2" />
                   </button>
-                </div>
+                </HeaderButton>
               )}
               {displayFor === 'default' && (
                 <Metrics
@@ -100,7 +111,7 @@ export const Default = ({
                   )}
                 />
               )}
-            </Labels>
+            </HeaderButtonRow>
           </div>
         </div>
         <Separator />
@@ -109,12 +120,12 @@ export const Default = ({
             <Pulse address={address} displayFor={displayFor} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.9rem' }}>
+            <LabelRow inline>
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />
-            </Labels>
+            </LabelRow>
             <EraStatus
               address={address}
               status={validatorStatus}
