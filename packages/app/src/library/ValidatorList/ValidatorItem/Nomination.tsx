@@ -15,7 +15,7 @@ import { Identity } from '../../ListItem/Labels/Identity'
 import { Metrics } from '../../ListItem/Labels/Metrics'
 import { NominationStatus } from '../../ListItem/Labels/NominationStatus'
 import { Select } from '../../ListItem/Labels/Select'
-import { Pulse } from './Pulse'
+import { EraPoints } from './EraPoints'
 import { getIdentityDisplay } from './Utils'
 import type { ValidatorItemProps } from './types'
 
@@ -26,6 +26,7 @@ export const Nomination = ({
   bondFor,
   displayFor,
   nominationStatus,
+  eraPoints,
 }: ValidatorItemProps) => {
   const { selectActive } = useList()
   const { validatorIdentities, validatorSupers } = useValidators()
@@ -63,7 +64,11 @@ export const Nomination = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <Pulse address={address} displayFor={displayFor} />
+            <EraPoints
+              address={address}
+              displayFor={displayFor}
+              eraPoints={eraPoints}
+            />
           </div>
           <div>
             <LabelRow inline>

@@ -28,7 +28,7 @@ import { EraStatus } from '../../ListItem/Labels/EraStatus'
 import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator'
 import { Identity } from '../../ListItem/Labels/Identity'
 import { Select } from '../../ListItem/Labels/Select'
-import { Pulse } from './Pulse'
+import { EraPoints } from './EraPoints'
 import { getIdentityDisplay } from './Utils'
 import type { ValidatorItemProps } from './types'
 
@@ -37,6 +37,7 @@ export const Default = ({
   toggleFavorites,
   showMenu,
   displayFor,
+  eraPoints,
 }: ValidatorItemProps) => {
   const { t } = useTranslation('library')
   const { selectActive } = useList()
@@ -117,7 +118,11 @@ export const Default = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <Pulse address={address} displayFor={displayFor} />
+            <EraPoints
+              address={address}
+              displayFor={displayFor}
+              eraPoints={eraPoints}
+            />
           </div>
           <div>
             <LabelRow inline>

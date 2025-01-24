@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { MaxEraRewardPointsEras } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -11,24 +10,31 @@ import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Graph } from 'ui-core/list'
 import { normaliseEraPoints, prefillEraPoints } from './Utils'
-import type { PulseGraphProps, PulseProps } from './types'
+import type { GraphInnerProps, PulseProps } from './types'
 
-export const Pulse = ({ address, displayFor }: PulseProps) => {
+export const EraPoints = ({ displayFor, eraPoints }: PulseProps) => {
   const { t } = useTranslation('library')
-  const { isReady, activeEra } = useApi()
+  const { isReady } = useApi()
+  const { validatorsFetched } = useValidators()
   const { setTooltipTextAndOpen } = useTooltip()
-  const { getValidatorPointsFromEras, eraPointsBoundaries, erasRewardPoints } =
-    useValidators()
-  const startEra = activeEra.index.minus(1)
-  const eraRewardPoints = getValidatorPointsFromEras(startEra, address)
 
-  const high = eraPointsBoundaries?.high || new BigNumber(1)
-  const normalisedPoints = normaliseEraPoints(eraRewardPoints, high)
+  const eraPointData: bigint[] = eraPoints.map(({ points }) => BigInt(points))
+  const high = eraPointData.sort((a, b) => Number(b - a))[0]
+
+  const normalisedPoints = normaliseEraPoints(
+    Object.fromEntries(
+      eraPoints.map(({ era, points }) => [
+        era,
+        new BigNumber(points.toString()),
+      ])
+    ),
+    new BigNumber(high?.toString() || 1)
+  )
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
 
-  const syncing = !isReady || !Object.values(erasRewardPoints).length
+  const syncing = !isReady || !eraPoints.length || !validatorsFetched
   const tooltipText = t('validatorPerformance', {
-    count: MaxEraRewardPointsEras,
+    count: 30,
   })
 
   return (
@@ -37,7 +43,7 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
         text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
-      <PulseGraph
+      <GraphInner
         points={prefilledPoints}
         syncing={syncing}
         displayFor={displayFor}
@@ -46,11 +52,11 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
   )
 }
 
-export const PulseGraph = ({
+const GraphInner = ({
   points: rawPoints = [],
   syncing,
   displayFor,
-}: PulseGraphProps) => {
+}: GraphInnerProps) => {
   // Prefill with duplicate of start point.
   let points = [rawPoints[0] || 0]
   points = points.concat(rawPoints)

@@ -3,7 +3,6 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
-import { MaxEraRewardPointsEras } from 'consts'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
@@ -174,7 +173,7 @@ export const useValidatorFilters = () => {
     })
 
   const ordersToLabels: Record<string, string> = {
-    rank: `${MaxEraRewardPointsEras} ${t('dayPerformance')}`,
+    rank: `30 ${t('dayPerformance')}`,
     low_commission: t('lowCommission'),
     high_commission: t('highCommission'),
     default: t('unordered'),

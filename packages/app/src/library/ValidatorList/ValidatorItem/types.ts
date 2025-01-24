@@ -16,14 +16,15 @@ export interface ValidatorItemProps {
   showMenu?: boolean
   toggleFavorites?: boolean
   nominationStatus?: NominationStatus
-  performance: ValidatorEraPoints[]
+  eraPoints: ValidatorEraPoints[]
 }
 
 export interface PulseProps {
   address: string
   displayFor: DisplayFor
+  eraPoints: ValidatorEraPoints[]
 }
-export interface PulseGraphProps {
+export interface GraphInnerProps {
   points: number[]
   syncing: boolean
   displayFor: DisplayFor

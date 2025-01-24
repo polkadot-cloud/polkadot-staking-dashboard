@@ -192,9 +192,12 @@ export const ValidatorListInner = ({
   // Get subset for page display
   const listItems = validators.slice(pageStart).slice(0, validatorsPerPage)
   // A unique key for the current page of items
-  const pageKey = JSON.stringify(
-    listItems.map(({ address }, i) => `${i}${address}`)
-  )
+  const pageKey =
+    JSON.stringify(listItems.map(({ address }, i) => `${i}${address}`)) +
+    JSON.stringify(includes) +
+    JSON.stringify(excludes) +
+    JSON.stringify(order) +
+    JSON.stringify(searchTerm)
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
@@ -240,7 +243,7 @@ export const ValidatorListInner = ({
     const results = await fetchValidatorEraPointsBatch(
       network,
       listItems.map(({ address }) => address),
-      activeEra.index.toNumber(),
+      Math.max(activeEra.index.toNumber() - 1, 0),
       30
     )
     // Update performance if key still matches current page key
@@ -405,7 +408,7 @@ export const ValidatorListInner = ({
                     showMenu={showMenu}
                     bondFor={bondFor}
                     displayFor={displayFor}
-                    performance={
+                    eraPoints={
                       performances.find(
                         (entry) => entry.validator === validator.address
                       )?.points || []

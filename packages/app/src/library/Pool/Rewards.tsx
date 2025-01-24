@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { MaxEraRewardPointsEras } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -31,7 +30,7 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
 
   const empty = Object.values(poolRewardPoints).length === 0
   const syncing = !isReady
-  const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`
+  const tooltipText = `30 ${t('dayPoolPerformance')}`
 
   return (
     <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
