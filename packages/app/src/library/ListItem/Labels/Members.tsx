@@ -4,8 +4,8 @@
 import { faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
-import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 
 export const Members = ({ members }: { members: string }) => {
@@ -16,9 +16,8 @@ export const Members = ({ members }: { members: string }) => {
 
   return (
     <Label>
-      <TooltipTrigger
-        className="tooltip-trigger-element"
-        data-tooltip-text={tooltipText}
+      <TooltipArea
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       <FontAwesomeIcon icon={faUsers} />

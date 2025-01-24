@@ -5,8 +5,8 @@ import { MaxEraRewardPointsEras } from 'consts'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
-import { TooltipTrigger } from '../Wrappers'
 
 export const Quartile = ({ address }: { address: string }) => {
   const { t } = useTranslation()
@@ -25,9 +25,8 @@ export const Quartile = ({ address }: { address: string }) => {
 
   return (
     <Label>
-      <TooltipTrigger
-        className="tooltip-trigger-element"
-        data-tooltip-text={tooltipText}
+      <TooltipArea
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
         style={{ cursor: 'default' }}
       />

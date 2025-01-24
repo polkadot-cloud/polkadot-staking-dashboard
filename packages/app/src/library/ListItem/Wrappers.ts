@@ -142,16 +142,3 @@ export const PoolStatusWrapper = styled.div<{
     }
   }
 `
-
-export const TooltipTrigger = styled.div`
-  z-index: 1;
-  width: 130%;
-  height: 130%;
-  position: absolute;
-  top: -10%;
-  left: -10%;
-
-  &.pointer {
-    cursor: pointer;
-  }
-`

@@ -7,9 +7,9 @@ import { useNetwork } from 'contexts/Network'
 import { useTooltip } from 'contexts/Tooltip'
 import type { Pool } from 'library/Pool/types'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 import { planckToUnitBn } from 'utils'
-import { TooltipTrigger } from '../Wrappers'
 
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library')
@@ -31,9 +31,8 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
 
   return (
     <Label>
-      <TooltipTrigger
-        className="tooltip-trigger-element"
-        data-tooltip-text={tooltipText}
+      <TooltipArea
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
 

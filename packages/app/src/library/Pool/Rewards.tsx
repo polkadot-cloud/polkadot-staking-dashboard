@@ -6,12 +6,12 @@ import { MaxEraRewardPointsEras } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import {
   normaliseEraPoints,
   prefillEraPoints,
 } from 'library/ValidatorList/ValidatorItem/Utils'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
 import { Graph } from 'ui-core/list'
 import type { RewardProps, RewardsGraphProps } from './types'
 
@@ -36,9 +36,8 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
   return (
     <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
       {syncing && <div className="preload" />}
-      <TooltipTrigger
-        className="tooltip-trigger-element"
-        data-tooltip-text={tooltipText}
+      <TooltipArea
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       <RewardsGraph points={prefilledPoints} syncing={empty} />

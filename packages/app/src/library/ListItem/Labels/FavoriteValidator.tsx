@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { Notifications } from 'controllers/Notifications'
-import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
 import { HeaderButton } from 'ui-core/list'
 import type { FavoriteProps } from '../types'
 
@@ -35,9 +35,9 @@ export const FavoriteValidator = ({ address, outline }: FavoriteProps) => {
 
   return (
     <HeaderButton outline={outline}>
-      <TooltipTrigger
-        className="tooltip-trigger-element pointer"
-        data-tooltip-text={tooltipText}
+      <TooltipArea
+        pointer
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
         onClick={() => {
           if (isFavorite) {
