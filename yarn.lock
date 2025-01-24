@@ -4620,7 +4620,7 @@ __metadata:
     wagmi: "npm:^2.14.8"
     xxhash-wasm: "npm:^1.0.2"
   peerDependencies:
-    "@fortawesome/fontawesome-svg-core": "workspace:*"
+    "@fortawesome/fontawesome-svg-core": "*"
     "@fortawesome/free-solid-svg-icons": "*"
     "@tanstack/react-query": "*"
     eslint: "*"
