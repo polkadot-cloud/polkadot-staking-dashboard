@@ -89,13 +89,13 @@ export const ValidatorListInner = ({
   const actionsAll = [...actions].filter((action) => !action.onSelected)
   const actionsSelected = [...actions].filter((action) => action.onSelected)
 
-  // Determine the nominator of the validator list. Fallback to activeAccount if not provided.
+  // Determine the nominator of the validator list. Fallback to activeAccount if not provided
   const nominator = initialNominator || activeAccount
 
-  // Store the current nomination status of validator records relative to the supplied nominator.
+  // Store the current nomination status of validator records relative to the supplied nominator
   const nominationStatus = useRef<Record<string, NominationStatus>>({})
 
-  // Get nomination status relative to supplied nominator, if `format` is `nomination`.
+  // Get nomination status relative to supplied nominator, if `format` is `nomination`
   const processNominationStatus = () => {
     if (format === 'nomination') {
       if (bondFor === 'pool') {
@@ -106,13 +106,13 @@ export const ValidatorListInner = ({
           ])
         )
       } else {
-        // get all active account's nominations.
+        // get all active account's nominations
         const nominationStatuses = getNominationSetStatus(
           nominator,
           'nominator'
         )
 
-        // find the nominator status within the returned nominations.
+        // find the nominator status within the returned nominations
         nominationStatus.current = Object.fromEntries(
           initialValidators.map(({ address }) => [
             address,
@@ -123,7 +123,7 @@ export const ValidatorListInner = ({
     }
   }
 
-  // Injects status into supplied initial validators.
+  // Injects status into supplied initial validators
   const prepareInitialValidators = () => {
     processNominationStatus()
     const statusToIndex = {
@@ -138,26 +138,26 @@ export const ValidatorListInner = ({
     )
   }
 
-  // Current page.
+  // Current page
   const [page, setPage] = useState<number>(1)
 
-  // Default list of validators.
+  // Default list of validators
   const [validatorsDefault, setValidatorsDefault] = useState<
     ValidatorListEntry[]
   >(prepareInitialValidators())
 
-  // Manipulated list (custom ordering, filtering) of validators.
+  // Manipulated list (custom ordering, filtering) of validators
   const [validators, setValidators] = useState<ValidatorListEntry[]>(
     prepareInitialValidators()
   )
 
-  // Store whether the validator list has been fetched initially.
+  // Store whether the validator list has been fetched initially
   const [fetched, setFetched] = useState<boolean>(false)
 
-  // Store whether the search bar is being used.
+  // Store whether the search bar is being used
   const [isSearching, setIsSearching] = useState<boolean>(false)
 
-  // Pagination.
+  // Pagination
   const totalPages = Math.ceil(validators.length / validatorsPerPage)
   const pageEnd = page * validatorsPerPage - 1
   const pageStart = pageEnd - (validatorsPerPage - 1)
@@ -179,7 +179,7 @@ export const ValidatorListInner = ({
     }
   }
 
-  // get throttled subset or entire list
+  // Get subset for page display
   const listValidators = validators.slice(pageStart).slice(0, validatorsPerPage)
 
   // if in modal, handle resize
@@ -219,7 +219,7 @@ export const ValidatorListInner = ({
   }
 
   // Set default filters. Should re-render if era stakers re-syncs as era points effect the
-  // performance order.
+  // performance order
   useEffect(() => {
     if (allowFilters) {
       if (defaultFilters?.includes?.length) {
@@ -253,7 +253,7 @@ export const ValidatorListInner = ({
     }
   }, [syncing])
 
-  // Reset list when validator list changes.
+  // Reset list when validator list changes
   useEffect(() => {
     if (alwaysRefetchValidators) {
       if (
@@ -267,28 +267,28 @@ export const ValidatorListInner = ({
     }
   }, [initialValidators, nominator])
 
-  // Configure validator list when network is ready to fetch.
+  // Configure validator list when network is ready to fetch
   useEffect(() => {
     if (isReady && !activeEra.index.isZero()) {
       setupValidatorList()
     }
   }, [isReady, activeEra.index, syncing, fetched])
 
-  // Trigger `onSelected` when selection changes.
+  // Trigger `onSelected` when selection changes
   useEffect(() => {
     if (onSelected) {
       onSelected(listProvider)
     }
   }, [selected])
 
-  // List ui changes / validator changes trigger re-render of list.
+  // List ui changes / validator changes trigger re-render of list
   useEffect(() => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate()
     }
   }, [order, syncing, includes, excludes, peopleApiStatus])
 
-  // Handle modal resize on list format change.
+  // Handle modal resize on list format change
   useEffect(() => {
     maybeHandleModalResize()
   }, [listFormat, validators, page])
