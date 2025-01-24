@@ -8,8 +8,9 @@ import { PoolBonded } from 'library/ListItem/Labels/PoolBonded'
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
 import { PoolNominateStatus } from 'library/ListItem/Labels/PoolNominateStatus'
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
+import { Wrapper } from 'library/ListItem/Wrappers'
 import { usePoolsTabs } from 'pages/Pools/context'
+import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { Members } from '../ListItem/Labels/Members'
 import { More } from '../ListItem/Labels/More'
 import { PoolId } from '../ListItem/Labels/PoolId'
@@ -29,14 +30,14 @@ export const Pool = ({ pool }: PoolProps) => {
         <div className="row top">
           <PoolIdentity pool={pool} />
           <div>
-            <Labels>
+            <HeaderButtonRow>
               <FavoritePool address={addresses.stash} />
               <More
                 pool={pool}
                 setActiveTab={setActiveTab}
                 disabled={syncing}
               />
-            </Labels>
+            </HeaderButtonRow>
           </div>
         </div>
         <Separator />
@@ -45,14 +46,14 @@ export const Pool = ({ pool }: PoolProps) => {
             <PoolNominateStatus pool={pool} />
           </div>
           <div>
-            <Labels>
+            <LabelRow>
               {currentCommission > 0 && (
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />
               <PoolBonded pool={pool} />
-            </Labels>
+            </LabelRow>
           </div>
         </div>
       </div>

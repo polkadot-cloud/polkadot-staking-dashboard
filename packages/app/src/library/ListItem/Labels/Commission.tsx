@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTooltip } from 'contexts/Tooltip'
-import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
+import { Label } from 'ui-core/list'
 
 export const Commission = ({ commission }: { commission: number }) => {
   const { t } = useTranslation('library')
@@ -12,13 +13,12 @@ export const Commission = ({ commission }: { commission: number }) => {
   const tooltipText = t('validatorCommission')
 
   return (
-    <div className="label">
-      <TooltipTrigger
-        className="tooltip-trigger-element"
-        data-tooltip-text={tooltipText}
+    <Label>
+      <TooltipArea
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       {commission}%
-    </div>
+    </Label>
   )
 }
