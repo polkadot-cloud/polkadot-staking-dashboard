@@ -54,7 +54,7 @@
     "react-i18next": "^15.4.0",
     "vitest": "^3.0.3"
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.6.0",
   "prettier": {
     "arrowParens": "always",
     "trailingComma": "es5",
