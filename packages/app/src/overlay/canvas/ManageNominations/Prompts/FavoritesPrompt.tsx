@@ -1,19 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useApi } from 'contexts/Api'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import type { Validator } from 'contexts/Validators/types'
 import { Notifications } from 'controllers/Notifications'
 import { Identity } from 'library/ListItem/Labels/Identity'
-import { SelectWrapper } from 'library/ListItem/Wrappers'
 import { Title } from 'library/Prompt/Title'
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { Checkbox } from 'ui-core/list'
 import type { FavoritesPromptProps } from '../types'
 
 export const FavoritesPrompt = ({
@@ -67,8 +65,8 @@ export const FavoritesPrompt = ({
               key={`favorite_${i}`}
               className={isDisabled && inInitial ? 'inactive' : undefined}
             >
-              <SelectWrapper
-                disabled={inInitial}
+              <Checkbox
+                checked={inInitial || selected.includes(favorite)}
                 onClick={() => {
                   if (selected.includes(favorite)) {
                     removeFromSelected([favorite])
@@ -76,11 +74,7 @@ export const FavoritesPrompt = ({
                     addToSelected(favorite)
                   }
                 }}
-              >
-                {(inInitial || selected.includes(favorite)) && (
-                  <FontAwesomeIcon icon={faCheck} transform="shrink-2" />
-                )}
-              </SelectWrapper>
+              />
               <Identity key={`favorite_${i}`} address={favorite.address} />
             </PromptListItem>
           )

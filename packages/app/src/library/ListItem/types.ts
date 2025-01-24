@@ -7,16 +7,30 @@ import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types
 import type { ReactNode } from 'react'
 import type { BondedPool, BondFor, MaybeAddress } from 'types'
 
+export interface Outline {
+  outline?: boolean
+}
+export type CopyAddressProps = Outline & {
+  address: string
+}
+
+export type FavoriteProps = Outline & {
+  address: string
+}
+
+export type MetricsProps = Outline & {
+  display: ReactNode | null
+  address: string
+}
+
+export type MoreProps = Outline & {
+  pool: BondedPool
+  setActiveTab: (t: number) => void
+  disabled: boolean
+  outline?: boolean
+}
 export interface BlockedProps {
   prefs: ValidatorPrefs
-}
-
-export interface CopyAddressProps {
-  address: string
-}
-
-export interface FavoriteProps {
-  address: string
 }
 
 export interface IdentityProps {
@@ -25,11 +39,6 @@ export interface IdentityProps {
 
 export interface PoolIdentityProps {
   pool: BondedPool
-}
-
-export interface MetricsProps {
-  display: ReactNode | null
-  address: string
 }
 
 export interface NominationStatusProps {
