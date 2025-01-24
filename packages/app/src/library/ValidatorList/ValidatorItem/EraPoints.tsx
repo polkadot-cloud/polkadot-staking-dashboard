@@ -64,9 +64,9 @@ const GraphInner = ({
   points.push(rawPoints[rawPoints.length - 1] || 0)
 
   const totalSegments = points.length - 2
-  const vbWidth = 512
+  const vbWidth = 520
   const vbHeight = 115
-  const xPadding = 5
+  const xPadding = 0
   const yPadding = 10
   const xArea = vbWidth - 2 * xPadding
   const yArea = vbHeight - 2 * yPadding
@@ -117,7 +117,7 @@ const GraphInner = ({
         return (
           <line
             key={`grid_coord_${index}`}
-            strokeWidth="3.75"
+            strokeWidth={4}
             stroke={
               displayFor === 'canvas'
                 ? 'var(--grid-color-secondary)'
@@ -136,7 +136,7 @@ const GraphInner = ({
           ({ y1, y2 }, index) => (
             <line
               key={`grid_coord_${index}`}
-              strokeWidth="3.75"
+              strokeWidth={4}
               stroke={
                 displayFor === 'canvas'
                   ? 'var(--grid-color-secondary)'
@@ -158,7 +158,7 @@ const GraphInner = ({
           return (
             <line
               key={`line_coord_${index}`}
-              strokeWidth={5}
+              strokeWidth={5.5}
               opacity={opacity}
               stroke={
                 zero
