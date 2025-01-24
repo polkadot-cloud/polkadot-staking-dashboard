@@ -5,7 +5,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Labels, Wrapper } from 'library/ListItem/Wrappers'
-import { Separator } from 'ui-core/list'
+import { LabelRow, Separator } from 'ui-core/list'
 import { useList } from '../../List/context'
 import { Blocked } from '../../ListItem/Labels/Blocked'
 import { Commission } from '../../ListItem/Labels/Commission'
@@ -66,12 +66,12 @@ export const Nomination = ({
             <Pulse address={address} displayFor={displayFor} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.9rem' }}>
+            <LabelRow inline>
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />
-            </Labels>
+            </LabelRow>
             <NominationStatus
               address={address}
               bondFor={bondFor}

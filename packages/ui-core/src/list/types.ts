@@ -17,3 +17,7 @@ export type HeaderButtonProps = ComponentBase & {
   outline?: boolean
   withText?: boolean
 }
+
+export type LabelRowProps = ComponentBase & {
+  inline?: boolean
+}

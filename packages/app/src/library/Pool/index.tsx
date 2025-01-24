@@ -10,7 +10,7 @@ import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
 import { PoolNominateStatus } from 'library/ListItem/Labels/PoolNominateStatus'
 import { Labels, Wrapper } from 'library/ListItem/Wrappers'
 import { usePoolsTabs } from 'pages/Pools/context'
-import { Separator } from 'ui-core/list'
+import { LabelRow, Separator } from 'ui-core/list'
 import { Members } from '../ListItem/Labels/Members'
 import { More } from '../ListItem/Labels/More'
 import { PoolId } from '../ListItem/Labels/PoolId'
@@ -46,14 +46,14 @@ export const Pool = ({ pool }: PoolProps) => {
             <PoolNominateStatus pool={pool} />
           </div>
           <div>
-            <Labels>
+            <LabelRow>
               {currentCommission > 0 && (
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />
               <PoolBonded pool={pool} />
-            </Labels>
+            </LabelRow>
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Labels, Wrapper } from 'library/ListItem/Wrappers'
 import { MenuList } from 'library/Menu/List'
 import { useTranslation } from 'react-i18next'
-import { HeaderButton, Separator } from 'ui-core/list'
+import { HeaderButton, LabelRow, Separator } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries'
 import { useList } from '../../List/context'
@@ -115,12 +115,12 @@ export const Default = ({
             <Pulse address={address} displayFor={displayFor} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.9rem' }}>
+            <LabelRow inline>
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />
-            </Labels>
+            </LabelRow>
             <EraStatus
               address={address}
               status={validatorStatus}
