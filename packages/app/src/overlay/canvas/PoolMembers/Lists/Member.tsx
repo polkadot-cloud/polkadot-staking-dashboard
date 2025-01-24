@@ -14,12 +14,12 @@ import { useList } from 'library/List/context'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded'
 import { Select } from 'library/ListItem/Labels/Select'
-import { Labels, Wrapper } from 'library/ListItem/Wrappers'
+import { Wrapper } from 'library/ListItem/Wrappers'
 import { MenuList } from 'library/Menu/List'
 import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Separator } from 'ui-core/list'
+import { HeaderButtonRow, Separator } from 'ui-core/list'
 import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
 
@@ -122,7 +122,7 @@ export const Member = ({
             {selectActive && <Select item={{ address: who }} />}
             <Identity address={who} />
             <div>
-              <Labels>
+              <HeaderButtonRow>
                 {menuItems.length > 0 && (
                   <button
                     type="button"
@@ -133,7 +133,7 @@ export const Member = ({
                     <FontAwesomeIcon icon={faBars} />
                   </button>
                 )}
-              </Labels>
+              </HeaderButtonRow>
             </div>
           </div>
           <Separator />

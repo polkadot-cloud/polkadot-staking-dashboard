@@ -4,8 +4,8 @@
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
-import { Labels, Wrapper } from 'library/ListItem/Wrappers'
-import { LabelRow, Separator } from 'ui-core/list'
+import { Wrapper } from 'library/ListItem/Wrappers'
+import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { useList } from '../../List/context'
 import { Blocked } from '../../ListItem/Labels/Blocked'
 import { Commission } from '../../ListItem/Labels/Commission'
@@ -42,7 +42,7 @@ export const Nomination = ({
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels>
+            <HeaderButtonRow>
               <CopyAddress address={address} outline={outline} />
               {toggleFavorites && (
                 <FavoriteValidator address={address} outline={outline} />
@@ -57,7 +57,7 @@ export const Nomination = ({
                   outline={outline}
                 />
               )}
-            </Labels>
+            </HeaderButtonRow>
           </div>
         </div>
         <Separator />

@@ -4,6 +4,7 @@
 export * from './Checkbox'
 export * from './Graph'
 export * from './HeaderButton'
+export * from './HeaderButtonRow'
 export * from './Identity'
 export * from './Label'
 export * from './LabelRow'

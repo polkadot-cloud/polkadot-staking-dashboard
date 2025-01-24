@@ -10,10 +10,15 @@ import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { Metrics } from 'library/ListItem/Labels/Metrics'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
-import { Labels, Wrapper } from 'library/ListItem/Wrappers'
+import { Wrapper } from 'library/ListItem/Wrappers'
 import { MenuList } from 'library/Menu/List'
 import { useTranslation } from 'react-i18next'
-import { HeaderButton, LabelRow, Separator } from 'ui-core/list'
+import {
+  HeaderButton,
+  HeaderButtonRow,
+  LabelRow,
+  Separator,
+} from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries'
 import { useList } from '../../List/context'
@@ -85,7 +90,7 @@ export const Default = ({
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels>
+            <HeaderButtonRow>
               <CopyAddress address={address} outline={outline} />
               {toggleFavorites && (
                 <FavoriteValidator address={address} outline={outline} />
@@ -106,7 +111,7 @@ export const Default = ({
                   )}
                 />
               )}
-            </Labels>
+            </HeaderButtonRow>
           </div>
         </div>
         <Separator />

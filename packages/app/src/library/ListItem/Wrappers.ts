@@ -87,17 +87,6 @@ export const Wrapper = styled.div`
   }
 `
 
-export const Labels = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  font-size: 0.85rem;
-  align-items: center;
-  overflow: hidden;
-  flex-grow: 1;
-  padding: 0 0 0 0.25rem;
-  height: inherit;
-`
-
 export const ValidatorStatusWrapper = styled.div<{
   $status: string
   $noMargin?: boolean
