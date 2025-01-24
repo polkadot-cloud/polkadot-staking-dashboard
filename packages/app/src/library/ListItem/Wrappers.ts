@@ -312,13 +312,6 @@ export const SelectWrapper = styled.button`
   }
 `
 
-export const Separator = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
-  width: 100%;
-  height: 1px;
-  opacity: 0.7;
-`
-
 export const TooltipTrigger = styled.div`
   z-index: 1;
   width: 130%;
