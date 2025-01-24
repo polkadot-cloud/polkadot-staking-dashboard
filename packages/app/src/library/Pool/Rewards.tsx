@@ -7,14 +7,12 @@ import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import {
-  TooltipTrigger,
-  ValidatorPulseWrapper,
-} from 'library/ListItem/Wrappers'
-import {
   normaliseEraPoints,
   prefillEraPoints,
 } from 'library/ValidatorList/ValidatorItem/Utils'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
+import { Graph } from 'ui-core/list'
 import type { RewardProps, RewardsGraphProps } from './types'
 
 export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
@@ -36,15 +34,14 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
   const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`
 
   return (
-    <ValidatorPulseWrapper className={displayFor}>
+    <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
       {syncing && <div className="preload" />}
-      <TooltipTrigger
-        className="tooltip-trigger-element"
-        data-tooltip-text={tooltipText}
+      <TooltipArea
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       <RewardsGraph points={prefilledPoints} syncing={empty} />
-    </ValidatorPulseWrapper>
+    </Graph>
   )
 }
 

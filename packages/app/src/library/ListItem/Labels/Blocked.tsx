@@ -4,8 +4,9 @@
 import { faUserSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
-import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
+import { Label } from 'ui-core/list'
 import type { BlockedProps } from '../types'
 
 export const Blocked = ({ prefs }: BlockedProps) => {
@@ -17,10 +18,9 @@ export const Blocked = ({ prefs }: BlockedProps) => {
 
   return (
     blocked && (
-      <div className="label">
-        <TooltipTrigger
-          className="tooltip-trigger-element"
-          data-tooltip-text={tooltipText}
+      <Label>
+        <TooltipArea
+          text={tooltipText}
           onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
         />
         <FontAwesomeIcon
@@ -28,7 +28,7 @@ export const Blocked = ({ prefs }: BlockedProps) => {
           color="#d2545d"
           transform="shrink-1"
         />
-      </div>
+      </Label>
     )
   )
 }

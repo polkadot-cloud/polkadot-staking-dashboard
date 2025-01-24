@@ -31,3 +31,10 @@ export interface PageTitleTabProps {
   badge?: string | number
   disabled?: boolean
 }
+
+export type TooltipAreaProps = ComponentBase & {
+  text: string
+  pointer?: boolean
+  onMouseMove: () => void
+  onClick?: () => void
+}

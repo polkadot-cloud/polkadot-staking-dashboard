@@ -2,15 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next'
+import { HeaderButton } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
 import type { MetricsProps } from '../types'
 
-export const Metrics = ({ display, address }: MetricsProps) => {
+export const Metrics = ({ display, address, outline }: MetricsProps) => {
   const { t } = useTranslation()
   const { openCanvas } = useOverlay().canvas
 
   return (
-    <div className="label button-with-text">
+    <HeaderButton outline={outline} withText>
       <button
         type="button"
         onClick={() =>
@@ -26,6 +27,6 @@ export const Metrics = ({ display, address }: MetricsProps) => {
       >
         {t('metrics', { ns: 'library' })}
       </button>
-    </div>
+    </HeaderButton>
   )
 }

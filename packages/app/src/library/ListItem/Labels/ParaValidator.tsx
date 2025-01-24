@@ -5,8 +5,9 @@ import { faCubes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { TooltipTrigger } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { TooltipArea } from 'ui-core/base'
+import { Label } from 'ui-core/list'
 import type { ParaValidatorProps } from '../types'
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
@@ -21,13 +22,12 @@ export const ParaValidator = ({ address }: ParaValidatorProps) => {
   }
 
   return (
-    <div className="label">
-      <TooltipTrigger
-        className="tooltip-trigger-element"
-        data-tooltip-text={tooltipText}
+    <Label>
+      <TooltipArea
+        text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       <FontAwesomeIcon icon={faCubes} transform="shrink-1" />
-    </div>
+    </Label>
   )
 }

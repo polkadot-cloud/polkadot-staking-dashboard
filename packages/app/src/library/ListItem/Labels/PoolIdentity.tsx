@@ -5,7 +5,7 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { determinePoolDisplay } from 'contexts/Pools/util'
-import { IdentityWrapper } from 'library/ListItem/Wrappers'
+import { Identity } from 'ui-core/list'
 import type { PoolIdentityProps } from '../types'
 
 export const PoolIdentity = ({
@@ -20,15 +20,17 @@ export const PoolIdentity = ({
   )
 
   return (
-    <IdentityWrapper className="identity">
-      <Polkicon address={addresses.stash} fontSize="2rem" />
-      <div className="inner">
+    <Identity>
+      <div>
+        <Polkicon address={addresses.stash} fontSize="2rem" />
+      </div>
+      <div>
         {!metadataSynced ? (
           <h4>{ellipsisFn(addresses.stash)}</h4>
         ) : (
           <h4>{display}</h4>
         )}
       </div>
-    </IdentityWrapper>
+    </Identity>
   )
 }
