@@ -3,4 +3,5 @@
 
 export * from './Checkbox'
 export * from './Graph'
+export * from './Identity'
 export * from './Separator'

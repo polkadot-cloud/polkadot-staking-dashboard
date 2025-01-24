@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SmallFontSizeMaxWidth } from 'consts'
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
@@ -177,49 +176,6 @@ export const Labels = styled.div`
   }
 `
 
-export const IdentityWrapper = styled(motion.div)`
-  display: flex;
-  margin-right: 0.5rem;
-  align-items: center;
-  align-content: center;
-  overflow: hidden;
-  flex: 1 1 25%;
-  position: relative;
-
-  .inner {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    width: 100%;
-    height: 3.25rem;
-    padding: 0 0 0 0.2rem;
-  }
-  h4 {
-    color: var(--text-color-secondary);
-    font-family: InterSemiBold, sans-serif;
-    position: absolute;
-    top: 0;
-    height: 3.25rem;
-    line-height: 3.25rem;
-    padding: 0 0 0 0.3rem;
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 1rem;
-    width: 100%;
-
-    > span {
-      color: var(--text-color-secondary);
-      opacity: 0.75;
-      font-size: 0.88rem;
-      margin-left: 0.35rem;
-      position: relative;
-      top: -0.1rem;
-    }
-  }
-`
-
 export const ValidatorStatusWrapper = styled.div<{
   $status: string
   $noMargin?: boolean
@@ -250,7 +206,6 @@ export const PoolStatusWrapper = styled.div<{
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
   h4 {
     color: var(--text-color-tertiary);
     font-size: 1rem;
