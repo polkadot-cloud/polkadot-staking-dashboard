@@ -8,7 +8,6 @@ import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { StakingContext } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatDistance, fromUnixTime } from 'date-fns'
@@ -16,7 +15,6 @@ import { motion } from 'framer-motion'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
-import { payoutsPerPage } from 'library/List/defaults'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
 import { DefaultLocale, locales } from 'locales'
@@ -26,7 +24,7 @@ import type {
   PoolReward,
   RewardResults,
 } from 'plugin-staking-api/types'
-import { Component, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
@@ -39,6 +37,7 @@ export const PayoutListInner = ({
   pagination,
   title,
   payouts: initialPayouts,
+  itemsPerPage,
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages')
   const { mode } = useTheme()
@@ -58,9 +57,9 @@ export const PayoutListInner = ({
   // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)
 
-  const totalPages = Math.ceil(payouts.length / payoutsPerPage)
-  const pageEnd = page * payoutsPerPage - 1
-  const pageStart = pageEnd - (payoutsPerPage - 1)
+  const totalPages = Math.ceil(payouts.length / itemsPerPage)
+  const pageEnd = page * itemsPerPage - 1
+  const pageStart = pageEnd - (itemsPerPage - 1)
 
   // Refetch list when list changes
   useEffect(() => {
@@ -75,7 +74,7 @@ export const PayoutListInner = ({
     }
   }, [isReady, fetched, activeEra.index])
 
-  const listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
+  const listPayouts = payouts.slice(pageStart).slice(0, itemsPerPage)
   if (!listPayouts.length) {
     return null
   }
@@ -216,7 +215,7 @@ export const PayoutListInner = ({
 
 export const PayoutList = (props: PayoutListProps) => (
   <PayoutListProvider>
-    <PayoutListShouldUpdate {...props} />
+    <PayoutListInner {...props} />
   </PayoutListProvider>
 )
 
@@ -248,12 +247,4 @@ export const PoolClaim = ({
       {t('payouts.fromPool')} {poolId}
     </h4>
   )
-}
-
-export class PayoutListShouldUpdate extends Component {
-  static contextType = StakingContext
-
-  render() {
-    return <PayoutListInner {...this.props} />
-  }
 }

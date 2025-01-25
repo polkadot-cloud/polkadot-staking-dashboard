@@ -103,9 +103,9 @@ export const PoolsInner = () => {
             <PoolListProvider>
               <PoolList
                 pools={bondedPools}
+                itemsPerPage={30}
                 allowMoreCols
                 allowSearch
-                pagination
               />
             </PoolListProvider>
           </CardWrapper>

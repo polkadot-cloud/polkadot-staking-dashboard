@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { poolMembersPerPage } from 'library/List/defaults'
 import type { PoolMember } from 'types'
 import type { SubscanPoolMember, SubscanRequestBody } from './types'
 
@@ -24,11 +23,12 @@ export class Subscan {
   // Fetch a page of pool members from Subscan
   static fetchPoolMembers = async (
     poolId: number,
-    page: number
+    page: number,
+    row: number
   ): Promise<PoolMember[]> => {
     const result = await this.makeRequest(this.ENDPOINTS.poolMembers, {
       pool_id: poolId,
-      row: poolMembersPerPage,
+      row,
       page: page - 1,
     })
     if (!result?.list) {
@@ -44,14 +44,18 @@ export class Subscan {
   }
 
   // Handle fetching pool members
-  static handleFetchPoolMembers = async (poolId: number, page: number) => {
+  static handleFetchPoolMembers = async (
+    poolId: number,
+    page: number,
+    itemsPerPage: number
+  ) => {
     const dataKey = `${this.network}-${poolId}-${page}-members}`
     const currentValue = this.poolData[dataKey]
 
     if (currentValue) {
       return currentValue
     } else {
-      const result = await this.fetchPoolMembers(poolId, page)
+      const result = await this.fetchPoolMembers(poolId, page, itemsPerPage)
       this.poolData[dataKey] = result
 
       return result

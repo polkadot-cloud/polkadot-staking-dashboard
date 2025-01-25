@@ -14,7 +14,7 @@ export interface ValidatorListProps {
   nominator?: MaybeAddress
   allowFilters?: boolean
   toggleFavorites?: boolean
-  pagination?: boolean
+  itemsPerPage?: number
   title?: string
   selectable?: boolean
   onSelected?: AnyFunction

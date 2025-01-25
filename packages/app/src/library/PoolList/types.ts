@@ -12,7 +12,7 @@ export interface PoolListContextProps {
 export interface PoolListProps {
   allowMoreCols?: boolean
   allowSearch?: boolean
-  pagination?: boolean
   allowListFormat?: boolean
   pools?: BondedPool[]
+  itemsPerPage?: number
 }

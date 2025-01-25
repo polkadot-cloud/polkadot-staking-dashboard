@@ -58,7 +58,7 @@ export const AllValidators = () => {
                   allowMoreCols
                   allowFilters
                   allowSearch
-                  pagination
+                  itemsPerPage={30}
                   toggleFavorites
                 />
               )}

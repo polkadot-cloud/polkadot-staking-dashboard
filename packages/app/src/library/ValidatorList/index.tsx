@@ -14,7 +14,6 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { motion } from 'framer-motion'
 import { useSyncing } from 'hooks/useSyncing'
 import { FilterHeaderWrapper, List, Wrapper as ListWrapper } from 'library/List'
-import { validatorsPerPage } from 'library/List/defaults'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
@@ -42,7 +41,7 @@ export const ValidatorListInner = ({
   allowMoreCols,
   allowFilters,
   toggleFavorites,
-  pagination,
+  itemsPerPage,
   selectable,
   onSelected,
   actions = [],
@@ -132,9 +131,10 @@ export const ValidatorListInner = ({
   )
 
   // Pagination
-  const totalPages = Math.ceil(validators.length / validatorsPerPage)
-  const pageEnd = page * validatorsPerPage - 1
-  const pageStart = pageEnd - (validatorsPerPage - 1)
+  const pageLength: number = itemsPerPage || validators.length
+  const totalPages = Math.ceil(validators.length / pageLength)
+  const pageEnd = page * pageLength - 1
+  const pageStart = pageEnd - (pageLength - 1)
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = (
@@ -154,7 +154,7 @@ export const ValidatorListInner = ({
   }
 
   // Get subset for page display
-  const listItems = validators.slice(pageStart).slice(0, validatorsPerPage)
+  const listItems = validators.slice(pageStart).slice(0, pageLength)
   // A unique key for the current page of items
   const pageKey =
     JSON.stringify(listItems.map(({ address }, i) => `${i}${address}`)) +
@@ -324,7 +324,7 @@ export const ValidatorListInner = ({
         </FilterHeaderWrapper>
         {allowFilters && <FilterBadges />}
 
-        {listItems.length > 0 && pagination && (
+        {listItems.length > 0 && itemsPerPage && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
 
