@@ -4,10 +4,10 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useFilters } from 'contexts/Filters'
+import { useValidatorFilters } from 'hooks/useValidatorFilters'
 import { Title } from 'library/Prompt/Title'
 import { FilterListButton, FilterListWrapper } from 'library/Prompt/Wrappers'
 import { useTranslation } from 'react-i18next'
-import { useValidatorFilters } from '../../../hooks/useValidatorFilters'
 
 export const FilterValidators = () => {
   const { t } = useTranslation('library')
