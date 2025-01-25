@@ -122,8 +122,6 @@ export const NominationList = ({
     if (!pluginEnabled('staking_api')) {
       return
     }
-    // Delete stale performance data immediately
-    setPerformances([])
     const results = await fetchValidatorEraPointsBatch(
       network,
       validators.map(({ address }) => address),
