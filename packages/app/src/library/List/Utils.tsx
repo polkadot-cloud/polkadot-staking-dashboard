@@ -3,7 +3,7 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import type { AnyJson } from '@w3ux/types'
-import type BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js'
 
 export const getIdentityDisplay = (
   _identity: AnyJson,
@@ -66,12 +66,17 @@ export const normaliseEraPoints = (
   eraPoints: Record<string, BigNumber>,
   high: BigNumber
 ): Record<string, number> => {
-  const percentile = high.dividedBy(100)
+  const percentile = high.isZero() ? new BigNumber(0) : high.dividedBy(100)
 
   return Object.fromEntries(
     Object.entries(eraPoints).map(([era, points]) => [
       era,
-      Math.min(points.dividedBy(percentile).multipliedBy(0.01).toNumber(), 1),
+      Math.min(
+        percentile.isZero()
+          ? 0
+          : points.dividedBy(percentile).multipliedBy(0.01).toNumber(),
+        1
+      ),
     ])
   )
 }
