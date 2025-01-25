@@ -45,7 +45,6 @@ export const ValidatorListInner = ({
   selectable,
   onSelected,
   actions = [],
-  showMenu = true,
   displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
@@ -357,7 +356,6 @@ export const ValidatorListInner = ({
                     validator={validator}
                     nominator={nominator}
                     toggleFavorites={toggleFavorites}
-                    showMenu={showMenu}
                     bondFor={bondFor}
                     displayFor={displayFor}
                     eraPoints={

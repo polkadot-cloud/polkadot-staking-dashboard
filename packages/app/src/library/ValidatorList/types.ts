@@ -19,7 +19,6 @@ export interface ValidatorListProps {
   selectable?: boolean
   onSelected?: AnyFunction
   actions?: AnyJson[]
-  showMenu?: boolean
   displayFor?: DisplayFor
   allowSearch?: boolean
   allowListFormat?: boolean
@@ -35,7 +34,6 @@ export interface ItemProps {
   displayFor: DisplayFor
   nominator: MaybeAddress
   format?: string
-  showMenu?: boolean
   toggleFavorites?: boolean
   nominationStatus?: NominationStatus
   eraPoints: ValidatorEraPoints[]

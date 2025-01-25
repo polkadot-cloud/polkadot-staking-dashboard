@@ -35,7 +35,6 @@ import type { ItemProps } from './types'
 export const Item = ({
   validator,
   toggleFavorites,
-  showMenu,
   displayFor,
   eraPoints,
 }: ItemProps) => {
@@ -95,7 +94,7 @@ export const Item = ({
               {toggleFavorites && (
                 <FavoriteValidator address={address} outline={outline} />
               )}
-              {displayFor === 'default' && showMenu && (
+              {!['modal', 'canvas'].includes(displayFor) && (
                 <HeaderButton>
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>
                     <FontAwesomeIcon icon={faBars} transform="shrink-2" />
