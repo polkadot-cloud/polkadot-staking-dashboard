@@ -77,8 +77,12 @@ export const ValidatorListInner = ({
   const { injectValidatorListData } = useValidators()
   const { isReady, activeEra, peopleApiStatus } = useApi()
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters()
-
-  const { selected, listFormat, setListFormat } = listProvider
+  const {
+    selected,
+    listFormat,
+    setListFormat,
+    pagination: { page, setPage },
+  } = listProvider
   const includes = getFilters('include', 'validators')
   const excludes = getFilters('exclude', 'validators')
   const order = getOrder('validators')
@@ -105,9 +109,6 @@ export const ValidatorListInner = ({
         statusToIndex[nominationStatus.current[a.address]]
     )
   }
-
-  // Current page
-  const [page, setPage] = useState<number>(1)
 
   // Default list of validators
   const [validatorsDefault, setValidatorsDefault] = useState<
@@ -323,11 +324,9 @@ export const ValidatorListInner = ({
           </div>
         </FilterHeaderWrapper>
         {allowFilters && <FilterBadges />}
-
         {listItems.length > 0 && itemsPerPage && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-
         {selectable ? (
           <Selectable
             canSelect={listItems.length > 0}
@@ -336,7 +335,6 @@ export const ValidatorListInner = ({
             displayFor={displayFor}
           />
         ) : null}
-
         <MotionContainer>
           {listItems.length ? (
             <>

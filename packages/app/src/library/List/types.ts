@@ -4,7 +4,7 @@
 import type { AnyJson, DisplayFor } from '@w3ux/types'
 import type { ListFormat } from 'library/PoolList/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
-import type { FormEvent, ReactNode } from 'react'
+import type { Dispatch, FormEvent, ReactNode, SetStateAction } from 'react'
 
 export interface PaginationWrapperProps {
   $next: boolean
@@ -45,6 +45,10 @@ export interface ListContextInterface {
   selectActive: boolean
   listFormat: ListFormat
   selectToggleable: boolean
+  pagination: {
+    page: number
+    setPage: Dispatch<SetStateAction<number>>
+  }
 }
 
 export interface ListProviderProps {
