@@ -242,6 +242,8 @@ export const ValidatorListInner = ({
         setOrder('validators', defaultOrder)
       }
       setBootstrapped(true)
+    } else {
+      setBootstrapped(true)
     }
     return () => {
       if (allowFilters) {
