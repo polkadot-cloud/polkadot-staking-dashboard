@@ -14,7 +14,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
   getValidatorPointsFromEras: (startEra, address) => ({}),
   injectValidatorListData: (entries) => [],
-  validators: [],
+  getValidators: () => [],
   validatorIdentities: {},
   validatorSupers: {},
   avgCommission: 0,

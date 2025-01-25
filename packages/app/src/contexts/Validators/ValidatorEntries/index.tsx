@@ -30,6 +30,7 @@ import type {
   ValidatorAddresses,
   ValidatorEraPointHistory,
   ValidatorListEntry,
+  Validators,
   ValidatorsContextInterface,
   ValidatorStatus,
 } from '../types'
@@ -59,11 +60,17 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { stakers } = useStaking().eraStakers
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
 
-  // Stores all validator entries
-  const [validators, setValidators] = useState<Validator[]>([])
+  // Store validator entries and sync status
+  const [validators, setValidators] = useState<Validators>({
+    status: 'unsynced',
+    validators: [],
+  })
+  // Setter for validator status
+  const setValidatorsFetched = (status: Sync) =>
+    setValidators({ ...validators, status })
 
-  // Track whether the validator list has been fetched
-  const [validatorsFetched, setValidatorsFetched] = useState<Sync>('unsynced')
+  // Getter for validator entries
+  const getValidators = () => validators.validators
 
   // Store validator identity data
   const [validatorIdentities, setValidatorIdentities] = useState<
@@ -274,7 +281,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches and formats the active validator set, and derives metrics from the result
   const fetchValidators = async () => {
-    if (!isReady || validatorsFetched !== 'unsynced') {
+    if (!isReady || validators.status !== 'unsynced') {
       return
     }
     setValidatorsFetched('syncing')
@@ -316,7 +323,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     )
     setAvgCommission(avg)
     // NOTE: validators are shuffled before committed to state
-    setValidators(shuffle(validatorEntries))
+    setValidators({ status: 'synced', validators: shuffle(validatorEntries) })
+
     const peopleApiId: ChainId = `people-${network}`
     const peopleApiClient = Apis.getClient(`people-${network}` as SystemChainId)
     if (peopleApiClient) {
@@ -328,8 +336,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       setValidatorIdentities(identities)
       setValidatorSupers(supers)
     }
-
-    setValidatorsFetched('synced')
   }
 
   // Subscribe to active session validators
@@ -387,7 +393,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const formatWithPrefs = (addresses: string[]) =>
     addresses.map((address) => ({
       address,
-      prefs: validators.find((v) => v.address === address)?.prefs || {
+      prefs: getValidators().find((v) => v.address === address)?.prefs || {
         blocked: false,
         commission: 0,
       },
@@ -467,7 +473,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets a validator's total stake, if any
   const getValidatorTotalStake = (address: string): bigint => {
-    const entry = validators.find((v) => v.address === address)
+    const entry = getValidators().find((v) => v.address === address)
     if (!entry) {
       return 0n
     }
@@ -535,12 +541,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Reset validator state data on network change
   useEffectIgnoreInitial(() => {
-    setValidatorsFetched('unsynced')
+    setValidators({
+      status: 'unsynced',
+      validators: [],
+    })
     setErasRewawrdPointsFetched('unsynced')
     setSessionValidators([])
     setSessionParaValidators([])
     setAvgCommission(0)
-    setValidators([])
     setValidatorIdentities({})
     setValidatorSupers({})
     setErasRewardPoints({})
@@ -556,7 +564,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       fetchErasRewardPoints()
     }
   }, [
-    validatorsFetched,
+    validators.status,
     erasRewardPointsFetched,
     isReady,
     peopleApiStatus,
@@ -570,7 +578,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         setErasRewawrdPointsFetched('unsynced')
       }
 
-      if (validatorsFetched === 'synced') {
+      if (validators.status === 'synced') {
         setValidatorsFetched('unsynced')
       }
       fetchSessionValidators()
@@ -598,14 +606,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         fetchValidatorPrefs,
         getValidatorPointsFromEras,
         injectValidatorListData,
-        validators,
+        getValidators,
         validatorIdentities,
         validatorSupers,
         avgCommission,
         sessionValidators,
         sessionParaValidators,
         erasRewardPoints,
-        validatorsFetched,
+        validatorsFetched: validators.status,
         eraPointsBoundaries,
         validatorEraPointsHistory,
         erasRewardPointsFetched,

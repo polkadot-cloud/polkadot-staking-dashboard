@@ -11,12 +11,12 @@ import type { NominationsProps } from '../types'
 
 export const Nominations = ({ stash, poolId }: NominationsProps) => {
   const { t } = useTranslation()
-  const { validators } = useValidators()
+  const { getValidators } = useValidators()
   const { poolsNominations } = useBondedPools()
 
   // Extract validator entries from pool targets.
   const targets = poolsNominations[poolId]?.targets || []
-  const filteredTargets = validators.filter(({ address }) =>
+  const filteredTargets = getValidators().filter(({ address }) =>
     targets.includes(address)
   )
 

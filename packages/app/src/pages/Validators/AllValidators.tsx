@@ -15,7 +15,8 @@ import { TotalValidators } from './Stats/TotalValidators'
 export const AllValidators = () => {
   const { t } = useTranslation('pages')
   const { isReady } = useApi()
-  const { validators } = useValidators()
+  const { getValidators } = useValidators()
+  const validators = getValidators()
 
   return (
     <>

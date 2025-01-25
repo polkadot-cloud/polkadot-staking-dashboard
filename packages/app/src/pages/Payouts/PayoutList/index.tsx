@@ -46,8 +46,8 @@ export const PayoutListInner = ({
   const {
     networkData: { units, unit, colors },
   } = useNetwork()
-  const { validators } = useValidators()
   const { bondedPools } = useBondedPools()
+  const { getValidators } = useValidators()
   const { listFormat, setListFormat } = usePayoutList()
 
   const [page, setPage] = useState<number>(1)
@@ -126,10 +126,10 @@ export const PayoutListInner = ({
               batchIndex = pool ? bondedPools.indexOf(pool) : 0
             } else {
               const item = p as NominatorReward
-              const validator = validators.find(
+              const validator = getValidators().find(
                 (v) => v.address === item.validator
               )
-              batchIndex = validator ? validators.indexOf(validator) : 0
+              batchIndex = validator ? getValidators().indexOf(validator) : 0
             }
 
             return (

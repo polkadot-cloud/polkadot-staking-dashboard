@@ -55,8 +55,8 @@ export const ValidatorMetrics = () => {
   const { activeEra } = useApi()
   const { openHelp } = useHelp()
   const { containerRefs } = useUi()
-  const { validators } = useValidators()
   const { pluginEnabled } = usePlugins()
+  const { getValidators } = useValidators()
 
   const validator = options!.validator
   const identity = options!.identity
@@ -78,7 +78,9 @@ export const ValidatorMetrics = () => {
 
   const GRAPH_HEIGHT = 250
 
-  const prefs = validators.find((entry) => entry.address === validator)?.prefs
+  const prefs = getValidators().find(
+    (entry) => entry.address === validator
+  )?.prefs
   const commission = prefs?.commission ?? 0
 
   // Era points graph ref & sizing
