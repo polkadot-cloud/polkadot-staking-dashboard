@@ -51,7 +51,7 @@ export const ValidatorListInner = ({
   defaultOrder = undefined,
   defaultFilters = undefined,
 }: ValidatorListProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation()
   const {
     networkData: { colors },
   } = useNetwork()
@@ -65,6 +65,7 @@ export const ValidatorListInner = ({
     resetFilters,
     resetOrder,
     clearSearchTerm,
+    // Inject default filters and orders here
   } = useFilters()
   const { mode } = useTheme()
   const listProvider = useList()
@@ -88,6 +89,9 @@ export const ValidatorListInner = ({
   const searchTerm = getSearchTerm('validators')
   const actionsAll = [...actions].filter((action) => !action.onSelected)
   const actionsSelected = [...actions].filter((action) => action.onSelected)
+
+  // Track whether filter bootstrapping has been applied.
+  const [bootstrapped, setBootstrapped] = useState<boolean>(false)
 
   // Determine the nominator of the validator list. Fallback to activeAccount if not provided
   const nominator = initialNominator || activeAccount
@@ -153,7 +157,7 @@ export const ValidatorListInner = ({
     }
   }
 
-  // Get subset for page display
+  // Get subset for page display.
   const listItems = validators.slice(pageStart).slice(0, pageLength)
   // A unique key for the current page of items
   const pageKey =
@@ -217,7 +221,7 @@ export const ValidatorListInner = ({
   // Set default filters. Should re-render if era stakers re-syncs as era points effect the
   // performance order
   useEffect(() => {
-    if (allowFilters) {
+    if (!syncing && allowFilters) {
       if (defaultFilters?.includes?.length) {
         setMultiFilters(
           'include',
@@ -234,10 +238,10 @@ export const ValidatorListInner = ({
           false
         )
       }
-
       if (defaultOrder) {
         setOrder('validators', defaultOrder)
       }
+      setBootstrapped(true)
     }
     return () => {
       if (allowFilters) {
@@ -278,12 +282,20 @@ export const ValidatorListInner = ({
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate()
     }
-  }, [order, syncing, includes, excludes, peopleApiStatus])
+  }, [order, includes, excludes, peopleApiStatus])
 
   // Handle modal resize on list format change
   useEffect(() => {
     maybeHandleModalResize()
   }, [listFormat, validators, page])
+
+  if (!bootstrapped) {
+    return (
+      <div className="item">
+        <h3>{t('validators.fetchingValidators', { ns: 'pages' })}...</h3>
+      </div>
+    )
+  }
 
   return (
     <ListWrapper>
@@ -292,7 +304,7 @@ export const ValidatorListInner = ({
           <SearchInput
             value={searchTerm ?? ''}
             handleChange={handleSearchChange}
-            placeholder={t('searchAddress')}
+            placeholder={t('searchAddress', { ns: 'library' })}
           />
         )}
         <FilterHeaderWrapper>
@@ -370,7 +382,9 @@ export const ValidatorListInner = ({
             </>
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
-              {isSearching ? t('noValidatorsMatch') : t('noValidators')}
+              {isSearching
+                ? t('noValidatorsMatch', { ns: 'library' })
+                : t('noValidators', { ns: 'library' })}
             </h4>
           )}
         </MotionContainer>
