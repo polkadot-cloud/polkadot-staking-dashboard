@@ -2,24 +2,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { getIdentityDisplay } from 'library/List/Utils'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
-import { useList } from '../../List/context'
-import { Blocked } from '../../ListItem/Labels/Blocked'
-import { Commission } from '../../ListItem/Labels/Commission'
-import { CopyAddress } from '../../ListItem/Labels/CopyAddress'
-import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator'
-import { Identity } from '../../ListItem/Labels/Identity'
-import { Metrics } from '../../ListItem/Labels/Metrics'
-import { NominationStatus } from '../../ListItem/Labels/NominationStatus'
-import { Select } from '../../ListItem/Labels/Select'
-import { EraPoints } from './EraPoints'
-import { getIdentityDisplay } from './Utils'
-import type { ValidatorItemProps } from './types'
+import { EraPoints } from '../List/EraPoints'
+import { Blocked } from '../ListItem/Labels/Blocked'
+import { Commission } from '../ListItem/Labels/Commission'
+import { CopyAddress } from '../ListItem/Labels/CopyAddress'
+import { FavoriteValidator } from '../ListItem/Labels/FavoriteValidator'
+import { Identity } from '../ListItem/Labels/Identity'
+import { Metrics } from '../ListItem/Labels/Metrics'
+import { NominationStatus } from '../ListItem/Labels/NominationStatus'
+import type { ItemProps } from './types'
 
-export const Nomination = ({
+export const Item = ({
   validator,
   nominator,
   toggleFavorites,
@@ -27,8 +25,7 @@ export const Nomination = ({
   displayFor,
   nominationStatus,
   eraPoints,
-}: ValidatorItemProps) => {
-  const { selectActive } = useList()
+}: ItemProps) => {
   const { validatorIdentities, validatorSupers } = useValidators()
   const { address, prefs } = validator
   const commission = prefs?.commission ?? null
@@ -40,7 +37,6 @@ export const Nomination = ({
     <Wrapper>
       <div className={`inner ${displayFor}`}>
         <div className="row top">
-          {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
             <HeaderButtonRow>

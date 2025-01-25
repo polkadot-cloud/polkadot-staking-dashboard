@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
 import { useMenu } from 'contexts/Menu'
 import { usePlugins } from 'contexts/Plugins'
+import { EraPoints } from 'library/List/EraPoints'
+import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { Metrics } from 'library/ListItem/Labels/Metrics'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
@@ -20,25 +22,23 @@ import {
   Separator,
 } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
-import { useValidators } from '../../../contexts/Validators/ValidatorEntries'
-import { useList } from '../../List/context'
-import { Blocked } from '../../ListItem/Labels/Blocked'
-import { Commission } from '../../ListItem/Labels/Commission'
-import { EraStatus } from '../../ListItem/Labels/EraStatus'
-import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator'
-import { Identity } from '../../ListItem/Labels/Identity'
-import { Select } from '../../ListItem/Labels/Select'
-import { EraPoints } from './EraPoints'
-import { getIdentityDisplay } from './Utils'
-import type { ValidatorItemProps } from './types'
+import { useValidators } from '../../contexts/Validators/ValidatorEntries'
+import { useList } from '../List/context'
+import { Blocked } from '../ListItem/Labels/Blocked'
+import { Commission } from '../ListItem/Labels/Commission'
+import { EraStatus } from '../ListItem/Labels/EraStatus'
+import { FavoriteValidator } from '../ListItem/Labels/FavoriteValidator'
+import { Identity } from '../ListItem/Labels/Identity'
+import { Select } from '../ListItem/Labels/Select'
+import type { ItemProps } from './types'
 
-export const Default = ({
+export const Item = ({
   validator,
   toggleFavorites,
   showMenu,
   displayFor,
   eraPoints,
-}: ValidatorItemProps) => {
+}: ItemProps) => {
   const { t } = useTranslation('library')
   const { selectActive } = useList()
   const { openMenu, open } = useMenu()

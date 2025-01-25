@@ -8,12 +8,10 @@ import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useTheme } from 'contexts/Themes'
 import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { motion } from 'framer-motion'
-import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { FilterHeaderWrapper, List, Wrapper as ListWrapper } from 'library/List'
 import { validatorsPerPage } from 'library/List/defaults'
@@ -21,19 +19,19 @@ import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
 import { Selectable } from 'library/List/Selectable'
-import { ValidatorItem } from 'library/ValidatorList/ValidatorItem'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { NominationStatus } from 'types'
 import { useOverlay } from 'ui-overlay'
 import { useValidatorFilters } from '../../hooks/useValidatorFilters'
 import { ListProvider, useList } from '../List/context'
 import { FilterBadges } from './Filters/FilterBadges'
 import { FilterHeaders } from './Filters/FilterHeaders'
+import { Item } from './Item'
 import type { ValidatorListProps } from './types'
-import type { NominationStatus } from './ValidatorItem/types'
 
 export const ValidatorListInner = ({
   // Default list values.
@@ -45,7 +43,6 @@ export const ValidatorListInner = ({
   allowFilters,
   toggleFavorites,
   pagination,
-  format,
   selectable,
   onSelected,
   actions = [],
@@ -79,8 +76,6 @@ export const ValidatorListInner = ({
   const { activeAccount } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
   const { injectValidatorListData } = useValidators()
-  const { getPoolNominationStatus } = useBondedPools()
-  const { getNominationSetStatus } = useNominationStatus()
   const { isReady, activeEra, peopleApiStatus } = useApi()
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters()
 
@@ -98,37 +93,8 @@ export const ValidatorListInner = ({
   // Store the current nomination status of validator records relative to the supplied nominator
   const nominationStatus = useRef<Record<string, NominationStatus>>({})
 
-  // Get nomination status relative to supplied nominator, if `format` is `nomination`
-  const processNominationStatus = () => {
-    if (format === 'nomination') {
-      if (bondFor === 'pool') {
-        nominationStatus.current = Object.fromEntries(
-          initialValidators.map(({ address }) => [
-            address,
-            getPoolNominationStatus(nominator, address),
-          ])
-        )
-      } else {
-        // get all active account's nominations
-        const nominationStatuses = getNominationSetStatus(
-          nominator,
-          'nominator'
-        )
-
-        // find the nominator status within the returned nominations
-        nominationStatus.current = Object.fromEntries(
-          initialValidators.map(({ address }) => [
-            address,
-            nominationStatuses[address],
-          ])
-        )
-      }
-    }
-  }
-
   // Injects status into supplied initial validators
   const prepareInitialValidators = () => {
-    processNominationStatus()
     const statusToIndex = {
       active: 2,
       inactive: 1,
@@ -389,11 +355,10 @@ export const ValidatorListInner = ({
                     },
                   }}
                 >
-                  <ValidatorItem
+                  <Item
                     validator={validator}
                     nominator={nominator}
                     toggleFavorites={toggleFavorites}
-                    format={format}
                     showMenu={showMenu}
                     bondFor={bondFor}
                     displayFor={displayFor}

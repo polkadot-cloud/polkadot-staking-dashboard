@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ValidatorPrefs, ValidatorStatus } from 'contexts/Validators/types'
-import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types'
 import type { ReactNode } from 'react'
-import type { BondedPool, BondFor, MaybeAddress } from 'types'
+import type { BondedPool, BondFor, MaybeAddress, NominationStatus } from 'types'
 
 export interface Outline {
   outline?: boolean

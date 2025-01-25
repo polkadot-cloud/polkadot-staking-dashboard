@@ -5,10 +5,7 @@ import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import {
-  normaliseEraPoints,
-  prefillEraPoints,
-} from 'library/ValidatorList/ValidatorItem/Utils'
+import { normaliseEraPoints, prefillEraPoints } from 'library/List/Utils'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Graph } from 'ui-core/list'

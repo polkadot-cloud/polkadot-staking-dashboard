@@ -9,8 +9,8 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Graph } from 'ui-core/list'
-import { normaliseEraPoints, prefillEraPoints } from './Utils'
 import type { GraphInnerProps, PulseProps } from './types'
+import { normaliseEraPoints, prefillEraPoints } from './Utils'
 
 export const EraPoints = ({ displayFor, eraPoints }: PulseProps) => {
   const { t } = useTranslation('library')

@@ -3,6 +3,7 @@
 
 import type { AnyJson, DisplayFor } from '@w3ux/types'
 import type { ListFormat } from 'library/PoolList/types'
+import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import type { FormEvent, ReactNode } from 'react'
 
 export interface PaginationWrapperProps {
@@ -50,4 +51,15 @@ export interface ListProviderProps {
   selectToggleable?: boolean
   selectActive?: boolean
   children: ReactNode
+}
+
+export interface PulseProps {
+  address: string
+  displayFor: DisplayFor
+  eraPoints: ValidatorEraPoints[]
+}
+export interface GraphInnerProps {
+  points: number[]
+  syncing: boolean
+  displayFor: DisplayFor
 }

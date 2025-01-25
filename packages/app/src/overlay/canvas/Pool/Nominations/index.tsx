@@ -3,7 +3,7 @@
 
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { ValidatorList } from 'library/ValidatorList'
+import { NominationList } from 'library/NominationList'
 import { useTranslation } from 'react-i18next'
 import { Subheading } from 'ui-core/canvas'
 import { NominationsWrapper } from '../Wrappers'
@@ -31,15 +31,11 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
       </Subheading>
 
       {targets.length > 0 && (
-        <ValidatorList
-          format="nomination"
+        <NominationList
           bondFor="pool"
           validators={filteredTargets}
           nominator={stash}
-          showMenu={false}
           displayFor="canvas"
-          allowListFormat={false}
-          allowMoreCols={true}
         />
       )}
     </NominationsWrapper>
