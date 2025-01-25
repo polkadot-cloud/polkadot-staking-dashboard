@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useList } from 'contexts/List'
 import { Checkbox } from 'ui-core/list'
-import { useList } from '../../List/context'
 import type { SelectProps } from '../types'
 
 export const Select = ({ item }: SelectProps) => {

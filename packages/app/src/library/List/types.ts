@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson, DisplayFor } from '@w3ux/types'
-import type { ListFormat } from 'library/PoolList/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
-import type { Dispatch, FormEvent, ReactNode, SetStateAction } from 'react'
+import type { FormEvent } from 'react'
 
 export interface PaginationWrapperProps {
   $next: boolean
@@ -33,28 +32,6 @@ export interface SelectableProps {
   actionsSelected: AnyJson[]
   canSelect: boolean
   displayFor: DisplayFor
-}
-
-export interface ListContextInterface {
-  setSelectActive: (selectedActive: boolean) => void
-  addToSelected: (item: AnyJson) => void
-  removeFromSelected: (items: AnyJson[]) => void
-  resetSelected: () => void
-  setListFormat: (v: ListFormat) => void
-  selected: AnyJson[]
-  selectActive: boolean
-  listFormat: ListFormat
-  selectToggleable: boolean
-  pagination: {
-    page: number
-    setPage: Dispatch<SetStateAction<number>>
-  }
-}
-
-export interface ListProviderProps {
-  selectToggleable?: boolean
-  selectActive?: boolean
-  children: ReactNode
 }
 
 export interface PulseProps {

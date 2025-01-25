@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useTheme } from 'contexts/Themes'
@@ -30,7 +31,6 @@ import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 import { ItemWrapper } from '../Wrappers'
 import type { PayoutListProps } from '../types'
-import { PayoutListProvider, usePayoutList } from './context'
 
 export const PayoutListInner = ({
   allowMoreCols,
@@ -47,7 +47,7 @@ export const PayoutListInner = ({
   } = useNetwork()
   const { bondedPools } = useBondedPools()
   const { getValidators } = useValidators()
-  const { listFormat, setListFormat } = usePayoutList()
+  const { listFormat, setListFormat } = useList()
 
   const [page, setPage] = useState<number>(1)
 
@@ -214,9 +214,9 @@ export const PayoutListInner = ({
 }
 
 export const PayoutList = (props: PayoutListProps) => (
-  <PayoutListProvider>
+  <ListProvider>
     <PayoutListInner {...props} />
-  </PayoutListProvider>
+  </ListProvider>
 )
 
 export const NominatorIdentity = ({

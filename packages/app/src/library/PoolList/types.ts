@@ -3,12 +3,6 @@
 
 import type { BondedPool } from 'types'
 
-export type ListFormat = 'row' | 'col'
-
-export interface PoolListContextProps {
-  setListFormat: (v: ListFormat) => void
-  listFormat: ListFormat
-}
 export interface PoolListProps {
   allowMoreCols?: boolean
   allowSearch?: boolean

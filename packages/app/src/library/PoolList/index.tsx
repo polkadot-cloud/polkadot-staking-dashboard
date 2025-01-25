@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
+import { useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useTheme } from 'contexts/Themes'
@@ -27,7 +28,6 @@ import type { FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
-import { usePoolList } from './context'
 import type { PoolListProps } from './types'
 
 export const PoolList = ({
@@ -46,7 +46,7 @@ export const PoolList = ({
   const { activeEra } = useApi()
   const { syncing } = useSyncing()
   const { applyFilter } = usePoolFilters()
-  const { listFormat, setListFormat } = usePoolList()
+  const { listFormat, setListFormat } = useList()
   const { poolSearchFilter, poolsNominations } = useBondedPools()
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters()
 
