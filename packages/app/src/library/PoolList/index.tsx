@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
+import { useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useTheme } from 'contexts/Themes'
@@ -19,7 +20,6 @@ import {
   ListStatusHeader,
   Wrapper as ListWrapper,
 } from 'library/List'
-import { poolsPerPage } from 'library/List/defaults'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
@@ -28,15 +28,14 @@ import type { FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
-import { usePoolList } from './context'
 import type { PoolListProps } from './types'
 
 export const PoolList = ({
   allowMoreCols,
-  pagination,
   allowSearch,
   pools,
   allowListFormat = true,
+  itemsPerPage,
 }: PoolListProps) => {
   const { t } = useTranslation('library')
   const {
@@ -47,7 +46,7 @@ export const PoolList = ({
   const { activeEra } = useApi()
   const { syncing } = useSyncing()
   const { applyFilter } = usePoolFilters()
-  const { listFormat, setListFormat } = usePoolList()
+  const { listFormat, setListFormat } = useList()
   const { poolSearchFilter, poolsNominations } = useBondedPools()
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters()
 
@@ -78,12 +77,13 @@ export const PoolList = ({
   const [synced, setSynced] = useState<boolean>(false)
 
   // Handle Pagination.
-  const totalPages = Math.ceil(listPools.length / poolsPerPage)
-  const pageEnd = page * poolsPerPage - 1
-  const pageStart = pageEnd - (poolsPerPage - 1)
+  const pageLength = itemsPerPage || listPools.length
+  const totalPages = Math.ceil(listPools.length / pageLength)
+  const pageEnd = page * pageLength - 1
+  const pageStart = pageEnd - (pageLength - 1)
 
   // Get paged subset of list items.
-  const poolsToDisplay = listPools.slice(pageStart).slice(0, poolsPerPage)
+  const poolsToDisplay = listPools.slice(pageStart).slice(0, pageLength)
 
   // Handle resetting of pool list when provided pools change.
   const resetPoolList = () => {
@@ -202,7 +202,7 @@ export const PoolList = ({
           </div>
         </FilterHeaderWrapper>
 
-        {pagination && poolsToDisplay.length > 0 && (
+        {itemsPerPage && poolsToDisplay.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>

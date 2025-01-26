@@ -12,7 +12,7 @@ import type { BondFor, MaybeAddress } from 'types'
 
 export const useNominationStatus = () => {
   const { t } = useTranslation()
-  const { validators } = useValidators()
+  const { getValidators } = useValidators()
   const { getNominations } = useBalances()
   const { syncing } = useSyncing(['era-stakers'])
   const { activePoolNominations } = useActivePool()
@@ -46,7 +46,9 @@ export const useNominationStatus = () => {
     let earningRewards = false
     if (!syncing) {
       getNomineesByStatus(nominees, 'active').every((nominee) => {
-        const validator = validators.find(({ address }) => address === nominee)
+        const validator = getValidators().find(
+          ({ address }) => address === nominee
+        )
 
         if (validator) {
           const others =

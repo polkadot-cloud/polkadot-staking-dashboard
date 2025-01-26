@@ -20,7 +20,7 @@ export const Entity = () => {
   const { t } = useTranslation('pages')
   const { isReady } = useApi()
   const { network } = useNetwork()
-  const { validators: allValidators } = useValidators()
+  const { getValidators } = useValidators()
   const { setActiveSection, activeItem } = useCommunitySections()
 
   const { name, validators: entityAllValidators } = activeItem
@@ -28,14 +28,14 @@ export const Entity = () => {
 
   // include validators that exist in `erasStakers`
   const [activeValidators, setActiveValidators] = useState<Validator[]>(
-    allValidators.filter((v) => validators.includes(v.address))
+    getValidators().filter((v) => validators.includes(v.address))
   )
 
   useEffect(() => {
     setActiveValidators(
-      allValidators.filter((v) => validators.includes(v.address))
+      getValidators().filter((v) => validators.includes(v.address))
     )
-  }, [allValidators, network])
+  }, [getValidators(), network])
 
   useEffect(() => {
     const newValidators = [...activeValidators]
@@ -89,10 +89,9 @@ export const Entity = () => {
                 allowListFormat={false}
                 selectable={false}
                 allowMoreCols
-                pagination
+                itemsPerPage={30}
                 toggleFavorites
                 allowFilters
-                refetchOnListUpdate
               />
             )}
           </>

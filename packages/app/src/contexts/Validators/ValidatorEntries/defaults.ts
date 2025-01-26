@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js'
-import type { EraPointsBoundaries, ValidatorsContextInterface } from '../types'
+import type { ValidatorsContextInterface } from '../types'
 
 export const defaultAverageEraValidatorReward = {
   days: 0,
@@ -14,7 +14,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
   getValidatorPointsFromEras: (startEra, address) => ({}),
   injectValidatorListData: (entries) => [],
-  validators: [],
+  getValidators: () => [],
   validatorIdentities: {},
   validatorSupers: {},
   avgCommission: 0,
@@ -22,11 +22,11 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   sessionParaValidators: [],
   erasRewardPoints: {},
   validatorsFetched: 'unsynced',
-  eraPointsBoundaries: null,
   validatorEraPointsHistory: {},
   erasRewardPointsFetched: 'unsynced',
   averageEraValidatorReward: defaultAverageEraValidatorReward,
   formatWithPrefs: (addresses) => [],
+  getValidatorTotalStake: (address) => 0n,
 }
 
 export const defaultValidatorsData = {
@@ -34,5 +34,3 @@ export const defaultValidatorsData = {
   notFullCommissionCount: 0,
   totalNonAllCommission: new BigNumber(0),
 }
-
-export const defaultEraPointsBoundaries: EraPointsBoundaries = null

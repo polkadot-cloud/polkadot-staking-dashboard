@@ -76,6 +76,7 @@ export interface APIContextInterface {
   consts: APIConstants
   networkMetrics: APINetworkMetrics
   activeEra: APIActiveEra
+  activeEraRef: React.MutableRefObject<APIActiveEra>
   poolsConfig: APIPoolsConfig
   stakingMetrics: APIStakingMetrics
 }

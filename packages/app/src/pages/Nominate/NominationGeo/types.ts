@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ChainMetadata, NominatorDetail } from '@polkawatch/ddp-client'
+import type { ListFormat } from 'contexts/List/types'
 export type { NominatorDetail } from '@polkawatch/ddp-client'
 
 export type { ChainMetadata } from '@polkawatch/ddp-client'
@@ -19,7 +20,6 @@ export interface NomninationGeoListProps {
   data?: NominatorDetail
 }
 
-import type { ListFormat } from 'library/PoolList/types'
 export interface NominationGeoListContextInterface {
   setListFormat: (v: ListFormat) => void
   listFormat: ListFormat

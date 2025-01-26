@@ -53,3 +53,13 @@ export type TxSubmissionItem = {
   submitted: boolean
   pending: boolean
 }
+
+export interface EraRewardPoints {
+  total: number
+  individual: Record<string, [string, number]>
+}
+
+export interface EraRewardPointsEvent {
+  eraRewardPoints: EraRewardPoints
+  eraHigh: number
+}

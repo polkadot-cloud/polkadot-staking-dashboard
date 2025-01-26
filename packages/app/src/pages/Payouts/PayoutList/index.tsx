@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { StakingContext } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatDistance, fromUnixTime } from 'date-fns'
@@ -16,7 +16,6 @@ import { motion } from 'framer-motion'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
-import { payoutsPerPage } from 'library/List/defaults'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
 import { DefaultLocale, locales } from 'locales'
@@ -26,19 +25,19 @@ import type {
   PoolReward,
   RewardResults,
 } from 'plugin-staking-api/types'
-import { Component, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 import { ItemWrapper } from '../Wrappers'
 import type { PayoutListProps } from '../types'
-import { PayoutListProvider, usePayoutList } from './context'
 
 export const PayoutListInner = ({
   allowMoreCols,
   pagination,
   title,
   payouts: initialPayouts,
+  itemsPerPage,
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages')
   const { mode } = useTheme()
@@ -46,9 +45,9 @@ export const PayoutListInner = ({
   const {
     networkData: { units, unit, colors },
   } = useNetwork()
-  const { validators } = useValidators()
   const { bondedPools } = useBondedPools()
-  const { listFormat, setListFormat } = usePayoutList()
+  const { getValidators } = useValidators()
+  const { listFormat, setListFormat } = useList()
 
   const [page, setPage] = useState<number>(1)
 
@@ -58,9 +57,9 @@ export const PayoutListInner = ({
   // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)
 
-  const totalPages = Math.ceil(payouts.length / payoutsPerPage)
-  const pageEnd = page * payoutsPerPage - 1
-  const pageStart = pageEnd - (payoutsPerPage - 1)
+  const totalPages = Math.ceil(payouts.length / itemsPerPage)
+  const pageEnd = page * itemsPerPage - 1
+  const pageStart = pageEnd - (itemsPerPage - 1)
 
   // Refetch list when list changes
   useEffect(() => {
@@ -75,7 +74,7 @@ export const PayoutListInner = ({
     }
   }, [isReady, fetched, activeEra.index])
 
-  const listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
+  const listPayouts = payouts.slice(pageStart).slice(0, itemsPerPage)
   if (!listPayouts.length) {
     return null
   }
@@ -126,10 +125,10 @@ export const PayoutListInner = ({
               batchIndex = pool ? bondedPools.indexOf(pool) : 0
             } else {
               const item = p as NominatorReward
-              const validator = validators.find(
+              const validator = getValidators().find(
                 (v) => v.address === item.validator
               )
-              batchIndex = validator ? validators.indexOf(validator) : 0
+              batchIndex = validator ? getValidators().indexOf(validator) : 0
             }
 
             return (
@@ -215,9 +214,9 @@ export const PayoutListInner = ({
 }
 
 export const PayoutList = (props: PayoutListProps) => (
-  <PayoutListProvider>
-    <PayoutListShouldUpdate {...props} />
-  </PayoutListProvider>
+  <ListProvider>
+    <PayoutListInner {...props} />
+  </ListProvider>
 )
 
 export const NominatorIdentity = ({
@@ -248,12 +247,4 @@ export const PoolClaim = ({
       {t('payouts.fromPool')} {poolId}
     </h4>
   )
-}
-
-export class PayoutListShouldUpdate extends Component {
-  static contextType = StakingContext
-
-  render() {
-    return <PayoutListInner {...this.props} />
-  }
 }

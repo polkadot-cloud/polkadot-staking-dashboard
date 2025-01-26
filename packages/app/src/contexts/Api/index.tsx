@@ -124,9 +124,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   )
   const stakingMetricsRef = useRef(stakingMetrics)
 
-  // Store chain specs from PAPI
+  // Store chain specs
   const [chainSpecs, setChainSpecs] =
     useState<PapiChainSpecContext>(defaultChainSpecs)
+
+  // Whether the api is ready for querying
+  const isReady = apiStatus === 'ready' && chainSpecs.received === true
 
   // Bootstrap app-wide chain state
   const bootstrapNetworkConfig = async () => {
@@ -525,10 +528,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         setConnectionType,
         rpcEndpoint,
         setRpcEndpoint,
-        isReady: apiStatus === 'ready' && chainSpecs.received === true,
+        isReady,
         consts,
         networkMetrics,
         activeEra,
+        activeEraRef,
         poolsConfig,
         stakingMetrics,
       }}

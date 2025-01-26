@@ -12,7 +12,7 @@ export interface ValidatorsContextInterface {
     address: string
   ) => Record<string, BigNumber>
   injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[]
-  validators: Validator[]
+  getValidators: () => Validator[]
   validatorIdentities: Record<string, Identity>
   validatorSupers: Record<string, AnyJson>
   avgCommission: number
@@ -20,11 +20,16 @@ export interface ValidatorsContextInterface {
   sessionParaValidators: string[]
   erasRewardPoints: ErasRewardPoints
   validatorsFetched: Sync
-  eraPointsBoundaries: EraPointsBoundaries
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>
   erasRewardPointsFetched: Sync
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]
+  getValidatorTotalStake: (address: string) => bigint
+}
+
+export interface Validators {
+  status: Sync
+  validators: Validator[]
 }
 
 export type ValidatorStatus = 'waiting' | 'active'
@@ -68,14 +73,8 @@ export interface EraRewardPoints {
   individual: Record<string, string>
 }
 
-export type EraPointsBoundaries = {
-  high: BigNumber
-  low: BigNumber
-} | null
-
 export type ValidatorListEntry = Validator & {
   validatorStatus: ValidatorStatus
-  totalStake: BigNumber
 }
 
 export interface ValidatorEraPointHistory {

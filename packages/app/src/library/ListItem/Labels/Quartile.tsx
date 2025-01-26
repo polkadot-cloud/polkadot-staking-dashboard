@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { MaxEraRewardPointsEras } from 'consts'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +14,7 @@ export const Quartile = ({ address }: { address: string }) => {
 
   const quartile = validatorEraPointsHistory[address]?.quartile
   const tooltipText = `${t('dayPerformanceStanding', {
-    count: MaxEraRewardPointsEras,
+    count: 30,
     ns: 'library',
   })}`
 

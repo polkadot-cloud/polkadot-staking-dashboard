@@ -73,7 +73,11 @@ export const Members = () => {
       )}
 
       <CardWrapper className="transparent">
-        <FetchPageMemberList {...membersListProps} memberCount={memberCount} />
+        <FetchPageMemberList
+          {...membersListProps}
+          memberCount={memberCount}
+          itemsPerPage={50}
+        />
       </CardWrapper>
     </>
   )

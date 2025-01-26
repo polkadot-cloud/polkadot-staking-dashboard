@@ -18,10 +18,9 @@ import type {
   StakingContextInterface,
 } from 'contexts/Staking/types'
 import { Syncs } from 'controllers/Syncs'
-import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useRef, useState } from 'react'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NominationStatus } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
