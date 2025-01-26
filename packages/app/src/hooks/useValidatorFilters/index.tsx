@@ -4,6 +4,7 @@
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useErasPerDay } from 'hooks/useErasPerDay'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
 
@@ -16,6 +17,7 @@ export const useValidatorFilters = () => {
     sessionParaValidators,
     validatorEraPointsHistory,
   } = useValidators()
+  const { erasPerDay } = useErasPerDay()
 
   /*
    * filterMissingIdentity: Iterates through the supplied list and filters those with missing
@@ -173,7 +175,7 @@ export const useValidatorFilters = () => {
     })
 
   const ordersToLabels: Record<string, string> = {
-    rank: `30 ${t('dayPerformance')}`,
+    rank: `${Math.ceil(30 / erasPerDay.toNumber())} ${t('dayPerformance')}`,
     low_commission: t('lowCommission'),
     high_commission: t('highCommission'),
     default: t('unordered'),

@@ -4,6 +4,7 @@
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
+import { useErasPerDay } from 'hooks/useErasPerDay'
 import { normaliseEraPoints, prefillEraPoints } from 'library/List/Utils'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
@@ -13,6 +14,7 @@ import type { RewardProps, RewardsGraphProps } from './types'
 export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
   const { t } = useTranslation('library')
   const { isReady } = useApi()
+  const { erasPerDay } = useErasPerDay()
   const { setTooltipTextAndOpen } = useTooltip()
 
   // NOTE: Component currently not in use. Pool performance data is no longer being fetched.
@@ -25,7 +27,7 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
 
   const empty = Object.values(poolRewardPoints).length === 0
   const syncing = !isReady
-  const tooltipText = `30 ${t('dayPoolPerformance')}`
+  const tooltipText = `${Math.ceil(30 / erasPerDay.toNumber())} ${t('dayPoolPerformance')}`
 
   return (
     <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
