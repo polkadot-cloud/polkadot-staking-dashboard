@@ -3,13 +3,13 @@
 
 import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { EraPoints } from 'library/List/EraPoints'
+import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
-import { EraPointsHistorical } from '../List/EraPointsHistorical'
+import { HistoricalEraPoints } from '../List/EraPointsGraph/HistoricalEraPoints'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
 import { CopyAddress } from '../ListItem/Labels/CopyAddress'
@@ -64,13 +64,13 @@ export const Item = ({
         <div className="row bottom lg">
           <div>
             {pluginEnabled('staking_api') ? (
-              <EraPointsHistorical
+              <HistoricalEraPoints
                 address={address}
                 displayFor={displayFor}
                 eraPoints={eraPoints}
               />
             ) : (
-              <EraPoints address={address} displayFor={displayFor} />
+              <CurrentEraPoints address={address} displayFor={displayFor} />
             )}
           </div>
           <div>

@@ -7,8 +7,8 @@ import type { AnyJson } from '@w3ux/types'
 import { useList } from 'contexts/List'
 import { useMenu } from 'contexts/Menu'
 import { usePlugins } from 'contexts/Plugins'
-import { EraPoints } from 'library/List/EraPoints'
-import { EraPointsHistorical } from 'library/List/EraPointsHistorical'
+import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
+import { HistoricalEraPoints } from 'library/List/EraPointsGraph/HistoricalEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { Metrics } from 'library/ListItem/Labels/Metrics'
@@ -118,13 +118,13 @@ export const Item = ({
         <div className="row bottom lg">
           <div>
             {pluginEnabled('staking_api') ? (
-              <EraPointsHistorical
+              <HistoricalEraPoints
                 address={address}
                 displayFor={displayFor}
                 eraPoints={eraPoints}
               />
             ) : (
-              <EraPoints address={address} displayFor={displayFor} />
+              <CurrentEraPoints address={address} displayFor={displayFor} />
             )}
           </div>
           <div>

@@ -40,19 +40,13 @@ export interface EraPointsHistoricalProps {
   eraPoints: ValidatorEraPoints[]
 }
 
-export interface EraPointsHistoricalInnerProps {
+export interface EraPointsGraphInnerProps {
   points: number[]
   syncing: boolean
   displayFor: DisplayFor
 }
 
-export interface EraPointsProps {
+export interface CurrentEraPointsProps {
   address: string
-  displayFor: DisplayFor
-}
-
-export interface EraPointsInnerProps {
-  value: number
-  syncing: boolean
   displayFor: DisplayFor
 }
