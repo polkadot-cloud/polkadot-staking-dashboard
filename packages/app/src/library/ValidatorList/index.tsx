@@ -263,7 +263,7 @@ export const ValidatorListInner = ({
   // Fetch performance queries when validator list changes
   useEffect(() => {
     getPerformanceData(pageKey)
-  }, [pageKey])
+  }, [pageKey, pluginEnabled('staking_api')])
 
   // Configure validator list when network is ready to fetch
   useEffect(() => {

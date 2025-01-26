@@ -142,7 +142,7 @@ export const NominationList = ({
   // Fetch performance queries when list changes
   useEffect(() => {
     getPerformanceData(pageKey)
-  }, [pageKey])
+  }, [pageKey, pluginEnabled('staking_api')])
 
   // Configure list when network is ready to fetch
   useEffect(() => {
