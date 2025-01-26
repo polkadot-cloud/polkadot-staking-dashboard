@@ -20,7 +20,6 @@ export interface ValidatorsContextInterface {
   sessionParaValidators: string[]
   erasRewardPoints: ErasRewardPoints
   validatorsFetched: Sync
-  eraPointsBoundaries: EraPointsBoundaries
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>
   erasRewardPointsFetched: Sync
   averageEraValidatorReward: AverageEraValidatorReward
@@ -73,11 +72,6 @@ export interface EraRewardPoints {
   total: string
   individual: Record<string, string>
 }
-
-export type EraPointsBoundaries = {
-  high: BigNumber
-  low: BigNumber
-} | null
 
 export type ValidatorListEntry = Validator & {
   validatorStatus: ValidatorStatus

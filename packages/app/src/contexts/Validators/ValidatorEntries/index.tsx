@@ -24,7 +24,6 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import type { Identity, SuperIdentity } from 'types'
 import { perbillToPercent } from 'utils'
 import type {
-  EraPointsBoundaries,
   ErasRewardPoints,
   Validator,
   ValidatorAddresses,
@@ -37,7 +36,6 @@ import type {
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils'
 import {
   defaultAverageEraValidatorReward,
-  defaultEraPointsBoundaries,
   defaultValidatorsContext,
   defaultValidatorsData,
 } from './defaults'
@@ -104,10 +102,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const [validatorEraPointsHistory, setValidatorEraPointsHistory] = useState<
     Record<string, ValidatorEraPointHistory>
   >({})
-
-  // Store era point high and low for `MaxEraPointsEras` eras
-  const [eraPointsBoundaries, setEraPointsBoundaries] =
-    useState<EraPointsBoundaries>(defaultEraPointsBoundaries)
 
   // Average rerward rate
   const [averageEraValidatorReward, setAverageEraValidatorReward] = useState<{
@@ -422,33 +416,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     return points
   }
 
-  // Gets the highest and lowest (non-zero) era points earned `MaxEraRewardPointsEras` timeframe
-  const calculateEraPointsBoundaries = () => {
-    let high: BigNumber | null = null
-    let low: BigNumber | null = null
-
-    Object.entries(erasRewardPoints).forEach(([, { individual }]) => {
-      for (const [, points] of Object.entries(individual)) {
-        const p = new BigNumber(points)
-
-        if (p.isGreaterThan(high || 0)) {
-          high = p
-        }
-        if (low === null) {
-          low = p
-        } else if (p.isLessThan(low) && !p.isZero()) {
-          low = p
-        }
-      }
-    })
-
-    setEraPointsBoundaries({
-      high: high || new BigNumber(0),
-      low: low || new BigNumber(0),
-    })
-    setErasRewawrdPointsFetched('synced')
-  }
-
   // Inject status into validator entries
   const injectValidatorListData = (
     entries: Validator[]
@@ -552,7 +519,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setValidatorIdentities({})
     setValidatorSupers({})
     setErasRewardPoints({})
-    setEraPointsBoundaries(null)
     setValidatorEraPointsHistory({})
     setAverageEraValidatorReward(defaultAverageEraValidatorReward)
   }, [network])
@@ -586,13 +552,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [isReady, activeEra])
 
-  // Fetch era points boundaries when `erasRewardPoints` ready
-  useEffectIgnoreInitial(() => {
-    if (isReady && Object.values(erasRewardPoints).length) {
-      calculateEraPointsBoundaries()
-    }
-  }, [isReady, erasRewardPoints])
-
   // Fetch parachain session validators when `earliestStoredSession` ready
   useEffectIgnoreInitial(() => {
     if (isReady && earliestStoredSession.isGreaterThan(0)) {
@@ -614,7 +573,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         sessionParaValidators,
         erasRewardPoints,
         validatorsFetched: validators.status,
-        eraPointsBoundaries,
         validatorEraPointsHistory,
         erasRewardPointsFetched,
         averageEraValidatorReward,
