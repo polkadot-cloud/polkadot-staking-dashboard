@@ -12,7 +12,7 @@ import { Graph } from 'ui-core/list'
 import type { GraphInnerProps, PulseProps } from './types'
 import { normaliseEraPoints, prefillEraPoints } from './Utils'
 
-export const EraPoints = ({ displayFor, eraPoints }: PulseProps) => {
+export const EraPointsHistorical = ({ displayFor, eraPoints }: PulseProps) => {
   const { t } = useTranslation('library')
   const { isReady } = useApi()
   const { validatorsFetched } = useValidators()

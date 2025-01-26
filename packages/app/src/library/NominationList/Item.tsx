@@ -7,7 +7,7 @@ import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
-import { EraPoints } from '../List/EraPoints'
+import { EraPointsHistorical } from '../List/EraPointsHistorical'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
 import { CopyAddress } from '../ListItem/Labels/CopyAddress'
@@ -60,7 +60,7 @@ export const Item = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <EraPoints
+            <EraPointsHistorical
               address={address}
               displayFor={displayFor}
               eraPoints={eraPoints}
