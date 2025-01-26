@@ -47,9 +47,8 @@ export class ActiveEra implements Unsubscribable {
             this.#network,
             'stakingMetrics'
           )
-
           if (subStakingMetrics) {
-            subStakingMetrics.subscribe()
+            subStakingMetrics.unsubscribe()
             Subscriptions.remove(this.#network, 'stakingMetrics')
           }
 

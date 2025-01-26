@@ -13,7 +13,7 @@ export const Sync = () => {
   const { uids } = useTxMeta()
   const { syncing } = useSyncing()
   const { pathname } = useLocation()
-  const { validators } = useValidators()
+  const { getValidators } = useValidators()
   const { bondedPools } = useBondedPools()
 
   // Keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
@@ -31,7 +31,7 @@ export const Sync = () => {
   const onValidatorsSyncing = () => {
     if (
       pageFromUri(pathname, 'overview') === 'validators' &&
-      !validators.length
+      !getValidators().length
     ) {
       return true
     }

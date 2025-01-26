@@ -1,56 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
-import { MaxEraRewardPointsEras } from 'consts'
-import { useApi } from 'contexts/Api'
-import { useTooltip } from 'contexts/Tooltip'
-import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
-import { TooltipArea } from 'ui-core/base'
-import { Graph } from 'ui-core/list'
-import { normaliseEraPoints, prefillEraPoints } from './Utils'
-import type { PulseGraphProps, PulseProps } from './types'
+import { Fragment } from 'react/jsx-runtime'
+import type { EraPointsGraphInnerProps } from '../types'
 
-export const Pulse = ({ address, displayFor }: PulseProps) => {
-  const { t } = useTranslation('library')
-  const { isReady, activeEra } = useApi()
-  const { setTooltipTextAndOpen } = useTooltip()
-  const { getValidatorPointsFromEras, eraPointsBoundaries, erasRewardPoints } =
-    useValidators()
-  const startEra = activeEra.index.minus(1)
-  const eraRewardPoints = getValidatorPointsFromEras(startEra, address)
-
-  const high = eraPointsBoundaries?.high || new BigNumber(1)
-  const normalisedPoints = normaliseEraPoints(eraRewardPoints, high)
-  const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
-
-  const syncing = !isReady || !Object.values(erasRewardPoints).length
-  const tooltipText = t('validatorPerformance', {
-    count: MaxEraRewardPointsEras,
-  })
-
-  return (
-    <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
-      <TooltipArea
-        text={tooltipText}
-        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-      />
-      <PulseGraph
-        points={prefilledPoints}
-        syncing={syncing}
-        displayFor={displayFor}
-      />
-    </Graph>
-  )
-}
-
-export const PulseGraph = ({
+export const Inner = ({
   points: rawPoints = [],
   syncing,
   displayFor,
-}: PulseGraphProps) => {
+}: EraPointsGraphInnerProps) => {
   // Prefill with duplicate of start point.
   let points = [rawPoints[0] || 0]
   points = points.concat(rawPoints)
@@ -58,9 +16,9 @@ export const PulseGraph = ({
   points.push(rawPoints[rawPoints.length - 1] || 0)
 
   const totalSegments = points.length - 2
-  const vbWidth = 512
+  const vbWidth = 520
   const vbHeight = 115
-  const xPadding = 5
+  const xPadding = 0
   const yPadding = 10
   const xArea = vbWidth - 2 * xPadding
   const yArea = vbHeight - 2 * yPadding
@@ -111,7 +69,7 @@ export const PulseGraph = ({
         return (
           <line
             key={`grid_coord_${index}`}
-            strokeWidth="3.75"
+            strokeWidth={4}
             stroke={
               displayFor === 'canvas'
                 ? 'var(--grid-color-secondary)'
@@ -130,7 +88,7 @@ export const PulseGraph = ({
           ({ y1, y2 }, index) => (
             <line
               key={`grid_coord_${index}`}
-              strokeWidth="3.75"
+              strokeWidth={4}
               stroke={
                 displayFor === 'canvas'
                   ? 'var(--grid-color-secondary)'
@@ -152,7 +110,7 @@ export const PulseGraph = ({
           return (
             <line
               key={`line_coord_${index}`}
-              strokeWidth={5}
+              strokeWidth={5.5}
               opacity={opacity}
               stroke={
                 zero

@@ -4,8 +4,12 @@
 import { faBars, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
+import { useList } from 'contexts/List'
 import { useMenu } from 'contexts/Menu'
 import { usePlugins } from 'contexts/Plugins'
+import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
+import { HistoricalEraPoints } from 'library/List/EraPointsGraph/HistoricalEraPoints'
+import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { Metrics } from 'library/ListItem/Labels/Metrics'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
@@ -20,32 +24,28 @@ import {
   Separator,
 } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
-import { useValidators } from '../../../contexts/Validators/ValidatorEntries'
-import { useList } from '../../List/context'
-import { Blocked } from '../../ListItem/Labels/Blocked'
-import { Commission } from '../../ListItem/Labels/Commission'
-import { EraStatus } from '../../ListItem/Labels/EraStatus'
-import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator'
-import { Identity } from '../../ListItem/Labels/Identity'
-import { Select } from '../../ListItem/Labels/Select'
-import { Pulse } from './Pulse'
-import { getIdentityDisplay } from './Utils'
-import type { ValidatorItemProps } from './types'
+import { useValidators } from '../../contexts/Validators/ValidatorEntries'
+import { Blocked } from '../ListItem/Labels/Blocked'
+import { Commission } from '../ListItem/Labels/Commission'
+import { EraStatus } from '../ListItem/Labels/EraStatus'
+import { FavoriteValidator } from '../ListItem/Labels/FavoriteValidator'
+import { Identity } from '../ListItem/Labels/Identity'
+import { Select } from '../ListItem/Labels/Select'
+import type { ItemProps } from './types'
 
-export const Default = ({
+export const Item = ({
   validator,
   toggleFavorites,
-  showMenu,
   displayFor,
-}: ValidatorItemProps) => {
+  eraPoints,
+}: ItemProps) => {
   const { t } = useTranslation('library')
   const { selectActive } = useList()
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
   const { validatorIdentities, validatorSupers } = useValidators()
-
-  const { address, prefs, validatorStatus, totalStake } = validator
+  const { address, prefs, validatorStatus } = validator
   const commission = prefs?.commission ?? null
 
   // Whether buttons should be styled as outline.
@@ -95,7 +95,7 @@ export const Default = ({
               {toggleFavorites && (
                 <FavoriteValidator address={address} outline={outline} />
               )}
-              {displayFor === 'default' && showMenu && (
+              {!['modal', 'canvas'].includes(displayFor) && (
                 <HeaderButton>
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>
                     <FontAwesomeIcon icon={faBars} transform="shrink-2" />
@@ -117,7 +117,15 @@ export const Default = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <Pulse address={address} displayFor={displayFor} />
+            {pluginEnabled('staking_api') ? (
+              <HistoricalEraPoints
+                address={address}
+                displayFor={displayFor}
+                eraPoints={eraPoints}
+              />
+            ) : (
+              <CurrentEraPoints address={address} displayFor={displayFor} />
+            )}
           </div>
           <div>
             <LabelRow inline>
@@ -126,12 +134,7 @@ export const Default = ({
               <Commission commission={commission} />
               <ParaValidator address={address} />
             </LabelRow>
-            <EraStatus
-              address={address}
-              status={validatorStatus}
-              totalStake={totalStake}
-              noMargin
-            />
+            <EraStatus address={address} status={validatorStatus} noMargin />
           </div>
         </div>
       </div>

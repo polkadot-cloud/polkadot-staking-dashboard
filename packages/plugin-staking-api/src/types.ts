@@ -90,6 +90,12 @@ export type ValidatorEraPointsResult = Query & {
   }
 }
 
+export type ValidatorEraPointsBatchResult = Query & {
+  data: {
+    validatorEraPointsBatch: ValidatorEraPointsBatch[]
+  }
+}
+
 export interface UnclaimedRewards {
   total: string
   entries: EraUnclaimedReward[]
@@ -110,6 +116,11 @@ export interface ValidatorEraPoints {
   era: number
   points: string
   start: number
+}
+
+export interface ValidatorEraPointsBatch {
+  validator: string
+  points: ValidatorEraPoints[]
 }
 
 export interface PoolReward {
