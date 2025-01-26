@@ -34,13 +34,25 @@ export interface SelectableProps {
   displayFor: DisplayFor
 }
 
-export interface PulseProps {
+export interface EraPointsHistoricalProps {
   address: string
   displayFor: DisplayFor
   eraPoints: ValidatorEraPoints[]
 }
-export interface GraphInnerProps {
+
+export interface EraPointsHistoricalInnerProps {
   points: number[]
+  syncing: boolean
+  displayFor: DisplayFor
+}
+
+export interface EraPointsProps {
+  address: string
+  displayFor: DisplayFor
+}
+
+export interface EraPointsInnerProps {
+  value: number
   syncing: boolean
   displayFor: DisplayFor
 }

@@ -9,6 +9,7 @@ import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/ty
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type {
   APIEventDetail,
+  EraRewardPointsEvent,
   PapiReadyEvent,
   TxSubmissionItem,
 } from 'api/types'
@@ -45,6 +46,7 @@ declare global {
       networkMetrics: APINetworkMetrics
     }>
     'new-active-era': CustomEvent<{ activeEra: APIActiveEra }>
+    'new-era-reward-points': CustomEvent<EraRewardPointsEvent>
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>
     'new-staking-metrics': CustomEvent<{
       stakingMetrics: APIStakingMetrics

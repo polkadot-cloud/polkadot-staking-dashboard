@@ -1,7 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { EraPoints } from 'library/List/EraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
@@ -26,6 +28,7 @@ export const Item = ({
   nominationStatus,
   eraPoints,
 }: ItemProps) => {
+  const { pluginEnabled } = usePlugins()
   const { validatorIdentities, validatorSupers } = useValidators()
   const { address, prefs } = validator
   const commission = prefs?.commission ?? null
@@ -60,11 +63,15 @@ export const Item = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <EraPointsHistorical
-              address={address}
-              displayFor={displayFor}
-              eraPoints={eraPoints}
-            />
+            {pluginEnabled('staking_api') ? (
+              <EraPointsHistorical
+                address={address}
+                displayFor={displayFor}
+                eraPoints={eraPoints}
+              />
+            ) : (
+              <EraPoints address={address} displayFor={displayFor} />
+            )}
           </div>
           <div>
             <LabelRow inline>

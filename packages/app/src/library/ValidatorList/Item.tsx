@@ -7,6 +7,7 @@ import type { AnyJson } from '@w3ux/types'
 import { useList } from 'contexts/List'
 import { useMenu } from 'contexts/Menu'
 import { usePlugins } from 'contexts/Plugins'
+import { EraPoints } from 'library/List/EraPoints'
 import { EraPointsHistorical } from 'library/List/EraPointsHistorical'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
@@ -116,11 +117,15 @@ export const Item = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <EraPointsHistorical
-              address={address}
-              displayFor={displayFor}
-              eraPoints={eraPoints}
-            />
+            {pluginEnabled('staking_api') ? (
+              <EraPointsHistorical
+                address={address}
+                displayFor={displayFor}
+                eraPoints={eraPoints}
+              />
+            ) : (
+              <EraPoints address={address} displayFor={displayFor} />
+            )}
           </div>
           <div>
             <LabelRow inline>

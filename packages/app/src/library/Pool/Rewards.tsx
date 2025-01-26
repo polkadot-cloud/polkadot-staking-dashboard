@@ -4,7 +4,6 @@
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
-import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { normaliseEraPoints, prefillEraPoints } from 'library/List/Utils'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
@@ -15,13 +14,12 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
   const { t } = useTranslation('library')
   const { isReady } = useApi()
   const { setTooltipTextAndOpen } = useTooltip()
-  const { eraPointsBoundaries } = useValidators()
 
   // NOTE: Component currently not in use. Pool performance data is no longer being fetched.
   const poolRewardPoints = {}
   const eraRewardPoints = {}
+  const high = new BigNumber(1)
 
-  const high = eraPointsBoundaries?.high || new BigNumber(1)
   const normalisedPoints = normaliseEraPoints(eraRewardPoints, high)
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
 

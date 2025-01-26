@@ -10,6 +10,7 @@ import { Era } from 'api/query/era'
 import { NetworkMeta } from 'api/query/networkMeta'
 import { ActiveEra } from 'api/subscribe/activeEra'
 import { BlockNumber } from 'api/subscribe/blockNumber'
+import { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import { NetworkMetrics } from 'api/subscribe/networkMetrics'
 import { PoolsConfig } from 'api/subscribe/poolsConfig'
 import type { APIEventDetail, ApiStatus, ConnectionType } from 'api/types'
@@ -398,6 +399,23 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           activeEraRef
         )
       }
+
+      // Update era reward points subscription
+      // Unsubscribe to staking metrics if it exists.
+      const currentEraRewardPointsSub = Subscriptions.get(
+        network,
+        'erasRewardPoints'
+      )
+      if (currentEraRewardPointsSub) {
+        currentEraRewardPointsSub.unsubscribe()
+        Subscriptions.remove(network, 'erasRewardPoints')
+      }
+      // Subscribe to eras reward points for current era
+      Subscriptions.set(
+        network,
+        'erasRewardPoints',
+        new ErasRewardPoints(network, index)
+      )
     }
   }
 
@@ -529,6 +547,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         consts,
         networkMetrics,
         activeEra,
+        activeEraRef,
         poolsConfig,
         stakingMetrics,
       }}

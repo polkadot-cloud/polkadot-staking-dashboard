@@ -1,46 +1,75 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
+import type { EraRewardPointsEvent } from 'api/types'
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { Fragment } from 'react'
+import { Subscriptions } from 'controllers/Subscriptions'
+import { isCustomEvent } from 'controllers/utils'
+import { Fragment, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Graph } from 'ui-core/list'
-import type {
-  EraPointsHistoricalInnerProps,
-  EraPointsHistoricalProps,
-} from './types'
-import { normaliseEraPoints, prefillEraPoints } from './Utils'
+import { useEventListener } from 'usehooks-ts'
+import type { EraPointsInnerProps, EraPointsProps } from './types'
+import { normaliseEraPoints } from './Utils'
 
-export const EraPointsHistorical = ({
-  displayFor,
-  eraPoints,
-}: EraPointsHistoricalProps) => {
-  const { t } = useTranslation('library')
-  const { isReady } = useApi()
+export const EraPoints = ({ address, displayFor }: EraPointsProps) => {
+  const { t } = useTranslation()
+  const { network } = useNetwork()
+  const { isReady, activeEraRef } = useApi()
   const { validatorsFetched } = useValidators()
   const { setTooltipTextAndOpen } = useTooltip()
 
-  const eraPointData: bigint[] = eraPoints.map(({ points }) => BigInt(points))
-  const high = eraPointData.sort((a, b) => Number(b - a))[0]
+  const subscription = Subscriptions.get(
+    network,
+    'erasRewardPoints'
+  ) as ErasRewardPoints
 
-  const normalisedPoints = normaliseEraPoints(
-    Object.fromEntries(
-      eraPoints.map(({ era, points }) => [
-        era,
-        new BigNumber(points.toString()),
-      ])
-    ),
-    new BigNumber(high?.toString() || 1)
+  // Era points value.
+  const [eraPoints, setEraPoints] = useState<BigNumber>(
+    new BigNumber(subscription?.getIndividualEraPoints(address) || 0)
   )
-  const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
-  const syncing = !isReady || !eraPoints.length || !validatorsFetched
-  const tooltipText = t('validatorPerformance', {
-    count: 30,
+
+  // Highest performing validator points for current era
+  const [eraHigh, setEraHigh] = useState<number>(subscription?.eraHigh || 1)
+
+  // Normalise era point data for graph
+  const normalisedPoints = normaliseEraPoints(
+    {
+      [String(activeEraRef.current.index)]: eraPoints,
+    },
+    new BigNumber(eraHigh)
+  )
+  const normalisedPoint = Object.values(normalisedPoints)[0]
+  const syncing = !isReady || !validatorsFetched || eraHigh <= 1
+  const tooltipText = t('eraRewardPoints', {
+    ns: 'library',
+    points: eraPoints.toFormat(),
   })
+
+  const handleEraRewardPoints = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      const { eraRewardPoints, eraHigh: eventEraHigh } =
+        e.detail as EraRewardPointsEvent
+
+      const individual = Object.values(eraRewardPoints.individual)
+      const entry = individual.find((item) => item[0] === address)
+      const newEraPoints = new BigNumber(entry?.[1] || 0)
+      setEraPoints(newEraPoints)
+      setEraHigh(eventEraHigh)
+    }
+  }
+
+  useEventListener(
+    'new-era-reward-points',
+    handleEraRewardPoints,
+    useRef<Document>(document)
+  )
 
   return (
     <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
@@ -49,7 +78,7 @@ export const EraPointsHistorical = ({
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       <GraphInner
-        points={prefilledPoints}
+        value={normalisedPoint}
         syncing={syncing}
         displayFor={displayFor}
       />
@@ -57,16 +86,9 @@ export const EraPointsHistorical = ({
   )
 }
 
-const GraphInner = ({
-  points: rawPoints = [],
-  syncing,
-  displayFor,
-}: EraPointsHistoricalInnerProps) => {
+const GraphInner = ({ value, syncing, displayFor }: EraPointsInnerProps) => {
   // Prefill with duplicate of start point.
-  let points = [rawPoints[0] || 0]
-  points = points.concat(rawPoints)
-  // Prefill with duplicate of end point.
-  points.push(rawPoints[rawPoints.length - 1] || 0)
+  const points = Array(3).fill(value)
 
   const totalSegments = points.length - 2
   const vbWidth = 520
@@ -84,7 +106,6 @@ const GraphInner = ({
       y: vbHeight - yPadding - yArea * point,
       zero: point === 0,
     }
-
     if (index === 0 || index === points.length - 2) {
       xCursor += xSegment * 0.5
     } else {
@@ -159,7 +180,7 @@ const GraphInner = ({
       {!syncing &&
         lineCoords.map(({ x1, y1, x2, y2, zero }, index) => {
           const startOrEnd = index === 0 || index === lineCoords.length - 2
-          const opacity = startOrEnd ? 0.25 : zero ? 0.5 : 1
+          const opacity = startOrEnd ? 1 : zero ? 0.5 : 1
           return (
             <line
               key={`line_coord_${index}`}

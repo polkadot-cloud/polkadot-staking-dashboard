@@ -76,6 +76,7 @@
     "enablePermissionlessClaiming": "Habilitar reclamación sin permisos",
     "era": "Era",
     "eraPoints": "Puntos de la Era",
+    "eraRewardPoints": "{{points}} Era Puntos de recompensa",
     "errorUnknown": "Ups, algo salió mal",
     "errorWithTransaction": "Error con la transacción",
     "estimatedFee": "Tarifa estimada",
