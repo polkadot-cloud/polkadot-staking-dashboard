@@ -4368,7 +4368,7 @@ __metadata:
     ui-overlay: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
-    viem: "npm:^2.22.10"
+    viem: "npm:^2.22.15"
     vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.8.0"
     vite-plugin-eslint: "npm:^1.8.1"
@@ -11256,7 +11256,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.1.1, viem@npm:^2.22.10":
+"viem@npm:^2.1.1":
   version: 2.22.13
   resolution: "viem@npm:2.22.13"
   dependencies:
@@ -11274,6 +11274,27 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/56d42c1a60fb665022cbc606186da256d6e79e571d73fbfd859555aad38637545a8ee75be5f7c3879a0c3b174cadbd614769884afd137d6eea04a2745358ce6f
+  languageName: node
+  linkType: hard
+
+"viem@npm:^2.22.15":
+  version: 2.22.15
+  resolution: "viem@npm:2.22.15"
+  dependencies:
+    "@noble/curves": "npm:1.8.1"
+    "@noble/hashes": "npm:1.7.1"
+    "@scure/bip32": "npm:1.6.2"
+    "@scure/bip39": "npm:1.5.4"
+    abitype: "npm:1.0.8"
+    isows: "npm:1.0.6"
+    ox: "npm:0.6.7"
+    ws: "npm:8.18.0"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/de832e08423498d6b1746cfb352cbf525b433f57706890fe54c54f3576623e177f2edb9784c6a0cdc4cf77d50be15f0ead46798c2767393989477240bbbbee93
   languageName: node
   linkType: hard
 
