@@ -5,6 +5,7 @@ import type {
   IconDefinition,
   IconProp,
 } from '@fortawesome/fontawesome-svg-core'
+import type { ComponentBase } from '@w3ux/types'
 import type { MouseEvent } from 'react'
 
 // Common button props, applied to all buttons.
@@ -45,4 +46,10 @@ export interface ButtonIconProps {
   iconRight?: IconProp | IconDefinition
   // transform icon size.
   iconTransform?: string
+}
+
+export type MultiButtonProps = ComponentBase & {
+  marginLeft?: boolean
+  marginRight?: boolean
+  marginX?: boolean
 }
