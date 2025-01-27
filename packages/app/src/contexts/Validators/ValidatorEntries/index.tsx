@@ -574,7 +574,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         erasRewardPoints,
         validatorsFetched: validators.status,
         validatorEraPointsHistory,
-        erasRewardPointsFetched,
         averageEraValidatorReward,
         formatWithPrefs,
         getValidatorTotalStake,
