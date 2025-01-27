@@ -61,48 +61,50 @@ export const Active = () => {
           <Status height={ROW_HEIGHT} />
         </RowSection>
       </PageRow>
-      <PageRow>
-        <CardWrapper>
-          {nominated?.length || inSetup() || syncing ? (
-            <Nominations bondFor="nominator" nominator={activeAccount} />
-          ) : (
-            <>
-              <CardHeader action margin>
-                <h3>
-                  {t('nominate.nominate', { ns: 'pages' })}
-                  <ButtonHelp
-                    marginLeft
-                    onClick={() => openHelp('Nominations')}
-                  />
-                </h3>
-                <div>
-                  <ButtonPrimary
-                    iconLeft={faChevronCircleRight}
-                    iconTransform="grow-1"
-                    text={`${t('nominate.nominate', { ns: 'pages' })}`}
-                    disabled={inSetup() || syncing || isFastUnstaking}
-                    onClick={() =>
-                      openCanvas({
-                        key: 'ManageNominations',
-                        scroll: false,
-                        options: {
-                          bondFor: 'nominator',
-                          nominator: activeAccount,
-                          nominated,
-                        },
-                        size: 'xl',
-                      })
-                    }
-                  />
-                </div>
-              </CardHeader>
-              <ListStatusHeader>
-                {t('notNominating', { ns: 'library' })}.
-              </ListStatusHeader>
-            </>
-          )}
-        </CardWrapper>
-      </PageRow>
+      {!inSetup() && (
+        <PageRow>
+          <CardWrapper>
+            {nominated?.length || inSetup() || syncing ? (
+              <Nominations bondFor="nominator" nominator={activeAccount} />
+            ) : (
+              <>
+                <CardHeader action margin>
+                  <h3>
+                    {t('nominate.nominate', { ns: 'pages' })}
+                    <ButtonHelp
+                      marginLeft
+                      onClick={() => openHelp('Nominations')}
+                    />
+                  </h3>
+                  <div>
+                    <ButtonPrimary
+                      iconLeft={faChevronCircleRight}
+                      iconTransform="grow-1"
+                      text={`${t('nominate.nominate', { ns: 'pages' })}`}
+                      disabled={inSetup() || syncing || isFastUnstaking}
+                      onClick={() =>
+                        openCanvas({
+                          key: 'ManageNominations',
+                          scroll: false,
+                          options: {
+                            bondFor: 'nominator',
+                            nominator: activeAccount,
+                            nominated,
+                          },
+                          size: 'xl',
+                        })
+                      }
+                    />
+                  </div>
+                </CardHeader>
+                <ListStatusHeader>
+                  {t('notNominating', { ns: 'library' })}.
+                </ListStatusHeader>
+              </>
+            )}
+          </CardWrapper>
+        </PageRow>
+      )}
     </>
   )
 }
