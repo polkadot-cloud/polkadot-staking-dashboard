@@ -5,6 +5,7 @@ import type { ComponentBase } from '@w3ux/types'
 
 export type RowProps = ComponentBase & {
   yMargin?: boolean
+  xMargin?: boolean
 }
 
 export type PageTitleProps = PageTitleTabsProps & {
