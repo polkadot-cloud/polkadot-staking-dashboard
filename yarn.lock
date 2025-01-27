@@ -1611,14 +1611,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/merkleize-metadata@npm:^1.1.12":
-  version: 1.1.12
-  resolution: "@polkadot-api/merkleize-metadata@npm:1.1.12"
+"@polkadot-api/merkleize-metadata@npm:^1.1.13":
+  version: 1.1.13
+  resolution: "@polkadot-api/merkleize-metadata@npm:1.1.13"
   dependencies:
-    "@polkadot-api/metadata-builders": "npm:0.10.0"
+    "@polkadot-api/metadata-builders": "npm:0.10.1"
     "@polkadot-api/substrate-bindings": "npm:0.11.0"
     "@polkadot-api/utils": "npm:0.1.2"
-  checksum: 10c0/d3fac5be41878dd8c318dd76c9f09e3a6e769f8791386bc4c5a5c27c272efa0c4d3cf839034dfc2b28324c0a35b9bf5fd9df2e33392cff7760f8f5b40f41fe20
+  checksum: 10c0/9b2c7aca84ef54f3cb4dae3200a710d3f710e06fbf5394a39fe181664a1cf624cac6ccae76498807ba30a30cc19623b8713505e827ed3a4ddca6f07e7a0d8e08
   languageName: node
   linkType: hard
 
@@ -1629,6 +1629,16 @@ __metadata:
     "@polkadot-api/substrate-bindings": "npm:0.11.0"
     "@polkadot-api/utils": "npm:0.1.2"
   checksum: 10c0/0fb49a6cd4e2b66e3c3983f66e427b5763da0b67d5c4847c190e6e546f67bc4908d456b2afe80ce85316736d3aa408d779f309b292957648820aca44e6578719
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/metadata-builders@npm:0.10.1":
+  version: 0.10.1
+  resolution: "@polkadot-api/metadata-builders@npm:0.10.1"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:0.11.0"
+    "@polkadot-api/utils": "npm:0.1.2"
+  checksum: 10c0/4faa8d09087a514977dfa5a3ee795fa3a6f4ccd1bdb6383193c3e421a3b6facf40993a90357f28cf1a32ee559914d34272d55b4650a6236fce433112a86a779c
   languageName: node
   linkType: hard
 
@@ -4329,7 +4339,7 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
     "@lottiefiles/dotlottie-react": "npm:^0.12.1"
-    "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
+    "@polkadot-api/merkleize-metadata": "npm:^1.1.13"
     "@polkadot-api/signers-common": "npm:^0.1.4"
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"
     "@polkadot/util": "npm:^13.3.1"
