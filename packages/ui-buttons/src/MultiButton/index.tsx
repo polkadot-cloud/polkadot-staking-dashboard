@@ -12,8 +12,10 @@ export const MultiButton = ({
   marginLeft,
   marginRight,
   marginX,
+  disabled,
 }: MultiButtonProps) => {
   const allClasses = classNames(classes.multiButton, {
+    [classes.disabled]: !!disabled,
     [commonClasses.btnSpacingLeft]: marginLeft,
     [commonClasses.btnSpacingRight]: marginRight,
     [commonClasses.btnMarginX]: marginX,

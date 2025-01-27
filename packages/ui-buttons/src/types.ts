@@ -52,4 +52,5 @@ export type MultiButtonProps = ComponentBase & {
   marginLeft?: boolean
   marginRight?: boolean
   marginX?: boolean
+  disabled?: boolean
 }
