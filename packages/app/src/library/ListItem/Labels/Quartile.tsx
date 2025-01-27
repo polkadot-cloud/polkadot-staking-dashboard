@@ -10,17 +10,13 @@ import { Label } from 'ui-core/list'
 export const Quartile = ({ address }: { address: string }) => {
   const { t } = useTranslation()
   const { setTooltipTextAndOpen } = useTooltip()
-  const { validatorEraPointsHistory, erasRewardPointsFetched } = useValidators()
+  const { validatorEraPointsHistory } = useValidators()
 
   const quartile = validatorEraPointsHistory[address]?.quartile
   const tooltipText = `${t('dayPerformanceStanding', {
     count: 30,
     ns: 'library',
   })}`
-
-  if (erasRewardPointsFetched !== 'synced') {
-    return null
-  }
 
   return (
     <Label>
