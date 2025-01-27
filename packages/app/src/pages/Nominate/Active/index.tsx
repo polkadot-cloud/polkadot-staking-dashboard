@@ -30,8 +30,8 @@ export const Active = () => {
   const { t } = useTranslation()
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
-  const { inSetup } = useStaking()
   const { getNominations } = useBalances()
+  const { inSetup, isBonding } = useStaking()
   const { openCanvas } = useOverlay().canvas
   const { isFastUnstaking } = useUnstaking()
   const { formatWithPrefs } = useValidators()
@@ -61,7 +61,7 @@ export const Active = () => {
           <Status height={ROW_HEIGHT} />
         </RowSection>
       </PageRow>
-      {!inSetup() && (
+      {isBonding() && (
         <PageRow>
           <CardWrapper>
             {nominated?.length || inSetup() || syncing ? (
