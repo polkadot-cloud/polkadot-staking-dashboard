@@ -4,8 +4,13 @@
 .buttonRow {
   display: flex;
   align-items: center;
+  
+  &.yMargin {
+    margin-top: 1rem;
+  }
+  &.xMargin {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
 }
 
-.buttonRowYMargin {
-  margin-top: 1rem;
-}

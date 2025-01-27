@@ -8,9 +8,9 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
+import { ButtonRow } from 'ui-core/base'
 import DefaultAccount from '../Account/DefaultAccount'
 import PoolAccount from '../Account/PoolAccount'
-import { HeadingWrapper } from './Wrappers'
 
 export const Connected = () => {
   const { t } = useTranslation('library')
@@ -25,7 +25,7 @@ export const Connected = () => {
     activeAccount && (
       <>
         {/* Default account display / stash label if actively nominating. */}
-        <HeadingWrapper>
+        <ButtonRow xMargin>
           <DefaultAccount
             value={activeAccount}
             label={
@@ -33,28 +33,28 @@ export const Connected = () => {
             }
             readOnly={!accountHasSigner(activeAccount)}
           />
-        </HeadingWrapper>
+        </ButtonRow>
 
         {/* Pool account display / hide if not in pool or if syncing. */}
         {activePool !== null && !syncing && (
-          <HeadingWrapper>
+          <ButtonRow xMargin>
             <PoolAccount
               label={t('pool')}
               pool={activePool}
               syncing={!Object.values(poolsMetaData).length}
             />
-          </HeadingWrapper>
+          </ButtonRow>
         )}
 
         {/* Proxy account display / hide if no proxy. */}
         {activeProxy && (
-          <HeadingWrapper>
+          <ButtonRow xMargin>
             <DefaultAccount
               value={activeProxy}
               label={t('proxy')}
               readOnly={!accountHasSigner(activeProxy)}
             />
-          </HeadingWrapper>
+          </ButtonRow>
         )}
       </>
     )

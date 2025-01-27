@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -13,7 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonHelp, ButtonPrimary, ButtonText, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
@@ -33,15 +33,22 @@ export const ManageBond = () => {
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
-  const { isBonding, isMember, activePool } = useActivePool()
+  const { isBonding, isMember, activePool, isDepositor } = useActivePool()
 
   const allTransferOptions = getTransferOptions(activeAccount)
   const {
-    pool: { active, totalUnlocking, totalUnlocked, totalUnlockChunks },
+    pool: { active, totalUnlocking, totalUnlocked },
     transferrableBalance,
   } = allTransferOptions
-
   const { state } = activePool?.bondedPool || {}
+
+  const bondDisabled =
+    syncing ||
+    !isBonding() ||
+    !isMember() ||
+    isReadOnlyAccount(activeAccount) ||
+    state === 'Destroying'
+  const canLeavePool = isMember() && !isDepositor() && active?.isGreaterThan(0)
 
   return (
     <>
@@ -61,60 +68,41 @@ export const ManageBond = () => {
           />
         </h2>
         <ButtonRow>
-          <ButtonPrimary
-            disabled={
-              syncing ||
-              !isBonding() ||
-              !isMember() ||
-              isReadOnlyAccount(activeAccount) ||
-              state === 'Destroying'
-            }
-            marginRight
-            onClick={() =>
-              openModal({
-                key: 'Bond',
-                options: { bondFor: 'pool' },
-                size: 'sm',
-              })
-            }
-            text="+"
-          />
-          <ButtonPrimary
-            disabled={
-              syncing ||
-              !isBonding() ||
-              !isMember() ||
-              isReadOnlyAccount(activeAccount) ||
-              state === 'Destroying'
-            }
-            marginRight
-            onClick={() =>
-              openModal({
-                key: 'Unbond',
-                options: { bondFor: 'pool' },
-                size: 'sm',
-              })
-            }
-            text="-"
-          />
-          <ButtonPrimary
-            disabled={
-              syncing || !isMember() || isReadOnlyAccount(activeAccount)
-            }
-            iconLeft={faLockOpen}
-            onClick={() =>
-              openModal({
-                key: 'UnlockChunks',
-                options: {
-                  bondFor: 'pool',
-                  disableWindowResize: true,
-                  disableScroll: true,
-                },
-                size: 'sm',
-              })
-            }
-            text={String(totalUnlockChunks ?? 0)}
-          />
+          <MultiButton marginRight disabled={bondDisabled}>
+            <ButtonText
+              disabled={bondDisabled}
+              marginRight
+              onClick={() =>
+                openModal({
+                  key: 'Bond',
+                  options: { bondFor: 'pool' },
+                  size: 'sm',
+                })
+              }
+              iconLeft={faPlus}
+              text=""
+            />
+            <ButtonText
+              disabled={bondDisabled}
+              marginRight
+              onClick={() =>
+                openModal({
+                  key: 'Unbond',
+                  options: { bondFor: 'pool' },
+                  size: 'sm',
+                })
+              }
+              iconLeft={faMinus}
+              text=""
+            />
+          </MultiButton>
+          {canLeavePool && (
+            <ButtonPrimary
+              text={t('nominate.unstake')}
+              iconLeft={faSignOut}
+              onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
+            />
+          )}
         </ButtonRow>
       </CardHeader>
       <BondedChart
