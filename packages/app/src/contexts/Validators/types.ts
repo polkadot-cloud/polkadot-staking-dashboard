@@ -21,7 +21,6 @@ export interface ValidatorsContextInterface {
   erasRewardPoints: ErasRewardPoints
   validatorsFetched: Sync
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>
-  erasRewardPointsFetched: Sync
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]
   getValidatorTotalStake: (address: string) => bigint

@@ -23,7 +23,6 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   erasRewardPoints: {},
   validatorsFetched: 'unsynced',
   validatorEraPointsHistory: {},
-  erasRewardPointsFetched: 'unsynced',
   averageEraValidatorReward: defaultAverageEraValidatorReward,
   formatWithPrefs: (addresses) => [],
   getValidatorTotalStake: (address) => 0n,
