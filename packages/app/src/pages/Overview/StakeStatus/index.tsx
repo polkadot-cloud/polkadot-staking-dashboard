@@ -24,7 +24,7 @@ export const StakeStatus = () => {
         {showNominate && (
           <RowSection secondary={showMembership} standalone={!showMembership}>
             <section>
-              <NominationStatus showButtons={false} />
+              <NominationStatus />
             </section>
           </RowSection>
         )}

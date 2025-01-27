@@ -21,7 +21,7 @@ import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
-import { Padding, Warnings } from 'ui-core/modal'
+import { Padding, Title, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
@@ -98,7 +98,8 @@ export const LeavePool = ({
 
   return (
     <>
-      <Padding horizontalOnly>
+      <Padding>
+        <Title>{t('leavePool')}</Title>
         {warnings.length > 0 ? (
           <Warnings>
             {warnings.map((text, i) => (

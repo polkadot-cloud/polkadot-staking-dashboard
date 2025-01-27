@@ -3,10 +3,8 @@
 
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { Warning } from 'library/Form/Warning'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import type { ForwardedRef } from 'react'
@@ -19,13 +17,8 @@ import type { TasksProps } from './types'
 export const Tasks = forwardRef(
   ({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {
     const { t } = useTranslation('modals')
-    const { activeAccount } = useActiveAccounts()
-    const { getTransferOptions } = useTransferOptions()
     const { globalMaxCommission } = useApi().poolsConfig
-    const { activePool, isOwner, isBouncer, isMember, isDepositor } =
-      useActivePool()
-
-    const { active } = getTransferOptions(activeAccount).pool
+    const { activePool, isOwner, isBouncer } = useActivePool()
 
     const poolLocked = activePool?.bondedPool?.state === 'Blocked'
     const poolDestroying = activePool?.bondedPool?.state === 'Destroying'
@@ -168,19 +161,6 @@ export const Tasks = forwardRef(
                   </TaskInnerWrapper>
                 </ButtonOption>
               </>
-            )}
-            {isMember() && !isDepositor() && active?.isGreaterThan(0) && (
-              <ButtonOption
-                onClick={() => {
-                  setSection(1)
-                  setTask('leave_pool')
-                }}
-              >
-                <TaskInnerWrapper>
-                  <h3>{t('leavePool')}</h3>
-                  <p>{t('unbondFundsLeavePool')}</p>
-                </TaskInnerWrapper>
-              </ButtonOption>
             )}
           </div>
         </div>
