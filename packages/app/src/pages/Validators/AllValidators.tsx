@@ -15,7 +15,8 @@ import { TotalValidators } from './Stats/TotalValidators'
 export const AllValidators = () => {
   const { t } = useTranslation('pages')
   const { isReady } = useApi()
-  const { validators } = useValidators()
+  const { getValidators } = useValidators()
+  const validators = getValidators()
 
   return (
     <>
@@ -37,7 +38,6 @@ export const AllValidators = () => {
                   <h3>{t('validators.fetchingValidators')}...</h3>
                 </div>
               )}
-
               {validators.length > 0 && (
                 <ValidatorList
                   bondFor="nominator"
@@ -57,7 +57,7 @@ export const AllValidators = () => {
                   allowMoreCols
                   allowFilters
                   allowSearch
-                  pagination
+                  itemsPerPage={30}
                   toggleFavorites
                 />
               )}

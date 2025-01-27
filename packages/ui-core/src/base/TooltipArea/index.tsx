@@ -24,10 +24,7 @@ export const TooltipArea = ({
       className={allClasses}
       data-tooltip-text={text}
       style={style}
-      onMouseMove={() => {
-        console.log('moving')
-        onMouseMove()
-      }}
+      onMouseMove={() => onMouseMove()}
       onClick={() => onClick && onClick()}
     />
   )

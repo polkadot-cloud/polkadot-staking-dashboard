@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson, DisplayFor } from '@w3ux/types'
-import type { ListFormat } from 'library/PoolList/types'
-import type { FormEvent, ReactNode } from 'react'
+import type { ValidatorEraPoints } from 'plugin-staking-api/types'
+import type { FormEvent } from 'react'
 
 export interface PaginationWrapperProps {
   $next: boolean
@@ -34,20 +34,19 @@ export interface SelectableProps {
   displayFor: DisplayFor
 }
 
-export interface ListContextInterface {
-  setSelectActive: (selectedActive: boolean) => void
-  addToSelected: (item: AnyJson) => void
-  removeFromSelected: (items: AnyJson[]) => void
-  resetSelected: () => void
-  setListFormat: (v: ListFormat) => void
-  selected: AnyJson[]
-  selectActive: boolean
-  listFormat: ListFormat
-  selectToggleable: boolean
+export interface EraPointsHistoricalProps {
+  address: string
+  displayFor: DisplayFor
+  eraPoints: ValidatorEraPoints[]
 }
 
-export interface ListProviderProps {
-  selectToggleable?: boolean
-  selectActive?: boolean
-  children: ReactNode
+export interface EraPointsGraphInnerProps {
+  points: number[]
+  syncing: boolean
+  displayFor: DisplayFor
+}
+
+export interface CurrentEraPointsProps {
+  address: string
+  displayFor: DisplayFor
 }

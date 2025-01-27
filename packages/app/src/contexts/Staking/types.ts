@@ -1,8 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NominationStatus } from 'types'
 
 export interface ActiveAccountOwnStake {
   address: string

@@ -4,10 +4,10 @@
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { getIdentityDisplay } from 'library/List/Utils'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import { Identity as Wrapper } from 'ui-core/list'
-import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils'
 import type { IdentityProps } from '../types'
 
 export const Identity = ({ address }: IdentityProps) => {

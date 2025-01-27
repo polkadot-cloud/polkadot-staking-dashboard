@@ -76,6 +76,7 @@
     "enablePermissionlessClaiming": "启用己许可申领",
     "era": "Era",
     "eraPoints": "Era 点数",
+    "eraRewardPoints": "{{points}} Era奖励积分",
     "errorUnknown": "抱歉，页面出现点小问题哦",
     "errorWithTransaction": "交易出错",
     "estimatedFee": "预计费用",

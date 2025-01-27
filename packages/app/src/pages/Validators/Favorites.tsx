@@ -31,7 +31,6 @@ export const ValidatorFavorites = () => {
               selectable={false}
               allowListFormat={false}
               allowFilters
-              refetchOnListUpdate
               allowMoreCols
               toggleFavorites
             />
