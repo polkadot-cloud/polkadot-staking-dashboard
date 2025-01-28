@@ -4,53 +4,56 @@
 import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Warning } from 'library/Form/Warning'
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonOption } from 'ui-buttons'
-import { Identity } from 'ui-identity'
-import { ButtonRowWrapper, ContentWrapper, TaskInnerWrapper } from './Wrappers'
+import { useOverlay } from 'ui-overlay'
+import { ContentWrapper, TaskInnerWrapper } from './Wrappers'
 import type { TasksProps } from './types'
 
 export const Tasks = forwardRef(
   ({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {
     const { t } = useTranslation('modals')
+    const { setModalStatus } = useOverlay().modal
+    const { openCanvas } = useOverlay().canvas
     const { globalMaxCommission } = useApi().poolsConfig
     const { activePool, isOwner, isBouncer } = useActivePool()
 
     const poolLocked = activePool?.bondedPool?.state === 'Blocked'
     const poolDestroying = activePool?.bondedPool?.state === 'Destroying'
 
-    const stash = activePool?.addresses.stash || ''
-    const reward = activePool?.addresses.reward || ''
-
     return (
       <ContentWrapper>
         <div ref={ref}>
-          <div className="items" style={{ paddingBottom: '1rem' }}>
+          <div
+            className="items"
+            style={{ paddingTop: '1.5rem', paddingBottom: '1rem' }}
+          >
             {poolDestroying && (
               <div style={{ marginBottom: '0.75rem' }}>
                 <Warning text={t('beingDestroyed')} />
               </div>
             )}
-
-            <ButtonRowWrapper>
-              <section>
-                <Identity
-                  title={t('poolAddress', { type: 'Stash' })}
-                  address={stash}
-                  Action={<CopyAddress address={stash} />}
-                />
-              </section>
-              <section>
-                <Identity
-                  title={t('poolAddress', { type: 'Reward' })}
-                  address={reward}
-                  Action={<CopyAddress address={reward} />}
-                />
-              </section>
-            </ButtonRowWrapper>
+            <ButtonOption
+              onClick={() => {
+                setModalStatus('closing')
+                openCanvas({
+                  key: 'Pool',
+                  options: {
+                    providedPool: {
+                      id: activePool?.id,
+                    },
+                  },
+                  size: 'xl',
+                })
+              }}
+            >
+              <TaskInnerWrapper>
+                <h3>{t('viewPoolTitle')}</h3>
+                <p>{t('viewPoolSubtitle')}</p>
+              </TaskInnerWrapper>
+            </ButtonOption>
 
             {isOwner() && globalMaxCommission > 0 && (
               <>
