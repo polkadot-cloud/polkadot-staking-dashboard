@@ -23,6 +23,7 @@ export const Header = ({
 }: HeaderProps) => {
   const { t } = useTranslation()
   const { closeCanvas } = useOverlay().canvas
+  const poolCommission = bondedPool?.commission?.current?.[0]
 
   // Randomly select a new pool to display
   const handleChooseNewPool = () => {
@@ -34,8 +35,6 @@ export const Header = ({
       filteredPools[(filteredPools.length * Math.random()) << 0]?.id
     setSelectedPoolId(newCandidate)
   }
-
-  const poolCommission = bondedPool?.commission?.current?.[0]
 
   // Pool state to tag class
   const getTagClass = (state: PoolState) => {
