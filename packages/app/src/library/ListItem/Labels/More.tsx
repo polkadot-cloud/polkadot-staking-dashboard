@@ -10,10 +10,6 @@ export const More = ({ pool, setActiveTab, disabled, outline }: MoreProps) => {
   const { t } = useTranslation('tips')
   const { openCanvas } = useOverlay().canvas
   const { id } = pool
-
-  // Define a unique pool performance data key
-  const performanceKey = `pool_page_standalone_${id}`
-
   return (
     <HeaderButton outline={outline} withText>
       <button
@@ -24,7 +20,6 @@ export const More = ({ pool, setActiveTab, disabled, outline }: MoreProps) => {
             options: {
               providedPool: {
                 id,
-                performanceBatchKey: performanceKey,
               },
               onJoinCallback: () => setActiveTab(0),
             },

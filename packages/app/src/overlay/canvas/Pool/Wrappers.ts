@@ -89,41 +89,6 @@ export const AddressesWrapper = styled.div`
     @media (max-width: 600px) {
       flex-basis: 100%;
     }
-
-    > div {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      > span {
-        margin-right: 0.75rem;
-        font-size: 1rem;
-        padding: 0.5rem;
-      }
-
-      > h4 {
-        color: var(--text-color-secondary);
-        font-family: InterSemiBold, sans-serif;
-        display: flex;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        margin: 0;
-        flex: 1;
-
-        &.heading {
-          font-family: InterBold, sans-serif;
-        }
-
-        > .label {
-          margin-left: 0.75rem;
-
-          > button {
-            color: var(--text-color-tertiary);
-          }
-        }
-      }
-    }
   }
 `
 
