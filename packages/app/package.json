@@ -42,7 +42,7 @@
     "i18next-browser-languagedetector": "^8.0.2",
     "locales": "workspace:*",
     "plugin-staking-api": "workspace:*",
-    "polkadot-api": "^1.8.2",
+    "polkadot-api": "^1.8.4",
     "qrcode-generator": "1.4.4",
     "rc-slider": "^11.1.6",
     "react-chartjs-2": "^5.2.0",
