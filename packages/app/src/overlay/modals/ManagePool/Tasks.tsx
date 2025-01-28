@@ -35,7 +35,6 @@ export const Tasks = forwardRef(
                 <Warning text={t('beingDestroyed')} />
               </div>
             )}
-
             <ButtonOption
               onClick={() => {
                 setModalStatus('closing')
