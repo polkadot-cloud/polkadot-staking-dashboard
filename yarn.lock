@@ -1632,6 +1632,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-api/metadata-builders@npm:0.10.1":
+  version: 0.10.1
+  resolution: "@polkadot-api/metadata-builders@npm:0.10.1"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:0.11.0"
+    "@polkadot-api/utils": "npm:0.1.2"
+  checksum: 10c0/4faa8d09087a514977dfa5a3ee795fa3a6f4ccd1bdb6383193c3e421a3b6facf40993a90357f28cf1a32ee559914d34272d55b4650a6236fce433112a86a779c
+  languageName: node
+  linkType: hard
+
 "@polkadot-api/metadata-builders@npm:0.3.2":
   version: 0.3.2
   resolution: "@polkadot-api/metadata-builders@npm:0.3.2"
@@ -1722,7 +1732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/signers-common@npm:0.1.4, @polkadot-api/signers-common@npm:^0.1.4":
+"@polkadot-api/signers-common@npm:0.1.4":
   version: 0.1.4
   resolution: "@polkadot-api/signers-common@npm:0.1.4"
   dependencies:
@@ -1731,6 +1741,18 @@ __metadata:
     "@polkadot-api/substrate-bindings": "npm:0.11.0"
     "@polkadot-api/utils": "npm:0.1.2"
   checksum: 10c0/f3406ec0e8166181de9c0bc99af3302fa96d1d309ac6c0a8f6ee59c4db1ff397443b7610a02c6d9c08a0db6256ae9b31299f88e8685ddef67b02b7b1ecd31d6c
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/signers-common@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@polkadot-api/signers-common@npm:0.1.5"
+  dependencies:
+    "@polkadot-api/metadata-builders": "npm:0.10.1"
+    "@polkadot-api/polkadot-signer": "npm:0.1.6"
+    "@polkadot-api/substrate-bindings": "npm:0.11.0"
+    "@polkadot-api/utils": "npm:0.1.2"
+  checksum: 10c0/db57a01df88b9b3fecbc30bc029f400a3b5908465490c308c7acda7b7acd02a19e32328b0475730476d4edab7bc1333b204b6cca5bc14223614ce26a30bd557e
   languageName: node
   linkType: hard
 
@@ -4330,7 +4352,7 @@ __metadata:
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
     "@lottiefiles/dotlottie-react": "npm:^0.12.1"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
-    "@polkadot-api/signers-common": "npm:^0.1.4"
+    "@polkadot-api/signers-common": "npm:^0.1.5"
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"
     "@polkadot/util": "npm:^13.3.1"
     "@polkawatch/ddp-client": "npm:^2.0.20"
