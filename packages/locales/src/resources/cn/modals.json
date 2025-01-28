@@ -284,6 +284,8 @@
     "validatorMetrics": "验证人指标",
     "vaultAccounts": "{{count}} 个帐户己被导入",
     "vaultAccounts_zero": "无帐户导入",
+    "viewPoolSubtitle": "查看池性能和其他指标.",
+    "viewPoolTitle": "查看池指标",
     "waitingForQRCode": "请扫描二维码",
     "web": "网络",
     "willSurpass": "添加过多收藏夹将超{{maxNominations}}提名数",

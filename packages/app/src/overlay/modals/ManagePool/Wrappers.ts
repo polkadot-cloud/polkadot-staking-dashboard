@@ -117,32 +117,6 @@ export const SliderWrapper = styled.div`
   }
 `
 
-export const ButtonRowWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  margin: 0.5rem 0 1.25rem 0;
-
-  > section {
-    width: 50%;
-    flex-grow: 0;
-
-    &:first-child {
-      padding-right: 0.25rem;
-    }
-    &:last-child {
-      padding-left: 0.25rem;
-    }
-    @media (max-width: 800px) {
-      border-bottom: 1px solid var(--border-primary-color);
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.75rem;
-      padding: 0;
-      width: 100%;
-    }
-  }
-`
-
 export const TaskInnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
