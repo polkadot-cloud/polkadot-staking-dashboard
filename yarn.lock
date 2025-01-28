@@ -4358,7 +4358,6 @@ __metadata:
     "@w3ux/factories": "npm:^1.0.0"
     "@w3ux/react-connect-kit": "npm:^2.1.1"
     "@w3ux/react-odometer": "npm:^1.1.0"
-    "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
     "@w3ux/validator-assets": "npm:^0.3.1"
     "@zondax/ledger-substrate": "npm:^1.0.1"
     assets: "workspace:*"
@@ -4385,6 +4384,7 @@ __metadata:
     types: "workspace:*"
     ui-buttons: "workspace:*"
     ui-core: "workspace:*"
+    ui-identity: "workspace:*"
     ui-overlay: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
@@ -4401,6 +4401,7 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": "*"
     "@fortawesome/free-solid-svg-icons": "*"
     "@tanstack/react-query": "*"
+    "@w3ux/react-polkicon": "*"
     eslint: "*"
     react: "*"
     vite: "*"
@@ -8843,6 +8844,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.22.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/hooks": "npm:^1.4.0"
+    "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
     "@w3ux/types": "npm:^1.0.0"
     "@w3ux/utils": "npm:^1.2.0"
     bignumber.js: "npm:^9.1.2"
@@ -10943,6 +10945,17 @@ __metadata:
   peerDependencies:
     "@fortawesome/fontawesome-svg-core": "*"
     "@fortawesome/free-solid-svg-icons": "*"
+    react: "*"
+  languageName: unknown
+  linkType: soft
+
+"ui-identity@workspace:*, ui-identity@workspace:packages/ui-identity":
+  version: 0.0.0-use.local
+  resolution: "ui-identity@workspace:packages/ui-identity"
+  dependencies:
+    ui-core: "workspace:*"
+  peerDependencies:
+    "@w3ux/react-polkicon": "*"
     react: "*"
   languageName: unknown
   linkType: soft

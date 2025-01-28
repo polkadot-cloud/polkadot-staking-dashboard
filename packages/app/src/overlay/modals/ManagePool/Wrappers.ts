@@ -133,28 +133,6 @@ export const ButtonRowWrapper = styled.div`
     &:last-child {
       padding-left: 0.25rem;
     }
-
-    > .inner {
-      padding: 0.5rem;
-      display: flex;
-      align-items: center;
-
-      > .icon {
-        margin-right: 0.75rem;
-        font-size: 3rem;
-      }
-
-      > div > h3 {
-        display: flex;
-        align-items: center;
-
-        button {
-          color: var(--text-color-primary);
-          margin-left: 0.75rem;
-        }
-      }
-    }
-
     @media (max-width: 800px) {
       border-bottom: 1px solid var(--border-primary-color);
       padding-bottom: 0.5rem;

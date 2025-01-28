@@ -1,8 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn } from '@w3ux/utils'
 import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Warning } from 'library/Form/Warning'
@@ -11,6 +9,7 @@ import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonOption } from 'ui-buttons'
+import { Identity } from 'ui-identity'
 import { ButtonRowWrapper, ContentWrapper, TaskInnerWrapper } from './Wrappers'
 import type { TasksProps } from './types'
 
@@ -38,32 +37,18 @@ export const Tasks = forwardRef(
 
             <ButtonRowWrapper>
               <section>
-                <div className="inner">
-                  <span className="icon">
-                    <Polkicon address={stash} />
-                  </span>
-                  <div>
-                    <h3>
-                      {t('poolAddress', { type: 'Stash' })}{' '}
-                      <CopyAddress address={stash} />
-                    </h3>
-                    <h4>{ellipsisFn(stash, 5)}</h4>
-                  </div>
-                </div>
+                <Identity
+                  title={t('poolAddress', { type: 'Stash' })}
+                  address={stash}
+                  Action={<CopyAddress address={stash} />}
+                />
               </section>
               <section>
-                <div className="inner">
-                  <span className="icon">
-                    <Polkicon address={reward} />
-                  </span>
-                  <div>
-                    <h3>
-                      {t('poolAddress', { type: 'Reward' })}{' '}
-                      <CopyAddress address={reward} />
-                    </h3>
-                    <h4>{ellipsisFn(reward, 5)}</h4>
-                  </div>
-                </div>
+                <Identity
+                  title={t('poolAddress', { type: 'Reward' })}
+                  address={reward}
+                  Action={<CopyAddress address={reward} />}
+                />
               </section>
             </ButtonRowWrapper>
 
