@@ -12,7 +12,7 @@ export const Identity = ({
   style,
 }: IdentityProps) => (
   <div className={classes.identity} style={style}>
-    <span className="icon">{Icon}</span>
+    <span>{Icon}</span>
     <div>
       <h3>{label}</h3>
       <h4>

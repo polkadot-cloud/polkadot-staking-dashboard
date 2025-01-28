@@ -7,4 +7,5 @@ export interface IdentityProps {
   title: string
   address: string
   Action: React.ReactNode
+  iconSize?: string | number
 }

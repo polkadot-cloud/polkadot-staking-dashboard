@@ -6,8 +6,13 @@ import { ellipsisFn } from '@w3ux/utils'
 import { Identity as IdentityBase } from 'ui-core/base'
 import type { IdentityProps } from './types'
 
-export const Identity = ({ title, address, Action }: IdentityProps) => {
-  const Icon = <Polkicon address={address} />
+export const Identity = ({
+  title,
+  address,
+  Action,
+  iconSize,
+}: IdentityProps) => {
+  const Icon = <Polkicon address={address} fontSize={iconSize} />
   return (
     <IdentityBase
       Icon={Icon}

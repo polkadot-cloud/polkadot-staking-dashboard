@@ -183,7 +183,6 @@ export const ValidatorMetrics = () => {
               </>
             )}
           </GraphInner>
-
           <Subheading style={{ marginTop: '2rem' }}>
             <h3>
               {t('rewardHistory', { ns: 'library' })}
