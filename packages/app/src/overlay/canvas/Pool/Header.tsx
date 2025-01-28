@@ -35,6 +35,8 @@ export const Header = ({
     setSelectedPoolId(newCandidate)
   }
 
+  const poolCommission = bondedPool?.commission?.current?.[0]
+
   // Pool state to tag class
   const getTagClass = (state: PoolState) => {
     switch (state) {
@@ -92,6 +94,13 @@ export const Header = ({
                   </span>
                 )}
               </h3>
+              {poolCommission && (
+                <h3>
+                  <span>
+                    {poolCommission}% {t('commission', { ns: 'modals' })}
+                  </span>
+                </h3>
+              )}
               {autoSelected && (
                 <h3>
                   <span>{t('autoSelected', { ns: 'library' })}</span>
