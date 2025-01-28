@@ -14,11 +14,11 @@ export const Identity = ({
   <div className={classes.identity} style={style}>
     <span className="icon">{Icon}</span>
     <div>
-      <h3>
-        {label}
+      <h3>{label}</h3>
+      <h4>
+        {subheading}
         {Action}
-      </h3>
-      <h4>{subheading}</h4>
+      </h4>
     </div>
   </div>
 )

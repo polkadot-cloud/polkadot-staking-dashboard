@@ -40,14 +40,14 @@ export const Tasks = forwardRef(
                 <Identity
                   title={t('poolAddress', { type: 'Stash' })}
                   address={stash}
-                  Action={<CopyAddress address={stash} />}
+                  Action={<CopyAddress address={stash} outline />}
                 />
               </section>
               <section>
                 <Identity
                   title={t('poolAddress', { type: 'Reward' })}
                   address={reward}
-                  Action={<CopyAddress address={reward} />}
+                  Action={<CopyAddress address={reward} outline />}
                 />
               </section>
             </ButtonRowWrapper>
