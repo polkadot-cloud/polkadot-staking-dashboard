@@ -299,6 +299,8 @@
     "vaultAccounts_one": "{{count}} Account Imported",
     "vaultAccounts_other": "{{count}} Accounts Imported",
     "vaultAccounts_zero": "No Accounts Imported",
+    "viewPoolSubtitle": "View pool performance and other metrics.",
+    "viewPoolTitle": "View Pool Metrics",
     "waitingForQRCode": "Waiting for QR Code",
     "web": "Web",
     "willSurpass": "Adding this many favorites will surpass {{maxNominations}} nominations.",

@@ -1,9 +1,8 @@
 {
-  "name": "plugin-staking-api",
-  "version": "1.1.0",
+  "name": "ui-identity",
+  "version": "1.0.0",
   "license": "GPL-3.0-only",
   "type": "module",
-  "main": "src/index.tsx",
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
@@ -13,7 +12,11 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.12.8",
-    "graphql": "^16.10.0"
+    "ui-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "@w3ux/react-polkicon": "*",
+    "@w3ux/utils": "*",
+    "react": "*"
   }
 }

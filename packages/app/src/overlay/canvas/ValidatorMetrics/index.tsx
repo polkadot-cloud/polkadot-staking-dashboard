@@ -1,8 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChartPie } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import BigNumber from 'bignumber.js'
@@ -122,8 +120,9 @@ export const ValidatorMetrics = () => {
             </div>
             <HeadTags>
               <h3>
-                <FontAwesomeIcon icon={faChartPie} transform="shrink-1" />
-                {t('commission', { ns: 'modals' })}: {commission}%
+                <span>
+                  {commission}% {t('commission', { ns: 'modals' })}
+                </span>
               </h3>
             </HeadTags>
           </div>
@@ -184,7 +183,6 @@ export const ValidatorMetrics = () => {
               </>
             )}
           </GraphInner>
-
           <Subheading style={{ marginTop: '2rem' }}>
             <h3>
               {t('rewardHistory', { ns: 'library' })}

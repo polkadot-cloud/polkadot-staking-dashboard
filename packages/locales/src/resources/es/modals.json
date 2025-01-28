@@ -299,6 +299,8 @@
     "vaultAccounts_one": "{{count}} Cuenta Importada",
     "vaultAccounts_other": "{{count}} Cuentas Importadas",
     "vaultAccounts_zero": "Sin Cuentas Importadas",
+    "viewPoolSubtitle": "Vea el rendimiento del grupo y otras métricas.",
+    "viewPoolTitle": "Ver métricas del pool",
     "waitingForQRCode": "Esperando código QR",
     "web": "Web",
     "willSurpass": "Añadir tantos favoritos superará {{maxNominations}} nominaciones.",

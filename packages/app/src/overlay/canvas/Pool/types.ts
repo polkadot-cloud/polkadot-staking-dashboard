@@ -20,12 +20,6 @@ export interface NominationsProps {
   poolId: number
 }
 
-export interface AddressSectionProps {
-  address: string
-  label: string
-  helpKey?: string
-}
-
 export interface OverviewSectionProps {
   bondedPool: BondedPool
 }

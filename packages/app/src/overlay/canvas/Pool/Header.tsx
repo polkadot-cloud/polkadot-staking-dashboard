@@ -23,6 +23,7 @@ export const Header = ({
 }: HeaderProps) => {
   const { t } = useTranslation()
   const { closeCanvas } = useOverlay().canvas
+  const poolCommission = bondedPool?.commission?.current?.[0]
 
   // Randomly select a new pool to display
   const handleChooseNewPool = () => {
@@ -92,6 +93,13 @@ export const Header = ({
                   </span>
                 )}
               </h3>
+              {poolCommission && (
+                <h3>
+                  <span>
+                    {poolCommission}% {t('commission', { ns: 'modals' })}
+                  </span>
+                </h3>
+              )}
               {autoSelected && (
                 <h3>
                   <span>{t('autoSelected', { ns: 'library' })}</span>
