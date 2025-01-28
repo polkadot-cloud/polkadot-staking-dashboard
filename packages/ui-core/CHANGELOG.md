@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.1.0...ui-core-v1.2.0) (2025-01-28)
+
+
+### Features
+
+* Abstract identity components, use in canvases, easier pool metrics access ([#2479](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2479)) ([3dd021b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3dd021be779485875b0976cca70ec36bd293b370))
+* Add pool commission label to `Pool` canvas ([#2478](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2478)) ([9bd440a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9bd440ad45a5a47f2eda2e522a3b0e510ac4410f))
+* Easier access to validator metrics ([#2450](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2450)) ([12379a5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/12379a5f041d742b67a70672fa093379ee8cf397))
+* Enhance graphs, add validator rewards, pool reward history graphs ([#2462](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2462)) ([ccda2cb](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ccda2cbaeac8075e8a6650410538f9f0ae9885d5))
+* Pool performance & join candidates from Staking API, fallbacks, UI enhancements ([#2457](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2457)) ([73f198c](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/73f198c7956bfbd1cbb47780bcfac8e10d15d689))
+* **refactor:** List components to `ui-core` ([#2465](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2465)) ([01d5c77](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/01d5c7705a51e8cbcb96fd77ef5f710aaa75d470))
+* **refactor:** Simplify bond buttons, unify "Unstake" term for nominators and pools ([#2467](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2467)) ([90bd894](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/90bd894af33ba276f29d50d054dbad5d550c72b0))
+* Validator performance charts from Staking API ([#2466](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2466)) ([6215f47](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6215f4731505e95bf78ffe826f57918b99e7a6a5))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.0.0...ui-core-v1.1.0) (2025-01-16)
 
 
