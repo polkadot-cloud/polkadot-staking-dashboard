@@ -22,9 +22,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.12.4":
-  version: 3.12.7
-  resolution: "@apollo/client@npm:3.12.7"
+"@apollo/client@npm:^3.12.8":
+  version: 3.12.8
+  resolution: "@apollo/client@npm:3.12.8"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -35,7 +35,6 @@ __metadata:
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
     rehackt: "npm:^0.1.0"
-    response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
     tslib: "npm:^2.3.0"
@@ -55,7 +54,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/396147eafe9099217da534305be7667a44f89fbb7ef7bb342662fd842fffc6de870744546137a8a7065c1bc458f1201070a74fb7ece0f9f63b6c03907de27cc8
+  checksum: 10c0/3af203769fa82892dd5d4870eea2d8d2845b4197118a274779f483df154410601c45bd008afb017f03ef446902ce4ea9c32454e3525abe782286a65979a1f7d0
   languageName: node
   linkType: hard
 
@@ -1632,6 +1631,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-api/metadata-builders@npm:0.10.1":
+  version: 0.10.1
+  resolution: "@polkadot-api/metadata-builders@npm:0.10.1"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:0.11.0"
+    "@polkadot-api/utils": "npm:0.1.2"
+  checksum: 10c0/4faa8d09087a514977dfa5a3ee795fa3a6f4ccd1bdb6383193c3e421a3b6facf40993a90357f28cf1a32ee559914d34272d55b4650a6236fce433112a86a779c
+  languageName: node
+  linkType: hard
+
 "@polkadot-api/metadata-builders@npm:0.3.2":
   version: 0.3.2
   resolution: "@polkadot-api/metadata-builders@npm:0.3.2"
@@ -1722,7 +1731,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/signers-common@npm:0.1.4, @polkadot-api/signers-common@npm:^0.1.4":
+"@polkadot-api/signers-common@npm:0.1.4":
   version: 0.1.4
   resolution: "@polkadot-api/signers-common@npm:0.1.4"
   dependencies:
@@ -1731,6 +1740,18 @@ __metadata:
     "@polkadot-api/substrate-bindings": "npm:0.11.0"
     "@polkadot-api/utils": "npm:0.1.2"
   checksum: 10c0/f3406ec0e8166181de9c0bc99af3302fa96d1d309ac6c0a8f6ee59c4db1ff397443b7610a02c6d9c08a0db6256ae9b31299f88e8685ddef67b02b7b1ecd31d6c
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/signers-common@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@polkadot-api/signers-common@npm:0.1.5"
+  dependencies:
+    "@polkadot-api/metadata-builders": "npm:0.10.1"
+    "@polkadot-api/polkadot-signer": "npm:0.1.6"
+    "@polkadot-api/substrate-bindings": "npm:0.11.0"
+    "@polkadot-api/utils": "npm:0.1.2"
+  checksum: 10c0/db57a01df88b9b3fecbc30bc029f400a3b5908465490c308c7acda7b7acd02a19e32328b0475730476d4edab7bc1333b204b6cca5bc14223614ce26a30bd557e
   languageName: node
   linkType: hard
 
@@ -4330,7 +4351,7 @@ __metadata:
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
     "@lottiefiles/dotlottie-react": "npm:^0.12.1"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
-    "@polkadot-api/signers-common": "npm:^0.1.4"
+    "@polkadot-api/signers-common": "npm:^0.1.5"
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"
     "@polkadot/util": "npm:^13.3.1"
     "@polkawatch/ddp-client": "npm:^2.0.20"
@@ -8762,7 +8783,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "plugin-staking-api@workspace:packages/plugin-staking-api"
   dependencies:
-    "@apollo/client": "npm:^3.12.4"
+    "@apollo/client": "npm:^3.12.8"
     graphql: "npm:^16.10.0"
   languageName: unknown
   linkType: soft
@@ -9278,7 +9299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.8":
+"readable-stream@npm:^2.3.3":
   version: 2.3.8
   resolution: "readable-stream@npm:2.3.8"
   dependencies:
@@ -9476,15 +9497,6 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: 10c0/78ad6edb8309a2bfb720c2c1898f7907a37f858866ce11a5974643af1203a6a6e05b2fa9c53d8064a673a447b83d42569260c306d43628bff5bb101969708355
-  languageName: node
-  linkType: hard
-
-"response-iterator@npm:^0.2.6":
-  version: 0.2.19
-  resolution: "response-iterator@npm:0.2.19"
-  dependencies:
-    readable-stream: "npm:^2.3.8"
-  checksum: 10c0/fee5d23958060f87f74ba11d7d291d4a0e88ea964abed0d3375ac174993666131446c84c20236460cec9fae8173fbed78caa5a6534c717a98ce67255e38fe85e
   languageName: node
   linkType: hard
 

@@ -20,7 +20,7 @@
     "@ledgerhq/hw-transport-webhid": "^6.30.0",
     "@lottiefiles/dotlottie-react": "^0.12.1",
     "@polkadot-api/merkleize-metadata": "^1.1.12",
-    "@polkadot-api/signers-common": "^0.1.4",
+    "@polkadot-api/signers-common": "^0.1.5",
     "@polkadot-api/substrate-bindings": "^0.11.0",
     "@polkadot/util": "^13.3.1",
     "@polkawatch/ddp-client": "^2.0.20",
