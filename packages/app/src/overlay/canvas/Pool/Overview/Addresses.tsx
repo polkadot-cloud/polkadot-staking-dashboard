@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CardWrapper } from 'library/Card/Wrappers'
+import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { useTranslation } from 'react-i18next'
 import { Subheading } from 'ui-core/canvas'
+import { Identity } from 'ui-identity'
 import type { OverviewSectionProps } from '../types'
 import { AddressesWrapper } from '../Wrappers'
-import { AddressSection } from './AddressSection'
 
 export const Addresses = ({
   bondedPool: { addresses },
@@ -19,8 +20,20 @@ export const Addresses = ({
       </Subheading>
 
       <AddressesWrapper>
-        <AddressSection address={addresses.stash} label="Stash" />
-        <AddressSection address={addresses.reward} label="Reward" />
+        <section>
+          <Identity
+            title={'Stash'}
+            address={addresses.stash}
+            Action={<CopyAddress address={addresses.stash} outline />}
+          />
+        </section>
+        <section>
+          <Identity
+            title={'Reward'}
+            address={addresses.reward}
+            Action={<CopyAddress address={addresses.reward} outline />}
+          />
+        </section>
       </AddressesWrapper>
     </CardWrapper>
   )
