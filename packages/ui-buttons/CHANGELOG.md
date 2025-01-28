@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.1.0...ui-buttons-v1.2.0) (2025-01-28)
+
+
+### Features
+
+* Abstract identity components, use in canvases, easier pool metrics access ([#2479](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2479)) ([3dd021b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3dd021be779485875b0976cca70ec36bd293b370))
+* **refactor:** Simplify bond buttons, unify "Unstake" term for nominators and pools ([#2467](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2467)) ([90bd894](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/90bd894af33ba276f29d50d054dbad5d550c72b0))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.0.0...ui-buttons-v1.1.0) (2025-01-16)
 
 

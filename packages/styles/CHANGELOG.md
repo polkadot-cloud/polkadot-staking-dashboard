@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/styles-v1.1.0...styles-v1.2.0) (2025-01-28)
+
+
+### Features
+
+* Enhance graphs, add validator rewards, pool reward history graphs ([#2462](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2462)) ([ccda2cb](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ccda2cbaeac8075e8a6650410538f9f0ae9885d5))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/styles-v1.0.0...styles-v1.1.0) (2025-01-16)
 
 
