@@ -84,6 +84,17 @@ export type CanFastUnstakeResult = Query & {
   }
 }
 
+export type ActiveValidatorRanksResult = Query & {
+  data: {
+    activeValidatorRanks: ActiveValidatorRank[]
+  }
+}
+
+export interface ActiveValidatorRank {
+  validator: string
+  rank: number
+}
+
 export type ValidatorEraPointsResult = Query & {
   data: {
     validatorEraPoints: ValidatorEraPoints[]
