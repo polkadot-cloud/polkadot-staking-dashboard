@@ -15,7 +15,7 @@ export const useValidatorFilters = () => {
     sessionValidators,
     validatorIdentities,
     sessionParaValidators,
-    validatorEraPointsHistory,
+    activeValidatorRanks,
   } = useValidators()
   const { erasPerDay } = useErasPerDay()
 
@@ -169,8 +169,12 @@ export const useValidatorFilters = () => {
    */
   const orderByRank = (list: AnyFilter) =>
     [...list].sort((a, b) => {
-      const aRank = validatorEraPointsHistory[a.address]?.rank || 9999
-      const bRank = validatorEraPointsHistory[b.address]?.rank || 9999
+      const aRank =
+        activeValidatorRanks.find((r) => r.validator === a.address)?.rank ||
+        9999
+      const bRank =
+        activeValidatorRanks.find((r) => r.validator === b.address)?.rank ||
+        9999
       return aRank - bRank
     })
 

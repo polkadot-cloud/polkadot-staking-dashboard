@@ -19,6 +19,8 @@ import { useStaking } from 'contexts/Staking'
 import { Apis } from 'controllers/Apis'
 import { Identities } from 'controllers/Identities'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { fetchActiveValidatorRanks } from 'plugin-staking-api'
+import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { Identity, SuperIdentity } from 'types'
@@ -97,6 +99,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store era reward points, keyed by era
   const [erasRewardPoints, setErasRewardPoints] = useState<ErasRewardPoints>({})
+
+  // Stores active validator ranks
+  const [activeValidatorRanks, setActiveValidatorRanks] = useState<
+    ActiveValidatorRank[]
+  >([])
 
   // Store validator era points history and metrics
   const [validatorEraPointsHistory, setValidatorEraPointsHistory] = useState<
@@ -506,6 +513,30 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAverageEraValidatorReward({ days, reward })
   }
 
+  const getActiveValidatorRanks = async (): Promise<void> => {
+    const result = await fetchActiveValidatorRanks(network)
+    setActiveValidatorRanks(result.activeValidatorRanks)
+  }
+
+  const getValidatorRankSegment = (validator: string): number => {
+    const fallbackSegment = 100
+    const totalValidators = activeValidatorRanks.length
+    if (totalValidators === 0) {
+      return fallbackSegment
+    }
+    // Find the rank of the given validator
+    const validatorEntry = activeValidatorRanks.find(
+      (entry) => entry.validator === validator
+    )
+    if (!validatorEntry) {
+      return fallbackSegment
+    }
+    const rank = validatorEntry.rank
+    const percentile = (rank / totalValidators) * 100
+    const segment = Math.ceil(percentile / 10) * 10
+    return segment
+  }
+
   // Reset validator state data on network change
   useEffectIgnoreInitial(() => {
     setValidators({
@@ -521,6 +552,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setErasRewardPoints({})
     setValidatorEraPointsHistory({})
     setAverageEraValidatorReward(defaultAverageEraValidatorReward)
+  }, [network])
+
+  // Refetch active validator ranks when network changes
+  useEffect(() => {
+    getActiveValidatorRanks()
   }, [network])
 
   // Fetch validators and era reward points when fetched status changes
@@ -577,6 +613,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         averageEraValidatorReward,
         formatWithPrefs,
         getValidatorTotalStake,
+        activeValidatorRanks,
+        getValidatorRankSegment,
       }}
     >
       {children}

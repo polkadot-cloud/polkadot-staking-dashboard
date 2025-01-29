@@ -3,6 +3,7 @@
 
 import type { AnyJson, Sync } from '@w3ux/types'
 import type BigNumber from 'bignumber.js'
+import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { Identity } from 'types'
 
 export interface ValidatorsContextInterface {
@@ -24,6 +25,8 @@ export interface ValidatorsContextInterface {
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]
   getValidatorTotalStake: (address: string) => bigint
+  activeValidatorRanks: ActiveValidatorRank[]
+  getValidatorRankSegment: (address: string) => number
 }
 
 export interface Validators {
