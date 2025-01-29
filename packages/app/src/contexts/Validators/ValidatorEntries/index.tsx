@@ -9,13 +9,16 @@ import { ParaSessionAccounts } from 'api/query/paraSessionAccounts'
 import { SessionValidators } from 'api/query/sessionValidators'
 import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti'
 import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
+import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import BigNumber from 'bignumber.js'
 import type { AnyApi, ChainId, SystemChainId } from 'common-types'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { Apis } from 'controllers/Apis'
 import { Identities } from 'controllers/Identities'
+import { Subscriptions } from 'controllers/Subscriptions'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
@@ -53,6 +56,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     networkMetrics: { earliestStoredSession },
   } = useApi()
   const { activeEra } = useApi()
+  const { pluginEnabled } = usePlugins()
   const { stakers } = useStaking().eraStakers
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
 
@@ -349,23 +353,57 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setActiveValidatorRanks(result.activeValidatorRanks)
   }
 
+  const getValidatorRank = (validator: string): number | undefined => {
+    if (pluginEnabled('staking_api')) {
+      return activeValidatorRanks.find((r) => r.validator === validator)?.rank
+    } else {
+      const sub = Subscriptions.get(
+        network,
+        'erasRewardPoints'
+      ) as ErasRewardPoints
+      if (!sub) {
+        return undefined
+      }
+      const rank = sub.getRank(validator)
+      if (!rank) {
+        return undefined
+      }
+      return rank
+    }
+  }
+
   const getValidatorRankSegment = (validator: string): number => {
     const fallbackSegment = 100
-    const totalValidators = activeValidatorRanks.length
-    if (totalValidators === 0) {
-      return fallbackSegment
+    if (pluginEnabled('staking_api')) {
+      const totalValidators = activeValidatorRanks.length
+      if (totalValidators === 0) {
+        return fallbackSegment
+      }
+      // Find the rank of the given validator
+      const rank = getValidatorRank(validator)
+      if (!rank) {
+        return fallbackSegment
+      }
+      const percentile = (rank / totalValidators) * 100
+      const segment = Math.ceil(percentile / 10) * 10
+      return segment
+    } else {
+      const sub = Subscriptions.get(
+        network,
+        'erasRewardPoints'
+      ) as ErasRewardPoints
+
+      if (!sub) {
+        return fallbackSegment
+      }
+      const rank = sub.getRank(validator)
+      if (!rank) {
+        return fallbackSegment
+      }
+      const percentile = (rank / sub.ranks.length) * 100
+      const segment = Math.ceil(percentile / 10) * 10
+      return segment
     }
-    // Find the rank of the given validator
-    const validatorEntry = activeValidatorRanks.find(
-      (entry) => entry.validator === validator
-    )
-    if (!validatorEntry) {
-      return fallbackSegment
-    }
-    const rank = validatorEntry.rank
-    const percentile = (rank / totalValidators) * 100
-    const segment = Math.ceil(percentile / 10) * 10
-    return segment
   }
 
   // Reset validator state data on network change
@@ -384,8 +422,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Refetch active validator ranks when network changes
   useEffect(() => {
-    getActiveValidatorRanks()
-  }, [network])
+    if (pluginEnabled('staking_api')) {
+      getActiveValidatorRanks()
+    }
+  }, [network, pluginEnabled('staking_api')])
 
   // Fetch validators and era reward points when fetched status changes
   useEffect(() => {
@@ -427,7 +467,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         averageEraValidatorReward,
         formatWithPrefs,
         getValidatorTotalStake,
-        activeValidatorRanks,
+        getValidatorRank,
         getValidatorRankSegment,
       }}
     >

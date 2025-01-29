@@ -156,6 +156,7 @@
     "payoutAccount": "Cuenta de Pago",
     "payoutAddress": "Dirección de Pago",
     "pending": "Pendiente",
+    "performance": "Rendimiento",
     "permissioned": "Con permiso",
     "permissionedSubtitle": "Solo tú puedes reclamar recompensas.",
     "permissionlessClaimingTurnedOff": "La reclamación sin permisos está desactivada.",

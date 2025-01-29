@@ -153,6 +153,7 @@
     "payoutAccount": "收益到账账户",
     "payoutAddress": "收益到账地址",
     "pending": "待定中",
+    "performance": "表现",
     "permissioned": "已获许可",
     "permissionedSubtitle": "仅本人可申领奖励",
     "permissionlessClaimingTurnedOff": "己许可申领己关闭",

@@ -23,7 +23,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   averageEraValidatorReward: defaultAverageEraValidatorReward,
   formatWithPrefs: (addresses) => [],
   getValidatorTotalStake: (address) => 0n,
-  activeValidatorRanks: [],
+  getValidatorRank: (address) => 0,
   getValidatorRankSegment: (address) => 0,
 }
 
