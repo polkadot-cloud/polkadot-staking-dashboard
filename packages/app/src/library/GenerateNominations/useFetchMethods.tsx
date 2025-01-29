@@ -11,7 +11,7 @@ import type { AddNominationsType } from './types'
 export const useFetchMehods = () => {
   const { favoritesList } = useFavoriteValidators()
   const { applyFilter, applyOrder } = useValidatorFilters()
-  const { getValidators, validatorEraPointsHistory } = useValidators()
+  const { getValidators, getValidatorRankSegment } = useValidators()
 
   const fetch = (method: string) => {
     let nominations
@@ -80,7 +80,7 @@ export const useFetchMehods = () => {
 
     // keep validators that are in upper 75% performance quartile.
     filtered = filtered.filter((a: Validator) => {
-      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100
+      const quartile = getValidatorRankSegment(a.address)
       return quartile <= 75
     })
 
@@ -116,7 +116,7 @@ export const useFetchMehods = () => {
 
     // keep validators that are in upper 50% performance quartile.
     active = active.filter((a: Validator) => {
-      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100
+      const quartile = getValidatorRankSegment(a.address)
       return quartile <= 50
     })
 
@@ -159,7 +159,7 @@ export const useFetchMehods = () => {
       ) || []
 
     const highPerformance = active.filter((a: Validator) => {
-      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100
+      const quartile = getValidatorRankSegment(a.address)
       return quartile <= 50
     })
 
