@@ -43,6 +43,13 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version
       if (localAppVersion !== version) {
+        // Added in 1.9.0
+        //
+        // Remove local historical era point data
+        localStorage.removeItem('polkadot_era_reward_points')
+        localStorage.removeItem('kusama_era_reward_points')
+        localStorage.removeItem('westend_era_reward_points')
+
         // Added in 1.8.0
         //
         // Reset local plugins data.
