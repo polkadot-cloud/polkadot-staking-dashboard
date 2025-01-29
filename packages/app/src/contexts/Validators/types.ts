@@ -7,10 +7,6 @@ import type { Identity } from 'types'
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>
-  getValidatorPointsFromEras: (
-    startEra: BigNumber,
-    address: string
-  ) => Record<string, BigNumber>
   injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[]
   getValidators: () => Validator[]
   validatorIdentities: Record<string, Identity>
@@ -18,12 +14,12 @@ export interface ValidatorsContextInterface {
   avgCommission: number
   sessionValidators: string[]
   sessionParaValidators: string[]
-  erasRewardPoints: ErasRewardPoints
   validatorsFetched: Sync
-  validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]
   getValidatorTotalStake: (address: string) => bigint
+  getValidatorRank: (address: string) => number | undefined
+  getValidatorRankSegment: (address: string) => number
 }
 
 export interface Validators {
@@ -65,28 +61,6 @@ export interface LocalValidatorEntriesData {
   entries: Validator[]
 }
 
-export type ErasRewardPoints = Record<string, EraRewardPoints>
-
-export interface EraRewardPoints {
-  total: string
-  individual: Record<string, string>
-}
-
 export type ValidatorListEntry = Validator & {
   validatorStatus: ValidatorStatus
-}
-
-export interface ValidatorEraPointHistory {
-  eras: Record<string, BigNumber>
-  totalPoints: BigNumber
-  rank?: number
-  quartile?: number
-}
-
-export interface LocalValidatorExposure {
-  staked: string
-  total: string
-  share: string
-  isValidator: boolean
-  exposedPage: number
 }

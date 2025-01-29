@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson, Sync } from '@w3ux/types'
+import type { AnyJson } from '@w3ux/types'
 import type BigNumber from 'bignumber.js'
 import type { MaybeAddress } from './accounts'
 import type { Identity, SuperIdentity } from './identity'
@@ -110,23 +110,6 @@ export interface ActivePoolItem {
 export type AccountActivePools = Record<string, ActivePool | null>
 
 export type AccountPoolNominations = Record<string, Nominations>
-
-// Pool performance:
-
-// Fetching status for keys.
-export type PoolPerformanceTasks = Record<
-  PoolRewardPointsKey,
-  PoolPerformanceTaskStatus
->
-
-// Performance fetching status.
-export interface PoolPerformanceTaskStatus {
-  status: Sync
-  addresses: string[]
-  startEra: BigNumber
-  currentEra: BigNumber
-  endEra: BigNumber
-}
 
 /*
  * Batch Key -> Pool Address -> Era -> Points.

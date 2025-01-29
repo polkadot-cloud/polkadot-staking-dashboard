@@ -10,9 +10,9 @@ import { Label } from 'ui-core/list'
 export const Quartile = ({ address }: { address: string }) => {
   const { t } = useTranslation()
   const { setTooltipTextAndOpen } = useTooltip()
-  const { validatorEraPointsHistory } = useValidators()
+  const { getValidatorRankSegment } = useValidators()
 
-  const quartile = validatorEraPointsHistory[address]?.quartile
+  const quartile = getValidatorRankSegment(address)
   const tooltipText = `${t('dayPerformanceStanding', {
     count: 30,
     ns: 'library',
