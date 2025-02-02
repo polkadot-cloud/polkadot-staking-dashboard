@@ -9,6 +9,7 @@ import type { IdentityProps } from './types'
 export const Identity = ({
   title,
   address,
+  identity,
   Action,
   iconSize,
 }: IdentityProps) => {
@@ -17,8 +18,7 @@ export const Identity = ({
     <IdentityBase
       Icon={Icon}
       label={title}
-      address={address}
-      subheading={ellipsisFn(address, 5)}
+      value={identity || ellipsisFn(address, 8)}
       Action={Action}
     />
   )

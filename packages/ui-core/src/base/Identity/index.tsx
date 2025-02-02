@@ -8,7 +8,7 @@ export const Identity = ({
   Icon,
   Action,
   label,
-  subheading,
+  value,
   style,
 }: IdentityProps) => (
   <div className={classes.identity} style={style}>
@@ -16,7 +16,7 @@ export const Identity = ({
     <div>
       <h3>{label}</h3>
       <h4>
-        {subheading}
+        {value}
         {Action}
       </h4>
     </div>
