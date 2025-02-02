@@ -1,9 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ChainId, SystemChainId } from 'common-types'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { Apis } from 'controllers/Apis'
+import { Identities } from 'controllers/Identities'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
 import type { BondedPool } from 'types'
@@ -13,6 +16,7 @@ import { Header } from './Header'
 import { Nominations } from './Nominations'
 import { Overview } from './Overview'
 import { Preloader } from './Preloader'
+import type { RoleIdentities } from './types'
 
 export const Pool = () => {
   const {
@@ -34,6 +38,12 @@ export const Pool = () => {
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0)
+
+  // Store any identity data for pool roles
+  const [roleIdentities, setRoleIdentities] = useState<RoleIdentities>({
+    identities: {},
+    supers: {},
+  })
 
   // Gets pool candidates for joining pool. If Staking API is disabled, fall back to subset of open
   // pools
@@ -92,6 +102,27 @@ export const Pool = () => {
     }
   }, [])
 
+  const peopleApiId: ChainId = `people-${network}`
+  // Fetch pool role identities when bonded pool changes
+  const handleRoleIdentities = async (addresses: string[]) => {
+    const { identities, supers } = await Identities.fetch(peopleApiId, [
+      ...addresses,
+    ])
+    setRoleIdentities({ identities, supers })
+  }
+
+  useEffect(() => {
+    if (bondedPool) {
+      const peopleApiClient = Apis.getClient(
+        `people-${network}` as SystemChainId
+      )
+      if (peopleApiClient) {
+        const addresses = new Set(Object.values(bondedPool.roles))
+        handleRoleIdentities([...addresses])
+      }
+    }
+  }, [bondedPool])
+
   return (
     <Main>
       {(!providedPoolId && !performanceDataReady) || !bondedPool ? (
@@ -108,7 +139,9 @@ export const Pool = () => {
             poolCandidates={shuffledCandidates}
             providedPoolId={providedPoolId}
           />
-          {activeTab === 0 && <Overview bondedPool={bondedPool} />}
+          {activeTab === 0 && (
+            <Overview bondedPool={bondedPool} roleIdentities={roleIdentities} />
+          )}
           {activeTab === 1 && (
             <Nominations
               poolId={bondedPool.id}
