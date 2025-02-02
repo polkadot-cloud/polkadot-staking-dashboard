@@ -11,19 +11,17 @@ export const getIdentityDisplay = (
 ) => {
   let displayFinal = ''
   let foundSuper = false
-
-  // check super identity exists, get display.Raw if it does
+  // Check super identity exists, get display.Raw if it does
   const superIdentity = _superIdentity?.identity ?? null
   const superRaw = _superIdentity?.superOf?.[1]?.Raw ?? null
-
   const superDisplay = superIdentity?.info?.display?.value?.asText() ?? null
 
-  // check if super raw has been encoded
+  // Check if super raw has been encoded
   const superRawAsBytes = u8aToString(u8aUnwrapBytes(superRaw))
-
-  // check if super identity has been byte encoded
+  // Check if super identity has been byte encoded
   const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(superDisplay))
 
+  // Determine final display value if super was found
   if (superIdentityAsBytes !== '') {
     displayFinal = superIdentityAsBytes
     foundSuper = true
@@ -32,13 +30,13 @@ export const getIdentityDisplay = (
     foundSuper = true
   }
 
+  // Determine final display value if super was not found
   if (!foundSuper) {
-    // cehck sub identity exists, get display.Raw if it does
+    // Check sub-identity exists, get display.Raw if it does
     const identity = _identity?.info?.display?.value?.asText() ?? null
-
-    // check if identity has been byte encoded
+    // Check if identity has been byte encoded
     const subIdentityAsBytes = u8aToString(u8aUnwrapBytes(identity))
-
+    // Add sub-identity to final display value if it exists
     if (subIdentityAsBytes !== '') {
       displayFinal = subIdentityAsBytes
     } else if (identity !== null) {
