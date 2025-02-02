@@ -16,11 +16,13 @@ export const Identity = ({ address }: IdentityProps) => {
 
   const [display, setDisplay] = useState<ReactNode>(
     getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
+      .node
   )
 
   useEffect(() => {
     setDisplay(
       getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
+        .node
     )
   }, [validatorSupers, validatorIdentities, address])
 

@@ -50,10 +50,12 @@ export const Item = ({
               {displayFor !== 'canvas' && (
                 <Metrics
                   address={address}
-                  display={getIdentityDisplay(
-                    validatorIdentities[address],
-                    validatorSupers[address]
-                  )}
+                  display={
+                    getIdentityDisplay(
+                      validatorIdentities[address],
+                      validatorSupers[address]
+                    ).node
+                  }
                   outline={outline}
                 />
               )}

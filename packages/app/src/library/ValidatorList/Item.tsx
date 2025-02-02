@@ -54,7 +54,7 @@ export const Item = ({
   const identity = getIdentityDisplay(
     validatorIdentities[address],
     validatorSupers[address]
-  )
+  ).node
 
   // Configure menu.
   const menuItems: AnyJson[] = []
@@ -105,10 +105,12 @@ export const Item = ({
               {displayFor === 'default' && (
                 <Metrics
                   address={address}
-                  display={getIdentityDisplay(
-                    validatorIdentities[address],
-                    validatorSupers[address]
-                  )}
+                  display={
+                    getIdentityDisplay(
+                      validatorIdentities[address],
+                      validatorSupers[address]
+                    ).node
+                  }
                 />
               )}
             </HeaderButtonRow>
