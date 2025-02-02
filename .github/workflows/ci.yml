@@ -40,6 +40,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
+        cache: 'yarn'
       - run: yarn build
         working-directory: packages/app
       - run: yarn lint
@@ -53,6 +54,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
+          cache: 'yarn'
       - run: yarn install
       - run: yarn run validate
         working-directory: packages/locales
