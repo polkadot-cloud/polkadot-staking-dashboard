@@ -22,7 +22,7 @@ export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
   const synced = roleIdentities !== undefined
 
   const display = address
-    ? getIdentityDisplay(identities[address], supers[address])
+    ? getIdentityDisplay(identities[address], supers[address]).node
     : null
 
   let notification: NotificationText | null = null

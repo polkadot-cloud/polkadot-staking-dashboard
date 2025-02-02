@@ -3,7 +3,7 @@
 
 import type { AnyJson, DisplayFor } from '@w3ux/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
-import type { FormEvent } from 'react'
+import type { FormEvent, ReactNode } from 'react'
 
 export interface PaginationWrapperProps {
   $next: boolean
@@ -49,4 +49,9 @@ export interface EraPointsGraphInnerProps {
 export interface CurrentEraPointsProps {
   address: string
   displayFor: DisplayFor
+}
+
+export interface IdentityDisplay {
+  node: ReactNode
+  data: Record<string, string> | null
 }

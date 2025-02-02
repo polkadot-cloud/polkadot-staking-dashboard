@@ -4,26 +4,25 @@
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
+import type { IdentityDisplay } from './types'
 
 export const getIdentityDisplay = (
   _identity: AnyJson,
   _superIdentity: AnyJson
-) => {
+): IdentityDisplay => {
   let displayFinal = ''
   let foundSuper = false
-
-  // check super identity exists, get display.Raw if it does
+  // Check super identity exists, get display.Raw if it does
   const superIdentity = _superIdentity?.identity ?? null
   const superRaw = _superIdentity?.superOf?.[1]?.Raw ?? null
-
   const superDisplay = superIdentity?.info?.display?.value?.asText() ?? null
 
-  // check if super raw has been encoded
+  // Check if super raw has been encoded
   const superRawAsBytes = u8aToString(u8aUnwrapBytes(superRaw))
-
-  // check if super identity has been byte encoded
+  // Check if super identity has been byte encoded
   const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(superDisplay))
 
+  // Determine final display value if super was found
   if (superIdentityAsBytes !== '') {
     displayFinal = superIdentityAsBytes
     foundSuper = true
@@ -32,13 +31,13 @@ export const getIdentityDisplay = (
     foundSuper = true
   }
 
+  // Determine final display value if super was not found
   if (!foundSuper) {
-    // cehck sub identity exists, get display.Raw if it does
+    // Check sub-identity exists, get display.Raw if it does
     const identity = _identity?.info?.display?.value?.asText() ?? null
-
-    // check if identity has been byte encoded
+    // Check if identity has been byte encoded
     const subIdentityAsBytes = u8aToString(u8aUnwrapBytes(identity))
-
+    // Add sub-identity to final display value if it exists
     if (subIdentityAsBytes !== '') {
       displayFinal = subIdentityAsBytes
     } else if (identity !== null) {
@@ -46,19 +45,27 @@ export const getIdentityDisplay = (
     }
   }
   if (displayFinal === '') {
-    return null
+    return { node: null, data: null }
   }
 
-  return (
-    <>
-      {displayFinal}
-      {superRawAsBytes !== '' ? (
-        <span>/ {superRawAsBytes}</span>
-      ) : superRaw !== null ? (
-        <span>/ {superRaw}</span>
-      ) : null}
-    </>
-  )
+  const data = {
+    display: displayFinal,
+    super:
+      superIdentityAsBytes !== ''
+        ? superRawAsBytes
+        : superRaw !== null
+          ? superRaw
+          : null,
+  }
+  return {
+    node: (
+      <>
+        {data.display}
+        {data.super ? <span>/ {data.super}</span> : null}
+      </>
+    ),
+    data,
+  }
 }
 
 // Normalise era points between 0 and 1 relative to the highest recorded value.
