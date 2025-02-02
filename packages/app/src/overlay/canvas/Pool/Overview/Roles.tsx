@@ -20,12 +20,26 @@ export const Roles = ({
   const { openHelp } = useHelp()
   const iconSize = '3rem'
 
-  // TODO: Get correctly formatted role identity data
+  // Get formatted role identity data
   const rootIdentity = getIdentityDisplay(
     identities[bondedPool?.roles?.root || ''],
     supers[bondedPool?.roles?.root || '']
-  )
-  console.log(rootIdentity)
+  )?.data?.display
+
+  const nominatorIdentity = getIdentityDisplay(
+    identities[bondedPool?.roles?.nominator || ''],
+    supers[bondedPool?.roles?.nominator || '']
+  )?.data?.display
+
+  const bouncerIdentity = getIdentityDisplay(
+    identities[bondedPool?.roles?.bouncer || ''],
+    supers[bondedPool?.roles?.bouncer || '']
+  )?.data?.display
+
+  const depositorIdentity = getIdentityDisplay(
+    identities[bondedPool?.roles?.depositor || ''],
+    supers[bondedPool?.roles?.depositor || '']
+  )?.data?.display
 
   return (
     <div>
@@ -42,6 +56,7 @@ export const Roles = ({
               <Identity
                 title={t('pools.root')}
                 address={bondedPool.roles.root}
+                identity={rootIdentity}
                 Action={<CopyAddress address={bondedPool.roles.root} outline />}
                 iconSize={iconSize}
               />
@@ -52,6 +67,7 @@ export const Roles = ({
               <Identity
                 title={t('pools.nominator')}
                 address={bondedPool.roles.nominator}
+                identity={nominatorIdentity}
                 Action={
                   <CopyAddress address={bondedPool.roles.nominator} outline />
                 }
@@ -64,6 +80,7 @@ export const Roles = ({
               <Identity
                 title={t('pools.bouncer')}
                 address={bondedPool.roles.bouncer}
+                identity={bouncerIdentity}
                 Action={
                   <CopyAddress address={bondedPool.roles.bouncer} outline />
                 }
@@ -76,6 +93,7 @@ export const Roles = ({
               <Identity
                 title={t('pools.depositor')}
                 address={bondedPool.roles.depositor}
+                identity={depositorIdentity}
                 Action={
                   <CopyAddress address={bondedPool.roles.depositor} outline />
                 }

@@ -4,11 +4,12 @@
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
+import type { IdentityDisplay } from './types'
 
 export const getIdentityDisplay = (
   _identity: AnyJson,
   _superIdentity: AnyJson
-) => {
+): IdentityDisplay => {
   let displayFinal = ''
   let foundSuper = false
   // Check super identity exists, get display.Raw if it does
@@ -44,19 +45,27 @@ export const getIdentityDisplay = (
     }
   }
   if (displayFinal === '') {
-    return null
+    return { node: null, data: null }
   }
 
-  return (
-    <>
-      {displayFinal}
-      {superRawAsBytes !== '' ? (
-        <span>/ {superRawAsBytes}</span>
-      ) : superRaw !== null ? (
-        <span>/ {superRaw}</span>
-      ) : null}
-    </>
-  )
+  const data = {
+    display: displayFinal,
+    super:
+      superIdentityAsBytes !== ''
+        ? superRawAsBytes
+        : superRaw !== null
+          ? superRaw
+          : null,
+  }
+  return {
+    node: (
+      <>
+        {data.display}
+        {data.super ? <span>/ {data.super}</span> : null}
+      </>
+    ),
+    data,
+  }
 }
 
 // Normalise era points between 0 and 1 relative to the highest recorded value.

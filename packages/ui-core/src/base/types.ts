@@ -44,6 +44,5 @@ export type IdentityProps = ComponentBase & {
   Icon: React.ReactNode
   Action?: React.ReactNode
   label: string
-  address: string
-  subheading: string
+  value: string
 }
