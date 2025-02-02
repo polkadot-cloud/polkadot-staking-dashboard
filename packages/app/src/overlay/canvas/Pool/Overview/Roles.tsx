@@ -3,6 +3,7 @@
 
 import { useHelp } from 'contexts/Help'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
@@ -11,10 +12,20 @@ import { Identity } from 'ui-identity'
 import type { OverviewSectionProps } from '../types'
 import { AddressesWrapper } from '../Wrappers'
 
-export const Roles = ({ bondedPool }: OverviewSectionProps) => {
+export const Roles = ({
+  bondedPool,
+  roleIdentities: { identities, supers },
+}: OverviewSectionProps) => {
   const { t } = useTranslation('pages')
   const { openHelp } = useHelp()
   const iconSize = '3rem'
+
+  // TODO: Get correctly formatted role identity data
+  const rootIdentity = getIdentityDisplay(
+    identities[bondedPool?.roles?.root || ''],
+    supers[bondedPool?.roles?.root || '']
+  )
+  console.log(rootIdentity)
 
   return (
     <div>
