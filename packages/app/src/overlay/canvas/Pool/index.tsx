@@ -102,24 +102,21 @@ export const Pool = () => {
     }
   }, [])
 
-  const peopleApiId: ChainId = `people-${network}`
   // Fetch pool role identities when bonded pool changes
   const handleRoleIdentities = async (addresses: string[]) => {
-    const { identities, supers } = await Identities.fetch(peopleApiId, [
-      ...addresses,
-    ])
-    setRoleIdentities({ identities, supers })
+    const peopleApiId: ChainId = `people-${network}`
+    const peopleApiClient = Apis.getClient(`people-${network}` as SystemChainId)
+    if (peopleApiClient) {
+      const { identities, supers } = await Identities.fetch(peopleApiId, [
+        ...addresses,
+      ])
+      setRoleIdentities({ identities, supers })
+    }
   }
 
   useEffect(() => {
     if (bondedPool) {
-      const peopleApiClient = Apis.getClient(
-        `people-${network}` as SystemChainId
-      )
-      if (peopleApiClient) {
-        const addresses = new Set(Object.values(bondedPool.roles))
-        handleRoleIdentities([...addresses])
-      }
+      handleRoleIdentities([...new Set(Object.values(bondedPool.roles))])
     }
   }, [bondedPool])
 
