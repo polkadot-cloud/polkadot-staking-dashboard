@@ -248,18 +248,18 @@
       "annual": "Annual"
     }
   },
-    "validators": {
-      "activeValidators": "Active Validators",
-      "allValidators": "All Validators",
-      "averageCommission": "Average Commission",
-      "connecting": "Connecting",
-      "favoriteValidators": "Favorite Validators",
-      "favorites": "Favorites",
-      "fetchingFavoriteValidators": "Fetching favorite validators",
-      "fetchingValidators": "Fetching validators",
-      "networkValidators": "Network Validators",
-      "noFavorites": "No Favorites.",
-      "totalValidators": "Total Validators",
-      "validators": "Validators"
-    }
+  "validators": {
+    "activeValidators": "Active Validators",
+    "allValidators": "All Validators",
+    "averageCommission": "Average Commission",
+    "connecting": "Connecting",
+    "favoriteValidators": "Favorite Validators",
+    "favorites": "Favorites",
+    "fetchingFavoriteValidators": "Fetching favorite validators",
+    "fetchingValidators": "Fetching validators",
+    "networkValidators": "Network Validators",
+    "noFavorites": "No Favorites.",
+    "totalValidators": "Total Validators",
+    "validators": "Validators"
   }
+}
