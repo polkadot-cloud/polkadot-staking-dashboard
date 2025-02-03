@@ -1,0 +1,229 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { planckToUnit } from '@w3ux/utils'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
+import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { StatBoxList } from 'library/StatBoxList'
+import { Text } from 'library/StatBoxList/Text'
+import { formatTokenPrice, useTokenPrice } from 'plugin-staking-api'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimary } from 'ui-buttons'
+import { CardHeader, PageRow } from 'ui-core/base'
+import { RewardText, RewardsGrid } from '../Wrappers'
+
+export const Active = () => {
+  const { t } = useTranslation('pages')
+  const { activeAccount } = useActiveAccounts()
+  const { inPool } = useActivePool()
+  const { getLedger, getPoolMembership } = useBalances()
+  const { networkData } = useNetwork()
+  const { getAverageRewardRate } = useAverageRewardRate()
+
+  const [manualStake, setManualStake] = useState<number | null>(null)
+  const [isCustomStake, setIsCustomStake] = useState(false)
+
+  // Get current stake
+  const getCurrentStake = () => {
+    if (!activeAccount) {
+      return '0'
+    }
+
+    let rawAmount = '0'
+    if (inPool()) {
+      const membership = getPoolMembership(activeAccount)
+      rawAmount = membership?.points ?? '0'
+    } else {
+      rawAmount = getLedger({ stash: activeAccount }).active.toString() ?? '0'
+    }
+    return planckToUnit(rawAmount, networkData.units)
+  }
+
+  // Get token price
+  const { loading, error, data } = useTokenPrice({
+    ticker: `${networkData.api.unit}USDT`,
+  })
+  const { price: dotPrice } = formatTokenPrice(loading, error, data)
+
+  // Get reward rate
+  const { avgRateBeforeCommission } = getAverageRewardRate(false)
+  const rewardRate = avgRateBeforeCommission.toNumber()
+
+  // Calculate rewards
+  const currentStake =
+    isCustomStake && manualStake !== null
+      ? manualStake
+      : Number(getCurrentStake())
+  const annualReward = currentStake * (rewardRate / 100) || 0
+  const monthlyReward = annualReward / 12 || 0
+  const dailyReward = annualReward / 365 || 0
+
+  const handleToggleStake = () => {
+    if (isCustomStake) {
+      // Reset to wallet-connected stake
+      setManualStake(null)
+    }
+    setIsCustomStake(!isCustomStake)
+  }
+
+  return (
+    <>
+      <StatBoxList>
+        <RewardText>
+          <Text
+            label={t('Average Reward Rate')}
+            value={`${rewardRate.toFixed(2)}%`}
+            helpKey="Average Reward Rate"
+          />
+        </RewardText>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+          }}
+        >
+          <Text
+            label={
+              isCustomStake ? t('Custom Balance') : t('Current Staked Balance')
+            }
+            value={`${currentStake.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })} ${networkData.api.unit}`}
+            helpKey={isCustomStake ? 'Custom Balance' : 'Your Balance'}
+          />
+          <ButtonPrimary
+            text={
+              isCustomStake
+                ? t('Use Connected Wallet Balance')
+                : t('Use Custom Amount')
+            }
+            onClick={handleToggleStake}
+            style={{ minWidth: 'fit-content', whiteSpace: 'nowrap' }}
+          />
+        </div>
+      </StatBoxList>
+
+      <AnimatePresence>
+        {isCustomStake && (
+          <PageRow>
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: 'auto', marginTop: '1rem' }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              transition={{
+                duration: 0.3,
+                ease: 'easeInOut',
+              }}
+              style={{ overflow: 'hidden' }}
+            >
+              <CardWrapper>
+                <CardHeader>
+                  <h4>{t('Adjust Your Stake')}</h4>
+                </CardHeader>
+
+                <div style={{ padding: '1rem' }}>
+                  <label htmlFor="manual-stake">
+                    {t('Enter Stake Amount')} ({networkData.api.unit}):
+                  </label>
+                  <input
+                    id="manual-stake"
+                    type="number"
+                    step="0.01"
+                    value={manualStake ?? ''}
+                    onChange={(e) =>
+                      setManualStake(Number(e.target.value) || null)
+                    }
+                    placeholder={t('i.e. 100')}
+                    style={{
+                      width: '100%',
+                      padding: '0.5rem',
+                      marginTop: '0.5rem',
+                      border: '1px solid var(--border-primary-color)',
+                      borderRadius: '4px',
+                    }}
+                  />
+                </div>
+              </CardWrapper>
+            </motion.div>
+          </PageRow>
+        )}
+      </AnimatePresence>
+
+      <PageRow>
+        <CardWrapper>
+          <CardHeader>
+            <h4>{t('Your Projected Rewards')}</h4>
+          </CardHeader>
+
+          <RewardsGrid>
+            <div className="header">
+              <span>Period</span>
+              <span>{networkData.api.unit}</span>
+              <span>USDT</span>
+            </div>
+
+            <div className="reward-row">
+              <span>Daily</span>
+              <span>
+                {dailyReward.toLocaleString('en-US', {
+                  minimumFractionDigits: 3,
+                  maximumFractionDigits: 3,
+                })}
+              </span>
+              <span>
+                $
+                {(dailyReward * dotPrice).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+
+            <div className="reward-row">
+              <span>Monthly</span>
+              <span>
+                {monthlyReward.toLocaleString('en-US', {
+                  minimumFractionDigits: 3,
+                  maximumFractionDigits: 3,
+                })}
+              </span>
+              <span>
+                $
+                {(monthlyReward * dotPrice).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+
+            <div className="reward-row">
+              <span>Annual</span>
+              <span>
+                {annualReward.toLocaleString('en-US', {
+                  minimumFractionDigits: 3,
+                  maximumFractionDigits: 3,
+                })}
+              </span>
+              <span>
+                $
+                {(annualReward * dotPrice).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+          </RewardsGrid>
+        </CardWrapper>
+      </PageRow>
+    </>
+  )
+}
