@@ -29,7 +29,6 @@ export const Active = () => {
   const [manualStake, setManualStake] = useState<number | null>(null)
   const [isCustomStake, setIsCustomStake] = useState(false)
 
-  // Get current stake
   const getCurrentStake = () => {
     if (!activeAccount) {
       return '0'
@@ -45,17 +44,14 @@ export const Active = () => {
     return planckToUnit(rawAmount, networkData.units)
   }
 
-  // Get token price
   const { loading, error, data } = useTokenPrice({
     ticker: `${networkData.api.unit}USDT`,
   })
   const { price: dotPrice } = formatTokenPrice(loading, error, data)
 
-  // Get reward rate
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
 
-  // Calculate rewards
   const currentStake =
     isCustomStake && manualStake !== null
       ? manualStake
@@ -66,7 +62,6 @@ export const Active = () => {
 
   const handleToggleStake = () => {
     if (isCustomStake) {
-      // Reset to wallet-connected stake
       setManualStake(null)
     }
     setIsCustomStake(!isCustomStake)
@@ -77,7 +72,7 @@ export const Active = () => {
       <StatBoxList>
         <RewardText>
           <Text
-            label={t('Average Reward Rate')}
+            label={t('rewards.averageRewardRate')}
             value={`${rewardRate.toFixed(2)}%`}
             helpKey="Average Reward Rate"
           />
@@ -92,7 +87,9 @@ export const Active = () => {
         >
           <Text
             label={
-              isCustomStake ? t('Custom Balance') : t('Current Staked Balance')
+              isCustomStake
+                ? t('rewards.customBalance')
+                : t('rewards.currentStakedBalance')
             }
             value={`${currentStake.toLocaleString('en-US', {
               minimumFractionDigits: 2,
@@ -103,8 +100,8 @@ export const Active = () => {
           <ButtonPrimary
             text={
               isCustomStake
-                ? t('Use Connected Wallet Balance')
-                : t('Use Custom Amount')
+                ? t('rewards.useConnectedWallet')
+                : t('rewards.useCustomAmount')
             }
             onClick={handleToggleStake}
             style={{ minWidth: 'fit-content', whiteSpace: 'nowrap' }}
@@ -127,12 +124,12 @@ export const Active = () => {
             >
               <CardWrapper>
                 <CardHeader>
-                  <h4>{t('Adjust Your Stake')}</h4>
+                  <h4>{t('rewards.adjustStake')}</h4>
                 </CardHeader>
 
                 <div style={{ padding: '1rem' }}>
                   <label htmlFor="manual-stake">
-                    {t('Enter Stake Amount')} ({networkData.api.unit}):
+                    {t('rewards.enterStakeAmount')} ({networkData.api.unit}):
                   </label>
                   <input
                     id="manual-stake"
@@ -142,7 +139,7 @@ export const Active = () => {
                     onChange={(e) =>
                       setManualStake(Number(e.target.value) || null)
                     }
-                    placeholder={t('i.e. 100')}
+                    placeholder={t('rewards.stakePlaceholder')}
                     style={{
                       width: '100%',
                       padding: '0.5rem',
@@ -161,18 +158,18 @@ export const Active = () => {
       <PageRow>
         <CardWrapper>
           <CardHeader>
-            <h4>{t('Your Projected Rewards')}</h4>
+            <h4>{t('rewards.projectedRewards')}</h4>
           </CardHeader>
 
           <RewardsGrid>
             <div className="header">
-              <span>Period</span>
+              <span>{t('rewards.period')}</span>
               <span>{networkData.api.unit}</span>
               <span>USDT</span>
             </div>
 
             <div className="reward-row">
-              <span>Daily</span>
+              <span>{t('rewards.daily')}</span>
               <span>
                 {dailyReward.toLocaleString('en-US', {
                   minimumFractionDigits: 3,
@@ -189,7 +186,7 @@ export const Active = () => {
             </div>
 
             <div className="reward-row">
-              <span>Monthly</span>
+              <span>{t('rewards.monthly')}</span>
               <span>
                 {monthlyReward.toLocaleString('en-US', {
                   minimumFractionDigits: 3,
@@ -206,7 +203,7 @@ export const Active = () => {
             </div>
 
             <div className="reward-row">
-              <span>Annual</span>
+              <span>{t('rewards.annual')}</span>
               <span>
                 {annualReward.toLocaleString('en-US', {
                   minimumFractionDigits: 3,

@@ -18,7 +18,7 @@ export const Rewards = () => {
         title={t('rewards.rewardsCalculator')}
         tabs={[
           {
-            title: t('Rewards Calculator'),
+            title: t('rewards.calculator'),
             active: activeTab === 0,
             onClick: () => setActiveTab(0),
           },

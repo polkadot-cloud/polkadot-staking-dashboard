@@ -231,13 +231,23 @@
       "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
     },
     "rewards": {
-      "title": "Rewards",
       "rewardsCalculator": "Rewards Calculator",
-      "currentBalance": "Your Current Balance",
-      "projectedRewards": "Your Projected Rewards",
-      "payoutHistory": "Your Payout History",
-      "averageRewardRate": "Current Average Reward Rate"
-    },
+      "calculator": "Calculator",
+      "averageRewardRate": "Average Reward Rate",
+      "customBalance": "Custom Balance",
+      "currentStakedBalance": "Current Staked Balance",
+      "useConnectedWallet": "Use Connected Wallet",
+      "useCustomAmount": "Use Custom Amount",
+      "adjustStake": "Adjust Your Stake",
+      "enterStakeAmount": "Enter Stake Amount",
+      "stakePlaceholder": "e.g. 100",
+      "projectedRewards": "Projected Rewards",
+      "period": "Period",
+      "daily": "Daily",
+      "monthly": "Monthly",
+      "annual": "Annual"
+    }
+  },
     "validators": {
       "activeValidators": "Active Validators",
       "allValidators": "All Validators",
@@ -253,4 +263,3 @@
       "validators": "Validators"
     }
   }
-}
