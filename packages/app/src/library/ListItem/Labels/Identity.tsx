@@ -4,10 +4,10 @@
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { IdentityWrapper } from 'library/ListItem/Wrappers'
+import { getIdentityDisplay } from 'library/List/Utils'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
-import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils'
+import { Identity as Wrapper } from 'ui-core/list'
 import type { IdentityProps } from '../types'
 
 export const Identity = ({ address }: IdentityProps) => {
@@ -16,31 +16,28 @@ export const Identity = ({ address }: IdentityProps) => {
 
   const [display, setDisplay] = useState<ReactNode>(
     getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
+      .node
   )
 
   useEffect(() => {
     setDisplay(
       getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
+        .node
     )
   }, [validatorSupers, validatorIdentities, address])
 
   return (
-    <IdentityWrapper
-      className="identity"
-      initial={{ opacity: 0.5 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <span style={{ paddingRight: '0.25rem' }}>
+    <Wrapper>
+      <div>
         <Polkicon address={address} fontSize="2rem" />
-      </span>
-      <div className="inner">
+      </div>
+      <div>
         {validatorsFetched && display !== null ? (
           <h4>{display}</h4>
         ) : (
           <h4>{ellipsisFn(address, 6)}</h4>
         )}
       </div>
-    </IdentityWrapper>
+    </Wrapper>
   )
 }

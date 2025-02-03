@@ -3,7 +3,6 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
-import { MaxEraRewardPointsEras } from 'consts'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
@@ -11,13 +10,12 @@ import { useTranslation } from 'react-i18next'
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library')
   const {
-    sessionValidators,
-    sessionParaValidators,
-    validatorIdentities,
     validatorSupers,
-    validatorEraPointsHistory,
+    getValidatorRank,
+    sessionValidators,
+    validatorIdentities,
+    sessionParaValidators,
   } = useValidators()
-
   /*
    * filterMissingIdentity: Iterates through the supplied list and filters those with missing
    * identities. Returns the updated filtered list.
@@ -168,13 +166,13 @@ export const useValidatorFilters = () => {
    */
   const orderByRank = (list: AnyFilter) =>
     [...list].sort((a, b) => {
-      const aRank = validatorEraPointsHistory[a.address]?.rank || 9999
-      const bRank = validatorEraPointsHistory[b.address]?.rank || 9999
+      const aRank = getValidatorRank(a.address) || 9999
+      const bRank = getValidatorRank(b.address) || 9999
       return aRank - bRank
     })
 
   const ordersToLabels: Record<string, string> = {
-    rank: `${MaxEraRewardPointsEras} ${t('dayPerformance')}`,
+    rank: `${t('performance')}`,
     low_commission: t('lowCommission'),
     high_commission: t('highCommission'),
     default: t('unordered'),

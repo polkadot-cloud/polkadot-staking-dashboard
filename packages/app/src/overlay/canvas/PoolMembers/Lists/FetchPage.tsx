@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -10,19 +11,18 @@ import { Subscan } from 'controllers/Subscan'
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
-import { ListProvider } from 'library/List/context'
-import { poolMembersPerPage } from 'library/List/defaults'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { PoolMember } from 'types'
 import { Member } from './Member'
-import type { FetchpageMembersListProps } from './types'
+import type { MembersListProps } from './types'
 
 export const MembersListInner = ({
   pagination,
   batchKey,
   memberCount,
-}: FetchpageMembersListProps) => {
+  itemsPerPage,
+}: MembersListProps) => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
@@ -40,9 +40,9 @@ export const MembersListInner = ({
   const [page, setPage] = useState<number>(1)
 
   // pagination
-  const totalPages = Math.ceil(Number(memberCount) / poolMembersPerPage)
-  const pageEnd = poolMembersPerPage - 1
-  const pageStart = pageEnd - (poolMembersPerPage - 1)
+  const totalPages = Math.ceil(Number(memberCount) / itemsPerPage)
+  const pageEnd = itemsPerPage - 1
+  const pageStart = pageEnd - (itemsPerPage - 1)
 
   // handle validator list bootstrapping
   const fetchingMemberList = useRef<boolean>(false)
@@ -55,7 +55,8 @@ export const MembersListInner = ({
 
       const newMembers = (await Subscan.handleFetchPoolMembers(
         poolId,
-        page
+        page,
+        itemsPerPage
       )) as PoolMember[]
 
       fetchingMemberList.current = false
@@ -66,9 +67,7 @@ export const MembersListInner = ({
   }
 
   // get throttled subset or entire list
-  const listMembers = poolMembersApi
-    .slice(pageStart)
-    .slice(0, poolMembersPerPage)
+  const listMembers = poolMembersApi.slice(pageStart).slice(0, itemsPerPage)
 
   // Refetch list when page changes.
   useEffect(() => {
@@ -124,7 +123,7 @@ export const MembersListInner = ({
   )
 }
 
-export const MembersList = (props: FetchpageMembersListProps) => {
+export const MembersList = (props: MembersListProps) => {
   const { selectToggleable } = props
 
   return (

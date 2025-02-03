@@ -1,22 +1,34 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js'
 import type { ValidatorPrefs, ValidatorStatus } from 'contexts/Validators/types'
-import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types'
 import type { ReactNode } from 'react'
-import type { BondedPool, BondFor, MaybeAddress } from 'types'
+import type { BondedPool, BondFor, MaybeAddress, NominationStatus } from 'types'
 
+export interface Outline {
+  outline?: boolean
+}
+export type CopyAddressProps = Outline & {
+  address: string
+}
+
+export type FavoriteProps = Outline & {
+  address: string
+}
+
+export type MetricsProps = Outline & {
+  display: ReactNode | null
+  address: string
+}
+
+export type MoreProps = Outline & {
+  pool: BondedPool
+  setActiveTab: (t: number) => void
+  disabled: boolean
+  outline?: boolean
+}
 export interface BlockedProps {
   prefs: ValidatorPrefs
-}
-
-export interface CopyAddressProps {
-  address: string
-}
-
-export interface FavoriteProps {
-  address: string
 }
 
 export interface IdentityProps {
@@ -25,11 +37,6 @@ export interface IdentityProps {
 
 export interface PoolIdentityProps {
   pool: BondedPool
-}
-
-export interface MetricsProps {
-  display: ReactNode | null
-  address: string
 }
 
 export interface NominationStatusProps {
@@ -51,8 +58,7 @@ export interface ParaValidatorProps {
 }
 
 export interface EraStatusProps {
-  address: MaybeAddress
+  address: string
   noMargin: boolean
-  totalStake: BigNumber
   status: ValidatorStatus
 }

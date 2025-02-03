@@ -2,6 +2,7 @@
   "base": {
     "active": "Active",
     "community": "Community",
+    "date": "Date",
     "decentralization": "Decentralization",
     "email": "Email",
     "goTo": "Go To",
@@ -32,6 +33,11 @@
       }
     },
     "payouts": "Payouts",
+    "plugin": {
+      "polkawatch": "Polkawatch",
+      "staking_api": "Staking API",
+      "subscan": "Subscan"
+    },
     "pools": "Pools",
     "resources": "Resources",
     "rewards": "Rewards",

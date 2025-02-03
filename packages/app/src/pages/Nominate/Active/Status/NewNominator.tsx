@@ -36,7 +36,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
             <section className="standalone">
               <div className="buttons">
                 <div
-                  className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ``}`}
+                  className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ` pulse`}`}
                 >
                   <button
                     onClick={() =>

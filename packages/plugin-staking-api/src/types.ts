@@ -48,6 +48,19 @@ export type UnclaimedRewardsResult = Query & {
     unclaimedRewards: UnclaimedRewards
   }
 }
+
+export type ValidatorRewardsResult = Query & {
+  data: {
+    validatorRewards: ValidatorReward[]
+  }
+}
+
+export interface ValidatorReward {
+  era: number
+  reward: string
+  start: number
+}
+
 export type PoolRewardResults = Query & {
   data: {
     poolRewards: PoolReward[]
@@ -71,9 +84,26 @@ export type CanFastUnstakeResult = Query & {
   }
 }
 
+export type ActiveValidatorRanksResult = Query & {
+  data: {
+    activeValidatorRanks: ActiveValidatorRank[]
+  }
+}
+
+export interface ActiveValidatorRank {
+  validator: string
+  rank: number
+}
+
 export type ValidatorEraPointsResult = Query & {
   data: {
     validatorEraPoints: ValidatorEraPoints[]
+  }
+}
+
+export type ValidatorEraPointsBatchResult = Query & {
+  data: {
+    validatorEraPointsBatch: ValidatorEraPointsBatch[]
   }
 }
 
@@ -99,11 +129,34 @@ export interface ValidatorEraPoints {
   start: number
 }
 
+export interface ValidatorEraPointsBatch {
+  validator: string
+  points: ValidatorEraPoints[]
+}
+
 export interface PoolReward {
   reward: string
   timestamp: number
   who: string
   poolId: number
+}
+
+export type PoolEraPointsResult = Query & {
+  data: {
+    poolEraPoints: PoolEraPoints[]
+  }
+}
+
+export interface PoolEraPoints {
+  era: number
+  points: string
+  start: number
+}
+
+export type PoolCandidatesResult = Query & {
+  data: {
+    poolCandidates: number[]
+  }
 }
 
 export type PayoutsAndClaims = (NominatorReward | PoolReward)[]

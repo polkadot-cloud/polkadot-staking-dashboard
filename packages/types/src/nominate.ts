@@ -9,3 +9,5 @@ export interface Nominations {
 }
 
 export type Targets = string[]
+
+export type NominationStatus = 'active' | 'inactive' | 'waiting'

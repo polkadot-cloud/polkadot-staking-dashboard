@@ -1,43 +1,25 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useTranslation } from 'react-i18next'
-import type { BondedPool } from 'types'
+import { HeaderButton } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
+import type { MoreProps } from '../types'
 
-export const More = ({
-  pool,
-  setActiveTab,
-  disabled,
-}: {
-  pool: BondedPool
-  setActiveTab: (t: number) => void
-  disabled: boolean
-}) => {
+export const More = ({ pool, setActiveTab, disabled, outline }: MoreProps) => {
   const { t } = useTranslation('tips')
   const { openCanvas } = useOverlay().canvas
-  const { startPoolRewardPointsFetch } = usePoolPerformance()
-
-  const { id, addresses } = pool
-
-  // Define a unique pool performance data key
-  const performanceKey = `pool_page_standalone_${id}`
-
+  const { id } = pool
   return (
-    <div className="label button-with-text">
+    <HeaderButton outline={outline} withText>
       <button
         type="button"
         onClick={() => {
-          startPoolRewardPointsFetch(performanceKey, [addresses.stash])
           openCanvas({
-            key: 'JoinPool',
+            key: 'Pool',
             options: {
               providedPool: {
                 id,
-                performanceBatchKey: performanceKey,
               },
               onJoinCallback: () => setActiveTab(0),
             },
@@ -47,8 +29,7 @@ export const More = ({
         disabled={disabled}
       >
         {t('module.more')}
-        <FontAwesomeIcon icon={faCaretRight} transform="shrink-2" />
       </button>
-    </div>
+    </HeaderButton>
   )
 }

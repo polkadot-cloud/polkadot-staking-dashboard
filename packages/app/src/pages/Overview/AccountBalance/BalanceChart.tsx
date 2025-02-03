@@ -17,10 +17,10 @@ import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
-import { CardHeader } from 'ui-core/base'
+import { CardHeader, CardLabel } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { FiatValue } from './FiatValue'
+import { Value } from './Value'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
@@ -141,11 +141,11 @@ export const BalanceChart = () => {
             value={minDecimalPlaces(totalBalance.toFormat(), 2)}
             zeroDecimals={2}
           />
-          <h5>
+          <CardLabel>
             {plugins.includes('staking_api') ? (
-              <FiatValue totalBalance={totalBalance} />
+              <Value totalBalance={totalBalance} />
             ) : null}
-          </h5>
+          </CardLabel>
         </h2>
       </CardHeader>
       <BarChartWrapper>

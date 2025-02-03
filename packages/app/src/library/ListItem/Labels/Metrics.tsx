@@ -1,16 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChartLine } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useTranslation } from 'react-i18next'
+import { HeaderButton } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
 import type { MetricsProps } from '../types'
 
-export const Metrics = ({ display, address }: MetricsProps) => {
+export const Metrics = ({ display, address, outline }: MetricsProps) => {
+  const { t } = useTranslation()
   const { openCanvas } = useOverlay().canvas
 
   return (
-    <div className="label">
+    <HeaderButton outline={outline} withText>
       <button
         type="button"
         onClick={() =>
@@ -24,8 +25,8 @@ export const Metrics = ({ display, address }: MetricsProps) => {
           })
         }
       >
-        <FontAwesomeIcon icon={faChartLine} transform="shrink-2" />
+        {t('metrics', { ns: 'library' })}
       </button>
-    </div>
+    </HeaderButton>
   )
 }

@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import BigNumber from 'bignumber.js'
@@ -11,6 +10,7 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatSize } from 'library/Graphs/Utils'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
@@ -21,14 +21,17 @@ import {
   GraphContainer,
   GraphInner,
   Head,
+  HeadTags,
   Main,
   Stat,
   Subheading,
 } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { ActiveGraph } from './ActiveGraph'
-import { InactiveGraph } from './InactiveGraph'
+import { ActiveGraph as ActiveGraphEraPoints } from './EraPoints/ActiveGraph'
+import { InactiveGraph as InactiveGraphEraPoints } from './EraPoints/InactiveGraph'
+import { ActiveGraph as ActiveGraphRewards } from './Rewards/ActiveGraph'
+import { InactiveGraph as InactiveGraphRewards } from './Rewards/InactiveGraph'
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation()
@@ -51,6 +54,7 @@ export const ValidatorMetrics = () => {
   const { openHelp } = useHelp()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
+  const { getValidators } = useValidators()
 
   const validator = options!.validator
   const identity = options!.identity
@@ -62,7 +66,6 @@ export const ValidatorMetrics = () => {
   let otherStake = new BigNumber(0)
   if (validatorInEra) {
     const { others, own } = validatorInEra
-
     others.forEach(({ value }) => {
       otherStake = otherStake.plus(value)
     })
@@ -71,23 +74,34 @@ export const ValidatorMetrics = () => {
     }
   }
 
-  // Ref to the graph container
-  const graphInnerRef = useRef<HTMLDivElement | null>(null)
+  const GRAPH_HEIGHT = 250
 
-  // Get the size of the graph container
-  const size = useSize(graphInnerRef, {
+  const prefs = getValidators().find(
+    (entry) => entry.address === validator
+  )?.prefs
+  const commission = prefs?.commission ?? 0
+
+  // Era points graph ref & sizing
+  const graphEraPointsRef = useRef<HTMLDivElement | null>(null)
+  const sizeEraPoints = useSize(graphEraPointsRef, {
     outerElement: containerRefs?.mainInterface,
   })
-  const { width, height } = formatSize(size, 250)
+  const graphSizeEraPoints = formatSize(sizeEraPoints, GRAPH_HEIGHT)
+
+  // token earned graph ref & sizing
+  const graphRewardsRef = useRef<HTMLDivElement | null>(null)
+  const sizeRewards = useSize(graphRewardsRef, {
+    outerElement: containerRefs?.mainInterface,
+  })
+  const graphSizeRewards = formatSize(sizeRewards, GRAPH_HEIGHT)
 
   return (
     <Main>
       <Head>
         <ButtonPrimary
-          text={t('pools.back', { ns: 'pages' })}
+          text={t('close', { ns: 'modals' })}
           lg
           onClick={() => closeCanvas()}
-          iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
@@ -104,6 +118,13 @@ export const ValidatorMetrics = () => {
             <div className="title">
               <h1>{identity}</h1>
             </div>
+            <HeadTags>
+              <h3>
+                <span>
+                  {commission}% {t('commission', { ns: 'modals' })}
+                </span>
+              </h3>
+            </HeadTags>
           </div>
         </div>
       </AccountTitle>
@@ -134,14 +155,18 @@ export const ValidatorMetrics = () => {
               />
             </h3>
           </Subheading>
-          <GraphInner ref={graphInnerRef} width={width} height={height}>
+          <GraphInner
+            ref={graphEraPointsRef}
+            width={graphSizeEraPoints.width}
+            height={graphSizeEraPoints.height}
+          >
             {pluginEnabled('staking_api') ? (
-              <ActiveGraph
+              <ActiveGraphEraPoints
                 network={network}
                 validator={validator}
                 fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
-                width={width}
-                height={height}
+                width={graphSizeEraPoints.width}
+                height={graphSizeEraPoints.height}
               />
             ) : (
               <>
@@ -151,7 +176,48 @@ export const ValidatorMetrics = () => {
                   title={t('common.stakingApiDisabled', { ns: 'pages' })}
                   topOffset="37%"
                 />
-                <InactiveGraph width={width} height={height} />
+                <InactiveGraphEraPoints
+                  width={graphSizeEraPoints.width}
+                  height={graphSizeEraPoints.height}
+                />
+              </>
+            )}
+          </GraphInner>
+          <Subheading style={{ marginTop: '2rem' }}>
+            <h3>
+              {t('rewardHistory', { ns: 'library' })}
+              <ButtonHelp
+                outline
+                marginLeft
+                onClick={() => openHelp('Validator Reward History')}
+              />
+            </h3>
+          </Subheading>
+          <GraphInner
+            ref={graphRewardsRef}
+            width={graphSizeRewards.width}
+            height={graphSizeRewards.height}
+          >
+            {pluginEnabled('staking_api') ? (
+              <ActiveGraphRewards
+                network={network}
+                validator={validator}
+                fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+                width={graphSizeRewards.width}
+                height={graphSizeRewards.height}
+              />
+            ) : (
+              <>
+                <StatusLabel
+                  status="active_service"
+                  statusFor="staking_api"
+                  title={t('common.stakingApiDisabled', { ns: 'pages' })}
+                  topOffset="37%"
+                />
+                <InactiveGraphRewards
+                  width={graphSizeRewards.width}
+                  height={graphSizeRewards.height}
+                />
               </>
             )}
           </GraphInner>

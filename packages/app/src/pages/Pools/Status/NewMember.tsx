@@ -3,13 +3,9 @@
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useJoinPools } from 'contexts/Pools/JoinPools'
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useStaking } from 'contexts/Staking'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
-import { PoolSync } from 'library/PoolSync'
-import { StyledLoader } from 'library/PoolSync/Loader'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { usePoolsTabs } from '../context'
@@ -19,22 +15,15 @@ import { useStatusButtons } from './useStatusButtons'
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation()
   const { inSetup } = useStaking()
-  const { poolsForJoin } = useJoinPools()
   const { setActiveTab } = usePoolsTabs()
   const { openCanvas } = useOverlay().canvas
-  const { startJoinPoolFetch } = useJoinPools()
-  const { getPoolPerformanceTask } = usePoolPerformance()
   const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
-
-  // Get the pool performance task to determine if performance data is ready.
-  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join')
 
   // Alias for create button disabled state
   const createDisabled = getCreateDisabled() || !inSetup()
 
   // Disable opening the canvas if data is not ready.
-  const joinButtonDisabled =
-    getJoinDisabled() || !poolsForJoin.length || !inSetup()
+  const joinButtonDisabled = getJoinDisabled() || !inSetup()
 
   return (
     <CallToActionWrapper>
@@ -46,44 +35,20 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section className="fixedWidth">
               <div className="buttons">
                 <div
-                  className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${poolJoinPerformanceTask.status === 'synced' ? ` pulse` : ``}`}
+                  className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${!joinButtonDisabled ? ` pulse` : ``}`}
                 >
                   <button
                     onClick={() => {
-                      // Start sync process, otherwise, open canvas.
-                      if (poolJoinPerformanceTask.status === 'unsynced') {
-                        startJoinPoolFetch()
-                      }
-
                       openCanvas({
-                        key: 'JoinPool',
+                        key: 'Pool',
                         options: {},
                         size: 'xl',
                       })
                     }}
                     disabled={joinButtonDisabled}
                   >
-                    {poolJoinPerformanceTask.status === 'unsynced' && (
-                      <>
-                        {t('pools.joinPool', { ns: 'pages' })}
-                        <FontAwesomeIcon icon={faUserPlus} />
-                      </>
-                    )}
-
-                    {poolJoinPerformanceTask.status === 'syncing' && (
-                      <>
-                        {t('syncingPoolData', { ns: 'library' })}{' '}
-                        <StyledLoader />
-                      </>
-                    )}
-
-                    {poolJoinPerformanceTask.status === 'synced' && (
-                      <>
-                        {t('readyToJoinPool', { ns: 'library' })}
-                        <FontAwesomeIcon icon={faUserPlus} />
-                      </>
-                    )}
-                    <PoolSync performanceKey="pool_join" />
+                    {t('pools.joinPool', { ns: 'pages' })}
+                    <FontAwesomeIcon icon={faUserPlus} />
                   </button>
                 </div>
               </div>
