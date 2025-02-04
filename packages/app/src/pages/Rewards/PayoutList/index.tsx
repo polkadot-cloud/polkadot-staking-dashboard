@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { StakingContext } from 'contexts/Staking'
@@ -16,7 +17,6 @@ import { motion } from 'framer-motion'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
-import { payoutsPerPage } from 'library/List/defaults'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
 import { DefaultLocale, locales } from 'locales'
@@ -32,7 +32,8 @@ import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 import { ItemWrapper } from '../Wrappers'
 import type { PayoutListProps } from '../types'
-import { PayoutListProvider, usePayoutList } from './context'
+
+const PAYOUTS_PER_PAGE = 50
 
 export const PayoutListInner = ({
   allowMoreCols,
@@ -46,11 +47,14 @@ export const PayoutListInner = ({
   const {
     networkData: { units, unit, colors },
   } = useNetwork()
-  const { validators } = useValidators()
+  const { getValidators } = useValidators()
   const { bondedPools } = useBondedPools()
-  const { listFormat, setListFormat } = usePayoutList()
-
-  const [page, setPage] = useState<number>(1)
+  const {
+    listFormat,
+    setListFormat,
+    pagination: { page, setPage },
+  } = useList()
+  const validators = getValidators()
 
   // Manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)
@@ -58,9 +62,9 @@ export const PayoutListInner = ({
   // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)
 
-  const totalPages = Math.ceil(payouts.length / payoutsPerPage)
-  const pageEnd = page * payoutsPerPage - 1
-  const pageStart = pageEnd - (payoutsPerPage - 1)
+  const totalPages = Math.ceil(payouts.length / PAYOUTS_PER_PAGE)
+  const pageEnd = page * PAYOUTS_PER_PAGE - 1
+  const pageStart = pageEnd - (PAYOUTS_PER_PAGE - 1)
 
   // Refetch list when list changes
   useEffect(() => {
@@ -75,7 +79,7 @@ export const PayoutListInner = ({
     }
   }, [isReady, fetched, activeEra.index])
 
-  const listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
+  const listPayouts = payouts.slice(pageStart).slice(0, PAYOUTS_PER_PAGE)
   if (!listPayouts.length) {
     return null
   }
@@ -215,9 +219,9 @@ export const PayoutListInner = ({
 }
 
 export const PayoutList = (props: PayoutListProps) => (
-  <PayoutListProvider>
+  <ListProvider>
     <PayoutListShouldUpdate {...props} />
-  </PayoutListProvider>
+  </ListProvider>
 )
 
 export const NominatorIdentity = ({
