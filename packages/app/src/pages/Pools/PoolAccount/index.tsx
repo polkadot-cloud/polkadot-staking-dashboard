@@ -8,7 +8,7 @@ import { ellipsisFn } from '@w3ux/utils'
 import { Notifications } from 'controllers/Notifications'
 import type { NotificationText } from 'controllers/Notifications/types'
 import { motion } from 'framer-motion'
-import { getIdentityDisplay } from 'library/ValidatorList/ValidatorItem/Utils'
+import { getIdentityDisplay } from 'library/List/Utils'
 import { useTranslation } from 'react-i18next'
 import type { PoolAccountProps } from '../types'
 import { Wrapper } from './Wrapper'
@@ -22,7 +22,7 @@ export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
   const synced = roleIdentities !== undefined
 
   const display = address
-    ? getIdentityDisplay(identities[address], supers[address])
+    ? getIdentityDisplay(identities[address], supers[address]).node
     : null
 
   let notification: NotificationText | null = null

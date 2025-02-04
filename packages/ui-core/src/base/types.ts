@@ -5,6 +5,7 @@ import type { ComponentBase } from '@w3ux/types'
 
 export type RowProps = ComponentBase & {
   yMargin?: boolean
+  xMargin?: boolean
 }
 
 export type PageTitleProps = PageTitleTabsProps & {
@@ -30,4 +31,18 @@ export interface PageTitleTabProps {
   onClick: () => void
   badge?: string | number
   disabled?: boolean
+}
+
+export type TooltipAreaProps = ComponentBase & {
+  text: string
+  pointer?: boolean
+  onMouseMove: () => void
+  onClick?: () => void
+}
+
+export type IdentityProps = ComponentBase & {
+  Icon: React.ReactNode
+  Action?: React.ReactNode
+  label: string
+  value: string
 }

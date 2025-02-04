@@ -5,20 +5,21 @@ import { faBars, faShare, faUnlockAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
 import { useApi } from 'contexts/Api'
+import { useList } from 'contexts/List'
 import { useMenu } from 'contexts/Menu'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePoolMembers } from 'contexts/Pools/PoolMembers'
 import { usePrompt } from 'contexts/Prompt'
 import { motion } from 'framer-motion'
-import { useList } from 'library/List/context'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded'
 import { Select } from 'library/ListItem/Labels/Select'
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
+import { Wrapper } from 'library/ListItem/Wrappers'
 import { MenuList } from 'library/Menu/List'
 import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { HeaderButtonRow, Separator } from 'ui-core/list'
 import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
 
@@ -121,7 +122,7 @@ export const Member = ({
             {selectActive && <Select item={{ address: who }} />}
             <Identity address={who} />
             <div>
-              <Labels>
+              <HeaderButtonRow>
                 {menuItems.length > 0 && (
                   <button
                     type="button"
@@ -132,7 +133,7 @@ export const Member = ({
                     <FontAwesomeIcon icon={faBars} />
                   </button>
                 )}
-              </Labels>
+              </HeaderButtonRow>
             </div>
           </div>
           <Separator />

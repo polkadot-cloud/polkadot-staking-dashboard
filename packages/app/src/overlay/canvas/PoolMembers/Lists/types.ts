@@ -3,10 +3,8 @@
 
 export interface MembersListProps {
   pagination: boolean
+  itemsPerPage: number
   batchKey: string
   selectToggleable?: boolean
-}
-
-export type FetchpageMembersListProps = MembersListProps & {
   memberCount: string
 }

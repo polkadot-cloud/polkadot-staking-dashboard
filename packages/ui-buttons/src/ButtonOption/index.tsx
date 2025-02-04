@@ -35,7 +35,6 @@ export const ButtonOption = (props: ButtonOptionProps): JSX.Element => {
     classes.btnOption,
     {
       [commonClasses.btnDisabled]: disabled,
-      [commonClasses.btnActiveTransforms]: !disabled,
     },
     className
   )

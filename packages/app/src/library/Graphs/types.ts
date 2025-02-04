@@ -3,11 +3,7 @@
 
 import type BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
-import type {
-  NominatorReward,
-  PoolReward,
-  ValidatorEraPoints,
-} from 'plugin-staking-api/types'
+import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
 
 export interface BondedProps {
   active: BigNumber
@@ -17,20 +13,16 @@ export interface BondedProps {
   inactive: boolean
 }
 
-export interface EraPointsProps {
-  items: ValidatorEraPoints[]
-  height: number
-}
-
 export interface PayoutBarProps {
   days: number
   height: string
   data: GraphPayoutData
   nominating: boolean
   inPool: boolean
+  syncing: boolean
 }
 
-export interface PayoutLineProps {
+export interface AveragePayoutLineProps {
   days: number
   average: number
   height: string
@@ -66,4 +58,10 @@ export interface GeoDonutProps {
   height?: string | number
   legendHeight?: number
   maxLabelLen?: number
+}
+
+export interface PayoutLineEntry {
+  era: number
+  reward: string
+  start: number
 }

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
+import { ListProvider } from 'contexts/List'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { PoolList } from 'library/PoolList'
-import { PoolListProvider } from 'library/PoolList/context'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
@@ -50,9 +50,9 @@ export const PoolFavorites = () => {
         ) : (
           isReady &&
           (favoritesList.length > 0 ? (
-            <PoolListProvider>
-              <PoolList pools={favoritesList} allowMoreCols pagination />
-            </PoolListProvider>
+            <ListProvider>
+              <PoolList pools={favoritesList} allowMoreCols itemsPerPage={30} />
+            </ListProvider>
           ) : (
             <ListStatusHeader>{t('pools.noFavorites')}</ListStatusHeader>
           ))

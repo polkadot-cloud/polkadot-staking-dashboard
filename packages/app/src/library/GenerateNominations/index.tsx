@@ -45,7 +45,7 @@ export const GenerateNominations = ({
   const { favoritesList } = useFavoriteValidators()
   const { openPromptWith, closePrompt } = usePrompt()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { validators, validatorsFetched } = useValidators()
+  const { getValidators, validatorsFetched } = useValidators()
   const {
     fetch: fetchFromMethod,
     add: addNomination,
@@ -91,7 +91,7 @@ export const GenerateNominations = ({
   useEffect(() => {
     if (
       !isReady ||
-      !validators?.length ||
+      !getValidators()?.length ||
       !stakers?.length ||
       validatorsFetched !== 'synced'
     ) {

@@ -91,6 +91,7 @@ export const defaultApiContext: APIContextInterface = {
   consts: defaultConsts,
   networkMetrics: defaultNetworkMetrics,
   activeEra: defaultActiveEra,
+  activeEraRef: { current: defaultActiveEra },
   poolsConfig: defaultPoolsConfig,
   stakingMetrics: defaultStakingMetrics,
 }

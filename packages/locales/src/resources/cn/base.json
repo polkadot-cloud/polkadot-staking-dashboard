@@ -2,6 +2,7 @@
   "base": {
     "active": "激活",
     "community": "社区",
+    "date": "日期",
     "decentralization": "去中心化",
     "email": "电子邮件",
     "goTo": "查看",
@@ -32,6 +33,11 @@
       }
     },
     "payouts": "收益",
+    "plugin": {
+      "polkawatch": "Polkawatch",
+      "staking_api": "Staking API",
+      "subscan": "Subscan"
+    },
     "pools": "提名池",
     "resources": "信息",
     "rewards": "奖励",

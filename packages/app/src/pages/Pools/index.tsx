@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { PoolList } from 'library/PoolList'
-import { PoolListProvider } from 'library/PoolList/context'
 import { StatBoxList } from 'library/StatBoxList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
@@ -100,14 +100,14 @@ export const PoolsInner = () => {
       {activeTab === 1 && (
         <PageRow>
           <CardWrapper>
-            <PoolListProvider>
+            <ListProvider>
               <PoolList
                 pools={bondedPools}
+                itemsPerPage={30}
                 allowMoreCols
                 allowSearch
-                pagination
               />
-            </PoolListProvider>
+            </ListProvider>
           </CardWrapper>
         </PageRow>
       )}

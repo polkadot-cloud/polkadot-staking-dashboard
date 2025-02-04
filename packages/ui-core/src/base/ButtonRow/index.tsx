@@ -9,9 +9,10 @@ import classes from './index.module.scss'
  * @name ButtonRow
  * @summary A flex container for a row of buttons.
  */
-export const ButtonRow = ({ children, style, yMargin }: RowProps) => {
+export const ButtonRow = ({ children, style, yMargin, xMargin }: RowProps) => {
   const buttonClasses = classNames(classes.buttonRow, {
-    [classes.buttonRowYMargin]: yMargin,
+    [classes.xMargin]: xMargin,
+    [classes.yMargin]: yMargin,
   })
 
   return (

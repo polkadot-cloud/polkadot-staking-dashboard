@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxPayoutDays } from 'consts'
+import { AveragePayoutLine } from 'library/Graphs/AveragePayoutLine'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
 
 export const InactiveGraph = () => (
   <>
@@ -13,8 +13,9 @@ export const InactiveGraph = () => (
       data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
       nominating={false}
       inPool={false}
+      syncing={false}
     />
-    <PayoutLine
+    <AveragePayoutLine
       days={MaxPayoutDays}
       average={10}
       height="65px"

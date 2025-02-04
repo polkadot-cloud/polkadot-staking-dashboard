@@ -42,7 +42,7 @@ export const useProxySupported = () => {
     const call = `${pallet}.${method}`
 
     // If a batch call, test if every inner call is a supported proxy call.
-    if (call === 'utility.batch') {
+    if (call === 'Utility.batch') {
       return (tx?.decodedCall?.value?.value?.calls || [])
         .map((c: AnyJson) => ({
           pallet: c.type,

@@ -9,8 +9,8 @@ import { useFilters } from 'contexts/Filters'
 import { usePrompt } from 'contexts/Prompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons'
-import { FilterValidators } from '../FilterValidators'
-import { OrderValidators } from '../OrderValidators'
+import { FilterValidators } from '../Prompts/FilterValidators'
+import { OrderValidators } from '../Prompts/OrderValidators'
 
 export const FilterHeaders = () => {
   const { t } = useTranslation('library')

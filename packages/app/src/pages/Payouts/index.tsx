@@ -138,6 +138,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
               title={t('payouts.recentPayouts', { ns: 'pages' })}
               payouts={payoutsList}
               pagination
+              itemsPerPage={50}
             />
           </CardWrapper>
         </PageRow>
