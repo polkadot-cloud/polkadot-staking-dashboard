@@ -11,7 +11,7 @@ import type { AddNominationsType } from './types'
 export const useFetchMehods = () => {
   const { favoritesList } = useFavoriteValidators()
   const { applyFilter, applyOrder } = useValidatorFilters()
-  const { validators, validatorEraPointsHistory } = useValidators()
+  const { getValidators, getValidatorRankSegment } = useValidators()
 
   const fetch = (method: string) => {
     let nominations
@@ -63,7 +63,7 @@ export const useFetchMehods = () => {
   }
 
   const fetchLowCommission = () => {
-    let filtered = Object.assign(validators)
+    let filtered = Object.assign(getValidators())
 
     // filter validators to find active candidates
     filtered = applyFilter(
@@ -80,7 +80,7 @@ export const useFetchMehods = () => {
 
     // keep validators that are in upper 75% performance quartile.
     filtered = filtered.filter((a: Validator) => {
-      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100
+      const quartile = getValidatorRankSegment(a.address)
       return quartile <= 75
     })
 
@@ -92,8 +92,8 @@ export const useFetchMehods = () => {
   }
 
   const fetchOptimal = () => {
-    let active = Object.assign(validators)
-    let waiting = Object.assign(validators)
+    let active = Object.assign(getValidators())
+    let waiting = Object.assign(getValidators())
 
     // filter validators to find waiting candidates
     waiting = applyFilter(
@@ -116,7 +116,7 @@ export const useFetchMehods = () => {
 
     // keep validators that are in upper 50% performance quartile.
     active = active.filter((a: Validator) => {
-      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100
+      const quartile = getValidatorRankSegment(a.address)
       return quartile <= 50
     })
 
@@ -133,7 +133,7 @@ export const useFetchMehods = () => {
   }
 
   const available = (nominations: Validator[]) => {
-    const all = Object.assign(validators)
+    const all = Object.assign(getValidators())
 
     const parachainActive =
       applyFilter(
@@ -159,7 +159,7 @@ export const useFetchMehods = () => {
       ) || []
 
     const highPerformance = active.filter((a: Validator) => {
-      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100
+      const quartile = getValidatorRankSegment(a.address)
       return quartile <= 50
     })
 

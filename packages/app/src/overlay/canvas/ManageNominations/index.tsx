@@ -180,7 +180,6 @@ export const ManageNominations = () => {
             />
           </h3>
         </Title>
-
         <GenerateNominations
           displayFor="canvas"
           setters={[

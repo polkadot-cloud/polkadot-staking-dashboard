@@ -21,6 +21,7 @@ import { DefaultLocale, locales } from 'locales'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
+import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from './types'
 import { formatRewardsForGraphs } from './Utils'
 
@@ -41,6 +42,7 @@ export const PayoutBar = ({
   data: { payouts, poolClaims, unclaimedPayouts },
   nominating,
   inPool,
+  syncing,
 }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library')
   const { mode } = useTheme()
@@ -181,6 +183,11 @@ export const PayoutBar = ({
         height: height || 'auto',
       }}
     >
+      {syncing && (
+        <Spinner
+          style={{ position: 'absolute', right: '2.5rem', top: '-2.5rem' }}
+        />
+      )}
       <Bar options={options} data={data} />
     </div>
   )

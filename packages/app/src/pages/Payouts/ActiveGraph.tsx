@@ -7,8 +7,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
+import { AveragePayoutLine } from 'library/Graphs/AveragePayoutLine'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { removeNonZeroAmountAndSort } from 'library/Graphs/Utils'
 import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
@@ -25,7 +25,7 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
   const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
 
-  const { data: nominatorRewardsData } = useRewards({
+  const { data: nominatorRewardsData, loading: rewardsLoading } = useRewards({
     chain: network,
     who: activeAccount || '',
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
@@ -35,11 +35,13 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
   fromDate.setDate(fromDate.getDate() - MaxPayoutDays)
   fromDate.setHours(0, 0, 0, 0)
 
-  const { data: poolRewardsData } = usePoolRewards({
-    chain: network,
-    who: activeAccount || '',
-    from: getUnixTime(fromDate),
-  })
+  const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
+    {
+      chain: network,
+      who: activeAccount || '',
+      from: getUnixTime(fromDate),
+    }
+  )
 
   const allRewards = nominatorRewardsData?.allRewards ?? []
   const payouts =
@@ -66,8 +68,9 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
         data={{ payouts, unclaimedPayouts, poolClaims }}
         nominating={nominating}
         inPool={inPool}
+        syncing={rewardsLoading || poolRewardsLoading}
       />
-      <PayoutLine
+      <AveragePayoutLine
         days={MaxPayoutDays}
         average={10}
         height="65px"

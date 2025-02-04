@@ -4,6 +4,7 @@
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
@@ -18,6 +19,7 @@ export const UnstakePrompts = () => {
   const { t } = useTranslation('pages')
   const { mode } = useTheme()
   const { syncing } = useSyncing()
+  const { inSetup } = useStaking()
   const { openModal } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
   const { unit, colors } = useNetwork().networkData
@@ -36,6 +38,7 @@ export const UnstakePrompts = () => {
     !totalUnlocked.isZero()
 
   return (
+    !inSetup() &&
     (isUnstaking || isFastUnstaking) &&
     !syncing && (
       <PageRow>

@@ -1,28 +1,41 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBolt,
+  faMinus,
+  faPlus,
+  faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
+import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useFastUnstake } from 'contexts/FastUnstake'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useTransferOptions } from 'contexts/TransferOptions'
+import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonHelp, ButtonPrimary, ButtonText, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages')
+  const {
+    isReady,
+    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+  } = useApi()
   const {
     networkData: {
       units,
@@ -33,18 +46,52 @@ export const ManageBond = () => {
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
   const { getLedger } = useBalances()
+  const { getBondedAccount } = useBonded()
   const { openModal } = useOverlay().modal
   const { isFastUnstaking } = useUnstaking()
+  const { activeAccount } = useActiveAccounts()
+  const { getFastUnstakeText } = useUnstaking()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
-  const { activeAccount } = useActiveAccounts()
+  const { getNominationStatus } = useNominationStatus()
+  const { exposed, fastUnstakeStatus } = useFastUnstake()
+
+  const controller = getBondedAccount(activeAccount)
   const ledger = getLedger({ stash: activeAccount })
   const { active }: { active: BigNumber } = ledger
   const allTransferOptions = getTransferOptions(activeAccount)
 
   const { freeBalance } = allTransferOptions
-  const { totalUnlocking, totalUnlocked, totalUnlockChunks } =
-    allTransferOptions.nominate
+  const { totalUnlocking, totalUnlocked } = allTransferOptions.nominate
+  const nominationStatus = getNominationStatus(activeAccount, 'nominator')
+
+  // Determine whether to display fast unstake button or regular unstake button.
+  const unstakeButton =
+    fastUnstakeErasToCheckPerBlock > 0 &&
+    !nominationStatus.nominees.active.length &&
+    fastUnstakeStatus !== null &&
+    !exposed ? (
+      <ButtonPrimary
+        disabled={isReadOnlyAccount(controller)}
+        text={getFastUnstakeText()}
+        iconLeft={faBolt}
+        onClick={() => {
+          openModal({ key: 'ManageFastUnstake', size: 'sm' })
+        }}
+      />
+    ) : (
+      <ButtonPrimary
+        text={t('nominate.unstake')}
+        iconLeft={faSignOutAlt}
+        disabled={!isReady || isReadOnlyAccount(controller) || !activeAccount}
+        onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
+      />
+    )
+
+  const unstakeDisabled =
+    inSetup() || syncing || isReadOnlyAccount(activeAccount)
+
+  const bondDisabled = unstakeDisabled || isFastUnstaking
 
   return (
     <>
@@ -64,57 +111,36 @@ export const ManageBond = () => {
           />
         </h2>
         <ButtonRow>
-          <ButtonPrimary
-            disabled={
-              inSetup() ||
-              syncing ||
-              isReadOnlyAccount(activeAccount) ||
-              isFastUnstaking
-            }
-            marginRight
-            onClick={() =>
-              openModal({
-                key: 'Bond',
-                options: { bondFor: 'nominator' },
-                size: 'sm',
-              })
-            }
-            text="+"
-          />
-          <ButtonPrimary
-            disabled={
-              inSetup() ||
-              syncing ||
-              isReadOnlyAccount(activeAccount) ||
-              isFastUnstaking
-            }
-            marginRight
-            onClick={() =>
-              openModal({
-                key: 'Unbond',
-                options: { bondFor: 'nominator' },
-                size: 'sm',
-              })
-            }
-            text="-"
-          />
-          <ButtonPrimary
-            disabled={syncing || inSetup() || isReadOnlyAccount(activeAccount)}
-            iconLeft={faLockOpen}
-            marginRight
-            onClick={() =>
-              openModal({
-                key: 'UnlockChunks',
-                options: {
-                  bondFor: 'nominator',
-                  disableWindowResize: true,
-                  disableScroll: true,
-                },
-                size: 'sm',
-              })
-            }
-            text={String(totalUnlockChunks ?? 0)}
-          />
+          <MultiButton marginRight disabled={bondDisabled}>
+            <ButtonText
+              disabled={bondDisabled}
+              marginRight
+              onClick={() =>
+                openModal({
+                  key: 'Bond',
+                  options: { bondFor: 'nominator' },
+                  size: 'sm',
+                })
+              }
+              iconLeft={faPlus}
+              text=""
+            />
+            <span />
+            <ButtonText
+              disabled={bondDisabled}
+              marginRight
+              onClick={() =>
+                openModal({
+                  key: 'Unbond',
+                  options: { bondFor: 'nominator' },
+                  size: 'sm',
+                })
+              }
+              iconLeft={faMinus}
+              text=""
+            />
+          </MultiButton>
+          {!unstakeDisabled && unstakeButton}
         </ButtonRow>
       </CardHeader>
       <BondedChart

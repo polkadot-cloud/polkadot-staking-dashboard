@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { AveragePayoutLine } from 'library/Graphs/AveragePayoutLine'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
 import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
@@ -23,9 +23,10 @@ export const InactiveGraph = ({
         data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
         nominating={false}
         inPool={false}
+        syncing={false}
       />
       <div style={{ marginTop: '3rem' }}>
-        <PayoutLine
+        <AveragePayoutLine
           days={19}
           average={10}
           height="65px"

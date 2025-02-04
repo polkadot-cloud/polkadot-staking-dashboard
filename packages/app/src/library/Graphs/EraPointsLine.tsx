@@ -3,6 +3,7 @@
 
 import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
+import type { FontSpec } from 'chart.js'
 import {
   BarElement,
   CategoryScale,
@@ -22,6 +23,7 @@ import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
+import { Spinner } from 'ui-core/base'
 
 ChartJS.register(
   CategoryScale,
@@ -57,6 +59,19 @@ export const EraPointsLine = ({
   // Use primary color for line
   const color = colors.primary[mode]
 
+  // Styling of axis titles
+  const titleFontSpec: Partial<FontSpec> = {
+    family: "'Inter', 'sans-serif'",
+    weight: 'lighter',
+    size: 11,
+  }
+  const titleStyle = {
+    color: graphColors.title[mode],
+    display: true,
+    padding: 6,
+    font: titleFontSpec,
+  }
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -75,6 +90,10 @@ export const EraPointsLine = ({
           },
           autoSkip: true,
         },
+        title: {
+          ...titleStyle,
+          text: `${t('date', { ns: 'base' })}`,
+        },
       },
       y: {
         stacked: true,
@@ -90,6 +109,10 @@ export const EraPointsLine = ({
         },
         grid: {
           color: graphColors.canvas.grid[mode],
+        },
+        title: {
+          ...titleStyle,
+          text: `${t('eraPoints', { ns: 'library' })}`,
         },
       },
     },
@@ -148,6 +171,11 @@ export const EraPointsLine = ({
         height,
       }}
     >
+      {syncing && (
+        <Spinner
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
+        />
+      )}
       <Line options={options} data={data} />
     </div>
   )

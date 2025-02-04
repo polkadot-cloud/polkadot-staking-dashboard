@@ -42,15 +42,16 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
   })
 
   const allRewards = nominatorRewardsData?.allRewards ?? []
-  const payouts = allRewards.filter(
-    (reward: NominatorReward) => reward.claimed === true
-  )
-  const unclaimedPayouts = allRewards.filter(
-    (reward: NominatorReward) => reward.claimed === false
-  )
+  const payouts =
+    allRewards.filter((reward: NominatorReward) => reward.claimed === true) ??
+    []
+  const unclaimedPayouts =
+    allRewards.filter((reward: NominatorReward) => reward.claimed === false) ??
+    []
   const poolClaims = poolRewardsData?.poolRewards ?? []
 
   useEffect(() => {
+    // filter zero rewards and order via timestamp, most recent first
     const payoutsList = (allRewards as RewardResults).concat(
       poolClaims
     ) as RewardResults

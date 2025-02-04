@@ -7,6 +7,7 @@ import type { ActiveEra } from 'api/subscribe/activeEra'
 import type { ActivePoolAccount } from 'api/subscribe/activePoolAccount'
 import type { BlockNumber } from 'api/subscribe/blockNumber'
 import type { Bonded } from 'api/subscribe/bonded'
+import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import type { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
 import type { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
 import type { NetworkMetrics } from 'api/subscribe/networkMetrics'
@@ -22,6 +23,7 @@ export type Subscription =
   | ActivePoolAccount
   | BlockNumber
   | Bonded
+  | ErasRewardPoints
   | FastUnstakeConfig
   | FastUnstakeQueue
   | NetworkMetrics

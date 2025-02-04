@@ -1,9 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
-import type { TooltipItem } from 'chart.js'
+import type { FontSpec } from 'chart.js'
 import {
+  BarElement,
   CategoryScale,
   Chart as ChartJS,
   Legend,
@@ -15,102 +17,109 @@ import {
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
+import { format, fromUnixTime } from 'date-fns'
+import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
-import type { PayoutLineProps } from './types'
-import {
-  calculatePayoutAverages,
-  combineRewards,
-  formatRewardsForGraphs,
-} from './Utils'
+import { Spinner } from 'ui-core/base'
+import type { PayoutLineEntry } from './types'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 )
 
 export const PayoutLine = ({
-  days,
-  average,
+  entries,
+  syncing,
+  width,
   height,
-  background,
-  data: { payouts, poolClaims },
-  nominating,
-  inPool,
-}: PayoutLineProps) => {
-  const { t } = useTranslation('library')
+}: {
+  entries: PayoutLineEntry[]
+  syncing: boolean
+  width: string | number
+  height: string | number
+}) => {
+  const { i18n, t } = useTranslation()
   const { mode } = useTheme()
-  const { unit, units, colors } = useNetwork().networkData
+  const { colors, unit } = useNetwork().networkData
 
-  const staking = nominating || inPool
-  const inPoolOnly = !nominating && inPool
-  // Define the most recent date that we will show on the graph
-  const fromDate = new Date()
+  // Format reward points as an array of strings, or an empty array if syncing
+  const dataset = syncing
+    ? []
+    : entries.map((entry) => new BigNumber(entry.reward).toString())
 
-  const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
-    fromDate,
-    days,
-    units,
-    payouts,
-    poolClaims,
-    [] // Note: we are not using `unclaimedPayouts` here
-  )
-  const { p: graphPayouts, a: graphPrePayouts } = allPayouts
-  const { p: graphPoolClaims, a: graphPrePoolClaims } = allPoolClaims
+  // Use primary color for line
+  const color = colors.primary[mode]
 
-  // Combine payouts and pool claims into one dataset and calculate averages
-  const combined = combineRewards(graphPayouts, graphPoolClaims)
-  const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims)
-
-  const combinedPayouts = calculatePayoutAverages(
-    preCombined.concat(combined),
-    fromDate,
-    days,
-    10
-  )
-
-  // Determine color for payouts
-  const color = !staking
-    ? colors.primary[mode]
-    : !inPoolOnly
-      ? colors.primary[mode]
-      : colors.secondary[mode]
-
+  // Styling of axis titles
+  const titleFontSpec: Partial<FontSpec> = {
+    family: "'Inter', 'sans-serif'",
+    weight: 'lighter',
+    size: 11,
+  }
+  const titleStyle = {
+    color: graphColors.title[mode],
+    display: true,
+    padding: 6,
+    font: titleFontSpec,
+  }
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    barPercentage: 0.3,
+    maxBarThickness: 13,
     scales: {
       x: {
+        stacked: true,
         grid: {
           display: false,
         },
         ticks: {
-          display: false,
-          maxTicksLimit: 30,
+          color: graphColors.canvas.axis[mode],
+          font: {
+            size: 10,
+          },
           autoSkip: true,
+        },
+        title: {
+          ...titleStyle,
+          text: `${t('date', { ns: 'base' })}`,
         },
       },
       y: {
+        stacked: true,
+        beginAtZero: true,
         ticks: {
-          display: false,
-          beginAtZero: false,
+          color: graphColors.canvas.axis[mode],
+          font: {
+            size: 10,
+          },
         },
         border: {
           display: false,
         },
         grid: {
-          color: graphColors.grid[mode],
+          color: graphColors.canvas.grid[mode],
+        },
+        title: {
+          ...titleStyle,
+          text: `${unit} ${t('reward', { ns: 'modals' })}`,
         },
       },
     },
     plugins: {
       legend: {
+        display: false,
+      },
+      title: {
         display: false,
       },
       tooltip: {
@@ -123,10 +132,8 @@ export const PayoutLine = ({
         },
         callbacks: {
           title: () => [],
-          label: ({ parsed }: TooltipItem<'line'>) =>
-            ` ${new BigNumber(parsed.y)
-              .decimalPlaces(units)
-              .toFormat()} ${unit}`,
+          label: (context: AnyJson) =>
+            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
         intersect: false,
         interaction: {
@@ -137,36 +144,38 @@ export const PayoutLine = ({
   }
 
   const data = {
-    labels: combinedPayouts.map(() => ''),
+    labels: entries.map(({ start }: { start: number }) => {
+      const dateObj = format(fromUnixTime(start), 'do MMM', {
+        locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+      })
+      return `${dateObj}`
+    }),
     datasets: [
       {
-        label: t('payout'),
-        data: combinedPayouts.map(({ reward }: { reward: number }) => reward),
+        label: t('era', { ns: 'library' }),
+        data: dataset,
         borderColor: color,
-        pointStyle: undefined,
+        backgroundColor: color,
         pointRadius: 0,
-        borderWidth: 2.3,
-        tension: 0.25,
-        fill: false,
+        borderRadius: 3,
       },
     ],
   }
 
   return (
-    <>
-      <h5 className="secondary" style={{ paddingLeft: '1.5rem' }}>
-        {average > 1 ? `${average} ${t('dayAverage')}` : null}
-      </h5>
-      <div
-        style={{
-          height: height || 'auto',
-          background: background || 'none',
-          marginTop: '0.6rem',
-          padding: '0 0 0.5rem 1.5rem',
-        }}
-      >
-        <Line options={options} data={data} />
-      </div>
-    </>
+    <div
+      className="inner"
+      style={{
+        width,
+        height,
+      }}
+    >
+      {syncing && (
+        <Spinner
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
+        />
+      )}
+      <Line options={options} data={data} />
+    </div>
   )
 }

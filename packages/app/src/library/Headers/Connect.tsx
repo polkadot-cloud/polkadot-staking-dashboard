@@ -4,9 +4,9 @@
 import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTranslation } from 'react-i18next'
-import { ButtonText } from 'ui-buttons'
+import { ButtonText, MultiButton } from 'ui-buttons'
+import { ButtonRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { ConnectedAccount, HeadingWrapper } from './Wrappers'
 
 export const Connect = () => {
   const { t } = useTranslation('library')
@@ -14,8 +14,8 @@ export const Connect = () => {
   const { accounts } = useImportedAccounts()
 
   return (
-    <HeadingWrapper>
-      <ConnectedAccount>
+    <ButtonRow>
+      <MultiButton marginLeft>
         {accounts.length ? (
           <>
             <ButtonText
@@ -48,7 +48,7 @@ export const Connect = () => {
             style={{ color: 'white', fontSize: '1.05rem' }}
           />
         )}
-      </ConnectedAccount>
-    </HeadingWrapper>
+      </MultiButton>
+    </ButtonRow>
   )
 }
