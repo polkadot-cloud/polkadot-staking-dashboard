@@ -22,6 +22,7 @@ import { DiscordSupport } from './modals/DiscordSupport'
 import { ImportLedger } from './modals/ImportLedger'
 import { ImportVault } from './modals/ImportVault'
 import { ImportWalletConnect } from './modals/ImportWalletConnect'
+import { Invite } from './modals/Invite'
 import { LeavePool } from './modals/LeavePool'
 import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
@@ -58,6 +59,7 @@ export const Overlays = () => {
         ImportLedger,
         ImportVault,
         ImportWalletConnect,
+        Invite,
         ManagePool,
         ManageFastUnstake,
         Networks,

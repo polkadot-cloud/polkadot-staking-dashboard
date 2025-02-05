@@ -146,6 +146,16 @@ export const SideMenu = () => {
                 size: sideMenuMinimised ? '1.05em' : '1em',
               }}
             />
+
+            <Secondary
+              onClick={() => openModal({ key: 'Invite', size: 'sm' })}
+              name={t('invite')}
+              minimised={sideMenuMinimised}
+              icon={{
+                Svg: DiscordSVG,
+                size: sideMenuMinimised ? '1.05em' : '1em',
+              }}
+            />
           </div>
         </section>
 
