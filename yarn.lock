@@ -3288,7 +3288,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chroma-js@npm:^3.1.0":
+"@types/chroma-js@npm:^3.1.1":
   version: 3.1.1
   resolution: "@types/chroma-js@npm:3.1.1"
   checksum: 10c0/2b2d2eb44fd6e7103696c890c04a84c55441e9fea2f3913949bb377ec7249fe8a95e8117108b6e837422dbb23dee8180ad6907a29a8ae6d9443e7423cd0b2f6a
@@ -8816,7 +8816,7 @@ __metadata:
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.13"
     "@tanstack/react-query": "npm:^5.66.0"
-    "@types/chroma-js": "npm:^3.1.0"
+    "@types/chroma-js": "npm:^3.1.1"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.2.25"
     "@types/react-helmet": "npm:^6.1.11"
