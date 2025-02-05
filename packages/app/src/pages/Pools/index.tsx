@@ -12,7 +12,9 @@ import { StatBoxList } from 'library/StatBoxList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 import { PageRow, PageTitle, RowSection } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 import { ClosurePrompts } from './ClosurePrompts'
 import { PoolFavorites } from './Favorites'
 import { ManageBond } from './ManageBond'
@@ -32,10 +34,33 @@ export const PoolsInner = () => {
   const { bondedPools } = useBondedPools()
   const { activeTab, setActiveTab } = usePoolsTabs()
   const { getPoolRoles, activePool } = useActivePool()
+  const { openCanvas } = useOverlay().canvas
+  const location = useLocation()
 
   const ROW_HEIGHT = 220
 
-  // Go back to tab 0 on network change.
+  // Handle pool invite navigation
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const poolId = params.get('pool')
+    const isInvite = params.get('fromInvite') === 'true'
+
+    if (poolId) {
+      setActiveTab(1)
+      openCanvas({
+        key: 'Pool',
+        options: {
+          id: poolId,
+          fromInvite: isInvite,
+          // Force direct pool selection
+          forcePoolId: isInvite ? poolId : undefined,
+        },
+        size: 'xl',
+      })
+    }
+  }, [location])
+
+  // Reset tab on network change
   useEffect(() => {
     setActiveTab(0)
   }, [network])

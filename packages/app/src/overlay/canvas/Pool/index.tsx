@@ -71,19 +71,55 @@ export const Pool = () => {
     [poolCandidates]
   )
 
-  const initialSelectedPoolId = useMemo(
-    () =>
-      providedPoolId ||
-      shuffledCandidates[(shuffledCandidates.length * Math.random()) << 0]
-        ?.id ||
-      0,
-    []
-  )
+  // The selected bonded pool id
+  const [selectedPoolId, setSelectedPoolId] = useState<number>(0)
 
-  // The selected bonded pool id. Assigns a random id if one is not provided
-  const [selectedPoolId, setSelectedPoolId] = useState<number>(
-    initialSelectedPoolId
-  )
+  // Keep track of whether we've set the initial pool
+  const [initialPoolSet, setInitialPoolSet] = useState(false)
+
+  // Effect to set the pool ID once data is available
+  useEffect(() => {
+    if (bondedPools.length > 0 && !initialPoolSet) {
+      // If a forced pool ID is provided, use it directly
+      if (options?.forcePoolId) {
+        console.log('Forcing pool selection:', options.forcePoolId)
+        setSelectedPoolId(Number(options.forcePoolId))
+        setInitialPoolSet(true)
+        return
+      }
+
+      const providedId = options?.id
+      const isInvite = options?.fromInvite
+      console.log('Pool selection attempt:', { providedId, isInvite })
+
+      if (isInvite && providedId) {
+        const pool = bondedPools.find(
+          (p) => String(p.id) === String(providedId)
+        )
+        if (pool) {
+          console.log('Setting invited pool ID to:', Number(providedId))
+          setSelectedPoolId(Number(providedId))
+          setInitialPoolSet(true)
+        }
+      }
+    }
+  }, [
+    bondedPools,
+    options?.forcePoolId,
+    options?.id,
+    options?.fromInvite,
+    initialPoolSet,
+  ])
+
+  // Also log in the random selection effect
+  useEffect(() => {
+    if (!providedPoolId) {
+      getPoolCandidates().then((candidates) => {
+        console.log('Got pool candidates:', candidates)
+        setPoolCandidates(candidates)
+      })
+    }
+  }, [])
 
   // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
   // pool otherwise. Re-fetches when the selected pool count is incremented
@@ -132,9 +168,9 @@ export const Pool = () => {
             setSelectedPoolId={setSelectedPoolId}
             bondedPool={bondedPool}
             metadata={poolsMetaData[selectedPoolId]}
-            autoSelected={!providedPoolId}
+            autoSelected={!options?.fromInvite}
             poolCandidates={shuffledCandidates}
-            providedPoolId={providedPoolId}
+            providedPoolId={options?.fromInvite ? options?.id : null}
           />
           {activeTab === 0 && (
             <Overview bondedPool={bondedPool} roleIdentities={roleIdentities} />

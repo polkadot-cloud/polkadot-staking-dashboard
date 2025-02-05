@@ -14,11 +14,9 @@ import type { HeaderProps } from './types'
 export const Header = ({
   activeTab,
   bondedPool,
-  poolCandidates,
   metadata,
   autoSelected,
   setActiveTab,
-  setSelectedPoolId,
   providedPoolId,
 }: HeaderProps) => {
   const { t } = useTranslation()
@@ -27,13 +25,9 @@ export const Header = ({
 
   // Randomly select a new pool to display
   const handleChooseNewPool = () => {
-    // Remove current pool from filtered so it is not selected again
-    const filteredPools = poolCandidates.filter(
-      (pool) => Number(pool.id) !== Number(bondedPool.id)
-    )
-    const newCandidate =
-      filteredPools[(filteredPools.length * Math.random()) << 0]?.id
-    setSelectedPoolId(newCandidate)
+    if (providedPoolId) {
+      return
+    }
   }
 
   // Pool state to tag class

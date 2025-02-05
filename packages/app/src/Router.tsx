@@ -29,9 +29,16 @@ import {
   Route,
   Routes,
   useLocation,
+  useParams,
 } from 'react-router-dom'
 import { StakingApi } from 'StakingApi'
 import { Body, Main } from 'ui-core/base'
+
+const PoolInviteRedirect = () => {
+  const { id } = useParams()
+  console.log('Redirecting pool invite with id:', id)
+  return <Navigate to={`/pools?pool=${id}&fromInvite=true`} replace />
+}
 
 const RouterInner = () => {
   const { network } = useNetwork()
@@ -71,12 +78,26 @@ const RouterInner = () => {
           <Menu />
           <Tooltip />
           <Prompt />
-          <SideMenu />
+          <SideMenu />{' '}
           <Main ref={mainInterfaceRef}>
             <HelmetProvider>
               <Headers />
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
                 <Routes>
+                  <Route
+                    path="/invite/pool/:id"
+                    element={<PoolInviteRedirect />}
+                  />
+                  <Route
+                    path="/invite/validator/:address"
+                    element={
+                      <Navigate
+                        to="/nominate"
+                        state={{ inviteValidatorAddress: useParams().address }}
+                        replace
+                      />
+                    }
+                  />
                   {PagesConfig.map((page, i) => (
                     <Route
                       key={`main_interface_page_${i}`}
