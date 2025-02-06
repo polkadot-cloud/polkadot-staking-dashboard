@@ -3,7 +3,12 @@
 
 import type { ApolloError } from '@apollo/client'
 import { gql, useQuery } from '@apollo/client'
-import type { TokenPriceResult, UseTokenPriceResult } from '../types'
+import { client } from '../Client'
+import type {
+  TokenPrice,
+  TokenPriceResult,
+  UseTokenPriceResult,
+} from '../types'
 
 const QUERY = gql`
   query TokenPrice($ticker: String!) {
@@ -25,15 +30,38 @@ export const useTokenPrice = ({
   return { loading, error, data, refetch }
 }
 
-export const formatTokenPrice = (
+export const fetchTokenPrice = async (
+  ticker: string
+): Promise<TokenPrice | null> => {
+  try {
+    const result = await client.query({
+      query: QUERY,
+      variables: { ticker },
+    })
+    return result.data.tokenPrice
+  } catch (error) {
+    return null
+  }
+}
+
+export const formatTokenPriceFromResult = (
   loading: boolean,
   error: ApolloError | undefined,
   data: TokenPriceResult
 ) => {
-  const price =
-    loading || error ? 0 : Number(data?.tokenPrice?.price.toFixed(2)) || 0
-  const change =
-    loading || error ? 0 : Number(data?.tokenPrice?.change.toFixed(2)) || 0
+  const maybePrice = loading || error ? 0 : data?.tokenPrice?.price || null
+  const maybeChange = loading || error ? 0 : data?.tokenPrice?.change || null
+  return formatTokenPrice(maybePrice, maybeChange)
+}
 
-  return { price, change }
+export const formatTokenPrice = (
+  maybePrice: number | null,
+  maybeChange: number | null
+): { price: number; change: number } => {
+  const price = Number((maybePrice || 0).toFixed(2))
+  const change = Number((maybeChange || 0).toFixed(2))
+  return {
+    price,
+    change,
+  }
 }

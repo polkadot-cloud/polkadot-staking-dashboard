@@ -35,6 +35,7 @@ import { PromptProvider } from 'contexts/Prompt'
 import { ProxiesProvider } from 'contexts/Proxies'
 import { SetupProvider } from 'contexts/Setup'
 import { StakingProvider } from 'contexts/Staking'
+import { TokenPricesProvider } from 'contexts/TokenPrice'
 import { TooltipProvider } from 'contexts/Tooltip'
 import { TransferOptionsProvider } from 'contexts/TransferOptions'
 import { TxMetaProvider } from 'contexts/TxMeta'
@@ -89,6 +90,7 @@ export const Providers = () => {
       ProxiesProvider,
       HelpProvider,
       PluginsProvider,
+      TokenPricesProvider,
       BondedProvider,
       BalancesProvider,
       StakingProvider,
