@@ -4,7 +4,7 @@
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { isCustomEvent } from 'controllers/utils'
-import { fetchTokenPrice } from 'plugin-staking-api'
+import { fetchTokenPrice, formatTokenPrice } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
@@ -71,8 +71,10 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     useRef<Document>(document)
   )
 
+  const { price, change } = tokenPrice
+
   return (
-    <TokenPricesContext.Provider value={{ ...tokenPrice }}>
+    <TokenPricesContext.Provider value={{ ...formatTokenPrice(price, change) }}>
       {children}
     </TokenPricesContext.Provider>
   )
