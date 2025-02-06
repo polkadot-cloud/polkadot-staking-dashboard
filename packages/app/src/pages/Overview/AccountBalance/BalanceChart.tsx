@@ -25,6 +25,7 @@ import { Value } from './Value'
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
   const {
+    network,
     networkData: {
       units,
       unit,
@@ -142,7 +143,7 @@ export const BalanceChart = () => {
             zeroDecimals={2}
           />
           <CardLabel>
-            {plugins.includes('staking_api') ? (
+            {plugins.includes('staking_api') && network !== 'westend' ? (
               <Value totalBalance={totalBalance} />
             ) : null}
           </CardLabel>
