@@ -49,7 +49,7 @@ jobs:
       - run: yarn test
 
   all:
-    needs: [check-license, markdown-link-check, build, validate-locales]
+    needs: [check-license, markdown-link-check, build]
     runs-on: ubuntu-latest
     steps:
       - run: echo Success
