@@ -18,9 +18,9 @@ export const DefaultLocale = 'en'
 
 // Available locales as key value pairs.
 export const locales: Record<string, LocaleEntry> = {
-  en: { dateFormat: enGB, label: 'English' },
-  cn: { dateFormat: zhCN, label: '中文' },
-  es: { dateFormat: es, label: 'Español' },
+  en: { dateFormat: enGB, label: 'English', tag: 'en' },
+  cn: { dateFormat: zhCN, label: '中文', tag: 'zh' },
+  es: { dateFormat: es, label: 'Español', tag: 'es' },
 }
 
 // Supported namespaces.
