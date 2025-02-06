@@ -2,6 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export type TokenPricesContextInterface = {
-  price: number | null
-  change: number | null
+  price: number
+  change: number
 }
