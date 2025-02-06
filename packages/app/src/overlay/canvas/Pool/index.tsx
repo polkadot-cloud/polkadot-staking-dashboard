@@ -80,36 +80,33 @@ export const Pool = () => {
   // Effect to set the pool ID once data is available
   useEffect(() => {
     if (bondedPools.length > 0 && !initialPoolSet) {
-      // If a forced pool ID is provided, use it directly
-      if (options?.forcePoolId) {
-        console.log('Forcing pool selection:', options.forcePoolId)
-        setSelectedPoolId(Number(options.forcePoolId))
-        setInitialPoolSet(true)
-        return
-      }
-
       const providedId = options?.id
       const isInvite = options?.fromInvite
-      console.log('Pool selection attempt:', { providedId, isInvite })
+
+      const selectRandomPool = () => {
+        const randomId =
+          bondedPools[Math.floor(Math.random() * bondedPools.length)]?.id || 0
+        console.log('Using random pool:', randomId)
+        setSelectedPoolId(Number(randomId))
+        setInitialPoolSet(true)
+      }
 
       if (isInvite && providedId) {
         const pool = bondedPools.find(
           (p) => String(p.id) === String(providedId)
         )
         if (pool) {
-          console.log('Setting invited pool ID to:', Number(providedId))
+          console.log('Setting invited pool ID:', Number(providedId))
           setSelectedPoolId(Number(providedId))
           setInitialPoolSet(true)
+        } else {
+          selectRandomPool()
         }
+      } else if (!initialPoolSet) {
+        selectRandomPool()
       }
     }
-  }, [
-    bondedPools,
-    options?.forcePoolId,
-    options?.id,
-    options?.fromInvite,
-    initialPoolSet,
-  ])
+  }, [bondedPools, options?.id, options?.fromInvite, initialPoolSet])
 
   // Also log in the random selection effect
   useEffect(() => {
