@@ -10,7 +10,7 @@ import classes from './index.module.scss'
 export const Pie = memo(
   ({
     color1 = 'var(--accent-color-primary)',
-    color2 = 'var(--background-primary)',
+    color2 = 'var(--background-default)',
   }: PieProps) => {
     // Define the keyframes for the pie
     const pie1Keyframes = keyframes`
