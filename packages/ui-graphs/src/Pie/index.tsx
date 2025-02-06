@@ -6,7 +6,7 @@ import styled, { keyframes } from 'styled-components'
 import type { PieProps } from '../types'
 import classes from './index.module.scss'
 
-// Memoizing the Pie component to prevent animation restarts
+// Memoizing component to prevent animation restarts
 export const Pie = memo(
   ({
     color1 = 'var(--accent-color-primary)',
