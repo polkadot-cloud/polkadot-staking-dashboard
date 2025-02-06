@@ -103,7 +103,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       return [addresses.stash]
     })
     const nominationsMulti = await new NominatorsMulti(network, stashes).fetch()
-    setPoolsNominations(formatPoolsNominations(nominationsMulti, ids))
+    setPoolsNominations(formatPoolsNominations(nominationsMulti || [], ids))
   }
 
   // Format raw pool nominations data
