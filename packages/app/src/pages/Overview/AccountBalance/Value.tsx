@@ -4,7 +4,7 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
-import { formatTokenPrice, useTokenPrice } from 'plugin-staking-api'
+import { formatTokenPriceFromResult, useTokenPrice } from 'plugin-staking-api'
 
 interface CardLabelProps {
   totalBalance: BigNumber
@@ -19,7 +19,7 @@ export const Value = ({ totalBalance }: CardLabelProps) => {
   const { loading, error, data, refetch } = useTokenPrice({
     ticker: `${unit}USDT`,
   })
-  const { price } = formatTokenPrice(loading, error, data)
+  const { price } = formatTokenPriceFromResult(loading, error, data)
 
   // Convert balance to fiat value
   const freeFiat = totalBalance.multipliedBy(

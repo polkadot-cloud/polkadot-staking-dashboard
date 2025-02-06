@@ -44,7 +44,7 @@ export const fetchTokenPrice = async (
   }
 }
 
-export const formatTokenPrice = (
+export const formatTokenPriceFromResult = (
   loading: boolean,
   error: ApolloError | undefined,
   data: TokenPriceResult

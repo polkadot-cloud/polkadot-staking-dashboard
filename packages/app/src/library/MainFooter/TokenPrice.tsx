@@ -4,7 +4,7 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useNetwork } from 'contexts/Network'
 import { isCustomEvent } from 'controllers/utils'
-import { formatTokenPrice, useTokenPrice } from 'plugin-staking-api'
+import { formatTokenPriceFromResult, useTokenPrice } from 'plugin-staking-api'
 import { useRef } from 'react'
 import { useEventListener } from 'usehooks-ts'
 
@@ -18,7 +18,7 @@ export const TokenPrice = () => {
   const { loading, error, data, refetch } = useTokenPrice({
     ticker: `${unit}USDT`,
   })
-  const { price, change } = formatTokenPrice(loading, error, data)
+  const { price, change } = formatTokenPriceFromResult(loading, error, data)
 
   //  Refetch token price if online status changes to online.
   const handleOnlineStatus = (e: Event): void => {
