@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { enGB, es, zhCN } from 'date-fns/locale'
@@ -18,9 +18,9 @@ export const DefaultLocale = 'en'
 
 // Available locales as key value pairs.
 export const locales: Record<string, LocaleEntry> = {
-  en: { dateFormat: enGB, label: 'English' },
-  cn: { dateFormat: zhCN, label: '中文' },
-  es: { dateFormat: es, label: 'Español' },
+  en: { dateFormat: enGB, label: 'English', tag: 'en' },
+  cn: { dateFormat: zhCN, label: '中文', tag: 'zh' },
+  es: { dateFormat: es, label: 'Español', tag: 'es' },
 }
 
 // Supported namespaces.

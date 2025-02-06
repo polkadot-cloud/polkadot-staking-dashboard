@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
@@ -103,7 +103,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       return [addresses.stash]
     })
     const nominationsMulti = await new NominatorsMulti(network, stashes).fetch()
-    setPoolsNominations(formatPoolsNominations(nominationsMulti, ids))
+    setPoolsNominations(formatPoolsNominations(nominationsMulti || [], ids))
   }
 
   // Format raw pool nominations data
