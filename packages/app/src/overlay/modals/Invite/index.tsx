@@ -15,9 +15,10 @@ export const Invite = () => {
   const { t } = useTranslation('modals')
   const { activeAccount } = useActiveAccounts()
   const { inSetup } = useStaking()
-  const { isOwner, activePool } = useActivePool()
+  const { isOwner, activePool, isMember } = useActivePool()
 
-  const canGeneratePoolInvite = activeAccount && isOwner() && activePool
+  const canGeneratePoolInvite =
+    activeAccount && (isOwner() || isMember()) && activePool
   const canGenerateValidatorInvite = activeAccount && !inSetup()
 
   const generateInviteLink = async (type: 'pool' | 'validator' | 'group') => {
