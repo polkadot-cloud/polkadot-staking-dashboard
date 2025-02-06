@@ -13,6 +13,8 @@ import type { TokenPricesContextInterface } from './types'
 
 const REFETCH_PRICE_INTERVAL = 30 * 1000
 
+const IGNORE_NETWORKS = ['westend']
+
 export const TokenPricesContext = createContext<TokenPricesContextInterface>(
   defaultTokenPricesContext
 )
@@ -48,7 +50,7 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
   // Mange token price state and interval on plugin / network toggle
   let interval: NodeJS.Timeout
   useEffect(() => {
-    if (pluginEnabled('staking_api')) {
+    if (pluginEnabled('staking_api') && !IGNORE_NETWORKS.includes(network)) {
       // Fetch token price
       getTokenPrice()
       // Initiate interval to refetch token price every 30 seconds
