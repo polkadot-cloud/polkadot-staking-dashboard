@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
@@ -22,10 +22,19 @@ export const getInitialLanguage = () => {
     return urlLng
   }
 
-  // fall back to localStorage if present.
+  // fall back to localStorage if present
   const localLng = localStorage.getItem('lng')
   if (localLng && Object.keys(locales).find((key) => key === localLng)) {
     return localLng
+  }
+
+  // fall back to browser language
+  const supportedBrowser = Object.entries(locales).find(([, { tag }]) =>
+    navigator.language.startsWith(tag)
+  )?.[0]
+  if (supportedBrowser) {
+    localStorage.setItem('lng', supportedBrowser)
+    return supportedBrowser
   }
 
   localStorage.setItem('lng', DefaultLocale)
