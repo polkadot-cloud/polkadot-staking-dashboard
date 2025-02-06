@@ -6,12 +6,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useTokenPrices } from 'contexts/TokenPrice'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { StatBoxList } from 'library/StatBoxList'
 import { Text } from 'library/StatBoxList/Text'
-import { formatTokenPrice, useTokenPrice } from 'plugin-staking-api'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
@@ -20,12 +20,12 @@ import { RewardText, RewardsGrid } from '../Wrappers'
 
 export const Active = () => {
   const { t } = useTranslation('pages')
-  const { activeAccount } = useActiveAccounts()
   const { inPool } = useActivePool()
-  const { getLedger, getPoolMembership } = useBalances()
   const { networkData } = useNetwork()
+  const { price: dotPrice } = useTokenPrices()
+  const { activeAccount } = useActiveAccounts()
+  const { getLedger, getPoolMembership } = useBalances()
   const { getAverageRewardRate } = useAverageRewardRate()
-
   const [manualStake, setManualStake] = useState<number | null>(null)
   const [isCustomStake, setIsCustomStake] = useState(false)
 
@@ -43,11 +43,6 @@ export const Active = () => {
     }
     return planckToUnit(rawAmount, networkData.units)
   }
-
-  const { loading, error, data } = useTokenPrice({
-    ticker: `${networkData.api.unit}USDT`,
-  })
-  const { price: dotPrice } = formatTokenPrice(loading, error, data)
 
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
