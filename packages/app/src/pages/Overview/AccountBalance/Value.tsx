@@ -1,25 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
-import { useNetwork } from 'contexts/Network'
-import { formatTokenPriceFromResult, useTokenPrice } from 'plugin-staking-api'
+import { useTokenPrices } from 'contexts/TokenPrice'
 
-interface CardLabelProps {
-  totalBalance: BigNumber
-}
-
-export const Value = ({ totalBalance }: CardLabelProps) => {
-  const {
-    networkData: {
-      api: { unit },
-    },
-  } = useNetwork()
-  const { loading, error, data, refetch } = useTokenPrice({
-    ticker: `${unit}USDT`,
-  })
-  const { price } = formatTokenPriceFromResult(loading, error, data)
+export const Value = ({ totalBalance }: { totalBalance: BigNumber }) => {
+  const { price } = useTokenPrices()
 
   // Convert balance to fiat value
   const freeFiat = totalBalance.multipliedBy(
@@ -31,14 +17,6 @@ export const Value = ({ totalBalance }: CardLabelProps) => {
     style: 'currency',
     currency: 'USD',
   })
-
-  // Initiate interval to refetch token price every 30 seconds
-  useEffectIgnoreInitial(() => {
-    const interval = setInterval(() => {
-      refetch()
-    }, 30 * 1000)
-    return () => clearInterval(interval)
-  }, [refetch])
 
   return <>{usdFormatter.format(freeFiat.toNumber())}</>
 }

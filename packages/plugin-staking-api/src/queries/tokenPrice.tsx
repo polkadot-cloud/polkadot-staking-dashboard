@@ -57,7 +57,7 @@ export const formatTokenPriceFromResult = (
 export const formatTokenPrice = (
   maybePrice: number | null,
   maybeChange: number | null
-) => {
+): { price: number; change: number } => {
   const price = Number((maybePrice || 0).toFixed(2))
   const change = Number((maybeChange || 0).toFixed(2))
   return {
