@@ -49,10 +49,19 @@ export const formatTokenPriceFromResult = (
   error: ApolloError | undefined,
   data: TokenPriceResult
 ) => {
-  const price =
-    loading || error ? 0 : Number(data?.tokenPrice?.price.toFixed(2)) || 0
-  const change =
-    loading || error ? 0 : Number(data?.tokenPrice?.change.toFixed(2)) || 0
+  const maybePrice = loading || error ? 0 : data?.tokenPrice?.price || null
+  const maybeChange = loading || error ? 0 : data?.tokenPrice?.change || null
+  return formatTokenPrice(maybePrice, maybeChange)
+}
 
-  return { price, change }
+export const formatTokenPrice = (
+  maybePrice: number | null,
+  maybeChange: number | null
+) => {
+  const price = Number((maybePrice || 0).toFixed(2))
+  const change = Number((maybeChange || 0).toFixed(2))
+  return {
+    price,
+    change,
+  }
 }
