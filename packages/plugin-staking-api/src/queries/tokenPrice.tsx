@@ -3,7 +3,12 @@
 
 import type { ApolloError } from '@apollo/client'
 import { gql, useQuery } from '@apollo/client'
-import type { TokenPriceResult, UseTokenPriceResult } from '../types'
+import { client } from '../Client'
+import type {
+  TokenPrice,
+  TokenPriceResult,
+  UseTokenPriceResult,
+} from '../types'
 
 const QUERY = gql`
   query TokenPrice($ticker: String!) {
@@ -23,6 +28,20 @@ export const useTokenPrice = ({
     variables: { ticker },
   })
   return { loading, error, data, refetch }
+}
+
+export const fetchTokenPrice = async (
+  ticker: string
+): Promise<TokenPrice | null> => {
+  try {
+    const result = await client.query({
+      query: QUERY,
+      variables: { ticker },
+    })
+    return result.data.tokenPrice
+  } catch (error) {
+    return null
+  }
 }
 
 export const formatTokenPrice = (
