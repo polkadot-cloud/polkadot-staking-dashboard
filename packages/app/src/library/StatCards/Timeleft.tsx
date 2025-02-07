@@ -4,9 +4,14 @@
 import { useHelp } from 'contexts/Help'
 import { Countdown } from 'library/Countdown'
 import { ButtonHelp } from 'ui-buttons'
+import {
+  Countdown as CountdownWrapper,
+  StatCard,
+  StatContent,
+  StatGraphic,
+  StatSubtitle,
+} from 'ui-core/base'
 import { Pie } from 'ui-graphs'
-import { StatBox } from './Item'
-import { TimeLeftWrapper } from './Wrapper'
 import type { TimeleftProps } from './types'
 
 export const Timeleft = ({
@@ -16,33 +21,31 @@ export const Timeleft = ({
   tooltip,
   helpKey,
 }: TimeleftProps) => {
-  const help = helpKey !== undefined
   const { openHelp } = useHelp()
 
   return (
-    <StatBox>
-      <div className="content chart">
-        <div className="chart">
+    <StatCard>
+      <div>
+        <StatGraphic>
           <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
-          {tooltip ? (
-            <div className="tooltip">
-              <h3>{tooltip}</h3>
-            </div>
-          ) : null}
-        </div>
-
-        <div className="labels">
-          <TimeLeftWrapper>
+        </StatGraphic>
+        {tooltip && (
+          <label>
+            <h3>{tooltip}</h3>
+          </label>
+        )}
+        <StatContent>
+          <CountdownWrapper>
             <Countdown timeleft={timeleft} />
-          </TimeLeftWrapper>
-          <h4>
+          </CountdownWrapper>
+          <StatSubtitle>
             {label}{' '}
-            {help ? (
+            {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
-          </h4>
-        </div>
+          </StatSubtitle>
+        </StatContent>
       </div>
-    </StatBox>
+    </StatCard>
   )
 }
