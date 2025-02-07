@@ -18,24 +18,21 @@ export const Pie = memo(({ value = 0, size = '2rem' }: Props) => {
       stroke-dasharray: ${value}, ${inactive}, 0, 0;
       }
     `
-  const pie2Keyframes = keyframes`
-    100% {
-      stroke-dasharray: 0, ${value}, ${inactive}, 0;
-    }
-  `
 
   // Define pie animations per segment
   const Wrapper = styled.div`
     > svg {
       > circle {
-        animation: ${pie1Keyframes} 0.75s 1 cubic-bezier(0, 0.85, 0, 0.85)
-          forwards;
         &:nth-child(1) {
-          stroke: ${activeColor};
+          stroke: ${inactiveColor};
+          stroke-dasharray: 100, 0, 0, 0;
+          z-index: 0;
         }
         &:nth-child(2) {
-          stroke: ${inactiveColor};
-          animation-name: ${pie2Keyframes};
+          animation: ${pie1Keyframes} 0.75s 1 cubic-bezier(0, 0.85, 0, 0.85)
+            forwards;
+          stroke: ${activeColor};
+          z-index: 1;
         }
       }
     }
