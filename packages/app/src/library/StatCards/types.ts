@@ -18,10 +18,7 @@ export interface PieProps {
     unit: string | number
     total?: string | number
   }
-  graph: {
-    value1: number
-    value2: number
-  }
+  pieValue: number
   tooltip?: string
   helpKey: string
 }
@@ -44,6 +41,3 @@ export interface TimeleftProps {
   tooltip?: string
   helpKey?: string
 }
-
-export type TimeLeftRaw = TimeLeftRawItem[]
-export type TimeLeftRawItem = (number | string)[]
