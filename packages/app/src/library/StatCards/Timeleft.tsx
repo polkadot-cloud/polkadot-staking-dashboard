@@ -8,6 +8,7 @@ import {
   Countdown as CountdownWrapper,
   StatCard,
   StatGraphic,
+  StatSubtitle,
 } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
 import { StatContent } from './Wrapper'
@@ -37,12 +38,12 @@ export const Timeleft = ({
           <CountdownWrapper>
             <Countdown timeleft={timeleft} />
           </CountdownWrapper>
-          <h4>
+          <StatSubtitle>
             {label}{' '}
             {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
-          </h4>
+          </StatSubtitle>
         </div>
       </StatContent>
     </StatCard>

@@ -58,47 +58,5 @@ export const StatContent = styled.div`
     flex-flow: column wrap;
     justify-content: center;
     overflow: hidden;
-
-    h3 {
-      font-family: InterBold, sans-serif;
-      font-size: 1.2rem;
-      display: flex;
-      flex-flow: row wrap;
-      margin-top: 0.1rem;
-      margin-bottom: 0.1rem;
-
-      &.primary {
-        color: var(--accent-color-primary);
-      }
-
-      &.text {
-        margin-top: 0.15rem;
-        display: flex;
-        align-items: center;
-      }
-      span.total {
-        color: var(--text-color-secondary);
-        display: flex;
-        font-size: 0.95rem;
-        margin-left: 0.4rem;
-        position: relative;
-        bottom: 0.1rem;
-      }
-    }
-
-    h4 {
-      color: var(--text-color-secondary);
-      font-family: InterSemiBold, sans-serif;
-      flex: 1;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-    }
-
-    @media (min-width: 950px) {
-      h3 {
-        font-size: 1.25rem;
-      }
-    }
   }
 `
