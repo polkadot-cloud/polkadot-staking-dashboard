@@ -24,9 +24,9 @@ export const Timeleft = ({
       <StatBoxContent className="chart">
         <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
         {tooltip ? (
-          <div className="tooltip">
+          <label>
             <h3>{tooltip}</h3>
-          </div>
+          </label>
         ) : null}
 
         <div className="labels">

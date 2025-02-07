@@ -34,9 +34,9 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
       <StatBoxContent className="chart">
         <PieGraph value={pieValue} size="3.2rem" />
         {tooltip ? (
-          <div className="tooltip">
+          <label>
             <h3>{tooltip}</h3>
-          </div>
+          </label>
         ) : null}
 
         <div className="labels">

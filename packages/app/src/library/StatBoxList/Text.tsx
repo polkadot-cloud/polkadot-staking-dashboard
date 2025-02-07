@@ -4,7 +4,7 @@
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
 import { StatCard } from 'ui-core/base'
-import { StatBoxContent, TextTitleWrapper } from './Wrapper'
+import { StatBoxContent } from './Wrapper'
 import type { TextProps } from './types'
 
 export const Text = ({
@@ -20,10 +20,10 @@ export const Text = ({
     <StatCard>
       <StatBoxContent>
         <div className="labels">
-          <TextTitleWrapper $primary={primary === true}>
+          <h3 className={primary ? 'primary' : ''}>
             {value}
             {secondaryValue ? <span>{secondaryValue}</span> : null}
-          </TextTitleWrapper>
+          </h3>
           <h4>
             {label}
             {help ? (
