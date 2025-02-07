@@ -23,11 +23,11 @@ export const Timeleft = ({
     <StatCard>
       <StatBoxContent className="chart">
         <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
-        {tooltip ? (
+        {tooltip && (
           <label>
             <h3>{tooltip}</h3>
           </label>
-        ) : null}
+        )}
 
         <div className="labels">
           <TimeLeftWrapper>
