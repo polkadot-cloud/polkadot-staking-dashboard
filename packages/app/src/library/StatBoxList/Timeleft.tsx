@@ -22,14 +22,12 @@ export const Timeleft = ({
   return (
     <StatCard>
       <StatBoxContent className="chart">
-        <div className="chart">
-          <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
-          {tooltip ? (
-            <div className="tooltip">
-              <h3>{tooltip}</h3>
-            </div>
-          ) : null}
-        </div>
+        <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
+        {tooltip ? (
+          <div className="tooltip">
+            <h3>{tooltip}</h3>
+          </div>
+        ) : null}
 
         <div className="labels">
           <TimeLeftWrapper>

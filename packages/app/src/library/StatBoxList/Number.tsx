@@ -21,7 +21,7 @@ export const Number = ({
 
   return (
     <StatCard>
-      <StatBoxContent className="chart">
+      <StatBoxContent>
         <div className="labels">
           <h3>
             <Odometer

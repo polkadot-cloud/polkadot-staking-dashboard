@@ -41,22 +41,15 @@ export const StatBoxContent = styled.div`
     align-items: center;
   }
 
-  > .chart {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &.chart {
     padding-left: 1rem;
-
-    .graph {
-      overflow: hidden;
-    }
+    overflow: hidden;
 
     .tooltip {
       background: var(--background-invert);
       opacity: 0;
       position: absolute;
-      top: -20px;
+      top: -1rem;
       left: -8px;
       z-index: 2;
       border-radius: 0.5rem;

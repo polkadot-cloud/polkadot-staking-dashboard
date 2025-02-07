@@ -31,15 +31,13 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
 
   return (
     <StatCard>
-      <StatBoxContent>
-        <div className="chart">
-          <PieGraph value={pieValue} size="3.2rem" />
-          {tooltip ? (
-            <div className="tooltip">
-              <h3>{tooltip}</h3>
-            </div>
-          ) : null}
-        </div>
+      <StatBoxContent className="chart">
+        <PieGraph value={pieValue} size="3.2rem" />
+        {tooltip ? (
+          <div className="tooltip">
+            <h3>{tooltip}</h3>
+          </div>
+        ) : null}
 
         <div className="labels">
           <h3>

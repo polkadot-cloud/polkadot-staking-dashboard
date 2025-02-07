@@ -18,7 +18,7 @@ export const Text = ({
   const { openHelp } = useHelp()
   return (
     <StatCard>
-      <StatBoxContent className="chart">
+      <StatBoxContent>
         <div className="labels">
           <TextTitleWrapper $primary={primary === true}>
             {value}
