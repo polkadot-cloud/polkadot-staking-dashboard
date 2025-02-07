@@ -7,11 +7,11 @@ import { ButtonHelp } from 'ui-buttons'
 import {
   Countdown as CountdownWrapper,
   StatCard,
+  StatContent,
   StatGraphic,
   StatSubtitle,
 } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
-import { StatContent } from './Wrapper'
 import type { TimeleftProps } from './types'
 
 export const Timeleft = ({
@@ -25,7 +25,7 @@ export const Timeleft = ({
 
   return (
     <StatCard>
-      <StatContent>
+      <div>
         <StatGraphic>
           <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
         </StatGraphic>
@@ -34,7 +34,7 @@ export const Timeleft = ({
             <h3>{tooltip}</h3>
           </label>
         )}
-        <div className="labels">
+        <StatContent>
           <CountdownWrapper>
             <Countdown timeleft={timeleft} />
           </CountdownWrapper>
@@ -44,8 +44,8 @@ export const Timeleft = ({
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
           </StatSubtitle>
-        </div>
-      </StatContent>
+        </StatContent>
+      </div>
     </StatCard>
   )
 }

@@ -7,6 +7,7 @@ import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
 import {
   StatCard,
+  StatContent,
   StatGraphic,
   StatSubtitle,
   StatTitle,
@@ -14,7 +15,6 @@ import {
 } from 'ui-core/base'
 import { Pie as PieGraph } from 'ui-graphs'
 import type { PieProps } from './types'
-import { StatContent } from './Wrapper'
 
 export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
   const showTotal = !!stat?.total
@@ -22,7 +22,7 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
 
   return (
     <StatCard>
-      <StatContent>
+      <div>
         <StatGraphic>
           <PieGraph value={pieValue} size="3.2rem" />
         </StatGraphic>
@@ -31,7 +31,7 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
             <h3>{tooltip}</h3>
           </label>
         )}
-        <div className="labels">
+        <StatContent>
           <StatTitle>
             <Odometer value={new BigNumber(stat.value).toFormat()} />
             {stat?.unit && stat.unit}
@@ -50,8 +50,8 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
           </StatSubtitle>
-        </div>
-      </StatContent>
+        </StatContent>
+      </div>
     </StatCard>
   )
 }
