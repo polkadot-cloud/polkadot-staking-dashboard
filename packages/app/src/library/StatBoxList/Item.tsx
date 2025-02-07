@@ -9,16 +9,7 @@ import { Text } from './Text'
 import { StatBoxWrapper } from './Wrapper'
 
 export const StatBox = ({ children }: { children: ReactNode }) => (
-  <StatBoxWrapper
-    whileHover={{ scale: 1.02 }}
-    transition={{
-      duration: 0.5,
-      type: 'spring',
-      bounce: 0.4,
-    }}
-  >
-    {children}
-  </StatBoxWrapper>
+  <StatBoxWrapper>{children}</StatBoxWrapper>
 )
 
 export const StatBoxListItem = ({
