@@ -24,7 +24,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { PluginLabel } from 'library/PluginLabel'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
-import { CardHeader, PageRow, StatBoxRow } from 'ui-core/base'
+import { CardHeader, PageRow, StatRow } from 'ui-core/base'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -113,11 +113,11 @@ export const NominationGeo = () => {
 
   return (
     <>
-      <StatBoxRow>
+      <StatRow>
         <AnalyzedDays />
         <AnalyzedEras meta={networkMeta} />
         <AnalyzedPayouts data={nominationDetail} />
-      </StatBoxRow>
+      </StatRow>
       <PageRow>
         <CardWrapper>
           <PluginLabel plugin="polkawatch" />

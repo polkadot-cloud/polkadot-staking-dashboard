@@ -8,7 +8,7 @@ import {
   PageRow,
   PageTitle,
   RowSection,
-  StatBoxRow,
+  StatRow,
 } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
@@ -32,11 +32,11 @@ export const Overview = () => {
           <AccountControls />
         </PageHeading>
       </PageRow>
-      <StatBoxRow>
+      <StatRow>
         <AverageRewardRate />
         <SupplyStaked />
         <NextRewards />
-      </StatBoxRow>
+      </StatRow>
       <PageRow>
         <StakeStatus />
       </PageRow>

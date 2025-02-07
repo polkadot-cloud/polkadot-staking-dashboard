@@ -11,7 +11,7 @@ import { PoolList } from 'library/PoolList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageRow, PageTitle, RowSection, StatBoxRow } from 'ui-core/base'
+import { PageRow, PageTitle, RowSection, StatRow } from 'ui-core/base'
 import { ClosurePrompts } from './ClosurePrompts'
 import { PoolFavorites } from './Favorites'
 import { ManageBond } from './ManageBond'
@@ -64,11 +64,11 @@ export const PoolsInner = () => {
       />
       {activeTab === 0 && (
         <>
-          <StatBoxRow>
+          <StatRow>
             <ActivePoolCount />
             <MinJoinBond />
             <MinCreateBond />
-          </StatBoxRow>
+          </StatRow>
           <ClosurePrompts />
           <WithdrawPrompt bondFor="pool" />
           <PageRow>

@@ -6,14 +6,14 @@ import classNames from 'classnames'
 import classes from './index.module.scss'
 
 /**
- * @name StatBoxRow
+ * @name StatRow
  * @summary Used to house a row of `StatBox` items.
  */
-export const StatBoxRow = ({ children, style }: ComponentBase) => {
-  const divClasses = classNames('page-padding', classes.statBoxRow)
+export const StatRow = ({ children, style }: ComponentBase) => {
+  const allClasses = classNames('page-padding', classes.statRow)
 
   return (
-    <div className={divClasses} style={style}>
+    <div className={allClasses} style={style}>
       {children}
     </div>
   )
