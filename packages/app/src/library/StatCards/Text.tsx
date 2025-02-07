@@ -4,7 +4,7 @@
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
 import { StatCard } from 'ui-core/base'
-import { StatBoxContent } from './Wrapper'
+import { StatContent } from './Wrapper'
 import type { TextProps } from './types'
 
 export const Text = ({
@@ -18,7 +18,7 @@ export const Text = ({
 
   return (
     <StatCard>
-      <StatBoxContent>
+      <StatContent>
         <div className="labels">
           <h3 className={primary ? 'primary' : ''}>
             {value}
@@ -31,7 +31,7 @@ export const Text = ({
             ) : null}
           </h4>
         </div>
-      </StatBoxContent>
+      </StatContent>
     </StatCard>
   )
 }

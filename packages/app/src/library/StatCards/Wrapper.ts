@@ -3,7 +3,7 @@
 
 import styled from 'styled-components'
 
-export const StatBoxContent = styled.div`
+export const StatContent = styled.div`
   background: var(--background-primary);
   box-shadow: var(--card-shadow-secondary);
   display: flex;

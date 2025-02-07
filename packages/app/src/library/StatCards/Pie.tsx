@@ -8,7 +8,7 @@ import { ButtonHelp } from 'ui-buttons'
 import { StatCard, StatGraphic } from 'ui-core/base'
 import { Pie as PieGraph } from 'ui-graphs'
 import type { PieProps } from './types'
-import { StatBoxContent } from './Wrapper'
+import { StatContent } from './Wrapper'
 
 export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
   const showTotal = !!stat?.total
@@ -16,7 +16,7 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
 
   return (
     <StatCard>
-      <StatBoxContent>
+      <StatContent>
         <StatGraphic>
           <PieGraph value={pieValue} size="3.2rem" />
         </StatGraphic>
@@ -45,7 +45,7 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
             ) : null}
           </h4>
         </div>
-      </StatBoxContent>
+      </StatContent>
     </StatCard>
   )
 }
