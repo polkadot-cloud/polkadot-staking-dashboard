@@ -25,7 +25,7 @@ export const Timeleft = ({
 
   return (
     <StatCard>
-      <StatContent className="chart">
+      <StatContent>
         <StatGraphic>
           <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
         </StatGraphic>
