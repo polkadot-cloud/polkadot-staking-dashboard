@@ -4,9 +4,9 @@
 import { useHelp } from 'contexts/Help'
 import { Countdown } from 'library/Countdown'
 import { ButtonHelp } from 'ui-buttons'
-import { StatCard } from 'ui-core/base'
+import { Countdown as CountdownWrapper, StatCard } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
-import { StatBoxContent, TimeLeftWrapper } from './Wrapper'
+import { StatBoxContent } from './Wrapper'
 import type { TimeleftProps } from './types'
 
 export const Timeleft = ({
@@ -28,9 +28,9 @@ export const Timeleft = ({
           </label>
         )}
         <div className="labels">
-          <TimeLeftWrapper>
+          <CountdownWrapper>
             <Countdown timeleft={timeleft} />
-          </TimeLeftWrapper>
+          </CountdownWrapper>
           <h4>
             {label}{' '}
             {helpKey !== undefined ? (

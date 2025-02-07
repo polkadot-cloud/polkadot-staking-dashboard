@@ -106,19 +106,3 @@ export const StatBoxContent = styled.div`
     }
   }
 `
-
-export const TimeLeftWrapper = styled.div`
-  color: var(--text-color-primary);
-  font-family: InterBold, sans-serif;
-  display: flex;
-  font-size: 1.2rem;
-
-  span {
-    color: var(--text-color-primary);
-    font-family: InterSemiBold, sans-serif;
-    font-size: 0.95rem;
-    margin-left: 0.3rem;
-    margin-top: 0.1rem;
-    margin-right: 0.75rem;
-  }
-`
