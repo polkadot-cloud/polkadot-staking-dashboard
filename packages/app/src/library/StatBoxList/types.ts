@@ -41,6 +41,3 @@ export interface TimeleftProps {
   tooltip?: string
   helpKey?: string
 }
-
-export type TimeLeftRaw = TimeLeftRawItem[]
-export type TimeLeftRawItem = (number | string)[]
