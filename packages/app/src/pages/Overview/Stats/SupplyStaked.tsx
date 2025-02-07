@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Pie } from 'library/StatBoxList/Pie'
+import { Pie } from 'library/StatCards/Pie'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 

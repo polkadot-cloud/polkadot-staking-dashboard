@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { Text } from 'library/StatBoxList/Text'
+import { Text } from 'library/StatCards/Text'
 import { useTranslation } from 'react-i18next'
 
 export const AverageCommission = () => {

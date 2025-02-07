@@ -5,7 +5,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import BigNumber from 'bignumber.js'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
-import { StatBox } from './Item'
+import { StatCard, StatContent, StatSubtitle, StatTitle } from 'ui-core/base'
 import type { NumberProps } from './types'
 
 export const Number = ({
@@ -15,29 +15,28 @@ export const Number = ({
   helpKey,
   decimals,
 }: NumberProps) => {
-  const help = helpKey !== undefined
   const { openHelp } = useHelp()
 
   return (
-    <StatBox>
-      <div className="content chart">
-        <div className="labels">
-          <h3>
+    <StatCard>
+      <div>
+        <StatContent>
+          <StatTitle>
             <Odometer
               value={new BigNumber(value)
                 .decimalPlaces(decimals || 0)
                 .toFormat()}
             />
             {unit || null}
-          </h3>
-          <h4>
+          </StatTitle>
+          <StatSubtitle>
             {label}
-            {help ? (
+            {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
-          </h4>
-        </div>
+          </StatSubtitle>
+        </StatContent>
       </div>
-    </StatBox>
+    </StatCard>
   )
 }
