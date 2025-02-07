@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api'
 import { useStaking } from 'contexts/Staking'
 import { Pie } from 'library/StatBoxList/Pie'
 import { useTranslation } from 'react-i18next'
+import { percentageOf } from 'ui-graphs'
 
 export const ActiveValidators = () => {
   const { t } = useTranslation('pages')
@@ -29,10 +30,7 @@ export const ActiveValidators = () => {
       total: validatorCount.toNumber(),
       unit: '',
     },
-    graph: {
-      value1: activeValidators,
-      value2: validatorCount.minus(activeValidators).toNumber(),
-    },
+    pieValue: percentageOf(activeValidators, validatorCount.toNumber()),
     tooltip: `${activeValidatorsAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Active Validator',
   }

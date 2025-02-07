@@ -32,13 +32,7 @@ export const SupplyStaked = () => {
       value: `${supplyAsPercent.decimalPlaces(2).toFormat()}`,
       unit: '%',
     },
-    graph: {
-      value1: supplyAsPercent.decimalPlaces(2).toNumber(),
-      value2: new BigNumber(100)
-        .minus(supplyAsPercent)
-        .decimalPlaces(2)
-        .toNumber(),
-    },
+    pieValue: supplyAsPercent.decimalPlaces(2).toNumber(),
     tooltip: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Supply Staked',
   }

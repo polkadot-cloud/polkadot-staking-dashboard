@@ -7,7 +7,7 @@ import classes from './index.module.scss'
 import type { Props } from './types'
 
 // Memoizing component to prevent animation restarts
-export const Pie = memo(({ value = 0 }: Props) => {
+export const Pie = memo(({ value = 0, size = '2rem' }: Props) => {
   const inactive = 100 - value
   const activeColor = 'var(--accent-color-primary)'
   const inactiveColor = 'var(--background-default)'
@@ -42,7 +42,7 @@ export const Pie = memo(({ value = 0 }: Props) => {
   `
 
   return (
-    <Wrapper className={classes.pie}>
+    <Wrapper className={classes.pie} style={{ width: size, height: size }}>
       <svg viewBox="0 0 63.6619772368 63.6619772368">
         <circle cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
         <circle cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />

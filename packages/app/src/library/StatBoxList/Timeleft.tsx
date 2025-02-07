@@ -3,8 +3,8 @@
 
 import { useHelp } from 'contexts/Help'
 import { Countdown } from 'library/Countdown'
-import { SimplePie } from 'library/SimplePie'
 import { ButtonHelp } from 'ui-buttons'
+import { Pie } from 'ui-graphs'
 import { StatBox } from './Item'
 import { TimeLeftWrapper } from './Wrapper'
 import type { TimeleftProps } from './types'
@@ -23,19 +23,7 @@ export const Timeleft = ({
     <StatBox>
       <div className="content chart">
         <div className="chart">
-          <SimplePie
-            items={[
-              {
-                value: graph?.value1,
-                color: 'var(--accent-color-primary)',
-              },
-              {
-                value: graph?.value2,
-                color: 'var(--background-default)',
-              },
-            ]}
-            diameter={34}
-          />
+          <Pie value={graph.value1} size="3.2rem" />
           {tooltip ? (
             <div className="tooltip">
               <h3>{tooltip}</h3>

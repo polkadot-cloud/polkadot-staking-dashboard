@@ -5,13 +5,13 @@ import { Odometer } from '@w3ux/react-odometer'
 import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
 import { useHelp } from 'contexts/Help'
-import { SimplePie } from 'library/SimplePie'
 import { useEffect, useState } from 'react'
 import { ButtonHelp } from 'ui-buttons'
+import { Pie as PieGraph } from 'ui-graphs'
 import { StatBox } from './Item'
 import type { PieProps } from './types'
 
-export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
+export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined
   const showTotal = !!stat?.total
   const { openHelp } = useHelp()
@@ -30,22 +30,9 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
 
   return (
     <StatBox>
-      <div className="content chart">
+      <div className="content">
         <div className="chart">
-          <SimplePie
-            items={[
-              {
-                value: graph?.value1,
-                color: 'var(--accent-color-primary)',
-              },
-              {
-                value: graph?.value2,
-                color: 'var(--background-default)',
-              },
-            ]}
-            diameter={34}
-            speed={2}
-          />
+          <PieGraph value={pieValue} size="3.2rem" />
           {tooltip ? (
             <div className="tooltip">
               <h3>{tooltip}</h3>

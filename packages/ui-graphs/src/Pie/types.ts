@@ -3,4 +3,5 @@
 
 export interface Props {
   value: number
+  size?: string | number
 }
