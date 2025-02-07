@@ -10,6 +10,7 @@ import { ButtonHelp } from 'ui-buttons'
 import { Pie as PieGraph } from 'ui-graphs'
 import { StatBox } from './Item'
 import type { PieProps } from './types'
+import { StatBoxContent } from './Wrapper'
 
 export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined
@@ -30,7 +31,7 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
 
   return (
     <StatBox>
-      <div className="content">
+      <StatBoxContent>
         <div className="chart">
           <PieGraph value={pieValue} size="3.2rem" />
           {tooltip ? (
@@ -60,7 +61,7 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
             ) : null}
           </h4>
         </div>
-      </div>
+      </StatBoxContent>
     </StatBox>
   )
 }

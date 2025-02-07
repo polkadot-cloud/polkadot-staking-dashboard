@@ -7,6 +7,7 @@ import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
 import { StatBox } from './Item'
 import type { NumberProps } from './types'
+import { StatBoxContent } from './Wrapper'
 
 export const Number = ({
   label,
@@ -20,7 +21,7 @@ export const Number = ({
 
   return (
     <StatBox>
-      <div className="content chart">
+      <StatBoxContent className="chart">
         <div className="labels">
           <h3>
             <Odometer
@@ -37,7 +38,7 @@ export const Number = ({
             ) : null}
           </h4>
         </div>
-      </div>
+      </StatBoxContent>
     </StatBox>
   )
 }

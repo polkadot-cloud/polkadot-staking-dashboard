@@ -6,7 +6,7 @@ import { Countdown } from 'library/Countdown'
 import { ButtonHelp } from 'ui-buttons'
 import { Pie } from 'ui-graphs'
 import { StatBox } from './Item'
-import { TimeLeftWrapper } from './Wrapper'
+import { StatBoxContent, TimeLeftWrapper } from './Wrapper'
 import type { TimeleftProps } from './types'
 
 export const Timeleft = ({
@@ -21,7 +21,7 @@ export const Timeleft = ({
 
   return (
     <StatBox>
-      <div className="content chart">
+      <StatBoxContent className="chart">
         <div className="chart">
           <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
           {tooltip ? (
@@ -42,7 +42,7 @@ export const Timeleft = ({
             ) : null}
           </h4>
         </div>
-      </div>
+      </StatBoxContent>
     </StatBox>
   )
 }
