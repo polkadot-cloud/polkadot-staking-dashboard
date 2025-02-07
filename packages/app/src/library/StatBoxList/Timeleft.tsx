@@ -4,8 +4,8 @@
 import { useHelp } from 'contexts/Help'
 import { Countdown } from 'library/Countdown'
 import { ButtonHelp } from 'ui-buttons'
+import { StatCard } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
-import { StatBox } from './Item'
 import { StatBoxContent, TimeLeftWrapper } from './Wrapper'
 import type { TimeleftProps } from './types'
 
@@ -20,7 +20,7 @@ export const Timeleft = ({
   const { openHelp } = useHelp()
 
   return (
-    <StatBox>
+    <StatCard>
       <StatBoxContent className="chart">
         <div className="chart">
           <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
@@ -43,6 +43,6 @@ export const Timeleft = ({
           </h4>
         </div>
       </StatBoxContent>
-    </StatBox>
+    </StatCard>
   )
 }

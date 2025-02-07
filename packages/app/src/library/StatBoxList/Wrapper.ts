@@ -3,31 +3,6 @@
 
 import styled from 'styled-components'
 
-export const StatBoxWrapper = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  z-index: 0;
-  flex: 1;
-  flex-basis: 100%;
-  margin-bottom: 1rem;
-  transition: transform var(--transition-duration);
-
-  &:hover {
-    transform: scale(1.02);
-  }
-
-  @media (min-width: 800px) {
-    flex-basis: 33%;
-    min-width: 200px;
-    max-width: none;
-    margin-bottom: 0;
-  }
-
-  @media (min-width: 950px) {
-    max-width: 300px;
-  }
-`
-
 export const StatBoxContent = styled.div`
   background: var(--background-primary);
   box-shadow: var(--card-shadow-secondary);

@@ -7,8 +7,8 @@ import BigNumber from 'bignumber.js'
 import { useHelp } from 'contexts/Help'
 import { useEffect, useState } from 'react'
 import { ButtonHelp } from 'ui-buttons'
+import { StatCard } from 'ui-core/base'
 import { Pie as PieGraph } from 'ui-graphs'
-import { StatBox } from './Item'
 import type { PieProps } from './types'
 import { StatBoxContent } from './Wrapper'
 
@@ -30,7 +30,7 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
   }, [stat])
 
   return (
-    <StatBox>
+    <StatCard>
       <StatBoxContent>
         <div className="chart">
           <PieGraph value={pieValue} size="3.2rem" />
@@ -62,6 +62,6 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
           </h4>
         </div>
       </StatBoxContent>
-    </StatBox>
+    </StatCard>
   )
 }

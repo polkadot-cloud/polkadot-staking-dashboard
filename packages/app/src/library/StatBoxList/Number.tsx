@@ -5,7 +5,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import BigNumber from 'bignumber.js'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
-import { StatBox } from './Item'
+import { StatCard } from 'ui-core/base'
 import type { NumberProps } from './types'
 import { StatBoxContent } from './Wrapper'
 
@@ -20,7 +20,7 @@ export const Number = ({
   const { openHelp } = useHelp()
 
   return (
-    <StatBox>
+    <StatCard>
       <StatBoxContent className="chart">
         <div className="labels">
           <h3>
@@ -39,6 +39,6 @@ export const Number = ({
           </h4>
         </div>
       </StatBoxContent>
-    </StatBox>
+    </StatCard>
   )
 }
