@@ -33,12 +33,11 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
     <StatCard>
       <StatBoxContent className="chart">
         <PieGraph value={pieValue} size="3.2rem" />
-        {tooltip ? (
+        {tooltip && (
           <label>
             <h3>{tooltip}</h3>
           </label>
-        ) : null}
-
+        )}
         <div className="labels">
           <h3>
             <Odometer value={new BigNumber(values.value).toFormat()} />

@@ -39,37 +39,19 @@ export const StatBoxContent = styled.div`
     }
   }
 
-  h3 {
-    font-size: 1.2rem;
-  }
-
-  @media (min-width: 950px) {
-    h3 {
-      font-size: 1.25rem;
+  &:hover {
+    label {
+      opacity: 1;
     }
   }
+
   @media (max-width: 749px) {
     margin-right: 0;
     padding: 0.9rem 0;
   }
 
-  h4 {
-    color: var(--text-color-secondary);
-    font-family: InterSemiBold, sans-serif;
-    flex: 1;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-  }
-
   &.chart {
     padding-left: 1rem;
-
-    &:hover {
-      label {
-        opacity: 1;
-      }
-    }
   }
 
   > .labels {
@@ -83,6 +65,7 @@ export const StatBoxContent = styled.div`
 
     h3 {
       font-family: InterBold, sans-serif;
+      font-size: 1.2rem;
       display: flex;
       flex-flow: row wrap;
       margin-top: 0.1rem;
@@ -104,6 +87,21 @@ export const StatBoxContent = styled.div`
         margin-left: 0.4rem;
         position: relative;
         bottom: 0.1rem;
+      }
+    }
+
+    h4 {
+      color: var(--text-color-secondary);
+      font-family: InterSemiBold, sans-serif;
+      flex: 1;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+    }
+
+    @media (min-width: 950px) {
+      h3 {
+        font-size: 1.25rem;
       }
     }
   }

@@ -28,7 +28,6 @@ export const Timeleft = ({
             <h3>{tooltip}</h3>
           </label>
         )}
-
         <div className="labels">
           <TimeLeftWrapper>
             <Countdown timeleft={timeleft} />
