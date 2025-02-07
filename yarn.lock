@@ -4358,11 +4358,11 @@ __metadata:
     react-helmet-async: "npm:^2.0.5"
     react-router-dom: "npm:^7.1.1"
     rxjs: "npm:^7.8.1"
-    styled-components: "npm:^6.1.13"
     styles: "workspace:*"
     types: "workspace:*"
     ui-buttons: "workspace:*"
     ui-core: "workspace:*"
+    ui-graphs: "workspace:*"
     ui-identity: "workspace:*"
     ui-overlay: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
@@ -8847,6 +8847,7 @@ __metadata:
     react-error-boundary: "npm:^4.0.13"
     react-i18next: "npm:^15.4.0"
     sass: "npm:1.77.6"
+    styled-components: "npm:^6.1.13"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.23.0"
     vite: "npm:^6.0.11"
@@ -10925,6 +10926,15 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": "*"
     "@fortawesome/free-solid-svg-icons": "*"
     react: "*"
+  languageName: unknown
+  linkType: soft
+
+"ui-graphs@workspace:*, ui-graphs@workspace:packages/ui-graphs":
+  version: 0.0.0-use.local
+  resolution: "ui-graphs@workspace:packages/ui-graphs"
+  peerDependencies:
+    react: "*"
+    styled-components: "*"
   languageName: unknown
   linkType: soft
 

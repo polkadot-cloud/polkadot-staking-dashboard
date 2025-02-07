@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api'
 import { useStaking } from 'contexts/Staking'
 import { Pie } from 'library/StatBoxList/Pie'
 import { useTranslation } from 'react-i18next'
+import { percentageOf } from 'ui-graphs'
 
 export const ActiveNominators = () => {
   const { t } = useTranslation('pages')
@@ -28,10 +29,10 @@ export const ActiveNominators = () => {
       total: counterForNominators.toNumber(),
       unit: '',
     },
-    graph: {
-      value1: totalActiveNominators,
-      value2: counterForNominators.minus(totalActiveNominators).toNumber(),
-    },
+    pieValue: percentageOf(
+      totalActiveNominators,
+      counterForNominators.toNumber()
+    ),
     tooltip: `${new BigNumber(totalNominatorsAsPercent)
       .decimalPlaces(2)
       .toFormat()}%`,
