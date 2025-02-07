@@ -50,10 +50,6 @@ export const StatBoxContent = styled.div`
     padding: 0.9rem 0;
   }
 
-  &.chart {
-    padding-left: 1rem;
-  }
-
   > .labels {
     padding-left: 1.25rem;
     flex-basis: 70%;

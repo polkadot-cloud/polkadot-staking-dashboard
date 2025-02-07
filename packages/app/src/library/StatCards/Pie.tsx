@@ -5,7 +5,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import BigNumber from 'bignumber.js'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
-import { StatCard } from 'ui-core/base'
+import { StatCard, StatGraphic } from 'ui-core/base'
 import { Pie as PieGraph } from 'ui-graphs'
 import type { PieProps } from './types'
 import { StatBoxContent } from './Wrapper'
@@ -16,8 +16,10 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
 
   return (
     <StatCard>
-      <StatBoxContent className="chart">
-        <PieGraph value={pieValue} size="3.2rem" />
+      <StatBoxContent>
+        <StatGraphic>
+          <PieGraph value={pieValue} size="3.2rem" />
+        </StatGraphic>
         {tooltip && (
           <label>
             <h3>{tooltip}</h3>
