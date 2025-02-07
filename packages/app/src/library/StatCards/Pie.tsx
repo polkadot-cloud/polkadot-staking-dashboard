@@ -35,7 +35,6 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
           <StatTitle>
             <Odometer value={new BigNumber(stat.value).toFormat()} />
             {stat?.unit && stat.unit}
-
             {showTotal ? (
               <StatTotal>
                 /&nbsp;
