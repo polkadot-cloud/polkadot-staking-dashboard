@@ -23,15 +23,8 @@ export const StatBoxWrapper = styled.div`
     margin-bottom: 0;
   }
 
-  /* responsive screen sizing */
-  h3 {
-    font-size: 1.2rem;
-  }
   @media (min-width: 950px) {
     max-width: 300px;
-    h3 {
-      font-size: 1.25rem;
-    }
   }
 `
 
@@ -42,6 +35,16 @@ export const StatBoxContent = styled.div`
   @media (max-width: 799px) {
     box-shadow: var(--card-shadow);
   }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+  @media (min-width: 950px) {
+    h3 {
+      font-size: 1.25rem;
+    }
+  }
+
   display: flex;
   border-radius: 0.6rem;
   margin-right: 1.25rem;
