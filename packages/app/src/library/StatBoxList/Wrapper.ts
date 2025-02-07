@@ -4,19 +4,6 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const ListWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  padding-top: 1rem;
-
-  > div:last-child {
-    margin-bottom: 0;
-    .content {
-      margin-right: 0;
-    }
-  }
-`
-
 export const StatBoxWrapper = styled(motion.div)`
   display: flex;
   flex-flow: column wrap;

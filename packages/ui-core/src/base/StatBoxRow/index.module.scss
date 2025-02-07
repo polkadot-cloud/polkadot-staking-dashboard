@@ -3,5 +3,12 @@
 
 .statBoxRow {
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
+  margin-top: 1rem;
+  > div:last-child {
+    margin-bottom: 0;
+    .content {
+      margin-right: 0;
+    }
+  }
 }
