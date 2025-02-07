@@ -16,7 +16,6 @@ export const Timeleft = ({
   tooltip,
   helpKey,
 }: TimeleftProps) => {
-  const help = helpKey !== undefined
   const { openHelp } = useHelp()
 
   return (
@@ -34,7 +33,7 @@ export const Timeleft = ({
           </TimeLeftWrapper>
           <h4>
             {label}{' '}
-            {help ? (
+            {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
           </h4>

@@ -14,8 +14,8 @@ export const Text = ({
   helpKey,
   primary,
 }: TextProps) => {
-  const help = helpKey !== undefined
   const { openHelp } = useHelp()
+
   return (
     <StatCard>
       <StatBoxContent>
@@ -26,7 +26,7 @@ export const Text = ({
           </h3>
           <h4>
             {label}
-            {help ? (
+            {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
           </h4>
