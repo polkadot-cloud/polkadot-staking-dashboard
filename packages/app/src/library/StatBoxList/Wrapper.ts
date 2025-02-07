@@ -109,20 +109,11 @@ export const StatBoxContent = styled.div`
   }
 `
 
-export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
-  color: ${(props) =>
-    props.primary === true
-      ? 'var(--accent-color-primary)'
-      : 'var(--text-color-primary)'};
+export const TimeLeftWrapper = styled.div`
+  color: var(--text-color-primary);
   font-family: InterBold, sans-serif;
   display: flex;
-  flex-flow: row wrap;
   font-size: 1.2rem;
-  @media (min-width: 950px) {
-    max-width: 300px;
-    font-size: 1.25rem;
-  }
-  margin-bottom: 0.15rem;
 
   span {
     color: var(--text-color-primary);
