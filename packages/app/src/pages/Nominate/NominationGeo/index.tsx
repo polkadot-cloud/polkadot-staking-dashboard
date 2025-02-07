@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network'
-import { StatBoxList } from 'library/StatBoxList'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -25,7 +24,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { PluginLabel } from 'library/PluginLabel'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
-import { CardHeader, PageRow } from 'ui-core/base'
+import { CardHeader, PageRow, StatBoxRow } from 'ui-core/base'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -114,11 +113,11 @@ export const NominationGeo = () => {
 
   return (
     <>
-      <StatBoxList>
+      <StatBoxRow>
         <AnalyzedDays />
         <AnalyzedEras meta={networkMeta} />
         <AnalyzedPayouts data={nominationDetail} />
-      </StatBoxList>
+      </StatBoxRow>
       <PageRow>
         <CardWrapper>
           <PluginLabel plugin="polkawatch" />

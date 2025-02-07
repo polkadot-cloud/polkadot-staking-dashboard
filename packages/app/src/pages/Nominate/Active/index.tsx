@@ -12,11 +12,10 @@ import { useUnstaking } from 'hooks/useUnstaking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { Nominations } from 'library/Nominations'
-import { StatBoxList } from 'library/StatBoxList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { CardHeader, PageRow, RowSection } from 'ui-core/base'
+import { CardHeader, PageRow, RowSection, StatBoxRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
@@ -42,11 +41,11 @@ export const Active = () => {
 
   return (
     <>
-      <StatBoxList>
+      <StatBoxRow>
         <ActiveNominators />
         <MinimumNominatorBond />
         <MinimumActiveStake />
-      </StatBoxList>
+      </StatBoxRow>
       <CommissionPrompt />
 
       {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}

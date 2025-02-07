@@ -4,10 +4,9 @@
 import { useApi } from 'contexts/Api'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { StatBoxList } from 'library/StatBoxList'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
-import { PageRow } from 'ui-core/base'
+import { PageRow, StatBoxRow } from 'ui-core/base'
 import { ActiveValidators } from './Stats/ActiveValidators'
 import { AverageCommission } from './Stats/AverageCommission'
 import { TotalValidators } from './Stats/TotalValidators'
@@ -20,11 +19,11 @@ export const AllValidators = () => {
 
   return (
     <>
-      <StatBoxList>
+      <StatBoxRow>
         <ActiveValidators />
         <TotalValidators />
         <AverageCommission />
-      </StatBoxList>
+      </StatBoxRow>
       <PageRow>
         <CardWrapper>
           {!isReady ? (

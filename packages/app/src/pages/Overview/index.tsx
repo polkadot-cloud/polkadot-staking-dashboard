@@ -2,9 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CardWrapper } from 'library/Card/Wrappers'
-import { StatBoxList } from 'library/StatBoxList'
 import { useTranslation } from 'react-i18next'
-import { PageHeading, PageRow, PageTitle, RowSection } from 'ui-core/base'
+import {
+  PageHeading,
+  PageRow,
+  PageTitle,
+  RowSection,
+  StatBoxRow,
+} from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
 import { AccountControls } from './AccountControls'
@@ -27,11 +32,11 @@ export const Overview = () => {
           <AccountControls />
         </PageHeading>
       </PageRow>
-      <StatBoxList>
+      <StatBoxRow>
         <AverageRewardRate />
         <SupplyStaked />
         <NextRewards />
-      </StatBoxList>
+      </StatBoxRow>
       <PageRow>
         <StakeStatus />
       </PageRow>
