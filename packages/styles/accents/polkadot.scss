@@ -21,7 +21,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --accent-color-primary-light: var(--accent-color-primary-50);
   --accent-color-primary-dark: var(--accent-color-primary-40);
 
-  --accent-color-secondary-light: #{$base-secondary};
+  --accent-color-secondary-light: var(--accent-color-secondary-50);
   --accent-color-secondary-dark: var(--accent-color-secondary-40);
 
   --accent-color-tertiary-light: rgb(221, 217, 231);

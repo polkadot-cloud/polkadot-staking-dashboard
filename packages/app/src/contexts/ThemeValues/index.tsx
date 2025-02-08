@@ -26,7 +26,7 @@ export const ThemeValuesProvider = ({ children }: { children: ReactNode }) => {
   const { themeElementRef } = useTheme()
 
   // Store the class list of the theme container as a string
-  const [classListString, setClassListString] = useState('')
+  const [classListString, setClassListString] = useState<string>('')
 
   // Watch for classList changes using MutationObserver
   useEffect(() => {
