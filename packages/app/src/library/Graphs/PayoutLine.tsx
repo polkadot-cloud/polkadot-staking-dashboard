@@ -17,6 +17,7 @@ import {
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
@@ -49,7 +50,8 @@ export const PayoutLine = ({
 }) => {
   const { i18n, t } = useTranslation()
   const { mode } = useTheme()
-  const { colors, unit } = useNetwork().networkData
+  const { unit } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
 
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
@@ -57,7 +59,7 @@ export const PayoutLine = ({
     : entries.map((entry) => new BigNumber(entry.reward).toString())
 
   // Use primary color for line
-  const color = colors.primary[mode]
+  const color = getThemeValue('--accent-color-primary')
 
   // Styling of axis titles
   const titleFontSpec: Partial<FontSpec> = {

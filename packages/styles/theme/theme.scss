@@ -43,6 +43,8 @@ SPDX-License-Identifier: GPL-3.0-only */
   --card-shadow-color: rgb(158 158 158 / 20%);
   --card-deep-shadow-color: rgb(158 158 158 / 50%);
   --card-shadow-color-secondary: #e7e7e7;
+  --accent-color-primary: var(--accent-color-primary-light);
+  --accent-color-secondary: var(--accent-color-secondary-light);
   --accent-color-tertiary: var(--accent-color-tertiary-light);
   --accent-color-stroke: var(--accent-color-stroke-light);
   --accent-color-transparent: var(--accent-color-transparent-light);
@@ -118,6 +120,8 @@ SPDX-License-Identifier: GPL-3.0-only */
   --card-shadow-color: rgb(28 24 28 / 25%);
   --card-deep-shadow-color: rgb(28 24 28 / 50%);
   --card-shadow-color-secondary: rgb(28 24 28 / 25%);
+  --accent-color-primary: var(--accent-color-primary-dark);
+  --accent-color-secondary: var(--accent-color-secondary-dark);
   --accent-color-tertiary: var(--accent-color-tertiary-dark);
   --accent-color-stroke: var(--accent-color-stroke-dark);
   --accent-color-transparent: var(--accent-color-transparent-dark);

@@ -15,6 +15,7 @@ import {
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
@@ -46,7 +47,8 @@ export const AveragePayoutLine = ({
 }: AveragePayoutLineProps) => {
   const { t } = useTranslation('library')
   const { mode } = useTheme()
-  const { unit, units, colors } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
+  const { unit, units } = useNetwork().networkData
 
   const staking = nominating || inPool
   const inPoolOnly = !nominating && inPool
@@ -77,10 +79,10 @@ export const AveragePayoutLine = ({
 
   // Determine color for payouts
   const color = !staking
-    ? colors.primary[mode]
+    ? getThemeValue('--accent-color-primary')
     : !inPoolOnly
-      ? colors.primary[mode]
-      : colors.secondary[mode]
+      ? getThemeValue('--accent-color-primary')
+      : getThemeValue('--accent-color-secondary')
 
   const options = {
     responsive: true,

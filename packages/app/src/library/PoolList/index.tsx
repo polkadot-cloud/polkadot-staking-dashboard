@@ -9,7 +9,7 @@ import { useFilters } from 'contexts/Filters'
 import { useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { motion } from 'framer-motion'
 import { usePoolFilters } from 'hooks/usePoolFilters'
 import { useSyncing } from 'hooks/useSyncing'
@@ -38,14 +38,11 @@ export const PoolList = ({
   itemsPerPage,
 }: PoolListProps) => {
   const { t } = useTranslation('library')
-  const {
-    network,
-    networkData: { colors },
-  } = useNetwork()
-  const { mode } = useTheme()
   const { activeEra } = useApi()
   const { syncing } = useSyncing()
+  const { network } = useNetwork()
   const { applyFilter } = usePoolFilters()
+  const { getThemeValue } = useThemeValues()
   const { listFormat, setListFormat } = useList()
   const { poolSearchFilter, poolsNominations } = useBondedPools()
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters()
@@ -185,7 +182,9 @@ export const PoolList = ({
                   <FontAwesomeIcon
                     icon={faBars}
                     color={
-                      listFormat === 'row' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'row'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>
@@ -193,7 +192,9 @@ export const PoolList = ({
                   <FontAwesomeIcon
                     icon={faGripVertical}
                     color={
-                      listFormat === 'col' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'col'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>

@@ -4,9 +4,8 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
@@ -21,11 +20,10 @@ import { timeleftAsString } from 'utils'
 
 export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { t } = useTranslation('modals')
-  const { mode } = useTheme()
   const { consts } = useApi()
   const { activePool } = useActivePool()
   const { openModal } = useOverlay().modal
-  const { colors } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
 
   const { syncing } = useSyncing(['balances'])
   const { activeAccount } = useActiveAccounts()
@@ -57,7 +55,11 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
     state !== 'Destroying' &&
     displayPrompt && (
       <PageRow>
-        <CardWrapper style={{ border: `1px solid ${colors.secondary[mode]}` }}>
+        <CardWrapper
+          style={{
+            border: `1px solid ${getThemeValue('--accent-color-primary')}`,
+          }}
+        >
           <div className="content">
             <h3>{t('unlocksInProgress')}</h3>
             <h4>{t('youHaveActiveUnlocks', { bondDurationFormatted })}</h4>

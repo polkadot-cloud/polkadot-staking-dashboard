@@ -54,10 +54,14 @@ export const ThemesProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(newTheme, setTheme, themeRef)
   }
 
+  // A ref to refer to the Entry component that stores the theme variables.
+  const themeElementRef = useRef<HTMLDivElement>(null)
+
   return (
     <ThemeContext.Provider
       value={{
         toggleTheme,
+        themeElementRef,
         mode: themeRef.current,
       }}
     >
