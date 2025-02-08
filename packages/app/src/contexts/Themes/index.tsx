@@ -54,10 +54,25 @@ export const ThemesProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(newTheme, setTheme, themeRef)
   }
 
+  // A ref to refer to the Entry component that stores the theme variables.
+  const themeElementRef = useRef<HTMLDivElement>(null)
+
+  // Get a CSS variable value from theme container
+  const getThemeValue = (variable: string) => {
+    if (!themeElementRef.current) {
+      return ''
+    }
+    const style = getComputedStyle(themeElementRef.current)
+    const value = style?.getPropertyValue(variable)
+    return value
+  }
+
   return (
     <ThemeContext.Provider
       value={{
         toggleTheme,
+        themeElementRef,
+        getThemeValue,
         mode: themeRef.current,
       }}
     >

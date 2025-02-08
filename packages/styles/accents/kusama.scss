@@ -5,8 +5,8 @@ SPDX-License-Identifier: GPL-3.0-only */
   $base-primary: rgb(126 131 141);
   $base-secondary: rgb(141 144 150);
 
-  --accent-color-primary: #{$base-primary};
-  --accent-color-secondary: #{$base-secondary};
+  --accent-color-primary-default: #{$base-primary};
+  --accent-color-secondary-default: #{$base-secondary};
 
   @for $i from 1 through 19 {
     --accent-color-primary-#{100 - ($i * 5)}: #{hsl(

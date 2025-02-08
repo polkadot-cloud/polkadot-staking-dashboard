@@ -6,5 +6,7 @@ import type { ThemeContextInterface } from './types'
 
 export const defaultThemeContext: ThemeContextInterface = {
   toggleTheme: (str) => {},
+  themeElementRef: { current: null },
   mode: 'light',
+  getThemeValue: (name) => '',
 }
