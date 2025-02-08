@@ -8,9 +8,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -21,12 +20,11 @@ import { useOverlay } from 'ui-overlay'
 
 export const CommissionPrompt = () => {
   const { t } = useTranslation('pages')
-  const { mode } = useTheme()
   const { inSetup } = useStaking()
   const { getNominations } = useBalances()
   const { openCanvas } = useOverlay().canvas
+  const { getThemeValue } = useThemeValues()
   const { formatWithPrefs } = useValidators()
-  const { colors } = useNetwork().networkData
   const { activeAccount } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
 
@@ -39,7 +37,7 @@ export const CommissionPrompt = () => {
     return null
   }
 
-  const annuncementBorderColor = colors.secondary[mode]
+  const annuncementBorderColor = getThemeValue('--accent-color-secondary')
 
   return (
     <PageRow>

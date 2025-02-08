@@ -9,7 +9,7 @@ import { useFilters } from 'contexts/Filters'
 import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { motion } from 'framer-motion'
@@ -53,9 +53,6 @@ export const ValidatorListInner = ({
 }: ValidatorListProps) => {
   const { t } = useTranslation()
   const {
-    networkData: { colors },
-  } = useNetwork()
-  const {
     getFilters,
     setMultiFilters,
     getOrder,
@@ -67,11 +64,11 @@ export const ValidatorListInner = ({
     clearSearchTerm,
     // Inject default filters and orders here
   } = useFilters()
-  const { mode } = useTheme()
   const listProvider = useList()
   const { syncing } = useSyncing()
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
+  const { getThemeValue } = useThemeValues()
   const { activeAccount } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
   const { injectValidatorListData } = useValidators()
@@ -318,7 +315,9 @@ export const ValidatorListInner = ({
                   <FontAwesomeIcon
                     icon={faBars}
                     color={
-                      listFormat === 'row' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'row'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>
@@ -326,7 +325,9 @@ export const ValidatorListInner = ({
                   <FontAwesomeIcon
                     icon={faGripVertical}
                     color={
-                      listFormat === 'col' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'col'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>
