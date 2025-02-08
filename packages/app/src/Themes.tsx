@@ -10,8 +10,8 @@ import { Entry } from 'ui-core/base'
 
 // light / dark `mode` added to styled-components provider
 export const ThemedRouter = () => {
-  const { mode } = useTheme()
   const { network } = useNetwork()
+  const { mode, themeElementRef } = useTheme()
 
   // Update body background to `--background-default` color upon theme change.
   useEffect(() => {
@@ -24,7 +24,7 @@ export const ThemedRouter = () => {
 
   return (
     <ThemeProvider theme={{ mode }}>
-      <Entry mode={mode} theme={`${network}-relay`}>
+      <Entry mode={mode} theme={`${network}-relay`} ref={themeElementRef}>
         <Router />
       </Entry>
     </ThemeProvider>
