@@ -3,16 +3,16 @@
 
 .btnSubmitInvert {
   border: 1px solid var(--accent-color-stroke);
-  border-radius: var(--button-border-radius-small);
+  border-radius: var(--button-sm-border-radius);
   color: var(--accent-color-stroke);
 }
 
 .btnSubmitInvertSm {
-  padding: var(--button-padding-large);
-  font-size: var(--button-font-size-small);
+  padding: var(--button-lg-padding);
+  font-size: var(--button-sm-font-size);
 }
 
 .btnSubmitInvertLg {
-  padding: var(--button-padding-large);
-  font-size: var(--button-font-size-large);
+  padding: var(--button-lg-padding);
+  font-size: var(--button-lg-font-size);
 }

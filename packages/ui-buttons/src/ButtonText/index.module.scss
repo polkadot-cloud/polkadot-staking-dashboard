@@ -3,7 +3,9 @@
 
 .btnText {
   color: var(--text-color-primary);
-  border-radius: var(--button-border-radius-large);
-  font-size: var(--button-font-size-small);
-  padding: 0.45rem;
+  border-radius: var(--button-lg-border-radius);
+  font-size: var(--button-sm-font-size);
+  padding: var(--button-sm-padding);
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
 }

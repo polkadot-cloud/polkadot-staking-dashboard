@@ -24,35 +24,35 @@
 }
 
 .btnSpacingLeft {
-  margin-left: var(--button-spacing-large);
+  margin-left: var(--button-lg-spacing);
 }
 
 .btnSpacingRight {
-  margin-right: var(--button-spacing-large);
+  margin-right: var(--button-lg-spacing);
 }
 
 .btnMarginX {
-  margin: 0 var(--button-spacing-large);
+  margin: 0 var(--button-lg-spacing);
 }
 
 .btnSmall {
-  padding: var(--button-padding-small);
-  font-size: var(--button-font-size-small);
+  padding: var(--button-sm-padding);
+  font-size: var(--button-sm-font-size);
 }
 
 .btnLarge {
-  padding: var(--button-padding-large);
-  font-size: var(--button-font-size-large);
+  padding: var(--button-lg-padding);
+  font-size: var(--button-lg-font-size);
 }
 
 .btnIconLeftSpacing {
-  margin-left: var(--button-spacing-small);
-  margin-right: var(--button-spacing-large);
+  margin-left: var(--button-sm-spacing);
+  margin-right: var(--button-lg-spacing);
 }
 
 .btnIconRightSpacing {
-  margin-left: var(--button-spacing-large);
-  margin-right: var(--button-spacing-small);
+  margin-left: var(--button-lg-spacing);
+  margin-right: var(--button-sm-spacing);
 }
 
 .btnDisabled {
