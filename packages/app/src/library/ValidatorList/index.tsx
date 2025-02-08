@@ -53,9 +53,6 @@ export const ValidatorListInner = ({
 }: ValidatorListProps) => {
   const { t } = useTranslation()
   const {
-    networkData: { colors },
-  } = useNetwork()
-  const {
     getFilters,
     setMultiFilters,
     getOrder,
@@ -67,10 +64,10 @@ export const ValidatorListInner = ({
     clearSearchTerm,
     // Inject default filters and orders here
   } = useFilters()
-  const { mode } = useTheme()
   const listProvider = useList()
   const { syncing } = useSyncing()
   const { network } = useNetwork()
+  const { getThemeValue } = useTheme()
   const { pluginEnabled } = usePlugins()
   const { activeAccount } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
@@ -318,7 +315,9 @@ export const ValidatorListInner = ({
                   <FontAwesomeIcon
                     icon={faBars}
                     color={
-                      listFormat === 'row' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'row'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>
@@ -326,7 +325,9 @@ export const ValidatorListInner = ({
                   <FontAwesomeIcon
                     icon={faGripVertical}
                     color={
-                      listFormat === 'col' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'col'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>

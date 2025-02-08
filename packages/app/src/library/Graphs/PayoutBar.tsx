@@ -45,8 +45,8 @@ export const PayoutBar = ({
   syncing,
 }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library')
-  const { mode } = useTheme()
-  const { unit, units, colors } = useNetwork().networkData
+  const { mode, getThemeValue } = useTheme()
+  const { unit, units } = useNetwork().networkData
   const staking = nominating || inPool
 
   // Get formatted rewards data
@@ -65,13 +65,13 @@ export const PayoutBar = ({
 
   // Determine color for payouts
   const colorPayouts = !staking
-    ? colors.transparent[mode]
-    : colors.primary[mode]
+    ? getThemeValue('--accent-color-transparent')
+    : getThemeValue('--accent-color-primary')
 
   // Determine color for poolClaims
   const colorPoolClaims = !staking
-    ? colors.transparent[mode]
-    : colors.secondary[mode]
+    ? getThemeValue('--accent-color-transparent')
+    : getThemeValue('--accent-color-secondary')
 
   const borderRadius = 4
   const pointRadius = 0
@@ -109,7 +109,7 @@ export const PayoutBar = ({
         ),
         label: t('unclaimedPayouts'),
         borderColor: colorPayouts,
-        backgroundColor: colors.pending[mode],
+        backgroundColor: getThemeValue('--accent-color-pending'),
         pointRadius,
         borderRadius,
       },

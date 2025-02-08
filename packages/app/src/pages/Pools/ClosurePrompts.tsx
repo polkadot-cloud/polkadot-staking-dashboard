@@ -3,7 +3,6 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTheme } from 'contexts/Themes'
 import { useTransferOptions } from 'contexts/TransferOptions'
@@ -16,9 +15,8 @@ import { useOverlay } from 'ui-overlay'
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages')
-  const { mode } = useTheme()
+  const { getThemeValue } = useTheme()
   const { openModal } = useOverlay().modal
-  const { colors } = useNetwork().networkData
   const { activeAccount } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { getTransferOptions } = useTransferOptions()
@@ -28,7 +26,6 @@ export const ClosurePrompts = () => {
   const { state, memberCounter } = activePool?.bondedPool || {}
   const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool
   const targets = activePoolNominations?.targets ?? []
-  const annuncementBorderColor = colors.secondary[mode]
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
@@ -45,7 +42,11 @@ export const ClosurePrompts = () => {
     state === 'Destroying' &&
     depositorCanClose && (
       <PageRow>
-        <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
+        <CardWrapper
+          style={{
+            border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
+          }}
+        >
           <div className="content">
             <h3>{t('pools.destroyPool')}</h3>
             <h4>

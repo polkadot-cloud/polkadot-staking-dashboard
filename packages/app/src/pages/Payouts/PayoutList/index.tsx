@@ -40,10 +40,10 @@ export const PayoutListInner = ({
   itemsPerPage,
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages')
-  const { mode } = useTheme()
+  const { getThemeValue } = useTheme()
   const { isReady, activeEra } = useApi()
   const {
-    networkData: { units, unit, colors },
+    networkData: { units, unit },
   } = useNetwork()
   const { bondedPools } = useBondedPools()
   const { getValidators } = useValidators()
@@ -89,13 +89,21 @@ export const PayoutListInner = ({
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? getThemeValue('--accent-color-primary')
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? getThemeValue('--accent-color-primary')
+                  : 'inherit'
+              }
             />
           </button>
         </div>

@@ -38,13 +38,10 @@ export const PoolList = ({
   itemsPerPage,
 }: PoolListProps) => {
   const { t } = useTranslation('library')
-  const {
-    network,
-    networkData: { colors },
-  } = useNetwork()
-  const { mode } = useTheme()
   const { activeEra } = useApi()
   const { syncing } = useSyncing()
+  const { network } = useNetwork()
+  const { getThemeValue } = useTheme()
   const { applyFilter } = usePoolFilters()
   const { listFormat, setListFormat } = useList()
   const { poolSearchFilter, poolsNominations } = useBondedPools()
@@ -185,7 +182,9 @@ export const PoolList = ({
                   <FontAwesomeIcon
                     icon={faBars}
                     color={
-                      listFormat === 'row' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'row'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>
@@ -193,7 +192,9 @@ export const PoolList = ({
                   <FontAwesomeIcon
                     icon={faGripVertical}
                     color={
-                      listFormat === 'col' ? colors.primary[mode] : 'inherit'
+                      listFormat === 'col'
+                        ? getThemeValue('--accent-color-primary')
+                        : 'inherit'
                     }
                   />
                 </button>

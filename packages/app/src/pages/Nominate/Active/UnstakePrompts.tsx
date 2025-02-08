@@ -17,18 +17,17 @@ import { useOverlay } from 'ui-overlay'
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages')
-  const { mode } = useTheme()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
+  const { getThemeValue } = useTheme()
   const { openModal } = useOverlay().modal
+  const { unit } = useNetwork().networkData
   const { activeAccount } = useActiveAccounts()
-  const { unit, colors } = useNetwork().networkData
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
 
   const { getTransferOptions } = useTransferOptions()
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAccount).nominate
-  const annuncementBorderColor = colors.secondary[mode]
 
   // unstaking can withdraw
   const canWithdrawUnlocks =
@@ -42,7 +41,11 @@ export const UnstakePrompts = () => {
     (isUnstaking || isFastUnstaking) &&
     !syncing && (
       <PageRow>
-        <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
+        <CardWrapper
+          style={{
+            border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
+          }}
+        >
           <div className="content">
             <h3>
               {t('nominate.unstakePromptInProgress', {
