@@ -3,17 +3,23 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 /* general styles */
 :root {
-  --button-border-radius-small: 0.75rem;
-  --button-border-radius-large: 1.5rem;
-  --button-padding-small: 0.41rem 1rem;
-  --button-padding-large: 0.53rem 1rem;
-  --button-spacing-small: 0.125rem;
-  --button-spacing-large: 0.625rem;
-  --button-font-size-small: 1rem;
-  --button-font-size-large: 1.15rem;
+  --button-sm-border-radius: 0.75rem;
+  --button-sm-padding: 0.41rem 1rem;
+  --button-sm-spacing: 0.125rem;
+  --button-sm-font-size: 1rem;
+
+  // NOTE: Medium sizes are not currently in use.
+  // --button-md-border-radius: 0.75rem;
+  // --button-md-padding: 0.6rem 1.25rem;
+  // --button-md-spacing: 0.125rem;
+  // --button-md-font-size: 1.1rem;
+
+  --button-lg-border-radius: 1.5rem;
+  --button-lg-padding: 0.62rem 1rem;
+  --button-lg-spacing: 0.625rem;
+  --button-lg-font-size: 1.25rem;
 
   --transition-duration: 0.15s;
-
   --opacity-disabled: 0.3;
 }
 
@@ -43,8 +49,6 @@ SPDX-License-Identifier: GPL-3.0-only */
   --card-shadow-color: rgb(158 158 158 / 20%);
   --card-deep-shadow-color: rgb(158 158 158 / 50%);
   --card-shadow-color-secondary: #e7e7e7;
-  --accent-color-primary: var(--accent-color-primary-light);
-  --accent-color-secondary: var(--accent-color-secondary-light);
   --accent-color-tertiary: var(--accent-color-tertiary-light);
   --accent-color-stroke: var(--accent-color-stroke-light);
   --accent-color-transparent: var(--accent-color-transparent-light);
@@ -120,8 +124,6 @@ SPDX-License-Identifier: GPL-3.0-only */
   --card-shadow-color: rgb(28 24 28 / 25%);
   --card-deep-shadow-color: rgb(28 24 28 / 50%);
   --card-shadow-color-secondary: rgb(28 24 28 / 25%);
-  --accent-color-primary: var(--accent-color-primary-dark);
-  --accent-color-secondary: var(--accent-color-secondary-dark);
   --accent-color-tertiary: var(--accent-color-tertiary-dark);
   --accent-color-stroke: var(--accent-color-stroke-dark);
   --accent-color-transparent: var(--accent-color-transparent-dark);

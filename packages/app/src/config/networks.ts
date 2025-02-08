@@ -37,8 +37,8 @@ export const NetworkList: Networks = {
         dark: 'rgb(211, 48, 121)',
       },
       secondary: {
-        light: '#552bbf',
-        dark: '#6d39ee',
+        light: 'rgb(123, 90, 207)',
+        dark: 'rgb(123, 90, 207)',
       },
       stroke: {
         light: 'rgb(211, 48, 121)',
@@ -89,11 +89,11 @@ export const NetworkList: Networks = {
     },
     colors: {
       primary: {
-        light: 'rgb(31, 41, 55)',
-        dark: 'rgb(126, 131, 141)',
+        light: 'rgb(105, 111, 124)',
+        dark: 'rgb(105, 111, 124)',
       },
       secondary: {
-        light: 'rgb(31, 41, 55)',
+        light: 'rgb(141 144 150)',
         dark: 'rgb(141, 144, 150)',
       },
       stroke: {
@@ -149,7 +149,7 @@ export const NetworkList: Networks = {
       },
       secondary: {
         light: '#de6a50',
-        dark: '#d7674e',
+        dark: '#de6a50',
       },
       stroke: {
         light: '#da4e71',
