@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   $base-primary: rgb(211, 48, 121);
   $base-secondary: rgb(110, 71, 207);
 
-  @for $i from 1 through 19 {
+  @for $i from 0 through 19 {
     --accent-color-primary-#{100 - ($i * 5)}: #{hsl(
         hue($base-primary),
         saturation($base-primary),
@@ -18,7 +18,7 @@ SPDX-License-Identifier: GPL-3.0-only */
       )};
   }
 
-  --accent-color-primary-light: #{$base-primary};
+  --accent-color-primary-light: var(--accent-color-primary-50);
   --accent-color-primary-dark: var(--accent-color-primary-40);
 
   --accent-color-secondary-light: #{$base-secondary};

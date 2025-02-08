@@ -4,6 +4,7 @@
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { NetworkProvider } from 'contexts/Network'
 import { ThemesProvider } from 'contexts/Themes'
+import { ThemeValuesProvider } from 'contexts/ThemeValues'
 import { i18next } from 'locales'
 import { Providers } from 'Providers'
 import { I18nextProvider } from 'react-i18next'
@@ -11,11 +12,13 @@ import { I18nextProvider } from 'react-i18next'
 export const App = () => (
   <I18nextProvider i18n={i18next}>
     <ThemesProvider>
-      <NetworkProvider>
-        <ActiveAccountsProvider>
-          <Providers />
-        </ActiveAccountsProvider>
-      </NetworkProvider>
+      <ThemeValuesProvider>
+        <NetworkProvider>
+          <ActiveAccountsProvider>
+            <Providers />
+          </ActiveAccountsProvider>
+        </NetworkProvider>
+      </ThemeValuesProvider>
     </ThemesProvider>
   </I18nextProvider>
 )

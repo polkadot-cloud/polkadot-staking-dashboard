@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   $base-primary: rgb(218, 78, 113);
   $base-secondary: rgb(222, 106, 80);
 
-  @for $i from 1 through 19 {
+  @for $i from 0 through 19 {
     --accent-color-primary-#{100 - ($i * 5)}: #{hsl(
         hue($base-primary),
         saturation($base-primary),
@@ -18,11 +18,11 @@ SPDX-License-Identifier: GPL-3.0-only */
       )};
   }
 
-  --accent-color-primary-light: #{$base-primary};
-  --accent-color-primary-dark: #{$base-primary};
+  --accent-color-primary-light: var(--accent-color-primary-50);
+  --accent-color-primary-dark: var(--accent-color-primary-50);
 
-  --accent-color-secondary-light: #{$base-secondary};
-  --accent-color-secondary-dark: var(--accent-color-secondary-100);
+  --accent-color-secondary-light: var(--accent-color-secondary-50);
+  --accent-color-secondary-dark: var(--accent-color-secondary-50);
 
   --accent-color-tertiary-light: rgb(232, 213, 208);
   --accent-color-tertiary-dark: rgb(70, 48, 47);
