@@ -3,7 +3,7 @@
 
 .btnSubmit {
   border: 1px solid var(--accent-color-primary);
-  border-radius: var(--button-border-radius-small);
+  border-radius: var(--button-sm-border-radius);
   background: var(--accent-color-primary);
   color: white;
 }
@@ -14,13 +14,13 @@
 }
 
 .btnSubmitSm {
-  padding: var(--button-padding-large);
-  font-size: var(--button-font-size-small);
+  padding: var(--button-lg-padding);
+  font-size: var(--button-sm-font-size);
 }
 
 .btnSubmitLg {
-  padding: var(--button-padding-large);
-  font-size: var(--button-font-size-large);
+  padding: var(--button-lg-padding);
+  font-size: var(--button-lg-font-size);
 }
 
 .btnSubmitPulse {
