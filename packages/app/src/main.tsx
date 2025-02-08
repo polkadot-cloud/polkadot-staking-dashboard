@@ -6,9 +6,9 @@ import { createRoot } from 'react-dom/client'
 import { version } from '../package.json'
 
 // Network styles
-import 'styles/accents/kusama-relay.css'
-import 'styles/accents/polkadot-relay.css'
-import 'styles/accents/westend-relay.css'
+import 'styles/accents/kusama.scss'
+import 'styles/accents/polkadot.scss'
+import 'styles/accents/westend.scss'
 
 // App styles
 import 'styles/fonts/font.scss'
