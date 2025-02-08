@@ -5,7 +5,7 @@ import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
@@ -19,9 +19,9 @@ export const UnstakePrompts = () => {
   const { t } = useTranslation('pages')
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
-  const { getThemeValue } = useTheme()
   const { openModal } = useOverlay().modal
   const { unit } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
   const { activeAccount } = useActiveAccounts()
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
 

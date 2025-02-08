@@ -6,8 +6,7 @@ import type { MutableRefObject } from 'react'
 export type Theme = 'light' | 'dark'
 
 export interface ThemeContextInterface {
-  toggleTheme: (str?: Theme) => void
   themeElementRef: MutableRefObject<HTMLDivElement | null>
+  toggleTheme: (str?: Theme) => void
   mode: Theme
-  getThemeValue: (name: string) => string
 }

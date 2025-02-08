@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
@@ -47,7 +48,8 @@ export const EraPointsLine = ({
   height: string | number
 }) => {
   const { i18n, t } = useTranslation()
-  const { mode, getThemeValue } = useTheme()
+  const { mode } = useTheme()
+  const { getThemeValue } = useThemeValues()
 
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing

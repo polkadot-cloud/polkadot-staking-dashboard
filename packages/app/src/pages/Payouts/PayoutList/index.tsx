@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api'
 import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatDistance, fromUnixTime } from 'date-fns'
 import { motion } from 'framer-motion'
@@ -40,13 +40,13 @@ export const PayoutListInner = ({
   itemsPerPage,
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages')
-  const { getThemeValue } = useTheme()
   const { isReady, activeEra } = useApi()
   const {
     networkData: { units, unit },
   } = useNetwork()
   const { bondedPools } = useBondedPools()
   const { getValidators } = useValidators()
+  const { getThemeValue } = useThemeValues()
   const { listFormat, setListFormat } = useList()
 
   const [page, setPage] = useState<number>(1)

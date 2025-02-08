@@ -16,6 +16,7 @@ import {
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { Bar } from 'react-chartjs-2'
@@ -45,7 +46,8 @@ export const PayoutBar = ({
   syncing,
 }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library')
-  const { mode, getThemeValue } = useTheme()
+  const { mode } = useTheme()
+  const { getThemeValue } = useThemeValues()
   const { unit, units } = useNetwork().networkData
   const staking = nominating || inPool
 

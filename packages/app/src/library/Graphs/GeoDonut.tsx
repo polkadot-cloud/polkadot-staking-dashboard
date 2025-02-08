@@ -6,6 +6,7 @@ import { ellipsisFn } from '@w3ux/utils'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import chroma from 'chroma-js'
 import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { Doughnut } from 'react-chartjs-2'
 import graphColors from 'styles/graphs/index.json'
 import type { GeoDonutProps } from './types'
@@ -20,7 +21,8 @@ export const GeoDonut = ({
   legendHeight = 25,
   maxLabelLen = 3,
 }: GeoDonutProps) => {
-  const { mode, getThemeValue } = useTheme()
+  const { mode } = useTheme()
+  const { getThemeValue } = useThemeValues()
 
   const { labels } = series
   let { data } = series

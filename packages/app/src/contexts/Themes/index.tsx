@@ -3,7 +3,7 @@
 
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
-import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import { defaultThemeContext } from './defaults'
 import type { Theme, ThemeContextInterface } from './types'
 
@@ -57,25 +57,11 @@ export const ThemesProvider = ({ children }: { children: ReactNode }) => {
   // A ref to refer to the Entry component that stores the theme variables.
   const themeElementRef = useRef<HTMLDivElement>(null)
 
-  // Get a CSS variable value from theme container
-  const getThemeValue = useCallback(
-    (variable: string) => {
-      if (!themeElementRef.current) {
-        return ''
-      }
-      const style = getComputedStyle(themeElementRef.current)
-      const value = style?.getPropertyValue(variable).trim()
-      return value
-    },
-    [theme]
-  )
-
   return (
     <ThemeContext.Provider
       value={{
         toggleTheme,
         themeElementRef,
-        getThemeValue,
         mode: themeRef.current,
       }}
     >

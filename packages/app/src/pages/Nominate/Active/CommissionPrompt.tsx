@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useStaking } from 'contexts/Staking'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -22,8 +22,8 @@ export const CommissionPrompt = () => {
   const { t } = useTranslation('pages')
   const { inSetup } = useStaking()
   const { getNominations } = useBalances()
-  const { getThemeValue } = useTheme()
   const { openCanvas } = useOverlay().canvas
+  const { getThemeValue } = useThemeValues()
   const { formatWithPrefs } = useValidators()
   const { activeAccount } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])

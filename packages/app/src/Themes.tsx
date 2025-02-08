@@ -3,6 +3,7 @@
 
 import { Router } from 'Router'
 import { useNetwork } from 'contexts/Network'
+import { ThemeValuesProvider } from 'contexts/ThemeValues'
 import { useTheme } from 'contexts/Themes'
 import { useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
@@ -25,7 +26,9 @@ export const ThemedRouter = () => {
   return (
     <ThemeProvider theme={{ mode }}>
       <Entry mode={mode} theme={`${network}-relay`} ref={themeElementRef}>
-        <Router />
+        <ThemeValuesProvider>
+          <Router />
+        </ThemeValuesProvider>
       </Entry>
     </ThemeProvider>
   )

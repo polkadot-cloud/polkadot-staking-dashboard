@@ -4,7 +4,7 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -15,8 +15,8 @@ import { useOverlay } from 'ui-overlay'
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages')
-  const { getThemeValue } = useTheme()
   const { openModal } = useOverlay().modal
+  const { getThemeValue } = useThemeValues()
   const { activeAccount } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { getTransferOptions } = useTransferOptions()

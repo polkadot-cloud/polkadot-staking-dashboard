@@ -9,7 +9,7 @@ import { useFilters } from 'contexts/Filters'
 import { useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { motion } from 'framer-motion'
 import { usePoolFilters } from 'hooks/usePoolFilters'
 import { useSyncing } from 'hooks/useSyncing'
@@ -41,8 +41,8 @@ export const PoolList = ({
   const { activeEra } = useApi()
   const { syncing } = useSyncing()
   const { network } = useNetwork()
-  const { getThemeValue } = useTheme()
   const { applyFilter } = usePoolFilters()
+  const { getThemeValue } = useThemeValues()
   const { listFormat, setListFormat } = useList()
   const { poolSearchFilter, poolsNominations } = useBondedPools()
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters()
