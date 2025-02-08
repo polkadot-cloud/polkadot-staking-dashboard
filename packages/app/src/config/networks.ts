@@ -89,8 +89,8 @@ export const NetworkList: Networks = {
     },
     colors: {
       primary: {
-        light: 'rgb(105, 111, 124)',
-        dark: 'rgb(105, 111, 124)',
+        light: 'rgb(126 131 141)',
+        dark: 'rgb(126 131 141)',
       },
       secondary: {
         light: 'rgb(141 144 150)',
