@@ -7,6 +7,7 @@ export interface PayoutListProps {
   allowMoreCols?: boolean
   pagination?: boolean
   title?: string | null
+  itemsPerPage: number
   payoutsList?: AnyApi
   payouts?: AnyApi
 }

@@ -15,14 +15,13 @@ import {
   getPayoutsToDate,
 } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
-import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import type { RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { CardHeader, PageRow } from 'ui-core/base'
+import { CardHeader, PageRow, StatRow } from 'ui-core/base'
 import { ActiveGraph } from './Graph/ActiveGraph'
 import { InactiveGraph } from './Graph/InactiveGraph'
 import { PayoutList } from './PayoutList'
@@ -66,9 +65,9 @@ export const PayoutHistory = () => {
 
   return (
     <>
-      <StatBoxList>
+      <StatRow>
         <LastEraPayout />
-      </StatBoxList>
+      </StatRow>
       <PageRow>
         <CardWrapper>
           <CardHeader>
@@ -138,6 +137,7 @@ export const PayoutHistory = () => {
               title={t('payouts.recentPayouts')}
               payouts={payoutsList}
               pagination
+              itemsPerPage={50}
             />
           </CardWrapper>
         </PageRow>

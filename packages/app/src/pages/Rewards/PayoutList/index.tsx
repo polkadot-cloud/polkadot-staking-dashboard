@@ -9,8 +9,7 @@ import { useApi } from 'contexts/Api'
 import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { StakingContext } from 'contexts/Staking'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatDistance, fromUnixTime } from 'date-fns'
 import { motion } from 'framer-motion'
@@ -26,35 +25,31 @@ import type {
   PoolReward,
   RewardResults,
 } from 'plugin-staking-api/types'
-import { Component, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 import { ItemWrapper } from '../Wrappers'
 import type { PayoutListProps } from '../types'
 
-const PAYOUTS_PER_PAGE = 50
-
 export const PayoutListInner = ({
   allowMoreCols,
   pagination,
   title,
   payouts: initialPayouts,
+  itemsPerPage,
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages')
-  const { mode } = useTheme()
   const { isReady, activeEra } = useApi()
   const {
-    networkData: { units, unit, colors },
+    networkData: { units, unit },
   } = useNetwork()
-  const { getValidators } = useValidators()
   const { bondedPools } = useBondedPools()
-  const {
-    listFormat,
-    setListFormat,
-    pagination: { page, setPage },
-  } = useList()
-  const validators = getValidators()
+  const { getValidators } = useValidators()
+  const { getThemeValue } = useThemeValues()
+  const { listFormat, setListFormat } = useList()
+
+  const [page, setPage] = useState<number>(1)
 
   // Manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)
@@ -62,9 +57,9 @@ export const PayoutListInner = ({
   // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)
 
-  const totalPages = Math.ceil(payouts.length / PAYOUTS_PER_PAGE)
-  const pageEnd = page * PAYOUTS_PER_PAGE - 1
-  const pageStart = pageEnd - (PAYOUTS_PER_PAGE - 1)
+  const totalPages = Math.ceil(payouts.length / itemsPerPage)
+  const pageEnd = page * itemsPerPage - 1
+  const pageStart = pageEnd - (itemsPerPage - 1)
 
   // Refetch list when list changes
   useEffect(() => {
@@ -79,7 +74,7 @@ export const PayoutListInner = ({
     }
   }, [isReady, fetched, activeEra.index])
 
-  const listPayouts = payouts.slice(pageStart).slice(0, PAYOUTS_PER_PAGE)
+  const listPayouts = payouts.slice(pageStart).slice(0, itemsPerPage)
   if (!listPayouts.length) {
     return null
   }
@@ -94,13 +89,21 @@ export const PayoutListInner = ({
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? getThemeValue('--accent-color-primary')
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? getThemeValue('--accent-color-primary')
+                  : 'inherit'
+              }
             />
           </button>
         </div>
@@ -130,10 +133,10 @@ export const PayoutListInner = ({
               batchIndex = pool ? bondedPools.indexOf(pool) : 0
             } else {
               const item = p as NominatorReward
-              const validator = validators.find(
+              const validator = getValidators().find(
                 (v) => v.address === item.validator
               )
-              batchIndex = validator ? validators.indexOf(validator) : 0
+              batchIndex = validator ? getValidators().indexOf(validator) : 0
             }
 
             return (
@@ -220,7 +223,7 @@ export const PayoutListInner = ({
 
 export const PayoutList = (props: PayoutListProps) => (
   <ListProvider>
-    <PayoutListShouldUpdate {...props} />
+    <PayoutListInner {...props} />
   </ListProvider>
 )
 
@@ -252,12 +255,4 @@ export const PoolClaim = ({
       {t('payouts.fromPool')} {poolId}
     </h4>
   )
-}
-
-export class PayoutListShouldUpdate extends Component {
-  static contextType = StakingContext
-
-  render() {
-    return <PayoutListInner {...this.props} />
-  }
 }

@@ -10,12 +10,11 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { StatBoxList } from 'library/StatBoxList'
-import { Text } from 'library/StatBoxList/Text'
+import { Text } from 'library/StatCards/Text'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { CardHeader, PageRow } from 'ui-core/base'
+import { CardHeader, PageRow, StatRow } from 'ui-core/base'
 import { RewardText, RewardsGrid } from '../Wrappers'
 
 export const Active = () => {
@@ -64,7 +63,7 @@ export const Active = () => {
 
   return (
     <>
-      <StatBoxList>
+      <StatRow>
         <RewardText>
           <Text
             label={t('rewards.averageRewardRate')}
@@ -102,7 +101,7 @@ export const Active = () => {
             style={{ minWidth: 'fit-content', whiteSpace: 'nowrap' }}
           />
         </div>
-      </StatBoxList>
+      </StatRow>
 
       <AnimatePresence>
         {isCustomStake && (
