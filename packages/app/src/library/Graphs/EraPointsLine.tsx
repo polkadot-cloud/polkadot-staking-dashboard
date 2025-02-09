@@ -15,14 +15,12 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { useTheme } from 'contexts/Themes'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import graphColors from 'styles/graphs/index.json'
 import { Spinner } from 'ui-core/base'
 
 ChartJS.register(
@@ -48,7 +46,6 @@ export const EraPointsLine = ({
   height: string | number
 }) => {
   const { i18n, t } = useTranslation()
-  const { mode } = useTheme()
   const { getThemeValue } = useThemeValues()
 
   // Format reward points as an array of strings, or an empty array if syncing
@@ -57,7 +54,7 @@ export const EraPointsLine = ({
     : entries.map((entry) => new BigNumber(entry.points).toString())
 
   // Use primary color for line
-  const color = getThemeValue('--accent-color-primary ')
+  const color = getThemeValue('--accent-color-primary')
   // Styling of axis titles
   const titleFontSpec: Partial<FontSpec> = {
     family: "'Inter', 'sans-serif'",
@@ -65,7 +62,7 @@ export const EraPointsLine = ({
     size: 11,
   }
   const titleStyle = {
-    color: graphColors.title[mode],
+    color: getThemeValue('--text-color-secondary'),
     display: true,
     padding: 6,
     font: titleFontSpec,
@@ -83,7 +80,7 @@ export const EraPointsLine = ({
           display: false,
         },
         ticks: {
-          color: graphColors.canvas.axis[mode],
+          color: getThemeValue('--grid-canvas-axis'),
           font: {
             size: 10,
           },
@@ -98,7 +95,7 @@ export const EraPointsLine = ({
         stacked: true,
         beginAtZero: true,
         ticks: {
-          color: graphColors.canvas.axis[mode],
+          color: getThemeValue('--grid-canvas-axis'),
           font: {
             size: 10,
           },
@@ -107,7 +104,7 @@ export const EraPointsLine = ({
           display: false,
         },
         grid: {
-          color: graphColors.canvas.grid[mode],
+          color: getThemeValue('--grid-canvas'),
         },
         title: {
           ...titleStyle,
@@ -125,8 +122,8 @@ export const EraPointsLine = ({
       tooltip: {
         displayColors: false,
         backgroundColor: getThemeValue('--background-invert'),
-        titleColor: graphColors.label[mode],
-        bodyColor: graphColors.label[mode],
+        titleColor: getThemeValue('--text-color-invert'),
+        bodyColor: getThemeValue('--text-color-invert'),
         bodyFont: {
           weight: 600,
         },

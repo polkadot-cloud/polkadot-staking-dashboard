@@ -14,11 +14,9 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
-import { useTheme } from 'contexts/Themes'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import graphColors from 'styles/graphs/index.json'
 import type { AveragePayoutLineProps } from './types'
 import {
   calculatePayoutAverages,
@@ -46,7 +44,6 @@ export const AveragePayoutLine = ({
   inPool,
 }: AveragePayoutLineProps) => {
   const { t } = useTranslation('library')
-  const { mode } = useTheme()
   const { getThemeValue } = useThemeValues()
   const { unit, units } = useNetwork().networkData
 
@@ -107,7 +104,7 @@ export const AveragePayoutLine = ({
           display: false,
         },
         grid: {
-          color: graphColors.grid[mode],
+          color: getThemeValue('--grid-color-secondary'),
         },
       },
     },
@@ -118,8 +115,8 @@ export const AveragePayoutLine = ({
       tooltip: {
         displayColors: false,
         backgroundColor: getThemeValue('--background-invert'),
-        titleColor: graphColors.label[mode],
-        bodyColor: graphColors.label[mode],
+        titleColor: getThemeValue('--text-color-invert'),
+        bodyColor: getThemeValue('--text-color-invert'),
         bodyFont: {
           weight: 600,
         },
