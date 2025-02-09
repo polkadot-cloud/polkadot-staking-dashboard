@@ -3,8 +3,9 @@
 
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
-import { Pie } from 'library/StatBoxList/Pie'
+import { Pie } from 'library/StatCards/Pie'
 import { useTranslation } from 'react-i18next'
+import { percentageOf } from 'ui-graphs'
 
 export const TotalValidators = () => {
   const { t } = useTranslation('pages')
@@ -27,10 +28,10 @@ export const TotalValidators = () => {
       total: maxValidatorsCount.toNumber(),
       unit: '',
     },
-    graph: {
-      value1: totalValidators.toNumber(),
-      value2: maxValidatorsCount.minus(totalValidators).toNumber(),
-    },
+    pieValue: percentageOf(
+      totalValidators.toNumber(),
+      maxValidatorsCount.toNumber()
+    ),
     tooltip: `${new BigNumber(totalValidatorsAsPercent)
       .decimalPlaces(2)
       .toFormat()}%`,

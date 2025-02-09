@@ -3,20 +3,18 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { MembersList as FetchPageMemberList } from './Lists/FetchPage'
 
 export const Members = () => {
   const { t } = useTranslation('pages')
-  const { mode } = useTheme()
+  const { getThemeValue } = useThemeValues()
   const { activePool, isOwner, isBouncer } = useActivePool()
 
-  const { colors } = useNetwork().networkData
-  const annuncementBorderColor = colors.secondary[mode]
+  const annuncementBorderColor = getThemeValue('--accent-color-secondary')
 
   const showBlockedPrompt =
     activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer())

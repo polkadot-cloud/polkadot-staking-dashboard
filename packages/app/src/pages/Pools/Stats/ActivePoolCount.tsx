@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
-import { Number } from 'library/StatBoxList/Number'
+import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
 export const ActivePoolCount = () => {

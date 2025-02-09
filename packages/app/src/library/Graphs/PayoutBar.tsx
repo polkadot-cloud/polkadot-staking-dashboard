@@ -15,12 +15,11 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import graphColors from 'styles/graphs/index.json'
 import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from './types'
 import { formatRewardsForGraphs } from './Utils'
@@ -45,8 +44,8 @@ export const PayoutBar = ({
   syncing,
 }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library')
-  const { mode } = useTheme()
-  const { unit, units, colors } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
+  const { unit, units } = useNetwork().networkData
   const staking = nominating || inPool
 
   // Get formatted rewards data
@@ -65,13 +64,13 @@ export const PayoutBar = ({
 
   // Determine color for payouts
   const colorPayouts = !staking
-    ? colors.transparent[mode]
-    : colors.primary[mode]
+    ? getThemeValue('--accent-color-transparent')
+    : getThemeValue('--accent-color-primary')
 
   // Determine color for poolClaims
   const colorPoolClaims = !staking
-    ? colors.transparent[mode]
-    : colors.secondary[mode]
+    ? getThemeValue('--accent-color-transparent')
+    : getThemeValue('--accent-color-secondary')
 
   const borderRadius = 4
   const pointRadius = 0
@@ -109,7 +108,7 @@ export const PayoutBar = ({
         ),
         label: t('unclaimedPayouts'),
         borderColor: colorPayouts,
-        backgroundColor: colors.pending[mode],
+        backgroundColor: getThemeValue('--accent-color-pending'),
         pointRadius,
         borderRadius,
       },
@@ -145,7 +144,7 @@ export const PayoutBar = ({
           display: false,
         },
         grid: {
-          color: graphColors.grid[mode],
+          color: getThemeValue('--grid-color-secondary'),
         },
       },
     },
@@ -158,9 +157,9 @@ export const PayoutBar = ({
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: graphColors.tooltip[mode],
-        titleColor: graphColors.label[mode],
-        bodyColor: graphColors.label[mode],
+        backgroundColor: getThemeValue('--background-invert'),
+        titleColor: getThemeValue('--text-color-invert'),
+        bodyColor: getThemeValue('--text-color-invert'),
         bodyFont: {
           weight: 600,
         },
