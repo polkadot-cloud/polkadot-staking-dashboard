@@ -1,8 +1,4 @@
 {
-  "inactive": {
-    "light": "#eee",
-    "dark": "rgb(39,35,39)"
-  },
   "tooltip": {
     "light": "#333",
     "dark": "#ddd"

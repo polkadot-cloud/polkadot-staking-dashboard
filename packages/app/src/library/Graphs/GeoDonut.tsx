@@ -5,10 +5,8 @@ import type { AnyJson } from '@w3ux/types'
 import { ellipsisFn } from '@w3ux/utils'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import chroma from 'chroma-js'
-import { useTheme } from 'contexts/Themes'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { Doughnut } from 'react-chartjs-2'
-import graphColors from 'styles/graphs/index.json'
 import type { GeoDonutProps } from './types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
@@ -21,14 +19,13 @@ export const GeoDonut = ({
   legendHeight = 25,
   maxLabelLen = 3,
 }: GeoDonutProps) => {
-  const { mode } = useTheme()
   const { getThemeValue } = useThemeValues()
 
   const { labels } = series
   let { data } = series
   const isZero = data.length === 0
   const backgroundColor = isZero
-    ? graphColors.inactive[mode]
+    ? getThemeValue('--background-default')
     : getThemeValue('--accent-color-primary')
 
   const total = data.reduce((acc: number, value: number) => acc + value, 0)
@@ -36,10 +33,13 @@ export const GeoDonut = ({
   data = data.map((value: number) => (value / total) * 100)
 
   const options = {
-    borderColor: graphColors.inactive[mode],
-    hoverBorderColor: graphColors.inactive[mode],
+    borderColor: getThemeValue('--background-default'),
+    hoverBorderColor: getThemeValue('--background-default'),
     backgroundColor,
-    hoverBackgroundColor: [backgroundColor, graphColors.inactive[mode]],
+    hoverBackgroundColor: [
+      backgroundColor,
+      getThemeValue('--background-default'),
+    ],
     responsive: true,
     maintainAspectRatio: false,
     spacing: 0,
@@ -84,7 +84,7 @@ export const GeoDonut = ({
         // We make a gradient of N+2 colors from active to inactive, and we discard both ends N is
         // the number of datapoints to plot.
         backgroundColor: chroma
-          .scale([backgroundColor, graphColors.inactive[mode]])
+          .scale([backgroundColor, getThemeValue('--background-default')])
           .colors(data.length + 1),
         borderWidth: 0.5,
       },
