@@ -52,7 +52,7 @@ export const PagesConfig: PagesConfigItems = [
   },
   {
     category: 2,
-    key: 'rewards_payouts',
+    key: 'rewards',
     uri: `${BASE_URL}rewards`,
     hash: '/rewards',
     Entry: Rewards,
