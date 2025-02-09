@@ -15,8 +15,8 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
@@ -49,7 +49,7 @@ export const EraPointsLine = ({
 }) => {
   const { i18n, t } = useTranslation()
   const { mode } = useTheme()
-  const { colors } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
 
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
@@ -57,8 +57,7 @@ export const EraPointsLine = ({
     : entries.map((entry) => new BigNumber(entry.points).toString())
 
   // Use primary color for line
-  const color = colors.primary[mode]
-
+  const color = getThemeValue('--accent-color-primary ')
   // Styling of axis titles
   const titleFontSpec: Partial<FontSpec> = {
     family: "'Inter', 'sans-serif'",
