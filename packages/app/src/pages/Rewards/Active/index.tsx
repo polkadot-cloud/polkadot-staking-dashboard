@@ -1,47 +1,30 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTokenPrices } from 'contexts/TokenPrice'
+import { useTransferOptions } from 'contexts/TransferOptions'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { Text } from 'library/StatCards/Text'
+import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader, PageRow, StatRow } from 'ui-core/base'
-import { RewardText, RewardsGrid } from '../Wrappers'
+import { StakedBalance } from '../Stats/StakedBalance'
+import { RewardsGrid } from '../Wrappers'
 
 export const Active = () => {
   const { t } = useTranslation('pages')
-  const { inPool } = useActivePool()
   const { networkData } = useNetwork()
   const { price: dotPrice } = useTokenPrices()
   const { activeAccount } = useActiveAccounts()
-  const { getLedger, getPoolMembership } = useBalances()
+  const { getStakedBalance } = useTransferOptions()
   const { getAverageRewardRate } = useAverageRewardRate()
   const [manualStake, setManualStake] = useState<number | null>(null)
   const [isCustomStake, setIsCustomStake] = useState(false)
-
-  const getCurrentStake = () => {
-    if (!activeAccount) {
-      return '0'
-    }
-
-    let rawAmount = '0'
-    if (inPool()) {
-      const membership = getPoolMembership(activeAccount)
-      rawAmount = membership?.points ?? '0'
-    } else {
-      rawAmount = getLedger({ stash: activeAccount }).active.toString() ?? '0'
-    }
-    return planckToUnit(rawAmount, networkData.units)
-  }
 
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
@@ -49,7 +32,8 @@ export const Active = () => {
   const currentStake =
     isCustomStake && manualStake !== null
       ? manualStake
-      : Number(getCurrentStake())
+      : getStakedBalance(activeAccount).toNumber()
+
   const annualReward = currentStake * (rewardRate / 100) || 0
   const monthlyReward = annualReward / 12 || 0
   const dailyReward = annualReward / 365 || 0
@@ -64,13 +48,8 @@ export const Active = () => {
   return (
     <>
       <StatRow>
-        <RewardText>
-          <Text
-            label={t('rewards.averageRewardRate')}
-            value={`${rewardRate.toFixed(2)}%`}
-            helpKey="Average Reward Rate"
-          />
-        </RewardText>
+        <AverageRewardRate />
+        <StakedBalance isCustomStake={isCustomStake} />
         <div
           style={{
             display: 'flex',
@@ -79,18 +58,6 @@ export const Active = () => {
             gap: '1rem',
           }}
         >
-          <Text
-            label={
-              isCustomStake
-                ? t('rewards.customBalance')
-                : t('rewards.currentStakedBalance')
-            }
-            value={`${currentStake.toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })} ${networkData.api.unit}`}
-            helpKey={isCustomStake ? 'Custom Balance' : 'Your Balance'}
-          />
           <ButtonPrimary
             text={
               isCustomStake
