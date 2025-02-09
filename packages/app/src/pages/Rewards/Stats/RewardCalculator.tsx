@@ -20,7 +20,7 @@ export const RewardCalculator = ({
       <FontAwesomeIcon
         icon={faCalculator}
         color="var(--accent-color-primary"
-        style={{ marginLeft: '0.35rem', height: '3rem' }}
+        style={{ marginLeft: '0.35rem', height: '2.75rem' }}
       />
     ),
     label: isCustomStake
