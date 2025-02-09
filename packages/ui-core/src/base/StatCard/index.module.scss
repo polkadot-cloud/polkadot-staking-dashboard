@@ -69,9 +69,15 @@
     }
   }
 
+  &.button {
+    &:hover {
+      transform: none;
+    }
+  }
+
   button {
     box-shadow: 0 3px 6px var(--card-deep-shadow-color);
-    transition: border 0.2s;
+    transition: border 0.15s;
     &:hover {
       border: 1px solid var(--accent-color-pending);
     }
