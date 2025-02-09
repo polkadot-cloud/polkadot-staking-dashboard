@@ -11,8 +11,8 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader, PageRow, StatRow } from 'ui-core/base'
+import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
 import { RewardsGrid } from '../Wrappers'
 
@@ -50,24 +50,10 @@ export const Active = () => {
       <StatRow>
         <AverageRewardRate />
         <StakedBalance isCustomStake={isCustomStake} />
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-          }}
-        >
-          <ButtonPrimary
-            text={
-              isCustomStake
-                ? t('rewards.useConnectedWallet')
-                : t('rewards.useCustomAmount')
-            }
-            onClick={handleToggleStake}
-            style={{ minWidth: 'fit-content', whiteSpace: 'nowrap' }}
-          />
-        </div>
+        <RewardCalculator
+          isCustomStake={isCustomStake}
+          onClick={handleToggleStake}
+        />
       </StatRow>
 
       <AnimatePresence>
