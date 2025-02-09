@@ -105,7 +105,7 @@ export const Active = () => {
       <PageRow>
         <CardWrapper>
           <CardHeader>
-            <h4>{t('rewards.projectedRewards')}</h4>
+            <h3>{t('rewards.projectedRewards')}</h3>
           </CardHeader>
 
           <RewardsGrid>
