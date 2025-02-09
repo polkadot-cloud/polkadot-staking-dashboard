@@ -26,7 +26,7 @@ export const RewardCalculator = ({
     label: isCustomStake
       ? t('rewards.useConnectedWallet')
       : t('rewards.useCustomAmount'),
-    title: 'Reward Calculator',
+    title: t('rewards.rewardsCalculator'),
     onClick,
     active: isCustomStake,
   }
