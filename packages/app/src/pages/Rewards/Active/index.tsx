@@ -111,7 +111,7 @@ export const Active = () => {
           <RewardsGrid>
             <div className="header">
               <span>{t('rewards.period')}</span>
-              <span>{networkData.api.unit}</span>
+              <span>{networkData.unit}</span>
               <span>USDT</span>
             </div>
 
