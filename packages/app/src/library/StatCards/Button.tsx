@@ -27,7 +27,7 @@ export const Button = ({
   return (
     <StatButton>
       <button type="button" onClick={() => onClick()}>
-        <div style={{ position: 'absolute', right: '2.1rem', top: '0.6rem' }}>
+        <div style={{ position: 'absolute', right: '2rem', top: '0.5rem' }}>
           {active ? (
             <FontAwesomeIcon
               icon={faTimes}
