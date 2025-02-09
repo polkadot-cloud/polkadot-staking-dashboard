@@ -124,7 +124,7 @@ export const EraPointsLine = ({
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: graphColors.tooltip[mode],
+        backgroundColor: getThemeValue('--background-invert'),
         titleColor: graphColors.label[mode],
         bodyColor: graphColors.label[mode],
         bodyFont: {
