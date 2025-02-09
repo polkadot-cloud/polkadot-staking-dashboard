@@ -16,13 +16,11 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
-import { useTheme } from 'contexts/Themes'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import graphColors from 'styles/graphs/index.json'
 import { Spinner } from 'ui-core/base'
 import type { PayoutLineEntry } from './types'
 
@@ -49,7 +47,6 @@ export const PayoutLine = ({
   height: string | number
 }) => {
   const { i18n, t } = useTranslation()
-  const { mode } = useTheme()
   const { unit } = useNetwork().networkData
   const { getThemeValue } = useThemeValues()
 
@@ -68,7 +65,7 @@ export const PayoutLine = ({
     size: 11,
   }
   const titleStyle = {
-    color: graphColors.title[mode],
+    color: getThemeValue('--text-color-secondary'),
     display: true,
     padding: 6,
     font: titleFontSpec,
@@ -85,7 +82,7 @@ export const PayoutLine = ({
           display: false,
         },
         ticks: {
-          color: graphColors.canvas.axis[mode],
+          color: getThemeValue('--grid-canvas-axis'),
           font: {
             size: 10,
           },
@@ -100,7 +97,7 @@ export const PayoutLine = ({
         stacked: true,
         beginAtZero: true,
         ticks: {
-          color: graphColors.canvas.axis[mode],
+          color: getThemeValue('--grid-canvas-axis'),
           font: {
             size: 10,
           },
@@ -109,7 +106,7 @@ export const PayoutLine = ({
           display: false,
         },
         grid: {
-          color: graphColors.canvas.grid[mode],
+          color: getThemeValue('--grid-canvas'),
         },
         title: {
           ...titleStyle,
@@ -126,9 +123,9 @@ export const PayoutLine = ({
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: graphColors.tooltip[mode],
-        titleColor: graphColors.label[mode],
-        bodyColor: graphColors.label[mode],
+        backgroundColor: getThemeValue('--background-invert'),
+        titleColor: getThemeValue('--text-color-invert'),
+        bodyColor: getThemeValue('--text-color-invert'),
         bodyFont: {
           weight: 600,
         },
