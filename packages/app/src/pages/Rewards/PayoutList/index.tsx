@@ -47,9 +47,11 @@ export const PayoutListInner = ({
   const { bondedPools } = useBondedPools()
   const { getValidators } = useValidators()
   const { getThemeValue } = useThemeValues()
-  const { listFormat, setListFormat } = useList()
-
-  const [page, setPage] = useState<number>(1)
+  const {
+    listFormat,
+    setListFormat,
+    pagination: { page, setPage },
+  } = useList()
 
   // Manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)
