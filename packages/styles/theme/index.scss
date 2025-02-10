@@ -118,6 +118,11 @@ ellipse.primary {
   fill: var(--text-color-primary);
 }
 
+path.accent,
+ellipse.accent {
+  fill: var(--accent-color-primary);
+}
+
 .page-padding {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
