@@ -6474,9 +6474,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^12.0.11":
-  version: 12.1.0
-  resolution: "framer-motion@npm:12.1.0"
+"framer-motion@npm:^12.4.2":
+  version: 12.4.2
+  resolution: "framer-motion@npm:12.4.2"
   dependencies:
     motion-dom: "npm:^12.0.0"
     motion-utils: "npm:^12.0.0"
@@ -6492,7 +6492,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/7b7fe45cf38f2a13236a19f95840ec42dd7de9f9692cb6fdce8c5f17c5101c0bcce43783968a0c6157a1f8b2bcd9cbb88eb9fd9c0e7212a357ec6010135e80d4
+  checksum: 10c0/31d1a5360278de19ccf8e3e79cf442e15b5c04980130914f8cdcd3becc99fbd47088041b9b92fc9c06af7dc4030dc3b6e2da2c9c3d25cce9e36dc35d1bf6ac51
   languageName: node
   linkType: hard
 
@@ -8838,7 +8838,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.4"
     eslint-plugin-react-hooks: "npm:^5.1.0"
     eslint-plugin-unused-imports: "npm:^4.1.4"
-    framer-motion: "npm:^12.0.11"
+    framer-motion: "npm:^12.4.2"
     globals: "npm:^15.13.0"
     i18next: "npm:^24.2.2"
     prettier: "npm:^3.4.2"
