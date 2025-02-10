@@ -56,7 +56,7 @@
     "ui-graphs": "workspace:*",
     "ui-identity": "workspace:*",
     "ui-overlay": "workspace:*",
-    "usehooks-ts": "^3.0.2",
+    "usehooks-ts": "^3.1.1",
     "utils": "workspace:*",
     "viem": "^2.22.19",
     "wagmi": "^2.14.8",
