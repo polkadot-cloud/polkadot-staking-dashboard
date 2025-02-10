@@ -118,8 +118,8 @@ export const PayoutBar = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.5,
-    maxBarThickness: 15,
+    barPercentage: 0.45,
+    maxBarThickness: 12,
     scales: {
       x: {
         stacked: true,
