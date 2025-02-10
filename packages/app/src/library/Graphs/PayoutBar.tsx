@@ -72,7 +72,7 @@ export const PayoutBar = ({
     ? getThemeValue('--accent-color-transparent')
     : getThemeValue('--accent-color-secondary')
 
-  const borderRadius = 4
+  const borderRadius = 3.5
   const pointRadius = 0
   const data = {
     labels: graphPayouts.map(({ timestamp }: { timestamp: number }) => {
@@ -118,7 +118,7 @@ export const PayoutBar = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.45,
+    barPercentage: 0.5,
     maxBarThickness: 12,
     scales: {
       x: {
