@@ -5,8 +5,8 @@ import { gql, useQuery } from '@apollo/client'
 import type { AllRewardsResult } from '../types'
 
 const QUERY = gql`
-  query AllRewards($chain: String!, $who: String!, $fromEra: Int!) {
-    allRewards(chain: $chain, who: $who, fromEra: $fromEra) {
+  query AllRewards($network: String!, $who: String!, $fromEra: Int!) {
+    allRewards(network: $network, who: $who, fromEra: $fromEra) {
       claimed
       era
       reward
@@ -18,16 +18,16 @@ const QUERY = gql`
 `
 
 export const useRewards = ({
-  chain,
+  network,
   who,
   fromEra,
 }: {
-  chain: string
+  network: string
   who: string
   fromEra: number
 }): AllRewardsResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain, who, fromEra },
+    variables: { network, who, fromEra },
   })
   return { loading, error, data, refetch }
 }

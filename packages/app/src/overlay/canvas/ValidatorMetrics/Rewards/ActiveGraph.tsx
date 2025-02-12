@@ -25,7 +25,7 @@ export const ActiveGraph = ({
     networkData: { units },
   } = useNetwork()
   const { data, loading, error } = useValidatorRewards({
-    chain: network,
+    network,
     validator,
     fromEra,
   })
