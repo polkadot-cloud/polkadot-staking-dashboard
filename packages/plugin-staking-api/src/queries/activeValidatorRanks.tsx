@@ -6,8 +6,8 @@ import { client } from '../Client'
 import type { ActiveValidatorRank, ActiveValidatorRanksResult } from '../types'
 
 const QUERY = gql`
-  query ActiveValidatorRanks($chain: String!) {
-    activeValidatorRanks(chain: $chain) {
+  query ActiveValidatorRanks($network: String!) {
+    activeValidatorRanks(network: $network) {
       validator
       rank
     }
@@ -15,23 +15,23 @@ const QUERY = gql`
 `
 
 export const useActiveValidatorRanks = ({
-  chain,
+  network,
 }: {
-  chain: string
+  network: string
 }): ActiveValidatorRanksResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain },
+    variables: { network },
   })
   return { loading, error, data, refetch }
 }
 
 export const fetchActiveValidatorRanks = async (
-  chain: string
+  network: string
 ): Promise<{ activeValidatorRanks: ActiveValidatorRank[] }> => {
   try {
     const result = await client.query({
       query: QUERY,
-      variables: { chain },
+      variables: { network },
     })
     return result.data
   } catch (error) {

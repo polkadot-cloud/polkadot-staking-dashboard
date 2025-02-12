@@ -23,7 +23,7 @@ export const ActiveGraph = ({
   units,
 }: Props) => {
   const { data, loading, error } = useRewards({
-    chain: network,
+    network,
     who: stash,
     fromEra,
   })
