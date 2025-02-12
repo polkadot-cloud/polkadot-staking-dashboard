@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
@@ -6,29 +6,29 @@ import { client } from '../Client'
 import type { PoolCandidatesResult } from '../types'
 
 const QUERY = gql`
-  query PoolCandidates($chain: String!) {
-    poolCandidates(chain: $chain)
+  query PoolCandidates($network: String!) {
+    poolCandidates(network: $network)
   }
 `
 
 export const usePoolCandidates = ({
-  chain,
+  network,
 }: {
-  chain: string
+  network: string
 }): PoolCandidatesResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain },
+    variables: { network },
   })
   return { loading, error, data, refetch }
 }
 
 export const fetchPoolCandidates = async (
-  chain: string
+  network: string
 ): Promise<{ poolCandidates: number[] }> => {
   try {
     const result = await client.query({
       query: QUERY,
-      variables: { chain },
+      variables: { network },
     })
 
     return result.data

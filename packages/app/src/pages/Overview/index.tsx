@@ -1,10 +1,15 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CardWrapper } from 'library/Card/Wrappers'
-import { StatBoxList } from 'library/StatBoxList'
 import { useTranslation } from 'react-i18next'
-import { PageHeading, PageRow, PageTitle, RowSection } from 'ui-core/base'
+import {
+  PageHeading,
+  PageRow,
+  PageTitle,
+  RowSection,
+  StatRow,
+} from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
 import { AccountControls } from './AccountControls'
@@ -27,11 +32,11 @@ export const Overview = () => {
           <AccountControls />
         </PageHeading>
       </PageRow>
-      <StatBoxList>
+      <StatRow>
         <AverageRewardRate />
         <SupplyStaked />
         <NextRewards />
-      </StatBoxList>
+      </StatRow>
       <PageRow>
         <StakeStatus />
       </PageRow>

@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types'
@@ -23,7 +23,6 @@ import type {
 import type { ActiveBalance } from 'contexts/Balances/types'
 import type { BondedAccount } from 'contexts/Bonded/types'
 import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
-import type { Theme } from 'contexts/Themes/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
@@ -76,12 +75,6 @@ export type SystemChainId =
 
 export type Networks = Record<string, Network>
 
-type NetworkColor =
-  | 'primary'
-  | 'secondary'
-  | 'stroke'
-  | 'transparent'
-  | 'pending'
 export interface Network {
   name: NetworkId
   endpoints: {
@@ -91,7 +84,6 @@ export interface Network {
     rpcEndpoints: Record<string, string>
   }
 
-  colors: Record<NetworkColor, { [key in Theme]: string }>
   unit: string
   units: number
   ss58: number

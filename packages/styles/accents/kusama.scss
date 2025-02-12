@@ -1,0 +1,38 @@
+/* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
+
+.theme-kusama {
+  $base-primary: rgb(51, 51, 53);
+  $base-secondary: rgb(141 144 150);
+
+  @for $i from 0 through 19 {
+    --accent-color-primary-#{100 - ($i * 5)}: #{hsl(
+        hue($base-primary),
+        saturation($base-primary),
+        $i * 5%
+      )};
+    --accent-color-secondary-#{100 - ($i * 5)}: #{hsl(
+        hue($base-secondary),
+        saturation($base-secondary),
+        $i * 5%
+      )};
+  }
+
+  --accent-color-primary-light: var(--accent-color-primary-90);
+  --accent-color-primary-dark: var(--accent-color-primary-40);
+
+  --accent-color-secondary-light: var(--accent-color-secondary-50);
+  --accent-color-secondary-dark: var(--accent-color-secondary-55);
+
+  --accent-color-tertiary-light: rgb(230, 230, 230);
+  --accent-color-tertiary-dark: rgb(68, 68, 68);
+
+  --accent-color-stroke-light: rgb(76, 75, 99);
+  --accent-color-stroke-dark: rgb(209, 209, 219);
+
+  --accent-color-transparent-light: rgb(51 51 51 / 5%);
+  --accent-color-transparent-dark: rgb(102 102 102 / 5%);
+
+  --accent-color-pending-light: rgb(51 51 51 / 50%);
+  --accent-color-pending-dark: rgb(102 102 102 / 50%);
+}

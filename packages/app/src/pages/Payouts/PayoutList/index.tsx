@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api'
 import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatDistance, fromUnixTime } from 'date-fns'
 import { motion } from 'framer-motion'
@@ -40,13 +40,13 @@ export const PayoutListInner = ({
   itemsPerPage,
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages')
-  const { mode } = useTheme()
   const { isReady, activeEra } = useApi()
   const {
-    networkData: { units, unit, colors },
+    networkData: { units, unit },
   } = useNetwork()
   const { bondedPools } = useBondedPools()
   const { getValidators } = useValidators()
+  const { getThemeValue } = useThemeValues()
   const { listFormat, setListFormat } = useList()
 
   const [page, setPage] = useState<number>(1)
@@ -89,13 +89,21 @@ export const PayoutListInner = ({
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? getThemeValue('--accent-color-primary')
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? getThemeValue('--accent-color-primary')
+                  : 'inherit'
+              }
             />
           </button>
         </div>

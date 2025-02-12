@@ -49,16 +49,16 @@
     "react-helmet-async": "^2.0.5",
     "react-router-dom": "^7.1.1",
     "rxjs": "^7.8.1",
-    "styled-components": "^6.1.13",
     "styles": "workspace:*",
     "types": "workspace:*",
     "ui-buttons": "workspace:*",
     "ui-core": "workspace:*",
+    "ui-graphs": "workspace:*",
     "ui-identity": "workspace:*",
     "ui-overlay": "workspace:*",
     "usehooks-ts": "^3.0.2",
     "utils": "workspace:*",
-    "viem": "^2.22.15",
+    "viem": "^2.22.19",
     "wagmi": "^2.14.8",
     "xxhash-wasm": "^1.0.2"
   },
@@ -68,7 +68,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.4"
+    "vitest": "^3.0.5"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",

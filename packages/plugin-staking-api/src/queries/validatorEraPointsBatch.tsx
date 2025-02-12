@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
@@ -10,13 +10,13 @@ import type {
 
 const QUERY = gql`
   query ValidatorEraPointsBatch(
-    $chain: String!
+    $network: String!
     $validators: [String!]!
     $fromEra: Int!
     $depth: Int
   ) {
     validatorEraPointsBatch(
-      chain: $chain
+      network: $network
       validators: $validators
       fromEra: $fromEra
       depth: $depth
@@ -32,24 +32,24 @@ const QUERY = gql`
 `
 
 export const useValidatorEraPointsBatch = ({
-  chain,
+  network,
   validators,
   fromEra,
   depth,
 }: {
-  chain: string
+  network: string
   validators: string[]
   fromEra: number
   depth?: number
 }): ValidatorEraPointsBatchResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain, validators, fromEra, depth },
+    variables: { network, validators, fromEra, depth },
   })
   return { loading, error, data, refetch }
 }
 
 export const fetchValidatorEraPointsBatch = async (
-  chain: string,
+  network: string,
   validators: string[],
   fromEra: number,
   depth?: number
@@ -57,7 +57,7 @@ export const fetchValidatorEraPointsBatch = async (
   try {
     const result = await client.query({
       query: QUERY,
-      variables: { chain, validators, fromEra, depth },
+      variables: { network, validators, fromEra, depth },
     })
     return result.data
   } catch (error) {

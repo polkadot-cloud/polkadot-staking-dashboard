@@ -1,8 +1,7 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network'
-import { StatBoxList } from 'library/StatBoxList'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -25,7 +24,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { PluginLabel } from 'library/PluginLabel'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
-import { CardHeader, PageRow } from 'ui-core/base'
+import { CardHeader, PageRow, StatRow } from 'ui-core/base'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -114,11 +113,11 @@ export const NominationGeo = () => {
 
   return (
     <>
-      <StatBoxList>
+      <StatRow>
         <AnalyzedDays />
         <AnalyzedEras meta={networkMeta} />
         <AnalyzedPayouts data={nominationDetail} />
-      </StatBoxList>
+      </StatRow>
       <PageRow>
         <CardWrapper>
           <PluginLabel plugin="polkawatch" />

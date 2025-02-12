@@ -1,10 +1,10 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnPrimaryInvert {
-  border: 1px solid var(--accent-color-stroke);
-  border-radius: var(--button-border-radius-large);
-  color: var(--accent-color-stroke);
+  border: 1px solid var(--accent-color-primary);
+  border-radius: var(--button-lg-border-radius);
+  color: var(--accent-color-primary);
 }
 .btnPrimaryInvertSecondaryColor {
   border: 1px solid var(--accent-color-secondary);

@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -86,12 +86,7 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   position: relative;
   text-transform: uppercase;
 
-  ellipse {
-    fill: var(--accent-color-primary);
-  }
-
   > span {
-    color: var(--accent-color-primary);
     margin-top: 0.25rem;
     margin-left: 0.75rem;
     background-clip: text;
@@ -101,10 +96,6 @@ export const LogoWrapper = styled.div<MinimisedProps>`
     .logo {
       width: auto;
       height: 1.4rem;
-
-      path {
-        fill: var(--accent-color-primary);
-      }
     }
   }
 `

@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnTab {
@@ -46,8 +46,8 @@
 .btnTabBadge {
   border: 1px solid var(--border-primary-color);
   color: var(--text-color-tertiary);
-  font-size: var(--button-font-size-small);
-  margin-left: var(--button-spacing-large);
+  font-size: var(--button-sm-font-size);
+  margin-left: var(--button-lg-spacing);
   display: flex;
   padding: 0.3rem 0.6rem;
   align-items: center;

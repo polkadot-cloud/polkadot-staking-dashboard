@@ -1,12 +1,12 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
 import type { PoolRewardResults } from '../types'
 
 const QUERY = gql`
-  query PoolRewards($chain: String!, $who: String!, $from: Int!) {
-    poolRewards(chain: $chain, who: $who, from: $from) {
+  query PoolRewards($network: String!, $who: String!, $from: Int!) {
+    poolRewards(network: $network, who: $who, from: $from) {
       poolId
       reward
       timestamp
@@ -16,16 +16,16 @@ const QUERY = gql`
 `
 
 export const usePoolRewards = ({
-  chain,
+  network,
   who,
   from,
 }: {
-  chain: string
+  network: string
   who: string
   from: number
 }): PoolRewardResults => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain, who, from },
+    variables: { network, who, from },
   })
   return { loading, error, data, refetch }
 }

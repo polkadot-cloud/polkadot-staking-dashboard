@@ -1,12 +1,12 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
 import type { UnclaimedRewardsResult } from '../types'
 
 const QUERY = gql`
-  query UnclaimedRewards($chain: String!, $who: String!, $fromEra: Int!) {
-    unclaimedRewards(chain: $chain, who: $who, fromEra: $fromEra) {
+  query UnclaimedRewards($network: String!, $who: String!, $fromEra: Int!) {
+    unclaimedRewards(network: $network, who: $who, fromEra: $fromEra) {
       total
       entries {
         era
@@ -22,16 +22,16 @@ const QUERY = gql`
 `
 
 export const useUnclaimedRewards = ({
-  chain,
+  network,
   who,
   fromEra,
 }: {
-  chain: string
+  network: string
   who: string
   fromEra: number
 }): UnclaimedRewardsResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain, who, fromEra },
+    variables: { network, who, fromEra },
   })
   return { loading, error, data, refetch }
 }

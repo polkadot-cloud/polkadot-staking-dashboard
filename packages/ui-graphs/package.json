@@ -1,0 +1,18 @@
+{
+  "name": "ui-graphs",
+  "version": "1.0.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
+    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+  },
+  "exports": {
+    ".": "./src/index.tsx",
+    "./types": "./src/types.ts"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "styled-components": "*"
+  }
+}

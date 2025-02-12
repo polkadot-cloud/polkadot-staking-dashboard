@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ListProvider } from 'contexts/List'
@@ -8,13 +8,10 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { PoolList } from 'library/PoolList'
-import { StatBoxList } from 'library/StatBoxList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
-import { PageRow, PageTitle, RowSection } from 'ui-core/base'
-import { useOverlay } from 'ui-overlay'
+import { PageRow, PageTitle, RowSection, StatRow } from 'ui-core/base'
 import { ClosurePrompts } from './ClosurePrompts'
 import { PoolFavorites } from './Favorites'
 import { ManageBond } from './ManageBond'
@@ -90,11 +87,11 @@ export const PoolsInner = () => {
       />
       {activeTab === 0 && (
         <>
-          <StatBoxList>
+          <StatRow>
             <ActivePoolCount />
             <MinJoinBond />
             <MinCreateBond />
-          </StatBoxList>
+          </StatRow>
           <ClosurePrompts />
           <WithdrawPrompt bondFor="pool" />
           <PageRow>

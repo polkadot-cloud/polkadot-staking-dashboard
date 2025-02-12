@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import KusamaIconSVG from 'assets/svg/chains/kusamaIcon.svg?react'
@@ -29,28 +29,6 @@ export const NetworkList: Networks = {
         LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
         RadiumBlock: 'wss://polkadot.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://dot-rpc.stakeworld.io',
-      },
-    },
-    colors: {
-      primary: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
-      },
-      secondary: {
-        light: '#552bbf',
-        dark: '#6d39ee',
-      },
-      stroke: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
-      },
-      transparent: {
-        light: 'rgb(211, 48, 121, 0.05)',
-        dark: 'rgb(211, 48, 121, 0.05)',
-      },
-      pending: {
-        light: 'rgb(211, 48, 121, 0.33)',
-        dark: 'rgb(211, 48, 121, 0.33)',
       },
     },
     unit: 'DOT',
@@ -87,28 +65,6 @@ export const NetworkList: Networks = {
         Stakeworld: 'wss://ksm-rpc.stakeworld.io',
       },
     },
-    colors: {
-      primary: {
-        light: 'rgb(31, 41, 55)',
-        dark: 'rgb(126, 131, 141)',
-      },
-      secondary: {
-        light: 'rgb(31, 41, 55)',
-        dark: 'rgb(141, 144, 150)',
-      },
-      stroke: {
-        light: '#4c4b63',
-        dark: '#d1d1db',
-      },
-      transparent: {
-        light: 'rgb(51,51,51,0.05)',
-        dark: 'rgb(102,102,102, 0.05)',
-      },
-      pending: {
-        light: 'rgb(51,51,51,0.33)',
-        dark: 'rgb(102,102,102, 0.33)',
-      },
-    },
     unit: 'KSM',
     units: 12,
     ss58: 2,
@@ -140,28 +96,6 @@ export const NetworkList: Networks = {
         LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
         RadiumBlock: 'wss://westend.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://wnd-rpc.stakeworld.io',
-      },
-    },
-    colors: {
-      primary: {
-        light: '#da4e71',
-        dark: '#da4e71',
-      },
-      secondary: {
-        light: '#de6a50',
-        dark: '#d7674e',
-      },
-      stroke: {
-        light: '#da4e71',
-        dark: '#da4e71',
-      },
-      transparent: {
-        light: 'rgb(218, 78, 113, 0.05)',
-        dark: 'rgb(218, 78, 113, 0.05)',
-      },
-      pending: {
-        light: 'rgb(218, 78, 113, 0.33)',
-        dark: 'rgb(218, 78, 113, 0.33)',
       },
     },
     unit: 'WND',

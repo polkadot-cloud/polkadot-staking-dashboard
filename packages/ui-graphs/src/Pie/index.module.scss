@@ -1,0 +1,23 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.pie {
+  position: relative;
+
+  > svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+
+    > circle {
+      fill: transparent;
+      stroke-width: 31.8309886184;
+      stroke-dasharray: 0, 0, 0, 100;
+      stroke-dashoffset: 25;
+    }
+  }
+}

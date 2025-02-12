@@ -1,11 +1,12 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useStaking } from 'contexts/Staking'
-import { Pie } from 'library/StatBoxList/Pie'
+import { Pie } from 'library/StatCards/Pie'
 import { useTranslation } from 'react-i18next'
+import { percentageOf } from 'ui-graphs'
 
 export const ActiveNominators = () => {
   const { t } = useTranslation('pages')
@@ -28,10 +29,10 @@ export const ActiveNominators = () => {
       total: counterForNominators.toNumber(),
       unit: '',
     },
-    graph: {
-      value1: totalActiveNominators,
-      value2: counterForNominators.minus(totalActiveNominators).toNumber(),
-    },
+    pieValue: percentageOf(
+      totalActiveNominators,
+      counterForNominators.toNumber()
+    ),
     tooltip: `${new BigNumber(totalNominatorsAsPercent)
       .decimalPlaces(2)
       .toFormat()}%`,

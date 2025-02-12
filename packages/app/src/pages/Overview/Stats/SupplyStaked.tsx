@@ -1,10 +1,10 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Pie } from 'library/StatBoxList/Pie'
+import { Pie } from 'library/StatCards/Pie'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
@@ -32,13 +32,7 @@ export const SupplyStaked = () => {
       value: `${supplyAsPercent.decimalPlaces(2).toFormat()}`,
       unit: '%',
     },
-    graph: {
-      value1: supplyAsPercent.decimalPlaces(2).toNumber(),
-      value2: new BigNumber(100)
-        .minus(supplyAsPercent)
-        .decimalPlaces(2)
-        .toNumber(),
-    },
+    pieValue: supplyAsPercent.decimalPlaces(2).toNumber(),
     tooltip: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Supply Staked',
   }

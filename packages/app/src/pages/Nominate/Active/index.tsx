@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
@@ -12,11 +12,10 @@ import { useUnstaking } from 'hooks/useUnstaking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { Nominations } from 'library/Nominations'
-import { StatBoxList } from 'library/StatBoxList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { CardHeader, PageRow, RowSection } from 'ui-core/base'
+import { CardHeader, PageRow, RowSection, StatRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
@@ -42,11 +41,11 @@ export const Active = () => {
 
   return (
     <>
-      <StatBoxList>
+      <StatRow>
         <ActiveNominators />
         <MinimumNominatorBond />
         <MinimumActiveStake />
-      </StatBoxList>
+      </StatRow>
       <CommissionPrompt />
 
       {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}

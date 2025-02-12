@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
@@ -6,13 +6,13 @@ import type { PoolEraPointsResult } from '../types'
 
 const QUERY = gql`
   query PoolEraPoints(
-    $chain: String!
+    $network: String!
     $poolId: Int!
     $fromEra: Int!
     $depth: Int
   ) {
     poolEraPoints(
-      chain: $chain
+      network: $network
       poolId: $poolId
       fromEra: $fromEra
       depth: $depth
@@ -25,18 +25,18 @@ const QUERY = gql`
 `
 
 export const usePoolEraPoints = ({
-  chain,
+  network,
   poolId,
   fromEra,
   depth,
 }: {
-  chain: string
+  network: string
   poolId: number
   fromEra: number
   depth?: number
 }): PoolEraPointsResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain, poolId, fromEra, depth },
+    variables: { network, poolId, fromEra, depth },
   })
   return { loading, error, data, refetch }
 }

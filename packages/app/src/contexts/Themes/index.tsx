@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
@@ -54,10 +54,14 @@ export const ThemesProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(newTheme, setTheme, themeRef)
   }
 
+  // A ref to refer to the Entry component that stores the theme variables.
+  const themeElementRef = useRef<HTMLDivElement>(null)
+
   return (
     <ThemeContext.Provider
       value={{
         toggleTheme,
+        themeElementRef,
         mode: themeRef.current,
       }}
     >

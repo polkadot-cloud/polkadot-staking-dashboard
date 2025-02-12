@@ -1,11 +1,11 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
@@ -17,18 +17,17 @@ import { useOverlay } from 'ui-overlay'
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages')
-  const { mode } = useTheme()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
   const { openModal } = useOverlay().modal
+  const { unit } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
   const { activeAccount } = useActiveAccounts()
-  const { unit, colors } = useNetwork().networkData
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
 
   const { getTransferOptions } = useTransferOptions()
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAccount).nominate
-  const annuncementBorderColor = colors.secondary[mode]
 
   // unstaking can withdraw
   const canWithdrawUnlocks =
@@ -42,7 +41,11 @@ export const UnstakePrompts = () => {
     (isUnstaking || isFastUnstaking) &&
     !syncing && (
       <PageRow>
-        <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
+        <CardWrapper
+          style={{
+            border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
+          }}
+        >
           <div className="content">
             <h3>
               {t('nominate.unstakePromptInProgress', {

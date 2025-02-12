@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
@@ -25,6 +25,7 @@ import { Value } from './Value'
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
   const {
+    network,
     networkData: {
       units,
       unit,
@@ -142,7 +143,7 @@ export const BalanceChart = () => {
             zeroDecimals={2}
           />
           <CardLabel>
-            {plugins.includes('staking_api') ? (
+            {plugins.includes('staking_api') && network !== 'westend' ? (
               <Value totalBalance={totalBalance} />
             ) : null}
           </CardLabel>

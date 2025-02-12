@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SectionFullWidthThreshold } from 'consts'
@@ -82,7 +82,6 @@ export const BannerWrapper = styled.div`
     align-items: center;
 
     h3 {
-      font-family: InterSemiBold, sans-serif;
       line-height: 1.8rem;
     }
     button {

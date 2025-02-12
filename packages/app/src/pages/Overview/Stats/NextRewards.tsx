@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTimeLeft } from '@w3ux/hooks'
@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { fromUnixTime, getUnixTime } from 'date-fns'
 import { useEraTimeLeft } from 'hooks/useEraTimeLeft'
-import { Timeleft } from 'library/StatBoxList/Timeleft'
+import { Timeleft } from 'library/StatCards/Timeleft'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatTimeleft } from 'utils'

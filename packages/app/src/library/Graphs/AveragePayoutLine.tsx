@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
@@ -14,10 +14,9 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useNetwork } from 'contexts/Network'
-import { useTheme } from 'contexts/Themes'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import graphColors from 'styles/graphs/index.json'
 import type { AveragePayoutLineProps } from './types'
 import {
   calculatePayoutAverages,
@@ -45,8 +44,8 @@ export const AveragePayoutLine = ({
   inPool,
 }: AveragePayoutLineProps) => {
   const { t } = useTranslation('library')
-  const { mode } = useTheme()
-  const { unit, units, colors } = useNetwork().networkData
+  const { getThemeValue } = useThemeValues()
+  const { unit, units } = useNetwork().networkData
 
   const staking = nominating || inPool
   const inPoolOnly = !nominating && inPool
@@ -77,10 +76,10 @@ export const AveragePayoutLine = ({
 
   // Determine color for payouts
   const color = !staking
-    ? colors.primary[mode]
+    ? getThemeValue('--accent-color-primary')
     : !inPoolOnly
-      ? colors.primary[mode]
-      : colors.secondary[mode]
+      ? getThemeValue('--accent-color-primary')
+      : getThemeValue('--accent-color-secondary')
 
   const options = {
     responsive: true,
@@ -105,7 +104,7 @@ export const AveragePayoutLine = ({
           display: false,
         },
         grid: {
-          color: graphColors.grid[mode],
+          color: getThemeValue('--grid-color-secondary'),
         },
       },
     },
@@ -115,9 +114,9 @@ export const AveragePayoutLine = ({
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: graphColors.tooltip[mode],
-        titleColor: graphColors.label[mode],
-        bodyColor: graphColors.label[mode],
+        backgroundColor: getThemeValue('--background-invert'),
+        titleColor: getThemeValue('--text-color-invert'),
+        bodyColor: getThemeValue('--text-color-invert'),
         bodyFont: {
           weight: 600,
         },

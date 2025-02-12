@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +8,7 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/svg/brands/discord.svg?react'
 import LogoGithubSVG from 'assets/svg/brands/github.svg?react'
 import BookSVG from 'assets/svg/icons/book.svg?react'
+import CloudSVG from 'assets/svg/icons/cloud.svg?react'
 import CogSVG from 'assets/svg/icons/cog.svg?react'
 import EnvelopeSVG from 'assets/svg/icons/envelope.svg?react'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
@@ -75,19 +76,16 @@ export const SideMenu = () => {
         <section>
           <LogoWrapper $minimised={sideMenuMinimised}>
             {sideMenuMinimised ? (
-              <networkData.brand.icon
-                style={{ maxHeight: '100%', width: '1.8rem' }}
-              />
+              <CloudSVG style={{ maxHeight: '100%', width: '1.8rem' }} />
             ) : (
               <>
-                <networkData.brand.icon
+                <CloudSVG
                   style={{
                     maxHeight: '100%',
                     height: '100%',
-                    width: '1.5rem',
+                    width: '1.65rem',
                   }}
                 />
-
                 <span>
                   <LogoSVG className="logo" />
                 </span>

@@ -1,4 +1,4 @@
-// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
@@ -16,14 +16,13 @@ import {
   getPayoutsToDate,
 } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
-import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import type { RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { CardHeader, PageRow, PageTitle } from 'ui-core/base'
+import { CardHeader, PageRow, PageTitle, StatRow } from 'ui-core/base'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 import { PayoutList } from './PayoutList'
@@ -68,9 +67,9 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   return (
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
-      <StatBoxList>
+      <StatRow>
         <LastEraPayout />
-      </StatBoxList>
+      </StatRow>
       <PageRow>
         <CardWrapper>
           <CardHeader>
