@@ -32,7 +32,7 @@ export const ActiveGraph = ({
   const { activeAccount } = useActiveAccounts()
 
   const { data: nominatorRewardData, loading: rewardsLoading } = useRewards({
-    chain: network,
+    network,
     who: activeAccount || '',
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
@@ -44,7 +44,7 @@ export const ActiveGraph = ({
 
   const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
     {
-      chain: network,
+      network,
       who: activeAccount || '',
       from: getUnixTime(fromDate),
     }
