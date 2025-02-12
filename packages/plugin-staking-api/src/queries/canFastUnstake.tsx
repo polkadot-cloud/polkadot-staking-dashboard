@@ -5,22 +5,22 @@ import { gql, useQuery } from '@apollo/client'
 import type { CanFastUnstakeResult } from '../types'
 
 const QUERY = gql`
-  query PoolRewards($chain: String!, $who: String!) {
-    canFastUnstake(chain: $chain, who: $who) {
+  query PoolRewards($network: String!, $who: String!) {
+    canFastUnstake(network: $network, who: $who) {
       status
     }
   }
 `
 
 export const useCanFastUnstake = ({
-  chain,
+  network,
   who,
 }: {
-  chain: string
+  network: string
   who: string
 }): CanFastUnstakeResult => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { chain, who },
+    variables: { network, who },
   })
   return { loading, error, data, refetch }
 }

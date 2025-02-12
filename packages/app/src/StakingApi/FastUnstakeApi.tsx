@@ -9,7 +9,7 @@ import type { Props } from './types'
 export const FastUnstakeApi = ({ activeAccount, network }: Props) => {
   const { setFastUnstakeStatus } = useFastUnstake()
   const { data, loading, error } = useCanFastUnstake({
-    chain: network,
+    network,
     who: activeAccount,
   })
 

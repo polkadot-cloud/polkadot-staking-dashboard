@@ -20,7 +20,7 @@ export const ActiveGraph = ({
   height,
 }: Props) => {
   const { data, loading, error } = useValidatorEraPoints({
-    chain: network,
+    network,
     validator,
     fromEra,
   })
