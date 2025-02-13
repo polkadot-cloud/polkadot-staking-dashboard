@@ -15,8 +15,10 @@ import { CardHeader, PageRow, StatRow } from 'ui-core/base'
 import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
 import { RewardsGrid } from '../Wrappers'
+import type { PageProps } from '../types'
 
-export const Overview = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const Overview = (_: PageProps) => {
   const { t } = useTranslation('pages')
   const { networkData } = useNetwork()
   const { price: dotPrice } = useTokenPrices()

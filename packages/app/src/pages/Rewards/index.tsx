@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { RewardResults } from 'plugin-staking-api/types'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from 'ui-core/base'
@@ -11,6 +12,13 @@ import { Wrapper } from './Wrappers'
 export const Rewards = () => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<number>(0)
+
+  const [payoutsList, setPayoutsList] = useState<RewardResults>([])
+
+  const pageProps = {
+    payoutsList,
+    setPayoutsList,
+  }
 
   return (
     <Wrapper>
@@ -29,8 +37,8 @@ export const Rewards = () => {
           },
         ]}
       />
-      {activeTab === 0 && <Overview />}
-      {activeTab === 1 && <PayoutHistory />}
+      {activeTab === 0 && <Overview {...pageProps} />}
+      {activeTab === 1 && <PayoutHistory {...pageProps} />}
     </Wrapper>
   )
 }

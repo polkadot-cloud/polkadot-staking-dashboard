@@ -2,6 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyApi } from 'common-types'
+import type { RewardResults } from 'plugin-staking-api/types'
+import type { Dispatch, SetStateAction } from 'react'
+
+export interface PageProps {
+  payoutsList: RewardResults
+  setPayoutsList: Dispatch<SetStateAction<RewardResults>>
+}
 
 export interface PayoutListProps {
   allowMoreCols?: boolean

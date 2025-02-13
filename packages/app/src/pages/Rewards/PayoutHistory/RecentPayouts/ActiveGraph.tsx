@@ -17,10 +17,10 @@ import { useEffect } from 'react'
 interface Props {
   nominating: boolean
   inPool: boolean
-  setPayoutLists: (payouts: AnyApi[]) => void
+  setPayoutsList: (payouts: AnyApi[]) => void
 }
 
-export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
+export const ActiveGraph = ({ nominating, inPool, setPayoutsList }: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
@@ -57,7 +57,7 @@ export const ActiveGraph = ({ nominating, inPool, setPayoutLists }: Props) => {
     const payoutsList = (allRewards as RewardResults).concat(
       poolClaims
     ) as RewardResults
-    setPayoutLists(removeNonZeroAmountAndSort(payoutsList))
+    setPayoutsList(removeNonZeroAmountAndSort(payoutsList))
   }, [JSON.stringify(payouts), JSON.stringify(poolClaims)])
 
   return (
