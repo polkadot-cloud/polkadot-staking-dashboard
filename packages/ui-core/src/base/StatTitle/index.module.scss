@@ -8,6 +8,9 @@
   flex-flow: row wrap;
   margin-top: 0.1rem;
   margin-bottom: 0.1rem;
+  &.semibold {
+    font-family: InterSemiBold, sans-serif;
+  }
   &.primary {
     color: var(--accent-color-primary);
   }
