@@ -23,13 +23,14 @@ export const RewardsGrid = styled.div`
   padding: 0 1rem;
 
   > .row {
-    padding: 0.65rem 0;
+    padding: 0.6rem 0;
 
     &.head {
       border-bottom: 1px solid var(--border-primary-color);
       grid-template-columns: repeat(3, 1fr);
       display: grid;
       > div > h4 {
+        font-family: InterSemiBold, sans-serif;
         color: var(--text-color-secondary);
       }
     }
@@ -48,10 +49,8 @@ export const RewardsGrid = styled.div`
         &:first-child {
           color: var(--text-color-secondary);
         }
-        &:not(:first-child) {
-          font-family: InterSemiBold, sans-serif;
-        }
         > h3 {
+          font-family: Inter, sans-serif;
           display: flex;
           align-items: center;
           svg {
