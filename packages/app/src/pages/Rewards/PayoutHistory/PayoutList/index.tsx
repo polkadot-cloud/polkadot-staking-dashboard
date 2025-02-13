@@ -29,8 +29,8 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
-import { ItemWrapper } from '../Wrappers'
-import type { PayoutListProps } from '../types'
+import { ItemWrapper } from '../../Wrappers'
+import type { PayoutListProps } from '../../types'
 
 export const PayoutListInner = ({
   allowMoreCols,

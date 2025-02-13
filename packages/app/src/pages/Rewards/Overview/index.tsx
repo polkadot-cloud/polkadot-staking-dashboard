@@ -16,7 +16,7 @@ import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
 import { RewardsGrid } from '../Wrappers'
 
-export const Active = () => {
+export const Overview = () => {
   const { t } = useTranslation('pages')
   const { networkData } = useNetwork()
   const { price: dotPrice } = useTokenPrices()
@@ -92,7 +92,7 @@ export const Active = () => {
                       padding: '0.5rem',
                       marginTop: '0.5rem',
                       border: '1px solid var(--border-primary-color)',
-                      borderRadius: '4px',
+                      borderRadius: '0.5rem',
                     }}
                   />
                 </div>

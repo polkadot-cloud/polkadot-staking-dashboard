@@ -22,10 +22,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { CardHeader, PageRow, StatRow } from 'ui-core/base'
+import { LastEraPayout } from '../Stats/LastEraPayout'
 import { ActiveGraph } from './Graph/ActiveGraph'
 import { InactiveGraph } from './Graph/InactiveGraph'
 import { PayoutList } from './PayoutList'
-import { LastEraPayout } from './Stats/LastEraPayout'
 
 export const PayoutHistory = () => {
   const { i18n, t } = useTranslation('pages')

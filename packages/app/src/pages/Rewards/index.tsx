@@ -4,32 +4,32 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from 'ui-core/base'
-import { Active } from './Active'
+import { Overview } from './Overview'
 import { PayoutHistory } from './PayoutHistory'
 import { Wrapper } from './Wrappers'
 
 export const Rewards = () => {
-  const { t } = useTranslation('pages')
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<number>(0)
 
   return (
     <Wrapper>
       <PageTitle
-        title={t('rewards.rewardsCalculator')}
+        title={t('rewards', { ns: 'modals' })}
         tabs={[
           {
-            title: t('rewards.calculator'),
+            title: t('overview', { ns: 'base' }),
             active: activeTab === 0,
             onClick: () => setActiveTab(0),
           },
           {
-            title: t('payouts.payoutHistory'),
+            title: t('payouts.payoutHistory', { ns: 'pages' }),
             active: activeTab === 1,
             onClick: () => setActiveTab(1),
           },
         ]}
       />
-      {activeTab === 0 && <Active />}
+      {activeTab === 0 && <Overview />}
       {activeTab === 1 && <PayoutHistory />}
     </Wrapper>
   )
