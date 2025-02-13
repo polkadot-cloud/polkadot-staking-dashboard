@@ -146,8 +146,8 @@ export const Overview = (_: PageProps) => {
                   <h3>
                     <FontAwesomeIcon icon={faCaretUp} />
                     {symbol}
-                    minimumFractionDigits: 2,
                     {(dailyReward * tokenPrice).toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
                   </h3>
@@ -171,8 +171,8 @@ export const Overview = (_: PageProps) => {
                   <h3>
                     <FontAwesomeIcon icon={faCaretUp} />
                     {symbol}
-                    minimumFractionDigits: 2,
                     {(monthlyReward * tokenPrice).toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
                   </h3>
@@ -196,8 +196,8 @@ export const Overview = (_: PageProps) => {
                   <h3>
                     <FontAwesomeIcon icon={faCaretUp} />
                     {symbol}
-                    minimumFractionDigits: 2,
                     {(annualReward * tokenPrice).toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
                   </h3>
