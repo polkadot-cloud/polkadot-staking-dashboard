@@ -16,9 +16,11 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.2.2"
+  },
+  "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
     "@fortawesome/free-solid-svg-icons": "*",
-    "@fortawesome/react-fontawesome": "*",
     "react": "*"
   }
 }

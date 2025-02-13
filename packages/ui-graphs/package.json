@@ -11,9 +11,8 @@
     ".": "./src/index.tsx",
     "./types": "./src/types.ts"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
     "styled-components": "*"
   }
 }
