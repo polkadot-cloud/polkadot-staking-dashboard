@@ -12,11 +12,9 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
-    "ui-core": "workspace:*"
-  },
-  "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
     "@fortawesome/free-solid-svg-icons": "*",
-    "react": "*"
+    "react": "*",
+    "ui-core": "workspace:*"
   }
 }
