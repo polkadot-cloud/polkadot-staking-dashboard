@@ -78,7 +78,7 @@ export const SignPrompt = ({
           {stage === 1 && (
             <ButtonPrimary
               text={t('iHaveScanned')}
-              lg
+              size="lg"
               onClick={() => {
                 setStage(2)
               }}

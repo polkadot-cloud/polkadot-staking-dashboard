@@ -20,7 +20,7 @@ export const NominatorSetup = () => {
       <Head>
         <ButtonPrimary
           text={t('close', { ns: 'modals' })}
-          lg
+          size="lg"
           onClick={() => closeCanvas()}
           style={{ marginLeft: '1.1rem' }}
         />

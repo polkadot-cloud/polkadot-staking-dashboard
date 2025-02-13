@@ -54,3 +54,5 @@ export type MultiButtonProps = ComponentBase & {
   marginX?: boolean
   disabled?: boolean
 }
+
+export type ButtonSize = 'sm' | 'md' | 'lg'
