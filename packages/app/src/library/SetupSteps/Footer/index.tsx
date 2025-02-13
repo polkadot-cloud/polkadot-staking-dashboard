@@ -24,7 +24,7 @@ export const Footer = ({ complete, bondFor }: FooterProps) => {
       <section>
         {complete ? (
           <ButtonPrimary
-            lg
+            size="lg"
             text={t('continue')}
             onClick={() =>
               setActiveAccountSetupSection(bondFor, setup.section + 1)
@@ -32,7 +32,7 @@ export const Footer = ({ complete, bondFor }: FooterProps) => {
           />
         ) : (
           <div style={{ opacity: 0.5 }}>
-            <ButtonPrimary text={t('continue')} disabled lg />
+            <ButtonPrimary text={t('continue')} disabled size="lg" />
           </div>
         )}
       </section>

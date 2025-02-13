@@ -77,6 +77,7 @@ export const Active = () => {
                   </h3>
                   <div>
                     <ButtonPrimary
+                      size="md"
                       iconLeft={faChevronCircleRight}
                       iconTransform="grow-1"
                       text={`${t('nominate.nominate', { ns: 'pages' })}`}

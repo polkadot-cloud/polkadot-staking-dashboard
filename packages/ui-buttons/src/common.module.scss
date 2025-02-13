@@ -40,6 +40,11 @@
   font-size: var(--button-sm-font-size);
 }
 
+.btnMedium {
+  padding: var(--button-md-padding);
+  font-size: var(--button-md-font-size);
+}
+
 .btnLarge {
   padding: var(--button-lg-padding);
   font-size: var(--button-lg-font-size);
