@@ -6,14 +6,14 @@
   transition: transform var(--transition-duration);
   border-radius: 1.5rem;
   display: flex;
-  padding: 0.1rem 0.5rem;
+  padding: 0.1rem 0.25rem;
   &.disabled {
     background: var(--accent-color-pending);
   }
   > span {
     border-right: 1px solid var(--text-color-invert);
     opacity: 0.2;
-    margin: 0 0.4rem;
+    margin: 0 0.2rem;
   }
   > button {
     color: white;
