@@ -72,6 +72,7 @@ export const ManageBond = () => {
     fastUnstakeStatus !== null &&
     !exposed ? (
       <ButtonPrimary
+        size="md"
         disabled={isReadOnlyAccount(controller)}
         text={getFastUnstakeText()}
         iconLeft={faBolt}
@@ -81,6 +82,7 @@ export const ManageBond = () => {
       />
     ) : (
       <ButtonPrimary
+        size="md"
         text={t('nominate.unstake')}
         iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(controller) || !activeAccount}
@@ -113,6 +115,7 @@ export const ManageBond = () => {
         <ButtonRow>
           <MultiButton marginRight disabled={bondDisabled}>
             <ButtonText
+              size="md"
               disabled={bondDisabled}
               marginRight
               onClick={() =>
@@ -127,6 +130,7 @@ export const ManageBond = () => {
             />
             <span />
             <ButtonText
+              size="md"
               disabled={bondDisabled}
               marginRight
               onClick={() =>
