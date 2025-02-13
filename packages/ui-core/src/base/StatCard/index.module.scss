@@ -76,7 +76,7 @@
   }
 
   > button {
-    box-shadow: 0 3px 6px var(--card-deep-shadow-color);
+    border: 1px solid var(--border-primary-color);
     transition: border 0.1s;
     &:hover {
       border: 1px solid var(--accent-color-pending);

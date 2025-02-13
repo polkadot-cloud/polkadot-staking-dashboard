@@ -19,33 +19,38 @@ export const RewardText = styled.div`
 `
 
 export const RewardsGrid = styled.div`
-  padding: 1rem;
+  margin-top: 1.25rem;
+  padding: 0 1rem;
 
-  .header {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--border-primary-color);
-    font-weight: 500;
-    color: var(--text-color-secondary);
-  }
+  > .row {
+    padding: 0.75rem 0;
 
-  .reward-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0.75rem 0.5rem;
-    border-bottom: 1px solid var(--border-secondary-color);
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    span {
-      &:first-child {
+    &.head {
+      border-bottom: 1px solid var(--border-primary-color);
+      grid-template-columns: repeat(3, 1fr);
+      display: grid;
+      > div > h4 {
         color: var(--text-color-secondary);
       }
-      &:not(:first-child) {
-        font-family: InterSemiBold, sans-serif;
+    }
+    &.body {
+      border-bottom: 1px solid var(--border-secondary-color);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 1.05rem 0;
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0.5rem;
+      }
+
+      > div {
+        &:first-child {
+          color: var(--text-color-secondary);
+        }
+        &:not(:first-child) {
+          font-family: InterSemiBold, sans-serif;
+        }
       }
     }
   }

@@ -5,7 +5,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
@@ -47,6 +47,9 @@ export const Overview = (_: PageProps) => {
     setIsCustomStake(!isCustomStake)
   }
 
+  const currency = 'USDT'
+  const symbol = '$'
+
   return (
     <>
       <StatRow>
@@ -61,19 +64,10 @@ export const Overview = (_: PageProps) => {
       <AnimatePresence>
         {isCustomStake && (
           <PageRow>
-            <motion.div
-              initial={{ opacity: 0, height: 0, marginTop: 0 }}
-              animate={{ opacity: 1, height: 'auto', marginTop: '1rem' }}
-              exit={{ opacity: 0, height: 0, marginTop: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: 'easeInOut',
-              }}
-              style={{ overflow: 'hidden' }}
-            >
+            <div>
               <CardWrapper>
                 <CardHeader>
-                  <h4>{t('rewards.adjustStake')}</h4>
+                  <h3>{t('rewards.adjustStake')}</h3>
                 </CardHeader>
 
                 <div style={{ padding: '1rem' }}>
@@ -99,7 +93,7 @@ export const Overview = (_: PageProps) => {
                   />
                 </div>
               </CardWrapper>
-            </motion.div>
+            </div>
           </PageRow>
         )}
       </AnimatePresence>
@@ -111,61 +105,85 @@ export const Overview = (_: PageProps) => {
           </CardHeader>
 
           <RewardsGrid>
-            <div className="header">
-              <span>{t('rewards.period')}</span>
-              <span>{networkData.unit}</span>
-              <span>USDT</span>
+            <div className="row head">
+              <div>
+                <h4>{t('rewards.period')}</h4>
+              </div>
+              <div>
+                <h4>{networkData.unit}</h4>
+              </div>
+              <div>
+                <h4>{currency}</h4>
+              </div>
             </div>
 
-            <div className="reward-row">
-              <span>{t('rewards.daily')}</span>
-              <span>
-                {dailyReward.toLocaleString('en-US', {
-                  minimumFractionDigits: 3,
-                  maximumFractionDigits: 3,
-                })}
-              </span>
-              <span>
-                $
-                {(dailyReward * dotPrice).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
+            <div className="row body">
+              <div>
+                <h3>{t('rewards.daily')}</h3>
+              </div>
+              <div>
+                <h3>
+                  {dailyReward.toLocaleString('en-US', {
+                    minimumFractionDigits: 3,
+                    maximumFractionDigits: 3,
+                  })}
+                </h3>
+              </div>
+              <div>
+                <h3>
+                  {symbol}
+                  {(dailyReward * dotPrice).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </h3>
+              </div>
             </div>
 
-            <div className="reward-row">
-              <span>{t('rewards.monthly')}</span>
-              <span>
-                {monthlyReward.toLocaleString('en-US', {
-                  minimumFractionDigits: 3,
-                  maximumFractionDigits: 3,
-                })}
-              </span>
-              <span>
-                $
-                {(monthlyReward * dotPrice).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
+            <div className="row body">
+              <div>
+                <h3>{t('rewards.monthly')}</h3>
+              </div>
+              <div>
+                <h3>
+                  {monthlyReward.toLocaleString('en-US', {
+                    minimumFractionDigits: 3,
+                    maximumFractionDigits: 3,
+                  })}
+                </h3>
+              </div>
+              <div>
+                <h3>
+                  {symbol}
+                  {(monthlyReward * dotPrice).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </h3>
+              </div>
             </div>
 
-            <div className="reward-row">
-              <span>{t('rewards.annual')}</span>
-              <span>
-                {annualReward.toLocaleString('en-US', {
-                  minimumFractionDigits: 3,
-                  maximumFractionDigits: 3,
-                })}
-              </span>
-              <span>
-                $
-                {(annualReward * dotPrice).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
+            <div className="row body">
+              <div>
+                <h3>{t('rewards.annual')}</h3>
+              </div>
+              <div>
+                <h3>
+                  {annualReward.toLocaleString('en-US', {
+                    minimumFractionDigits: 3,
+                    maximumFractionDigits: 3,
+                  })}
+                </h3>
+              </div>
+              <div>
+                <h3>
+                  {symbol}
+                  {(annualReward * dotPrice).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </h3>
+              </div>
             </div>
           </RewardsGrid>
         </CardWrapper>
