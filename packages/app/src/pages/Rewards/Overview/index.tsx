@@ -7,7 +7,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
@@ -62,11 +62,19 @@ export const Overview = (_: PageProps) => {
           onClick={handleToggleStake}
         />
       </StatRow>
-
       <AnimatePresence>
         {isCustomStake && (
           <PageRow>
-            <div>
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: 'auto', marginTop: '1rem' }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              transition={{
+                duration: 0.3,
+                ease: 'easeInOut',
+              }}
+              style={{ overflow: 'hidden' }}
+            >
               <CardWrapper>
                 <CardHeader>
                   <h3>{t('rewards.adjustStake')}</h3>
@@ -95,7 +103,7 @@ export const Overview = (_: PageProps) => {
                   />
                 </div>
               </CardWrapper>
-            </div>
+            </motion.div>
           </PageRow>
         )}
       </AnimatePresence>
