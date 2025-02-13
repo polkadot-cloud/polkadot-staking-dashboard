@@ -45,6 +45,7 @@ export const ManagePool = () => {
               </h3>
               <ButtonRow>
                 <ButtonPrimary
+                  size="md"
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
                   text={t('pools.nominate', { ns: 'pages' })}
