@@ -25,6 +25,34 @@
       "polkawatchDisabled": "Polkawatch Disabled",
       "totalPayoutsAnalysed": "Total Payouts Analysed"
     },
+    "easyMode": {
+      "title": "Easy Mode Staking",
+      "switchToAdvanced": "Switch to Advanced Mode",
+      "currentBalance": "Current Balance",
+      "stakingStatus": "Staking Status",
+      "rewards": "Rewards",
+      "unclaimedRewards": "Unclaimed Rewards",
+      "totalRewards": "Total Rewards All Time",
+      "inPool": "In Pool",
+      "notStaking": "Available",
+      "activeStaking": "Currently Staking",
+      "notStakingStatus": "Not Currently Staking",
+      "startStaking": "Start Staking",
+      "stake": "Stake DOT",
+      "unstake": "Unstake",
+      "claimRewards": "Claim Rewards",
+      "warning": "Note: Unstaking has a 28-day waiting period. Rewards may take time to appear.",
+      "accountDetails": "Account Details",
+      "fullAddress": "Full Address",
+      "copyAddress": "Copy Address",
+      "addressCopied": "Address copied to clipboard",
+      "balance": {
+        "total": "Total Balance",
+        "available": "Available",
+        "staked": "Currently Staked",
+        "fiatValue": "Current Value"
+      }
+    },
     "nominate": {
       "activeNominations": "Active Nominations",
       "addressCopied": "Address Copied to Clipboard",

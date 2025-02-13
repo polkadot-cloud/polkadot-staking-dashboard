@@ -1,6 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import {
+  faChartLine,
+  faCoins,
+  faExclamationTriangle,
+  faLightbulb,
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
@@ -15,21 +22,32 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'ui-buttons'
-import { CardLabel, PageHeading, PageRow, PageTitle } from 'ui-core/base'
+import { PageHeading, PageRow, PageTitle } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { Value } from '../Overview/AccountBalance/Value'
-import EasyAccountControls from './EasyAccountControls'
+import { AccountHeader } from './AccountHeader'
 import {
   ActionsRow,
+  BalanceContainer,
+  CardContentHeader,
   CardGrid,
+  MetricsContainer,
   OverviewCard,
-  SectionHeader,
+  StatusBadge,
   WarningBox,
 } from './Wrappers'
 
 export const EasyMode = () => {
   const { t } = useTranslation('pages')
   const navigate = useNavigate()
+  const { activeAccount } = useActiveAccounts()
+  const {
+    networkData: { units, unit, brand },
+  } = useNetwork()
+  const { getBalance, getLocks } = useBalances()
+  const { getTransferOptions } = useTransferOptions()
+  const { isNominating } = useStaking()
+  const { unclaimedRewards } = usePayouts()
 
   useEffect(() => {
     localStorage.setItem('stakingMode', 'easy')
@@ -40,137 +58,137 @@ export const EasyMode = () => {
     navigate('/advanced')
   }
 
-  const {
-    networkData: { units, unit, brand },
-  } = useNetwork()
-  const { getBalance, getLocks } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  // Balance calculations
   const balance = getBalance(activeAccount)
-
-  const { getTransferOptions } = useTransferOptions()
   const allTransferOptions = getTransferOptions(activeAccount)
-  const poolOptions = allTransferOptions.pool
-  const unlockingPools = poolOptions.totalUnlocking.plus(
-    poolOptions.totalUnlocked
+  const poolBondOptions = allTransferOptions.pool
+  const unlockingPools = poolBondOptions.totalUnlocking.plus(
+    poolBondOptions.totalUnlocked
   )
 
-  const totalBalance: BigNumber = planckToUnitBn(
-    balance.free.plus(poolOptions.active).plus(unlockingPools),
-    units
-  )
-
-  const inPool = planckToUnitBn(
-    poolOptions.active
-      .plus(poolOptions.totalUnlocking)
-      .plus(poolOptions.totalUnlocked),
-    units
-  )
-
+  // Get account non-staking locks
   const { locks } = getLocks(activeAccount)
   const locksStaking = locks.find(({ id }) => id === 'staking')
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
     : new BigNumber(0)
+
+  // Calculate balances
+  const { free } = balance
   const available = planckToUnitBn(
-    BigNumber.max(balance.free.minus(lockStakingAmount), 0),
+    BigNumber.max(free.minus(lockStakingAmount), 0),
     units
   )
-  const notStaking = available
-
-  const { isNominating } = useStaking()
-  const { unclaimedRewards } = usePayouts()
+  const totalBalance = planckToUnitBn(free.plus(unlockingPools), units)
+  const stakedBalance = planckToUnitBn(lockStakingAmount, units)
   const unclaimedRewardsValue = new BigNumber(unclaimedRewards.total)
-  const totalRewards = new BigNumber(0) // Default if not otherwise provided
-
-  const handleStake = () => {
-    console.log('Stake action invoked')
-  }
-  const handleUnstake = () => {
-    console.log('Unstake action invoked')
-  }
-  const handleClaimRewards = () => {
-    console.log('Claim Rewards action invoked')
-  }
+  const totalRewards = new BigNumber(0)
 
   return (
     <>
-      <PageTitle title={t('easyMode.title', 'Easy Mode Staking Overview')} />
+      <PageTitle title={t('easyMode.title')} />
 
       <PageRow>
         <PageHeading>
-          <EasyAccountControls />
+          <AccountHeader
+            address={activeAccount || ''}
+            onSwitchMode={handleSwitchToAdvanced}
+          />
         </PageHeading>
       </PageRow>
 
-      <PageRow style={{ justifyContent: 'flex-end' }}>
-        <ButtonPrimary
-          onClick={handleSwitchToAdvanced}
-          text={t('easyMode.switchToAdvanced', 'Switch to Advanced Mode')}
-        />
-      </PageRow>
-
       <CardGrid>
+        {/* Balance Card */}
         <CardWrapper>
           <OverviewCard>
-            <SectionHeader>
-              {t('easyMode.currentBalance', 'Current Balance')}
-            </SectionHeader>
-            <h2 style={{ display: 'flex', alignItems: 'center' }}>
-              {brand.token && typeof brand.token === 'function' ? (
-                <brand.token title="token" />
-              ) : (
-                brand.token
-              )}
-              <Odometer
-                value={minDecimalPlaces(totalBalance.toFormat(), 2)}
-                zeroDecimals={2}
-              />
-              <CardLabel>
-                <Value totalBalance={totalBalance} />
-              </CardLabel>
-            </h2>
-            <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
-              <strong>{t('easyMode.inPool', 'In a Pool')}: </strong>
-              {inPool.toFormat()} {unit} ·{' '}
-              <strong>{t('easyMode.notStaking', 'Not Staking')}: </strong>
-              {notStaking.toFormat()} {unit}
-            </p>
+            <CardContentHeader>
+              <FontAwesomeIcon icon={faCoins} />
+              <h3>{t('easyMode.currentBalance')}</h3>
+            </CardContentHeader>
+
+            <BalanceContainer>
+              <div className="token-icon">
+                {brand.token && typeof brand.token === 'function' && (
+                  <brand.token />
+                )}
+              </div>
+              <div className="balance-info">
+                <div className="main-balance">
+                  <Odometer
+                    value={minDecimalPlaces(totalBalance.toFormat(), 2)}
+                    zeroDecimals={2}
+                  />
+                  <span style={{ whiteSpace: 'nowrap' }}>{unit}</span>
+                  <span className="fiat-value">
+                    <Value totalBalance={totalBalance} />
+                  </span>
+                </div>
+              </div>
+            </BalanceContainer>
+
+            <MetricsContainer>
+              <div className="metric">
+                <div className="label">{t('easyMode.balance.available')}</div>
+                <div className="value">
+                  {available.toFormat()} {unit}
+                </div>
+              </div>
+              <div className="metric">
+                <div className="label">{t('easyMode.balance.staked')}</div>
+                <div className="value">
+                  {stakedBalance.toFormat()} {unit}
+                </div>
+              </div>
+            </MetricsContainer>
           </OverviewCard>
         </CardWrapper>
 
+        {/* Staking Status Card */}
         <CardWrapper>
           <OverviewCard>
-            <SectionHeader>
-              {t('easyMode.stakingStatus', 'Staking Status')}
-            </SectionHeader>
-            <p>
+            <CardContentHeader>
+              <FontAwesomeIcon icon={faChartLine} />
+              <h3>{t('easyMode.stakingStatus')}</h3>
+            </CardContentHeader>
+            <StatusBadge $active={isNominating()}>
+              <div />
               {isNominating()
-                ? t(
-                    'easyMode.activeStaking',
-                    'You are actively nominating validators.'
-                  )
-                : t(
-                    'easyMode.notStakingStatus',
-                    'You are currently not staking.'
-                  )}
-            </p>
+                ? t('easyMode.activeStaking')
+                : t('easyMode.notStakingStatus')}
+            </StatusBadge>
+            {!isNominating() && (
+              <ButtonPrimary
+                text={t('easyMode.startStaking')}
+                onClick={() => navigate('/stake')}
+                style={{ marginTop: '1rem' }}
+              />
+            )}
           </OverviewCard>
         </CardWrapper>
 
+        {/* Rewards Card */}
         <CardWrapper>
           <OverviewCard>
-            <SectionHeader>
-              {t('easyMode.unclaimedRewards', 'Unclaimed Rewards')}
-            </SectionHeader>
-            <p style={{ marginBottom: '0.5rem' }}>
-              {unclaimedRewardsValue.toFormat()} {unit}
-            </p>
-            <SectionHeader>
-              {t('easyMode.totalRewards', 'Total Rewards All Time')}
-            </SectionHeader>
-            <p>
-              {totalRewards.toFormat()} {unit}
-            </p>
+            <CardContentHeader>
+              <FontAwesomeIcon icon={faCoins} />
+              <h3>{t('easyMode.rewards')}</h3>
+            </CardContentHeader>
+            <MetricsContainer
+              style={{ borderTop: 0, paddingTop: 0, marginTop: 0 }}
+            >
+              <div className="metric">
+                <div className="label">{t('easyMode.unclaimedRewards')}</div>
+                <div className="value">
+                  {unclaimedRewardsValue.toFormat()} {unit}
+                </div>
+              </div>
+              <div className="metric">
+                <div className="label">{t('easyMode.totalRewards')}</div>
+                <div className="value">
+                  {totalRewards.toFormat()} {unit}
+                </div>
+              </div>
+            </MetricsContainer>
           </OverviewCard>
         </CardWrapper>
       </CardGrid>
@@ -178,25 +196,46 @@ export const EasyMode = () => {
       <PageRow>
         <CardWrapper>
           <OverviewCard>
+            <CardContentHeader>
+              <FontAwesomeIcon icon={faLightbulb} />
+              <h3>{t('easyMode.recommendation')}</h3>
+            </CardContentHeader>
+            <div
+              style={{
+                fontSize: '0.9rem',
+                color: 'var(--text-color-secondary)',
+              }}
+            >
+              Based on your current balance and staking preferences, we'll
+              provide personalized recommendations here.
+            </div>
+          </OverviewCard>
+        </CardWrapper>
+      </PageRow>
+
+      <PageRow>
+        <CardWrapper>
+          <OverviewCard>
             <ActionsRow>
               <ButtonPrimary
-                onClick={handleStake}
-                text={t('easyMode.stake', 'Stake')}
+                onClick={() => navigate('/stake')}
+                text={t('easyMode.stake')}
+                disabled={!activeAccount}
               />
               <ButtonPrimary
-                onClick={handleUnstake}
-                text={t('easyMode.unstake', 'Unstake')}
+                onClick={() => navigate('/unstake')}
+                text={t('easyMode.unstake')}
+                disabled={!activeAccount || !isNominating()}
               />
               <ButtonPrimary
-                onClick={handleClaimRewards}
-                text={t('easyMode.claimRewards', 'Claim Rewards')}
+                onClick={() => navigate('/rewards')}
+                text={t('easyMode.claimRewards')}
+                disabled={!activeAccount || unclaimedRewardsValue.isZero()}
               />
             </ActionsRow>
             <WarningBox>
-              {t(
-                'easyMode.warning',
-                'Note: Unstaking initiates a 28-day lock period before funds become available. Rewards may be subject to protocol rules or delays.'
-              )}
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+              <div>{t('easyMode.warning')}</div>
             </WarningBox>
           </OverviewCard>
         </CardWrapper>
