@@ -6,7 +6,7 @@
   transition: transform var(--transition-duration);
   border-radius: 1.5rem;
   display: flex;
-  padding: 0.1rem 0.75rem;
+  padding: 0.1rem 0.5rem;
   &.disabled {
     background: var(--accent-color-pending);
   }
