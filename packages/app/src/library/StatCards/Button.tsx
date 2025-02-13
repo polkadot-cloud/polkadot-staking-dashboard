@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
@@ -28,15 +28,9 @@ export const Button = ({
     <StatButton>
       <button type="button" onClick={() => onClick()}>
         <div style={{ position: 'absolute', right: '2rem', top: '0.5rem' }}>
-          {active ? (
+          {active && (
             <FontAwesomeIcon
               icon={faTimes}
-              color="var(--text-color-secondary)"
-            />
-          ) : (
-            <FontAwesomeIcon
-              icon={faUpRightFromSquare}
-              transform="shrink-3"
               color="var(--text-color-secondary)"
             />
           )}
