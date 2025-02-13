@@ -92,6 +92,7 @@ export const Nominations = ({
           <ButtonRow>
             <ButtonPrimary
               text={t('nominate.stop')}
+              size="md"
               iconLeft={faStopCircle}
               iconTransform="grow-1"
               disabled={btnsDisabled}
@@ -108,6 +109,7 @@ export const Nominations = ({
             />
             <ButtonPrimary
               text={t('nominate.manage')}
+              size="md"
               iconLeft={faCog}
               iconTransform="grow-1"
               disabled={btnsDisabled}

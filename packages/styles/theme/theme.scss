@@ -4,9 +4,14 @@ SPDX-License-Identifier: GPL-3.0-only */
 /* general styles */
 :root {
   --button-sm-border-radius: 0.75rem;
-  --button-sm-padding: 0.41rem 1rem;
+  --button-sm-padding: 0.45rem 1rem;
   --button-sm-spacing: 0.125rem;
   --button-sm-font-size: 1rem;
+
+  --button-md-border-radius: 1rem;
+  --button-md-padding: 0.5rem 1.25rem;
+  --button-md-spacing: 0.125rem;
+  --button-md-font-size: 1.1rem;
 
   --button-lg-border-radius: 1.5rem;
   --button-lg-padding: 0.53rem 1rem;

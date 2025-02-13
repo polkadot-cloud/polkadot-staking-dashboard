@@ -19,6 +19,7 @@ export const Connect = () => {
         {accounts.length ? (
           <>
             <ButtonText
+              size="md"
               text={t('accounts')}
               iconLeft={faWallet}
               onClick={() => {
@@ -28,6 +29,7 @@ export const Connect = () => {
             />
             <span />
             <ButtonText
+              size="md"
               text=""
               iconRight={faPlug}
               iconTransform="grow-1"
@@ -39,6 +41,7 @@ export const Connect = () => {
           </>
         ) : (
           <ButtonText
+            size="md"
             text={t('connect')}
             iconRight={faPlug}
             iconTransform="grow-1"

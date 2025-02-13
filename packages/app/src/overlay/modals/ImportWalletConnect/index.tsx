@@ -68,7 +68,7 @@ export const ImportWalletConnect = () => {
     >
       <div>
         <ButtonPrimary
-          lg
+          size="lg"
           onClick={() => handleImportAddresses()}
           iconLeft={faRefresh}
           text={t('import', { ns: 'modals' })}
