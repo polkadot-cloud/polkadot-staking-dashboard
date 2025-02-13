@@ -9,8 +9,10 @@
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.2.2"
+  },
+  "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
-    "@fortawesome/react-fontawesome": "*",
     "react": "*"
   }
 }

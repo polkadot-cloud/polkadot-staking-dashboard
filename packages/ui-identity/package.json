@@ -12,9 +12,11 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
+    "ui-core": "workspace:*"
+  },
+  "peerDependencies": {
     "@w3ux/react-polkicon": "*",
     "@w3ux/utils": "*",
-    "react": "*",
-    "ui-core": "workspace:*"
+    "react": "*"
   }
 }
