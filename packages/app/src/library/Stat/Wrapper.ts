@@ -35,7 +35,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    height: 2.6rem;
+    height: 2.75rem;
     position: relative;
     width: auto;
     max-width: 100%;
@@ -81,7 +81,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
         position: absolute;
         display: flex;
         right: 0.2rem;
-        top: 0rem;
+        top: 0.1rem;
       }
     }
   }

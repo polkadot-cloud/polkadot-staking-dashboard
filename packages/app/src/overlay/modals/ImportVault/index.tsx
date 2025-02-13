@@ -82,7 +82,7 @@ export const ImportVault = () => {
     >
       <div>
         <ButtonPrimary
-          lg
+          size="lg"
           iconLeft={faQrcode}
           text={t('importAccount', { ns: 'modals' })}
           disabled={promptStatus !== 0}

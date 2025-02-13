@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ComponentBaseWithClassName } from '@w3ux/types'
-import type { ButtonCommonProps, ButtonIconProps } from '../types'
+import type { ButtonCommonProps, ButtonIconProps, ButtonSize } from '../types'
 
 export type ButtonPrimaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
     colorSecondary?: boolean
-    lg?: boolean
+    size?: ButtonSize
     text: string
   }
