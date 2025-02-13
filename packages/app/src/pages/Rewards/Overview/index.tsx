@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
@@ -123,6 +125,7 @@ export const Overview = (_: PageProps) => {
               </div>
               <div>
                 <h3>
+                  <FontAwesomeIcon icon={faCaretUp} />
                   {dailyReward.toLocaleString('en-US', {
                     minimumFractionDigits: 3,
                     maximumFractionDigits: 3,
@@ -131,6 +134,7 @@ export const Overview = (_: PageProps) => {
               </div>
               <div>
                 <h3>
+                  <FontAwesomeIcon icon={faCaretUp} />
                   {symbol}
                   {(dailyReward * dotPrice).toLocaleString('en-US', {
                     minimumFractionDigits: 2,
@@ -146,6 +150,7 @@ export const Overview = (_: PageProps) => {
               </div>
               <div>
                 <h3>
+                  <FontAwesomeIcon icon={faCaretUp} />
                   {monthlyReward.toLocaleString('en-US', {
                     minimumFractionDigits: 3,
                     maximumFractionDigits: 3,
@@ -154,6 +159,7 @@ export const Overview = (_: PageProps) => {
               </div>
               <div>
                 <h3>
+                  <FontAwesomeIcon icon={faCaretUp} />
                   {symbol}
                   {(monthlyReward * dotPrice).toLocaleString('en-US', {
                     minimumFractionDigits: 2,
@@ -169,6 +175,7 @@ export const Overview = (_: PageProps) => {
               </div>
               <div>
                 <h3>
+                  <FontAwesomeIcon icon={faCaretUp} />
                   {annualReward.toLocaleString('en-US', {
                     minimumFractionDigits: 3,
                     maximumFractionDigits: 3,
@@ -177,6 +184,7 @@ export const Overview = (_: PageProps) => {
               </div>
               <div>
                 <h3>
+                  <FontAwesomeIcon icon={faCaretUp} />
                   {symbol}
                   {(annualReward * dotPrice).toLocaleString('en-US', {
                     minimumFractionDigits: 2,
