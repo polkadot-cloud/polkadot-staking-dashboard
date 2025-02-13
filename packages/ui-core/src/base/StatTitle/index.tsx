@@ -14,11 +14,14 @@ export const StatTitle = ({
   style,
   primary,
   text,
+  semibold,
 }: ComponentBase & {
   primary?: boolean
   text?: boolean
+  semibold?: boolean
 }) => {
   const allClasses = classNames(classes.statTitle, {
+    [classes.semibold]: !!semibold,
     [classes.primary]: !!primary,
     [classes.text]: !!text,
   })

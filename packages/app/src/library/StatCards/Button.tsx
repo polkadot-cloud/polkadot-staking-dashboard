@@ -43,7 +43,7 @@ export const Button = ({
         </div>
         <StatGraphic>{Icon}</StatGraphic>
         <StatContent>
-          <StatTitle>{title}</StatTitle>
+          <StatTitle semibold>{title}</StatTitle>
           <StatSubtitle primary>
             {label}{' '}
             {helpKey !== undefined ? (
