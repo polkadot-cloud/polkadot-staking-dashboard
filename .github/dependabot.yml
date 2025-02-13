@@ -31,7 +31,6 @@ updates:
         patterns:
           - 'classnames'
           - 'date-fns'
-          - 'bn.js'
           - 'buffer'
           - 'compare-versions'
           - '@ledgerhq/*'

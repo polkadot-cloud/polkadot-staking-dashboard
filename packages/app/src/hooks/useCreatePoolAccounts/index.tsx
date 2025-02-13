@@ -4,7 +4,6 @@
 import { AccountId } from '@polkadot-api/substrate-bindings'
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
-import { BN } from 'bn.js'
 import { useApi } from 'contexts/Api'
 
 export const useCreatePoolAccounts = () => {
@@ -28,7 +27,7 @@ export const useCreatePoolAccounts = () => {
       stringToU8a('modl'),
       poolsPalletId,
       new Uint8Array([index]),
-      bnToU8a(new BN(poolId.toString()), { bitLength: 32, isLe: true }),
+      bnToU8a(BigInt(poolId.toString()), { bitLength: 32, isLe: true }),
       new Uint8Array(32)
     )
 
