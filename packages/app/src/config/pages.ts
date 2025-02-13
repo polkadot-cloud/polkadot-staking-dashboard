@@ -3,6 +3,7 @@
 
 import type { PageCategoryItems, PagesConfigItems } from 'common-types'
 import { Community } from 'pages/Community'
+import { EasyMode } from 'pages/EasyMode'
 import { Nominate } from 'pages/Nominate'
 import { Overview } from 'pages/Overview'
 import { Payouts } from 'pages/Payouts'
@@ -57,6 +58,14 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/payouts',
     Entry: Payouts,
     lottie: 'analytics',
+  },
+  {
+    category: 2,
+    key: 'easy',
+    uri: `${BASE_URL}easy`,
+    hash: '/easy',
+    Entry: EasyMode,
+    lottie: 'simple',
   },
   {
     category: 3,
