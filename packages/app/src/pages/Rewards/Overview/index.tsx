@@ -5,6 +5,7 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { useTokenPrices } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -23,13 +24,13 @@ import type { PageProps } from '../types'
 export const Overview = (_: PageProps) => {
   const { t } = useTranslation('pages')
   const { networkData } = useNetwork()
-  const { price: dotPrice } = useTokenPrices()
+  const { pluginEnabled } = usePlugins()
   const { activeAccount } = useActiveAccounts()
+  const { price: tokenPrice } = useTokenPrices()
   const { getStakedBalance } = useTransferOptions()
   const { getAverageRewardRate } = useAverageRewardRate()
   const [manualStake, setManualStake] = useState<number | null>(null)
   const [isCustomStake, setIsCustomStake] = useState(false)
-
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
 
@@ -108,102 +109,104 @@ export const Overview = (_: PageProps) => {
         )}
       </AnimatePresence>
 
-      <PageRow>
-        <CardWrapper>
-          <CardHeader>
-            <h3>{t('rewards.projectedRewards')}</h3>
-          </CardHeader>
+      {pluginEnabled('staking_api') && (
+        <PageRow>
+          <CardWrapper>
+            <CardHeader>
+              <h3>{t('rewards.projectedRewards')}</h3>
+            </CardHeader>
 
-          <RewardsGrid>
-            <div className="row head">
-              <div>
-                <h4>{t('rewards.period')}</h4>
+            <RewardsGrid>
+              <div className="row head">
+                <div>
+                  <h4>{t('rewards.period')}</h4>
+                </div>
+                <div>
+                  <h4>{networkData.unit}</h4>
+                </div>
+                <div>
+                  <h4>{currency}</h4>
+                </div>
               </div>
-              <div>
-                <h4>{networkData.unit}</h4>
-              </div>
-              <div>
-                <h4>{currency}</h4>
-              </div>
-            </div>
 
-            <div className="row body">
-              <div>
-                <h3>{t('rewards.daily')}</h3>
-              </div>
-              <div>
-                <h3>
-                  <FontAwesomeIcon icon={faCaretUp} />
-                  {dailyReward.toLocaleString('en-US', {
-                    minimumFractionDigits: 3,
-                    maximumFractionDigits: 3,
-                  })}
-                </h3>
-              </div>
-              <div>
-                <h3>
-                  <FontAwesomeIcon icon={faCaretUp} />
-                  {symbol}
-                  {(dailyReward * dotPrice).toLocaleString('en-US', {
+              <div className="row body">
+                <div>
+                  <h3>{t('rewards.daily')}</h3>
+                </div>
+                <div>
+                  <h3>
+                    <FontAwesomeIcon icon={faCaretUp} />
+                    {dailyReward.toLocaleString('en-US', {
+                      minimumFractionDigits: 3,
+                      maximumFractionDigits: 3,
+                    })}
+                  </h3>
+                </div>
+                <div>
+                  <h3>
+                    <FontAwesomeIcon icon={faCaretUp} />
+                    {symbol}
                     minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </h3>
+                    {(dailyReward * tokenPrice).toLocaleString('en-US', {
+                      maximumFractionDigits: 2,
+                    })}
+                  </h3>
+                </div>
               </div>
-            </div>
 
-            <div className="row body">
-              <div>
-                <h3>{t('rewards.monthly')}</h3>
-              </div>
-              <div>
-                <h3>
-                  <FontAwesomeIcon icon={faCaretUp} />
-                  {monthlyReward.toLocaleString('en-US', {
-                    minimumFractionDigits: 3,
-                    maximumFractionDigits: 3,
-                  })}
-                </h3>
-              </div>
-              <div>
-                <h3>
-                  <FontAwesomeIcon icon={faCaretUp} />
-                  {symbol}
-                  {(monthlyReward * dotPrice).toLocaleString('en-US', {
+              <div className="row body">
+                <div>
+                  <h3>{t('rewards.monthly')}</h3>
+                </div>
+                <div>
+                  <h3>
+                    <FontAwesomeIcon icon={faCaretUp} />
+                    {monthlyReward.toLocaleString('en-US', {
+                      minimumFractionDigits: 3,
+                      maximumFractionDigits: 3,
+                    })}
+                  </h3>
+                </div>
+                <div>
+                  <h3>
+                    <FontAwesomeIcon icon={faCaretUp} />
+                    {symbol}
                     minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </h3>
+                    {(monthlyReward * tokenPrice).toLocaleString('en-US', {
+                      maximumFractionDigits: 2,
+                    })}
+                  </h3>
+                </div>
               </div>
-            </div>
 
-            <div className="row body">
-              <div>
-                <h3>{t('rewards.annual')}</h3>
-              </div>
-              <div>
-                <h3>
-                  <FontAwesomeIcon icon={faCaretUp} />
-                  {annualReward.toLocaleString('en-US', {
-                    minimumFractionDigits: 3,
-                    maximumFractionDigits: 3,
-                  })}
-                </h3>
-              </div>
-              <div>
-                <h3>
-                  <FontAwesomeIcon icon={faCaretUp} />
-                  {symbol}
-                  {(annualReward * dotPrice).toLocaleString('en-US', {
+              <div className="row body">
+                <div>
+                  <h3>{t('rewards.annual')}</h3>
+                </div>
+                <div>
+                  <h3>
+                    <FontAwesomeIcon icon={faCaretUp} />
+                    {annualReward.toLocaleString('en-US', {
+                      minimumFractionDigits: 3,
+                      maximumFractionDigits: 3,
+                    })}
+                  </h3>
+                </div>
+                <div>
+                  <h3>
+                    <FontAwesomeIcon icon={faCaretUp} />
+                    {symbol}
                     minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </h3>
+                    {(annualReward * tokenPrice).toLocaleString('en-US', {
+                      maximumFractionDigits: 2,
+                    })}
+                  </h3>
+                </div>
               </div>
-            </div>
-          </RewardsGrid>
-        </CardWrapper>
-      </PageRow>
+            </RewardsGrid>
+          </CardWrapper>
+        </PageRow>
+      )}
     </>
   )
 }
