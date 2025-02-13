@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-  faChevronCircleLeft,
-  faChevronCircleRight,
+  faChevronLeft,
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSyncing } from 'hooks/useSyncing'
@@ -27,19 +27,6 @@ export const PageToggle = ({
 
   return (
     <PageToggleWrapper>
-      <button
-        type="button"
-        disabled={totalPages === 1 || page === 1}
-        onClick={() => {
-          setPageHandler(page - 1)
-        }}
-      >
-        <FontAwesomeIcon
-          icon={faChevronCircleLeft}
-          className="icon"
-          transform="grow-2"
-        />
-      </button>
       <h4 className={totalPages === 1 ? `disabled` : undefined}>
         <span>
           {start}
@@ -47,23 +34,41 @@ export const PageToggle = ({
         </span>
         {totalPages > 1 && (
           <>
-            {t('module.of', { ns: 'tips' })} <span>{totalItems}</span>
+            {t('module.of', { ns: 'tips' })}
+            <span>{totalItems}</span>
           </>
         )}
       </h4>
-      <button
-        type="button"
-        disabled={totalPages === 1 || page === totalPages}
-        onClick={() => {
-          setPageHandler(page + 1)
-        }}
-      >
-        <FontAwesomeIcon
-          icon={faChevronCircleRight}
-          className="icon"
-          transform="grow-2"
-        />
-      </button>
+      <span>
+        <button
+          type="button"
+          disabled={totalPages === 1 || page === 1}
+          onClick={() => {
+            setPageHandler(page - 1)
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="icon"
+            transform="shrink-1"
+          />
+        </button>
+      </span>
+      <span>
+        <button
+          type="button"
+          disabled={totalPages === 1 || page === totalPages}
+          onClick={() => {
+            setPageHandler(page + 1)
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className="icon"
+            transform="shrink-1"
+          />
+        </button>
+      </span>
     </PageToggleWrapper>
   )
 }

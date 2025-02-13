@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageWidthMediumThreshold, SmallFontSizeMaxWidth } from 'consts'
+import { SmallFontSizeMaxWidth } from 'consts'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
@@ -9,20 +9,13 @@ export const TipsWrapper = styled.div`
   width: 100%;
   display: flex;
   position: relative;
-  padding: 0.15rem 1rem 0.7rem 1.25rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-
-  @media (max-width: ${PageWidthMediumThreshold}px) {
-    padding: 0.5rem 1rem;
-  }
 `
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   justify-items: center;
-  margin: 0.25rem 0 0rem 0;
+  padding: 0.75rem 1.5rem 0.85rem 1.5rem;
 `
 export const ItemWrapper = styled(motion.div)`
   padding: 0 0.25rem;
@@ -115,38 +108,48 @@ export const ItemInnerWrapper = styled.div`
 
 export const PageToggleWrapper = styled.div`
   color: var(--text-color-secondary);
-  border-radius: 1.5rem;
-  position: relative;
-  top: 0.2rem;
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
   margin-left: 0.5rem;
+  height: 100%;
 
-  > button {
-    margin: 0 0.5rem;
-    opacity: 0.75;
-    font-size: 1.1rem;
-    transition: color var(--transition-duration);
-    > svg {
-      color: var(--text-color-secondary);
-    }
-    &:hover {
-      opacity: 1;
-      color: var(--accent-color-primary);
-    }
-    &:disabled {
-      color: var(--text-color-secondary);
-      opacity: var(--opacity-disabled);
+  > span {
+    border-left: 1px solid var(--border-primary-color);
+    height: inherit;
+
+    > button {
+      transition: color var(--transition-duration);
+      opacity: 0.75;
+      font-size: 1.1rem;
+      height: 100%;
+      padding: 0 1rem;
+
+      > svg {
+        color: var(--text-color-secondary);
+      }
+      &:hover {
+        opacity: 1;
+        color: var(--accent-color-primary);
+        background-color: var(--background-default);
+      }
+      &:disabled {
+        color: var(--text-color-secondary);
+        opacity: var(--opacity-disabled);
+      }
     }
   }
 
   h4 {
+    color: var(--text-color-tertiary);
+
     @media (max-width: ${SmallFontSizeMaxWidth}px) {
       display: none;
     }
     margin: 0;
-    span {
-      margin: 0 0.5rem;
+    margin-right: 0.5rem;
+    > span {
+      margin: 0 0.4rem;
     }
     &.disabled {
       opacity: var(--opacity-disabled);
