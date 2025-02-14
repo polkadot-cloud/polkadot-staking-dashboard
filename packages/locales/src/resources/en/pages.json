@@ -45,6 +45,7 @@
       "accountDetails": "Account Details",
       "fullAddress": "Full Address",
       "copyAddress": "Copy Address",
+      "recommendation": "Staking Recommendation",
       "addressCopied": "Address copied to clipboard",
       "balance": {
         "total": "Total Balance",

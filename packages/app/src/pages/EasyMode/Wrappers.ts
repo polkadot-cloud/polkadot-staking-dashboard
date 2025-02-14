@@ -4,36 +4,29 @@
 import { PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
 
-/* 
-  Use a common horizontally padded container for rows which guarantees that all full-width cards 
-  (and grouped cards) line up identically.
-*/
-export const StyledPageRow = styled.div`
+export const BaseWrapper = styled.div`
+  background: var(--background-primary);
+  border-radius: 1rem;
   width: 100%;
-  padding: 0 1rem;
-  margin: 1rem auto;
+  margin: 0;
   box-sizing: border-box;
-  > * {
-    width: 100%;
-  }
 `
 
-/*
-  For the three cards side-by-side, use CSS Grid and include the same horizontal padding.
-  This makes sure the left/right boundaries match the full-width rows.
-*/
-export const CardGrid = styled.div`
+export const StatRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  width: 100%;
-  padding: 0 1rem;
-  box-sizing: border-box;
   margin: 1rem 0;
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
     grid-template-columns: 1fr;
   }
+`
+
+export const OverviewCard = styled(BaseWrapper)`
+  padding: 1.25rem;
+  min-height: 9rem;
+  height: 100%;
 `
 
 export const BalanceContainer = styled.div`
@@ -67,16 +60,6 @@ export const BalanceContainer = styled.div`
       margin-top: 0.25rem;
     }
   }
-`
-
-export const OverviewCard = styled.div`
-  padding: 1.25rem;
-  background: var(--background-primary);
-  border-radius: 1rem;
-  width: 100%;
-  min-height: 9rem;
-  height: 100%;
-  box-sizing: border-box; /* ensure padding doesn't cause overflow */
 `
 
 export const CardContentHeader = styled.div`
@@ -182,11 +165,11 @@ export const WarningBox = styled.div`
   }
 `
 
-export const RecommendationCard = styled.div`
+export const RecommendationCard = styled(BaseWrapper)`
   padding: 1.25rem;
-  background: var(--background-primary);
-  border-radius: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 1rem;
+`
+
+export const PoolHealth = styled.span`
+  color: var(--status-success);
+  font-weight: 600; /* or 700 for bolder text */
 `

@@ -6,6 +6,7 @@ import {
   faCoins,
   faExclamationTriangle,
   faLightbulb,
+  faPercent,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
@@ -26,13 +27,15 @@ import { PageHeading, PageRow, PageTitle } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { Value } from '../Overview/AccountBalance/Value'
 import { AccountHeader } from './AccountHeader'
+
 import {
   ActionsRow,
   BalanceContainer,
   CardContentHeader,
-  CardGrid,
   MetricsContainer,
   OverviewCard,
+  PoolHealth,
+  StatRow,
   StatusBadge,
   WarningBox,
 } from './Wrappers'
@@ -88,6 +91,7 @@ export const EasyMode = () => {
     <>
       <PageTitle title={t('easyMode.title')} />
 
+      {/* Top row with heading + switch mode */}
       <PageRow>
         <PageHeading>
           <AccountHeader
@@ -97,102 +101,130 @@ export const EasyMode = () => {
         </PageHeading>
       </PageRow>
 
-      <CardGrid>
-        {/* Balance Card */}
-        <CardWrapper>
-          <OverviewCard>
-            <CardContentHeader>
-              <FontAwesomeIcon icon={faCoins} />
-              <h3>{t('easyMode.currentBalance')}</h3>
-            </CardContentHeader>
+      <PageRow>
+        <StatRow>
+          <CardWrapper>
+            <OverviewCard>
+              <CardContentHeader>
+                <FontAwesomeIcon icon={faCoins} />
+                <h3>{t('easyMode.currentBalance')}</h3>
+              </CardContentHeader>
 
-            <BalanceContainer>
-              <div className="token-icon">
-                {brand.token && typeof brand.token === 'function' && (
-                  <brand.token />
-                )}
-              </div>
-              <div className="balance-info">
-                <div className="main-balance">
-                  <Odometer
-                    value={minDecimalPlaces(totalBalance.toFormat(), 2)}
-                    zeroDecimals={2}
-                  />
-                  <span style={{ whiteSpace: 'nowrap' }}>{unit}</span>
-                  <span className="fiat-value">
-                    <Value totalBalance={totalBalance} />
-                  </span>
+              <BalanceContainer>
+                <div className="token-icon">
+                  {brand.token && typeof brand.token === 'function' && (
+                    <brand.token />
+                  )}
                 </div>
-              </div>
-            </BalanceContainer>
+                <div className="balance-info">
+                  <div className="main-balance">
+                    <Odometer
+                      value={minDecimalPlaces(totalBalance.toFormat(), 2)}
+                      zeroDecimals={2}
+                    />
+                    <span style={{ whiteSpace: 'nowrap' }}>{unit}</span>
+                    <span className="fiat-value">
+                      <Value totalBalance={totalBalance} />
+                    </span>
+                  </div>
+                </div>
+              </BalanceContainer>
 
-            <MetricsContainer>
-              <div className="metric">
-                <div className="label">{t('easyMode.balance.available')}</div>
-                <div className="value">
-                  {available.toFormat()} {unit}
+              <MetricsContainer>
+                <div className="metric">
+                  <div className="label">{t('easyMode.balance.available')}</div>
+                  <div className="value">
+                    {available.toFormat()} {unit}
+                  </div>
                 </div>
-              </div>
-              <div className="metric">
-                <div className="label">{t('easyMode.balance.staked')}</div>
-                <div className="value">
-                  {stakedBalance.toFormat()} {unit}
+                <div className="metric">
+                  <div className="label">{t('easyMode.balance.staked')}</div>
+                  <div className="value">
+                    {stakedBalance.toFormat()} {unit}
+                  </div>
                 </div>
-              </div>
-            </MetricsContainer>
-          </OverviewCard>
-        </CardWrapper>
+              </MetricsContainer>
+            </OverviewCard>
+          </CardWrapper>
 
-        {/* Staking Status Card */}
-        <CardWrapper>
-          <OverviewCard>
-            <CardContentHeader>
-              <FontAwesomeIcon icon={faChartLine} />
-              <h3>{t('easyMode.stakingStatus')}</h3>
-            </CardContentHeader>
-            <StatusBadge $active={isNominating()}>
-              <div />
-              {isNominating()
-                ? t('easyMode.activeStaking')
-                : t('easyMode.notStakingStatus')}
-            </StatusBadge>
-            {!isNominating() && (
-              <ButtonPrimary
-                text={t('easyMode.startStaking')}
-                onClick={() => navigate('/stake')}
-                style={{ marginTop: '1rem' }}
-              />
-            )}
-          </OverviewCard>
-        </CardWrapper>
+          {/* Staking Status Card */}
+          <CardWrapper>
+            <OverviewCard>
+              <CardContentHeader>
+                <FontAwesomeIcon icon={faChartLine} />
+                <h3>{t('easyMode.stakingStatus')}</h3>
+              </CardContentHeader>
+              <StatusBadge $active={isNominating()}>
+                <div />
+                {isNominating()
+                  ? t('easyMode.activeStaking')
+                  : t('easyMode.notStakingStatus')}
+              </StatusBadge>
+              {!isNominating() && (
+                <ButtonPrimary
+                  text={t('easyMode.startStaking')}
+                  onClick={() => navigate('/stake')}
+                  style={{ marginTop: '1rem' }}
+                />
+              )}
+            </OverviewCard>
+          </CardWrapper>
 
-        {/* Rewards Card */}
-        <CardWrapper>
-          <OverviewCard>
-            <CardContentHeader>
-              <FontAwesomeIcon icon={faCoins} />
-              <h3>{t('easyMode.rewards')}</h3>
-            </CardContentHeader>
-            <MetricsContainer
-              style={{ borderTop: 0, paddingTop: 0, marginTop: 0 }}
-            >
-              <div className="metric">
-                <div className="label">{t('easyMode.unclaimedRewards')}</div>
-                <div className="value">
-                  {unclaimedRewardsValue.toFormat()} {unit}
+          {/* Rewards Card */}
+          <CardWrapper>
+            <OverviewCard>
+              <CardContentHeader>
+                <FontAwesomeIcon icon={faCoins} />
+                <h3>{t('easyMode.rewards')}</h3>
+              </CardContentHeader>
+              <MetricsContainer
+                style={{ borderTop: 0, paddingTop: 0, marginTop: 0 }}
+              >
+                <div className="metric">
+                  <div className="label">{t('easyMode.unclaimedRewards')}</div>
+                  <div className="value">
+                    {unclaimedRewardsValue.toFormat()} {unit}
+                  </div>
                 </div>
-              </div>
-              <div className="metric">
-                <div className="label">{t('easyMode.totalRewards')}</div>
-                <div className="value">
-                  {totalRewards.toFormat()} {unit}
+                <div className="metric">
+                  <div className="label">{t('easyMode.totalRewards')}</div>
+                  <div className="value">
+                    {totalRewards.toFormat()} {unit}
+                  </div>
                 </div>
-              </div>
-            </MetricsContainer>
-          </OverviewCard>
-        </CardWrapper>
-      </CardGrid>
+              </MetricsContainer>
+            </OverviewCard>
+          </CardWrapper>
 
+          {/* Commission Card */}
+          <CardWrapper>
+            <OverviewCard>
+              <CardContentHeader>
+                <FontAwesomeIcon icon={faPercent} />
+                <h3>Pool / Validator Commission</h3>
+              </CardContentHeader>
+              <div style={{ marginBottom: '0.75rem' }}>
+                {/* Example: "Pool Health - Good" with bold/green "Good" */}
+                Pool Health - <PoolHealth>Good</PoolHealth>
+              </div>
+              <div style={{ fontSize: '0.9rem', marginBottom: '0.75rem' }}>
+                This pool is charging 0% commission, you are earning optimum
+                rewards
+              </div>
+              <div
+                style={{
+                  fontSize: '0.9rem',
+                  color: 'var(--text-color-secondary)',
+                }}
+              >
+                Advice if it is healthy or needs change (add logic)
+              </div>
+            </OverviewCard>
+          </CardWrapper>
+        </StatRow>
+      </PageRow>
+
+      {/* Recommendation box */}
       <PageRow>
         <CardWrapper>
           <OverviewCard>
@@ -213,6 +245,7 @@ export const EasyMode = () => {
         </CardWrapper>
       </PageRow>
 
+      {/* Actions + warning */}
       <PageRow>
         <CardWrapper>
           <OverviewCard>
