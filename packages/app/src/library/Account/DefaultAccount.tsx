@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { Wrapper } from './Wrapper'
 import type { AccountProps } from './types'
 
-const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
+const DefaultAccount = ({ value, readOnly }: AccountProps) => {
   const { t } = useTranslation('library')
   const { getAccount } = useImportedAccounts()
 
@@ -25,15 +25,9 @@ const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
 
   return (
     <Wrapper>
-      {label !== undefined && (
+      {readOnly && (
         <div className="account-label">
-          {label}{' '}
-          {readOnly && (
-            <>
-              &nbsp;
-              <FontAwesomeIcon icon={faGlasses} />
-            </>
-          )}
+          <FontAwesomeIcon icon={faGlasses} />
         </div>
       )}
       {text === null ? (

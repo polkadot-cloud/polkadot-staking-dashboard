@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  border: 1px solid var(--border-primary-color);
+  border: 2px solid var(--border-primary-color);
   transition: transform var(--transition-duration) ease-out;
   cursor: default;
   font-size: 1.1rem;
@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
   padding: 0.1rem 1.25rem;
   max-width: 235px;
   flex: 1;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.025);
