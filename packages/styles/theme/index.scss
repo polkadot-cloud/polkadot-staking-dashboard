@@ -114,11 +114,13 @@ textarea:focus {
 }
 
 path.primary,
+circle.primary,
 ellipse.primary {
   fill: var(--text-color-primary);
 }
 
 path.accent,
+circle.accent,
 ellipse.accent {
   fill: var(--accent-color-primary);
 }
