@@ -3,16 +3,9 @@
 
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
-import {
-  PageHeading,
-  PageRow,
-  PageTitle,
-  RowSection,
-  StatRow,
-} from 'ui-core/base'
+import { PageRow, PageTitle, RowSection, StatRow } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
-import { AccountControls } from './AccountControls'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { StakeStatus } from './StakeStatus'
@@ -27,11 +20,6 @@ export const Overview = () => {
   return (
     <>
       <PageTitle title={t('overview.overview')} />
-      <PageRow>
-        <PageHeading>
-          <AccountControls />
-        </PageHeading>
-      </PageRow>
       <StatRow>
         <AverageRewardRate />
         <SupplyStaked />

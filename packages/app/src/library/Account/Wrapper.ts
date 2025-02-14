@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  border: 2px solid var(--border-primary-color);
+  border: 1px solid var(--border-primary-color);
   transition: transform var(--transition-duration) ease-out;
   cursor: default;
   font-size: 1.1rem;

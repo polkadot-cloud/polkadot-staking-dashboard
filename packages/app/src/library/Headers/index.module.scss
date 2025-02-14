@@ -3,27 +3,18 @@
 
 
 .Content {
-	border-radius: 0.5rem;
-	padding: 1rem 1.5rem;
-	width: 260px;
 	background: var(--background-primary);
   box-shadow: var(--card-shadow);
+	border-radius: 0.75rem;
 	animation-duration: 400ms;
+	padding: 1rem 1.5rem;
+	width: 280px;
 	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 	will-change: transform, opacity;
   word-wrap: break-word;
 
-	&[data-state="open"][data-side="top"] {
-		animation-name: slideDownAndFade;
-	}
-	&[data-state="open"][data-side="right"] {
-		animation-name: slideLeftAndFade;
-	}
 	&[data-state="open"][data-side="bottom"] {
 		animation-name: slideUpAndFade;
-	}
-	&[data-state="open"][data-side="left"] {
-		animation-name: slideRightAndFade;
 	}
   z-index: 9;
 
@@ -125,38 +116,5 @@
 	to {
 		opacity: 1;
 		transform: translateY(0);
-	}
-}
-
-@keyframes slideRightAndFade {
-	from {
-		opacity: 0;
-		transform: translateX(-2px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
-@keyframes slideDownAndFade {
-	from {
-		opacity: 0;
-		transform: translateY(-2px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-@keyframes slideLeftAndFade {
-	from {
-		opacity: 0;
-		transform: translateX(2px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(0);
 	}
 }
