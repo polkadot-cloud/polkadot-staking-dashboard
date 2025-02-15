@@ -44,6 +44,7 @@ export const ItemWrapper = styled.div`
 
   .icon {
     font-size: 1.7rem;
+    max-width: 1.7rem;
     margin-right: 0.5rem;
     z-index: 1;
   }

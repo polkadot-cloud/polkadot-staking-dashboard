@@ -26,10 +26,19 @@ export const Identity = ({ address }: IdentityProps) => {
     )
   }, [validatorSupers, validatorIdentities, address])
 
+  const polkiconSize = '2rem'
+
   return (
     <Wrapper>
-      <div>
-        <Polkicon address={address} fontSize="2rem" />
+      <div
+        style={{
+          minWidth: polkiconSize,
+          maxWidth: polkiconSize,
+          /* Safari fix */
+          border: '0.1rem solid transparent',
+        }}
+      >
+        <Polkicon address={address} fontSize={polkiconSize} />
       </div>
       <div>
         {validatorsFetched && display !== null ? (

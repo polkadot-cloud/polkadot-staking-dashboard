@@ -54,7 +54,7 @@ export const Stat = ({
   let display
   switch (type) {
     case 'address':
-      display = stat.display
+      display = <h2>{stat.display}</h2>
       break
     case 'odometer':
       display = (
@@ -111,7 +111,7 @@ export const Stat = ({
             </>
           ) : null}
           {type === 'address' ? (
-            <div className="icon">
+            <div className="icon" style={{ maxWidth: '2.4rem' }}>
               <Polkicon
                 address={(stat as StatAddress)?.address || ''}
                 fontSize="2.4rem"
