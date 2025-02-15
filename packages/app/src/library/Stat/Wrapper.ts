@@ -50,8 +50,8 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       left: 0;
       top: 0;
       margin: 0;
-      height: 2.6rem;
-      line-height: 2.6rem;
+      height: 2.9rem;
+      line-height: 2.9rem;
       font-size: 1.4rem;
       width: auto;
       max-width: 100%;
@@ -82,7 +82,11 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
         position: absolute;
         display: flex;
         right: 0.2rem;
-        top: 0.1rem;
+        top: 0.4rem;
+
+        > span {
+          position: relative;
+        }
       }
     }
   }
