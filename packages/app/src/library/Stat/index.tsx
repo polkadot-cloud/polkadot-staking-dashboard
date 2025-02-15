@@ -10,7 +10,7 @@ import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { Notifications } from 'controllers/Notifications'
-import { Fragment, useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
 import type { StatAddress, StatProps } from './types'
@@ -54,7 +54,7 @@ export const Stat = ({
   let display
   switch (type) {
     case 'address':
-      display = <h2>{stat.display}</h2>
+      display = stat.display
       break
     case 'odometer':
       display = (
@@ -122,7 +122,7 @@ export const Stat = ({
           {buttons ? (
             <span ref={subjectRef}>
               {buttons.map((btn: AnyJson, index: number) => (
-                <Fragment key={`stat_${index}`}>
+                <span key={`stat_${index}`}>
                   <Button
                     key={`btn_${index}_${Math.random()}`}
                     text={btn.title}
@@ -131,9 +131,9 @@ export const Stat = ({
                     iconTransform={btn.transform ?? undefined}
                     disabled={btn.disabled ?? false}
                     onClick={() => btn.onClick()}
+                    marginRight
                   />
-                  &nbsp;&nbsp;
-                </Fragment>
+                </span>
               ))}
             </span>
           ) : null}
