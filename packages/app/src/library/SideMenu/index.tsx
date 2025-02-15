@@ -1,7 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
@@ -74,7 +77,11 @@ export const SideMenu = () => {
     >
       <Wrapper ref={ref} $minimised={sideMenuMinimised}>
         <section>
-          <LogoWrapper $minimised={sideMenuMinimised}>
+          <LogoWrapper
+            $minimised={sideMenuMinimised}
+            type="button"
+            onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
+          >
             {sideMenuMinimised ? (
               <CloudSVG style={{ maxHeight: '100%', width: '1.8rem' }} />
             ) : (
@@ -90,6 +97,16 @@ export const SideMenu = () => {
                   <LogoSVG className="logo" />
                 </span>
               </>
+            )}
+            {!sideMenuOpen && (
+              <span className="toggle">
+                <span className="label">
+                  <FontAwesomeIcon
+                    icon={sideMenuMinimised ? faChevronRight : faChevronLeft}
+                    transform="shrink-5"
+                  />
+                </span>
+              </span>
             )}
           </LogoWrapper>
           <Heading title={t('network')} minimised={sideMenuMinimised} />
@@ -148,15 +165,6 @@ export const SideMenu = () => {
         </section>
 
         <section>
-          <button
-            type="button"
-            onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
-            aria-label="Menu"
-          >
-            <FontAwesomeIcon
-              icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
-            />
-          </button>
           <button
             type="button"
             onClick={() =>

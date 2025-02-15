@@ -55,7 +55,7 @@ export const Wrapper = styled.div<MinimisedProps>`
         position: relative;
         transition: color var(--transition-duration);
         margin-top: ${(props) => (props.$minimised ? '1rem' : 0)};
-        margin-right: ${(props) => (props.$minimised ? 0 : '0.9rem')};
+        margin-right: ${(props) => (props.$minimised ? 0 : '1.25rem')};
         opacity: 0.75;
         padding: 0.1rem;
 
@@ -74,7 +74,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   }
 `
 
-export const LogoWrapper = styled.div<MinimisedProps>`
+export const LogoWrapper = styled.button<MinimisedProps>`
   display: flex;
   flex-flow: row wrap;
   justify-content: ${(props) => (props.$minimised ? 'center' : 'flex-start')};
@@ -82,10 +82,30 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   width: 100%;
   height: 2.8rem;
   padding: ${(props) => (props.$minimised ? '0' : '0.4rem 0 0.4rem 0.5rem')};
+  margin-top: ${(props) => (props.$minimised ? '0' : '0.6rem')};
   margin-bottom: ${(props) => (props.$minimised ? '0.75rem' : '0.5rem')};
   position: relative;
   text-transform: uppercase;
 
+  > .toggle {
+    position: absolute;
+    top: ${(props) => (props.$minimised ? '1rem' : '-0.1rem')};
+    right: ${(props) => (props.$minimised ? '-0.75rem' : '0')};
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    > .label {
+      background: var(--background-primary);
+      color: var(--text-color-secondary);
+      width: 1.75rem;
+      height: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+  }
   > span {
     margin-top: 0.25rem;
     margin-left: 0.75rem;
@@ -95,7 +115,13 @@ export const LogoWrapper = styled.div<MinimisedProps>`
 
     .logo {
       width: auto;
-      height: 1.4rem;
+      height: 1.5rem;
+    }
+  }
+
+  &:hover {
+    > .toggle > .label {
+      color: var(--accent-color-primary);
     }
   }
 `
