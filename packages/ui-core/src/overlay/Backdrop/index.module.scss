@@ -3,7 +3,5 @@
 
 .backdrop {
   background: var(--modal-background-color);
-  transition: backdrop-filter 0.5s;
-  backdrop-filter: blur(4px);
   z-index: 9;
 }

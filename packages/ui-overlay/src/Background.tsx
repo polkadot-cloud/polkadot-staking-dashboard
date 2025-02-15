@@ -41,9 +41,9 @@ export const Background = ({
     externalOverlayStatus === 'closed' ? null : (
     <Backdrop
       blur={
-        canvasStatus === 'open' || externalOverlayStatus === 'open'
+        externalOverlayStatus === 'open' || canvasStatus === 'open'
           ? '1.4rem'
-          : '0.4rem'
+          : '0rem'
       }
       initial={{
         opacity: 0,
