@@ -171,22 +171,14 @@ export const Tips = () => {
           />
         )}
       </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <PageToggle
-          start={start}
-          end={end}
-          page={page}
-          itemsPerPage={itemsPerPage}
-          totalItems={items.length}
-          setPageHandler={setPageHandler}
-        />
-      </div>
+      <PageToggle
+        start={start}
+        end={end}
+        page={page}
+        itemsPerPage={itemsPerPage}
+        totalItems={items.length}
+        setPageHandler={setPageHandler}
+      />
     </TipsWrapper>
   )
 }

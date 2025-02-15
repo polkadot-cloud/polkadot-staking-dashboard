@@ -4340,7 +4340,6 @@ __metadata:
     "@w3ux/validator-assets": "npm:^0.3.1"
     "@zondax/ledger-substrate": "npm:^1.0.1"
     assets: "workspace:*"
-    bn.js: "npm:^5.2.1"
     buffer: "npm:^6.0.3"
     chart.js: "npm:^4.4.7"
     chroma-js: "npm:^3.1.1"

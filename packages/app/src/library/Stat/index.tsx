@@ -10,7 +10,7 @@ import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { Notifications } from 'controllers/Notifications'
-import { Fragment, useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
 import type { StatAddress, StatProps } from './types'
@@ -102,7 +102,7 @@ export const Stat = ({
           </button>
         ) : null}
       </h4>
-      <div className="content">
+      <div className={`content${buttons ? ' withButtons' : ''}`}>
         <div className="text" ref={containerRef}>
           {icon ? (
             <>
@@ -111,7 +111,7 @@ export const Stat = ({
             </>
           ) : null}
           {type === 'address' ? (
-            <div className="icon">
+            <div className="icon" style={{ maxWidth: '2.4rem' }}>
               <Polkicon
                 address={(stat as StatAddress)?.address || ''}
                 fontSize="2.4rem"
@@ -122,7 +122,7 @@ export const Stat = ({
           {buttons ? (
             <span ref={subjectRef}>
               {buttons.map((btn: AnyJson, index: number) => (
-                <Fragment key={`stat_${index}`}>
+                <span key={`stat_${index}`}>
                   <Button
                     key={`btn_${index}_${Math.random()}`}
                     text={btn.title}
@@ -131,9 +131,9 @@ export const Stat = ({
                     iconTransform={btn.transform ?? undefined}
                     disabled={btn.disabled ?? false}
                     onClick={() => btn.onClick()}
+                    marginRight
                   />
-                  &nbsp;&nbsp;
-                </Fragment>
+                </span>
               ))}
             </span>
           ) : null}

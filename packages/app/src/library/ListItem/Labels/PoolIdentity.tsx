@@ -19,10 +19,12 @@ export const PoolIdentity = ({
     poolsMetaData[Number(id)]
   )
 
+  const polkiconSize = '2rem'
+
   return (
     <Identity>
-      <div>
-        <Polkicon address={addresses.stash} fontSize="2rem" />
+      <div style={{ maxWidth: polkiconSize }}>
+        <Polkicon address={addresses.stash} fontSize={polkiconSize} />
       </div>
       <div>
         {!metadataSynced ? (
