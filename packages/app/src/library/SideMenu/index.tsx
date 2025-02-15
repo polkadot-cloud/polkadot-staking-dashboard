@@ -83,14 +83,14 @@ export const SideMenu = () => {
             onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
           >
             {sideMenuMinimised ? (
-              <CloudSVG style={{ maxHeight: '100%', width: '1.8rem' }} />
+              <CloudSVG style={{ maxHeight: '100%', width: '2rem' }} />
             ) : (
               <>
                 <CloudSVG
                   style={{
                     maxHeight: '100%',
                     height: '100%',
-                    width: '1.65rem',
+                    width: '1.55rem',
                   }}
                 />
                 <span>

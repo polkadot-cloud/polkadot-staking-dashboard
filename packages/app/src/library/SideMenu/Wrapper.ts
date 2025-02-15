@@ -89,8 +89,8 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 
   > .toggle {
     position: absolute;
-    top: ${(props) => (props.$minimised ? '1rem' : '-0.1rem')};
-    right: ${(props) => (props.$minimised ? '-0.75rem' : '0')};
+    top: ${(props) => (props.$minimised ? '0.9rem' : '-0.1rem')};
+    right: ${(props) => (props.$minimised ? '-0.65rem' : '0')};
     height: 100%;
     display: flex;
     align-items: center;
@@ -115,7 +115,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 
     .logo {
       width: auto;
-      height: 1.5rem;
+      height: ${(props) => (props.$minimised ? '2.15rem' : '1.5rem')};
     }
   }
 
