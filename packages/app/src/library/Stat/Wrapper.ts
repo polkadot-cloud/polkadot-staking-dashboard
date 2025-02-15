@@ -11,7 +11,6 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin: 0 0 0.15rem 0;
 
     > .btn {
       color: var(--text-color-secondary);
@@ -32,10 +31,12 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
   }
 
   .content {
+    --content-height: 2.8rem;
+
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    height: 2.75rem;
+    height: var(--content-height);
     position: relative;
     width: auto;
     max-width: 100%;
@@ -45,13 +46,12 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       padding-left: ${(props) => (props.$isAddress ? '3rem' : 0)};
       font-family: InterBold, sans-serif;
       color: var(--text-color-primary);
-      padding-top: 0.25rem;
       position: absolute;
       left: 0;
       top: 0;
       margin: 0;
-      height: 2.9rem;
-      line-height: 2.9rem;
+      height: var(--content-height);
+      line-height: var(--content-height);
       font-size: 1.4rem;
       width: auto;
       max-width: 100%;
@@ -59,7 +59,6 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      display: flex;
 
       h2 {
         font-family: InterBold, sans-serif;
@@ -73,7 +72,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
         position: absolute;
         display: flex;
         left: 0;
-        top: 0.4rem;
+        top: 0.3rem;
         flex-flow: row wrap;
         align-items: center;
       }
@@ -82,7 +81,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
         position: absolute;
         display: flex;
         right: 0.2rem;
-        top: 0.4rem;
+        top: 0.3rem;
 
         > span {
           position: relative;
