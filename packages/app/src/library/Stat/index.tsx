@@ -102,7 +102,7 @@ export const Stat = ({
           </button>
         ) : null}
       </h4>
-      <div className="content">
+      <div className={`content${buttons ? ' withButtons' : ''}`}>
         <div className="text" ref={containerRef}>
           {icon ? (
             <>
