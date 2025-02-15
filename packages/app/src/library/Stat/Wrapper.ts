@@ -73,7 +73,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
         position: absolute;
         display: flex;
         left: 0;
-        top: 0;
+        top: 0.4rem;
         flex-flow: row wrap;
         align-items: center;
       }
