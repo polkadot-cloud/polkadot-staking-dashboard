@@ -19,8 +19,8 @@ export const RewardText = styled.div`
 `
 
 export const RewardsGrid = styled.div`
-  margin-top: 1.25rem;
-  padding: 0 1rem;
+  margin-top: 0.5rem;
+  padding: 0 0.5rem;
 
   > .row {
     padding: 0.6rem 0;
@@ -30,8 +30,8 @@ export const RewardsGrid = styled.div`
       grid-template-columns: repeat(3, 1fr);
       display: grid;
       > div > h4 {
+        color: var(--text-color-tertiary);
         font-family: InterSemiBold, sans-serif;
-        color: var(--text-color-secondary);
       }
     }
     &.body {

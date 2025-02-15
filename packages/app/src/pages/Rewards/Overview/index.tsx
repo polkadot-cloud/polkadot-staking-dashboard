@@ -3,6 +3,9 @@
 
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Odometer } from '@w3ux/react-odometer'
+import { minDecimalPlaces } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -14,16 +17,29 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CardHeader, PageRow, StatRow } from 'ui-core/base'
+import {
+  CardHeader,
+  CardLabel,
+  PageRow,
+  Separator,
+  StatRow,
+} from 'ui-core/base'
 import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
 import { RewardsGrid } from '../Wrappers'
 import type { PageProps } from '../types'
+import { Value } from './Value'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Overview = (_: PageProps) => {
   const { t } = useTranslation('pages')
-  const { networkData } = useNetwork()
+  const {
+    network,
+    networkData: {
+      unit,
+      brand: { token: Token },
+    },
+  } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { activeAccount } = useActiveAccounts()
   const { price: tokenPrice } = useTokenPrices()
@@ -52,6 +68,11 @@ export const Overview = (_: PageProps) => {
 
   const currency = 'USDT'
   const symbol = '$'
+
+  // Determine label depending if custom balance is active
+  const balanceLabel = isCustomStake
+    ? t('rewards.customBalance')
+    : t('rewards.currentStakedBalance')
 
   return (
     <>
@@ -83,7 +104,7 @@ export const Overview = (_: PageProps) => {
 
                 <div style={{ padding: '1rem' }}>
                   <label htmlFor="manual-stake">
-                    {t('rewards.enterStakeAmount')} ({networkData.api.unit}):
+                    {t('rewards.enterStakeAmount')} ({unit}):
                   </label>
                   <input
                     id="manual-stake"
@@ -113,7 +134,27 @@ export const Overview = (_: PageProps) => {
         <PageRow>
           <CardWrapper>
             <CardHeader>
-              <h3>{t('rewards.projectedRewards')}</h3>
+              <h4>{balanceLabel}</h4>
+              <h2>
+                <Token />
+                <Odometer
+                  value={minDecimalPlaces(
+                    new BigNumber(currentStake).toFormat(),
+                    2
+                  )}
+                  zeroDecimals={2}
+                />
+                <CardLabel>
+                  {network !== 'westend' ? (
+                    <Value totalBalance={currentStake} />
+                  ) : null}
+                </CardLabel>
+              </h2>
+            </CardHeader>
+            <Separator style={{ margin: '0 0 1.5rem 0' }} />
+
+            <CardHeader>
+              <h4>{t('rewards.projectedRewards')}</h4>
             </CardHeader>
 
             <RewardsGrid>
@@ -122,7 +163,7 @@ export const Overview = (_: PageProps) => {
                   <h4>{t('rewards.period')}</h4>
                 </div>
                 <div>
-                  <h4>{networkData.unit}</h4>
+                  <h4>{unit}</h4>
                 </div>
                 <div>
                   <h4>{currency}</h4>
