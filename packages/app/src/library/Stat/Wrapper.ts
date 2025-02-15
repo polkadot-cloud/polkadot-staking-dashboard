@@ -51,7 +51,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       top: 0;
       margin: 0;
       height: 2.6rem;
-      height: 2.6rem;
+      line-height: 2.6rem;
       font-size: 1.4rem;
       width: auto;
       max-width: 100%;
@@ -59,13 +59,14 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      display: flex;
 
       h2 {
         font-family: InterBold, sans-serif;
         display: flex;
         align-items: center;
         text-overflow: ellipsis;
-        line-height: 1.4rem;
+        line-height: 2.6rem;
       }
 
       .icon {
