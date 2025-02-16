@@ -16,7 +16,8 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
-    "@fortawesome/react-fontawesome": "^0.2.2"
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "radix-ui": "*"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
