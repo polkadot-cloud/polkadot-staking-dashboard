@@ -1,16 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCopy } from '@fortawesome/free-regular-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
-import { Notifications } from 'controllers/Notifications'
-import type { NotificationText } from 'controllers/Notifications/types'
 import { useTranslation } from 'react-i18next'
+import { ButtonCopy } from 'ui-buttons'
 import { ItemWrapper } from './Wrappers'
 import type { ActiveAccountProps } from './types'
 
@@ -23,16 +21,6 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
   const delegatorAddress = delegate ? address : null
 
   const accountData = getAccount(primaryAddress)
-
-  // click to copy notification
-  let notification: NotificationText | null = null
-  if (accountData !== null) {
-    notification = {
-      title: t('overview.addressCopied'),
-      subtitle: accountData.address,
-    }
-  }
-
   const proxyDelegate = getProxyDelegate(delegatorAddress, primaryAddress)
 
   return (
@@ -58,21 +46,9 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
                 </span>
               )}
               {ellipsisFn(primaryAddress)}
-              <button
-                type="button"
-                onClick={() => {
-                  navigator.clipboard.writeText(primaryAddress)
-                  if (notification) {
-                    Notifications.emit(notification)
-                  }
-                }}
-              >
-                <FontAwesomeIcon
-                  className="copy"
-                  icon={faCopy}
-                  transform="shrink-4"
-                />
-              </button>
+              <div className="btn">
+                <ButtonCopy value={primaryAddress} inheritSize />
+              </div>
               {accountData.name !== ellipsisFn(primaryAddress) && (
                 <>
                   <div className="sep" />
