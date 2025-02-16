@@ -56,3 +56,9 @@ export type MultiButtonProps = ComponentBase & {
 }
 
 export type ButtonSize = 'sm' | 'md' | 'lg'
+
+export interface ButtonCopyProps {
+  onClick?: (e?: MouseEvent<HTMLButtonElement>) => void
+  value: string
+  inheritSize?: boolean
+}
