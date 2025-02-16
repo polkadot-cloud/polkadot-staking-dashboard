@@ -28,7 +28,6 @@ export const Wrapper = styled.div`
     }
     h4 {
       padding: 0;
-
       > .addr {
         opacity: 0.75;
       }
@@ -40,13 +39,7 @@ export const Wrapper = styled.div`
       margin-left: 0.5rem;
 
       > .copy {
-        color: var(--text-color-secondary);
-        cursor: pointer;
-        transition: opacity var(--transition-duration);
-        margin-left: 0.5rem;
-        &:hover {
-          opacity: 0.8;
-        }
+        margin-left: 0.25rem;
       }
     }
   }
