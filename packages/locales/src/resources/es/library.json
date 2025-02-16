@@ -58,7 +58,6 @@
     "connecting": "Conectando",
     "connectionLost": "Se perdió la conexión",
     "continue": "Continuar",
-    "copyAddress": "Copiar Dirección",
     "copyPoolAddress": "Copiar la dirección del pool {{type}}",
     "createPool": "Crear Pool",
     "dayAverage": "Promedio Diario",
