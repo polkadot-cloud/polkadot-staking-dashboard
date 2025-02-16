@@ -23,6 +23,7 @@ export const Wrapper = styled.div`
   }
   .polkicon {
     margin: 0.15rem 0.25rem 0 0;
+    max-width: 1.5rem;
   }
   .account-label {
     border-right: 1px solid var(--border-secondary-color);

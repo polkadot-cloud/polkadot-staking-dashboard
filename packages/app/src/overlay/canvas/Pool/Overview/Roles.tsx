@@ -57,7 +57,7 @@ export const Roles = ({
                 title={t('pools.root')}
                 address={bondedPool.roles.root}
                 identity={rootIdentity}
-                Action={<CopyAddress address={bondedPool.roles.root} outline />}
+                Action={<CopyAddress address={bondedPool.roles.root} />}
                 iconSize={iconSize}
               />
             </section>
@@ -68,9 +68,7 @@ export const Roles = ({
                 title={t('pools.nominator')}
                 address={bondedPool.roles.nominator}
                 identity={nominatorIdentity}
-                Action={
-                  <CopyAddress address={bondedPool.roles.nominator} outline />
-                }
+                Action={<CopyAddress address={bondedPool.roles.nominator} />}
                 iconSize={iconSize}
               />
             </section>
@@ -81,9 +79,7 @@ export const Roles = ({
                 title={t('pools.bouncer')}
                 address={bondedPool.roles.bouncer}
                 identity={bouncerIdentity}
-                Action={
-                  <CopyAddress address={bondedPool.roles.bouncer} outline />
-                }
+                Action={<CopyAddress address={bondedPool.roles.bouncer} />}
                 iconSize={iconSize}
               />
             </section>
@@ -94,9 +90,7 @@ export const Roles = ({
                 title={t('pools.depositor')}
                 address={bondedPool.roles.depositor}
                 identity={depositorIdentity}
-                Action={
-                  <CopyAddress address={bondedPool.roles.depositor} outline />
-                }
+                Action={<CopyAddress address={bondedPool.roles.depositor} />}
                 iconSize={iconSize}
               />
             </section>

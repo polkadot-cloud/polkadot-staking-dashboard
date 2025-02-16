@@ -24,14 +24,14 @@ export const Addresses = ({
           <Identity
             title={'Stash'}
             address={addresses.stash}
-            Action={<CopyAddress address={addresses.stash} outline />}
+            Action={<CopyAddress address={addresses.stash} />}
           />
         </section>
         <section>
           <Identity
             title={'Reward'}
             address={addresses.reward}
-            Action={<CopyAddress address={addresses.reward} outline />}
+            Action={<CopyAddress address={addresses.reward} />}
           />
         </section>
       </AddressesWrapper>
