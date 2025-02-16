@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Tooltip as RadixTooltip } from 'radix-ui'
-import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react'
+import { type MouseEvent as ReactMouseEvent, type ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Tooltip = ({
@@ -11,14 +11,16 @@ export const Tooltip = ({
   text,
   onTriggerClick,
   onPointerDownOutside,
+  handleOpenChange,
 }: {
   children: ReactNode
   container?: HTMLDivElement
   text: string
   onTriggerClick?: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void
   onPointerDownOutside?: (e: Event) => void
+  handleOpenChange?: (isOpen: boolean) => void
 }) => (
-  <RadixTooltip.Root>
+  <RadixTooltip.Root onOpenChange={handleOpenChange}>
     <RadixTooltip.Trigger
       asChild
       onClick={(event) => {
@@ -38,6 +40,9 @@ export const Tooltip = ({
           if (typeof onPointerDownOutside === 'function') {
             onPointerDownOutside(event)
           }
+          event.preventDefault()
+        }}
+        onFocusCapture={(event) => {
           event.preventDefault()
         }}
       >

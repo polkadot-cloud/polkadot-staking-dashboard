@@ -5,7 +5,7 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Tooltip } from 'ui-core/base'
 import type { ButtonCopyProps } from '../types'
 import classes from './index.module.scss'
@@ -19,6 +19,7 @@ export const ButtonCopy = ({
   tooltipText,
 }: ButtonCopyProps) => {
   const [active, setActive] = useState<boolean>(false)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const handleClick = () => {
     setActive(true)
@@ -40,6 +41,20 @@ export const ButtonCopy = ({
 
   const text = active ? tooltipText.copied : tooltipText.copy
 
+  const handleOpenChange = (isOpen: boolean) => {
+    if (!isOpen && buttonRef.current) {
+      buttonRef.current.blur() // Unfocus trigger when tooltip closes
+    }
+  }
+
+  // Unfocus trigger when tooltip closes
+  useEffect(() => {
+    if (!open && buttonRef.current) {
+      console.log('blur button')
+      buttonRef.current.blur()
+    }
+  }, [open])
+
   return (
     <Tooltip
       text={text}
@@ -50,9 +65,11 @@ export const ButtonCopy = ({
       onPointerDownOutside={(event) => {
         event.preventDefault()
       }}
+      handleOpenChange={handleOpenChange}
     >
       <button
         type="button"
+        ref={buttonRef}
         style={size ? { width: size, height: size } : {}}
         className={baseClasses}
         onClick={() => {
