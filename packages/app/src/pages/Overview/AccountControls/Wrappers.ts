@@ -79,9 +79,9 @@ export const ItemWrapper = styled.div`
   }
 
   .btn {
-    width: 1.1rem;
-    height: 1.1rem;
-    margin: 0 0.35rem;
+    width: 1rem;
+    height: 1rem;
+    margin: 0 0.35rem 0 0.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
