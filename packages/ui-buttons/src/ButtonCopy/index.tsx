@@ -13,8 +13,9 @@ import classes from './index.module.scss'
 export const ButtonCopy = ({
   onClick,
   value,
-  inheritSize,
+  size,
   tooltipPortalContainer,
+  xMargin,
 }: ButtonCopyProps) => {
   const [active, setActive] = useState<boolean>(false)
 
@@ -22,14 +23,18 @@ export const ButtonCopy = ({
     setActive(true)
   }
 
+  const baseClasses = classNames(classes.btnCopy, {
+    [classes.xMargin]: xMargin,
+  })
+
   const copyClasses = classNames(classes.copyIcon, {
     [classes.active]: active,
-    [classes.inheritSize]: inheritSize,
+    [classes.inheritSize]: size == undefined,
   })
 
   const checkClasses = classNames(classes.checkIcon, {
     [classes.active]: active,
-    [classes.inheritSize]: inheritSize,
+    [classes.inheritSize]: size === undefined,
   })
 
   const tooltipText = active ? 'Copied!' : 'Copy'
@@ -47,7 +52,8 @@ export const ButtonCopy = ({
     >
       <button
         type="button"
-        className={classes.btnCopy}
+        style={size ? { width: size, height: size } : {}}
+        className={baseClasses}
         onClick={() => {
           if (typeof onClick === 'function') {
             onClick()

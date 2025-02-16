@@ -47,7 +47,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
               )}
               {ellipsisFn(primaryAddress)}
               <div className="btn">
-                <ButtonCopy value={primaryAddress} inheritSize />
+                <ButtonCopy value={primaryAddress} size="0.95rem" />
               </div>
               {accountData.name !== ellipsisFn(primaryAddress) && (
                 <>

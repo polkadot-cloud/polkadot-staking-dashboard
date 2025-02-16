@@ -48,9 +48,6 @@ export const Item = ({
   const { address, prefs, validatorStatus } = validator
   const commission = prefs?.commission ?? null
 
-  // Whether buttons should be styled as outline.
-  const outline = displayFor === 'canvas'
-
   const identity = getIdentityDisplay(
     validatorIdentities[address],
     validatorSupers[address]
@@ -91,10 +88,8 @@ export const Item = ({
           <Identity address={address} />
           <div>
             <HeaderButtonRow>
-              <CopyAddress address={address} outline={outline} />
-              {toggleFavorites && (
-                <FavoriteValidator address={address} outline={outline} />
-              )}
+              <CopyAddress address={address} />
+              {toggleFavorites && <FavoriteValidator address={address} />}
               {!['modal', 'canvas'].includes(displayFor) && (
                 <HeaderButton>
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>

@@ -60,6 +60,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg'
 export interface ButtonCopyProps {
   onClick?: (e?: MouseEvent<HTMLButtonElement>) => void
   value: string
-  inheritSize?: boolean
+  size?: string | number
   tooltipPortalContainer?: HTMLDivElement
+  xMargin?: boolean
 }
