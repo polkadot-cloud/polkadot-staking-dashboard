@@ -60,6 +60,7 @@
     "continue": "Continuar",
     "copied": "Copiado!",
     "copy": "Copiar",
+    "copyAddress": "Copiar Dirección",
     "copyPoolAddress": "Copiar la dirección del pool {{type}}",
     "createPool": "Crear Pool",
     "dayAverage": "Promedio Diario",
