@@ -43,7 +43,7 @@ export const Item = ({
           <Identity address={address} />
           <div>
             <HeaderButtonRow>
-              <CopyAddress address={address} outline={outline} />
+              <CopyAddress address={address} />
               {toggleFavorites && (
                 <FavoriteValidator address={address} outline={outline} />
               )}

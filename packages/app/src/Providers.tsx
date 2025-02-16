@@ -43,6 +43,7 @@ import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { WalletConnectProvider } from 'contexts/WalletConnect'
+import { Tooltip } from 'radix-ui'
 import { ThemedRouter } from 'Themes'
 import { OverlayProvider } from 'ui-overlay'
 import { registerSaEvent } from 'utils'
@@ -112,6 +113,7 @@ export const Providers = () => {
       MigrateProvider,
       FiltersProvider,
       CommunityProvider,
+      Tooltip.Provider,
     ],
     ThemedRouter
   )
