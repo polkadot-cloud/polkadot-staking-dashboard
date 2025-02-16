@@ -58,6 +58,8 @@
     "connecting": "Connecting",
     "connectionLost": "Connection has been lost",
     "continue": "Continue",
+    "copy": "Copy",
+    "copied": "Copied!",
     "copyPoolAddress": "Copy Pool {{type}} Address",
     "createPool": "Create Pool",
     "dayAverage": "Day Average",

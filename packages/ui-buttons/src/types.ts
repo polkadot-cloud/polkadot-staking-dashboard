@@ -63,4 +63,8 @@ export interface ButtonCopyProps {
   size?: string | number
   tooltipPortalContainer?: HTMLDivElement
   xMargin?: boolean
+  tooltipText: {
+    copy: string
+    copied: string
+  }
 }

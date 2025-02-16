@@ -16,6 +16,7 @@ export const ButtonCopy = ({
   size,
   tooltipPortalContainer,
   xMargin,
+  tooltipText,
 }: ButtonCopyProps) => {
   const [active, setActive] = useState<boolean>(false)
 
@@ -37,11 +38,11 @@ export const ButtonCopy = ({
     [classes.inheritSize]: size === undefined,
   })
 
-  const tooltipText = active ? 'Copied!' : 'Copy'
+  const text = active ? tooltipText.copied : tooltipText.copy
 
   return (
     <Tooltip
-      text={tooltipText}
+      text={text}
       container={tooltipPortalContainer}
       onTriggerClick={(event) => {
         event.preventDefault()
