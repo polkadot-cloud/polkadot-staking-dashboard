@@ -17,7 +17,7 @@ export const ButtonCopy = (
       {...props}
       tooltipPortalContainer={themeElementRef.current || undefined}
       tooltipText={{
-        copy: t('copy'),
+        copy: t('copyAddress'),
         copied: t('copied'),
       }}
     />
