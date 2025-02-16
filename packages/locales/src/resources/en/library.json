@@ -60,6 +60,7 @@
     "continue": "Continue",
     "copied": "Copied!",
     "copy": "Copy",
+    "copyAddress": "Copy Address",
     "copyPoolAddress": "Copy Pool {{type}} Address",
     "createPool": "Create Pool",
     "dayAverage": "Day Average",
