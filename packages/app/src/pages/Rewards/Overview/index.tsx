@@ -25,8 +25,8 @@ import {
   StatRow,
 } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { LastEraPayout } from '../Stats/LastEraPayout'
 import { RewardCalculator } from '../Stats/RewardCalculator'
-import { StakedBalance } from '../Stats/StakedBalance'
 import type { PayoutHistoryProps } from '../types'
 import { RecentPayouts } from './RecentPayouts'
 
@@ -59,7 +59,7 @@ export const Overview = (props: PayoutHistoryProps) => {
     <>
       <StatRow>
         <AverageRewardRate />
-        <StakedBalance />
+        <LastEraPayout />
         <RewardCalculator
           onClick={() => {
             openModal({
