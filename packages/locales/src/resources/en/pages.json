@@ -25,6 +25,57 @@
       "polkawatchDisabled": "Polkawatch Disabled",
       "totalPayoutsAnalysed": "Total Payouts Analysed"
     },
+    "learning": {
+      "title": "Learning Center",
+      "paths": {
+        "essential": {
+          "title": "Getting Started",
+          "description": "New to staking? Start here for the basics",
+          "guides": {
+            "what-is-staking": {
+              "title": "What is Staking?",
+              "content": "Staking is how you earn rewards with your DOT tokens. Think of it like putting money in a savings account that pays interest. When you stake your DOT, you help secure the Polkadot network and earn rewards in return."
+            },
+            "first-stake": {
+              "title": "Making Your First Stake",
+              "content": "Ready to start staking? Here's how in simple steps:\n\n1. Ensure you have DOT tokens in your account\n2. Choose between direct staking or joining a pool\n3. If direct staking, select your validators\n4. Bond your tokens\n5. Start earning rewards"
+            },
+            "rewards": {
+              "title": "Understanding Rewards",
+              "content": "Learn how staking rewards work. Rewards are paid out every 24 hours (one era) based on network performance. The amount you earn depends on:\n\n• How much DOT you've staked\n• Which validators you've chosen\n• Overall network conditions"
+            }
+          }
+        },
+        "intermediate": {
+          "title": "Core Concepts",
+          "description": "Deepen your understanding of staking",
+          "guides": {
+            "nomination-pools": {
+              "title": "Nomination Pools Explained",
+              "content": "Nomination pools let you combine your DOT with other stakers. This is great for smaller holders as you can:\n\n• Start staking with less DOT\n• Share the costs of running a validator\n• Still earn proportional rewards"
+            },
+            "validator-selection": {
+              "title": "Choosing Validators",
+              "content": "Learn how to pick reliable validators. Good validators typically have:\n\n• High uptime and reliability\n• Reasonable commission rates\n• Good track record\n• Sufficient self-stake"
+            }
+          }
+        },
+        "advanced": {
+          "title": "Advanced Topics",
+          "description": "Master complex staking strategies",
+          "guides": {
+            "controller-accounts": {
+              "title": "Controller Accounts",
+              "content": "Controller accounts add security to your staking setup. They:\n\n• Keep your main (stash) account safe\n• Handle routine staking operations\n• Manage your nominations\n• Process rewards"
+            },
+            "slashing": {
+              "title": "Understanding Slashing",
+              "content": "Slashing is a penalty for validator misbehavior. To protect yourself:\n\n• Choose reliable validators\n• Diversify your nominations\n• Monitor validator performance\n• Stay informed about network changes"
+            }
+          }
+        }
+      }
+    },
     "nominate": {
       "activeNominations": "Active Nominations",
       "addressCopied": "Address Copied to Clipboard",

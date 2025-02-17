@@ -3,6 +3,7 @@
 
 import type { PageCategoryItems, PagesConfigItems } from 'common-types'
 import { Community } from 'pages/Community'
+import { Learning } from 'pages/Learning'
 import { Nominate } from 'pages/Nominate'
 import { Overview } from 'pages/Overview'
 import { Payouts } from 'pages/Payouts'
@@ -22,6 +23,10 @@ export const PageCategories: PageCategoryItems = [
   {
     id: 3,
     key: 'validators',
+  },
+  {
+    id: 4,
+    key: 'learning',
   },
 ]
 
@@ -72,6 +77,14 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${BASE_URL}community`,
     hash: '/community',
     Entry: Community,
+    lottie: 'label',
+  },
+  {
+    category: 4,
+    key: 'learning',
+    uri: `${BASE_URL}learning`,
+    hash: '/learning',
+    Entry: Learning,
     lottie: 'label',
   },
 ]
