@@ -24,6 +24,18 @@ export const RewardsGrid = styled.div`
 
   > .row {
     padding: 0.6rem 0;
+    > div {
+      > h3,
+      h4 {
+        display: flex;
+        align-items: center;
+      }
+
+      .token {
+        margin-right: 0.5rem;
+        width: 1.5rem;
+      }
+    }
 
     &.head {
       border-bottom: 1px solid var(--border-primary-color);
@@ -49,10 +61,9 @@ export const RewardsGrid = styled.div`
         &:first-child {
           color: var(--text-color-secondary);
         }
+
         > h3 {
           font-family: Inter, sans-serif;
-          display: flex;
-          align-items: center;
           svg {
             color: var(--status-success-color);
             margin-right: 0.6rem;

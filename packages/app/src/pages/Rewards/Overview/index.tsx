@@ -55,9 +55,6 @@ export const Overview = (_: PageProps) => {
   const currency = 'USD'
   const symbol = '$'
 
-  // Determine label depending if custom balance is active
-  const balanceLabel = t('rewards.stakedBalance')
-
   return (
     <>
       <StatRow>
@@ -81,7 +78,7 @@ export const Overview = (_: PageProps) => {
         <PageRow>
           <CardWrapper>
             <CardHeader>
-              <h4>{balanceLabel}</h4>
+              <h4>{t('rewards.stakedBalance')}</h4>
               <h2>
                 <Token />
                 <Odometer
@@ -97,18 +94,19 @@ export const Overview = (_: PageProps) => {
               </h2>
             </CardHeader>
             <Separator style={{ margin: '0 0 1.5rem 0' }} />
-
             <CardHeader>
               <h4>{t('rewards.projectedRewards')}</h4>
             </CardHeader>
-
             <RewardsGrid>
               <div className="row head">
                 <div>
                   <h4>{t('rewards.period')}</h4>
                 </div>
                 <div>
-                  <h4>{unit}</h4>
+                  <h4>
+                    <Token className="token" />
+                    {unit}
+                  </h4>
                 </div>
                 <div>
                   <h4>{currency}</h4>
