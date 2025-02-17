@@ -29,13 +29,15 @@ export const ActiveGraph = ({
       inPool={inPool}
       syncing={loading}
     />
-    <AveragePayoutLine
-      days={MaxPayoutDays}
-      average={10}
-      height="65px"
-      data={{ payouts, unclaimedPayouts, poolClaims }}
-      nominating={nominating}
-      inPool={inPool}
-    />
+    <div style={{ marginTop: '1em' }}>
+      <AveragePayoutLine
+        days={MaxPayoutDays}
+        average={10}
+        height="65px"
+        data={{ payouts, unclaimedPayouts, poolClaims }}
+        nominating={nominating}
+        inPool={inPool}
+      />
+    </div>
   </>
 )
