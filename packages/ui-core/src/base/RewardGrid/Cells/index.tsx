@@ -3,7 +3,7 @@
 
 import type { ComponentBase } from '@w3ux/types'
 import type { ReactNode } from 'react'
-import { Cell } from './Cell'
+import { Cell } from '../Cell'
 
 export const Cells = ({
   items,

@@ -3,10 +3,11 @@
 
 import type { ComponentBase } from '@w3ux/types'
 import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
 export const Row = ({ children, style }: ComponentBase) => {
-  const allClasses = classNames(classes.row, classes.body)
+  const allClasses = classNames(commonClasses.row, classes.body)
 
   return (
     <div className={allClasses} style={style}>
