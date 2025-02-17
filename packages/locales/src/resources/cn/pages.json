@@ -228,11 +228,11 @@
       "withdrawUnlock": "请取出己解锁金额以继续关闭池"
     },
     "rewards": {
+      "StakedBalance": "质押余额",
       "adjustStake": "调整质押",
       "annual": "每年",
       "averageRewardRate": "平均奖励率",
       "calculator": "计算器",
-      "currentStakedBalance": "当前质押余额",
       "customBalance": "自定义余额",
       "daily": "每日",
       "enterStakeAmount": "输入质押金额",

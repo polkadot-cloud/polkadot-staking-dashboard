@@ -72,7 +72,7 @@ export const Overview = (_: PageProps) => {
   // Determine label depending if custom balance is active
   const balanceLabel = isCustomStake
     ? t('rewards.customBalance')
-    : t('rewards.currentStakedBalance')
+    : t('rewards.stakedBalance')
 
   return (
     <>

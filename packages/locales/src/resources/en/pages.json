@@ -235,7 +235,6 @@
       "annual": "Annual",
       "averageRewardRate": "Average Reward Rate",
       "calculator": "Calculator",
-      "currentStakedBalance": "Current Staked Balance",
       "customBalance": "Custom Balance",
       "daily": "Daily",
       "enterStakeAmount": "Enter Stake Amount",
@@ -244,6 +243,7 @@
       "projectedRewards": "Projected Rewards",
       "rewardsCalculator": "Rewards Calculator",
       "stakePlaceholder": "e.g. 100",
+      "stakedBalance": "Staked Balance",
       "useConnectedWallet": "Use Connected Wallet",
       "useCustomAmount": "Use Custom Amount"
     }

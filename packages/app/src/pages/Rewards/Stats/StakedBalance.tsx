@@ -26,7 +26,7 @@ export const StakedBalance = ({
   // Determine label depending if custom balance is active
   const label = isCustomStake
     ? t('rewards.customBalance')
-    : t('rewards.currentStakedBalance')
+    : t('rewards.stakedBalance')
 
   // Determine help key depending on if custom balance is active
   const helpKey = isCustomStake ? 'Custom Balance' : 'Your Balance'
