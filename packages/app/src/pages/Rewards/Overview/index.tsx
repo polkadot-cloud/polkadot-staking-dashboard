@@ -11,12 +11,10 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useTokenPrices } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { AnimatePresence, motion } from 'framer-motion'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { FiatValue } from 'library/FiatValue'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   CardHeader,
@@ -25,6 +23,7 @@ import {
   Separator,
   StatRow,
 } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
 import { RewardsGrid } from '../Wrappers'
@@ -40,96 +39,43 @@ export const Overview = (_: PageProps) => {
     },
   } = useNetwork()
   const { pluginEnabled } = usePlugins()
+  const { openModal } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
   const { price: tokenPrice } = useTokenPrices()
   const { getStakedBalance } = useTransferOptions()
   const { getAverageRewardRate } = useAverageRewardRate()
-  const [manualStake, setManualStake] = useState<number | null>(null)
-  const [isCustomStake, setIsCustomStake] = useState(false)
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
 
-  const currentStake =
-    isCustomStake && manualStake !== null
-      ? manualStake
-      : getStakedBalance(activeAccount).toNumber()
-
+  const currentStake = getStakedBalance(activeAccount).toNumber()
   const annualReward = currentStake * (rewardRate / 100) || 0
   const monthlyReward = annualReward / 12 || 0
   const dailyReward = annualReward / 365 || 0
 
-  const handleToggleStake = () => {
-    if (isCustomStake) {
-      setManualStake(null)
-    }
-    setIsCustomStake(!isCustomStake)
-  }
-
-  const currency = 'USDT'
+  const currency = 'USD'
   const symbol = '$'
 
   // Determine label depending if custom balance is active
-  const balanceLabel = isCustomStake
-    ? t('rewards.customBalance')
-    : t('rewards.stakedBalance')
+  const balanceLabel = t('rewards.stakedBalance')
 
   return (
     <>
       <StatRow>
         <AverageRewardRate />
-        <StakedBalance isCustomStake={isCustomStake} />
+        <StakedBalance />
         <RewardCalculator
-          isCustomStake={isCustomStake}
           onClick={() => {
-            handleToggleStake()
+            openModal({
+              key: 'RewardCalculator',
+              size: 'xs',
+              options: {
+                currency,
+                symbol,
+              },
+            })
           }}
         />
       </StatRow>
-      <AnimatePresence>
-        {isCustomStake && (
-          <PageRow>
-            <motion.div
-              initial={{ opacity: 0, height: 0, marginTop: 0 }}
-              animate={{ opacity: 1, height: 'auto', marginTop: '1rem' }}
-              exit={{ opacity: 0, height: 0, marginTop: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: 'easeInOut',
-              }}
-              style={{ overflow: 'hidden' }}
-            >
-              <CardWrapper>
-                <CardHeader>
-                  <h3>{t('rewards.adjustStake')}</h3>
-                </CardHeader>
-
-                <div style={{ padding: '1rem' }}>
-                  <label htmlFor="manual-stake">
-                    {t('rewards.enterStakeAmount')} ({unit}):
-                  </label>
-                  <input
-                    id="manual-stake"
-                    type="number"
-                    step="0.01"
-                    value={manualStake ?? ''}
-                    onChange={(e) =>
-                      setManualStake(Number(e.target.value) || null)
-                    }
-                    placeholder={t('rewards.stakePlaceholder')}
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem',
-                      marginTop: '0.5rem',
-                      border: '1px solid var(--border-primary-color)',
-                      borderRadius: '0.5rem',
-                    }}
-                  />
-                </div>
-              </CardWrapper>
-            </motion.div>
-          </PageRow>
-        )}
-      </AnimatePresence>
 
       {pluginEnabled('staking_api') && (
         <PageRow>
@@ -146,7 +92,7 @@ export const Overview = (_: PageProps) => {
                   zeroDecimals={2}
                 />
                 <CardLabel>
-                  <FiatValue tokenBalance={currentStake} />
+                  <FiatValue tokenBalance={currentStake} currency={currency} />
                 </CardLabel>
               </h2>
             </CardHeader>

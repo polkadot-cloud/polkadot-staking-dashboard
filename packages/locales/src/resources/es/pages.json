@@ -235,7 +235,6 @@
       "annual": "Anual",
       "averageRewardRate": "Tasa de Recompensa",
       "calculator": "Calculadora",
-      "customBalance": "Balance Personalizado",
       "daily": "Diario",
       "enterStakeAmount": "Ingresa Cantidad",
       "monthly": "Mensual",
@@ -244,7 +243,6 @@
       "rewardsCalculator": "Calculadora de Recompensas",
       "stakePlaceholder": "ej. 100",
       "stakedBalance": "Balance en Staking",
-      "useConnectedWallet": "Usar Billetera Conectada",
       "useCustomAmount": "Usar Cantidad Personalizada"
     },
     "validators": {

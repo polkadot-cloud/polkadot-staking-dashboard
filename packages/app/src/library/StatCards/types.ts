@@ -48,6 +48,5 @@ export interface ButtonProps {
   label: string
   title: string
   helpKey?: string
-  active: boolean
   onClick: () => void
 }

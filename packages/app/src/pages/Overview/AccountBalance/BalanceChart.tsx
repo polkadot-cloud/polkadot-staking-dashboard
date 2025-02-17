@@ -144,7 +144,10 @@ export const BalanceChart = () => {
           />
           <CardLabel>
             {plugins.includes('staking_api') && network !== 'westend' ? (
-              <FiatValue tokenBalance={totalBalance.toNumber()} />
+              <FiatValue
+                tokenBalance={totalBalance.toNumber()}
+                currency="USD"
+              />
             ) : null}
           </CardLabel>
         </h2>

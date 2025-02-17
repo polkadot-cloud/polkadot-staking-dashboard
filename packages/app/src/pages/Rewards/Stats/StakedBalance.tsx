@@ -8,11 +8,7 @@ import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
-export const StakedBalance = ({
-  isCustomStake,
-}: {
-  isCustomStake: boolean
-}) => {
+export const StakedBalance = () => {
   const { t } = useTranslation('pages')
   const {
     networkData: { unit, units },
@@ -23,16 +19,11 @@ export const StakedBalance = ({
   // Determine the actual staked balance to display
   const stakedBalance = getStakedBalance(activeAccount)
 
-  // Determine label depending if custom balance is active
-  const label = isCustomStake
-    ? t('rewards.customBalance')
-    : t('rewards.stakedBalance')
-
   // Determine help key depending on if custom balance is active
-  const helpKey = isCustomStake ? 'Custom Balance' : 'Your Balance'
+  const helpKey = 'Your Balance'
 
   const params = {
-    label,
+    label: t('rewards.stakedBalance'),
     value: planckToUnitBn(stakedBalance, units).toNumber(),
     decimals: 3,
     unit: `${unit}`,

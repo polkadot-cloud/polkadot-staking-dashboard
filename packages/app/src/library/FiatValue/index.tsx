@@ -5,7 +5,13 @@ import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
 
-export const FiatValue = ({ tokenBalance }: { tokenBalance: number }) => {
+export const FiatValue = ({
+  tokenBalance,
+  currency,
+}: {
+  tokenBalance: number
+  currency: string
+}) => {
   const { network } = useNetwork()
   const { price } = useTokenPrices()
 
@@ -13,14 +19,14 @@ export const FiatValue = ({ tokenBalance }: { tokenBalance: number }) => {
   const freeFiat = new BigNumber(tokenBalance * price).decimalPlaces(2)
 
   // Formatter for price feed
-  const usdFormatter = new Intl.NumberFormat('en-US', {
+  const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency,
   })
 
   if (network === 'westend') {
     return null
   }
 
-  return <>{usdFormatter.format(freeFiat.toNumber())}</>
+  return <>{formatter.format(freeFiat.toNumber())}</>
 }

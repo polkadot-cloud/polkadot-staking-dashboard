@@ -6,13 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from 'library/StatCards/Button'
 import { useTranslation } from 'react-i18next'
 
-export const RewardCalculator = ({
-  isCustomStake,
-  onClick,
-}: {
-  isCustomStake: boolean
-  onClick: () => void
-}) => {
+export const RewardCalculator = ({ onClick }: { onClick: () => void }) => {
   const { t } = useTranslation('pages')
 
   const params = {
@@ -23,12 +17,9 @@ export const RewardCalculator = ({
         style={{ marginLeft: '0.35rem', height: '2.75rem' }}
       />
     ),
-    label: isCustomStake
-      ? t('rewards.useConnectedWallet')
-      : t('rewards.useCustomAmount'),
+    label: t('rewards.useCustomAmount'),
     title: t('rewards.rewardsCalculator'),
     onClick,
-    active: isCustomStake,
   }
 
   return <Button {...params} />
