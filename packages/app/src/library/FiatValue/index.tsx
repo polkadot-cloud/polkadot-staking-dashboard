@@ -2,19 +2,25 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
 
-export const Value = ({ totalBalance }: { totalBalance: number }) => {
+export const FiatValue = ({ tokenBalance }: { tokenBalance: number }) => {
+  const { network } = useNetwork()
   const { price } = useTokenPrices()
 
   // Convert balance to fiat value
-  const freeFiat = new BigNumber(totalBalance * price).decimalPlaces(2)
+  const freeFiat = new BigNumber(tokenBalance * price).decimalPlaces(2)
 
   // Formatter for price feed
   const usdFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   })
+
+  if (network === 'westend') {
+    return null
+  }
 
   return <>{usdFormatter.format(freeFiat.toNumber())}</>
 }

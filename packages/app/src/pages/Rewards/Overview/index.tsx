@@ -14,6 +14,7 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { FiatValue } from 'library/FiatValue'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,13 +29,11 @@ import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
 import { RewardsGrid } from '../Wrappers'
 import type { PageProps } from '../types'
-import { Value } from './Value'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Overview = (_: PageProps) => {
   const { t } = useTranslation('pages')
   const {
-    network,
     networkData: {
       unit,
       brand: { token: Token },
@@ -81,7 +80,9 @@ export const Overview = (_: PageProps) => {
         <StakedBalance isCustomStake={isCustomStake} />
         <RewardCalculator
           isCustomStake={isCustomStake}
-          onClick={handleToggleStake}
+          onClick={() => {
+            handleToggleStake()
+          }}
         />
       </StatRow>
       <AnimatePresence>
@@ -145,9 +146,7 @@ export const Overview = (_: PageProps) => {
                   zeroDecimals={2}
                 />
                 <CardLabel>
-                  {network !== 'westend' ? (
-                    <Value totalBalance={currentStake} />
-                  ) : null}
+                  <FiatValue tokenBalance={currentStake} />
                 </CardLabel>
               </h2>
             </CardHeader>

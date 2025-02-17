@@ -15,12 +15,12 @@ import { useSyncing } from 'hooks/useSyncing'
 import { BarSegment } from 'library/BarChart/BarSegment'
 import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
+import { FiatValue } from 'library/FiatValue'
 import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
 import { CardHeader, CardLabel } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { Value } from './Value'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
@@ -144,7 +144,7 @@ export const BalanceChart = () => {
           />
           <CardLabel>
             {plugins.includes('staking_api') && network !== 'westend' ? (
-              <Value totalBalance={totalBalance} />
+              <FiatValue tokenBalance={totalBalance.toNumber()} />
             ) : null}
           </CardLabel>
         </h2>
