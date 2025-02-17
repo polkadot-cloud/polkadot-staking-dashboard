@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { useTokenPrices } from 'contexts/TokenPrice'
+import { getUserFiatCurrency } from 'locales/src/util'
 
 export const Value = ({ totalBalance }: { totalBalance: BigNumber }) => {
   const { price } = useTokenPrices()
@@ -12,11 +13,14 @@ export const Value = ({ totalBalance }: { totalBalance: BigNumber }) => {
     new BigNumber(price).decimalPlaces(2)
   )
 
-  // Formatter for price feed
-  const usdFormatter = new Intl.NumberFormat('en-US', {
+  // Get user's fiat currency
+  const fiat = getUserFiatCurrency() || 'USD'
+
+  // Use the same formatting as the footer
+  const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: fiat,
   })
 
-  return <>{usdFormatter.format(freeFiat.toNumber())}</>
+  return <>{formatter.format(freeFiat.toNumber())}</>
 }

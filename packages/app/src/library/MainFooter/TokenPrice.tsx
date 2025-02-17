@@ -3,6 +3,7 @@
 
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
+import { getUserFiatCurrency } from 'locales/src/util' // adjust this import path if needed
 
 export const TokenPrice = () => {
   const {
@@ -11,13 +12,17 @@ export const TokenPrice = () => {
     },
   } = useNetwork()
   const { price, change } = useTokenPrices()
+
+  // Determine which fiat currency formatter to use.
+  const fiat = getUserFiatCurrency() || 'USD'
+
   return (
     <>
       <div className="stat">
         1 {unit} /{' '}
         {new Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: 'USD',
+          currency: fiat,
         }).format(price)}
       </div>
       <div className="stat">

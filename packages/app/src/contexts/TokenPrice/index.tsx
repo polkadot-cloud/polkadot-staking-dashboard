@@ -4,15 +4,14 @@
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { isCustomEvent } from 'controllers/utils'
-import { fetchTokenPrice, formatTokenPrice } from 'plugin-staking-api'
+import { fetchLocalTokenPrice, formatTokenPrice } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
 import { defaultTokenPricesContext } from './defaults'
 import type { TokenPricesContextInterface } from './types'
 
-const REFETCH_PRICE_INTERVAL = 30 * 1000
-
+const REFETCH_PRICE_INTERVAL = 30_000 // 30 seconds
 const IGNORE_NETWORKS = ['westend']
 
 export const TokenPricesContext = createContext<TokenPricesContextInterface>(
@@ -27,44 +26,32 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     networkData: { unit },
   } = useNetwork()
   const { pluginEnabled } = usePlugins()
-
   const [tokenPrice, setTokenPrice] = useState<TokenPricesContextInterface>(
     defaultTokenPricesContext
   )
 
-  // Handler for fetching price from Staking API
   const getTokenPrice = async () => {
-    const result = await fetchTokenPrice(`${unit}USDT`)
+    const result = await fetchLocalTokenPrice(unit)
     setTokenPrice(result || defaultTokenPricesContext)
   }
 
-  //  Refetch token price if online status changes to online
-  const handleOnlineStatus = (e: Event): void => {
-    if (isCustomEvent(e)) {
-      if (e.detail.online) {
-        getTokenPrice()
-      }
+  const handleOnlineStatus = (e: Event) => {
+    if (isCustomEvent(e) && e.detail.online) {
+      getTokenPrice()
     }
   }
 
-  // Mange token price state and interval on plugin / network toggle
-  let interval: NodeJS.Timeout
   useEffect(() => {
+    let interval: NodeJS.Timeout
+
     if (pluginEnabled('staking_api') && !IGNORE_NETWORKS.includes(network)) {
-      // Fetch token price
       getTokenPrice()
-      // Initiate interval to refetch token price every 30 seconds
-      interval = setInterval(() => {
-        getTokenPrice()
-      }, REFETCH_PRICE_INTERVAL)
+      interval = setInterval(getTokenPrice, REFETCH_PRICE_INTERVAL)
     } else {
-      // Clear interval and set token price to default
-      clearInterval(interval)
       setTokenPrice(defaultTokenPricesContext)
     }
-    return () => {
-      clearInterval(interval)
-    }
+
+    return () => clearInterval(interval)
   }, [network, pluginEnabled('staking_api')])
 
   useEventListener(
@@ -73,10 +60,10 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     useRef<Document>(document)
   )
 
-  const { price, change } = tokenPrice
-
   return (
-    <TokenPricesContext.Provider value={{ ...formatTokenPrice(price, change) }}>
+    <TokenPricesContext.Provider
+      value={{ ...formatTokenPrice(tokenPrice.price, tokenPrice.change) }}
+    >
       {children}
     </TokenPricesContext.Provider>
   )
