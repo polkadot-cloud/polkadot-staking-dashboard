@@ -10,7 +10,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, PageRow } from 'ui-core/base'
+import { ButtonRow, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const ClosurePrompts = () => {
@@ -41,7 +41,7 @@ export const ClosurePrompts = () => {
   return (
     state === 'Destroying' &&
     depositorCanClose && (
-      <PageRow>
+      <Page.Row>
         <CardWrapper
           style={{
             border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
@@ -98,7 +98,7 @@ export const ClosurePrompts = () => {
             </ButtonRow>
           </div>
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
     )
   )
 }

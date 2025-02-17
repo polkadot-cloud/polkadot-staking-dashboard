@@ -1,19 +1,28 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ComponentBase } from '@w3ux/types'
-import { MaxPageWidth } from 'consts'
-import classes from './index.module.scss'
+import { Body } from './Body'
+import { Container } from './Container'
+import { Entry } from './Entry'
+import { Footer } from './Footer'
+import { Heading } from './Heading'
+import { Main } from './Main'
+import { Row } from './Row'
+import { RowSection } from './RowSection'
+import { Side } from './Side'
+import { Title } from './Title'
+import { TitleTabs } from './TitleTabs'
 
-/**
- * @name Page
- * @summary Page container.
- */
-export const Page = ({ children, style }: ComponentBase) => (
-  <div
-    className={classes.page}
-    style={{ ...style, maxWidth: `${MaxPageWidth}px` }}
-  >
-    {children}
-  </div>
-)
+export const Page = {
+  Body,
+  Container,
+  Entry,
+  Footer,
+  Heading,
+  Main,
+  Row,
+  RowSection,
+  Side,
+  Title,
+  TitleTabs,
+}

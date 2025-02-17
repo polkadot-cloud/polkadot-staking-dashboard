@@ -27,7 +27,7 @@ import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Side } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
@@ -70,7 +70,7 @@ export const SideMenu = () => {
         : 'danger'
 
   return (
-    <Side
+    <Page.Side
       open={sideMenuOpen}
       minimised={sideMenuMinimised}
       width={`${SideMenuMaximisedWidth}px`}
@@ -141,7 +141,6 @@ export const SideMenu = () => {
                 size: sideMenuMinimised ? '0.95em' : '0.9em',
               }}
             />
-
             <Secondary
               onClick={() => openModal({ key: 'DiscordSupport', size: 'sm' })}
               name="Discord"
@@ -151,7 +150,6 @@ export const SideMenu = () => {
                 size: sideMenuMinimised ? '1.2em' : '1.2em',
               }}
             />
-
             <Secondary
               onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
               name={t('email', { ns: 'base' })}
@@ -163,7 +161,6 @@ export const SideMenu = () => {
             />
           </div>
         </section>
-
         <section>
           <button
             type="button"
@@ -209,6 +206,6 @@ export const SideMenu = () => {
           )}
         </section>
       </Wrapper>
-    </Side>
+    </Page.Side>
   )
 }
