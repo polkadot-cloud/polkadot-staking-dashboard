@@ -3,14 +3,14 @@
 
 import classNames from 'classnames'
 import { ButtonTab } from 'ui-buttons'
-import type { PageTitleProps, PageTitleTabProps } from '../types'
+import type { PageTitleProps, PageTitleTabProps } from '../../types'
 import classes from './index.module.scss'
 
 /**
- * @name PageTitleTabs
+ * @name TitleTabs
  * @summary The element in a page title, inculding ButtonTabs.
  */
-export const PageTitleTabs = ({
+export const TitleTabs = ({
   sticky,
   tabs = [],
   inline = false,

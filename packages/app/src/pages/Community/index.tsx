@@ -3,7 +3,7 @@
 
 import type { PageProps } from 'common-types'
 import { useTranslation } from 'react-i18next'
-import { PageTitle } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { Entity } from './Entity'
 import { List } from './List'
 import { Wrapper } from './Wrappers'
@@ -17,7 +17,7 @@ export const CommunityInner = ({ page }: PageProps) => {
 
   return (
     <Wrapper>
-      <PageTitle title={t(key)} />
+      <Page.Title title={t(key)} />
       {activeSection === 0 && <List />}
       {activeSection === 1 && <Entity />}
     </Wrapper>

@@ -15,7 +15,7 @@ import { usePrompt } from 'contexts/Prompt'
 import { isCustomEvent } from 'controllers/utils'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Footer } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { useEventListener } from 'usehooks-ts'
 import { Disclaimer } from './Disclaimer'
 import { Status } from './Status'
@@ -50,7 +50,7 @@ export const MainFooter = () => {
   }, [network])
 
   return (
-    <Footer>
+    <Page.Footer>
       <Wrapper
         className="page-padding"
         style={{ maxWidth: `${MaxPageWidth}px` }}
@@ -119,6 +119,6 @@ export const MainFooter = () => {
           </section>
         </Summary>
       </Wrapper>
-    </Footer>
+    </Page.Footer>
   )
 }

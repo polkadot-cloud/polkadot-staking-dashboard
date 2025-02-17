@@ -5,11 +5,11 @@ import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
 /**
- * @name Page
+ * @name Heading
  * @summary Page heading container.
  */
-export const PageHeading = ({ children, style }: ComponentBase) => (
-  <div className={classes.pageHeading} style={style}>
+export const Heading = ({ children, style }: ComponentBase) => (
+  <div className={classes.heading} style={style}>
     {children}
   </div>
 )

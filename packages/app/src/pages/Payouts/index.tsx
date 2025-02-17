@@ -22,7 +22,7 @@ import type { RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { CardHeader, PageRow, PageTitle, Stat } from 'ui-core/base'
+import { CardHeader, Page, Stat } from 'ui-core/base'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 import { PayoutList } from './PayoutList'
@@ -66,11 +66,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
 
   return (
     <>
-      <PageTitle title={t(key, { ns: 'base' })} />
+      <Page.Title title={t(key, { ns: 'base' })} />
       <Stat.Row>
         <LastEraPayout />
       </Stat.Row>
-      <PageRow>
+      <Page.Row>
         <CardWrapper>
           <CardHeader>
             <h4>
@@ -129,9 +129,9 @@ export const Payouts = ({ page: { key } }: PageProps) => {
             </GraphWrapper>
           </div>
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
       {!!payoutsList?.length && (
-        <PageRow>
+        <Page.Row>
           <CardWrapper>
             <PayoutList
               title={t('payouts.recentPayouts', { ns: 'pages' })}
@@ -140,7 +140,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
               itemsPerPage={50}
             />
           </CardWrapper>
-        </PageRow>
+        </Page.Row>
       )}
     </>
   )
