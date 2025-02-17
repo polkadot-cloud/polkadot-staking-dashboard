@@ -3,7 +3,7 @@
 
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
-import { getUserFiatCurrency } from 'locales/src/util' // adjust this import path if needed
+import { getUserFiatCurrency } from 'locales/src/util'
 
 export const TokenPrice = () => {
   const {
@@ -12,8 +12,6 @@ export const TokenPrice = () => {
     },
   } = useNetwork()
   const { price, change } = useTokenPrices()
-
-  // Determine which fiat currency formatter to use.
   const fiat = getUserFiatCurrency() || 'USD'
 
   return (
