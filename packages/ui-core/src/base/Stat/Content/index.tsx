@@ -5,11 +5,11 @@ import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
 /**
- * @name StatCard
- * @summary Used to house a Stat item within a `StatRow`.
+ * @name Content
+ * @summary Used to house the title contents within a `StatRow`.
  */
-export const StatCard = ({ children, style }: ComponentBase) => (
-  <div className={classes.statCard} style={style}>
+export const Content = ({ children, style }: ComponentBase) => (
+  <div className={classes.content} style={style}>
     {children}
   </div>
 )

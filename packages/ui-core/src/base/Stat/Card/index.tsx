@@ -5,11 +5,11 @@ import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
 /**
- * @name StatSubtitle
- * @summary Used to house a subtitle for `StatCard`
+ * @name Card
+ * @summary Used to house a Stat item within a `StatRow`.
  */
-export const StatSubtitle = ({ children, style }: ComponentBase) => (
-  <h4 className={classes.statSubtitle} style={style}>
+export const Card = ({ children, style }: ComponentBase) => (
+  <div className={classes.card} style={style}>
     {children}
-  </h4>
+  </div>
 )

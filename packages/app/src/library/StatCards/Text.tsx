@@ -3,7 +3,7 @@
 
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
-import { StatCard, StatContent, StatSubtitle, StatTitle } from 'ui-core/base'
+import { Stat } from 'ui-core/base'
 import type { TextProps } from './types'
 
 export const Text = ({
@@ -16,21 +16,21 @@ export const Text = ({
   const { openHelp } = useHelp()
 
   return (
-    <StatCard>
+    <Stat.Card>
       <div>
-        <StatContent>
-          <StatTitle primary={primary}>
+        <Stat.Content>
+          <Stat.Title primary={primary}>
             {value}
             {secondaryValue ? <span>{secondaryValue}</span> : null}
-          </StatTitle>
-          <StatSubtitle>
+          </Stat.Title>
+          <Stat.Subtitle>
             {label}
             {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
-          </StatSubtitle>
-        </StatContent>
+          </Stat.Subtitle>
+        </Stat.Content>
       </div>
-    </StatCard>
+    </Stat.Card>
   )
 }

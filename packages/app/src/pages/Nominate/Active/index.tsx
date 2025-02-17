@@ -15,7 +15,7 @@ import { Nominations } from 'library/Nominations'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { CardHeader, PageRow, RowSection, StatRow } from 'ui-core/base'
+import { CardHeader, PageRow, RowSection, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
@@ -41,11 +41,11 @@ export const Active = () => {
 
   return (
     <>
-      <StatRow>
+      <Stat.Row>
         <ActiveNominators />
         <MinimumNominatorBond />
         <MinimumActiveStake />
-      </StatRow>
+      </Stat.Row>
       <CommissionPrompt />
 
       {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}

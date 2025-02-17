@@ -3,13 +3,7 @@
 
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
-import {
-  PageHeading,
-  PageRow,
-  PageTitle,
-  RowSection,
-  StatRow,
-} from 'ui-core/base'
+import { PageHeading, PageRow, PageTitle, RowSection, Stat } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
 import { AccountControls } from './AccountControls'
@@ -32,11 +26,11 @@ export const Overview = () => {
           <AccountControls />
         </PageHeading>
       </PageRow>
-      <StatRow>
+      <Stat.Row>
         <AverageRewardRate />
         <SupplyStaked />
         <NextRewards />
-      </StatRow>
+      </Stat.Row>
       <PageRow>
         <StakeStatus />
       </PageRow>
