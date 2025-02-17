@@ -28,9 +28,9 @@ import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
 import { RewardsGrid } from '../Wrappers'
 import type { PageProps } from '../types'
+import { RecentPayouts } from './RecentPayouts'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const Overview = (_: PageProps) => {
+export const Overview = (props: PageProps) => {
   const { t } = useTranslation('pages')
   const {
     networkData: {
@@ -73,6 +73,11 @@ export const Overview = (_: PageProps) => {
           }}
         />
       </StatRow>
+      <PageRow>
+        <CardWrapper>
+          <RecentPayouts {...props} />
+        </CardWrapper>
+      </PageRow>
 
       {pluginEnabled('staking_api') && (
         <PageRow>

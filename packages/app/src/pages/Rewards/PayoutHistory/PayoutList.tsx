@@ -78,7 +78,13 @@ export const PayoutListInner = ({
 
   const listPayouts = payouts.slice(pageStart).slice(0, itemsPerPage)
   if (!listPayouts.length) {
-    return null
+    return (
+      <ListWrapper>
+        <div>
+          <h3>No payout history.</h3>
+        </div>
+      </ListWrapper>
+    )
   }
 
   return (
