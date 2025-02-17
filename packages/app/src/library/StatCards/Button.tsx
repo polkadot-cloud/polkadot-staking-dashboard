@@ -3,13 +3,7 @@
 
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
-import {
-  StatButton,
-  StatContent,
-  StatGraphic,
-  StatSubtitle,
-  StatTitle,
-} from 'ui-core/base'
+import { Stat } from 'ui-core/base'
 import type { ButtonProps } from './types'
 
 export const Button = ({
@@ -22,19 +16,19 @@ export const Button = ({
   const { openHelp } = useHelp()
 
   return (
-    <StatButton>
+    <Stat.Button>
       <button type="button" onClick={() => onClick()}>
-        <StatGraphic>{Icon}</StatGraphic>
-        <StatContent>
-          <StatTitle semibold>{title}</StatTitle>
-          <StatSubtitle primary>
+        <Stat.Graphic>{Icon}</Stat.Graphic>
+        <Stat.Content>
+          <Stat.Title semibold>{title}</Stat.Title>
+          <Stat.Subtitle primary>
             {label}{' '}
             {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
-          </StatSubtitle>
-        </StatContent>
+          </Stat.Subtitle>
+        </Stat.Content>
       </button>
-    </StatButton>
+    </Stat.Button>
   )
 }

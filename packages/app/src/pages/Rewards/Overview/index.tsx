@@ -25,10 +25,10 @@ import { useTranslation } from 'react-i18next'
 import {
   CardHeader,
   CardLabel,
-  PageRow,
+  Page,
   RewardGrid,
   Separator,
-  StatRow,
+  Stat,
 } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { LastEraPayout } from '../Stats/LastEraPayout'
@@ -86,7 +86,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 
   return (
     <>
-      <StatRow>
+      <Stat.Row>
         <AverageRewardRate />
         <LastEraPayout />
         <RewardCalculator
@@ -101,15 +101,15 @@ export const Overview = (props: PayoutHistoryProps) => {
             })
           }}
         />
-      </StatRow>
-      <PageRow>
+      </Stat.Row>
+      <Page.Row>
         <CardWrapper>
           <RecentPayouts {...props} />
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
 
       {pluginEnabled('staking_api') && (
-        <PageRow>
+        <Page.Row>
           <CardWrapper>
             <CardHeader>
               <h3>{t('rewards.projectedRewards')}</h3>
@@ -235,7 +235,7 @@ export const Overview = (props: PayoutHistoryProps) => {
               </RewardGrid.Row>
             </RewardGrid.Root>
           </CardWrapper>
-        </PageRow>
+        </Page.Row>
       )}
     </>
   )

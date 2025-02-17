@@ -12,7 +12,7 @@ import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageTitle } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { Overview } from './Overview'
 import { PayoutHistory } from './PayoutHistory'
 import { Wrapper } from './Wrappers'
@@ -103,7 +103,7 @@ export const Rewards = () => {
 
   return (
     <Wrapper>
-      <PageTitle
+      <Page.Title
         title={t('rewards', { ns: 'modals' })}
         tabs={[
           {
