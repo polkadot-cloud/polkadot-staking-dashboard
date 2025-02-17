@@ -1,11 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-.statSubtitle {
-  color: var(--text-color-secondary);
-  font-family: InterSemiBold, sans-serif;
-  flex: 1;
+.row {
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  margin-top: 1rem;
+  > div:last-child {
+    margin-bottom: 0;
+    > div {
+      margin-right: 0;
+    }
+  }
 }

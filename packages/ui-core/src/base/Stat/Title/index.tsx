@@ -6,10 +6,10 @@ import classNames from 'classnames'
 import classes from './index.module.scss'
 
 /**
- * @name StatTitle
- * @summary Used to house a title for `StatCard`
+ * @name Title
+ * @summary Used to house a title for `Stat.Card`
  */
-export const StatTitle = ({
+export const Title = ({
   children,
   style,
   primary,
@@ -18,7 +18,7 @@ export const StatTitle = ({
   primary?: boolean
   text?: boolean
 }) => {
-  const allClasses = classNames(classes.statTitle, {
+  const allClasses = classNames(classes.title, {
     [classes.primary]: !!primary,
     [classes.text]: !!text,
   })

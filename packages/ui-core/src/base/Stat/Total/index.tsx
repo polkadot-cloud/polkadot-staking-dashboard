@@ -4,12 +4,8 @@
 import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
-/**
- * @name StatGraphic
- * @summary Used to house a graphic in a `StatCard`
- */
-export const StatGraphic = ({ children, style }: ComponentBase) => (
-  <div className={classes.statGraphic} style={style}>
+export const Total = ({ children, style }: ComponentBase) => (
+  <span className={classes.total} style={style}>
     {children}
-  </div>
+  </span>
 )
