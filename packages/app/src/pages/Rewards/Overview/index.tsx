@@ -20,13 +20,13 @@ import {
   CardHeader,
   CardLabel,
   PageRow,
+  RewardGrid,
   Separator,
   StatRow,
 } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
-import { RewardsGrid } from '../Wrappers'
 import type { PageProps } from '../types'
 import { RecentPayouts } from './RecentPayouts'
 
@@ -104,27 +104,24 @@ export const Overview = (props: PageProps) => {
               </h2>
             </CardHeader>
 
-            <RewardsGrid>
-              <div className="row head">
-                <div>
-                  <h4>{t('rewards.period')}</h4>
-                </div>
-                <div>
-                  <h4>
-                    <Token className="token" />
-                    {unit}
-                  </h4>
-                </div>
-                <div>
-                  <h4>{currency}</h4>
-                </div>
-              </div>
-
-              <div className="row body">
-                <div>
-                  <h3>{t('rewards.daily')}</h3>
-                </div>
-                <div>
+            <RewardGrid.Root>
+              <RewardGrid.Head>
+                <RewardGrid.Cells
+                  items={[
+                    <h4>{t('rewards.period')}</h4>,
+                    <h4>
+                      <Token />
+                      {unit}
+                    </h4>,
+                    <h4>{currency}</h4>,
+                  ]}
+                />
+              </RewardGrid.Head>
+              <RewardGrid.Row>
+                <RewardGrid.Cell>
+                  <RewardGrid.Label>{t('rewards.daily')}</RewardGrid.Label>
+                </RewardGrid.Cell>
+                <RewardGrid.Cell>
                   <h3>
                     <FontAwesomeIcon icon={faCaretUp} />
                     {dailyReward.toLocaleString('en-US', {
@@ -132,8 +129,8 @@ export const Overview = (props: PageProps) => {
                       maximumFractionDigits: 3,
                     })}
                   </h3>
-                </div>
-                <div>
+                </RewardGrid.Cell>
+                <RewardGrid.Cell>
                   <h3>
                     <FontAwesomeIcon icon={faCaretUp} />
                     {symbol}
@@ -142,59 +139,53 @@ export const Overview = (props: PageProps) => {
                       maximumFractionDigits: 2,
                     })}
                   </h3>
-                </div>
-              </div>
-
-              <div className="row body">
-                <div>
-                  <h3>{t('rewards.monthly')}</h3>
-                </div>
-                <div>
-                  <h3>
-                    <FontAwesomeIcon icon={faCaretUp} />
-                    {monthlyReward.toLocaleString('en-US', {
-                      minimumFractionDigits: 3,
-                      maximumFractionDigits: 3,
-                    })}
-                  </h3>
-                </div>
-                <div>
-                  <h3>
-                    <FontAwesomeIcon icon={faCaretUp} />
-                    {symbol}
-                    {(monthlyReward * tokenPrice).toLocaleString('en-US', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </h3>
-                </div>
-              </div>
-
-              <div className="row body">
-                <div>
-                  <h3>{t('rewards.annual')}</h3>
-                </div>
-                <div>
-                  <h3>
-                    <FontAwesomeIcon icon={faCaretUp} />
-                    {annualReward.toLocaleString('en-US', {
-                      minimumFractionDigits: 3,
-                      maximumFractionDigits: 3,
-                    })}
-                  </h3>
-                </div>
-                <div>
-                  <h3>
-                    <FontAwesomeIcon icon={faCaretUp} />
-                    {symbol}
-                    {(annualReward * tokenPrice).toLocaleString('en-US', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </h3>
-                </div>
-              </div>
-            </RewardsGrid>
+                </RewardGrid.Cell>
+              </RewardGrid.Row>
+              <RewardGrid.Row>
+                <RewardGrid.Cells
+                  items={[
+                    <RewardGrid.Label>{t('rewards.monthly')}</RewardGrid.Label>,
+                    <h3>
+                      <FontAwesomeIcon icon={faCaretUp} />
+                      {monthlyReward.toLocaleString('en-US', {
+                        minimumFractionDigits: 3,
+                        maximumFractionDigits: 3,
+                      })}
+                    </h3>,
+                    <h3>
+                      <FontAwesomeIcon icon={faCaretUp} />
+                      {symbol}
+                      {(monthlyReward * tokenPrice).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </h3>,
+                  ]}
+                />
+              </RewardGrid.Row>
+              <RewardGrid.Row>
+                <RewardGrid.Cells
+                  items={[
+                    <RewardGrid.Label>{t('rewards.annual')}</RewardGrid.Label>,
+                    <h3>
+                      <FontAwesomeIcon icon={faCaretUp} />
+                      {annualReward.toLocaleString('en-US', {
+                        minimumFractionDigits: 3,
+                        maximumFractionDigits: 3,
+                      })}
+                    </h3>,
+                    <h3>
+                      <FontAwesomeIcon icon={faCaretUp} />
+                      {symbol}
+                      {(annualReward * tokenPrice).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </h3>,
+                  ]}
+                />
+              </RewardGrid.Row>
+            </RewardGrid.Root>
           </CardWrapper>
         </PageRow>
       )}
