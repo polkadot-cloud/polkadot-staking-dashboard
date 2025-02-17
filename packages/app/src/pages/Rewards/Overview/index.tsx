@@ -1,7 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretUp,
+  faToggleOff,
+  faToggleOn,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
@@ -11,10 +15,12 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useTokenPrices } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { FiatValue } from 'library/FiatValue'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   CardHeader,
@@ -40,6 +46,7 @@ export const Overview = (props: PayoutHistoryProps) => {
   } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
+  const { avgCommission } = useValidators()
   const { activeAccount } = useActiveAccounts()
   const { price: tokenPrice } = useTokenPrices()
   const { getStakedBalance } = useTransferOptions()
@@ -47,13 +54,35 @@ export const Overview = (props: PayoutHistoryProps) => {
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
 
+  // Whether to show base or commission-adjusted rewards
+  const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
+
   const currentStake = getStakedBalance(activeAccount).toNumber()
-  const annualReward = currentStake * (rewardRate / 100) || 0
-  const monthlyReward = annualReward / 12 || 0
-  const dailyReward = annualReward / 365 || 0
+  const annualRewardBase = currentStake * (rewardRate / 100) || 0
+
+  const annualRewardAfterCommission =
+    annualRewardBase * (1 - avgCommission / 100)
+  const monthlyRewardAfterCommission = annualRewardAfterCommission / 12
+  const dailyRewardAfterCommission = annualRewardAfterCommission / 365
+
+  const annualReward = showAdjusted
+    ? annualRewardAfterCommission
+    : annualRewardBase
+
+  const monthlyReward = showAdjusted
+    ? monthlyRewardAfterCommission
+    : annualRewardBase / 12
+  const dailyReward = showAdjusted
+    ? dailyRewardAfterCommission
+    : annualRewardBase / 365
 
   const currency = 'USD'
   const symbol = '$'
+
+  // TODO: Move to locales
+  const toggleText = !showAdjusted
+    ? 'Adjust For Average Commission'
+    : 'Adjusting For Average Commission'
 
   return (
     <>
@@ -102,6 +131,26 @@ export const Overview = (props: PayoutHistoryProps) => {
                 </CardLabel>
               </h2>
             </CardHeader>
+
+            <div style={{ padding: '0.5rem' }}>
+              <h2>
+                <button
+                  type="button"
+                  onClick={() => setShowCommissionAdjusted(!showAdjusted)}
+                >
+                  <FontAwesomeIcon
+                    icon={showAdjusted ? faToggleOn : faToggleOff}
+                    style={{
+                      color: 'var(--accent-color-primary)',
+                      marginRight: '0.8rem',
+                    }}
+                    transform={'grow-6'}
+                  />
+                  {toggleText}
+                </button>
+              </h2>
+            </div>
+
             <RewardGrid.Root>
               <RewardGrid.Head>
                 <RewardGrid.Cells
