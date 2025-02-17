@@ -12,7 +12,6 @@ export const MailSupportAddress = 'staking@polkadot.cloud'
 /*
  * Element Thresholds
  */
-export const MaxPageWidth = 1450
 export const SideMenuMaximisedWidth = 195
 export const SideMenuMinimisedWidth = 75
 export const SectionFullWidthThreshold = 1000

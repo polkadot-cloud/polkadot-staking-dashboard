@@ -57,7 +57,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
-    padding: 1rem 0.75rem;
+    padding: 1.25rem 1rem;
   }
 
   @media (min-width: ${PageWidthMediumThreshold + 1}px) {

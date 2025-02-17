@@ -17,7 +17,7 @@ export const Side = ({
   style,
   open,
   minimised,
-  width = '20rem',
+  width,
 }: SideProps) => {
   const vars = { '--core-side-width': width } as CSSProperties
 

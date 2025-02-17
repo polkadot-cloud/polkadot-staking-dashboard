@@ -8,6 +8,6 @@ export type SideProps = ComponentBase & {
   open: boolean
   // Whether side menu is in minimised state.
   minimised: boolean
-  // Optional width property to be applied to maximised side.
-  width?: string | number
+  // Width property to be applied to maximised side.
+  width: string | number
 }
