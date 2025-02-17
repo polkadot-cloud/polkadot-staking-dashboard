@@ -83,6 +83,11 @@ export const Overview = (props: PageProps) => {
         <PageRow>
           <CardWrapper>
             <CardHeader>
+              <h3>{t('rewards.projectedRewards')}</h3>
+            </CardHeader>
+            <Separator style={{ margin: '0 0 1.5rem 0', border: 0 }} />
+
+            <CardHeader>
               <h4>{t('rewards.stakedBalance')}</h4>
               <h2>
                 <Token />
@@ -98,10 +103,7 @@ export const Overview = (props: PageProps) => {
                 </CardLabel>
               </h2>
             </CardHeader>
-            <Separator style={{ margin: '0 0 1.5rem 0' }} />
-            <CardHeader>
-              <h4>{t('rewards.projectedRewards')}</h4>
-            </CardHeader>
+
             <RewardsGrid>
               <div className="row head">
                 <div>
