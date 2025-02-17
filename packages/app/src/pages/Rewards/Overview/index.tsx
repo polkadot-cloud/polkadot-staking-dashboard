@@ -27,10 +27,10 @@ import {
 import { useOverlay } from 'ui-overlay'
 import { RewardCalculator } from '../Stats/RewardCalculator'
 import { StakedBalance } from '../Stats/StakedBalance'
-import type { PageProps } from '../types'
+import type { PayoutHistoryProps } from '../types'
 import { RecentPayouts } from './RecentPayouts'
 
-export const Overview = (props: PageProps) => {
+export const Overview = (props: PayoutHistoryProps) => {
   const { t } = useTranslation('pages')
   const {
     networkData: {

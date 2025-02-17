@@ -15,14 +15,19 @@ import {
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
-import type { PageProps } from 'pages/Rewards/types'
+import type { PayoutHistoryProps } from 'pages/Rewards/types'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 
-export const RecentPayouts = ({ payoutsList, setPayoutsList }: PageProps) => {
+export const RecentPayouts = ({
+  payoutsList,
+  setPayoutsList,
+  payoutGraphData,
+  loading,
+}: PayoutHistoryProps) => {
   const { i18n, t } = useTranslation('pages')
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
@@ -101,7 +106,8 @@ export const RecentPayouts = ({ payoutsList, setPayoutsList }: PageProps) => {
             <ActiveGraph
               nominating={nominating}
               inPool={inPool()}
-              setPayoutsList={setPayoutsList}
+              payoutGraphData={payoutGraphData}
+              loading={loading}
             />
           ) : (
             <InactiveGraph />

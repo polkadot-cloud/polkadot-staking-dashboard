@@ -9,4 +9,4 @@ export const Cells = ({
   items,
 }: ComponentBase & {
   items: React.ReactNode[]
-}): ReactNode => items.map((item) => <Cell>{item}</Cell>)
+}): ReactNode => items.map((item, i) => <Cell key={`cell_${i}`}>{item}</Cell>)
