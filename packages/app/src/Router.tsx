@@ -31,7 +31,7 @@ import {
   useLocation,
 } from 'react-router-dom'
 import { StakingApi } from 'StakingApi'
-import { Body, Main } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 
 const RouterInner = () => {
   const { network } = useNetwork()
@@ -65,14 +65,14 @@ const RouterInner = () => {
           <StakingApi activeAccount={activeAccount} network={network} />
         )}
         <NotificationPrompts />
-        <Body>
+        <Page.Body>
           <Help />
           <Overlays />
           <Menu />
           <Tooltip />
           <Prompt />
           <SideMenu />
-          <Main ref={mainInterfaceRef}>
+          <Page.Main ref={mainInterfaceRef}>
             <HelmetProvider>
               <Headers />
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
@@ -93,8 +93,8 @@ const RouterInner = () => {
               </ErrorBoundary>
               <MainFooter />
             </HelmetProvider>
-          </Main>
-        </Body>
+          </Page.Main>
+        </Page.Body>
         <Offline />
       </ApolloProvider>
     </ErrorBoundary>

@@ -5,17 +5,17 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
 import { ButtonSecondary } from 'ui-buttons'
-import { PageTitleTabs } from 'ui-core/base'
-import type { PageTitleProps } from '../types'
+import type { PageTitleProps } from '../../types'
+import { TitleTabs } from '../TitleTabs'
 import classes from './index.module.scss'
 
 /**
- * @name PageTitle
+ * @name Title
  * @summary
  * The element that wraps a page title. Determines the padding and position relative to top of
  * screen when the element is stuck.
  */
-export const PageTitle = ({ title, button, tabs = [] }: PageTitleProps) => {
+export const Title = ({ title, button, tabs = [] }: PageTitleProps) => {
   const [sticky, setSticky] = useState(false)
   const ref = useRef<HTMLElement>(null)
 
@@ -64,7 +64,7 @@ export const PageTitle = ({ title, button, tabs = [] }: PageTitleProps) => {
             </div>
           )}
         </section>
-        {tabs.length > 0 && <PageTitleTabs sticky={sticky} tabs={tabs} />}
+        {tabs.length > 0 && <TitleTabs sticky={sticky} tabs={tabs} />}
       </header>
     </>
   )

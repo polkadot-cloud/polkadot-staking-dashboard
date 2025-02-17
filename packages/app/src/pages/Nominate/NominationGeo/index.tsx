@@ -24,7 +24,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { PluginLabel } from 'library/PluginLabel'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
-import { CardHeader, PageRow, Stat } from 'ui-core/base'
+import { CardHeader, Page, Stat } from 'ui-core/base'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -118,7 +118,7 @@ export const NominationGeo = () => {
         <AnalyzedEras meta={networkMeta} />
         <AnalyzedPayouts data={nominationDetail} />
       </Stat.Row>
-      <PageRow>
+      <Page.Row>
         <CardWrapper>
           <PluginLabel plugin="polkawatch" />
           <CardHeader>
@@ -201,9 +201,9 @@ export const NominationGeo = () => {
             )}
           </GraphsWrapper>
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
       {nominationDetail?.nodeDistributionDetail && (
-        <PageRow>
+        <Page.Row>
           <CardWrapper>
             <NominationGeoList
               title={t('decentralization.decentralizationPerNomination', {
@@ -212,7 +212,7 @@ export const NominationGeo = () => {
               data={nominationDetail}
             />
           </CardWrapper>
-        </PageRow>
+        </Page.Row>
       )}
     </>
   )

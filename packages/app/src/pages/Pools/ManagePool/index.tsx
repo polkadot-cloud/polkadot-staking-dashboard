@@ -9,7 +9,7 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, CardHeader, PageRow } from 'ui-core/base'
+import { ButtonRow, CardHeader, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const ManagePool = () => {
@@ -31,7 +31,7 @@ export const ManagePool = () => {
   const canNominate = isOwner() || isNominator()
 
   return (
-    <PageRow>
+    <Page.Row>
       <CardWrapper>
         {canNominate && !isNominating && state !== 'Destroying' ? (
           <>
@@ -71,6 +71,6 @@ export const ManagePool = () => {
           <Nominations bondFor="pool" nominator={nominator} />
         )}
       </CardWrapper>
-    </PageRow>
+    </Page.Row>
   )
 }

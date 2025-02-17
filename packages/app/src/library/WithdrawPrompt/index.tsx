@@ -14,7 +14,7 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, PageRow } from 'ui-core/base'
+import { ButtonRow, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { timeleftAsString } from 'utils'
 
@@ -54,7 +54,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
     destroyed. */
     state !== 'Destroying' &&
     displayPrompt && (
-      <PageRow>
+      <Page.Row>
         <CardWrapper
           style={{
             border: `1px solid ${getThemeValue('--accent-color-primary')}`,
@@ -86,7 +86,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
             </ButtonRow>
           </div>
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
     )
   )
 }

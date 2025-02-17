@@ -11,7 +11,7 @@ import { ValidatorList } from 'library/ValidatorList'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
-import { PageHeading, PageRow } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
 import { useCommunitySections } from './context'
@@ -54,15 +54,15 @@ export const Entity = () => {
   }
 
   return (
-    <PageRow>
-      <PageHeading>
+    <Page.Row>
+      <Page.Heading>
         <ButtonSecondary
           text={t('community.goBack')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
         />
-      </PageHeading>
+      </Page.Heading>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         <Item item={activeItem} actionable={false} />
       </ItemsWrapper>
@@ -97,6 +97,6 @@ export const Entity = () => {
           </>
         )}
       </CardWrapper>
-    </PageRow>
+    </Page.Row>
   )
 }

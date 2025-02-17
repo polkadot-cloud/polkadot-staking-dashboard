@@ -4,7 +4,7 @@
 import { usePlugins } from 'contexts/Plugins'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageTitle } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { Active } from './Active'
 import { NominationGeo } from './NominationGeo'
 import { Wrapper } from './Wrappers'
@@ -24,7 +24,7 @@ export const Nominate = () => {
 
   return (
     <Wrapper>
-      <PageTitle
+      <Page.Title
         title={t('nominate.nominate', { ns: 'pages' })}
         tabs={
           pluginEnabled('polkawatch')

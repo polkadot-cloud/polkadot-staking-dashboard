@@ -11,7 +11,7 @@ import { PoolList } from 'library/PoolList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageRow, PageTitle, RowSection, Stat } from 'ui-core/base'
+import { Page, Stat } from 'ui-core/base'
 import { ClosurePrompts } from './ClosurePrompts'
 import { PoolFavorites } from './Favorites'
 import { ManageBond } from './ManageBond'
@@ -41,7 +41,7 @@ export const PoolsInner = () => {
 
   return (
     <>
-      <PageTitle
+      <Page.Title
         title={t('pools.pools')}
         tabs={[
           {
@@ -71,33 +71,33 @@ export const PoolsInner = () => {
           </Stat.Row>
           <ClosurePrompts />
           <WithdrawPrompt bondFor="pool" />
-          <PageRow>
-            <RowSection secondary vLast>
+          <Page.Row>
+            <Page.RowSection secondary vLast>
               <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />
               </CardWrapper>
-            </RowSection>
-            <RowSection hLast>
+            </Page.RowSection>
+            <Page.RowSection hLast>
               <Status height={ROW_HEIGHT} />
-            </RowSection>
-          </PageRow>
+            </Page.RowSection>
+          </Page.Row>
           {activePool !== null && (
             <>
               <ManagePool />
-              <PageRow>
+              <Page.Row>
                 <CardWrapper>
                   <Roles defaultRoles={getPoolRoles()} />
                 </CardWrapper>
-              </PageRow>
-              <PageRow>
+              </Page.Row>
+              <Page.Row>
                 <PoolStats />
-              </PageRow>
+              </Page.Row>
             </>
           )}
         </>
       )}
       {activeTab === 1 && (
-        <PageRow>
+        <Page.Row>
           <CardWrapper>
             <ListProvider>
               <PoolList
@@ -108,7 +108,7 @@ export const PoolsInner = () => {
               />
             </ListProvider>
           </CardWrapper>
-        </PageRow>
+        </Page.Row>
       )}
       {activeTab === 2 && <PoolFavorites />}
     </>

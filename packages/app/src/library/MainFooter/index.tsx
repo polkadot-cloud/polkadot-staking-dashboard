@@ -14,7 +14,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { isCustomEvent } from 'controllers/utils'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Footer } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { useEventListener } from 'usehooks-ts'
 import { Status } from './Status'
 import { TokenPrice } from './TokenPrice'
@@ -47,7 +47,7 @@ export const MainFooter = () => {
   }, [network])
 
   return (
-    <Footer>
+    <Page.Footer>
       <Wrapper
         className="page-padding"
         style={{ maxWidth: `${MaxPageWidth}px` }}
@@ -106,6 +106,6 @@ export const MainFooter = () => {
           </section>
         </Summary>
       </Wrapper>
-    </Footer>
+    </Page.Footer>
   )
 }
