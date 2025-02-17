@@ -80,9 +80,7 @@ export const Overview = (props: PayoutHistoryProps) => {
   const symbol = '$'
 
   // TODO: Move to locales
-  const toggleText = !showAdjusted
-    ? 'Adjust For Average Commission'
-    : 'Adjusting For Average Commission'
+  const toggleText = 'Deduct Average Commission'
 
   return (
     <>
