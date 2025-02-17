@@ -107,6 +107,8 @@
       "nominating": "Nominando",
       "notStaking": "Sin Hacer Staking",
       "overview": "Resumen",
+      "paidOutLastEraSubtitle": "Importe total pagado como recompensa en la última era a los stakers.",
+      "paidOutLastEraTitle": "se pagó en la última era.",
       "pool": "Pool",
       "poolMembersBonding": "miembros de Pools están vinculando activamente en Pools.",
       "proxy": "Proxy",

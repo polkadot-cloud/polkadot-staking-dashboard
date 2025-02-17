@@ -3,8 +3,7 @@
 
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
-import { PageRow, StatRow } from 'ui-core/base'
-import { LastEraPayout } from '../Stats/LastEraPayout'
+import { PageRow } from 'ui-core/base'
 import type { PageProps } from '../types'
 import { PayoutList } from './PayoutList'
 
@@ -13,20 +12,15 @@ export const PayoutHistory = (props: PageProps) => {
   const { t } = useTranslation('pages')
 
   return (
-    <>
-      <StatRow>
-        <LastEraPayout />
-      </StatRow>
-      <PageRow>
-        <CardWrapper>
-          <PayoutList
-            title={t('payouts.recentPayouts')}
-            payouts={payoutsList}
-            pagination
-            itemsPerPage={50}
-          />
-        </CardWrapper>
-      </PageRow>
-    </>
+    <PageRow>
+      <CardWrapper>
+        <PayoutList
+          title={t('payouts.recentPayouts')}
+          payouts={payoutsList}
+          pagination
+          itemsPerPage={50}
+        />
+      </CardWrapper>
+    </PageRow>
   )
 }

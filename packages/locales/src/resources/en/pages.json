@@ -107,6 +107,8 @@
       "nominating": "Nominating",
       "notStaking": "Not Staking",
       "overview": "Overview",
+      "paidOutLastEraSubtitle": "Total amount paid out as rewards in the last era to stakers.",
+      "paidOutLastEraTitle": "was paid out in the last era.",
       "pool": "Pool",
       "poolMembersBonding": "pool members are actively bonding in pools.",
       "proxy": "Proxy",
