@@ -76,10 +76,10 @@
   }
 
   > button {
-    border: 1px solid var(--border-primary-color);
+    border: 1px solid var(--accent-color-pending);
     transition: border 0.1s;
     &:hover {
-      border: 1px solid var(--accent-color-pending);
+      border: 1px solid var(--accent-color-primary);
     }
   }
 }
