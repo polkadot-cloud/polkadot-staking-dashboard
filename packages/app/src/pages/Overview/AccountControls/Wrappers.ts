@@ -78,12 +78,13 @@ export const ItemWrapper = styled.div`
     }
   }
 
-  button {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    margin-left: 0.25rem;
-    padding: 0;
+  .btn {
+    margin: 0 0.5rem 0 0.75rem;
+    position: relative;
+    top: -0.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   h4 {

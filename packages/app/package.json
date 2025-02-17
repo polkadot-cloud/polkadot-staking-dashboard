@@ -75,6 +75,7 @@
     "@tanstack/react-query": "*",
     "@w3ux/react-polkicon": "*",
     "eslint": "*",
+    "radix-ui": "*",
     "react": "*",
     "vite": "*"
   }

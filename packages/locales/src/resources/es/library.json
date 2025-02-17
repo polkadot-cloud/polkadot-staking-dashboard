@@ -58,6 +58,8 @@
     "connecting": "Conectando",
     "connectionLost": "Se perdió la conexión",
     "continue": "Continuar",
+    "copied": "Copiado!",
+    "copy": "Copiar",
     "copyAddress": "Copiar Dirección",
     "copyPoolAddress": "Copiar la dirección del pool {{type}}",
     "createPool": "Crear Pool",

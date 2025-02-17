@@ -14,13 +14,6 @@ export interface StatProps {
   helpKey: string
   icon?: IconProp
   buttonType?: string
-  copy?: {
-    content: string
-    notification: {
-      title: string
-      subtitle: string
-    }
-  }
 }
 
 export interface StatAddress {
