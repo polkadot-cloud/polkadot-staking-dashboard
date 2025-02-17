@@ -146,7 +146,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                     }}
                     transform={'grow-6'}
                   />
-                  {toggleText}
+                  {toggleText} of {avgCommission}%
                 </button>
               </h2>
             </div>
