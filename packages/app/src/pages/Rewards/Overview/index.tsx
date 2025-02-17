@@ -132,6 +132,7 @@ export const Overview = (props: PayoutHistoryProps) => {
               </h2>
             </CardHeader>
 
+            <Separator />
             <div style={{ padding: '0.5rem' }}>
               <h2>
                 <button
