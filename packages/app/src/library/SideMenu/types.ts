@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types'
+import type { BulletType } from 'common-types'
 import type { FunctionComponent, ReactNode, SVGProps } from 'react'
 
 export interface MinimisedProps {
@@ -18,7 +19,7 @@ export interface PrimaryProps {
   active: boolean
   to: string
   lottie: AnyJson
-  action: undefined | { type: string; status: string; text?: string }
+  bullet?: BulletType
   minimised: boolean
 }
 

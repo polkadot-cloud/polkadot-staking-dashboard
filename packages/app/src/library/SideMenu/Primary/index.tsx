@@ -13,28 +13,13 @@ export const Primary = ({
   name,
   active,
   to,
-  action,
+  bullet,
   minimised,
   lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi()
 
   const { icon, play } = useDotLottieButton(lottie)
-
-  let Action = null
-  const actionStatus = action?.status ?? null
-
-  switch (action?.type) {
-    case 'bullet':
-      Action = (
-        <div className={`action ${actionStatus}`}>
-          <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-        </div>
-      )
-      break
-    default:
-      Action = null
-  }
 
   return (
     <Link
@@ -49,7 +34,7 @@ export const Primary = ({
       <Wrapper
         className={`${active ? `active` : `inactive`}${
           minimised ? ` minimised` : ``
-        }${action ? ` ${actionStatus}` : ``}`}
+        }${bullet ? ` ${bullet}` : ``}`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{
@@ -61,7 +46,12 @@ export const Primary = ({
         </div>
         {!minimised && (
           <>
-            <h4 className="name">{name}</h4> {Action}
+            <h4 className="name">{name}</h4>
+            {bullet && (
+              <div className={`action ${bullet}`}>
+                <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+              </div>
+            )}
           </>
         )}
       </Wrapper>
