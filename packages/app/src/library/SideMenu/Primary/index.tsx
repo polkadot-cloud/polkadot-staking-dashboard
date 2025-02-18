@@ -7,6 +7,7 @@ import { useUi } from 'contexts/UI'
 import { useDotLottieButton } from 'hooks/useDotLottieButton'
 import { Link } from 'react-router-dom'
 import type { PrimaryProps } from '../types'
+import { BulletWrapper } from '../Wrapper'
 import { Wrapper } from './Wrappers'
 
 export const Primary = ({
@@ -48,9 +49,9 @@ export const Primary = ({
           <>
             <h4 className="name">{name}</h4>
             {bullet && (
-              <div className={`action ${bullet}`}>
+              <BulletWrapper className={bullet}>
                 <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-              </div>
+              </BulletWrapper>
             )}
           </>
         )}

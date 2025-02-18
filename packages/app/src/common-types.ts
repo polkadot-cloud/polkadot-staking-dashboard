@@ -154,4 +154,4 @@ export type AnyApi = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyMetaBatch = any
 
-export type BulletType = 'success' | 'accent' | 'warning'
+export type BulletType = 'success' | 'accent' | 'warning' | 'danger'

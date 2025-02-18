@@ -32,7 +32,7 @@ import { useOverlay } from 'ui-overlay'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
-import { ConnectionSymbol, LogoWrapper, Separator, Wrapper } from './Wrapper'
+import { LogoWrapper, Separator, Wrapper } from './Wrapper'
 
 export const SideMenu = () => {
   const { t } = useTranslation('base')
@@ -115,12 +115,7 @@ export const SideMenu = () => {
               size: networkData.brand.inline.size,
             }}
             minimised={sideMenuMinimised}
-            action={
-              <ConnectionSymbol
-                className={apiStatusClass}
-                style={{ opacity: 0.7 }}
-              />
-            }
+            bullet={apiStatusClass}
           />
           <Separator />
           <Main />
@@ -134,7 +129,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: BookSVG,
-                size: sideMenuMinimised ? '0.95em' : '0.9em',
+                size: sideMenuMinimised ? '0.95em' : '0.8em',
               }}
             />
             <Secondary
@@ -143,7 +138,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: DiscordSVG,
-                size: sideMenuMinimised ? '1.2em' : '1.2em',
+                size: sideMenuMinimised ? '1.2em' : '1em',
               }}
             />
             <Secondary
@@ -152,7 +147,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: EnvelopeSVG,
-                size: sideMenuMinimised ? '1.05em' : '1em',
+                size: sideMenuMinimised ? '1.05em' : '0.9em',
               }}
             />
           </div>

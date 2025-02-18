@@ -138,23 +138,55 @@ export const Separator = styled.div`
   margin: 1rem 1rem 0.5rem 0;
 `
 
-export const ConnectionSymbol = styled.div`
-  width: 0.53rem;
-  height: 0.53rem;
-  background: ${(props) => props.color};
-  border-radius: 50%;
-  margin: 0 0.7rem;
+export const BulletWrapper = styled.div`
+  color: var(--status-success-color);
+  display: flex;
+  flex: 1;
+  font-size: 0.88rem;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  margin-right: 0.4rem;
+  opacity: 0.7;
+
+  > span {
+    &.success {
+      color: var(--accent-color-primary);
+      border: 1px solid var(--accent-color-primary);
+    }
+    &.warning {
+      color: var(--accent-color-secondary);
+      border: 1px solid var(--accent-color-secondary);
+    }
+    border-radius: 0.5rem;
+    padding: 0.15rem 0.5rem;
+  }
 
   &.success {
-    background: var(--status-success-color);
-    color: var(--status-success-color);
+    svg {
+      color: var(--status-success-color);
+    }
   }
   &.warning {
-    background: var(--status-warning-color);
-    color: var(--status-warning-color);
+    svg {
+      color: var(--accent-color-secondary);
+    }
+  }
+  &.accent {
+    svg {
+      color: var(--accent-color-primary);
+    }
   }
   &.danger {
-    background: var(--status-danger-color);
-    color: var(--status-danger-color);
+    svg {
+      color: var(--status-danger-color);
+    }
+  }
+  &.minimised {
+    > svg {
+      flex: 0;
+      position: absolute;
+      right: -3px;
+      top: -4px;
+    }
   }
 `

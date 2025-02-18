@@ -3,7 +3,7 @@
 
 import type { AnyJson } from '@w3ux/types'
 import type { BulletType } from 'common-types'
-import type { FunctionComponent, ReactNode, SVGProps } from 'react'
+import type { FunctionComponent, SVGProps } from 'react'
 
 export interface MinimisedProps {
   $minimised?: boolean
@@ -30,7 +30,7 @@ export interface SecondaryProps {
   active?: boolean
   to?: string
   icon: IconProps
-  action?: ReactNode
+  bullet?: BulletType
   minimised: boolean
 }
 
