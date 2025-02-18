@@ -74,6 +74,23 @@
             }
           }
         }
+      },
+      "categories": {
+        "difficulty": {
+          "beginner": "Beginner",
+          "intermediate": "Intermediate",
+          "advanced": "Advanced"
+        },
+        "topic": {
+          "security": "Security",
+          "rewards": "Rewards",
+          "technical": "Technical",
+          "economic": "Economic"
+        },
+        "time": {
+          "quick-read": "Quick read",
+          "deep-dive": "Deep dive"
+        }
       }
     },
     "nominate": {
