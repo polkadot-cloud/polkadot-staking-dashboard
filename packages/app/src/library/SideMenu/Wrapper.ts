@@ -161,6 +161,11 @@ export const BulletWrapper = styled.div`
     padding: 0.15rem 0.5rem;
   }
 
+  &.accent {
+    svg {
+      color: var(--accent-color-primary);
+    }
+  }
   &.success {
     svg {
       color: var(--status-success-color);
@@ -168,12 +173,7 @@ export const BulletWrapper = styled.div`
   }
   &.warning {
     svg {
-      color: var(--accent-color-secondary);
-    }
-  }
-  &.accent {
-    svg {
-      color: var(--accent-color-primary);
+      color: var(--status-warning-color);
     }
   }
   &.danger {
