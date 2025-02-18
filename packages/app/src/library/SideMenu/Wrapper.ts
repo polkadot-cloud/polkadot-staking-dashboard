@@ -3,6 +3,7 @@
 
 import {
   PageWidthMediumThreshold,
+  SideMenuHiddenWidth,
   SideMenuMaximisedWidth,
   SideMenuMinimisedWidth,
 } from 'consts'
@@ -22,6 +23,11 @@ export const Wrapper = styled.div<MinimisedProps>`
     props.$minimised
       ? `${SideMenuMinimisedWidth}px`
       : `${SideMenuMaximisedWidth}px`};
+
+  @media (max-width: ${PageWidthMediumThreshold}px) {
+    width: ${SideMenuHiddenWidth}px;
+  }
+
   padding: ${(props) =>
     props.$minimised ? `0.5rem 1rem 0.5rem 1rem` : `0rem 1rem 1rem 1rem`};
   margin: 0.75rem 0;
@@ -55,7 +61,7 @@ export const Wrapper = styled.div<MinimisedProps>`
         position: relative;
         transition: color var(--transition-duration);
         margin-top: ${(props) => (props.$minimised ? '1rem' : 0)};
-        margin-right: ${(props) => (props.$minimised ? 0 : '1.25rem')};
+        margin-right: ${(props) => (props.$minimised ? 0 : '1rem')};
         opacity: 0.75;
         padding: 0.1rem;
 
@@ -133,8 +139,8 @@ export const Separator = styled.div`
 `
 
 export const ConnectionSymbol = styled.div`
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.53rem;
+  height: 0.53rem;
   background: ${(props) => props.color};
   border-radius: 50%;
   margin: 0 0.7rem;

@@ -18,7 +18,7 @@ import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import LogoSVG from 'assets/svg/icons/logo.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
-import { PageWidthMediumThreshold, SideMenuMaximisedWidth } from 'consts'
+import { PageWidthMediumThreshold } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
@@ -70,11 +70,7 @@ export const SideMenu = () => {
         : 'danger'
 
   return (
-    <Page.Side
-      open={sideMenuOpen}
-      minimised={sideMenuMinimised}
-      width={`${SideMenuMaximisedWidth}px`}
-    >
+    <Page.Side open={sideMenuOpen} minimised={sideMenuMinimised}>
       <Wrapper ref={ref} $minimised={sideMenuMinimised}>
         <section>
           <LogoWrapper

@@ -25,19 +25,10 @@ export const Primary = ({
   const actionStatus = action?.status ?? null
 
   switch (action?.type) {
-    case 'text':
-      Action = (
-        <div className="action text">
-          <span className={actionStatus || undefined}>
-            {action?.text ?? ''}
-          </span>
-        </div>
-      )
-      break
     case 'bullet':
       Action = (
         <div className={`action ${actionStatus}`}>
-          <FontAwesomeIcon icon={faCircle} transform="shrink-4" />
+          <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
         </div>
       )
       break

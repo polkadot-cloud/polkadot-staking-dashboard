@@ -85,9 +85,8 @@ export const Main = () => {
 
         if (staking) {
           pages[i].action = {
-            type: 'text',
-            status: 'success',
-            text: t('active'),
+            type: 'bullet',
+            status: 'accent',
           }
         }
         if (warning) {
@@ -103,9 +102,8 @@ export const Main = () => {
 
         if (inPool()) {
           pages[i].action = {
-            type: 'text',
-            status: 'success',
-            text: t('active'),
+            type: 'bullet',
+            status: 'accent',
           }
         }
       }

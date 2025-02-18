@@ -23,7 +23,8 @@ export const Wrapper = styled(motion.div)`
     margin: 0.7rem 0.2rem 0.5rem 0;
     padding: 0.65rem 0rem;
 
-    &.success {
+    &.success,
+    &.accent {
       border: 1px solid var(--accent-color-primary);
     }
     &.warning {
@@ -34,9 +35,9 @@ export const Wrapper = styled(motion.div)`
   .dotlottie {
     color: var(--text-color-primary);
     margin-left: 0.25rem;
-    margin-right: 0.65rem;
-    width: 1.35rem;
-    height: 1.35rem;
+    margin-right: 0.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
     .fa-icon {
       margin: 0 0.15rem;
     }
@@ -83,6 +84,11 @@ export const Wrapper = styled(motion.div)`
     &.warning {
       svg {
         color: var(--accent-color-secondary);
+      }
+    }
+    &.accent {
+      svg {
+        color: var(--accent-color-primary);
       }
     }
     &.minimised {
