@@ -99,7 +99,7 @@ export const SideMenu = () => {
                 <span className="label">
                   <FontAwesomeIcon
                     icon={sideMenuMinimised ? faChevronRight : faChevronLeft}
-                    transform="shrink-5"
+                    transform="shrink-6"
                   />
                 </span>
               </span>

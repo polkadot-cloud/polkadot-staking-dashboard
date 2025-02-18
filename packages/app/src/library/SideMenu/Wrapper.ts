@@ -104,8 +104,8 @@ export const LogoWrapper = styled.button<MinimisedProps>`
     > .label {
       background: var(--background-primary);
       color: var(--text-color-secondary);
-      width: 1.75rem;
-      height: 1.75rem;
+      width: 1.5rem;
+      height: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
