@@ -8,7 +8,6 @@ import { Odometer } from '@w3ux/react-odometer'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import CloudIconSVG from 'assets/svg/icons/cloud.svg?react'
 import BigNumber from 'bignumber.js'
-import { MaxPageWidth } from 'consts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { usePrompt } from 'contexts/Prompt'
@@ -51,10 +50,7 @@ export const MainFooter = () => {
 
   return (
     <Page.Footer>
-      <Wrapper
-        className="page-padding"
-        style={{ maxWidth: `${MaxPageWidth}px` }}
-      >
+      <Wrapper className="page-padding container-width">
         <CloudIconSVG className="icon" />
         <Summary>
           <section>
