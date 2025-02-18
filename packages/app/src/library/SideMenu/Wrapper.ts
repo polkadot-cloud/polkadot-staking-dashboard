@@ -3,6 +3,7 @@
 
 import {
   PageWidthMediumThreshold,
+  SideMenuHiddenWidth,
   SideMenuMaximisedWidth,
   SideMenuMinimisedWidth,
 } from 'consts'
@@ -22,6 +23,11 @@ export const Wrapper = styled.div<MinimisedProps>`
     props.$minimised
       ? `${SideMenuMinimisedWidth}px`
       : `${SideMenuMaximisedWidth}px`};
+
+  @media (max-width: ${PageWidthMediumThreshold}px) {
+    width: ${SideMenuHiddenWidth}px;
+  }
+
   padding: ${(props) =>
     props.$minimised ? `0.5rem 1rem 0.5rem 1rem` : `0rem 1rem 1rem 1rem`};
   margin: 0.75rem 0;
@@ -55,7 +61,7 @@ export const Wrapper = styled.div<MinimisedProps>`
         position: relative;
         transition: color var(--transition-duration);
         margin-top: ${(props) => (props.$minimised ? '1rem' : 0)};
-        margin-right: ${(props) => (props.$minimised ? 0 : '1.25rem')};
+        margin-right: ${(props) => (props.$minimised ? 0 : '1rem')};
         opacity: 0.75;
         padding: 0.1rem;
 
@@ -90,7 +96,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   > .toggle {
     position: absolute;
     top: ${(props) => (props.$minimised ? '0.9rem' : '-0.1rem')};
-    right: ${(props) => (props.$minimised ? '-0.65rem' : '0')};
+    right: ${(props) => (props.$minimised ? '-0.25rem' : '0')};
     height: 100%;
     display: flex;
     align-items: center;
@@ -98,8 +104,8 @@ export const LogoWrapper = styled.button<MinimisedProps>`
     > .label {
       background: var(--background-primary);
       color: var(--text-color-secondary);
-      width: 1.75rem;
-      height: 1.75rem;
+      width: 1.5rem;
+      height: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -132,23 +138,55 @@ export const Separator = styled.div`
   margin: 1rem 1rem 0.5rem 0;
 `
 
-export const ConnectionSymbol = styled.div`
-  width: 0.6rem;
-  height: 0.6rem;
-  background: ${(props) => props.color};
-  border-radius: 50%;
-  margin: 0 0.7rem;
+export const BulletWrapper = styled.div`
+  color: var(--status-success-color);
+  display: flex;
+  flex: 1;
+  font-size: 0.88rem;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  margin-right: 0.4rem;
+  opacity: 0.7;
+
+  > span {
+    &.success {
+      color: var(--accent-color-primary);
+      border: 1px solid var(--accent-color-primary);
+    }
+    &.warning {
+      color: var(--accent-color-secondary);
+      border: 1px solid var(--accent-color-secondary);
+    }
+    border-radius: 0.5rem;
+    padding: 0.15rem 0.5rem;
+  }
 
   &.success {
-    background: var(--status-success-color);
-    color: var(--status-success-color);
+    svg {
+      color: var(--status-success-color);
+    }
   }
   &.warning {
-    background: var(--status-warning-color);
-    color: var(--status-warning-color);
+    svg {
+      color: var(--accent-color-secondary);
+    }
+  }
+  &.accent {
+    svg {
+      color: var(--accent-color-primary);
+    }
   }
   &.danger {
-    background: var(--status-danger-color);
-    color: var(--status-danger-color);
+    svg {
+      color: var(--status-danger-color);
+    }
+  }
+  &.minimised {
+    > svg {
+      flex: 0;
+      position: absolute;
+      right: -3px;
+      top: -4px;
+    }
   }
 `
