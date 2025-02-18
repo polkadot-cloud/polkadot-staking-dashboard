@@ -23,10 +23,8 @@
 }
 
 .rowPrimaryWrapperFirst {
-  @media (min-width: $page-width-medium-threshold) {
-    order: 1;
-  }
   @media (min-width: $row-section-thirds-threshold) {
+    order: 1;
     padding-left: 0.75rem;
   }
 }
