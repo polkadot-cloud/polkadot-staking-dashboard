@@ -29,15 +29,15 @@ export const Main = () => {
   const { pathname } = useLocation()
   const { inPool } = useActivePool()
   const { networkData } = useNetwork()
+  const {
+    getPoolSetupPercent,
+    getNominatorSetupPercent,
+  }: SetupContextInterface = useSetup()
   const { getNominations } = useBalances()
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
   const { formatWithPrefs } = useValidators()
   const { activeAccount } = useActiveAccounts()
-  const {
-    getPoolSetupPercent,
-    getNominatorSetupPercent,
-  }: SetupContextInterface = useSetup()
   const { sideMenuMinimised }: UIContextInterface = useUi()
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking()
 
@@ -54,64 +54,41 @@ export const Main = () => {
     pages: Object.assign(PagesConfig),
   })
 
+  // Configure side menu bullets for active account
   useEffect(() => {
     if (!accounts.length) {
       return
     }
-
-    // inject actions into menu items
-    const pages = Object.assign(pageConfig.pages)
+    // Inject actions into menu items
+    const pages: PageItem[] = Object.assign(pageConfig.pages)
 
     let i = 0
     for (const { uri } of pages) {
-      // set undefined action as default
-      pages[i].action = undefined
       if (uri === `${import.meta.env.BASE_URL}`) {
         const warning = !syncing && controllerDifferentToStash
         if (warning) {
-          pages[i].action = {
-            type: 'bullet',
-            status: 'warning',
-          }
+          pages[i].bullet = 'warning'
         }
       }
-
       if (uri === `${import.meta.env.BASE_URL}nominate`) {
-        // configure Stake action
         const staking = !inNominatorSetup()
-        const warning =
+        if (staking) {
+          pages[i].bullet = 'accent'
+        }
+        if (
           (!syncing && controllerDifferentToStash) ||
           (!inNominatorSetup() && fullCommissionNominees.length > 0)
-
-        if (staking) {
-          pages[i].action = {
-            type: 'text',
-            status: 'success',
-            text: t('active'),
-          }
-        }
-        if (warning) {
-          pages[i].action = {
-            type: 'bullet',
-            status: 'warning',
-          }
+        ) {
+          pages[i].bullet = 'warning'
         }
       }
-
       if (uri === `${import.meta.env.BASE_URL}pools`) {
-        // configure Pools action
-
         if (inPool()) {
-          pages[i].action = {
-            type: 'text',
-            status: 'success',
-            text: t('active'),
-          }
+          pages[i].bullet = 'accent'
         }
       }
       i++
     }
-
     setPageConfig({
       categories: pageConfig.categories,
       pages,
@@ -137,14 +114,11 @@ export const Main = () => {
       {pageConfig.categories.map(
         ({ id: categoryId, key: categoryKey }: PageCategory) => (
           <div className="inner" key={`sidemenu_category_${categoryId}`}>
-            {/* display heading if not `default` (used for top links) */}
             {categoryKey !== 'default' && (
               <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
             )}
-
-            {/* display category links */}
             {pagesToDisplay.map(
-              ({ category, hash, key, lottie, action }: PageItem) => (
+              ({ category, hash, key, lottie, bullet }: PageItem) => (
                 <Fragment key={`sidemenu_page_${categoryId}_${key}`}>
                   {category === categoryId && (
                     <Primary
@@ -152,7 +126,7 @@ export const Main = () => {
                       to={hash}
                       active={hash === pathname}
                       lottie={lottie}
-                      action={action}
+                      bullet={bullet}
                       minimised={sideMenuMinimised}
                     />
                   )}
