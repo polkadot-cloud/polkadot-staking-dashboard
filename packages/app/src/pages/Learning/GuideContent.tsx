@@ -5,6 +5,8 @@ import { useLearningState } from 'contexts/Learning'
 import { motion } from 'framer-motion'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { ContentWrapper } from './Wrappers'
 import { paths } from './paths'
 
@@ -16,52 +18,12 @@ export const GuideContent = () => {
     return null
   }
 
-  // Find the active guide metadata from paths.ts
+  // Find current guide metadata from paths.ts
   const currentGuideMeta = paths
     .find((path) => path.id === activePath)
     ?.guides.find((guide) => guide.id === activeGuide.id)
 
-  const formatContent = (content: string) => {
-    const parts = content.split('\n\n')
-    return parts.map((part, index) => {
-      if (part.includes('•')) {
-        const items = part.split('•').filter((item) => item.trim())
-        return (
-          <motion.ul
-            key={`list-${index}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + index * 0.1 }}
-            className="guide-list"
-          >
-            {items.map((item, i) => (
-              <motion.li
-                key={`item-${i}`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 + i * 0.1 }}
-              >
-                {item.trim()}
-              </motion.li>
-            ))}
-          </motion.ul>
-        )
-      }
-      return (
-        <motion.p
-          key={`p-${index}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 + index * 0.1 }}
-          className="guide-paragraph"
-        >
-          {part.trim()}
-        </motion.p>
-      )
-    })
-  }
-
-  // Retrieve content using i18n if needed.
+  // Retrieve content using i18n translation
   const content = t(
     `learning.paths.${activePath}.guides.${activeGuide.id}.content`
   )
@@ -84,7 +46,6 @@ export const GuideContent = () => {
             {t(`learning.paths.${activePath}.guides.${activeGuide.id}.title`)}
           </motion.h2>
 
-          {/* Display the tags if metadata is available */}
           {currentGuideMeta && (
             <div className="guide-tags" style={{ marginBottom: '0.75rem' }}>
               <span
@@ -119,7 +80,8 @@ export const GuideContent = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            {formatContent(content)}
+            {/* Replace manual parsing with Markdown rendering */}
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
           </motion.div>
         </motion.div>
       </CardWrapper>

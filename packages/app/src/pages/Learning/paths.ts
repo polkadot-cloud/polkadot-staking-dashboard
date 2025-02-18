@@ -25,6 +25,12 @@ export const paths: LearningPath[] = [
         time: 'learning.categories.time.quick-read',
       },
       {
+        id: 'pools-vs-nominating',
+        difficulty: 'learning.categories.difficulty.beginner',
+        topic: 'learning.categories.topic.technical',
+        time: 'learning.categories.time.deep-dive',
+      },
+      {
         id: 'first-stake',
         difficulty: 'learning.categories.difficulty.beginner',
         topic: 'learning.categories.topic.security',
