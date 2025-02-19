@@ -22,6 +22,7 @@ export const RewardCalculator = () => {
   const {
     networkData: {
       unit,
+      units,
       brand: { token: Token },
     },
   } = useNetwork()
@@ -68,7 +69,7 @@ export const RewardCalculator = () => {
                 <Token />
                 <Odometer
                   value={minDecimalPlaces(
-                    new BigNumber(dailyReward).toFormat(),
+                    new BigNumber(dailyReward).toFormat(units),
                     2
                   )}
                   zeroDecimals={2}
@@ -85,7 +86,7 @@ export const RewardCalculator = () => {
                 <Token />
                 <Odometer
                   value={minDecimalPlaces(
-                    new BigNumber(monthlyReward).toFormat(),
+                    new BigNumber(monthlyReward).toFormat(units),
                     2
                   )}
                   zeroDecimals={2}
@@ -102,7 +103,7 @@ export const RewardCalculator = () => {
                 <Token />
                 <Odometer
                   value={minDecimalPlaces(
-                    new BigNumber(annualReward).toFormat(),
+                    new BigNumber(annualReward).toFormat(units),
                     2
                   )}
                   zeroDecimals={2}
