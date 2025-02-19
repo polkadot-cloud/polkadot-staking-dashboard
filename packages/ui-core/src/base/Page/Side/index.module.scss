@@ -5,8 +5,8 @@
 
 .side {
   /* maximised by default, or minimised otherwise. */
-  min-width: var(--core-side-width);
-  max-width: var(--core-side-width);
+  min-width: $side-menu-maximised-width;
+  max-width: $side-menu-maximised-width;
   z-index: 7;
   position: sticky;
   top: 0;
@@ -18,6 +18,8 @@
   transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
 
   @media (max-width: $page-width-medium-threshold) {
+    min-width: $side-menu-hidden-width;
+    max-width: $side-menu-hidden-width;
     position: fixed;
     top: 0;
     left: 0;
@@ -31,6 +33,6 @@
 
 .sideHidden {
   @media (max-width: $page-width-medium-threshold) {
-    left: calc(var(--core-side-width) * -1);
+    left: calc($side-menu-hidden-width * -1);
   }
 }

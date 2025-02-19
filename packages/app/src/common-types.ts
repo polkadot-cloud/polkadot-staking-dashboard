@@ -135,11 +135,7 @@ export interface PageItem {
   hash: string
   Entry: FC<PageProps>
   lottie: AnyJson
-  action?: {
-    type: string
-    status: string
-    text?: string | undefined
-  }
+  bullet?: BulletType
 }
 
 export type PagesConfigItems = PageItem[]
@@ -157,3 +153,5 @@ export type AnyApi = any
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyMetaBatch = any
+
+export type BulletType = 'success' | 'accent' | 'warning' | 'danger'

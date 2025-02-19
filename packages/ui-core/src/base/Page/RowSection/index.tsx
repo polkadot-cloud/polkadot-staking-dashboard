@@ -34,7 +34,7 @@ export const RowSection = ({
 
   const rowClasses = classNames(mainClass, hClass, {
     [classes.rowSectionVLast]: vLast,
-    [classes.rowNoHPadding]: standalone,
+    [classes.standalone]: standalone,
   })
 
   return (

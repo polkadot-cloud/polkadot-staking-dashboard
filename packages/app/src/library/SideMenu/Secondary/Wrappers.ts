@@ -13,7 +13,7 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   flex-flow: row wrap;
   align-items: center;
   position: relative;
-  padding: 0.75rem 0rem 0.75rem 0.5rem;
+  padding: 0rem 0.5rem;
   margin: 0.8rem 0.2rem 1rem 0;
   width: 100%;
 
@@ -25,13 +25,6 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   .light {
     color: var(--text-color-primary);
     margin-left: 0.2rem;
-  }
-  .action {
-    color: var(--text-color-primary);
-    flex: 1;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
   }
 
   &.active {
@@ -59,7 +52,7 @@ export const MinimisedWrapper = styled(motion.button)`
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 0rem 0rem;
+  padding: 0;
   margin: 0.6rem 0 1.15rem 0;
   min-height: 3.2rem;
   width: 100%;
@@ -73,14 +66,7 @@ export const MinimisedWrapper = styled(motion.button)`
   .icon {
     margin: 0;
   }
-  .action {
-    &.minimised {
-      flex: 0;
-      position: absolute;
-      top: -2px;
-      right: -13px;
-    }
-  }
+
   &.success {
     border: 1px solid var(--status-success-color-transparent);
   }
@@ -93,6 +79,9 @@ export const MinimisedWrapper = styled(motion.button)`
 `
 
 export const IconWrapper = styled.div<{ $minimised: boolean }>`
+  height: 2rem;
+  display: flex;
+  align-items: center;
   margin-left: ${(props) => (props.$minimised ? 0 : '0.25rem')};
   margin-right: ${(props) => (props.$minimised ? 0 : '0.65rem')};
 

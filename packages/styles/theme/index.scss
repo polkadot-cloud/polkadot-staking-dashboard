@@ -136,3 +136,10 @@ ellipse.accent {
     padding: 0 5rem 0 2.5rem;
   }
 }
+
+.container-width {
+  max-width: $max-page-width-sm;
+  @media(min-width: $row-section-thirds-threshold) {
+    max-width: $max-page-width-lg;
+  }
+}
