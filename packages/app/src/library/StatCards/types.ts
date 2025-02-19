@@ -9,7 +9,7 @@ export interface NumberProps {
   value: number
   decimals?: number
   unit: string
-  helpKey: string
+  helpKey?: string
 }
 
 export interface PieProps {
@@ -21,7 +21,7 @@ export interface PieProps {
   }
   pieValue: number
   tooltip?: string
-  helpKey: string
+  helpKey?: string
 }
 
 export interface TextProps {
@@ -29,7 +29,7 @@ export interface TextProps {
   label: string
   value: string
   secondaryValue?: string
-  helpKey: string
+  helpKey?: string
 }
 
 export interface TimeleftProps {
