@@ -31,8 +31,8 @@ import {
   Stat,
 } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { LastEraPayout } from '../Stats/LastEraPayout'
 import { RewardCalculator } from '../Stats/RewardCalculator'
+import { RewardTrend } from '../Stats/RewardTrend'
 import type { PayoutHistoryProps } from '../types'
 import { RecentPayouts } from './RecentPayouts'
 
@@ -86,7 +86,7 @@ export const Overview = (props: PayoutHistoryProps) => {
     <>
       <Stat.Row>
         <AverageRewardRate />
-        <LastEraPayout />
+        {pluginEnabled('staking_api') && <RewardTrend />}
         <RewardCalculator
           onClick={() => {
             openModal({

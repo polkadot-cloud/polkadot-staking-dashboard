@@ -28,8 +28,17 @@ export interface TextProps {
   primary?: boolean
   label: string
   value: string
-  secondaryValue?: string
   helpKey?: string
+}
+
+export interface TickerProps {
+  primary?: boolean
+  label: string
+  value: string
+  helpKey?: string
+  direction?: 'up' | 'down'
+  unit: string
+  changePercent: string
 }
 
 export interface TimeleftProps {

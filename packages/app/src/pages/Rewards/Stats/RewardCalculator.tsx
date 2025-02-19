@@ -14,7 +14,7 @@ export const RewardCalculator = ({ onClick }: { onClick: () => void }) => {
       <FontAwesomeIcon
         icon={faCalculator}
         color="var(--accent-color-primary"
-        style={{ marginLeft: '0.35rem', height: '2.75rem' }}
+        style={{ marginLeft: '0.25rem', height: '2.1rem' }}
       />
     ),
     label: t('rewards.useCustomAmount'),
