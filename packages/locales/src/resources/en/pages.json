@@ -248,7 +248,8 @@
       "useCustomAmount": "Use Custom Amount",
       "last30DayReward": "Last 30 Days Reward",
       "deductAvgCommissionOf": "Deduct Average Commission of {{commission}}%",
-      "rewardCalculator": "Reward Calculator"
+      "rewardCalculator": "Reward Calculator",
+      "rewardCalcSubtitle": "Enter a {{unit}} amount to stake and calculate the potential rewards."
     },
     "validators": {
       "activeValidators": "Active Validators",

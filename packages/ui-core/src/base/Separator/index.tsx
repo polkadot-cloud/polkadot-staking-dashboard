@@ -13,9 +13,11 @@ export const Separator = ({
   children,
   style,
   transparent,
-}: ComponentBase & { transparent?: boolean }) => {
+  lg,
+}: ComponentBase & { transparent?: boolean; lg?: boolean }) => {
   const allClasses = classNames(classes.separator, {
-    [classes.transparent]: transparent,
+    [classes.transparent]: !!transparent,
+    [classes.lg]: !!lg,
   })
   return (
     <div className={allClasses} style={style}>

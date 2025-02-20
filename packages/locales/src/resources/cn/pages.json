@@ -245,7 +245,8 @@
       "useCustomAmount": "使用自定义金额",
       "last30DayReward": "过去30天的奖励",
       "deductAvgCommissionOf": "扣除平均佣金{{commission}}",
-      "rewardCalculator": "奖励计算器"
+      "rewardCalculator": "奖励计算器",
+      "rewardCalcSubtitle": "输入 {{unit}} 的质押金额并计算潜在奖励."
     },
     "validators": {
       "activeValidators": "活跃验证人",

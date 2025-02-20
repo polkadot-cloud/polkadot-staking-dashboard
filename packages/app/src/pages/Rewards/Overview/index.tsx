@@ -129,7 +129,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 
             <Separator />
             <div style={{ padding: '0.5rem' }}>
-              <h2>
+              <h3>
                 <button
                   type="button"
                   onClick={() => setShowCommissionAdjusted(!showAdjusted)}
@@ -137,7 +137,9 @@ export const Overview = (props: PayoutHistoryProps) => {
                   <FontAwesomeIcon
                     icon={showAdjusted ? faToggleOn : faToggleOff}
                     style={{
-                      color: 'var(--accent-color-primary)',
+                      color: showAdjusted
+                        ? 'var(--accent-color-primary)'
+                        : 'var(--text-color-tertiary)',
                       marginRight: '0.8rem',
                     }}
                     transform={'grow-6'}
@@ -146,7 +148,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                     commission: avgCommission,
                   })}
                 </button>
-              </h2>
+              </h3>
             </div>
 
             <RewardGrid.Root>

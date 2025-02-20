@@ -248,7 +248,8 @@
       "useCustomAmount": "Usar Cantidad Personalizada",
       "last30DayReward": "Recompensa de los últimos 30 días",
       "deductAvgCommissionOf": "Deducir la comisión promedio de {{commission}}%",
-      "rewardCalculator": "Calculadora de Recompensas"
+      "rewardCalculator": "Calculadora de Recompensas",
+      "rewardCalcSubtitle": "Ingrese una cantidad de {{unit}} para apostar y calcule las recompensas potenciales."
     },
     "validators": {
       "activeValidators": "Validadores Activos",
