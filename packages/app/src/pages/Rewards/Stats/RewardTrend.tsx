@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { Ticker } from 'library/StatCards/Ticker'
-import { fetchRewardTrend } from 'plugin-staking-api'
+import { fetchNominatorRewardTrend } from 'plugin-staking-api'
 import type { RewardTrend as IRewardTrend } from 'plugin-staking-api/types'
 import { useEffect, useState } from 'react'
 
@@ -29,7 +29,11 @@ export const RewardTrend = () => {
   // Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
   const getRewardTrend = async () => {
     if (activeAccount && activeEra.index.isGreaterThan(0)) {
-      const result = await fetchRewardTrend(network, activeAccount, eras)
+      const result = await fetchNominatorRewardTrend(
+        network,
+        activeAccount,
+        eras
+      )
       setRewardTrend(result)
     }
   }

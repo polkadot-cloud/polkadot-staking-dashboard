@@ -6,8 +6,8 @@ import { client } from '../Client'
 import type { RewardTrendResult } from '../types'
 
 const QUERY = gql`
-  query RewardTrend($network: String!, $who: String!, $eras: Int!) {
-    rewardTrend(network: $network, who: $who, eras: $eras) {
+  query NominatorRewardTrend($network: String!, $who: String!, $eras: Int!) {
+    nominatorRewardTrend(network: $network, who: $who, eras: $eras) {
       reward
       previous
       change {
@@ -18,7 +18,7 @@ const QUERY = gql`
   }
 `
 
-export const useRewardTrend = ({
+export const useNominatorRewardTrend = ({
   network,
   who,
   eras,
@@ -33,7 +33,7 @@ export const useRewardTrend = ({
   return { loading, error, data, refetch }
 }
 
-export const fetchRewardTrend = async (
+export const fetchNominatorRewardTrend = async (
   network: string,
   who: string,
   eras: number
@@ -43,7 +43,7 @@ export const fetchRewardTrend = async (
       query: QUERY,
       variables: { network, who, eras },
     })
-    return result.data.rewardTrend
+    return result.data.nominatorRewardTrend
   } catch (error) {
     return null
   }
