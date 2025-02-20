@@ -245,7 +245,9 @@
       "rewardsCalculator": "Calculadora de Recompensas",
       "stakePlaceholder": "ej. 100",
       "stakedBalance": "Balance en Staking",
-      "useCustomAmount": "Usar Cantidad Personalizada"
+      "useCustomAmount": "Usar Cantidad Personalizada",
+      "last30DayReward": "Recompensa de los últimos 30 días",
+      "deductAvgCommissionOf": "Deducir la comisión promedio de {{commission}}%"
     },
     "validators": {
       "activeValidators": "Validadores Activos",

@@ -79,9 +79,6 @@ export const Overview = (props: PayoutHistoryProps) => {
   const currency = 'USD'
   const symbol = '$'
 
-  // TODO: Move to locales
-  const toggleText = 'Deduct Average Commission'
-
   return (
     <>
       <Stat.Row>
@@ -145,7 +142,9 @@ export const Overview = (props: PayoutHistoryProps) => {
                     }}
                     transform={'grow-6'}
                   />
-                  {toggleText} of {avgCommission}%
+                  {t('rewards.deductAvgCommissionOf', {
+                    commission: avgCommission,
+                  })}
                 </button>
               </h2>
             </div>

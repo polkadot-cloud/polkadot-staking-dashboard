@@ -16,9 +16,10 @@ import {
 } from 'plugin-staking-api'
 import type { RewardTrend as IRewardTrend } from 'plugin-staking-api/types'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const RewardTrend = () => {
-  // const { t } = useTranslation('pages')
+  const { t } = useTranslation('pages')
   const {
     network,
     networkData: { unit, units },
@@ -72,8 +73,7 @@ export const RewardTrend = () => {
   }
 
   const params = {
-    // TODO: Move to locale
-    label: 'Last 30 Days Reward',
+    label: t('rewards.last30DayReward'),
     value: new BigNumber(planckToUnit(value, units))
       .decimalPlaces(3)
       .toFormat(),

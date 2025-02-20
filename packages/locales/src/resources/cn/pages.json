@@ -230,7 +230,7 @@
       "withdrawUnlock": "请取出己解锁金额以继续关闭池"
     },
     "rewards": {
-      "StakedBalance": "质押余额",
+      "stakedBalance": "质押余额",
       "adjustStake": "调整质押",
       "annual": "每年",
       "averageRewardRate": "平均奖励率",
@@ -242,7 +242,9 @@
       "projectedRewards": "预计奖励",
       "rewardsCalculator": "奖励计算器",
       "stakePlaceholder": "例如 100",
-      "useCustomAmount": "使用自定义金额"
+      "useCustomAmount": "使用自定义金额",
+      "last30DayReward": "过去30天的奖励",
+      "deductAvgCommissionOf": "扣除平均佣金{{commission}}"
     },
     "validators": {
       "activeValidators": "活跃验证人",

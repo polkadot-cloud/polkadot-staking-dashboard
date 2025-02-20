@@ -245,7 +245,9 @@
       "rewardsCalculator": "Rewards Calculator",
       "stakePlaceholder": "e.g. 100",
       "stakedBalance": "Staked Balance",
-      "useCustomAmount": "Use Custom Amount"
+      "useCustomAmount": "Use Custom Amount",
+      "last30DayReward": "Last 30 Days Reward",
+      "deductAvgCommissionOf": "Deduct Average Commission of {{commission}}%"
     },
     "validators": {
       "activeValidators": "Active Validators",
