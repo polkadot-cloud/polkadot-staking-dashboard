@@ -230,23 +230,23 @@
       "withdrawUnlock": "请取出己解锁金额以继续关闭池"
     },
     "rewards": {
-      "stakedBalance": "质押余额",
       "adjustStake": "调整质押",
       "annual": "每年",
       "averageRewardRate": "平均奖励率",
       "calculator": "计算器",
       "daily": "每日",
-      "unitAmount": "{{unit}}数量：",
+      "deductAvgCommissionOf": "扣除平均佣金{{commission}}",
+      "last30DayReward": "过去30天的奖励",
       "monthly": "每月",
       "period": "期间",
       "projectedRewards": "预计奖励",
+      "rewardCalcSubtitle": "输入 {{unit}} 的质押金额并计算潜在奖励.",
+      "rewardCalculator": "奖励计算器",
       "rewardsCalculator": "奖励计算器",
       "stakePlaceholder": "例如 100",
-      "useCustomAmount": "使用自定义金额",
-      "last30DayReward": "过去30天的奖励",
-      "deductAvgCommissionOf": "扣除平均佣金{{commission}}",
-      "rewardCalculator": "奖励计算器",
-      "rewardCalcSubtitle": "输入 {{unit}} 的质押金额并计算潜在奖励."
+      "stakedBalance": "质押余额",
+      "unitAmount": "{{unit}}数量：",
+      "useCustomAmount": "使用自定义金额"
     },
     "validators": {
       "activeValidators": "活跃验证人",
