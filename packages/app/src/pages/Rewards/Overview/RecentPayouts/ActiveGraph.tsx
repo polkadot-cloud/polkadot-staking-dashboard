@@ -29,7 +29,7 @@ export const ActiveGraph = ({
       inPool={inPool}
       syncing={loading}
     />
-    <div style={{ marginTop: '1em' }}>
+    <div style={{ marginTop: '1rem' }}>
       <AveragePayoutLine
         days={MaxPayoutDays}
         average={10}
