@@ -5,10 +5,15 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { Ticker } from 'library/StatCards/Ticker'
-import { fetchNominatorRewardTrend } from 'plugin-staking-api'
+import {
+  fetchNominatorRewardTrend,
+  fetchPoolRewardTrend,
+} from 'plugin-staking-api'
 import type { RewardTrend as IRewardTrend } from 'plugin-staking-api/types'
 import { useEffect, useState } from 'react'
 
@@ -19,9 +24,15 @@ export const RewardTrend = () => {
     networkData: { unit, units },
   } = useNetwork()
   const { activeEra } = useApi()
+  const { inSetup } = useStaking()
   const { erasPerDay } = useErasPerDay()
+  const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
+
+  const membership = getPoolMembership(activeAccount)
   const eras = erasPerDay.multipliedBy(30).toNumber()
+  // NOTE: 30 day duration in seconds
+  const duration = 2592000
 
   // Store the reward trend result
   const [rewardTrend, setRewardTrend] = useState<IRewardTrend | null>(null)
@@ -29,18 +40,25 @@ export const RewardTrend = () => {
   // Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
   const getRewardTrend = async () => {
     if (activeAccount && activeEra.index.isGreaterThan(0)) {
-      const result = await fetchNominatorRewardTrend(
-        network,
-        activeAccount,
-        eras
-      )
+      const result = membership
+        ? await fetchPoolRewardTrend(network, activeAccount, duration)
+        : await fetchNominatorRewardTrend(network, activeAccount, eras)
       setRewardTrend(result)
     }
   }
+
   useEffect(() => {
     setRewardTrend(null)
-    getRewardTrend()
-  }, [activeAccount, network, activeEra.index.toString()])
+    if (!inSetup() || membership) {
+      getRewardTrend()
+    }
+  }, [
+    activeAccount,
+    network,
+    activeEra.index.toString(),
+    membership,
+    inSetup(),
+  ])
 
   // Format the reward trend data
   let value = '0'
