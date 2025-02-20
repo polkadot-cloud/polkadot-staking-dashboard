@@ -102,7 +102,6 @@ export const Overview = (props: PayoutHistoryProps) => {
           <RecentPayouts {...props} />
         </CardWrapper>
       </Page.Row>
-
       {pluginEnabled('staking_api') && (
         <Page.Row>
           <CardWrapper>
@@ -126,7 +125,6 @@ export const Overview = (props: PayoutHistoryProps) => {
                 </CardLabel>
               </h2>
             </CardHeader>
-
             <Separator />
             <div style={{ padding: '0.5rem' }}>
               <h3>
@@ -150,7 +148,6 @@ export const Overview = (props: PayoutHistoryProps) => {
                 </button>
               </h3>
             </div>
-
             <RewardGrid.Root>
               <RewardGrid.Head>
                 <RewardGrid.Cells

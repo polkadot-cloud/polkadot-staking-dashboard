@@ -168,7 +168,7 @@ export const RewardCalculator = () => {
               </h3>
             </TokenFiat>
           </CardHeader>
-          <Separator transparent style={{ marginTop: '3rem' }} />
+          <Separator transparent style={{ marginTop: '2.5rem' }} />
         </ContentWrapper>
       </Padding>
     </div>
