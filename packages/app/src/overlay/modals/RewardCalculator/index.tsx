@@ -8,9 +8,11 @@ import { useNetwork } from 'contexts/Network'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { FiatValue } from 'library/FiatValue'
 import { Title } from 'library/Modal/Title'
+import type { ChangeEvent } from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader, CardLabel, Separator } from 'ui-core/base'
+import { TokenInput } from 'ui-core/input'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ContentWrapper } from '../Networks/Wrapper'
@@ -38,6 +40,10 @@ export const RewardCalculator = () => {
   const monthlyReward = annualReward / 12 || 0
   const dailyReward = annualReward / 365 || 0
 
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setManualStake(Number(e.target.value || 0))
+  }
+
   return (
     <>
       <Title title="Reward Calculator" />
@@ -47,20 +53,13 @@ export const RewardCalculator = () => {
             <label htmlFor="manual-stake">
               {t('rewards.enterStakeAmount', { ns: 'pages' })} ({unit}):
             </label>
-            <input
-              id="manual-stake"
-              type="number"
-              step="0.01"
-              value={manualStake ?? ''}
-              onChange={(e) => setManualStake(Number(e.target.value) || 0)}
+            <TokenInput
+              id="reward-calc-token-input"
+              label={`${t('rewards.enterStakeAmount', { ns: 'pages' })} ${unit}`}
+              onChange={onChange}
               placeholder={t('rewards.stakePlaceholder', { ns: 'pages' })}
-              style={{
-                width: '100%',
-                padding: '0.5rem',
-                marginTop: '0.5rem',
-                border: '1px solid var(--border-primary-color)',
-                borderRadius: '0.5rem',
-              }}
+              value={manualStake || ''}
+              marginY
             />
             <Separator />
             <CardHeader>
