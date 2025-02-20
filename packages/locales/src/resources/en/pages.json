@@ -238,7 +238,7 @@
       "averageRewardRate": "Average Reward Rate",
       "calculator": "Calculator",
       "daily": "Daily",
-      "enterStakeAmount": "Enter Stake Amount",
+      "unitAmount": "{{unit}} Amount",
       "monthly": "Monthly",
       "period": "Period",
       "projectedRewards": "Projected Rewards",
@@ -247,7 +247,8 @@
       "stakedBalance": "Staked Balance",
       "useCustomAmount": "Use Custom Amount",
       "last30DayReward": "Last 30 Days Reward",
-      "deductAvgCommissionOf": "Deduct Average Commission of {{commission}}%"
+      "deductAvgCommissionOf": "Deduct Average Commission of {{commission}}%",
+      "rewardCalculator": "Reward Calculator"
     },
     "validators": {
       "activeValidators": "Active Validators",

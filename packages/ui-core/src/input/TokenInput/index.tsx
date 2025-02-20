@@ -18,15 +18,14 @@ export const TokenInput = ({
   })
 
   return (
-    <>
+    <div className={allClasses}>
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
-        className={allClasses}
         value={value}
         onChange={(e) => onChange(e)}
         placeholder={placeholder}
       />
-    </>
+    </div>
   )
 }

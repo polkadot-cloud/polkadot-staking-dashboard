@@ -5,4 +5,8 @@
   border-bottom: 1px solid var(--border-primary-color);
   margin: 0.67rem 0;
   width: 100%;
+
+  &.transparent {
+    border: none;
+  }
 }

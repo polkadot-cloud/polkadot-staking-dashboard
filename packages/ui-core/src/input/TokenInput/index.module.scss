@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .tokenInput {
-  border: 1px solid var(--border-primary-color);
-  background: var(--background-default);
-  color: var(--text-color-primary);
-  border-radius: 1rem;
-  padding: 0.75rem 1rem;
-  width: 100%;
-  font-size: 1.4rem;
-  margin-top: 0.5rem;
-
   &.marginY {
-    margin: 0.75rem 0 1rem 0;
+    margin: 1.25rem 0 1.5rem 0;
+  }
+  > input {
+    border: 1px solid var(--border-primary-color);
+    background: var(--background-default);
+    color: var(--text-color-primary);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    font-size: 1.3rem;
+    margin-top: 0.75rem;
   }
 }

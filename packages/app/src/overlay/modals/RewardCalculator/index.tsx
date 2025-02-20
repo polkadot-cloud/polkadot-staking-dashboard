@@ -17,7 +17,7 @@ import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ContentWrapper } from '../Networks/Wrapper'
 
-const DEFAULT_MANUAL_STAKE = 200
+const DEFAULT_TOKEN_INPUT = 100
 
 export const RewardCalculator = () => {
   const { t } = useTranslation()
@@ -34,7 +34,7 @@ export const RewardCalculator = () => {
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
 
-  const [manualStake, setManualStake] = useState<number>(DEFAULT_MANUAL_STAKE)
+  const [manualStake, setManualStake] = useState<number>(DEFAULT_TOKEN_INPUT)
 
   const annualReward = manualStake * (rewardRate / 100) || 0
   const monthlyReward = annualReward / 12 || 0
@@ -46,73 +46,75 @@ export const RewardCalculator = () => {
 
   return (
     <>
-      <Title title="Reward Calculator" />
-      <Padding>
+      <Title
+        title={t('rewards.rewardCalculator', { ns: 'pages' })}
+        style={{ paddingLeft: '0.5rem' }}
+      />
+      <Padding horizontalOnly>
         <ContentWrapper>
-          <Padding>
-            <label htmlFor="manual-stake">
-              {t('rewards.enterStakeAmount', { ns: 'pages' })} ({unit}):
-            </label>
-            <TokenInput
-              id="reward-calc-token-input"
-              label={`${t('rewards.enterStakeAmount', { ns: 'pages' })} ${unit}`}
-              onChange={onChange}
-              placeholder={t('rewards.stakePlaceholder', { ns: 'pages' })}
-              value={manualStake || ''}
-              marginY
-            />
-            <Separator />
-            <CardHeader>
-              <h4>{t('rewards.daily', { ns: 'pages' })}</h4>
-              <h2>
-                <Token />
-                <Odometer
-                  value={minDecimalPlaces(
-                    new BigNumber(dailyReward).toFormat(units),
-                    2
-                  )}
-                  zeroDecimals={2}
-                />
-                <CardLabel>
-                  <FiatValue tokenBalance={dailyReward} currency={currency} />
-                </CardLabel>
-              </h2>
-            </CardHeader>
-            <Separator />
-            <CardHeader>
-              <h4>{t('rewards.monthly', { ns: 'pages' })}</h4>
-              <h2>
-                <Token />
-                <Odometer
-                  value={minDecimalPlaces(
-                    new BigNumber(monthlyReward).toFormat(units),
-                    2
-                  )}
-                  zeroDecimals={2}
-                />
-                <CardLabel>
-                  <FiatValue tokenBalance={monthlyReward} currency={currency} />
-                </CardLabel>
-              </h2>
-            </CardHeader>
-            <Separator />
-            <CardHeader>
-              <h4>{t('rewards.annual', { ns: 'pages' })}</h4>
-              <h2>
-                <Token />
-                <Odometer
-                  value={minDecimalPlaces(
-                    new BigNumber(annualReward).toFormat(units),
-                    2
-                  )}
-                  zeroDecimals={2}
-                />
-                <CardLabel>
-                  <FiatValue tokenBalance={annualReward} currency={currency} />
-                </CardLabel>
-              </h2>
-            </CardHeader>
-          </Padding>
+          <h4>
+            Enter a DOT amount to stake and calculate the potential rewards.
+          </h4>
+          <TokenInput
+            id="reward-calc-token-input"
+            label={`${t('rewards.unitAmount', { ns: 'pages', unit })}:`}
+            onChange={onChange}
+            placeholder={t('rewards.stakePlaceholder', { ns: 'pages' })}
+            value={manualStake || ''}
+            marginY
+          />
+          <Separator />
+          <CardHeader>
+            <h4>{t('rewards.daily', { ns: 'pages' })}</h4>
+            <h2>
+              <Token />
+              <Odometer
+                value={minDecimalPlaces(
+                  new BigNumber(dailyReward).toFormat(units),
+                  2
+                )}
+                zeroDecimals={2}
+              />
+              <CardLabel>
+                <FiatValue tokenBalance={dailyReward} currency={currency} />
+              </CardLabel>
+            </h2>
+          </CardHeader>
+          <Separator />
+          <CardHeader>
+            <h4>{t('rewards.monthly', { ns: 'pages' })}</h4>
+            <h2>
+              <Token />
+              <Odometer
+                value={minDecimalPlaces(
+                  new BigNumber(monthlyReward).toFormat(units),
+                  2
+                )}
+                zeroDecimals={2}
+              />
+              <CardLabel>
+                <FiatValue tokenBalance={monthlyReward} currency={currency} />
+              </CardLabel>
+            </h2>
+          </CardHeader>
+          <Separator />
+          <CardHeader>
+            <h4>{t('rewards.annual', { ns: 'pages' })}</h4>
+            <h2>
+              <Token />
+              <Odometer
+                value={minDecimalPlaces(
+                  new BigNumber(annualReward).toFormat(units),
+                  2
+                )}
+                zeroDecimals={2}
+              />
+              <CardLabel>
+                <FiatValue tokenBalance={annualReward} currency={currency} />
+              </CardLabel>
+            </h2>
+          </CardHeader>
+          <Separator transparent />
         </ContentWrapper>
       </Padding>
     </>

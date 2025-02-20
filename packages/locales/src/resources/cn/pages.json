@@ -236,7 +236,7 @@
       "averageRewardRate": "平均奖励率",
       "calculator": "计算器",
       "daily": "每日",
-      "enterStakeAmount": "输入质押金额",
+      "unitAmount": "{{unit}}数量：",
       "monthly": "每月",
       "period": "期间",
       "projectedRewards": "预计奖励",
@@ -244,7 +244,8 @@
       "stakePlaceholder": "例如 100",
       "useCustomAmount": "使用自定义金额",
       "last30DayReward": "过去30天的奖励",
-      "deductAvgCommissionOf": "扣除平均佣金{{commission}}"
+      "deductAvgCommissionOf": "扣除平均佣金{{commission}}",
+      "rewardCalculator": "奖励计算器"
     },
     "validators": {
       "activeValidators": "活跃验证人",

@@ -238,7 +238,7 @@
       "averageRewardRate": "Tasa de Recompensa",
       "calculator": "Calculadora",
       "daily": "Diario",
-      "enterStakeAmount": "Ingresa Cantidad",
+      "unitAmount": "{{unit}} Cantidad",
       "monthly": "Mensual",
       "period": "Período",
       "projectedRewards": "Recompensas Proyectadas",
@@ -247,7 +247,8 @@
       "stakedBalance": "Balance en Staking",
       "useCustomAmount": "Usar Cantidad Personalizada",
       "last30DayReward": "Recompensa de los últimos 30 días",
-      "deductAvgCommissionOf": "Deducir la comisión promedio de {{commission}}%"
+      "deductAvgCommissionOf": "Deducir la comisión promedio de {{commission}}%",
+      "rewardCalculator": "Calculadora de Recompensas"
     },
     "validators": {
       "activeValidators": "Validadores Activos",
