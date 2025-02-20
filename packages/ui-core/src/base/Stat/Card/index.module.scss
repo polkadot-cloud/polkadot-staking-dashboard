@@ -8,7 +8,9 @@
   flex: 1;
   flex-basis: 100%;
   margin-bottom: 1rem;
+  position: relative;
   transition: transform var(--transition-duration);
+  
   &:hover {
     transform: scale(1.02);
   }
@@ -22,13 +24,14 @@
     max-width: 300px;
   }
 
-  > div {
+  > div, > button {
     background: var(--background-primary);
     box-shadow: var(--card-shadow-secondary);
+    border: 1px solid transparent;
     display: flex;
     border-radius: 1rem;
     margin-right: 1.25rem;
-    padding: 0.9rem 0rem;
+    padding: 0.75rem 0rem;
     max-height: 5.25rem;
     flex-flow: row wrap;
 
@@ -63,6 +66,20 @@
     @media (max-width: 749px) {
       margin-right: 0;
       padding: 0.9rem 0;
+    }
+  }
+
+  &.button {
+    &:hover {
+      transform: none;
+    }
+  }
+
+  > button {
+    border: 1px solid var(--accent-color-pending);
+    transition: border 0.1s;
+    &:hover {
+      border: 1px solid var(--accent-color-primary);
     }
   }
 }

@@ -1,10 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const ItemWrapper = styled(motion.div)`
+export const Wrapper = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+`
+
+export const ItemWrapper = styled.div`
   padding: 0.5rem;
   width: 100%;
 
