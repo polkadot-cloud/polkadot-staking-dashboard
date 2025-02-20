@@ -1,0 +1,30 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.tokenFiat {
+  display: flex;
+  align-items: center;
+  > div {
+    &:first-child {
+      width: 3rem;
+      max-width: 3rem;
+    }
+    &:last-child {
+      padding-left: 1rem;
+      flex: 1;
+
+      > h1 {
+        margin-bottom: 0.4rem;
+      }
+
+      > h3 {
+        color: var(--text-color-tertiary);
+      }
+    }
+  }
+  color: var(--text-color-secondary);
+  font-family: InterSemiBold, sans-serif;
+  margin-top: 0.2rem;
+  margin-left: 0.4rem;
+  font-size: 1.1rem;
+}
