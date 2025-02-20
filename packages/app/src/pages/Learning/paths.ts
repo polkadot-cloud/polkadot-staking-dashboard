@@ -14,6 +14,12 @@ export interface LearningPath {
   guides: LearningGuide[]
 }
 
+export interface GuideSection {
+  title?: string
+  content: string
+  subsections?: GuideSection[]
+}
+
 export const paths: LearningPath[] = [
   {
     id: 'essential',
