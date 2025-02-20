@@ -167,7 +167,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                 </RewardGrid.Cell>
                 <RewardGrid.Cell>
                   <h3>
-                    <FontAwesomeIcon icon={faCaretUp} />
+                    {dailyReward > 0 && <FontAwesomeIcon icon={faCaretUp} />}
                     {dailyReward.toLocaleString('en-US', {
                       minimumFractionDigits: 3,
                       maximumFractionDigits: 3,
@@ -176,7 +176,9 @@ export const Overview = (props: PayoutHistoryProps) => {
                 </RewardGrid.Cell>
                 <RewardGrid.Cell>
                   <h3>
-                    <FontAwesomeIcon icon={faCaretUp} />
+                    {dailyReward > 0 && tokenPrice > 0 && (
+                      <FontAwesomeIcon icon={faCaretUp} />
+                    )}
                     {symbol}
                     {(dailyReward * tokenPrice).toLocaleString('en-US', {
                       minimumFractionDigits: 2,
@@ -190,14 +192,18 @@ export const Overview = (props: PayoutHistoryProps) => {
                   items={[
                     <RewardGrid.Label>{t('rewards.monthly')}</RewardGrid.Label>,
                     <h3>
-                      <FontAwesomeIcon icon={faCaretUp} />
+                      {monthlyReward > 0 && (
+                        <FontAwesomeIcon icon={faCaretUp} />
+                      )}
                       {monthlyReward.toLocaleString('en-US', {
                         minimumFractionDigits: 3,
                         maximumFractionDigits: 3,
                       })}
                     </h3>,
                     <h3>
-                      <FontAwesomeIcon icon={faCaretUp} />
+                      {monthlyReward > 0 && tokenPrice > 0 && (
+                        <FontAwesomeIcon icon={faCaretUp} />
+                      )}
                       {symbol}
                       {(monthlyReward * tokenPrice).toLocaleString('en-US', {
                         minimumFractionDigits: 2,
@@ -212,14 +218,16 @@ export const Overview = (props: PayoutHistoryProps) => {
                   items={[
                     <RewardGrid.Label>{t('rewards.annual')}</RewardGrid.Label>,
                     <h3>
-                      <FontAwesomeIcon icon={faCaretUp} />
+                      {annualReward > 0 && <FontAwesomeIcon icon={faCaretUp} />}
                       {annualReward.toLocaleString('en-US', {
                         minimumFractionDigits: 3,
                         maximumFractionDigits: 3,
                       })}
                     </h3>,
                     <h3>
-                      <FontAwesomeIcon icon={faCaretUp} />
+                      {annualReward > 0 && tokenPrice > 0 && (
+                        <FontAwesomeIcon icon={faCaretUp} />
+                      )}
                       {symbol}
                       {(annualReward * tokenPrice).toLocaleString('en-US', {
                         minimumFractionDigits: 2,
