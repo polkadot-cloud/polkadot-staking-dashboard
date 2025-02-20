@@ -46,6 +46,7 @@ export const Ticker = ({
                 color: tickerColor,
               }}
             >
+              {direction === 'up' && '+'}
               {changePercent}%
             </label>
           </Stat.Title>
