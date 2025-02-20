@@ -3,9 +3,10 @@
 
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
-import { PageRow, PageTitle, RowSection, StatRow } from 'ui-core/base'
+import { Page, Stat } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
+import { AccountControls } from './AccountControls'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { StakeStatus } from './StakeStatus'
@@ -19,31 +20,36 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={t('overview.overview')} />
-      <StatRow>
+      <Page.Title title={t('overview.overview')} />
+      <Page.Row>
+        <Page.Heading>
+          <AccountControls />
+        </Page.Heading>
+      </Page.Row>
+      <Stat.Row>
         <AverageRewardRate />
         <SupplyStaked />
         <NextRewards />
-      </StatRow>
-      <PageRow>
+      </Stat.Row>
+      <Page.Row>
         <StakeStatus />
-      </PageRow>
-      <PageRow>
-        <RowSection secondary>
+      </Page.Row>
+      <Page.Row>
+        <Page.RowSection secondary>
           <CardWrapper height={PAYOUTS_HEIGHT}>
             <BalanceChart />
             <BalanceLinks />
           </CardWrapper>
-        </RowSection>
-        <RowSection hLast vLast>
+        </Page.RowSection>
+        <Page.RowSection hLast vLast>
           <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
             <Payouts />
           </CardWrapper>
-        </RowSection>
-      </PageRow>
-      <PageRow>
+        </Page.RowSection>
+      </Page.Row>
+      <Page.Row>
         <NetworkStats />
-      </PageRow>
+      </Page.Row>
     </>
   )
 }

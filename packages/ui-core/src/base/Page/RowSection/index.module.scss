@@ -1,0 +1,77 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+@import 'styles/theme/_variables';
+
+.rowPrimaryWrapper {
+  order: 0;
+  flex: 1;
+  flex-basis: 100%;
+  max-width: 100%;
+
+  @media (min-width: $page-width-medium-threshold) {
+    order: 0;
+    flex: 1;
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  @media (min-width: $row-section-thirds-threshold) {
+    flex-basis: 60%;
+    width: 60%;
+  }
+}
+
+.rowPrimaryWrapperFirst {
+  @media (min-width: $row-section-thirds-threshold) {
+    order: 1;
+    padding-left: 0.75rem;
+  }
+}
+
+.rowPrimaryWrapperLast {
+  @media (min-width: $page-width-medium-threshold) {
+    padding-right: 0.75rem;
+  }
+}
+
+.rowSecondaryWrapper {
+  order: 0;
+  flex-basis: 100%;
+  width: 100%;
+  border-radius: 1rem;
+
+  @media (min-width: $page-width-medium-threshold) {
+    order: 0;
+    flex: 1;
+    max-width: none;
+  }
+
+  @media (min-width: $row-section-thirds-threshold) {
+    padding-left: 0;
+    flex-basis: 40%;
+    max-width: 40%;
+  }
+}
+
+.rowSecondaryWrapperFirst {
+  @media (min-width: $row-section-thirds-threshold) {
+    padding-left: 0.75rem;
+    order: 1;
+  }
+}
+
+.standalone {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.rowSecondaryWrapperLast {
+  @media (min-width: $row-section-thirds-threshold) {
+    padding-right: 0.75rem;
+  }
+}
+
+.rowSectionVLast {
+  order: 1;
+}

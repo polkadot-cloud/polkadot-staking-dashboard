@@ -17,7 +17,7 @@ export const Identity = ({
       <h3>{label}</h3>
       <h4>
         {value}
-        {Action}
+        <span>{Action}</span>
       </h4>
     </div>
   </div>

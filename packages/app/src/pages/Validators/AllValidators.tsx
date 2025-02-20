@@ -6,7 +6,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
-import { PageRow, StatRow } from 'ui-core/base'
+import { Page, Stat } from 'ui-core/base'
 import { ActiveValidators } from './Stats/ActiveValidators'
 import { AverageCommission } from './Stats/AverageCommission'
 import { TotalValidators } from './Stats/TotalValidators'
@@ -19,12 +19,12 @@ export const AllValidators = () => {
 
   return (
     <>
-      <StatRow>
+      <Stat.Row>
         <ActiveValidators />
         <TotalValidators />
         <AverageCommission />
-      </StatRow>
-      <PageRow>
+      </Stat.Row>
+      <Page.Row>
         <CardWrapper>
           {!isReady ? (
             <div className="item">
@@ -63,7 +63,7 @@ export const AllValidators = () => {
             </>
           )}
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
     </>
   )
 }

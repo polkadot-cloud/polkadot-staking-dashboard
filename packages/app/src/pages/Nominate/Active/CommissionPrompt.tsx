@@ -15,7 +15,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, PageRow } from 'ui-core/base'
+import { ButtonRow, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const CommissionPrompt = () => {
@@ -40,7 +40,7 @@ export const CommissionPrompt = () => {
   const annuncementBorderColor = getThemeValue('--accent-color-secondary')
 
   return (
-    <PageRow>
+    <Page.Row>
       <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
         <div className="content">
           <h3>
@@ -69,6 +69,6 @@ export const CommissionPrompt = () => {
           </ButtonRow>
         </div>
       </CardWrapper>
-    </PageRow>
+    </Page.Row>
   )
 }

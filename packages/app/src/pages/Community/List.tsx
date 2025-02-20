@@ -5,7 +5,7 @@ import type { ValidatorEntry } from '@w3ux/validator-assets'
 import { useCommunity } from 'contexts/Community'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useState } from 'react'
-import { PageRow } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
 import { useCommunitySections } from './context'
@@ -41,12 +41,12 @@ export const List = () => {
   }
 
   return (
-    <PageRow yMargin>
+    <Page.Row yMargin>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         {entityItems.map((item, index: number) => (
           <Item key={`community_item_${index}`} item={item} actionable />
         ))}
       </ItemsWrapper>
-    </PageRow>
+    </Page.Row>
   )
 }

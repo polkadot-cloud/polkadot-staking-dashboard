@@ -20,7 +20,7 @@ export const Tooltip = ({
   onPointerDownOutside?: (e: Event) => void
   handleOpenChange?: (isOpen: boolean) => void
 }) => (
-  <RadixTooltip.Root onOpenChange={handleOpenChange}>
+  <RadixTooltip.Root onOpenChange={handleOpenChange} delayDuration={200}>
     <RadixTooltip.Trigger
       asChild
       onClick={(event) => {

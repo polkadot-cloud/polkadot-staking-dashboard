@@ -15,7 +15,7 @@ import { Nominations } from 'library/Nominations'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { CardHeader, PageRow, RowSection, StatRow } from 'ui-core/base'
+import { CardHeader, Page, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
@@ -41,27 +41,27 @@ export const Active = () => {
 
   return (
     <>
-      <StatRow>
+      <Stat.Row>
         <ActiveNominators />
         <MinimumNominatorBond />
         <MinimumActiveStake />
-      </StatRow>
+      </Stat.Row>
       <CommissionPrompt />
 
       {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}
       <UnstakePrompts />
-      <PageRow>
-        <RowSection secondary vLast>
+      <Page.Row>
+        <Page.RowSection secondary vLast>
           <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
-        </RowSection>
-        <RowSection hLast>
+        </Page.RowSection>
+        <Page.RowSection hLast>
           <Status height={ROW_HEIGHT} />
-        </RowSection>
-      </PageRow>
+        </Page.RowSection>
+      </Page.Row>
       {isBonding() && (
-        <PageRow>
+        <Page.Row>
           <CardWrapper>
             {nominated?.length || inSetup() || syncing ? (
               <Nominations bondFor="nominator" nominator={activeAccount} />
@@ -103,7 +103,7 @@ export const Active = () => {
               </>
             )}
           </CardWrapper>
-        </PageRow>
+        </Page.Row>
       )}
     </>
   )

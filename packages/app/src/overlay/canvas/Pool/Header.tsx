@@ -7,7 +7,7 @@ import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
-import { PageTitleTabs } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import type { HeaderProps } from './types'
@@ -109,7 +109,7 @@ export const Header = ({
           </div>
         </div>
 
-        <PageTitleTabs
+        <Page.TitleTabs
           sticky={false}
           tabs={[
             {

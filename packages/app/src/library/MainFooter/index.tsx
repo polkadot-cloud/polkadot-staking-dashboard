@@ -8,13 +8,12 @@ import { Odometer } from '@w3ux/react-odometer'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import CloudIconSVG from 'assets/svg/icons/cloud.svg?react'
 import BigNumber from 'bignumber.js'
-import { MaxPageWidth } from 'consts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { isCustomEvent } from 'controllers/utils'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Footer } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { useEventListener } from 'usehooks-ts'
 import { Status } from './Status'
 import { TokenPrice } from './TokenPrice'
@@ -47,11 +46,8 @@ export const MainFooter = () => {
   }, [network])
 
   return (
-    <Footer>
-      <Wrapper
-        className="page-padding"
-        style={{ maxWidth: `${MaxPageWidth}px` }}
-      >
+    <Page.Footer>
+      <Wrapper className="page-padding container-width">
         <CloudIconSVG className="icon" />
         <Summary>
           <section>
@@ -106,6 +102,6 @@ export const MainFooter = () => {
           </section>
         </Summary>
       </Wrapper>
-    </Footer>
+    </Page.Footer>
   )
 }
