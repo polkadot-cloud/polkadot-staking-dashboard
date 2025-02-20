@@ -137,6 +137,7 @@
       "payoutHistory": "Historial de Pagos",
       "poolClaim": "Reclamo del Pool",
       "recentPayouts": "Pagos Recientes",
+      "noRecentPayouts": "Sin Pagos Recientes",
       "slashed": "Penalizado",
       "subscanDisabled": "Subscan Desactivado"
     },

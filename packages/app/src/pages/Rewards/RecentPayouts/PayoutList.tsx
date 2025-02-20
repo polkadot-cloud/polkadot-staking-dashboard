@@ -81,7 +81,7 @@ export const PayoutListInner = ({
     return (
       <ListWrapper>
         <div>
-          <h3>No payout history.</h3>
+          <h3>{t('payouts.noRecentPayouts')}.</h3>
         </div>
       </ListWrapper>
     )

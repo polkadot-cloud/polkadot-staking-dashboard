@@ -137,6 +137,7 @@
       "payoutHistory": "Payout History",
       "poolClaim": "Pool Claim",
       "recentPayouts": "Recent Payouts",
+      "noRecentPayouts": "No Recent Payouts",
       "slashed": "Slashed",
       "subscanDisabled": "Subscan Disabled"
     },
