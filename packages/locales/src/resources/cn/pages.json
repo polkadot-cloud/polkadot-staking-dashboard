@@ -246,7 +246,7 @@
       "stakePlaceholder": "例如 100",
       "stakedBalance": "质押余额",
       "unitAmount": "{{unit}}数量：",
-      "useCustomAmount": "使用自定义金额"
+      "useCustomAmount": "自定义金额"
     },
     "validators": {
       "activeValidators": "活跃验证人",
