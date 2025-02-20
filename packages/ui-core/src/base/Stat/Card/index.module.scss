@@ -9,7 +9,7 @@
   flex-basis: 100%;
   margin-bottom: 1rem;
   position: relative;
-  transition: transform 0.15s;
+  transition: transform var(--transition-duration);
   
   &:hover {
     transform: scale(1.02);
