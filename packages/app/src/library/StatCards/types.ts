@@ -56,6 +56,5 @@ export interface ButtonProps {
   Icon: ReactNode
   label: string
   title: string
-  helpKey?: string
   onClick: () => void
 }
