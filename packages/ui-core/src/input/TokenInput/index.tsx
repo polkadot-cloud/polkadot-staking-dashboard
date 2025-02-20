@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
+import type { TokenInputProps } from '../types'
 import classes from './index.module.scss'
 
 export const TokenInput = ({
@@ -11,8 +12,7 @@ export const TokenInput = ({
   marginY,
   id,
   label,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: any) => {
+}: TokenInputProps) => {
   const allClasses = classNames(classes.tokenInput, {
     [classes.marginY]: !!marginY,
   })

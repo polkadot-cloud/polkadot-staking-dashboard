@@ -85,7 +85,7 @@ export const RewardCalculator = () => {
             label={`${t('rewards.unitAmount', { ns: 'pages', unit })}`}
             onChange={onChange}
             placeholder={t('rewards.stakePlaceholder', { ns: 'pages' })}
-            value={stakeAmount || ''}
+            value={String(stakeAmount || 0)}
             marginY
           />{' '}
           <h3 style={{ padding: '0 0.5rem' }}>
