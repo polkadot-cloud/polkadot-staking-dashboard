@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { Overview } from './Overview'
-import { PayoutHistory } from './PayoutHistory'
+import { RecentPayouts } from './RecentPayouts'
 import { Wrapper } from './Wrappers'
 import type { PayoutGraphData } from './types'
 
@@ -112,7 +112,7 @@ export const Rewards = () => {
             onClick: () => setActiveTab(0),
           },
           {
-            title: t('payouts.payoutHistory', { ns: 'pages' }),
+            title: t('payouts.recentPayouts', { ns: 'pages' }),
             active: activeTab === 1,
             onClick: () => setActiveTab(1),
           },
@@ -125,7 +125,7 @@ export const Rewards = () => {
           loading={loading}
         />
       )}
-      {activeTab === 1 && <PayoutHistory {...pageProps} />}
+      {activeTab === 1 && <RecentPayouts {...pageProps} />}
     </Wrapper>
   )
 }

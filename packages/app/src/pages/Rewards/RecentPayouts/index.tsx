@@ -7,7 +7,7 @@ import { Page } from 'ui-core/base'
 import type { PageProps } from '../types'
 import { PayoutList } from './PayoutList'
 
-export const PayoutHistory = (props: PageProps) => {
+export const RecentPayouts = (props: PageProps) => {
   const { payoutsList } = props
   const { t } = useTranslation('pages')
 

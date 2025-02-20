@@ -20,7 +20,7 @@ import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ContentWrapper } from '../Networks/Wrapper'
 
-const DEFAULT_TOKEN_INPUT = 100
+const DEFAULT_TOKEN_INPUT = 1000
 
 export const RewardCalculator = () => {
   const { t } = useTranslation()
