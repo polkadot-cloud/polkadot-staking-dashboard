@@ -64,7 +64,11 @@ export const RewardCalculator = () => {
     : annualRewardBase / 365
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setStakeAmount(Number(e.target.value || 0))
+    const isNumber = !isNaN(Number(e.target.value))
+    if (!isNumber) {
+      return
+    }
+    setStakeAmount(Number(e.target.value))
   }
 
   return (

@@ -5,9 +5,17 @@
   &.marginY {
     margin: 1rem 0 1.25rem 0;
   }
+
+  &:focus-within label {
+    color: var(--accent-color-primary);
+  }
+  
   > label {
     color: var(--text-color-secondary);
     font-family: InterSemiBold, sans-serif; 
+    &:focus {
+      color: var(--accent-color-primary);
+    }
   }
   > input {
     border: 1px solid var(--border-primary-color);
@@ -18,5 +26,9 @@
     width: 100%;
     font-size: 1.3rem;
     margin-top: 0.5rem;
+
+    &:focus {
+      border-color: var(--accent-color-primary);
+    }
   }
 }
