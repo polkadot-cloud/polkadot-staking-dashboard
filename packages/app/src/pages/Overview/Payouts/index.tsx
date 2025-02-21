@@ -94,7 +94,7 @@ export const Payouts = () => {
           <StatusLabel
             status="active_service"
             statusFor="staking_api"
-            title={t('common.stakingApiDisabled')}
+            title={t('stakingApiDisabled')}
             topOffset="37%"
           />
         ) : (

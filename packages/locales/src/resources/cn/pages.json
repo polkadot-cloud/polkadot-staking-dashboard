@@ -1,6 +1,5 @@
 {
   "pages": {
-    "common": { "stakingApiDisabled": "Staking API己断开" },
     "community": {
       "bio": "简介",
       "connecting": "连接中",
@@ -249,6 +248,7 @@
       "unitAmount": "{{unit}}数量：",
       "useCustomAmount": "自定义金额"
     },
+    "stakingApiDisabled": "Staking API己断开",
     "validators": {
       "activeValidators": "活跃验证人",
       "allValidators": "所有验证人",

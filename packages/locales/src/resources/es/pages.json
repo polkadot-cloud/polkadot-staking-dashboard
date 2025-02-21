@@ -1,6 +1,5 @@
 {
   "pages": {
-    "common": { "stakingApiDisabled": "API de Staking Desactivada" },
     "community": {
       "bio": "Bio",
       "connecting": "Conectando",
@@ -252,6 +251,7 @@
       "unitAmount": "{{unit}} Cantidad",
       "useCustomAmount": "Usar Cantidad Personalizada"
     },
+    "stakingApiDisabled": "API de Staking Desactivada",
     "validators": {
       "activeValidators": "Validadores Activos",
       "allValidators": "Todos los Validadores",
