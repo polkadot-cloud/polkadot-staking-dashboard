@@ -57,7 +57,7 @@ export const Entity = () => {
     <Page.Row>
       <Page.Heading>
         <ButtonSecondary
-          text={t('community.goBack')}
+          text={t('goBack')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
@@ -69,7 +69,7 @@ export const Entity = () => {
       <CardWrapper>
         {!isReady ? (
           <div className="item">
-            <h3>{t('community.connecting')}...</h3>
+            <h3>{t('connecting')}...</h3>
           </div>
         ) : (
           <>
@@ -77,8 +77,8 @@ export const Entity = () => {
               <div className="item">
                 <h3>
                   {validators.length
-                    ? `${t('community.fetchingValidators')}...`
-                    : t('community.noValidators')}
+                    ? `${t('fetchingValidators')}...`
+                    : t('noValidators')}
                 </h3>
               </div>
             )}

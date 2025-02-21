@@ -14,6 +14,7 @@ export const Scroll = forwardRef(
     ref?: ForwardedRef<HTMLDivElement>
   ) => {
     const allClasses = classNames(classes.scroll, commonClasses.scrollBar, {
+      [classes.xs]: size === 'xs',
       [classes.lg]: size === 'lg',
       [classes.xl]: size === 'xl',
     })

@@ -22,7 +22,7 @@ export const TotalValidators = () => {
   }
 
   const params = {
-    label: t('validators.totalValidators'),
+    label: t('totalValidators'),
     stat: {
       value: totalValidators.toNumber(),
       total: maxValidatorsCount.toNumber(),

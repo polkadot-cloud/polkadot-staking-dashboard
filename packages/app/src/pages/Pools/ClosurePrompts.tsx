@@ -48,21 +48,21 @@ export const ClosurePrompts = () => {
           }}
         >
           <div className="content">
-            <h3>{t('pools.destroyPool')}</h3>
+            <h3>{t('destroyPool')}</h3>
             <h4>
-              {t('pools.leftThePool')}.{' '}
+              {t('leftThePool')}.{' '}
               {targets.length > 0
-                ? t('pools.stopNominating')
+                ? t('stopNominating')
                 : depositorCanWithdraw
-                  ? t('pools.closePool')
+                  ? t('closePool')
                   : depositorCanUnbond
-                    ? t('pools.unbondYourFunds')
-                    : t('pools.withdrawUnlock')}
+                    ? t('unbondYourFunds')
+                    : t('withdrawUnlock')}
             </h4>
             <ButtonRow yMargin>
               <ButtonPrimary
                 marginRight
-                text={t('pools.unbond')}
+                text={t('unbond')}
                 disabled={
                   syncing || (!depositorCanWithdraw && !depositorCanUnbond)
                 }
@@ -78,7 +78,7 @@ export const ClosurePrompts = () => {
                 iconLeft={faLockOpen}
                 text={
                   depositorCanWithdraw
-                    ? t('pools.unlocked')
+                    ? t('unlocked')
                     : String(totalUnlockChunks ?? 0)
                 }
                 disabled={syncing || !isBonding()}

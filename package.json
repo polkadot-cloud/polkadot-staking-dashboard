@@ -31,18 +31,18 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^15.13.0",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.1",
     "prettier-plugin-organize-imports": "^4.1.0",
     "sass": "1.77.6",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.23.0",
-    "vite": "^6.0.11"
+    "vite": "^6.1.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@polkadot-api/merkleize-metadata": "^1.1.13",
-    "@tanstack/react-query": "^5.66.0",
+    "@tanstack/react-query": "^5.66.5",
     "@w3ux/hooks": "^1.4.0",
     "@w3ux/react-polkicon": "^2.0.1-alpha.0",
     "@w3ux/utils": "^1.2.0",

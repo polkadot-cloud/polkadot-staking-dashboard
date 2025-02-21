@@ -23,7 +23,8 @@ export const Wrapper = styled(motion.div)`
     margin: 0.7rem 0.2rem 0.5rem 0;
     padding: 0.65rem 0rem;
 
-    &.success {
+    &.success,
+    &.accent {
       border: 1px solid var(--accent-color-primary);
     }
     &.warning {
@@ -34,9 +35,9 @@ export const Wrapper = styled(motion.div)`
   .dotlottie {
     color: var(--text-color-primary);
     margin-left: 0.25rem;
-    margin-right: 0.65rem;
-    width: 1.35rem;
-    height: 1.35rem;
+    margin-right: 0.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
     .fa-icon {
       margin: 0 0.15rem;
     }
@@ -51,48 +52,6 @@ export const Wrapper = styled(motion.div)`
     margin: 0;
     padding: 0;
     line-height: 1.35rem;
-  }
-  .action {
-    color: var(--status-success-color);
-    display: flex;
-    flex: 1;
-    font-size: 0.88rem;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-    margin-right: 0.4rem;
-    opacity: 0.7;
-
-    > span {
-      &.success {
-        color: var(--accent-color-primary);
-        border: 1px solid var(--accent-color-primary);
-      }
-      &.warning {
-        color: var(--accent-color-secondary);
-        border: 1px solid var(--accent-color-secondary);
-      }
-      border-radius: 0.5rem;
-      padding: 0.15rem 0.5rem;
-    }
-
-    &.success {
-      svg {
-        color: var(--status-success-color);
-      }
-    }
-    &.warning {
-      svg {
-        color: var(--accent-color-secondary);
-      }
-    }
-    &.minimised {
-      > svg {
-        flex: 0;
-        position: absolute;
-        right: -3px;
-        top: -4px;
-      }
-    }
   }
 
   &.active {

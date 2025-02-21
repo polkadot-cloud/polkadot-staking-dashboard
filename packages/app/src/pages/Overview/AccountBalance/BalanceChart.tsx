@@ -15,12 +15,12 @@ import { useSyncing } from 'hooks/useSyncing'
 import { BarSegment } from 'library/BarChart/BarSegment'
 import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
+import { FiatValue } from 'library/FiatValue'
 import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
 import { CardHeader, CardLabel } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { Value } from './Value'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
@@ -135,7 +135,7 @@ export const BalanceChart = () => {
   return (
     <>
       <CardHeader>
-        <h4>{t('overview.balance')}</h4>
+        <h4>{t('balance')}</h4>
         <h2>
           <Token />
           <Odometer
@@ -144,7 +144,10 @@ export const BalanceChart = () => {
           />
           <CardLabel>
             {plugins.includes('staking_api') && network !== 'westend' ? (
-              <Value totalBalance={totalBalance} />
+              <FiatValue
+                tokenBalance={totalBalance.toNumber()}
+                currency="USD"
+              />
             ) : null}
           </CardLabel>
         </h2>
@@ -152,12 +155,12 @@ export const BalanceChart = () => {
       <BarChartWrapper>
         <Legend>
           {isNominating ? (
-            <LegendItem dataClass="d1" label={t('overview.nominating')} />
+            <LegendItem dataClass="d1" label={t('nominating')} />
           ) : null}
           {inPool.isGreaterThan(0) ? (
-            <LegendItem dataClass="d2" label={t('overview.inPool')} />
+            <LegendItem dataClass="d2" label={t('inPool')} />
           ) : null}
-          <LegendItem dataClass="d4" label={t('overview.notStaking')} />
+          <LegendItem dataClass="d4" label={t('notStaking')} />
         </Legend>
         <Bar>
           <BarSegment
@@ -193,7 +196,7 @@ export const BalanceChart = () => {
             }}
           >
             <Legend>
-              <LegendItem label={t('overview.free')} helpKey="Your Balance" />
+              <LegendItem label={t('free')} helpKey="Your Balance" />
             </Legend>
             <Bar>
               <BarSegment
@@ -213,10 +216,7 @@ export const BalanceChart = () => {
               }}
             >
               <Legend>
-                <LegendItem
-                  label={t('overview.locked')}
-                  helpKey="Reserve Balance"
-                />
+                <LegendItem label={t('locked')} helpKey="Reserve Balance" />
               </Legend>
               <Bar>
                 <BarSegment
@@ -241,7 +241,7 @@ export const BalanceChart = () => {
                 label=""
                 button={
                   <ButtonTertiary
-                    text={t('overview.reserveBalance')}
+                    text={t('reserveBalance')}
                     onClick={() =>
                       openModal({ key: 'UpdateReserve', size: 'sm' })
                     }
