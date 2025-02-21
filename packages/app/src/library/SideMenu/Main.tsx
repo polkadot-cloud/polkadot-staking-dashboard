@@ -19,7 +19,7 @@ import { Heading } from './Heading/Heading'
 import { Primary } from './Primary'
 
 export const Main = () => {
-  const { t } = useTranslation('base')
+  const { t } = useTranslation('app')
   const { syncing } = useSyncing()
   const { pathname } = useLocation()
   const { inPool } = useActivePool()

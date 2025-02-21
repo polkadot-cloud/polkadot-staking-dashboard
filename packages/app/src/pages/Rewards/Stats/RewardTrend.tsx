@@ -73,7 +73,7 @@ export const RewardTrend = () => {
   }
 
   const params = {
-    label: t('rewards.last30DayReward'),
+    label: t('last30DayReward'),
     value: new BigNumber(planckToUnit(value, units))
       .decimalPlaces(3)
       .toFormat(),

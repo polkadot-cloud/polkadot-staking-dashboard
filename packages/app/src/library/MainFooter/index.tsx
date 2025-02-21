@@ -22,7 +22,7 @@ import { TokenPrice } from './TokenPrice'
 import { Summary, Wrapper } from './Wrappers'
 
 export const MainFooter = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { plugins } = usePlugins()
   const { network } = useNetwork()
   const { openPromptWith } = usePrompt()

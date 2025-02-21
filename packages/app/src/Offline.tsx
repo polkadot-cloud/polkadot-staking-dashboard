@@ -11,7 +11,7 @@ import { Offline as Wrapper } from 'ui-core/base'
 import { useEventListener } from 'usehooks-ts'
 
 export const Offline = () => {
-  const { t } = useTranslation('base')
+  const { t } = useTranslation('app')
   const [offline, setOffline] = useState<boolean>(false)
 
   const handleOnlineStatus = (e: Event): void => {

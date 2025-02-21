@@ -20,7 +20,7 @@ export const BondInput = ({
   value = '0',
   syncing = false,
 }: BondInputProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     networkData: { unit },
   } = useNetwork()

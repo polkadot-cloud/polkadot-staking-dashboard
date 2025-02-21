@@ -55,7 +55,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                     }}
                     disabled={nominateButtonDisabled}
                   >
-                    {t('nominate.startNominating', { ns: 'pages' })}
+                    {t('startNominating', { ns: 'pages' })}
                   </button>
                 </div>
               </div>
@@ -64,7 +64,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
               <div className="buttons">
                 <div className={`button secondary standalone`}>
                   <button onClick={() => navigate('/validators')}>
-                    {t('browseValidators', { ns: 'library' })}
+                    {t('browseValidators', { ns: 'app' })}
                     <FontAwesomeIcon
                       icon={faChevronRight}
                       transform="shrink-4"
