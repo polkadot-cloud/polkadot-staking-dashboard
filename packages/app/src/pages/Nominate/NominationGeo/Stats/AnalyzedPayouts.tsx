@@ -14,7 +14,7 @@ export const AnalyzedPayouts = ({ data }: AnalyzedPayoutsProps) => {
   const { unit } = useNetwork().networkData
 
   const params = {
-    label: t('decentralization.totalPayoutsAnalysed'),
+    label: t('totalPayoutsAnalysed'),
     value:
       data?.nodeDistributionDetail?.reduce(
         (acc, node) => acc + node.TokenRewards,

@@ -15,7 +15,7 @@ export const LastEraPayout = () => {
   const lastRewardUnit = planckToUnitBn(lastReward, units).toNumber()
 
   const params = {
-    label: t('payouts.lastEraPayout'),
+    label: t('lastEraPayout'),
     value: lastRewardUnit,
     decimals: 3,
     unit,

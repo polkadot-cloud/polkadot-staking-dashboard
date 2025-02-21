@@ -31,7 +31,7 @@ export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
         transition={{ duration: 0.3 }}
       >
         {address === null ? (
-          <h4>{t('pools.notSet')}</h4>
+          <h4>{t('notSet')}</h4>
         ) : synced && display !== null ? (
           <>
             <div className="icon">

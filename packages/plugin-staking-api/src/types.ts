@@ -84,6 +84,21 @@ export type CanFastUnstakeResult = Query & {
   }
 }
 
+export type RewardTrendResult = Query & {
+  data: {
+    rewardTrend: RewardTrend
+  }
+}
+
+export interface RewardTrend {
+  reward: string
+  previous: string
+  change: {
+    percent: string
+    value: string
+  }
+}
+
 export type ActiveValidatorRanksResult = Query & {
   data: {
     activeValidatorRanks: ActiveValidatorRank[]

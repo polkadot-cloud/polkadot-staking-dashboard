@@ -45,13 +45,13 @@ export const Input = ({
         <input
           className="underline"
           style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
-          placeholder={t('pools.poolName')}
+          placeholder={t('poolName')}
           type="text"
           onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}
         />
       </div>
-      <p>{t('pools.poolNameSupport')}</p>
+      <p>{t('poolNameSupport')}</p>
     </>
   )
 }

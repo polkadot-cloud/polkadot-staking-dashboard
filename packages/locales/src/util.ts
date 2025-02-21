@@ -58,7 +58,7 @@ export const getResources = (lng: string, i18n?: i18n) => {
       JSON.stringify({ l: lng, r: fallbackResources })
     )
     // Add language to i18n if it does not exist.
-    if (i18n && !i18n.hasResourceBundle(lng, 'base')) {
+    if (i18n && !i18n.hasResourceBundle(lng, 'app')) {
       addI18nresources(i18n, lng, fallbackResources)
     }
   } else {

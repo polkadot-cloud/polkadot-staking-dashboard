@@ -11,7 +11,7 @@ import { Label } from 'ui-core/list'
 import type { ParaValidatorProps } from '../types'
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { sessionParaValidators } = useValidators()
   const { setTooltipTextAndOpen } = useTooltip()
 

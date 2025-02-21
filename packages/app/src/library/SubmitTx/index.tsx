@@ -55,18 +55,18 @@ export const SubmitTx = ({
 
   // Default to active account
   let signingOpts = {
-    label: t('signer', { ns: 'library' }),
+    label: t('signer', { ns: 'app' }),
     who: getAccount(activeAccount),
   }
 
   if (activeProxy && proxySupported) {
     signingOpts = {
-      label: t('signedByProxy', { ns: 'library' }),
+      label: t('signedByProxy', { ns: 'app' }),
       who: getAccount(activeProxy),
     }
   } else if (!(activeProxy && proxySupported) && fromController) {
     signingOpts = {
-      label: t('signedByController', { ns: 'library' }),
+      label: t('signedByController', { ns: 'app' }),
       who: getAccount(controller),
     }
   }
@@ -94,7 +94,7 @@ export const SubmitTx = ({
       label={signingOpts.label}
       name={signingOpts.who?.name || ''}
       notEnoughFunds={notEnoughFunds}
-      dangerMessage={`${t('notEnough', { ns: 'library' })} ${unit}`}
+      dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
       SignerComponent={
         requiresManualSign(from) ? (
           <ManualSign

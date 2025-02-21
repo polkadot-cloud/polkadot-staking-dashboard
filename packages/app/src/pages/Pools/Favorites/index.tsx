@@ -44,9 +44,7 @@ export const PoolFavorites = () => {
     <Page.Row>
       <CardWrapper>
         {favoritesList === null || syncing ? (
-          <ListStatusHeader>
-            {t('pools.fetchingFavoritePools')}...
-          </ListStatusHeader>
+          <ListStatusHeader>{t('fetchingFavoritePools')}...</ListStatusHeader>
         ) : (
           isReady &&
           (favoritesList.length > 0 ? (
@@ -54,7 +52,7 @@ export const PoolFavorites = () => {
               <PoolList pools={favoritesList} allowMoreCols itemsPerPage={30} />
             </ListProvider>
           ) : (
-            <ListStatusHeader>{t('pools.noFavorites')}</ListStatusHeader>
+            <ListStatusHeader>{t('noFavorites')}</ListStatusHeader>
           ))
         )}
       </CardWrapper>

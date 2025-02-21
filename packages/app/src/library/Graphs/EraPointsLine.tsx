@@ -88,7 +88,7 @@ export const EraPointsLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('date', { ns: 'base' })}`,
+          text: `${t('date', { ns: 'app' })}`,
         },
       },
       y: {
@@ -108,7 +108,7 @@ export const EraPointsLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('eraPoints', { ns: 'library' })}`,
+          text: `${t('eraPoints', { ns: 'app' })}`,
         },
       },
     },
@@ -130,7 +130,7 @@ export const EraPointsLine = ({
         callbacks: {
           title: () => [],
           label: (context: AnyJson) =>
-            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints', { ns: 'library' })}`,
+            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints', { ns: 'app' })}`,
         },
         intersect: false,
         interaction: {
@@ -149,7 +149,7 @@ export const EraPointsLine = ({
     }),
     datasets: [
       {
-        label: t('era', { ns: 'library' }),
+        label: t('era', { ns: 'app' }),
         data: dataset,
         borderColor: color,
         backgroundColor: color,

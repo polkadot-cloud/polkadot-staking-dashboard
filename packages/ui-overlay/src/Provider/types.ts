@@ -66,7 +66,7 @@ export type ModalStatus =
 
 export type ConfigOptions = Record<string, AnyJson>
 
-export type ModalSize = 'sm' | 'lg' | 'xl'
+export type ModalSize = 'xs' | 'sm' | 'lg' | 'xl'
 
 export interface ModalConfig {
   key: string
