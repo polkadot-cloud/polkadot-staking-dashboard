@@ -49,7 +49,7 @@ export const PoolStatus = () => {
     : !poolNominating
       ? t('pools.inactivePoolNotNominating')
       : nominees.active.length
-        ? `${t('pools.nominatingAnd')} ${
+        ? `${t('pools.poolsNominatingAnd')} ${
             earningRewards
               ? t('pools.earningRewards')
               : t('pools.notEarningRewards')
