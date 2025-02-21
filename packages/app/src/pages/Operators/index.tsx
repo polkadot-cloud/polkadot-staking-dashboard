@@ -24,7 +24,7 @@ export const CommunityInner = ({ page }: PageProps) => {
   )
 }
 
-export const Community = (props: PageProps) => (
+export const Operators = (props: PageProps) => (
   <CommunitySectionsProvider>
     <CommunityInner {...props} />
   </CommunitySectionsProvider>
