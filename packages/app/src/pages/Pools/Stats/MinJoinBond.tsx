@@ -15,7 +15,7 @@ export const MinJoinBond = () => {
   const { minJoinBond } = useApi().poolsConfig
 
   const params = {
-    label: t('pools.minimumToJoinPool'),
+    label: t('minimumToJoinPool'),
     value: planckToUnitBn(minJoinBond, units).toNumber(),
     decimals: 3,
     unit: ` ${unit}`,

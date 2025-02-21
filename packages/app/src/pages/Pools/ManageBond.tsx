@@ -54,7 +54,7 @@ export const ManageBond = () => {
     <>
       <CardHeader>
         <h4>
-          {t('pools.bondedFunds')}
+          {t('bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
         <h2>

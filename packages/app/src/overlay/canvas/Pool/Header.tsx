@@ -113,7 +113,7 @@ export const Header = ({
           sticky={false}
           tabs={[
             {
-              title: t('pools.overview', { ns: 'pages' }),
+              title: t('overview', { ns: 'pages' }),
               active: activeTab === 0,
               onClick: () => setActiveTab(0),
             },

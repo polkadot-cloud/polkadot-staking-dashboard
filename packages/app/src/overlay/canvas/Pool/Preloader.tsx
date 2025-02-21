@@ -44,9 +44,9 @@ export const Preloader = () => {
         />
       </Head>
       <Title>
-        <h1>{t('pools.pools')}</h1>
+        <h1>{t('pools')}</h1>
         <h3>
-          {t('pools.joinPoolHeading', {
+          {t('joinPoolHeading', {
             totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
             totalPoolPoints: totalPoolPointsUnit,
             unit,

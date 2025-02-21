@@ -48,7 +48,7 @@ export const ManagePool = () => {
                   size="md"
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
-                  text={t('pools.nominate', { ns: 'pages' })}
+                  text={t('nominate', { ns: 'pages' })}
                   disabled={!canNominate}
                   onClick={() =>
                     openCanvas({
