@@ -9,7 +9,7 @@ import type { ButtonCopyProps } from 'ui-buttons/src/types'
 export const ButtonCopy = (
   props: Omit<ButtonCopyProps, 'tooltipText' | 'tooltipPortalContainer'>
 ) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { themeElementRef } = useTheme()
 
   return (

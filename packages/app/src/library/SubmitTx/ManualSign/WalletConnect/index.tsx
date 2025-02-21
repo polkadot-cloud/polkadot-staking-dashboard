@@ -28,7 +28,7 @@ export const WalletConnect = ({
   notEnoughFunds: boolean
   submitted: boolean
 }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getTxSubmission } = useTxMeta()
   const { accountHasSigner } = useImportedAccounts()
   const { wcSessionActive, connectProvider, fetchAddresses } =

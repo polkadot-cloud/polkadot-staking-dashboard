@@ -30,7 +30,7 @@ export const Settings = () => {
               <StatusButton
                 key={plugin}
                 checked={plugins.includes(plugin)}
-                label={t(`plugin.${plugin}`, { ns: 'base' })}
+                label={t(`plugin.${plugin}`, { ns: 'app' })}
                 onClick={() => togglePlugin(plugin)}
               />
             )

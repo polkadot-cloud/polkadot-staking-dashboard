@@ -18,7 +18,7 @@ export const Heading = ({
   disabled,
   handleReset,
 }: HeadingProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
 
   return (
     <HeadingWrapper>

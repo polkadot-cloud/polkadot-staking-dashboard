@@ -14,7 +14,7 @@ export const Selectable = ({
   canSelect,
   displayFor,
 }: SelectableProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const provider = useList()
   const { isFastUnstaking } = useUnstaking()
 
