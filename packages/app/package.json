@@ -37,7 +37,7 @@
     "compare-versions": "^6.1.1",
     "consts": "workspace:*",
     "html5-qrcode": "^2.3.8",
-    "i18next-browser-languagedetector": "^8.0.2",
+    "i18next-browser-languagedetector": "^8.0.3",
     "locales": "workspace:*",
     "plugin-staking-api": "workspace:*",
     "polkadot-api": "^1.8.4",
@@ -57,8 +57,8 @@
     "ui-overlay": "workspace:*",
     "usehooks-ts": "^3.0.2",
     "utils": "workspace:*",
-    "viem": "^2.22.19",
-    "wagmi": "^2.14.8",
+    "viem": "^2.23.2",
+    "wagmi": "^2.14.11",
     "xxhash-wasm": "^1.0.2"
   },
   "devDependencies": {
