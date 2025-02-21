@@ -69,18 +69,18 @@ export const useNominationStatus = () => {
     // Determine the localised message to display based on the nomination status.
     let str
     if (inSetup() || syncing) {
-      str = t('nominate.notNominating', { ns: 'pages' })
+      str = t('notNominating', { ns: 'pages' })
     } else if (!nominees.length) {
-      str = t('nominate.noNominationsSet', { ns: 'pages' })
+      str = t('noNominationsSet', { ns: 'pages' })
     } else if (activeNominees.length) {
-      str = t('nominate.nominatingAnd', { ns: 'pages' })
+      str = t('nominatingAnd', { ns: 'pages' })
       if (earningRewards) {
-        str += ` ${t('nominate.earningRewards', { ns: 'pages' })}`
+        str += ` ${t('earningRewards', { ns: 'pages' })}`
       } else {
-        str += ` ${t('nominate.notEarningRewards', { ns: 'pages' })}`
+        str += ` ${t('notEarningRewards', { ns: 'pages' })}`
       }
     } else {
-      str = t('nominate.waitingForActiveNominations', { ns: 'pages' })
+      str = t('waitingForActiveNominations', { ns: 'pages' })
     }
 
     return {

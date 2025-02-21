@@ -74,17 +74,17 @@ export const RewardCalculator = () => {
   return (
     <div style={{ padding: '0 0.5rem' }}>
       <Title
-        title={t('rewards.rewardCalculator', { ns: 'pages' })}
+        title={t('rewardCalculator', { ns: 'pages' })}
         style={{ paddingLeft: '0.5rem' }}
       />
       <Padding horizontalOnly>
         <ContentWrapper>
-          <h4>{t('rewards.rewardCalcSubtitle', { ns: 'pages', unit })}</h4>
+          <h4>{t('rewardCalcSubtitle', { ns: 'pages', unit })}</h4>
           <TokenInput
             id="reward-calc-token-input"
-            label={`${t('rewards.unitAmount', { ns: 'pages', unit })}`}
+            label={`${t('unitAmount', { ns: 'pages', unit })}`}
             onChange={onChange}
-            placeholder={t('rewards.stakePlaceholder', { ns: 'pages' })}
+            placeholder={t('stakePlaceholder', { ns: 'pages' })}
             value={String(stakeAmount || 0)}
             marginY
           />{' '}
@@ -103,7 +103,7 @@ export const RewardCalculator = () => {
                 }}
                 transform={'grow-6'}
               />
-              {t('rewards.deductAvgCommissionOf', {
+              {t('deductAvgCommissionOf', {
                 ns: 'pages',
                 commission: avgCommission,
               })}
@@ -112,8 +112,7 @@ export const RewardCalculator = () => {
           <Separator lg />
           <CardHeader>
             <h4>
-              {t('rewards.daily', { ns: 'pages' })}{' '}
-              {t('rewards', { ns: 'modals' })}
+              {t('daily', { ns: 'pages' })} {t('rewards', { ns: 'modals' })}
             </h4>
             <TokenFiat Token={<Token />}>
               <h1>
@@ -133,8 +132,7 @@ export const RewardCalculator = () => {
           <Separator lg />
           <CardHeader>
             <h4>
-              {t('rewards.monthly', { ns: 'pages' })}{' '}
-              {t('rewards', { ns: 'modals' })}
+              {t('monthly', { ns: 'pages' })} {t('rewards', { ns: 'modals' })}
             </h4>
             <TokenFiat Token={<Token />}>
               <h1>
@@ -154,8 +152,7 @@ export const RewardCalculator = () => {
           <Separator lg />
           <CardHeader>
             <h4>
-              {t('rewards.annual', { ns: 'pages' })}{' '}
-              {t('rewards', { ns: 'modals' })}
+              {t('annual', { ns: 'pages' })} {t('rewards', { ns: 'modals' })}
             </h4>
             <TokenFiat Token={<Token />}>
               <h1>

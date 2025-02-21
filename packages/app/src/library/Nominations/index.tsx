@@ -85,13 +85,13 @@ export const Nominations = ({
     <Wrapper>
       <CardHeader action margin>
         <h3>
-          {isPool ? t('nominate.poolNominations') : t('nominate.nominations')}
+          {isPool ? t('poolNominations') : t('nominations')}
           <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
         </h3>
         {displayBtns && (
           <ButtonRow>
             <ButtonPrimary
-              text={t('nominate.stop')}
+              text={t('stop')}
               size="md"
               iconLeft={faStopCircle}
               iconTransform="grow-1"
@@ -108,7 +108,7 @@ export const Nominations = ({
               }
             />
             <ButtonPrimary
-              text={t('nominate.manage')}
+              text={t('manage')}
               size="md"
               iconLeft={faCog}
               iconTransform="grow-1"
@@ -131,9 +131,9 @@ export const Nominations = ({
         )}
       </CardHeader>
       {!isPool && syncing ? (
-        <ListStatusHeader>{`${t('nominate.syncing')}...`}</ListStatusHeader>
+        <ListStatusHeader>{`${t('syncing')}...`}</ListStatusHeader>
       ) : !nominator ? (
-        <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>
+        <ListStatusHeader>{t('notNominating')}.</ListStatusHeader>
       ) : (nominated?.length || 0) > 0 ? (
         <NominationList
           bondFor={bondFor}
@@ -141,9 +141,9 @@ export const Nominations = ({
           nominator={nominator}
         />
       ) : poolDestroying ? (
-        <ListStatusHeader>{t('nominate.poolDestroy')}</ListStatusHeader>
+        <ListStatusHeader>{t('poolDestroy')}</ListStatusHeader>
       ) : (
-        <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>
+        <ListStatusHeader>{t('notNominating')}.</ListStatusHeader>
       )}
     </Wrapper>
   )

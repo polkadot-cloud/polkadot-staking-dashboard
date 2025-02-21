@@ -135,7 +135,7 @@ export const BalanceChart = () => {
   return (
     <>
       <CardHeader>
-        <h4>{t('overview.balance')}</h4>
+        <h4>{t('balance')}</h4>
         <h2>
           <Token />
           <Odometer
@@ -155,12 +155,12 @@ export const BalanceChart = () => {
       <BarChartWrapper>
         <Legend>
           {isNominating ? (
-            <LegendItem dataClass="d1" label={t('overview.nominating')} />
+            <LegendItem dataClass="d1" label={t('nominating')} />
           ) : null}
           {inPool.isGreaterThan(0) ? (
-            <LegendItem dataClass="d2" label={t('overview.inPool')} />
+            <LegendItem dataClass="d2" label={t('inPool')} />
           ) : null}
-          <LegendItem dataClass="d4" label={t('overview.notStaking')} />
+          <LegendItem dataClass="d4" label={t('notStaking')} />
         </Legend>
         <Bar>
           <BarSegment
@@ -196,7 +196,7 @@ export const BalanceChart = () => {
             }}
           >
             <Legend>
-              <LegendItem label={t('overview.free')} helpKey="Your Balance" />
+              <LegendItem label={t('free')} helpKey="Your Balance" />
             </Legend>
             <Bar>
               <BarSegment
@@ -216,10 +216,7 @@ export const BalanceChart = () => {
               }}
             >
               <Legend>
-                <LegendItem
-                  label={t('overview.locked')}
-                  helpKey="Reserve Balance"
-                />
+                <LegendItem label={t('locked')} helpKey="Reserve Balance" />
               </Legend>
               <Bar>
                 <BarSegment
@@ -244,7 +241,7 @@ export const BalanceChart = () => {
                 label=""
                 button={
                   <ButtonTertiary
-                    text={t('overview.reserveBalance')}
+                    text={t('reserveBalance')}
                     onClick={() =>
                       openModal({ key: 'UpdateReserve', size: 'sm' })
                     }
