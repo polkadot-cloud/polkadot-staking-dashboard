@@ -1,23 +1,17 @@
 {
   "pages": {
+    "analyticsNotAvailable": "无法使用该分布式分析器",
+    "analyticsNotSupported": "此网络不支持该分布式分析器",
     "bio": "简介",
+    "byRegionCountryNetwork": "按地区、国家和网络",
     "connecting": "连接中",
-    "decentralization": {
-      "analyticsNotAvailable": "无法使用该分布式分析器",
-      "analyticsNotSupported": "此网络不支持该分布式分析器",
-      "byRegionCountryNetwork": "按地区、国家和网络",
-      "decentralizationPerNomination": "每个提名的地理位置",
-      "howDecentralizedIsYourNomination": "您的提名去中心化程度如何？",
-      "maxDaysAnalyzed": "分析的最大天数",
-      "maxErasAnalyzed": "最大分析Era数",
-      "nominationShareInRewards": "奖励份额",
-      "payoutDistribution": "收益分布",
-      "polkawatchDisabled": "Polkawatch己断开",
-      "totalPayoutsAnalysed": "总收益分析"
-    },
+    "decentralizationPerNomination": "每个提名的地理位置",
     "email": "邮箱",
     "fetchingValidators": "正在获取验证人信息",
     "goBack": "返回",
+    "howDecentralizedIsYourNomination": "您的提名去中心化程度如何？",
+    "maxDaysAnalyzed": "分析的最大天数",
+    "maxErasAnalyzed": "最大分析Era数",
     "noValidators": "不包含验证人",
     "nominate": {
       "activeNominations": "活跃提名人",
@@ -73,6 +67,7 @@
       "validator": "{{count}} 提名人",
       "waitingForActiveNominations": "等待有效提名"
     },
+    "nominationShareInRewards": "奖励份额",
     "overview": {
       "activeEra": "活跃 Era",
       "activeNominators": "活跃提名人",
@@ -120,6 +115,7 @@
       "unlocking": "正在解锁",
       "updateReserve": "更新预存"
     },
+    "payoutDistribution": "收益分布",
     "payouts": {
       "deductedFromBond": "从质押里扣除",
       "fromPool": "从提名池",
@@ -134,6 +130,7 @@
       "slashed": "除名",
       "subscanDisabled": "Subscan己断开"
     },
+    "polkawatchDisabled": "Polkawatch己断开",
     "pools": {
       "activePools": "活跃提名池",
       "address": "地址",
@@ -245,6 +242,7 @@
       "useCustomAmount": "自定义金额"
     },
     "stakingApiDisabled": "Staking API己断开",
+    "totalPayoutsAnalysed": "总收益分析",
     "validator": "{{count}} 个验证人",
     "validators": {
       "activeValidators": "活跃验证人",

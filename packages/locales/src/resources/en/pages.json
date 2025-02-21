@@ -1,23 +1,17 @@
 {
   "pages": {
+    "analyticsNotAvailable": "Analytics Not Available",
+    "analyticsNotSupported": "Analytics Not Supported",
     "bio": "Bio",
+    "byRegionCountryNetwork": "by Region, Country and Network",
     "connecting": "Connecting",
-    "decentralization": {
-      "analyticsNotAvailable": "Analytics Not Available",
-      "analyticsNotSupported": "Analytics Not Supported",
-      "byRegionCountryNetwork": "by Region, Country and Network",
-      "decentralizationPerNomination": "Geolocation Per Nomination",
-      "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
-      "maxDaysAnalyzed": "Max Days Analysed",
-      "maxErasAnalyzed": "Max Eras Analysed",
-      "nominationShareInRewards": "Share of rewards",
-      "payoutDistribution": "Payout Distribution",
-      "polkawatchDisabled": "Polkawatch Disabled",
-      "totalPayoutsAnalysed": "Total Payouts Analysed"
-    },
+    "decentralizationPerNomination": "Geolocation Per Nomination",
     "email": "Email",
     "fetchingValidators": "Fetching validators",
     "goBack": "Go Back",
+    "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
+    "maxDaysAnalyzed": "Max Days Analysed",
+    "maxErasAnalyzed": "Max Eras Analysed",
     "noValidators": "This entity contains no validators.",
     "nominate": {
       "activeNominations": "Active Nominations",
@@ -74,6 +68,7 @@
       "validator_other": "{{count}} Validators",
       "waitingForActiveNominations": "Waiting for Active Nominations"
     },
+    "nominationShareInRewards": "Share of rewards",
     "overview": {
       "activeEra": "Active Era",
       "activeNominators": "Active Nominators",
@@ -121,6 +116,7 @@
       "unlocking": "Unlocking",
       "updateReserve": "Update Reserve"
     },
+    "payoutDistribution": "Payout Distribution",
     "payouts": {
       "deductedFromBond": "Deducted from bond",
       "fromPool": "From Pool",
@@ -135,6 +131,7 @@
       "slashed": "Slashed",
       "subscanDisabled": "Subscan Disabled"
     },
+    "polkawatchDisabled": "Polkawatch Disabled",
     "pools": {
       "activePools": "Active Pools",
       "address": "Address",
@@ -247,6 +244,7 @@
       "useCustomAmount": "Use Custom Amount"
     },
     "stakingApiDisabled": "Staking API Disabled",
+    "totalPayoutsAnalysed": "Total Payouts Analysed",
     "validator_one": "{{count}} Validator",
     "validator_other": "{{count}} Validators",
     "validators": {

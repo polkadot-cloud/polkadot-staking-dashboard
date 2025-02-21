@@ -1,23 +1,17 @@
 {
   "pages": {
+    "analyticsNotAvailable": "Análisis no disponible",
+    "analyticsNotSupported": "Análisis no soportado",
     "bio": "Bio",
+    "byRegionCountryNetwork": "por Región, País y Red",
     "connecting": "Conectando",
-    "decentralization": {
-      "analyticsNotAvailable": "Análisis no disponible",
-      "analyticsNotSupported": "Análisis no soportado",
-      "byRegionCountryNetwork": "por Región, País y Red",
-      "decentralizationPerNomination": "Geolocalización Por Nominación",
-      "howDecentralizedIsYourNomination": "¿Qué tan descentralizada está tu nominación?",
-      "maxDaysAnalyzed": "Máximo de días analizados",
-      "maxErasAnalyzed": "Máximo de eras analizadas",
-      "nominationShareInRewards": "Reparto de las recompensas",
-      "payoutDistribution": "Distribución de pagos",
-      "polkawatchDisabled": "Polkawatch desactivado",
-      "totalPayoutsAnalysed": "Total de Pagos Analizados"
-    },
+    "decentralizationPerNomination": "Geolocalización Por Nominación",
     "email": "Correo electrónico",
     "fetchingValidators": "Obteniendo validadores",
     "goBack": "Volver",
+    "howDecentralizedIsYourNomination": "¿Qué tan descentralizada está tu nominación?",
+    "maxDaysAnalyzed": "Máximo de días analizados",
+    "maxErasAnalyzed": "Máximo de eras analizadas",
     "noValidators": "Esta entidad no contiene validadores.",
     "nominate": {
       "activeNominations": "Nominaciones Activas",
@@ -74,6 +68,7 @@
       "validator_other": "{{count}} Validadores",
       "waitingForActiveNominations": "Esperando nominaciones activas"
     },
+    "nominationShareInRewards": "Reparto de las recompensas",
     "overview": {
       "activeEra": "Era Activa",
       "activeNominators": "Nominadores Activos",
@@ -121,6 +116,7 @@
       "unlocking": "Desvinculando",
       "updateReserve": "Actualizar Reserva"
     },
+    "payoutDistribution": "Distribución de pagos",
     "payouts": {
       "deductedFromBond": "Deducido de la Vinculación",
       "fromPool": "Del Pool",
@@ -135,6 +131,7 @@
       "slashed": "Penalizado",
       "subscanDisabled": "Subscan Desactivado"
     },
+    "polkawatchDisabled": "Polkawatch desactivado",
     "pools": {
       "activePools": "Pools Activos",
       "address": "Dirección",
@@ -247,6 +244,7 @@
       "useCustomAmount": "Usar Cantidad Personalizada"
     },
     "stakingApiDisabled": "API de Staking Desactivada",
+    "totalPayoutsAnalysed": "Total de Pagos Analizados",
     "validator_one": "{{count}} Validador",
     "validator_other": "{{count}} Validadores",
     "validators": {
