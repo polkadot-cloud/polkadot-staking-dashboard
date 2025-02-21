@@ -18,7 +18,7 @@ export const PoolMemberBonded = ({
   batchKey: string
   batchIndex: number
 }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { units, unit } = useNetwork().networkData
 
   const poolMembers = meta[batchKey]?.poolMembers ?? []

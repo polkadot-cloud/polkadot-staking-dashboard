@@ -1106,14 +1106,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lottiefiles/dotlottie-react@npm:^0.12.3":
-  version: 0.12.3
-  resolution: "@lottiefiles/dotlottie-react@npm:0.12.3"
+"@lottiefiles/dotlottie-react@npm:^0.13.0":
+  version: 0.13.0
+  resolution: "@lottiefiles/dotlottie-react@npm:0.13.0"
   dependencies:
     "@lottiefiles/dotlottie-web": "npm:0.40.1"
   peerDependencies:
     react: ^17 || ^18 || ^19
-  checksum: 10c0/2b92c1af4c0c1dcc1bbab5ad11904a5ec6e2d13c3b2b67c83f3b97669a565086ef06c5dd496365790b425d57898613b0d5b8daff57c09e864e2ccb414fc7f0f8
+  checksum: 10c0/f89ad899ea5b5fa171b55d8b28daf91ab96f85b0e67cc0bd6ada3935152f5c445aaf89176b1047248ae0918f250ce6a14dab8657a6da52133ec8717b03ced6ef
   languageName: node
   linkType: hard
 
@@ -5572,7 +5572,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^6.7.2"
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
-    "@lottiefiles/dotlottie-react": "npm:^0.12.3"
+    "@lottiefiles/dotlottie-react": "npm:^0.13.0"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
     "@polkadot-api/signers-common": "npm:^0.1.5"
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"

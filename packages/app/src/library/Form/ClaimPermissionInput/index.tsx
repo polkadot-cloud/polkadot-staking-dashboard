@@ -13,7 +13,7 @@ export const ClaimPermissionInput = ({
   onChange,
   disabled = false,
 }: ClaimPermissionInputProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
 
   const claimPermissionConfig: ClaimPermissionConfig[] = [
     {

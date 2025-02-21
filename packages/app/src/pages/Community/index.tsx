@@ -10,7 +10,7 @@ import { Wrapper } from './Wrappers'
 import { CommunitySectionsProvider, useCommunitySections } from './context'
 
 export const CommunityInner = ({ page }: PageProps) => {
-  const { t } = useTranslation('base')
+  const { t } = useTranslation('app')
   const { activeSection } = useCommunitySections()
 
   const { key } = page

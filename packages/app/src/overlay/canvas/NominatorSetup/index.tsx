@@ -26,7 +26,7 @@ export const NominatorSetup = () => {
         />
       </Head>
       <Title>
-        <h1>{t('nominate.startNominating')}</h1>
+        <h1>{t('startNominating')}</h1>
       </Title>
       <CardWrapper className="canvas">
         <Payee section={1} />
