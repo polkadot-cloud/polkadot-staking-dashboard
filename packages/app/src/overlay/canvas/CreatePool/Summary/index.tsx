@@ -117,7 +117,9 @@ export const Summary = ({ section }: SetupStepProps) => {
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;
               {t('pools.nominating')}:
             </div>
-            <div>{t('nominate.validator', { count: nominations.length })}</div>
+            <div>
+              {t('nominate.validatorCount', { count: nominations.length })}
+            </div>
           </section>
           <section>
             <div>

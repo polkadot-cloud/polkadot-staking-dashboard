@@ -64,8 +64,8 @@
       "unstakePromptRevert": "Si ya no deseas desvincular, vuelve a vincular tu {{unit}} y comienza a nominar de nuevo.",
       "unstakePromptWaitingForUnlocks": "Esperando que los descompromisos estén disponibles para retirar",
       "update": "Actualizar",
-      "validator_one": "{{count}} Validador",
-      "validator_other": "{{count}} Validadores",
+      "validatorCount_one": "{{count}} Validador",
+      "validatorCount_other": "{{count}} Validadores",
       "waitingForActiveNominations": "Esperando nominaciones activas"
     },
     "nominationShareInRewards": "Reparto de las recompensas",

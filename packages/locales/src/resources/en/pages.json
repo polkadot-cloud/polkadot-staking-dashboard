@@ -64,8 +64,8 @@
       "unstakePromptRevert": "If you no longer wish to unstake, rebond your {{unit}} and start nominating again.",
       "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
       "update": "Update",
-      "validator_one": "{{count}} Validator",
-      "validator_other": "{{count}} Validators",
+      "validatorCount_one": "{{count}} Validator",
+      "validatorCount_other": "{{count}} Validators",
       "waitingForActiveNominations": "Waiting for Active Nominations"
     },
     "nominationShareInRewards": "Share of rewards",
