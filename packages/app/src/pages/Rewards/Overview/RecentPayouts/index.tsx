@@ -62,7 +62,7 @@ export const RecentPayouts = ({
   return (
     <>
       <CardHeader>
-        <h4>{t('overview.recentPayouts')}</h4>
+        <h4>{t('recentPayouts')}</h4>
         <h2>
           {payoutsFromDate && payoutsToDate ? (
             <>

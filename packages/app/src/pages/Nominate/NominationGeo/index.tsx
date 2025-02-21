@@ -129,9 +129,7 @@ export const NominationGeo = () => {
                 onClick={() => openHelp('Nomination Payout Distribution')}
               />
             </h4>
-            <h2>
-              {t('byRegionCountryNetwork', { ns: 'pages' })}
-            </h2>
+            <h2>{t('byRegionCountryNetwork', { ns: 'pages' })}</h2>
           </CardHeader>
           <GraphsWrapper style={{ minHeight: graphContainerMinHeight }}>
             {showDisabledLabel && (

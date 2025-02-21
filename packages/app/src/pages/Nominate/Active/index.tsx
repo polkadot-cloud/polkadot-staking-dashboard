@@ -69,7 +69,7 @@ export const Active = () => {
               <>
                 <CardHeader action margin>
                   <h3>
-                    {t('nominate.nominate', { ns: 'pages' })}
+                    {t('nominate', { ns: 'pages' })}
                     <ButtonHelp
                       marginLeft
                       onClick={() => openHelp('Nominations')}
@@ -80,7 +80,7 @@ export const Active = () => {
                       size="md"
                       iconLeft={faChevronCircleRight}
                       iconTransform="grow-1"
-                      text={`${t('nominate.nominate', { ns: 'pages' })}`}
+                      text={`${t('nominate', { ns: 'pages' })}`}
                       disabled={inSetup() || syncing || isFastUnstaking}
                       onClick={() =>
                         openCanvas({

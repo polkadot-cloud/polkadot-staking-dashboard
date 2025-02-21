@@ -37,7 +37,7 @@ export const ManagePool = () => {
           <>
             <CardHeader action margin>
               <h3>
-                {t('nominate.nominations', { ns: 'pages' })}
+                {t('nominations', { ns: 'pages' })}
                 <ButtonHelp
                   marginLeft
                   onClick={() => openHelp('Nominations')}

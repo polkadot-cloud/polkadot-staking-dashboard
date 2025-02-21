@@ -66,7 +66,7 @@ export const Payouts = () => {
   return (
     <>
       <CardHeader>
-        <h4>{t('overview.recentPayouts')}</h4>
+        <h4>{t('recentPayouts')}</h4>
         <h2>
           <Token />
           <Odometer
@@ -100,7 +100,7 @@ export const Payouts = () => {
         ) : (
           <StatusLabel
             status="sync_or_setup"
-            title={t('overview.notStaking')}
+            title={t('notStaking')}
             topOffset="37%"
           />
         )}

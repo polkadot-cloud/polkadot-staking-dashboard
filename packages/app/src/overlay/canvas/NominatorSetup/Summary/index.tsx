@@ -96,18 +96,18 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('nominate.summary')}
+        title={t('summary')}
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
           accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
-        ) && <Warning text={t('nominate.readOnly')} />}
+        ) && <Warning text={t('readOnly')} />}
         <SummaryWrapper>
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominate.payoutDestination')}:
+              {t('payoutDestination')}:
             </div>
             <div>
               {payee.destination === 'Account'
@@ -118,16 +118,14 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominate.nominating')}:
+              {t('nominating')}:
             </div>
-            <div>
-              {t('nominate.validatorCount', { count: nominations.length })}
-            </div>
+            <div>{t('validatorCount', { count: nominations.length })}</div>
           </section>
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominate.bondAmount')}:
+              {t('bondAmount')}:
             </div>
             <div>
               {new BigNumber(bond || 0).toFormat()} {unit}
@@ -143,7 +141,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={t('nominate.startNominating')}
+            submitText={t('startNominating')}
             valid
             {...submitExtrinsic}
             displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */

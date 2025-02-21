@@ -118,7 +118,7 @@ export const Header = ({
               onClick: () => setActiveTab(0),
             },
             {
-              title: t('nominate.nominations', { ns: 'pages' }),
+              title: t('nominations', { ns: 'pages' }),
               active: activeTab === 1,
               onClick: () => setActiveTab(1),
             },

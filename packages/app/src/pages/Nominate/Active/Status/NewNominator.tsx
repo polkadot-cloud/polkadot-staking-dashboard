@@ -48,7 +48,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                     }
                     disabled={nominateButtonDisabled}
                   >
-                    {t('nominate.startNominating', { ns: 'pages' })}
+                    {t('startNominating', { ns: 'pages' })}
                   </button>
                 </div>
               </div>

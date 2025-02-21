@@ -45,14 +45,14 @@ export const CommissionPrompt = () => {
         <div className="content">
           <h3>
             <FontAwesomeIcon icon={faWarning} />{' '}
-            {t('nominate.fullCommissionValidatorTitle')}
+            {t('fullCommissionValidatorTitle')}
           </h3>
-          <h4>{t('nominate.fullCommissionValidatorSubtitle')}</h4>
+          <h4>{t('fullCommissionValidatorSubtitle')}</h4>
           <ButtonRow yMargin>
             <ButtonPrimary
               iconLeft={faChevronCircleRight}
               iconTransform="grow-1"
-              text={`${t('nominate.manage', { ns: 'pages' })}`}
+              text={`${t('manage', { ns: 'pages' })}`}
               onClick={() =>
                 openCanvas({
                   key: 'ManageNominations',

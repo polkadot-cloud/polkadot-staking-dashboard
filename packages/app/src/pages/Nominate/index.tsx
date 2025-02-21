@@ -25,7 +25,7 @@ export const Nominate = () => {
   return (
     <Wrapper>
       <Page.Title
-        title={t('nominate.nominate', { ns: 'pages' })}
+        title={t('nominate', { ns: 'pages' })}
         tabs={
           pluginEnabled('polkawatch')
             ? [

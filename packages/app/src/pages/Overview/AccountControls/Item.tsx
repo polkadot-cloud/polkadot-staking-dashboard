@@ -41,7 +41,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
               </div>
               {delegatorAddress && (
                 <span>
-                  {proxyDelegate?.proxyType} {t('overview.proxy')}
+                  {proxyDelegate?.proxyType} {t('proxy')}
                   <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                 </span>
               )}
@@ -60,7 +60,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
             </>
           )}
 
-          {!accountData ? t('overview.noActiveAccount') : null}
+          {!accountData ? t('noActiveAccount') : null}
         </h4>
       </div>
     </ItemWrapper>

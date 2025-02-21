@@ -101,7 +101,7 @@ export const ManageBond = () => {
           {canLeavePool && (
             <ButtonPrimary
               size="md"
-              text={t('nominate.unstake')}
+              text={t('unstake')}
               iconLeft={faSignOut}
               onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
             />
