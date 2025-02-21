@@ -31,7 +31,7 @@ export const NominationList = ({
   toggleFavorites,
   displayFor = 'default',
 }: NominationListProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { syncing } = useSyncing()
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()

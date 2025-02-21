@@ -40,11 +40,11 @@ export const Members = () => {
           }}
         >
           <div className="content">
-            <h3>{t('pools.poolCurrentlyLocked')}</h3>
+            <h3>{t('poolCurrentlyLocked')}</h3>
             <h4>
-              {t('pools.permissionToUnbond')}({' '}
+              {t('permissionToUnbond')}({' '}
               <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
-              {t('pools.managementOptions')}
+              {t('managementOptions')}
             </h4>
           </div>
         </CardWrapper>
@@ -60,11 +60,11 @@ export const Members = () => {
           }}
         >
           <div className="content">
-            <h3>{t('pools.poolInDestroyingState')}</h3>
+            <h3>{t('poolInDestroyingState')}</h3>
             <h4>
-              {t('pools.permissionToUnbond')} ({' '}
+              {t('permissionToUnbond')} ({' '}
               <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
-              {t('pools.managementOptions')}
+              {t('managementOptions')}
             </h4>
           </div>
         </CardWrapper>

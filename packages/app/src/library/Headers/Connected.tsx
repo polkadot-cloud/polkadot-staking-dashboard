@@ -13,7 +13,7 @@ import DefaultAccount from '../Account/DefaultAccount'
 import PoolAccount from '../Account/PoolAccount'
 
 export const Connected = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { isNominating } = useStaking()
   const { activePool } = useActivePool()
   const { poolsMetaData } = useBondedPools()

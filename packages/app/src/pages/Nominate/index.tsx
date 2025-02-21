@@ -25,17 +25,17 @@ export const Nominate = () => {
   return (
     <Wrapper>
       <Page.Title
-        title={t('nominate.nominate', { ns: 'pages' })}
+        title={t('nominate', { ns: 'pages' })}
         tabs={
           pluginEnabled('polkawatch')
             ? [
                 {
-                  title: t('overview', { ns: 'base' }),
+                  title: t('overview', { ns: 'app' }),
                   active: activeTab === 0,
                   onClick: () => setActiveTab(0),
                 },
                 {
-                  title: t('decentralization', { ns: 'base' }),
+                  title: t('decentralization', { ns: 'app' }),
                   active: activeTab === 1,
                   onClick: () => setActiveTab(1),
                 },

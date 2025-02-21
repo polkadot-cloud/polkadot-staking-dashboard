@@ -27,7 +27,7 @@ export const Title = ({
   hideDone,
   closeText,
 }: TitleProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { closePrompt } = usePrompt()
   const { openHelp } = useHelp()
 
