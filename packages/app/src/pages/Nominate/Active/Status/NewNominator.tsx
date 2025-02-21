@@ -57,7 +57,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
               <div className="buttons">
                 <div className={`button secondary standalone`}>
                   <button onClick={() => navigate('/validators')}>
-                    {t('browseValidators', { ns: 'library' })}
+                    {t('browseValidators', { ns: 'app' })}
                     <FontAwesomeIcon
                       icon={faChevronRight}
                       transform="shrink-4"

@@ -151,7 +151,7 @@ export const PayoutLine = ({
     }),
     datasets: [
       {
-        label: t('era', { ns: 'library' }),
+        label: t('era', { ns: 'app' }),
         data: dataset,
         borderColor: color,
         backgroundColor: color,

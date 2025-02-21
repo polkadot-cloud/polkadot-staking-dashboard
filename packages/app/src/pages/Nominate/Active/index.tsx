@@ -98,7 +98,7 @@ export const Active = () => {
                   </div>
                 </CardHeader>
                 <ListStatusHeader>
-                  {t('notNominating', { ns: 'library' })}.
+                  {t('notNominating', { ns: 'app' })}.
                 </ListStatusHeader>
               </>
             )}

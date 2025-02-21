@@ -9,7 +9,7 @@ import { ButtonRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const Connect = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { openModal } = useOverlay().modal
   const { accounts } = useImportedAccounts()
 

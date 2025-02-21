@@ -63,7 +63,7 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
     <div>
       <Subheading>
         <h3>
-          {t('rewardHistory', { ns: 'library' })}
+          {t('rewardHistory', { ns: 'app' })}
           <ButtonHelp
             outline
             marginLeft

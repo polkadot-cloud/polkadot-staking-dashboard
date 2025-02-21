@@ -119,7 +119,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     <JoinFormWrapper>
       <h2>{t('pools.joinPool', { ns: 'pages' })}</h2>
       <h4>
-        {t('bond', { ns: 'library' })} {unit}
+        {t('bond', { ns: 'app' })} {unit}
       </h4>
       <div className="input">
         <div>
@@ -139,7 +139,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
           />
         </div>
       </div>
-      <h4 className="underline">{t('claimSetting', { ns: 'library' })}</h4>
+      <h4 className="underline">{t('claimSetting', { ns: 'app' })}</h4>
       <ClaimPermissionInput
         current={claimPermission}
         onChange={(val: ClaimPermission) => {

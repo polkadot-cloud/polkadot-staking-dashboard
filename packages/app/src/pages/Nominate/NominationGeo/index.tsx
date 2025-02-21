@@ -147,7 +147,7 @@ export const NominationGeo = () => {
               <StatusLabel
                 status="no_data"
                 title={t('notNominating', {
-                  ns: 'library',
+                  ns: 'app',
                 })}
               />
             )}

@@ -10,7 +10,7 @@
   margin-bottom: 1rem;
   position: relative;
   transition: transform var(--transition-duration);
-  
+
   &:hover {
     transform: scale(1.02);
   }
@@ -24,7 +24,8 @@
     max-width: 300px;
   }
 
-  > div, > button {
+  > div,
+  > button {
     background: var(--background-primary);
     box-shadow: var(--card-shadow-secondary);
     border: 1px solid transparent;

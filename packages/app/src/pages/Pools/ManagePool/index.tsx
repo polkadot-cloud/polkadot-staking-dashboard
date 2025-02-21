@@ -65,7 +65,7 @@ export const ManagePool = () => {
                 />
               </ButtonRow>
             </CardHeader>
-            <h4>{t('notNominating', { ns: 'library' })}.</h4>
+            <h4>{t('notNominating', { ns: 'app' })}.</h4>
           </>
         ) : (
           <Nominations bondFor="pool" nominator={nominator} />

@@ -147,7 +147,7 @@ export const ValidatorMetrics = () => {
         <div>
           <Subheading>
             <h3>
-              {t('recentPerformance', { ns: 'library' })}
+              {t('recentPerformance', { ns: 'app' })}
               <ButtonHelp
                 outline
                 marginLeft
@@ -185,7 +185,7 @@ export const ValidatorMetrics = () => {
           </GraphInner>
           <Subheading style={{ marginTop: '2rem' }}>
             <h3>
-              {t('rewardHistory', { ns: 'library' })}
+              {t('rewardHistory', { ns: 'app' })}
               <ButtonHelp
                 outline
                 marginLeft

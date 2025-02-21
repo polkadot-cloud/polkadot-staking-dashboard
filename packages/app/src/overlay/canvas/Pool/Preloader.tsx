@@ -54,9 +54,7 @@ export const Preloader = () => {
           })}
         </h3>
       </Title>
-      <Preload
-        title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
-      />
+      <Preload title={`${t('analyzingPoolPerformance', { ns: 'app' })}...`} />
     </>
   )
 }

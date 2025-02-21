@@ -15,7 +15,7 @@ export const Quartile = ({ address }: { address: string }) => {
   const quartile = getValidatorRankSegment(address)
   const tooltipText = `${t('dayPerformanceStanding', {
     count: 30,
-    ns: 'library',
+    ns: 'app',
   })}`
 
   return (
@@ -26,7 +26,7 @@ export const Quartile = ({ address }: { address: string }) => {
         style={{ cursor: 'default' }}
       />
       {![100, undefined].includes(quartile)
-        ? `${t('top', { ns: 'library' })} ${quartile}%`
+        ? `${t('top', { ns: 'app' })} ${quartile}%`
         : ``}
     </Label>
   )
