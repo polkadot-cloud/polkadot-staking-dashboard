@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PageCategoryItems, PagesConfigItems } from 'common-types'
-import { Community } from 'pages/Community'
 import { Nominate } from 'pages/Nominate'
+import { Operators } from 'pages/Operators'
 import { Overview } from 'pages/Overview'
 import { Pools } from 'pages/Pools'
 import { Rewards } from 'pages/Rewards'
@@ -68,10 +68,10 @@ export const PagesConfig: PagesConfigItems = [
   },
   {
     category: 3,
-    key: 'community',
-    uri: `${BASE_URL}community`,
-    hash: '/community',
-    Entry: Community,
+    key: 'operators',
+    uri: `${BASE_URL}operators`,
+    hash: '/operators',
+    Entry: Operators,
     lottie: 'label',
   },
 ]
