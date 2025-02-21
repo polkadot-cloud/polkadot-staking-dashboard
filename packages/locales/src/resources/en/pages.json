@@ -1,16 +1,7 @@
 {
   "pages": {
-    "community": {
-      "bio": "Bio",
-      "connecting": "Connecting",
-      "email": "Email",
-      "fetchingValidators": "Fetching validators",
-      "goBack": "Go Back",
-      "noValidators": "This entity contains no validators.",
-      "validator_one": "{{count}} Validator",
-      "validator_other": "{{count}} Validators",
-      "website": "Website"
-    },
+    "bio": "Bio",
+    "connecting": "Connecting",
     "decentralization": {
       "analyticsNotAvailable": "Analytics Not Available",
       "analyticsNotSupported": "Analytics Not Supported",
@@ -24,6 +15,10 @@
       "polkawatchDisabled": "Polkawatch Disabled",
       "totalPayoutsAnalysed": "Total Payouts Analysed"
     },
+    "email": "Email",
+    "fetchingValidators": "Fetching validators",
+    "goBack": "Go Back",
+    "noValidators": "This entity contains no validators.",
     "nominate": {
       "activeNominations": "Active Nominations",
       "addressCopied": "Address Copied to Clipboard",
@@ -252,6 +247,8 @@
       "useCustomAmount": "Use Custom Amount"
     },
     "stakingApiDisabled": "Staking API Disabled",
+    "validator_one": "{{count}} Validator",
+    "validator_other": "{{count}} Validators",
     "validators": {
       "activeValidators": "Active Validators",
       "allValidators": "All Validators",
@@ -265,6 +262,7 @@
       "noFavorites": "No Favorites.",
       "totalValidators": "Total Validators",
       "validators": "Validators"
-    }
+    },
+    "website": "Website"
   }
 }

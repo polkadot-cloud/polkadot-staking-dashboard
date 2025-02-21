@@ -1,16 +1,7 @@
 {
   "pages": {
-    "community": {
-      "bio": "Bio",
-      "connecting": "Conectando",
-      "email": "Correo electrónico",
-      "fetchingValidators": "Obteniendo validadores",
-      "goBack": "Volver",
-      "noValidators": "Esta entidad no contiene validadores.",
-      "validator_one": "{{count}} Validador",
-      "validator_other": "{{count}} Validadores",
-      "website": "Sitio Web"
-    },
+    "bio": "Bio",
+    "connecting": "Conectando",
     "decentralization": {
       "analyticsNotAvailable": "Análisis no disponible",
       "analyticsNotSupported": "Análisis no soportado",
@@ -24,6 +15,10 @@
       "polkawatchDisabled": "Polkawatch desactivado",
       "totalPayoutsAnalysed": "Total de Pagos Analizados"
     },
+    "email": "Correo electrónico",
+    "fetchingValidators": "Obteniendo validadores",
+    "goBack": "Volver",
+    "noValidators": "Esta entidad no contiene validadores.",
     "nominate": {
       "activeNominations": "Nominaciones Activas",
       "addressCopied": "Dirección Copiada",
@@ -252,6 +247,8 @@
       "useCustomAmount": "Usar Cantidad Personalizada"
     },
     "stakingApiDisabled": "API de Staking Desactivada",
+    "validator_one": "{{count}} Validador",
+    "validator_other": "{{count}} Validadores",
     "validators": {
       "activeValidators": "Validadores Activos",
       "allValidators": "Todos los Validadores",
@@ -265,6 +262,7 @@
       "noFavorites": "Sin favoritos.",
       "totalValidators": "Total de Validadores",
       "validators": "Validadores"
-    }
+    },
+    "website": "Sitio Web"
   }
 }

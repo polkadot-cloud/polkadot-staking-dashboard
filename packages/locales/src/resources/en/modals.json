@@ -251,7 +251,7 @@
     "submitting": "Submitting",
     "subscanDisabled": "Subscan Disabled",
     "successfullyFetchedAddress": "Successfully Fetched Address",
-    "supportDiscord": "Join the Staking Dashboard Discord channel to receive dedicated support from our team and connect with the Polkadot community.",
+    "supportDiscord": "Join the Staking Dashboard Discord channel to receive dedicated support from our team and connect with the Polkadot ",
     "supportEmail": "We provide dedicated email support for Staking Dashboard users. Contact us, and our team will strive to respond promptly to assist you.",
     "thisMinimumDelay_one": "This minimum delay is the approximate equivalent of {{count}} block.",
     "thisMinimumDelay_other": "This minimum delay is the approximate equivalent of {{count}} blocks.",

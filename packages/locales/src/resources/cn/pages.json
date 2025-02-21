@@ -1,15 +1,7 @@
 {
   "pages": {
-    "community": {
-      "bio": "简介",
-      "connecting": "连接中",
-      "email": "邮箱",
-      "fetchingValidators": "正在获取验证人信息",
-      "goBack": "返回",
-      "noValidators": "不包含验证人",
-      "validator": "{{count}} 个验证人",
-      "website": "个人网站"
-    },
+    "bio": "简介",
+    "connecting": "连接中",
     "decentralization": {
       "analyticsNotAvailable": "无法使用该分布式分析器",
       "analyticsNotSupported": "此网络不支持该分布式分析器",
@@ -23,6 +15,10 @@
       "polkawatchDisabled": "Polkawatch己断开",
       "totalPayoutsAnalysed": "总收益分析"
     },
+    "email": "邮箱",
+    "fetchingValidators": "正在获取验证人信息",
+    "goBack": "返回",
+    "noValidators": "不包含验证人",
     "nominate": {
       "activeNominations": "活跃提名人",
       "addressCopied": "地址已复制到剪贴板",
@@ -249,6 +245,7 @@
       "useCustomAmount": "自定义金额"
     },
     "stakingApiDisabled": "Staking API己断开",
+    "validator": "{{count}} 个验证人",
     "validators": {
       "activeValidators": "活跃验证人",
       "allValidators": "所有验证人",
@@ -262,6 +259,7 @@
       "noFavorites": "无收藏夹",
       "totalValidators": "所有验证人",
       "validators": "验证人"
-    }
+    },
+    "website": "个人网站"
   }
 }
