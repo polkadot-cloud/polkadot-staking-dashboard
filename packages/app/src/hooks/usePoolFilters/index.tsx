@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 
 export const usePoolFilters = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { poolsNominations } = useBondedPools()
   const { getNominationsStatusFromTargets } = useStaking()
   const { getPoolNominationStatusCode } = useBondedPools()

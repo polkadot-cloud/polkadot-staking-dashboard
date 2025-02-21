@@ -96,7 +96,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Returns whether the active account is in a pool.
-  const inPool = () => !!membership
+  const inPool = () => !!(membership?.address === activeAccount)
 
   // Returns whether the active account is the depositor of the active pool
   const isDepositor = () => {

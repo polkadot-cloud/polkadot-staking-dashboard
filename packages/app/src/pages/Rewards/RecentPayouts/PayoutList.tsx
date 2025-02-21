@@ -47,9 +47,11 @@ export const PayoutListInner = ({
   const { bondedPools } = useBondedPools()
   const { getValidators } = useValidators()
   const { getThemeValue } = useThemeValues()
-  const { listFormat, setListFormat } = useList()
-
-  const [page, setPage] = useState<number>(1)
+  const {
+    listFormat,
+    setListFormat,
+    pagination: { page, setPage },
+  } = useList()
 
   // Manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)
@@ -76,7 +78,13 @@ export const PayoutListInner = ({
 
   const listPayouts = payouts.slice(pageStart).slice(0, itemsPerPage)
   if (!listPayouts.length) {
-    return null
+    return (
+      <ListWrapper>
+        <div>
+          <h3>{t('noRecentPayouts')}.</h3>
+        </div>
+      </ListWrapper>
+    )
   }
 
   return (
@@ -119,9 +127,7 @@ export const PayoutListInner = ({
               ? (p as PoolReward)
               : (p as NominatorReward)
 
-            const label = poolReward
-              ? t('payouts.poolClaim')
-              : t('payouts.payout')
+            const label = poolReward ? t('poolClaim') : t('payout')
 
             const labelClass = poolReward ? 'claim' : 'reward'
 
@@ -189,8 +195,8 @@ export const PayoutListInner = ({
                               poolId={(record as PoolReward).poolId}
                             />
                           )}
-                          {label === t('payouts.slashed') && (
-                            <h4>{t('payouts.deductedFromBond')}</h4>
+                          {label === t('slashed') && (
+                            <h4>{t('deductedFromBond')}</h4>
                           )}
                         </div>
                         <div>
@@ -252,7 +258,7 @@ export const PoolClaim = ({
     <PoolIdentity pool={pool} />
   ) : (
     <h4>
-      {t('payouts.fromPool')} {poolId}
+      {t('fromPool')} {poolId}
     </h4>
   )
 }

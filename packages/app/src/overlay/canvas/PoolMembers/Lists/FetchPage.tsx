@@ -104,7 +104,7 @@ export const MembersListInner = ({
         )}
         {fetchedPoolMembersApi !== 'synced' ? (
           <ListStatusHeader style={{ marginTop: '0.5rem' }}>
-            {t('pools.fetchingMemberList')}....
+            {t('fetchingMemberList')}....
           </ListStatusHeader>
         ) : (
           <MotionContainer>

@@ -24,7 +24,7 @@ export const SignPrompt = ({
   const {
     chainSpecs: { genesisHash },
   } = useApi()
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
 
   // Whether user is on sign or submit stage.
   const [stage, setStage] = useState<number>(1)

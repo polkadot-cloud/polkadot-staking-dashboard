@@ -1,11 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { SecondaryProps } from '../types'
+import { BulletWrapper } from '../Wrapper'
 import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers'
 
 export const Secondary = ({
-  action,
+  bullet,
   classes,
   name,
   icon,
@@ -39,7 +42,11 @@ export const Secondary = ({
       {!minimised && (
         <>
           <div className="name">{name}</div>
-          {action && <div className="action">{action}</div>}
+          {bullet && (
+            <BulletWrapper className={bullet}>
+              <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+            </BulletWrapper>
+          )}
         </>
       )}
     </StyledWrapper>

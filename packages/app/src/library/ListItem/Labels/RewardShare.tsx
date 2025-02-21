@@ -12,7 +12,7 @@ export const RewardShare = ({ share }: { share: number }) => {
   const { t } = useTranslation('pages')
   const { setTooltipTextAndOpen } = useTooltip()
 
-  const tooltipText = t('decentralization.nominationShareInRewards')
+  const tooltipText = t('nominationShareInRewards')
 
   return (
     <Label>

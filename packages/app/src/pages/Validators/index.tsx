@@ -24,15 +24,15 @@ export const ValidatorsInner = () => {
   return (
     <>
       <Page.Title
-        title={t('validators.validators')}
+        title={t('validators')}
         tabs={[
           {
-            title: t('validators.allValidators'),
+            title: t('allValidators'),
             active: activeTab === 0,
             onClick: () => setActiveTab(0),
           },
           {
-            title: t('validators.favorites'),
+            title: t('favorites'),
             active: activeTab === 1,
             onClick: () => setActiveTab(1),
             badge: String(favorites.length),

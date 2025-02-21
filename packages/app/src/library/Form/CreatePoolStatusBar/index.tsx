@@ -12,7 +12,7 @@ import type { NominateStatusBarProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { minCreateBond } = useApi().poolsConfig
   const { unit, units } = useNetwork().networkData
   const { syncing } = useSyncing(['initialization'])

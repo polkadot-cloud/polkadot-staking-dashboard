@@ -28,7 +28,7 @@ import { useOverlay } from 'ui-overlay'
 import { RevertPrompt } from './Prompts/RevertPrompt'
 
 export const ManageNominations = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     closeCanvas,
     setCanvasStatus,
@@ -159,7 +159,7 @@ export const ManageNominations = () => {
             }
           />
           <ButtonPrimary
-            text={t('cancel', { ns: 'library' })}
+            text={t('cancel', { ns: 'app' })}
             size="lg"
             onClick={() => closeCanvas()}
             iconLeft={faTimes}
@@ -170,7 +170,7 @@ export const ManageNominations = () => {
           <h1>{t('manageNominations', { ns: 'modals' })}</h1>
           <h3>
             {t('chooseValidators', {
-              ns: 'library',
+              ns: 'app',
               maxNominations: maxNominations.toString(),
             })}
             <ButtonHelp

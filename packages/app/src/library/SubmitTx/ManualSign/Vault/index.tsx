@@ -27,7 +27,7 @@ export const Vault = ({
   notEnoughFunds: boolean
   submitted: boolean
 }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { status: promptStatus } = usePrompt()
   const { accountHasSigner } = useImportedAccounts()
 

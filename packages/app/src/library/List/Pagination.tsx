@@ -12,7 +12,7 @@ export const Pagination = ({
   setter,
   disabled = false,
 }: PaginationProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const [next, setNext] = useState<number>(page + 1 > total ? total : page + 1)
   const [prev, setPrev] = useState<number>(page - 1 < 1 ? 1 : page - 1)
 
