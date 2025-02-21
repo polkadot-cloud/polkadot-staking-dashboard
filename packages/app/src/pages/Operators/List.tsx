@@ -2,26 +2,26 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ValidatorEntry } from '@w3ux/validator-assets'
-import { useCommunity } from 'contexts/Community'
 import { useNetwork } from 'contexts/Network'
+import { useOperators } from 'contexts/Operators'
 import { useEffect, useState } from 'react'
 import { Page } from 'ui-core/base'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
-import { useCommunitySections } from './context'
+import { useOperatorsSections } from './context'
 
 export const List = () => {
   const { network } = useNetwork()
-  const { scrollPos } = useCommunitySections()
-  const { validatorCommunity } = useCommunity()
+  const { scrollPos } = useOperatorsSections()
+  const { validatorOperators } = useOperators()
 
   const [entityItems, setEntityItems] = useState<ValidatorEntry[]>(
-    validatorCommunity.filter((v) => v.validators[network] !== undefined)
+    validatorOperators.filter((v) => v.validators[network] !== undefined)
   )
 
   useEffect(() => {
     setEntityItems(
-      validatorCommunity.filter((v) => v.validators[network] !== undefined)
+      validatorOperators.filter((v) => v.validators[network] !== undefined)
     )
   }, [network])
 
@@ -44,7 +44,7 @@ export const List = () => {
     <Page.Row yMargin>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         {entityItems.map((item, index: number) => (
-          <Item key={`community_item_${index}`} item={item} actionable />
+          <Item key={`operator_item_${index}`} item={item} actionable />
         ))}
       </ItemsWrapper>
     </Page.Row>

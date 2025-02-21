@@ -14,14 +14,14 @@ import { ButtonSecondary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
-import { useCommunitySections } from './context'
+import { useOperatorsSections } from './context'
 
 export const Entity = () => {
   const { t } = useTranslation('pages')
   const { isReady } = useApi()
   const { network } = useNetwork()
   const { getValidators } = useValidators()
-  const { setActiveSection, activeItem } = useCommunitySections()
+  const { setActiveSection, activeItem } = useOperatorsSections()
 
   const { name, validators: entityAllValidators } = activeItem
   const validators = entityAllValidators[network] ?? []
