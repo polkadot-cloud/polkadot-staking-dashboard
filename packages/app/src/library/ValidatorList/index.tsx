@@ -291,7 +291,7 @@ export const ValidatorListInner = ({
   if (!bootstrapped) {
     return (
       <div className="item">
-        <h3>{t('validators.fetchingValidators', { ns: 'pages' })}...</h3>
+        <h3>{t('fetchingValidators', { ns: 'pages' })}...</h3>
       </div>
     )
   }

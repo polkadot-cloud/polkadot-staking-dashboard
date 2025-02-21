@@ -17,8 +17,8 @@ export const RewardCalculator = ({ onClick }: { onClick: () => void }) => {
         style={{ marginLeft: '0.25rem', height: '2.1rem' }}
       />
     ),
-    label: t('rewards.useCustomAmount'),
-    title: t('rewards.rewardsCalculator'),
+    label: t('useCustomAmount'),
+    title: t('rewardsCalculator'),
     onClick,
   }
 
