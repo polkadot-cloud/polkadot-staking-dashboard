@@ -22,9 +22,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.12.9":
-  version: 3.12.9
-  resolution: "@apollo/client@npm:3.12.9"
+"@apollo/client@npm:^3.13.1":
+  version: 3.13.1
+  resolution: "@apollo/client@npm:3.13.1"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -41,7 +41,7 @@ __metadata:
     zen-observable-ts: "npm:^1.2.5"
   peerDependencies:
     graphql: ^15.0.0 || ^16.0.0
-    graphql-ws: ^5.5.5
+    graphql-ws: ^5.5.5 || ^6.0.3
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
     subscriptions-transport-ws: ^0.9.0 || ^0.11.0
@@ -54,7 +54,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/b76a1cce25a08bd1835588420afb12a709194dc380d792f8bec5e4f7fad186af5cf13f5170e835c3d7d62b43ac8e94699621ea3afc6f20a0e30f164ffcc4c97a
+  checksum: 10c0/50e65f9b12e82159d50feb6ad356bbc9dc871f04d930954b3fa299d63d0d578f1be95377d2961572907e56aeaa2b7e36c1c8a6d1287ce1a85cf454ee528f1d00
   languageName: node
   linkType: hard
 
@@ -4648,21 +4648,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.66.0":
-  version: 5.66.0
-  resolution: "@tanstack/query-core@npm:5.66.0"
-  checksum: 10c0/a03afcb3a075f1923ce3d03dcb16662bb35159280bf87598b9d446366cfd47f5c736be41fb90938c4e6848633c036087d7019f0dbb95f2f2450a9fea4764adbb
+"@tanstack/query-core@npm:5.66.4":
+  version: 5.66.4
+  resolution: "@tanstack/query-core@npm:5.66.4"
+  checksum: 10c0/ef0ebf572e0109791e53e9a7c2790a93cbfe1c6f3fb462793c621c0f2d44c0b38f78f22a32526e124790f69a017ae3254877281f418ffef06d83f4edb82df51a
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.66.0":
-  version: 5.66.0
-  resolution: "@tanstack/react-query@npm:5.66.0"
+"@tanstack/react-query@npm:^5.66.5":
+  version: 5.66.5
+  resolution: "@tanstack/react-query@npm:5.66.5"
   dependencies:
-    "@tanstack/query-core": "npm:5.66.0"
+    "@tanstack/query-core": "npm:5.66.4"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/60e1a3fd7f2f8b2038d70954b51eeb84c31273d09a68537babdc2ac3d8c200968a1f7865a8e189ffd63be0c30387985b4b4eaf1d9065990bd3699ac5872b7523
+  checksum: 10c0/82a1f82bb0e327af8e4aa4d4464a00ca372eba193c21ab055a46a5a75ef0af695479b156deb7743acd9256a4a3d3abfb1adb9148dfad2252f1f9baacb9ea3f23
   languageName: node
   linkType: hard
 
@@ -5733,7 +5733,7 @@ __metadata:
     compare-versions: "npm:^6.1.1"
     consts: "workspace:*"
     html5-qrcode: "npm:^2.3.8"
-    i18next-browser-languagedetector: "npm:^8.0.2"
+    i18next-browser-languagedetector: "npm:^8.0.3"
     locales: "workspace:*"
     plugin-staking-api: "workspace:*"
     polkadot-api: "npm:^1.8.4"
@@ -8347,12 +8347,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-browser-languagedetector@npm:^8.0.2":
-  version: 8.0.2
-  resolution: "i18next-browser-languagedetector@npm:8.0.2"
+"i18next-browser-languagedetector@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "i18next-browser-languagedetector@npm:8.0.3"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/b4ed7531ab503da12e043209c396b1aa9a0bdb2bbb397c0c85605bf16f08bf4cdacf9c1866cd32be1f19266488accb8d15dc8a76a6046e9ee359284199a8dcbc
+  checksum: 10c0/cb8af8ca13b02e6dcece6a85ad8a8191cb7e3d914c57651d5cecc3b5ad91720d823f97646c5acf136c9cb573f146311aa02c0f03b1053e4f0fd82bd43c121702
   languageName: node
   linkType: hard
 
@@ -10171,7 +10171,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "plugin-staking-api@workspace:packages/plugin-staking-api"
   dependencies:
-    "@apollo/client": "npm:^3.12.9"
+    "@apollo/client": "npm:^3.13.1"
     graphql: "npm:^16.10.0"
   languageName: unknown
   linkType: soft
@@ -10224,7 +10224,7 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": "npm:^6.7.2"
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.13"
-    "@tanstack/react-query": "npm:^5.66.0"
+    "@tanstack/react-query": "npm:^5.66.5"
     "@types/chroma-js": "npm:^3.1.1"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.2.25"
