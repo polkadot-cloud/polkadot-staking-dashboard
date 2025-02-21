@@ -18,7 +18,7 @@ import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import LogoSVG from 'assets/svg/icons/logo.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
-import { PageWidthMediumThreshold, SideMenuMaximisedWidth } from 'consts'
+import { PageWidthMediumThreshold } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
@@ -32,10 +32,10 @@ import { useOverlay } from 'ui-overlay'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
-import { ConnectionSymbol, LogoWrapper, Separator, Wrapper } from './Wrapper'
+import { LogoWrapper, Separator, Wrapper } from './Wrapper'
 
 export const SideMenu = () => {
-  const { t } = useTranslation('base')
+  const { t } = useTranslation('app')
   const { openHelp } = useHelp()
   const { apiStatus } = useApi()
   const {
@@ -70,11 +70,7 @@ export const SideMenu = () => {
         : 'danger'
 
   return (
-    <Page.Side
-      open={sideMenuOpen}
-      minimised={sideMenuMinimised}
-      width={`${SideMenuMaximisedWidth}px`}
-    >
+    <Page.Side open={sideMenuOpen} minimised={sideMenuMinimised}>
       <Wrapper ref={ref} $minimised={sideMenuMinimised}>
         <section>
           <LogoWrapper
@@ -103,7 +99,7 @@ export const SideMenu = () => {
                 <span className="label">
                   <FontAwesomeIcon
                     icon={sideMenuMinimised ? faChevronRight : faChevronLeft}
-                    transform="shrink-5"
+                    transform="shrink-6"
                   />
                 </span>
               </span>
@@ -119,12 +115,7 @@ export const SideMenu = () => {
               size: networkData.brand.inline.size,
             }}
             minimised={sideMenuMinimised}
-            action={
-              <ConnectionSymbol
-                className={apiStatusClass}
-                style={{ opacity: 0.7 }}
-              />
-            }
+            bullet={apiStatusClass}
           />
           <Separator />
           <Main />
@@ -138,7 +129,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: BookSVG,
-                size: sideMenuMinimised ? '0.95em' : '0.9em',
+                size: sideMenuMinimised ? '0.95em' : '0.8em',
               }}
             />
             <Secondary
@@ -147,16 +138,16 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: DiscordSVG,
-                size: sideMenuMinimised ? '1.2em' : '1.2em',
+                size: sideMenuMinimised ? '1.2em' : '1em',
               }}
             />
             <Secondary
               onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
-              name={t('email', { ns: 'base' })}
+              name={t('email', { ns: 'app' })}
               minimised={sideMenuMinimised}
               icon={{
                 Svg: EnvelopeSVG,
-                size: sideMenuMinimised ? '1.05em' : '1em',
+                size: sideMenuMinimised ? '1.05em' : '0.9em',
               }}
             />
           </div>

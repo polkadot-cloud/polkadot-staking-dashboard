@@ -27,7 +27,7 @@ export const SupplyStaked = () => {
       : lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01))
 
   const params = {
-    label: t('overview.unitSupplyStaked', { unit }),
+    label: t('unitSupplyStaked', { unit }),
     stat: {
       value: `${supplyAsPercent.decimalPlaces(2).toFormat()}`,
       unit: '%',

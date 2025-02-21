@@ -10,7 +10,7 @@ export const AverageCommission = () => {
   const { avgCommission } = useValidators()
 
   const params = {
-    label: t('validators.averageCommission'),
+    label: t('averageCommission'),
     value: `${String(avgCommission)}%`,
     helpKey: 'Average Commission',
   }

@@ -29,7 +29,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
 
   return (
     <Stat
-      label={t('nominate.pendingPayouts', { ns: 'pages' })}
+      label={t('pendingPayouts', { ns: 'pages' })}
       helpKey="Payout"
       type="odometer"
       stat={{

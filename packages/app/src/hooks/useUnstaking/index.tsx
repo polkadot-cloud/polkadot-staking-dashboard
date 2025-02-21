@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { useNominationStatus } from '../useNominationStatus'
 
 export const useUnstaking = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { inSetup } = useStaking()
   const { activeAccount } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()

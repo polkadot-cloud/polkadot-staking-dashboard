@@ -14,7 +14,7 @@ import { GenerateNominations } from '../GenerateNominations'
 import type { NominationsProps } from './types'
 
 export const Nominate = ({ bondFor, section }: NominationsProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { consts } = useApi()
   const { activeAccount } = useActiveAccounts()
   const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()

@@ -33,7 +33,7 @@ export const Ledger = ({
   notEnoughFunds: boolean
   submitted: boolean
 }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     setFeedback,
     getFeedback,
