@@ -112,7 +112,7 @@ export const Rewards = () => {
             onClick: () => setActiveTab(0),
           },
           {
-            title: t('payouts.recentPayouts', { ns: 'pages' }),
+            title: t('recentPayouts', { ns: 'pages' }),
             active: activeTab === 1,
             onClick: () => setActiveTab(1),
           },

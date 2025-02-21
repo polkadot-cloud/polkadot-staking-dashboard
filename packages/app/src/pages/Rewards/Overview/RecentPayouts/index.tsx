@@ -72,7 +72,7 @@ export const RecentPayouts = ({
               )}
             </>
           ) : (
-            t('payouts.none')
+            t('none')
           )}
         </h2>
       </CardHeader>
@@ -88,7 +88,7 @@ export const RecentPayouts = ({
           notStaking && (
             <StatusLabel
               status="sync_or_setup"
-              title={t('payouts.notStaking')}
+              title={t('notStaking')}
               topOffset="30%"
             />
           )
