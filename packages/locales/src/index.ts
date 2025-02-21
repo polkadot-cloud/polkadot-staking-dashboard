@@ -4,7 +4,7 @@
 import { enGB, es, zhCN } from 'date-fns/locale'
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import baseEn from './resources/en/base.json'
+import appEn from './resources/en/app.json'
 import helpEn from './resources/en/help.json'
 import libEn from './resources/en/library.json'
 import modalsEn from './resources/en/modals.json'
@@ -25,7 +25,8 @@ export const locales: Record<string, LocaleEntry> = {
 
 // Supported namespaces.
 export const lngNamespaces: string[] = [
-  'base',
+  'app',
+  'app',
   'help',
   'library',
   'modals',
@@ -35,7 +36,7 @@ export const lngNamespaces: string[] = [
 
 // Default structure of language resources.
 export const fallbackResources = {
-  ...baseEn,
+  ...appEn,
   ...helpEn,
   ...libEn,
   ...modalsEn,

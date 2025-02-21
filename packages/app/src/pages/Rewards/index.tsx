@@ -107,7 +107,7 @@ export const Rewards = () => {
         title={t('rewards', { ns: 'modals' })}
         tabs={[
           {
-            title: t('overview', { ns: 'base' }),
+            title: t('overview', { ns: 'app' }),
             active: activeTab === 0,
             onClick: () => setActiveTab(0),
           },
