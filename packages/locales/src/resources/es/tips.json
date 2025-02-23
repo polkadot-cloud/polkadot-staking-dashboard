@@ -2,9 +2,9 @@
   "tips": {
     "connectExtensions": [
       "Conectar Extensiones",
-      "Conecta tus cuentas para comenzar a usar Polkadot Staking Dashboard.",
+      "Conecta tus cuentas para comenzar a usar Polkadot Cloud Staking.",
       [
-        "Conecta tus cuentas para comenzar a usar Polkadot Staking Dashboard.",
+        "Conecta tus cuentas para comenzar a usar Polkadot Cloud Staking.",
         "Las cuentas se acceden a través de extensiones web, que actúan como billeteras. Tu billetera se usa para firmar las transacciones que envías dentro del dashboard.",
         "Conecta tus billeteras desde el botón Conectar en la parte superior derecha del dashboard, y selecciona la cuenta con la que deseas hacer staking para continuar.",
         "Staking Dashboard soporta una amplia gama de extensiones y billeteras."

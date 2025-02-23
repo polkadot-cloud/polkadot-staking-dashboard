@@ -4,7 +4,7 @@
 
 <!-- markdown-link-check-enable -->
 
-# Polkadot Staking Dashboard
+# Polkadot Cloud Staking
 
 <img width="1479" alt="Screenshot 2024-10-06 at 13 56 44" src="https://github.com/user-attachments/assets/d8edbbae-3cf0-4330-bac3-280e74f5d3cc">
 
@@ -16,7 +16,7 @@ To showcase a validator operator on staking dashboard, submit a PR to [**`@w3ux/
 
 ## URL Variable Support
 
-Polkadot Staking Dashboard supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network. Variables are added at the end of the hash portion of URL.
+Polkadot Cloud Staking supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network. Variables are added at the end of the hash portion of URL.
 
 The currently supported URL variables are as follows:
 
