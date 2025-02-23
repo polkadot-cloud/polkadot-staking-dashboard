@@ -157,6 +157,7 @@
     "notStaking": "Not Staking",
     "notValidAddress": "Not a valid address",
     "offline": "Connection appears to be offline",
+    "operators": "Operators",
     "optimalSelection": "Optimal Selection",
     "optimalSelectionSubtitle": "Selects top performing and regularly active validators.",
     "order": "Order",

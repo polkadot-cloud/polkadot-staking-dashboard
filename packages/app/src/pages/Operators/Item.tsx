@@ -13,7 +13,7 @@ import { Suspense, lazy, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { ItemWrapper } from './Wrappers'
-import { useCommunitySections } from './context'
+import { useOperatorsSections } from './context'
 import type { ItemProps } from './types'
 
 export const Item = ({ item, actionable }: ItemProps) => {
@@ -33,7 +33,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
   const validatorCount = entityAllValidators[network]?.length ?? 0
 
   const { setActiveSection, setActiveItem, setScrollPos } =
-    useCommunitySections()
+    useOperatorsSections()
 
   const listItem = {
     hidden: {
