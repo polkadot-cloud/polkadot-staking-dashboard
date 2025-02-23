@@ -12,7 +12,7 @@
 
 ### Validator Operators
 
-To showcase a validator operator on staking dashboard, submit a PR to [**`@w3ux/w3ux-library`**](https://github.com/w3ux/w3ux-library/tree/main). The operator will then be available in the **`@w3ux/validator-assets`** NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
+To showcase your validator operator, submit a PR to [**`@w3ux/w3ux-library`**](https://github.com/w3ux/w3ux-library/tree/main). The operator will then be available in the **`@w3ux/validator-assets`** NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
 
 ## URL Variable Support
 
@@ -20,9 +20,9 @@ Polkadot Cloud Staking supports URL variables that can be used to direct users t
 
 The currently supported URL variables are as follows:
 
-- **n**: Controls the default network to connect to upon visiting the dashboard. Supported values are `polkadot`, `kusama` and `westend`.
-- **l**: Controls the default to use upon visiting the dashboard. Supported values are `en` and `cn`.
-- **a**: Controls the account to connect to upon visiting the dashboard. Ignored if the account is not present in the initial imported accounts.
+- **n**: Controls the default network to connect to upon visiting the app. Supported values are `polkadot`, `kusama` and `westend`.
+- **l**: Controls the default to use upon visiting the app. Supported values are `en` and `cn`.
+- **a**: Controls the account to connect to upon visiting the app. Ignored if the account is not present in the initial imported accounts.
 
 URL variables take precedence over saved values in local storage, and will overwrite current configurations. URL variables will update (if present) as a user switches configurations in-app, such as changing the network or language.
 
