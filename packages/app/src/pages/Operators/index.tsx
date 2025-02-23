@@ -7,11 +7,11 @@ import { Page } from 'ui-core/base'
 import { Entity } from './Entity'
 import { List } from './List'
 import { Wrapper } from './Wrappers'
-import { CommunitySectionsProvider, useCommunitySections } from './context'
+import { OperatorsSectionsProvider, useOperatorsSections } from './context'
 
-export const CommunityInner = ({ page }: PageProps) => {
+export const OperatorsInner = ({ page }: PageProps) => {
   const { t } = useTranslation('app')
-  const { activeSection } = useCommunitySections()
+  const { activeSection } = useOperatorsSections()
 
   const { key } = page
 
@@ -24,8 +24,8 @@ export const CommunityInner = ({ page }: PageProps) => {
   )
 }
 
-export const Community = (props: PageProps) => (
-  <CommunitySectionsProvider>
-    <CommunityInner {...props} />
-  </CommunitySectionsProvider>
+export const Operators = (props: PageProps) => (
+  <OperatorsSectionsProvider>
+    <OperatorsInner {...props} />
+  </OperatorsSectionsProvider>
 )

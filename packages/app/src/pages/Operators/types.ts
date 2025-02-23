@@ -21,7 +21,7 @@ export interface Item {
   }>
 }
 
-export interface CommunitySectionsContextInterface {
+export interface OperatorsSectionsContextInterface {
   setActiveSection: (t: number) => void
   activeSection: number
   activeItem: Item
