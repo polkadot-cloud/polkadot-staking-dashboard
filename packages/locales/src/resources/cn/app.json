@@ -154,7 +154,7 @@
     "notStaking": "无抵押",
     "notValidAddress": "无效地址",
     "offline": "连接似乎处于离线状态",
-    "operators": "Operators",
+    "operators": "验证人实体",
     "optimalSelection": "最佳选择",
     "optimalSelectionSubtitle": "选择表现最佳且定期活跃的验证人",
     "order": "顺序",
