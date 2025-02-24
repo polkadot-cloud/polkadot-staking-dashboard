@@ -3,7 +3,7 @@
 
 import type { ApolloError } from '@apollo/client'
 import { gql, useQuery } from '@apollo/client'
-import { fiatMapping, getUserFiatCurrency } from '../../../locales/src/util'
+import { getUserFiatCurrency } from '../../../locales/src/util'
 import { client } from '../Client'
 import type {
   TokenPrice,
@@ -64,39 +64,39 @@ export const formatTokenPrice = (
 })
 
 /* Fetches token's local price based on user's fiat settings:
- * 1. Gets base USDT pair (e.g. DOTUSDT)
- * 2. Checks direct fiat pair (e.g. DOTEUR)
- * 3. Falls back to USDT-fiat conversion (e.g. USDTCOP) */
+ * 1. Always gets base USDT pair (e.g. DOTUSDT)
+ * 2. For non-USD currencies, fetches USDT-fiat conversion (e.g. USDTEUR)
+ * 3. Calculates price by multiplying token-USDT with USDT-fiat rate */
 export const fetchLocalTokenPrice = async (
   token: string
 ): Promise<{ price: number; change: number } | null> => {
+  // Always fetch base USDT price
   const baseTicker = token + 'USDT'
   const baseData = await fetchTokenPrice(baseTicker)
+
+  // If we can't get the base price, return null
   if (!baseData?.price) {
     return null
   }
 
+  // Get user's fiat currency preference
   const fiat = getUserFiatCurrency()
+
+  // If no fiat preference or USD, just return the USDT price
   if (!fiat || fiat === 'USD') {
     return baseData
   }
 
-  const directTicker = token + fiat
-  const directData = await fetchTokenPrice(directTicker)
-  if (directData?.price && directData.price > 0) {
-    return directData
-  }
-
-  if (!fiatMapping[fiat]) {
-    return baseData
-  }
-
+  // For non-USD currencies, get the USDT to fiat conversion rate
   const crossTicker = 'USDT' + fiat
   const crossData = await fetchTokenPrice(crossTicker)
+
+  // If we can't get the conversion rate, fall back to the USDT price
   if (!crossData?.price) {
     return baseData
   }
 
+  // Calculate the final price in the user's local currency
   return {
     price: Number((baseData.price * crossData.price).toFixed(2)),
     change: baseData.change,

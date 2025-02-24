@@ -139,7 +139,7 @@ ellipse.accent {
 
 .container-width {
   max-width: $max-page-width-sm;
-  @media(min-width: $row-section-thirds-threshold) {
+  @media (min-width: $row-section-thirds-threshold) {
     max-width: $max-page-width-lg;
   }
 }
