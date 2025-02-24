@@ -7,7 +7,7 @@
         "Connect your accounts to begin using Polkadot Cloud Staking.",
         "Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.",
         "Connect your wallets from the Connect button at the top right of the dashboard, and select the account you wish to stake with to continue.",
-        "Staking Dashboard supports a range of extensions and wallets."
+        "Cloud Staking supports a range of extensions and wallets."
       ]
     ],
     "howToStake": [
@@ -92,7 +92,7 @@
       [
         "Various factors affect how much validators are rewarded, such as the amount of era points it generates and how many nominators are backing it.",
         "All these metrics change over time, sometimes in an unpredictable manner. It is therefore important that nominators actively monitor validators and their performance.",
-        "Staking dashboard provides a range of metrics to help you understand how a validator is performing."
+        "Cloud Staking provides a range of metrics to help you understand how a validator is performing."
       ]
     ]
   }

@@ -21,7 +21,7 @@ Polkadot Cloud Staking supports URL variables that can be used to direct users t
 The currently supported URL variables are as follows:
 
 - **n**: Controls the default network to connect to upon visiting the app. Supported values are `polkadot`, `kusama` and `westend`.
-- **l**: Controls the default to use upon visiting the app. Supported values are `en` and `cn`.
+- **l**: Controls the default to use upon visiting the app.
 - **a**: Controls the account to connect to upon visiting the app. Ignored if the account is not present in the initial imported accounts.
 
 URL variables take precedence over saved values in local storage, and will overwrite current configurations. URL variables will update (if present) as a user switches configurations in-app, such as changing the network or language.

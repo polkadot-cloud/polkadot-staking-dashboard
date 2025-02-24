@@ -2,7 +2,7 @@
 
 This section aims to familiarise developers to the Polkadot Cloud Staking [[Deployment](https://staking.polkadot.cloud)].
 
-Reach out to ross@jkrb.io for clarification of any content within this document.
+Reach out to staking@polkadot.cloud for clarification of any content within this document.
 
 ## Submitting Pull Requests
 
