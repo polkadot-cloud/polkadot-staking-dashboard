@@ -1,5 +1,45 @@
 # Changelog
 
+## [1.9.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.8.0...app-v1.9.0) (2025-02-24)
+
+
+### Features
+
+* Abstract identity components, use in canvases, easier pool metrics access ([#2479](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2479)) ([3dd021b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3dd021be779485875b0976cca70ec36bd293b370))
+* Add pool commission label to `Pool` canvas ([#2478](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2478)) ([9bd440a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9bd440ad45a5a47f2eda2e522a3b0e510ac4410f))
+* Backing terminology for nomination list items ([#2449](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2449)) ([adcbc97](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/adcbc9784e31588e92d81cce56ff3554bf9b7895))
+* Copy button redesign ([#2528](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2528)) ([a4b88fb](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a4b88fb8f73622af169cf0949f7025e7db79b07f))
+* Easier access to validator metrics ([#2450](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2450)) ([12379a5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/12379a5f041d742b67a70672fa093379ee8cf397))
+* Enhance graphs, add validator rewards, pool reward history graphs ([#2462](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2462)) ([ccda2cb](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ccda2cbaeac8075e8a6650410538f9f0ae9885d5))
+* Force plugins in production environment, promote tips to UI ([#2458](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2458)) ([fb1d3b3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/fb1d3b39e136a6c16c7946900aa7447c3d126ceb))
+* Global token price provider ([#2495](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2495)) ([1839d8f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1839d8fda077ff06e9849c9632b9b8b59a0d5afe))
+* implement rewards calculator and merge payout history ([#2482](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2482)) ([d463aa4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d463aa4bb361e3cdfed435a12ad8713b9a9d04ec))
+* Pool performance & join candidates from Staking API, fallbacks, UI enhancements ([#2457](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2457)) ([73f198c](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/73f198c7956bfbd1cbb47780bcfac8e10d15d689))
+* **refactor:** Enhance accent colors, unify primary & secondary colors ([#2500](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2500)) ([cd80af7](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/cd80af7d2740d5920a2fb088216659a1615aa2ad))
+* **refactor:** Flatten locale files, combine base & library into app ([#2543](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2543)) ([db77b58](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/db77b58f77871e5d53175bb1a750dc41d0dffa76))
+* **refactor:** graph colors to CSS, remove JS based config ([#2502](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2502)) ([befad34](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/befad3486f128074877d1a53540d0c08fde75068))
+* **refactor:** Init `ui-graphs`, replace pie chart with pure CSS `Pie` component ([#2496](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2496)) ([98adc49](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/98adc49a7dfb423d422b77f200b32aacb45b198c))
+* **refactor:** List components to `ui-core` ([#2465](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2465)) ([01d5c77](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/01d5c7705a51e8cbcb96fd77ef5f710aaa75d470))
+* **refactor:** Misc updates & renames ([#2461](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2461)) ([ea3d4c3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ea3d4c3e796e09bfff3da659f5816416129ff933))
+* **refactor:** Refactor stat cards to `ui-` packages, remove legacy code ([#2499](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2499)) ([26ae9d5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/26ae9d5e8cb4fc9bd62c07c6a6bf3d8241afca42))
+* **refactor:** Simplify bond buttons, unify "Unstake" term for nominators and pools ([#2467](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2467)) ([90bd894](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/90bd894af33ba276f29d50d054dbad5d550c72b0))
+* **refactor:** Staking API arg `chain` -&gt; `network` ([#2515](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2515)) ([ccb2a63](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ccb2a63549ea3decdd1336848e46f95391cedf82))
+* Rename dapp to Polkadot Cloud Staking ([#2550](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2550)) ([4e36712](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/4e3671232bb0e7ffcbf73348c1a2af883277146f))
+* Use medium button sizes for key CTAs ([#2517](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2517)) ([f0e11ec](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f0e11ec095fd5f0034450a44a32d452a7b051f61))
+* **ux:** Amend side menu toggle to top of menu ([#2527](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2527)) ([7def405](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7def4057175f9504fa27dd5fb640b66f6b5c2b44))
+* **ux:** Get theme values directly from CSS, discontinue network colors ([#2501](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2501)) ([b8630d1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b8630d1291b9e39a83a6cd98eb7da8f5ed128bf2))
+* **ux:** Minify tips toggle ([#2518](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2518)) ([057c2cd](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/057c2cdbf575d18f0388ff7c28a10f7965ad1dfd))
+* **ux:** Plug role identities into `Pools` canvas, improve identity handling ([#2481](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2481)) ([dd576b5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/dd576b58eb10c2855ab51d67b283f7c783c2d101))
+* **ux:** Shrink maximised side menu ([#2541](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2541)) ([2708b07](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2708b07a3c1889b20d042d7bceb61c57ec73580e))
+* **ux:** Use Cloud icon for favicon & app icon ([#2503](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2503)) ([2324eec](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2324eec09f2cfcd6c986cda6d1364b2bdc173b13))
+* Validator performance charts from Staking API ([#2466](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2466)) ([6215f47](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6215f4731505e95bf78ffe826f57918b99e7a6a5))
+* Validator ranks from Staking API, stop historical era point scraping ([#2480](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2480)) ([abe0b1c](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/abe0b1c097dc89b60fd2c540fe84f66f69a2b6c4))
+
+
+### Bug Fixes
+
+* batch call test ([#2447](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2447)) ([6f4f9ae](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6f4f9ae861bca36e4252cf76301ee6633b434acd))
+
 ## [1.8.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.7.0...app-v1.8.0) (2025-01-16)
 
 

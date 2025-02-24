@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.1.0...ui-overlay-v1.2.0) (2025-02-24)
+
+
+### Features
+
+* implement rewards calculator and merge payout history ([#2482](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2482)) ([d463aa4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d463aa4bb361e3cdfed435a12ad8713b9a9d04ec))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.0.0...ui-overlay-v1.1.0) (2025-01-16)
 
 
