@@ -1,8 +1,8 @@
 # Contribution Guide
 
-This section aims to familiarise developers to the Polkadot Staking Dashboard [[Deployment](https://staking.polkadot.cloud)].
+This section aims to familiarise developers to the Polkadot Cloud Staking [[Deployment](https://staking.polkadot.cloud)].
 
-Reach out to ross@jkrb.io for clarification of any content within this document.
+Reach out to staking@polkadot.cloud for clarification of any content within this document.
 
 ## Submitting Pull Requests
 
@@ -25,7 +25,7 @@ If you would like to know more about the Conventional Commits specification, ple
 
 ## Releases
 
-[Release Please](https://github.com/googleapis/release-please) is used for automating staking dashboard's changelog and release generation.
+[Release Please](https://github.com/googleapis/release-please) is used for automating staking each package's changelog and release generation.
 
 Release Please is a GitHub action maintained by Google that automates CHANGELOG generation, the creation of GitHub releases, and version bumps. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
 
