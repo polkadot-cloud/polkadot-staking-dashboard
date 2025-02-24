@@ -16,7 +16,7 @@ export const PoolMembers = () => {
     <Main>
       <Head>
         <ButtonPrimary
-          text={t('cancel', { ns: 'library' })}
+          text={t('cancel', { ns: 'app' })}
           size="lg"
           onClick={() => closeCanvas()}
           iconLeft={faTimes}

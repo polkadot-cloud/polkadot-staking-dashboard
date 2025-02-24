@@ -9,7 +9,7 @@ import type { FooterProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const Footer = ({ complete, bondFor }: FooterProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { activeAccount } = useActiveAccounts()
   const { getPoolSetup, getNominatorSetup, setActiveAccountSetupSection } =
     useSetup()

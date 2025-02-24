@@ -15,7 +15,7 @@ export const MinCreateBond = () => {
   const { minCreateBond } = useApi().poolsConfig
 
   const params = {
-    label: t('pools.minimumToCreatePool'),
+    label: t('minimumToCreatePool'),
     value: planckToUnitBn(minCreateBond, units).toNumber(),
     decimals: 3,
     unit,

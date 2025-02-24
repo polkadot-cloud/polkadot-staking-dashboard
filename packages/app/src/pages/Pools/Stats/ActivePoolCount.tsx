@@ -10,7 +10,7 @@ export const ActivePoolCount = () => {
   const { counterForBondedPools } = useApi().poolsConfig
 
   const params = {
-    label: t('pools.activePools'),
+    label: t('activePools'),
     value: counterForBondedPools.toNumber(),
     unit: '',
     helpKey: 'Active Pools',

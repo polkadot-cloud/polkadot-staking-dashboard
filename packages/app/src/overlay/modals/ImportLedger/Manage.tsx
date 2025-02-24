@@ -75,8 +75,8 @@ export const Manage = ({
         }
         show
         t={{
-          tDone: t('done', { ns: 'library' }),
-          tCancel: t('cancel', { ns: 'library' }),
+          tDone: t('done', { ns: 'app' }),
+          tCancel: t('cancel', { ns: 'app' }),
         }}
       />
     </>

@@ -14,11 +14,14 @@ export const Title = ({
   style,
   primary,
   text,
+  semibold,
 }: ComponentBase & {
   primary?: boolean
   text?: boolean
+  semibold?: boolean
 }) => {
   const allClasses = classNames(classes.title, {
+    [classes.semibold]: !!semibold,
     [classes.primary]: !!primary,
     [classes.text]: !!text,
   })

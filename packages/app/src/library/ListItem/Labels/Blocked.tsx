@@ -10,7 +10,7 @@ import { Label } from 'ui-core/list'
 import type { BlockedProps } from '../types'
 
 export const Blocked = ({ prefs }: BlockedProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const blocked = prefs?.blocked ?? null
   const { setTooltipTextAndOpen } = useTooltip()
 

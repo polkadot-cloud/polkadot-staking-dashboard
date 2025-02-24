@@ -38,28 +38,26 @@ export const PoolStatus = () => {
   // Determine pool status - left side.
   const poolStatusLeft =
     poolState === 'Blocked'
-      ? `${t('pools.locked')} / `
+      ? `${t('locked')} / `
       : poolState === 'Destroying'
-        ? `${t('pools.destroying')} / `
+        ? `${t('destroying')} / `
         : ''
 
   // Determine pool status - right side.
   const poolStatusRight = syncing
-    ? t('pools.inactivePoolNotNominating')
+    ? t('inactivePoolNotNominating')
     : !poolNominating
-      ? t('pools.inactivePoolNotNominating')
+      ? t('inactivePoolNotNominating')
       : nominees.active.length
-        ? `${t('pools.nominatingAnd')} ${
-            earningRewards
-              ? t('pools.earningRewards')
-              : t('pools.notEarningRewards')
+        ? `${t('poolsNominatingAnd')} ${
+            earningRewards ? t('earningRewards') : t('notEarningRewards')
           }`
-        : t('pools.waitingForActiveNominations')
+        : t('waitingForActiveNominations')
 
   return (
     <Stat
       icon={syncing ? undefined : poolStateIcon}
-      label={t('pools.poolStatus')}
+      label={t('poolStatus')}
       helpKey="Nomination Status"
       stat={`${poolStatusLeft}${poolStatusRight}`}
     />

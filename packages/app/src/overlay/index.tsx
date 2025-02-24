@@ -27,6 +27,7 @@ import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
 import { ManagePool } from './modals/ManagePool'
 import { Networks } from './modals/Networks'
+import { RewardCalculator } from './modals/RewardCalculator'
 import { Settings } from './modals/Settings'
 import { StopNominations } from './modals/StopNominations'
 import { Unbond } from './modals/Unbond'
@@ -61,6 +62,7 @@ export const Overlays = () => {
         ManagePool,
         ManageFastUnstake,
         Networks,
+        RewardCalculator,
         Settings,
         ValidatorGeo,
         UnlockChunks,

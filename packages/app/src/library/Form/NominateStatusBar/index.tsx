@@ -14,7 +14,7 @@ import type { NominateStatusBarProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { openHelp } = useHelp()
   const {
     networkMetrics: { minimumActiveStake },

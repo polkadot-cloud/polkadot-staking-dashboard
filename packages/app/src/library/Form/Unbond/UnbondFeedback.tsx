@@ -27,7 +27,7 @@ export const UnbondFeedback = ({
   txFees,
   displayFirstWarningOnly = true,
 }: UnbondFeedbackProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     networkData: { units, unit },
   } = useNetwork()

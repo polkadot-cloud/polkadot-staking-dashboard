@@ -17,7 +17,7 @@ export const NominationStatus = ({
   noMargin = false,
   status,
 }: NominationStatusProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     networkData: { unit, units },
   } = useNetwork()

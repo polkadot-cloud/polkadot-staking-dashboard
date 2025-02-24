@@ -121,7 +121,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 
     .logo {
       width: auto;
-      height: ${(props) => (props.$minimised ? '2.15rem' : '1.5rem')};
+      height: ${(props) => (props.$minimised ? '2.15rem' : '1.45rem')};
     }
   }
 

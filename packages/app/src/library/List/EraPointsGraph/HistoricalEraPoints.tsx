@@ -17,7 +17,7 @@ export const HistoricalEraPoints = ({
   displayFor,
   eraPoints,
 }: EraPointsHistoricalProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { isReady } = useApi()
   const { erasPerDay } = useErasPerDay()
   const { validatorsFetched } = useValidators()

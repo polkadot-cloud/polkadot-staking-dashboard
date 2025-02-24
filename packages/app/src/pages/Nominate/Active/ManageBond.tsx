@@ -83,7 +83,7 @@ export const ManageBond = () => {
     ) : (
       <ButtonPrimary
         size="md"
-        text={t('nominate.unstake')}
+        text={t('unstake')}
         iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(controller) || !activeAccount}
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
@@ -99,7 +99,7 @@ export const ManageBond = () => {
     <>
       <CardHeader>
         <h4>
-          {t('nominate.bondedFunds')}
+          {t('bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
         <h2>

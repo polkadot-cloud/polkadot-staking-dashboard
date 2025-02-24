@@ -8,7 +8,7 @@ import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
 
 export const useValidatorFilters = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     validatorSupers,
     getValidatorRank,

@@ -48,17 +48,17 @@ export const UnstakePrompts = () => {
         >
           <div className="content">
             <h3>
-              {t('nominate.unstakePromptInProgress', {
+              {t('unstakePromptInProgress', {
                 context: isFastUnstaking ? 'fast' : 'regular',
               })}
             </h3>
             <h4>
               {isFastUnstaking
-                ? t('nominate.unstakePromptInQueue')
+                ? t('unstakePromptInQueue')
                 : !canWithdrawUnlocks
-                  ? t('nominate.unstakePromptWaitingForUnlocks')
-                  : `${t('nominate.unstakePromptReadyToWithdraw')} ${t(
-                      'nominate.unstakePromptRevert',
+                  ? t('unstakePromptWaitingForUnlocks')
+                  : `${t('unstakePromptReadyToWithdraw')} ${t(
+                      'unstakePromptRevert',
                       { unit }
                     )}`}
             </h4>
@@ -77,7 +77,7 @@ export const UnstakePrompts = () => {
                   iconLeft={faLockOpen}
                   text={
                     canWithdrawUnlocks
-                      ? t('nominate.unlocked')
+                      ? t('unlocked')
                       : String(totalUnlockChunks ?? 0)
                   }
                   disabled={false}

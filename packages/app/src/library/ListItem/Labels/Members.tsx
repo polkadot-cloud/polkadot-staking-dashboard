@@ -9,7 +9,7 @@ import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 
 export const Members = ({ members }: { members: string }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { setTooltipTextAndOpen } = useTooltip()
 
   const tooltipText = t('poolMembers')

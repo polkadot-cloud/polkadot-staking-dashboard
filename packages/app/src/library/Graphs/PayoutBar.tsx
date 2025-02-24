@@ -43,7 +43,7 @@ export const PayoutBar = ({
   inPool,
   syncing,
 }: PayoutBarProps) => {
-  const { i18n, t } = useTranslation('library')
+  const { i18n, t } = useTranslation('app')
   const { getThemeValue } = useThemeValues()
   const { unit, units } = useNetwork().networkData
   const staking = nominating || inPool

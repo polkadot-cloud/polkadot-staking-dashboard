@@ -20,7 +20,7 @@ export interface PayeeItem {
 }
 
 export const usePayeeConfig = () => {
-  const { t } = useTranslation('base')
+  const { t } = useTranslation('app')
   const getPayeeItems = (extended?: boolean): PayeeItem[] => {
     let items: PayeeItem[] = [
       {

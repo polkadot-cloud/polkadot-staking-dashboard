@@ -13,7 +13,7 @@ import { FilterValidators } from '../Prompts/FilterValidators'
 import { OrderValidators } from '../Prompts/OrderValidators'
 
 export const FilterHeaders = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { openPromptWith } = usePrompt()
   const { resetFilters, getFilters } = useFilters()
 

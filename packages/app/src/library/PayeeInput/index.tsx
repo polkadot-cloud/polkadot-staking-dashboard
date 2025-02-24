@@ -21,7 +21,7 @@ export const PayeeInput = ({
   setAccount,
   handleChange,
 }: PayeeInputProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
   const {

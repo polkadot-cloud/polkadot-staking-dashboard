@@ -28,20 +28,20 @@ export const AllValidators = () => {
         <CardWrapper>
           {!isReady ? (
             <div className="item">
-              <h3>{t('validators.connecting')}...</h3>
+              <h3>{t('connecting')}...</h3>
             </div>
           ) : (
             <>
               {validators.length === 0 && (
                 <div className="item">
-                  <h3>{t('validators.fetchingValidators')}...</h3>
+                  <h3>{t('fetchingValidators')}...</h3>
                 </div>
               )}
               {validators.length > 0 && (
                 <ValidatorList
                   bondFor="nominator"
                   validators={validators}
-                  title={t('validators.networkValidators')}
+                  title={t('networkValidators')}
                   selectable={false}
                   defaultFilters={{
                     includes: ['active'],

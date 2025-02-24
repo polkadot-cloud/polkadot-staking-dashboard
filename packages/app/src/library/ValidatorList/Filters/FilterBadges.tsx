@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const FilterBadges = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getFilters, getOrder, toggleFilter } = useFilters()
   const { includesToLabels, excludesToLabels, ordersToLabels } =
     useValidatorFilters()

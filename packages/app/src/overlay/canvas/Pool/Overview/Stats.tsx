@@ -18,7 +18,7 @@ export const Stats = ({
 }: OverviewSectionProps & {
   graphSyncing?: boolean
 }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     network,
     networkData: {

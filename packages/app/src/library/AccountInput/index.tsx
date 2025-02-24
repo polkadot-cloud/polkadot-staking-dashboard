@@ -27,7 +27,7 @@ export const AccountInput = ({
   initialValue = null,
   border = true,
 }: AccountInputProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
 
   const {
     networkData: { ss58 },

@@ -11,7 +11,7 @@ import { Wrapper } from './Wrapper'
 import type { PoolAccountProps } from './types'
 
 const PoolAccount = ({ label, pool, syncing }: PoolAccountProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { poolsMetaData } = useBondedPools()
 
   // Default display text value.

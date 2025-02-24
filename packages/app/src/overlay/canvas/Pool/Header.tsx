@@ -53,7 +53,7 @@ export const Header = ({
       <Head>
         {providedPoolId === null && (
           <ButtonPrimaryInvert
-            text={t('chooseAnotherPool', { ns: 'library' })}
+            text={t('chooseAnotherPool', { ns: 'app' })}
             iconLeft={faArrowsRotate}
             onClick={() => handleChooseNewPool()}
             lg
@@ -86,10 +86,10 @@ export const Header = ({
             </div>
             <HeadTags>
               <h3>
-                {t('pool', { ns: 'library' })} {bondedPool.id}
+                {t('pool', { ns: 'app' })} {bondedPool.id}
                 {['Blocked', 'Destroying'].includes(bondedPool.state) && (
                   <span className={getTagClass(bondedPool.state)}>
-                    {t(bondedPool.state.toLowerCase(), { ns: 'library' })}
+                    {t(bondedPool.state.toLowerCase(), { ns: 'app' })}
                   </span>
                 )}
               </h3>
@@ -102,7 +102,7 @@ export const Header = ({
               )}
               {autoSelected && (
                 <h3>
-                  <span>{t('autoSelected', { ns: 'library' })}</span>
+                  <span>{t('autoSelected', { ns: 'app' })}</span>
                 </h3>
               )}
             </HeadTags>
@@ -113,12 +113,12 @@ export const Header = ({
           sticky={false}
           tabs={[
             {
-              title: t('pools.overview', { ns: 'pages' }),
+              title: t('overview', { ns: 'pages' }),
               active: activeTab === 0,
               onClick: () => setActiveTab(0),
             },
             {
-              title: t('nominate.nominations', { ns: 'pages' }),
+              title: t('nominations', { ns: 'pages' }),
               active: activeTab === 1,
               onClick: () => setActiveTab(1),
             },

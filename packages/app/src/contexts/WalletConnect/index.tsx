@@ -65,7 +65,7 @@ export const WalletConnectProvider = ({
     const provider = await UniversalProvider.init({
       projectId: wcProjectId,
       metadata: {
-        name: 'Polkadot Staking Dashboard',
+        name: 'Polkadot Cloud Staking',
         description:
           'A fully featured dashboard for Polkadot staking and nomination pools',
         url: 'https://staking.polkadot.cloud/',

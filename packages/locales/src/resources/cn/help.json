@@ -150,7 +150,7 @@
       "ledgerHardwareWallets": [
         "Ledger硬件钱包",
         [
-          "Staking Dashboard己完全支持可兼容的Ledger设备.您可开始使用Ledger管理{NETWORK_NAME}上的抵押.",
+          "Cloud Staking.您可开始使用Ledger管理{NETWORK_NAME}上的抵押.",
           "因为您的私钥一直在硬件设备上,所以硬件钱包也称为冷钱包.硬件钱包没有连接互联网，所以使用该类钱包可确保安全.",
           "为了使用Ledger设备导入和签署交易, 您的设备必须安装{NETWORK_NAME} Ledger App. 该应用程序可以通过Ledger自己的应用程序Ledger Live安装.",
           "详情请在其官方网站上查找:ledger.com."
@@ -332,7 +332,7 @@
         [
           "代理帐户是代理另一个帐户的帐户.",
           "在代理帐户术语中, 代理帐户称为委托帐户, 代理帐户所代表的代理帐户被称为委托人帐户.",
-          "Staking Dashboard允许被委托人代表委托人签署交易. 如果代理账户在没有委托人的委托的情况下而存在, 则委托人将自动列为只读帐户."
+          "Cloud Staking允许被委托人代表委托人签署交易. 如果代理账户在没有委托人的委托的情况下而存在, 则委托人将自动列为只读帐户."
         ]
       ],
       "readOnlyAccounts": [
@@ -351,7 +351,7 @@
       "reserveBalanceForExistentialDeposit": [
         "为最低存款存储",
         [
-          "如果您的账户已经锁定了足够涵盖最低存款的金额, 例如为提名而锁定的金额, Staking Dashboard则不会另外锁定任何额外的可用金额.",
+          "如果您的账户已经锁定了足够涵盖最低存款的金额, 例如为提名而锁定的金额, Cloud Staking则不会另外锁定任何额外的可用金额.",
           "在这种情况下, \"无\" 会显示在存储下的 \"为最低存款存储\"部分."
         ]
       ],
@@ -416,7 +416,7 @@
       "wrongTransaction": [
         "错误交易",
         [
-          "此错误发生原因为当Ledger设备正在签名或签名后的交易与Staking Dashboard上当前活动交易不同.",
+          "此错误发生原因为当Ledger设备正在签名或签名后的交易与Cloud Staking上当前活动交易不同.",
           "请确保Ledger设备上没有未完成的交易, 然后重试."
         ]
       ],
@@ -437,7 +437,7 @@
       "claimRewards": "申领提名池奖励",
       "connectAccounts": "如何连接您的帐户",
       "createPools": "创建提名池",
-      "howToUse": "如何使用Staking Dashboard:概述",
+      "howToUse": "Cloud Staking:概述",
       "polkawatchAnalytics": "Polkawatch的去中心化分析: 介绍",
       "rebonding": "解除质押中",
       "stakeDot": "抵押您的DOT",

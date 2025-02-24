@@ -16,7 +16,7 @@ export const Header = ({
   thisSection,
   bondFor,
 }: HeaderProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { openHelp } = useHelp()
   const { activeAccount } = useActiveAccounts()
   const { getPoolSetup, getNominatorSetup, setActiveAccountSetupSection } =

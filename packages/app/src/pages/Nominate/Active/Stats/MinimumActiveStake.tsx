@@ -15,7 +15,7 @@ export const MinimumActiveStake = () => {
   const { minimumActiveStake } = useApi().networkMetrics
 
   const params = {
-    label: t('nominate.minimumToEarnRewards'),
+    label: t('minimumToEarnRewards'),
     value: planckToUnitBn(minimumActiveStake, units).toNumber(),
     decimals: 3,
     unit: `${unit}`,

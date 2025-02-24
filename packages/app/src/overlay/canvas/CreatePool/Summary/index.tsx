@@ -88,25 +88,25 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('pools.summary')}
+        title={t('summary')}
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
           accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
-        ) && <Warning text={t('pools.readOnly')} />}
+        ) && <Warning text={t('readOnly')} />}
         <SummaryWrapper>
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('pools.poolName')}:
+              {t('poolName')}:
             </div>
-            <div>{metadata ?? `${t('pools.notSet')}`}</div>
+            <div>{metadata ?? `${t('notSet')}`}</div>
           </section>
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('pools.bondAmount')}:
+              {t('bondAmount')}:
             </div>
             <div>
               {new BigNumber(bond).toFormat()} {unit}
@@ -115,16 +115,16 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;
-              {t('pools.nominating')}:
+              {t('nominating')}:
             </div>
-            <div>{t('nominate.validator', { count: nominations.length })}</div>
+            <div>{t('validatorCount', { count: nominations.length })}</div>
           </section>
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('pools.roles')}:
+              {t('roles')}:
             </div>
-            <div>{t('pools.assigned')}</div>
+            <div>{t('assigned')}</div>
           </section>
         </SummaryWrapper>
         <div
@@ -136,7 +136,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={t('pools.createPool')}
+            submitText={t('createPool')}
             valid
             {...submitExtrinsic}
             displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */

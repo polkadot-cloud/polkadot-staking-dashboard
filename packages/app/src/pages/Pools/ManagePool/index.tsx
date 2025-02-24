@@ -37,7 +37,7 @@ export const ManagePool = () => {
           <>
             <CardHeader action margin>
               <h3>
-                {t('nominate.nominations', { ns: 'pages' })}
+                {t('nominations', { ns: 'pages' })}
                 <ButtonHelp
                   marginLeft
                   onClick={() => openHelp('Nominations')}
@@ -48,7 +48,7 @@ export const ManagePool = () => {
                   size="md"
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
-                  text={t('pools.nominate', { ns: 'pages' })}
+                  text={t('nominate', { ns: 'pages' })}
                   disabled={!canNominate}
                   onClick={() =>
                     openCanvas({
@@ -65,7 +65,7 @@ export const ManagePool = () => {
                 />
               </ButtonRow>
             </CardHeader>
-            <h4>{t('notNominating', { ns: 'library' })}.</h4>
+            <h4>{t('notNominating', { ns: 'app' })}.</h4>
           </>
         ) : (
           <Nominations bondFor="pool" nominator={nominator} />

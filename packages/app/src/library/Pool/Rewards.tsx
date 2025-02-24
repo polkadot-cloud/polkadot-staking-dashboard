@@ -12,7 +12,7 @@ import { Graph } from 'ui-core/list'
 import type { RewardProps, RewardsGraphProps } from './types'
 
 export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { isReady } = useApi()
   const { erasPerDay } = useErasPerDay()
   const { setTooltipTextAndOpen } = useTooltip()

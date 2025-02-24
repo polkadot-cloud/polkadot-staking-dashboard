@@ -48,13 +48,13 @@ export const useStatusButtons = () => {
     !bondedPools.length
 
   if (!membership) {
-    label = t('pools.poolMembership')
+    label = t('poolMembership')
   } else if (isOwner()) {
-    label = `${t('pools.ownerOfPool')} ${membership.poolId}`
+    label = `${t('ownerOfPool')} ${membership.poolId}`
   } else if (active?.isGreaterThan(0)) {
-    label = `${t('pools.memberOfPool')} ${membership.poolId}`
+    label = `${t('memberOfPool')} ${membership.poolId}`
   } else {
-    label = `${t('pools.leavingPool')} ${membership.poolId}`
+    label = `${t('leavingPool')} ${membership.poolId}`
   }
   return { label, getJoinDisabled, getCreateDisabled }
 }

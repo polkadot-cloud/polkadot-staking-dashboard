@@ -24,16 +24,16 @@ export const formatTimeleft = (
 ): TimeLeftFormatted => {
   // Create a default object containing formatted time components for days, hours, and minutes
   const formatted: TimeLeftFormatted = {
-    days: [days, t('time.day', { count: days, ns: 'base' })],
-    hours: [hours, t('time.hr', { count: hours, ns: 'base' })],
-    minutes: [minutes, t('time.min', { count: minutes, ns: 'base' })],
+    days: [days, t('time.day', { count: days, ns: 'app' })],
+    hours: [hours, t('time.hr', { count: hours, ns: 'app' })],
+    minutes: [minutes, t('time.min', { count: minutes, ns: 'app' })],
   }
 
   // If there are no days or hours but there are seconds, override with a formatted seconds object
   if (!days && !hours && seconds) {
     formatted['seconds'] = [
       seconds,
-      t('time.second', { count: seconds, ns: 'base' }),
+      t('time.second', { count: seconds, ns: 'app' }),
     ]
     return formatted
   }
@@ -56,19 +56,19 @@ export const timeleftAsString = (
 
   let str = ''
   if (days > 0) {
-    str += `${days} ${t('time.day', { count: days, ns: 'base' })}`
+    str += `${days} ${t('time.day', { count: days, ns: 'app' })}`
   }
   if (hours > 0) {
     if (str) {
       str += ', '
     }
-    str += ` ${hours} ${t(tHour, { count: hours, ns: 'base' })}`
+    str += ` ${hours} ${t(tHour, { count: hours, ns: 'app' })}`
   }
   if (minutes > 0) {
     if (str) {
       str += ', '
     }
-    str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`
+    str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'app' })}`
   }
   if (!days && !hours) {
     if (str) {

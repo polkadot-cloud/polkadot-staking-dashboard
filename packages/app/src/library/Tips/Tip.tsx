@@ -27,8 +27,8 @@ export const Tip = ({ title, description, page }: TipProps) => {
           {!!page && (
             <ButtonPrimary
               marginRight
-              text={`${t('goTo', { ns: 'base' })} ${t(page, {
-                ns: 'base',
+              text={`${t('goTo', { ns: 'app' })} ${t(page, {
+                ns: 'app',
               })}`}
               onClick={() => {
                 closePrompt()

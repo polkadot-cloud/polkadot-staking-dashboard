@@ -12,7 +12,7 @@ import { Label } from 'ui-core/list'
 import { planckToUnitBn } from 'utils'
 
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     networkData: {
       units,

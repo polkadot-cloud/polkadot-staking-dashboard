@@ -13,7 +13,7 @@ export const MinimumNominatorBond = () => {
   const { minNominatorBond } = useApi().stakingMetrics
 
   const params = {
-    label: t('nominate.minimumToNominate'),
+    label: t('minimumToNominate'),
     value: planckToUnitBn(minNominatorBond, units).toNumber(),
     decimals: 3,
     unit: `${unit}`,

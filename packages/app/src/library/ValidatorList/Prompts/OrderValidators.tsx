@@ -10,7 +10,7 @@ import { FilterListButton, FilterListWrapper } from 'library/Prompt/Wrappers'
 import { useTranslation } from 'react-i18next'
 
 export const OrderValidators = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getOrder, setOrder } = useFilters()
   const { ordersToLabels } = useValidatorFilters()
 

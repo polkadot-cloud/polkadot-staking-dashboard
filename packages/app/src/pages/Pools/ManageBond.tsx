@@ -54,7 +54,7 @@ export const ManageBond = () => {
     <>
       <CardHeader>
         <h4>
-          {t('pools.bondedFunds')}
+          {t('bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
         <h2>
@@ -101,7 +101,7 @@ export const ManageBond = () => {
           {canLeavePool && (
             <ButtonPrimary
               size="md"
-              text={t('nominate.unstake')}
+              text={t('unstake')}
               iconLeft={faSignOut}
               onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
             />

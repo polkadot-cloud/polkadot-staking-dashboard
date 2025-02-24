@@ -291,7 +291,7 @@ export const ValidatorListInner = ({
   if (!bootstrapped) {
     return (
       <div className="item">
-        <h3>{t('validators.fetchingValidators', { ns: 'pages' })}...</h3>
+        <h3>{t('fetchingValidators', { ns: 'pages' })}...</h3>
       </div>
     )
   }
@@ -303,7 +303,7 @@ export const ValidatorListInner = ({
           <SearchInput
             value={searchTerm ?? ''}
             handleChange={handleSearchChange}
-            placeholder={t('searchAddress', { ns: 'library' })}
+            placeholder={t('searchAddress', { ns: 'app' })}
           />
         )}
         <FilterHeaderWrapper>
@@ -386,8 +386,8 @@ export const ValidatorListInner = ({
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
               {isSearching
-                ? t('noValidatorsMatch', { ns: 'library' })
-                : t('noValidators', { ns: 'library' })}
+                ? t('noValidatorsMatch', { ns: 'app' })
+                : t('noValidators', { ns: 'app' })}
             </h4>
           )}
         </MotionContainer>

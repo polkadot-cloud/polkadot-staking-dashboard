@@ -6,8 +6,16 @@
   font-size: 1.2rem;
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
   margin-top: 0.1rem;
   margin-bottom: 0.1rem;
+
+  > svg {
+    margin-right: 0.5rem;
+  }
+  &.semibold {
+    font-family: InterSemiBold, sans-serif;
+  }
   &.primary {
     color: var(--accent-color-primary);
   }
@@ -18,5 +26,24 @@
   }
   @media (min-width: 950px) {
     font-size: 1.25rem;
+  }
+
+  > label {
+    font-family: Inter, sans-serif;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+
+    &.success {
+      color: var(--status-success-color);
+    }
+    &.warning {
+      color: var(--status-warning-color);
+    }
+    &.error {
+      color: var(--status-error-color);
+    }
+    &.danger {
+      color: var(--status-danger-color);
+    }
   }
 }

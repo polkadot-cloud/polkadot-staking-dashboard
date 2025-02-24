@@ -33,7 +33,7 @@ export const NextRewards = () => {
   }, [activeEra, getUnixTime(dateTo)])
 
   const params = {
-    label: t('overview.nextRewardDistribution'),
+    label: t('nextRewardDistribution'),
     timeleft: formatted,
     graph: {
       value1: activeEra.index.isZero()

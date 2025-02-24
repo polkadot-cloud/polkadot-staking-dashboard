@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
+import { client } from '../Client'
 import type { PoolRewardResults } from '../types'
 
 const QUERY = gql`
@@ -28,4 +29,20 @@ export const usePoolRewards = ({
     variables: { network, who, from },
   })
   return { loading, error, data, refetch }
+}
+
+export const fetchPoolRewards = async (
+  network: string,
+  who: string,
+  from: number
+) => {
+  try {
+    const result = await client.query({
+      query: QUERY,
+      variables: { network, who, from },
+    })
+    return result.data.poolRewards
+  } catch (error) {
+    return null
+  }
 }

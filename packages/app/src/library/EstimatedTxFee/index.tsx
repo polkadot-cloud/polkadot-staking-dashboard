@@ -10,7 +10,7 @@ import { Wrapper } from './Wrapper'
 import type { EstimatedTxFeeProps } from './types'
 
 export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getTxSubmission } = useTxMeta()
   const { unit, units } = useNetwork().networkData
 

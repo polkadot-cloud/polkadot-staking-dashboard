@@ -37,7 +37,7 @@ export const PoolList = ({
   allowListFormat = true,
   itemsPerPage,
 }: PoolListProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { activeEra } = useApi()
   const { syncing } = useSyncing()
   const { network } = useNetwork()

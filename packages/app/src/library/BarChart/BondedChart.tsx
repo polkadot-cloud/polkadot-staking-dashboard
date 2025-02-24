@@ -16,7 +16,7 @@ export const BondedChart = ({
   unlocked,
   inactive,
 }: BondedChartProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     networkData: { unit },
   } = useNetwork()

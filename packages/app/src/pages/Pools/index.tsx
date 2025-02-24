@@ -42,20 +42,20 @@ export const PoolsInner = () => {
   return (
     <>
       <Page.Title
-        title={t('pools.pools')}
+        title={t('pools')}
         tabs={[
           {
-            title: t('pools.overview'),
+            title: t('overview'),
             active: activeTab === 0,
             onClick: () => setActiveTab(0),
           },
           {
-            title: t('pools.allPools'),
+            title: t('allPools'),
             active: activeTab === 1,
             onClick: () => setActiveTab(1),
           },
           {
-            title: t('pools.favorites'),
+            title: t('favorites'),
             active: activeTab === 2,
             onClick: () => setActiveTab(2),
             badge: String(favorites.length),

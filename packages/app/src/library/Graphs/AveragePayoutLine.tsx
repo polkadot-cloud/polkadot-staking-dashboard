@@ -43,7 +43,7 @@ export const AveragePayoutLine = ({
   nominating,
   inPool,
 }: AveragePayoutLineProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getThemeValue } = useThemeValues()
   const { unit, units } = useNetwork().networkData
 

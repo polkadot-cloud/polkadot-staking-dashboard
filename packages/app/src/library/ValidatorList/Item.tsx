@@ -39,7 +39,7 @@ export const Item = ({
   displayFor,
   eraPoints,
 }: ItemProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { selectActive } = useList()
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()

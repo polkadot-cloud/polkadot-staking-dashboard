@@ -90,7 +90,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('date', { ns: 'base' })}`,
+          text: `${t('date', { ns: 'app' })}`,
         },
       },
       y: {
@@ -151,7 +151,7 @@ export const PayoutLine = ({
     }),
     datasets: [
       {
-        label: t('era', { ns: 'library' }),
+        label: t('era', { ns: 'app' }),
         data: dataset,
         borderColor: color,
         backgroundColor: color,

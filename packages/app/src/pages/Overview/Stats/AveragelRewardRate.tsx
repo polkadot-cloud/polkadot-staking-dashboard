@@ -12,7 +12,7 @@ export const AverageRewardRate = () => {
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
 
   const params = {
-    label: `${t('overview.averageRewardRate')}`,
+    label: `${t('averageRewardRate')}`,
     value: `${avgRateBeforeCommission.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Average Reward Rate',
 

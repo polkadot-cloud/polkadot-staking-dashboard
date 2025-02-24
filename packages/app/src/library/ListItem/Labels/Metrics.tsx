@@ -25,7 +25,7 @@ export const Metrics = ({ display, address, outline }: MetricsProps) => {
           })
         }
       >
-        {t('metrics', { ns: 'library' })}
+        {t('metrics', { ns: 'app' })}
       </button>
     </HeaderButton>
   )

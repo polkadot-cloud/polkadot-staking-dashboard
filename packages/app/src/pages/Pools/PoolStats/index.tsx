@@ -42,37 +42,37 @@ export const PoolStats = () => {
   let stateDisplay
   switch (state) {
     case 'Blocked':
-      stateDisplay = t('pools.locked')
+      stateDisplay = t('locked')
       break
     case 'Destroying':
-      stateDisplay = t('pools.destroying')
+      stateDisplay = t('destroying')
       break
     default:
-      stateDisplay = t('pools.open')
+      stateDisplay = t('open')
       break
   }
 
   const items: PoolStatLabel[] = [
     {
-      label: t('pools.poolState'),
+      label: t('poolState'),
       value: stateDisplay,
     },
   ]
 
   if (currentCommission) {
     items.push({
-      label: t('pools.poolCommission'),
+      label: t('poolCommission'),
       value: `${currentCommission}%`,
     })
   }
 
   items.push(
     {
-      label: t('pools.poolMembers'),
+      label: t('poolMembers'),
       value: `${memberCounter}`,
       button: pluginEnabled('subscan')
         ? {
-            text: t('pools.browseMembers'),
+            text: t('browseMembers'),
             onClick: () => {
               openCanvas({ key: 'PoolMembers', size: 'xl' })
             },
@@ -81,7 +81,7 @@ export const PoolStats = () => {
         : undefined,
     },
     {
-      label: t('pools.totalBonded'),
+      label: t('totalBonded'),
       value: `${bonded} ${unit}`,
     }
   )
@@ -89,7 +89,7 @@ export const PoolStats = () => {
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
       <CardHeader margin>
-        <h3>{t('pools.poolStats')}</h3>
+        <h3>{t('poolStats')}</h3>
       </CardHeader>
       <Wrapper>
         <Header items={items} />

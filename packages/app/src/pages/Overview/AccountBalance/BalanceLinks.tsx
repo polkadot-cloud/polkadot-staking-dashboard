@@ -19,7 +19,7 @@ export const BalanceLinks = () => {
   return (
     <MoreWrapper>
       <Separator />
-      <h4>{t('overview.moreResources')}</h4>
+      <h4>{t('moreResources')}</h4>
       <section>
         <ButtonPrimaryInvert
           lg

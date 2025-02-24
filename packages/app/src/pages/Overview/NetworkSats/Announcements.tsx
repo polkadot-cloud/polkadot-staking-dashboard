@@ -24,8 +24,10 @@ export const Announcements = () => {
   const { bondedPools } = useBondedPools()
   const {
     poolsConfig: { counterForPoolMembers },
-    stakingMetrics: { totalStaked },
+    stakingMetrics: { totalStaked, lastReward },
   } = useApi()
+
+  const lastRewardUnit = planckToUnitBn(lastReward, units)
 
   let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {
@@ -54,18 +56,16 @@ export const Announcements = () => {
 
   const announcements = []
 
-  const networkUnit = unit
-
-  // total staked on the network
+  // Total staked on the network
   if (!totalStaked.isZero()) {
     announcements.push({
       class: 'neutral',
-      title: t('overview.networkCurrentlyStaked', {
+      title: t('networkCurrentlyStaked', {
         total: planckToUnitBn(totalStaked, units).integerValue().toFormat(),
         unit,
         network: capitalizeFirstLetter(network),
       }),
-      subtitle: t('overview.networkCurrentlyStakedSubtitle', {
+      subtitle: t('networkCurrentlyStakedSubtitle', {
         unit,
       }),
     })
@@ -73,27 +73,36 @@ export const Announcements = () => {
     announcements.push(null)
   }
 
-  // total locked in pools
+  // Total locked in pools
   if (bondedPools.length) {
     announcements.push({
       class: 'neutral',
       title: `${totalPoolPointsUnit.integerValue().toFormat()} ${unit} ${t(
-        'overview.inPools'
+        'inPools'
       )}`,
-      subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
+      subtitle: `${t('bondedInPools', { networkUnit: unit })}`,
     })
   } else {
     announcements.push(null)
   }
 
+  // Total locked in pools
   if (counterForPoolMembers.isGreaterThan(0)) {
-    // total locked in pools
     announcements.push({
       class: 'neutral',
-      title: `${counterForPoolMembers.toFormat()} ${t(
-        'overview.poolMembersBonding'
-      )}`,
-      subtitle: `${t('overview.totalNumAccounts')}`,
+      title: `${counterForPoolMembers.toFormat()} ${t('poolMembersBonding')}`,
+      subtitle: `${t('totalNumAccounts')}`,
+    })
+  } else {
+    announcements.push(null)
+  }
+
+  // Last era payout
+  if (lastRewardUnit.isGreaterThan(0)) {
+    announcements.push({
+      class: 'neutral',
+      title: `${lastRewardUnit.integerValue().toFormat()} ${unit} ${t('paidOutLastEraTitle')}`,
+      subtitle: `${t('paidOutLastEraSubtitle')}`,
     })
   } else {
     announcements.push(null)

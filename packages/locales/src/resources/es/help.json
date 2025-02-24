@@ -146,7 +146,7 @@
       "ledgerHardwareWallets": [
         "Carteras Hardware Ledger",
         [
-          "Los dispositivos Ledger compatibles están completamente soportados en el Staking Dashboard. Usa tu Ledger para gestionar tu actividad de staking en {NETWORK_NAME}.",
+          "Los dispositivos Ledger compatibles están completamente soportados en el Cloud Staking. Usa tu Ledger para gestionar tu actividad de staking en {NETWORK_NAME}.",
           "Usar una cartera hardware asegura una experiencia segura, donde tus claves permanecen en el dispositivo hardware en todo momento. Esto también se conoce como almacenamiento en frío, ya que no hay conexión activa a internet con tu cartera.",
           "Para importar y firmar transacciones con tu dispositivo Ledger, tu dispositivo debe tener la app Ledger de {NETWORK_NAME} instalada. La app de {NETWORK_NAME} puede ser instalada a través de la aplicación Ledger Live.",
           "Encuentra más información sobre Ledger en su sitio web oficial, ledger.com."
@@ -170,7 +170,7 @@
         "Balance Comprometido",
         [
           "En {NETWORK_NAME}, algunas acciones requieren que tu balance esté comprometido, como hacer staking o votar en gobernanza. Si parte de tu balance está comprometido, no puede ser transferido.",
-          "La cantidad de balance comprometido mostrado en el Staking Dashboard representa todos tus compromisos aparte del compromiso de staking - por lo tanto muestra todo el balance comprometido a tu disposición que puedes usar para nominar.",
+          "La cantidad de balance comprometido mostrado en el Cloud Staking representa todos tus compromisos aparte del compromiso de staking - por lo tanto muestra todo el balance comprometido a tu disposición que puedes usar para nominar.",
           "Puedes nominar con cualquier balance comprometido restante, pero no puedes unirte a un pool con él, ya que hacerlo requiere una transferencia a la cuenta del pool."
         ]
       ],
@@ -301,7 +301,7 @@
           "Tu estado de membresía del pool refleja si eres miembro de un pool.",
           "Las membresías de pool pueden ser de miembro del pool o propietario del pool.",
           "Actualmente en {NETWORK_NAME}, las cuentas solo pueden unirse a un pool a la vez. Si deseas unirte a otro pool, primero debes abandonar tu pool actual.",
-          "Para dejar un pool, simplemente necesitas desvincular y retirar todos tus {NETWORK_UNIT} vinculados. El Staking Dashboard proporciona un botón específico de Salir para desvincular del pool."
+          "Para dejar un pool, simplemente necesitas desvincular y retirar todos tus {NETWORK_UNIT} vinculados. El Cloud Staking proporciona un botón específico de Salir para desvincular del pool."
         ]
       ],
       "poolRewardHistory": [
@@ -333,7 +333,7 @@
         [
           "Las cuentas proxy son cuentas que actúan en nombre de otra cuenta.",
           "En términos de cuentas proxy, la cuenta proxy se llama cuenta delegada, y la cuenta representada se llama cuenta delegadora.",
-          "El Staking Dashboard permite a los delegados firmar transacciones en nombre de un delegador. Si existe un delegado en el panel sin su delegador, el delegador se importa automáticamente como una cuenta de solo lectura."
+          "El Cloud Staking permite a los delegados firmar transacciones en nombre de un delegador. Si existe un delegado en el panel sin su delegador, el delegador se importa automáticamente como una cuenta de solo lectura."
         ]
       ],
       "readOnlyAccounts": [
@@ -346,13 +346,13 @@
         "Balance de Reserva",
         [
           "En {NETWORK_NAME}, debes tener un balance superior a cierta cantidad para que tu cuenta exista en la cadena. Esta cantidad se llama tu 'depósito existencial'.",
-          "El Staking Dashboard asegura que esta cantidad de {NETWORK_UNIT} nunca se toque."
+          "El Cloud Staking asegura que esta cantidad de {NETWORK_UNIT} nunca se toque."
         ]
       ],
       "reserveBalanceForExistentialDeposit": [
         "Balance de Reserva para Depósito Existencial",
         [
-          "Si tu cuenta ya tiene un balance inmovilizado que cubre el depósito existencial de tu cuenta, como el balance inmovilizado para nominar, entonces el Staking Dashboard no inmovilizará ningún balance libre adicional.",
+          "Si tu cuenta ya tiene un balance inmovilizado que cubre el depósito existencial de tu cuenta, como el balance inmovilizado para nominar, entonces el Cloud Staking no inmovilizará ningún balance libre adicional.",
           "En este escenario, se muestra \"Ninguno\" bajo la sección \"Reserva Para Depósito Existencial\" en tus ajustes de Balance de Reserva."
         ]
       ],
@@ -407,7 +407,7 @@
       "wrongTransaction": [
         "Transacción Incorrecta",
         [
-          "Este error ocurre cuando un dispositivo Ledger firmó o está en proceso de firmar una transacción diferente a la actualmente activa en el Staking Dashboard.",
+          "Este error ocurre cuando un dispositivo Ledger firmó o está en proceso de firmar una transacción diferente a la actualmente activa en el Cloud Staking.",
           "Asegúrate de que no haya transacciones pendientes en el dispositivo Ledger e inténtalo de nuevo."
         ]
       ],
@@ -428,7 +428,7 @@
       "claimRewards": "Reclamar Recompensas del Pool de Nominación",
       "connectAccounts": "Cómo Conectar Tus Cuentas",
       "createPools": "Crear Pools de Nominación",
-      "howToUse": "Cómo Usar el Staking Dashboard: Overview",
+      "howToUse": "Cómo Usar el Cloud Staking: Overview",
       "polkawatchAnalytics": "Análisis de Descentralización por Polkawatch: Introducción",
       "rebonding": "Revincular",
       "stakeDot": "Hacer Stake con tus DOT",

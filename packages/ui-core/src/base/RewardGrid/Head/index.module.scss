@@ -1,0 +1,12 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.head {
+  border-bottom: 1px solid var(--border-primary-color);
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+  > div > h4 {
+    color: var(--text-color-tertiary);
+    font-family: InterSemiBold, sans-serif;
+  }
+}

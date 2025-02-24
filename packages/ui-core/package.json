@@ -10,6 +10,7 @@
   "exports": {
     "./base": "./src/base/index.tsx",
     "./canvas": "./src/canvas/index.tsx",
+    "./input": "./src/input/index.tsx",
     "./list": "./src/list/index.tsx",
     "./modal": "./src/modal/index.tsx",
     "./overlay": "./src/overlay/index.tsx",

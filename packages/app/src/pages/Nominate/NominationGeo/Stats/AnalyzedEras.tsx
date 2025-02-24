@@ -12,7 +12,7 @@ export const AnalyzedEras = ({ meta }: AnalyzedErasProps) => {
   const { t } = useTranslation('pages')
 
   const params = {
-    label: t('decentralization.maxErasAnalyzed'),
+    label: t('maxErasAnalyzed'),
     value: meta?.ErasPerMonth || 0,
     unit: 'Eras',
     helpKey: 'Decentralization Analytics Period',

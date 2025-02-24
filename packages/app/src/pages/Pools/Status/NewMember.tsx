@@ -47,7 +47,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     }}
                     disabled={joinButtonDisabled}
                   >
-                    {t('pools.joinPool', { ns: 'pages' })}
+                    {t('joinPool', { ns: 'pages' })}
                     <FontAwesomeIcon icon={faUserPlus} />
                   </button>
                 </div>
@@ -68,12 +68,12 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     }
                     disabled={createDisabled}
                   >
-                    {t('pools.createPool', { ns: 'pages' })}
+                    {t('createPool', { ns: 'pages' })}
                   </button>
                 </div>
                 <div className={`button standalone secondary`}>
                   <button onClick={() => setActiveTab(1)}>
-                    {t('pools.browsePools', { ns: 'pages' })}
+                    {t('browsePools', { ns: 'pages' })}
                   </button>
                 </div>
               </div>

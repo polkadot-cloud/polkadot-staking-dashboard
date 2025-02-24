@@ -12,7 +12,7 @@ export const ErrorFallbackApp = ({
 }: {
   resetErrorBoundary: () => void
 }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
 
   return (
     <Wrapper className="app">
@@ -37,7 +37,7 @@ export const ErrorFallbackRoutes = ({
 }: {
   resetErrorBoundary: () => void
 }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
 
   return (
     <Wrapper>
@@ -62,7 +62,7 @@ interface ErrorFallbackProps {
 }
 export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
   const { resetErrorBoundary } = props
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
 
   return (
     <Wrapper className="modal">

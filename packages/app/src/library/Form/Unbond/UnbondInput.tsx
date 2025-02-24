@@ -20,7 +20,7 @@ export const UnbondInput = ({
   value = '0',
   active,
 }: UnbondInputProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { networkData } = useNetwork()
   const { activeAccount } = useActiveAccounts()
 

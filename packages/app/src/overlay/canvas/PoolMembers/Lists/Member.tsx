@@ -64,7 +64,7 @@ export const Member = ({
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
         wrap: null,
-        title: `${t('pools.unbondFunds', { ns: 'pages' })}`,
+        title: `${t('unbondFunds', { ns: 'pages' })}`,
         cb: () => {
           openPromptWith(<UnbondMember who={who} member={member} />)
         },
@@ -83,7 +83,7 @@ export const Member = ({
         menuItems.push({
           icon: <FontAwesomeIcon icon={faShare} transform="shrink-3" />,
           wrap: null,
-          title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
+          title: `${t('withdrawFunds', { ns: 'pages' })}`,
           cb: () => {
             openPromptWith(
               <WithdrawMember who={who} member={member} memberRef={memberRef} />

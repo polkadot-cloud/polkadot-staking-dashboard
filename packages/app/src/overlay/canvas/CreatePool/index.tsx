@@ -27,7 +27,7 @@ export const CreatePool = () => {
         />
       </Head>
       <Title>
-        <h1>{t('pools.createAPool', { ns: 'pages' })}</h1>
+        <h1>{t('createAPool', { ns: 'pages' })}</h1>
       </Title>
       <CardWrapper className="canvas">
         <PoolName section={1} />

@@ -63,7 +63,7 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
     <div>
       <Subheading>
         <h3>
-          {t('rewardHistory', { ns: 'library' })}
+          {t('rewardHistory', { ns: 'app' })}
           <ButtonHelp
             outline
             marginLeft
@@ -86,7 +86,7 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
             <StatusLabel
               status="active_service"
               statusFor="staking_api"
-              title={t('common.stakingApiDisabled', { ns: 'pages' })}
+              title={t('stakingApiDisabled', { ns: 'pages' })}
               topOffset="37%"
             />
             <InactiveGraph width={width} height={height} />

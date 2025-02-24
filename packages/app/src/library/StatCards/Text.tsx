@@ -6,23 +6,14 @@ import { ButtonHelp } from 'ui-buttons'
 import { Stat } from 'ui-core/base'
 import type { TextProps } from './types'
 
-export const Text = ({
-  label,
-  value,
-  secondaryValue,
-  helpKey,
-  primary,
-}: TextProps) => {
+export const Text = ({ label, value, helpKey, primary }: TextProps) => {
   const { openHelp } = useHelp()
 
   return (
     <Stat.Card>
       <div>
         <Stat.Content>
-          <Stat.Title primary={primary}>
-            {value}
-            {secondaryValue ? <span>{secondaryValue}</span> : null}
-          </Stat.Title>
+          <Stat.Title primary={primary}>{value}</Stat.Title>
           <Stat.Subtitle>
             {label}
             {helpKey !== undefined ? (

@@ -24,7 +24,7 @@ export const ActiveValidators = () => {
   }
 
   const params = {
-    label: t('validators.activeValidators'),
+    label: t('activeValidators'),
     stat: {
       value: activeValidators,
       total: validatorCount.toNumber(),

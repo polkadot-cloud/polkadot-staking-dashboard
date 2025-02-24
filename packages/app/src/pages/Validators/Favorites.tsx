@@ -19,7 +19,7 @@ export const ValidatorFavorites = () => {
       <CardWrapper>
         {favoritesList === null ? (
           <ListStatusHeader>
-            {t('validators.fetchingFavoriteValidators')}...
+            {t('fetchingFavoriteValidators')}...
           </ListStatusHeader>
         ) : (
           isReady &&
@@ -27,7 +27,7 @@ export const ValidatorFavorites = () => {
             <ValidatorList
               bondFor="nominator"
               validators={favoritesList}
-              title={t('validators.favoriteValidators')}
+              title={t('favoriteValidators')}
               selectable={false}
               allowListFormat={false}
               allowFilters
@@ -35,7 +35,7 @@ export const ValidatorFavorites = () => {
               toggleFavorites
             />
           ) : (
-            <ListStatusHeader>{t('validators.noFavorites')}</ListStatusHeader>
+            <ListStatusHeader>{t('noFavorites')}</ListStatusHeader>
           ))
         )}
       </CardWrapper>

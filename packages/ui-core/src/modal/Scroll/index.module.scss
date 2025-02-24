@@ -8,6 +8,9 @@
   max-height: 100%;
   width: 100%;
   max-width: 600px;
+  &.xs {
+    max-width: 425px;
+  }
   &.lg {
     max-width: 800px;
   }

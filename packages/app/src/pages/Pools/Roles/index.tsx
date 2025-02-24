@@ -146,7 +146,7 @@ export const Roles = ({
       <CardHeader action margin>
         {!inline && (
           <h3>
-            {t('pools.roles')}
+            {t('roles')}
             <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
           </h3>
         )}
@@ -157,7 +157,7 @@ export const Roles = ({
               <ButtonType
                 iconLeft={faTimesCircle}
                 iconTransform="grow-1"
-                text={t('pools.cancel')}
+                text={t('cancel')}
                 disabled={syncing || isReadOnlyAccount(activeAccount)}
                 onClick={() => cancelHandler()}
               />
@@ -166,7 +166,7 @@ export const Roles = ({
             <ButtonType
               iconLeft={isEditing ? faCheckCircle : faEdit}
               iconTransform="grow-1"
-              text={isEditing ? t('pools.save') : t('pools.edit')}
+              text={isEditing ? t('save') : t('edit')}
               disabled={
                 syncing ||
                 isReadOnlyAccount(activeAccount) ||
@@ -180,13 +180,13 @@ export const Roles = ({
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h4>{t('pools.depositor')}</h4>
+            <h4>{t('depositor')}</h4>
             <PoolAccount address={roles.depositor ?? null} pool={activePool} />
           </div>
         </section>
         <section>
           <div className="inner">
-            <h4>{t('pools.root')}</h4>
+            <h4>{t('root')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="root"
@@ -200,7 +200,7 @@ export const Roles = ({
         </section>
         <section>
           <div className="inner">
-            <h4>{t('pools.nominator')}</h4>
+            <h4>{t('nominator')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="nominator"
@@ -217,7 +217,7 @@ export const Roles = ({
         </section>
         <section>
           <div className="inner">
-            <h4>{t('pools.bouncer')}</h4>
+            <h4>{t('bouncer')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="bouncer"

@@ -12,7 +12,7 @@ import { planckToUnitBn } from 'utils'
 import type { EraStatusProps } from '../types'
 
 export const EraStatus = ({ address, noMargin, status }: EraStatusProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { syncing } = useSyncing()
   const { unit, units } = useNetwork().networkData
   const { getValidatorTotalStake } = useValidators()

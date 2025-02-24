@@ -20,7 +20,7 @@ export const Overview = () => {
 
   return (
     <>
-      <Page.Title title={t('overview.overview')} />
+      <Page.Title title={t('overview')} />
       <Page.Row>
         <Page.Heading>
           <AccountControls />
