@@ -9,7 +9,6 @@ import svgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 // https://vitejs.dev/config/
-//
 // - `BASE_URL`env variable is used in the codebase to refer to the supplied base.
 export default defineConfig({
   plugins: [
