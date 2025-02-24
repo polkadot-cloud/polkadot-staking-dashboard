@@ -243,6 +243,24 @@ export const ValidatorCommunity: ValidatorEntry[] = [
     },
   },
   {
+    name: 'GuruStaking👳',
+    icon: 'GuruStaking',
+    bio: 'We are thrilled to have you join us in this exciting journey of blockchain validation and decentralized governance. As a validator, we play a crucial role in securing the network, verifying transactions, and contributing to the overall stability and reliability of the DotSama ecosystem.',
+    email: 'stake@gurustaking.com',
+    x: '@GuruStaking',
+    website: 'https://gurustaking.com',
+    validators: {
+      polkadot: [
+        '138tCNoHg9QbhjqanRS7R8ZC8547A6CdaSmrCtJCRLpjQk6r',
+        '1ja8qGypM5HT9Rqq6AGQ9z58bSi2kfkrqsGuB84zxdp1SZH',
+      ],
+      kusama: [
+        'F5j1j9TJ7xWePJmYh64Bf2b97pmer3mX1BsonCUpx3CJZpu',
+        'ESE6ka6wGpXGDJ5ykjAvH1TTuAC9Dg5VFfc1dcfoEwX9qc1',
+      ],
+    },
+  },
+  {
     name: 'Helikon',
     icon: 'Helikon',
     bio: 'We are an independent blockchain software, infrastructre and staking services company from Istanbul. We run our validators on state-of-the-art owned hardware in a Tier III colocation data center just outside Istanbul. Please visit our website for more information about our products and services.',
@@ -779,6 +797,9 @@ export const ValidatorCommunity: ValidatorEntry[] = [
         'Gfwn89EPQqTbcfhuSPznquqAC1N2GFDCzqLbMQaijUwDspf',
         'FVkxBDehfaTfRiGtE2m2zLnMXQXji66KVpd7xviufZpGYYC',
         'HPrV3G2PR2AtyMf2uoDBE4GyvRGdz9UhUASEvSGEENmobBB',
+        'Gj4dYBs4PPvQjf7Exkrpfe65EoitvdecNYhtBPa3ymWZF3S',
+        'HqFz6V9aV4dLXaGp6TY5tLdK85vkiiea96GVUJQ7hgXUqh5',
+        'EfWJofhHXhL6RkaoSxrXbq3wWkta1bmXxqTbDtBcF5wnR6N',
       ],
     },
   },
