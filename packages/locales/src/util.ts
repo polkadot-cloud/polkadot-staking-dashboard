@@ -107,20 +107,33 @@ const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
 }
 
 /* Currency Management */
-export const fiatMapping: { [key: string]: string } = {
-  ARS: 'ARS',
-  BRL: 'BRL',
-  COP: 'COP',
-  CZK: 'CZK',
-  EUR: 'EUR',
-  MXN: 'MXN',
-  PLN: 'PLN',
-  RON: 'RON',
-  TRY: 'TRY',
-  UAH: 'UAH',
-  ZAR: 'ZAR',
-}
+// Local storage key for user fiat currency preference
+const FIAT_CURRENCY_KEY = 'user_fiat_currency'
 
+// Supported fiat currencies
+export const SUPPORTED_CURRENCIES = [
+  'USD',
+  'EUR',
+  'GBP',
+  'AUD',
+  'CAD',
+  'CHF',
+  'CNY',
+  'JPY',
+  'INR',
+  'TRY',
+  'BRL',
+  'COP',
+  'UAH',
+  'ZAR',
+  'PLN',
+  'ARS',
+  'MXN',
+  'CZK',
+  'RON',
+]
+
+// Map of countries to their currencies
 const countryToFiatMap: { [key: string]: string } = {
   // Euro Zone
   AT: 'EUR',
@@ -145,59 +158,124 @@ const countryToFiatMap: { [key: string]: string } = {
   SK: 'EUR',
   // Other Countries
   AR: 'ARS',
+  AU: 'AUD',
   BR: 'BRL',
+  CA: 'CAD',
+  CH: 'CHF',
+  CN: 'CNY',
   CO: 'COP',
   CZ: 'CZK',
+  GB: 'GBP',
+  IN: 'INR',
+  JP: 'JPY',
   MX: 'MXN',
   PL: 'PLN',
   RO: 'RON',
   TR: 'TRY',
   UA: 'UAH',
+  US: 'USD',
   ZA: 'ZAR',
 }
 
+// Map of language codes to countries
 const languageToCountry: { [key: string]: string } = {
   af: 'ZA',
   cs: 'CZ',
   de: 'DE',
   el: 'GR',
+  en: 'US',
+  'en-GB': 'GB',
+  'en-US': 'US',
+  'en-CA': 'CA',
+  'en-AU': 'AU',
+  es: 'ES',
   et: 'EE',
   fi: 'FI',
   fr: 'FR',
+  'fr-CA': 'CA',
   hr: 'HR',
   hu: 'HU',
   it: 'IT',
+  ja: 'JP',
   lt: 'LT',
   lv: 'LV',
   nl: 'NL',
   pl: 'PL',
   pt: 'PT',
+  'pt-BR': 'BR',
   ro: 'RO',
   sk: 'SK',
   sl: 'SI',
   tr: 'TR',
   uk: 'UA',
+  zh: 'CN',
+  'zh-CN': 'CN',
 }
 
-export const getUserFiatCurrency = (): string | null => {
-  const locale = navigator.language
-  const parts = locale.split('-')
+/**
+ * Get the user's preferred fiat currency from local storage or browser locale
+ */
+export const getUserFiatCurrency = (): string => {
+  // Try to get from local storage first
+  const storedCurrency = localStorage.getItem(FIAT_CURRENCY_KEY)
+  if (storedCurrency && SUPPORTED_CURRENCIES.includes(storedCurrency)) {
+    return storedCurrency
+  }
 
-  if (parts[1]) {
+  // Try to get from browser locale
+  const locale = navigator.language
+
+  // Try to get country from locale (e.g., en-US -> US)
+  const parts = locale.split('-')
+  if (parts.length > 1) {
     const countryCode = parts[1].toUpperCase()
     const fiat = countryToFiatMap[countryCode]
-    if (fiatMapping[fiat]) {
+    if (fiat && SUPPORTED_CURRENCIES.includes(fiat)) {
       return fiat
     }
   }
 
-  const countryFromLang = languageToCountry[parts[0]]
+  // Try to get country from language (e.g., fr -> FR)
+  const countryFromLang =
+    languageToCountry[locale] || languageToCountry[parts[0]]
   if (countryFromLang) {
     const fiat = countryToFiatMap[countryFromLang]
-    if (fiatMapping[fiat]) {
+    if (fiat && SUPPORTED_CURRENCIES.includes(fiat)) {
       return fiat
     }
   }
 
-  return null
+  // Default to USD
+  return 'USD'
+}
+
+/**
+ * Set the user's preferred fiat currency
+ * @param currency The currency code to set (e.g., 'USD', 'EUR')
+ */
+export const setUserFiatCurrency = (currency: string): void => {
+  if (SUPPORTED_CURRENCIES.includes(currency)) {
+    localStorage.setItem(FIAT_CURRENCY_KEY, currency)
+  }
+}
+
+/**
+ * Format a number as currency based on the user's preferred currency and locale
+ */
+export const formatFiatCurrency = (
+  value: number,
+  currency?: string
+): string => {
+  const currencyCode = currency || getUserFiatCurrency()
+  const locale = navigator.language || 'en-US'
+
+  // Some currencies typically don't show decimal places
+  const noDecimalCurrencies = ['JPY', 'KRW', 'IDR', 'TWD', 'VND', 'CLP', 'COP']
+
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode,
+    minimumFractionDigits: noDecimalCurrencies.includes(currencyCode) ? 0 : 2,
+    maximumFractionDigits: noDecimalCurrencies.includes(currencyCode) ? 0 : 2,
+  }).format(value)
 }
