@@ -219,6 +219,7 @@
     "rpcProviders": "RPC服务端",
     "scanFromPolkadotVault": "从Polkadot Vault中扫描",
     "searchAccount": "搜索帐户",
+    "selectCurrency": "Select Currency",
     "selectNetwork": "网络选择",
     "selectRpcProvider": "可选择任意一个RPC服务端来更改Cloud Staking连接的{{network}}节点",
     "selected": "己选",
