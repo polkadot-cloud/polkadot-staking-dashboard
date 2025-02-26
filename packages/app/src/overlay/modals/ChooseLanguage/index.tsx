@@ -31,7 +31,7 @@ export const ChooseLanguage = () => {
               >
                 {label}
                 {i18n.resolvedLanguage === code && (
-                  <span className="selected">Selected</span>
+                  <span className="selected">{t('selected')}</span>
                 )}
               </LocaleButton>
             ))}

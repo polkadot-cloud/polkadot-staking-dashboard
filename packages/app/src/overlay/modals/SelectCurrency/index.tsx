@@ -110,7 +110,9 @@ export const SelectCurrency = () => {
                     <span className="currency-name">
                       {currencyNames[currency]?.name || 'Unknown Currency'}
                     </span>
-                    {isSelected && <span className="selected">Selected</span>}
+                    {isSelected && (
+                      <span className="selected">{t('selected')}</span>
+                    )}
                   </CurrencyButton>
                 )
               })}
