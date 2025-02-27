@@ -3,10 +3,85 @@
 
 import styled from 'styled-components'
 
+export const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0 1.5rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+
+  .title-container {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5rem;
+
+    h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+  }
+`
+
+export const SearchInput = styled.div`
+  position: relative;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+    z-index: 1;
+  }
+
+  input {
+    width: 100%;
+    height: 30px;
+    padding: 0 0.6rem 0 2rem;
+    border-radius: 1.5rem;
+    border: 1px solid var(--border-primary-color);
+    background: var(--background-primary);
+    color: var(--text-color-primary);
+    font-size: 0.85rem;
+    outline: none;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s;
+
+    &:focus {
+      border-color: var(--accent-color-primary);
+      background: var(--background-primary);
+    }
+
+    &::placeholder {
+      color: var(--text-color-tertiary);
+      opacity: 0.7;
+    }
+  }
+`
+
 export const CurrencyListWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
+
+  .no-results {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-color-secondary);
+    font-style: bold;
+    background: var(--background-primary);
+    border-radius: 0.75rem;
+    border: 1px dashed var(--accent-color-primary);
+  }
 
   .warning {
     color: var(--text-color-secondary);
@@ -26,7 +101,7 @@ export const CurrencyListWrapper = styled.div`
     overflow-y: auto;
     z-index: 1;
     width: 100%;
-    margin: 1rem 0 1.5rem 0;
+    margin: 0 0 1.5rem 0;
     max-height: 60vh;
     display: flex;
     flex-direction: column;

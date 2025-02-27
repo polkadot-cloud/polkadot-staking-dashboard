@@ -1,7 +1,7 @@
 // Copyright 2023 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 
-import { Title } from 'library/Prompt/Title'
 import { Padding } from 'ui-core/modal'
+import { Title } from '../../library/Prompt/Title'
 
 export const Disclaimer = () => (
   <>

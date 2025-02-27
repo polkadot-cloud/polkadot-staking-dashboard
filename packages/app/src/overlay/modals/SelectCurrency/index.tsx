@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CurrencySVG from 'assets/svg/icons/dollarsign.svg?react'
 import {
   SUPPORTED_CURRENCIES,
@@ -13,7 +15,12 @@ import { Padding } from 'ui-core/modal'
 import { usePlugins } from '../../../contexts/Plugins'
 import { Title } from '../../../library/Modal/Title'
 import { ContentWrapper } from '../Networks/Wrapper'
-import { CurrencyButton, CurrencyListWrapper } from './Wrapper'
+import {
+  CurrencyButton,
+  CurrencyListWrapper,
+  HeaderWrapper,
+  SearchInput,
+} from './Wrapper'
 
 export const SelectCurrency = () => {
   const { t } = useTranslation('modals')
@@ -21,6 +28,9 @@ export const SelectCurrency = () => {
 
   // Get current currency
   const [currentCurrency, setCurrentCurrency] = useState<string>('')
+
+  // Search term state
+  const [searchTerm, setSearchTerm] = useState<string>('')
 
   // Currency names with symbols
   const currencyNames: Record<string, { name: string; symbol: string }> = {
@@ -70,8 +80,24 @@ export const SelectCurrency = () => {
     window.location.reload()
   }
 
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+  }
+
+  const filteredCurrencies = SUPPORTED_CURRENCIES.filter((currency) => {
+    const searchTermLower = searchTerm.toLowerCase()
+    const currencyInfo = currencyNames[currency]
+
+    return (
+      currency.toLowerCase().includes(searchTermLower) ||
+      currencyInfo?.name.toLowerCase().includes(searchTermLower) ||
+      currencyInfo?.symbol.toLowerCase().includes(searchTermLower)
+    )
+  })
+
   // Sort currencies - put the selected one first, then sort alphabetically
-  const sortedCurrencies = [...SUPPORTED_CURRENCIES].sort((a, b) => {
+  const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
     if (a === currentCurrency) {
       return -1
     }
@@ -83,39 +109,56 @@ export const SelectCurrency = () => {
 
   return (
     <>
-      <Title title={t('selectCurrency')} Svg={CurrencySVG} />
+      <HeaderWrapper>
+        <div className="title-container">
+          <Title title={t('selectCurrency')} Svg={CurrencySVG} />
+        </div>
+        <SearchInput>
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
+          <input
+            type="text"
+            placeholder={t('searchCurrency')}
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </SearchInput>
+      </HeaderWrapper>
       <Padding>
         <ContentWrapper>
           <CurrencyListWrapper>
             <div className="items">
-              {sortedCurrencies.map((currency) => {
-                // Flag to determine if this currency is selected
-                const isSelected = currentCurrency === currency
+              {sortedCurrencies.length > 0 ? (
+                sortedCurrencies.map((currency) => {
+                  // Flag to determine if this currency is selected
+                  const isSelected = currentCurrency === currency
 
-                // Disable selection if staking API is not enabled
-                const disabled = !stakingApiEnabled
+                  // Disable selection if staking API is not enabled
+                  const disabled = !stakingApiEnabled
 
-                return (
-                  <CurrencyButton
-                    type="button"
-                    $connected={isSelected}
-                    onClick={() => !disabled && handleSelect(currency)}
-                    key={`select_${currency}`}
-                    disabled={disabled}
-                  >
-                    <span className="currency-symbol">
-                      {currencyNames[currency]?.symbol || '$'}
-                    </span>
-                    <span className="currency-code">{currency}</span>
-                    <span className="currency-name">
-                      {currencyNames[currency]?.name || 'Unknown Currency'}
-                    </span>
-                    {isSelected && (
-                      <span className="selected">{t('selected')}</span>
-                    )}
-                  </CurrencyButton>
-                )
-              })}
+                  return (
+                    <CurrencyButton
+                      type="button"
+                      $connected={isSelected}
+                      onClick={() => !disabled && handleSelect(currency)}
+                      key={`select_${currency}`}
+                      disabled={disabled}
+                    >
+                      <span className="currency-symbol">
+                        {currencyNames[currency]?.symbol || '$'}
+                      </span>
+                      <span className="currency-code">{currency}</span>
+                      <span className="currency-name">
+                        {currencyNames[currency]?.name || 'Unknown Currency'}
+                      </span>
+                      {isSelected && (
+                        <span className="selected">{t('selected')}</span>
+                      )}
+                    </CurrencyButton>
+                  )
+                })
+              ) : (
+                <div className="no-results">{t('noCurrenciesFound')}</div>
+              )}
             </div>
 
             {!stakingApiEnabled && (
