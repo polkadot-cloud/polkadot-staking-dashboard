@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.9.0...app-v1.10.0) (2025-02-28)
+
+
+### Features
+
+* **ci:** Add `build:verify` and `lint:check` scripts, cache Vite build ([#2559](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2559)) ([b966b69](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b966b690f871c2cd5b6c6d93842e0d718014ecb1))
+
 ## [1.9.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.8.0...app-v1.9.0) (2025-02-24)
 
 
