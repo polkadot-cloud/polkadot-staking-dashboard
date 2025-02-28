@@ -10,8 +10,6 @@ export const ContentWrapper = styled.div`
   .items {
     box-sizing: border-box;
     position: relative;
-    box-sizing: border-box;
-    border-bottom: none;
     width: auto;
     border-radius: 0.75rem;
     overflow: hidden;
@@ -19,37 +17,43 @@ export const ContentWrapper = styled.div`
     z-index: 1;
     width: 100%;
     margin: 1rem 0 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 `
 
 export const LocaleButton = styled.button<{ $connected: boolean }>`
   color: var(--text-color-primary);
-  background: var(--button-primary-background);
+  background: ${(props) =>
+    props.$connected
+      ? 'var(--background-floating-card)'
+      : 'var(--button-primary-background)'};
   font-family: InterSemiBold, sans-serif;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 0.9rem 1rem;
   cursor: pointer;
   border-radius: 0.75rem;
-  display: inline-flex;
-  flex-flow: row wrap;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  border: 1px solid var(--status-success-color-transparent);
+  text-align: left;
+  border: 1px solid
+    ${(props) =>
+      props.$connected ? 'var(--accent-color-primary)' : 'transparent'};
   margin: 0.5rem 0;
-  ${(props) =>
-    props.$connected !== true &&
-    `
-  border: 1px solid rgba(0,0,0,0);
-`}
 
-  h4 {
-    color: var(--text-color-secondary);
-    &.selected {
-      color: var(--status-success-color);
-      margin-left: 0.75rem;
-    }
+  .selected {
+    color: var(--accent-color-primary);
+    margin-left: auto;
+    font-size: 0.95rem;
   }
+
   &:hover {
-    background: var(--button-hover-background);
+    background: ${(props) =>
+      props.$connected
+        ? 'var(--background-floating-card)'
+        : 'var(--button-hover-background)'};
   }
 `

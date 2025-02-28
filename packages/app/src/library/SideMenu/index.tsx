@@ -4,6 +4,7 @@
 import {
   faChevronLeft,
   faChevronRight,
+  faDollarSign,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
@@ -163,36 +164,43 @@ export const SideMenu = () => {
             }
             aria-label="Github"
           >
-            <LogoGithubSVG width="1.2em" height="1.2em" />
+            <LogoGithubSVG width="1em" height="1em" />
           </button>
           <button
             type="button"
             onClick={() => openModal({ key: 'Settings' })}
             aria-label="Settings"
           >
-            <CogSVG width="1.3em" height="1.3em" />
+            <CogSVG width="1.1em" height="1.1em" />
           </button>
           <button
             type="button"
             onClick={() => openModal({ key: 'ChooseLanguage' })}
           >
-            <LanguageSVG width="1.25em" height="1.25em" />
+            <LanguageSVG width="1.1em" height="1.1em" />
+          </button>
+          <button
+            type="button"
+            onClick={() => openModal({ key: 'SelectCurrency' })}
+            aria-label="Select Currency"
+          >
+            <FontAwesomeIcon icon={faDollarSign} width="1.1em" height="1.1em" />
           </button>
           {mode === 'dark' ? (
             <button
               type="button"
               onClick={() => toggleTheme()}
-              aria-label="aria-label"
+              aria-label="Toggle Light Mode"
             >
-              <SunnyOutlineSVG width="1.25em" height="1.25em" />
+              <SunnyOutlineSVG width="1.1em" height="1.1em" />
             </button>
           ) : (
             <button
               type="button"
               onClick={() => toggleTheme()}
-              aria-label="Toggle"
+              aria-label="Toggle Dark Mode"
             >
-              <MoonOutlineSVG width="1.1em" height="1.1em" />
+              <MoonOutlineSVG width="1em" height="1em" />
             </button>
           )}
         </section>

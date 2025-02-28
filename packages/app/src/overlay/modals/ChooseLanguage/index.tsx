@@ -18,23 +18,22 @@ export const ChooseLanguage = () => {
       <Title title={t('chooseLanguage')} Svg={LanguageSVG} />
       <Padding>
         <ContentWrapper>
-          <div className="item">
+          <div className="items">
             {Object.entries(locales).map(([code, { label }], i) => (
-              <h3 key={`${code}_${i}`}>
-                <LocaleButton
-                  $connected={i18n.resolvedLanguage === code}
-                  type="button"
-                  onClick={() => {
-                    changeLanguage(code, i18n)
-                    setModalStatus('closing')
-                  }}
-                >
-                  {label}
-                  {i18n.resolvedLanguage === code && (
-                    <h4 className="selected">{t('selected')}</h4>
-                  )}
-                </LocaleButton>
-              </h3>
+              <LocaleButton
+                key={`${code}_${i}`}
+                $connected={i18n.resolvedLanguage === code}
+                type="button"
+                onClick={() => {
+                  changeLanguage(code, i18n)
+                  setModalStatus('closing')
+                }}
+              >
+                {label}
+                {i18n.resolvedLanguage === code && (
+                  <span className="selected">{t('selected')}</span>
+                )}
+              </LocaleButton>
             ))}
           </div>
         </ContentWrapper>

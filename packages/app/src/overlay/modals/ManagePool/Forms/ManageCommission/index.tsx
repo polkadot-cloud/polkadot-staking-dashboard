@@ -1,47 +1,52 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolSetCommission } from 'api/tx/poolSetCommission'
-import { PoolSetCommissionChangeRate } from 'api/tx/poolSetCommissionChangeRate'
-import { PoolSetCommissionMax } from 'api/tx/poolSetCommissionMax'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useHelp } from 'contexts/Help'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useBatchCall } from 'hooks/useBatchCall'
-import { useSignerWarnings } from 'hooks/useSignerWarnings'
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { ActionItem } from 'library/ActionItem'
-import { Warning } from 'library/Form/Warning'
-import { SubmitTx } from 'library/SubmitTx'
-import 'rc-slider/assets/index.css'
-import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonSubmitInvert } from 'ui-buttons'
-import { Padding, Warnings } from 'ui-core/modal'
-import { useOverlay } from 'ui-overlay'
-import { ChangeRate } from './ChangeRate'
-import { CommissionCurrent } from './CommissionCurrent'
-import { MaxCommission } from './MaxCommission'
-import { usePoolCommission } from './provider'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import BigNumber from 'bignumber.js';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useHelp } from 'contexts/Help';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { Warning } from 'library/Form/Warning';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { SubmitTx } from 'library/SubmitTx';
+import 'rc-slider/assets/index.css';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { usePoolCommission } from './provider';
+import { CommissionCurrent } from './CommissionCurrent';
+import { MaxCommission } from './MaxCommission';
+import { ChangeRate } from './ChangeRate';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
 
 export const ManageCommission = ({
   setSection,
   incrementCalculateHeight,
-  onResize,
 }: {
-  setSection: Dispatch<SetStateAction<number>>
-  incrementCalculateHeight: () => void
-  onResize: () => void
+  setSection: Dispatch<SetStateAction<number>>;
+  incrementCalculateHeight: () => void;
 }) => {
-  const { t } = useTranslation('modals')
-  const { openHelp } = useHelp()
+  const { t } = useTranslation('modals');
+  const { openHelp } = useHelp();
   const {
+    api,
     poolsConfig: { globalMaxCommission },
-  } = useApi()
+  } = useApi();
+  const { newBatchCall } = useBatchCall();
+  const { activeAccount } = useActiveAccounts();
+  const { setModalStatus } = useOverlay().modal;
+  const { isOwner, activePool } = useActivePool();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
     getInitial,
     getCurrent,
@@ -50,44 +55,37 @@ export const ManageCommission = ({
     hasValue,
     resetAll,
     isUpdated,
-  } = usePoolCommission()
-  const { network } = useNetwork()
-  const { newBatchCall } = useBatchCall()
-  const { activeAccount } = useActiveAccounts()
-  const { setModalStatus } = useOverlay().modal
-  const { isOwner, activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { getBondedPool, updateBondedPools } = useBondedPools()
+  } = usePoolCommission();
 
-  const poolId = activePool?.id || 0
-  const bondedPool = getBondedPool(poolId)
+  const poolId = activePool?.id || 0;
+  const bondedPool = getBondedPool(poolId);
 
   // Get currently set commission values.
-  const commission = getCurrent('commission')
-  const payee = getCurrent('payee')
-  const maxCommission = getCurrent('max_commission')
-  const changeRate = getCurrent('change_rate')
+  const commission = getCurrent('commission');
+  const payee = getCurrent('payee');
+  const maxCommission = getCurrent('max_commission');
+  const changeRate = getCurrent('change_rate');
 
   // Valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false)
+  const [valid, setValid] = useState<boolean>(false);
 
   // Monitor when input items change.
-  const commissionUpdated: boolean = commission !== getInitial('commission')
+  const commissionUpdated: boolean = commission !== getInitial('commission');
 
   // Global form change.
   const noChange: boolean =
     !commissionUpdated &&
     !isUpdated('max_commission') &&
-    !isUpdated('change_rate')
+    !isUpdated('change_rate');
 
   // Monitor when input items are invalid.
   const commissionAboveMax: boolean =
-    hasValue('max_commission') && commission > maxCommission
-  const commissionAboveGlobal = commission > globalMaxCommission
+    hasValue('max_commission') && commission > maxCommission;
+  const commissionAboveGlobal = commission > globalMaxCommission;
 
   const commissionAboveMaxIncrease: boolean =
     hasValue('change_rate') &&
-    commission - getInitial('commission') > changeRate.maxIncrease
+    commission - getInitial('commission') > changeRate.maxIncrease;
 
   const invalidCurrentCommission: boolean =
     commissionUpdated &&
@@ -95,83 +93,91 @@ export const ManageCommission = ({
       (commission !== 0 && payee === null) ||
       commissionAboveMax ||
       commissionAboveMaxIncrease ||
-      commission > globalMaxCommission)
+      commission > globalMaxCommission);
 
   const invalidMaxCommission: boolean =
     hasValue('max_commission') &&
     isUpdated('max_commission') &&
-    maxCommission > getInitial('max_commission')
+    maxCommission > getInitial('max_commission');
 
   const maxCommissionAboveGlobal: boolean =
-    getEnabled('max_commission') && maxCommission > globalMaxCommission
+    getEnabled('max_commission') && maxCommission > globalMaxCommission;
 
   // Change rate is invalid if updated is not more restrictive than current.
   const invalidMaxIncrease: boolean =
     getEnabled('change_rate') &&
     isUpdated('change_rate') &&
-    changeRate.maxIncrease > getInitial('change_rate').maxIncrease
+    changeRate.maxIncrease > getInitial('change_rate').maxIncrease;
 
   const invalidMinDelay: boolean =
     getEnabled('change_rate') &&
     isUpdated('change_rate') &&
-    changeRate.minDelay < getInitial('change_rate').minDelay
+    changeRate.minDelay < getInitial('change_rate').minDelay;
 
-  const invalidChangeRate: boolean = invalidMaxIncrease || invalidMinDelay
+  const invalidChangeRate: boolean = invalidMaxIncrease || invalidMinDelay;
 
-  const currentCommissionSet: boolean = payee && commission !== 0
+  const currentCommissionSet: boolean = payee && commission !== 0;
 
   // Check there are txs to submit.
   const txsToSubmit =
     commissionUpdated ||
     (isUpdated('max_commission') && getEnabled('max_commission')) ||
-    (isUpdated('change_rate') && getEnabled('change_rate'))
+    (isUpdated('change_rate') && getEnabled('change_rate'));
 
+  // tx to submit.
   const getTx = () => {
-    if (!valid) {
-      return null
+    if (!valid || !api) {
+      return null;
     }
-    const txs = []
+
+    const txs = [];
     if (commissionUpdated) {
-      const commissionPerbill = commission * 10000000
       txs.push(
-        new PoolSetCommission(
-          network,
+        api.tx.nominationPools.setCommission(
           poolId,
-          currentCommissionSet ? [commissionPerbill, payee] : undefined
-        ).tx()
-      )
+          currentCommissionSet
+            ? [
+                new BigNumber(commission).multipliedBy(10000000).toString(),
+                payee,
+              ]
+            : null
+        )
+      );
     }
     if (isUpdated('max_commission') && getEnabled('max_commission')) {
-      const maxPerbill = maxCommission * 10000000
-      txs.push(new PoolSetCommissionMax(network, poolId, maxPerbill).tx())
+      txs.push(
+        api.tx.nominationPools.setCommissionMax(
+          poolId,
+          new BigNumber(maxCommission).multipliedBy(10000000).toString()
+        )
+      );
     }
     if (isUpdated('change_rate') && getEnabled('change_rate')) {
-      const maxIncreasePerbill = changeRate.maxIncrease * 10000000
       txs.push(
-        new PoolSetCommissionChangeRate(
-          network,
-          poolId,
-          maxIncreasePerbill,
-          changeRate.minDelay
-        ).tx()
-      )
+        api.tx.nominationPools.setCommissionChangeRate(poolId, {
+          maxIncrease: new BigNumber(changeRate.maxIncrease)
+            .multipliedBy(10000000)
+            .toString(),
+          minDelay: changeRate.minDelay.toString(),
+        })
+      );
     }
 
     if (txs.length === 1) {
-      return txs[0]
+      return txs[0];
     }
-    return newBatchCall(txs, activeAccount)
-  }
+    return newBatchCall(txs, activeAccount);
+  };
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus('closing')
+      setModalStatus('closing');
     },
     callbackInBlock: () => {
-      const pool = getBondedPool(poolId)
+      const pool = getBondedPool(poolId);
       if (pool) {
         updateBondedPools([
           {
@@ -192,36 +198,36 @@ export const ManageCommission = ({
                 : pool.commission?.changeRate || null,
             },
           },
-        ])
+        ]);
       }
     },
-  })
+  });
 
   // Commission current meta required for form.
   const commissionCurrentMeta = {
     commissionAboveMax,
     commissionAboveGlobal,
     commissionAboveMaxIncrease,
-  }
+  };
 
   // Max commission meta required for form.
   const maxCommissionMeta = {
     invalidMaxCommission,
     maxCommissionAboveGlobal,
-  }
+  };
 
   // Change rate meta required for form.
   const changeRateMeta = {
     invalidMaxIncrease,
     invalidMinDelay,
-  }
+  };
 
   // Get transaction signer warnings.
   const warnings = getSignerWarnings(
     activeAccount,
     false,
     submitExtrinsic.proxySupported
-  )
+  );
 
   // Update whether commission configs are valid on each invalid input, and when tx object changes.
   useEffect(() => {
@@ -234,7 +240,7 @@ export const ManageCommission = ({
         !invalidChangeRate &&
         !noChange &&
         txsToSubmit
-    )
+    );
   }, [
     isOwner(),
     invalidCurrentCommission,
@@ -245,22 +251,22 @@ export const ManageCommission = ({
     bondedPool,
     noChange,
     txsToSubmit,
-  ])
+  ]);
 
   // Trigger modal resize when commission options are enabled / disabled.
   useEffect(() => {
-    incrementCalculateHeight()
-  }, [getEnabled('max_commission'), getEnabled('change_rate')])
+    incrementCalculateHeight();
+  }, [getEnabled('max_commission'), getEnabled('change_rate')]);
 
   return (
     <>
-      <Padding horizontalOnly>
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
-          <Warnings>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </Warnings>
+          </ModalWarnings>
         ) : null}
 
         <ActionItem
@@ -302,7 +308,7 @@ export const ManageCommission = ({
           }
         />
         <ChangeRate {...changeRateMeta} />
-      </Padding>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[
@@ -312,14 +318,13 @@ export const ManageCommission = ({
             iconLeft={faChevronLeft}
             iconTransform="shrink-1"
             onClick={() => {
-              setSection(0)
-              resetAll()
+              setSection(0);
+              resetAll();
             }}
           />,
         ]}
-        onResize={onResize}
         {...submitExtrinsic}
       />
     </>
-  )
-}
+  );
+};

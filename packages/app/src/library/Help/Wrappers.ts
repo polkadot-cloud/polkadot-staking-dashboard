@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion'
-import styled from 'styled-components'
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 export const ListWrapper = styled(motion.div)`
   display: flex;
@@ -33,7 +33,7 @@ export const ListWrapper = styled(motion.div)`
     line-height: 1.4rem;
     margin: 0;
   }
-`
+`;
 
 export const DefinitionWrapper = styled(motion.div)`
   background: var(--background-floating-card);
@@ -87,20 +87,10 @@ export const DefinitionWrapper = styled(motion.div)`
       opacity: 0.5;
     }
   }
-`
-
-export const HelpTitle = styled.h1`
-  font-family: Poppins700, sans-serif;
-  margin: 1.75rem 0;
-`
-
-export const HelpSubtitle = styled.h3`
-  font-family: InterSemiBold, sans-serif;
-  margin: 2rem 0.5rem 1rem;
-`
+`;
 
 export const ItemWrapper = styled(motion.div)<{
-  width: string | number
+  width: string | number;
 }>`
   display: flex;
   width: ${(props) => props.width};
@@ -143,4 +133,4 @@ export const ItemWrapper = styled(motion.div)<{
       margin-right: 0.75rem;
     }
   }
-`
+`;

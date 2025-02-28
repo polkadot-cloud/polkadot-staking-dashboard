@@ -1,8 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
-import type { TooltipItem } from 'chart.js'
+import BigNumber from 'bignumber.js';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -12,17 +11,23 @@ import {
   PointElement,
   Title,
   Tooltip,
-} from 'chart.js'
-import { useNetwork } from 'contexts/Network'
-import { useThemeValues } from 'contexts/ThemeValues'
-import { Line } from 'react-chartjs-2'
-import { useTranslation } from 'react-i18next'
-import type { AveragePayoutLineProps } from './types'
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
+import { useSubscan } from 'contexts/Plugins/Subscan';
+import { useTheme } from 'contexts/Themes';
+import { useUi } from 'contexts/UI';
+import { graphColors } from 'styles/graphs';
+import type { AnyJson, AnySubscan } from 'types';
+import { useNetwork } from 'contexts/Network';
+import type { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
   combineRewards,
   formatRewardsForGraphs,
-} from './Utils'
+} from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -32,55 +37,64 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-)
+);
 
-export const AveragePayoutLine = ({
+export const PayoutLine = ({
   days,
   average,
   height,
   background,
-  data: { payouts, poolClaims },
-  nominating,
-  inPool,
-}: AveragePayoutLineProps) => {
-  const { t } = useTranslation('app')
-  const { getThemeValue } = useThemeValues()
-  const { unit, units } = useNetwork().networkData
+}: PayoutLineProps) => {
+  const { t } = useTranslation('library');
+  const { mode } = useTheme();
+  const { isSyncing } = useUi();
+  const { inSetup } = useStaking();
+  const { payouts, poolClaims } = useSubscan();
+  const { unit, units, colors } = useNetwork().networkData;
+  const { membership: poolMembership } = usePoolMemberships();
 
-  const staking = nominating || inPool
-  const inPoolOnly = !nominating && inPool
-  // Define the most recent date that we will show on the graph
-  const fromDate = new Date()
+  const notStaking = !isSyncing && inSetup() && !poolMembership;
+  const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
+
+  // remove slashes from payouts (graph does not support negative values).
+  const payoutsNoSlash = payouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
+  );
+
+  // define the most recent date that we will show on the graph.
+  const fromDate = new Date();
 
   const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
     fromDate,
     days,
     units,
-    payouts,
+    payoutsNoSlash,
     poolClaims,
-    [] // Note: we are not using `unclaimedPayouts` here
-  )
-  const { p: graphPayouts, a: graphPrePayouts } = allPayouts
-  const { p: graphPoolClaims, a: graphPrePoolClaims } = allPoolClaims
+    [] // Note: we are not using `unclaimedPayouts` here.
+  );
 
-  // Combine payouts and pool claims into one dataset and calculate averages
-  const combined = combineRewards(graphPayouts, graphPoolClaims)
-  const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims)
+  const { p: graphPayouts, a: graphPrePayouts } = allPayouts;
+  const { p: graphPoolClaims, a: graphPrePoolClaims } = allPoolClaims;
+
+  // combine payouts and pool claims into one dataset and calculate averages.
+  const combined = combineRewards(graphPayouts, graphPoolClaims);
+  const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims);
 
   const combinedPayouts = calculatePayoutAverages(
     preCombined.concat(combined),
     fromDate,
     days,
     10
-  )
+  );
 
-  // Determine color for payouts
-  const color = !staking
-    ? getThemeValue('--accent-color-primary')
-    : !inPoolOnly
-      ? getThemeValue('--accent-color-primary')
-      : getThemeValue('--accent-color-secondary')
+  // determine color for payouts
+  const color = notStaking
+    ? colors.primary[mode]
+    : !poolingOnly
+      ? colors.primary[mode]
+      : colors.secondary[mode];
 
+  // configure graph options
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -104,7 +118,7 @@ export const AveragePayoutLine = ({
           display: false,
         },
         grid: {
-          color: getThemeValue('--grid-color-secondary'),
+          color: graphColors.grid[mode],
         },
       },
     },
@@ -114,16 +128,16 @@ export const AveragePayoutLine = ({
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: getThemeValue('--background-invert'),
-        titleColor: getThemeValue('--text-color-invert'),
-        bodyColor: getThemeValue('--text-color-invert'),
+        backgroundColor: graphColors.tooltip[mode],
+        titleColor: graphColors.label[mode],
+        bodyColor: graphColors.label[mode],
         bodyFont: {
           weight: 600,
         },
         callbacks: {
           title: () => [],
-          label: ({ parsed }: TooltipItem<'line'>) =>
-            ` ${new BigNumber(parsed.y)
+          label: (context: AnyJson) =>
+            ` ${new BigNumber(context.parsed.y)
               .decimalPlaces(units)
               .toFormat()} ${unit}`,
         },
@@ -133,23 +147,22 @@ export const AveragePayoutLine = ({
         },
       },
     },
-  }
+  };
 
   const data = {
     labels: combinedPayouts.map(() => ''),
     datasets: [
       {
         label: t('payout'),
-        data: combinedPayouts.map(({ reward }: { reward: number }) => reward),
+        data: combinedPayouts.map((item: AnySubscan) => item?.amount ?? 0),
         borderColor: color,
+        backgroundColor: color,
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2.3,
-        tension: 0.25,
-        fill: false,
       },
     ],
-  }
+  };
 
   return (
     <>
@@ -167,5 +180,5 @@ export const AveragePayoutLine = ({
         <Line options={options} data={data} />
       </div>
     </>
-  )
-}
+  );
+};

@@ -1,10 +1,19 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from 'types';
+
 export interface MembersListProps {
-  pagination: boolean
-  itemsPerPage: number
-  batchKey: string
-  selectToggleable?: boolean
-  memberCount: string
+  pagination: boolean;
+  batchKey: string;
+  disableThrottle?: boolean;
+  selectToggleable?: boolean;
 }
+
+export type DefaultMembersListProps = MembersListProps & {
+  members: AnyJson;
+};
+
+export type FetchpageMembersListProps = MembersListProps & {
+  memberCount: number;
+};

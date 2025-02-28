@@ -1,41 +1,67 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useUi } from 'contexts/UI'
-import { useDotLottieButton } from 'hooks/useDotLottieButton'
-import { Link } from 'react-router-dom'
-import type { PrimaryProps } from '../types'
-import { BulletWrapper } from '../Wrapper'
-import { Wrapper } from './Wrappers'
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNetwork } from 'contexts/Network';
+import { useUi } from 'contexts/UI';
+import { useDotLottieButton } from 'hooks/useDotLottieButton';
+import { Link } from 'react-router-dom';
+import { registerSaEvent } from 'utils';
+import type { PrimaryProps } from '../types';
+import { Wrapper } from './Wrappers';
 
 export const Primary = ({
   name,
   active,
   to,
-  bullet,
+  action,
   minimised,
   lottie,
 }: PrimaryProps) => {
-  const { setSideMenu } = useUi()
+  const { setSideMenu } = useUi();
+  const { network } = useNetwork();
+  const { icon, play } = useDotLottieButton(lottie);
 
-  const { icon, play } = useDotLottieButton(lottie)
+  let Action = null;
+  const actionStatus = action?.status ?? null;
+
+  switch (action?.type) {
+    case 'text':
+      Action = (
+        <div className="action text">
+          <span className={actionStatus || undefined}>
+            {action?.text ?? ''}
+          </span>
+        </div>
+      );
+      break;
+    case 'bullet':
+      Action = (
+        <div className={`action ${actionStatus}`}>
+          <FontAwesomeIcon icon={faCircle} transform="shrink-4" />
+        </div>
+      );
+      break;
+    default:
+      Action = null;
+  }
 
   return (
     <Link
       to={to}
       onClick={() => {
         if (!active) {
-          play()
-          setSideMenu(false)
+          play();
+          setSideMenu(false);
+          registerSaEvent(`${network.toLowerCase()}_${name}_page_visit`);
         }
       }}
     >
       <Wrapper
         className={`${active ? `active` : `inactive`}${
           minimised ? ` minimised` : ``
-        }${bullet ? ` ${bullet}` : ``}`}
+        }${action ? ` ${actionStatus}` : ``}`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{
@@ -47,15 +73,10 @@ export const Primary = ({
         </div>
         {!minimised && (
           <>
-            <h4 className="name">{name}</h4>
-            {bullet && (
-              <BulletWrapper className={bullet}>
-                <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-              </BulletWrapper>
-            )}
+            <h4 className="name">{name}</h4> {Action}
           </>
         )}
       </Wrapper>
     </Link>
-  )
-}
+  );
+};

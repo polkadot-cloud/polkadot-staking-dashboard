@@ -1,32 +1,39 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useThemeValues } from 'contexts/ThemeValues'
-import { CardWrapper } from 'library/Card/Wrappers'
-import { useTranslation } from 'react-i18next'
-import { MembersList as FetchPageMemberList } from './Lists/FetchPage'
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
+import { usePlugins } from 'contexts/Plugins';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { useTheme } from 'contexts/Themes';
+import { CardWrapper } from 'library/Card/Wrappers';
+import { useNetwork } from 'contexts/Network';
+import { MembersList as DefaultMemberList } from './Lists/Default';
+import { MembersList as FetchPageMemberList } from './Lists/FetchPage';
 
 export const Members = () => {
-  const { t } = useTranslation('pages')
-  const { getThemeValue } = useThemeValues()
-  const { activePool, isOwner, isBouncer } = useActivePool()
+  const { t } = useTranslation('pages');
+  const { mode } = useTheme();
+  const { pluginEnabled } = usePlugins();
+  const { getMembersOfPoolFromNode } = usePoolMembers();
+  const { selectedActivePool, isOwner, isBouncer, selectedPoolMemberCount } =
+    useActivePools();
 
-  const annuncementBorderColor = getThemeValue('--accent-color-secondary')
+  const { colors } = useNetwork().networkData;
+  const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
-    activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer())
-
-  const memberCount = activePool?.bondedPool?.memberCounter ?? '0'
+    selectedActivePool?.bondedPool?.state === 'Blocked' &&
+    (isOwner() || isBouncer());
 
   const membersListProps = {
     batchKey: 'active_pool_members',
     pagination: true,
     selectToggleable: false,
     allowMoreCols: true,
-  }
+  };
 
   return (
     <>
@@ -40,18 +47,18 @@ export const Members = () => {
           }}
         >
           <div className="content">
-            <h3>{t('poolCurrentlyLocked')}</h3>
+            <h3>{t('pools.poolCurrentlyLocked')}</h3>
             <h4>
-              {t('permissionToUnbond')}({' '}
+              {t('pools.permissionToUnbond')}({' '}
               <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
-              {t('managementOptions')}
+              {t('pools.managementOptions')}
             </h4>
           </div>
         </CardWrapper>
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {activePool?.bondedPool?.state === 'Destroying' && (
+      {selectedActivePool?.bondedPool?.state === 'Destroying' && (
         <CardWrapper
           className="canvas"
           style={{
@@ -60,23 +67,29 @@ export const Members = () => {
           }}
         >
           <div className="content">
-            <h3>{t('poolInDestroyingState')}</h3>
+            <h3>{t('pools.poolInDestroyingState')}</h3>
             <h4>
-              {t('permissionToUnbond')} ({' '}
+              {t('pools.permissionToUnbond')} ({' '}
               <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
-              {t('managementOptions')}
+              {t('pools.managementOptions')}
             </h4>
           </div>
         </CardWrapper>
       )}
 
       <CardWrapper className="transparent">
-        <FetchPageMemberList
-          {...membersListProps}
-          memberCount={memberCount}
-          itemsPerPage={50}
-        />
+        {pluginEnabled('subscan') ? (
+          <FetchPageMemberList
+            {...membersListProps}
+            memberCount={selectedPoolMemberCount}
+          />
+        ) : (
+          <DefaultMemberList
+            {...membersListProps}
+            members={getMembersOfPoolFromNode(selectedActivePool?.id ?? 0)}
+          />
+        )}
       </CardWrapper>
     </>
-  )
-}
+  );
+};

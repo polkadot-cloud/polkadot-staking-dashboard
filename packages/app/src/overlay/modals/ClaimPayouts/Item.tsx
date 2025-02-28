@@ -1,26 +1,27 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useNetwork } from 'contexts/Network'
-import { useTranslation } from 'react-i18next'
-import { ButtonSubmit } from 'ui-buttons'
-import { planckToUnitBn } from 'utils'
-import type { ItemProps } from './types'
-import { getTotalPayout } from './Utils'
-import { ItemWrapper } from './Wrappers'
+import { ButtonSubmit } from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
+import { planckToUnit } from '@w3ux/utils';
+import { useNetwork } from 'contexts/Network';
+import { ItemWrapper } from './Wrappers';
+import type { ItemProps } from './types';
+import { getTotalPayout } from './Utils';
 
 export const Item = ({
   era,
-  validators,
+  unclaimedPayout,
   setPayouts,
   setSection,
 }: ItemProps) => {
-  const { t } = useTranslation('modals')
+  const { t } = useTranslation('modals');
   const {
     networkData: { units, unit },
-  } = useNetwork()
-  const totalPayout = getTotalPayout(validators)
-  const numPayouts = validators.length
+  } = useNetwork();
+
+  const totalPayout = getTotalPayout(unclaimedPayout);
+  const numPayouts = Object.values(unclaimedPayout).length;
 
   return (
     <ItemWrapper>
@@ -35,9 +36,10 @@ export const Item = ({
             </span>
           </h4>
           <h2>
-            {planckToUnitBn(totalPayout, units).toString()} {unit}
+            {planckToUnit(totalPayout, units).toString()} {unit}
           </h2>
         </section>
+
         <section>
           <div>
             <ButtonSubmit
@@ -47,17 +49,17 @@ export const Item = ({
                   {
                     era,
                     payout: totalPayout.toString(),
-                    paginatedValidators: validators.map(
-                      ({ page, validator }) => [page || 0, validator]
+                    paginatedValidators: Object.entries(unclaimedPayout).map(
+                      ([v, [page]]) => [page, v]
                     ),
                   },
-                ])
-                setSection(1)
+                ]);
+                setSection(1);
               }}
             />
           </div>
         </section>
       </div>
     </ItemWrapper>
-  )
-}
+  );
+};

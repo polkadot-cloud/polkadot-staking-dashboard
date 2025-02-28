@@ -1,25 +1,25 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
   faEnvelope,
   faExternalLink,
   faServer,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNetwork } from 'contexts/Network'
-import { Suspense, lazy, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useOverlay } from 'ui-overlay'
-import { ItemWrapper } from './Wrappers'
-import { useOperatorsSections } from './context'
-import type { ItemProps } from './types'
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Suspense, lazy, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { useNetwork } from 'contexts/Network';
+import { ItemWrapper } from './Wrappers';
+import { useCommunitySections } from './context';
+import type { ItemProps } from './types';
 
 export const Item = ({ item, actionable }: ItemProps) => {
-  const { t } = useTranslation('pages')
-  const { openModal } = useOverlay().modal
-  const { network } = useNetwork()
+  const { t } = useTranslation('pages');
+  const { openModal } = useOverlay().modal;
+  const { network } = useNetwork();
 
   const {
     bio,
@@ -29,11 +29,11 @@ export const Item = ({ item, actionable }: ItemProps) => {
     website,
     icon,
     validators: entityAllValidators,
-  } = item
-  const validatorCount = entityAllValidators[network]?.length ?? 0
+  } = item;
+  const validatorCount = entityAllValidators[network]?.length ?? 0;
 
   const { setActiveSection, setActiveItem, setScrollPos } =
-    useOperatorsSections()
+    useCommunitySections();
 
   const listItem = {
     hidden: {
@@ -52,12 +52,12 @@ export const Item = ({ item, actionable }: ItemProps) => {
         bounce: 0.2,
       },
     },
-  }
+  };
 
   const Thumbnail = useMemo(
     () => lazy(() => import(`../../config/validators/${icon}.tsx`)),
     []
-  )
+  );
 
   return (
     <ItemWrapper
@@ -79,7 +79,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
               onClick={() => openModal({ key: 'Bio', options: { name, bio } })}
               className="active"
             >
-              <span>{t('bio')}</span>
+              <span>{t('community.bio')}</span>
             </button>
           </h3>
 
@@ -90,9 +90,9 @@ export const Item = ({ item, actionable }: ItemProps) => {
               type="button"
               onClick={() => {
                 if (actionable) {
-                  setActiveSection(1)
-                  setActiveItem(item)
-                  setScrollPos(window.scrollY)
+                  setActiveSection(1);
+                  setActiveItem(item);
+                  setScrollPos(window.scrollY);
                 }
               }}
             >
@@ -102,7 +102,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 transform="shrink-1"
               />
               <h4>
-                {t('validator', {
+                {t('community.validator', {
                   count: validatorCount,
                 })}
               </h4>
@@ -112,7 +112,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(`mailto:${email}`, '_blank')
+                  window.open(`mailto:${email}`, '_blank');
                 }}
               >
                 <FontAwesomeIcon
@@ -120,7 +120,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                   transform="shrink-1"
                   className="icon-left"
                 />
-                <h4>{t('email')}</h4>
+                <h4>{t('community.email')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
@@ -133,7 +133,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(`https://twitter.com/${x}`, '_blank')
+                  window.open(`https://twitter.com/${x}`, '_blank');
                 }}
               >
                 <FontAwesomeIcon icon={faTwitter} className="icon-left" />
@@ -150,10 +150,10 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(website, '_blank')
+                  window.open(website, '_blank');
                 }}
               >
-                <h4>{t('website')}</h4>
+                <h4>{t('community.website')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
@@ -165,5 +165,5 @@ export const Item = ({ item, actionable }: ItemProps) => {
         </section>
       </div>
     </ItemWrapper>
-  )
-}
+  );
+};

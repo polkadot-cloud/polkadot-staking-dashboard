@@ -1,16 +1,16 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useHelp } from 'contexts/Help'
-import { usePlugins } from 'contexts/Plugins'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useStaking } from 'contexts/Staking'
-import { useSyncing } from 'hooks/useSyncing'
-import { ButtonHelp } from 'ui-buttons'
-import { Wrapper } from './Wrapper'
-import type { StatusLabelProps } from './types'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonHelp } from '@polkadot-cloud/react';
+import { useHelp } from 'contexts/Help';
+import { usePlugins } from 'contexts/Plugins';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { Wrapper } from './Wrapper';
+import type { StatusLabelProps } from './types';
 
 export const StatusLabel = ({
   title,
@@ -20,22 +20,22 @@ export const StatusLabel = ({
   topOffset = '40%',
   status = 'sync_or_setup',
 }: StatusLabelProps) => {
-  const { openHelp } = useHelp()
-  const { syncing } = useSyncing()
-  const { plugins } = usePlugins()
-  const { inSetup } = useStaking()
-  const { inPool } = useActivePool()
+  const { isSyncing } = useUi();
+  const { plugins } = usePlugins();
+  const { inSetup } = useStaking();
+  const { membership } = usePoolMemberships();
+  const { openHelp } = useHelp();
 
   // syncing or not staking
   if (status === 'sync_or_setup') {
-    if (syncing || !inSetup() || inPool()) {
-      return null
+    if (isSyncing || !inSetup() || membership !== null) {
+      return null;
     }
   }
 
   if (status === 'active_service' && statusFor) {
     if (plugins.includes(statusFor)) {
-      return null
+      return null;
     }
   }
 
@@ -58,5 +58,5 @@ export const StatusLabel = ({
         </h2>
       </div>
     </Wrapper>
-  )
-}
+  );
+};

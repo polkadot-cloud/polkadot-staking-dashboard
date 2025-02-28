@@ -28,6 +28,7 @@ import { ManageFastUnstake } from './modals/ManageFastUnstake'
 import { ManagePool } from './modals/ManagePool'
 import { Networks } from './modals/Networks'
 import { RewardCalculator } from './modals/RewardCalculator'
+import { SelectCurrency } from './modals/SelectCurrency'
 import { Settings } from './modals/Settings'
 import { StopNominations } from './modals/StopNominations'
 import { Unbond } from './modals/Unbond'
@@ -63,6 +64,7 @@ export const Overlays = () => {
         ManageFastUnstake,
         Networks,
         RewardCalculator,
+        SelectCurrency,
         Settings,
         ValidatorGeo,
         UnlockChunks,

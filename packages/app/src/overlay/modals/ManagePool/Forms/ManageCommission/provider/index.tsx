@@ -1,143 +1,146 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { createContext, useContext, useEffect, useState } from 'react'
-import type { MaybeAddress } from 'types'
-import { defaultPoolCommissionContext } from './defaults'
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { MaybeAddress } from 'types';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { rmCommas } from '@w3ux/utils';
 import type {
   ChangeRateInput,
   CommissionFeature,
   OptionalCommissionFeature,
   PoolCommissionContextInterface,
   PoolCommissionProviderProps,
-} from './types'
+} from './types';
+import { defaultPoolCommissionContext } from './defaults';
 
 export const PoolCommissionContext =
-  createContext<PoolCommissionContextInterface>(defaultPoolCommissionContext)
+  createContext<PoolCommissionContextInterface>(defaultPoolCommissionContext);
 
-export const usePoolCommission = () => useContext(PoolCommissionContext)
+export const usePoolCommission = () => useContext(PoolCommissionContext);
 
 export const PoolCommissionProvider = ({
   children,
 }: PoolCommissionProviderProps) => {
-  const { activePool } = useActivePool()
-  const { getBondedPool } = useBondedPools()
-  const poolId = activePool?.id || 0
-  const bondedPool = getBondedPool(poolId)
+  const { getBondedPool } = useBondedPools();
+  const { selectedActivePool } = useActivePools();
+  const poolId = selectedActivePool?.id || 0;
+  const bondedPool = getBondedPool(poolId);
 
   // Get initial commission value from the bonded pool commission config.
-  const initialCommission = Number(bondedPool?.commission?.current?.[0] || '0')
+  const initialCommission = Number(
+    (bondedPool?.commission?.current?.[0] || '0%').slice(0, -1)
+  );
 
   // Get initial payee value from the bonded pool commission config.
-  const initialPayee = bondedPool?.commission?.current?.[1] || null
+  const initialPayee = bondedPool?.commission?.current?.[1] || null;
 
   // Get initial maximum commission value from the bonded pool commission config.
   const initialMaxCommission = Number(
-    (bondedPool?.commission?.max || '100').toString()
-  )
+    (bondedPool?.commission?.max || '100%').slice(0, -1)
+  );
 
   // Get initial change rate value from the bonded pool commission config.
   const initialChangeRate = ((): ChangeRateInput => {
-    const raw = bondedPool?.commission?.changeRate
+    const raw = bondedPool?.commission?.changeRate;
     return raw
       ? {
-          maxIncrease: Number(raw.maxIncrease),
-          minDelay: Number(raw.minDelay),
+          maxIncrease: Number(raw.maxIncrease.slice(0, -1)),
+          minDelay: Number(rmCommas(raw.minDelay)),
         }
       : {
           maxIncrease: 100,
           minDelay: 0,
-        }
-  })()
+        };
+  })();
 
   // Get whether a commission feature has been set.
   const hasValue = (feature: OptionalCommissionFeature): boolean => {
     switch (feature) {
       case 'max_commission':
-        return !!bondedPool?.commission?.max
+        return !!bondedPool?.commission?.max;
       case 'change_rate':
-        return !!bondedPool?.commission?.changeRate
+        return !!bondedPool?.commission?.changeRate;
       default:
-        return false
+        return false;
     }
-  }
+  };
 
   // Store the commission payee.
-  const [payee, setPayee] = useState<MaybeAddress>(initialPayee)
+  const [payee, setPayee] = useState<MaybeAddress>(initialPayee);
 
   // Store the current commission value.
-  const [commission, setCommission] = useState<number>(initialCommission)
+  const [commission, setCommission] = useState<number>(initialCommission);
 
   // Store the maximum commission value.
   const [maxCommission, setMaxCommission] =
-    useState<number>(initialMaxCommission)
+    useState<number>(initialMaxCommission);
 
   // Store the commission change rate value.
   const [changeRate, setChangeRate] =
-    useState<ChangeRateInput>(initialChangeRate)
+    useState<ChangeRateInput>(initialChangeRate);
 
   // Whether max commission has been enabled.
   const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(
     hasValue('max_commission')
-  )
+  );
 
   // Whether change rate has been enabled.
   const [changeRateEnabled, setChangeRateEnabled] = useState<boolean>(
     hasValue('change_rate')
-  )
+  );
 
   // Reset all values to their initial (current) values.
   const resetAll = (): void => {
-    setCommission(initialCommission)
-    setPayee(initialPayee)
-    setMaxCommission(initialMaxCommission)
-  }
+    setCommission(initialCommission);
+    setPayee(initialPayee);
+    setMaxCommission(initialMaxCommission);
+  };
 
   // Get the initial value of a commission feature.
   const getInitial = (feature: CommissionFeature) => {
     switch (feature) {
       case 'commission':
-        return initialCommission
+        return initialCommission;
       case 'payee':
-        return initialPayee
+        return initialPayee;
       case 'max_commission':
-        return initialMaxCommission
+        return initialMaxCommission;
       case 'change_rate':
-        return initialChangeRate
+        return initialChangeRate;
       default:
-        return false
+        return false;
     }
-  }
+  };
 
   // Get the current value of a commission feayture.
   const getCurrent = (feature: CommissionFeature) => {
     switch (feature) {
       case 'commission':
-        return commission
+        return commission;
       case 'payee':
-        return payee
+        return payee;
       case 'max_commission':
-        return maxCommission
+        return maxCommission;
       case 'change_rate':
-        return changeRate
+        return changeRate;
       default:
-        return false
+        return false;
     }
-  }
+  };
 
   // Get whether a commission feature is enabled.
   const getEnabled = (feature: OptionalCommissionFeature): boolean => {
     switch (feature) {
       case 'max_commission':
-        return maxCommissionEnabled
+        return maxCommissionEnabled;
       case 'change_rate':
-        return changeRateEnabled
+        return changeRateEnabled;
       default:
-        return false
+        return false;
     }
-  }
+  };
 
   // Set whether a commission feature is enabled.
   const setEnabled = (
@@ -146,20 +149,20 @@ export const PoolCommissionProvider = ({
   ): void => {
     switch (feature) {
       case 'max_commission':
-        setMaxCommissionEnabled(enabled)
-        break
+        setMaxCommissionEnabled(enabled);
+        break;
       case 'change_rate':
-        setChangeRateEnabled(enabled)
-        break
+        setChangeRateEnabled(enabled);
+        break;
       default:
     }
-  }
+  };
 
   // Get whether a feature has been updated from its initial value.
   const isUpdated = (feature: CommissionFeature): boolean => {
     switch (feature) {
       case 'commission':
-        return commission !== initialCommission
+        return commission !== initialCommission;
 
       case 'max_commission':
         return (
@@ -170,7 +173,7 @@ export const PoolCommissionProvider = ({
           maxCommission !== getInitial('max_commission') ||
           // no value set and max commission is enabled.
           (!hasValue('max_commission') && getEnabled('max_commission'))
-        )
+        );
 
       case 'change_rate':
         return (
@@ -184,17 +187,17 @@ export const PoolCommissionProvider = ({
               JSON.stringify(getInitial('change_rate'))) ||
           // no value set and change rate is enabled.
           (!hasValue('change_rate') && getEnabled('change_rate'))
-        )
+        );
 
       default:
-        return false
+        return false;
     }
-  }
+  };
 
   // Reset all values to their initial (current) values when bonded pool changes.
   useEffect(() => {
-    resetAll()
-  }, [bondedPool])
+    resetAll();
+  }, [bondedPool]);
 
   return (
     <PoolCommissionContext.Provider
@@ -214,5 +217,5 @@ export const PoolCommissionProvider = ({
     >
       {children}
     </PoolCommissionContext.Provider>
-  )
-}
+  );
+};

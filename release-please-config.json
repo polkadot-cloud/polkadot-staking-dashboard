@@ -1,19 +1,4 @@
 {
   "last-release-sha": "99cfade027ce6ca81d0a14657d6bdd1b05406ad8",
-  "include-component-in-tag": true,
-  "packages": {
-    "packages/app": {},
-    "packages/assets": {},
-    "packages/consts": {},
-    "packages/locales": {},
-    "packages/plugin-staking-api": {},
-    "packages/styles": {},
-    "packages/types": {},
-    "packages/ui-buttons": {},
-    "packages/ui-core": {},
-    "packages/ui-graphs": {},
-    "packages/ui-identity": {},
-    "packages/ui-overlay": {},
-    "packages/utils": {}
-  }
+  "changelog-path": "docs/CHANGELOG.md"
 }

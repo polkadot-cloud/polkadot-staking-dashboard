@@ -1,18 +1,18 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBug } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Wrapper } from './Wrapper'
+import { faBug } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
+import type { FC } from 'react';
+import { Wrapper } from './Wrapper';
 
 export const ErrorFallbackApp = ({
   resetErrorBoundary,
 }: {
-  resetErrorBoundary: () => void
+  resetErrorBoundary: () => void;
 }) => {
-  const { t } = useTranslation('app')
+  const { t } = useTranslation('library');
 
   return (
     <Wrapper className="app">
@@ -21,23 +21,20 @@ export const ErrorFallbackApp = ({
       </h3>
       <h1>{t('errorUnknown')}</h1>
       <h2>
-        <button
-          type="button"
-          onClick={() => resetErrorBoundary && resetErrorBoundary()}
-        >
+        <button type="button" onClick={resetErrorBoundary}>
           {t('clickToReload')}
         </button>
       </h2>
     </Wrapper>
-  )
-}
+  );
+};
 
 export const ErrorFallbackRoutes = ({
   resetErrorBoundary,
 }: {
-  resetErrorBoundary: () => void
+  resetErrorBoundary: () => void;
 }) => {
-  const { t } = useTranslation('app')
+  const { t } = useTranslation('library');
 
   return (
     <Wrapper>
@@ -46,23 +43,20 @@ export const ErrorFallbackRoutes = ({
       </h3>
       <h1>{t('errorUnknown')}</h1>
       <h2>
-        <button
-          type="button"
-          onClick={() => resetErrorBoundary && resetErrorBoundary()}
-        >
+        <button type="button" onClick={resetErrorBoundary}>
           {t('clickToReload')}
         </button>
       </h2>
     </Wrapper>
-  )
-}
+  );
+};
 
 interface ErrorFallbackProps {
-  resetErrorBoundary?: () => void
+  resetErrorBoundary?: () => void;
 }
 export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
-  const { resetErrorBoundary } = props
-  const { t } = useTranslation('app')
+  const { resetErrorBoundary } = props;
+  const { t } = useTranslation('library');
 
   return (
     <Wrapper className="modal">
@@ -76,5 +70,5 @@ export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
         </button>
       </h4>
     </Wrapper>
-  )
-}
+  );
+};

@@ -6,27 +6,19 @@ import type { i18n } from 'i18next'
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '.'
 import type { LocaleJson, LocaleJsonValue } from './types'
 
-// Gets the active language
-//
-// Get the stored language from localStorage, or fallback to
-// DefaultLocale otherwise.
-
+/* Language Management */
 export const getInitialLanguage = () => {
-  // get language from url if present
   const urlLng = extractUrlValue('l')
-
   if (Object.keys(locales).find((key) => key === urlLng) && urlLng) {
     localStorage.setItem('lng', urlLng)
     return urlLng
   }
 
-  // fall back to localStorage if present
   const localLng = localStorage.getItem('lng')
   if (localLng && Object.keys(locales).find((key) => key === localLng)) {
     return localLng
   }
 
-  // fall back to browser language
   const supportedBrowser = Object.entries(locales).find(([, { tag }]) =>
     navigator.language.startsWith(tag)
   )?.[0]
@@ -39,20 +31,12 @@ export const getInitialLanguage = () => {
   return DefaultLocale
 }
 
-// Determine resources of selected language, and whether a dynamic
-// import is needed for missing language resources.
-//
-// If selected language is DefaultLocale, then we fall back to
-// the default language resources that have already been imported.
 export const getResources = (lng: string, i18n?: i18n) => {
   let dynamicLoad = false
-
   let resources: Record<string, LocaleJson> = {}
+
   if (lng === DefaultLocale) {
-    // determine resources exist without dynamically importing them.
-    resources = {
-      [lng]: fallbackResources,
-    }
+    resources = { [lng]: fallbackResources }
     localStorage.setItem(
       'lng_resources',
       JSON.stringify({ l: lng, r: fallbackResources })
@@ -62,97 +46,159 @@ export const getResources = (lng: string, i18n?: i18n) => {
       addI18nresources(i18n, lng, fallbackResources)
     }
   } else {
-    // not the default locale, check if local resources exist
     let localValid = false
     const localResources = localStorage.getItem('lng_resources')
     if (localResources !== null) {
       const { l, r } = JSON.parse(localResources)
-
       if (l === lng) {
         localValid = true
-        // local resources found, load them in
-        resources = {
-          [lng]: {
-            ...r,
-          },
-        }
+        resources = { [lng]: { ...r } }
       }
     }
     if (!localValid) {
-      // no resources exist locally, dynamic import needed.
       dynamicLoad = true
-      resources = {
-        en: fallbackResources,
-      }
+      resources = { en: fallbackResources }
     }
   }
-  return {
-    resources,
-    dynamicLoad,
-  }
+  return { resources, dynamicLoad }
 }
 
-// Change language
-//
-// On click handler for changing language in-app.
 export const changeLanguage = async (lng: string, i18next: i18n) => {
-  // check whether resources exist and need to by dynamically loaded.
   const { resources, dynamicLoad } = getResources(lng, i18next)
-
   const r = resources?.[lng] || {}
 
   localStorage.setItem('lng', lng)
-  // dynamically load default language resources if needed.
   if (dynamicLoad) {
     await doDynamicImport(lng, i18next)
   } else {
     localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }))
     i18next.changeLanguage(lng)
   }
-  // update url `l` if needed.
   varToUrlHash('l', lng, false)
 }
 
-// Load language resources dynamically.
-//
-// Bootstraps i18next with additional language resources.
+/* Resource Loading */
 export const loadLngAsync = async (lng: string) => {
   const resources = await Promise.all(
-    lngNamespaces.map(async (namespace) => {
-      const json = await import(`./resources/${lng}/${namespace}.json`)
-      return json
-    })
+    lngNamespaces.map(
+      (namespace) => import(`./resources/${lng}/${namespace}.json`)
+    )
   )
 
   const ns: LocaleJson = {}
   resources.forEach((mod: LocaleJson, i: number) => {
     ns[lngNamespaces[i]] = mod[lngNamespaces[i]]
   })
-
-  return {
-    l: lng,
-    r: ns,
-  }
+  return { l: lng, r: ns }
 }
 
-// Handles a dynamic import.
-//
-// Once imports have been loaded, they are added to i18next as resources.
-// Finally, the active language is changed to the imported language.
 export const doDynamicImport = async (lng: string, i18next: i18n) => {
   const { l, r } = await loadLngAsync(lng)
-
   localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }))
-
   Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
     i18next.addResourceBundle(l, ns, inner)
   })
   i18next.changeLanguage(l)
 }
 
-// Adds resources to i18next.
 const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
   Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
     i18n.addResourceBundle(lng, ns, inner)
   })
+}
+
+/* Currency Management */
+export const fiatMapping: { [key: string]: string } = {
+  ARS: 'ARS',
+  BRL: 'BRL',
+  COP: 'COP',
+  CZK: 'CZK',
+  EUR: 'EUR',
+  MXN: 'MXN',
+  PLN: 'PLN',
+  RON: 'RON',
+  TRY: 'TRY',
+  UAH: 'UAH',
+  ZAR: 'ZAR',
+}
+
+const countryToFiatMap: { [key: string]: string } = {
+  // Euro Zone
+  AT: 'EUR',
+  BE: 'EUR',
+  CY: 'EUR',
+  DE: 'EUR',
+  EE: 'EUR',
+  ES: 'EUR',
+  FI: 'EUR',
+  FR: 'EUR',
+  GR: 'EUR',
+  HR: 'EUR',
+  IE: 'EUR',
+  IT: 'EUR',
+  LT: 'EUR',
+  LU: 'EUR',
+  LV: 'EUR',
+  MT: 'EUR',
+  NL: 'EUR',
+  PT: 'EUR',
+  SI: 'EUR',
+  SK: 'EUR',
+  // Other Countries
+  AR: 'ARS',
+  BR: 'BRL',
+  CO: 'COP',
+  CZ: 'CZK',
+  MX: 'MXN',
+  PL: 'PLN',
+  RO: 'RON',
+  TR: 'TRY',
+  UA: 'UAH',
+  ZA: 'ZAR',
+}
+
+const languageToCountry: { [key: string]: string } = {
+  af: 'ZA',
+  cs: 'CZ',
+  de: 'DE',
+  el: 'GR',
+  et: 'EE',
+  fi: 'FI',
+  fr: 'FR',
+  hr: 'HR',
+  hu: 'HU',
+  it: 'IT',
+  lt: 'LT',
+  lv: 'LV',
+  nl: 'NL',
+  pl: 'PL',
+  pt: 'PT',
+  ro: 'RO',
+  sk: 'SK',
+  sl: 'SI',
+  tr: 'TR',
+  uk: 'UA',
+}
+
+export const getUserFiatCurrency = (): string | null => {
+  const locale = navigator.language
+  const parts = locale.split('-')
+
+  if (parts[1]) {
+    const countryCode = parts[1].toUpperCase()
+    const fiat = countryToFiatMap[countryCode]
+    if (fiatMapping[fiat]) {
+      return fiat
+    }
+  }
+
+  const countryFromLang = languageToCountry[parts[0]]
+  if (countryFromLang) {
+    const fiat = countryToFiatMap[countryFromLang]
+    if (fiatMapping[fiat]) {
+      return fiat
+    }
+  }
+
+  return null
 }

@@ -1,7 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const ActiveAccounsWrapper = styled.div`
   width: 100%;
@@ -10,18 +10,14 @@ export const ActiveAccounsWrapper = styled.div`
 
   > div {
     border-bottom: 1px solid var(--border-primary-color);
-    padding: 0.5rem 0;
-
-    &:first-child {
-      padding-top: 0;
-    }
+    padding: 0.65rem 0;
 
     &:last-child {
       border: none;
       padding-bottom: 0;
     }
   }
-`
+`;
 
 export const ItemWrapper = styled.div`
   display: flex;
@@ -31,10 +27,9 @@ export const ItemWrapper = styled.div`
   width: 100%;
 
   .delegator {
-    font-size: 1.7rem;
     width: 0.75rem;
     z-index: 0;
-    margin-top: 0;
+    margin-top: 0.1rem;
     margin-right: 0.35rem;
 
     > div {
@@ -43,8 +38,8 @@ export const ItemWrapper = styled.div`
   }
 
   .icon {
-    font-size: 1.7rem;
-    max-width: 1.7rem;
+    position: relative;
+    top: 0.1rem;
     margin-right: 0.5rem;
     z-index: 1;
   }
@@ -78,13 +73,12 @@ export const ItemWrapper = styled.div`
     }
   }
 
-  .btn {
-    margin: 0 0.5rem 0 0.75rem;
-    position: relative;
-    top: -0.15rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-left: 0.25rem;
+    padding: 0;
   }
 
   h4 {
@@ -129,4 +123,4 @@ export const ItemWrapper = styled.div`
       }
     }
   }
-`
+`;

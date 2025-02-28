@@ -1,49 +1,49 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { StyledSlider } from 'library/StyledSlider'
-import { SliderWrapper } from 'overlay/modals/ManagePool/Wrappers'
-import { useTranslation } from 'react-i18next'
-import { usePoolCommission } from './provider'
+import { useTranslation } from 'react-i18next';
+import { SliderWrapper } from 'modals/ManagePool/Wrappers';
+import { StyledSlider } from 'library/StyledSlider';
+import { usePoolCommission } from './provider';
 
 export const MaxCommission = ({
   invalidMaxCommission,
   maxCommissionAboveGlobal,
 }: {
-  invalidMaxCommission: boolean
-  maxCommissionAboveGlobal: boolean
+  invalidMaxCommission: boolean;
+  maxCommissionAboveGlobal: boolean;
 }) => {
-  const { t } = useTranslation('modals')
+  const { t } = useTranslation('modals');
   const { getEnabled, getCurrent, setCommission, setMaxCommission, isUpdated } =
-    usePoolCommission()
+    usePoolCommission();
 
   // Get the current commission and max commission values.
-  const commission = getCurrent('commission')
-  const maxCommission = getCurrent('max_commission')
-  const maxCommissionUpdated = isUpdated('max_commission')
+  const commission = getCurrent('commission');
+  const maxCommission = getCurrent('max_commission');
+  const maxCommissionUpdated = isUpdated('max_commission');
 
   // Determine the max commission feedback to display.
   const maxCommissionFeedback = (() => {
     if (!maxCommissionUpdated) {
-      return undefined
+      return undefined;
     }
     if (invalidMaxCommission) {
       return {
         text: t('aboveExisting'),
         label: 'danger',
-      }
+      };
     }
     if (maxCommissionAboveGlobal) {
       return {
         text: t('aboveGlobalMax'),
         label: 'danger',
-      }
+      };
     }
     return {
       text: t('updated'),
       label: 'neutral',
-    }
-  })()
+    };
+  })();
 
   return (
     getEnabled('max_commission') && (
@@ -60,14 +60,14 @@ export const MaxCommission = ({
           step={0.1}
           onChange={(val) => {
             if (typeof val === 'number') {
-              setMaxCommission(val)
+              setMaxCommission(val);
               if (val < commission) {
-                setCommission(val)
+                setCommission(val);
               }
             }
           }}
         />
       </SliderWrapper>
     )
-  )
-}
+  );
+};

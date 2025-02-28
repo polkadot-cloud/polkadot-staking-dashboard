@@ -1,57 +1,62 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faQrcode } from '@fortawesome/free-solid-svg-icons'
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import { useVaultAccounts } from '@w3ux/react-connect-kit'
-import { Polkicon } from '@w3ux/react-polkicon'
-import type { AnyJson } from '@w3ux/types'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
-import { useNetwork } from 'contexts/Network'
-import { usePrompt } from 'contexts/Prompt'
-import { HardwareAddress } from 'library/Hardware/HardwareAddress'
-import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar'
-import { Confirm } from 'library/Import/Confirm'
-import { Heading } from 'library/Import/Heading'
-import { NoAccounts } from 'library/Import/NoAccounts'
-import { Remove } from 'library/Import/Remove'
-import { AddressesWrapper } from 'library/Import/Wrappers'
-import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonPrimary, ButtonText } from 'ui-buttons'
-import { useOverlay } from 'ui-overlay'
-import { Reader } from './Reader'
+import { faQrcode } from '@fortawesome/free-solid-svg-icons';
+import {
+  ButtonPrimary,
+  ButtonText,
+  HardwareAddress,
+  HardwareStatusBar,
+  Polkicon,
+} from '@polkadot-cloud/react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
+import { usePrompt } from 'contexts/Prompt';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
+import { Confirm } from 'library/Import/Confirm';
+import { Heading } from 'library/Import/Heading';
+import { NoAccounts } from 'library/Import/NoAccounts';
+import { Remove } from 'library/Import/Remove';
+import { AddressesWrapper } from 'library/Import/Wrappers';
+import type { AnyJson } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { Reader } from './Reader';
 
 export const ImportVault = () => {
-  const { t } = useTranslation()
-  const { network } = useNetwork()
-  const { replaceModal } = useOverlay().modal
-  const { renameOtherAccount } = useOtherAccounts()
-  const { openPromptWith, status: promptStatus } = usePrompt()
+  const { t } = useTranslation();
+  const { replaceModal } = useOverlay().modal;
+  const { renameOtherAccount } = useOtherAccounts();
+  const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
-    addVaultAccount,
-    getVaultAccount,
-    getVaultAccounts,
+    vaultAccounts,
     vaultAccountExists,
     renameVaultAccount,
+    addVaultAccount,
     removeVaultAccount,
-  } = useVaultAccounts()
-  const { setModalResize } = useOverlay().modal
-
-  const vaultAccounts = getVaultAccounts(network)
+    getVaultAccount,
+  } = useVaultAccounts();
+  const { setModalResize } = useOverlay().modal;
+  const source = 'vault';
 
   const renameHandler = (address: string, newName: string) => {
-    renameVaultAccount(network, address, newName)
-    renameOtherAccount(address, newName)
-  }
+    renameVaultAccount(address, newName);
+    renameOtherAccount(address, newName);
+  };
 
   const openConfirmHandler = (address: string, index: number) => {
     openPromptWith(
-      <Confirm address={address} index={index} addHandler={addVaultAccount} />,
+      <Confirm
+        address={address}
+        index={index}
+        addHandler={addVaultAccount}
+        source={source}
+      />,
       'small'
-    )
-  }
+    );
+  };
 
   const openRemoveHandler = (address: string) => {
     openPromptWith(
@@ -59,14 +64,15 @@ export const ImportVault = () => {
         address={address}
         removeHandler={removeVaultAccount}
         getHandler={getVaultAccount}
+        source={source}
       />,
       'small'
-    )
-  }
+    );
+  };
 
   useEffect(() => {
-    setModalResize()
-  }, [JSON.stringify(vaultAccounts)])
+    setModalResize();
+  }, [vaultAccounts]);
 
   return vaultAccounts.length === 0 ? (
     <NoAccounts
@@ -75,12 +81,12 @@ export const ImportVault = () => {
     >
       <div>
         <ButtonPrimary
-          size="lg"
+          lg
           iconLeft={faQrcode}
           text={t('importAccount', { ns: 'modals' })}
           disabled={promptStatus !== 0}
           onClick={() => {
-            openPromptWith(<Reader />, 'small')
+            openPromptWith(<Reader />, 'small');
           }}
         />
       </div>
@@ -92,12 +98,11 @@ export const ImportVault = () => {
         <div className="items">
           {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
             <HardwareAddress
-              network={network}
               key={i}
               address={address}
               index={index}
               initial={name}
-              Identicon={<Polkicon address={address} />}
+              Identicon={<Polkicon address={address} size={40} />}
               existsHandler={vaultAccountExists}
               renameHandler={renameHandler}
               openRemoveHandler={openRemoveHandler}
@@ -115,7 +120,7 @@ export const ImportVault = () => {
             text={t('importAnotherAccount', { ns: 'modals' })}
             disabled={promptStatus !== 0}
             onClick={() => {
-              openPromptWith(<Reader />, 'small')
+              openPromptWith(<Reader />, 'small');
             }}
           />
         </div>
@@ -132,10 +137,10 @@ export const ImportVault = () => {
           replaceModal({ key: 'Connect', options: { disableScroll: true } })
         }
         t={{
-          tDone: t('done', { ns: 'app' }),
-          tCancel: t('cancel', { ns: 'app' }),
+          tDone: t('done', { ns: 'library' }),
+          tCancel: t('cancel', { ns: 'library' }),
         }}
       />
     </>
-  )
-}
+  );
+};

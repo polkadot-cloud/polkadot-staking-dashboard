@@ -1,31 +1,37 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons'
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react'
-import { inChrome } from '@w3ux/utils'
-import { useHelp } from 'contexts/Help'
-import { useNetwork } from 'contexts/Network'
-import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
-import { useOverlay } from 'ui-overlay'
-import { ConnectItem, HardwareItem } from './Wrappers'
+import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons';
+import {
+  faExclamationTriangle,
+  faExternalLinkAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { inChrome } from '@w3ux/utils';
+import { useHelp } from 'contexts/Help';
+import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { useNetwork } from 'contexts/Network';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
+import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
 
 export const Ledger = () => {
-  const { openHelp } = useHelp()
-  const { replaceModal } = useOverlay().modal
-  const { network } = useNetwork()
-  const url = 'ledger.com'
+  const { openHelp } = useHelp();
+  const { replaceModal } = useOverlay().modal;
+  const { network } = useNetwork();
+  const url = 'ledger.com';
 
   // Only render on Polkadot and Kusama networks.
   if (!['polkadot', 'kusama'].includes(network)) {
-    return null
+    return null;
   }
 
   return (
-    <ConnectItem>
-      <HardwareItem>
+    <ModalConnectItem>
+      <ModalHardwareItem>
         <div className="body">
           <div className="status">
             <ButtonHelp onClick={() => openHelp('Ledger Hardware Wallets')} />
@@ -34,6 +40,15 @@ export const Ledger = () => {
             <LedgerLogoSVG className="logo" />
           </div>
           <div className="row margin">
+            <ButtonText
+              text={network === 'polkadot' ? 'BETA' : 'EXPERIMENTAL'}
+              disabled
+              marginRight
+              iconLeft={
+                network === 'polkadot' ? undefined : faExclamationTriangle
+              }
+              style={{ opacity: 0.5 }}
+            />
             <ButtonText
               text="Chrome / Brave"
               disabled
@@ -62,7 +77,7 @@ export const Ledger = () => {
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
           </a>
         </div>
-      </HardwareItem>
-    </ConnectItem>
-  )
-}
+      </ModalHardwareItem>
+    </ModalConnectItem>
+  );
+};

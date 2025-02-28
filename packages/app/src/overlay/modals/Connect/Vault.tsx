@@ -1,25 +1,28 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt, faQrcode } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import { useHelp } from 'contexts/Help'
-import type { ReactElement } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
-import { useOverlay } from 'ui-overlay'
-import { ConnectItem, HardwareItem } from './Wrappers'
+import { faExternalLinkAlt, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHelp } from 'contexts/Help';
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
+import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 
 export const Vault = (): ReactElement => {
-  const { t } = useTranslation('modals')
-  const { openHelp } = useHelp()
-  const { replaceModal } = useOverlay().modal
-  const url = 'signer.parity.io'
+  const { t } = useTranslation('modals');
+  const { openHelp } = useHelp();
+  const { replaceModal } = useOverlay().modal;
+  const url = 'signer.parity.io';
 
   return (
-    <ConnectItem>
-      <HardwareItem>
+    <ModalConnectItem>
+      <ModalHardwareItem>
         <div className="body">
           <div className="status">
             <ButtonHelp onClick={() => openHelp('Polkadot Vault')} />
@@ -35,7 +38,7 @@ export const Vault = (): ReactElement => {
               style={{
                 opacity: 1,
                 color: 'var(--accent-color-primary)',
-                fontFamily: 'Poppins700',
+                fontFamily: 'Unbounded',
               }}
             />
           </div>
@@ -43,7 +46,7 @@ export const Vault = (): ReactElement => {
             <ButtonPrimaryInvert
               text={t('import')}
               onClick={() => {
-                replaceModal({ key: 'ImportVault' })
+                replaceModal({ key: 'ImportVault' });
               }}
               iconLeft={faQrcode}
               iconTransform="shrink-1"
@@ -61,7 +64,7 @@ export const Vault = (): ReactElement => {
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
           </a>
         </div>
-      </HardwareItem>
-    </ConnectItem>
-  )
-}
+      </ModalHardwareItem>
+    </ModalConnectItem>
+  );
+};

@@ -1,32 +1,30 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { Members } from 'overlay/canvas/PoolMembers/Members'
-import { useTranslation } from 'react-i18next'
-import { ButtonPrimary } from 'ui-buttons'
-import { Head, Main, Title } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
+import { Members } from 'canvas/PoolMembers/Members';
+import { useTranslation } from 'react-i18next';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const PoolMembers = () => {
-  const { t } = useTranslation()
-  const { closeCanvas } = useOverlay().canvas
+  const { t } = useTranslation();
+  const { closeCanvas } = useOverlay().canvas;
 
   return (
-    <Main>
-      <Head>
+    <CanvasFullScreenWrapper>
+      <div className="head">
         <ButtonPrimary
-          text={t('cancel', { ns: 'app' })}
-          size="lg"
+          text={t('cancel', { ns: 'library' })}
+          lg
           onClick={() => closeCanvas()}
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
-      </Head>
-      <Title>
-        <h1>{t('poolMembers', { ns: 'modals' })}</h1>
-      </Title>
+      </div>
+      <h1>{t('poolMembers', { ns: 'modals' })}</h1>
       <Members />
-    </Main>
-  )
-}
+    </CanvasFullScreenWrapper>
+  );
+};
