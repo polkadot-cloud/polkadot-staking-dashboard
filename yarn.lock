@@ -5797,7 +5797,7 @@ __metadata:
     react-dom: "npm:^18.2.0"
     react-helmet-async: "npm:^2.0.5"
     react-router-dom: "npm:^7.1.1"
-    rxjs: "npm:^7.8.1"
+    rxjs: "npm:^7.8.2"
     styles: "workspace:*"
     types: "workspace:*"
     ui-buttons: "workspace:*"
@@ -10304,7 +10304,7 @@ __metadata:
     framer-motion: "npm:^12.4.7"
     globals: "npm:^16.0.0"
     i18next: "npm:^24.2.2"
-    prettier: "npm:^3.5.1"
+    prettier: "npm:^3.5.2"
     prettier-plugin-organize-imports: "npm:^4.1.0"
     radix-ui: "npm:^1.1.3"
     react: "npm:^18.3.1"
@@ -10433,12 +10433,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.5.1":
-  version: 3.5.1
-  resolution: "prettier@npm:3.5.1"
+"prettier@npm:^3.5.2":
+  version: 3.5.2
+  resolution: "prettier@npm:3.5.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/9f6f810eae455d6e4213845151a484a2338f2e0d6a8b84ee8e13a83af8a2421ef6c1e31e61e4b135671fb57b9541f6624648880cc2061ac803e243ac898c0123
+  checksum: 10c0/d7b597ed33f39c32ace675896ad187f06a3e48dc8a1e80051b5c5f0dae3586d53981704b8fda5ac3b080e6c2e0e197d239131b953702674f044351621ca5e1ac
   languageName: node
   linkType: hard
 
@@ -11306,6 +11306,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.1.0"
   checksum: 10c0/3c49c1ecd66170b175c9cacf5cef67f8914dcbc7cd0162855538d365c83fea631167cacb644b3ce533b2ea0e9a4d0b12175186985f89d75abe73dbd8f7f06f68
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^7.8.2":
+  version: 7.8.2
+  resolution: "rxjs@npm:7.8.2"
+  dependencies:
+    tslib: "npm:^2.1.0"
+  checksum: 10c0/1fcd33d2066ada98ba8f21fcbbcaee9f0b271de1d38dc7f4e256bfbc6ffcdde68c8bfb69093de7eeb46f24b1fb820620bf0223706cff26b4ab99a7ff7b2e2c45
   languageName: node
   linkType: hard
 
