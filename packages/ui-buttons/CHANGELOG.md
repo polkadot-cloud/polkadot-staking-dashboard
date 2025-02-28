@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.1.0...ui-buttons-v1.2.0) (2025-02-24)
+
+
+### Features
+
+* Abstract identity components, use in canvases, easier pool metrics access ([#2479](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2479)) ([3dd021b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3dd021be779485875b0976cca70ec36bd293b370))
+* Copy button redesign ([#2528](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2528)) ([a4b88fb](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a4b88fb8f73622af169cf0949f7025e7db79b07f))
+* **refactor:** Enhance accent colors, unify primary & secondary colors ([#2500](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2500)) ([cd80af7](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/cd80af7d2740d5920a2fb088216659a1615aa2ad))
+* **refactor:** Flatten locale files, combine base & library into app ([#2543](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2543)) ([db77b58](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/db77b58f77871e5d53175bb1a750dc41d0dffa76))
+* **refactor:** Simplify bond buttons, unify "Unstake" term for nominators and pools ([#2467](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2467)) ([90bd894](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/90bd894af33ba276f29d50d054dbad5d550c72b0))
+* Rename dapp to Polkadot Cloud Staking ([#2550](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2550)) ([4e36712](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/4e3671232bb0e7ffcbf73348c1a2af883277146f))
+* Use medium button sizes for key CTAs ([#2517](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2517)) ([f0e11ec](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f0e11ec095fd5f0034450a44a32d452a7b051f61))
+* **ux:** Get theme values directly from CSS, discontinue network colors ([#2501](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2501)) ([b8630d1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b8630d1291b9e39a83a6cd98eb7da8f5ed128bf2))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.0.0...ui-buttons-v1.1.0) (2025-01-16)
 
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.1.0...consts-v1.2.0) (2025-02-24)
+
+
+### Features
+
+* Rename dapp to Polkadot Cloud Staking ([#2550](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2550)) ([4e36712](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/4e3671232bb0e7ffcbf73348c1a2af883277146f))
+* **ux:** Shrink maximised side menu ([#2541](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2541)) ([2708b07](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2708b07a3c1889b20d042d7bceb61c57ec73580e))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.0.0...consts-v1.1.0) (2025-01-16)
 
 
