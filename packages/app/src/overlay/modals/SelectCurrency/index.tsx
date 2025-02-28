@@ -32,37 +32,6 @@ export const SelectCurrency = () => {
   // Search term state
   const [searchTerm, setSearchTerm] = useState<string>('')
 
-  // Currency names with symbols
-  const currencyNames: Record<string, { name: string; symbol: string }> = {
-    USD: { name: 'US Dollar', symbol: '$' },
-    EUR: { name: 'Euro', symbol: '€' },
-    GBP: { name: 'British Pound', symbol: '£' },
-    AUD: { name: 'Australian Dollar', symbol: 'A$' },
-    CAD: { name: 'Canadian Dollar', symbol: 'C$' },
-    CHF: { name: 'Swiss Franc', symbol: 'Fr' },
-    CNY: { name: 'Chinese Yuan', symbol: '¥' },
-    JPY: { name: 'Japanese Yen', symbol: '¥' },
-    INR: { name: 'Indian Rupee', symbol: '₹' },
-    TRY: { name: 'Turkish Lira', symbol: '₺' },
-    BRL: { name: 'Brazilian Real', symbol: 'R$' },
-    COP: { name: 'Colombian Peso', symbol: 'COP$' },
-    UAH: { name: 'Ukrainian Hryvnia', symbol: '₴' },
-    ZAR: { name: 'South African Rand', symbol: 'R' },
-    PLN: { name: 'Polish Złoty', symbol: 'zł' },
-    ARS: { name: 'Argentine Peso', symbol: 'ARS$' },
-    MXN: { name: 'Mexican Peso', symbol: 'MX$' },
-    CZK: { name: 'Czech Koruna', symbol: 'Kč' },
-    RON: { name: 'Romanian Leu', symbol: 'lei' },
-    BGN: { name: 'Bulgarian Lev', symbol: 'лв' },
-    SGD: { name: 'Singapore Dollar', symbol: 'S$' },
-    NZD: { name: 'New Zealand Dollar', symbol: 'NZ$' },
-    THB: { name: 'Thai Baht', symbol: '฿' },
-    KRW: { name: 'South Korean Won', symbol: '₩' },
-    IDR: { name: 'Indonesian Rupiah', symbol: 'Rp' },
-    MYR: { name: 'Malaysian Ringgit', symbol: 'RM' },
-    PHP: { name: 'Philippine Peso', symbol: '₱' },
-  }
-
   // Get current currency on mount
   useEffect(() => {
     setCurrentCurrency(getUserFiatCurrency())
@@ -87,12 +56,15 @@ export const SelectCurrency = () => {
 
   const filteredCurrencies = SUPPORTED_CURRENCIES.filter((currency) => {
     const searchTermLower = searchTerm.toLowerCase()
-    const currencyInfo = currencyNames[currency]
+    // Get localized currency info
+    const currencyName = t(`currencies.${currency}.name`).toLowerCase()
+    const currencySymbol = t(`currencies.${currency}.symbol`).toLowerCase()
+    const currencyCode = currency.toLowerCase()
 
     return (
-      currency.toLowerCase().includes(searchTermLower) ||
-      currencyInfo?.name.toLowerCase().includes(searchTermLower) ||
-      currencyInfo?.symbol.toLowerCase().includes(searchTermLower)
+      currencyCode.includes(searchTermLower) ||
+      currencyName.includes(searchTermLower) ||
+      currencySymbol.includes(searchTermLower)
     )
   })
 
@@ -144,11 +116,11 @@ export const SelectCurrency = () => {
                       disabled={disabled}
                     >
                       <span className="currency-symbol">
-                        {currencyNames[currency]?.symbol || '$'}
+                        {t(`currencies.${currency}.symbol`)}
                       </span>
                       <span className="currency-code">{currency}</span>
                       <span className="currency-name">
-                        {currencyNames[currency]?.name || 'Unknown Currency'}
+                        {t(`currencies.${currency}.name`)}
                       </span>
                       {isSelected && (
                         <span className="selected">{t('selected')}</span>
