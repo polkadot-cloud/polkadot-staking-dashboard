@@ -1,32 +1,24 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
-import { useNetwork } from 'contexts/Network'
+import type BigNumber from 'bignumber.js'
 import { useTokenPrices } from 'contexts/TokenPrice'
+import { formatFiatCurrency } from 'locales/src/util'
 
-export const FiatValue = ({
-  tokenBalance,
-  currency,
-}: {
-  tokenBalance: number
-  currency: string
-}) => {
-  const { network } = useNetwork()
+interface FiatValueProps {
+  tokenBalance: number | BigNumber
+  currency?: string
+}
+
+export const FiatValue = ({ tokenBalance }: FiatValueProps) => {
   const { price } = useTokenPrices()
 
   // Convert balance to fiat value
-  const freeFiat = new BigNumber(tokenBalance * price).decimalPlaces(2)
+  const balance =
+    typeof tokenBalance === 'number' ? tokenBalance : tokenBalance.toNumber()
 
-  // Formatter for price feed
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-  })
+  const fiatValue = balance * price
 
-  if (network === 'westend') {
-    return null
-  }
-
-  return <>{formatter.format(freeFiat.toNumber())}</>
+  // Format using the user's preferred currency
+  return <>{formatFiatCurrency(fiatValue)}</>
 }

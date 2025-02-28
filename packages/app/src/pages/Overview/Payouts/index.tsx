@@ -9,6 +9,7 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
+import { useTokenPrices } from 'contexts/TokenPrice'
 import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
 import { useSyncing } from 'hooks/useSyncing'
@@ -16,6 +17,7 @@ import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
+import { formatFiatCurrency } from 'locales/src/util'
 import type { RewardResult } from 'plugin-staking-api/types'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -37,6 +39,7 @@ export const Payouts = () => {
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
   const { pluginEnabled } = usePlugins()
+  const { price: tokenPrice } = useTokenPrices()
 
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
@@ -63,28 +66,36 @@ export const Payouts = () => {
     }
   }
 
+  // Calculate the fiat value of the reward
+  const rewardAmount =
+    lastReward === undefined
+      ? new BigNumber(0)
+      : planckToUnitBn(new BigNumber(lastReward?.reward || 0), units)
+
+  // Get formatted amount
+  const formattedAmount = minDecimalPlaces(rewardAmount.toFormat(), 2)
+
   return (
     <>
       <CardHeader>
         <h4>{t('recentPayouts')}</h4>
         <h2>
           <Token />
-          <Odometer
-            value={minDecimalPlaces(
-              lastReward === undefined
-                ? '0'
-                : planckToUnitBn(
-                    new BigNumber(lastReward?.reward || 0),
-                    units
-                  ).toFormat(),
-              2
-            )}
-          />
+          <Odometer value={formattedAmount} zeroDecimals={2} />
           <CardLabel>
             {lastReward === undefined ? (
               ''
             ) : (
-              <>&nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}</>
+              <>
+                &nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}
+                {rewardAmount.isGreaterThan(0) && tokenPrice > 0 && (
+                  <span style={{ marginLeft: '0.5rem', opacity: 0.75 }}>
+                    {formatFiatCurrency(
+                      rewardAmount.multipliedBy(tokenPrice).toNumber()
+                    )}
+                  </span>
+                )}
+              </>
             )}
           </CardLabel>
         </h2>

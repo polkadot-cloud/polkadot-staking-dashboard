@@ -231,6 +231,7 @@
     "rpcProviders": "Proveedores RPC",
     "scanFromPolkadotVault": "Escanear desde Polkadot Vault",
     "searchAccount": "Buscar Cuenta",
+    "selectCurrency": "Seleccionar Moneda",
     "selectNetwork": "Seleccionar Red",
     "selectRpcProvider": "Selecciona un proveedor RPC para cambiar el nodo {{network}} al que se conecta el Cloud Staking.",
     "selected": "Seleccionado",
