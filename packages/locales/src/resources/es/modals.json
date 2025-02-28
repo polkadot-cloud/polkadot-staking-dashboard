@@ -63,33 +63,114 @@
     "continue": "Continuar",
     "controllerImported": "Debes tener tu cuenta controladora importada para firmar esta transacción.",
     "currencies": {
-      "USD": { "name": "Dólar estadounidense", "symbol": "$" },
-      "EUR": { "name": "Euro", "symbol": "€" },
-      "GBP": { "name": "Libra esterlina", "symbol": "£" },
-      "AUD": { "name": "Dólar australiano", "symbol": "A$" },
-      "CAD": { "name": "Dólar canadiense", "symbol": "C$" },
-      "CHF": { "name": "Franco suizo", "symbol": "Fr" },
-      "CNY": { "name": "Yuan chino", "symbol": "¥" },
-      "JPY": { "name": "Yen japonés", "symbol": "¥" },
-      "INR": { "name": "Rupia india", "symbol": "₹" },
-      "TRY": { "name": "Lira turca", "symbol": "₺" },
-      "BRL": { "name": "Real brasileño", "symbol": "R$" },
-      "COP": { "name": "Peso colombiano", "symbol": "COP$" },
-      "UAH": { "name": "Grivna ucraniana", "symbol": "₴" },
-      "ZAR": { "name": "Rand sudafricano", "symbol": "R" },
-      "PLN": { "name": "Złoty polaco", "symbol": "zł" },
-      "ARS": { "name": "Peso argentino", "symbol": "ARS$" },
-      "MXN": { "name": "Peso mexicano", "symbol": "MX$" },
-      "CZK": { "name": "Corona checa", "symbol": "Kč" },
-      "RON": { "name": "Leu rumano", "symbol": "lei" },
-      "BGN": { "name": "Lev búlgaro", "symbol": "лв" },
-      "SGD": { "name": "Dólar de Singapur", "symbol": "S$" },
-      "NZD": { "name": "Dólar neozelandés", "symbol": "NZ$" },
-      "THB": { "name": "Baht tailandés", "symbol": "฿" },
-      "KRW": { "name": "Won surcoreano", "symbol": "₩" },
-      "IDR": { "name": "Rupia indonesia", "symbol": "Rp" },
-      "MYR": { "name": "Ringgit malayo", "symbol": "RM" },
-      "PHP": { "name": "Peso filipino", "symbol": "₱" }
+      "ARS": {
+        "name": "Peso argentino",
+        "symbol": "ARS$"
+      },
+      "AUD": {
+        "name": "Dólar australiano",
+        "symbol": "A$"
+      },
+      "BGN": {
+        "name": "Lev búlgaro",
+        "symbol": "лв"
+      },
+      "BRL": {
+        "name": "Real brasileño",
+        "symbol": "R$"
+      },
+      "CAD": {
+        "name": "Dólar canadiense",
+        "symbol": "C$"
+      },
+      "CHF": {
+        "name": "Franco suizo",
+        "symbol": "Fr"
+      },
+      "CNY": {
+        "name": "Yuan chino",
+        "symbol": "¥"
+      },
+      "COP": {
+        "name": "Peso colombiano",
+        "symbol": "COP$"
+      },
+      "CZK": {
+        "name": "Corona checa",
+        "symbol": "Kč"
+      },
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      },
+      "GBP": {
+        "name": "Libra esterlina",
+        "symbol": "£"
+      },
+      "IDR": {
+        "name": "Rupia indonesia",
+        "symbol": "Rp"
+      },
+      "INR": {
+        "name": "Rupia india",
+        "symbol": "₹"
+      },
+      "JPY": {
+        "name": "Yen japonés",
+        "symbol": "¥"
+      },
+      "KRW": {
+        "name": "Won surcoreano",
+        "symbol": "₩"
+      },
+      "MXN": {
+        "name": "Peso mexicano",
+        "symbol": "MX$"
+      },
+      "MYR": {
+        "name": "Ringgit malayo",
+        "symbol": "RM"
+      },
+      "NZD": {
+        "name": "Dólar neozelandés",
+        "symbol": "NZ$"
+      },
+      "PHP": {
+        "name": "Peso filipino",
+        "symbol": "₱"
+      },
+      "PLN": {
+        "name": "Złoty polaco",
+        "symbol": "zł"
+      },
+      "RON": {
+        "name": "Leu rumano",
+        "symbol": "lei"
+      },
+      "SGD": {
+        "name": "Dólar de Singapur",
+        "symbol": "S$"
+      },
+      "THB": {
+        "name": "Baht tailandés",
+        "symbol": "฿"
+      },
+      "TRY": {
+        "name": "Lira turca",
+        "symbol": "₺"
+      },
+      "UAH": {
+        "name": "Grivna ucraniana",
+        "symbol": "₴"
+      },
+      "USD": {
+        "name": "Dólar estadounidense",
+        "symbol": "$"
+      },
+      "ZAR": {
+        "name": "Rand sudafricano",
+        "symbol": "R"
+      }
     },
     "days": "Días",
     "decentralizationAnalyticsNotAvailable": "Análisis de descentralización no disponible",
