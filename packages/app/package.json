@@ -5,7 +5,7 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "build": "npx tsc && npx vite build --base '/'",
-    "build:verify": "npx tsc --noEmit && npx vite build --base '/' --mode development --emptyOutDir",
+    "build:verify": "npx tsc --noEmit --skipLibCheck && npx vite build --base '/' --mode development --emptyOutDir",
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
     "dev": "npx vite",

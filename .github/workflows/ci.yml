@@ -36,7 +36,7 @@ jobs:
             .yarn/cache
           key: ${{ runner.os }}-vite-${{ hashFiles('**/yarn.lock') }}
 
-  verify-build:
+  verify:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -57,7 +57,7 @@ jobs:
       - run: yarn test
 
   all:
-    needs: [check-license, markdown-link-check, build]
+    needs: [check-license, markdown-link-check, verify]
     runs-on: ubuntu-latest
     steps:
       - run: echo Success
