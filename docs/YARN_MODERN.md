@@ -1,6 +1,6 @@
 # Using Yarn Modern
 
-Yarn Modern is used in this workspace as the chosen package manager. It contains a local binary of the yarn version used, so you don't need to install anything globally.
+Staking dashboard uses Yarn Modern as its package manager. It contains a local binary of the yarn version used, so you don't need to install anything globally.
 
 _If you fetch this repository for the first time, or if the yarn version is updated in the repository, restart or reload your IDE or CLI to make sure it picks up the updated version._
 
@@ -20,7 +20,7 @@ Verify the version with `npm --version`. You may need to restart your IDE or CLI
 
 ### I cannot switch between Yarn Classic and Yarn Modern on my machine
 
-It should not matter that you have Yarn Classic installed globally, as a local yarn binary is used within the workspace. If however you _do_ require Yarn Modern on your machine, try the following troubleshooting steps:
+It should not matter that you have Yarn Classic installed globally, as staking dashboard has a local yarn binary that it uses. If however you _do_ require Yarn Modern on your machine, try the following troubleshooting steps:
 
 #### Check for other yarn config files
 
@@ -32,7 +32,7 @@ Run `which yarn` to determine where your system yarn binary is located and verif
 
 #### Verify your system's yarn version
 
-Verify the active yarn version on your machine with `yarn --version`. This should be run outside of this repository as to not pick up the local yarn binary in the project. To be sure the correct version is being displayed, it is safest to do this in the active yarn directory, e.g. the directory from the previous step.
+Verify the active yarn version on your machine with `yarn --version`. This should be run outside of the staking dashboard repository as to not pick up the local yarn binary in the project. To be sure the correct version is being displayed, it is safest to do this in the active yarn directory, e.g. the directory from the previous step.
 
 #### Set a new yarn version
 

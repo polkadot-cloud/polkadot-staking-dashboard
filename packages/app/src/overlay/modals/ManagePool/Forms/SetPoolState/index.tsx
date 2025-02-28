@@ -1,113 +1,112 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolSetState } from 'api/tx/poolSetState'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useSignerWarnings } from 'hooks/useSignerWarnings'
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { ActionItem } from 'library/ActionItem'
-import { Warning } from 'library/Form/Warning'
-import { SubmitTx } from 'library/SubmitTx'
-import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonSubmitInvert } from 'ui-buttons'
-import { Padding, Warnings } from 'ui-core/modal'
-import { useOverlay } from 'ui-overlay'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { SubmitTx } from 'library/SubmitTx';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ActionItem } from 'library/ActionItem';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 
 export const SetPoolState = ({
   setSection,
   task = '',
-  onResize,
 }: {
-  setSection: Dispatch<SetStateAction<number>>
-  task?: string
-  onResize: () => void
+  setSection: Dispatch<SetStateAction<number>>;
+  task?: string;
 }) => {
-  const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { isOwner, isBouncer, activePool } = useActivePool()
-  const { updateBondedPools, getBondedPool } = useBondedPools()
+  const { t } = useTranslation('modals');
+  const { api } = useApi();
+  const { setModalStatus } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { isOwner, isBouncer, activePool } = useActivePool();
+  const { updateBondedPools, getBondedPool } = useBondedPools();
 
-  const poolId = activePool?.id
+  const poolId = activePool?.id;
 
   // valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false)
+  const [valid, setValid] = useState<boolean>(false);
 
   // ensure account has relevant roles for task
   const canToggle =
     (isOwner() || isBouncer()) &&
-    ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task)
+    ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task);
 
   useEffect(() => {
-    setValid(canToggle)
-  }, [canToggle])
+    setValid(canToggle);
+  }, [canToggle]);
 
   const content = (() => {
-    let title
-    let message
+    let title;
+    let message;
     switch (task) {
       case 'destroy_pool':
-        title = <ActionItem text={t('setToDestroying')} />
-        message = <p>{t('setToDestroyingSubtitle')}</p>
-        break
+        title = <ActionItem text={t('setToDestroying')} />;
+        message = <p>{t('setToDestroyingSubtitle')}</p>;
+        break;
       case 'unlock_pool':
-        title = <ActionItem text={t('unlockPool')} />
-        message = <p>{t('unlockPoolSubtitle')}</p>
-        break
+        title = <ActionItem text={t('unlockPool')} />;
+        message = <p>{t('unlockPoolSubtitle')}</p>;
+        break;
       default:
-        title = <ActionItem text={t('lockPool')} />
-        message = <p>{t('lockPoolSubtitle')}</p>
+        title = <ActionItem text={t('lockPool')} />;
+        message = <p>{t('lockPoolSubtitle')}</p>;
     }
-    return { title, message }
-  })()
+    return { title, message };
+  })();
 
   const poolStateFromTask = (s: string) => {
     switch (s) {
       case 'destroy_pool':
-        return 'Destroying'
+        return 'Destroying';
       case 'lock_pool':
-        return 'Blocked'
+        return 'Blocked';
       default:
-        return 'Open'
+        return 'Open';
     }
-  }
+  };
 
+  // tx to submit
   const getTx = () => {
-    if (!valid || poolId === undefined) {
-      return null
+    if (!valid || !api) {
+      return null;
     }
-    let tx
+
+    let tx;
     switch (task) {
       case 'destroy_pool':
-        tx = new PoolSetState(network, poolId, 'Destroying').tx()
-        break
+        tx = api.tx.nominationPools.setState(poolId, 'Destroying');
+        break;
       case 'unlock_pool':
-        tx = new PoolSetState(network, poolId, 'Open').tx()
-
-        break
+        tx = api.tx.nominationPools.setState(poolId, 'Open');
+        break;
       case 'lock_pool':
-        tx = new PoolSetState(network, poolId, 'Blocked').tx()
-        break
+        tx = api.tx.nominationPools.setState(poolId, 'Blocked');
+        break;
       default:
-        tx = null
+        tx = null;
     }
-    return tx
-  }
+    return tx;
+  };
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus('closing')
+      setModalStatus('closing');
     },
     callbackInBlock: () => {
       // reflect updated state in `bondedPools` list.
@@ -115,38 +114,38 @@ export const SetPoolState = ({
         ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task) &&
         poolId
       ) {
-        const pool = getBondedPool(poolId)
+        const pool = getBondedPool(poolId);
         if (pool) {
           updateBondedPools([
             {
               ...pool,
               state: poolStateFromTask(task),
             },
-          ])
+          ]);
         }
       }
     },
-  })
+  });
 
   const warnings = getSignerWarnings(
     activeAccount,
     false,
     submitExtrinsic.proxySupported
-  )
+  );
 
   return (
     <>
-      <Padding horizontalOnly>
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
-          <Warnings>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </Warnings>
+          </ModalWarnings>
         ) : null}
         {content.title}
         {content.message}
-      </Padding>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[
@@ -158,9 +157,8 @@ export const SetPoolState = ({
             onClick={() => setSection(0)}
           />,
         ]}
-        onResize={onResize}
         {...submitExtrinsic}
       />
     </>
-  )
-}
+  );
+};

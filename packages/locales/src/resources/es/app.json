@@ -64,6 +64,7 @@
     "copyAddress": "Copiar Dirección",
     "copyPoolAddress": "Copiar la dirección del pool {{type}}",
     "createPool": "Crear Pool",
+    "dashboardDisclaimer": "Aviso legal del panel de control",
     "date": "Fecha",
     "dayAverage": "Promedio Diario",
     "dayPerformance": "Rendimiento Diario",

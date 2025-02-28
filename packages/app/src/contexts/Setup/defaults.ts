@@ -1,12 +1,12 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
 import type {
   NominatorProgress,
   PoolProgress,
   SetupContextInterface,
-} from './types'
+} from './types';
 
 export const defaultNominatorProgress: NominatorProgress = {
   payee: {
@@ -15,21 +15,29 @@ export const defaultNominatorProgress: NominatorProgress = {
   },
   nominations: [],
   bond: '',
-}
+};
 
 export const defaultPoolProgress: PoolProgress = {
   metadata: '',
   bond: '',
   nominations: [],
   roles: null,
-}
+};
 
 export const defaultSetupContext: SetupContextInterface = {
+  getSetupProgress: (a, b) => ({
+    section: 1,
+    progress: defaultNominatorProgress,
+  }),
   removeSetupProgress: (a, b) => {},
   getNominatorSetupPercent: (a) => 0,
   getPoolSetupPercent: (a) => 0,
   setActiveAccountSetup: (t, p) => {},
   setActiveAccountSetupSection: (t, s) => {},
+  setOnNominatorSetup: (v) => {},
+  setOnPoolSetup: (v) => {},
+  onNominatorSetup: false,
+  onPoolSetup: false,
   getNominatorSetup: (address) => ({
     section: 1,
     progress: defaultNominatorProgress,
@@ -38,4 +46,4 @@ export const defaultSetupContext: SetupContextInterface = {
     section: 1,
     progress: defaultPoolProgress,
   }),
-}
+};

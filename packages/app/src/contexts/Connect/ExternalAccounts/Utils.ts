@@ -1,43 +1,43 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ExternalAccount } from '@w3ux/react-connect-kit/types'
-import { localStorageOrDefault } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
+import { localStorageOrDefault } from '@w3ux/utils';
+import type { NetworkName } from 'types';
 
-// Check whether an external account exists in local storage
+// Check whether an external account exists in local storage.
 export const externalAccountExistsLocal = (
   address: string,
-  network: NetworkId
+  network: NetworkName
 ) =>
   getLocalExternalAccounts().find(
     (l) => l.address === address && l.network === network
-  )
+  );
 
-// Gets local external accounts from local storage. Ensure that only `user` accounts are returned
-export const getLocalExternalAccounts = (network?: NetworkId) => {
+// Gets local external accounts from local storage. Ensure that only `user` accounts are returned.
+export const getLocalExternalAccounts = (network?: NetworkName) => {
   let localAccounts = localStorageOrDefault(
     'external_accounts',
     [],
     true
-  ) as ExternalAccount[]
+  ) as ExternalAccount[];
   if (network) {
     localAccounts = localAccounts.filter(
       (l) => l.network === network && l.addedBy !== 'system'
-    )
+    );
   }
-  return localAccounts
-}
+  return localAccounts;
+};
 
-// Adds a local external account to local storage
+// Adds a local external account to local storage.
 export const addLocalExternalAccount = (account: ExternalAccount) => {
   localStorage.setItem(
     'external_accounts',
     JSON.stringify(getLocalExternalAccounts().concat(account))
-  )
-}
+  );
+};
 
-// Updates a local external account with the provided `addedBy` property
+// Updates a local external account with the provided `addedBy` property.
 export const updateLocalExternalAccount = (entry: ExternalAccount) => {
   localStorage.setItem(
     'external_accounts',
@@ -46,22 +46,22 @@ export const updateLocalExternalAccount = (entry: ExternalAccount) => {
         a.address === entry.address ? entry : a
       )
     )
-  )
-}
+  );
+};
 
-// Removes supplied external cccounts from local storage
+// Removes supplied external cccounts from local storage.
 export const removeLocalExternalAccounts = (
-  network: NetworkId,
+  network: NetworkName,
   accounts: ExternalAccount[]
 ) => {
   if (!accounts.length) {
-    return
+    return;
   }
 
   const updatedAccounts = getLocalExternalAccounts(network).filter(
     (a) =>
       accounts.find((b) => b.address === a.address && a.network === network) ===
       undefined
-  )
-  localStorage.setItem('external_accounts', JSON.stringify(updatedAccounts))
-}
+  );
+  localStorage.setItem('external_accounts', JSON.stringify(updatedAccounts));
+};
