@@ -28,7 +28,15 @@ jobs:
           check-modified-files-only: 'yes'
           config-file: 'check-markdown-links-config.json'
 
-  build:
+      - name: Cache Vite Build
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules/.vite
+            .yarn/cache
+          key: ${{ runner.os }}-vite-${{ hashFiles('**/yarn.lock') }}
+
+  verify-build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,9 +49,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn install
-      - run: yarn build
+      - run: yarn lint:check
+      - run: yarn build:verify
         working-directory: packages/app
-      - run: yarn lint
       - run: yarn run validate
         working-directory: packages/locales
       - run: yarn test
