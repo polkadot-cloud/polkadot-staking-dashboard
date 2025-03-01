@@ -4,7 +4,7 @@
 import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTranslation } from 'react-i18next'
-import { ButtonText, MultiButton } from 'ui-buttons'
+import { MultiButton } from 'ui-buttons'
 import { ButtonRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
@@ -15,10 +15,10 @@ export const Connect = () => {
 
   return (
     <ButtonRow>
-      <MultiButton marginLeft>
+      <MultiButton.Container marginLeft>
         {accounts.length ? (
           <>
-            <ButtonText
+            <MultiButton.Button
               size="md"
               text={t('accounts')}
               iconLeft={faWallet}
@@ -28,7 +28,7 @@ export const Connect = () => {
               style={{ color: 'white', fontSize: '1.05rem' }}
             />
             <span />
-            <ButtonText
+            <MultiButton.Button
               size="md"
               text=""
               iconRight={faPlug}
@@ -40,7 +40,7 @@ export const Connect = () => {
             />
           </>
         ) : (
-          <ButtonText
+          <MultiButton.Button
             size="md"
             text={t('connect')}
             iconRight={faPlug}
@@ -51,7 +51,7 @@ export const Connect = () => {
             style={{ color: 'white', fontSize: '1.05rem' }}
           />
         )}
-      </MultiButton>
+      </MultiButton.Container>
     </ButtonRow>
   )
 }
