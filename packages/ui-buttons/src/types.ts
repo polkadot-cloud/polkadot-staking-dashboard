@@ -141,6 +141,7 @@ export type ButtonTextProps = ComponentBaseWithClassName &
   ButtonCommonProps & {
     text: string
     size?: Omit<ButtonSize, 'lg'>
+    status?: 'danger'
   }
 
 export type MultiButtonContainerProps = ComponentBase & {

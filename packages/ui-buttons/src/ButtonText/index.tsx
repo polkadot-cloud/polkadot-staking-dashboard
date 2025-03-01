@@ -33,6 +33,7 @@ export const ButtonText = (props: ButtonTextProps): JSX.Element => {
     onMouseMove,
     onMouseOut,
     size,
+    status,
   } = props
 
   const buttonClasses = classNames(
@@ -40,13 +41,13 @@ export const ButtonText = (props: ButtonTextProps): JSX.Element => {
     classes.btnText,
     {
       [classes.sm]: size !== 'md',
+      [classes.danger]: status === 'danger',
       [commonClasses.btnMedium]: size === 'md',
       [commonClasses.btnGrow]: grow,
       [commonClasses.btnSpacingLeft]: marginLeft,
       [commonClasses.btnSpacingRight]: marginRight,
       [commonClasses.btnMarginX]: marginX,
       [commonClasses.btnDisabled]: disabled,
-      [commonClasses.btnActiveTransforms]: !disabled,
     },
     className
   )

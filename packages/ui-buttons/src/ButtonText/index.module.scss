@@ -4,6 +4,17 @@
 .btnText {
   color: var(--text-color-primary);
   border-radius: var(--button-lg-border-radius);
+  transition: color var(--transition-duration);
+  &:hover {
+    color: var(--text-color-secondary);
+  }
+
+  &.danger {
+    color: var(--status-danger-color);
+    &:hover {
+      color: var(--status-danger-color);
+    }
+  }
 
   &.sm {
     font-size: var(--button-sm-font-size);

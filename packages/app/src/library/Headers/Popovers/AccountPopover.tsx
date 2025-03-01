@@ -48,6 +48,7 @@ export const AccountPopover = ({
         />
         <span style={{ color: 'var(--text-color-tertiary)' }}>|</span>
         <ButtonText
+          status="danger"
           marginLeft
           text={t('disconnect', { ns: 'modals' })}
           onClick={() => {
