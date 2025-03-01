@@ -9,12 +9,14 @@ export const Popover = ({
   children,
   content,
   portalContainer,
+  open,
 }: {
   children: ReactNode
   content: ReactNode
   portalContainer?: HTMLDivElement
+  open?: boolean
 }) => (
-  <RadixPopover.Root>
+  <RadixPopover.Root open={open}>
     <RadixPopover.Trigger>{children}</RadixPopover.Trigger>
     <RadixPopover.Portal container={portalContainer}>
       <RadixPopover.Content

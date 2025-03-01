@@ -4,6 +4,7 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
+import { useState } from 'react'
 import { ButtonRow, Popover } from 'ui-core/base'
 import DefaultAccount from '../Account/DefaultAccount'
 import { AccountPopover } from './Popovers/AccountPopover'
@@ -13,15 +14,24 @@ export const Connected = () => {
   const { accountHasSigner } = useImportedAccounts()
   const { activeAccount, activeProxy } = useActiveAccounts()
 
+  const [open, setOpen] = useState<boolean>(false)
+
   return (
     activeAccount && (
       <>
         {/* Default account display. */}
         <Popover
+          open={open}
           portalContainer={themeElementRef.current || undefined}
-          content={<AccountPopover />}
+          content={<AccountPopover setOpen={setOpen} />}
         >
           <DefaultAccount
+            className="header-account"
+            onClick={() => {
+              if (!open) {
+                setOpen(true)
+              }
+            }}
             value={activeAccount}
             readOnly={!accountHasSigner(activeAccount)}
           />

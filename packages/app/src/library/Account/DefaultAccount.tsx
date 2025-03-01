@@ -11,7 +11,12 @@ import { useTranslation } from 'react-i18next'
 import { Wrapper } from './Wrapper'
 import type { AccountProps } from './types'
 
-const DefaultAccount = ({ value, readOnly }: AccountProps) => {
+const DefaultAccount = ({
+  value,
+  readOnly,
+  onClick,
+  className,
+}: AccountProps) => {
   const { t } = useTranslation('app')
   const { getAccount } = useImportedAccounts()
 
@@ -24,7 +29,7 @@ const DefaultAccount = ({ value, readOnly }: AccountProps) => {
         : ellipsisFn(value)
 
   return (
-    <Wrapper>
+    <Wrapper onClick={onClick} className={className}>
       {readOnly && (
         <div className="account-label">
           <FontAwesomeIcon icon={faGlasses} />

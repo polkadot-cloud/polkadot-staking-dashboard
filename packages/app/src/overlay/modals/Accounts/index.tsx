@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -13,7 +13,7 @@ import { ActionItem } from 'library/ActionItem'
 import { Fragment, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
-import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
+import { ButtonPrimaryInvert } from 'ui-buttons'
 import { CustomHeader, Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { AccountButton } from './Account'
@@ -39,8 +39,7 @@ export const Accounts = () => {
   } = useOverlay().modal
   const { accounts } = useImportedAccounts()
   const { getFeeReserve } = useTransferOptions()
-  const { activeAccount, setActiveAccount, setActiveProxy } =
-    useActiveAccounts()
+  const { activeAccount } = useActiveAccounts()
 
   // Listen to balance updates for entire accounts list.
   const { getLocks, getBalance, getEdReserved, getPoolMembership } =
@@ -177,21 +176,6 @@ export const Accounts = () => {
             }
             marginLeft
           />
-        </div>
-        <div>
-          {activeAccount && (
-            <ButtonText
-              style={{
-                color: 'var(--accent-color-primary)',
-              }}
-              text={t('disconnect')}
-              iconRight={faLinkSlash}
-              onClick={() => {
-                setActiveAccount(null)
-                setActiveProxy(null)
-              }}
-            />
-          )}
         </div>
       </CustomHeader>
       {!activeAccount && !accounts.length && (
