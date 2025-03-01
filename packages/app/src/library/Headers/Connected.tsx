@@ -4,9 +4,9 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
-import { ButtonCopy } from 'library/ButtonCopy'
 import { ButtonRow, Popover } from 'ui-core/base'
 import DefaultAccount from '../Account/DefaultAccount'
+import { AccountPopover } from './Popovers/AccountPopover'
 
 export const Connected = () => {
   const { themeElementRef } = useTheme()
@@ -19,15 +19,7 @@ export const Connected = () => {
         {/* Default account display. */}
         <Popover
           portalContainer={themeElementRef.current || undefined}
-          content={
-            <>
-              <h4>Full Address</h4>
-              <p>
-                {activeAccount} &nbsp;
-                <ButtonCopy value={activeAccount} size="0.95rem" />
-              </p>
-            </>
-          }
+          content={<AccountPopover />}
         >
           <DefaultAccount
             value={activeAccount}
