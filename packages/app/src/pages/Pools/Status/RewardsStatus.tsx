@@ -39,7 +39,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
     : pendingRewards > minUnclaimedDisplay
       ? [
           {
-            title: t('pools.withdraw'),
+            title: t('withdraw'),
             icon: faCircleDown,
             disabled: !isReady,
             small: true,
@@ -51,7 +51,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
               }),
           },
           {
-            title: t('pools.compound'),
+            title: t('compound'),
             icon: faPlus,
             disabled:
               !isReady || activePool?.bondedPool?.state === 'Destroying',
@@ -68,7 +68,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
 
   return (
     <Stat
-      label={t('pools.unclaimedRewards')}
+      label={t('unclaimedRewards')}
       helpKey="Pool Rewards"
       type="odometer"
       stat={{ value: labelRewards }}

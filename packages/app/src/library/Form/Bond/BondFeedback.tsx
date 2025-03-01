@@ -30,7 +30,7 @@ export const BondFeedback = ({
   syncing = false,
   displayFirstWarningOnly = true,
 }: BondFeedbackProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     networkData: { units, unit },
   } = useNetwork()

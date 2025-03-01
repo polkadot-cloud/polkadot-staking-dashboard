@@ -41,7 +41,7 @@ export const useSubmitExtrinsic = ({
   callbackSubmit,
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     network,
     networkData: { units, unit },

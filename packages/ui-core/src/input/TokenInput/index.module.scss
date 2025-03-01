@@ -9,10 +9,10 @@
   &:focus-within label {
     color: var(--accent-color-primary);
   }
-  
+
   > label {
     color: var(--text-color-secondary);
-    font-family: InterSemiBold, sans-serif; 
+    font-family: InterSemiBold, sans-serif;
     &:focus {
       color: var(--accent-color-primary);
     }

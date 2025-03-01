@@ -106,11 +106,11 @@ export const Overview = (props: PayoutHistoryProps) => {
         <Page.Row>
           <CardWrapper>
             <CardHeader>
-              <h3>{t('rewards.projectedRewards')}</h3>
+              <h3>{t('projectedRewards')}</h3>
             </CardHeader>
             <Separator style={{ margin: '0 0 1.5rem 0', border: 0 }} />
             <CardHeader>
-              <h4>{t('rewards.stakedBalance')}</h4>
+              <h4>{t('stakedBalance')}</h4>
               <h2>
                 <Token />
                 <Odometer
@@ -142,7 +142,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                     }}
                     transform={'grow-6'}
                   />
-                  {t('rewards.deductAvgCommissionOf', {
+                  {t('deductAvgCommissionOf', {
                     commission: avgCommission,
                   })}
                 </button>
@@ -152,7 +152,7 @@ export const Overview = (props: PayoutHistoryProps) => {
               <RewardGrid.Head>
                 <RewardGrid.Cells
                   items={[
-                    <h4>{t('rewards.period')}</h4>,
+                    <h4>{t('period')}</h4>,
                     <h4>
                       <Token />
                       {unit}
@@ -163,7 +163,7 @@ export const Overview = (props: PayoutHistoryProps) => {
               </RewardGrid.Head>
               <RewardGrid.Row>
                 <RewardGrid.Cell>
-                  <RewardGrid.Label>{t('rewards.daily')}</RewardGrid.Label>
+                  <RewardGrid.Label>{t('daily')}</RewardGrid.Label>
                 </RewardGrid.Cell>
                 <RewardGrid.Cell>
                   <h3>
@@ -190,7 +190,7 @@ export const Overview = (props: PayoutHistoryProps) => {
               <RewardGrid.Row>
                 <RewardGrid.Cells
                   items={[
-                    <RewardGrid.Label>{t('rewards.monthly')}</RewardGrid.Label>,
+                    <RewardGrid.Label>{t('monthly')}</RewardGrid.Label>,
                     <h3>
                       {monthlyReward > 0 && (
                         <FontAwesomeIcon icon={faCaretUp} />
@@ -216,7 +216,7 @@ export const Overview = (props: PayoutHistoryProps) => {
               <RewardGrid.Row>
                 <RewardGrid.Cells
                   items={[
-                    <RewardGrid.Label>{t('rewards.annual')}</RewardGrid.Label>,
+                    <RewardGrid.Label>{t('annual')}</RewardGrid.Label>,
                     <h3>
                       {annualReward > 0 && <FontAwesomeIcon icon={faCaretUp} />}
                       {annualReward.toLocaleString('en-US', {

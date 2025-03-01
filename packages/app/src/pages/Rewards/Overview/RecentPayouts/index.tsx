@@ -62,7 +62,7 @@ export const RecentPayouts = ({
   return (
     <>
       <CardHeader>
-        <h4>{t('overview.recentPayouts')}</h4>
+        <h4>{t('recentPayouts')}</h4>
         <h2>
           {payoutsFromDate && payoutsToDate ? (
             <>
@@ -72,7 +72,7 @@ export const RecentPayouts = ({
               )}
             </>
           ) : (
-            t('payouts.none')
+            t('none')
           )}
         </h2>
       </CardHeader>
@@ -81,14 +81,14 @@ export const RecentPayouts = ({
           <StatusLabel
             status="active_service"
             statusFor="staking_api"
-            title={t('common.stakingApiDisabled')}
+            title={t('stakingApiDisabled')}
             topOffset="30%"
           />
         ) : (
           notStaking && (
             <StatusLabel
               status="sync_or_setup"
-              title={t('payouts.notStaking')}
+              title={t('notStaking')}
               topOffset="30%"
             />
           )

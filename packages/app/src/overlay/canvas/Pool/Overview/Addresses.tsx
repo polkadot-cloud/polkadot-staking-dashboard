@@ -12,7 +12,7 @@ import { AddressesWrapper } from '../Wrappers'
 export const Addresses = ({
   bondedPool: { addresses },
 }: OverviewSectionProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   return (
     <CardWrapper className="canvas secondary">
       <Subheading>

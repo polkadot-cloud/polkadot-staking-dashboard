@@ -4,35 +4,35 @@
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { communityItem, defaultContext } from './defaults'
-import type { CommunitySectionsContextInterface, Item } from './types'
+import { defaultContext, operatorItem } from './defaults'
+import type { Item, OperatorsSectionsContextInterface } from './types'
 
-export const CommunitySectionsContext =
-  createContext<CommunitySectionsContextInterface>(defaultContext)
+export const OperatorsSectionsContext =
+  createContext<OperatorsSectionsContextInterface>(defaultContext)
 
-export const useCommunitySections = () => useContext(CommunitySectionsContext)
+export const useOperatorsSections = () => useContext(OperatorsSectionsContext)
 
-export const CommunitySectionsProvider = ({
+export const OperatorsSectionsProvider = ({
   children,
 }: {
   children: ReactNode
 }) => {
   const { network } = useNetwork()
 
-  // store the active section of the community page
+  // store the active section of the operators page
   const [activeSection, setActiveSectionState] = useState<number>(0)
 
-  // store the active entity item of the community page
-  const [activeItem, setActiveItem] = useState<Item>(communityItem)
+  // store the active entity item of the operators page
+  const [activeItem, setActiveItem] = useState<Item>(operatorItem)
 
   // store the Y scroll position when the last entity was visited
-  // used to automatically scroll back down upon returning to the entity lsit.
+  // used to automatically scroll back down upon returning to the entity list.
   const [scrollPos, setScrollPos] = useState<number>(0)
 
   // go back to first section and reset item when network switches
   useEffect(() => {
     setActiveSectionState(0)
-    setActiveItem(communityItem)
+    setActiveItem(operatorItem)
   }, [network])
 
   const setActiveSection = (t: number) => {
@@ -40,7 +40,7 @@ export const CommunitySectionsProvider = ({
   }
 
   return (
-    <CommunitySectionsContext.Provider
+    <OperatorsSectionsContext.Provider
       value={{
         activeSection,
         setActiveSection,
@@ -51,6 +51,6 @@ export const CommunitySectionsProvider = ({
       }}
     >
       {children}
-    </CommunitySectionsContext.Provider>
+    </OperatorsSectionsContext.Provider>
   )
 }

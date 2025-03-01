@@ -3,6 +3,6 @@
 
 import type { ValidatorEntry } from '@w3ux/validator-assets'
 
-export interface CommunityContextInterface {
-  validatorCommunity: ValidatorEntry[]
+export interface OperatorsContextInterface {
+  validatorOperators: ValidatorEntry[]
 }

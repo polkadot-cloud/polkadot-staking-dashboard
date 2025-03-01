@@ -35,7 +35,7 @@ import { Secondary } from './Secondary'
 import { LogoWrapper, Separator, Wrapper } from './Wrapper'
 
 export const SideMenu = () => {
-  const { t } = useTranslation('base')
+  const { t } = useTranslation('app')
   const { openHelp } = useHelp()
   const { apiStatus } = useApi()
   const {
@@ -143,7 +143,7 @@ export const SideMenu = () => {
             />
             <Secondary
               onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
-              name={t('email', { ns: 'base' })}
+              name={t('email', { ns: 'app' })}
               minimised={sideMenuMinimised}
               icon={{
                 Svg: EnvelopeSVG,

@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getPoolNominationStatusCode, poolsNominations } = useBondedPools()
   const { eraStakers, getNominationsStatusFromTargets } = useStaking()
   const { addresses } = pool

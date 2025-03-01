@@ -13,7 +13,7 @@ import { Suspense, lazy, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { ItemWrapper } from './Wrappers'
-import { useCommunitySections } from './context'
+import { useOperatorsSections } from './context'
 import type { ItemProps } from './types'
 
 export const Item = ({ item, actionable }: ItemProps) => {
@@ -33,7 +33,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
   const validatorCount = entityAllValidators[network]?.length ?? 0
 
   const { setActiveSection, setActiveItem, setScrollPos } =
-    useCommunitySections()
+    useOperatorsSections()
 
   const listItem = {
     hidden: {
@@ -79,7 +79,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
               onClick={() => openModal({ key: 'Bio', options: { name, bio } })}
               className="active"
             >
-              <span>{t('community.bio')}</span>
+              <span>{t('bio')}</span>
             </button>
           </h3>
 
@@ -102,7 +102,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 transform="shrink-1"
               />
               <h4>
-                {t('community.validator', {
+                {t('validator', {
                   count: validatorCount,
                 })}
               </h4>
@@ -120,7 +120,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                   transform="shrink-1"
                   className="icon-left"
                 />
-                <h4>{t('community.email')}</h4>
+                <h4>{t('email')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
@@ -153,7 +153,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                   window.open(website, '_blank')
                 }}
               >
-                <h4>{t('community.website')}</h4>
+                <h4>{t('website')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"

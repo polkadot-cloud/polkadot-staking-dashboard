@@ -29,7 +29,7 @@ export const PayoutDestinationStatus = () => {
   // Get payee status text to display.
   const getPayeeStatus = () => {
     if (inSetup()) {
-      return t('nominate.notAssigned')
+      return t('notAssigned')
     }
     const status = getPayeeItems(true).find(
       ({ value }) => value === payee.destination
@@ -38,7 +38,7 @@ export const PayoutDestinationStatus = () => {
     if (status) {
       return status
     }
-    return t('nominate.notAssigned')
+    return t('notAssigned')
   }
 
   // Get the payee destination icon to display, falling back to wallet icon.
@@ -49,7 +49,7 @@ export const PayoutDestinationStatus = () => {
 
   return (
     <Stat
-      label={t('nominate.payoutDestination')}
+      label={t('payoutDestination')}
       helpKey="Payout Destination"
       icon={payeeIcon}
       stat={getPayeeStatus()}
@@ -57,7 +57,7 @@ export const PayoutDestinationStatus = () => {
         !inSetup()
           ? [
               {
-                title: t('nominate.update'),
+                title: t('update'),
                 icon: faGear,
                 small: true,
                 disabled:

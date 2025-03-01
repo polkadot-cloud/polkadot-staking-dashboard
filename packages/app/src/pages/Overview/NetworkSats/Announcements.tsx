@@ -60,12 +60,12 @@ export const Announcements = () => {
   if (!totalStaked.isZero()) {
     announcements.push({
       class: 'neutral',
-      title: t('overview.networkCurrentlyStaked', {
+      title: t('networkCurrentlyStaked', {
         total: planckToUnitBn(totalStaked, units).integerValue().toFormat(),
         unit,
         network: capitalizeFirstLetter(network),
       }),
-      subtitle: t('overview.networkCurrentlyStakedSubtitle', {
+      subtitle: t('networkCurrentlyStakedSubtitle', {
         unit,
       }),
     })
@@ -78,9 +78,9 @@ export const Announcements = () => {
     announcements.push({
       class: 'neutral',
       title: `${totalPoolPointsUnit.integerValue().toFormat()} ${unit} ${t(
-        'overview.inPools'
+        'inPools'
       )}`,
-      subtitle: `${t('overview.bondedInPools', { networkUnit: unit })}`,
+      subtitle: `${t('bondedInPools', { networkUnit: unit })}`,
     })
   } else {
     announcements.push(null)
@@ -90,10 +90,8 @@ export const Announcements = () => {
   if (counterForPoolMembers.isGreaterThan(0)) {
     announcements.push({
       class: 'neutral',
-      title: `${counterForPoolMembers.toFormat()} ${t(
-        'overview.poolMembersBonding'
-      )}`,
-      subtitle: `${t('overview.totalNumAccounts')}`,
+      title: `${counterForPoolMembers.toFormat()} ${t('poolMembersBonding')}`,
+      subtitle: `${t('totalNumAccounts')}`,
     })
   } else {
     announcements.push(null)
@@ -103,8 +101,8 @@ export const Announcements = () => {
   if (lastRewardUnit.isGreaterThan(0)) {
     announcements.push({
       class: 'neutral',
-      title: `${lastRewardUnit.integerValue().toFormat()} ${unit} ${t('overview.paidOutLastEraTitle')}`,
-      subtitle: `${t('overview.paidOutLastEraSubtitle')}`,
+      title: `${lastRewardUnit.integerValue().toFormat()} ${unit} ${t('paidOutLastEraTitle')}`,
+      subtitle: `${t('paidOutLastEraSubtitle')}`,
     })
   } else {
     announcements.push(null)

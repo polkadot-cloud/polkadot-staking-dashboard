@@ -12,7 +12,7 @@ import { Wrapper } from './Wrapper'
 import type { AccountProps } from './types'
 
 const DefaultAccount = ({ value, readOnly }: AccountProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { getAccount } = useImportedAccounts()
 
   // Determine account display text. Title takes precedence over value.

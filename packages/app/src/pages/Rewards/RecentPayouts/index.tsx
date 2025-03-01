@@ -15,7 +15,7 @@ export const RecentPayouts = (props: PageProps) => {
     <Page.Row>
       <CardWrapper>
         <PayoutList
-          title={t('payouts.recentPayouts')}
+          title={t('recentPayouts')}
           payouts={payoutsList}
           pagination
           itemsPerPage={50}
