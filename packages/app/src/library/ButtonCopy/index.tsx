@@ -4,7 +4,7 @@
 import { useTheme } from 'contexts/Themes'
 import { useTranslation } from 'react-i18next'
 import { ButtonCopy as Wrapper } from 'ui-buttons'
-import type { ButtonCopyProps } from 'ui-buttons/src/types'
+import type { ButtonCopyProps } from 'ui-buttons/types'
 
 export const ButtonCopy = (
   props: Omit<ButtonCopyProps, 'tooltipText' | 'portalContainer'>

@@ -3,7 +3,7 @@
 
 import classNames from 'classnames'
 import commonClasses from '../common.module.scss'
-import type { MultiButtonProps } from '../types'
+import type { MultiButtonContainerProps } from '../types'
 import classes from './index.module.scss'
 
 export const Container = ({
@@ -13,7 +13,7 @@ export const Container = ({
   marginRight,
   marginX,
   disabled,
-}: MultiButtonProps) => {
+}: MultiButtonContainerProps) => {
   const allClasses = classNames(classes.multiButton, {
     [classes.disabled]: !!disabled,
     [commonClasses.btnSpacingLeft]: marginLeft,

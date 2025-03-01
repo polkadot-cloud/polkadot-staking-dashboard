@@ -4,11 +4,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import commonClasses from '../common.module.scss'
+import type { MultiButtonButtonProps } from '../types'
 import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
-import type { ButtonProps } from './types'
 
-export const Button = (props: ButtonProps): JSX.Element => {
+export const Button = (props: MultiButtonButtonProps): JSX.Element => {
   const {
     disabled,
     grow,

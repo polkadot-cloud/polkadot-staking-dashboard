@@ -5,7 +5,7 @@ import type {
   IconDefinition,
   IconProp,
 } from '@fortawesome/fontawesome-svg-core'
-import type { ComponentBase } from '@w3ux/types'
+import type { ComponentBase, ComponentBaseWithClassName } from '@w3ux/types'
 import type { MouseEvent } from 'react'
 
 // Common button props, applied to all buttons.
@@ -30,6 +30,8 @@ export interface ButtonCommonProps {
   onMouseOut?: (e?: MouseEvent<HTMLButtonElement>) => void
 }
 
+export type ButtonSize = 'sm' | 'md' | 'lg'
+
 // Button mouse event handler props.
 export interface OnMouseHandlersProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
@@ -38,24 +40,11 @@ export interface OnMouseHandlersProps {
   onMouseOut?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-// Button icon support.
 export interface ButtonIconProps {
-  // include a left icon with the button.
   iconLeft?: IconProp | IconDefinition
-  // include a right icon with the button.
   iconRight?: IconProp | IconDefinition
-  // transform icon size.
   iconTransform?: string
 }
-
-export type MultiButtonProps = ComponentBase & {
-  marginLeft?: boolean
-  marginRight?: boolean
-  marginX?: boolean
-  disabled?: boolean
-}
-
-export type ButtonSize = 'sm' | 'md' | 'lg'
 
 export interface ButtonCopyProps {
   onClick?: (e?: MouseEvent<HTMLButtonElement>) => void
@@ -68,3 +57,102 @@ export interface ButtonCopyProps {
     copied: string
   }
 }
+
+export type ButtonHelpProps = ComponentBaseWithClassName &
+  ButtonCommonProps & {
+    background?: 'primary' | 'secondary' | 'none'
+    outline?: boolean
+  }
+
+export type ButtonMonoProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    lg?: boolean
+    text: string
+  }
+
+export type ButtonMonoInvertProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    lg?: boolean
+    text: string
+  }
+
+export type ButtonOptionProps = ComponentBaseWithClassName &
+  ButtonCommonProps & {
+    content?: boolean
+  }
+
+export type ButtonPrimaryProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    colorSecondary?: boolean
+    size?: ButtonSize
+    text: string
+  }
+
+export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    colorSecondary?: boolean
+    lg?: boolean
+    text: string
+  }
+
+export type ButtonSecondaryProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    lg?: boolean
+    text: string
+  }
+
+export type ButtonSubmitProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    colorSecondary?: boolean
+    text: string
+    lg?: boolean
+    pulse?: boolean
+  }
+
+export type ButtonSubmitInvertProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    text: string
+    lg?: boolean
+  }
+
+export type ButtonTabProps = ComponentBaseWithClassName &
+  ButtonCommonProps & {
+    colorSecondary?: boolean
+    active?: boolean
+    title: string
+    badge?: string | number
+  }
+
+export type ButtonTertiaryProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    text: string
+  }
+
+export type ButtonTextProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    text: string
+    size?: Omit<ButtonSize, 'lg'>
+  }
+
+export type MultiButtonContainerProps = ComponentBase & {
+  marginLeft?: boolean
+  marginRight?: boolean
+  marginX?: boolean
+  disabled?: boolean
+}
+
+export type MultiButtonButtonProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    text: string
+    size?: Omit<ButtonSize, 'lg'>
+  }
