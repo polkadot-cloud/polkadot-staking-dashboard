@@ -5,10 +5,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
 import { ButtonCopy } from 'library/ButtonCopy'
-import { Popover } from 'radix-ui'
-import { ButtonRow } from 'ui-core/base'
+import { ButtonRow, Popover } from 'ui-core/base'
 import DefaultAccount from '../Account/DefaultAccount'
-import styles from './index.module.scss'
 
 export const Connected = () => {
   const { themeElementRef } = useTheme()
@@ -19,30 +17,23 @@ export const Connected = () => {
     activeAccount && (
       <>
         {/* Default account display. */}
-        <Popover.Root>
-          <Popover.Trigger>
-            <DefaultAccount
-              value={activeAccount}
-              readOnly={!accountHasSigner(activeAccount)}
-            />
-          </Popover.Trigger>
-          <Popover.Portal container={themeElementRef.current}>
-            <Popover.Content
-              className={styles.Content}
-              sideOffset={5}
-              onOpenAutoFocus={(event) => event.preventDefault()}
-            >
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <h4>Full Address</h4>
-                <p>
-                  {activeAccount} &nbsp;
-                  <ButtonCopy value={activeAccount} size="0.95rem" />
-                </p>
-              </div>
-              <Popover.Arrow className={styles.Arrow} />
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover.Root>
+        <Popover
+          portalContainer={themeElementRef.current || undefined}
+          content={
+            <>
+              <h4>Full Address</h4>
+              <p>
+                {activeAccount} &nbsp;
+                <ButtonCopy value={activeAccount} size="0.95rem" />
+              </p>
+            </>
+          }
+        >
+          <DefaultAccount
+            value={activeAccount}
+            readOnly={!accountHasSigner(activeAccount)}
+          />
+        </Popover>
 
         {/* Proxy account display / hide if no proxy. */}
         {activeProxy && (

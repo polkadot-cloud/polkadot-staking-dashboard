@@ -61,7 +61,7 @@ export interface ButtonCopyProps {
   onClick?: (e?: MouseEvent<HTMLButtonElement>) => void
   value: string
   size?: string | number
-  tooltipPortalContainer?: HTMLDivElement
+  portalContainer?: HTMLDivElement
   xMargin?: boolean
   tooltipText: {
     copy: string
