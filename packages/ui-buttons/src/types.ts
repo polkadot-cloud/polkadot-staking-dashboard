@@ -157,3 +157,13 @@ export type MultiButtonButtonProps = ComponentBaseWithClassName &
     text: string
     size?: Omit<ButtonSize, 'lg'>
   }
+
+export type ButtonHeaderProps = ComponentBase &
+  OnMouseHandlersProps & {
+    marginLeft?: boolean
+    marginRight?: boolean
+    marginX?: boolean
+    disabled?: boolean
+    icon: IconProp | IconDefinition
+    iconTransform?: string
+  }

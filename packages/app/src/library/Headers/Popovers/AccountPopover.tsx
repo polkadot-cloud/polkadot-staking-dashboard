@@ -23,7 +23,7 @@ export const AccountPopover = ({
 
   const popoverRef = useRef<HTMLDivElement>(null)
 
-  // Close the menu if clicked outside of its container.
+  // Close the menu if clicked outside of its container
   useOutsideAlerter(popoverRef, () => {
     setOpen(false)
   }, ['header-account'])
@@ -54,6 +54,7 @@ export const AccountPopover = ({
           onClick={() => {
             setActiveAccount(null)
             setActiveProxy(null)
+            setOpen(false)
           }}
         />
       </ButtonRow>
