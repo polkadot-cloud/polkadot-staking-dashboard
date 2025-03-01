@@ -4,10 +4,10 @@ SPDX-License-Identifier: GPL-3.0-only */
 .Content {
 	background: var(--background-primary);
   box-shadow: var(--card-shadow);
-	border-radius: 0.75rem;
+	border-radius: 1rem;
 	animation-duration: 400ms;
 	padding: 1rem 1.5rem;
-	width: 280px;
+	width: 290px;
 	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 	will-change: transform, opacity;
   word-wrap: break-word;
