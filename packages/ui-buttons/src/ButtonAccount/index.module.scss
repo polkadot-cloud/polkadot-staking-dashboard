@@ -4,6 +4,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 .btnAccount {
   color: white;
   background: var(--accent-color-primary);
+  box-shadow: var(--card-shadow);
   transition: all var(--transition-duration);
   border-radius: 4rem;
   height: 3rem;
