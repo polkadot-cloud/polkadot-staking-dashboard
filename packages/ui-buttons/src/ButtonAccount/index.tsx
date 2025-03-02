@@ -12,13 +12,18 @@ import classes from './index.module.scss'
 export const ButtonAccount = ({
   activeAccount,
   activeProxy,
-  className,
   readOnly,
+  open,
+  className,
   marginLeft,
   style,
 }: ButtonAccountProps) => {
   const allClasses = classNames(classes.btnAccount, {
     [classes.marginLeft]: marginLeft,
+  })
+
+  const arrowClasses = classNames(classes.arrow, {
+    [classes.open]: open,
   })
 
   const address = activeAccount?.address || ''
@@ -48,7 +53,7 @@ export const ButtonAccount = ({
       {readOnly && (
         <FontAwesomeIcon icon={faGlasses} className={classes.icon} />
       )}
-      <div className={classes.arrow}>
+      <div className={arrowClasses}>
         <FontAwesomeIcon icon={faChevronDown} transform="shrink-5" />
       </div>
     </div>

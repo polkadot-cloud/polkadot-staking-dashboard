@@ -28,9 +28,7 @@ export const Connected = () => {
         content={<AccountPopover setOpen={setOpen} />}
         onTriggerClick={() => {
           if (activeAccount) {
-            if (!open) {
-              setOpen(true)
-            }
+            setOpen(!open)
           } else {
             openModal({ key: 'Accounts' })
           }
@@ -41,6 +39,7 @@ export const Connected = () => {
           activeAccount={getAccount(activeAccount)}
           activeProxy={getAccount(activeProxy)}
           readOnly={!accountHasSigner(activeAccount)}
+          open={open}
         />
       </Popover>
       {activeProxy && (

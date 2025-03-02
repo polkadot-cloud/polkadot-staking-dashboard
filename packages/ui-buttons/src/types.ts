@@ -175,6 +175,7 @@ export type ButtonHeaderProps = ComponentBase &
 export type ButtonAccountProps = ComponentBaseWithClassName & {
   activeAccount: ImportedAccount | null
   readOnly: boolean
+  open: boolean
   activeProxy: ImportedAccount | null
   marginLeft?: boolean
   marginRight?: boolean
