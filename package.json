@@ -21,7 +21,7 @@
     "@types/react-helmet": "^6.1.11",
     "@typescript-eslint/parser": "^8.25.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
-    "@w3ux/types": "^1.0.0",
+    "@w3ux/types": "^1.0.1",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-import-resolver-typescript": "^3.8.3",

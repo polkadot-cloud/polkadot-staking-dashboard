@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@w3ux/react-connect-kit": "^2.1.2",
+    "types": "workspace:*",
     "ui-core": "workspace:*"
   },
   "peerDependencies": {

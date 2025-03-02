@@ -1,0 +1,17 @@
+/* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
+
+.btnAccount {
+  color: var(--text-color-invert);
+  background: var(--accent-color-primary);
+  transition: all var(--transition-duration);
+  border-radius: 4rem;
+  height: 3.25rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+
+  &.marginLeft {
+    margin-left: 0.8rem;
+  }
+}

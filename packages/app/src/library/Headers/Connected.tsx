@@ -5,6 +5,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
+import { ButtonAccount } from 'ui-buttons'
 import { ButtonRow, Popover } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import DefaultAccount from '../Account/DefaultAccount'
@@ -20,6 +21,16 @@ export const Connected = () => {
 
   return (
     <>
+      <Popover
+        open={open}
+        portalContainer={themeElementRef.current || undefined}
+        content={<AccountPopover setOpen={setOpen} />}
+      >
+        <ButtonAccount
+          activeAccount={activeAccount}
+          activeProxy={activeProxy}
+        />
+      </Popover>
       <Popover
         open={open}
         portalContainer={themeElementRef.current || undefined}
