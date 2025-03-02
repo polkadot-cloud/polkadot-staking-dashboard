@@ -12,6 +12,7 @@ import classes from './index.module.scss'
 
 export const ButtonAccount = ({
   activeAccount,
+  activeProxy,
   className,
   readOnly,
   marginLeft,
@@ -44,14 +45,19 @@ export const ButtonAccount = ({
       disabled={disabled}
       {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
     >
-      <span style={{ marginRight: '1.25rem' }}>
+      <span
+        style={{
+          marginRight: '1.25rem',
+        }}
+      >
         <Polkicon
-          background="rgba(255,255,255,0.8)"
+          background="transparent"
           address={address}
-          transform="grow-7"
+          transform="grow-9"
         />
       </span>
       {accountDisplay}
+      {activeProxy && <span className={classes.proxy}>/ Proxied</span>}
       {readOnly && (
         <FontAwesomeIcon icon={faGlasses} className={classes.icon} />
       )}

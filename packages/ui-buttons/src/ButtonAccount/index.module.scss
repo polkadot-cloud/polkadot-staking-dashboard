@@ -2,7 +2,7 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 .btnAccount {
-  color: var(--text-color-invert);
+  color: white;
   background: var(--accent-color-primary);
   transition: all var(--transition-duration);
   border-radius: 4rem;
@@ -10,12 +10,21 @@ SPDX-License-Identifier: GPL-3.0-only */
   display: flex;
   align-items: center;
   padding: 0 1.25rem;
+  font-size: 1.2rem;
 
   &.marginLeft {
     margin-left: 0.8rem;
   }
 
   > .icon {
-    margin-left: 0.85rem;
+    margin-left: 0.95rem;
+  }
+
+  > .proxy {
+    font-size: 0.8em;
+    margin-left: 0.75rem;
+    margin-right: 0.5rem;
+    position: relative;
+    top: -0.05rem;
   }
 }

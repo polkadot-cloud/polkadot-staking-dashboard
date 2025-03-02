@@ -7,7 +7,7 @@ import { useOverlay } from 'ui-overlay'
 import { Connected } from './Connected'
 import { SideMenuToggle } from './SideMenuToggle'
 import { Sync } from './Sync'
-import { LargeScreensOnly, Wrapper } from './Wrappers'
+import { Wrapper } from './Wrappers'
 
 export const Headers = () => {
   const { openModal } = useOverlay().modal
@@ -20,10 +20,8 @@ export const Headers = () => {
       {/* Syncing spinner */}
       <Sync />
 
-      {/* Connected accounts */}
-      <LargeScreensOnly>
-        <Connected />
-      </LargeScreensOnly>
+      {/* Account with Popover */}
+      <Connected />
 
       {/* Connect */}
       <ButtonHeader
