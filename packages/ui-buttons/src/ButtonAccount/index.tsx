@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faGlasses } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
@@ -36,11 +36,7 @@ export const ButtonAccount = ({
       className={`${className ? `${className} ` : ' '}${allClasses}`}
       style={style}
     >
-      <span
-        style={{
-          marginRight: '1.25rem',
-        }}
-      >
+      <span className={classes.polkicon}>
         <Polkicon
           background="transparent"
           address={address}
@@ -52,6 +48,9 @@ export const ButtonAccount = ({
       {readOnly && (
         <FontAwesomeIcon icon={faGlasses} className={classes.icon} />
       )}
+      <div className={classes.arrow}>
+        <FontAwesomeIcon icon={faChevronDown} transform="shrink-5" />
+      </div>
     </div>
   )
 }
