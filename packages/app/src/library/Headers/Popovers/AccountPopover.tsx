@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useOutsideAlerter } from '@w3ux/hooks'
-import { Polkicon } from '@w3ux/react-polkicon'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { ButtonCopy } from 'library/ButtonCopy'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonText } from 'ui-buttons'
-import { ButtonRow, Separator } from 'ui-core/base'
+import { ButtonRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { Account } from './Account'
 
 export const AccountPopover = ({
   setOpen,
@@ -35,28 +34,13 @@ export const AccountPopover = ({
 
   return (
     <div ref={popoverRef}>
-      <Polkicon address={activeAccount || ''} fontSize="4rem" />
-      <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>Active Account:</h4>
-      <p style={{ marginTop: '0.2rem' }}>
-        {activeAccount} &nbsp;
-        <ButtonCopy value={activeAccount || ''} size="0.95rem" />
-      </p>
-      <Separator />
-
+      <Account address={activeAccount || ''} label="Active Account" />
       {activeProxy && activeProxyType && (
-        <>
-          <Polkicon address={activeProxy} fontSize="4rem" />
-          <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>
-            Signer ({activeProxyType} Proxy):
-          </h4>
-          <p style={{ marginTop: '0.2rem' }}>
-            {activeProxy} &nbsp;
-            <ButtonCopy value={activeProxy} size="0.95rem" />
-          </p>
-          <Separator />
-        </>
+        <Account
+          address={activeProxy}
+          label={`Signer (${activeProxyType} Proxy)`}
+        />
       )}
-
       <ButtonRow>
         <ButtonText
           marginRight
