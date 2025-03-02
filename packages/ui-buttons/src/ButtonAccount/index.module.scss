@@ -41,13 +41,22 @@ SPDX-License-Identifier: GPL-3.0-only */
     border-left: 1px solid rgba(255, 255, 255, 0.25);
 
     > svg {
-      color: rgba(255, 255, 255, 0.75);
+      color: white;
+      opacity: 0.75;
       transition: opacity var(--transition-duration);
     }
 
     &.open {
-      svg {
+      > svg {
         opacity: 0.5;
+      }
+    }
+  }
+
+  &:hover {
+    >.arrow {
+      svg {
+        opacity: 1;
       }
     }
   }
