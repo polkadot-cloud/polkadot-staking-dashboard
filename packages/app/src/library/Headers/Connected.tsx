@@ -27,17 +27,10 @@ export const Connected = () => {
         content={<AccountPopover setOpen={setOpen} />}
       >
         <ButtonAccount
+          className="header-account"
           activeAccount={getAccount(activeAccount)}
           activeProxy={getAccount(activeProxy)}
-        />
-      </Popover>
-      <Popover
-        open={open}
-        portalContainer={themeElementRef.current || undefined}
-        content={<AccountPopover setOpen={setOpen} />}
-      >
-        <DefaultAccount
-          className="header-account"
+          readOnly={!accountHasSigner(activeAccount)}
           onClick={() => {
             if (activeAccount) {
               if (!open) {
@@ -47,8 +40,6 @@ export const Connected = () => {
               openModal({ key: 'Accounts' })
             }
           }}
-          value={activeAccount || ''}
-          readOnly={!accountHasSigner(activeAccount)}
         />
       </Popover>
       {activeProxy && (

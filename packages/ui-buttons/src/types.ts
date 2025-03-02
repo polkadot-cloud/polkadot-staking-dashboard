@@ -172,9 +172,10 @@ export type ButtonHeaderProps = ComponentBase &
     iconTransform?: string
   }
 
-export type ButtonAccountProps = ComponentBase &
+export type ButtonAccountProps = ComponentBaseWithClassName &
   OnMouseHandlersProps & {
     activeAccount: ImportedAccount | null
+    readOnly: boolean
     activeProxy: ImportedAccount | null
     marginLeft?: boolean
     marginRight?: boolean
