@@ -44,5 +44,9 @@ export const Sync = () => {
     onValidatorsSyncing() ||
     uids.filter(({ submitted }) => submitted === true).length > 0
 
-  return isSyncing ? <Spinner /> : null
+  return isSyncing ? (
+    <span style={{ marginRight: '1rem' }}>
+      <Spinner />
+    </span>
+  ) : null
 }

@@ -13,9 +13,9 @@ export const Account = ({
   label: string
 }) => (
   <>
-    <Polkicon address={address} fontSize="4rem" />
+    <Polkicon address={address} fontSize="3.5rem" />
     <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{label}:</h4>
-    <p style={{ marginTop: '0.2rem' }}>
+    <p style={{ marginTop: '0.4rem' }}>
       {address} &nbsp;
       <ButtonCopy value={address} size="0.95rem" />
     </p>
