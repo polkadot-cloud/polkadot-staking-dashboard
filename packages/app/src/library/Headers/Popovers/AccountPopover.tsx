@@ -18,8 +18,13 @@ export const AccountPopover = ({
 }) => {
   const { t } = useTranslation()
   const { openModal } = useOverlay().modal
-  const { activeAccount, setActiveAccount, setActiveProxy } =
-    useActiveAccounts()
+  const {
+    activeAccount,
+    activeProxy,
+    activeProxyType,
+    setActiveAccount,
+    setActiveProxy,
+  } = useActiveAccounts()
 
   const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -31,12 +36,27 @@ export const AccountPopover = ({
   return (
     <div ref={popoverRef}>
       <Polkicon address={activeAccount || ''} fontSize="4rem" />
-      <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>Full Address</h4>
+      <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>Active Account:</h4>
       <p style={{ marginTop: '0.2rem' }}>
         {activeAccount} &nbsp;
         <ButtonCopy value={activeAccount || ''} size="0.95rem" />
       </p>
       <Separator />
+
+      {activeProxy && activeProxyType && (
+        <>
+          <Polkicon address={activeProxy} fontSize="4rem" />
+          <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>
+            Signer ({activeProxyType} Proxy):
+          </h4>
+          <p style={{ marginTop: '0.2rem' }}>
+            {activeProxy} &nbsp;
+            <ButtonCopy value={activeProxy} size="0.95rem" />
+          </p>
+          <Separator />
+        </>
+      )}
+
       <ButtonRow>
         <ButtonText
           marginRight
