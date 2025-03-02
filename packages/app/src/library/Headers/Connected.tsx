@@ -5,51 +5,48 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
-import { ButtonAccount } from 'ui-buttons'
-import { ButtonRow } from 'ui-core/base'
+import { ButtonAccount, ButtonAccountInactive } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
-import DefaultAccount from '../Account/DefaultAccount'
 import { AccountPopover } from './Popovers/AccountPopover'
 
 export const Connected = () => {
   const { themeElementRef } = useTheme()
   const { openModal } = useOverlay().modal
   const { activeAccount, activeProxy } = useActiveAccounts()
-  const { accountHasSigner, getAccount } = useImportedAccounts()
+  const { accountHasSigner, getAccount, accounts } = useImportedAccounts()
 
   const [open, setOpen] = useState<boolean>(false)
 
-  return (
-    <>
-      <Popover
+  const totalImportedAccounts = accounts.length
+
+  return !activeAccount ? (
+    <ButtonAccountInactive
+      label={totalImportedAccounts ? 'Select Account' : 'Connect Accounts'}
+      onClick={() =>
+        openModal({ key: totalImportedAccounts ? 'Accounts' : 'Connect' })
+      }
+    />
+  ) : (
+    <Popover
+      open={open}
+      portalContainer={themeElementRef.current || undefined}
+      content={<AccountPopover setOpen={setOpen} />}
+      onTriggerClick={() => {
+        if (activeAccount) {
+          setOpen(!open)
+        } else {
+          openModal({ key: 'Accounts' })
+        }
+      }}
+    >
+      <ButtonAccount
+        className="header-account"
+        activeAccount={getAccount(activeAccount)}
+        activeProxy={getAccount(activeProxy)}
+        readOnly={!accountHasSigner(activeAccount)}
         open={open}
-        portalContainer={themeElementRef.current || undefined}
-        content={<AccountPopover setOpen={setOpen} />}
-        onTriggerClick={() => {
-          if (activeAccount) {
-            setOpen(!open)
-          } else {
-            openModal({ key: 'Accounts' })
-          }
-        }}
-      >
-        <ButtonAccount
-          className="header-account"
-          activeAccount={getAccount(activeAccount)}
-          activeProxy={getAccount(activeProxy)}
-          readOnly={!accountHasSigner(activeAccount)}
-          open={open}
-        />
-      </Popover>
-      {activeProxy && (
-        <ButtonRow xMargin>
-          <DefaultAccount
-            value={activeProxy}
-            readOnly={!accountHasSigner(activeProxy)}
-          />
-        </ButtonRow>
-      )}
-    </>
+      />
+    </Popover>
   )
 }

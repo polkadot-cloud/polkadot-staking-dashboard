@@ -1,12 +1,17 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronDown, faGlasses } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronDown,
+  faChevronRight,
+  faGlasses,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
-import type { ButtonAccountProps } from '../types'
+import type { ButtonAccountInactiveProps, ButtonAccountProps } from '../types'
+import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
 
 export const ButtonAccount = ({
@@ -21,7 +26,6 @@ export const ButtonAccount = ({
   const allClasses = classNames(classes.btnAccount, {
     [classes.marginLeft]: marginLeft,
   })
-
   const arrowClasses = classNames(classes.arrow, {
     [classes.open]: open,
   })
@@ -57,5 +61,37 @@ export const ButtonAccount = ({
         <FontAwesomeIcon icon={faChevronDown} transform="shrink-5" />
       </div>
     </div>
+  )
+}
+
+export const ButtonAccountInactive = ({
+  label,
+  className,
+  marginLeft,
+  style,
+  onClick,
+  onMouseOver,
+  onMouseMove,
+  onMouseOut,
+  disabled,
+}: ButtonAccountInactiveProps) => {
+  const allClasses = classNames(classes.btnAccount, {
+    [classes.marginLeft]: marginLeft,
+  })
+  const arrowClasses = classNames(classes.arrow, classes.noBorder)
+
+  return (
+    <button
+      type="button"
+      className={`${className ? `${className} ` : ' '}${allClasses}`}
+      style={style}
+      disabled={disabled}
+      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+    >
+      {label}
+      <div className={arrowClasses}>
+        <FontAwesomeIcon icon={faChevronRight} transform="shrink-5" />
+      </div>
+    </button>
   )
 }

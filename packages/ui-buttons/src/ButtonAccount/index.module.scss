@@ -40,6 +40,10 @@ SPDX-License-Identifier: GPL-3.0-only */
     margin-left: 1.25rem;
     border-left: 1px solid rgba(255, 255, 255, 0.25);
 
+    &.noBorder {
+    padding-left: 0;
+      border-left: none;
+    }
     > svg {
       color: white;
       opacity: 0.75;
