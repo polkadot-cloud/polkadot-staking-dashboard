@@ -5387,12 +5387,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/validator-assets@npm:^0.3.2":
-  version: 0.3.2
-  resolution: "@w3ux/validator-assets@npm:0.3.2"
+"@w3ux/validator-assets@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@w3ux/validator-assets@npm:0.3.3"
   peerDependencies:
     react: ^18
-  checksum: 10c0/7a1e87093017556c2c1af7350b79e58d319d327bd939395ac58635a8c10ca6998eb8f41c3c3532bc133d5b1aa7dcb8fb0d6063095a0461673c54a5d83cacf396
+  checksum: 10c0/69d7965d8d8726d2c7f95e0763a2eb9a8b54ac295d9bc0672c0c3310ad80175e8049ef1aced94e402cafe1f6f3a6d70d2f99ff102632f3f30051d5e24bd840fb
   languageName: node
   linkType: hard
 
@@ -5944,7 +5944,7 @@ __metadata:
     "@w3ux/factories": "npm:^1.0.0"
     "@w3ux/react-connect-kit": "npm:^2.1.3"
     "@w3ux/react-odometer": "npm:^1.1.0"
-    "@w3ux/validator-assets": "npm:^0.3.2"
+    "@w3ux/validator-assets": "npm:^0.3.3"
     "@zondax/ledger-substrate": "npm:^1.0.1"
     assets: "workspace:*"
     buffer: "npm:^6.0.3"
