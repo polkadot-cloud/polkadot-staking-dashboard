@@ -6,7 +6,8 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { ButtonAccount } from 'ui-buttons'
-import { ButtonRow, Popover } from 'ui-core/base'
+import { ButtonRow } from 'ui-core/base'
+import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 import DefaultAccount from '../Account/DefaultAccount'
 import { AccountPopover } from './Popovers/AccountPopover'
@@ -25,21 +26,21 @@ export const Connected = () => {
         open={open}
         portalContainer={themeElementRef.current || undefined}
         content={<AccountPopover setOpen={setOpen} />}
+        onTriggerClick={() => {
+          if (activeAccount) {
+            if (!open) {
+              setOpen(true)
+            }
+          } else {
+            openModal({ key: 'Accounts' })
+          }
+        }}
       >
         <ButtonAccount
           className="header-account"
           activeAccount={getAccount(activeAccount)}
           activeProxy={getAccount(activeProxy)}
           readOnly={!accountHasSigner(activeAccount)}
-          onClick={() => {
-            if (activeAccount) {
-              if (!open) {
-                setOpen(true)
-              }
-            } else {
-              openModal({ key: 'Accounts' })
-            }
-          }}
         />
       </Popover>
       {activeProxy && (

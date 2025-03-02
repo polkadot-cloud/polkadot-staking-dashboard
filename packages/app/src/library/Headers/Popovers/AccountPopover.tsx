@@ -7,6 +7,7 @@ import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonText } from 'ui-buttons'
 import { ButtonRow } from 'ui-core/base'
+import { Padding } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 import { Account } from './Account'
 
@@ -41,27 +42,29 @@ export const AccountPopover = ({
           label={`Signer (${activeProxyType} Proxy)`}
         />
       )}
-      <ButtonRow>
-        <ButtonText
-          marginRight
-          text="Switch Account"
-          onClick={() => {
-            setOpen(false)
-            openModal({ key: 'Accounts' })
-          }}
-        />
-        <span style={{ color: 'var(--text-color-tertiary)' }}>|</span>
-        <ButtonText
-          status="danger"
-          marginLeft
-          text={t('disconnect', { ns: 'modals' })}
-          onClick={() => {
-            setActiveAccount(null)
-            setActiveProxy(null)
-            setOpen(false)
-          }}
-        />
-      </ButtonRow>
+      <Padding flex>
+        <ButtonRow>
+          <ButtonText
+            marginRight
+            text="Switch Account"
+            onClick={() => {
+              setOpen(false)
+              openModal({ key: 'Accounts' })
+            }}
+          />
+          <span style={{ color: 'var(--text-color-tertiary)' }}>|</span>
+          <ButtonText
+            status="danger"
+            marginLeft
+            text={t('disconnect', { ns: 'modals' })}
+            onClick={() => {
+              setActiveAccount(null)
+              setActiveProxy(null)
+              setOpen(false)
+            }}
+          />
+        </ButtonRow>
+      </Padding>
     </div>
   )
 }

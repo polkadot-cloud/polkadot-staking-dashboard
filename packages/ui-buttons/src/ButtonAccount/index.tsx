@@ -7,7 +7,6 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
 import type { ButtonAccountProps } from '../types'
-import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
 
 export const ButtonAccount = ({
@@ -17,11 +16,6 @@ export const ButtonAccount = ({
   readOnly,
   marginLeft,
   style,
-  disabled,
-  onClick,
-  onMouseOver,
-  onMouseMove,
-  onMouseOut,
 }: ButtonAccountProps) => {
   const allClasses = classNames(classes.btnAccount, {
     [classes.marginLeft]: marginLeft,
@@ -38,12 +32,9 @@ export const ButtonAccount = ({
         : ellipsisFn(address)
 
   return (
-    <button
-      type="button"
+    <div
       className={`${className ? `${className} ` : ' '}${allClasses}`}
       style={style}
-      disabled={disabled}
-      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
     >
       <span
         style={{
@@ -61,6 +52,6 @@ export const ButtonAccount = ({
       {readOnly && (
         <FontAwesomeIcon icon={faGlasses} className={classes.icon} />
       )}
-    </button>
+    </div>
   )
 }

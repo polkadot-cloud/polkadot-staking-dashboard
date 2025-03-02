@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   box-shadow: var(--card-shadow);
 	border-radius: 1rem;
 	animation-duration: 400ms;
-	padding: 1rem 1.5rem;
+	padding: 1rem 0;
 	width: 310px;
 	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 	will-change: transform, opacity;

@@ -10,14 +10,24 @@ export const Popover = ({
   content,
   portalContainer,
   open,
+  onTriggerClick,
 }: {
   children: ReactNode
   content: ReactNode
   portalContainer?: HTMLDivElement
   open?: boolean
+  onTriggerClick?: () => void
 }) => (
   <RadixPopover.Root open={open}>
-    <RadixPopover.Trigger>{children}</RadixPopover.Trigger>
+    <RadixPopover.Trigger
+      onClick={() => {
+        if (typeof onTriggerClick === 'function') {
+          onTriggerClick()
+        }
+      }}
+    >
+      {children}
+    </RadixPopover.Trigger>
     <RadixPopover.Portal container={portalContainer}>
       <RadixPopover.Content
         className={classes.Content}
