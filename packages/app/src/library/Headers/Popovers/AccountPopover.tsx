@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useOutsideAlerter } from '@w3ux/hooks'
+import { ellipsisFn } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonText } from 'ui-buttons'
@@ -25,6 +27,7 @@ export const AccountPopover = ({
     setActiveAccount,
     setActiveProxy,
   } = useActiveAccounts()
+  const { getAccount } = useImportedAccounts()
 
   const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -33,13 +36,21 @@ export const AccountPopover = ({
     setOpen(false)
   }, ['header-account'])
 
+  const account = getAccount(activeAccount)
+  const name = account?.name || ''
+
+  const accountLabel =
+    activeAccount && activeAccount !== ''
+      ? name || ellipsisFn(activeAccount)
+      : ''
+
   return (
     <div ref={popoverRef}>
-      <Account address={activeAccount || ''} label="Active Account" />
+      <Account address={activeAccount || ''} label={accountLabel} />
       {activeProxy && activeProxyType && (
         <Account
           address={activeProxy}
-          label={`Signer (${activeProxyType} Proxy)`}
+          label={`Signer (${activeProxyType} Proxy):`}
         />
       )}
       <Padding flex>
