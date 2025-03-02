@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@w3ux/types": "^2.1.2",
     "@w3ux/react-polkicon": "^2.0.1-alpha.0",
+    "@w3ux/types": "^1.0.2",
     "@w3ux/utils": "^1.2.0",
     "types": "workspace:*",
     "ui-core": "workspace:*"
