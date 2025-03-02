@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
 import type { ButtonAccountProps } from '../types'
 import { onMouseHandlers } from '../util'
@@ -20,6 +21,16 @@ export const ButtonAccount = ({
     [classes.marginLeft]: marginLeft,
   })
 
+  const address = activeAccount?.address || ''
+  const name = activeAccount?.name || ''
+
+  const accountDisplay: string | null =
+    address === null
+      ? null
+      : address !== ''
+        ? name || ellipsisFn(address)
+        : ellipsisFn(address)
+
   return (
     <button
       type="button"
@@ -28,7 +39,7 @@ export const ButtonAccount = ({
       disabled={disabled}
       {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
     >
-      {activeAccount}
+      {accountDisplay}
     </button>
   )
 }

@@ -14,8 +14,8 @@ import { AccountPopover } from './Popovers/AccountPopover'
 export const Connected = () => {
   const { themeElementRef } = useTheme()
   const { openModal } = useOverlay().modal
-  const { accountHasSigner } = useImportedAccounts()
   const { activeAccount, activeProxy } = useActiveAccounts()
+  const { accountHasSigner, getAccount } = useImportedAccounts()
 
   const [open, setOpen] = useState<boolean>(false)
 
@@ -27,8 +27,8 @@ export const Connected = () => {
         content={<AccountPopover setOpen={setOpen} />}
       >
         <ButtonAccount
-          activeAccount={activeAccount}
-          activeProxy={activeProxy}
+          activeAccount={getAccount(activeAccount)}
+          activeProxy={getAccount(activeProxy)}
         />
       </Popover>
       <Popover

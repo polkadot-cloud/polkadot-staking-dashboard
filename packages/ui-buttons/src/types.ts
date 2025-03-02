@@ -5,9 +5,12 @@ import type {
   IconDefinition,
   IconProp,
 } from '@fortawesome/fontawesome-svg-core'
-import type { ComponentBase, ComponentBaseWithClassName } from '@w3ux/types'
+import type {
+  ComponentBase,
+  ComponentBaseWithClassName,
+  ImportedAccount,
+} from '@w3ux/types'
 import type { MouseEvent } from 'react'
-import type { MaybeString } from 'types'
 
 // Common button props, applied to all buttons.
 export interface ButtonCommonProps {
@@ -171,8 +174,8 @@ export type ButtonHeaderProps = ComponentBase &
 
 export type ButtonAccountProps = ComponentBase &
   OnMouseHandlersProps & {
-    activeAccount: MaybeString
-    activeProxy: MaybeString
+    activeAccount: ImportedAccount | null
+    activeProxy: ImportedAccount | null
     marginLeft?: boolean
     marginRight?: boolean
     marginX?: boolean
