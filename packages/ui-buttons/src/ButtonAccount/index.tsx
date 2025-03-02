@@ -10,11 +10,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
-import type { ButtonAccountInactiveProps, ButtonAccountProps } from '../types'
+import type {
+  ButtonAccountInactiveProps,
+  ButtonAccountLabelProps,
+} from '../types'
 import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
 
-export const ButtonAccount = ({
+export const ButtonAccountLabel = ({
   activeAccount,
   activeProxy,
   readOnly,
@@ -22,7 +25,7 @@ export const ButtonAccount = ({
   className,
   marginLeft,
   style,
-}: ButtonAccountProps) => {
+}: ButtonAccountLabelProps) => {
   const allClasses = classNames(classes.btnAccount, {
     [classes.marginLeft]: marginLeft,
   })

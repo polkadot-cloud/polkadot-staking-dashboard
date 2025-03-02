@@ -172,7 +172,7 @@ export type ButtonHeaderProps = ComponentBase &
     iconTransform?: string
   }
 
-export type ButtonAccountProps = ComponentBaseWithClassName & {
+export type ButtonAccountLabelProps = ComponentBaseWithClassName & {
   activeAccount: ImportedAccount | null
   readOnly: boolean
   open: boolean

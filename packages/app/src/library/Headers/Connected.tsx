@@ -5,7 +5,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
-import { ButtonAccount, ButtonAccountInactive } from 'ui-buttons'
+import { ButtonAccountInactive, ButtonAccountLabel } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 import { AccountPopover } from './Popovers/AccountPopover'
@@ -40,7 +40,7 @@ export const Connected = () => {
         }
       }}
     >
-      <ButtonAccount
+      <ButtonAccountLabel
         className="header-account"
         activeAccount={getAccount(activeAccount)}
         activeProxy={getAccount(activeProxy)}
