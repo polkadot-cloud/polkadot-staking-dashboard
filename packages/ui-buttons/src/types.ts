@@ -172,6 +172,14 @@ export type ButtonHeaderProps = ComponentBase &
     iconTransform?: string
   }
 
+export type InactiveButtonHeaderProps = ComponentBase & {
+  marginLeft?: boolean
+  marginRight?: boolean
+  marginX?: boolean
+  icon: IconProp | IconDefinition
+  iconTransform?: string
+}
+
 export type ButtonAccountLabelProps = ComponentBaseWithClassName & {
   activeAccount: ImportedAccount | null
   readOnly: boolean

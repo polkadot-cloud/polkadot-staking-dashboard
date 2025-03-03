@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import type { ButtonHeaderProps } from '../types'
+import type { ButtonHeaderProps, InactiveButtonHeaderProps } from '../types'
 import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
 
@@ -32,5 +32,22 @@ export const ButtonHeader = ({
     >
       <FontAwesomeIcon icon={icon} transform={iconTransform} />
     </button>
+  )
+}
+
+export const InactiveButtonHeader = ({
+  marginLeft,
+  style,
+  icon,
+  iconTransform,
+}: InactiveButtonHeaderProps) => {
+  const allClasses = classNames(classes.btnHeader, {
+    [classes.marginLeft]: marginLeft,
+  })
+
+  return (
+    <div className={allClasses} style={style}>
+      <FontAwesomeIcon icon={icon} transform={iconTransform} />
+    </div>
   )
 }

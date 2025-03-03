@@ -45,7 +45,7 @@ export const AccountPopover = ({
       : ''
 
   return (
-    <div ref={popoverRef}>
+    <div ref={popoverRef} style={{ padding: '1.5rem 0 0.75rem 0' }}>
       <Account address={activeAccount || ''} label={accountLabel} />
       {activeProxy && activeProxyType && (
         <Account
