@@ -2,7 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons'
+import {
+  faExternalLinkAlt,
+  faPuzzlePiece,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
@@ -20,30 +23,14 @@ export const MenuPopover = () => {
     <div>
       <MenuItemButton onClick={() => toggleTheme()}>
         <div>
-          <h3>Theme</h3>
-        </div>
-        <div>
           {mode === 'dark' ? (
             <SunnyOutlineSVG width="1.25em" height="1.25em" />
           ) : (
             <MoonOutlineSVG width="1.1em" height="1.1em" />
           )}
         </div>
-      </MenuItemButton>
-      <MenuItemButton
-        onClick={() => {
-          openModal({ key: 'ChooseLanguage' })
-        }}
-      >
         <div>
-          <h3>Language</h3>
-        </div>
-        <div>
-          <LanguageSVG
-            width="1.4em"
-            height="1.4em"
-            style={{ position: 'relative', right: '-0.25rem' }}
-          />
+          <h3>Dark Mode</h3>
         </div>
       </MenuItemButton>
       <MenuItemButton
@@ -52,10 +39,22 @@ export const MenuPopover = () => {
         }}
       >
         <div>
-          <h3>Plugins</h3>
+          <FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
         </div>
         <div>
-          <FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
+          <h3>Plugins</h3>
+        </div>
+      </MenuItemButton>
+      <MenuItemButton
+        onClick={() => {
+          openModal({ key: 'ChooseLanguage' })
+        }}
+      >
+        <div>
+          <LanguageSVG width="1.4em" height="1.4em" />
+        </div>
+        <div>
+          <h3>Language</h3>
         </div>
       </MenuItemButton>
       <MenuItemButton
@@ -64,10 +63,13 @@ export const MenuPopover = () => {
         }}
       >
         <div>
-          <h3>GitHub</h3>
+          <FontAwesomeIcon icon={faGithub} transform="grow-2" />
         </div>
         <div>
-          <FontAwesomeIcon icon={faGithub} transform="grow-2" />
+          <h3>
+            GitHub
+            <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
+          </h3>
         </div>
       </MenuItemButton>
     </div>

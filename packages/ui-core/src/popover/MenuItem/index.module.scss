@@ -4,7 +4,7 @@
 .menuItem {
   border-bottom: 1px solid var(--border-primary-color);
   transition: background var(--transition-duration);
-  padding: 1.75rem 1.35rem 1.25rem 1.35rem;
+  padding: 1.65rem 1.25rem 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   width: 100%;
@@ -15,18 +15,25 @@
   > div {
     display: flex;
     &:first-child {
+      color: var(--text-color-tertiary);
+      padding-right: 0.75rem;
+      width: 2.5rem;
+      align-items: center;
+      path {
+        fill: var(--text-color-tertiary);
+      }
+    }
+
+    &:last-child {
       flex-grow: 1;
       justify-content: flex-start;
 
       > h3 {
+        color: var(--text-color-secondary);
         font-size: 1.2rem;
-      }
-    }
-    &:last-child {
-      padding-right: 0.75rem;
-      color: var(--text-color-tertiary);
-      path {
-        fill: var(--text-color-tertiary);
+        > svg {
+          margin-left: 0.5rem;
+        }
       }
     }
   }

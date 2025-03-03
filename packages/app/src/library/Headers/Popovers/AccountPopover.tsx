@@ -44,6 +44,9 @@ export const AccountPopover = ({
       ? name || ellipsisFn(activeAccount)
       : ''
 
+  // Button font size
+  const fontSize = '1.05rem'
+
   return (
     <div ref={popoverRef} style={{ padding: '1.5rem 0 0.75rem 0' }}>
       <Account address={activeAccount || ''} label={accountLabel} />
@@ -56,6 +59,7 @@ export const AccountPopover = ({
       <Padding flex>
         <ButtonRow>
           <ButtonText
+            style={{ fontSize }}
             marginRight
             text="Switch Account"
             onClick={() => {
@@ -65,6 +69,7 @@ export const AccountPopover = ({
           />
           <span style={{ color: 'var(--text-color-tertiary)' }}>|</span>
           <ButtonText
+            style={{ fontSize }}
             status="danger"
             marginLeft
             text={t('disconnect', { ns: 'modals' })}
