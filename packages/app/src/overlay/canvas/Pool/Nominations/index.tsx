@@ -25,8 +25,8 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
       <Subheading>
         <h3>
           {!targets.length
-            ? t('nominate.noNominationsSet', { ns: 'pages' })
-            : `${targets.length} ${t('nominations', { ns: 'library', count: targets.length })}`}
+            ? t('noNominationsSet', { ns: 'pages' })
+            : `${targets.length} ${t('nominations', { ns: 'app', count: targets.length })}`}
         </h3>
       </Subheading>
 

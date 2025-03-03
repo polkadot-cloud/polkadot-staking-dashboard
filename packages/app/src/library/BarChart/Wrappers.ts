@@ -95,7 +95,7 @@ export const Bar = styled.div`
     transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
     > span {
-      font-family: InterBold, sans-serif;
+      font-family: InterSemiBold, sans-serif;
       position: absolute;
       left: 0;
       text-overflow: ellipsis;

@@ -1,7 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
@@ -15,7 +18,7 @@ import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import LogoSVG from 'assets/svg/icons/logo.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
-import { PageWidthMediumThreshold, SideMenuMaximisedWidth } from 'consts'
+import { PageWidthMediumThreshold } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
@@ -24,15 +27,15 @@ import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Side } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
-import { ConnectionSymbol, LogoWrapper, Separator, Wrapper } from './Wrapper'
+import { LogoWrapper, Separator, Wrapper } from './Wrapper'
 
 export const SideMenu = () => {
-  const { t } = useTranslation('base')
+  const { t } = useTranslation('app')
   const { openHelp } = useHelp()
   const { apiStatus } = useApi()
   const {
@@ -67,29 +70,39 @@ export const SideMenu = () => {
         : 'danger'
 
   return (
-    <Side
-      open={sideMenuOpen}
-      minimised={sideMenuMinimised}
-      width={`${SideMenuMaximisedWidth}px`}
-    >
+    <Page.Side open={sideMenuOpen} minimised={sideMenuMinimised}>
       <Wrapper ref={ref} $minimised={sideMenuMinimised}>
         <section>
-          <LogoWrapper $minimised={sideMenuMinimised}>
+          <LogoWrapper
+            $minimised={sideMenuMinimised}
+            type="button"
+            onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
+          >
             {sideMenuMinimised ? (
-              <CloudSVG style={{ maxHeight: '100%', width: '1.8rem' }} />
+              <CloudSVG style={{ maxHeight: '100%', width: '2rem' }} />
             ) : (
               <>
                 <CloudSVG
                   style={{
                     maxHeight: '100%',
                     height: '100%',
-                    width: '1.65rem',
+                    width: '1.55rem',
                   }}
                 />
                 <span>
                   <LogoSVG className="logo" />
                 </span>
               </>
+            )}
+            {!sideMenuOpen && (
+              <span className="toggle">
+                <span className="label">
+                  <FontAwesomeIcon
+                    icon={sideMenuMinimised ? faChevronRight : faChevronLeft}
+                    transform="shrink-6"
+                  />
+                </span>
+              </span>
             )}
           </LogoWrapper>
           <Heading title={t('network')} minimised={sideMenuMinimised} />
@@ -102,12 +115,7 @@ export const SideMenu = () => {
               size: networkData.brand.inline.size,
             }}
             minimised={sideMenuMinimised}
-            action={
-              <ConnectionSymbol
-                className={apiStatusClass}
-                style={{ opacity: 0.7 }}
-              />
-            }
+            bullet={apiStatusClass}
           />
           <Separator />
           <Main />
@@ -121,27 +129,25 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: BookSVG,
-                size: sideMenuMinimised ? '0.95em' : '0.9em',
+                size: sideMenuMinimised ? '0.95em' : '0.8em',
               }}
             />
-
             <Secondary
               onClick={() => openModal({ key: 'DiscordSupport', size: 'sm' })}
               name="Discord"
               minimised={sideMenuMinimised}
               icon={{
                 Svg: DiscordSVG,
-                size: sideMenuMinimised ? '1.2em' : '1.2em',
+                size: sideMenuMinimised ? '1.2em' : '1em',
               }}
             />
-
             <Secondary
               onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
-              name={t('email', { ns: 'base' })}
+              name={t('email', { ns: 'app' })}
               minimised={sideMenuMinimised}
               icon={{
                 Svg: EnvelopeSVG,
-                size: sideMenuMinimised ? '1.05em' : '1em',
+                size: sideMenuMinimised ? '1.05em' : '0.9em',
               }}
             />
 
@@ -156,17 +162,7 @@ export const SideMenu = () => {
             />
           </div>
         </section>
-
         <section>
-          <button
-            type="button"
-            onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
-            aria-label="Menu"
-          >
-            <FontAwesomeIcon
-              icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
-            />
-          </button>
           <button
             type="button"
             onClick={() =>
@@ -211,6 +207,6 @@ export const SideMenu = () => {
           )}
         </section>
       </Wrapper>
-    </Side>
+    </Page.Side>
   )
 }

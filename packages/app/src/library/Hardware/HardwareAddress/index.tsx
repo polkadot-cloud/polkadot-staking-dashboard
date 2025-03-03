@@ -67,7 +67,7 @@ export const HardwareAddress = ({
     <Wrapper>
       <div className="content">
         <div className="inner">
-          <div className="identicon">
+          <div className="identicon" style={{ maxWidth: '3rem' }}>
             {Identicon}
             <div className="index-icon ">{index + 1}</div>
           </div>

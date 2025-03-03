@@ -6,7 +6,7 @@ import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
 import { useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { Entry } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 
 // light / dark `mode` added to styled-components provider
 export const ThemedRouter = () => {
@@ -24,9 +24,9 @@ export const ThemedRouter = () => {
 
   return (
     <ThemeProvider theme={{ mode }}>
-      <Entry mode={mode} theme={`${network}`} ref={themeElementRef}>
+      <Page.Entry mode={mode} theme={`${network}`} ref={themeElementRef}>
         <Router />
-      </Entry>
+      </Page.Entry>
     </ThemeProvider>
   )
 }

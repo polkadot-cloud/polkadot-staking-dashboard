@@ -12,7 +12,7 @@ import { PoolList } from 'library/PoolList'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
-import { PageRow } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages')
@@ -41,12 +41,10 @@ export const PoolFavorites = () => {
   }, [favorites])
 
   return (
-    <PageRow>
+    <Page.Row>
       <CardWrapper>
         {favoritesList === null || syncing ? (
-          <ListStatusHeader>
-            {t('pools.fetchingFavoritePools')}...
-          </ListStatusHeader>
+          <ListStatusHeader>{t('fetchingFavoritePools')}...</ListStatusHeader>
         ) : (
           isReady &&
           (favoritesList.length > 0 ? (
@@ -54,10 +52,10 @@ export const PoolFavorites = () => {
               <PoolList pools={favoritesList} allowMoreCols itemsPerPage={30} />
             </ListProvider>
           ) : (
-            <ListStatusHeader>{t('pools.noFavorites')}</ListStatusHeader>
+            <ListStatusHeader>{t('noFavorites')}</ListStatusHeader>
           ))
         )}
       </CardWrapper>
-    </PageRow>
+    </Page.Row>
   )
 }

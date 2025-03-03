@@ -8,7 +8,7 @@ import type { BondedPool, BondFor, MaybeAddress, NominationStatus } from 'types'
 export interface Outline {
   outline?: boolean
 }
-export type CopyAddressProps = Outline & {
+export type CopyAddressProps = {
   address: string
 }
 

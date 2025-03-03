@@ -46,7 +46,7 @@ export const Roles = ({
       <CardWrapper className="canvas secondary">
         <Subheading>
           <h3>
-            {t('pools.roles')}
+            {t('roles')}
             <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
           </h3>
         </Subheading>
@@ -54,10 +54,10 @@ export const Roles = ({
           {bondedPool.roles.root && (
             <section>
               <Identity
-                title={t('pools.root')}
+                title={t('root')}
                 address={bondedPool.roles.root}
                 identity={rootIdentity}
-                Action={<CopyAddress address={bondedPool.roles.root} outline />}
+                Action={<CopyAddress address={bondedPool.roles.root} />}
                 iconSize={iconSize}
               />
             </section>
@@ -65,12 +65,10 @@ export const Roles = ({
           {bondedPool.roles.nominator && (
             <section>
               <Identity
-                title={t('pools.nominator')}
+                title={t('nominator')}
                 address={bondedPool.roles.nominator}
                 identity={nominatorIdentity}
-                Action={
-                  <CopyAddress address={bondedPool.roles.nominator} outline />
-                }
+                Action={<CopyAddress address={bondedPool.roles.nominator} />}
                 iconSize={iconSize}
               />
             </section>
@@ -78,12 +76,10 @@ export const Roles = ({
           {bondedPool.roles.bouncer && (
             <section>
               <Identity
-                title={t('pools.bouncer')}
+                title={t('bouncer')}
                 address={bondedPool.roles.bouncer}
                 identity={bouncerIdentity}
-                Action={
-                  <CopyAddress address={bondedPool.roles.bouncer} outline />
-                }
+                Action={<CopyAddress address={bondedPool.roles.bouncer} />}
                 iconSize={iconSize}
               />
             </section>
@@ -91,12 +87,10 @@ export const Roles = ({
           {bondedPool.roles.depositor && (
             <section>
               <Identity
-                title={t('pools.depositor')}
+                title={t('depositor')}
                 address={bondedPool.roles.depositor}
                 identity={depositorIdentity}
-                Action={
-                  <CopyAddress address={bondedPool.roles.depositor} outline />
-                }
+                Action={<CopyAddress address={bondedPool.roles.depositor} />}
                 iconSize={iconSize}
               />
             </section>

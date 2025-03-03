@@ -54,7 +54,7 @@ export const ManageBond = () => {
     <>
       <CardHeader>
         <h4>
-          {t('pools.bondedFunds')}
+          {t('bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
         <h2>
@@ -70,6 +70,7 @@ export const ManageBond = () => {
         <ButtonRow>
           <MultiButton marginRight disabled={bondDisabled}>
             <ButtonText
+              size="md"
               disabled={bondDisabled}
               marginRight
               onClick={() =>
@@ -83,6 +84,7 @@ export const ManageBond = () => {
               text=""
             />
             <ButtonText
+              size="md"
               disabled={bondDisabled}
               marginRight
               onClick={() =>
@@ -98,7 +100,8 @@ export const ManageBond = () => {
           </MultiButton>
           {canLeavePool && (
             <ButtonPrimary
-              text={t('nominate.unstake')}
+              size="md"
+              text={t('unstake')}
               iconLeft={faSignOut}
               onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
             />

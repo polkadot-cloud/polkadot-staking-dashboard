@@ -5,14 +5,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import BigNumber from 'bignumber.js'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp } from 'ui-buttons'
-import {
-  StatCard,
-  StatContent,
-  StatGraphic,
-  StatSubtitle,
-  StatTitle,
-  StatTotal,
-} from 'ui-core/base'
+import { Stat } from 'ui-core/base'
 import { Pie as PieGraph } from 'ui-graphs'
 import type { PieProps } from './types'
 
@@ -21,36 +14,36 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
   const { openHelp } = useHelp()
 
   return (
-    <StatCard>
+    <Stat.Card>
       <div>
-        <StatGraphic>
+        <Stat.Graphic>
           <PieGraph value={pieValue} size="3.2rem" />
-        </StatGraphic>
+        </Stat.Graphic>
         {tooltip && (
           <label>
             <h3>{tooltip}</h3>
           </label>
         )}
-        <StatContent>
-          <StatTitle>
+        <Stat.Content>
+          <Stat.Title>
             <Odometer value={new BigNumber(stat.value).toFormat()} />
             {stat?.unit && stat.unit}
             {showTotal ? (
-              <StatTotal>
+              <Stat.Total>
                 /&nbsp;
                 <Odometer value={new BigNumber(stat?.total || 0).toFormat()} />
                 {stat?.unit || null}
-              </StatTotal>
+              </Stat.Total>
             ) : null}
-          </StatTitle>
-          <StatSubtitle>
+          </Stat.Title>
+          <Stat.Subtitle>
             {label}{' '}
             {helpKey !== undefined ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
-          </StatSubtitle>
-        </StatContent>
+          </Stat.Subtitle>
+        </Stat.Content>
       </div>
-    </StatCard>
+    </Stat.Card>
   )
 }

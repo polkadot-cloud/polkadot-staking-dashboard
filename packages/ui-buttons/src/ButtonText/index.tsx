@@ -10,7 +10,7 @@ import type { ButtonTextProps } from './types'
 
 /**
  * @name ButtonText
- * @description Plain button style used within the main interface of dashboards.
+ * @description Plain button style used within the main interface.
  *
  * @param {ButtonTextProps} props - The props for the ButtonText component.
  * @returns {JSX.Element} The rendered primary button component.
@@ -32,12 +32,15 @@ export const ButtonText = (props: ButtonTextProps): JSX.Element => {
     onMouseOver,
     onMouseMove,
     onMouseOut,
+    size,
   } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
     classes.btnText,
     {
+      [classes.sm]: size !== 'md',
+      [commonClasses.btnMedium]: size === 'md',
       [commonClasses.btnGrow]: grow,
       [commonClasses.btnSpacingLeft]: marginLeft,
       [commonClasses.btnSpacingRight]: marginRight,

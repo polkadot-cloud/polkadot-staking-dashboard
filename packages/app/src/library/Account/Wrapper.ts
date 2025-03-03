@@ -7,13 +7,13 @@ export const Wrapper = styled.div`
   border: 1px solid var(--border-primary-color);
   transition: transform var(--transition-duration) ease-out;
   cursor: default;
-  font-size: 1.05rem;
-  border-radius: 1.25rem;
+  font-size: 1.1rem;
+  border-radius: 1.5rem;
   box-shadow: none;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0.1rem 1.25rem;
   max-width: 235px;
   flex: 1;
 
@@ -22,6 +22,7 @@ export const Wrapper = styled.div`
   }
   .polkicon {
     margin: 0.15rem 0.25rem 0 0;
+    max-width: 1.5rem;
   }
   .account-label {
     border-right: 1px solid var(--border-secondary-color);

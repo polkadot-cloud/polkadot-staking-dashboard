@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const useAccountFromUrl = () => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { accounts } = useImportedAccounts()
   const { accountsInitialised } = useOtherAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()

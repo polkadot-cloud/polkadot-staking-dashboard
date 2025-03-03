@@ -21,13 +21,13 @@ export const CreatePool = () => {
       <Head>
         <ButtonPrimary
           text={t('close', { ns: 'modals' })}
-          lg
+          size="lg"
           onClick={() => closeCanvas()}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
       <Title>
-        <h1>{t('pools.createAPool', { ns: 'pages' })}</h1>
+        <h1>{t('createAPool', { ns: 'pages' })}</h1>
       </Title>
       <CardWrapper className="canvas">
         <PoolName section={1} />

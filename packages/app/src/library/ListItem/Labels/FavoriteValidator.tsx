@@ -13,7 +13,7 @@ import { HeaderButton } from 'ui-core/list'
 import type { FavoriteProps } from '../types'
 
 export const FavoriteValidator = ({ address, outline }: FavoriteProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { setTooltipTextAndOpen } = useTooltip()
   const { favorites, addFavorite, removeFavorite } = useFavoriteValidators()
 

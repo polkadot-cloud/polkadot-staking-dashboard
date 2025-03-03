@@ -75,7 +75,7 @@ export const ImportVault = () => {
     >
       <div>
         <ButtonPrimary
-          lg
+          size="lg"
           iconLeft={faQrcode}
           text={t('importAccount', { ns: 'modals' })}
           disabled={promptStatus !== 0}
@@ -132,8 +132,8 @@ export const ImportVault = () => {
           replaceModal({ key: 'Connect', options: { disableScroll: true } })
         }
         t={{
-          tDone: t('done', { ns: 'library' }),
-          tCancel: t('cancel', { ns: 'library' }),
+          tDone: t('done', { ns: 'app' }),
+          tCancel: t('cancel', { ns: 'app' }),
         }}
       />
     </>

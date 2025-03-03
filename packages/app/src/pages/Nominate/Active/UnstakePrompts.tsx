@@ -12,7 +12,7 @@ import { useUnstaking } from 'hooks/useUnstaking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, PageRow } from 'ui-core/base'
+import { ButtonRow, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const UnstakePrompts = () => {
@@ -40,7 +40,7 @@ export const UnstakePrompts = () => {
     !inSetup() &&
     (isUnstaking || isFastUnstaking) &&
     !syncing && (
-      <PageRow>
+      <Page.Row>
         <CardWrapper
           style={{
             border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
@@ -48,17 +48,17 @@ export const UnstakePrompts = () => {
         >
           <div className="content">
             <h3>
-              {t('nominate.unstakePromptInProgress', {
+              {t('unstakePromptInProgress', {
                 context: isFastUnstaking ? 'fast' : 'regular',
               })}
             </h3>
             <h4>
               {isFastUnstaking
-                ? t('nominate.unstakePromptInQueue')
+                ? t('unstakePromptInQueue')
                 : !canWithdrawUnlocks
-                  ? t('nominate.unstakePromptWaitingForUnlocks')
-                  : `${t('nominate.unstakePromptReadyToWithdraw')} ${t(
-                      'nominate.unstakePromptRevert',
+                  ? t('unstakePromptWaitingForUnlocks')
+                  : `${t('unstakePromptReadyToWithdraw')} ${t(
+                      'unstakePromptRevert',
                       { unit }
                     )}`}
             </h4>
@@ -77,7 +77,7 @@ export const UnstakePrompts = () => {
                   iconLeft={faLockOpen}
                   text={
                     canWithdrawUnlocks
-                      ? t('nominate.unlocked')
+                      ? t('unlocked')
                       : String(totalUnlockChunks ?? 0)
                   }
                   disabled={false}
@@ -98,7 +98,7 @@ export const UnstakePrompts = () => {
             </ButtonRow>
           </div>
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
     )
   )
 }

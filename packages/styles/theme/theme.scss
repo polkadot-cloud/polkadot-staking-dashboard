@@ -4,9 +4,14 @@ SPDX-License-Identifier: GPL-3.0-only */
 /* general styles */
 :root {
   --button-sm-border-radius: 0.75rem;
-  --button-sm-padding: 0.41rem 1rem;
+  --button-sm-padding: 0.45rem 1rem;
   --button-sm-spacing: 0.125rem;
   --button-sm-font-size: 1rem;
+
+  --button-md-border-radius: 1rem;
+  --button-md-padding: 0.5rem 1.25rem;
+  --button-md-spacing: 0.125rem;
+  --button-md-font-size: 1.1rem;
 
   --button-lg-border-radius: 1.5rem;
   --button-lg-padding: 0.53rem 1rem;
@@ -32,7 +37,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --background-status-overlay: rgb(255 255 255 / 85%);
   --background-menu: #eaeaea;
   --background-input: #fdfdfd;
-  --border-primary-color: #e4e4e4;
+  --border-primary-color: #e2e2e2;
   --border-secondary-color: #cfcccc;
   --button-primary-background: #efeeee;
   --button-secondary-background: #e7e5e5;
@@ -85,12 +90,14 @@ SPDX-License-Identifier: GPL-3.0-only */
   --grid-color-secondary: #e8e8e8;
   --grid-canvas-axis: #222;
   --grid-canvas: #ccc;
-  --card-shadow: -1px -2px 12px 1px var(--card-shadow-color-secondary),
+  --card-shadow:
+    -1px -2px 12px 1px var(--card-shadow-color-secondary),
     0px 0.5px 1px 0px var(--card-deep-shadow-color),
     0 3.5px 6px -1px var(--card-shadow-color),
     0.4px -0.4px 0px 0px var(--card-shadow-color),
     -0.4px 0px 0px 0px var(--card-shadow-color);
-  --card-shadow-secondary: 0px 1px 1px 0px var(--card-shadow-color-secondary),
+  --card-shadow-secondary:
+    0px 1px 1px 0px var(--card-shadow-color-secondary),
     0 0.5px 1px -1px var(--card-shadow-color-secondary),
     0.4px -0.4px 0px 0px var(--card-shadow-color-secondary),
     -0.4px 0px 0px 0px var(--card-shadow-color-secondary);
@@ -163,12 +170,14 @@ SPDX-License-Identifier: GPL-3.0-only */
   --grid-color-secondary: rgb(53 45 53);
   --grid-canvas-axis: #eee;
   --grid-canvas: #444;
-  --card-shadow: -1px -2px 12px 1px var(--card-shadow-color-secondary),
+  --card-shadow:
+    -1px -2px 12px 1px var(--card-shadow-color-secondary),
     0px 0.75px 1px 0px var(--card-deep-shadow-color),
     0 3.5px 6px -1px var(--card-shadow-color),
     0.4px -0.4px 0px 0px var(--card-shadow-color),
     -0.4px 0px 0px 0px var(--card-shadow-color);
-  --card-shadow-secondary: 0px 1px 1px 0px var(--card-shadow-color-secondary),
+  --card-shadow-secondary:
+    0px 1px 1px 0px var(--card-shadow-color-secondary),
     0 0.5px 1px -1px var(--card-shadow-color-secondary),
     0.4px -0.4px 0px 0px var(--card-shadow-color-secondary),
     -0.4px 0px 0px 0px var(--card-shadow-color-secondary);

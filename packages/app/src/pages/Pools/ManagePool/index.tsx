@@ -9,7 +9,7 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, CardHeader, PageRow } from 'ui-core/base'
+import { ButtonRow, CardHeader, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const ManagePool = () => {
@@ -31,13 +31,13 @@ export const ManagePool = () => {
   const canNominate = isOwner() || isNominator()
 
   return (
-    <PageRow>
+    <Page.Row>
       <CardWrapper>
         {canNominate && !isNominating && state !== 'Destroying' ? (
           <>
             <CardHeader action margin>
               <h3>
-                {t('nominate.nominations', { ns: 'pages' })}
+                {t('nominations', { ns: 'pages' })}
                 <ButtonHelp
                   marginLeft
                   onClick={() => openHelp('Nominations')}
@@ -45,9 +45,10 @@ export const ManagePool = () => {
               </h3>
               <ButtonRow>
                 <ButtonPrimary
+                  size="md"
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
-                  text={t('pools.nominate', { ns: 'pages' })}
+                  text={t('nominate', { ns: 'pages' })}
                   disabled={!canNominate}
                   onClick={() =>
                     openCanvas({
@@ -64,12 +65,12 @@ export const ManagePool = () => {
                 />
               </ButtonRow>
             </CardHeader>
-            <h4>{t('notNominating', { ns: 'library' })}.</h4>
+            <h4>{t('notNominating', { ns: 'app' })}.</h4>
           </>
         ) : (
           <Nominations bondFor="pool" nominator={nominator} />
         )}
       </CardWrapper>
-    </PageRow>
+    </Page.Row>
   )
 }

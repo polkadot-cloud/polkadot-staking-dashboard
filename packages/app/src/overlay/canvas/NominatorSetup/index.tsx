@@ -20,13 +20,13 @@ export const NominatorSetup = () => {
       <Head>
         <ButtonPrimary
           text={t('close', { ns: 'modals' })}
-          lg
+          size="lg"
           onClick={() => closeCanvas()}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
       <Title>
-        <h1>{t('nominate.startNominating')}</h1>
+        <h1>{t('startNominating')}</h1>
       </Title>
       <CardWrapper className="canvas">
         <Payee section={1} />

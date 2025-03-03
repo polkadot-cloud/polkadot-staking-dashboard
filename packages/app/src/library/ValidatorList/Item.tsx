@@ -39,7 +39,7 @@ export const Item = ({
   displayFor,
   eraPoints,
 }: ItemProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { selectActive } = useList()
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
@@ -47,9 +47,6 @@ export const Item = ({
   const { validatorIdentities, validatorSupers } = useValidators()
   const { address, prefs, validatorStatus } = validator
   const commission = prefs?.commission ?? null
-
-  // Whether buttons should be styled as outline.
-  const outline = displayFor === 'canvas'
 
   const identity = getIdentityDisplay(
     validatorIdentities[address],
@@ -91,10 +88,8 @@ export const Item = ({
           <Identity address={address} />
           <div>
             <HeaderButtonRow>
-              <CopyAddress address={address} outline={outline} />
-              {toggleFavorites && (
-                <FavoriteValidator address={address} outline={outline} />
-              )}
+              <CopyAddress address={address} />
+              {toggleFavorites && <FavoriteValidator address={address} />}
               {!['modal', 'canvas'].includes(displayFor) && (
                 <HeaderButton>
                   <button type="button" onClick={(ev) => toggleMenu(ev)}>

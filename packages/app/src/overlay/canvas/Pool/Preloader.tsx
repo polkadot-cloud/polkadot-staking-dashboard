@@ -38,15 +38,15 @@ export const Preloader = () => {
       <Head>
         <ButtonPrimary
           text={t('close', { ns: 'modals' })}
-          lg
+          size="lg"
           onClick={() => closeCanvas()}
           style={{ marginLeft: '1.1rem' }}
         />
       </Head>
       <Title>
-        <h1>{t('pools.pools')}</h1>
+        <h1>{t('pools')}</h1>
         <h3>
-          {t('pools.joinPoolHeading', {
+          {t('joinPoolHeading', {
             totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
             totalPoolPoints: totalPoolPointsUnit,
             unit,
@@ -54,9 +54,7 @@ export const Preloader = () => {
           })}
         </h3>
       </Title>
-      <Preload
-        title={`${t('analyzingPoolPerformance', { ns: 'library' })}...`}
-      />
+      <Preload title={`${t('analyzingPoolPerformance', { ns: 'app' })}...`} />
     </>
   )
 }

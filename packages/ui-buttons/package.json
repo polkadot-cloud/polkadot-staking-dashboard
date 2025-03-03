@@ -1,6 +1,6 @@
 {
   "name": "ui-buttons",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "GPL-3.0-only",
   "type": "module",
   "main": "src/index.tsx",
@@ -9,7 +9,8 @@
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
   "dependencies": {
-    "@fortawesome/react-fontawesome": "^0.2.2"
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "ui-core": "workspace:*"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",

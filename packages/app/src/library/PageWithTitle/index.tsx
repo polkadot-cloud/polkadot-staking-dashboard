@@ -11,13 +11,13 @@ export const PageWithTitle = ({ page }: { page: PageItem }) => {
   const { Entry, key } = page
 
   return (
-    <Page>
+    <Page.Container>
       <Helmet>
         <title>{`${t('title', {
-          ns: 'base',
-        })} : ${t(key, { ns: 'base' })}`}</title>
+          ns: 'app',
+        })} : ${t(key, { ns: 'app' })}`}</title>
       </Helmet>
       <Entry page={page} />
-    </Page>
+    </Page.Container>
   )
 }

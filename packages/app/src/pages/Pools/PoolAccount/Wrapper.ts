@@ -23,11 +23,11 @@ export const Wrapper = styled.div`
 
     .icon {
       font-size: 1.7rem;
+      max-width: 1.7rem;
       margin-right: 0.5rem;
     }
     h4 {
       padding: 0;
-
       > .addr {
         opacity: 0.75;
       }
@@ -39,13 +39,7 @@ export const Wrapper = styled.div`
       margin-left: 0.5rem;
 
       > .copy {
-        color: var(--text-color-secondary);
-        cursor: pointer;
-        transition: opacity var(--transition-duration);
-        margin-left: 0.5rem;
-        &:hover {
-          opacity: 0.8;
-        }
+        margin-left: 0.25rem;
       }
     }
   }

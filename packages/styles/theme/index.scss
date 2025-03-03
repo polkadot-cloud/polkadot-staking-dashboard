@@ -114,13 +114,19 @@ textarea:focus {
 }
 
 path.primary,
+circle.primary,
 ellipse.primary {
   fill: var(--text-color-primary);
 }
 
 path.accent,
+circle.accent,
 ellipse.accent {
   fill: var(--accent-color-primary);
+}
+
+label {
+  color: var(--text-color-primary);
 }
 
 .page-padding {
@@ -132,5 +138,12 @@ ellipse.accent {
   }
   @media (min-width: $page-width-small-threshold) {
     padding: 0 5rem 0 2.5rem;
+  }
+}
+
+.container-width {
+  max-width: $max-page-width-sm;
+  @media (min-width: $row-section-thirds-threshold) {
+    max-width: $max-page-width-lg;
   }
 }

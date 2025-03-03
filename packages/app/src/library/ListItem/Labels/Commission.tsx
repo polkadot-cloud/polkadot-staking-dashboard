@@ -7,7 +7,7 @@ import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 
 export const Commission = ({ commission }: { commission: number }) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { setTooltipTextAndOpen } = useTooltip()
 
   const tooltipText = t('validatorCommission')

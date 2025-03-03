@@ -100,7 +100,7 @@ export const ValidatorMetrics = () => {
       <Head>
         <ButtonPrimary
           text={t('close', { ns: 'modals' })}
-          lg
+          size="lg"
           onClick={() => closeCanvas()}
           style={{ marginLeft: '1.1rem' }}
         />
@@ -147,7 +147,7 @@ export const ValidatorMetrics = () => {
         <div>
           <Subheading>
             <h3>
-              {t('recentPerformance', { ns: 'library' })}
+              {t('recentPerformance', { ns: 'app' })}
               <ButtonHelp
                 outline
                 marginLeft
@@ -173,7 +173,7 @@ export const ValidatorMetrics = () => {
                 <StatusLabel
                   status="active_service"
                   statusFor="staking_api"
-                  title={t('common.stakingApiDisabled', { ns: 'pages' })}
+                  title={t('stakingApiDisabled', { ns: 'pages' })}
                   topOffset="37%"
                 />
                 <InactiveGraphEraPoints
@@ -185,7 +185,7 @@ export const ValidatorMetrics = () => {
           </GraphInner>
           <Subheading style={{ marginTop: '2rem' }}>
             <h3>
-              {t('rewardHistory', { ns: 'library' })}
+              {t('rewardHistory', { ns: 'app' })}
               <ButtonHelp
                 outline
                 marginLeft
@@ -211,7 +211,7 @@ export const ValidatorMetrics = () => {
                 <StatusLabel
                   status="active_service"
                   statusFor="staking_api"
-                  title={t('common.stakingApiDisabled', { ns: 'pages' })}
+                  title={t('stakingApiDisabled', { ns: 'pages' })}
                   topOffset="37%"
                 />
                 <InactiveGraphRewards

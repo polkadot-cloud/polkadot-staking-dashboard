@@ -9,6 +9,7 @@ import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import unusedImports from 'eslint-plugin-unused-imports'
 import globals from 'globals'
+import path from 'path'
 import tseslint from 'typescript-eslint'
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -64,11 +65,22 @@ export default [
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
-          arrowFunctions: true,
         },
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './tsconfig.json',
+        projectService: {
+          defaultProject: 'tsconfig.json',
+          allowDefaultProject: ['tsconfig.json', 'eslint.config.js'],
+        },
+        tsconfigRootDir: path.__dirname,
+        overrides: [
+          {
+            files: ['eslint.config.js'],
+            parserOptions: {
+              project: null,
+            },
+          },
+        ],
       },
     },
     settings: {

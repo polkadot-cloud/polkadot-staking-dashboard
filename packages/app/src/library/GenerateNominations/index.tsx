@@ -37,7 +37,7 @@ export const GenerateNominations = ({
   nominations: defaultNominations,
   displayFor = 'default',
 }: GenerateNominationsProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { isReady, consts } = useApi()
   const { isFastUnstaking } = useUnstaking()
   const { stakers } = useStaking().eraStakers

@@ -68,7 +68,7 @@ export const ImportWalletConnect = () => {
     >
       <div>
         <ButtonPrimary
-          lg
+          size="lg"
           onClick={() => handleImportAddresses()}
           iconLeft={faRefresh}
           text={t('import', { ns: 'modals' })}
@@ -117,14 +117,14 @@ export const ImportWalletConnect = () => {
       <HardwareStatusBar
         show
         Icon={WalletConnectSVG}
-        text={`Wallet Connect ${t('accounts', { ns: 'library' })}`}
+        text={`Wallet Connect ${t('accounts', { ns: 'app' })}`}
         inProgress={false}
         handleDone={() =>
           replaceModal({ key: 'Connect', options: { disableScroll: true } })
         }
         t={{
-          tDone: t('done', { ns: 'library' }),
-          tCancel: t('cancel', { ns: 'library' }),
+          tDone: t('done', { ns: 'app' }),
+          tCancel: t('cancel', { ns: 'app' }),
         }}
       />
     </>

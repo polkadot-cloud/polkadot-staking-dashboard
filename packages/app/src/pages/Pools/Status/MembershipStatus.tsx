@@ -35,7 +35,7 @@ export const MembershipStatus = ({
   const poolState = activePool?.bondedPool?.state ?? null
 
   const membershipButtons = []
-  let membershipDisplay = t('pools.notInPool')
+  let membershipDisplay = t('notInPool')
 
   if (activePool) {
     // Determine pool membership display.
@@ -53,7 +53,7 @@ export const MembershipStatus = ({
       // Display manage button if active account is not a read-only account.
       if (!isReadOnlyAccount(activeAccount)) {
         membershipButtons.push({
-          title: t('pools.manage'),
+          title: t('manage'),
           icon: faCog,
           disabled: !isReady,
           small: true,
@@ -81,9 +81,9 @@ export const MembershipStatus = ({
     />
   ) : (
     <Stat
-      label={t('pools.poolMembership')}
+      label={t('poolMembership')}
       helpKey="Pool Membership"
-      stat={!inSetup() ? t('pools.alreadyNominating') : t('pools.notInPool')}
+      stat={!inSetup() ? t('alreadyNominating') : t('notInPool')}
       buttonType={buttonType}
     />
   )

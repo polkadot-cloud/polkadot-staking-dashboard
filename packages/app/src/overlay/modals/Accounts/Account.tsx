@@ -85,13 +85,13 @@ export const AccountButton = ({
             disabled={!imported}
           >
             {delegator && (
-              <div className="delegator">
+              <div className="delegator" style={{ maxWidth: '1.9rem' }}>
                 <div>
                   <Polkicon address={delegator} fontSize="1.9rem" />
                 </div>
               </div>
             )}
-            <div className="identicon">
+            <div className="identicon" style={{ maxWidth: '1.9rem' }}>
               <Polkicon address={address ?? ''} fontSize="1.9rem" />
             </div>
             <span className="name">

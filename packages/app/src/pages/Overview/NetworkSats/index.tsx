@@ -22,22 +22,22 @@ export const NetworkStats = () => {
 
   const items = [
     {
-      label: t('overview.totalValidators'),
+      label: t('totalValidators'),
       value: totalValidators.toFormat(0),
       helpKey: 'Validator',
     },
     {
-      label: t('overview.totalNominators'),
+      label: t('totalNominators'),
       value: counterForNominators.toFormat(0),
       helpKey: 'Total Nominators',
     },
     {
-      label: t('overview.activePools'),
+      label: t('activePools'),
       value: new BigNumber(bondedPools.length).toFormat(),
       helpKey: 'Active Pools',
     },
     {
-      label: t('overview.latestInflationRate'),
+      label: t('latestInflationRate'),
       value: `${
         inflationToStakers.toString() === '0'
           ? '0'
@@ -50,7 +50,7 @@ export const NetworkStats = () => {
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
       <CardHeader margin>
-        <h3>{t('overview.networkStats')}</h3>
+        <h3>{t('networkStats')}</h3>
       </CardHeader>
       <Wrapper>
         <Header items={items} />

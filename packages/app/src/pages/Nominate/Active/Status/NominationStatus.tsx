@@ -18,9 +18,9 @@ export const NominationStatus = () => {
 
   return (
     <Stat
-      label={t('nominate.status')}
+      label={t('status')}
       helpKey="Nomination Status"
-      stat={inPool() ? t('nominate.alreadyInPool') : nominationStatus.message}
+      stat={inPool() ? t('alreadyInPool') : nominationStatus.message}
     />
   )
 }
