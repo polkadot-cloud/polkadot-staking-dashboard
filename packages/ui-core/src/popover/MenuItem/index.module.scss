@@ -4,7 +4,7 @@
 .menuItem {
   border-bottom: 1px solid var(--border-primary-color);
   transition: background var(--transition-duration);
-  padding: 1.25rem 1.5rem;
+  padding: 1.75rem 1.35rem 1.25rem 1.35rem;
   display: flex;
   align-items: center;
   width: 100%;
@@ -17,6 +17,10 @@
     &:first-child {
       flex-grow: 1;
       justify-content: flex-start;
+
+      > h3 {
+        font-size: 1.2rem;
+      }
     }
     &:last-child {
       padding-right: 0.75rem;

@@ -40,8 +40,8 @@ export const MenuPopover = () => {
         </div>
         <div>
           <LanguageSVG
-            width="1.65em"
-            height="1.65em"
+            width="1.4em"
+            height="1.4em"
             style={{ position: 'relative', right: '-0.25rem' }}
           />
         </div>
@@ -55,7 +55,7 @@ export const MenuPopover = () => {
           <h3>Plugins</h3>
         </div>
         <div>
-          <FontAwesomeIcon icon={faPuzzlePiece} transform="grow-3" />
+          <FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
         </div>
       </MenuItemButton>
       <MenuItemButton
@@ -67,7 +67,7 @@ export const MenuPopover = () => {
           <h3>GitHub</h3>
         </div>
         <div>
-          <FontAwesomeIcon icon={faGithub} transform="grow-5" />
+          <FontAwesomeIcon icon={faGithub} transform="grow-2" />
         </div>
       </MenuItemButton>
     </div>
