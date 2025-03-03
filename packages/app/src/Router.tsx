@@ -29,15 +29,66 @@ import {
   Route,
   Routes,
   useLocation,
+  useNavigate,
   useParams,
 } from 'react-router-dom'
 import { StakingApi } from 'StakingApi'
 import { Page } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 
+// Enhanced Pool Invite Handler
 const PoolInviteRedirect = () => {
   const { id } = useParams()
-  console.log('Redirecting pool invite with id:', id)
-  return <Navigate to={`/pools?pool=${id}&fromInvite=true`} replace />
+  const navigate = useNavigate()
+  const { openCanvas } = useOverlay().canvas
+
+  useEffect(() => {
+    if (id) {
+      console.log('Processing pool invite with id:', id)
+
+      // Open the Pool canvas with the provided ID
+      openCanvas({
+        key: 'Pool',
+        options: {
+          id: Number(id),
+          fromInvite: true,
+        },
+      })
+
+      // Navigate to pools page
+      navigate('/pools', { replace: true })
+    } else {
+      // If no ID provided, just go to pools page
+      navigate('/pools', { replace: true })
+    }
+  }, [id, navigate, openCanvas])
+
+  // Show a temporary return while the navigation happens
+  return null
+}
+
+// Enhanced Validator Invite Handler
+const ValidatorInviteRedirect = () => {
+  const { address } = useParams()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (address) {
+      console.log('Processing validator invite with address:', address)
+
+      // Navigate to nominate page with the validator address in state
+      navigate('/nominate', {
+        state: { inviteValidatorAddress: address },
+        replace: true,
+      })
+    } else {
+      // If no address provided, just go to validators page
+      navigate('/validators', { replace: true })
+    }
+  }, [address, navigate])
+
+  // Show a temporary return while the navigation happens
+  return null
 }
 
 const RouterInner = () => {
@@ -90,13 +141,7 @@ const RouterInner = () => {
                   />
                   <Route
                     path="/invite/validator/:address"
-                    element={
-                      <Navigate
-                        to="/nominate"
-                        state={{ inviteValidatorAddress: useParams().address }}
-                        replace
-                      />
-                    }
+                    element={<ValidatorInviteRedirect />}
                   />
                   {PagesConfig.map((page, i) => (
                     <Route

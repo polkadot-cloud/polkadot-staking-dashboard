@@ -29,9 +29,10 @@ export const Pool = () => {
   // Store latest pool candidates
   const [poolCandidates, setPoolCandidates] = useState<number[]>([])
 
-  // Get the provided pool id and performance batch key from options, if available
-  const providedPool = options?.providedPool
-  const providedPoolId = providedPool?.id || null
+  // Get the provided pool id from options
+  // Check both direct id and fromInvite flag
+  const providedPoolId = options?.id || null
+  const fromInvite = options?.fromInvite || false
 
   // Whether performance data is ready
   const performanceDataReady = !!providedPoolId || poolCandidates.length > 0
@@ -45,8 +46,13 @@ export const Pool = () => {
     supers: {},
   })
 
-  // Gets pool candidates for joining pool. If Staking API is disabled, fall back to subset of open
-  // pools
+  // The selected bonded pool id
+  const [selectedPoolId, setSelectedPoolId] = useState<number>(0)
+
+  // Keep track of whether we've set the initial pool
+  const [initialPoolSet, setInitialPoolSet] = useState(false)
+
+  // Gets pool candidates for joining pool
   const getPoolCandidates = async () => {
     if (pluginEnabled('staking_api')) {
       const result = await fetchPoolCandidates(network)
@@ -59,6 +65,7 @@ export const Pool = () => {
     }
   }
 
+  // Filtered and shuffled pool candidates
   const shuffledCandidates: BondedPool[] = useMemo(
     () =>
       poolCandidates
@@ -67,21 +74,19 @@ export const Pool = () => {
             (bondedPool) => Number(bondedPool.id) === Number(poolId)
           )
         )
-        .filter((entry) => entry !== undefined),
-    [poolCandidates]
+        .filter((entry) => entry !== undefined) as BondedPool[],
+    [poolCandidates, bondedPools]
   )
-
-  // The selected bonded pool id
-  const [selectedPoolId, setSelectedPoolId] = useState<number>(0)
-
-  // Keep track of whether we've set the initial pool
-  const [initialPoolSet, setInitialPoolSet] = useState(false)
 
   // Effect to set the pool ID once data is available
   useEffect(() => {
     if (bondedPools.length > 0 && !initialPoolSet) {
-      const providedId = options?.id
-      const isInvite = options?.fromInvite
+      console.log(
+        'Setting up pool, provided ID:',
+        providedPoolId,
+        'from invite:',
+        fromInvite
+      )
 
       const selectRandomPool = () => {
         const randomId =
@@ -91,13 +96,14 @@ export const Pool = () => {
         setInitialPoolSet(true)
       }
 
-      if (isInvite && providedId) {
+      if (providedPoolId) {
+        // Find the pool in bonded pools
         const pool = bondedPools.find(
-          (p) => String(p.id) === String(providedId)
+          (p) => Number(p.id) === Number(providedPoolId)
         )
         if (pool) {
-          console.log('Setting invited pool ID:', Number(providedId))
-          setSelectedPoolId(Number(providedId))
+          console.log('Setting provided pool ID:', Number(providedPoolId))
+          setSelectedPoolId(Number(providedPoolId))
           setInitialPoolSet(true)
         } else {
           selectRandomPool()
@@ -106,34 +112,21 @@ export const Pool = () => {
         selectRandomPool()
       }
     }
-  }, [bondedPools, options?.id, options?.fromInvite, initialPoolSet])
+  }, [bondedPools, providedPoolId, initialPoolSet, fromInvite])
 
-  // Also log in the random selection effect
+  // Fetch pool candidates on initial load
   useEffect(() => {
-    if (!providedPoolId) {
-      getPoolCandidates().then((candidates) => {
-        console.log('Got pool candidates:', candidates)
-        setPoolCandidates(candidates)
-      })
-    }
+    getPoolCandidates().then((candidates) => {
+      console.log('Got pool candidates:', candidates)
+      setPoolCandidates(candidates)
+    })
   }, [])
 
-  // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
-  // pool otherwise. Re-fetches when the selected pool count is incremented
+  // The bonded pool to display
   const bondedPool = useMemo(
     () => bondedPools.find(({ id }) => Number(id) === Number(selectedPoolId)),
-    [selectedPoolId]
+    [selectedPoolId, bondedPools]
   )
-
-  // Fetch pool candidates if provided pool is not available
-  useEffect(() => {
-    if (!providedPoolId) {
-      getPoolCandidates().then((candidates) => {
-        setPoolCandidates(candidates)
-        setSelectedPoolId(candidates[(candidates.length * Math.random()) << 0])
-      })
-    }
-  }, [])
 
   // Fetch pool role identities when bonded pool changes
   const handleRoleIdentities = async (addresses: string[]) => {
@@ -165,9 +158,9 @@ export const Pool = () => {
             setSelectedPoolId={setSelectedPoolId}
             bondedPool={bondedPool}
             metadata={poolsMetaData[selectedPoolId]}
-            autoSelected={!options?.fromInvite}
+            autoSelected={!fromInvite}
             poolCandidates={shuffledCandidates}
-            providedPoolId={options?.fromInvite ? options?.id : null}
+            providedPoolId={fromInvite ? providedPoolId : null}
           />
           {activeTab === 0 && (
             <Overview bondedPool={bondedPool} roleIdentities={roleIdentities} />

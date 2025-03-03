@@ -11,13 +11,16 @@ import { Page } from 'ui-core/base'
 import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import type { HeaderProps } from './types'
+
 export const Header = ({
   activeTab,
   bondedPool,
   metadata,
   autoSelected,
   setActiveTab,
+  poolCandidates,
   providedPoolId,
+  setSelectedPoolId,
 }: HeaderProps) => {
   const { t } = useTranslation()
   const { closeCanvas } = useOverlay().canvas
@@ -27,6 +30,15 @@ export const Header = ({
   const handleChooseNewPool = () => {
     if (providedPoolId) {
       return
+    }
+
+    // Select a random pool from available candidates
+    if (poolCandidates.length > 0) {
+      const randomPool =
+        poolCandidates[Math.floor(Math.random() * poolCandidates.length)]
+      if (randomPool) {
+        setSelectedPoolId(Number(randomPool.id))
+      }
     }
   }
 

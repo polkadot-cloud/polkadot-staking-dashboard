@@ -15,13 +15,16 @@ import CloudSVG from 'assets/svg/icons/cloud.svg?react'
 import CogSVG from 'assets/svg/icons/cog.svg?react'
 import EnvelopeSVG from 'assets/svg/icons/envelope.svg?react'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
+import LinkSVG from 'assets/svg/icons/link.svg?react'
 import LogoSVG from 'assets/svg/icons/logo.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
@@ -48,6 +51,8 @@ export const SideMenu = () => {
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
   const { networkData, network } = useNetwork()
+  const { activeAccount } = useActiveAccounts()
+  const { activePool } = useActivePool()
 
   // Listen to window resize to automatically hide the side menu on window resize.
   useOnResize(() => {
@@ -68,6 +73,22 @@ export const SideMenu = () => {
       : ['connected', 'ready'].includes(apiStatus)
         ? 'success'
         : 'danger'
+
+  // Check if user can create invite links
+  const canCreateInvites = activeAccount !== null
+
+  // Handle opening invite modal based on account status
+  const handleInviteClick = () => {
+    if (canCreateInvites) {
+      openModal({
+        key: 'Invite',
+        size: 'sm',
+        options: {
+          activePool,
+        },
+      })
+    }
+  }
 
   return (
     <Page.Side open={sideMenuOpen} minimised={sideMenuMinimised}>
@@ -152,13 +173,14 @@ export const SideMenu = () => {
             />
 
             <Secondary
-              onClick={() => openModal({ key: 'Invite', size: 'sm' })}
+              onClick={handleInviteClick}
               name={t('invite')}
               minimised={sideMenuMinimised}
               icon={{
-                Svg: DiscordSVG,
-                size: sideMenuMinimised ? '1.05em' : '1em',
+                Svg: LinkSVG,
+                size: sideMenuMinimised ? '1.05em' : '0.9em',
               }}
+              classes={!canCreateInvites ? ['inactive'] : undefined}
             />
           </div>
         </section>

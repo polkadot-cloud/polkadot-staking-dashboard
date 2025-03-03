@@ -11,6 +11,7 @@ import { Title } from 'library/Modal/Title'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
+import { useOverlay } from 'ui-overlay'
 import { SupportWrapper } from './Wrapper'
 
 export const Invite = () => {
@@ -20,6 +21,12 @@ export const Invite = () => {
   const { isOwner, activePool, isMember } = useActivePool()
   const { getNominations } = useBalances()
   const [feedback, setFeedback] = useState('')
+  const {
+    config: { options },
+  } = useOverlay().modal
+
+  // Get the pool from options if available (passed from SideMenu)
+  const poolFromOptions = options?.activePool ?? activePool
 
   // Handle feedback message display
   useEffect(() => {
@@ -30,13 +37,18 @@ export const Invite = () => {
   }, [feedback])
 
   const canGeneratePoolInvite =
-    activeAccount && (isOwner() || isMember()) && activePool
-  const canGenerateValidatorInvite = activeAccount && !inSetup()
+    activeAccount &&
+    (isOwner() || isMember()) &&
+    (poolFromOptions || activePool)
+
+  const canGenerateValidatorInvite =
+    activeAccount && !inSetup() && getNominations(activeAccount).length > 0
 
   const generateInviteLink = async (type: 'pool' | 'validator') => {
     let id = ''
     let params = ''
-    const baseUrl = 'https://staking.polkadot.cloud/invite'
+    // Use window.location.origin for better compatibility
+    const baseUrl = window.location.origin
 
     try {
       switch (type) {
@@ -44,14 +56,24 @@ export const Invite = () => {
           if (!canGeneratePoolInvite) {
             return
           }
-          id = String(activePool?.id || '')
+
+          // Use pool from options, fall back to active pool
+          id = String(poolFromOptions?.id || activePool?.id || '')
+
+          if (!id) {
+            setFeedback(t('noPoolToInvite'))
+            return
+          }
+
           break
         }
         case 'validator': {
           if (!canGenerateValidatorInvite) {
             return
           }
-          id = activeAccount
+
+          id = activeAccount || ''
+
           // Get current nominations for the active account
           const nominationsForAccount = getNominations(activeAccount)
           if (nominationsForAccount.length) {
@@ -63,15 +85,16 @@ export const Invite = () => {
       }
 
       if (!id) {
+        setFeedback(t('noIdForInvite'))
         return
       }
 
-      // For validator invites, append params to existing ones
-      const poolTab = type === 'pool' ? params : ''
-      const validatorParams = type === 'validator' ? params : ''
-      const link = `${baseUrl}/${type}/${id}${poolTab}${validatorParams}`
+      // Generate the invite link
+      const link = `${baseUrl}/#/invite/${type}/${id}${params}`
       await navigator.clipboard.writeText(link)
       setFeedback(t('linkCopied'))
+
+      console.log('Generated invite link:', link)
     } catch (e) {
       console.error('Failed to generate invite link:', e)
       setFeedback(t('errorCopyingLink'))
