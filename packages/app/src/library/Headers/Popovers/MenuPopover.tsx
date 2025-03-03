@@ -12,10 +12,15 @@ import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
 import { GitHubURl } from 'consts'
 import { useTheme } from 'contexts/Themes'
+import type { Dispatch, SetStateAction } from 'react'
 import { MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 
-export const MenuPopover = () => {
+export const MenuPopover = ({
+  setOpen,
+}: {
+  setOpen: Dispatch<SetStateAction<boolean>>
+}) => {
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
 
@@ -35,6 +40,7 @@ export const MenuPopover = () => {
       </MenuItemButton>
       <MenuItemButton
         onClick={() => {
+          setOpen(false)
           openModal({ key: 'Settings' })
         }}
       >
@@ -47,6 +53,7 @@ export const MenuPopover = () => {
       </MenuItemButton>
       <MenuItemButton
         onClick={() => {
+          setOpen(false)
           openModal({ key: 'ChooseLanguage' })
         }}
       >
@@ -59,6 +66,7 @@ export const MenuPopover = () => {
       </MenuItemButton>
       <MenuItemButton
         onClick={() => {
+          setOpen(false)
           window.open(GitHubURl, '_blank')
         }}
       >
