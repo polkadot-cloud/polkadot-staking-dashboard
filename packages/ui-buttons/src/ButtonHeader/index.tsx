@@ -17,6 +17,7 @@ export const ButtonHeader = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
+  className,
 }: ButtonHeaderProps) => {
   const allClasses = classNames(classes.btnHeader, {
     [classes.marginLeft]: marginLeft,
@@ -25,7 +26,7 @@ export const ButtonHeader = ({
   return (
     <button
       type="button"
-      className={allClasses}
+      className={`${className ? `${className} ` : ``}${allClasses}`}
       style={style}
       disabled={disabled}
       {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
@@ -40,13 +41,17 @@ export const InactiveButtonHeader = ({
   style,
   icon,
   iconTransform,
+  className,
 }: InactiveButtonHeaderProps) => {
   const allClasses = classNames(classes.btnHeader, {
     [classes.marginLeft]: marginLeft,
   })
 
   return (
-    <div className={allClasses} style={style}>
+    <div
+      className={`${className ? `${className} ` : ``}${allClasses}`}
+      style={style}
+    >
       <FontAwesomeIcon icon={icon} transform={iconTransform} />
     </div>
   )

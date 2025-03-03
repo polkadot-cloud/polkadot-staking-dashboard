@@ -7,12 +7,13 @@ import {
   faPuzzlePiece,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useOutsideAlerter } from '@w3ux/hooks'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
 import { GitHubURl } from 'consts'
 import { useTheme } from 'contexts/Themes'
-import type { Dispatch, SetStateAction } from 'react'
+import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 
@@ -24,8 +25,15 @@ export const MenuPopover = ({
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
 
+  const popoverRef = useRef<HTMLDivElement>(null)
+
+  // Close the menu if clicked outside of its container
+  useOutsideAlerter(popoverRef, () => {
+    setOpen(false)
+  }, ['header-settings'])
+
   return (
-    <div>
+    <div ref={popoverRef}>
       <MenuItemButton onClick={() => toggleTheme()}>
         <div>
           {mode === 'dark' ? (

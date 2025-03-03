@@ -162,7 +162,7 @@ export type MultiButtonButtonProps = ComponentBaseWithClassName &
     size?: Omit<ButtonSize, 'lg'>
   }
 
-export type ButtonHeaderProps = ComponentBase &
+export type ButtonHeaderProps = ComponentBaseWithClassName &
   OnMouseHandlersProps & {
     marginLeft?: boolean
     marginRight?: boolean
@@ -172,7 +172,7 @@ export type ButtonHeaderProps = ComponentBase &
     iconTransform?: string
   }
 
-export type InactiveButtonHeaderProps = ComponentBase & {
+export type InactiveButtonHeaderProps = ComponentBaseWithClassName & {
   marginLeft?: boolean
   marginRight?: boolean
   marginX?: boolean

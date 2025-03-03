@@ -22,7 +22,11 @@ export const Settings = () => {
         setOpen(!open)
       }}
     >
-      <InactiveButtonHeader marginLeft icon={faCog} />
+      <InactiveButtonHeader
+        className="header-settings"
+        marginLeft
+        icon={faCog}
+      />
     </Popover>
   )
 }
