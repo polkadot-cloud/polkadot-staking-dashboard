@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { ExternalAccount } from '@w3ux/react-connect-kit/types'
-import type { AnyJson } from '@w3ux/types'
+import type { AnyJson, ExternalAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
 import { ErasStakersOverview } from 'api/query/erasStakersOverview'

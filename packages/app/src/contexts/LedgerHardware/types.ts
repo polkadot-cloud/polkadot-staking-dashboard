@@ -1,10 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
+import type { AnyJson, MaybeString } from '@w3ux/types'
 import type { NetworkId } from 'common-types'
 import type { FunctionComponent, SVGProps } from 'react'
-import type { MaybeString } from 'types'
 
 export interface LedgerHardwareContextInterface {
   integrityChecked: boolean

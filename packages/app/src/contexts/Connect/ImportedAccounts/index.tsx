@@ -3,10 +3,7 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts } from '@w3ux/react-connect-kit'
-import type {
-  ExternalAccount,
-  ImportedAccount,
-} from '@w3ux/react-connect-kit/types'
+import type { ExternalAccount, ImportedAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'

@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -13,9 +12,8 @@ import { ActionItem } from 'library/ActionItem'
 import { Fragment, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
-import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
 import { CustomHeader, Padding } from 'ui-core/modal'
-import { useOverlay } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 import { AccountButton } from './Account'
 import { Delegates } from './Delegates'
 import { AccountSeparator, AccountWrapper } from './Wrappers'
@@ -32,15 +30,10 @@ export const Accounts = () => {
     consts: { existentialDeposit },
   } = useApi()
   const { getDelegates } = useProxies()
-  const {
-    replaceModal,
-    status: modalStatus,
-    setModalResize,
-  } = useOverlay().modal
   const { accounts } = useImportedAccounts()
+  const { activeAccount } = useActiveAccounts()
   const { getFeeReserve } = useTransferOptions()
-  const { activeAccount, setActiveAccount, setActiveProxy } =
-    useActiveAccounts()
+  const { status: modalStatus, setModalResize } = useOverlay().modal
 
   // Listen to balance updates for entire accounts list.
   const { getLocks, getBalance, getEdReserved, getPoolMembership } =
@@ -164,120 +157,99 @@ export const Accounts = () => {
   ])
 
   return (
-    <Padding>
-      <CustomHeader>
-        <div>
-          <h1>{t('accounts')}</h1>
-          <ButtonPrimaryInvert
-            text={t('goToConnect')}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-3"
-            onClick={() =>
-              replaceModal({ key: 'Connect', options: { disableScroll: true } })
-            }
-            marginLeft
-          />
-        </div>
-        <div>
-          {activeAccount && (
-            <ButtonText
-              style={{
-                color: 'var(--accent-color-primary)',
-              }}
-              text={t('disconnect')}
-              iconRight={faLinkSlash}
-              onClick={() => {
-                setActiveAccount(null)
-                setActiveProxy(null)
-              }}
-            />
-          )}
-        </div>
-      </CustomHeader>
-      {!activeAccount && !accounts.length && (
-        <AccountWrapper style={{ marginTop: '1.5rem' }}>
+    <>
+      <Close />
+      <Padding>
+        <CustomHeader>
           <div>
-            <div>
-              <h4 style={{ padding: '0.75rem 1rem' }}>
-                {t('noActiveAccount')}
-              </h4>
-            </div>
-            <div />
+            <h1>{t('accounts')}</h1>
           </div>
-        </AccountWrapper>
-      )}
+        </CustomHeader>
+        {!activeAccount && !accounts.length && (
+          <AccountWrapper style={{ marginTop: '1.5rem' }}>
+            <div>
+              <div>
+                <h4 style={{ padding: '0.75rem 1rem' }}>
+                  {t('noActiveAccount')}
+                </h4>
+              </div>
+              <div />
+            </div>
+          </AccountWrapper>
+        )}
 
-      {nominatingAndPool.length ? (
-        <>
-          <AccountSeparator />
-          <ActionItem text={t('nominatingAndInPool')} />
-          {nominatingAndPool.map(({ address, delegates }, i) => (
-            <Fragment key={`acc_nominating_and_pool_${i}`}>
-              <AccountButton
-                transferrableBalance={getTransferrableBalance(address)}
-                address={address}
-              />
-              {address && (
-                <Delegates delegator={address} delegates={delegates} />
-              )}
-            </Fragment>
-          ))}
-        </>
-      ) : null}
+        {nominatingAndPool.length ? (
+          <>
+            <AccountSeparator />
+            <ActionItem text={t('nominatingAndInPool')} />
+            {nominatingAndPool.map(({ address, delegates }, i) => (
+              <Fragment key={`acc_nominating_and_pool_${i}`}>
+                <AccountButton
+                  transferrableBalance={getTransferrableBalance(address)}
+                  address={address}
+                />
+                {address && (
+                  <Delegates delegator={address} delegates={delegates} />
+                )}
+              </Fragment>
+            ))}
+          </>
+        ) : null}
 
-      {nominating.length ? (
-        <>
-          <AccountSeparator />
-          <ActionItem text={t('nominating')} />
-          {nominating.map(({ address, delegates }, i) => (
-            <Fragment key={`acc_nominating_${i}`}>
-              <AccountButton
-                transferrableBalance={getTransferrableBalance(address)}
-                address={address}
-              />
-              {address && (
-                <Delegates delegator={address} delegates={delegates} />
-              )}
-            </Fragment>
-          ))}
-        </>
-      ) : null}
+        {nominating.length ? (
+          <>
+            <AccountSeparator />
+            <ActionItem text={t('nominating')} />
+            {nominating.map(({ address, delegates }, i) => (
+              <Fragment key={`acc_nominating_${i}`}>
+                <AccountButton
+                  transferrableBalance={getTransferrableBalance(address)}
+                  address={address}
+                />
+                {address && (
+                  <Delegates delegator={address} delegates={delegates} />
+                )}
+              </Fragment>
+            ))}
+          </>
+        ) : null}
 
-      {inPool.length ? (
-        <>
-          <AccountSeparator />
-          <ActionItem text={t('inPool')} />
-          {inPool.map(({ address, delegates }, i) => (
-            <Fragment key={`acc_in_pool_${i}`}>
-              <AccountButton
-                transferrableBalance={getTransferrableBalance(address)}
-                address={address}
-              />
-              {address && (
-                <Delegates delegator={address} delegates={delegates} />
-              )}
-            </Fragment>
-          ))}
-        </>
-      ) : null}
+        {inPool.length ? (
+          <>
+            <AccountSeparator />
+            <ActionItem text={t('inPool')} />
+            {inPool.map(({ address, delegates }, i) => (
+              <Fragment key={`acc_in_pool_${i}`}>
+                <AccountButton
+                  transferrableBalance={getTransferrableBalance(address)}
+                  address={address}
+                />
+                {address && (
+                  <Delegates delegator={address} delegates={delegates} />
+                )}
+              </Fragment>
+            ))}
+          </>
+        ) : null}
 
-      {notStaking.length ? (
-        <>
-          <AccountSeparator />
-          <ActionItem text={t('notStaking')} />
-          {notStaking.map(({ address, delegates }, i) => (
-            <Fragment key={`acc_not_staking_${i}`}>
-              <AccountButton
-                transferrableBalance={getTransferrableBalance(address)}
-                address={address}
-              />
-              {address && (
-                <Delegates delegator={address} delegates={delegates} />
-              )}
-            </Fragment>
-          ))}
-        </>
-      ) : null}
-    </Padding>
+        {notStaking.length ? (
+          <>
+            <AccountSeparator />
+            <ActionItem text={t('notStaking')} />
+            {notStaking.map(({ address, delegates }, i) => (
+              <Fragment key={`acc_not_staking_${i}`}>
+                <AccountButton
+                  transferrableBalance={getTransferrableBalance(address)}
+                  address={address}
+                />
+                {address && (
+                  <Delegates delegator={address} delegates={delegates} />
+                )}
+              </Fragment>
+            ))}
+          </>
+        ) : null}
+      </Padding>
+    </>
   )
 }

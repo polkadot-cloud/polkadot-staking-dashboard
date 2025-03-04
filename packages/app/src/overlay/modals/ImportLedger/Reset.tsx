@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useLedgerAccounts } from '@w3ux/react-connect-kit'
-import type { LedgerAccount } from '@w3ux/react-connect-kit/types'
-import type { AnyJson } from '@w3ux/types'
+import type { AnyJson, LedgerAccount } from '@w3ux/types'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { getLocalLedgerAddresses } from 'contexts/LedgerHardware/Utils'
 import type { LedgerAddress } from 'contexts/LedgerHardware/types'

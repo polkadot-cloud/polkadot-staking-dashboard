@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { MaybeAddress } from '@w3ux/react-connect-kit/types'
+import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import type {
@@ -29,7 +29,7 @@ import { useEventListener } from 'usehooks-ts'
 export const useActiveBalances = ({
   accounts,
 }: {
-  accounts: MaybeAddress[]
+  accounts: MaybeString[]
 }) => {
   const { network } = useNetwork()
 
@@ -41,7 +41,7 @@ export const useActiveBalances = ({
   const activeBalancesRef = useRef(activeBalances)
 
   // Gets an active balance's balance
-  const getBalance = (address: MaybeAddress) => {
+  const getBalance = (address: MaybeString) => {
     if (address) {
       const maybeBalance = activeBalances[address]?.balances?.balance
       if (maybeBalance) {
@@ -52,7 +52,7 @@ export const useActiveBalances = ({
   }
 
   // Gets an active balance's nonce
-  const getNonce = (address: MaybeAddress) => {
+  const getNonce = (address: MaybeString) => {
     if (address) {
       const maybeNonce = activeBalances[address]?.balances?.nonce
       if (maybeNonce) {
@@ -71,7 +71,7 @@ export const useActiveBalances = ({
     )?.amount || new BigNumber(0)
 
   // Gets an active balance's locks
-  const getLocks = (address: MaybeAddress): BalanceLocks => {
+  const getLocks = (address: MaybeString): BalanceLocks => {
     if (address) {
       const maybeLocks = activeBalances[address]?.balances?.locks
       if (maybeLocks) {
@@ -105,7 +105,7 @@ export const useActiveBalances = ({
   }
 
   // Gets an active balance's payee
-  const getPayee = (address: MaybeAddress): PayeeConfig => {
+  const getPayee = (address: MaybeString): PayeeConfig => {
     if (address) {
       const maybePayee = activeBalances[address]?.payee
       if (maybePayee) {
@@ -116,7 +116,7 @@ export const useActiveBalances = ({
   }
 
   // Gets an active balance's pool membership
-  const getPoolMembership = (address: MaybeAddress): PoolMembership | null => {
+  const getPoolMembership = (address: MaybeString): PoolMembership | null => {
     if (address) {
       const maybePoolMembership = activeBalances[address]?.poolMembership
       if (maybePoolMembership) {
@@ -128,7 +128,7 @@ export const useActiveBalances = ({
 
   // Gets the amount of balance reserved for existential deposit
   const getEdReserved = (
-    address: MaybeAddress,
+    address: MaybeString,
     existentialDeposit: BigNumber
   ): BigNumber => {
     const { locks, maxLock } = getLocks(address)
@@ -139,7 +139,7 @@ export const useActiveBalances = ({
   }
 
   // Gets an active balance's nominations
-  const getNominations = (address: MaybeAddress): Targets => {
+  const getNominations = (address: MaybeString): Targets => {
     if (address) {
       const maybeNominations =
         activeBalances[address]?.nominations?.targets || []

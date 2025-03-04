@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
-import { AccountControls } from './AccountControls'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { StakeStatus } from './StakeStatus'
@@ -21,11 +20,6 @@ export const Overview = () => {
   return (
     <>
       <Page.Title title={t('overview')} />
-      <Page.Row>
-        <Page.Heading>
-          <AccountControls />
-        </Page.Heading>
-      </Page.Row>
       <Stat.Row>
         <AverageRewardRate />
         <SupplyStaked />
