@@ -11,3 +11,7 @@ export interface TokenInputProps {
   id: string
   label: string
 }
+
+export interface SwitchProps {
+  checked: boolean
+}

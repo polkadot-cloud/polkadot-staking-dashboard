@@ -10,10 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
-import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
 import { GitHubURl } from 'consts'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
+import { Switch } from 'ui-core/input'
 import { MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 
@@ -36,14 +36,13 @@ export const MenuPopover = ({
     <div ref={popoverRef}>
       <MenuItemButton onClick={() => toggleTheme()}>
         <div>
-          {mode === 'dark' ? (
-            <SunnyOutlineSVG width="1.25em" height="1.25em" />
-          ) : (
-            <MoonOutlineSVG width="1.1em" height="1.1em" />
-          )}
+          <MoonOutlineSVG width="1.1em" height="1.1em" />
         </div>
         <div>
           <h3>Dark Mode</h3>
+          <div>
+            <Switch checked={mode === 'dark'} />
+          </div>
         </div>
       </MenuItemButton>
       <MenuItemButton
