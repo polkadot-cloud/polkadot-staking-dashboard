@@ -55,7 +55,7 @@ export const ButtonAccountLabel = ({
           transform="grow-9"
         />
       </span>
-      {accountDisplay}
+      <span className={classes.display}>{accountDisplay}</span>
       {activeProxy && <span className={classes.proxy}>/ Proxied</span>}
       {readOnly && (
         <FontAwesomeIcon icon={faGlasses} className={classes.icon} />

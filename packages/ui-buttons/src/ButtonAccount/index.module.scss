@@ -24,6 +24,12 @@ SPDX-License-Identifier: GPL-3.0-only */
     margin-left: 0.95rem;
   }
 
+  > .display {
+    max-width: 12rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
   > .proxy {
     font-size: 0.8em;
     margin-left: 0.75rem;
