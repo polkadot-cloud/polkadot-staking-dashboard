@@ -11,9 +11,9 @@ import classes from './index.module.scss'
 
 export const Label = ({
   activeAccount,
-  activeProxy,
   readOnly,
   open,
+  label,
   className,
   marginLeft,
   style,
@@ -48,7 +48,7 @@ export const Label = ({
         />
       </span>
       <span className={classes.display}>{accountDisplay}</span>
-      {activeProxy && <span className={classes.proxy}>/ Proxied</span>}
+      {label && <span className={classes.label}>/ {label}</span>}
       {readOnly && (
         <FontAwesomeIcon icon={faGlasses} className={classes.icon} />
       )}

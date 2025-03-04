@@ -184,7 +184,7 @@ export type ButtonAccountLabelProps = ComponentBaseWithClassName & {
   activeAccount: ImportedAccount | null
   readOnly: boolean
   open: boolean
-  activeProxy: ImportedAccount | null
+  label?: string
   marginLeft?: boolean
   marginRight?: boolean
   marginX?: boolean

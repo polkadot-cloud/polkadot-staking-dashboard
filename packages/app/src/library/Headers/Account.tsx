@@ -45,7 +45,7 @@ export const Account = () => {
       <ButtonAccount.Label
         className="header-account"
         activeAccount={getAccount(activeAccount)}
-        activeProxy={getAccount(activeProxy)}
+        label={getAccount(activeProxy) ? t('proxy', { ns: 'app' }) : undefined}
         readOnly={!accountHasSigner(activeAccount)}
         open={open}
       />
