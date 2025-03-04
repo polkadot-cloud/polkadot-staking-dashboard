@@ -57,6 +57,8 @@
     "connectedTo": "Connected To",
     "connectedToNetwork": "Connected to Network",
     "connecting": "Connecting",
+    "selectAccount": "Select Account",
+    "connectAccounts": "Connect Accounts",
     "connectionLost": "Connection has been lost",
     "continue": "Continue",
     "copied": "Copied!",

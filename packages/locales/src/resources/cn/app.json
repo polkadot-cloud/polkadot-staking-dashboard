@@ -59,6 +59,8 @@
     "connecting": "连接中",
     "connectionLost": "连接已丢失",
     "continue": "继续",
+    "selectAccount": "选择账户",
+    "connectAccounts": "连接账户",
     "copied": "已复制!",
     "copy": "复制",
     "copyAddress": "复制地址",

@@ -56,6 +56,8 @@
     "connect": "Conectar",
     "connectedTo": "Conectado a",
     "connectedToNetwork": "Conectado a la Red",
+    "selectAccount": "Seleccionar Cuenta",
+    "connectAccounts": "Conectar Cuentas",
     "connecting": "Conectando",
     "connectionLost": "Se perdió la conexión",
     "continue": "Continuar",
