@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
   padding: 0.1rem 1.25rem;
   max-width: 235px;
   flex: 1;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.025);

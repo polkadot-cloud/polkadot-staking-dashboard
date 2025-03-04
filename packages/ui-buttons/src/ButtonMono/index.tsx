@@ -4,9 +4,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import commonClasses from '../common.module.scss'
+import type { ButtonMonoProps } from '../types'
 import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
-import type { ButtonMonoProps } from './types'
 
 /**
  * @name ButtonMono

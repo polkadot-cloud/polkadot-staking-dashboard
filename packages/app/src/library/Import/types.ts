@@ -1,8 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ImportedAccount } from '@w3ux/react-connect-kit/types'
-import type { AnyFunction } from '@w3ux/types'
+import type { AnyFunction, ImportedAccount } from '@w3ux/types'
 import type { FunctionComponent, SVGProps } from 'react'
 
 export interface HeadingProps {

@@ -7,8 +7,8 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { ExternalAccount } from '@w3ux/react-connect-kit/types'
 import { Polkicon } from '@w3ux/react-polkicon'
+import type { ExternalAccount } from '@w3ux/types'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'

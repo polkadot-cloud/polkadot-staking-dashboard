@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import type { MaybeString } from '@w3ux/types'
 import { createContext, useContext, useState } from 'react'
-import type { MaybeString } from 'types'
 import * as defaults from './defaults'
 import type {
   HelpContextInterface,
