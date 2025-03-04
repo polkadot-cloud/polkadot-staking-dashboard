@@ -13,6 +13,7 @@ import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Switch } from 'ui-core/input'
 import { MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
@@ -22,6 +23,7 @@ export const MenuPopover = ({
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
+  const { t } = useTranslation()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
 
@@ -39,7 +41,7 @@ export const MenuPopover = ({
           <MoonOutlineSVG width="1.1em" height="1.1em" />
         </div>
         <div>
-          <h3>Dark Mode</h3>
+          <h3>{t('darkMode', { ns: 'app' })}</h3>
           <div>
             <Switch checked={mode === 'dark'} />
           </div>
@@ -55,7 +57,7 @@ export const MenuPopover = ({
           <FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
         </div>
         <div>
-          <h3>Plugins</h3>
+          <h3>{t('plugins', { ns: 'modals' })}</h3>
         </div>
       </MenuItemButton>
       <MenuItemButton
@@ -68,7 +70,7 @@ export const MenuPopover = ({
           <LanguageSVG width="1.4em" height="1.4em" />
         </div>
         <div>
-          <h3>Language</h3>
+          <h3>{t('language', { ns: 'app' })}</h3>
         </div>
       </MenuItemButton>
       <MenuItemButton

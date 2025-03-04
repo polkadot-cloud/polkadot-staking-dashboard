@@ -61,7 +61,7 @@ export const AccountPopover = ({
           <ButtonText
             style={{ fontSize }}
             marginRight
-            text="Switch Account"
+            text={t('switchAccount', { ns: 'app' })}
             onClick={() => {
               setOpen(false)
               openModal({ key: 'Accounts' })
