@@ -15,16 +15,9 @@ export const Headers = () => {
 
   return (
     <Wrapper>
-      {/* Side menu toggle */}
       <SideMenuToggle />
-
-      {/* Syncing spinner */}
       <Sync />
-
-      {/* Account with Popover */}
       <Account />
-
-      {/* Connect */}
       <ButtonHeader
         marginLeft
         icon={faPlug}
@@ -32,7 +25,6 @@ export const Headers = () => {
           openModal({ key: 'Connect' })
         }}
       />
-
       <Settings />
     </Wrapper>
   )
