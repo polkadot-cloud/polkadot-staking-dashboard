@@ -19,6 +19,7 @@ import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
 import { Offline } from 'Offline'
 import { Overlays } from 'overlay'
+import { PoolInvitePage, ValidatorInvitePage } from 'pages/Invite'
 import { ApolloProvider, client } from 'plugin-staking-api'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -29,67 +30,9 @@ import {
   Route,
   Routes,
   useLocation,
-  useNavigate,
-  useParams,
 } from 'react-router-dom'
 import { StakingApi } from 'StakingApi'
 import { Page } from 'ui-core/base'
-import { useOverlay } from 'ui-overlay'
-
-// Enhanced Pool Invite Handler
-const PoolInviteRedirect = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const { openCanvas } = useOverlay().canvas
-
-  useEffect(() => {
-    if (id) {
-      console.log('Processing pool invite with id:', id)
-
-      // Open the Pool canvas with the provided ID
-      openCanvas({
-        key: 'Pool',
-        options: {
-          id: Number(id),
-          fromInvite: true,
-        },
-      })
-
-      // Navigate to pools page
-      navigate('/pools', { replace: true })
-    } else {
-      // If no ID provided, just go to pools page
-      navigate('/pools', { replace: true })
-    }
-  }, [id, navigate, openCanvas])
-
-  // Show a temporary return while the navigation happens
-  return null
-}
-
-// Enhanced Validator Invite Handler
-const ValidatorInviteRedirect = () => {
-  const { address } = useParams()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (address) {
-      console.log('Processing validator invite with address:', address)
-
-      // Navigate to nominate page with the validator address in state
-      navigate('/nominate', {
-        state: { inviteValidatorAddress: address },
-        replace: true,
-      })
-    } else {
-      // If no address provided, just go to validators page
-      navigate('/validators', { replace: true })
-    }
-  }, [address, navigate])
-
-  // Show a temporary return while the navigation happens
-  return null
-}
 
 const RouterInner = () => {
   const { network } = useNetwork()
@@ -135,13 +78,10 @@ const RouterInner = () => {
               <Headers />
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
                 <Routes>
-                  <Route
-                    path="/invite/pool/:id"
-                    element={<PoolInviteRedirect />}
-                  />
+                  <Route path="/invite/pool/:id" element={<PoolInvitePage />} />
                   <Route
                     path="/invite/validator/:address"
-                    element={<ValidatorInviteRedirect />}
+                    element={<ValidatorInvitePage />}
                   />
                   {PagesConfig.map((page, i) => (
                     <Route
