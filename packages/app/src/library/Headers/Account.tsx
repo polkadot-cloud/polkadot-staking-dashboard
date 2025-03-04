@@ -5,7 +5,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
-import { ButtonAccountInactive, ButtonAccountLabel } from 'ui-buttons'
+import { ButtonAccount } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 import { AccountPopover } from './Popovers/AccountPopover'
@@ -21,7 +21,7 @@ export const Account = () => {
   const totalImportedAccounts = accounts.length
 
   return !activeAccount ? (
-    <ButtonAccountInactive
+    <ButtonAccount.Standalone
       label={totalImportedAccounts ? 'Select Account' : 'Connect Accounts'}
       onClick={() =>
         openModal({ key: totalImportedAccounts ? 'Accounts' : 'Connect' })
@@ -40,7 +40,7 @@ export const Account = () => {
         }
       }}
     >
-      <ButtonAccountLabel
+      <ButtonAccount.Label
         className="header-account"
         activeAccount={getAccount(activeAccount)}
         activeProxy={getAccount(activeProxy)}

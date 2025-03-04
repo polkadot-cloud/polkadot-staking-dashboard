@@ -190,7 +190,7 @@ export type ButtonAccountLabelProps = ComponentBaseWithClassName & {
   marginX?: boolean
 }
 
-export type ButtonAccountInactiveProps = ComponentBaseWithClassName &
+export type ButtonAccountStandaloneProps = ComponentBaseWithClassName &
   OnMouseHandlersProps & {
     label: string
     marginLeft?: boolean
