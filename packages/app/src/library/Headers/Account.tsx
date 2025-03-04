@@ -10,7 +10,7 @@ import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 import { AccountPopover } from './Popovers/AccountPopover'
 
-export const Connected = () => {
+export const Account = () => {
   const { themeElementRef } = useTheme()
   const { openModal } = useOverlay().modal
   const { activeAccount, activeProxy } = useActiveAccounts()

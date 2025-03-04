@@ -4,7 +4,7 @@
 import { faPlug } from '@fortawesome/free-solid-svg-icons'
 import { ButtonHeader } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
-import { Connected } from './Connected'
+import { Account } from './Account'
 import { Settings } from './Settings'
 import { SideMenuToggle } from './SideMenuToggle'
 import { Sync } from './Sync'
@@ -22,7 +22,7 @@ export const Headers = () => {
       <Sync />
 
       {/* Account with Popover */}
-      <Connected />
+      <Account />
 
       {/* Connect */}
       <ButtonHeader
