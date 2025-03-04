@@ -15,7 +15,7 @@ export const Settings = () => {
 
   return (
     <>
-      <Title title={t('settings', { ns: 'modals' })} />
+      <Title title={t('plugins', { ns: 'modals' })} />
       <Padding>
         <ContentWrapper>
           <h4>{t('togglePlugins', { ns: 'modals' })}</h4>

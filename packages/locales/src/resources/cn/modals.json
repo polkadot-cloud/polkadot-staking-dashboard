@@ -177,6 +177,7 @@
     "payeeAdded": "已添加收款人",
     "payoutDestination": "收益到账地址",
     "pendingPayout": "{{count}} 个待申领收益",
+    "plugins": "插件",
     "polkawatchDisabled": "Polkawatch己断开",
     "pool": "池",
     "poolAddress": "池{{type}}地址",

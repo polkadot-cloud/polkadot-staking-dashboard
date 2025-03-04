@@ -189,6 +189,7 @@
     "payoutDestination": "Destino del Pago",
     "pendingPayout_one": "{{count}} Pago Pendiente",
     "pendingPayout_other": "{{count}} Pagos Pendientes",
+    "plugins": "Plugins",
     "polkawatchDisabled": "Polkawatch Desactivado",
     "pool": "Pool",
     "poolAddress": "Dirección {{type}} del Pool",
