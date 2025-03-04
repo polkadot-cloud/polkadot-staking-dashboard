@@ -4,7 +4,7 @@
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ButtonCopy } from 'library/ButtonCopy'
 import { Separator } from 'ui-core/base'
-import { Padding } from 'ui-core/popover'
+import { Padding, Stat } from 'ui-core/popover'
 
 export const Account = ({
   address,
@@ -16,11 +16,11 @@ export const Account = ({
   <>
     <Padding>
       <Polkicon address={address} fontSize="3.5rem" />
-      <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{label}</h4>
-      <p style={{ marginTop: '0.4rem', marginBottom: '1rem' }}>
+      <Stat.Label>{label}</Stat.Label>
+      <Stat.Value>
         {address} &nbsp;
         <ButtonCopy value={address} size="0.95rem" />
-      </p>
+      </Stat.Value>
     </Padding>
     <Separator />
   </>
