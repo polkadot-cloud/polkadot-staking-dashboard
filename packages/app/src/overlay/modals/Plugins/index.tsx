@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
 import { ContentWrapper } from '../Networks/Wrapper'
 
-export const Settings = () => {
+export const Plugins = () => {
   const { plugins, togglePlugin } = usePlugins()
   const { t } = useTranslation()
 

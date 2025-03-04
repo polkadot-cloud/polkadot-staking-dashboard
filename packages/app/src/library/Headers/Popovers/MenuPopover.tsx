@@ -48,7 +48,7 @@ export const MenuPopover = ({
       <MenuItemButton
         onClick={() => {
           setOpen(false)
-          openModal({ key: 'Settings' })
+          openModal({ key: 'Plugins' })
         }}
       >
         <div>
