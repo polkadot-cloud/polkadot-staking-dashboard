@@ -29,7 +29,7 @@
     &:last-child {
       flex-grow: 1;
       justify-content: flex-start;
-      
+
       > h3 {
         color: var(--text-color-secondary);
         font-size: 1.25rem;
@@ -37,10 +37,10 @@
           margin-left: 0.5rem;
         }
       }
-      
+
       > div {
         flex-grow: 1;
-        display: flex;;
+        display: flex;
         justify-content: flex-end;
       }
     }
