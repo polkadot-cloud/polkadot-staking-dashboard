@@ -1,15 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ApolloError } from '@apollo/client'
 import { gql, useQuery } from '@apollo/client'
 import { getUserFiatCurrency } from '../../../locales/src/util'
 import { client } from '../Client'
-import type {
-  TokenPrice,
-  TokenPriceResult,
-  UseTokenPriceResult,
-} from '../types'
+import type { TokenPrice, UseTokenPriceResult } from '../types'
 
 const QUERY = gql`
   query TokenPrice($ticker: String!) {
@@ -43,16 +38,6 @@ export const fetchTokenPrice = async (
   } catch (error) {
     return null
   }
-}
-
-export const formatTokenPriceFromResult = (
-  loading: boolean,
-  error: ApolloError | undefined,
-  data: TokenPriceResult
-) => {
-  const maybePrice = loading || error ? 0 : data?.tokenPrice?.price || null
-  const maybeChange = loading || error ? 0 : data?.tokenPrice?.change || null
-  return formatTokenPrice(maybePrice, maybeChange)
 }
 
 export const formatTokenPrice = (
