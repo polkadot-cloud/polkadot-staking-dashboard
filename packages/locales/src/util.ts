@@ -3,6 +3,7 @@
 
 // TODO: Split this file into util/language and util/
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
+import { SupportedCountries } from 'consts/countries'
 import { SupportedCurrencies } from 'consts/currencies'
 import type { i18n } from 'i18next'
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '.'
@@ -113,100 +114,6 @@ const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
 // Local storage key for user fiat currency preference
 const FIAT_CURRENCY_KEY = 'user_fiat_currency'
 
-// Map of countries to their currencies
-// NOTE: Can we flatten this with `languageToCountry`?
-const countryToFiatMap: { [key: string]: string } = {
-  // Euro Zone
-  AT: 'EUR',
-  BE: 'EUR',
-  CY: 'EUR',
-  DE: 'EUR',
-  EE: 'EUR',
-  ES: 'EUR',
-  FI: 'EUR',
-  FR: 'EUR',
-  GR: 'EUR',
-  HR: 'EUR',
-  IE: 'EUR',
-  IT: 'EUR',
-  LT: 'EUR',
-  LU: 'EUR',
-  LV: 'EUR',
-  MT: 'EUR',
-  NL: 'EUR',
-  PT: 'EUR',
-  SI: 'EUR',
-  SK: 'EUR',
-  // Other Countries
-  AR: 'ARS',
-  AU: 'AUD',
-  BR: 'BRL',
-  CA: 'CAD',
-  CH: 'CHF',
-  CN: 'CNY',
-  CO: 'COP',
-  CZ: 'CZK',
-  GB: 'GBP',
-  IN: 'INR',
-  JP: 'JPY',
-  MX: 'MXN',
-  PL: 'PLN',
-  RO: 'RON',
-  TR: 'TRY',
-  UA: 'UAH',
-  US: 'USD',
-  ZA: 'ZAR',
-  BG: 'BGN',
-  SG: 'SGD',
-  NZ: 'NZD',
-  TH: 'THB',
-  KR: 'KRW',
-  ID: 'IDR',
-  MY: 'MYR',
-  PH: 'PHP',
-}
-
-// Map of language codes to countries
-const languageToCountry: { [key: string]: string } = {
-  af: 'ZA',
-  cs: 'CZ',
-  de: 'DE',
-  el: 'GR',
-  en: 'US',
-  'en-GB': 'GB',
-  'en-US': 'US',
-  'en-CA': 'CA',
-  'en-AU': 'AU',
-  es: 'ES',
-  et: 'EE',
-  fi: 'FI',
-  fr: 'FR',
-  'fr-CA': 'CA',
-  hr: 'HR',
-  hu: 'HU',
-  it: 'IT',
-  ja: 'JP',
-  lt: 'LT',
-  lv: 'LV',
-  nl: 'NL',
-  pl: 'PL',
-  pt: 'PT',
-  'pt-BR': 'BR',
-  ro: 'RO',
-  sk: 'SK',
-  sl: 'SI',
-  tr: 'TR',
-  uk: 'UA',
-  zh: 'CN',
-  'zh-CN': 'CN',
-  bg: 'BG',
-  th: 'TH',
-  ko: 'KR',
-  id: 'ID',
-  ms: 'MY',
-  tl: 'PH',
-}
-
 /**
  * Get the user's preferred fiat currency from local storage or browser locale
  */
@@ -221,14 +128,14 @@ export const getUserFiatCurrency = (): string => {
   }
 
   // Abstract into utility function ----------
-  // Try to get from browser locale
+  // Try to get from navigator.language
   const locale = navigator.language
 
   // Try to get country from locale (e.g., en-US -> US)
   const parts = locale.split('-')
   if (parts.length > 1) {
     const countryCode = parts[1].toUpperCase()
-    const fiat = countryToFiatMap[countryCode]
+    const fiat = SupportedCountries[countryCode]?.defaultCurrency
     if (fiat && Object.keys(SupportedCurrencies).includes(fiat)) {
       return fiat
     }
@@ -236,11 +143,13 @@ export const getUserFiatCurrency = (): string => {
   // -------------------------------------------
 
   // Abstract into utility function ----------
-  // Try to get country from language (e.g., fr -> FR)
-  const countryFromLang =
-    languageToCountry[locale] || languageToCountry[parts[0]]
+  //Find the first country that includes `navigator.language` as a language
+  const countryFromLang = Object.entries(SupportedCountries).find(([, meta]) =>
+    meta.languages.includes(locale)
+  )?.[0]
+
   if (countryFromLang) {
-    const fiat = countryToFiatMap[countryFromLang]
+    const fiat = SupportedCountries[countryFromLang]?.defaultCurrency
     if (fiat && Object.keys(SupportedCurrencies).includes(fiat)) {
       return fiat
     }

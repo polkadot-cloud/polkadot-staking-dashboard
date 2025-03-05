@@ -1,0 +1,57 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+export const SupportedCountries: {
+  [key: string]: {
+    languages: string[]
+    defaultCurrency: string
+  }
+} = {
+  BE: { languages: [], defaultCurrency: 'EUR' },
+  AT: { languages: [], defaultCurrency: 'EUR' },
+  CY: { languages: [], defaultCurrency: 'EUR' },
+  DE: { languages: ['de'], defaultCurrency: 'EUR' },
+  EE: { languages: ['et'], defaultCurrency: 'EUR' },
+  ES: { languages: ['es'], defaultCurrency: 'EUR' },
+  FI: { languages: ['fi'], defaultCurrency: 'EUR' },
+  FR: { languages: ['fr'], defaultCurrency: 'EUR' },
+  GR: { languages: ['el'], defaultCurrency: 'EUR' },
+  HR: { languages: ['hr'], defaultCurrency: 'EUR' },
+  HU: { languages: ['hu'], defaultCurrency: 'EUR' },
+  IE: { languages: [], defaultCurrency: 'EUR' },
+  IT: { languages: ['it'], defaultCurrency: 'EUR' },
+  LT: { languages: ['lt'], defaultCurrency: 'EUR' },
+  LU: { languages: [], defaultCurrency: 'EUR' },
+  LV: { languages: ['lv'], defaultCurrency: 'EUR' },
+  MT: { languages: [], defaultCurrency: 'EUR' },
+  NL: { languages: ['nl'], defaultCurrency: 'EUR' },
+  PT: { languages: ['pt'], defaultCurrency: 'EUR' },
+  SI: { languages: ['sl'], defaultCurrency: 'EUR' },
+  SK: { languages: ['sk'], defaultCurrency: 'EUR' },
+  AR: { languages: [], defaultCurrency: 'ARS' },
+  AU: { languages: ['en-AU'], defaultCurrency: 'AUD' },
+  BR: { languages: ['pt-BR'], defaultCurrency: 'BRL' },
+  CA: { languages: ['en-CA', 'fr-CA'], defaultCurrency: 'CAD' },
+  CH: { languages: [], defaultCurrency: 'CHF' },
+  CN: { languages: ['zh', 'zh-CN'], defaultCurrency: 'CNY' },
+  CO: { languages: [], defaultCurrency: 'COP' },
+  CZ: { languages: ['cs'], defaultCurrency: 'CZK' },
+  GB: { languages: ['en-GB'], defaultCurrency: 'GBP' },
+  IN: { languages: [], defaultCurrency: 'INR' },
+  JP: { languages: ['ja'], defaultCurrency: 'JPY' },
+  MX: { languages: [], defaultCurrency: 'MXN' },
+  PL: { languages: ['pl'], defaultCurrency: 'PLN' },
+  RO: { languages: ['ro'], defaultCurrency: 'RON' },
+  TR: { languages: ['tr'], defaultCurrency: 'TRY' },
+  UA: { languages: ['uk'], defaultCurrency: 'UAH' },
+  US: { languages: ['en-US'], defaultCurrency: 'USD' },
+  ZA: { languages: ['af'], defaultCurrency: 'ZAR' },
+  BG: { languages: ['bg'], defaultCurrency: 'BGN' },
+  SG: { languages: [], defaultCurrency: 'SGD' },
+  NZ: { languages: [], defaultCurrency: 'NZD' },
+  TH: { languages: ['th'], defaultCurrency: 'THB' },
+  KR: { languages: ['ko'], defaultCurrency: 'KRW' },
+  ID: { languages: ['id'], defaultCurrency: 'IDR' },
+  MY: { languages: ['ms'], defaultCurrency: 'MYR' },
+  PH: { languages: ['tl'], defaultCurrency: 'PHP' },
+}

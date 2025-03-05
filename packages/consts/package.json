@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./currencies": "./src/currencies.ts"
+    "./currencies": "./src/currencies.ts",
+    "./countries": "./src/countries.ts"
   },
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
