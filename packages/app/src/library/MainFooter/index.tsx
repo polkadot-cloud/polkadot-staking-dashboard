@@ -10,6 +10,7 @@ import CloudIconSVG from 'assets/svg/icons/cloud.svg?react'
 import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { IGNORE_NETWORKS } from 'contexts/TokenPrice'
 import { isCustomEvent } from 'controllers/utils'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -85,9 +86,8 @@ export const MainFooter = () => {
           </section>
           <section>
             <div className="hide-small">
-              {plugins.includes('staking_api') && network !== 'westend' && (
-                <TokenPrice />
-              )}
+              {plugins.includes('staking_api') &&
+                !IGNORE_NETWORKS.includes(network) && <TokenPrice />}
               {import.meta.env.MODE === 'development' && (
                 <div className="stat last">
                   <FontAwesomeIcon icon={faHive} />

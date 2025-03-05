@@ -10,6 +10,7 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { IGNORE_NETWORKS } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
 import { BarSegment } from 'library/BarChart/BarSegment'
@@ -143,7 +144,8 @@ export const BalanceChart = () => {
             zeroDecimals={2}
           />
           <CardLabel>
-            {plugins.includes('staking_api') && network !== 'westend' ? (
+            {plugins.includes('staking_api') &&
+            !IGNORE_NETWORKS.includes(network) ? (
               <FiatValue
                 tokenBalance={totalBalance.toNumber()}
                 currency="USD"

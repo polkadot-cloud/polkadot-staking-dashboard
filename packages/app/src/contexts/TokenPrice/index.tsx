@@ -12,7 +12,7 @@ import { defaultTokenPricesContext } from './defaults'
 import type { TokenPricesContextInterface } from './types'
 
 const REFETCH_PRICE_INTERVAL = 30_000 // 30 seconds
-const IGNORE_NETWORKS = ['westend']
+export const IGNORE_NETWORKS = ['westend']
 
 export const TokenPricesContext = createContext<TokenPricesContextInterface>(
   defaultTokenPricesContext
