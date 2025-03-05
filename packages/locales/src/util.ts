@@ -3,6 +3,7 @@
 
 // TODO: Split this file into util/language and util/
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
+import { SupportedCurrencies } from 'consts/currencies'
 import type { i18n } from 'i18next'
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '.'
 import type { LocaleJson, LocaleJsonValue } from './types'
@@ -112,37 +113,6 @@ const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
 // Local storage key for user fiat currency preference
 const FIAT_CURRENCY_KEY = 'user_fiat_currency'
 
-// Supported fiat currencies
-export const SUPPORTED_CURRENCIES = [
-  'USD',
-  'EUR',
-  'GBP',
-  'AUD',
-  'CAD',
-  'CHF',
-  'CNY',
-  'JPY',
-  'INR',
-  'TRY',
-  'BRL',
-  'COP',
-  'UAH',
-  'ZAR',
-  'PLN',
-  'ARS',
-  'MXN',
-  'CZK',
-  'RON',
-  'BGN',
-  'SGD',
-  'NZD',
-  'THB',
-  'KRW',
-  'IDR',
-  'MYR',
-  'PHP',
-]
-
 // Map of countries to their currencies
 // NOTE: Can we flatten this with `languageToCountry`?
 const countryToFiatMap: { [key: string]: string } = {
@@ -243,7 +213,10 @@ const languageToCountry: { [key: string]: string } = {
 export const getUserFiatCurrency = (): string => {
   // Try to get from local storage first
   const storedCurrency = localStorage.getItem(FIAT_CURRENCY_KEY)
-  if (storedCurrency && SUPPORTED_CURRENCIES.includes(storedCurrency)) {
+  if (
+    storedCurrency &&
+    Object.keys(SupportedCurrencies).includes(storedCurrency)
+  ) {
     return storedCurrency
   }
 
@@ -256,7 +229,7 @@ export const getUserFiatCurrency = (): string => {
   if (parts.length > 1) {
     const countryCode = parts[1].toUpperCase()
     const fiat = countryToFiatMap[countryCode]
-    if (fiat && SUPPORTED_CURRENCIES.includes(fiat)) {
+    if (fiat && Object.keys(SupportedCurrencies).includes(fiat)) {
       return fiat
     }
   }
@@ -268,7 +241,7 @@ export const getUserFiatCurrency = (): string => {
     languageToCountry[locale] || languageToCountry[parts[0]]
   if (countryFromLang) {
     const fiat = countryToFiatMap[countryFromLang]
-    if (fiat && SUPPORTED_CURRENCIES.includes(fiat)) {
+    if (fiat && Object.keys(SupportedCurrencies).includes(fiat)) {
       return fiat
     }
   }
@@ -283,7 +256,7 @@ export const getUserFiatCurrency = (): string => {
  * @param currency The currency code to set (e.g., 'USD', 'EUR')
  */
 export const setLocalCurrency = (currency: string): void => {
-  if (SUPPORTED_CURRENCIES.includes(currency)) {
+  if (Object.keys(SupportedCurrencies).includes(currency)) {
     localStorage.setItem(FIAT_CURRENCY_KEY, currency)
   }
 }
@@ -298,14 +271,12 @@ export const formatFiatCurrency = (
   const currencyCode = currency || getUserFiatCurrency()
   const locale = navigator.language || 'en-US'
 
-  // Some currencies typically don't show decimal places
-  // NOTE: This can be in a separate config file for currencies.
-  const noDecimalCurrencies = ['JPY', 'KRW', 'IDR', 'TWD', 'VND', 'CLP', 'COP']
+  const decimals: number = SupportedCurrencies[currencyCode]?.noDecimals ? 0 : 2
 
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currencyCode,
-    minimumFractionDigits: noDecimalCurrencies.includes(currencyCode) ? 0 : 2,
-    maximumFractionDigits: noDecimalCurrencies.includes(currencyCode) ? 0 : 2,
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
   }).format(value)
 }

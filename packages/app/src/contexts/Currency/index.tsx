@@ -5,9 +5,9 @@ import { getUserFiatCurrency, setLocalCurrency } from 'locales'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useState } from 'react'
 import { defaultCurrencyContext } from './defaults'
-import type { CurencyContextInterface } from './types'
+import type { CurrencyContextInterface } from './types'
 
-export const CurrencyContext = createContext<CurencyContextInterface>(
+export const CurrencyContext = createContext<CurrencyContextInterface>(
   defaultCurrencyContext
 )
 

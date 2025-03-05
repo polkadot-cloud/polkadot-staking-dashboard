@@ -4,8 +4,8 @@
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CurrencySVG from 'assets/svg/icons/dollarsign.svg?react'
+import { SupportedCurrencies } from 'consts/currencies'
 import { useCurrency } from 'contexts/Currency'
-import { SUPPORTED_CURRENCIES } from 'locales/src/util'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
@@ -47,19 +47,21 @@ export const SelectCurrency = () => {
     setSearchTerm(e.target.value)
   }
 
-  const filteredCurrencies = SUPPORTED_CURRENCIES.filter((c) => {
-    const searchTermLower = searchTerm.toLowerCase()
-    // Get localized currency info
-    const currencyName = t(`currencies.${c}.name`).toLowerCase()
-    const currencySymbol = t(`currencies.${c}.symbol`).toLowerCase()
-    const currencyCode = c.toLowerCase()
+  const filteredCurrencies = Object.keys(SupportedCurrencies).filter(
+    (c) => {
+      const searchTermLower = searchTerm.toLowerCase()
+      // Get localized currency info
+      const currencyName = t(`currencies.${c}.name`).toLowerCase()
+      const currencySymbol = t(`currencies.${c}.symbol`).toLowerCase()
+      const currencyCode = c.toLowerCase()
 
-    return (
-      currencyCode.includes(searchTermLower) ||
-      currencyName.includes(searchTermLower) ||
-      currencySymbol.includes(searchTermLower)
-    )
-  })
+      return (
+        currencyCode.includes(searchTermLower) ||
+        currencyName.includes(searchTermLower) ||
+        currencySymbol.includes(searchTermLower)
+      )
+    }
+  )
 
   // Sort currencies - put the selected one first, then sort alphabetically
   const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {

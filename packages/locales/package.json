@@ -9,5 +9,8 @@
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
     "order": "node ./.scripts/localeOrderKeys.cjs",
     "validate": "node ./.scripts/localeValidate.cjs"
+  },
+  "dependencies": {
+    "consts": "workspace:*"
   }
 }
