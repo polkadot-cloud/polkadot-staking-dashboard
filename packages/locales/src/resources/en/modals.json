@@ -63,114 +63,33 @@
     "continue": "Continue",
     "controllerImported": "You must have your controller account imported to sign this transaction.",
     "currencies": {
-      "ARS": {
-        "name": "Argentine Peso",
-        "symbol": "ARS$"
-      },
-      "AUD": {
-        "name": "Australian Dollar",
-        "symbol": "A$"
-      },
-      "BGN": {
-        "name": "Bulgarian Lev",
-        "symbol": "лв"
-      },
-      "BRL": {
-        "name": "Brazilian Real",
-        "symbol": "R$"
-      },
-      "CAD": {
-        "name": "Canadian Dollar",
-        "symbol": "C$"
-      },
-      "CHF": {
-        "name": "Swiss Franc",
-        "symbol": "Fr"
-      },
-      "CNY": {
-        "name": "Chinese Yuan",
-        "symbol": "¥"
-      },
-      "COP": {
-        "name": "Colombian Peso",
-        "symbol": "COP$"
-      },
-      "CZK": {
-        "name": "Czech Koruna",
-        "symbol": "Kč"
-      },
-      "EUR": {
-        "name": "Euro",
-        "symbol": "€"
-      },
-      "GBP": {
-        "name": "British Pound",
-        "symbol": "£"
-      },
-      "IDR": {
-        "name": "Indonesian Rupiah",
-        "symbol": "Rp"
-      },
-      "INR": {
-        "name": "Indian Rupee",
-        "symbol": "₹"
-      },
-      "JPY": {
-        "name": "Japanese Yen",
-        "symbol": "¥"
-      },
-      "KRW": {
-        "name": "South Korean Won",
-        "symbol": "₩"
-      },
-      "MXN": {
-        "name": "Mexican Peso",
-        "symbol": "MX$"
-      },
-      "MYR": {
-        "name": "Malaysian Ringgit",
-        "symbol": "RM"
-      },
-      "NZD": {
-        "name": "New Zealand Dollar",
-        "symbol": "NZ$"
-      },
-      "PHP": {
-        "name": "Philippine Peso",
-        "symbol": "₱"
-      },
-      "PLN": {
-        "name": "Polish Złoty",
-        "symbol": "zł"
-      },
-      "RON": {
-        "name": "Romanian Leu",
-        "symbol": "lei"
-      },
-      "SGD": {
-        "name": "Singapore Dollar",
-        "symbol": "S$"
-      },
-      "THB": {
-        "name": "Thai Baht",
-        "symbol": "฿"
-      },
-      "TRY": {
-        "name": "Turkish Lira",
-        "symbol": "₺"
-      },
-      "UAH": {
-        "name": "Ukrainian Hryvnia",
-        "symbol": "₴"
-      },
-      "USD": {
-        "name": "US Dollar",
-        "symbol": "$"
-      },
-      "ZAR": {
-        "name": "South African Rand",
-        "symbol": "R"
-      }
+      "ARS": { "name": "Argentine Peso", "symbol": "ARS$" },
+      "AUD": { "name": "Australian Dollar", "symbol": "A$" },
+      "BGN": { "name": "Bulgarian Lev", "symbol": "лв" },
+      "BRL": { "name": "Brazilian Real", "symbol": "R$" },
+      "CAD": { "name": "Canadian Dollar", "symbol": "C$" },
+      "CHF": { "name": "Swiss Franc", "symbol": "Fr" },
+      "CNY": { "name": "Chinese Yuan", "symbol": "¥" },
+      "COP": { "name": "Colombian Peso", "symbol": "COP$" },
+      "CZK": { "name": "Czech Koruna", "symbol": "Kč" },
+      "EUR": { "name": "Euro", "symbol": "€" },
+      "GBP": { "name": "British Pound", "symbol": "£" },
+      "IDR": { "name": "Indonesian Rupiah", "symbol": "Rp" },
+      "INR": { "name": "Indian Rupee", "symbol": "₹" },
+      "JPY": { "name": "Japanese Yen", "symbol": "¥" },
+      "KRW": { "name": "South Korean Won", "symbol": "₩" },
+      "MXN": { "name": "Mexican Peso", "symbol": "MX$" },
+      "MYR": { "name": "Malaysian Ringgit", "symbol": "RM" },
+      "NZD": { "name": "New Zealand Dollar", "symbol": "NZ$" },
+      "PHP": { "name": "Philippine Peso", "symbol": "₱" },
+      "PLN": { "name": "Polish Złoty", "symbol": "zł" },
+      "RON": { "name": "Romanian Leu", "symbol": "lei" },
+      "SGD": { "name": "Singapore Dollar", "symbol": "S$" },
+      "THB": { "name": "Thai Baht", "symbol": "฿" },
+      "TRY": { "name": "Turkish Lira", "symbol": "₺" },
+      "UAH": { "name": "Ukrainian Hryvnia", "symbol": "₴" },
+      "USD": { "name": "US Dollar", "symbol": "$" },
+      "ZAR": { "name": "South African Rand", "symbol": "R" }
     },
     "days": "Days",
     "decentralizationAnalyticsNotAvailable": "Decentralization analytics not available",
