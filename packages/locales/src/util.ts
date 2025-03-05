@@ -21,8 +21,8 @@ export const getInitialLanguage = () => {
     return localLng
   }
 
-  const supportedBrowser = Object.entries(locales).find(([, { tag }]) =>
-    navigator.language.startsWith(tag)
+  const supportedBrowser = Object.entries(locales).find(([locale]) =>
+    navigator.language.startsWith(locale)
   )?.[0]
   if (supportedBrowser) {
     localStorage.setItem('lng', supportedBrowser)

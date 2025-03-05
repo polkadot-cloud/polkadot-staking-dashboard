@@ -47,21 +47,19 @@ export const SelectCurrency = () => {
     setSearchTerm(e.target.value)
   }
 
-  const filteredCurrencies = Object.keys(SupportedCurrencies).filter(
-    (c) => {
-      const searchTermLower = searchTerm.toLowerCase()
-      // Get localized currency info
-      const currencyName = t(`currencies.${c}.name`).toLowerCase()
-      const currencySymbol = t(`currencies.${c}.symbol`).toLowerCase()
-      const currencyCode = c.toLowerCase()
+  const filteredCurrencies = Object.keys(SupportedCurrencies).filter((c) => {
+    const searchTermLower = searchTerm.toLowerCase()
+    // Get localized currency info
+    const currencyName = t(`currencies.${c}.name`).toLowerCase()
+    const currencySymbol = t(`currencies.${c}.symbol`).toLowerCase()
+    const currencyCode = c.toLowerCase()
 
-      return (
-        currencyCode.includes(searchTermLower) ||
-        currencyName.includes(searchTermLower) ||
-        currencySymbol.includes(searchTermLower)
-      )
-    }
-  )
+    return (
+      currencyCode.includes(searchTermLower) ||
+      currencyName.includes(searchTermLower) ||
+      currencySymbol.includes(searchTermLower)
+    )
+  })
 
   // Sort currencies - put the selected one first, then sort alphabetically
   const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
