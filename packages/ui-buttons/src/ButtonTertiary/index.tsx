@@ -4,9 +4,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import commonClasses from '../common.module.scss'
+import type { ButtonTertiaryProps } from '../types'
 import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
-import type { ButtonTertiaryProps } from './types'
 
 /**
  * @name ButtonTertiary

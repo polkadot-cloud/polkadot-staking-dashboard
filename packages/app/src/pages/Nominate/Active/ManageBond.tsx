@@ -25,7 +25,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary, ButtonText, MultiButton } from 'ui-buttons'
+import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
@@ -83,7 +83,7 @@ export const ManageBond = () => {
     ) : (
       <ButtonPrimary
         size="md"
-        text={t('nominate.unstake')}
+        text={t('unstake')}
         iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(controller) || !activeAccount}
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
@@ -99,7 +99,7 @@ export const ManageBond = () => {
     <>
       <CardHeader>
         <h4>
-          {t('nominate.bondedFunds')}
+          {t('bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
         <h2>
@@ -113,8 +113,8 @@ export const ManageBond = () => {
           />
         </h2>
         <ButtonRow>
-          <MultiButton marginRight disabled={bondDisabled}>
-            <ButtonText
+          <MultiButton.Container marginRight disabled={bondDisabled}>
+            <MultiButton.Button
               size="md"
               disabled={bondDisabled}
               marginRight
@@ -129,7 +129,7 @@ export const ManageBond = () => {
               text=""
             />
             <span />
-            <ButtonText
+            <MultiButton.Button
               size="md"
               disabled={bondDisabled}
               marginRight
@@ -143,7 +143,7 @@ export const ManageBond = () => {
               iconLeft={faMinus}
               text=""
             />
-          </MultiButton>
+          </MultiButton.Container>
           {!unstakeDisabled && unstakeButton}
         </ButtonRow>
       </CardHeader>

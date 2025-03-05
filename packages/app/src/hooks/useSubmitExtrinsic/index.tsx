@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useExtensions } from '@w3ux/react-connect-kit'
-import type { LedgerAccount } from '@w3ux/react-connect-kit/types'
+import type { LedgerAccount } from '@w3ux/types'
 import { formatAccountSs58 } from '@w3ux/utils'
 import { Proxy } from 'api/tx/proxy'
 import { TxSubmission } from 'api/txSubmission'
@@ -41,7 +41,7 @@ export const useSubmitExtrinsic = ({
   callbackSubmit,
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const {
     network,
     networkData: { units, unit },

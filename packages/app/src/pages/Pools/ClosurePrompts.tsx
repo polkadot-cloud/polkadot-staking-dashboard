@@ -10,7 +10,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, PageRow } from 'ui-core/base'
+import { ButtonRow, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const ClosurePrompts = () => {
@@ -41,28 +41,28 @@ export const ClosurePrompts = () => {
   return (
     state === 'Destroying' &&
     depositorCanClose && (
-      <PageRow>
+      <Page.Row>
         <CardWrapper
           style={{
             border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
           }}
         >
           <div className="content">
-            <h3>{t('pools.destroyPool')}</h3>
+            <h3>{t('destroyPool')}</h3>
             <h4>
-              {t('pools.leftThePool')}.{' '}
+              {t('leftThePool')}.{' '}
               {targets.length > 0
-                ? t('pools.stopNominating')
+                ? t('stopNominating')
                 : depositorCanWithdraw
-                  ? t('pools.closePool')
+                  ? t('closePool')
                   : depositorCanUnbond
-                    ? t('pools.unbondYourFunds')
-                    : t('pools.withdrawUnlock')}
+                    ? t('unbondYourFunds')
+                    : t('withdrawUnlock')}
             </h4>
             <ButtonRow yMargin>
               <ButtonPrimary
                 marginRight
-                text={t('pools.unbond')}
+                text={t('unbond')}
                 disabled={
                   syncing || (!depositorCanWithdraw && !depositorCanUnbond)
                 }
@@ -78,7 +78,7 @@ export const ClosurePrompts = () => {
                 iconLeft={faLockOpen}
                 text={
                   depositorCanWithdraw
-                    ? t('pools.unlocked')
+                    ? t('unlocked')
                     : String(totalUnlockChunks ?? 0)
                 }
                 disabled={syncing || !isBonding()}
@@ -98,7 +98,7 @@ export const ClosurePrompts = () => {
             </ButtonRow>
           </div>
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
     )
   )
 }

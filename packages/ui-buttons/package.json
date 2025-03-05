@@ -1,15 +1,23 @@
 {
   "name": "ui-buttons",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "GPL-3.0-only",
   "type": "module",
-  "main": "src/index.tsx",
+  "exports": {
+    ".": "./src/index.tsx",
+    "./types": "./src/types.ts"
+  },
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
   "dependencies": {
-    "@fortawesome/react-fontawesome": "^0.2.2"
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@w3ux/react-polkicon": "^2.0.1-alpha.0",
+    "@w3ux/types": "^1.0.2",
+    "@w3ux/utils": "^1.2.0",
+    "types": "workspace:*",
+    "ui-core": "workspace:*"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",

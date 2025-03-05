@@ -18,7 +18,7 @@ export const Submit = ({
   onSubmit,
   disabled,
 }: LedgerSubmitProps) => {
-  const { t } = useTranslation('library')
+  const { t } = useTranslation('app')
   const { network } = useNetwork()
   const { txMetadataChainId } = getLedgerApp(network)
   const { getIsExecuting, integrityChecked, checkRuntimeVersion } =

@@ -11,7 +11,7 @@ export const Wrapper = styled.button`
   padding: 1rem 0.75rem;
   border-radius: 0.75rem;
   margin-bottom: 1rem;
-  font-size: 1rem;
+  font-size: 1.15rem;
   display: flex;
   flex-flow: row-reverse wrap;
   align-items: center;

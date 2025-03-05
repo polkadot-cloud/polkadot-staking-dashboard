@@ -14,7 +14,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
 import { BondedProvider } from 'contexts/Bonded'
-import { CommunityProvider } from 'contexts/Community'
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
@@ -25,6 +24,7 @@ import { LedgerHardwareProvider } from 'contexts/LedgerHardware'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { useNetwork } from 'contexts/Network'
+import { OperatorsProvider } from 'contexts/Operators'
 import { PayoutsProvider } from 'contexts/Payouts'
 import { PluginsProvider } from 'contexts/Plugins'
 import { ActivePoolProvider } from 'contexts/Pools/ActivePool'
@@ -43,6 +43,7 @@ import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { WalletConnectProvider } from 'contexts/WalletConnect'
+import { Tooltip } from 'radix-ui'
 import { ThemedRouter } from 'Themes'
 import { OverlayProvider } from 'ui-overlay'
 
@@ -98,7 +99,8 @@ export const Providers = () => {
       PromptProvider,
       MigrateProvider,
       FiltersProvider,
-      CommunityProvider,
+      OperatorsProvider,
+      Tooltip.Provider,
     ],
     ThemedRouter
   )

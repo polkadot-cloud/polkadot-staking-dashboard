@@ -15,7 +15,7 @@ import { Nominations } from 'library/Nominations'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
-import { CardHeader, PageRow, RowSection, StatRow } from 'ui-core/base'
+import { CardHeader, Page, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
@@ -41,27 +41,27 @@ export const Active = () => {
 
   return (
     <>
-      <StatRow>
+      <Stat.Row>
         <ActiveNominators />
         <MinimumNominatorBond />
         <MinimumActiveStake />
-      </StatRow>
+      </Stat.Row>
       <CommissionPrompt />
 
       {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}
       <UnstakePrompts />
-      <PageRow>
-        <RowSection secondary vLast>
+      <Page.Row>
+        <Page.RowSection secondary vLast>
           <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
-        </RowSection>
-        <RowSection hLast>
+        </Page.RowSection>
+        <Page.RowSection hLast>
           <Status height={ROW_HEIGHT} />
-        </RowSection>
-      </PageRow>
+        </Page.RowSection>
+      </Page.Row>
       {isBonding() && (
-        <PageRow>
+        <Page.Row>
           <CardWrapper>
             {nominated?.length || inSetup() || syncing ? (
               <Nominations bondFor="nominator" nominator={activeAccount} />
@@ -69,7 +69,7 @@ export const Active = () => {
               <>
                 <CardHeader action margin>
                   <h3>
-                    {t('nominate.nominate', { ns: 'pages' })}
+                    {t('nominate', { ns: 'pages' })}
                     <ButtonHelp
                       marginLeft
                       onClick={() => openHelp('Nominations')}
@@ -80,7 +80,7 @@ export const Active = () => {
                       size="md"
                       iconLeft={faChevronCircleRight}
                       iconTransform="grow-1"
-                      text={`${t('nominate.nominate', { ns: 'pages' })}`}
+                      text={`${t('nominate', { ns: 'pages' })}`}
                       disabled={inSetup() || syncing || isFastUnstaking}
                       onClick={() =>
                         openCanvas({
@@ -98,12 +98,12 @@ export const Active = () => {
                   </div>
                 </CardHeader>
                 <ListStatusHeader>
-                  {t('notNominating', { ns: 'library' })}.
+                  {t('notNominating', { ns: 'app' })}.
                 </ListStatusHeader>
               </>
             )}
           </CardWrapper>
-        </PageRow>
+        </Page.Row>
       )}
     </>
   )

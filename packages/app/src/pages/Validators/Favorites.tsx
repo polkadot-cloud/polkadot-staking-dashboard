@@ -7,7 +7,7 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
-import { PageRow } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 
 export const ValidatorFavorites = () => {
   const { t } = useTranslation('pages')
@@ -15,11 +15,11 @@ export const ValidatorFavorites = () => {
   const { favoritesList } = useFavoriteValidators()
 
   return (
-    <PageRow>
+    <Page.Row>
       <CardWrapper>
         {favoritesList === null ? (
           <ListStatusHeader>
-            {t('validators.fetchingFavoriteValidators')}...
+            {t('fetchingFavoriteValidators')}...
           </ListStatusHeader>
         ) : (
           isReady &&
@@ -27,7 +27,7 @@ export const ValidatorFavorites = () => {
             <ValidatorList
               bondFor="nominator"
               validators={favoritesList}
-              title={t('validators.favoriteValidators')}
+              title={t('favoriteValidators')}
               selectable={false}
               allowListFormat={false}
               allowFilters
@@ -35,10 +35,10 @@ export const ValidatorFavorites = () => {
               toggleFavorites
             />
           ) : (
-            <ListStatusHeader>{t('validators.noFavorites')}</ListStatusHeader>
+            <ListStatusHeader>{t('noFavorites')}</ListStatusHeader>
           ))
         )}
       </CardWrapper>
-    </PageRow>
+    </Page.Row>
   )
 }

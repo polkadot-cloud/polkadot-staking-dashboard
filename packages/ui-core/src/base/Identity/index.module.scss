@@ -13,9 +13,10 @@
     margin-top: 0.4rem;
     display: flex;
     align-items: center;
-    button {
+
+    > span {
       color: var(--text-color-primary);
-      margin-left: 0.75rem;
+      margin-left: 0.4rem;
     }
   }
 }

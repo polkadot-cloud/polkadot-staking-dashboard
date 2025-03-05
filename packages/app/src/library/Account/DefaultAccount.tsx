@@ -11,8 +11,13 @@ import { useTranslation } from 'react-i18next'
 import { Wrapper } from './Wrapper'
 import type { AccountProps } from './types'
 
-const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
-  const { t } = useTranslation('library')
+const DefaultAccount = ({
+  value,
+  readOnly,
+  onClick,
+  className,
+}: AccountProps) => {
+  const { t } = useTranslation('app')
   const { getAccount } = useImportedAccounts()
 
   // Determine account display text. Title takes precedence over value.
@@ -24,16 +29,10 @@ const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
         : ellipsisFn(value)
 
   return (
-    <Wrapper>
-      {label !== undefined && (
+    <Wrapper onClick={onClick} className={className}>
+      {readOnly && (
         <div className="account-label">
-          {label}{' '}
-          {readOnly && (
-            <>
-              &nbsp;
-              <FontAwesomeIcon icon={faGlasses} />
-            </>
-          )}
+          <FontAwesomeIcon icon={faGlasses} />
         </div>
       )}
       {text === null ? (

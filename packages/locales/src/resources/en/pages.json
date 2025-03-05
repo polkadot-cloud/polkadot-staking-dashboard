@@ -1,7 +1,7 @@
 {
   "pages": {
     "common": { "stakingApiDisabled": "Staking API Disabled" },
-    "community": {
+    "operators": {
       "bio": "Bio",
       "connecting": "Connecting",
       "email": "Email",

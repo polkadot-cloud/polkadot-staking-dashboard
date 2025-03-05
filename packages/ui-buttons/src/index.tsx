@@ -1,6 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+export * from './ButtonAccount'
+export * from './ButtonCopy'
+export * from './ButtonHeader'
 export * from './ButtonHelp'
 export * from './ButtonMono'
 export * from './ButtonMonoInvert'

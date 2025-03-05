@@ -16,12 +16,14 @@ export const Wrapper = styled.div`
   padding: 0.1rem 1.25rem;
   max-width: 235px;
   flex: 1;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.025);
   }
   .polkicon {
     margin: 0.15rem 0.25rem 0 0;
+    max-width: 1.5rem;
   }
   .account-label {
     border-right: 1px solid var(--border-secondary-color);

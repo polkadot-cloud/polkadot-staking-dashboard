@@ -23,7 +23,7 @@ export const ActiveNominators = () => {
   }
 
   const params = {
-    label: t('overview.activeNominators'),
+    label: t('activeNominators'),
     stat: {
       value: totalActiveNominators,
       total: counterForNominators.toNumber(),

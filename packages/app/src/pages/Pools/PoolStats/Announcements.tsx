@@ -66,17 +66,17 @@ export const Announcements = () => {
   announcements.push({
     class: 'neutral',
     title: `${rewardsClaimed.decimalPlaces(3).toFormat()} ${unit} ${t(
-      'pools.beenClaimed'
+      'beenClaimed'
     )}`,
-    subtitle: `${t('pools.beenClaimedBy', { unit })}`,
+    subtitle: `${t('beenClaimedBy', { unit })}`,
   })
 
   announcements.push({
     class: 'neutral',
     title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
-      'pools.outstandingReward'
+      'outstandingReward'
     )}`,
-    subtitle: `${t('pools.availableToClaim', { unit })}`,
+    subtitle: `${t('availableToClaim', { unit })}`,
   })
 
   return (

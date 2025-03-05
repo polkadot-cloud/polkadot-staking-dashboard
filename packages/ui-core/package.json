@@ -1,6 +1,6 @@
 {
   "name": "ui-core",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
@@ -10,9 +10,11 @@
   "exports": {
     "./base": "./src/base/index.tsx",
     "./canvas": "./src/canvas/index.tsx",
+    "./input": "./src/input/index.tsx",
     "./list": "./src/list/index.tsx",
     "./modal": "./src/modal/index.tsx",
     "./overlay": "./src/overlay/index.tsx",
+    "./popover": "./src/popover/index.tsx",
     "./types": "./src/types.ts"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
     "@fortawesome/free-solid-svg-icons": "*",
+    "radix-ui": "*",
     "react": "*"
   }
 }

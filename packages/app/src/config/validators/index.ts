@@ -243,6 +243,24 @@ export const ValidatorCommunity: ValidatorEntry[] = [
     },
   },
   {
+    name: 'GuruStaking👳',
+    icon: 'GuruStaking',
+    bio: 'We are thrilled to have you join us in this exciting journey of blockchain validation and decentralized governance. As a validator, we play a crucial role in securing the network, verifying transactions, and contributing to the overall stability and reliability of the DotSama ecosystem.',
+    email: 'stake@gurustaking.com',
+    x: '@GuruStaking',
+    website: 'https://gurustaking.com',
+    validators: {
+      polkadot: [
+        '138tCNoHg9QbhjqanRS7R8ZC8547A6CdaSmrCtJCRLpjQk6r',
+        '1ja8qGypM5HT9Rqq6AGQ9z58bSi2kfkrqsGuB84zxdp1SZH',
+      ],
+      kusama: [
+        'F5j1j9TJ7xWePJmYh64Bf2b97pmer3mX1BsonCUpx3CJZpu',
+        'ESE6ka6wGpXGDJ5ykjAvH1TTuAC9Dg5VFfc1dcfoEwX9qc1',
+      ],
+    },
+  },
+  {
     name: 'Helikon',
     icon: 'Helikon',
     bio: 'We are an independent blockchain software, infrastructre and staking services company from Istanbul. We run our validators on state-of-the-art owned hardware in a Tier III colocation data center just outside Istanbul. Please visit our website for more information about our products and services.',
@@ -779,6 +797,9 @@ export const ValidatorCommunity: ValidatorEntry[] = [
         'Gfwn89EPQqTbcfhuSPznquqAC1N2GFDCzqLbMQaijUwDspf',
         'FVkxBDehfaTfRiGtE2m2zLnMXQXji66KVpd7xviufZpGYYC',
         'HPrV3G2PR2AtyMf2uoDBE4GyvRGdz9UhUASEvSGEENmobBB',
+        'Gj4dYBs4PPvQjf7Exkrpfe65EoitvdecNYhtBPa3ymWZF3S',
+        'HqFz6V9aV4dLXaGp6TY5tLdK85vkiiea96GVUJQ7hgXUqh5',
+        'EfWJofhHXhL6RkaoSxrXbq3wWkta1bmXxqTbDtBcF5wnR6N',
       ],
     },
   },
@@ -795,6 +816,28 @@ export const ValidatorCommunity: ValidatorEntry[] = [
         'F3EJS4BsGsxjvigBcgte4ZfYUhpcizMQizQ5TxkR5ts378r',
         'DGvPFG7dHMWryfHQD2XBQ4WX1nM5KnyHmsLSj2k7DaBRhUD',
         'CrfvUqb1cbjJ9j7TkbCuXzuffquXFmAASZUeM3Ha9x6pXjX',
+      ],
+    },
+  },
+  {
+    name: 'Saxemberg',
+    icon: 'Saxemberg',
+    bio: 'We offer validation and collation services to our nominators on Polkadot ecosystem. Active on-chain governance participants.',
+    email: 'hello@saxemberg.com',
+    website: 'https://saxemberg.com',
+    validators: {
+      polkadot: [
+        '153YD8ZHD9dRh82U419bSCB5SzWhbdAFzjj4NtA5pMazR2yC',
+        '16UgRGtYLuDWsBvjLLtc6FYVB3qSCV9c4sidcN4zaFm9qCFR',
+        '12ryLNrg44r7Qv7oWZa2wK6PuzUmAMueyVHRBsyR5N6anEaV',
+      ],
+      kusama: [
+        'J19LYGghRCe4Ct3VW4Vz1amMoUgogS1sh2FQvPWroKcDdb1',
+        'Cu2z7dVVdzFyDVTjUPm7feV9RFQ8QiG3yLGsVEj5NohFXk7',
+        'Dfg9gbTwG6aghwLYTfYoV4dXyhCRBLbRyFwENADHmg4zfDF',
+        'GL7MYnpQr7jgJqK8wSRUQuob1TvTY7uRJP6LUNeUyvMUhQR',
+        'GAGaWf9wiFGidsQdcLfHRrndVsfTRx9SKfMNJFekk7ue2zL',
+        'EAZLkHboA6P5ZnKASbKB2EdnSzRFHr2FrbxRRtyWyrHhVQ3',
       ],
     },
   },

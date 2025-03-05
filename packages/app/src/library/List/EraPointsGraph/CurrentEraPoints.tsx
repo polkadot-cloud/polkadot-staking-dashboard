@@ -52,7 +52,7 @@ export const CurrentEraPoints = ({
   const normalisedPoint = Object.values(normalisedPoints)[0]
   const syncing = !isReady || !validatorsFetched || eraHigh <= 1
   const tooltipText = t('eraRewardPoints', {
-    ns: 'library',
+    ns: 'app',
     points: eraPoints.toFormat(),
   })
 

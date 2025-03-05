@@ -13,7 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary, ButtonText, MultiButton } from 'ui-buttons'
+import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
@@ -54,7 +54,7 @@ export const ManageBond = () => {
     <>
       <CardHeader>
         <h4>
-          {t('pools.bondedFunds')}
+          {t('bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
         <h2>
@@ -68,8 +68,8 @@ export const ManageBond = () => {
           />
         </h2>
         <ButtonRow>
-          <MultiButton marginRight disabled={bondDisabled}>
-            <ButtonText
+          <MultiButton.Container marginRight disabled={bondDisabled}>
+            <MultiButton.Button
               size="md"
               disabled={bondDisabled}
               marginRight
@@ -83,7 +83,7 @@ export const ManageBond = () => {
               iconLeft={faPlus}
               text=""
             />
-            <ButtonText
+            <MultiButton.Button
               size="md"
               disabled={bondDisabled}
               marginRight
@@ -97,11 +97,11 @@ export const ManageBond = () => {
               iconLeft={faMinus}
               text=""
             />
-          </MultiButton>
+          </MultiButton.Container>
           {canLeavePool && (
             <ButtonPrimary
               size="md"
-              text={t('nominate.unstake')}
+              text={t('unstake')}
               iconLeft={faSignOut}
               onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
             />

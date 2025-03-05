@@ -11,7 +11,7 @@ import { PoolList } from 'library/PoolList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageRow, PageTitle, RowSection, StatRow } from 'ui-core/base'
+import { Page, Stat } from 'ui-core/base'
 import { ClosurePrompts } from './ClosurePrompts'
 import { PoolFavorites } from './Favorites'
 import { ManageBond } from './ManageBond'
@@ -41,21 +41,21 @@ export const PoolsInner = () => {
 
   return (
     <>
-      <PageTitle
-        title={t('pools.pools')}
+      <Page.Title
+        title={t('pools')}
         tabs={[
           {
-            title: t('pools.overview'),
+            title: t('overview'),
             active: activeTab === 0,
             onClick: () => setActiveTab(0),
           },
           {
-            title: t('pools.allPools'),
+            title: t('allPools'),
             active: activeTab === 1,
             onClick: () => setActiveTab(1),
           },
           {
-            title: t('pools.favorites'),
+            title: t('favorites'),
             active: activeTab === 2,
             onClick: () => setActiveTab(2),
             badge: String(favorites.length),
@@ -64,40 +64,40 @@ export const PoolsInner = () => {
       />
       {activeTab === 0 && (
         <>
-          <StatRow>
+          <Stat.Row>
             <ActivePoolCount />
             <MinJoinBond />
             <MinCreateBond />
-          </StatRow>
+          </Stat.Row>
           <ClosurePrompts />
           <WithdrawPrompt bondFor="pool" />
-          <PageRow>
-            <RowSection secondary vLast>
+          <Page.Row>
+            <Page.RowSection secondary vLast>
               <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />
               </CardWrapper>
-            </RowSection>
-            <RowSection hLast>
+            </Page.RowSection>
+            <Page.RowSection hLast>
               <Status height={ROW_HEIGHT} />
-            </RowSection>
-          </PageRow>
+            </Page.RowSection>
+          </Page.Row>
           {activePool !== null && (
             <>
               <ManagePool />
-              <PageRow>
+              <Page.Row>
                 <CardWrapper>
                   <Roles defaultRoles={getPoolRoles()} />
                 </CardWrapper>
-              </PageRow>
-              <PageRow>
+              </Page.Row>
+              <Page.Row>
                 <PoolStats />
-              </PageRow>
+              </Page.Row>
             </>
           )}
         </>
       )}
       {activeTab === 1 && (
-        <PageRow>
+        <Page.Row>
           <CardWrapper>
             <ListProvider>
               <PoolList
@@ -108,7 +108,7 @@ export const PoolsInner = () => {
               />
             </ListProvider>
           </CardWrapper>
-        </PageRow>
+        </Page.Row>
       )}
       {activeTab === 2 && <PoolFavorites />}
     </>

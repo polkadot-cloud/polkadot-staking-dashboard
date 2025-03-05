@@ -6,7 +6,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
-import { PageRow, StatRow } from 'ui-core/base'
+import { Page, Stat } from 'ui-core/base'
 import { ActiveValidators } from './Stats/ActiveValidators'
 import { AverageCommission } from './Stats/AverageCommission'
 import { TotalValidators } from './Stats/TotalValidators'
@@ -19,29 +19,29 @@ export const AllValidators = () => {
 
   return (
     <>
-      <StatRow>
+      <Stat.Row>
         <ActiveValidators />
         <TotalValidators />
         <AverageCommission />
-      </StatRow>
-      <PageRow>
+      </Stat.Row>
+      <Page.Row>
         <CardWrapper>
           {!isReady ? (
             <div className="item">
-              <h3>{t('validators.connecting')}...</h3>
+              <h3>{t('connecting')}...</h3>
             </div>
           ) : (
             <>
               {validators.length === 0 && (
                 <div className="item">
-                  <h3>{t('validators.fetchingValidators')}...</h3>
+                  <h3>{t('fetchingValidators')}...</h3>
                 </div>
               )}
               {validators.length > 0 && (
                 <ValidatorList
                   bondFor="nominator"
                   validators={validators}
-                  title={t('validators.networkValidators')}
+                  title={t('networkValidators')}
                   selectable={false}
                   defaultFilters={{
                     includes: ['active'],
@@ -63,7 +63,7 @@ export const AllValidators = () => {
             </>
           )}
         </CardWrapper>
-      </PageRow>
+      </Page.Row>
     </>
   )
 }

@@ -1,14 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAddress } from '@w3ux/react-connect-kit/types'
+import type { MaybeString } from '@w3ux/types'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import type { NetworkId } from 'common-types'
 
 // Get the local storage record for an account reserve balance
 export const getLocalFeeReserve = (
-  address: MaybeAddress,
+  address: MaybeString,
   defaultReserve: number,
   { network, units }: { network: NetworkId; units: number }
 ): BigNumber => {
@@ -21,7 +21,7 @@ export const getLocalFeeReserve = (
 
 // Sets the local storage record fro an account reserve balance
 export const setLocalFeeReserve = (
-  address: MaybeAddress,
+  address: MaybeString,
   amount: BigNumber,
   network: NetworkId
 ): void => {
