@@ -88,8 +88,13 @@ export const Payouts = () => {
             ) : (
               <>
                 &nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}
+                {/* TODO: Reformat and check if not westend */}
                 {rewardAmount.isGreaterThan(0) && tokenPrice > 0 && (
                   <span style={{ marginLeft: '0.5rem', opacity: 0.75 }}>
+                    {/* <FiatValue
+                      tokenBalance={rewardAmount}
+                      currency={currency}
+                    /> */}
                     {formatFiatCurrency(
                       rewardAmount.multipliedBy(tokenPrice).toNumber()
                     )}

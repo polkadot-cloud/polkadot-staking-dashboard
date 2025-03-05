@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+// TODO: Split this file into util/language and util/
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
 import type { i18n } from 'i18next'
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '.'
@@ -143,6 +144,7 @@ export const SUPPORTED_CURRENCIES = [
 ]
 
 // Map of countries to their currencies
+// NOTE: Can we flatten this with `languageToCountry`?
 const countryToFiatMap: { [key: string]: string } = {
   // Euro Zone
   AT: 'EUR',
@@ -245,6 +247,7 @@ export const getUserFiatCurrency = (): string => {
     return storedCurrency
   }
 
+  // Abstract into utility function ----------
   // Try to get from browser locale
   const locale = navigator.language
 
@@ -257,6 +260,9 @@ export const getUserFiatCurrency = (): string => {
       return fiat
     }
   }
+  // -------------------------------------------
+
+  // Abstract into utility function ----------
   // Try to get country from language (e.g., fr -> FR)
   const countryFromLang =
     languageToCountry[locale] || languageToCountry[parts[0]]
@@ -266,6 +272,7 @@ export const getUserFiatCurrency = (): string => {
       return fiat
     }
   }
+  // -------------------------------------------
 
   // Default to USD
   return 'USD'
@@ -292,6 +299,7 @@ export const formatFiatCurrency = (
   const locale = navigator.language || 'en-US'
 
   // Some currencies typically don't show decimal places
+  // NOTE: This can be in a separate config file for currencies.
   const noDecimalCurrencies = ['JPY', 'KRW', 'IDR', 'TWD', 'VND', 'CLP', 'COP']
 
   return new Intl.NumberFormat(locale, {
