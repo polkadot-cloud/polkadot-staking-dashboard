@@ -48,43 +48,6 @@ export const Wrapper = styled.div<MinimisedProps>`
     &:first-child {
       flex-grow: 1;
     }
-    /* Footer */
-    &:last-child {
-      display: flex;
-      flex-flow: ${(props) => (props.$minimised ? 'column wrap' : 'row wrap')};
-      align-items: center;
-      padding-top: 0.5rem;
-      padding-left: ${(props) => (props.$minimised ? 0 : '0.25rem')};
-      justify-content: ${(props) =>
-        props.$minimised ? 'center' : 'flex-start'};
-
-      button {
-        color: var(--text-color-secondary);
-        position: relative;
-        transition: color var(--transition-duration);
-        margin-top: ${(props) => (props.$minimised ? '1rem' : 0)};
-        margin-right: ${(props) => (props.$minimised ? 0 : '0.75rem')};
-        opacity: 0.75;
-        padding: 0.1rem;
-        width: 1.5rem;
-        height: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        path {
-          fill: var(--text-color-secondary);
-        }
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-
     > .inner {
       padding-left: ${(props) => (props.$minimised ? '0.1rem' : '0.25rem')};
     }

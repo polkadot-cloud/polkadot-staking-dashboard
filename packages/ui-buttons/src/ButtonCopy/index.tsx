@@ -14,7 +14,7 @@ export const ButtonCopy = ({
   onClick,
   value,
   size,
-  tooltipPortalContainer,
+  portalContainer,
   xMargin,
   tooltipText,
 }: ButtonCopyProps) => {
@@ -58,7 +58,7 @@ export const ButtonCopy = ({
   return (
     <Tooltip
       text={text}
-      container={tooltipPortalContainer}
+      container={portalContainer}
       onTriggerClick={(event) => {
         event.preventDefault()
       }}

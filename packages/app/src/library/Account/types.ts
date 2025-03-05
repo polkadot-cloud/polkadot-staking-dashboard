@@ -5,8 +5,9 @@ import type { ActivePool, MaybeAddress } from 'types'
 
 export interface AccountProps {
   value: MaybeAddress
-  label?: string
   readOnly?: boolean
+  onClick?: () => void
+  className?: string
 }
 
 export interface PoolAccountProps {

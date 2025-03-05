@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import extensions from '@w3ux/extension-assets'
 import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
@@ -11,7 +10,7 @@ import { ActionItem } from 'library/ActionItem'
 import { SelectItems } from 'library/SelectItems'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonPrimaryInvert, ButtonTab } from 'ui-buttons'
+import { ButtonTab } from 'ui-buttons'
 import {
   CustomHeader,
   FixedTitle,
@@ -33,7 +32,7 @@ import { ExtensionsWrapper } from './Wrappers'
 export const Connect = () => {
   const { t } = useTranslation('modals')
   const { extensionsStatus } = useExtensions()
-  const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal
+  const { setModalHeight, modalMaxHeight } = useOverlay().modal
 
   // Whether the app is running on mobile.
   const isMobile = mobileCheck()
@@ -160,13 +159,6 @@ export const Connect = () => {
         <CustomHeader>
           <div>
             <h1>{t('connect')}</h1>
-            <ButtonPrimaryInvert
-              text={t('goToAccounts')}
-              iconRight={faChevronRight}
-              iconTransform="shrink-3"
-              onClick={() => replaceModal({ key: 'Accounts' })}
-              marginLeft
-            />
           </div>
           <Section type="tab">
             <ButtonTab

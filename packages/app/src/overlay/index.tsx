@@ -27,9 +27,9 @@ import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
 import { ManagePool } from './modals/ManagePool'
 import { Networks } from './modals/Networks'
+import { Plugins } from './modals/Plugins'
 import { RewardCalculator } from './modals/RewardCalculator'
 import { SelectCurrency } from './modals/SelectCurrency'
-import { Settings } from './modals/Settings'
 import { StopNominations } from './modals/StopNominations'
 import { Unbond } from './modals/Unbond'
 import { UnlockChunks } from './modals/UnlockChunks'
@@ -65,7 +65,7 @@ export const Overlays = () => {
         Networks,
         RewardCalculator,
         SelectCurrency,
-        Settings,
+        Plugins,
         ValidatorGeo,
         UnlockChunks,
         Unstake,
