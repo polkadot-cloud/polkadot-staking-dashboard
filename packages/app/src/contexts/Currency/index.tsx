@@ -1,7 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getUserFiatCurrency, setLocalCurrency } from 'locales'
+import { FIAT_CURRENCY_KEY } from 'consts'
+import { SupportedCurrencies } from 'consts/currencies'
+import { getUserFiatCurrency } from 'locales'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useState } from 'react'
 import { defaultCurrencyContext } from './defaults'
@@ -17,7 +19,9 @@ export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   const [currency, setCurrencyState] = useState<string>(getUserFiatCurrency())
 
   const setCurrency = (newCurrency: string) => {
-    setLocalCurrency(newCurrency)
+    if (Object.keys(SupportedCurrencies).includes(currency)) {
+      localStorage.setItem(FIAT_CURRENCY_KEY, currency)
+    }
     setCurrencyState(newCurrency)
   }
   return (
