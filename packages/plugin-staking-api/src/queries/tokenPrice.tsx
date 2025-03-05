@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
-import { getUserFiatCurrency } from '../../../locales/src/util'
 import { client } from '../Client'
 import type { TokenPrice, UseTokenPriceResult } from '../types'
 
@@ -214,7 +213,8 @@ const calculateLocalPrice = (
  * 2. For non-USD currencies, fetches USDT-fiat conversion (e.g. USDTGBP for UK users)
  * 3. Calculates price based on the correct direction of exchange rate */
 export const fetchLocalTokenPrice = async (
-  token: string
+  token: string,
+  currency: string
 ): Promise<{ price: number; change: number } | null> => {
   // Always fetch base USDT price
   const baseTicker = token + 'USDT'
@@ -225,16 +225,13 @@ export const fetchLocalTokenPrice = async (
     return null
   }
 
-  // Get user's fiat currency preference
-  const fiat = getUserFiatCurrency()
-
   // If no fiat preference or USD, just return the USDT price
-  if (!fiat || fiat === 'USD') {
+  if (!currency || currency === 'USD') {
     return baseData
   }
 
   // For non-USD currencies, get the USDT to fiat conversion rate
-  const crossTicker = 'USDT' + fiat
+  const crossTicker = 'USDT' + currency
   const crossData = await fetchTokenPrice(crossTicker)
 
   // If we can't get the conversion rate, fall back to the USDT price
@@ -243,7 +240,11 @@ export const fetchLocalTokenPrice = async (
   }
 
   // Calculate the final price using our enhanced logic
-  const finalPrice = calculateLocalPrice(baseData.price, crossData.price, fiat)
+  const finalPrice = calculateLocalPrice(
+    baseData.price,
+    crossData.price,
+    currency
+  )
 
   return {
     price: finalPrice,

@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
-import { getUserFiatCurrency } from 'locales/src/util'
 
 export const TokenPrice = () => {
   const {
@@ -11,8 +11,8 @@ export const TokenPrice = () => {
       api: { unit },
     },
   } = useNetwork()
+  const { currency } = useCurrency()
   const { price, change } = useTokenPrices()
-  const fiat = getUserFiatCurrency() || 'USD'
 
   return (
     <>
@@ -20,7 +20,7 @@ export const TokenPrice = () => {
         1 {unit} /{' '}
         {new Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: fiat,
+          currency,
         }).format(price)}
       </div>
       <div className="stat">

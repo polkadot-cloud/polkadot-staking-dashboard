@@ -11,6 +11,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useTokenPrices } from 'contexts/TokenPrice'
@@ -18,7 +19,7 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { formatFiatCurrency, getUserFiatCurrency } from 'locales/src/util'
+import { formatFiatCurrency } from 'locales/src/util'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -44,6 +45,7 @@ export const Overview = (props: PayoutHistoryProps) => {
       brand: { token: Token },
     },
   } = useNetwork()
+  const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
   const { avgCommission } = useValidators()
@@ -76,9 +78,6 @@ export const Overview = (props: PayoutHistoryProps) => {
     ? dailyRewardAfterCommission
     : annualRewardBase / 365
 
-  // Get the user's preferred currency
-  const userCurrency = getUserFiatCurrency() || 'USD'
-
   // Format the currency with user's locale and currency preference
   const formatLocalCurrency = (value: number) => formatFiatCurrency(value)
 
@@ -93,7 +92,7 @@ export const Overview = (props: PayoutHistoryProps) => {
               key: 'RewardCalculator',
               size: 'xs',
               options: {
-                currency: userCurrency,
+                currency,
                 symbol: '', // Symbol will be provided by formatFiatCurrency
               },
             })
@@ -160,7 +159,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                       <Token />
                       {unit}
                     </h4>,
-                    <h4>{userCurrency}</h4>,
+                    <h4>{currency}</h4>,
                   ]}
                 />
               </RewardGrid.Head>

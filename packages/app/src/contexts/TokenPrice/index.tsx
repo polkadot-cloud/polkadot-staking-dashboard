@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { isCustomEvent } from 'controllers/utils'
@@ -24,12 +25,15 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     network,
     networkData: { unit },
   } = useNetwork()
+  const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
+
+  // Store token price and change
   const [tokenPrice, setTokenPrice] =
     useState<TokenPricesContextInterface>(defaultTokenPrice)
 
   const getTokenPrice = async () => {
-    const result = await fetchLocalTokenPrice(unit)
+    const result = await fetchLocalTokenPrice(unit, currency)
     setTokenPrice(result || defaultTokenPrice)
   }
 
@@ -50,7 +54,7 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return () => clearInterval(interval)
-  }, [network, pluginEnabled('staking_api')])
+  }, [network, currency, pluginEnabled('staking_api')])
 
   useEventListener(
     'online-status',

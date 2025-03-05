@@ -257,7 +257,6 @@ export const getUserFiatCurrency = (): string => {
       return fiat
     }
   }
-
   // Try to get country from language (e.g., fr -> FR)
   const countryFromLang =
     languageToCountry[locale] || languageToCountry[parts[0]]
@@ -276,7 +275,7 @@ export const getUserFiatCurrency = (): string => {
  * Set the user's preferred fiat currency
  * @param currency The currency code to set (e.g., 'USD', 'EUR')
  */
-export const setUserFiatCurrency = (currency: string): void => {
+export const setLocalCurrency = (currency: string): void => {
   if (SUPPORTED_CURRENCIES.includes(currency)) {
     localStorage.setItem(FIAT_CURRENCY_KEY, currency)
   }

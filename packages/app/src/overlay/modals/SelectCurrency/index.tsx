@@ -4,12 +4,9 @@
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CurrencySVG from 'assets/svg/icons/dollarsign.svg?react'
-import {
-  SUPPORTED_CURRENCIES,
-  getUserFiatCurrency,
-  setUserFiatCurrency,
-} from 'locales/src/util'
-import { useEffect, useState } from 'react'
+import { useCurrency } from 'contexts/Currency'
+import { SUPPORTED_CURRENCIES } from 'locales/src/util'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
 import { usePlugins } from '../../../contexts/Plugins'
@@ -25,25 +22,21 @@ import {
 export const SelectCurrency = () => {
   const { t } = useTranslation('modals')
   const { pluginEnabled } = usePlugins()
+  const { currency, setCurrency } = useCurrency()
 
   // Get current currency
-  const [currentCurrency, setCurrentCurrency] = useState<string>('')
+  const [currentCurrency, setCurrentCurrency] = useState<string>(currency)
 
   // Search term state
   const [searchTerm, setSearchTerm] = useState<string>('')
-
-  // Get current currency on mount
-  useEffect(() => {
-    setCurrentCurrency(getUserFiatCurrency())
-  }, [])
 
   // Whether Staking API is enabled (required for currency conversion)
   const stakingApiEnabled = pluginEnabled('staking_api')
 
   // Handle currency selection
-  const handleSelect = (currency: string) => {
-    setUserFiatCurrency(currency)
-    setCurrentCurrency(currency)
+  const handleSelect = (c: string) => {
+    setCurrency(c)
+    setCurrentCurrency(c)
 
     // Reload page to apply changes throughout the app
     window.location.reload()
@@ -54,12 +47,12 @@ export const SelectCurrency = () => {
     setSearchTerm(e.target.value)
   }
 
-  const filteredCurrencies = SUPPORTED_CURRENCIES.filter((currency) => {
+  const filteredCurrencies = SUPPORTED_CURRENCIES.filter((c) => {
     const searchTermLower = searchTerm.toLowerCase()
     // Get localized currency info
-    const currencyName = t(`currencies.${currency}.name`).toLowerCase()
-    const currencySymbol = t(`currencies.${currency}.symbol`).toLowerCase()
-    const currencyCode = currency.toLowerCase()
+    const currencyName = t(`currencies.${c}.name`).toLowerCase()
+    const currencySymbol = t(`currencies.${c}.symbol`).toLowerCase()
+    const currencyCode = c.toLowerCase()
 
     return (
       currencyCode.includes(searchTermLower) ||
@@ -100,9 +93,9 @@ export const SelectCurrency = () => {
           <CurrencyListWrapper>
             <div className="items">
               {sortedCurrencies.length > 0 ? (
-                sortedCurrencies.map((currency) => {
+                sortedCurrencies.map((c) => {
                   // Flag to determine if this currency is selected
-                  const isSelected = currentCurrency === currency
+                  const isSelected = currentCurrency === c
 
                   // Disable selection if staking API is not enabled
                   const disabled = !stakingApiEnabled
@@ -111,16 +104,16 @@ export const SelectCurrency = () => {
                     <CurrencyButton
                       type="button"
                       $connected={isSelected}
-                      onClick={() => !disabled && handleSelect(currency)}
-                      key={`select_${currency}`}
+                      onClick={() => !disabled && handleSelect(c)}
+                      key={`select_${c}`}
                       disabled={disabled}
                     >
                       <span className="currency-symbol">
-                        {t(`currencies.${currency}.symbol`)}
+                        {t(`currencies.${c}.symbol`)}
                       </span>
-                      <span className="currency-code">{currency}</span>
+                      <span className="currency-code">{c}</span>
                       <span className="currency-name">
-                        {t(`currencies.${currency}.name`)}
+                        {t(`currencies.${c}.name`)}
                       </span>
                       {isSelected && (
                         <span className="selected">{t('selected')}</span>
