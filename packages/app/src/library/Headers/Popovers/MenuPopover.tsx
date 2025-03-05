@@ -3,6 +3,7 @@
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
+  faDollarSign,
   faExternalLinkAlt,
   faPuzzlePiece,
 } from '@fortawesome/free-solid-svg-icons'
@@ -71,6 +72,19 @@ export const MenuPopover = ({
         </div>
         <div>
           <h3>{t('language', { ns: 'app' })}</h3>
+        </div>
+      </MenuItemButton>
+      <MenuItemButton
+        onClick={() => {
+          setOpen(false)
+          openModal({ key: 'SelectCurrency' })
+        }}
+      >
+        <div>
+          <FontAwesomeIcon icon={faDollarSign} transform="grow-2" />
+        </div>
+        <div>
+          <h3>{t('currency', { ns: 'app' })}</h3>
         </div>
       </MenuItemButton>
       <MenuItemButton
