@@ -4654,13 +4654,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sort-json@npm:^2":
-  version: 2.0.3
-  resolution: "@types/sort-json@npm:2.0.3"
-  checksum: 10c0/2775038deb38448493c2287b1ddaf9e4f0dda84a15ab297f7974f3077f13981c0b2e1eb086c8c0ad93bcfcc2726d33bbc3bf9ec54d9244b6649d3461e64943ec
-  languageName: node
-  linkType: hard
-
 "@types/stylis@npm:4.2.5":
   version: 4.2.5
   resolution: "@types/stylis@npm:4.2.5"
@@ -6612,13 +6605,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"detect-indent@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "detect-indent@npm:5.0.0"
-  checksum: 10c0/58d985dd5b4d5e5aad6fe7d8ecc74538fa92c807c894794b8505569e45651bf01a38755b65d9d3d17e512239a26d3131837cbef43cf4226968d5abf175bbcc9d
-  languageName: node
-  linkType: hard
-
 "detect-indent@npm:^7.0.1":
   version: 7.0.1
   resolution: "detect-indent@npm:7.0.1"
@@ -6630,13 +6616,6 @@ __metadata:
   version: 2.0.3
   resolution: "detect-libc@npm:2.0.3"
   checksum: 10c0/88095bda8f90220c95f162bf92cad70bd0e424913e655c20578600e35b91edc261af27531cf160a331e185c0ced93944bc7e09939143225f56312d7fd800fdb7
-  languageName: node
-  linkType: hard
-
-"detect-newline@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "detect-newline@npm:2.1.0"
-  checksum: 10c0/cb75c36c59da87115f49fe4aa22507f6c5271bac94c63a056af5d9dea2919208de57b6f0fb4543d6cf635965d10b42729d443589caa302cc76e1fa9f48e55f05
   languageName: node
   linkType: hard
 
@@ -10044,7 +10023,6 @@ __metadata:
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.2.25"
     "@types/react-helmet": "npm:^6.1.11"
-    "@types/sort-json": "npm:^2"
     "@typescript-eslint/parser": "npm:^8.25.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/hooks": "npm:^1.4.0"
@@ -10073,7 +10051,6 @@ __metadata:
     react-error-boundary: "npm:^4.0.13"
     react-i18next: "npm:^15.4.0"
     sass: "npm:1.77.6"
-    sort-json: "npm:^2.0.1"
     styled-components: "npm:^6.1.13"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.25.0"
@@ -11417,19 +11394,6 @@ __metadata:
   dependencies:
     atomic-sleep: "npm:^1.0.0"
   checksum: 10c0/6b40f2e91a999819b1dc24018a5d1c8b74e66e5d019eabad17d5b43fc309b32255b7c405ed6ec885693c8f2b969099ce96aeefde027180928bc58c034234a86d
-  languageName: node
-  linkType: hard
-
-"sort-json@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "sort-json@npm:2.0.1"
-  dependencies:
-    detect-indent: "npm:^5.0.0"
-    detect-newline: "npm:^2.1.0"
-    minimist: "npm:^1.2.0"
-  bin:
-    sort-json: app/cmd.js
-  checksum: 10c0/a9db6c13c715f6eb3bafb1acc3891909220f099e3bc32ae06328c67c0e0c2f1f05307df72551f69bc5644b6d16423e6934e1e536e96f4e167789723c20c5461b
   languageName: node
   linkType: hard
 
