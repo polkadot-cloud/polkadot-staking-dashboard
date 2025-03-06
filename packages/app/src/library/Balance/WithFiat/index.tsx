@@ -29,9 +29,12 @@ export const WithFiat = ({
 
   const showFiat = pluginEnabled('staking_api') && network !== 'westend'
 
+  const valueFormatted =
+    String(value) === '0' ? 0 : new BigNumber(value).toFormat(units)
+
   // If the plugin is not enabled, or the network is Westend, we don't show the fiat value
   if (!showFiat) {
-    return <Value tokenBalance={value} currency={currency} />
+    return <Value tokenBalance={valueFormatted} currency={currency} />
   }
 
   // Show token balance with fiat value
@@ -39,13 +42,13 @@ export const WithFiat = ({
     <TokenFiat Token={Token}>
       <h1>
         <Odometer
-          value={minDecimalPlaces(new BigNumber(value).toFormat(units), 2)}
+          value={minDecimalPlaces(valueFormatted, 2)}
           zeroDecimals={2}
         />
         {label && <CardLabel>&nbsp;{label}</CardLabel>}
       </h1>
       <h3>
-        <Value tokenBalance={value} currency={currency} />
+        <Value tokenBalance={valueFormatted} currency={currency} />
       </h3>
     </TokenFiat>
   )
