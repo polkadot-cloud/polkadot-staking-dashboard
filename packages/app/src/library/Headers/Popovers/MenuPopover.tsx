@@ -6,6 +6,8 @@ import {
   faDollarSign,
   faExternalLinkAlt,
   faPuzzlePiece,
+  faToggleOff,
+  faToggleOn,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
@@ -15,7 +17,6 @@ import { GitHubURl } from 'consts'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Switch } from 'ui-core/input'
 import { MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 
@@ -44,7 +45,15 @@ export const MenuPopover = ({
         <div>
           <h3>{t('darkMode', { ns: 'app' })}</h3>
           <div>
-            <Switch checked={mode === 'dark'} />
+            <FontAwesomeIcon
+              icon={mode === 'dark' ? faToggleOn : faToggleOff}
+              color={
+                mode === 'dark'
+                  ? 'var(--accent-color-primary)'
+                  : 'var(--text-color-tertiary)'
+              }
+              transform="grow-8"
+            />
           </div>
         </div>
       </MenuItemButton>
