@@ -2,43 +2,39 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
-import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
+import { Balance } from 'library/Balance'
 import { BarSegment } from 'library/BarChart/BarSegment'
 import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
-import { FiatValue } from 'library/FiatValue'
 import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
-import { CardHeader, CardLabel } from 'ui-core/base'
+import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
   const {
-    network,
     networkData: {
       units,
       unit,
       brand: { token: Token },
     },
   } = useNetwork()
-  const { plugins } = usePlugins()
   const { openModal } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
   const { getBalance, getLocks } = useBalances()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
+  const currency = 'USD'
 
   const balance = getBalance(activeAccount)
   const allTransferOptions = getTransferOptions(activeAccount)
@@ -136,21 +132,11 @@ export const BalanceChart = () => {
     <>
       <CardHeader>
         <h4>{t('balance')}</h4>
-        <h2>
-          <Token />
-          <Odometer
-            value={minDecimalPlaces(totalBalance.toFormat(), 2)}
-            zeroDecimals={2}
-          />
-          <CardLabel>
-            {plugins.includes('staking_api') && network !== 'westend' ? (
-              <FiatValue
-                tokenBalance={totalBalance.toNumber()}
-                currency="USD"
-              />
-            ) : null}
-          </CardLabel>
-        </h2>
+        <Balance.WithFiat
+          Token={<Token />}
+          value={totalBalance.toNumber()}
+          currency={currency}
+        />
       </CardHeader>
       <BarChartWrapper>
         <Legend>

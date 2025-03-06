@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
 
-export const FiatValue = ({
+export const Value = ({
   tokenBalance,
   currency,
 }: {

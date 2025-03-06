@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
-import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -12,6 +10,7 @@ import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
 import { useSyncing } from 'hooks/useSyncing'
+import { Balance } from 'library/Balance'
 import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
@@ -19,7 +18,7 @@ import { DefaultLocale, locales } from 'locales'
 import type { RewardResult } from 'plugin-staking-api/types'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CardHeader, CardLabel } from 'ui-core/base'
+import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
@@ -41,6 +40,7 @@ export const Payouts = () => {
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
 
+  const currency = 'USD'
   const [lastReward, setLastReward] = useState<RewardResult>()
   // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement>(null)
@@ -63,31 +63,25 @@ export const Payouts = () => {
     }
   }
 
+  const lastRewardUnit = planckToUnitBn(
+    new BigNumber(lastReward?.reward || 0),
+    units
+  ).toNumber()
+
   return (
     <>
       <CardHeader>
         <h4>{t('recentPayouts')}</h4>
-        <h2>
-          <Token />
-          <Odometer
-            value={minDecimalPlaces(
-              lastReward === undefined
-                ? '0'
-                : planckToUnitBn(
-                    new BigNumber(lastReward?.reward || 0),
-                    units
-                  ).toFormat(),
-              2
-            )}
-          />
-          <CardLabel>
-            {lastReward === undefined ? (
-              ''
-            ) : (
-              <>&nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}</>
-            )}
-          </CardLabel>
-        </h2>
+        <Balance.WithFiat
+          Token={<Token />}
+          value={lastRewardUnit}
+          currency={currency}
+          label={
+            lastReward === undefined
+              ? undefined
+              : formatDistance(formatFrom, formatTo, formatOpts)
+          }
+        />
       </CardHeader>
       <div className="inner" ref={graphInnerRef} style={{ minHeight }}>
         {!pluginEnabled('staking_api') ? (
