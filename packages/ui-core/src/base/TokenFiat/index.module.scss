@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   margin-top: 0.35rem;
-  margin-left: 0.3rem;
+  margin-left: 0.25rem;
 
   > div {
     &:first-child {
@@ -18,8 +18,8 @@
       > h1 {
         color: var(--text-color-secondary);
         font-family: InterBold, sans-serif;
-        font-size: 1.45rem;
-        margin-bottom: 0.3rem;
+        font-size: 1.55rem;
+        margin-bottom: 0.4rem;
         display: flex;
         align-items: center;
       }
