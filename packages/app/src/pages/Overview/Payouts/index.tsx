@@ -2,26 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
-import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
-import { useTokenPrices } from 'contexts/TokenPrice'
 import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
 import { useSyncing } from 'hooks/useSyncing'
+import { Balance } from 'library/Balance'
 import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
-import { formatFiatCurrency } from 'locales/src/util'
 import type { RewardResult } from 'plugin-staking-api/types'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CardHeader, CardLabel } from 'ui-core/base'
+import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
@@ -38,8 +36,8 @@ export const Payouts = () => {
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
+  const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
-  const { price: tokenPrice } = useTokenPrices()
 
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
@@ -66,44 +64,25 @@ export const Payouts = () => {
     }
   }
 
-  // Calculate the fiat value of the reward
-  const rewardAmount =
-    lastReward === undefined
-      ? new BigNumber(0)
-      : planckToUnitBn(new BigNumber(lastReward?.reward || 0), units)
-
-  // Get formatted amount
-  const formattedAmount = minDecimalPlaces(rewardAmount.toFormat(), 2)
+  const lastRewardUnit = planckToUnitBn(
+    new BigNumber(lastReward?.reward || 0),
+    units
+  ).toNumber()
 
   return (
     <>
       <CardHeader>
         <h4>{t('recentPayouts')}</h4>
-        <h2>
-          <Token />
-          <Odometer value={formattedAmount} zeroDecimals={2} />
-          <CardLabel>
-            {lastReward === undefined ? (
-              ''
-            ) : (
-              <>
-                &nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}
-                {/* TODO: Reformat and check if not westend */}
-                {rewardAmount.isGreaterThan(0) && tokenPrice > 0 && (
-                  <span style={{ marginLeft: '0.5rem', opacity: 0.75 }}>
-                    {/* <FiatValue
-                      tokenBalance={rewardAmount}
-                      currency={currency}
-                    /> */}
-                    {formatFiatCurrency(
-                      rewardAmount.multipliedBy(tokenPrice).toNumber()
-                    )}
-                  </span>
-                )}
-              </>
-            )}
-          </CardLabel>
-        </h2>
+        <Balance.WithFiat
+          Token={<Token />}
+          value={lastRewardUnit}
+          currency={currency}
+          label={
+            lastReward === undefined
+              ? undefined
+              : formatDistance(formatFrom, formatTo, formatOpts)
+          }
+        />
       </CardHeader>
       <div className="inner" ref={graphInnerRef} style={{ minHeight }}>
         {!pluginEnabled('staking_api') ? (

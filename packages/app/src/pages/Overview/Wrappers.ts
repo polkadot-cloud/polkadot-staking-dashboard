@@ -17,7 +17,7 @@ export const MoreWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 2.5rem;
+  margin-top: 2.25rem;
 
   @media (max-width: ${SectionFullWidthThreshold}px) {
     margin-top: 1.5rem;

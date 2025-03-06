@@ -24,9 +24,6 @@ export const SelectCurrency = () => {
   const { pluginEnabled } = usePlugins()
   const { currency, setCurrency } = useCurrency()
 
-  // Get current currency
-  const [currentCurrency, setCurrentCurrency] = useState<string>(currency)
-
   // Search term state
   const [searchTerm, setSearchTerm] = useState<string>('')
 
@@ -36,10 +33,6 @@ export const SelectCurrency = () => {
   // Handle currency selection
   const handleSelect = (c: string) => {
     setCurrency(c)
-    setCurrentCurrency(c)
-
-    // Reload page to apply changes throughout the app
-    window.location.reload()
   }
 
   // Handle search input change
@@ -63,10 +56,10 @@ export const SelectCurrency = () => {
 
   // Sort currencies - put the selected one first, then sort alphabetically
   const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
-    if (a === currentCurrency) {
+    if (a === currency) {
       return -1
     }
-    if (b === currentCurrency) {
+    if (b === currency) {
       return 1
     }
     return a.localeCompare(b)
@@ -95,7 +88,7 @@ export const SelectCurrency = () => {
               {sortedCurrencies.length > 0 ? (
                 sortedCurrencies.map((c) => {
                   // Flag to determine if this currency is selected
-                  const isSelected = currentCurrency === c
+                  const isSelected = currency === c
 
                   // Disable selection if staking API is not enabled
                   const disabled = !stakingApiEnabled

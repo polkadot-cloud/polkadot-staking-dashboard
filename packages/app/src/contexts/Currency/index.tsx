@@ -18,11 +18,11 @@ export const useCurrency = () => useContext(CurrencyContext)
 export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   const [currency, setCurrencyState] = useState<string>(getUserFiatCurrency())
 
-  const setCurrency = (newCurrency: string) => {
-    if (Object.keys(SupportedCurrencies).includes(currency)) {
-      localStorage.setItem(FIAT_CURRENCY_KEY, currency)
+  const setCurrency = (c: string) => {
+    setCurrencyState(c)
+    if (Object.keys(SupportedCurrencies).includes(c)) {
+      localStorage.setItem(FIAT_CURRENCY_KEY, c)
     }
-    setCurrencyState(newCurrency)
   }
   return (
     <CurrencyContext.Provider
