@@ -4983,10 +4983,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-odometer@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@w3ux/react-odometer@npm:1.1.0"
-  checksum: 10c0/8921d594728f9d96d4727c452b508c0813230023d76aecd22078c57c9b06b979200cc1c0ebf2ad0d620389215d3d329636132ab5440308a6bd991516ea7d8720
+"@w3ux/react-odometer@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@w3ux/react-odometer@npm:1.1.1"
+  checksum: 10c0/27f9e6970f230f9f0b594a0caddd20aac3205ad784cef5f4a5b4ff0795bff5e07fc4a84d2949a1fbc9389decac76f9cfc9ab29b63b91cafaabeaa5b9192d3f4a
   languageName: node
   linkType: hard
 
@@ -5572,7 +5572,7 @@ __metadata:
     "@w3ux/extension-assets": "npm:^1.0.0"
     "@w3ux/factories": "npm:^1.0.0"
     "@w3ux/react-connect-kit": "npm:^2.1.3"
-    "@w3ux/react-odometer": "npm:^1.1.0"
+    "@w3ux/react-odometer": "npm:^1.1.1"
     "@w3ux/validator-assets": "npm:^0.3.3"
     "@zondax/ledger-substrate": "npm:^1.0.1"
     assets: "workspace:*"
