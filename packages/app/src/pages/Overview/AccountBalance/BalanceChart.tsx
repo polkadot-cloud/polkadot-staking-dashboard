@@ -12,10 +12,10 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
+import { Balance } from 'library/Balance'
 import { BarSegment } from 'library/BarChart/BarSegment'
 import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
-import { FiatValue } from 'library/FiatValue'
 import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
 import { CardHeader, CardLabel } from 'ui-core/base'
@@ -144,7 +144,7 @@ export const BalanceChart = () => {
           />
           <CardLabel>
             {plugins.includes('staking_api') && network !== 'westend' ? (
-              <FiatValue
+              <Balance.Value
                 tokenBalance={totalBalance.toNumber()}
                 currency="USD"
               />
