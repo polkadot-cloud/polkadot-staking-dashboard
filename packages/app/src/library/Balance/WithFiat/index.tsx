@@ -42,7 +42,6 @@ export const WithFiat = ({
           value={minDecimalPlaces(new BigNumber(value).toFormat(units), 2)}
           zeroDecimals={2}
         />
-
         {label && <CardLabel>&nbsp;{label}</CardLabel>}
       </h1>
       <h3>
