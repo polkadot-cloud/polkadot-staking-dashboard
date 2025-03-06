@@ -5,12 +5,12 @@ import styled from 'styled-components'
 
 export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
   padding: ${(props) => (props.$lessPadding ? '0' : '0 0.5rem')};
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   width: 100%;
 
   .available {
     display: flex;
-    margin-top: 2.7rem;
+    margin-top: 2.25rem;
     width: 100%;
 
     > div {

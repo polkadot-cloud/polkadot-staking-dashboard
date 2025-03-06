@@ -17,8 +17,8 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { FiatValue } from 'library/FiatValue'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -121,7 +121,10 @@ export const Overview = (props: PayoutHistoryProps) => {
                   zeroDecimals={2}
                 />
                 <CardLabel>
-                  <FiatValue tokenBalance={currentStake} currency={currency} />
+                  <Balance.Value
+                    tokenBalance={currentStake}
+                    currency={currency}
+                  />
                 </CardLabel>
               </h2>
             </CardHeader>

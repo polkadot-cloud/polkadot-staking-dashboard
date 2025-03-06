@@ -4,11 +4,8 @@
 .tokenFiat {
   display: flex;
   align-items: center;
-  color: var(--text-color-secondary);
-  font-family: InterSemiBold, sans-serif;
   margin-top: 0.35rem;
-  margin-left: 0.4rem;
-  font-size: 1.1rem;
+  margin-left: 0.25rem;
 
   > div {
     &:first-child {
@@ -19,10 +16,17 @@
       padding-left: 0.8rem;
       flex: 1;
       > h1 {
-        margin-bottom: 0.5rem;
+        color: var(--text-color-secondary);
+        font-family: InterBold, sans-serif;
+        font-size: 1.4rem;
+        margin-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
       }
       > h3 {
-        color: var(--text-color-tertiary);
+        color: var(--text-color-secondary);
+        font-family: Inter, sans-serif;
+        font-size: 1.2rem;
       }
     }
   }

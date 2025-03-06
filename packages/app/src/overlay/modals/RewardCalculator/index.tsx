@@ -3,18 +3,15 @@
 
 import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
-import { FiatValue } from 'library/FiatValue'
+import { Balance } from 'library/Balance'
 import { Title } from 'library/Modal/Title'
 import type { ChangeEvent } from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CardHeader, Separator, TokenFiat } from 'ui-core/base'
+import { CardHeader, Separator } from 'ui-core/base'
 import { TokenInput } from 'ui-core/input'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
@@ -27,7 +24,6 @@ export const RewardCalculator = () => {
   const {
     networkData: {
       unit,
-      units,
       brand: { token: Token },
     },
   } = useNetwork()
@@ -114,60 +110,33 @@ export const RewardCalculator = () => {
             <h4>
               {t('daily', { ns: 'pages' })} {t('rewards', { ns: 'modals' })}
             </h4>
-            <TokenFiat Token={<Token />}>
-              <h1>
-                <Odometer
-                  value={minDecimalPlaces(
-                    new BigNumber(dailyReward).toFormat(units),
-                    2
-                  )}
-                  zeroDecimals={2}
-                />
-              </h1>
-              <h3>
-                <FiatValue tokenBalance={dailyReward} currency={currency} />
-              </h3>
-            </TokenFiat>
+            <Balance.WithFiat
+              Token={<Token />}
+              value={dailyReward}
+              currency={currency}
+            />
           </CardHeader>
           <Separator lg />
           <CardHeader>
             <h4>
               {t('monthly', { ns: 'pages' })} {t('rewards', { ns: 'modals' })}
             </h4>
-            <TokenFiat Token={<Token />}>
-              <h1>
-                <Odometer
-                  value={minDecimalPlaces(
-                    new BigNumber(monthlyReward).toFormat(units),
-                    2
-                  )}
-                  zeroDecimals={2}
-                />
-              </h1>
-              <h3>
-                <FiatValue tokenBalance={monthlyReward} currency={currency} />
-              </h3>
-            </TokenFiat>
+            <Balance.WithFiat
+              Token={<Token />}
+              value={monthlyReward}
+              currency={currency}
+            />
           </CardHeader>
           <Separator lg />
           <CardHeader>
             <h4>
               {t('annual', { ns: 'pages' })} {t('rewards', { ns: 'modals' })}
             </h4>
-            <TokenFiat Token={<Token />}>
-              <h1>
-                <Odometer
-                  value={minDecimalPlaces(
-                    new BigNumber(annualReward).toFormat(units),
-                    2
-                  )}
-                  zeroDecimals={2}
-                />
-              </h1>
-              <h3>
-                <FiatValue tokenBalance={annualReward} currency={currency} />
-              </h3>
-            </TokenFiat>
+            <Balance.WithFiat
+              Token={<Token />}
+              value={annualReward}
+              currency={currency}
+            />
           </CardHeader>
           <Separator transparent style={{ marginTop: '2.5rem' }} />
         </ContentWrapper>
