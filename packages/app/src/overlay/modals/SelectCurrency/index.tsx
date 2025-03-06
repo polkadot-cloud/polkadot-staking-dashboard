@@ -9,6 +9,7 @@ import { useCurrency } from 'contexts/Currency'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
+import { useOverlay } from 'ui-overlay'
 import { usePlugins } from '../../../contexts/Plugins'
 import { Title } from '../../../library/Modal/Title'
 import { ContentWrapper } from '../Networks/Wrapper'
@@ -22,6 +23,7 @@ import {
 export const SelectCurrency = () => {
   const { t } = useTranslation('modals')
   const { pluginEnabled } = usePlugins()
+  const { setModalStatus } = useOverlay().modal
   const { currency, setCurrency } = useCurrency()
 
   // Search term state
@@ -33,6 +35,7 @@ export const SelectCurrency = () => {
   // Handle currency selection
   const handleSelect = (c: string) => {
     setCurrency(c)
+    setModalStatus('closing')
   }
 
   // Handle search input change
