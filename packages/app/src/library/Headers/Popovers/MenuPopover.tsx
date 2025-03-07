@@ -14,6 +14,7 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
+import { useCurrency } from 'contexts/Currency'
 import { usePlugins } from 'contexts/Plugins'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
@@ -27,6 +28,8 @@ export const MenuPopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
+  const { currency } = useCurrency()
+  const { i18n } = useTranslation()
   const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
@@ -84,6 +87,11 @@ export const MenuPopover = ({
         <div>
           <h3>{t('language', { ns: 'app' })}</h3>
         </div>
+        <div>
+          <div>
+            <h4>{i18n.language.toUpperCase()}</h4>
+          </div>
+        </div>
       </MenuItemButton>
       {pluginEnabled('staking_api') && (
         <MenuItemButton
@@ -97,6 +105,11 @@ export const MenuPopover = ({
           </div>
           <div>
             <h3>{t('currency', { ns: 'app' })}</h3>
+          </div>
+          <div>
+            <div>
+              <h4>{currency}</h4>
+            </div>
           </div>
         </MenuItemButton>
       )}
