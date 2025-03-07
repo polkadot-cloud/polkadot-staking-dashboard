@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { useTokenPrices } from 'contexts/TokenPrice'
-import { formatFiatCurrency } from 'locales/src/util'
+import { formatFiatCurrency } from 'locales/util'
 
 export const Value = ({ totalBalance }: { totalBalance: BigNumber }) => {
   const { price } = useTokenPrices()

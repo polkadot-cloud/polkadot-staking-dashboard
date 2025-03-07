@@ -66,5 +66,4 @@ if (dynamicLoad) {
   doDynamicImport(lng, i18next)
 }
 
-export * from './util'
 export { i18next }

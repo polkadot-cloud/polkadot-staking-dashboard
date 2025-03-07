@@ -3,7 +3,8 @@
 
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import { Title } from 'library/Modal/Title'
-import { changeLanguage, locales } from 'locales'
+import { locales } from 'locales'
+import { changeLanguage } from 'locales/util'
 import { useTranslation } from 'react-i18next'
 import { ButtonModal } from 'ui-buttons'
 import { ButtonList, Padding } from 'ui-core/modal'

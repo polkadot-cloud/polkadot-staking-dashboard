@@ -3,7 +3,7 @@
 
 import { FiatCurrencyKey } from 'consts'
 import { SupportedCurrencies } from 'consts/currencies'
-import { getUserFiatCurrency } from 'locales'
+import { getUserFiatCurrency } from 'locales/util'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useState } from 'react'
 import { defaultCurrencyContext } from './defaults'

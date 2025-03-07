@@ -4,7 +4,7 @@
 import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useTokenPrices } from 'contexts/TokenPrice'
-import { formatFiatCurrency } from 'locales/src/util'
+import { formatFiatCurrency } from 'locales/util'
 
 export const Value = ({
   tokenBalance,
