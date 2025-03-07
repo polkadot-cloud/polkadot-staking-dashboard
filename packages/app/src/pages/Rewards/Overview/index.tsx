@@ -95,7 +95,6 @@ export const Overview = (props: PayoutHistoryProps) => {
               size: 'xs',
               options: {
                 currency,
-                symbol: '', // Symbol will be provided by formatFiatCurrency
               },
             })
           }}
