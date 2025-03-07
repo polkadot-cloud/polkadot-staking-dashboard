@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// TODO: Split this file into util/language and util/
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
 import type { i18n } from 'i18next'
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '..'
