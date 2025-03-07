@@ -32,11 +32,9 @@ export const SelectCurrency = () => {
 
   const filteredCurrencies = Object.keys(SupportedCurrencies).filter((c) => {
     const searchTermLower = searchTerm.toLowerCase()
-    // Get localized currency info
     const currencyName = t(`currencies.${c}.name`).toLowerCase()
-    const currencySymbol = t(`currencies.${c}.symbol`).toLowerCase()
+    const currencySymbol = SupportedCurrencies[c].symbol.toLowerCase()
     const currencyCode = c.toLowerCase()
-
     return (
       currencyCode.includes(searchTermLower) ||
       currencyName.includes(searchTermLower) ||
@@ -66,7 +64,7 @@ export const SelectCurrency = () => {
               <ButtonModal
                 key={`select_${c}`}
                 selected={currency === c}
-                text={`${c} - ${t(`currencies.${c}.symbol`)}`}
+                text={`${c} - ${SupportedCurrencies[c].symbol}`}
                 label={t(`currencies.${c}.name`)}
                 onClick={() => handleSelect(c)}
               />

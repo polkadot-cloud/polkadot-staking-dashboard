@@ -4,42 +4,89 @@
 export const SupportedCurrencies: Record<
   string,
   {
+    symbol: string
     noDecimals?: boolean
   }
 > = {
-  USD: {},
-  EUR: {},
-  GBP: {},
-  AUD: {},
-  CAD: {},
-  CHF: {},
-  CNY: {},
+  USD: {
+    symbol: '$',
+  },
+  EUR: {
+    symbol: '€',
+  },
+  GBP: {
+    symbol: '£',
+  },
+  AUD: {
+    symbol: 'A$',
+  },
+  CAD: {
+    symbol: 'C$',
+  },
+  CHF: {
+    symbol: 'Fr',
+  },
+  CNY: {
+    symbol: '¥',
+  },
   JPY: {
+    symbol: '¥',
     noDecimals: true,
   },
-  INR: {},
-  TRY: {},
-  BRL: {},
+  INR: {
+    symbol: '₹',
+  },
+  TRY: {
+    symbol: '₺',
+  },
+  BRL: {
+    symbol: 'R$',
+  },
   COP: {
+    symbol: 'COP$',
     noDecimals: true,
   },
-  UAH: {},
-  ZAR: {},
-  PLN: {},
-  ARS: {},
-  MXN: {},
-  CZK: {},
-  RON: {},
-  BGN: {},
-  SGD: {},
-  NZD: {},
-  THB: {},
+  UAH: {
+    symbol: '₴',
+  },
+  ZAR: {
+    symbol: 'R',
+  },
+  PLN: {
+    symbol: 'zł',
+  },
+  ARS: {
+    symbol: 'ARS$',
+  },
+  MXN: {
+    symbol: 'MX$',
+  },
+  CZK: {
+    symbol: 'Kč',
+  },
+  RON: {
+    symbol: 'lei',
+  },
+  BGN: {
+    symbol: 'лв',
+  },
+  SGD: {
+    symbol: 'S$',
+  },
+  NZD: {
+    symbol: 'NZ$',
+  },
+  THB: {
+    symbol: '฿',
+  },
   KRW: {
+    symbol: '₩',
     noDecimals: true,
   },
   IDR: {
+    symbol: 'Rp',
     noDecimals: true,
   },
-  MYR: {},
-  PHP: {},
+  MYR: { symbol: 'RM' },
+  PHP: { symbol: '₱' },
 }
