@@ -3,7 +3,7 @@
 
 // TODO: Split this file into util/language and util/
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
-import { FIAT_CURRENCY_KEY } from 'consts'
+import { FiatCurrencyKey } from 'consts'
 import { SupportedCountries } from 'consts/countries'
 import { SupportedCurrencies } from 'consts/currencies'
 import type { i18n } from 'i18next'
@@ -116,7 +116,7 @@ const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
  */
 export const getUserFiatCurrency = (): string => {
   // Try to get from local storage first
-  const storedCurrency = localStorage.getItem(FIAT_CURRENCY_KEY)
+  const storedCurrency = localStorage.getItem(FiatCurrencyKey)
   if (
     storedCurrency &&
     Object.keys(SupportedCurrencies).includes(storedCurrency)
