@@ -3,26 +3,21 @@
 
 import { SupportedCurrencies } from 'consts/currencies'
 import { useCurrency } from 'contexts/Currency'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
-import { usePlugins } from '../../../contexts/Plugins'
 import { Title } from '../../../library/Modal/Title'
 import { ContentWrapper } from '../Networks/Wrapper'
 import { CurrencyButton, CurrencyListWrapper, SearchInput } from './Wrapper'
 
 export const SelectCurrency = () => {
   const { t } = useTranslation('modals')
-  const { pluginEnabled } = usePlugins()
-  const { setModalStatus } = useOverlay().modal
+  const { setModalStatus, setModalResize } = useOverlay().modal
   const { currency, setCurrency } = useCurrency()
 
   // Search term state
   const [searchTerm, setSearchTerm] = useState<string>('')
-
-  // Whether Staking API is enabled (required for currency conversion)
-  const stakingApiEnabled = pluginEnabled('staking_api')
 
   // Handle currency selection
   const handleSelect = (c: string) => {
@@ -49,10 +44,13 @@ export const SelectCurrency = () => {
     )
   })
 
+  useEffect(() => {
+    setModalResize()
+  }, [searchTerm])
+
   return (
     <>
       <Title title={t('selectCurrency')} />
-
       <SearchInput>
         <input
           type="text"
@@ -61,7 +59,6 @@ export const SelectCurrency = () => {
           onChange={handleSearchChange}
         />
       </SearchInput>
-
       <Padding horizontalOnly>
         <ContentWrapper>
           <CurrencyListWrapper>
@@ -71,16 +68,12 @@ export const SelectCurrency = () => {
                   // Flag to determine if this currency is selected
                   const isSelected = currency === c
 
-                  // Disable selection if staking API is not enabled
-                  const disabled = !stakingApiEnabled
-
                   return (
                     <CurrencyButton
                       type="button"
                       $connected={isSelected}
-                      onClick={() => !disabled && handleSelect(c)}
+                      onClick={() => handleSelect(c)}
                       key={`select_${c}`}
-                      disabled={disabled}
                     >
                       <h3>
                         {c} - {t(`currencies.${c}.symbol`)}
@@ -93,10 +86,6 @@ export const SelectCurrency = () => {
                 <h4>{t('noCurrenciesFound')}</h4>
               )}
             </div>
-
-            {!stakingApiEnabled && (
-              <div className="warning">{t('currencyRequiresStakingApi')}</div>
-            )}
           </CurrencyListWrapper>
         </ContentWrapper>
       </Padding>

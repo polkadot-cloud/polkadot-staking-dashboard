@@ -14,6 +14,7 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
+import { usePlugins } from 'contexts/Plugins'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +27,7 @@ export const MenuPopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
+  const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
 
@@ -83,19 +85,21 @@ export const MenuPopover = ({
           <h3>{t('language', { ns: 'app' })}</h3>
         </div>
       </MenuItemButton>
-      <MenuItemButton
-        onClick={() => {
-          setOpen(false)
-          openModal({ key: 'SelectCurrency', size: 'xs' })
-        }}
-      >
-        <div>
-          <FontAwesomeIcon icon={faDollarSign} transform="grow-2" />
-        </div>
-        <div>
-          <h3>{t('currency', { ns: 'app' })}</h3>
-        </div>
-      </MenuItemButton>
+      {pluginEnabled('staking_api') && (
+        <MenuItemButton
+          onClick={() => {
+            setOpen(false)
+            openModal({ key: 'SelectCurrency', size: 'xs' })
+          }}
+        >
+          <div>
+            <FontAwesomeIcon icon={faDollarSign} transform="grow-2" />
+          </div>
+          <div>
+            <h3>{t('currency', { ns: 'app' })}</h3>
+          </div>
+        </MenuItemButton>
+      )}
       <MenuItemButton
         onClick={() => {
           setOpen(false)

@@ -37,16 +37,8 @@ export const CurrencyListWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-
-  .no-results {
-    padding: 1.5rem;
-    text-align: center;
-    color: var(--text-color-secondary);
-    font-style: bold;
-    background: var(--background-primary);
-    border-radius: 0.75rem;
-    border: 1px dashed var(--accent-color-primary);
-  }
+  max-height: 50vh;
+  min-height: 50vh;
 
   .warning {
     color: var(--text-color-secondary);
@@ -61,16 +53,14 @@ export const CurrencyListWrapper = styled.div`
     box-sizing: border-box;
     position: relative;
     width: auto;
-    border-radius: 0.75rem;
     overflow: hidden;
     overflow-y: auto;
     z-index: 1;
     width: 100%;
-    margin: 0 0 1.5rem 0;
-    max-height: 60vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    margin: 0;
   }
 `
 
@@ -82,7 +72,6 @@ export const CurrencyButton = styled.button<{ $connected: boolean }>`
   padding: 0.9rem 1rem;
   cursor: pointer;
   border-radius: 0.75rem;
-
   text-align: left;
   border: 1px solid
     ${(props) =>
@@ -90,6 +79,11 @@ export const CurrencyButton = styled.button<{ $connected: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 1rem;
+  }
 
   &:disabled {
     opacity: 0.5;
