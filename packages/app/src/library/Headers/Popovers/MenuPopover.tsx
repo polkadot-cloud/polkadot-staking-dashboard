@@ -78,7 +78,7 @@ export const MenuPopover = ({
       <MenuItemButton
         onClick={() => {
           setOpen(false)
-          openModal({ key: 'ChooseLanguage', size: 'xs' })
+          openModal({ key: 'SelectLanguage', size: 'xs' })
         }}
       >
         <div>

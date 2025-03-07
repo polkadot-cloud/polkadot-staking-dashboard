@@ -9,13 +9,13 @@ import { ButtonModal } from 'ui-buttons'
 import { ButtonList, Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
-export const ChooseLanguage = () => {
+export const SelectLanguage = () => {
   const { i18n, t } = useTranslation('modals')
   const { setModalStatus } = useOverlay().modal
 
   return (
     <>
-      <Title title={t('chooseLanguage')} Svg={LanguageSVG} />
+      <Title title={t('selectLanguage')} Svg={LanguageSVG} />
       <Padding horizontalOnly style={{ marginTop: '1rem' }}>
         <ButtonList>
           {Object.entries(locales).map(([code, { label }], i) => (

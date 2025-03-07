@@ -14,7 +14,6 @@ import { Accounts } from './modals/Accounts'
 import { Bio } from './modals/Bio'
 import { Bond } from './modals/Bond'
 import { ChangePoolRoles } from './modals/ChangePoolRoles'
-import { ChooseLanguage } from './modals/ChooseLanguage'
 import { ClaimPayouts } from './modals/ClaimPayouts'
 import { ClaimReward } from './modals/ClaimReward'
 import { Connect } from './modals/Connect'
@@ -30,6 +29,7 @@ import { Networks } from './modals/Networks'
 import { Plugins } from './modals/Plugins'
 import { RewardCalculator } from './modals/RewardCalculator'
 import { SelectCurrency } from './modals/SelectCurrency'
+import { SelectLanguage } from './modals/SelectLanguage'
 import { StopNominations } from './modals/StopNominations'
 import { Unbond } from './modals/Unbond'
 import { UnlockChunks } from './modals/UnlockChunks'
@@ -49,7 +49,7 @@ export const Overlays = () => {
         Bond,
         StopNominations,
         ChangePoolRoles,
-        ChooseLanguage,
+        SelectLanguage,
         ClaimPayouts,
         ClaimReward,
         Connect,
