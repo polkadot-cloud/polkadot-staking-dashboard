@@ -33,4 +33,4 @@ export const MaxEraRewardPointsEras = 10
 /*
  * Local storage keys
  */
-export const FIAT_CURRENCY_KEY = 'user_fiat_currency'
+export const FIAT_CURRENCY_KEY = 'currency'
