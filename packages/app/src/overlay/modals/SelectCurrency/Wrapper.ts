@@ -64,7 +64,7 @@ export const CurrencyListWrapper = styled.div`
   }
 `
 
-export const CurrencyButton = styled.button<{ $connected: boolean }>`
+export const CurrencyButton = styled.button`
   color: var(--text-color-primary);
   background: var(--button-primary-background);
   transition: background-color var(--transition-duration);
@@ -73,13 +73,15 @@ export const CurrencyButton = styled.button<{ $connected: boolean }>`
   cursor: pointer;
   border-radius: 0.75rem;
   text-align: left;
-  border: 1px solid
-    ${(props) =>
-      props.$connected ? 'var(--accent-color-primary)' : 'transparent'};
+  border: 1px solid transparent;
   position: relative;
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+
+  &.selected {
+    border-color: var(--accent-color-primary);
+  }
 
   &:last-child {
     margin-bottom: 1rem;

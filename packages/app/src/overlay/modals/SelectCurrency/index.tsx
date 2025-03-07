@@ -71,7 +71,7 @@ export const SelectCurrency = () => {
                   return (
                     <CurrencyButton
                       type="button"
-                      $connected={isSelected}
+                      className={isSelected ? 'selected' : ''}
                       onClick={() => handleSelect(c)}
                       key={`select_${c}`}
                     >
