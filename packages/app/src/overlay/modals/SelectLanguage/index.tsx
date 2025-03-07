@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import { Title } from 'library/Modal/Title'
 import { locales } from 'locales'
 import { changeLanguage } from 'locales/util'
@@ -16,7 +15,7 @@ export const SelectLanguage = () => {
 
   return (
     <>
-      <Title title={t('selectLanguage')} Svg={LanguageSVG} />
+      <Title title={t('selectLanguage')} />
       <Padding horizontalOnly style={{ marginTop: '1rem' }}>
         <ButtonList>
           {Object.entries(locales).map(([code, { label }], i) => (
