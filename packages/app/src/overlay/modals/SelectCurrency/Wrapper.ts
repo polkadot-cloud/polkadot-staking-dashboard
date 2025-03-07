@@ -9,7 +9,7 @@ export const SearchInput = styled.div`
   align-items: center;
   margin-top: 2rem;
   width: 100%;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 1rem 0rem 1rem;
 
   input {
     border-bottom: 1px solid var(--border-primary-color);
@@ -30,30 +30,5 @@ export const SearchInput = styled.div`
       color: var(--text-color-tertiary);
       opacity: 0.7;
     }
-  }
-`
-
-export const CurrencyListWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  max-height: 50vh;
-  min-height: 50vh;
-
-  > .inner {
-    position: relative;
-    width: auto;
-    overflow: hidden;
-    overflow-y: auto;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-  }
-
-  > .inner > button:last-child {
-    margin-bottom: 1rem;
   }
 `

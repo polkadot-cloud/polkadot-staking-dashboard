@@ -6,11 +6,10 @@ import { useCurrency } from 'contexts/Currency'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonModal } from 'ui-buttons'
-import { Padding } from 'ui-core/modal'
+import { ButtonList, Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { Title } from '../../../library/Modal/Title'
-import { ContentWrapper } from '../Networks/Wrapper'
-import { CurrencyListWrapper, SearchInput } from './Wrapper'
+import { SearchInput } from './Wrapper'
 
 export const SelectCurrency = () => {
   const { t } = useTranslation('modals')
@@ -61,25 +60,21 @@ export const SelectCurrency = () => {
         />
       </SearchInput>
       <Padding horizontalOnly>
-        <ContentWrapper>
-          <CurrencyListWrapper>
-            <div className="inner">
-              {filteredCurrencies.length > 0 ? (
-                filteredCurrencies.map((c) => (
-                  <ButtonModal
-                    key={`select_${c}`}
-                    selected={currency === c}
-                    text={`${c} - ${t(`currencies.${c}.symbol`)}`}
-                    label={t(`currencies.${c}.name`)}
-                    onClick={() => handleSelect(c)}
-                  />
-                ))
-              ) : (
-                <h4>{t('noCurrenciesFound')}</h4>
-              )}
-            </div>
-          </CurrencyListWrapper>
-        </ContentWrapper>
+        <ButtonList forceHeight>
+          {filteredCurrencies.length > 0 ? (
+            filteredCurrencies.map((c) => (
+              <ButtonModal
+                key={`select_${c}`}
+                selected={currency === c}
+                text={`${c} - ${t(`currencies.${c}.symbol`)}`}
+                label={t(`currencies.${c}.name`)}
+                onClick={() => handleSelect(c)}
+              />
+            ))
+          ) : (
+            <h4>{t('noCurrenciesFound')}</h4>
+          )}
+        </ButtonList>
       </Padding>
     </>
   )

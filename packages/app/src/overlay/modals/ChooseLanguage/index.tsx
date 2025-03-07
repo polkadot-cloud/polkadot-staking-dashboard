@@ -5,9 +5,9 @@ import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import { Title } from 'library/Modal/Title'
 import { changeLanguage, locales } from 'locales'
 import { useTranslation } from 'react-i18next'
-import { Padding } from 'ui-core/modal'
+import { ButtonModal } from 'ui-buttons'
+import { ButtonList, Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
-import { ContentWrapper, LocaleButton } from './Wrapper'
 
 export const ChooseLanguage = () => {
   const { i18n, t } = useTranslation('modals')
@@ -16,27 +16,21 @@ export const ChooseLanguage = () => {
   return (
     <>
       <Title title={t('chooseLanguage')} Svg={LanguageSVG} />
-      <Padding>
-        <ContentWrapper>
-          <div className="items">
-            {Object.entries(locales).map(([code, { label }], i) => (
-              <LocaleButton
-                key={`${code}_${i}`}
-                $connected={i18n.resolvedLanguage === code}
-                type="button"
-                onClick={() => {
-                  changeLanguage(code, i18n)
-                  setModalStatus('closing')
-                }}
-              >
-                {label}
-                {i18n.resolvedLanguage === code && (
-                  <span className="selected">{t('selected')}</span>
-                )}
-              </LocaleButton>
-            ))}
-          </div>
-        </ContentWrapper>
+      <Padding horizontalOnly style={{ marginTop: '1rem' }}>
+        <ButtonList>
+          {Object.entries(locales).map(([code, { label }], i) => (
+            <ButtonModal
+              key={`${code}_${i}`}
+              selected={i18n.resolvedLanguage === code}
+              onClick={() => {
+                changeLanguage(code, i18n)
+                setModalStatus('closing')
+              }}
+              text={label}
+              label={i18n.resolvedLanguage === code ? t('selected') : undefined}
+            />
+          ))}
+        </ButtonList>
       </Padding>
     </>
   )

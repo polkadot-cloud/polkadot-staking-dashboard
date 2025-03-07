@@ -32,7 +32,7 @@ export const ButtonModal = ({
       {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
     >
       <h3>{text}</h3>
-      <h5>{label}</h5>
+      {label && <h5>{label}</h5>}
     </button>
   )
 }

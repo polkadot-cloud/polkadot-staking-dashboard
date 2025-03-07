@@ -203,5 +203,5 @@ export type ButtonModalProps = ComponentBaseWithClassName &
   ButtonCommonProps & {
     selected: boolean
     text: string
-    label: string
+    label?: string
   }
