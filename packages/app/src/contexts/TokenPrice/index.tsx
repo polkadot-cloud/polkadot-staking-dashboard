@@ -5,7 +5,7 @@ import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { isCustomEvent } from 'controllers/utils'
-import { fetchLocalTokenPrice, formatTokenPrice } from 'plugin-staking-api'
+import { fetchTokenPrice, formatTokenPrice } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
@@ -33,7 +33,9 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     useState<TokenPricesContextInterface>(defaultTokenPrice)
 
   const getTokenPrice = async () => {
-    const result = await fetchLocalTokenPrice(unit, currency)
+    const result = await fetchTokenPrice(
+      `${unit}${currency}${currency === 'USD' ? 'T' : ''}`
+    )
     setTokenPrice(result || defaultTokenPrice)
   }
 
