@@ -1,9 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import CurrencySVG from 'assets/svg/icons/dollarsign.svg?react'
 import { SupportedCurrencies } from 'consts/currencies'
 import { useCurrency } from 'contexts/Currency'
 import { useState } from 'react'
@@ -13,12 +10,7 @@ import { useOverlay } from 'ui-overlay'
 import { usePlugins } from '../../../contexts/Plugins'
 import { Title } from '../../../library/Modal/Title'
 import { ContentWrapper } from '../Networks/Wrapper'
-import {
-  CurrencyButton,
-  CurrencyListWrapper,
-  HeaderWrapper,
-  SearchInput,
-} from './Wrapper'
+import { CurrencyButton, CurrencyListWrapper, SearchInput } from './Wrapper'
 
 export const SelectCurrency = () => {
   const { t } = useTranslation('modals')
@@ -57,39 +49,25 @@ export const SelectCurrency = () => {
     )
   })
 
-  // Sort currencies - put the selected one first, then sort alphabetically
-  const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
-    if (a === currency) {
-      return -1
-    }
-    if (b === currency) {
-      return 1
-    }
-    return a.localeCompare(b)
-  })
-
   return (
     <>
-      <HeaderWrapper>
-        <div className="title-container">
-          <Title title={t('selectCurrency')} Svg={CurrencySVG} />
-        </div>
-        <SearchInput>
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
-          <input
-            type="text"
-            placeholder={t('searchCurrency')}
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-        </SearchInput>
-      </HeaderWrapper>
-      <Padding>
+      <Title title={t('selectCurrency')} />
+
+      <SearchInput>
+        <input
+          type="text"
+          placeholder={t('searchCurrency')}
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </SearchInput>
+
+      <Padding horizontalOnly>
         <ContentWrapper>
           <CurrencyListWrapper>
             <div className="items">
-              {sortedCurrencies.length > 0 ? (
-                sortedCurrencies.map((c) => {
+              {filteredCurrencies.length > 0 ? (
+                filteredCurrencies.map((c) => {
                   // Flag to determine if this currency is selected
                   const isSelected = currency === c
 
@@ -104,21 +82,15 @@ export const SelectCurrency = () => {
                       key={`select_${c}`}
                       disabled={disabled}
                     >
-                      <span className="currency-symbol">
-                        {t(`currencies.${c}.symbol`)}
-                      </span>
-                      <span className="currency-code">{c}</span>
-                      <span className="currency-name">
-                        {t(`currencies.${c}.name`)}
-                      </span>
-                      {isSelected && (
-                        <span className="selected">{t('selected')}</span>
-                      )}
+                      <h3>
+                        {c} - {t(`currencies.${c}.symbol`)}
+                      </h3>
+                      <h5>{t(`currencies.${c}.name`)}</h5>
                     </CurrencyButton>
                   )
                 })
               ) : (
-                <div className="no-results">{t('noCurrenciesFound')}</div>
+                <h4>{t('noCurrenciesFound')}</h4>
               )}
             </div>
 

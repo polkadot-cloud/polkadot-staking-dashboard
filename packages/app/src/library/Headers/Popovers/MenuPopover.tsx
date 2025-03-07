@@ -86,7 +86,7 @@ export const MenuPopover = ({
       <MenuItemButton
         onClick={() => {
           setOpen(false)
-          openModal({ key: 'SelectCurrency' })
+          openModal({ key: 'SelectCurrency', size: 'xs' })
         }}
       >
         <div>
