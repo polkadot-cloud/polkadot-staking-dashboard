@@ -40,17 +40,7 @@ export const CurrencyListWrapper = styled.div`
   max-height: 50vh;
   min-height: 50vh;
 
-  .warning {
-    color: var(--text-color-secondary);
-    margin: 1rem 0;
-    padding: 0.75rem;
-    background: var(--background-primary);
-    border-radius: 0.75rem;
-    border: 1px solid var(--border-primary-color);
-  }
-
-  .items {
-    box-sizing: border-box;
+  > .inner {
     position: relative;
     width: auto;
     overflow: hidden;
@@ -62,41 +52,8 @@ export const CurrencyListWrapper = styled.div`
     flex-direction: column;
     margin: 0;
   }
-`
 
-export const CurrencyButton = styled.button`
-  color: var(--text-color-primary);
-  background: var(--button-primary-background);
-  transition: background-color var(--transition-duration);
-  box-sizing: border-box;
-  padding: 0.9rem 1rem;
-  cursor: pointer;
-  border-radius: 0.75rem;
-  text-align: left;
-  border: 1px solid transparent;
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-
-  &.selected {
-    border-color: var(--accent-color-primary);
-  }
-
-  &:last-child {
+  > .inner > button:last-child {
     margin-bottom: 1rem;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  > h3 {
-    font-family: Inter, sans-serif;
-    flex-grow: 1;
-  }
-
-  &:hover {
-    background: var(--button-hover-background);
   }
 `

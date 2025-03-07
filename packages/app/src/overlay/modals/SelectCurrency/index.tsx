@@ -5,11 +5,12 @@ import { SupportedCurrencies } from 'consts/currencies'
 import { useCurrency } from 'contexts/Currency'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ButtonModal } from 'ui-buttons'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { Title } from '../../../library/Modal/Title'
 import { ContentWrapper } from '../Networks/Wrapper'
-import { CurrencyButton, CurrencyListWrapper, SearchInput } from './Wrapper'
+import { CurrencyListWrapper, SearchInput } from './Wrapper'
 
 export const SelectCurrency = () => {
   const { t } = useTranslation('modals')
@@ -62,26 +63,17 @@ export const SelectCurrency = () => {
       <Padding horizontalOnly>
         <ContentWrapper>
           <CurrencyListWrapper>
-            <div className="items">
+            <div className="inner">
               {filteredCurrencies.length > 0 ? (
-                filteredCurrencies.map((c) => {
-                  // Flag to determine if this currency is selected
-                  const isSelected = currency === c
-
-                  return (
-                    <CurrencyButton
-                      type="button"
-                      className={isSelected ? 'selected' : ''}
-                      onClick={() => handleSelect(c)}
-                      key={`select_${c}`}
-                    >
-                      <h3>
-                        {c} - {t(`currencies.${c}.symbol`)}
-                      </h3>
-                      <h5>{t(`currencies.${c}.name`)}</h5>
-                    </CurrencyButton>
-                  )
-                })
+                filteredCurrencies.map((c) => (
+                  <ButtonModal
+                    key={`select_${c}`}
+                    selected={currency === c}
+                    text={`${c} - ${t(`currencies.${c}.symbol`)}`}
+                    label={t(`currencies.${c}.name`)}
+                    onClick={() => handleSelect(c)}
+                  />
+                ))
               ) : (
                 <h4>{t('noCurrenciesFound')}</h4>
               )}
