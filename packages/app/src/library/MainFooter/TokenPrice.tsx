@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
 
@@ -10,14 +11,16 @@ export const TokenPrice = () => {
       api: { unit },
     },
   } = useNetwork()
+  const { currency } = useCurrency()
   const { price, change } = useTokenPrices()
+
   return (
     <>
       <div className="stat">
         1 {unit} /{' '}
         {new Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: 'USD',
+          currency,
         }).format(price)}
       </div>
       <div className="stat">

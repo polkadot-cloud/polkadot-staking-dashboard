@@ -3,8 +3,8 @@
 
 import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
+import { formatFiatCurrency } from 'locales/util'
 
 export const Value = ({
   tokenBalance,
@@ -13,7 +13,6 @@ export const Value = ({
   tokenBalance: string | number
   currency: string
 }) => {
-  const { network } = useNetwork()
   const { price } = useTokenPrices()
 
   // Convert balance to fiat value
@@ -21,15 +20,6 @@ export const Value = ({
     .multipliedBy(price)
     .decimalPlaces(2)
 
-  // Formatter for price feed
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-  })
-
-  if (network === 'westend') {
-    return null
-  }
-
-  return <>{formatter.format(freeFiat.toNumber())}</>
+  // Format using the user's preferred currency
+  return <>{formatFiatCurrency(freeFiat.toNumber(), currency)}</>
 }

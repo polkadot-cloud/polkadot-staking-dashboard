@@ -31,7 +31,7 @@ URL variables take precedence over saved values in local storage, and will overw
 The following URL will load Kusama and use the Chinese localisation resource:
 
 ```
-staking.polkadot.cloud/#/overview?n=kusama&l=cn
+staking.polkadot.cloud/#/overview?n=kusama&l=zh
 ```
 
 ## Presentations

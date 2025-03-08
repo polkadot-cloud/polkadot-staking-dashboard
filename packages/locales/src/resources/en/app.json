@@ -65,6 +65,7 @@
     "copyAddress": "Copy Address",
     "copyPoolAddress": "Copy Pool {{type}} Address",
     "createPool": "Create Pool",
+    "currency": "Currency",
     "darkMode": "Dark Mode",
     "dashboardDisclaimer": "Dashboard Disclaimer",
     "date": "Date",

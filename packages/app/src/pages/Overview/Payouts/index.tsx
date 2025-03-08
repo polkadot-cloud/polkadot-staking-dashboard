@@ -3,6 +3,7 @@
 
 import { useSize } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -35,12 +36,12 @@ export const Payouts = () => {
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
+  const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
 
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
 
-  const currency = 'USD'
   const [lastReward, setLastReward] = useState<RewardResult>()
   // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement>(null)

@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
@@ -28,13 +29,13 @@ export const BalanceChart = () => {
       brand: { token: Token },
     },
   } = useNetwork()
+  const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
   const { getBalance, getLocks } = useBalances()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
-  const currency = 'USD'
 
   const balance = getBalance(activeAccount)
   const allTransferOptions = getTransferOptions(activeAccount)

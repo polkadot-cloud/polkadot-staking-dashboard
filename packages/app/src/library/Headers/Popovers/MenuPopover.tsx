@@ -3,6 +3,7 @@
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
+  faDollarSign,
   faExternalLinkAlt,
   faPuzzlePiece,
   faToggleOff,
@@ -13,6 +14,8 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
+import { useCurrency } from 'contexts/Currency'
+import { usePlugins } from 'contexts/Plugins'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,6 +28,9 @@ export const MenuPopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
+  const { currency } = useCurrency()
+  const { i18n } = useTranslation()
+  const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
 
@@ -72,7 +78,7 @@ export const MenuPopover = ({
       <MenuItemButton
         onClick={() => {
           setOpen(false)
-          openModal({ key: 'ChooseLanguage' })
+          openModal({ key: 'SelectLanguage', size: 'xs' })
         }}
       >
         <div>
@@ -81,7 +87,32 @@ export const MenuPopover = ({
         <div>
           <h3>{t('language', { ns: 'app' })}</h3>
         </div>
+        <div>
+          <div>
+            <h4>{i18n.language.toUpperCase()}</h4>
+          </div>
+        </div>
       </MenuItemButton>
+      {pluginEnabled('staking_api') && (
+        <MenuItemButton
+          onClick={() => {
+            setOpen(false)
+            openModal({ key: 'SelectCurrency', size: 'xs' })
+          }}
+        >
+          <div>
+            <FontAwesomeIcon icon={faDollarSign} transform="grow-2" />
+          </div>
+          <div>
+            <h3>{t('currency', { ns: 'app' })}</h3>
+          </div>
+          <div>
+            <div>
+              <h4>{currency}</h4>
+            </div>
+          </div>
+        </MenuItemButton>
+      )}
       <MenuItemButton
         onClick={() => {
           setOpen(false)

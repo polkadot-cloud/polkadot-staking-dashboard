@@ -198,3 +198,10 @@ export type ButtonAccountStandaloneProps = ComponentBaseWithClassName &
     marginX?: boolean
     disabled?: boolean
   }
+
+export type ButtonModalProps = ComponentBaseWithClassName &
+  ButtonCommonProps & {
+    selected: boolean
+    text: string
+    label?: string
+  }

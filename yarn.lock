@@ -8940,6 +8940,8 @@ __metadata:
 "locales@workspace:*, locales@workspace:packages/locales":
   version: 0.0.0-use.local
   resolution: "locales@workspace:packages/locales"
+  dependencies:
+    consts: "workspace:*"
   languageName: unknown
   linkType: soft
 
