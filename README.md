@@ -6,7 +6,7 @@
 
 # Polkadot Cloud Staking
 
-<img width="1479" alt="Screenshot 2024-10-06 at 13 56 44" src="https://github.com/user-attachments/assets/d8edbbae-3cf0-4330-bac3-280e74f5d3cc">
+<img width="1672" alt="Screenshot 2025-03-08 at 15 41 56" src="https://github.com/user-attachments/assets/99de5d57-3d99-4f84-8690-e358867877cd" />
 
 ## Contributing Community Assets
 
