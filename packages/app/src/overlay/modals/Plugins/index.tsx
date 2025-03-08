@@ -4,10 +4,9 @@
 import { CompulsoryPluginsProd, PluginsList } from 'config/plugins'
 import { usePlugins } from 'contexts/Plugins'
 import { Title } from 'library/Modal/Title'
-import { StatusButton } from 'library/StatusButton'
 import { useTranslation } from 'react-i18next'
-import { Padding } from 'ui-core/modal'
-import { ContentWrapper } from '../Networks/Wrapper'
+import { ButtonModal } from 'ui-buttons'
+import { ButtonList, Padding } from 'ui-core/modal'
 
 export const Plugins = () => {
   const { plugins, togglePlugin } = usePlugins()
@@ -16,9 +15,11 @@ export const Plugins = () => {
   return (
     <>
       <Title title={t('plugins', { ns: 'modals' })} />
-      <Padding>
-        <ContentWrapper>
-          <h4>{t('togglePlugins', { ns: 'modals' })}</h4>
+      <Padding horizontalOnly>
+        <ButtonList>
+          <h4 style={{ margin: '0.75rem 0.25rem' }}>
+            {t('togglePlugins', { ns: 'modals' })}
+          </h4>
           {PluginsList.map((plugin) => {
             if (
               import.meta.env.PROD &&
@@ -27,15 +28,16 @@ export const Plugins = () => {
               return null
             }
             return (
-              <StatusButton
+              <ButtonModal
                 key={plugin}
-                checked={plugins.includes(plugin)}
-                label={t(`plugin.${plugin}`, { ns: 'app' })}
+                label={'toggle'}
+                selected={plugins.includes(plugin)}
+                text={t(`plugin.${plugin}`, { ns: 'app' })}
                 onClick={() => togglePlugin(plugin)}
               />
             )
           })}
-        </ContentWrapper>
+        </ButtonList>
       </Padding>
     </>
   )
