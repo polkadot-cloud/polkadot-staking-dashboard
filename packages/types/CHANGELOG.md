@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.2.0...types-v1.3.0) (2025-03-08)
+
+
+### Features
+
+* **ux:** Simplified header UI, new Account, Settings popovers ([#2573](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2573)) ([d384b83](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d384b83409e6941187da2fd910a96b803644fcdc))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.1.0...types-v1.2.0) (2025-02-24)
 
 
