@@ -17,9 +17,9 @@ export const DefaultLocale = 'en'
 
 // Available locales as key value pairs.
 export const locales: Record<string, LocaleEntry> = {
-  en: { dateFormat: enGB, label: 'English', tag: 'en' },
-  cn: { dateFormat: zhCN, label: '中文', tag: 'zh' },
-  es: { dateFormat: es, label: 'Español', tag: 'es' },
+  en: { dateFormat: enGB, label: 'English' },
+  zh: { dateFormat: zhCN, label: '中文' },
+  es: { dateFormat: es, label: 'Español' },
 }
 
 // Supported namespaces.
@@ -66,5 +66,4 @@ if (dynamicLoad) {
   doDynamicImport(lng, i18next)
 }
 
-export * from './util'
 export { i18next }

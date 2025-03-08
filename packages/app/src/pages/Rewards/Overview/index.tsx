@@ -11,6 +11,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useTokenPrices } from 'contexts/TokenPrice'
@@ -19,6 +20,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { formatFiatCurrency } from 'locales/util'
 import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -44,6 +46,7 @@ export const Overview = (props: PayoutHistoryProps) => {
       brand: { token: Token },
     },
   } = useNetwork()
+  const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
   const { avgCommission } = useValidators()
@@ -76,8 +79,9 @@ export const Overview = (props: PayoutHistoryProps) => {
     ? dailyRewardAfterCommission
     : annualRewardBase / 365
 
-  const currency = 'USD'
-  const symbol = '$'
+  // Format the currency with user's locale and currency preference
+  const formatLocalCurrency = (value: number) =>
+    formatFiatCurrency(value, currency)
 
   return (
     <>
@@ -91,7 +95,6 @@ export const Overview = (props: PayoutHistoryProps) => {
               size: 'xs',
               options: {
                 currency,
-                symbol,
               },
             })
           }}
@@ -182,11 +185,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                     {dailyReward > 0 && tokenPrice > 0 && (
                       <FontAwesomeIcon icon={faCaretUp} />
                     )}
-                    {symbol}
-                    {(dailyReward * tokenPrice).toLocaleString('en-US', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {formatLocalCurrency(dailyReward * tokenPrice)}
                   </h3>
                 </RewardGrid.Cell>
               </RewardGrid.Row>
@@ -207,11 +206,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                       {monthlyReward > 0 && tokenPrice > 0 && (
                         <FontAwesomeIcon icon={faCaretUp} />
                       )}
-                      {symbol}
-                      {(monthlyReward * tokenPrice).toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
+                      {formatLocalCurrency(monthlyReward * tokenPrice)}
                     </h3>,
                   ]}
                 />
@@ -231,11 +226,7 @@ export const Overview = (props: PayoutHistoryProps) => {
                       {annualReward > 0 && tokenPrice > 0 && (
                         <FontAwesomeIcon icon={faCaretUp} />
                       )}
-                      {symbol}
-                      {(annualReward * tokenPrice).toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
+                      {formatLocalCurrency(annualReward * tokenPrice)}
                     </h3>,
                   ]}
                 />

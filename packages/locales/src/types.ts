@@ -24,5 +24,4 @@ export type LocaleJsonValue =
 export interface LocaleEntry {
   dateFormat: Locale
   label: string
-  tag: string
 }

@@ -65,6 +65,7 @@
     "copyAddress": "Copiar Dirección",
     "copyPoolAddress": "Copiar la dirección del pool {{type}}",
     "createPool": "Crear Pool",
+    "currency": "Moneda",
     "darkMode": "Modo Oscuro",
     "date": "Fecha",
     "dayAverage": "Promedio Diario",

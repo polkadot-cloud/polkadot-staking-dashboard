@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from '../modal/AddressHeader'
+export * from '../modal/ButtonList'
 export * from '../modal/Card'
 export * from '../modal/Close'
 export * from '../modal/Container'
