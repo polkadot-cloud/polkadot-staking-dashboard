@@ -14,7 +14,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 
   &.selected {
     border-color: var(--accent-color-primary);
@@ -29,5 +29,17 @@
   > h3 {
     font-family: Inter, sans-serif;
     flex-grow: 1;
+  }
+
+  h5 {
+    &.toggle {
+      > .on {
+        color: var(--accent-color-primary);
+      }
+      > .off {
+        color: var(--text-color-tertiary);
+        opacity: 0.75;
+      }
+    }
   }
 }

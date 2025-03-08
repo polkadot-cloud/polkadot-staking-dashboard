@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import type { ButtonModalProps } from '../types'
 import { onMouseHandlers } from '../util'
@@ -32,7 +34,17 @@ export const ButtonModal = ({
       {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
     >
       <h3>{text}</h3>
-      {label && <h5>{label}</h5>}
+      {label === 'toggle' ? (
+        <h5 className={classes.toggle}>
+          <FontAwesomeIcon
+            className={selected ? classes.on : classes.off}
+            icon={selected ? faToggleOn : faToggleOff}
+            transform="grow-10"
+          />
+        </h5>
+      ) : label === undefined ? null : (
+        <h5>{label}</h5>
+      )}
     </button>
   )
 }
