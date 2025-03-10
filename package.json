@@ -42,7 +42,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@polkadot-api/merkleize-metadata": "^1.1.13",
+    "@polkadot-api/merkleize-metadata": "^1.1.14",
     "@tanstack/react-query": "^5.66.9",
     "@w3ux/hooks": "^1.4.0",
     "@w3ux/react-polkicon": "^2.0.1-alpha.0",
