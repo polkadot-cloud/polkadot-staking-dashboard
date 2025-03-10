@@ -69,7 +69,7 @@ export const ConnectOverlay = ({
     <div ref={popoverRef}>
       <PopoverTab.Container position="top">
         <PopoverTab.Button
-          text={t('connect', { ns: 'app' })}
+          text={t('wallets', { ns: 'app' })}
           onClick={() => {
             /* Do nothing */
           }}

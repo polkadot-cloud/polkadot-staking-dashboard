@@ -280,6 +280,7 @@
     "viewPoolNominations": "Ver Nominaciones del Pool",
     "waiting": "Esperando",
     "walletNotFound": "Cartera no encontrada",
+    "wallets": "Carteras",
     "whenActivelyNominating": "cuando nominas activamente.",
     "wrongTransaction": "Transacción incorrecta, Por favor firma de nuevo."
   }

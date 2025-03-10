@@ -280,6 +280,7 @@
     "viewPoolNominations": "View Pool Nominations",
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
+    "wallets": "Wallets",
     "whenActivelyNominating": "when actively nominating.",
     "wrongTransaction": "Wrong transaction, please sign again."
   }
