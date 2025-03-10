@@ -19,7 +19,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@ledgerhq/hw-transport-webhid": "^6.30.0",
-    "@lottiefiles/dotlottie-react": "^0.13.0",
+    "@lottiefiles/dotlottie-react": "^0.13.2",
     "@polkadot-api/merkleize-metadata": "^1.1.12",
     "@polkadot-api/signers-common": "^0.1.5",
     "@polkadot-api/substrate-bindings": "^0.11.0",
