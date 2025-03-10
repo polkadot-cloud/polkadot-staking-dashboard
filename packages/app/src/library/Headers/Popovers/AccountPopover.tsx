@@ -7,9 +7,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonText } from 'ui-buttons'
-import { ButtonRow } from 'ui-core/base'
-import { Padding } from 'ui-core/popover'
+import { PopoverTab } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 import { Account } from './Account'
 
@@ -44,11 +42,8 @@ export const AccountPopover = ({
       ? name || ellipsisFn(activeAccount)
       : ''
 
-  // Button font size
-  const fontSize = '1.05rem'
-
   return (
-    <div ref={popoverRef} style={{ padding: '1.5rem 0 0.75rem 0' }}>
+    <div ref={popoverRef} style={{ padding: '1.5rem 0 0 0' }}>
       <Account address={activeAccount || ''} label={accountLabel} />
       {activeProxy && activeProxyType && (
         <Account
@@ -56,31 +51,25 @@ export const AccountPopover = ({
           label={`Signer (${activeProxyType} Proxy):`}
         />
       )}
-      <Padding flex>
-        <ButtonRow>
-          <ButtonText
-            style={{ fontSize }}
-            marginRight
-            text={t('switchAccount', { ns: 'app' })}
-            onClick={() => {
-              setOpen(false)
-              openModal({ key: 'Accounts' })
-            }}
-          />
-          <span style={{ color: 'var(--text-color-tertiary)' }}>|</span>
-          <ButtonText
-            style={{ fontSize }}
-            status="danger"
-            marginLeft
-            text={t('disconnect', { ns: 'modals' })}
-            onClick={() => {
-              setActiveAccount(null)
-              setActiveProxy(null)
-              setOpen(false)
-            }}
-          />
-        </ButtonRow>
-      </Padding>
+
+      <PopoverTab.Container position="bottom" yMargin>
+        <PopoverTab.Button
+          text={t('switchAccount', { ns: 'app' })}
+          onClick={() => {
+            setOpen(false)
+            openModal({ key: 'Accounts' })
+          }}
+        />
+        <PopoverTab.Button
+          status="danger"
+          text={t('disconnect', { ns: 'modals' })}
+          onClick={() => {
+            setActiveAccount(null)
+            setActiveProxy(null)
+            setOpen(false)
+          }}
+        />
+      </PopoverTab.Container>
     </div>
   )
 }

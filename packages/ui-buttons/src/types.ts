@@ -205,3 +205,11 @@ export type ButtonModalProps = ComponentBaseWithClassName &
     text: string
     label?: string
   }
+
+export type ButtonPopoverTabProps = ComponentBaseWithClassName &
+  OnMouseHandlersProps & {
+    text: string
+    status?: 'warning' | 'danger'
+    disabled?: boolean
+    grow?: boolean
+  }

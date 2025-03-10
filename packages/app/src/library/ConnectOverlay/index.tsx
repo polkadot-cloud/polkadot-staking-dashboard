@@ -7,6 +7,8 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
 import type { Dispatch, SetStateAction } from 'react'
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PopoverTab } from 'ui-buttons'
 import { Inner } from './Inner'
 import { mobileCheck } from './Utils'
 import { Wrapper } from './Wrappers'
@@ -16,6 +18,7 @@ export const ConnectOverlay = ({
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
+  const { t } = useTranslation()
   const { extensionsStatus } = useExtensions()
 
   const popoverRef = useRef<HTMLDivElement>(null)
@@ -64,6 +67,26 @@ export const ConnectOverlay = ({
 
   return (
     <div ref={popoverRef}>
+      <PopoverTab.Container position="top">
+        <PopoverTab.Button
+          text={t('connect', { ns: 'app' })}
+          onClick={() => {
+            /* Do nothing */
+          }}
+        />
+        <PopoverTab.Button
+          text={t('proxies', { ns: 'modals' })}
+          onClick={() => {
+            /* Do nothing */
+          }}
+        />
+        <PopoverTab.Button
+          text={t('readOnly', { ns: 'modals' })}
+          onClick={() => {
+            /* Do nothing */
+          }}
+        />
+      </PopoverTab.Container>
       <Wrapper className="large">
         <div className="scroll">
           <div className="inner">
