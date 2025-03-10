@@ -99,7 +99,7 @@ export const Main = () => {
                 <Fragment key={`sidemenu_page_${categoryId}_${key}`}>
                   {category === categoryId && (
                     <Primary
-                      name={t(key)}
+                      name={key === 'home' ? 'Home' : t(key)}
                       to={hash}
                       active={hash === pathname}
                       lottie={lottie}

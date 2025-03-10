@@ -87,7 +87,7 @@ const RouterInner = () => {
                   <Route
                     key="main_interface_navigate"
                     path="*"
-                    element={<Navigate to="/overview" />}
+                    element={<Navigate to="/home" />}
                   />
                 </Routes>
               </ErrorBoundary>
