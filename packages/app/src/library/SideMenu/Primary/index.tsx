@@ -43,7 +43,7 @@ export const Primary = ({
         }}
       >
         <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {name === 'Home' ? (
+          {to.includes('/home') || to === '/' ? (
             <button
               type="button"
               style={{

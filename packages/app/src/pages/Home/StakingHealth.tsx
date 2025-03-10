@@ -95,7 +95,7 @@ export const StakingHealth = () => {
   // Calculate individual's staking performance
   const calculateIndividualRewardRate = () => {
     // In a real implementation, we would calculate this based on actual rewards data
-    // For now, we'll use a simplified approach based on unclaimed rewards
+    // For now, I'll use a simplified approach based on unclaimed rewards
 
     // If user has no staking activity, return 0
     if (!isNominating && !isInPool) {
@@ -107,7 +107,6 @@ export const StakingHealth = () => {
     let individualRate = new BigNumber(0)
 
     if (isNominating) {
-      // For nominators: Use unclaimed rewards as a basis
       // In a real implementation, we would use historical payout data over a specific period
       const totalUnclaimed = new BigNumber(unclaimedRewards.total || '0')
       const stakedAmount = planckToUnitBn(frozen, units)
@@ -151,7 +150,7 @@ export const StakingHealth = () => {
     // Calculate performance ratio (individual rate / network average)
     const performanceRatio = individualRate.dividedBy(avgRateBeforeCommission)
 
-    // Using the thresholds as requested:
+    // Thresholds
     // Very Healthy: > 1-2% above average
     // Healthy: within 1-2% of average (either side)
     // Unhealthy: > 1-2% below average
@@ -239,7 +238,7 @@ export const StakingHealth = () => {
 
             {stakingType === 'pool' && (
               <>
-                <p>You are currently staking in a pool</p>
+                <p>{t('youAreCurrentlyStakingInAPool')}</p>
 
                 <div className="balance-info">
                   <h3>{t('balanceInformation')}</h3>

@@ -1,6 +1,5 @@
 {
   "pages": {
-    "home": "Home",
     "aboutDirectNomination": "About Direct Nomination",
     "activeEra": "Active Era",
     "activeNominations": "Active Nominations",
@@ -47,6 +46,7 @@
     "connect": "Connect",
     "connecting": "Connecting",
     "considerPoolStaking": "Consider pool staking until you reach the minimum",
+    "connectWalletForRecommendation": "Connect your wallet to learn your staking recommendation",
     "controllerAccount": "Controller Account",
     "controllerNotImported": "You have not imported your controller account. If you have lost access to your controller account, set a new one now. Otherwise, import the controller into one of your active extensions.",
     "createAPool": "Create a Pool",
@@ -74,6 +74,7 @@
     "fullCommissionValidatorTitle": "You Have a Nomination with 100% Commission",
     "generateNominations": "Generate Nominations",
     "goBack": "Go Back",
+    "home": "Home",
     "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
     "inPool": "In a Pool",
     "inPools": "is currently bonded in pools.",
@@ -227,6 +228,7 @@
     "validator_one": "{{count}} Validator",
     "validator_other": "{{count}} Validators",
     "validators": "Validators",
+    "walletBalance": "Wallet Balance",
     "waitingForActiveNominations": "Waiting for Active Nominations",
     "website": "Website",
     "withdraw": "Withdraw",
@@ -264,6 +266,7 @@
     "totalBalance": "Total Balance",
     "youAreCurrentlyInPool": "You are currently in pool",
     "yourStakingPosition": "Your staking position is",
-    "yourStakingStatus": "Your Staking Status"
+    "yourStakingStatus": "Your Staking Status",
+    "youAreCurrentlyStakingInAPool": "You are currently staking in a pool"
   }
 }

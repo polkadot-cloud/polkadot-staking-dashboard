@@ -125,14 +125,13 @@ export const WalletBalance = () => {
   return (
     <>
       <CardHeader>
-        <h4>Wallet Balance</h4>
+        <h4>{t('walletBalance')}</h4>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <Balance.WithFiat
             Token={<Token />}
             value={totalBalance.toNumber()}
             currency={currency}
           />
-// Send logic to go here          
           <ButtonPrimary
             text={t('send')}
             disabled={!activeAccount || totalBalance.isZero()}

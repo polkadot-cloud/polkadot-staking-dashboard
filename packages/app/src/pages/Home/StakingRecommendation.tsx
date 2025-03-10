@@ -136,7 +136,7 @@ export const StakingRecommendation = () => {
             }}
           >
             <p style={{ fontSize: '1.1rem', textAlign: 'center' }}>
-              Connect your wallet to learn your staking recommendation
+              {t('connectWalletForRecommendation')}
             </p>
           </div>
         ) : (
