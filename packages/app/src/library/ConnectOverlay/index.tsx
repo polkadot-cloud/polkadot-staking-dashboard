@@ -5,30 +5,20 @@ import extensions from '@w3ux/extension-assets'
 import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
-import { useConnectNew } from 'contexts/ConnectNew'
-import {
-  CONNECT_OVERLAY_MAX_WIDTH,
-  DocumentPadding,
-  TAB_TRANSITION_DURATION_MS,
-} from 'contexts/ConnectNew/defaults'
-import { motion } from 'framer-motion'
-import { useEffect } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
+import { useRef } from 'react'
 import { Inner } from './Inner'
 import { mobileCheck } from './Utils'
 import { Wrapper } from './Wrappers'
 
-export const ConnectOverlay = () => {
-  const {
-    open,
-    show,
-    hidden,
-    overlayRef,
-    syncPosition,
-    dismissOverlay,
-    position: [x, y],
-    checkOverlayPosition,
-  } = useConnectNew()
+export const ConnectOverlay = ({
+  setOpen,
+}: {
+  setOpen: Dispatch<SetStateAction<boolean>>
+}) => {
   const { extensionsStatus } = useExtensions()
+
+  const popoverRef = useRef<HTMLDivElement>(null)
 
   // Whether the app is running on mobile.
   const isMobile = mobileCheck()
@@ -67,71 +57,20 @@ export const ConnectOverlay = () => {
   )
   const other = web.filter((a) => !installed.find((b) => b.id === a.id))
 
-  // Handler for closing the overlay on window resize.
-  const resizeCallback = () => {
-    syncPosition()
-  }
-
-  // Close the overlay if clicked outside of its container.
-  useOutsideAlerter(overlayRef, () => {
-    dismissOverlay()
-  }, ['wcm-modal'])
-
-  // Check position and show the overlay if overlay has been opened.
-  useEffect(() => {
-    if (open) {
-      checkOverlayPosition()
-    }
-  }, [open])
-
-  // Close the overlay on window resize.
-  useEffect(() => {
-    window.addEventListener('resize', resizeCallback)
-    return () => {
-      window.removeEventListener('resize', resizeCallback)
-    }
-  }, [])
+  // Close the menu if clicked outside of its container
+  useOutsideAlerter(popoverRef, () => {
+    setOpen(false)
+  }, ['header-connect'])
 
   return (
-    open && (
-      <Wrapper
-        ref={overlayRef}
-        onAnimationComplete={() => checkOverlayPosition()}
-        className="large"
-        style={{
-          position: 'fixed',
-          left: `${x}px`,
-          top: `${y}px`,
-          opacity: show ? 1 : 0,
-          zIndex: 50,
-          width: '100%',
-          maxWidth: `${CONNECT_OVERLAY_MAX_WIDTH}px`,
-        }}
-      >
-        <motion.div
-          animate={!hidden ? 'show' : 'hidden'}
-          variants={{
-            hidden: {
-              opacity: 0,
-              transform: 'scale(0.95)',
-            },
-            show: {
-              opacity: 1,
-              transform: 'scale(1)',
-            },
-          }}
-          transition={{
-            duration: TAB_TRANSITION_DURATION_MS * 0.001,
-            ease: [0.1, 1, 0.1, 1],
-          }}
-          className="scroll"
-          style={{ maxHeight: window.innerHeight - DocumentPadding * 2 }}
-        >
+    <div ref={popoverRef}>
+      <Wrapper className="large">
+        <div className="scroll">
           <div className="inner">
             <Inner installed={installed} other={other} />
           </div>
-        </motion.div>
+        </div>
       </Wrapper>
-    )
+    </div>
   )
 }

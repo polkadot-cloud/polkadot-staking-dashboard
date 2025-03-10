@@ -17,7 +17,6 @@ import { BondedProvider } from 'contexts/Bonded'
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
-import { ConnectNewProvider } from 'contexts/ConnectNew'
 import { CurrencyProvider } from 'contexts/Currency'
 import { FastUnstakeProvider } from 'contexts/FastUnstake'
 import { FiltersProvider } from 'contexts/Filters'
@@ -77,7 +76,6 @@ export const Providers = () => {
       OtherAccountsProvider,
       ImportedAccountsProvider,
       WalletConnectProvider,
-      ConnectNewProvider,
       ProxiesProvider,
       HelpProvider,
       PluginsProvider,

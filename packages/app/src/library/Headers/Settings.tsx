@@ -2,36 +2,41 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCog, faPlugCircleBolt } from '@fortawesome/free-solid-svg-icons'
-import { useConnectNew } from 'contexts/ConnectNew'
-import type { ConnectMouseEvent } from 'contexts/ConnectNew/types'
 import { useTheme } from 'contexts/Themes'
+import { ConnectOverlay } from 'library/ConnectOverlay'
 import { useState } from 'react'
-import { ButtonHeader, InactiveButtonHeader } from 'ui-buttons'
+import { InactiveButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { MenuPopover } from './Popovers/MenuPopover'
 
 export const Settings = () => {
   const { themeElementRef } = useTheme()
-  const { openConnectOverlay } = useConnectNew()
 
-  const [open, setOpen] = useState<boolean>(false)
+  const [openSettings, setOpenSettings] = useState<boolean>(false)
+  const [openConnect, setOpenConnect] = useState<boolean>(false)
 
   return (
     <>
-      <ButtonHeader
-        className="header-settings"
-        marginLeft
-        icon={faPlugCircleBolt}
-        onClick={(ev: ConnectMouseEvent) => {
-          openConnectOverlay(ev)
-        }}
-      />
       <Popover
-        open={open}
+        open={openConnect}
         portalContainer={themeElementRef.current || undefined}
-        content={<MenuPopover setOpen={setOpen} />}
+        content={<ConnectOverlay setOpen={setOpenConnect} />}
         onTriggerClick={() => {
-          setOpen(!open)
+          setOpenConnect(!openConnect)
+        }}
+      >
+        <InactiveButtonHeader
+          className="header-connect"
+          marginLeft
+          icon={faPlugCircleBolt}
+        />
+      </Popover>
+      <Popover
+        open={openSettings}
+        portalContainer={themeElementRef.current || undefined}
+        content={<MenuPopover setOpen={setOpenSettings} />}
+        onTriggerClick={() => {
+          setOpenSettings(!openSettings)
         }}
       >
         <InactiveButtonHeader

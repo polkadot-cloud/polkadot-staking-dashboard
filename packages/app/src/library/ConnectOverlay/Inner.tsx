@@ -1,12 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
 // SPDX-License-Identifier: AGPL-3.0
 
-import { faExternalLinkAlt, faPlug } from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
-import { useConnectNew } from 'contexts/ConnectNew'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Extension } from './Extension'
@@ -17,8 +16,6 @@ import type { InnerProps } from './types'
 import { ItemWrapper } from './Wrappers'
 
 export const Inner = ({ installed, other }: InnerProps) => {
-  const { dismissOverlay } = useConnectNew()
-
   // Store the active hardware wallet, if selected.
   const [selectedConnectItem, setSelectedConnectItem] = useState<
     string | undefined
@@ -89,16 +86,6 @@ export const Inner = ({ installed, other }: InnerProps) => {
 
   return (
     <>
-      <div className="title">
-        <h3>
-          <FontAwesomeIcon icon={faPlug} transform="shrink-2" />
-          Connect Accounts
-        </h3>
-        <button type="button" onClick={() => dismissOverlay()}>
-          Close
-        </button>
-      </div>
-
       <motion.h4 {...getMotionProps('heading')}>Hardware</motion.h4>
       <motion.span {...getMotionProps('polkadot_vault')}>
         <ItemWrapper

@@ -7,7 +7,6 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
-import { ConnectOverlay } from 'library/ConnectOverlay'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
 import { Help } from 'library/Help'
@@ -67,7 +66,6 @@ const RouterInner = () => {
         )}
         <NotificationPrompts />
         <Page.Body>
-          <ConnectOverlay />
           <Help />
           <Overlays />
           <Menu />

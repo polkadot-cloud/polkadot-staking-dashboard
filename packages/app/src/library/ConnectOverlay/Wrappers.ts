@@ -6,12 +6,8 @@ import styled from 'styled-components'
 
 export const Wrapper = styled(motion.div)`
   --connect-item-height: 3.25rem;
-  padding: 0.75rem;
 
   > .scroll {
-    box-shadow: var(--shadow-floating-menu);
-    border: 1px solid var(--border-secondary-color);
-    background: var(--background-default);
     border-radius: 0.4rem;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -22,37 +18,6 @@ export const Wrapper = styled(motion.div)`
       flex-flow: column wrap;
       padding: 0.7rem;
       width: 100%;
-
-      .title {
-        flex: 1;
-        display: flex;
-
-        > h3 {
-          color: var(--text-color-tertiary);
-          margin-bottom: 0.35rem;
-          font-size: 0.75rem;
-
-          > svg {
-            margin-right: 0.4rem;
-          }
-        }
-
-        > button {
-          border: 1px solid var(--border-secondary-color);
-          background-color: var(--background-default);
-          color: var(--text-color-tertiary);
-          font-family: InterSemiBold, sans-serif;
-          font-size: 0.75rem;
-          margin-left: auto;
-          padding: 0.25rem 0.5rem;
-          border-radius: 0.4rem;
-          cursor: pointer;
-
-          &:hover {
-            background-color: var(--background-hover);
-          }
-        }
-      }
 
       > h4 {
         font-family: InterSemiBold, sans-serif;
