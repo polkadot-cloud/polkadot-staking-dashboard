@@ -69,7 +69,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.8"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
