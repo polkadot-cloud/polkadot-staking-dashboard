@@ -13,7 +13,7 @@ import {
 } from 'contexts/ConnectNew/defaults'
 import { motion } from 'framer-motion'
 import { useEffect } from 'react'
-// import { ConnectInner } from './Inner'
+import { Inner } from './Inner'
 import { mobileCheck } from './Utils'
 import { Wrapper } from './Wrappers'
 
@@ -66,7 +66,6 @@ export const ConnectOverlay = () => {
     Object.keys(extensionsStatus).find((key) => key === a.id)
   )
   const other = web.filter((a) => !installed.find((b) => b.id === a.id))
-  console.debug(other)
 
   // Handler for closing the overlay on window resize.
   const resizeCallback = () => {
@@ -115,12 +114,10 @@ export const ConnectOverlay = () => {
             hidden: {
               opacity: 0,
               transform: 'scale(0.95)',
-              filter: 'blur(4px)',
             },
             show: {
               opacity: 1,
               transform: 'scale(1)',
-              filter: 'blur(0)',
             },
           }}
           transition={{
@@ -131,7 +128,7 @@ export const ConnectOverlay = () => {
           style={{ maxHeight: window.innerHeight - DocumentPadding * 2 }}
         >
           <div className="inner">
-            {/* <ConnectInner installed={installed} other={other} /> */}
+            <Inner installed={installed} other={other} />
           </div>
         </motion.div>
       </Wrapper>
