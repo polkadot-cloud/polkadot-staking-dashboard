@@ -132,6 +132,7 @@ export const WalletBalance = () => {
             value={totalBalance.toNumber()}
             currency={currency}
           />
+// Send logic to go here          
           <ButtonPrimary
             text={t('send')}
             disabled={!activeAccount || totalBalance.isZero()}
