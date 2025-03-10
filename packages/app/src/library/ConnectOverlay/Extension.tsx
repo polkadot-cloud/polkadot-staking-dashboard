@@ -1,12 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
 // SPDX-License-Identifier: AGPL-3.0
 
-import {
-  faExternalLinkAlt,
-  faLink,
-  faMinus,
-  faPlus,
-} from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
@@ -91,24 +86,16 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
   return (
     <ItemWrapper className={`${last ? ` last` : ``}`}>
       <div>
-        <span className="icon-web">{Icon && <Icon />}</span>
+        <span className="icon">{Icon && <Icon />}</span>
       </div>
       <div>
         <div>
-          <h4 className={`${connected ? ` connected` : ``}`}>
-            {title}
-            {connected && (
-              <span className="badge">
-                <FontAwesomeIcon icon={faLink} transform="grow-0" />
-              </span>
-            )}
-          </h4>
-          <h5>
+          <h3 className={`${connected ? ` connected` : ``}`}>{title}</h3>
+          <h4>
             <a href={`https://${websiteUrl}`} target="_blank" rel="noreferrer">
               {websiteText}
-              <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-5" />
             </a>
-          </h5>
+          </h4>
         </div>
         <div>
           <button

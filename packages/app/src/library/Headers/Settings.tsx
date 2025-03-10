@@ -24,7 +24,7 @@ export const Settings = () => {
         onTriggerClick={() => {
           setOpenConnect(!openConnect)
         }}
-        width="350px"
+        width="375px"
       >
         <InactiveButtonHeader
           className="header-connect"

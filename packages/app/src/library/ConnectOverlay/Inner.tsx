@@ -1,8 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
 // SPDX-License-Identifier: AGPL-3.0
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
@@ -96,20 +94,16 @@ export const Inner = ({ installed, other }: InnerProps) => {
           </div>
           <div>
             <div>
-              <h4>Polkadot Vault</h4>
-              <h5>
+              <h3>Polkadot Vault</h3>
+              <h4>
                 <a
                   href="https://signer.parity.io"
                   target="_blank"
                   rel="noreferrer"
                 >
                   signer.parity.io
-                  <FontAwesomeIcon
-                    icon={faExternalLinkAlt}
-                    transform="shrink-5"
-                  />
                 </a>
-              </h5>
+              </h4>
             </div>
             <div>
               <button
@@ -137,16 +131,12 @@ export const Inner = ({ installed, other }: InnerProps) => {
           </div>
           <div>
             <div>
-              <h4>Ledger</h4>
-              <h5>
+              <h3>Ledger</h3>
+              <h4>
                 <a href="https://ledger.com" target="_blank" rel="noreferrer">
                   ledger.com
-                  <FontAwesomeIcon
-                    icon={faExternalLinkAlt}
-                    transform="shrink-5"
-                  />
                 </a>
-              </h5>
+              </h4>
             </div>
             <div>
               <button
@@ -163,8 +153,6 @@ export const Inner = ({ installed, other }: InnerProps) => {
         </ItemWrapper>
       </motion.span>
 
-      <motion.h4 {...getMotionProps('heading')}>Wallets</motion.h4>
-
       <motion.span {...getMotionProps('wallet_connect')}>
         <ItemWrapper
           className={`${selectedConnectItem === 'wallet_connect' ? ` last` : ``}`}
@@ -174,16 +162,12 @@ export const Inner = ({ installed, other }: InnerProps) => {
           </div>
           <div>
             <div>
-              <h4>Wallet Connect (Beta)</h4>
-              <h5>
+              <h3>Wallet Connect</h3>
+              <h4>
                 <a href="https://reown.com/" target="_blank" rel="noreferrer">
                   reown.com
-                  <FontAwesomeIcon
-                    icon={faExternalLinkAlt}
-                    transform="shrink-5"
-                  />
                 </a>
-              </h5>
+              </h4>
             </div>
             <div>
               <button

@@ -16,13 +16,15 @@ export const Wrapper = styled(motion.div)`
     > .inner {
       display: flex;
       flex-flow: column wrap;
-      padding: 0.7rem;
+      padding: 0.7rem 0 0 0;
       width: 100%;
 
       > h4 {
+        color: var(--text-color-tertiary);
         font-family: InterSemiBold, sans-serif;
-        margin: 0.75rem 0 0.4rem 0;
+        margin: 0.5rem 0 0.4rem 0;
         overflow: hidden;
+        padding: 0 0.75rem;
 
         &.hidden {
           margin: 0.75rem 0 0 0;
@@ -45,11 +47,9 @@ export const Wrapper = styled(motion.div)`
 `
 
 export const ItemWrapper = styled.div`
-  background-color: var(--background-default);
-  border: 1px solid var(--border-secondary-color);
-  border-radius: 0.4rem;
+  border-bottom: 1px solid var(--border-primary-color);
   flex: 1;
-  padding: 0 0.5rem;
+  padding: 0.5rem 0 0.75rem 0;
   display: flex;
   align-items: center;
   position: relative;
@@ -57,6 +57,7 @@ export const ItemWrapper = styled.div`
   margin-bottom: 0.5rem;
 
   &.last {
+    border-bottom: none;
     margin-bottom: 0;
   }
 
@@ -71,65 +72,36 @@ export const ItemWrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 2rem;
-      max-width: 2rem;
-      height: 100%;
-
-      .icon-web {
-        width: 1.6rem;
-        height: 1.6rem;
-      }
+      min-width: 4.25rem;
+      max-width: 4.25rem;
 
       > .icon {
-        width: 1.75rem;
-        height: 1.75rem;
+        width: 2.3rem;
+        height: 2.3rem;
       }
     }
 
     &:last-child {
       flex-grow: 1;
       display: flex;
-      padding-left: 0.5rem;
+      padding-right: 0.75rem;
 
       > div {
         &:first-child {
           flex-grow: 1;
 
-          > h4,
-          > h5 {
+          > h4 {
             display: flex;
             align-items: center;
-          }
-
-          > h4 {
-            font-family: InterBold, sans-serif;
-            line-height: 0.85rem;
-            margin-bottom: 0.25rem;
-
-            &.connected {
-              color: var(--text-color-primary);
-            }
-
-            > .badge {
-              color: var(--text-color-secondary);
-              border-radius: 0.25rem;
-              font-size: 0.7rem;
-              margin-left: 0.35rem;
-            }
-          }
-
-          > h5 {
             color: var(--text-color-tertiary);
             font-family: InterSemiBold, sans-serif;
 
             > a {
               color: var(--text-color-tertiary);
               text-decoration: none;
-              display: flex;
-              align-items: center;
-
-              > svg {
-                margin-left: 0.15rem;
+              width: auto;
+              &:hover {
+                text-decoration: underline;
               }
             }
           }
