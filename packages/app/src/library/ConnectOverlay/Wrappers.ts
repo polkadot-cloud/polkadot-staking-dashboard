@@ -49,12 +49,12 @@ export const Wrapper = styled(motion.div)`
 export const ItemWrapper = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   flex: 1;
-  padding: 0.75rem 0;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
   margin-bottom: 0.5rem;
+  height: 5rem;
 
   &.last {
     border-bottom: none;
