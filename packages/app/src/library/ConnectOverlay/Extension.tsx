@@ -85,16 +85,10 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
       <div>
         <div>
           <h3 className={`${connected ? ` connected` : ``}`}>{title}</h3>
-          <h4>
-            <button
-              onClick={(ev) => {
-                ev.stopPropagation()
-                window.open(`https://${websiteUrl}`, '_blank')
-              }}
-            >
-              {websiteText}
-            </button>
-          </h4>
+          <ConnectItem.WebUrl
+            url={`https://${websiteUrl}`}
+            text={websiteText}
+          />
         </div>
         <div>
           <ConnectItem.Button

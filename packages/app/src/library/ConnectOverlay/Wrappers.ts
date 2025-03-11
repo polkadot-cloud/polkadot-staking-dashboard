@@ -56,29 +56,9 @@ export const ItemWrapper = styled.div`
       flex-grow: 1;
       display: flex;
       padding-right: 0.75rem;
-
       > div {
         &:first-child {
           flex-grow: 1;
-          > h4 {
-            color: var(--text-color-tertiary);
-            font-family: Inter, sans-serif;
-            display: flex;
-            align-items: center;
-
-            > a,
-            > button {
-              color: var(--text-color-tertiary);
-              font-size: 1.1rem;
-              margin-top: 0.2rem;
-              text-decoration: none;
-              width: auto;
-
-              &:hover {
-                text-decoration: underline;
-              }
-            }
-          }
         }
       }
     }

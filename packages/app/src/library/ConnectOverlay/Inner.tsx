@@ -106,15 +106,10 @@ export const Inner = ({ installed, other }: InnerProps) => {
           <div>
             <div>
               <h3>Polkadot Vault</h3>
-              <h4>
-                <a
-                  href="https://signer.parity.io"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  signer.parity.io
-                </a>
-              </h4>
+              <ConnectItem.WebUrl
+                url={'https://signer.parity.io'}
+                text={'signer.parity.io'}
+              />
             </div>
             <ConnectItem.Icon
               faIcon={
@@ -144,11 +139,10 @@ export const Inner = ({ installed, other }: InnerProps) => {
           <div>
             <div>
               <h3>Ledger</h3>
-              <h4>
-                <a href="https://ledger.com" target="_blank" rel="noreferrer">
-                  ledger.com
-                </a>
-              </h4>
+              <ConnectItem.WebUrl
+                url={'https://ledger.com'}
+                text={'ledger.com'}
+              />
             </div>
             <ConnectItem.Icon
               faIcon={
@@ -179,11 +173,10 @@ export const Inner = ({ installed, other }: InnerProps) => {
           <div>
             <div>
               <h3>Wallet Connect</h3>
-              <h4>
-                <a href="https://reown.com/" target="_blank" rel="noreferrer">
-                  reown.com
-                </a>
-              </h4>
+              <ConnectItem.WebUrl
+                url={'https://reown.com'}
+                text={'reown.com'}
+              />
             </div>
             <ConnectItem.Icon
               faIcon={
