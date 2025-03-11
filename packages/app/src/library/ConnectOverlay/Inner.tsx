@@ -10,8 +10,7 @@ import { Extension } from './Extension'
 // import { ManageLedger } from './ManageLedger'
 // import { ManageVault } from './ManageVault'
 // import { ManageWalletConnect } from './ManageWalletConnect'
-import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { ConnectItem } from 'ui-core/popover'
+import { Hardware } from './Hardware'
 import type { InnerProps } from './types'
 
 export const Inner = ({ installed, other }: InnerProps) => {
@@ -87,101 +86,36 @@ export const Inner = ({ installed, other }: InnerProps) => {
     <>
       <motion.h4 {...getMotionProps('heading')}>Hardware</motion.h4>
       <motion.section {...getMotionProps('polkadot_vault')}>
-        <ConnectItem.Item
-          asButton
-          last={selectedConnectItem === 'polkadot_vault'}
-          onClick={() => {
-            setSelectedConnectItem(
-              selectedConnectItem === 'polkadot_vault'
-                ? undefined
-                : 'polkadot_vault'
-            )
-          }}
-        >
-          <div>
-            <ConnectItem.Logo Svg={PolkadotVaultSVG} />
-          </div>
-          <div>
-            <div>
-              <h3>Polkadot Vault</h3>
-              <ConnectItem.WebUrl
-                url={'https://vault.novasama.io'}
-                text={'vault.novasama.io'}
-              />
-            </div>
-            <ConnectItem.Icon
-              faIcon={
-                selectedConnectItem === 'polkadot_vault'
-                  ? faCheck
-                  : faChevronRight
-              }
-            />
-          </div>
-        </ConnectItem.Item>
+        <Hardware
+          active={selectedConnectItem === 'polkadot_vault'}
+          setSelectedConnectItem={setSelectedConnectItem}
+          Svg={PolkadotVaultSVG}
+          title="Polkadot Vault"
+          websiteUrl="https://vault.novasama.io"
+          websiteText="vault.novasama.io"
+        />
       </motion.section>
 
       <motion.section {...getMotionProps('ledger')}>
-        <ConnectItem.Item
-          asButton
-          last={selectedConnectItem === 'ledger'}
-          onClick={() => {
-            setSelectedConnectItem(
-              selectedConnectItem === 'ledger' ? undefined : 'ledger'
-            )
-          }}
-        >
-          <div>
-            <ConnectItem.Logo Svg={LedgerSquareSVG} />
-          </div>
-          <div>
-            <div>
-              <h3>Ledger</h3>
-              <ConnectItem.WebUrl
-                url={'https://ledger.com'}
-                text={'ledger.com'}
-              />
-            </div>
-            <ConnectItem.Icon
-              faIcon={
-                selectedConnectItem === 'ledger' ? faCheck : faChevronRight
-              }
-            />
-          </div>
-        </ConnectItem.Item>
+        <Hardware
+          active={selectedConnectItem === 'ledger'}
+          setSelectedConnectItem={setSelectedConnectItem}
+          Svg={LedgerSquareSVG}
+          title="Ledger"
+          websiteUrl="https://ledger.com"
+          websiteText="ledger.com"
+        />
       </motion.section>
 
       <motion.section {...getMotionProps('wallet_connect')}>
-        <ConnectItem.Item
-          asButton
-          last
-          onClick={() => {
-            setSelectedConnectItem(
-              selectedConnectItem === 'wallet_connect'
-                ? undefined
-                : 'wallet_connect'
-            )
-          }}
-        >
-          <div>
-            <ConnectItem.Logo Svg={WalletConnectSVG} />
-          </div>
-          <div>
-            <div>
-              <h3>Wallet Connect</h3>
-              <ConnectItem.WebUrl
-                url={'https://reown.com'}
-                text={'reown.com'}
-              />
-            </div>
-            <ConnectItem.Icon
-              faIcon={
-                selectedConnectItem === 'wallet_connect'
-                  ? faCheck
-                  : faChevronRight
-              }
-            />
-          </div>
-        </ConnectItem.Item>
+        <Hardware
+          active={selectedConnectItem === 'wallet_connect'}
+          setSelectedConnectItem={setSelectedConnectItem}
+          Svg={WalletConnectSVG}
+          title="Wallet Connect"
+          websiteUrl="https://reown.com"
+          websiteText="reown.com"
+        />
       </motion.section>
 
       <motion.h4 {...getMotionProps('heading')}>Web Extensions</motion.h4>
