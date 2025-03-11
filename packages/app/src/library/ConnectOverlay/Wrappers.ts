@@ -53,7 +53,7 @@ export const ItemWrapper = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
-  height: 5.3rem;
+  height: 5.4rem;
 
   &.asButton {
     &:hover {
