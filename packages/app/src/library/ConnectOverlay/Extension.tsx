@@ -87,9 +87,14 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
         <div>
           <h3 className={`${connected ? ` connected` : ``}`}>{title}</h3>
           <h4>
-            <a href={`https://${websiteUrl}`} target="_blank" rel="noreferrer">
+            <button
+              onClick={(ev) => {
+                ev.stopPropagation()
+                window.open(`https://${websiteUrl}`, '_blank')
+              }}
+            >
               {websiteText}
-            </a>
+            </button>
           </h4>
         </div>
         <div>

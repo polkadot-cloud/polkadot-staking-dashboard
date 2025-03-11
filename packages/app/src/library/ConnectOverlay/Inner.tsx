@@ -89,7 +89,14 @@ export const Inner = ({ installed, other }: InnerProps) => {
       <motion.h4 {...getMotionProps('heading')}>Hardware</motion.h4>
       <motion.span {...getMotionProps('polkadot_vault')}>
         <ItemWrapper
-          className={`${selectedConnectItem === 'polkadot_vault' ? ` last` : ``}`}
+          className={`asButton ${selectedConnectItem === 'polkadot_vault' ? ` last` : ``}`}
+          onClick={() => {
+            setSelectedConnectItem(
+              selectedConnectItem === 'polkadot_vault'
+                ? undefined
+                : 'polkadot_vault'
+            )
+          }}
         >
           <div>
             <div className="icon">
@@ -110,22 +117,13 @@ export const Inner = ({ installed, other }: InnerProps) => {
               </h4>
             </div>
             <div>
-              <button
-                className="manage"
-                onClick={() =>
-                  setSelectedConnectItem(
-                    selectedConnectItem === 'polkadot_vault'
-                      ? undefined
-                      : 'polkadot_vault'
-                  )
-                }
-              >
+              <div className="manage">
                 {selectedConnectItem === 'polkadot_vault' ? (
                   <FontAwesomeIcon icon={faCheck} />
                 ) : (
                   <FontAwesomeIcon icon={faChevronRight} />
                 )}
-              </button>
+              </div>
             </div>
           </div>
         </ItemWrapper>
@@ -133,7 +131,12 @@ export const Inner = ({ installed, other }: InnerProps) => {
 
       <motion.span {...getMotionProps('ledger')}>
         <ItemWrapper
-          className={`${selectedConnectItem === 'ledger' ? ` last` : ``}`}
+          className={`asButton ${selectedConnectItem === 'ledger' ? ` last` : ``}`}
+          onClick={() => {
+            setSelectedConnectItem(
+              selectedConnectItem === 'ledger' ? undefined : 'ledger'
+            )
+          }}
         >
           <div>
             <div className="icon">
@@ -150,20 +153,13 @@ export const Inner = ({ installed, other }: InnerProps) => {
               </h4>
             </div>
             <div>
-              <button
-                className="manage"
-                onClick={() =>
-                  setSelectedConnectItem(
-                    selectedConnectItem === 'ledger' ? undefined : 'ledger'
-                  )
-                }
-              >
+              <div className="manage">
                 {selectedConnectItem === 'ledger' ? (
                   <FontAwesomeIcon icon={faCheck} />
                 ) : (
                   <FontAwesomeIcon icon={faChevronRight} />
                 )}
-              </button>
+              </div>
             </div>
           </div>
         </ItemWrapper>
@@ -171,8 +167,15 @@ export const Inner = ({ installed, other }: InnerProps) => {
 
       <motion.span {...getMotionProps('wallet_connect')}>
         <ItemWrapper
-          className={`${selectedConnectItem === 'wallet_connect' ? ` last` : ``}`}
+          className={`asButton ${selectedConnectItem === 'wallet_connect' ? ` last` : ``}`}
           style={{ border: 'none' }}
+          onClick={() => {
+            setSelectedConnectItem(
+              selectedConnectItem === 'wallet_connect'
+                ? undefined
+                : 'wallet_connect'
+            )
+          }}
         >
           <div>
             <div className="icon">
@@ -189,22 +192,13 @@ export const Inner = ({ installed, other }: InnerProps) => {
               </h4>
             </div>
             <div>
-              <button
-                className="manage"
-                onClick={() =>
-                  setSelectedConnectItem(
-                    selectedConnectItem === 'wallet_connect'
-                      ? undefined
-                      : 'wallet_connect'
-                  )
-                }
-              >
+              <div className="manage">
                 {selectedConnectItem === 'wallet_connect' ? (
                   <FontAwesomeIcon icon={faCheck} />
                 ) : (
                   <FontAwesomeIcon icon={faChevronRight} />
                 )}
-              </button>
+              </div>
             </div>
           </div>
         </ItemWrapper>

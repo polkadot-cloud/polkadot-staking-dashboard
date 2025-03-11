@@ -53,8 +53,14 @@ export const ItemWrapper = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
-  margin-bottom: 0.5rem;
-  height: 5rem;
+  height: 5.25rem;
+
+  &.asButton {
+    &:hover {
+      background: var(--button-popover-tab-background);
+      cursor: pointer;
+    }
+  }
 
   &.last {
     border-bottom: none;
@@ -106,8 +112,11 @@ export const ItemWrapper = styled.div`
             display: flex;
             align-items: center;
 
-            > a {
+            > a,
+            > button {
               color: var(--text-color-tertiary);
+              font-size: 1.1rem;
+              line-height: 1.75rem;
               text-decoration: none;
               width: auto;
 
