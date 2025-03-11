@@ -153,7 +153,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
       <motion.section {...getMotionProps('wallet_connect')}>
         <ConnectItem.Item
           asButton
-          last={selectedConnectItem === 'wallet_connect'}
+          last
           onClick={() => {
             setSelectedConnectItem(
               selectedConnectItem === 'wallet_connect'
