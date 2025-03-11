@@ -22,9 +22,9 @@ export const Wrapper = styled(motion.div)`
         background: var(--button-popover-tab-background);
         color: var(--text-color-tertiary);
         font-family: InterSemiBold, sans-serif;
-        margin: 0 0 0.4rem 0;
         overflow: hidden;
-        padding: 0.75rem 0.75rem;
+        padding: 0 0.75rem;
+        line-height: 3rem;
 
         &.hidden {
           margin: 0.75rem 0 0 0;
