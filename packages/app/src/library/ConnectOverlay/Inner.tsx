@@ -13,7 +13,6 @@ import { Extension } from './Extension'
 import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { ConnectItem } from 'ui-core/popover'
 import type { InnerProps } from './types'
-import { ItemWrapper } from './Wrappers'
 
 export const Inner = ({ installed, other }: InnerProps) => {
   // Store the active hardware wallet, if selected.
@@ -88,8 +87,9 @@ export const Inner = ({ installed, other }: InnerProps) => {
     <>
       <motion.h4 {...getMotionProps('heading')}>Hardware</motion.h4>
       <motion.section {...getMotionProps('polkadot_vault')}>
-        <ItemWrapper
-          className={`asButton ${selectedConnectItem === 'polkadot_vault' ? ` last` : ``}`}
+        <ConnectItem.Item
+          asButton
+          last={selectedConnectItem === 'polkadot_vault'}
           onClick={() => {
             setSelectedConnectItem(
               selectedConnectItem === 'polkadot_vault'
@@ -99,9 +99,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
           }}
         >
           <div>
-            <div className="icon">
-              <PolkadotVaultSVG />
-            </div>
+            <ConnectItem.Logo Svg={PolkadotVaultSVG} />
           </div>
           <div>
             <div>
@@ -119,12 +117,13 @@ export const Inner = ({ installed, other }: InnerProps) => {
               }
             />
           </div>
-        </ItemWrapper>
+        </ConnectItem.Item>
       </motion.section>
 
       <motion.section {...getMotionProps('ledger')}>
-        <ItemWrapper
-          className={`asButton ${selectedConnectItem === 'ledger' ? ` last` : ``}`}
+        <ConnectItem.Item
+          asButton
+          last={selectedConnectItem === 'ledger'}
           onClick={() => {
             setSelectedConnectItem(
               selectedConnectItem === 'ledger' ? undefined : 'ledger'
@@ -132,9 +131,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
           }}
         >
           <div>
-            <div className="icon">
-              <LedgerSquareSVG style={{ width: '1.4rem', height: '1.4rem' }} />
-            </div>
+            <ConnectItem.Logo Svg={LedgerSquareSVG} />
           </div>
           <div>
             <div>
@@ -150,13 +147,13 @@ export const Inner = ({ installed, other }: InnerProps) => {
               }
             />
           </div>
-        </ItemWrapper>
+        </ConnectItem.Item>
       </motion.section>
 
       <motion.section {...getMotionProps('wallet_connect')}>
-        <ItemWrapper
-          className={`asButton ${selectedConnectItem === 'wallet_connect' ? ` last` : ``}`}
-          style={{ border: 'none' }}
+        <ConnectItem.Item
+          asButton
+          last={selectedConnectItem === 'wallet_connect'}
           onClick={() => {
             setSelectedConnectItem(
               selectedConnectItem === 'wallet_connect'
@@ -166,9 +163,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
           }}
         >
           <div>
-            <div className="icon">
-              <WalletConnectSVG style={{ width: '2rem', height: '2rem' }} />
-            </div>
+            <ConnectItem.Logo Svg={WalletConnectSVG} />
           </div>
           <div>
             <div>
@@ -186,7 +181,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
               }
             />
           </div>
-        </ItemWrapper>
+        </ConnectItem.Item>
       </motion.section>
 
       <motion.h4 {...getMotionProps('heading')}>Web Extensions</motion.h4>

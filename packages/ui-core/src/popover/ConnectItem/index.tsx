@@ -4,11 +4,15 @@
 import { Button } from './Button'
 import { Container } from './Container'
 import { Icon } from './Icon'
+import { Item } from './Item'
+import { Logo } from './Logo'
 import { WebUrl } from './WebUrl'
 
 export const ConnectItem = {
   Button,
   Container,
   Icon,
+  Item,
+  Logo,
   WebUrl,
 }

@@ -3,68 +3,6 @@
 
 import styled from 'styled-components'
 
-export const ItemWrapper = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
-  flex: 1;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  height: 5.4rem;
-
-  &.asButton {
-    &:hover {
-      background: var(--button-popover-tab-background);
-      cursor: pointer;
-    }
-  }
-
-  &.last {
-    border-bottom: none;
-    margin-bottom: 0;
-  }
-
-  > div {
-    display: flex;
-    align-items: center;
-
-    &:first-child {
-      flex: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 4.25rem;
-      max-width: 4.25rem;
-
-      > .icon {
-        background: var(--button-secondary-background);
-        border-radius: 50%;
-        width: 2.75rem;
-        height: 2.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        > svg {
-          width: 62%;
-          height: 62%;
-        }
-      }
-    }
-
-    &:last-child {
-      flex-grow: 1;
-      display: flex;
-      padding-right: 0.75rem;
-      > div {
-        &:first-child {
-          flex-grow: 1;
-        }
-      }
-    }
-  }
-`
-
 export const ChainSearchInputWrapper = styled.div`
   border: 1px solid var(--border-primary-color);
   background-color: var(--background-primary);

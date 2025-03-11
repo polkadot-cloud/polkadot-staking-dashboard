@@ -13,7 +13,6 @@ import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { localStorageOrDefault } from '@w3ux/utils'
 import { ConnectItem } from 'ui-core/popover'
 import type { ExtensionProps } from './types'
-import { ItemWrapper } from './Wrappers'
 
 export const Extension = ({ extension, last }: ExtensionProps) => {
   const { connectExtensionAccounts } = useExtensionAccounts()
@@ -78,9 +77,9 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
   }
 
   return (
-    <ItemWrapper className={`${last ? ` last` : ``}`}>
+    <ConnectItem.Item last={last}>
       <div>
-        <span className="icon">{Icon && <Icon />}</span>
+        <ConnectItem.Logo Svg={Icon} />
       </div>
       <div>
         <div>
@@ -99,6 +98,6 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
           />
         </div>
       </div>
-    </ItemWrapper>
+    </ConnectItem.Item>
   )
 }
