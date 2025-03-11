@@ -18,8 +18,8 @@ export const Ledger = () => {
   const { network } = useNetwork()
   const url = 'ledger.com'
 
-  // Only render on Polkadot and Kusama networks.
-  if (!['polkadot', 'kusama'].includes(network)) {
+  // Only render on Polkadot, Kusama, and Westend networks.
+  if (!['polkadot', 'kusama', 'westend'].includes(network)) {
     return null
   }
 
