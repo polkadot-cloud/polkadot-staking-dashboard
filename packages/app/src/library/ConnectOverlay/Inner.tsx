@@ -87,6 +87,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
       <motion.h4 {...getMotionProps('heading')}>Hardware</motion.h4>
       <motion.section {...getMotionProps('polkadot_vault')}>
         <Hardware
+          hardwareId="polkadot_vault"
           active={selectedConnectItem === 'polkadot_vault'}
           setSelectedConnectItem={setSelectedConnectItem}
           Svg={PolkadotVaultSVG}
@@ -98,6 +99,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
 
       <motion.section {...getMotionProps('ledger')}>
         <Hardware
+          hardwareId="ledger"
           active={selectedConnectItem === 'ledger'}
           setSelectedConnectItem={setSelectedConnectItem}
           Svg={LedgerSquareSVG}
@@ -109,6 +111,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
 
       <motion.section {...getMotionProps('wallet_connect')}>
         <Hardware
+          hardwareId="wallet_connect"
           active={selectedConnectItem === 'wallet_connect'}
           setSelectedConnectItem={setSelectedConnectItem}
           Svg={WalletConnectSVG}

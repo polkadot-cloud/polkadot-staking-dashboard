@@ -11,6 +11,7 @@ import type {
 import { ConnectItem } from 'ui-core/popover'
 
 export const Hardware = ({
+  hardwareId,
   active,
   setSelectedConnectItem,
   Svg,
@@ -18,6 +19,7 @@ export const Hardware = ({
   websiteUrl,
   websiteText,
 }: {
+  hardwareId: string
   active: boolean
   setSelectedConnectItem: Dispatch<SetStateAction<string | undefined>>
   Svg: FunctionComponent<SVGProps<SVGSVGElement>>
@@ -29,7 +31,7 @@ export const Hardware = ({
     asButton
     last={active}
     onClick={() => {
-      setSelectedConnectItem(active ? undefined : 'polkadot_vault')
+      setSelectedConnectItem(active ? undefined : hardwareId)
     }}
   >
     <div>
