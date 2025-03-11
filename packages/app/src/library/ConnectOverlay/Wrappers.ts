@@ -127,30 +127,24 @@ export const ItemWrapper = styled.div`
           }
         }
         &:last-child {
+          color: var(--text-color-secondary);
+          font-family: InterSemiBold, sans-serif;
           padding-right: 0.25rem;
+          font-size: 1.3rem;
 
-          > button {
-            color: var(--text-color-secondary);
-            font-family: InterSemiBold, sans-serif;
-            font-size: 1.3rem;
-
-            svg {
-              margin-right: 0.2rem;
-
-              &.active {
-                color: var(--status-success-color);
-                font-size: 1.4rem;
-              }
+          svg {
+            margin-right: 0.2rem;
+            &.active {
+              color: var(--status-success-color);
+              font-size: 1.4rem;
             }
+          }
 
-            &.manage {
-              > svg {
-                font-size: 1rem;
-              }
-            }
-            &:disabled {
-              cursor: default;
-            }
+          > .manage {
+            font-size: 1rem;
+          }
+          &:disabled {
+            cursor: default;
           }
         }
       }
