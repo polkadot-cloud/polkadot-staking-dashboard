@@ -3,14 +3,13 @@
 
 .menuItem {
   border-bottom: 1px solid var(--border-primary-color);
-  transition: background var(--transition-duration);
   padding: 1.65rem 1.25rem 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   width: 100%;
 
   &:hover {
-    background: var(--background-default);
+    background: var(--button-popover-tab-background);
   }
   > div {
     display: flex;
