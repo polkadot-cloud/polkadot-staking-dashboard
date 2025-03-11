@@ -1,50 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
 // SPDX-License-Identifier: AGPL-3.0
 
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
-
-export const Wrapper = styled(motion.div)`
-  --connect-item-height: 3.25rem;
-
-  > .scroll {
-    border-radius: 0.4rem;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    position: relative;
-
-    > .inner {
-      display: flex;
-      flex-flow: column wrap;
-      width: 100%;
-
-      > h4 {
-        background: var(--button-popover-tab-background);
-        color: var(--text-color-tertiary);
-        font-family: InterSemiBold, sans-serif;
-        overflow: hidden;
-        padding: 0 0.75rem;
-        line-height: 3rem;
-
-        &.hidden {
-          margin: 0.75rem 0 0 0;
-        }
-      }
-
-      > .motion {
-        overflow: hidden;
-
-        > .motion {
-          overflow: hidden;
-        }
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-`
 
 export const ItemWrapper = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
@@ -68,12 +25,10 @@ export const ItemWrapper = styled.div`
   }
 
   > div {
-    height: var(--connect-item-height);
     display: flex;
     align-items: center;
 
     &:first-child {
-      height: var(--connect-item-height);
       flex: 0;
       display: flex;
       align-items: center;

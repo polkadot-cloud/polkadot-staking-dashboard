@@ -11,7 +11,7 @@ import { Extension } from './Extension'
 // import { ManageVault } from './ManageVault'
 // import { ManageWalletConnect } from './ManageWalletConnect'
 import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ConnectItem } from 'ui-core/popover'
 import type { InnerProps } from './types'
 import { ItemWrapper } from './Wrappers'
 
@@ -87,7 +87,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
   return (
     <>
       <motion.h4 {...getMotionProps('heading')}>Hardware</motion.h4>
-      <motion.span {...getMotionProps('polkadot_vault')}>
+      <motion.section {...getMotionProps('polkadot_vault')}>
         <ItemWrapper
           className={`asButton ${selectedConnectItem === 'polkadot_vault' ? ` last` : ``}`}
           onClick={() => {
@@ -116,20 +116,18 @@ export const Inner = ({ installed, other }: InnerProps) => {
                 </a>
               </h4>
             </div>
-            <div>
-              <div className="manage">
-                {selectedConnectItem === 'polkadot_vault' ? (
-                  <FontAwesomeIcon icon={faCheck} />
-                ) : (
-                  <FontAwesomeIcon icon={faChevronRight} />
-                )}
-              </div>
-            </div>
+            <ConnectItem.Icon
+              faIcon={
+                selectedConnectItem === 'polkadot_vault'
+                  ? faCheck
+                  : faChevronRight
+              }
+            />
           </div>
         </ItemWrapper>
-      </motion.span>
+      </motion.section>
 
-      <motion.span {...getMotionProps('ledger')}>
+      <motion.section {...getMotionProps('ledger')}>
         <ItemWrapper
           className={`asButton ${selectedConnectItem === 'ledger' ? ` last` : ``}`}
           onClick={() => {
@@ -152,20 +150,16 @@ export const Inner = ({ installed, other }: InnerProps) => {
                 </a>
               </h4>
             </div>
-            <div>
-              <div className="manage">
-                {selectedConnectItem === 'ledger' ? (
-                  <FontAwesomeIcon icon={faCheck} />
-                ) : (
-                  <FontAwesomeIcon icon={faChevronRight} />
-                )}
-              </div>
-            </div>
+            <ConnectItem.Icon
+              faIcon={
+                selectedConnectItem === 'ledger' ? faCheck : faChevronRight
+              }
+            />
           </div>
         </ItemWrapper>
-      </motion.span>
+      </motion.section>
 
-      <motion.span {...getMotionProps('wallet_connect')}>
+      <motion.section {...getMotionProps('wallet_connect')}>
         <ItemWrapper
           className={`asButton ${selectedConnectItem === 'wallet_connect' ? ` last` : ``}`}
           style={{ border: 'none' }}
@@ -191,23 +185,21 @@ export const Inner = ({ installed, other }: InnerProps) => {
                 </a>
               </h4>
             </div>
-            <div>
-              <div className="manage">
-                {selectedConnectItem === 'wallet_connect' ? (
-                  <FontAwesomeIcon icon={faCheck} />
-                ) : (
-                  <FontAwesomeIcon icon={faChevronRight} />
-                )}
-              </div>
-            </div>
+            <ConnectItem.Icon
+              faIcon={
+                selectedConnectItem === 'wallet_connect'
+                  ? faCheck
+                  : faChevronRight
+              }
+            />
           </div>
         </ItemWrapper>
-      </motion.span>
+      </motion.section>
 
       <motion.h4 {...getMotionProps('heading')}>Web Extensions</motion.h4>
 
       {extensionItems.map((extension, i) => (
-        <motion.span
+        <motion.section
           {...getMotionProps('heading')}
           key={`extension_item_${extension.id}`}
         >
@@ -215,29 +207,29 @@ export const Inner = ({ installed, other }: InnerProps) => {
             extension={extension}
             last={i === extensionItems.length - 1}
           />
-        </motion.span>
+        </motion.section>
       ))}
 
-      {/* <motion.span {...getManageProps('polkadot_vault')}>
+      {/* <motion.section {...getManageProps('polkadot_vault')}>
         <ManageVault
           getMotionProps={getMotionProps}
           selectedConnectItem={selectedConnectItem}
         />
-      </motion.span>
+      </motion.section>
 
-      <motion.span {...getManageProps('ledger')}>
+      <motion.section {...getManageProps('ledger')}>
         <ManageLedger
           getMotionProps={getMotionProps}
           selectedConnectItem={selectedConnectItem}
         />
-      </motion.span>
+      </motion.section>
 
-      <motion.span {...getManageProps('wallet_connect')}>
+      <motion.section {...getManageProps('wallet_connect')}>
         <ManageWalletConnect
           getMotionProps={getMotionProps}
           selectedConnectItem={selectedConnectItem}
         />
-      </motion.span> */}
+      </motion.section> */}
     </>
   )
 }

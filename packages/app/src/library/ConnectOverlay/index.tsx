@@ -9,9 +9,9 @@ import type { Dispatch, SetStateAction } from 'react'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
+import { ConnectItem } from 'ui-core/popover'
 import { Inner } from './Inner'
 import { mobileCheck } from './Utils'
-import { Wrapper } from './Wrappers'
 
 export const ConnectOverlay = ({
   setOpen,
@@ -87,13 +87,9 @@ export const ConnectOverlay = ({
           }}
         />
       </PopoverTab.Container>
-      <Wrapper className="large">
-        <div className="scroll">
-          <div className="inner">
-            <Inner installed={installed} other={other} />
-          </div>
-        </div>
-      </Wrapper>
+      <ConnectItem.Container>
+        <Inner installed={installed} other={other} />
+      </ConnectItem.Container>
     </div>
   )
 }
