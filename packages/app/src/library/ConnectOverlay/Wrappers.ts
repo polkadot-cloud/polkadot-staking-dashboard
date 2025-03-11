@@ -16,15 +16,15 @@ export const Wrapper = styled(motion.div)`
     > .inner {
       display: flex;
       flex-flow: column wrap;
-      padding: 0.7rem 0 0 0;
       width: 100%;
 
       > h4 {
+        background: var(--button-popover-tab-background);
         color: var(--text-color-tertiary);
         font-family: InterSemiBold, sans-serif;
-        margin: 0.5rem 0 0.4rem 0;
+        margin: 0 0 0.4rem 0;
         overflow: hidden;
-        padding: 0 0.75rem;
+        padding: 0.75rem 0.75rem;
 
         &.hidden {
           margin: 0.75rem 0 0 0;
@@ -76,8 +76,18 @@ export const ItemWrapper = styled.div`
       max-width: 4.25rem;
 
       > .icon {
-        width: 2.3rem;
-        height: 2.3rem;
+        background: var(--button-secondary-background);
+        border-radius: 50%;
+        width: 2.75rem;
+        height: 2.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > svg {
+          width: 62%;
+          height: 62%;
+        }
       }
     }
 

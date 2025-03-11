@@ -90,7 +90,9 @@ export const Inner = ({ installed, other }: InnerProps) => {
           className={`${selectedConnectItem === 'polkadot_vault' ? ` last` : ``}`}
         >
           <div>
-            <PolkadotVaultSVG className="icon" />
+            <div className="icon">
+              <PolkadotVaultSVG />
+            </div>
           </div>
           <div>
             <div>
@@ -127,7 +129,9 @@ export const Inner = ({ installed, other }: InnerProps) => {
           className={`${selectedConnectItem === 'ledger' ? ` last` : ``}`}
         >
           <div>
-            <LedgerSquareSVG style={{ width: '1.4rem', height: '1.4rem' }} />
+            <div className="icon">
+              <LedgerSquareSVG style={{ width: '1.4rem', height: '1.4rem' }} />
+            </div>
           </div>
           <div>
             <div>
@@ -156,9 +160,12 @@ export const Inner = ({ installed, other }: InnerProps) => {
       <motion.span {...getMotionProps('wallet_connect')}>
         <ItemWrapper
           className={`${selectedConnectItem === 'wallet_connect' ? ` last` : ``}`}
+          style={{ border: 'none' }}
         >
           <div>
-            <WalletConnectSVG style={{ width: '2rem', height: '2rem' }} />
+            <div className="icon">
+              <WalletConnectSVG style={{ width: '2rem', height: '2rem' }} />
+            </div>
           </div>
           <div>
             <div>
