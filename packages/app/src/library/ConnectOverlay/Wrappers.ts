@@ -60,7 +60,6 @@ export const ItemWrapper = styled.div`
       > div {
         &:first-child {
           flex-grow: 1;
-
           > h4 {
             color: var(--text-color-tertiary);
             font-family: Inter, sans-serif;
@@ -79,27 +78,6 @@ export const ItemWrapper = styled.div`
                 text-decoration: underline;
               }
             }
-          }
-        }
-        &:last-child {
-          color: var(--text-color-secondary);
-          font-family: InterSemiBold, sans-serif;
-          padding-right: 0.25rem;
-          font-size: 1.3rem;
-
-          svg {
-            margin-right: 0.2rem;
-            &.active {
-              color: var(--status-success-color);
-              font-size: 1.4rem;
-            }
-          }
-
-          > .manage {
-            font-size: 1rem;
-          }
-          &:disabled {
-            cursor: default;
           }
         }
       }
