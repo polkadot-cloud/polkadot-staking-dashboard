@@ -10,6 +10,8 @@ import { Extension } from './Extension'
 // import { ManageLedger } from './ManageLedger'
 // import { ManageVault } from './ManageVault'
 // import { ManageWalletConnect } from './ManageWalletConnect'
+import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { InnerProps } from './types'
 import { ItemWrapper } from './Wrappers'
 
@@ -109,6 +111,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
             </div>
             <div>
               <button
+                className="manage"
                 onClick={() =>
                   setSelectedConnectItem(
                     selectedConnectItem === 'polkadot_vault'
@@ -117,7 +120,11 @@ export const Inner = ({ installed, other }: InnerProps) => {
                   )
                 }
               >
-                {selectedConnectItem === 'polkadot_vault' ? 'Done' : 'Manage'}
+                {selectedConnectItem === 'polkadot_vault' ? (
+                  <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faChevronRight} />
+                )}
               </button>
             </div>
           </div>
@@ -144,13 +151,18 @@ export const Inner = ({ installed, other }: InnerProps) => {
             </div>
             <div>
               <button
+                className="manage"
                 onClick={() =>
                   setSelectedConnectItem(
                     selectedConnectItem === 'ledger' ? undefined : 'ledger'
                   )
                 }
               >
-                {selectedConnectItem === 'ledger' ? 'Done' : 'Manage'}
+                {selectedConnectItem === 'ledger' ? (
+                  <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faChevronRight} />
+                )}
               </button>
             </div>
           </div>
@@ -178,6 +190,7 @@ export const Inner = ({ installed, other }: InnerProps) => {
             </div>
             <div>
               <button
+                className="manage"
                 onClick={() =>
                   setSelectedConnectItem(
                     selectedConnectItem === 'wallet_connect'
@@ -186,7 +199,11 @@ export const Inner = ({ installed, other }: InnerProps) => {
                   )
                 }
               >
-                {selectedConnectItem === 'wallet_connect' ? 'Done' : 'Manage'}
+                {selectedConnectItem === 'wallet_connect' ? (
+                  <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faChevronRight} />
+                )}
               </button>
             </div>
           </div>

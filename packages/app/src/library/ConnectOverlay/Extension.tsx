@@ -1,7 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
 // SPDX-License-Identifier: AGPL-3.0
 
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCheckCircle,
+  faPlugCircleExclamation,
+  faPlugCircleXmark,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
@@ -62,25 +67,15 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
   let statusJsx
   switch (extensionsStatus[id]) {
     case 'connected':
-      statusJsx = (
-        <>
-          <FontAwesomeIcon icon={faMinus} transform="shrink-4" />
-          Disconnect
-        </>
-      )
+      statusJsx = <FontAwesomeIcon icon={faCheckCircle} className="active" />
       break
 
     case 'not_authenticated':
-      statusJsx = 'Not Authenticated'
+      statusJsx = <FontAwesomeIcon icon={faPlugCircleExclamation} />
       break
 
     default:
-      statusJsx = (
-        <>
-          <FontAwesomeIcon icon={faPlus} transform="shrink-2" />
-          Connect
-        </>
-      )
+      statusJsx = <FontAwesomeIcon icon={faPlus} />
   }
 
   return (
@@ -103,7 +98,11 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
             onClick={() => handleClick()}
             disabled={disabled}
           >
-            {isInstalled ? statusJsx : 'Not Installed'}
+            {isInstalled ? (
+              statusJsx
+            ) : (
+              <FontAwesomeIcon icon={faPlugCircleXmark} />
+            )}
           </button>
         </div>
       </div>

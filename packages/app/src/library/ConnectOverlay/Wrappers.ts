@@ -101,15 +101,16 @@ export const ItemWrapper = styled.div`
           flex-grow: 1;
 
           > h4 {
+            color: var(--text-color-tertiary);
+            font-family: Inter, sans-serif;
             display: flex;
             align-items: center;
-            color: var(--text-color-tertiary);
-            font-family: InterSemiBold, sans-serif;
 
             > a {
               color: var(--text-color-tertiary);
               text-decoration: none;
               width: auto;
+
               &:hover {
                 text-decoration: underline;
               }
@@ -120,16 +121,25 @@ export const ItemWrapper = styled.div`
           padding-right: 0.25rem;
 
           > button {
-            color: var(--accent-color-secondary);
+            color: var(--text-color-secondary);
             font-family: InterSemiBold, sans-serif;
-            font-size: 0.75rem;
+            font-size: 1.3rem;
 
             svg {
               margin-right: 0.2rem;
+
+              &.active {
+                color: var(--status-success-color);
+                font-size: 1.4rem;
+              }
             }
 
+            &.manage {
+              > svg {
+                font-size: 1.1rem;
+              }
+            }
             &:disabled {
-              color: var(--text-color-tertiary);
               cursor: default;
             }
           }
