@@ -107,8 +107,8 @@ export const Inner = ({ installed, other }: InnerProps) => {
             <div>
               <h3>Polkadot Vault</h3>
               <ConnectItem.WebUrl
-                url={'https://signer.parity.io'}
-                text={'signer.parity.io'}
+                url={'https://vault.novasama.io'}
+                text={'vault.novasama.io'}
               />
             </div>
             <ConnectItem.Icon

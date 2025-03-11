@@ -15,7 +15,7 @@ export const Vault = (): ReactElement => {
   const { t } = useTranslation('modals')
   const { openHelp } = useHelp()
   const { replaceModal } = useOverlay().modal
-  const url = 'signer.parity.io'
+  const url = 'vault.novasama.io'
 
   return (
     <ConnectItem>
