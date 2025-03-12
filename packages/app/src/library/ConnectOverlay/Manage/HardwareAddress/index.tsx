@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
 // SPDX-License-Identifier: AGPL-3.0
 
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn, unescape } from '@w3ux/utils'
 import type { FormEvent } from 'react'
@@ -67,10 +67,7 @@ export const HardwareAddress = ({
       <div className={`border ${last === true ? ` last` : ``}`}></div>
       <div className="content">
         <div className="inner">
-          <div className="identicon">
-            {Identicon}
-            <div className="counter">{index + 1}</div>
-          </div>
+          <div className="identicon">{Identicon}</div>
           <div>
             <section className="row">
               <input
@@ -113,19 +110,9 @@ export const HardwareAddress = ({
                 </div>
               )}
             </section>
-            <h5 className="full">
-              <span>
-                {ellipsisFn(address, 10)}
-                {/* <ButtonIcon
-                  tooltipText="Copied!"
-                  id={`hw_address_copy_${address}`}
-                  transform="shrink-5"
-                  onClick={() => {
-                    navigator.clipboard.writeText(address)
-                  }}
-                /> */}
-              </span>
-            </h5>
+            <h4 className="full">
+              <span>{ellipsisFn(address, 10)}</span>
+            </h4>
           </div>
         </div>
       </div>
@@ -133,7 +120,7 @@ export const HardwareAddress = ({
         <div className="action">
           {isImported ? (
             <button type="button" onClick={() => onRemove(address)}>
-              Remove
+              <FontAwesomeIcon icon={faTimes} />
             </button>
           ) : (
             <button type="button" onClick={() => onConfirm(address, index)}>

@@ -6,15 +6,15 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 0.5rem 0.5rem 1.5rem 0.55rem;
+  padding: 1rem 0.5rem 1rem 0.75rem;
   position: relative;
+  border-bottom: 1px solid var(--border-primary-color);
 
   &.last {
     padding-bottom: 0.5rem;
   }
 
   > .border {
-    border-bottom: 1px solid var(--border-primary-color);
     position: absolute;
     right: 0.5rem;
     bottom: 1rem;
@@ -34,10 +34,8 @@ export const Wrapper = styled.div`
     padding-right: 0.25rem;
 
     > button {
-      color: var(--accent-color-secondary);
-      font-family: InterSemiBold, sans-serif;
-      font-size: 0.75rem;
       width: 100%;
+      margin-right: 0.75rem;
     }
   }
 
@@ -52,29 +50,6 @@ export const Wrapper = styled.div`
 
       > .identicon {
         position: relative;
-
-        > .counter {
-          background: var(--background-default);
-          border: 1.25px solid var(--border-secondary-color);
-          color: var(--text-color-secondary);
-          font-family: InterBold, sans-serif;
-          border-radius: 0.25rem;
-          position: absolute;
-          bottom: -0.25rem;
-          right: -0.4rem;
-          min-width: 1.15rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 1rem;
-          font-size: 0.6rem;
-
-          svg {
-            color: var(--text-color-primary);
-            width: 60%;
-            height: 60%;
-          }
-        }
       }
 
       > div:last-child {
@@ -113,21 +88,20 @@ export const Wrapper = styled.div`
         }
 
         input {
-          background: var(--background-primary);
+          background: var(--button-popover-tab-background);
           border: 1px solid var(--border-primary-color);
           color: var(--text-color-primary);
           font-family: InterSemiBold, sans-serif;
           border-radius: 0.5rem;
-          padding: 0.5rem 0.6rem;
+          padding: 0.75rem 0.75rem;
           letter-spacing: 0.02rem;
-          font-size: 0.75rem;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
           width: 100%;
           max-width: 275px;
           transition:
-            background 0.2s,
+            background-color 0.2s,
             border-color 0.3s,
             max-width 0.3s,
             padding 0.2s;
@@ -142,15 +116,14 @@ export const Wrapper = styled.div`
         }
 
         .full {
-          margin-top: 0.35rem;
-          margin-bottom: 1.1rem;
+          margin-top: 0.4rem;
+          margin-bottom: 1.75rem;
           opacity: 0.8;
           position: relative;
           width: 100%;
 
           > span {
-            color: var(--text-color-primary);
-            font-family: InterSemiBold, sans-serif;
+            color: var(--text-color-secondary);
             position: absolute;
             top: 0;
             left: 0;
@@ -161,7 +134,6 @@ export const Wrapper = styled.div`
             padding-right: 0;
             width: 100%;
             max-width: 100%;
-            font-size: 0.7rem;
 
             > button {
               color: var(--text-color-tertiary);

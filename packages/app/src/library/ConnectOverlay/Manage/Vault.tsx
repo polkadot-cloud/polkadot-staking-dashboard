@@ -90,7 +90,7 @@ export const Vault = ({
             address={address}
             index={i}
             initial={name}
-            Identicon={<Polkicon address={address} fontSize="2.1rem" />}
+            Identicon={<Polkicon address={address} fontSize="2.9rem" />}
             existsHandler={vaultAccountExists}
             renameHandler={handleRename}
             onRemove={handleRemove}
