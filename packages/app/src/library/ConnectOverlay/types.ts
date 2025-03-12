@@ -12,3 +12,16 @@ export interface ExtensionProps {
   extension: ExtensionArrayListItem
   last: boolean
 }
+
+export interface ManageHardwareProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getMotionProps: (item: string, active?: boolean) => any
+  selectedConnectItem: string | undefined
+}
+
+export interface QrReaderProps {
+  network: string
+  ss58: number
+  importActive: boolean
+  onSuccess: () => void
+}

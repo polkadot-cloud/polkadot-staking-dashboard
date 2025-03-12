@@ -11,6 +11,7 @@ import { Extension } from './Extension'
 // import { ManageVault } from './ManageVault'
 // import { ManageWalletConnect } from './ManageWalletConnect'
 import { Hardware } from './Hardware'
+import { Vault } from './Manage/Vault'
 import type { InnerProps } from './types'
 
 export const Inner = ({ installed, other }: InnerProps) => {
@@ -135,13 +136,14 @@ export const Inner = ({ installed, other }: InnerProps) => {
         </motion.section>
       ))}
 
-      {/* <motion.section {...getManageProps('polkadot_vault')}>
-        <ManageVault
+      <motion.section {...getManageProps('polkadot_vault')}>
+        <Vault
           getMotionProps={getMotionProps}
           selectedConnectItem={selectedConnectItem}
         />
       </motion.section>
 
+      {/*
       <motion.section {...getManageProps('ledger')}>
         <ManageLedger
           getMotionProps={getMotionProps}
