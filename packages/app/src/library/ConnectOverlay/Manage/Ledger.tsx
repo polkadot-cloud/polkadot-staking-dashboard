@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: AGPL-3.0
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
-import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useLedgerAccounts } from '@w3ux/react-connect-kit'
 import type { LedgerAddress } from '@w3ux/react-connect-kit/types'
@@ -189,18 +188,21 @@ export const Ledger = ({ getMotionProps }: ManageHardwareProps) => {
     <>
       <motion.div {...getMotionProps('address_config')}>
         <ConnectItem.Heading text="Ledger">
-          <ButtonText
-            text={'Reset'}
-            iconLeft={faQrcode}
-            onClick={() => {
-              if (
-                confirm('Are you sure you want to remove all ledger accounts?')
-              ) {
-                resetLedgerAccounts()
-              }
-            }}
-            style={{ fontSize: '1.1rem' }}
-          />
+          {addressesRef.current.length > 0 && (
+            <ButtonText
+              text={'Reset'}
+              onClick={() => {
+                if (
+                  confirm(
+                    'Are you sure you want to remove all ledger accounts?'
+                  )
+                ) {
+                  resetLedgerAccounts()
+                }
+              }}
+              style={{ fontSize: '1.1rem' }}
+            />
+          )}
           <ButtonText
             text={isExecuting ? 'Cancel Import' : 'Import Next Account'}
             iconLeft={faUsb}

@@ -32,16 +32,11 @@ export const ConnectOverlay = ({
   // Whether the app is running in a SubWallet Mobile.
   const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && isMobile
 
-  // Unsupported extensions - will not display.
-  const UNSUPPORTED_EXTENSIONS = ['metamask-polkadot-snap', 'polkagate-snap']
-
   // Format supported extensions as array.
-  const extensionsAsArray = Object.entries(extensions)
-    .filter(([key]) => !UNSUPPORTED_EXTENSIONS.includes(key))
-    .map(([key, value]) => ({
-      id: key,
-      ...value,
-    })) as ExtensionArrayListItem[]
+  const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
+    id: key,
+    ...value,
+  })) as ExtensionArrayListItem[]
 
   // Determine which web extensions to display. Only display Subwallet Mobile or Nova if in one of
   // those environments. In Nova Wallet's case, fetch `nova-wallet` metadata and overwrite

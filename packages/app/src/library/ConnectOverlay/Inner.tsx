@@ -78,7 +78,6 @@ export const Inner = ({ installed, other }: InnerProps) => {
     animate: selectedConnectItem === item ? 'show' : 'hidden',
     className: 'motion',
   })
-  console.debug(getManageProps(''))
 
   const extensionItems = installed.concat(other)
 
