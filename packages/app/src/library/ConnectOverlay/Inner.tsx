@@ -7,11 +7,10 @@ import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Extension } from './Extension'
-// import { ManageLedger } from './ManageLedger'
-// import { ManageVault } from './ManageVault'
-// import { ManageWalletConnect } from './ManageWalletConnect'
 import { Hardware } from './Hardware'
+import { Ledger } from './Manage/Ledger'
 import { Vault } from './Manage/Vault'
+import { WalletConnect } from './Manage/WalletConnect'
 import type { InnerProps } from './types'
 
 export const Inner = ({ installed, other }: InnerProps) => {
@@ -135,28 +134,24 @@ export const Inner = ({ installed, other }: InnerProps) => {
           />
         </motion.section>
       ))}
-
       <motion.section {...getManageProps('polkadot_vault')}>
         <Vault
           getMotionProps={getMotionProps}
           selectedConnectItem={selectedConnectItem}
         />
       </motion.section>
-
-      {/*
       <motion.section {...getManageProps('ledger')}>
-        <ManageLedger
+        <Ledger
           getMotionProps={getMotionProps}
           selectedConnectItem={selectedConnectItem}
         />
       </motion.section>
-
       <motion.section {...getManageProps('wallet_connect')}>
-        <ManageWalletConnect
+        <WalletConnect
           getMotionProps={getMotionProps}
           selectedConnectItem={selectedConnectItem}
         />
-      </motion.section> */}
+      </motion.section>
     </>
   )
 }
