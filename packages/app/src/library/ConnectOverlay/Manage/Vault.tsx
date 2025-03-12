@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: AGPL-3.0
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useVaultAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
@@ -10,7 +9,8 @@ import type { VaultAccount } from '@w3ux/types'
 import { useNetwork } from 'contexts/Network'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { ImportButtonWrapper, SubHeadingWrapper } from '../Wrappers'
+import { ButtonText } from 'ui-buttons'
+import { ConnectItem } from 'ui-core/popover'
 import type { ManageHardwareProps } from '../types'
 import { HardwareAddress } from './HardwareAddress'
 import { QrReader } from './QrReader'
@@ -60,29 +60,16 @@ export const Vault = ({
 
   return (
     <>
-      <motion.div {...getMotionProps('address_config')}>
-        <SubHeadingWrapper>
-          <h5>
-            {!importActive
-              ? `${
-                  vaultAccounts.length || 'No'
-                } ${vaultAccounts.length === 1 ? 'Account' : 'Accounts'}`
-              : 'New Account'}
-          </h5>
-          <ImportButtonWrapper>
-            <button
-              onClick={() => {
-                setImportActive(!importActive)
-              }}
-            >
-              {!importActive && (
-                <FontAwesomeIcon icon={faQrcode} transform="shrink-2" />
-              )}
-              {importActive ? 'Cancel Import' : 'Import Account'}
-            </button>
-          </ImportButtonWrapper>
-        </SubHeadingWrapper>
-      </motion.div>
+      <ConnectItem.Heading text="Polkadot Vault">
+        <ButtonText
+          text={!importActive ? 'Add Account' : 'Cancel'}
+          iconLeft={faQrcode}
+          onClick={() => {
+            setImportActive(!importActive)
+          }}
+          style={{ fontSize: '1.1rem' }}
+        />
+      </ConnectItem.Heading>
 
       <motion.div {...getMotionProps('import_container', importActive)}>
         <QrReader
