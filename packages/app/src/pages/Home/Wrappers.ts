@@ -86,9 +86,7 @@ export const Wrapper = styled.div`
 `
 
 export const WelcomeWrapper = styled(Wrapper)`
-  box-shadow: var(--card-shadow);
-  background: var(--background-primary);
-  border-radius: 1.1rem;
+  background: transparent;
   transition: all 0.2s;
 
   .welcome-header {
@@ -196,6 +194,7 @@ export const WelcomeWrapper = styled(Wrapper)`
       margin-top: 0.5rem;
       border: 1px solid var(--border-primary-color);
       transition: background 0.2s;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
       .wallet-icon {
         color: var(--text-color-primary);
