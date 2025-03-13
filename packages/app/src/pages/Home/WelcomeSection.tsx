@@ -7,6 +7,7 @@ import HandWaveIcon from 'assets/svg/icons/hand.svg?react'
 import { useTranslation } from 'react-i18next'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
 import { useImportedAccounts } from '../../contexts/Connect/ImportedAccounts'
+import { ButtonCopy } from '../../library/ButtonCopy'
 import { WelcomeWrapper } from './Wrappers'
 
 export const WelcomeSection = () => {
@@ -29,7 +30,10 @@ export const WelcomeSection = () => {
         <div className="welcome-content">
           <div className="account-info">
             <span>{accountName || t('activeAccount')}:</span>
-            <span className="account-address">{activeAccount}</span>
+            <div className="account-address-container">
+              <span className="account-address">{activeAccount}</span>
+              <ButtonCopy value={activeAccount} size="0.95rem" xMargin />
+            </div>
           </div>
           <p className="welcome-message">{t('welcomeMessage')}</p>
         </div>

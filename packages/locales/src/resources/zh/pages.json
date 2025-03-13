@@ -276,8 +276,12 @@
     "withdraw": "提取",
     "withdrawFunds": "取款",
     "withdrawUnlock": "提取您的解锁部分以继续关闭池。",
+    "youAreCurrently": "您当前正在",
     "youAreCurrentlyInPool": "您当前在池中",
-    "youAreCurrentlyStakingInAPool": "您当前正在池中质押",
+    "youAreCurrentlyNominating": "您当前正在提名 {{count}} 个验证人",
+    "youAreCurrentlyNominating_plural": "您当前正在提名 {{count}} 个验证人",
+    "youAreCurrentlyStakingInAPool": "您当前正在质押池中",
+    "youAreCurrentlyStakingInAPoolWithId": "您当前正在质押池 {{poolId}} ({{poolName}}) 中",
     "yourCurrentBalance": "您当前的余额：{{balance}} {{unit}}",
     "yourStakingPosition": "您的质押仓位是",
     "yourStakingStatus": "您的质押状态"

@@ -3,18 +3,21 @@
 
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { styled } from 'styled-components'
+import styled from 'styled-components'
 import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { Wrapper } from './Wrappers'
@@ -67,13 +70,6 @@ const HealthStatus = styled.div`
   }
 `
 
-const StyledText = styled.p`
-  color: var(--text-color-secondary);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-  font-size: 1.1rem;
-`
-
 const SectionTitle = styled.h3`
   color: var(--text-color-primary);
   margin-top: 2rem;
@@ -95,8 +91,8 @@ const TipsList = styled.ul`
 `
 
 const ManageButton = styled.button`
-  background-color: var(--button-primary-background);
-  color: var(--text-color-primary);
+  background-color: var(--accent-color-primary);
+  color: white;
   border: none;
   border-radius: 0.5rem;
   padding: 0.75rem 1.5rem;
@@ -110,7 +106,7 @@ const ManageButton = styled.button`
   margin-top: 1rem;
 
   &:hover {
-    background-color: var(--button-hover-background);
+    opacity: 0.85;
   }
 
   svg {
@@ -118,17 +114,24 @@ const ManageButton = styled.button`
   }
 `
 
+const StyledText = styled.p`
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+`
+
 export const StakingHealth = () => {
   const { t } = useTranslation('pages')
   const { activeAccount } = useActiveAccounts()
   const { inSetup } = useStaking()
   const { inPool } = useActivePool()
-  const { getBalance, getNominations } = useBalances()
+  const { getBalance, getNominations, getPoolMembership } = useBalances()
   const { formatWithPrefs } = useValidators()
+  const { getNominationStatus } = useNominationStatus()
   const {
     networkData: { units },
   } = useNetwork()
   const navigate = useNavigate()
+  const { poolsMetaData } = useBondedPools()
 
   const balance = getBalance(activeAccount)
   const { frozen } = balance
@@ -139,10 +142,35 @@ export const StakingHealth = () => {
     (nominee) => nominee.prefs.commission === 100
   )
 
+  // Get nominator status for message
+  const { message: nominatorStatusMessage } = getNominationStatus(
+    activeAccount,
+    'nominator'
+  )
+  // Convert first letter to lowercase for the message
+  const nominatorStatusLowercase =
+    nominatorStatusMessage.charAt(0).toLowerCase() +
+    nominatorStatusMessage.slice(1)
+  // Add "You are currently" before the status message
+  const fullNominatorStatusMessage = `${t('youAreCurrently')} ${nominatorStatusLowercase}`
+
   // Determine staking type
   const isNominating = !inSetup()
   const isInPool = inPool()
   const stakingType = isNominating ? 'nominating' : isInPool ? 'pool' : ''
+
+  // Get pool information if user is in a pool
+  const membership = getPoolMembership(activeAccount)
+  const poolId = membership?.poolId ? String(membership.poolId) : null
+
+  // Get pool metadata if available
+  const poolMetadata =
+    poolId && poolsMetaData && poolsMetaData[Number(poolId)]
+      ? poolsMetaData[Number(poolId)]
+      : ''
+  const poolName = poolMetadata
+    ? u8aToString(u8aUnwrapBytes(poolMetadata)) || t('unnamed')
+    : t('unnamed')
 
   // Get network average reward rate
   const { getAverageRewardRate } = useAverageRewardRate()
@@ -250,18 +278,21 @@ export const StakingHealth = () => {
         <div className="content">
           <h2>{t('yourStakingStatus')}</h2>
 
-          {stakingType === 'pool' && (
-            <StyledText>{t('youAreCurrentlyStakingInAPool')}</StyledText>
+          {/* Display staking type */}
+          {stakingType === 'nominating' && (
+            <StyledText>{fullNominatorStatusMessage}</StyledText>
           )}
 
-          {stakingType === 'nominating' && (
+          {stakingType === 'pool' && (
             <StyledText>
-              {t('youAreCurrentlyNominating', {
-                count: nominated.length,
+              {t('youAreCurrentlyStakingInAPoolWithId', {
+                poolId,
+                poolName,
               })}
             </StyledText>
           )}
 
+          {/* Display health status */}
           <HealthStatus className={healthStatus.class}>
             {t('yourStakingPosition')}: {healthStatus.message}
           </HealthStatus>

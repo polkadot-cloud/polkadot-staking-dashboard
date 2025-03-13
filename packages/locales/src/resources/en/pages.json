@@ -276,8 +276,12 @@
     "withdraw": "Withdraw",
     "withdrawFunds": "Withdraw Funds",
     "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure.",
+    "youAreCurrently": "You are currently",
     "youAreCurrentlyInPool": "You are currently in pool",
+    "youAreCurrentlyNominating": "You are currently nominating {{count}} validator",
+    "youAreCurrentlyNominating_plural": "You are currently nominating {{count}} validators",
     "youAreCurrentlyStakingInAPool": "You are currently staking in a pool",
+    "youAreCurrentlyStakingInAPoolWithId": "You are currently staking in Pool {{poolId}} ({{poolName}})",
     "yourCurrentBalance": "Your current balance: {{balance}} {{unit}}",
     "yourStakingPosition": "Your staking position is",
     "yourStakingStatus": "Your Staking Status"

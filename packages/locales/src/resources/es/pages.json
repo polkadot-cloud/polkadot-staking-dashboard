@@ -276,9 +276,13 @@
     "withdraw": "Retirar",
     "withdrawFunds": "Retirar fondos",
     "withdrawUnlock": "Retira tu fragmento de desvinculación para proceder con el cierre del Pool.",
+    "youAreCurrently": "Actualmente estás",
     "youAreCurrentlyInPool": "Actualmente estás en un pool",
-    "youAreCurrentlyStakingInAPool": "Actualmente estás haciendo staking en un pool",
-    "yourCurrentBalance": "Tu balance actual: {{balance}} {{unit}}",
+    "youAreCurrentlyNominating": "Actualmente estás nominando {{count}} validador",
+    "youAreCurrentlyNominating_plural": "Actualmente estás nominando {{count}} validadores",
+    "youAreCurrentlyStakingInAPool": "Actualmente estás participando en un grupo",
+    "youAreCurrentlyStakingInAPoolWithId": "Actualmente estás participando en el Grupo {{poolId}} ({{poolName}})",
+    "yourCurrentBalance": "Tu saldo actual: {{balance}} {{unit}}",
     "yourStakingPosition": "Tu posición de staking es",
     "yourStakingStatus": "Tu estado de staking"
   }
