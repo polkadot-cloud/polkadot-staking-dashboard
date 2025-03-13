@@ -4,7 +4,7 @@
 import { usePrompt } from 'contexts/Prompt'
 import { Html5Qrcode } from 'html5-qrcode'
 import type { ReactElement } from 'react'
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { ScanWrapper } from './Wrappers.js'
 import type { ScanProps } from './types.js'
 import { createImgSize } from './util.js'
@@ -57,14 +57,13 @@ export const Html5QrCodePlugin = ({
 }: Html5QrScannerProps) => {
   const { setOnClosePrompt } = usePrompt()
 
-  // Store the HTML QR Code instance.
-  const [html5QrCode, setHtml5QrCode] = useState<Html5Qrcode | null>(null)
+  const html5QrCodeRef = useRef<Html5Qrcode>()
 
   // Reference of the HTML element used to scan the QR code.
   const ref = useRef<HTMLDivElement>(null)
 
   const handleHtmlQrCode = async (): Promise<void> => {
-    if (!ref.current || !html5QrCode) {
+    if (!ref.current || !html5QrCodeRef.current) {
       return
     }
 
@@ -73,7 +72,7 @@ export const Html5QrCodePlugin = ({
 
       if (devices && devices.length) {
         const cameraId = devices[0].id
-        await html5QrCode.start(
+        await html5QrCodeRef.current.start(
           cameraId,
           {
             fps,
@@ -87,8 +86,6 @@ export const Html5QrCodePlugin = ({
             qrCodeErrorCallback(errorMessage)
           }
         )
-      } else {
-        // TODO: display error if no camera devices are available.
       }
     } catch (err) {
       console.error(err)
@@ -97,21 +94,22 @@ export const Html5QrCodePlugin = ({
 
   useEffect(() => {
     if (ref.current) {
-      // Instantiate Html5Qrcode once DOM element exists.
-      const newHtml5QrCode = new Html5Qrcode(ref.current.id)
-      setHtml5QrCode(newHtml5QrCode)
-
-      // Stop HTML5 Qr Code when prompt closes.
+      html5QrCodeRef.current = new Html5Qrcode(ref.current.id)
       setOnClosePrompt(() => {
-        newHtml5QrCode?.stop()
+        html5QrCodeRef.current?.stop()
       })
+      handleHtmlQrCode()
+    }
+    return () => {
+      try {
+        if (html5QrCodeRef.current) {
+          html5QrCodeRef.current.stop()
+        }
+      } catch (err) {
+        // Silently ignore error
+      }
     }
   }, [])
-
-  // Start QR scanner when API object is instantiated.
-  useEffect(() => {
-    handleHtmlQrCode()
-  }, [html5QrCode])
 
   return <div ref={ref} id="html5qr-code-full-region" />
 }
