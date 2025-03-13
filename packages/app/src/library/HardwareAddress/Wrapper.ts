@@ -6,7 +6,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem 0.5rem 1rem 0.75rem;
+  padding: 1.25rem 0.5rem 1.25rem 0.75rem;
   position: relative;
   border-bottom: 1px solid var(--border-primary-color);
 
@@ -99,7 +99,6 @@ export const Wrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           width: 100%;
-          max-width: 275px;
           transition:
             background-color 0.2s,
             border-color 0.3s,

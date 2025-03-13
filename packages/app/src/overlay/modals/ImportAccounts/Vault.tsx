@@ -53,7 +53,6 @@ export const Vault = () => {
           style={{ fontSize: '1.1rem' }}
         />
       </ConnectItem.Heading>
-
       <div>
         <QrReader
           network={network}
@@ -64,7 +63,6 @@ export const Vault = () => {
           }}
         />
       </div>
-
       <div>
         {vaultAccounts.map(({ address, name }: VaultAccount, i) => (
           <HardwareAddress
