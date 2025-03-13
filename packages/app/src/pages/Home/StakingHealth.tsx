@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -11,6 +13,7 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
@@ -19,46 +22,99 @@ import { Wrapper } from './Wrappers'
 // Styled components for the health status indicator
 const HealthStatus = styled.div`
   margin: 1.5rem 0;
-  padding: 1rem;
+  padding: 1.25rem;
   border-radius: 0.75rem;
   font-weight: 600;
   display: flex;
   align-items: center;
+  width: 100%;
+  font-size: 1.1rem;
 
   &.very-healthy {
     background-color: rgba(0, 180, 0, 0.15);
-    color: #00b400;
+    color: var(--text-color-primary);
   }
 
   &.healthy {
     background-color: rgba(0, 150, 0, 0.1);
-    color: #009600;
+    color: var(--text-color-primary);
   }
 
   &.unhealthy {
     background-color: rgba(220, 0, 0, 0.1);
-    color: #dc0000;
+    color: var(--text-color-primary);
   }
 
   &:before {
     content: '';
     display: inline-block;
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.85rem;
+    height: 0.85rem;
     border-radius: 50%;
     margin-right: 0.75rem;
   }
 
   &.very-healthy:before {
-    background-color: #00b400;
+    background-color: #2ecc71;
   }
 
   &.healthy:before {
-    background-color: #009600;
+    background-color: #27ae60;
   }
 
   &.unhealthy:before {
-    background-color: #dc0000;
+    background-color: #e74c3c;
+  }
+`
+
+const StyledText = styled.p`
+  color: var(--text-color-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  font-size: 1.1rem;
+`
+
+const SectionTitle = styled.h3`
+  color: var(--text-color-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+`
+
+const TipsList = styled.ul`
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+
+  li {
+    margin-bottom: 0.75rem;
+    color: var(--text-color-secondary);
+    line-height: 1.4;
+    font-size: 1.05rem;
+  }
+`
+
+const ManageButton = styled.button`
+  background-color: var(--button-primary-background);
+  color: var(--text-color-primary);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+
+  &:hover {
+    background-color: var(--button-hover-background);
+  }
+
+  svg {
+    margin-right: 0.5rem;
   }
 `
 
@@ -70,11 +126,12 @@ export const StakingHealth = () => {
   const { getBalance, getNominations } = useBalances()
   const { formatWithPrefs } = useValidators()
   const {
-    networkData: { units, unit },
+    networkData: { units },
   } = useNetwork()
+  const navigate = useNavigate()
 
   const balance = getBalance(activeAccount)
-  const { free, frozen } = balance
+  const { frozen } = balance
 
   // Get nominations if user is nominating
   const nominated = formatWithPrefs(getNominations(activeAccount))
@@ -175,106 +232,65 @@ export const StakingHealth = () => {
 
   const healthStatus = getStakingHealthStatus()
 
+  // Handle the manage stake button click
+  const handleManageStake = () => {
+    if (isInPool) {
+      navigate('/pools')
+    } else if (isNominating) {
+      navigate('/nominate')
+    }
+  }
+
   return (
     <>
       <CardHeader>
         <h4>{t('stakingHealth')}</h4>
       </CardHeader>
       <Wrapper>
-        <div
-          className="content"
-          style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}
-        >
-          <div style={{ flex: 1, minWidth: '300px' }}>
-            <h2>{t('yourStakingStatus')}</h2>
+        <div className="content">
+          <h2>{t('yourStakingStatus')}</h2>
 
-            <HealthStatus className={healthStatus.class}>
-              {t('yourStakingPosition')}: {healthStatus.message}
-            </HealthStatus>
+          {stakingType === 'pool' && (
+            <StyledText>{t('youAreCurrentlyStakingInAPool')}</StyledText>
+          )}
 
-            {stakingType === 'nominating' && (
-              <>
+          {stakingType === 'nominating' && (
+            <StyledText>
+              {t('youAreCurrentlyNominating', {
+                count: nominated.length,
+              })}
+            </StyledText>
+          )}
+
+          <HealthStatus className={healthStatus.class}>
+            {t('yourStakingPosition')}: {healthStatus.message}
+          </HealthStatus>
+
+          {stakingType === 'nominating' &&
+            fullCommissionNominees.length > 0 && (
+              <div className="warning">
+                <h3>{t('warningFullCommission')}</h3>
                 <p>
-                  {t('youAreCurrentlyNominating', {
-                    count: nominated.length,
+                  {t('youHaveNominatedFullCommission', {
+                    count: fullCommissionNominees.length,
                   })}
                 </p>
-
-                {fullCommissionNominees.length > 0 && (
-                  <div className="warning">
-                    <h3>{t('warningFullCommission')}</h3>
-                    <p>
-                      {t('youHaveNominatedFullCommission', {
-                        count: fullCommissionNominees.length,
-                      })}
-                    </p>
-                  </div>
-                )}
-
-                <div className="balance-info">
-                  <h3>{t('balanceInformation')}</h3>
-                  <div className="balance-row">
-                    <span>{t('totalBalance')}:</span>
-                    <span>
-                      {planckToUnitBn(free.plus(frozen), units).toFormat()}{' '}
-                      {unit}
-                    </span>
-                  </div>
-                  <div className="balance-row">
-                    <span>{t('stakedBalance')}:</span>
-                    <span>
-                      {planckToUnitBn(frozen, units).toFormat()} {unit}
-                    </span>
-                  </div>
-                  <div className="balance-row">
-                    <span>{t('freeBalance')}:</span>
-                    <span>
-                      {planckToUnitBn(free, units).toFormat()} {unit}
-                    </span>
-                  </div>
-                </div>
-              </>
+              </div>
             )}
 
-            {stakingType === 'pool' && (
-              <>
-                <p>{t('youAreCurrentlyStakingInAPool')}</p>
+          <SectionTitle>{t('stakingTips')}</SectionTitle>
+          <TipsList>
+            <li>{t('stakingTip1')}</li>
+            <li>{t('stakingTip2')}</li>
+            <li>{t('stakingTip3')}</li>
+          </TipsList>
 
-                <div className="balance-info">
-                  <h3>{t('balanceInformation')}</h3>
-                  <div className="balance-row">
-                    <span>{t('totalBalance')}:</span>
-                    <span>
-                      {planckToUnitBn(free.plus(frozen), units).toFormat()}{' '}
-                      {unit}
-                    </span>
-                  </div>
-                  <div className="balance-row">
-                    <span>{t('poolBalance')}:</span>
-                    <span>
-                      {planckToUnitBn(frozen, units).toFormat()} {unit}
-                    </span>
-                  </div>
-                  <div className="balance-row">
-                    <span>{t('freeBalance')}:</span>
-                    <span>
-                      {planckToUnitBn(free, units).toFormat()} {unit}
-                    </span>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-          <div style={{ flex: 1, minWidth: '300px' }}>
-            <div className="tips">
-              <h3>{t('stakingTips')}</h3>
-              <ul>
-                <li>{t('stakingTip1')}</li>
-                <li>{t('stakingTip2')}</li>
-                <li>{t('stakingTip3')}</li>
-              </ul>
-            </div>
-          </div>
+          {(isInPool || isNominating) && (
+            <ManageButton onClick={handleManageStake}>
+              <FontAwesomeIcon icon={faEdit} />
+              {t('manageStake')}
+            </ManageButton>
+          )}
         </div>
       </Wrapper>
     </>
