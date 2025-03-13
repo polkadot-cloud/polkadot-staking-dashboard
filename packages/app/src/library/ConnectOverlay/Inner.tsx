@@ -19,6 +19,8 @@ export const Inner = ({
 
   const extensionItems = installed.concat(other)
 
+  // TODO: Separate Polkadot JS as a developer tool. use `modals.developerTools` locale key as header.
+
   return (
     <>
       <h4>Hardware</h4>

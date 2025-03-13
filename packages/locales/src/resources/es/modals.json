@@ -105,7 +105,6 @@
     "done": "Hecho",
     "ensureLedgerIsConnected": "Consejo: Asegúrate de que tu dispositivo Ledger esté conectado antes de continuar.",
     "exitYourStakingPosition": "Salir de tu posición de staking.",
-    "extensionConnected": "Extensión Conectada",
     "extensions": "Extensiones",
     "fastUnstakeCurrentQueue": "Número de cuentas actualmente en la fila de desvinculación rápida",
     "fastUnstakeExposedAgo_one": "Estuviste expuesto por última vez hace {{count}} Era",

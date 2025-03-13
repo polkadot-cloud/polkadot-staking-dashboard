@@ -11,10 +11,12 @@ import {
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { localStorageOrDefault } from '@w3ux/utils'
+import { useTranslation } from 'react-i18next'
 import { ConnectItem } from 'ui-core/popover'
 import type { ExtensionProps } from './types'
 
 export const Extension = ({ extension, last }: ExtensionProps) => {
+  const { t } = useTranslation('modals')
   const { connectExtensionAccounts } = useExtensionAccounts()
   const { extensionsStatus, extensionCanConnect, extensionInstalled } =
     useExtensions()
@@ -42,14 +44,10 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
       if (canConnect) {
         await connectExtensionAccounts(id)
       } else {
-        alert('Console was unable to connect to the extension.')
+        alert('Unable to connect to the extension.')
       }
     } else {
-      if (
-        confirm(
-          'Are you sure you want to disconnect from this extension? This will reload the console.'
-        )
-      ) {
+      if (confirm(t('disconnectFromExtension'))) {
         const updatedAtiveExtensions = (
           localStorageOrDefault('active_extensions', [], true) as string[]
         ).filter((ext: string) => ext !== id)
@@ -67,9 +65,11 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
   let faIcon: IconDefinition
   switch (extensionsStatus[id]) {
     case 'connected':
+      // TODO: Use `connectedextensionCanConnect` tooltip here to accompany icon
       faIcon = faCheckCircle
       break
     case 'not_authenticated':
+      // TODO: Use `notAuthenticated` tooltip here to accompany icon
       faIcon = faPlugCircleExclamation
       break
     default:
@@ -90,6 +90,7 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
           />
         </div>
         <div>
+          {/* TODO: Add tooltip with `modals.notInstalled` locale here */}
           <ConnectItem.Button
             active={connected}
             onClick={() => handleClick()}

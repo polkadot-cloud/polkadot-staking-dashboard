@@ -1,8 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import extensions from '@w3ux/extension-assets'
-import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
 import type { AnyFunction } from '@w3ux/types'
@@ -20,7 +18,6 @@ import {
   Section,
 } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { Extension } from './Extension'
 import { Ledger } from './Ledger'
 import { Proxies } from './Proxies'
 import { ReadOnly } from './ReadOnly'
@@ -45,30 +42,6 @@ export const Connect = () => {
 
   // Whether the app is running on of mobile wallets.
   const inMobileWallet = inNova || inSubWallet
-
-  // Get supported extensions.
-  const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
-    id: key,
-    ...value,
-  })) as ExtensionArrayListItem[]
-
-  // If in SubWallet Mobile, keep `subwallet-js` only.
-  const web = inSubWallet
-    ? extensionsAsArray.filter((a) => a.id === 'subwallet-js')
-    : // If in Nova Wallet, fetch nova wallet metadata and replace its id with `polkadot-js`.
-      inNova
-      ? extensionsAsArray
-          .filter((a) => a.id === 'nova-wallet')
-          .map((a) => ({ ...a, id: 'polkadot-js' }))
-      : // Otherwise, keep all extensions except `polkadot-js`.
-        extensionsAsArray.filter(
-          (a) => a.id !== 'polkadot-js' && a.category === 'web-extension'
-        )
-
-  const installed = web.filter((a) =>
-    Object.keys(extensionsStatus).find((key) => key === a.id)
-  )
-  const other = web.filter((a) => !installed.find((b) => b.id === a.id))
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState<boolean>(false)
@@ -124,33 +97,11 @@ export const Connect = () => {
     </>
   )
 
-  // Web extension connect options JSX.
-  const ConnectExtensionsJSX = (
-    <>
-      <ActionItem text={t('web')} />
-      <ExtensionsWrapper>
-        <SelectItems layout="two-col">
-          {installed.concat(other).map((extension, i) => (
-            <Extension key={`extension_item_${i}`} meta={extension} />
-          ))}
-        </SelectItems>
-      </ExtensionsWrapper>
-    </>
-  )
-
   // Display hardware before extensions. If in Nova Wallet or SubWallet Mobile, display extension
   // before hardware.
-  const ConnectCombinedJSX = !inMobileWallet ? (
-    <>
-      {ConnectHardwareJSX}
-      {ConnectExtensionsJSX}
-    </>
-  ) : (
-    <>
-      {ConnectExtensionsJSX}
-      {ConnectHardwareJSX}
-    </>
-  )
+  const ConnectCombinedJSX = !inMobileWallet
+    ? ConnectHardwareJSX
+    : ConnectHardwareJSX
 
   return (
     <Section type="carousel">
@@ -207,23 +158,6 @@ export const Connect = () => {
         <Multi>
           <Padding horizontalOnly ref={homeRef}>
             {ConnectCombinedJSX}
-            {!inMobileWallet && (
-              <>
-                <ActionItem text={t('developerTools')} />
-                <ExtensionsWrapper>
-                  <SelectItems layout="two-col">
-                    {extensionsAsArray
-                      .filter((a) => a.id === 'polkadot-js')
-                      .map((extension, i) => (
-                        <Extension
-                          key={`extension_item_${i}`}
-                          meta={extension}
-                        />
-                      ))}
-                  </SelectItems>
-                </ExtensionsWrapper>
-              </>
-            )}
           </Padding>
         </Multi>
         <Multi>

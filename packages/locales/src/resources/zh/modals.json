@@ -102,7 +102,6 @@
     "done": "完成",
     "ensureLedgerIsConnected": "提示:请确保您的Ledger设备已连接",
     "exitYourStakingPosition": "退出抵押",
-    "extensionConnected": "扩展已连接",
     "extensions": "扩展",
     "fastUnstakeCurrentQueue": "当前处于快速解除抵押队列中的帐户数",
     "fastUnstakeExposedAgo": "您上次被显示于 {{count}} Era 前",
