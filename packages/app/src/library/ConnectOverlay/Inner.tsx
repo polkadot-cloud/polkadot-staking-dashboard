@@ -4,153 +4,84 @@
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
 import { Hardware } from './Hardware'
-import { Ledger } from './Manage/Ledger'
-import { Vault } from './Manage/Vault'
-import { WalletConnect } from './Manage/WalletConnect'
 import type { InnerProps } from './types'
 
-export const Inner = ({ installed, other }: InnerProps) => {
-  // Store the active hardware wallet, if selected.
-  const [selectedConnectItem, setSelectedConnectItem] = useState<
-    string | undefined
-  >(undefined)
-
-  const variants = {
-    hidden: {
-      height: 0,
-      opacity: 0,
-    },
-    show: {
-      height: 'auto',
-      opacity: 1,
-    },
-  }
-
-  // Gets framer motion props for either a element that needs to be hidden and shown.
-  const getMotionProps = (item: string, active = true) => {
-    // Whether to show this element if it is a heading.
-    const showHeading = item === 'heading' && selectedConnectItem === undefined
-
-    // Whether to show this element if it is a connect item.
-    const showConnectItem =
-      item !== undefined &&
-      (item === selectedConnectItem || selectedConnectItem === undefined)
-
-    // Whether to show this element if it is an imported address.
-    const showImportedAddress = item === 'address' && active
-
-    // Whether to show this element if it is an  address label.
-    const showAddressLabel = item === 'address_config' && active
-
-    // Whether to show this element if it is an import container.
-    const showImportContainer = item === 'import_container' && active
-
-    const show =
-      showHeading ||
-      showConnectItem ||
-      showImportedAddress ||
-      showAddressLabel ||
-      showImportContainer
-
-    return {
-      initial: 'show',
-      variants,
-      transition: {
-        duration: 0.4,
-        ease: [0.25, 1, 0.25, 1],
-      },
-      animate: show ? 'show' : 'hidden',
-      className: `motion${show ? `` : ` hidden`}`,
-    }
-  }
-
-  // Gets framer motion props for a management ui item.
-  const getManageProps = (item: string) => ({
-    initial: 'hidden',
-    variants,
-    transition: {
-      duration: 0.2,
-    },
-    animate: selectedConnectItem === item ? 'show' : 'hidden',
-    className: 'motion',
-  })
+export const Inner = ({
+  installed,
+  other,
+  setOpen,
+  selectedSection,
+}: InnerProps) => {
+  const { openModal } = useOverlay().modal
 
   const extensionItems = installed.concat(other)
 
   return (
     <>
-      <motion.h4 {...getMotionProps('heading')}>Hardware</motion.h4>
-      <motion.section {...getMotionProps('polkadot_vault')}>
+      <h4>Hardware</h4>
+      <section>
         <Hardware
-          hardwareId="polkadot_vault"
-          active={selectedConnectItem === 'polkadot_vault'}
-          setSelectedConnectItem={setSelectedConnectItem}
+          active={selectedSection === 'polkadot_vault'}
+          onClick={() => {
+            openModal({
+              key: 'ImportAccounts',
+              size: 'sm',
+              options: { source: 'polkadot_vault' },
+            })
+            setOpen(false)
+          }}
           Svg={PolkadotVaultSVG}
           title="Polkadot Vault"
           websiteUrl="https://vault.novasama.io"
           websiteText="vault.novasama.io"
         />
-      </motion.section>
-
-      <motion.section {...getMotionProps('ledger')}>
+      </section>
+      <section>
         <Hardware
-          hardwareId="ledger"
-          active={selectedConnectItem === 'ledger'}
-          setSelectedConnectItem={setSelectedConnectItem}
+          active={selectedSection === 'ledger'}
+          onClick={() => {
+            openModal({
+              key: 'ImportAccounts',
+              size: 'sm',
+              options: { source: 'ledger' },
+            })
+            setOpen(false)
+          }}
           Svg={LedgerSquareSVG}
           title="Ledger"
           websiteUrl="https://ledger.com"
           websiteText="ledger.com"
         />
-      </motion.section>
-
-      <motion.section {...getMotionProps('wallet_connect')}>
+      </section>
+      <section>
         <Hardware
-          hardwareId="wallet_connect"
-          active={selectedConnectItem === 'wallet_connect'}
-          setSelectedConnectItem={setSelectedConnectItem}
+          active={selectedSection === 'wallet_connect'}
+          onClick={() => {
+            openModal({
+              key: 'ImportAccounts',
+              size: 'sm',
+              options: { source: 'polkadot_vault' },
+            })
+            setOpen(false)
+          }}
           Svg={WalletConnectSVG}
           title="Wallet Connect"
           websiteUrl="https://reown.com"
           websiteText="reown.com"
         />
-      </motion.section>
-
-      <motion.h4 {...getMotionProps('heading')}>Web Extensions</motion.h4>
-
+      </section>
+      <h4>Web Extensions</h4>
       {extensionItems.map((extension, i) => (
-        <motion.section
-          {...getMotionProps('heading')}
-          key={`extension_item_${extension.id}`}
-        >
+        <section key={`extension_item_${extension.id}`}>
           <Extension
             extension={extension}
             last={i === extensionItems.length - 1}
           />
-        </motion.section>
+        </section>
       ))}
-      <motion.section {...getManageProps('polkadot_vault')}>
-        <Vault
-          getMotionProps={getMotionProps}
-          selectedConnectItem={selectedConnectItem}
-        />
-      </motion.section>
-      <motion.section {...getManageProps('ledger')}>
-        <Ledger
-          getMotionProps={getMotionProps}
-          selectedConnectItem={selectedConnectItem}
-        />
-      </motion.section>
-      <motion.section {...getManageProps('wallet_connect')}>
-        <WalletConnect
-          getMotionProps={getMotionProps}
-          selectedConnectItem={selectedConnectItem}
-        />
-      </motion.section>
     </>
   )
 }

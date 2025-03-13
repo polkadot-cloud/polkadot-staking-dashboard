@@ -15,14 +15,12 @@ import {
   getLocalLedgerAddresses,
 } from 'contexts/LedgerHardware/Utils'
 import { useNetwork } from 'contexts/Network'
-import { motion } from 'framer-motion'
+import { HardwareAddress } from 'library/HardwareAddress'
 import { useEffect, useRef, useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
-import type { ManageHardwareProps } from '../types'
-import { HardwareAddress } from './HardwareAddress'
 
-export const Ledger = ({ getMotionProps }: ManageHardwareProps) => {
+export const Ledger = () => {
   const {
     network,
     networkData: { ss58 },
@@ -186,7 +184,7 @@ export const Ledger = ({ getMotionProps }: ManageHardwareProps) => {
 
   return (
     <>
-      <motion.div {...getMotionProps('address_config')}>
+      <div>
         <ConnectItem.Heading text="Ledger">
           {addressesRef.current.length > 0 && (
             <ButtonText
@@ -220,9 +218,8 @@ export const Ledger = ({ getMotionProps }: ManageHardwareProps) => {
           {feedback?.message ||
             `${addressesRef.current.length || 'No'} ${addressesRef.current.length === 1 ? 'Account' : 'Accounts'}`}
         </h4>
-      </motion.div>
-
-      <motion.div {...getMotionProps('address')}>
+      </div>
+      <div>
         {addressesRef.current.map(({ name, address }: LedgerAccount, i) => (
           <HardwareAddress
             key={`ledger_imported_${i}`}
@@ -239,7 +236,7 @@ export const Ledger = ({ getMotionProps }: ManageHardwareProps) => {
             }}
           />
         ))}
-      </motion.div>
+      </div>
     </>
   )
 }

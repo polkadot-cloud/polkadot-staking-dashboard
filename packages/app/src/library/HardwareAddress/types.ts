@@ -1,21 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
 // SPDX-License-Identifier: AGPL-3.0
 
-import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import type { ComponentBase } from '@w3ux/types'
-import type { Dispatch, ReactNode, SetStateAction } from 'react'
-
-export interface InnerProps {
-  installed: ExtensionArrayListItem[]
-  other: ExtensionArrayListItem[]
-  setOpen: Dispatch<SetStateAction<boolean>>
-  selectedSection: string
-}
-
-export interface ExtensionProps {
-  extension: ExtensionArrayListItem
-  last: boolean
-}
+import type { ReactNode } from 'react'
 
 export type HardwareAddressProps = ComponentBase & {
   network: string

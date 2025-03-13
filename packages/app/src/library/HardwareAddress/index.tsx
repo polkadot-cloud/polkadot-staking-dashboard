@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn, unescape } from '@w3ux/utils'
 import type { FormEvent } from 'react'
 import { useState } from 'react'
-import type { HardwareAddressProps } from '../../types'
+import type { HardwareAddressProps } from './types'
 import { Wrapper } from './Wrapper'
 
 export const HardwareAddress = ({

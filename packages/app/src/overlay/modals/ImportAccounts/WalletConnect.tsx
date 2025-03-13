@@ -2,23 +2,17 @@
 // SPDX-License-Identifier: AGPL-3.0
 
 import { faLink, faSquareMinus } from '@fortawesome/free-solid-svg-icons'
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useWcAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { WCAccount } from '@w3ux/types'
 import { useNetwork } from 'contexts/Network'
 import { useWalletConnect } from 'contexts/WalletConnect'
-import { motion } from 'framer-motion'
+import { HardwareAddress } from 'library/HardwareAddress'
 import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
-import type { ManageHardwareProps } from '../types'
-import { HardwareAddress } from './HardwareAddress'
 
-export const WalletConnect = ({
-  getMotionProps,
-  selectedConnectItem,
-}: ManageHardwareProps) => {
+export const WalletConnect = () => {
   const {
     addWcAccount,
     getWcAccounts,
@@ -64,14 +58,6 @@ export const WalletConnect = ({
     setImportActive(false)
   }
 
-  // Resets UI when the selected connect item changes from `wallet_connect`, Cancelling import and
-  // search if active.
-  useEffectIgnoreInitial(() => {
-    if (selectedConnectItem !== 'wallet_connect') {
-      setImportActive(false)
-    }
-  }, [selectedConnectItem])
-
   // Disconnect from Wallet Connect and remove imported accounts.
   const disconnectWc = async () => {
     if (confirm('Are you sure you want to disconnect from Wallet Connect?')) {
@@ -87,7 +73,7 @@ export const WalletConnect = ({
 
   return (
     <>
-      <motion.div {...getMotionProps('address_config')}>
+      <div>
         <ConnectItem.Heading
           text={
             !wcSessionActive
@@ -141,9 +127,9 @@ export const WalletConnect = ({
             </>
           )}
         </ConnectItem.Heading>
-      </motion.div>
+      </div>
 
-      <motion.div {...getMotionProps('address')}>
+      <div>
         {wcAccounts.map(({ address, name }: WCAccount, i) => (
           <HardwareAddress
             key={`wc_imported_${network}_${i}`}
@@ -163,7 +149,7 @@ export const WalletConnect = ({
             }}
           />
         ))}
-      </motion.div>
+      </div>
     </>
   )
 }

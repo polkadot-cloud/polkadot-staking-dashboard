@@ -2,26 +2,19 @@
 // SPDX-License-Identifier: AGPL-3.0
 
 import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import type {
-  Dispatch,
-  FunctionComponent,
-  SetStateAction,
-  SVGProps,
-} from 'react'
+import type { FunctionComponent, SVGProps } from 'react'
 import { ConnectItem } from 'ui-core/popover'
 
 export const Hardware = ({
-  hardwareId,
   active,
-  setSelectedConnectItem,
+  onClick,
   Svg,
   title,
   websiteUrl,
   websiteText,
 }: {
-  hardwareId: string
   active: boolean
-  setSelectedConnectItem: Dispatch<SetStateAction<string | undefined>>
+  onClick: () => void
   Svg: FunctionComponent<SVGProps<SVGSVGElement>>
   title: string
   websiteUrl: string
@@ -31,7 +24,7 @@ export const Hardware = ({
     asButton
     last={active}
     onClick={() => {
-      setSelectedConnectItem(active ? undefined : hardwareId)
+      onClick()
     }}
   >
     <div>

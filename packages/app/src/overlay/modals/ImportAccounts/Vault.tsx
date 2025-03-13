@@ -2,23 +2,17 @@
 // SPDX-License-Identifier: AGPL-3.0
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useVaultAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { VaultAccount } from '@w3ux/types'
 import { useNetwork } from 'contexts/Network'
-import { motion } from 'framer-motion'
+import { HardwareAddress } from 'library/HardwareAddress'
+import { QrReader } from 'library/QrReader'
 import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
-import type { ManageHardwareProps } from '../types'
-import { HardwareAddress } from './HardwareAddress'
-import { QrReader } from './QrReader'
 
-export const Vault = ({
-  getMotionProps,
-  selectedConnectItem,
-}: ManageHardwareProps) => {
+export const Vault = () => {
   const {
     getVaultAccounts,
     vaultAccountExists,
@@ -35,9 +29,6 @@ export const Vault = ({
 
   const vaultAccounts = getVaultAccounts(network)
 
-  // Whether to show address entries. Requires both searching and importing to be inactive.
-  const showAddresses = true
-
   // Handle renaming a vault address.
   const handleRename = (address: string, newName: string) => {
     renameVaultAccount(network, address, newName)
@@ -49,14 +40,6 @@ export const Vault = ({
       removeVaultAccount(network, address)
     }
   }
-
-  // Resets UI when the selected connect item changes from `polakdot_vault`, Cancelling import and
-  // search if active.
-  useEffectIgnoreInitial(() => {
-    if (selectedConnectItem !== 'polkadot_vault') {
-      setImportActive(false)
-    }
-  }, [selectedConnectItem])
 
   return (
     <>
@@ -71,7 +54,7 @@ export const Vault = ({
         />
       </ConnectItem.Heading>
 
-      <motion.div {...getMotionProps('import_container', importActive)}>
+      <div>
         <QrReader
           network={network}
           ss58={ss58}
@@ -80,9 +63,9 @@ export const Vault = ({
             setImportActive(false)
           }}
         />
-      </motion.div>
+      </div>
 
-      <motion.div {...getMotionProps('address', showAddresses)}>
+      <div>
         {vaultAccounts.map(({ address, name }: VaultAccount, i) => (
           <HardwareAddress
             key={`vault_imported_${i}`}
@@ -99,7 +82,7 @@ export const Vault = ({
             }}
           />
         ))}
-      </motion.div>
+      </div>
     </>
   )
 }

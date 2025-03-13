@@ -6,8 +6,8 @@ import type { AnyJson } from '@w3ux/types'
 import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import { useEffect, useState } from 'react'
-import { ImportQRWrapper } from '../Wrappers'
-import type { QrReaderProps } from '../types'
+import type { QrReaderProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const QrReader = ({
   network,
@@ -56,7 +56,7 @@ export const QrReader = ({
         : 'Invalid Address'
 
   return (
-    <ImportQRWrapper>
+    <Wrapper>
       {importActive && (
         <>
           <div className="qrRegion">
@@ -68,6 +68,6 @@ export const QrReader = ({
           <h4>{feedback}</h4>
         </>
       )}
-    </ImportQRWrapper>
+    </Wrapper>
   )
 }

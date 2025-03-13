@@ -5,8 +5,9 @@ import extensions from '@w3ux/extension-assets'
 import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
+import { motion } from 'framer-motion'
 import type { Dispatch, SetStateAction } from 'react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
@@ -20,6 +21,9 @@ export const ConnectOverlay = ({
 }) => {
   const { t } = useTranslation()
   const { extensionsStatus } = useExtensions()
+
+  // Store the active hardware wallet, if selected.
+  const [selectedSection, setSelectedConnectItem] = useState<string>('wallets')
 
   const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -60,31 +64,64 @@ export const ConnectOverlay = ({
     setOpen(false)
   }, ['header-connect'])
 
+  const variants = {
+    hidden: {
+      height: 0,
+      opacity: 0,
+    },
+    show: {
+      height: 'auto',
+      opacity: 1,
+    },
+  }
+
+  // Gets framer motion props for a management ui item.
+  const getManageProps = (item: string, initial: 'show' | 'hidden') => ({
+    initial,
+    variants,
+    transition: {
+      duration: 0.2,
+    },
+    animate: selectedSection === item ? 'show' : 'hidden',
+    className: 'motion',
+  })
+
   return (
     <div ref={popoverRef}>
       <PopoverTab.Container position="top">
         <PopoverTab.Button
           text={t('wallets', { ns: 'app' })}
-          onClick={() => {
-            /* Do nothing */
-          }}
+          onClick={() => setSelectedConnectItem('wallets')}
         />
         <PopoverTab.Button
           text={t('proxies', { ns: 'modals' })}
-          onClick={() => {
-            /* Do nothing */
-          }}
+          onClick={() => setSelectedConnectItem('proxies')}
         />
         <PopoverTab.Button
           text={t('readOnly', { ns: 'modals' })}
-          onClick={() => {
-            /* Do nothing */
-          }}
+          onClick={() => setSelectedConnectItem('readOnly')}
         />
       </PopoverTab.Container>
-      <ConnectItem.Container>
-        <Inner installed={installed} other={other} />
-      </ConnectItem.Container>
+      <motion.section {...getManageProps('wallets', 'show')}>
+        <ConnectItem.Container>
+          <Inner
+            installed={installed}
+            other={other}
+            selectedSection={selectedSection}
+            setOpen={setOpen}
+          />
+        </ConnectItem.Container>
+      </motion.section>
+      <motion.section {...getManageProps('proxies', 'hidden')}>
+        <ConnectItem.Container>
+          <h4>Proxies</h4>
+        </ConnectItem.Container>
+      </motion.section>
+      <motion.section {...getManageProps('readOnly', 'hidden')}>
+        <ConnectItem.Container>
+          <h4>Read Only</h4>
+        </ConnectItem.Container>
+      </motion.section>
     </div>
   )
 }
