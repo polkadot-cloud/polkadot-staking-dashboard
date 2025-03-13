@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  
+
   &.top {
     border-bottom: 1px solid var(--border-primary-color);
     &.yMargin {
@@ -25,10 +25,10 @@
 
   &.bottom {
     border-top: 1px solid var(--border-primary-color);
-   &.yMargin {
-    margin-top: var(--vertical-spacing);
-   }
-    
+    &.yMargin {
+      margin-top: var(--vertical-spacing);
+    }
+
     > button {
       &:first-child {
         border-bottom-left-radius: 1rem;

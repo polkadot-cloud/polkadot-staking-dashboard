@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   will-change: transform, opacity;
   word-wrap: break-word;
   outline: none;
-  
+
   &[data-state='open'][data-side='bottom'] {
     animation-name: slideUpAndFade;
   }
