@@ -7,7 +7,6 @@ import { useVaultAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { VaultAccount } from '@w3ux/types'
 import { useNetwork } from 'contexts/Network'
-import { HardwareAddress } from 'library/HardwareAddress'
 import { QrReader } from 'library/QrReader'
 import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
@@ -76,7 +75,7 @@ export const Vault = () => {
       </div>
       <div>
         {vaultAccounts.map(({ address, name }: VaultAccount, i) => (
-          <HardwareAddress
+          <AccountImport.Item
             key={`vault_imported_${i}`}
             network={network}
             address={address}

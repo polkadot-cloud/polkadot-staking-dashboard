@@ -16,7 +16,6 @@ import {
   getLocalLedgerAddresses,
 } from 'contexts/LedgerHardware/Utils'
 import { useNetwork } from 'contexts/Network'
-import { HardwareAddress } from 'library/HardwareAddress'
 import { useEffect, useRef, useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
@@ -233,7 +232,7 @@ export const Ledger = () => {
       </div>
       <div>
         {addressesRef.current.map(({ name, address }: LedgerAccount, i) => (
-          <HardwareAddress
+          <AccountImport.Item
             key={`ledger_imported_${i}`}
             network="polkadot"
             address={address}

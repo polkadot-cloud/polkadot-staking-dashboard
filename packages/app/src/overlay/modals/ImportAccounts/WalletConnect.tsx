@@ -8,11 +8,9 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import type { WCAccount } from '@w3ux/types'
 import { useNetwork } from 'contexts/Network'
 import { useWalletConnect } from 'contexts/WalletConnect'
-import { HardwareAddress } from 'library/HardwareAddress'
 import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
-import { ConnectItem } from 'ui-core/popover'
 import { Close } from 'ui-overlay'
 
 export const WalletConnect = () => {
@@ -131,66 +129,9 @@ export const WalletConnect = () => {
           </>
         )}
       </AccountImport.Header>
-
-      <div>
-        <ConnectItem.Heading
-          text={
-            !wcSessionActive
-              ? 'Wallet Connect is Disconnected'
-              : !importActive
-                ? `${
-                    wcAccounts.length || 'No'
-                  } ${wcAccounts.length === 1 ? 'Account' : 'Accounts'}`
-                : 'New Account'
-          }
-        >
-          {!wcSessionActive ? (
-            <ButtonText
-              text={'Connect'}
-              iconLeft={faLink}
-              onClick={async () => {
-                // If client is disconnected, initialise a new client first.
-                if (!wcSessionActive) {
-                  await connectProvider()
-                }
-                const newSession = await initializeWcSession()
-                if (newSession) {
-                  handleImportAddresses()
-                }
-              }}
-              style={{ fontSize: '1.1rem' }}
-            />
-          ) : (
-            <>
-              <ButtonText
-                text={
-                  !wcInitialized
-                    ? 'Initialising'
-                    : importActive
-                      ? 'Cancel'
-                      : 'Refresh'
-                }
-                onClick={async () => {
-                  handleImportAddresses()
-                }}
-                style={{ fontSize: '1.1rem' }}
-              />
-              <ButtonText
-                text={'Disconnect'}
-                iconLeft={faSquareMinus}
-                onClick={async () => {
-                  disconnectWc()
-                }}
-                style={{ fontSize: '1.1rem' }}
-              />
-            </>
-          )}
-        </ConnectItem.Heading>
-      </div>
-
       <div>
         {wcAccounts.map(({ address, name }: WCAccount, i) => (
-          <HardwareAddress
+          <AccountImport.Item
             key={`wc_imported_${network}_${i}`}
             network={network}
             address={address}
