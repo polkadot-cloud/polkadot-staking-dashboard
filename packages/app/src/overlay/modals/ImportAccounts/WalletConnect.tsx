@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { ConnectItem } from 'ui-core/popover'
+import { Close } from 'ui-overlay'
 
 export const WalletConnect = () => {
   const {
@@ -75,6 +76,7 @@ export const WalletConnect = () => {
 
   return (
     <>
+      <Close />
       <AccountImport.Header
         Logo={<WalletConnectSVG />}
         title="Wallet Connect"

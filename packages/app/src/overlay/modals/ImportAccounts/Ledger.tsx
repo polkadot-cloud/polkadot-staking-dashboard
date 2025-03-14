@@ -20,6 +20,7 @@ import { HardwareAddress } from 'library/HardwareAddress'
 import { useEffect, useRef, useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
+import { Close } from 'ui-overlay'
 
 export const Ledger = () => {
   const {
@@ -185,6 +186,7 @@ export const Ledger = () => {
 
   return (
     <>
+      <Close />
       <AccountImport.Header
         Logo={<LedgerSquareSVG />}
         title="Ledger"

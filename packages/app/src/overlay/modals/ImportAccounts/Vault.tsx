@@ -12,6 +12,7 @@ import { QrReader } from 'library/QrReader'
 import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
+import { Close } from 'ui-overlay'
 
 export const Vault = () => {
   const {
@@ -44,6 +45,7 @@ export const Vault = () => {
 
   return (
     <>
+      <Close />
       <AccountImport.Header
         Logo={<PolkadotVaultSVG />}
         title="Polkadot Vault"
