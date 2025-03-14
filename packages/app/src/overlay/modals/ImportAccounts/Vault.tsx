@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { useVaultAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { VaultAccount } from '@w3ux/types'
@@ -10,7 +11,7 @@ import { HardwareAddress } from 'library/HardwareAddress'
 import { QrReader } from 'library/QrReader'
 import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
-import { ConnectItem } from 'ui-core/popover'
+import { AccountImport } from 'ui-core/base'
 
 export const Vault = () => {
   const {
@@ -43,16 +44,24 @@ export const Vault = () => {
 
   return (
     <>
-      <ConnectItem.Heading text="Polkadot Vault">
-        <ButtonText
-          text={!importActive ? 'Add Account' : 'Cancel'}
-          iconLeft={faQrcode}
-          onClick={() => {
-            setImportActive(!importActive)
-          }}
-          style={{ fontSize: '1.1rem' }}
-        />
-      </ConnectItem.Heading>
+      <AccountImport.Header
+        Logo={<PolkadotVaultSVG />}
+        title="Polkadot Vault"
+        websiteText="vault.novasama.io"
+        websiteUrl="https://vault.novasama.io"
+      >
+        <span>
+          <ButtonText
+            text={!importActive ? 'Add Account' : 'Cancel'}
+            iconLeft={faQrcode}
+            onClick={() => {
+              setImportActive(!importActive)
+            }}
+            style={{ fontSize: '1.1rem' }}
+          />
+        </span>
+      </AccountImport.Header>
+
       <div>
         <QrReader
           network={network}

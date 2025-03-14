@@ -6,7 +6,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 1.25rem 0.5rem 1.25rem 0.75rem;
+  padding: 1.25rem 1rem 1.25rem 1.5rem;
   position: relative;
   border-bottom: 1px solid var(--border-primary-color);
 

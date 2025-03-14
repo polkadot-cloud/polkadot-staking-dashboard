@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLink, faSquareMinus } from '@fortawesome/free-solid-svg-icons'
+import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useWcAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { WCAccount } from '@w3ux/types'
@@ -10,6 +11,7 @@ import { useWalletConnect } from 'contexts/WalletConnect'
 import { HardwareAddress } from 'library/HardwareAddress'
 import { useState } from 'react'
 import { ButtonText } from 'ui-buttons'
+import { AccountImport } from 'ui-core/base'
 import { ConnectItem } from 'ui-core/popover'
 
 export const WalletConnect = () => {
@@ -73,6 +75,61 @@ export const WalletConnect = () => {
 
   return (
     <>
+      <AccountImport.Header
+        Logo={<WalletConnectSVG />}
+        title="Wallet Connect"
+        websiteText="reown.com"
+        websiteUrl="https://reown.com"
+      >
+        {!wcSessionActive ? (
+          <span>
+            <ButtonText
+              text={'Connect'}
+              iconLeft={faLink}
+              onClick={async () => {
+                // If client is disconnected, initialise a new client first.
+                if (!wcSessionActive) {
+                  await connectProvider()
+                }
+                const newSession = await initializeWcSession()
+                if (newSession) {
+                  handleImportAddresses()
+                }
+              }}
+              style={{ fontSize: '1.1rem' }}
+            />
+          </span>
+        ) : (
+          <>
+            <span>
+              <ButtonText
+                text={
+                  !wcInitialized
+                    ? 'Initialising'
+                    : importActive
+                      ? 'Cancel'
+                      : 'Refresh'
+                }
+                onClick={async () => {
+                  handleImportAddresses()
+                }}
+                style={{ fontSize: '1.1rem' }}
+              />
+            </span>
+            <span>
+              <ButtonText
+                text={'Disconnect'}
+                iconLeft={faSquareMinus}
+                onClick={async () => {
+                  disconnectWc()
+                }}
+                style={{ fontSize: '1.1rem' }}
+              />
+            </span>
+          </>
+        )}
+      </AccountImport.Header>
+
       <div>
         <ConnectItem.Heading
           text={

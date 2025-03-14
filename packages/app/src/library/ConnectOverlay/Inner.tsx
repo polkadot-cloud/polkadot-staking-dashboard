@@ -65,7 +65,7 @@ export const Inner = ({
             openModal({
               key: 'ImportAccounts',
               size: 'sm',
-              options: { source: 'polkadot_vault' },
+              options: { source: 'wallet_connect' },
             })
             setOpen(false)
           }}

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
+import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useLedgerAccounts } from '@w3ux/react-connect-kit'
 import type { LedgerAddress } from '@w3ux/react-connect-kit/types'
@@ -18,7 +19,7 @@ import { useNetwork } from 'contexts/Network'
 import { HardwareAddress } from 'library/HardwareAddress'
 import { useEffect, useRef, useState } from 'react'
 import { ButtonText } from 'ui-buttons'
-import { ConnectItem } from 'ui-core/popover'
+import { AccountImport } from 'ui-core/base'
 
 export const Ledger = () => {
   const {
@@ -184,9 +185,14 @@ export const Ledger = () => {
 
   return (
     <>
-      <div>
-        <ConnectItem.Heading text="Ledger">
-          {addressesRef.current.length > 0 && (
+      <AccountImport.Header
+        Logo={<LedgerSquareSVG />}
+        title="Ledger"
+        websiteText="ledger.com"
+        websiteUrl="https://ledger.com"
+      >
+        {addressesRef.current.length > 0 && (
+          <span>
             <ButtonText
               text={'Reset'}
               onClick={() => {
@@ -200,7 +206,9 @@ export const Ledger = () => {
               }}
               style={{ fontSize: '1.1rem' }}
             />
-          )}
+          </span>
+        )}
+        <span>
           <ButtonText
             text={isExecuting ? 'Cancel Import' : 'Import Next Account'}
             iconLeft={faUsb}
@@ -213,7 +221,9 @@ export const Ledger = () => {
             }}
             style={{ fontSize: '1.1rem' }}
           />
-        </ConnectItem.Heading>
+        </span>
+      </AccountImport.Header>
+      <div>
         <h4 style={{ padding: '1rem' }}>
           {feedback?.message ||
             `${addressesRef.current.length || 'No'} ${addressesRef.current.length === 1 ? 'Account' : 'Accounts'}`}
