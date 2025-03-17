@@ -5,9 +5,9 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import commonClasses from '../common.module.scss'
+import type { ButtonOptionProps } from '../types'
 import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
-import type { ButtonOptionProps } from './types'
 
 /**
  * @name ButtonOption

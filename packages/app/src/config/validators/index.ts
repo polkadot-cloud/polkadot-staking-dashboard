@@ -819,4 +819,26 @@ export const ValidatorCommunity: ValidatorEntry[] = [
       ],
     },
   },
+  {
+    name: 'Saxemberg',
+    icon: 'Saxemberg',
+    bio: 'We offer validation and collation services to our nominators on Polkadot ecosystem. Active on-chain governance participants.',
+    email: 'hello@saxemberg.com',
+    website: 'https://saxemberg.com',
+    validators: {
+      polkadot: [
+        '153YD8ZHD9dRh82U419bSCB5SzWhbdAFzjj4NtA5pMazR2yC',
+        '16UgRGtYLuDWsBvjLLtc6FYVB3qSCV9c4sidcN4zaFm9qCFR',
+        '12ryLNrg44r7Qv7oWZa2wK6PuzUmAMueyVHRBsyR5N6anEaV',
+      ],
+      kusama: [
+        'J19LYGghRCe4Ct3VW4Vz1amMoUgogS1sh2FQvPWroKcDdb1',
+        'Cu2z7dVVdzFyDVTjUPm7feV9RFQ8QiG3yLGsVEj5NohFXk7',
+        'Dfg9gbTwG6aghwLYTfYoV4dXyhCRBLbRyFwENADHmg4zfDF',
+        'GL7MYnpQr7jgJqK8wSRUQuob1TvTY7uRJP6LUNeUyvMUhQR',
+        'GAGaWf9wiFGidsQdcLfHRrndVsfTRx9SKfMNJFekk7ue2zL',
+        'EAZLkHboA6P5ZnKASbKB2EdnSzRFHr2FrbxRRtyWyrHhVQ3',
+      ],
+    },
+  },
 ]

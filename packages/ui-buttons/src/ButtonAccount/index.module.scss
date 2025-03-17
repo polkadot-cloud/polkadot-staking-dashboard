@@ -1,0 +1,74 @@
+/* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
+
+.btnAccount {
+  color: white;
+  background: var(--accent-color-primary);
+  box-shadow: var(--card-shadow);
+  transition: all var(--transition-duration);
+  border-radius: 4rem;
+  height: 2.8rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem 0 1.25rem;
+  font-size: 1.2rem;
+
+  &.marginLeft {
+    margin-left: 0.8rem;
+  }
+
+  > .polkicon {
+    margin-right: 1.5rem;
+  }
+  > .icon {
+    margin-left: 0.95rem;
+  }
+
+  > .display {
+    max-width: 12rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  > .label {
+    font-size: 0.8em;
+    margin-left: 0.75rem;
+    margin-right: 0.5rem;
+    position: relative;
+    top: -0.05rem;
+  }
+
+  > .arrow {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0.5rem;
+    margin-left: 1.25rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+
+    &.noBorder {
+      padding-left: 0;
+      border-left: none;
+    }
+    > svg {
+      color: white;
+      opacity: 0.75;
+      transition: opacity var(--transition-duration);
+    }
+
+    &.open {
+      > svg {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &:hover {
+    > .arrow {
+      svg {
+        opacity: 1;
+      }
+    }
+  }
+}

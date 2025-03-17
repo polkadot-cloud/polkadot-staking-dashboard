@@ -9,23 +9,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/svg/brands/discord.svg?react'
-import LogoGithubSVG from 'assets/svg/brands/github.svg?react'
 import BookSVG from 'assets/svg/icons/book.svg?react'
 import CloudSVG from 'assets/svg/icons/cloud.svg?react'
-import CogSVG from 'assets/svg/icons/cog.svg?react'
 import EnvelopeSVG from 'assets/svg/icons/envelope.svg?react'
-import LanguageSVG from 'assets/svg/icons/language.svg?react'
 import LinkSVG from 'assets/svg/icons/link.svg?react'
 import LogoSVG from 'assets/svg/icons/logo.svg?react'
-import MoonOutlineSVG from 'assets/svg/icons/moon.svg?react'
-import SunnyOutlineSVG from 'assets/svg/icons/sun.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
 import { useRef } from 'react'
@@ -48,7 +42,6 @@ export const SideMenu = () => {
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi()
-  const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
   const { networkData, network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
@@ -183,50 +176,6 @@ export const SideMenu = () => {
               classes={!canCreateInvites ? ['inactive'] : undefined}
             />
           </div>
-        </section>
-        <section>
-          <button
-            type="button"
-            onClick={() =>
-              window.open(
-                'https://github.com/polkadot-cloud/polkadot-staking-dashboard',
-                '_blank'
-              )
-            }
-            aria-label="Github"
-          >
-            <LogoGithubSVG width="1.2em" height="1.2em" />
-          </button>
-          <button
-            type="button"
-            onClick={() => openModal({ key: 'Settings' })}
-            aria-label="Settings"
-          >
-            <CogSVG width="1.3em" height="1.3em" />
-          </button>
-          <button
-            type="button"
-            onClick={() => openModal({ key: 'ChooseLanguage' })}
-          >
-            <LanguageSVG width="1.25em" height="1.25em" />
-          </button>
-          {mode === 'dark' ? (
-            <button
-              type="button"
-              onClick={() => toggleTheme()}
-              aria-label="aria-label"
-            >
-              <SunnyOutlineSVG width="1.25em" height="1.25em" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => toggleTheme()}
-              aria-label="Toggle"
-            >
-              <MoonOutlineSVG width="1.1em" height="1.1em" />
-            </button>
-          )}
         </section>
       </Wrapper>
     </Page.Side>

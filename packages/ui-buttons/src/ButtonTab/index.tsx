@@ -3,9 +3,9 @@
 
 import classNames from 'classnames'
 import commonClasses from '../common.module.scss'
+import type { ButtonTabProps } from '../types'
 import { onMouseHandlers } from '../util'
 import classes from './index.module.scss'
-import type { ButtonTabProps } from './types'
 
 /**
  * @name ButtonTab

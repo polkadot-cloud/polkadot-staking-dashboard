@@ -3,7 +3,7 @@
 
 import type { TokenPricesContextInterface } from './types'
 
-export const defaultTokenPricesContext: TokenPricesContextInterface = {
+export const defaultTokenPrice: TokenPricesContextInterface = {
   price: 0,
   change: 0,
 }
