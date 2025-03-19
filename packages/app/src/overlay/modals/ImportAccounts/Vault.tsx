@@ -6,6 +6,7 @@ import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { useVaultAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { VaultAccount } from '@w3ux/types'
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
 import type { CSSProperties } from 'react'
@@ -20,12 +21,15 @@ export const Vault = () => {
     networkData: { ss58 },
   } = useNetwork()
   const {
+    getVaultAccount,
     getVaultAccounts,
     vaultAccountExists,
     renameVaultAccount,
     removeVaultAccount,
   } = useVaultAccounts()
   const { setModalResize } = useOverlay().modal
+  const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
+    useOtherAccounts()
 
   // Whether the import account button is active
   const [importActive, setImportActive] = useState<boolean>(false)
@@ -35,12 +39,17 @@ export const Vault = () => {
 
   // Handle renaming a vault address
   const handleRename = (address: string, newName: string) => {
+    renameOtherAccount(address, newName)
     renameVaultAccount(network, address, newName)
   }
 
   // Handle removing a vault address
   const handleRemove = (address: string): void => {
     if (confirm('Are you sure you want to remove this account?')) {
+      const existingOther = getVaultAccount(network, address)
+      if (existingOther) {
+        forgetOtherAccounts([existingOther])
+      }
       removeVaultAccount(network, address)
     }
   }
@@ -114,7 +123,8 @@ export const Vault = () => {
           <QrReader
             network={network}
             ss58={ss58}
-            onSuccess={() => {
+            onSuccess={(account) => {
+              addOtherAccounts([account])
               setImportActive(false)
             }}
           />

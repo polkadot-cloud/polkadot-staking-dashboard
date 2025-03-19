@@ -31,7 +31,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
     if (valid) {
       const account = addVaultAccount(network, qrData, vaultAccounts.length)
       if (account) {
-        onSuccess()
+        onSuccess(account)
       }
     }
   })
