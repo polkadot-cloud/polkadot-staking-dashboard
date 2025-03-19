@@ -21,8 +21,32 @@ export const Wrapper = styled.div`
     margin: 0.5rem 0;
   }
 
-  > h4 {
-    margin-bottom: 1rem;
+  > h3 {
+    display: flex;
+    align-items: flex-end;
+    margin: 0.5rem 0 1rem 0;
+
+    > div {
+      width: 2rem;
+      aspect-ratio: 8;
+      background: radial-gradient(
+          circle closest-side,
+          var(--text-color-primary) 100%,
+          #0000
+        )
+        0 / calc(100% / 3) 100% space;
+      clip-path: inset(0 100% 0 0);
+      animation: dots 4s steps(4) infinite;
+      position: relative;
+      top: -0.28rem;
+      margin-left: 0.4rem;
+    }
+  }
+
+  @keyframes dots {
+    to {
+      clip-path: inset(0 -34% 0 0);
+    }
   }
 
   @keyframes fadeInScale {

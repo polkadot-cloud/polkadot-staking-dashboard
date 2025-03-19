@@ -4,16 +4,6 @@
 import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
-export const Dismiss = ({
-  style,
-  onClick,
-}: ComponentBase & {
-  onClick: () => void
-}) => (
-  <button
-    type="button"
-    onClick={() => onClick()}
-    className={classes.dismiss}
-    style={style}
-  />
+export const Inactive = ({ style }: ComponentBase) => (
+  <div className={classes.inactive} style={style} />
 )

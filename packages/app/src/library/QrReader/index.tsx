@@ -58,7 +58,10 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
           onScan={({ signature }) => handleQrData(signature)}
         />
       </div>
-      <h4>{feedback}</h4>
+      <h3>
+        {feedback}
+        {qrData === undefined && <div></div>}
+      </h3>
     </Wrapper>
   )
 }

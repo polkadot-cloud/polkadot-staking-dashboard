@@ -10,7 +10,7 @@ import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
 import type { CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { ButtonText } from 'ui-buttons'
+import { ButtonSubmitInvert, ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
 
@@ -75,18 +75,14 @@ export const Vault = () => {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    minHeight: importActive ? '16rem' : 0,
-    opacity: importActive ? 0.15 : 1,
+    minHeight: importActive ? '20rem' : 0,
+    opacity: importActive ? 0.1 : 1,
     transition: 'all 0.2s',
   }
 
   return (
     <>
-      {importActive ? (
-        <AccountImport.Dismiss onClick={() => setImportActive(false)} />
-      ) : (
-        <Close />
-      )}
+      {importActive ? <AccountImport.Inactive /> : <Close />}
       <AccountImport.Header
         Logo={<PolkadotVaultSVG />}
         title="Polkadot Vault"
@@ -109,12 +105,11 @@ export const Vault = () => {
         <div
           style={{
             position: 'absolute',
-            top: '9.5rem',
+            top: '9.2rem',
             left: 0,
             width: '100%',
             zIndex: 9,
           }}
-          onClick={() => setImportActive(false)}
         >
           <QrReader
             network={network}
@@ -123,6 +118,12 @@ export const Vault = () => {
               setImportActive(false)
             }}
           />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <ButtonSubmitInvert
+              text="Cancel"
+              onClick={() => setImportActive(false)}
+            />
+          </div>
         </div>
       )}
       <div ref={accountsRef} style={{ ...accountsStyle }}>
