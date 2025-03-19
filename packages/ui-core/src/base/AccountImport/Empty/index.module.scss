@@ -1,8 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-export interface QrReaderProps {
-  network: string
-  ss58: number
-  onSuccess: () => void
+.empty {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0 1.5rem 0;
 }

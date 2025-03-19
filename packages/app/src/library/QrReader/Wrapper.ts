@@ -9,10 +9,11 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 9;
 
   > .qrRegion {
-    background-color: var(--background-invert);
-    border-radius: 0.35rem;
+    background: var(--background-default);
+    border-radius: 0.5rem;
     overflow: hidden;
     width: 250px;
     height: 188px;

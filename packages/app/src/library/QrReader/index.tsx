@@ -9,12 +9,7 @@ import { useEffect, useState } from 'react'
 import type { QrReaderProps } from './types'
 import { Wrapper } from './Wrapper'
 
-export const QrReader = ({
-  network,
-  ss58,
-  importActive,
-  onSuccess,
-}: QrReaderProps) => {
+export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultAccounts()
 
@@ -57,17 +52,13 @@ export const QrReader = ({
 
   return (
     <Wrapper>
-      {importActive && (
-        <>
-          <div className="qrRegion">
-            <QrScanSignature
-              size={250}
-              onScan={({ signature }) => handleQrData(signature)}
-            />
-          </div>
-          <h4>{feedback}</h4>
-        </>
-      )}
+      <div className="qrRegion">
+        <QrScanSignature
+          size={250}
+          onScan={({ signature }) => handleQrData(signature)}
+        />
+      </div>
+      <h4>{feedback}</h4>
     </Wrapper>
   )
 }
