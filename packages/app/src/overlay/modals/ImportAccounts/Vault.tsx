@@ -104,7 +104,7 @@ export const Vault = () => {
           <ButtonText
             text={
               !importActive
-                ? t('addAccount ', { ns: 'app' })
+                ? t('addAccount', { ns: 'app' })
                 : t('cancel', { ns: 'app' })
             }
             iconLeft={faQrcode}
