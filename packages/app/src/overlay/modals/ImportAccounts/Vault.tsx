@@ -11,11 +11,13 @@ import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
 import type { CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert, ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const Vault = () => {
+  const { t } = useTranslation()
   const {
     network,
     networkData: { ss58 },
@@ -45,7 +47,7 @@ export const Vault = () => {
 
   // Handle removing a vault address
   const handleRemove = (address: string): void => {
-    if (confirm('Are you sure you want to remove this account?')) {
+    if (confirm(t('areYouSure', { ns: 'app' }))) {
       const existingOther = getVaultAccount(network, address)
       if (existingOther) {
         forgetOtherAccounts([existingOther])
@@ -100,7 +102,11 @@ export const Vault = () => {
       >
         <span>
           <ButtonText
-            text={!importActive ? 'Add Account' : 'Cancel'}
+            text={
+              !importActive
+                ? t('addAccount ', { ns: 'app' })
+                : t('cancel', { ns: 'app' })
+            }
             iconLeft={faQrcode}
             onClick={() => {
               setImportActive(!importActive)
@@ -139,7 +145,7 @@ export const Vault = () => {
       <div ref={accountsRef} style={{ ...accountsStyle }}>
         {vaultAccounts.length === 0 && (
           <AccountImport.Empty>
-            <h3>No Accounts Imported</h3>
+            <h3>{t('noVaultAccountsImported', { ns: 'modals' })}</h3>
           </AccountImport.Empty>
         )}
         {vaultAccounts.map(({ address, name }: VaultAccount, i) => (
