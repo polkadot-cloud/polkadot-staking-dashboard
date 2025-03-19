@@ -143,27 +143,42 @@ export const Vault = () => {
         </div>
       )}
       <div ref={accountsRef} style={{ ...accountsStyle }}>
-        {vaultAccounts.length === 0 && (
+        {vaultAccounts.length === 0 ? (
           <AccountImport.Empty>
             <h3>{t('noVaultAccountsImported', { ns: 'modals' })}</h3>
           </AccountImport.Empty>
+        ) : (
+          <>
+            <h4
+              style={{
+                padding: '0 1rem 0.5rem 1rem',
+                color: 'var(--text-color-secondary)',
+              }}
+            >
+              {t('vaultAccounts', {
+                ns: 'modals',
+                count: vaultAccounts.length,
+              })}
+              :
+            </h4>
+            {vaultAccounts.map(({ address, name }: VaultAccount, i) => (
+              <AccountImport.Item
+                key={`vault_imported_${i}`}
+                network={network}
+                address={address}
+                index={i}
+                initial={name}
+                Identicon={<Polkicon address={address} fontSize="2.9rem" />}
+                existsHandler={vaultAccountExists}
+                renameHandler={handleRename}
+                onRemove={handleRemove}
+                onConfirm={() => {
+                  /* Do nothing. Not shown in UI. */
+                }}
+              />
+            ))}
+          </>
         )}
-        {vaultAccounts.map(({ address, name }: VaultAccount, i) => (
-          <AccountImport.Item
-            key={`vault_imported_${i}`}
-            network={network}
-            address={address}
-            index={i}
-            initial={name}
-            Identicon={<Polkicon address={address} fontSize="2.9rem" />}
-            existsHandler={vaultAccountExists}
-            renameHandler={handleRename}
-            onRemove={handleRemove}
-            onConfirm={() => {
-              /* Do nothing. Not shown in UI. */
-            }}
-          />
-        ))}
       </div>
     </>
   )

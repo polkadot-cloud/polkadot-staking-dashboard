@@ -22,7 +22,6 @@ import { Ledger } from './Ledger'
 import { Proxies } from './Proxies'
 import { ReadOnly } from './ReadOnly'
 import { mobileCheck } from './Utils'
-import { Vault } from './Vault'
 import { WalletConnect } from './WalletConnect'
 import { ExtensionsWrapper } from './Wrappers'
 
@@ -87,11 +86,9 @@ export const Connect = () => {
       <ActionItem text={t('hardware')} />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
-          {[Vault, Ledger, WalletConnect].map(
-            (Item: AnyFunction, i: number) => (
-              <Item key={`hardware_item_${i}`} />
-            )
-          )}
+          {[Ledger, WalletConnect].map((Item: AnyFunction, i: number) => (
+            <Item key={`hardware_item_${i}`} />
+          ))}
         </SelectItems>
       </ExtensionsWrapper>
     </>
