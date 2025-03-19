@@ -10,10 +10,11 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 9;
+  animation: fadeInScale 0.2s cubic-bezier(0, 1, 0, 1) forwards;
 
   > .qrRegion {
     background: var(--background-default);
-    border-radius: 0.5rem;
+    border-radius: 0.85rem;
     overflow: hidden;
     width: 250px;
     height: 188px;
@@ -22,5 +23,16 @@ export const Wrapper = styled.div`
 
   > h4 {
     margin-bottom: 1rem;
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0.75;
+      transform: scale(0.75);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 `

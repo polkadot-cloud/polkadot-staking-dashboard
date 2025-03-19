@@ -8,6 +8,7 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import type { VaultAccount } from '@w3ux/types'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
+import type { CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
@@ -45,18 +46,46 @@ export const Vault = () => {
   }
 
   // Account container ref
-  const accountsContainerRef = useRef<HTMLDivElement>(null)
+  const accountsRef = useRef<HTMLDivElement>(null)
+  const [accountsHeight, setAccountsHeight] = useState(0)
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.contentRect) {
+          setAccountsHeight(entry.contentRect.height)
+        }
+      }
+    })
+    if (accountsRef.current) {
+      observer.observe(accountsRef.current)
+    }
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
 
   // Resize modal on importActive change
   useEffect(() => {
     setModalResize()
-  }, [importActive, vaultAccounts.length])
+  }, [vaultAccounts.length, accountsHeight])
+
+  // Accounts container style depending on whether import is active
+  const accountsStyle: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    minHeight: importActive ? '16rem' : 0,
+    opacity: importActive ? 0.15 : 1,
+    transition: 'all 0.2s',
+  }
 
   return (
     <>
-      <Close />
-      {importActive && (
+      {importActive ? (
         <AccountImport.Dismiss onClick={() => setImportActive(false)} />
+      ) : (
+        <Close />
       )}
       <AccountImport.Header
         Logo={<PolkadotVaultSVG />}
@@ -80,7 +109,7 @@ export const Vault = () => {
         <div
           style={{
             position: 'absolute',
-            top: '5rem',
+            top: '9.5rem',
             left: 0,
             width: '100%',
             zIndex: 9,
@@ -96,14 +125,7 @@ export const Vault = () => {
           />
         </div>
       )}
-      <div
-        ref={accountsContainerRef}
-        style={{
-          marginTop: importActive ? '10rem' : 0,
-          opacity: importActive ? 0.25 : 1,
-          transition: 'all 0.2s',
-        }}
-      >
+      <div ref={accountsRef} style={{ ...accountsStyle }}>
         {vaultAccounts.length === 0 && (
           <AccountImport.Empty>
             <h3>No Accounts Imported</h3>
