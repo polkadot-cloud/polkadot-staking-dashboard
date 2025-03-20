@@ -8,14 +8,14 @@ import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
 import { Hardware } from './Hardware'
-import type { InnerProps } from './types'
+import type { WalletProps } from './types'
 
 export const Wallets = ({
   installed,
   other,
   setOpen,
   selectedSection,
-}: InnerProps) => {
+}: WalletProps) => {
   const { t } = useTranslation()
   const { openModal } = useOverlay().modal
 
