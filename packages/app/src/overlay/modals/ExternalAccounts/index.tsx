@@ -14,7 +14,9 @@ export const ExternalAccounts = () => {
   switch (type) {
     case 'read-only':
       return <ReadOnly />
-    default:
+    case 'proxies':
       return <Proxies />
+    default:
+      return null
   }
 }
