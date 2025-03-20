@@ -30,11 +30,6 @@
       justify-content: center;
       min-width: 4.25rem;
       max-width: 4.25rem;
-
-      &.empty {
-        min-width: 0;
-        max-width: 0;
-      }
     }
 
     &:last-child {
