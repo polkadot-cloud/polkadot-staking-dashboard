@@ -3,12 +3,14 @@
 
 .container {
   --vertical-spacing: 1.3rem;
+  --border-width: 0.75px;
+
   display: flex;
   align-items: center;
   width: 100%;
 
   &.top {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: var(--border-width) solid var(--border-secondary-color);
     &.yMargin {
       margin-bottom: var(--vertical-spacing);
     }
@@ -24,7 +26,7 @@
   }
 
   &.bottom {
-    border-top: 1px solid var(--border-primary-color);
+    border-top: var(--border-width) solid var(--border-secondary-color);
     &.yMargin {
       margin-top: var(--vertical-spacing);
     }
