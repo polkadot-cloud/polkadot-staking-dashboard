@@ -5,10 +5,9 @@ import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import type { ComponentBase } from '@w3ux/types'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
-export interface InnerProps {
+export type InnerProps = SetOpenProp & {
   installed: ExtensionArrayListItem[]
   other: ExtensionArrayListItem[]
-  setOpen: Dispatch<SetStateAction<boolean>>
   selectedSection: string
 }
 
@@ -30,4 +29,8 @@ export type HardwareAddressProps = ComponentBase & {
   onRemove: (address: string) => void
   onConfirm: (address: string, index: number) => void
   last?: boolean
+}
+
+export interface SetOpenProp {
+  setOpen: Dispatch<SetStateAction<boolean>>
 }

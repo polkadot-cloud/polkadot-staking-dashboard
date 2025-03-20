@@ -24,6 +24,8 @@ import { LeavePool } from './modals/LeavePool'
 import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
 import { ManagePool } from './modals/ManagePool'
+import { ManageProxies } from './modals/ManageProxies'
+import { ManageReadOnly } from './modals/ManageReadOnly'
 import { Networks } from './modals/Networks'
 import { Plugins } from './modals/Plugins'
 import { RewardCalculator } from './modals/RewardCalculator'
@@ -56,6 +58,8 @@ export const Overlays = () => {
         DiscordSupport,
         LeavePool,
         MailSupport,
+        ManageProxies,
+        ManageReadOnly,
         ImportAccounts,
         ImportLedger,
         ManagePool,

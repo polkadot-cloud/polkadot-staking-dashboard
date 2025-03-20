@@ -6,19 +6,17 @@ import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
 import { motion } from 'framer-motion'
-import type { Dispatch, SetStateAction } from 'react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
 import { Inner } from './Inner'
+import { Proxies } from './Proxies'
+import { ReadOnly } from './ReadOnly'
 import { mobileCheck } from './Utils'
+import type { SetOpenProp } from './types'
 
-export const ConnectPopover = ({
-  setOpen,
-}: {
-  setOpen: Dispatch<SetStateAction<boolean>>
-}) => {
+export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
   const { t } = useTranslation()
   const { extensionsStatus } = useExtensions()
 
@@ -113,14 +111,10 @@ export const ConnectPopover = ({
         </ConnectItem.Container>
       </motion.section>
       <motion.section {...getManageProps('proxies', 'hidden')}>
-        <ConnectItem.Container>
-          <h4>Proxies</h4>
-        </ConnectItem.Container>
+        <Proxies setOpen={setOpen} />
       </motion.section>
       <motion.section {...getManageProps('readOnly', 'hidden')}>
-        <ConnectItem.Container>
-          <h4>Read Only</h4>
-        </ConnectItem.Container>
+        <ReadOnly setOpen={setOpen} />
       </motion.section>
     </div>
   )
