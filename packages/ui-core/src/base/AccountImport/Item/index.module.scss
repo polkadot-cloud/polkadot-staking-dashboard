@@ -4,7 +4,7 @@
 .item {
   display: flex;
   align-items: center;
-  padding: 1.25rem 1.6rem;
+  padding: 1.5rem 1.6rem;
   position: relative;
   border-bottom: 1px solid var(--border-primary-color);
 
@@ -27,12 +27,18 @@
     flex: 0;
     display: flex;
     flex-direction: column;
-    padding-left: 1.5rem;
-    padding-right: 0.25rem;
+    padding-left: 2rem;
+    padding-right: 0.5rem;
 
     > button {
+      color: var(--text-color-tertiary);
       width: 100%;
+      margin-top: 1.7rem;
       margin-right: 0.75rem;
+
+      &:hover {
+        color: var(--accent-color-primary);
+      }
     }
   }
 
@@ -88,7 +94,7 @@
           background: var(--button-popover-tab-background);
           border: 1px solid var(--border-primary-color);
           color: var(--text-color-primary);
-          font-family: InterSemiBold, sans-serif;
+          font-family: Inter, sans-serif;
           padding: 1rem 0.85rem;
           border-radius: 0.65rem;
           letter-spacing: 0.02rem;
@@ -140,7 +146,7 @@
 
   .more {
     margin-top: 1rem;
-    padding: 0 1.5rem 0 2.5rem;
+    padding: 0 1.5rem;
 
     h4 {
       opacity: var(--opacity-disabled);

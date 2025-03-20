@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheck, faTimes, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
@@ -32,12 +32,6 @@ export const Item = ({
 
   // Store the currently edited name.
   const [editName, setEditName] = useState<string>(initial)
-
-  // Cancel editing and revert to the original name.
-  const cancelEditing = () => {
-    setEditName(name)
-    setEditing(false)
-  }
 
   // Commit the edited name.
   const commitEdit = () => {
@@ -95,31 +89,6 @@ export const Item = ({
                   }
                 }}
               />
-
-              {editing && (
-                <div style={{ display: 'flex' }}>
-                  &nbsp;
-                  <button
-                    type="button"
-                    className={classes.edit}
-                    onClick={() => commitEdit()}
-                  >
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      transform="shrink-2"
-                      className={classes.icon}
-                    />
-                  </button>
-                  &nbsp;
-                  <button
-                    type="button"
-                    className={classes.edit}
-                    onClick={() => cancelEditing()}
-                  >
-                    <FontAwesomeIcon icon={faXmark} transform="shrink-2" />
-                  </button>
-                </div>
-              )}
             </section>
           </div>
         </div>
@@ -128,7 +97,7 @@ export const Item = ({
         <div className={classes.action}>
           {isImported ? (
             <button type="button" onClick={() => onRemove(address)}>
-              <FontAwesomeIcon icon={faTimes} />
+              <FontAwesomeIcon icon={faTrash} />
             </button>
           ) : (
             <button type="button" onClick={() => onConfirm(address, index)}>
