@@ -135,6 +135,7 @@
     "importAddress": "导入地址",
     "importAnotherAccount": "导入另一个帐户",
     "importedAccount": "{{count}} 个己导入帐户",
+    "importedAccount_zero": "{{count}} 个己导入帐户",
     "inPool": "提名池中",
     "inputAddress": "输入地址",
     "inputDelegatorAddress": "输入委托人地址",
