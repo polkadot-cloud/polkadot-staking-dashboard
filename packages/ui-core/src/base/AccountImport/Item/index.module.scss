@@ -4,7 +4,7 @@
 .item {
   display: flex;
   align-items: center;
-  padding: 1.5rem 1.6rem;
+  padding: 1.5rem 1.6rem 1.5rem 1.35rem;
   position: relative;
   border-bottom: 1px solid var(--border-primary-color);
 
@@ -48,7 +48,7 @@
     flex-grow: 1;
 
     &.noAction {
-      padding-right: 1.5rem;
+      padding-right: 0.9rem;
     }
 
     > .inner {
