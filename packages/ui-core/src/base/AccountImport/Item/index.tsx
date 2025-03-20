@@ -24,16 +24,16 @@ export const Item = ({
   onRemove,
   last,
 }: ItemProps) => {
-  // Store whether this address is being edited.
+  // Store whether this address is being edited
   const [editing, setEditing] = useState<boolean>(false)
 
-  // Store the currently saved name.
+  // Store the currently saved name
   const [name, setName] = useState<string>(initial)
 
-  // Store the currently edited name.
+  // Store the currently edited name
   const [editName, setEditName] = useState<string>(initial)
 
-  // Commit the edited name.
+  // Commit the edited name
   const commitEdit = () => {
     let newName = editName
     if (editName === '') {
@@ -47,14 +47,14 @@ export const Item = ({
     setEditing(false)
   }
 
-  // Handle an input change.
+  // Handle an input change
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value || ''
     val = unescape(val)
     setEditName(val)
   }
 
-  // Check whether this address is imported.
+  // Check whether this address is imported
   const isImported = existsHandler(network, address)
 
   const containerClasses = classNames(classes.item, {
@@ -63,7 +63,6 @@ export const Item = ({
   const borderClasses = classNames(classes.border, {
     [classes.last]: last,
   })
-
   const contentClasses = classNames(classes.content, {
     [classes.noAction]: !allowAction,
   })
