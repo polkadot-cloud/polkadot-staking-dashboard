@@ -266,6 +266,7 @@ export const Ledger = () => {
                 network="polkadot"
                 address={address}
                 index={0}
+                last={i === addresses.length - 1}
                 initial={name}
                 Identicon={<Polkicon address={address} fontSize="3.3rem" />}
                 existsHandler={ledgerAccountExists}

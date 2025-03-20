@@ -64,10 +64,14 @@ export const Item = ({
     [classes.last]: last,
   })
 
+  const contentClasses = classNames(classes.content, {
+    [classes.noAction]: !allowAction,
+  })
+
   return (
     <div className={containerClasses}>
       <div className={borderClasses}></div>
-      <div className={classes.content}>
+      <div className={contentClasses}>
         <div className={classes.inner}>
           <div className={classes.identicon}>{Identicon}</div>
           <div>

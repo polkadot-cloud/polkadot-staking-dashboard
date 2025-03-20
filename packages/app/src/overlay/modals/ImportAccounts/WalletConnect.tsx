@@ -171,6 +171,7 @@ export const WalletConnect = () => {
                 network={network}
                 address={address}
                 index={i}
+                last={i === wcAccounts.length - 1}
                 initial={name}
                 Identicon={<Polkicon address={address} fontSize="3.3rem" />}
                 allowAction={false}
