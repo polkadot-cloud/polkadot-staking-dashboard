@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCog, faPlugCircleBolt } from '@fortawesome/free-solid-svg-icons'
+import { faCog, faPlug } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { InactiveButtonHeader } from 'ui-buttons'
@@ -29,7 +29,7 @@ export const Settings = () => {
         <InactiveButtonHeader
           className="header-connect"
           marginLeft
-          icon={faPlugCircleBolt}
+          icon={faPlug}
         />
       </Popover>
       <Popover
