@@ -19,8 +19,6 @@ import {
 } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { Ledger } from './Ledger'
-import { Proxies } from './Proxies'
-import { ReadOnly } from './ReadOnly'
 import { mobileCheck } from './Utils'
 import { ExtensionsWrapper } from './Wrappers'
 
@@ -40,12 +38,6 @@ export const Connect = () => {
 
   // Whether the app is running on of mobile wallets.
   const inMobileWallet = inNova || inSubWallet
-
-  // toggle read only management
-  const [readOnlyOpen, setReadOnlyOpen] = useState<boolean>(false)
-
-  // toggle proxy delegate management
-  const [newProxyOpen, setNewProxyOpen] = useState<boolean>(false)
 
   // active modal section
   const [section, setSection] = useState<number>(0)
@@ -70,7 +62,7 @@ export const Connect = () => {
   // Resize modal on state change.
   useEffectIgnoreInitial(() => {
     refreshModalHeight()
-  }, [section, readOnlyOpen, newProxyOpen, extensionsStatus])
+  }, [section, extensionsStatus])
 
   useEffect(() => {
     window.addEventListener('resize', refreshModalHeight)
@@ -113,16 +105,6 @@ export const Connect = () => {
               onClick={() => setSection(0)}
               active={section === 0}
             />
-            <ButtonTab
-              title={t('readOnly')}
-              onClick={() => setSection(1)}
-              active={section === 1}
-            />
-            <ButtonTab
-              title={t('proxies')}
-              onClick={() => setSection(2)}
-              active={section === 2}
-            />
           </Section>
         </CustomHeader>
       </FixedTitle>
@@ -156,16 +138,8 @@ export const Connect = () => {
             {ConnectCombinedJSX}
           </Padding>
         </Multi>
-        <Multi>
-          <Padding horizontalOnly ref={readOnlyRef}>
-            <ReadOnly setInputOpen={setReadOnlyOpen} inputOpen={readOnlyOpen} />
-          </Padding>
-        </Multi>
-        <Multi>
-          <Padding horizontalOnly ref={proxiesRef}>
-            <Proxies setInputOpen={setNewProxyOpen} inputOpen={newProxyOpen} />
-          </Padding>
-        </Multi>
+        <Multi></Multi>
+        <Multi></Multi>
       </MultiThree>
     </Section>
   )
