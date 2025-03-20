@@ -9,6 +9,7 @@ import type { LedgerAddress } from '@w3ux/react-connect-kit/types'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { LedgerAccount } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import type { LedgerResponse } from 'contexts/LedgerHardware/types'
 import {
@@ -33,6 +34,7 @@ export const Ledger = () => {
     removeLedgerAccount,
     renameLedgerAccount,
     ledgerAccountExists,
+    getLedgerAccount,
     getLedgerAccounts,
   } = useLedgerAccounts()
   const {
@@ -46,6 +48,8 @@ export const Ledger = () => {
     handleResetLedgerTask,
   } = useLedgerHardware()
   const { setModalResize } = useOverlay().modal
+  const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
+    useOtherAccounts()
 
   // Store addresses retreived from Ledger device. Defaults to local addresses
   const [addresses, setAddresses] = useState<LedgerAccount[]>(
@@ -60,6 +64,7 @@ export const Ledger = () => {
 
   // Handle renaming a ledger address
   const handleRename = (address: string, newName: string) => {
+    renameOtherAccount(address, newName)
     renameLedgerAccount(network, address, newName)
   }
 
@@ -85,6 +90,12 @@ export const Ledger = () => {
           'ledger_addresses',
           JSON.stringify(newLedgerAddresses)
         )
+      }
+
+      // Remove from `other` accounts state
+      const existingOther = getLedgerAccount(network, address)
+      if (existingOther) {
+        forgetOtherAccounts([existingOther])
       }
 
       // Remove ledger account from state
@@ -147,7 +158,14 @@ export const Ledger = () => {
         })
         .concat(newAddress)
       localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses))
-      addLedgerAccount(network, newAddress[0].address, options.accountIndex)
+      const account = addLedgerAccount(
+        network,
+        newAddress[0].address,
+        options.accountIndex
+      )
+      if (account) {
+        addOtherAccounts([account])
+      }
       resetStatusCode()
     }
   }

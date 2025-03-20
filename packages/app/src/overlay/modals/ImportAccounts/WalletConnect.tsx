@@ -10,6 +10,7 @@ import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useWcAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { WCAccount } from '@w3ux/types'
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { useEffect, useState } from 'react'
@@ -22,6 +23,7 @@ export const WalletConnect = () => {
   const { t } = useTranslation()
   const {
     addWcAccount,
+    getWcAccount,
     getWcAccounts,
     wcAccountExists,
     renameWcAccount,
@@ -37,6 +39,8 @@ export const WalletConnect = () => {
   } = useWalletConnect()
   const { network } = useNetwork()
   const { setModalResize } = useOverlay().modal
+  const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
+    useOtherAccounts()
 
   // Whether the import account button is active
   const [importActive, setImportActive] = useState<boolean>(false)
@@ -45,6 +49,7 @@ export const WalletConnect = () => {
 
   // Handle renaming an address
   const handleRename = (address: string, newName: string) => {
+    renameOtherAccount(address, newName)
     renameWcAccount(network, address, newName)
   }
 
@@ -60,7 +65,10 @@ export const WalletConnect = () => {
 
     // Save accounts to local storage
     filteredAccounts.forEach((address) => {
-      addWcAccount(network, address, wcAccounts.length)
+      const account = addWcAccount(network, address, wcAccounts.length)
+      if (account) {
+        addOtherAccounts([account])
+      }
     })
 
     setImportActive(false)
@@ -69,8 +77,12 @@ export const WalletConnect = () => {
   // Disconnect from Wallet Connect and remove imported accounts
   const disconnectWc = async () => {
     if (confirm(t('areYouSure', { ns: 'app' }))) {
-      wcAccounts.forEach((account) => {
-        removeWcAccount(network, account.address)
+      wcAccounts.forEach(({ address }) => {
+        const existingOther = getWcAccount(network, address)
+        if (existingOther) {
+          forgetOtherAccounts([existingOther])
+        }
+        removeWcAccount(network, address)
       })
 
       // Disconnect from Wallet Connect session
