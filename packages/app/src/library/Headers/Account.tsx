@@ -22,12 +22,11 @@ export const Account = () => {
 
   const totalImportedAccounts = accounts.length
 
+  // TODO: Open an xs modal of connect options if no accounts are imported
   return !activeAccount ? (
     <ButtonAccount.Standalone
       label={totalImportedAccounts ? t('selectAccount') : t('connectAccounts')}
-      onClick={() =>
-        openModal({ key: totalImportedAccounts ? 'Accounts' : 'Connect' })
-      }
+      onClick={() => openModal({ key: 'Accounts' })}
     />
   ) : (
     <Popover
