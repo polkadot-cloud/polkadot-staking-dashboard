@@ -88,8 +88,7 @@ export const Ledger = () => {
 
       // Remove ledger account from state
       removeLedgerAccount(network, address)
-
-      // Add ledger account to local state.
+      // Remove ledger account from state
       setStateWithRef(
         [...addressesRef.current.filter((a) => a.address !== address)],
         setAddresses,
@@ -147,11 +146,7 @@ export const Ledger = () => {
         })
         .concat(newAddress)
       localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses))
-
-      // Add new Ledger account to imported accounts
       addLedgerAccount(network, newAddress[0].address, options.accountIndex)
-
-      // Reset device status code
       resetStatusCode()
     }
   }
@@ -162,7 +157,6 @@ export const Ledger = () => {
     addressesRef.current.forEach((account) => {
       removeLedgerAccount(network, account.address)
     })
-
     setStateWithRef([], setAddresses, addressesRef)
   }
 
@@ -223,11 +217,11 @@ export const Ledger = () => {
           />
         </span>
       </AccountImport.Header>
-      <div>
-        <h4 style={{ padding: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <h3 style={{ padding: '1rem 0 2rem 0' }}>
           {feedback?.message ||
             `${addressesRef.current.length || 'No'} ${addressesRef.current.length === 1 ? 'Account' : 'Accounts'}`}
-        </h4>
+        </h3>
       </div>
       <div>
         {addressesRef.current.map(({ name, address }: LedgerAccount, i) => (
