@@ -10,7 +10,7 @@ import { Extension } from './Extension'
 import { Hardware } from './Hardware'
 import type { InnerProps } from './types'
 
-export const Inner = ({
+export const Wallets = ({
   installed,
   other,
   setOpen,

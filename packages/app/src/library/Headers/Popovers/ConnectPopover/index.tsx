@@ -10,11 +10,11 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
-import { Inner } from './Inner'
 import { Proxies } from './Proxies'
 import { ReadOnly } from './ReadOnly'
-import { mobileCheck } from './Utils'
 import type { SetOpenProp } from './types'
+import { mobileCheck } from './Utils'
+import { Wallets } from './Wallets'
 
 export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
   const { t } = useTranslation()
@@ -105,7 +105,7 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
       </PopoverTab.Container>
       <motion.section {...getManageProps('wallets', 'show')}>
         <ConnectItem.Container>
-          <Inner
+          <Wallets
             installed={installed}
             other={other}
             selectedSection={selectedSection}
