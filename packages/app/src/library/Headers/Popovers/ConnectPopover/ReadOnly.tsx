@@ -21,7 +21,13 @@ export const ReadOnly = ({ setOpen }: SetOpenProp) => {
           last={true}
           onClick={() => {
             setOpen(false)
-            openModal({ key: 'ManageReadOnly', size: 'sm' })
+            openModal({
+              key: 'ExternalAccounts',
+              size: 'sm',
+              options: {
+                type: 'read-only',
+              },
+            })
           }}
         >
           <div>

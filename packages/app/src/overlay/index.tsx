@@ -17,13 +17,12 @@ import { ChangePoolRoles } from './modals/ChangePoolRoles'
 import { ClaimPayouts } from './modals/ClaimPayouts'
 import { ClaimReward } from './modals/ClaimReward'
 import { DiscordSupport } from './modals/DiscordSupport'
+import { ExternalAccounts } from './modals/ExternalAccounts'
 import { ImportAccounts } from './modals/ImportAccounts'
 import { LeavePool } from './modals/LeavePool'
 import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
 import { ManagePool } from './modals/ManagePool'
-import { ManageProxies } from './modals/ManageProxies'
-import { ManageReadOnly } from './modals/ManageReadOnly'
 import { Networks } from './modals/Networks'
 import { Plugins } from './modals/Plugins'
 import { RewardCalculator } from './modals/RewardCalculator'
@@ -46,6 +45,7 @@ export const Overlays = () => {
       modals={{
         Bio,
         Bond,
+        ExternalAccounts,
         StopNominations,
         ChangePoolRoles,
         SelectLanguage,
@@ -55,8 +55,6 @@ export const Overlays = () => {
         DiscordSupport,
         LeavePool,
         MailSupport,
-        ManageProxies,
-        ManageReadOnly,
         ImportAccounts,
         ManagePool,
         ManageFastUnstake,

@@ -23,7 +23,7 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers'
 
-export const ManageProxies = () => {
+export const Proxies = () => {
   const { t } = useTranslation('modals')
   const { openHelp } = useHelp()
   const { accounts, getAccount } = useImportedAccounts()

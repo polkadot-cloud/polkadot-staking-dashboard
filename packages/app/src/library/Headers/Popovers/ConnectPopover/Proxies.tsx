@@ -21,7 +21,13 @@ export const Proxies = ({ setOpen }: SetOpenProp) => {
           last={true}
           onClick={() => {
             setOpen(false)
-            openModal({ key: 'ManageProxies', size: 'sm' })
+            openModal({
+              key: 'ExternalAccounts',
+              size: 'sm',
+              options: {
+                type: 'proxies',
+              },
+            })
           }}
         >
           <div>

@@ -25,7 +25,7 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers'
 
-export const ManageReadOnly = () => {
+export const ReadOnly = () => {
   const { t } = useTranslation('modals')
   const { openHelp } = useHelp()
   const { accounts } = useImportedAccounts()
