@@ -17,11 +17,13 @@ import {
 } from 'contexts/LedgerHardware/Utils'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close } from 'ui-overlay'
 
 export const Ledger = () => {
+  const { t } = useTranslation()
   const {
     network,
     networkData: { ss58 },
@@ -44,7 +46,7 @@ export const Ledger = () => {
     handleResetLedgerTask,
   } = useLedgerHardware()
 
-  // Store addresses retreived from Ledger device. Defaults to local addresses.
+  // Store addresses retreived from Ledger device. Defaults to local addresses
   const [addresses, setAddresses] = useState<LedgerAccount[]>(
     getLedgerAccounts(network)
   )
@@ -52,17 +54,17 @@ export const Ledger = () => {
 
   const { txMetadataChainId } = getLedgerApp(network)
 
-  // Get whether the ledger device is currently executing a task.
+  // Get whether the ledger device is currently executing a task
   const isExecuting = getIsExecuting()
 
-  // Handle renaming a ledger address.
+  // Handle renaming a ledger address
   const handleRename = (address: string, newName: string) => {
     renameLedgerAccount(network, address, newName)
   }
 
-  // Handle removing a ledger address.
+  // Handle removing a ledger address
   const handleRemove = (address: string) => {
-    if (confirm('Are you sure you want to remove this account?')) {
+    if (confirm(t('areYouSure', { ns: 'app' }))) {
       // Remove local ledger accounts.
       let newLedgerAddresses = getLocalLedgerAddresses()
 
@@ -84,7 +86,7 @@ export const Ledger = () => {
         )
       }
 
-      // Remove ledger account from state.
+      // Remove ledger account from state
       removeLedgerAccount(network, address)
 
       // Add ledger account to local state.
@@ -96,7 +98,7 @@ export const Ledger = () => {
     }
   }
 
-  // Gets the next non-imported ledger address index.
+  // Gets the next non-imported ledger address index
   const getNextAddressIndex = () => {
     if (!addressesRef.current.length) {
       return 0
@@ -104,17 +106,16 @@ export const Ledger = () => {
     return addressesRef.current[addressesRef.current.length - 1].index + 1
   }
 
-  // Ledger address getter.
+  // Ledger address getter
   const onGetAddress = async () => {
     await handleGetAddress(txMetadataChainId, getNextAddressIndex(), ss58)
   }
 
-  // Handle new Ledger status report.
+  // Handle new Ledger status report
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
     if (!response) {
       return
     }
-
     const { ack, statusCode, body, options } = response
     setStatusCode(ack, statusCode)
 
@@ -126,8 +127,6 @@ export const Ledger = () => {
         name: ellipsisFn(address),
         network,
       }))
-
-      // Add ledger account to local state.
       setStateWithRef(
         [...addressesRef.current, ...newAddress],
         setAddresses,
@@ -135,7 +134,7 @@ export const Ledger = () => {
       )
 
       // Update the full list of local ledger addresses with new entry. NOTE: This can be deprecated
-      // once w3ux package is updated to directly import without using local `ledger_addresses`.
+      // once w3ux package is updated to directly import without using local `ledger_addresses`
       const newAddresses = getLocalLedgerAddresses()
         .filter((a) => {
           if (a.address !== newAddress[0].address) {
@@ -149,15 +148,15 @@ export const Ledger = () => {
         .concat(newAddress)
       localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses))
 
-      // Add new Ledger account to imported accounts.
+      // Add new Ledger account to imported accounts
       addLedgerAccount(network, newAddress[0].address, options.accountIndex)
 
-      // Reset device status code.
+      // Reset device status code
       resetStatusCode()
     }
   }
 
-  // Resets ledger accounts.
+  // Resets ledger accounts
   const resetLedgerAccounts = () => {
     // Remove imported Ledger accounts.
     addressesRef.current.forEach((account) => {
@@ -167,15 +166,15 @@ export const Ledger = () => {
     setStateWithRef([], setAddresses, addressesRef)
   }
 
-  // Get last saved ledger feedback.
+  // Get last saved ledger feedback
   const feedback = getFeedback()
 
-  // Listen for new Ledger status reports.
+  // Listen for new Ledger status reports
   useEffectIgnoreInitial(() => {
     handleLedgerStatusResponse(transportResponse)
   }, [transportResponse])
 
-  // Tidy up context state when this component is no longer mounted.
+  // Tidy up context state when this component is no longer mounted
   useEffect(
     () => () => {
       handleUnmount()
