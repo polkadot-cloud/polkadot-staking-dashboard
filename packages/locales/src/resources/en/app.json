@@ -283,6 +283,7 @@
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
     "wallets": "Wallets",
+    "webExtensions": "Web Extensions",
     "whenActivelyNominating": "when actively nominating.",
     "wrongTransaction": "Wrong transaction, please sign again."
   }

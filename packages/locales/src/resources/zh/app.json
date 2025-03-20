@@ -274,6 +274,7 @@
     "waiting": "等待中",
     "walletNotFound": "未找到钱包",
     "wallets": "钱包",
+    "webExtensions": "浏览器扩展",
     "whenActivelyNominating": "当活跃提名时",
     "wrongTransaction": "错误交易，请重新签名"
   }

@@ -35,10 +35,12 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
   const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && isMobile
 
   // Format supported extensions as array.
-  const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
-    id: key,
-    ...value,
-  })) as ExtensionArrayListItem[]
+  const extensionsAsArray = Object.entries(extensions)
+    .map(([key, value]) => ({
+      id: key,
+      ...value,
+    }))
+    .filter(({ id }) => !id.includes('snap')) as ExtensionArrayListItem[]
 
   // Determine which web extensions to display. Only display Subwallet Mobile or Nova if in one of
   // those environments. In Nova Wallet's case, fetch `nova-wallet` metadata and overwrite

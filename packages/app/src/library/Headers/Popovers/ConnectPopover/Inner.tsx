@@ -4,6 +4,7 @@
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
+import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
 import { Hardware } from './Hardware'
@@ -15,15 +16,19 @@ export const Inner = ({
   setOpen,
   selectedSection,
 }: InnerProps) => {
+  const { t } = useTranslation()
   const { openModal } = useOverlay().modal
 
   const extensionItems = installed.concat(other)
 
-  // TODO: Separate Polkadot JS as a developer tool. use `modals.developerTools` locale key as header.
+  const devTools = extensionItems.filter((ext) => ext.id === 'polkadot-js')
+  const otherExtensions = extensionItems.filter(
+    (ext) => ext.id !== 'polkadot-js'
+  )
 
   return (
     <>
-      <h4>Hardware</h4>
+      <h4>{t('hardware', { ns: 'modals' })}</h4>
       <section>
         <Hardware
           active={selectedSection === 'polkadot_vault'}
@@ -75,8 +80,17 @@ export const Inner = ({
           websiteText="reown.com"
         />
       </section>
-      <h4>Web Extensions</h4>
-      {extensionItems.map((extension, i) => (
+      <h4>{t('webExtensions', { ns: 'app' })}</h4>
+      {otherExtensions.map((extension, i) => (
+        <section key={`extension_item_${extension.id}`}>
+          <Extension
+            extension={extension}
+            last={i === extensionItems.length - 1}
+          />
+        </section>
+      ))}
+      <h4>{t('developerTools', { ns: 'modals' })}</h4>
+      {devTools.map((extension, i) => (
         <section key={`extension_item_${extension.id}`}>
           <Extension
             extension={extension}
