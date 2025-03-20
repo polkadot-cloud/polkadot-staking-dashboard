@@ -50,7 +50,7 @@ export const Item = ({
   // Handle an input change
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value || ''
-    val = unescape(val)
+    val = decodeURI(val)
     setEditName(val)
   }
 
