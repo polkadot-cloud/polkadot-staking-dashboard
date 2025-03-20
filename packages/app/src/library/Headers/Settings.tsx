@@ -3,10 +3,10 @@
 
 import { faCog, faPlugCircleBolt } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from 'contexts/Themes'
-import { ConnectOverlay } from 'library/ConnectOverlay'
 import { useState } from 'react'
 import { InactiveButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
+import { ConnectPopover } from './Popovers/ConnectPopover'
 import { MenuPopover } from './Popovers/MenuPopover'
 
 export const Settings = () => {
@@ -20,7 +20,7 @@ export const Settings = () => {
       <Popover
         open={openConnect}
         portalContainer={themeElementRef.current || undefined}
-        content={<ConnectOverlay setOpen={setOpenConnect} />}
+        content={<ConnectPopover setOpen={setOpenConnect} />}
         onTriggerClick={() => {
           setOpenConnect(!openConnect)
         }}

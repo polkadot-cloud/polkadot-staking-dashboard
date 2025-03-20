@@ -14,7 +14,7 @@ import { ConnectItem } from 'ui-core/popover'
 import { Inner } from './Inner'
 import { mobileCheck } from './Utils'
 
-export const ConnectOverlay = ({
+export const ConnectPopover = ({
   setOpen,
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>
