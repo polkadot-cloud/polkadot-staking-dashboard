@@ -35,7 +35,7 @@ export const ReadOnly = ({ setOpen }: SetOpenProp) => {
           </div>
           <div>
             <div>
-              <h3>Manage Read Only Accounts</h3>
+              <h3>{t('readOnlyAccounts', { ns: 'modals' })}</h3>
             </div>
             <ConnectItem.Icon faIcon={faChevronRight} />
           </div>
