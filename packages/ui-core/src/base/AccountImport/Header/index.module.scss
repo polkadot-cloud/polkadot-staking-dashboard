@@ -44,13 +44,18 @@
       display: flex;
       flex-direction: row;
       justify-content: center;
-      
-      > span, > div {
+
+      > span,
+      > div {
         border: 1px solid var(--border-secondary-color);
         background: var(--background-primary);
         padding: 0.25rem 0.5rem;
         border-radius: 0.5rem;
         margin: 0 0.25rem;
+
+        > button {
+          font-size: 1.1rem;
+        }
       }
     }
   }

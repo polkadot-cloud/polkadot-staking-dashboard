@@ -206,7 +206,6 @@ export const Ledger = () => {
                   resetLedgerAccounts()
                 }
               }}
-              style={{ fontSize: '1.1rem' }}
             />
           </span>
         )}
@@ -221,7 +220,6 @@ export const Ledger = () => {
                 handleResetLedgerTask()
               }
             }}
-            style={{ fontSize: '1.1rem' }}
           />
         </span>
       </AccountImport.Header>
@@ -233,26 +231,17 @@ export const Ledger = () => {
       <div>
         {addresses.length === 0 && !maybeFeedback && (
           <AccountImport.Empty>
-            <h3
-              style={{
-                padding: '0 1rem 0.5rem 1rem',
-                color: 'var(--text-color-secondary)',
-              }}
-            >
-              {t('importedAccount', { count: 0, ns: 'modals' })}
-            </h3>
+            <h3>{t('importedAccount', { count: 0, ns: 'modals' })}</h3>
           </AccountImport.Empty>
         )}
         {addresses.length > 0 && (
           <>
-            <h4
-              style={{
-                padding: '0 1rem 0.5rem 1rem',
-                color: 'var(--text-color-secondary)',
-              }}
-            >
-              {t('importedAccount', { count: addresses.length, ns: 'modals' })}
-            </h4>
+            <AccountImport.SubHeading
+              text={t('importedAccount', {
+                count: addresses.length,
+                ns: 'modals',
+              })}
+            />
             {addresses.map(({ name, address }: LedgerAccount, i) => (
               <AccountImport.Item
                 key={`ledger_imported_${i}`}

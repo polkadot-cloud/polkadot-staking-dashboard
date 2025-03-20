@@ -107,7 +107,6 @@ export const WalletConnect = () => {
                   handleImportAddresses()
                 }
               }}
-              style={{ fontSize: '1.1rem' }}
             />
           </div>
         ) : (
@@ -124,7 +123,6 @@ export const WalletConnect = () => {
                 onClick={async () => {
                   handleImportAddresses()
                 }}
-                style={{ fontSize: '1.1rem' }}
                 iconLeft={
                   wcInitialized && !importActive ? faRotateRight : undefined
                 }
@@ -137,7 +135,6 @@ export const WalletConnect = () => {
                 onClick={async () => {
                   disconnectWc()
                 }}
-                style={{ fontSize: '1.1rem' }}
               />
             </div>
           </>
@@ -150,14 +147,12 @@ export const WalletConnect = () => {
           </AccountImport.Empty>
         ) : (
           <>
-            <h4
-              style={{
-                padding: '0 1rem 0.5rem 1rem',
-                color: 'var(--text-color-secondary)',
-              }}
-            >
-              {t('importedAccount', { count: wcAccounts.length, ns: 'modals' })}
-            </h4>
+            <AccountImport.SubHeading
+              text={t('importedAccount', {
+                count: wcAccounts.length,
+                ns: 'modals',
+              })}
+            />
             {wcAccounts.map(({ address, name }: WCAccount, i) => (
               <AccountImport.Item
                 key={`wc_imported_${network}_${i}`}
