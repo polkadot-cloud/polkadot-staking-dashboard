@@ -20,7 +20,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
-import { Close } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 
 export const Ledger = () => {
   const { t } = useTranslation()
@@ -45,6 +45,7 @@ export const Ledger = () => {
     transportResponse,
     handleResetLedgerTask,
   } = useLedgerHardware()
+  const { setModalResize } = useOverlay().modal
 
   // Store addresses retreived from Ledger device. Defaults to local addresses
   const [addresses, setAddresses] = useState<LedgerAccount[]>(
@@ -176,6 +177,13 @@ export const Ledger = () => {
     []
   )
 
+  // Resize modal on account length / feedback change
+  useEffect(() => {
+    setModalResize()
+  }, [addresses.length, feedback?.message])
+
+  const maybeFeedback = feedback?.message
+
   return (
     <>
       <Close />
@@ -217,29 +225,52 @@ export const Ledger = () => {
           />
         </span>
       </AccountImport.Header>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <h3 style={{ padding: '1rem 0 2rem 0' }}>
-          {feedback?.message ||
-            `${addressesRef.current.length || 'No'} ${addressesRef.current.length === 1 ? 'Account' : 'Accounts'}`}
-        </h3>
-      </div>
+      {!!maybeFeedback && (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <h3 style={{ padding: '1rem 0 2rem 0' }}>{feedback?.message}</h3>
+        </div>
+      )}
       <div>
-        {addressesRef.current.map(({ name, address }: LedgerAccount, i) => (
-          <AccountImport.Item
-            key={`ledger_imported_${i}`}
-            network="polkadot"
-            address={address}
-            index={0}
-            initial={name}
-            Identicon={<Polkicon address={address} fontSize="2.1rem" />}
-            existsHandler={ledgerAccountExists}
-            renameHandler={handleRename}
-            onRemove={handleRemove}
-            onConfirm={() => {
-              /* Do nothing. Not shown in UI. */
-            }}
-          />
-        ))}
+        {addresses.length === 0 && !maybeFeedback && (
+          <AccountImport.Empty>
+            <h3
+              style={{
+                padding: '0 1rem 0.5rem 1rem',
+                color: 'var(--text-color-secondary)',
+              }}
+            >
+              {t('importedAccount', { count: 0, ns: 'modals' })}
+            </h3>
+          </AccountImport.Empty>
+        )}
+        {addresses.length > 0 && (
+          <>
+            <h4
+              style={{
+                padding: '0 1rem 0.5rem 1rem',
+                color: 'var(--text-color-secondary)',
+              }}
+            >
+              {t('importedAccount', { count: addresses.length, ns: 'modals' })}
+            </h4>
+            {addresses.map(({ name, address }: LedgerAccount, i) => (
+              <AccountImport.Item
+                key={`ledger_imported_${i}`}
+                network="polkadot"
+                address={address}
+                index={0}
+                initial={name}
+                Identicon={<Polkicon address={address} fontSize="2.1rem" />}
+                existsHandler={ledgerAccountExists}
+                renameHandler={handleRename}
+                onRemove={handleRemove}
+                onConfirm={() => {
+                  /* Do nothing. Not shown in UI. */
+                }}
+              />
+            ))}
+          </>
+        )}
       </div>
     </>
   )

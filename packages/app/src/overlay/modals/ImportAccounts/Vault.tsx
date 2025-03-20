@@ -145,7 +145,7 @@ export const Vault = () => {
       <div ref={accountsRef} style={{ ...accountsStyle }}>
         {vaultAccounts.length === 0 ? (
           <AccountImport.Empty>
-            <h3>{t('noVaultAccountsImported', { ns: 'modals' })}</h3>
+            <h3>{t('importedAccount', { count: 0, ns: 'modals' })}</h3>
           </AccountImport.Empty>
         ) : (
           <>
@@ -155,7 +155,7 @@ export const Vault = () => {
                 color: 'var(--text-color-secondary)',
               }}
             >
-              {t('vaultAccounts', {
+              {t('importedAccount', {
                 ns: 'modals',
                 count: vaultAccounts.length,
               })}
