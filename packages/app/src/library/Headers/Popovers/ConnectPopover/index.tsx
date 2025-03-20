@@ -67,11 +67,9 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
   const variants = {
     hidden: {
       height: 0,
-      opacity: 0,
     },
     show: {
       height: 'auto',
-      opacity: 1,
     },
   }
 
@@ -84,10 +82,13 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
     },
     animate: selectedSection === item ? 'show' : 'hidden',
     className: 'motion',
+    style: {
+      overflow: 'hidden',
+    },
   })
 
   return (
-    <div ref={popoverRef}>
+    <div ref={popoverRef} style={{ overflow: 'hidden' }}>
       <PopoverTab.Container position="top">
         <PopoverTab.Button
           text={t('wallets', { ns: 'app' })}
