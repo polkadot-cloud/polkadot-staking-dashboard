@@ -172,7 +172,7 @@ export const WalletConnect = () => {
                 address={address}
                 index={i}
                 initial={name}
-                Identicon={<Polkicon address={address} fontSize="2.1rem" />}
+                Identicon={<Polkicon address={address} fontSize="3.3rem" />}
                 allowAction={false}
                 existsHandler={wcAccountExists}
                 renameHandler={handleRename}

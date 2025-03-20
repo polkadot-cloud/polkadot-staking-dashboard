@@ -77,6 +77,9 @@ export const Item = ({
         <div className={classes.inner}>
           <div className={classes.identicon}>{Identicon}</div>
           <div>
+            <h4 className={classes.full}>
+              <span>{address}</span>
+            </h4>
             <section className={classes.row}>
               <input
                 disabled={isImported && disableEditIfImported}
@@ -118,9 +121,6 @@ export const Item = ({
                 </div>
               )}
             </section>
-            <h4 className={classes.full}>
-              <span>{ellipsisFn(address, 10)}</span>
-            </h4>
           </div>
         </div>
       </div>

@@ -267,7 +267,7 @@ export const Ledger = () => {
                 address={address}
                 index={0}
                 initial={name}
-                Identicon={<Polkicon address={address} fontSize="2.1rem" />}
+                Identicon={<Polkicon address={address} fontSize="3.3rem" />}
                 existsHandler={ledgerAccountExists}
                 renameHandler={handleRename}
                 onRemove={handleRemove}
