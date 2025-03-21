@@ -33,10 +33,6 @@
   padding-right: 1.25rem;
 
   @media (min-width: $page-width-small-threshold) {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-  }
-  @media (min-width: $page-width-small-threshold) {
     padding-right: 5rem;
     padding-left: 2.5rem;
   }
@@ -80,6 +76,7 @@
   position: relative;
 
   @media (max-width: $page-width-medium-threshold) {
+    font-size: 1.65rem;
     left: 0rem;
     transform: scale(0.9);
   }
