@@ -214,7 +214,7 @@ export const Ledger = () => {
         {addressesRef.current.length > 0 && (
           <span>
             <ButtonText
-              text={'Reset'}
+              text={t('reset', { ns: 'app' })}
               onClick={() => {
                 if (confirm(t('areYouSure', { ns: 'app' }))) {
                   resetLedgerAccounts()
