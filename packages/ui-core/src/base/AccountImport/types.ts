@@ -7,7 +7,6 @@ import type { ReactNode } from 'react'
 export type ItemProps = ComponentBase & {
   network: string
   address: string
-  index: number
   initial: string
   disableEditIfImported?: boolean
   allowAction?: boolean
@@ -15,6 +14,5 @@ export type ItemProps = ComponentBase & {
   renameHandler: (address: string, newName: string) => void
   existsHandler: (network: string, address: string) => boolean
   onRemove: (address: string) => void
-  onConfirm: (address: string, index: number) => void
   last?: boolean
 }

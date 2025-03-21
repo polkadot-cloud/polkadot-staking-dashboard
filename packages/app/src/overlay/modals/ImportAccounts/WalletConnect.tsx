@@ -168,18 +168,14 @@ export const WalletConnect = () => {
                 key={`wc_imported_${network}_${i}`}
                 network={network}
                 address={address}
-                index={i}
+                allowAction={false}
                 last={i === wcAccounts.length - 1}
                 initial={name}
                 Identicon={<Polkicon address={address} fontSize="3.3rem" />}
-                allowAction={false}
                 existsHandler={wcAccountExists}
                 renameHandler={handleRename}
                 onRemove={() => {
                   // Do nothing
-                }}
-                onConfirm={() => {
-                  /* Do nothing. Not shown in UI. */
                 }}
               />
             ))}

@@ -13,14 +13,12 @@ import classes from './index.module.scss'
 export const Item = ({
   network,
   address,
-  index,
   initial,
   disableEditIfImported = false,
   allowAction = true,
   Identicon,
   existsHandler,
   renameHandler,
-  onConfirm,
   onRemove,
   last,
 }: ItemProps) => {
@@ -98,15 +96,9 @@ export const Item = ({
       </div>
       {allowAction && (
         <div className={classes.action}>
-          {isImported ? (
-            <button type="button" onClick={() => onRemove(address)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          ) : (
-            <button type="button" onClick={() => onConfirm(address, index)}>
-              Import
-            </button>
-          )}
+          <button type="button" onClick={() => onRemove(address)}>
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
         </div>
       )}
     </div>

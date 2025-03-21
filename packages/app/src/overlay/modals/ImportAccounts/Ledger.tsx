@@ -265,16 +265,12 @@ export const Ledger = () => {
                 key={`ledger_imported_${i}`}
                 network="polkadot"
                 address={address}
-                index={0}
                 last={i === addresses.length - 1}
                 initial={name}
                 Identicon={<Polkicon address={address} fontSize="3.3rem" />}
                 existsHandler={ledgerAccountExists}
                 renameHandler={handleRename}
                 onRemove={handleRemove}
-                onConfirm={() => {
-                  /* Do nothing. Not shown in UI. */
-                }}
               />
             ))}
           </>
