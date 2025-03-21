@@ -135,7 +135,7 @@ export const Vault = () => {
           />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <ButtonSubmitInvert
-              text="Cancel"
+              text={t('cancel', { ns: 'app' })}
               onClick={() => setImportActive(false)}
             />
           </div>
