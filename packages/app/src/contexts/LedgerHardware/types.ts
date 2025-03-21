@@ -3,7 +3,6 @@
 
 import type { AnyJson, MaybeString } from '@w3ux/types'
 import type { NetworkId } from 'common-types'
-import type { FunctionComponent, SVGProps } from 'react'
 
 export interface LedgerHardwareContextInterface {
   integrityChecked: boolean
@@ -80,7 +79,6 @@ export interface LedgerAddress {
 export interface LedgerChain {
   network: NetworkId
   txMetadataChainId: string
-  Icon: FunctionComponent<SVGProps<SVGSVGElement>>
 }
 
 export interface HandleErrorFeedback {

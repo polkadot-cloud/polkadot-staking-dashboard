@@ -1,0 +1,30 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.btnPopoverTab {
+  border-left: 1px solid var(--border-primary-color);
+  background: var(--button-popover-tab-background);
+  color: var(--text-color-secondary);
+  font-family: InterSemiBold, sans-serif;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+
+  &:hover {
+    background: var(--background-default);
+  }
+  &:first-child {
+    border-left: none;
+  }
+  &.grow {
+    flex: 1;
+  }
+  &.warning {
+    color: var(--status-warning-color);
+  }
+  &.danger {
+    color: var(--status-danger-color);
+  }
+}

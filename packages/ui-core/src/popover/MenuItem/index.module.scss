@@ -3,14 +3,13 @@
 
 .menuItem {
   border-bottom: 1px solid var(--border-primary-color);
-  transition: background var(--transition-duration);
   padding: 1.65rem 1.25rem 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   width: 100%;
 
   &:hover {
-    background: var(--background-default);
+    background: var(--button-popover-tab-background);
   }
   > div {
     display: flex;
@@ -18,9 +17,10 @@
 
     &:first-child {
       color: var(--text-color-tertiary);
-      padding-right: 0.75rem;
-      width: 2.5rem;
-      align-items: center;
+      margin-right: 1rem;
+      width: 1.5rem;
+      flex-direction: row;
+      justify-content: center;
       path {
         fill: var(--text-color-tertiary);
       }
