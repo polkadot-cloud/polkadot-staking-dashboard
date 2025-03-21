@@ -216,11 +216,7 @@ export const Ledger = () => {
             <ButtonText
               text={'Reset'}
               onClick={() => {
-                if (
-                  confirm(
-                    'Are you sure you want to remove all ledger accounts?'
-                  )
-                ) {
+                if (confirm(t('areYouSure', { ns: 'app' }))) {
                   resetLedgerAccounts()
                 }
               }}
@@ -229,7 +225,11 @@ export const Ledger = () => {
         )}
         <span>
           <ButtonText
-            text={isExecuting ? 'Cancel Import' : 'Import Next Account'}
+            text={
+              isExecuting
+                ? t('cancel', { ns: 'app' })
+                : t('importAnotherAccount', { ns: 'modals' })
+            }
             iconLeft={faUsb}
             onClick={async () => {
               if (!isExecuting) {

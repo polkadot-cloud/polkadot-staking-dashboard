@@ -107,7 +107,7 @@ export const WalletConnect = () => {
         {!wcSessionActive ? (
           <div>
             <ButtonText
-              text={'Connect'}
+              text={t('connect', { ns: 'app' })}
               iconLeft={faLink}
               onClick={async () => {
                 // If client is disconnected, initialise a new client first
