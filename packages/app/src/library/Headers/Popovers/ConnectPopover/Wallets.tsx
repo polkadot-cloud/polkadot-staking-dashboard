@@ -86,6 +86,7 @@ export const Wallets = ({
           <Extension
             extension={extension}
             last={i === extensionItems.length - 1}
+            setOpen={setOpen}
           />
         </section>
       ))}
@@ -95,6 +96,7 @@ export const Wallets = ({
           <Extension
             extension={extension}
             last={i === extensionItems.length - 1}
+            setOpen={setOpen}
           />
         </section>
       ))}

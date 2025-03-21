@@ -13,10 +13,12 @@ import { localStorageOrDefault } from '@w3ux/utils'
 import { useTranslation } from 'react-i18next'
 import { ButtonMonoInvert } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
+import { useOverlay } from 'ui-overlay'
 import type { ExtensionProps } from './types'
 
-export const Extension = ({ extension, last }: ExtensionProps) => {
+export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
   const { t } = useTranslation('modals')
+  const { openModal } = useOverlay().modal
   const { connectExtensionAccounts } = useExtensionAccounts()
   const { extensionsStatus, extensionCanConnect, extensionInstalled } =
     useExtensions()
@@ -43,6 +45,8 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
     if (!connected) {
       if (canConnect) {
         await connectExtensionAccounts(id)
+        setOpen(false)
+        openModal({ key: 'Accounts' })
       } else {
         alert('Unable to connect to the extension.')
       }
@@ -100,7 +104,6 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
             iconRight={
               connected ? undefined : isInstalled ? faIcon : faPlugCircleXmark
             }
-            iconTransform="grow-1"
             disabled={disabled}
           />
         </div>

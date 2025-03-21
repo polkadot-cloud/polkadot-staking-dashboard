@@ -10,7 +10,7 @@ export type WalletProps = SetOpenProp & {
   selectedSection: string
 }
 
-export interface ExtensionProps {
+export type ExtensionProps = SetOpenProp & {
   extension: ExtensionArrayListItem
   last: boolean
 }

@@ -10,8 +10,9 @@ import { ButtonAccount } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 import { AccountPopover } from './Popovers/AccountPopover'
+import type { ToggleConnectProps } from './Popovers/types'
 
-export const Account = () => {
+export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
   const { t } = useTranslation('app')
   const { themeElementRef } = useTheme()
   const { openModal } = useOverlay().modal
@@ -22,11 +23,16 @@ export const Account = () => {
 
   const totalImportedAccounts = accounts.length
 
-  // TODO: Open an xs modal of connect options if no accounts are imported
   return !activeAccount ? (
     <ButtonAccount.Standalone
       label={totalImportedAccounts ? t('selectAccount') : t('connectAccounts')}
-      onClick={() => openModal({ key: 'Accounts' })}
+      onClick={() => {
+        if (!totalImportedAccounts) {
+          setOpenConnect(true)
+        } else {
+          openModal({ key: 'Accounts' })
+        }
+      }}
     />
   ) : (
     <Popover
@@ -34,6 +40,9 @@ export const Account = () => {
       portalContainer={themeElementRef.current || undefined}
       content={<AccountPopover setOpen={setOpen} />}
       onTriggerClick={() => {
+        if (!totalImportedAccounts) {
+          return
+        }
         if (activeAccount) {
           setOpen(!open)
         } else {

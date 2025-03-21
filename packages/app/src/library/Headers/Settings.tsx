@@ -8,12 +8,15 @@ import { InactiveButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { ConnectPopover } from './Popovers/ConnectPopover'
 import { MenuPopover } from './Popovers/MenuPopover'
+import type { ToggleConnectProps } from './Popovers/types'
 
-export const Settings = () => {
+export const Settings = ({
+  openConnect,
+  setOpenConnect,
+}: ToggleConnectProps) => {
   const { themeElementRef } = useTheme()
 
   const [openSettings, setOpenSettings] = useState<boolean>(false)
-  const [openConnect, setOpenConnect] = useState<boolean>(false)
 
   return (
     <>
