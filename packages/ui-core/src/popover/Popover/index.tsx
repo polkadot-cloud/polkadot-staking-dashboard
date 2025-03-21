@@ -11,35 +11,42 @@ export const Popover = ({
   portalContainer,
   open,
   onTriggerClick,
+  width,
 }: {
   children: ReactNode
   content: ReactNode
   portalContainer?: HTMLDivElement
   open?: boolean
   onTriggerClick?: () => void
-}) => (
-  <RadixPopover.Root open={open}>
-    <RadixPopover.Trigger
-      onClick={() => {
-        if (typeof onTriggerClick === 'function') {
-          onTriggerClick()
-        }
-      }}
-    >
-      {children}
-    </RadixPopover.Trigger>
-    <RadixPopover.Portal container={portalContainer}>
-      <RadixPopover.Content
-        className={classes.Content}
-        sideOffset={4}
-        collisionPadding={15}
-        onOpenAutoFocus={(event) => event.preventDefault()}
+  width?: string | number
+}) => {
+  width = width || '310px'
+
+  return (
+    <RadixPopover.Root open={open}>
+      <RadixPopover.Trigger
+        onClick={() => {
+          if (typeof onTriggerClick === 'function') {
+            onTriggerClick()
+          }
+        }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {content}
-        </div>
-        <RadixPopover.Arrow className={classes.Arrow} />
-      </RadixPopover.Content>
-    </RadixPopover.Portal>
-  </RadixPopover.Root>
-)
+        {children}
+      </RadixPopover.Trigger>
+      <RadixPopover.Portal container={portalContainer}>
+        <RadixPopover.Content
+          className={classes.Content}
+          sideOffset={4}
+          collisionPadding={15}
+          onOpenAutoFocus={(event) => event.preventDefault()}
+          style={{ width }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {content}
+          </div>
+          <RadixPopover.Arrow className={classes.Arrow} />
+        </RadixPopover.Content>
+      </RadixPopover.Portal>
+    </RadixPopover.Root>
+  )
+}

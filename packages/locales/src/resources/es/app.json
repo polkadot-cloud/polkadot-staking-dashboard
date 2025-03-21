@@ -11,6 +11,7 @@
     "activeValidators": "Validadores Activos",
     "activelyNominating": "Nominando Activamente",
     "add": "Agregar",
+    "addAccount": "Agregar Cuenta",
     "addFromFavorites": "Agregar de Favoritos",
     "address": "Dirección",
     "addressCopiedToClipboard": "Dirección Copiada",
@@ -24,6 +25,7 @@
     "allowWithdraw": "Permitir Retiro",
     "alreadyImported": "Dirección Ya Importada",
     "analyzingPoolPerformance": "Analizando el rendimiento del pool",
+    "areYouSure": "¿Estás seguro?",
     "asAPoolMember": "como miembro del pool.",
     "asThePoolDepositor": "como el depositante del pool.",
     "atLeast": "El monto vinculado debe ser al menos",
@@ -118,6 +120,7 @@
     "inQueue": "En Fila",
     "inactive": "Inactivo",
     "include": "Incluir",
+    "initializing": "Inicializando",
     "insertPayoutAddress": "Introduce una Dirección de Pago",
     "invalid": "Dirección Inválida",
     "join": "Unirse",
@@ -281,6 +284,8 @@
     "viewPoolNominations": "Ver Nominaciones del Pool",
     "waiting": "Esperando",
     "walletNotFound": "Cartera no encontrada",
+    "wallets": "Carteras",
+    "webExtensions": "Extensión de Navegador",
     "whenActivelyNominating": "cuando nominas activamente.",
     "wrongTransaction": "Transacción incorrecta, Por favor firma de nuevo."
   }

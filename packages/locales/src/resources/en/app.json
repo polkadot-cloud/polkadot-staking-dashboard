@@ -11,6 +11,7 @@
     "activeValidators": "Active Validators",
     "activelyNominating": "Actively Nominating",
     "add": "Add",
+    "addAccount": "Add Account",
     "addFromFavorites": "Add From Favorites",
     "address": "Address",
     "addressCopiedToClipboard": "Address Copied to Clipboard",
@@ -24,6 +25,7 @@
     "allowWithdraw": "Allow Withdraw",
     "alreadyImported": "Address Already Imported",
     "analyzingPoolPerformance": "Analyzing pool performance",
+    "areYouSure": "Are you sure?",
     "asAPoolMember": "as a pool member.",
     "asThePoolDepositor": "as the pool depositor.",
     "atLeast": "Bond amount must be at least",
@@ -118,6 +120,7 @@
     "inQueue": "In Queue",
     "inactive": "Inactive",
     "include": "Include",
+    "initializing": "Initializing",
     "insertPayoutAddress": "Insert a payout address",
     "invalid": "Address Invalid",
     "join": "Join",
@@ -281,6 +284,8 @@
     "viewPoolNominations": "View Pool Nominations",
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
+    "wallets": "Wallets",
+    "webExtensions": "Web Extensions",
     "whenActivelyNominating": "when actively nominating.",
     "wrongTransaction": "Wrong transaction, please sign again."
   }

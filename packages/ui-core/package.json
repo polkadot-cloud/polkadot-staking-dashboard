@@ -23,6 +23,7 @@
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
     "@fortawesome/free-solid-svg-icons": "*",
+    "@w3ux/utils": "*",
     "radix-ui": "*",
     "react": "*"
   }
