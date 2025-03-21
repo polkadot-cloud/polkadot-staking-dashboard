@@ -3,7 +3,6 @@
 
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import {
-  faCheckCircle,
   faPlugCircleExclamation,
   faPlugCircleXmark,
   faPlus,
@@ -12,6 +11,7 @@ import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { localStorageOrDefault } from '@w3ux/utils'
 import { useTranslation } from 'react-i18next'
+import { ButtonMonoInvert } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
 import type { ExtensionProps } from './types'
 
@@ -64,12 +64,7 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
   // Determine icon to be displayed based on extension status
   let faIcon: IconDefinition
   switch (extensionsStatus[id]) {
-    case 'connected':
-      // TODO: Use `connectedextensionCanConnect` tooltip here to accompany icon
-      faIcon = faCheckCircle
-      break
     case 'not_authenticated':
-      // TODO: Use `notAuthenticated` tooltip here to accompany icon
       faIcon = faPlugCircleExclamation
       break
     default:
@@ -90,11 +85,22 @@ export const Extension = ({ extension, last }: ExtensionProps) => {
           />
         </div>
         <div>
-          {/* TODO: Add tooltip with `modals.notInstalled` locale here */}
-          <ConnectItem.Button
-            active={connected}
+          <ButtonMonoInvert
+            style={
+              connected ? { color: 'var(--status-danger-color)' } : undefined
+            }
+            text={
+              connected
+                ? t('disconnect', { ns: 'modals' })
+                : isInstalled
+                  ? t('connect', { ns: 'modals' })
+                  : t('notInstalled', { ns: 'modals' })
+            }
             onClick={() => handleClick()}
-            faIcon={isInstalled ? faIcon : faPlugCircleXmark}
+            iconRight={
+              connected ? undefined : isInstalled ? faIcon : faPlugCircleXmark
+            }
+            iconTransform="grow-1"
             disabled={disabled}
           />
         </div>
