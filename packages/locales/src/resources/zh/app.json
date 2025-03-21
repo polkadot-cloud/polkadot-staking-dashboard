@@ -117,6 +117,7 @@
     "inQueue": "在队列中",
     "inactive": "未激活",
     "include": "包含",
+    "initializing": "初始化中",
     "insertPayoutAddress": "输入收益到账地址",
     "invalid": "地址无效",
     "join": "加入提名池",

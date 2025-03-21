@@ -70,7 +70,6 @@ export const WalletConnect = () => {
         addOtherAccounts([account])
       }
     })
-
     setImportActive(false)
   }
 
@@ -84,7 +83,6 @@ export const WalletConnect = () => {
         }
         removeWcAccount(network, address)
       })
-
       // Disconnect from Wallet Connect session
       await disconnectWcSession()
     }
@@ -127,10 +125,10 @@ export const WalletConnect = () => {
               <ButtonText
                 text={
                   !wcInitialized
-                    ? 'Initialising'
+                    ? t('initializing', { ns: 'app' })
                     : importActive
-                      ? 'Cancel'
-                      : 'Refresh'
+                      ? t('cancel', { ns: 'app' })
+                      : t('refreshAccounts', { ns: 'modals' })
                 }
                 onClick={async () => {
                   handleImportAddresses()
@@ -142,7 +140,7 @@ export const WalletConnect = () => {
             </div>
             <div>
               <ButtonText
-                text={'Disconnect'}
+                text={t('disconnect', { ns: 'modals' })}
                 iconLeft={faSquareMinus}
                 onClick={async () => {
                   disconnectWc()
