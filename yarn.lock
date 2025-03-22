@@ -8991,6 +8991,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
+  languageName: node
+  linkType: hard
+
 "log-symbols@npm:^6.0.0":
   version: 6.0.0
   resolution: "log-symbols@npm:6.0.0"
@@ -10053,6 +10060,8 @@ __metadata:
     react-error-boundary: "npm:^4.0.13"
     react-i18next: "npm:^15.4.0"
     sass: "npm:1.77.6"
+    simplebar: "npm:^6.3.0"
+    simplebar-react: "npm:^3.3.0"
     styled-components: "npm:^6.1.13"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.25.0"
@@ -11312,6 +11321,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"simplebar-core@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "simplebar-core@npm:1.3.0"
+  dependencies:
+    lodash: "npm:^4.17.21"
+  checksum: 10c0/c8aa86a402e9a13ffb7a65d75851d400345f109f092f8c23c546bd3e451a7c63d84784fc3bb1c15283cd05ece2ccddd28025f42db0b50aa00db385d8afa7f5e6
+  languageName: node
+  linkType: hard
+
+"simplebar-react@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "simplebar-react@npm:3.3.0"
+  dependencies:
+    simplebar-core: "npm:^1.3.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10c0/ad07ac2b239f7372af48f92ad01b82a7e6465fcd1c43da9f5d12edb26cba81a55c87badd2cffac4aa8aa769da56c05b4e2eb5de19fec52588ca57f87d1f6202b
+  languageName: node
+  linkType: hard
+
+"simplebar@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "simplebar@npm:6.3.0"
+  dependencies:
+    simplebar-core: "npm:^1.3.0"
+  checksum: 10c0/e74f2637065d3f447124342b6223dbf7098966fff2c3185b62d056a38295c1b846496024d7ee4c3b17c0497dfd9c800d2231d3890c33e4e50ec0c53558872529
+  languageName: node
+  linkType: hard
+
 "smart-buffer@npm:^4.2.0":
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
@@ -12251,6 +12289,8 @@ __metadata:
     "@w3ux/utils": "*"
     radix-ui: "*"
     react: "*"
+    simplebar: "*"
+    simplebar-react: "*"
   languageName: unknown
   linkType: soft
 
