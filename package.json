@@ -37,7 +37,7 @@
     "sass": "1.77.6",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.25.0",
-    "vite": "^6.2.0"
+    "vite": "^6.2.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -59,7 +59,7 @@
     "simplebar": "^6.3.0",
     "simplebar-react": "^3.3.0",
     "styled-components": "^6.1.13",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.9"
   },
   "packageManager": "yarn@4.6.0",
   "prettier": {
