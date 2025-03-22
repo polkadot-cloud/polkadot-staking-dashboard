@@ -42,9 +42,6 @@ export const NetworkList: Networks = {
         size: '1.05em',
       },
     },
-    api: {
-      unit: 'DOT',
-    },
     defaultFeeReserve: 0.1,
     maxExposurePageSize: new BigNumber(512),
   },
@@ -76,9 +73,6 @@ export const NetworkList: Networks = {
         size: '1.35em',
       },
     },
-    api: {
-      unit: 'KSM',
-    },
     defaultFeeReserve: 0.05,
     maxExposurePageSize: new BigNumber(512),
   },
@@ -108,9 +102,6 @@ export const NetworkList: Networks = {
         svg: WestendInlineSVG,
         size: '0.96em',
       },
-    },
-    api: {
-      unit: 'DOT',
     },
     defaultFeeReserve: 0.1,
     maxExposurePageSize: new BigNumber(64),
