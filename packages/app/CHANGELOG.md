@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.10.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.9.0...app-v1.10.0) (2025-03-22)
+
+
+### Features
+
+* **ci:** Add `build:verify` and `lint:check` scripts, cache Vite build ([#2559](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2559)) ([b966b69](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b966b690f871c2cd5b6c6d93842e0d718014ecb1))
+* **locales:** Add multi-currency support for staking rewards & balances ([#2563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2563)) ([c25e64f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c25e64f0b35beb555641a1a6f018b63bb3cf32db))
+* **ux:** Expanded balance UI on `Overview` ([#2576](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2576)) ([e179dca](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e179dcadcc372724acc348b6f8a2fb0ad8c93732))
+* **ux:** Revised wallet & hardware account management flow ([#2595](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2595)) ([2f7faea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2f7faea0080322e67f62f1f02ac70ead7865caf9))
+* **ux:** Simplified header UI, new Account, Settings popovers ([#2573](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2573)) ([d384b83](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d384b83409e6941187da2fd910a96b803644fcdc))
+
+
+### Bug Fixes
+
+* Currency in modal order ([#2577](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2577)) ([2843f76](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2843f76cc425f764be657e8d63319ec1c2baae54))
+
 ## [1.9.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.8.0...app-v1.9.0) (2025-02-24)
 
 
