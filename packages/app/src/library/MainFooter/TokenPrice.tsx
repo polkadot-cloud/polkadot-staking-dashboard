@@ -7,9 +7,7 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 
 export const TokenPrice = () => {
   const {
-    networkData: {
-      api: { unit },
-    },
+    networkData: { unit },
   } = useNetwork()
   const { currency } = useCurrency()
   const { price, change } = useTokenPrices()

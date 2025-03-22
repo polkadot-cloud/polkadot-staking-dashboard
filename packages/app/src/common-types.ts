@@ -101,9 +101,6 @@ export interface Network {
       size: string
     }
   }
-  api: {
-    unit: string
-  }
   defaultFeeReserve: number
   maxExposurePageSize: BigNumber
 }
