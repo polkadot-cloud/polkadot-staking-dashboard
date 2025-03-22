@@ -1686,14 +1686,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/merkleize-metadata@npm:^1.1.12, @polkadot-api/merkleize-metadata@npm:^1.1.13":
-  version: 1.1.13
-  resolution: "@polkadot-api/merkleize-metadata@npm:1.1.13"
+"@polkadot-api/merkleize-metadata@npm:^1.1.14":
+  version: 1.1.14
+  resolution: "@polkadot-api/merkleize-metadata@npm:1.1.14"
   dependencies:
-    "@polkadot-api/metadata-builders": "npm:0.10.1"
-    "@polkadot-api/substrate-bindings": "npm:0.11.0"
+    "@polkadot-api/metadata-builders": "npm:0.10.2"
+    "@polkadot-api/substrate-bindings": "npm:0.11.1"
     "@polkadot-api/utils": "npm:0.1.2"
-  checksum: 10c0/9b2c7aca84ef54f3cb4dae3200a710d3f710e06fbf5394a39fe181664a1cf624cac6ccae76498807ba30a30cc19623b8713505e827ed3a4ddca6f07e7a0d8e08
+  checksum: 10c0/bcd9ad2677fb753e76aeb510115896fa5b924f8003ec7287ea65cea9b02a6b99ffedd0cdd24914a682c95fbcb72e4933fdc036b66b105274657f037e737531dd
   languageName: node
   linkType: hard
 
@@ -5733,7 +5733,7 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
     "@lottiefiles/dotlottie-react": "npm:^0.13.0"
-    "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
+    "@polkadot-api/merkleize-metadata": "npm:^1.1.14"
     "@polkadot-api/signers-common": "npm:^0.1.5"
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"
     "@polkadot/util": "npm:^13.4.3"
@@ -10178,7 +10178,7 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": "npm:^6.7.2"
     "@fortawesome/free-solid-svg-icons": "npm:^6.7.2"
     "@ledgerhq/logs": "npm:^6.12.0"
-    "@polkadot-api/merkleize-metadata": "npm:^1.1.13"
+    "@polkadot-api/merkleize-metadata": "npm:^1.1.14"
     "@tanstack/react-query": "npm:^5.66.9"
     "@types/chroma-js": "npm:^3.1.1"
     "@types/react": "npm:^18.3.3"
