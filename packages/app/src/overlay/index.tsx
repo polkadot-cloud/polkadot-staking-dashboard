@@ -16,11 +16,9 @@ import { Bond } from './modals/Bond'
 import { ChangePoolRoles } from './modals/ChangePoolRoles'
 import { ClaimPayouts } from './modals/ClaimPayouts'
 import { ClaimReward } from './modals/ClaimReward'
-import { Connect } from './modals/Connect'
 import { DiscordSupport } from './modals/DiscordSupport'
-import { ImportLedger } from './modals/ImportLedger'
-import { ImportVault } from './modals/ImportVault'
-import { ImportWalletConnect } from './modals/ImportWalletConnect'
+import { ExternalAccounts } from './modals/ExternalAccounts'
+import { ImportAccounts } from './modals/ImportAccounts'
 import { LeavePool } from './modals/LeavePool'
 import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
@@ -47,19 +45,17 @@ export const Overlays = () => {
       modals={{
         Bio,
         Bond,
+        ExternalAccounts,
         StopNominations,
         ChangePoolRoles,
         SelectLanguage,
         ClaimPayouts,
         ClaimReward,
-        Connect,
         Accounts,
         DiscordSupport,
         LeavePool,
         MailSupport,
-        ImportLedger,
-        ImportVault,
-        ImportWalletConnect,
+        ImportAccounts,
         ManagePool,
         ManageFastUnstake,
         Networks,

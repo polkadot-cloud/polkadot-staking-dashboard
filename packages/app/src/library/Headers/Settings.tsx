@@ -1,32 +1,54 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { faCog, faPlug } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { InactiveButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
+import { ConnectPopover } from './Popovers/ConnectPopover'
 import { MenuPopover } from './Popovers/MenuPopover'
+import type { ToggleConnectProps } from './Popovers/types'
 
-export const Settings = () => {
+export const Settings = ({
+  openConnect,
+  setOpenConnect,
+}: ToggleConnectProps) => {
   const { themeElementRef } = useTheme()
 
-  const [open, setOpen] = useState<boolean>(false)
+  const [openSettings, setOpenSettings] = useState<boolean>(false)
 
   return (
-    <Popover
-      open={open}
-      portalContainer={themeElementRef.current || undefined}
-      content={<MenuPopover setOpen={setOpen} />}
-      onTriggerClick={() => {
-        setOpen(!open)
-      }}
-    >
-      <InactiveButtonHeader
-        className="header-settings"
-        marginLeft
-        icon={faCog}
-      />
-    </Popover>
+    <>
+      <Popover
+        open={openConnect}
+        portalContainer={themeElementRef.current || undefined}
+        content={<ConnectPopover setOpen={setOpenConnect} />}
+        onTriggerClick={() => {
+          setOpenConnect(!openConnect)
+        }}
+        width="350px"
+      >
+        <InactiveButtonHeader
+          className="header-connect"
+          marginLeft
+          icon={faPlug}
+        />
+      </Popover>
+      <Popover
+        open={openSettings}
+        portalContainer={themeElementRef.current || undefined}
+        content={<MenuPopover setOpen={setOpenSettings} />}
+        onTriggerClick={() => {
+          setOpenSettings(!openSettings)
+        }}
+      >
+        <InactiveButtonHeader
+          className="header-settings"
+          marginLeft
+          icon={faCog}
+        />
+      </Popover>
+    </>
   )
 }
