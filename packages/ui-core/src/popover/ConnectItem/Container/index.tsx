@@ -3,12 +3,14 @@
 
 import type { ComponentBase } from '@w3ux/types'
 import { motion } from 'framer-motion'
+import SimpleBar from 'simplebar-react'
+import 'simplebar/dist/simplebar.min.css'
 import classes from './index.module.scss'
 
 export const Container = ({ style, children }: ComponentBase) => (
   <motion.div style={style} className={classes.container}>
-    <div className={classes.scroll}>
+    <SimpleBar style={{ maxHeight: '75vh' }} autoHide={true}>
       <div className={classes.inner}>{children}</div>
-    </div>
+    </SimpleBar>
   </motion.div>
 )
