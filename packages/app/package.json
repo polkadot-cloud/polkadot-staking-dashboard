@@ -22,7 +22,7 @@
     "@lottiefiles/dotlottie-react": "^0.13.2",
     "@polkadot-api/merkleize-metadata": "^1.1.14",
     "@polkadot-api/signers-common": "^0.1.5",
-    "@polkadot-api/substrate-bindings": "^0.11.0",
+    "@polkadot-api/substrate-bindings": "^0.11.1",
     "@polkadot/util": "^13.4.3",
     "@polkawatch/ddp-client": "^2.0.20",
     "@w3ux/extension-assets": "^1.0.0",

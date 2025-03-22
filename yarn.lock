@@ -1853,7 +1853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/substrate-bindings@npm:0.11.0, @polkadot-api/substrate-bindings@npm:^0.11.0":
+"@polkadot-api/substrate-bindings@npm:0.11.0":
   version: 0.11.0
   resolution: "@polkadot-api/substrate-bindings@npm:0.11.0"
   dependencies:
@@ -1865,7 +1865,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/substrate-bindings@npm:0.11.1":
+"@polkadot-api/substrate-bindings@npm:0.11.1, @polkadot-api/substrate-bindings@npm:^0.11.1":
   version: 0.11.1
   resolution: "@polkadot-api/substrate-bindings@npm:0.11.1"
   dependencies:
@@ -5735,7 +5735,7 @@ __metadata:
     "@lottiefiles/dotlottie-react": "npm:^0.13.2"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.14"
     "@polkadot-api/signers-common": "npm:^0.1.5"
-    "@polkadot-api/substrate-bindings": "npm:^0.11.0"
+    "@polkadot-api/substrate-bindings": "npm:^0.11.1"
     "@polkadot/util": "npm:^13.4.3"
     "@polkawatch/ddp-client": "npm:^2.0.20"
     "@w3ux/extension-assets": "npm:^1.0.0"
