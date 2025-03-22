@@ -12,4 +12,8 @@ export const LedgerChains: LedgerChain[] = [
     network: 'kusama',
     txMetadataChainId: 'ksm',
   },
+  {
+    network: 'westend',
+    txMetadataChainId: 'wnd',
+  },
 ]
