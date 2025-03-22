@@ -65,11 +65,11 @@
   },
   "devDependencies": {
     "vite-bundle-visualizer": "^1.2.1",
-    "vite-plugin-checker": "^0.9.0",
+    "vite-plugin-checker": "^0.9.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.9"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "*",
