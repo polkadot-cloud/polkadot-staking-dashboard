@@ -5572,14 +5572,14 @@ __metadata:
     ui-overlay: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
-    viem: "npm:^2.23.5"
+    viem: "npm:^2.23.14"
     vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.9.1"
     vite-plugin-eslint: "npm:^1.8.1"
     vite-plugin-svgr: "npm:^4.3.0"
     vite-tsconfig-paths: "npm:^5.1.4"
     vitest: "npm:^3.0.9"
-    wagmi: "npm:^2.14.12"
+    wagmi: "npm:^2.14.15"
     xxhash-wasm: "npm:^1.0.2"
   peerDependencies:
     "@fortawesome/fontawesome-svg-core": "*"
@@ -12698,7 +12698,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.1.1, viem@npm:^2.23.5":
+"viem@npm:^2.1.1, viem@npm:^2.23.14":
   version: 2.23.14
   resolution: "viem@npm:2.23.14"
   dependencies:
@@ -12957,7 +12957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wagmi@npm:^2.14.12":
+"wagmi@npm:^2.14.15":
   version: 2.14.15
   resolution: "wagmi@npm:2.14.15"
   dependencies:
