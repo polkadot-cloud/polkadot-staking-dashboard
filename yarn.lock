@@ -199,6 +199,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.26.10":
+  version: 7.26.10
+  resolution: "@babel/runtime@npm:7.26.10"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 10c0/6dc6d88c7908f505c4f7770fb4677dfa61f68f659b943c2be1f2a99cb6680343462867abf2d49822adc435932919b36c77ac60125793e719ea8745f2073d3745
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.26.9":
   version: 7.26.9
   resolution: "@babel/template@npm:7.26.9"
@@ -1677,14 +1686,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/merkleize-metadata@npm:^1.1.12, @polkadot-api/merkleize-metadata@npm:^1.1.13":
-  version: 1.1.13
-  resolution: "@polkadot-api/merkleize-metadata@npm:1.1.13"
+"@polkadot-api/merkleize-metadata@npm:^1.1.14":
+  version: 1.1.14
+  resolution: "@polkadot-api/merkleize-metadata@npm:1.1.14"
   dependencies:
-    "@polkadot-api/metadata-builders": "npm:0.10.1"
-    "@polkadot-api/substrate-bindings": "npm:0.11.0"
+    "@polkadot-api/metadata-builders": "npm:0.10.2"
+    "@polkadot-api/substrate-bindings": "npm:0.11.1"
     "@polkadot-api/utils": "npm:0.1.2"
-  checksum: 10c0/9b2c7aca84ef54f3cb4dae3200a710d3f710e06fbf5394a39fe181664a1cf624cac6ccae76498807ba30a30cc19623b8713505e827ed3a4ddca6f07e7a0d8e08
+  checksum: 10c0/bcd9ad2677fb753e76aeb510115896fa5b924f8003ec7287ea65cea9b02a6b99ffedd0cdd24914a682c95fbcb72e4933fdc036b66b105274657f037e737531dd
   languageName: node
   linkType: hard
 
@@ -5724,7 +5733,7 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
     "@lottiefiles/dotlottie-react": "npm:^0.13.0"
-    "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
+    "@polkadot-api/merkleize-metadata": "npm:^1.1.14"
     "@polkadot-api/signers-common": "npm:^0.1.5"
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"
     "@polkadot/util": "npm:^13.4.3"
@@ -8340,17 +8349,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^24.2.2":
-  version: 24.2.2
-  resolution: "i18next@npm:24.2.2"
+"i18next@npm:^24.2.3":
+  version: 24.2.3
+  resolution: "i18next@npm:24.2.3"
   dependencies:
-    "@babel/runtime": "npm:^7.23.2"
+    "@babel/runtime": "npm:^7.26.10"
   peerDependencies:
     typescript: ^5
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/df2f08f7e7a813d0c38f67e9a9f67f6e86cd105a58b6419cab1118833e0a8ebf8d31e2df9033c12890fc1db18740fc227acc593c0a30887f8f7f94cd0293d051
+  checksum: 10c0/7ac11a67d618ec714beef303aa497c1249bf5f1977dd3ebe9ca2673dfa6cadbba9e2d39ec1337688903ae3866ce9c1bc22cd6b265e66cce54c5db3a9bbedd390
   languageName: node
   linkType: hard
 
@@ -10169,7 +10178,7 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": "npm:^6.7.2"
     "@fortawesome/free-solid-svg-icons": "npm:^6.7.2"
     "@ledgerhq/logs": "npm:^6.12.0"
-    "@polkadot-api/merkleize-metadata": "npm:^1.1.13"
+    "@polkadot-api/merkleize-metadata": "npm:^1.1.14"
     "@tanstack/react-query": "npm:^5.66.9"
     "@types/chroma-js": "npm:^3.1.1"
     "@types/react": "npm:^18.3.3"
@@ -10195,7 +10204,7 @@ __metadata:
     eslint-plugin-unused-imports: "npm:^4.1.4"
     framer-motion: "npm:^12.4.11"
     globals: "npm:^16.0.0"
-    i18next: "npm:^24.2.2"
+    i18next: "npm:^24.2.3"
     prettier: "npm:^3.5.2"
     prettier-plugin-organize-imports: "npm:^4.1.0"
     radix-ui: "npm:^1.1.3"
