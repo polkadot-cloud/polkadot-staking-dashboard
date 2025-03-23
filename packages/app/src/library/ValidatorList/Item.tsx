@@ -40,7 +40,7 @@ export const Item = ({
   eraPoints,
 }: ItemProps) => {
   const { t } = useTranslation('app')
-  const { selectActive } = useList()
+  const { selectable } = useList()
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
@@ -84,7 +84,7 @@ export const Item = ({
     <Wrapper>
       <div className={`inner ${displayFor}`}>
         <div className="row top">
-          {selectActive && <Select item={validator} />}
+          {selectable && <Select item={validator} />}
           <Identity address={address} />
           <div>
             <HeaderButtonRow>

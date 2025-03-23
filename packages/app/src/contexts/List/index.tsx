@@ -16,7 +16,7 @@ export const useList = () => useContext(ListContext)
 
 export const ListProvider = ({
   selectToggleable = true,
-  selectActive: initialSelctActive = false,
+  selectable: initialSelectable = false,
   children,
 }: ListProviderProps) => {
   // Current page
@@ -26,9 +26,7 @@ export const ListProvider = ({
   const [selected, setSelected] = useState<AnyJson[]>([])
 
   // Store whether validator selection is active
-  const [selectActive, setSelectActiveState] = useState<boolean>(
-    initialSelctActive ?? false
-  )
+  const [selectable] = useState<boolean>(initialSelectable ?? false)
 
   // Store the list format of the list
   const [listFormat, _setListFormat] = useState<ListFormat>('col')
@@ -45,13 +43,6 @@ export const ListProvider = ({
     setSelected([])
   }
 
-  const setSelectActive = (_selectActive: boolean) => {
-    setSelectActiveState(_selectActive)
-    if (_selectActive === false) {
-      resetSelected()
-    }
-  }
-
   const setListFormat = (v: ListFormat) => {
     _setListFormat(v)
   }
@@ -59,13 +50,12 @@ export const ListProvider = ({
   return (
     <ListContext.Provider
       value={{
-        setSelectActive,
         addToSelected,
         removeFromSelected,
         resetSelected,
         setListFormat,
         selected,
-        selectActive,
+        selectable,
         listFormat,
         selectToggleable,
         pagination: {

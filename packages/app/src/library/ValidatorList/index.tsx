@@ -399,7 +399,7 @@ export const ValidatorListInner = ({
 export const ValidatorList = (props: ValidatorListProps) => {
   const { selectable, selectToggleable } = props
   return (
-    <ListProvider selectActive={selectable} selectToggleable={selectToggleable}>
+    <ListProvider selectable={selectable} selectToggleable={selectToggleable}>
       <ValidatorListInner {...props} />
     </ListProvider>
   )

@@ -7,13 +7,12 @@ import type { Dispatch, ReactNode, SetStateAction } from 'react'
 export type ListFormat = 'row' | 'col'
 
 export interface ListContextInterface {
-  setSelectActive: (selectedActive: boolean) => void
   addToSelected: (item: AnyJson) => void
   removeFromSelected: (items: AnyJson[]) => void
   resetSelected: () => void
   setListFormat: (v: ListFormat) => void
   selected: AnyJson[]
-  selectActive: boolean
+  selectable: boolean
   listFormat: ListFormat
   selectToggleable: boolean
   pagination: {
@@ -24,6 +23,6 @@ export interface ListContextInterface {
 
 export interface ListProviderProps {
   selectToggleable?: boolean
-  selectActive?: boolean
+  selectable?: boolean
   children: ReactNode
 }

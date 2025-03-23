@@ -15,7 +15,6 @@ export interface NominationListProps {
   toggleFavorites?: boolean
   title?: string
   displayFor?: DisplayFor
-  selectActive?: boolean
   selectToggleable?: boolean
 }
 

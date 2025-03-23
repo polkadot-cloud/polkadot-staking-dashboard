@@ -5,12 +5,11 @@
 import type { ListContextInterface } from './types'
 
 export const defaultContext: ListContextInterface = {
-  setSelectActive: (selectedActive) => {},
   addToSelected: (item) => {},
   removeFromSelected: (items) => {},
   resetSelected: () => {},
   setListFormat: (v: string) => {},
-  selectActive: false,
+  selectable: false,
   selected: [],
   listFormat: 'col',
   selectToggleable: true,

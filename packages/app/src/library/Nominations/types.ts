@@ -13,6 +13,5 @@ export interface ManageNominationsInterface {
   resetSelected: () => void
   selected: Validator[]
   listFormat: ListFormat
-  selectActive: boolean
   selectTogglable: boolean
 }
