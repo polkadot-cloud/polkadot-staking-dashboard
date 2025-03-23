@@ -8,8 +8,8 @@ import { SelectableWrapper } from '.'
 import type { SelectableProps } from './types'
 
 export const Selectable = ({
-  actionsAll,
-  actionsSelected,
+  selectHandlers,
+  filterHandlers,
   displayFor,
 }: SelectableProps) => {
   const provider = useList()
@@ -26,7 +26,7 @@ export const Selectable = ({
     <SelectableWrapper className="list">
       {selected.length > 0 && (
         <>
-          {actionsSelected.map((a, i: number) => (
+          {selectHandlers.map((a, i: number) => (
             <ButtonType
               key={`a_selected_${i}`}
               text={a.title}
@@ -39,7 +39,7 @@ export const Selectable = ({
           ))}
         </>
       )}
-      {actionsAll.map((a, i: number) => (
+      {filterHandlers.map((a, i: number) => (
         <ButtonType
           text={a.title}
           key={`a_all_${i}`}

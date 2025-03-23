@@ -63,7 +63,7 @@ export const GenerateNominations = ({
   // Ref for the height of the container
   const heightRef = useRef<HTMLDivElement>(null)
 
-  // Update nominations on account switch, or if `defaultNominations` change.
+  // Update nominations on account switch, or if `defaultNominations` change
   useEffect(() => {
     if (
       JSON.stringify(nominations) !==
@@ -140,18 +140,17 @@ export const GenerateNominations = ({
     !favoritesList?.length ||
     maxNominations.isLessThanOrEqualTo(nominations?.length)
 
-  // Accumulate actions
-  const actions = {
-    selected: [
-      {
-        id: 'removeSelected',
+  // Define handlers
+  const handlers = {
+    select: {
+      removeSelected: {
         title: `${t('removeSelected')}`,
         onClick: ({
           selected,
           resetSelected,
         }: {
           selected: AnyJson
-          resetSelected: AnyFunction
+          resetSelected?: AnyFunction
         }) => {
           const newNominations = [...nominations].filter(
             (n) =>
@@ -161,15 +160,16 @@ export const GenerateNominations = ({
           )
           setNominations([...newNominations])
           updateSetters([...newNominations])
-          resetSelected()
+          if (typeof resetSelected === 'function') {
+            resetSelected()
+          }
         },
         onSelected: true,
         isDisabled: () => false,
       },
-    ],
-    filters: [
-      {
-        id: 'addFromFavorites',
+    },
+    filters: {
+      addFromFavorites: {
         title: t('addFromFavorites'),
         onClick: () => () => {
           const updateList = (newNominations: Validator[]) => {
@@ -184,8 +184,7 @@ export const GenerateNominations = ({
         onSelected: false,
         isDisabled: disabledAddFavorites,
       },
-      {
-        id: 'highPerformance',
+      highPerformance: {
         title: t('highPerformanceValidator'),
         onClick: () => addNominationByType('High Performance Validator'),
         onSelected: false,
@@ -194,8 +193,7 @@ export const GenerateNominations = ({
           disabledMaxNominations() ||
           !availableToNominate(nominations).highPerformance.length,
       },
-      {
-        id: 'active',
+      getActive: {
         title: t('activeValidator'),
         onClick: () => addNominationByType('Active Validator'),
         onSelected: false,
@@ -204,8 +202,7 @@ export const GenerateNominations = ({
           disabledMaxNominations() ||
           !availableToNominate(nominations).activeValidators.length,
       },
-      {
-        id: 'random',
+      getRandom: {
         title: t('randomValidator'),
         onClick: () => addNominationByType('Random Validator'),
         onSelected: false,
@@ -214,10 +211,10 @@ export const GenerateNominations = ({
           disabledMaxNominations() ||
           !availableToNominate(nominations).randomValidators.length,
       },
-    ],
+    },
   }
 
-  // Determine button style depending on in canvas.
+  // Determine button style depending on in canvas
   const ButtonType =
     displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonMonoInvert
 
@@ -242,7 +239,7 @@ export const GenerateNominations = ({
             <ButtonType
               text={t('reGenerate')}
               onClick={() => {
-                // set a temporary height to prevent height snapping on re-renders.
+                // Set a temporary height to prevent height snapping on re-renders
                 setHeight(heightRef.current?.clientHeight || null)
                 setTimeout(() => setHeight(null), 200)
                 setFetching(true)
@@ -289,7 +286,7 @@ export const GenerateNominations = ({
                 <ValidatorList
                   bondFor="nominator"
                   validators={nominations}
-                  actions={actions}
+                  handlers={handlers}
                   allowMoreCols
                   allowListFormat={false}
                   displayFor={displayFor}

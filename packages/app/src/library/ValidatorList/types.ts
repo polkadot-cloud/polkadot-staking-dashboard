@@ -18,7 +18,7 @@ export interface ValidatorListProps {
   title?: string
   selectable?: boolean
   onSelected?: AnyFunction
-  actions?: Record<string, AnyJson[]>
+  handlers?: Record<string, Record<string, AnyFunction>>
   displayFor?: DisplayFor
   allowSearch?: boolean
   allowListFormat?: boolean
@@ -35,4 +35,8 @@ export interface ItemProps {
   toggleFavorites?: boolean
   nominationStatus?: NominationStatus
   eraPoints: ValidatorEraPoints[]
+  removeHandler?: (params: {
+    selected: Validator[]
+    resetSelection?: AnyFunction
+  }) => void
 }

@@ -39,6 +39,7 @@ export const Item = ({
   toggleFavorites,
   displayFor,
   eraPoints,
+  removeHandler,
 }: ItemProps) => {
   const { t } = useTranslation('app')
   const { openMenu, open } = useMenu()
@@ -119,12 +120,12 @@ export const Item = ({
                 />
               )}
             </HeaderButtonRow>
-            {selectable && (
+            {typeof removeHandler === 'function' && (
               <HeaderButton outline>
                 <button
                   type="button"
                   onClick={() => {
-                    /* TODO: Remove from selected nominees */
+                    removeHandler({ selected: [validator] })
                   }}
                 >
                   <FontAwesomeIcon icon={faTimes} transform="shrink-1" />
