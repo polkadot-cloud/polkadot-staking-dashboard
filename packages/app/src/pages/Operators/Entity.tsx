@@ -89,7 +89,7 @@ export const Entity = () => {
                 allowListFormat={false}
                 selectable={false}
                 allowMoreCols
-                itemsPerPage={30}
+                itemsPerPage={50}
                 toggleFavorites
                 allowFilters
               />
