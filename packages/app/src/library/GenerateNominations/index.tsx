@@ -141,72 +141,81 @@ export const GenerateNominations = ({
     maxNominations.isLessThanOrEqualTo(nominations?.length)
 
   // Accumulate actions
-  const actions = [
-    {
-      title: t('addFromFavorites'),
-      onClick: () => () => {
-        const updateList = (newNominations: Validator[]) => {
+  const actions = {
+    selected: [
+      {
+        id: 'removeSelected',
+        title: `${t('removeSelected')}`,
+        onClick: ({
+          selected,
+          resetSelected,
+        }: {
+          selected: AnyJson
+          resetSelected: AnyFunction
+        }) => {
+          const newNominations = [...nominations].filter(
+            (n) =>
+              !selected
+                .map(({ address }: { address: string }) => address)
+                .includes(n.address)
+          )
           setNominations([...newNominations])
-          updateSetters(newNominations)
-          closePrompt()
-        }
-        openPromptWith(
-          <FavoritesPrompt callback={updateList} nominations={nominations} />
-        )
+          updateSetters([...newNominations])
+          resetSelected()
+        },
+        onSelected: true,
+        isDisabled: () => false,
       },
-      onSelected: false,
-      isDisabled: disabledAddFavorites,
-    },
-    {
-      title: `${t('removeSelected')}`,
-      onClick: ({
-        selected,
-        resetSelected,
-      }: {
-        selected: AnyJson
-        resetSelected: AnyFunction
-      }) => {
-        const newNominations = [...nominations].filter(
-          (n) =>
-            !selected
-              .map(({ address }: { address: string }) => address)
-              .includes(n.address)
-        )
-        setNominations([...newNominations])
-        updateSetters([...newNominations])
-        resetSelected()
+    ],
+    filters: [
+      {
+        id: 'addFromFavorites',
+        title: t('addFromFavorites'),
+        onClick: () => () => {
+          const updateList = (newNominations: Validator[]) => {
+            setNominations([...newNominations])
+            updateSetters(newNominations)
+            closePrompt()
+          }
+          openPromptWith(
+            <FavoritesPrompt callback={updateList} nominations={nominations} />
+          )
+        },
+        onSelected: false,
+        isDisabled: disabledAddFavorites,
       },
-      onSelected: true,
-      isDisabled: () => false,
-    },
-    {
-      title: t('highPerformanceValidator'),
-      onClick: () => addNominationByType('High Performance Validator'),
-      onSelected: false,
-      icon: faPlus,
-      isDisabled: () =>
-        disabledMaxNominations() ||
-        !availableToNominate(nominations).highPerformance.length,
-    },
-    {
-      title: t('activeValidator'),
-      onClick: () => addNominationByType('Active Validator'),
-      onSelected: false,
-      icon: faPlus,
-      isDisabled: () =>
-        disabledMaxNominations() ||
-        !availableToNominate(nominations).activeValidators.length,
-    },
-    {
-      title: t('randomValidator'),
-      onClick: () => addNominationByType('Random Validator'),
-      onSelected: false,
-      icon: faPlus,
-      isDisabled: () =>
-        disabledMaxNominations() ||
-        !availableToNominate(nominations).randomValidators.length,
-    },
-  ]
+      {
+        id: 'highPerformance',
+        title: t('highPerformanceValidator'),
+        onClick: () => addNominationByType('High Performance Validator'),
+        onSelected: false,
+        icon: faPlus,
+        isDisabled: () =>
+          disabledMaxNominations() ||
+          !availableToNominate(nominations).highPerformance.length,
+      },
+      {
+        id: 'active',
+        title: t('activeValidator'),
+        onClick: () => addNominationByType('Active Validator'),
+        onSelected: false,
+        icon: faPlus,
+        isDisabled: () =>
+          disabledMaxNominations() ||
+          !availableToNominate(nominations).activeValidators.length,
+      },
+      {
+        id: 'random',
+        title: t('randomValidator'),
+        onClick: () => addNominationByType('Random Validator'),
+        onSelected: false,
+        icon: faPlus,
+        isDisabled: () =>
+          disabledMaxNominations() ||
+          !availableToNominate(nominations).randomValidators.length,
+      },
+    ],
+  }
 
   // Determine button style depending on in canvas.
   const ButtonType =

@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faGlobe, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
 import classNames from 'classnames'
@@ -41,10 +41,10 @@ export const Item = ({
   eraPoints,
 }: ItemProps) => {
   const { t } = useTranslation('app')
-  const { selectable, selected } = useList()
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
+  const { selectable, selected } = useList()
   const { validatorIdentities, validatorSupers } = useValidators()
   const { address, prefs, validatorStatus } = validator
   const commission = prefs?.commission ?? null
@@ -119,6 +119,18 @@ export const Item = ({
                 />
               )}
             </HeaderButtonRow>
+            {selectable && (
+              <HeaderButton outline>
+                <button
+                  type="button"
+                  onClick={() => {
+                    /* TODO: Remove from selected nominees */
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTimes} transform="shrink-1" />
+                </button>
+              </HeaderButton>
+            )}
           </div>
         </div>
         <Separator />

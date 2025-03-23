@@ -18,7 +18,7 @@ export interface ValidatorListProps {
   title?: string
   selectable?: boolean
   onSelected?: AnyFunction
-  actions?: AnyJson[]
+  actions?: Record<string, AnyJson[]>
   displayFor?: DisplayFor
   allowSearch?: boolean
   allowListFormat?: boolean

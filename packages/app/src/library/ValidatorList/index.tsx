@@ -44,7 +44,7 @@ export const ValidatorListInner = ({
   itemsPerPage,
   selectable,
   onSelected,
-  actions = [],
+  actions = {},
   displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
@@ -84,8 +84,9 @@ export const ValidatorListInner = ({
   const excludes = getFilters('exclude', 'validators')
   const order = getOrder('validators')
   const searchTerm = getSearchTerm('validators')
-  const actionsAll = [...actions].filter((action) => !action.onSelected)
-  const actionsSelected = [...actions].filter((action) => action.onSelected)
+
+  const actionsAll = actions?.['filters'] || []
+  const actionsSelected = actions?.['selected'] || []
 
   // Track whether filter bootstrapping has been applied.
   const [bootstrapped, setBootstrapped] = useState<boolean>(false)
