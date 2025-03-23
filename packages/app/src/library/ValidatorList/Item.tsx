@@ -53,7 +53,7 @@ export const Item = ({
     validatorSupers[address]
   ).node
 
-  // Configure menu.
+  // Configure menu
   const menuItems: AnyJson[] = []
 
   if (pluginEnabled('polkawatch')) {
