@@ -57,7 +57,13 @@ export const Wrapper = styled.div`
 
       &.top {
         height: var(--height-top-row);
+        > div {
+          height: inherit;
+          display: flex;
+          align-items: center;
+        }
       }
+
       &.bottom {
         height: var(--height-bottom-row);
 
