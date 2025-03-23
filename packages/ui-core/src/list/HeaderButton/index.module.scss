@@ -11,6 +11,7 @@
   justify-content: center;
   font-size: inherit;
   margin: 0 0.4em;
+
   > button {
     background: var(--shimmer-foreground);
     color: var(--text-color-secondary);
@@ -22,6 +23,7 @@
     @media (min-width: $page-width-small-threshold) {
       padding: 0 0.2rem;
     }
+    
     &:hover {
       opacity: 0.75;
     }
@@ -32,11 +34,12 @@
       opacity: var(--opacity-disabled);
     }
   }
+
   &.outline > button {
     border: 1px solid var(--border-secondary-color);
-    border: none;
     background: none;
   }
+
   &.text > button {
     font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;

@@ -1,14 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  faChartPie,
-  faChevronLeft,
-  faCoins,
-  faHeart,
-  faPlus,
-  faUserEdit,
-} from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -18,16 +11,14 @@ import { useStaking } from 'contexts/Staking'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import type { Validator } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { SelectableWrapper } from 'library/List'
-import { SelectItems } from 'library/SelectItems'
-import { SelectItem } from 'library/SelectItems/Item'
 import { ValidatorList } from 'library/ValidatorList'
 import { FavoritesPrompt } from 'overlay/canvas/ManageNominations/Prompts/FavoritesPrompt'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
+import { Methods } from './Methods'
 import type { AddNominationsType, GenerateNominationsProps } from './types'
 import { useFetchMehods } from './useFetchMethods'
 import { Wrapper } from './Wrapper'
@@ -39,7 +30,6 @@ export const GenerateNominations = ({
 }: GenerateNominationsProps) => {
   const { t } = useTranslation('app')
   const { isReady, consts } = useApi()
-  const { isFastUnstaking } = useUnstaking()
   const { stakers } = useStaking().eraStakers
   const { activeAccount } = useActiveAccounts()
   const { favoritesList } = useFavoriteValidators()
@@ -54,23 +44,23 @@ export const GenerateNominations = ({
   const { maxNominations } = consts
   const defaultNominationsCount = defaultNominations.nominations?.length || 0
 
-  // store the method of fetching validators
+  // Store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
     defaultNominationsCount ? 'Manual' : null
   )
 
-  // store whether validators are being fetched
+  // Store whether validators are being fetched
   const [fetching, setFetching] = useState<boolean>(false)
 
-  // store the currently selected set of nominations
+  // Store the currently selected set of nominations
   const [nominations, setNominations] = useState<Validator[]>(
     defaultNominations.nominations
   )
 
-  // store the height of the container
+  // Store the height of the container
   const [height, setHeight] = useState<number | null>(null)
 
-  // ref for the height of the container
+  // Ref for the height of the container
   const heightRef = useRef<HTMLDivElement>(null)
 
   // Update nominations on account switch, or if `defaultNominations` change.
@@ -87,7 +77,7 @@ export const GenerateNominations = ({
     }
   }, [activeAccount, defaultNominations])
 
-  // refetch if fetching is triggered
+  // Refetch if fetching is triggered
   useEffect(() => {
     if (
       !isReady ||
@@ -103,7 +93,7 @@ export const GenerateNominations = ({
     }
   })
 
-  // reset fixed height on window size change
+  // Reset fixed height on window size change
   useEffect(() => {
     window.addEventListener('resize', resizeCallback)
     return () => {
@@ -115,19 +105,17 @@ export const GenerateNominations = ({
     setHeight(null)
   }
 
-  // fetch nominations based on method
+  // Fetch nominations based on method
   const fetchNominationsForMethod = () => {
     if (method) {
       const newNominations = fetchFromMethod(method)
-
-      // update component state
       setNominations([...newNominations])
       setFetching(false)
       updateSetters(newNominations)
     }
   }
 
-  // add nominations based on method
+  // Add nominations based on method
   const addNominationByType = (type: AddNominationsType) => {
     if (method) {
       const newNominations = addNomination(nominations, type)
@@ -146,105 +134,48 @@ export const GenerateNominations = ({
     }
   }
 
-  // callback function for adding nominations.
-  const cbAddNominations = () => {
-    const updateList = (newNominations: Validator[]) => {
-      setNominations([...newNominations])
-      updateSetters(newNominations)
-      closePrompt()
-    }
-
-    openPromptWith(
-      <FavoritesPrompt callback={updateList} nominations={nominations} />
-    )
-  }
-
-  // function for clearing nomination list
-  const clearNominations = () => {
-    setMethod(null)
-    setNominations([])
-    updateSetters([])
-  }
-
-  // callback function for removing selected validators
-  const cbRemoveSelected = ({
-    selected,
-    resetSelected,
-  }: {
-    selected: AnyJson
-    resetSelected: AnyFunction
-  }) => {
-    const newNominations = [...nominations].filter(
-      (n) =>
-        !selected
-          .map(({ address }: { address: string }) => address)
-          .includes(n.address)
-    )
-    setNominations([...newNominations])
-    updateSetters([...newNominations])
-    resetSelected()
-  }
-
   const disabledMaxNominations = () =>
     maxNominations.isLessThanOrEqualTo(nominations?.length)
   const disabledAddFavorites = () =>
     !favoritesList?.length ||
     maxNominations.isLessThanOrEqualTo(nominations?.length)
 
-  // accumulate generation methods
-  const methods = [
-    {
-      title: t('optimalSelection'),
-      subtitle: t('optimalSelectionSubtitle'),
-      icon: faChartPie,
-      onClick: () => {
-        setMethod('Optimal Selection')
-        setNominations([])
-        setFetching(true)
-      },
-    },
-    {
-      title: t('activeLowCommission'),
-      subtitle: t('activeLowCommissionSubtitle'),
-      icon: faCoins,
-      onClick: () => {
-        setMethod('Active Low Commission')
-        setNominations([])
-        setFetching(true)
-      },
-    },
-    {
-      title: t('fromFavorites'),
-      subtitle: t('fromFavoritesSubtitle'),
-      icon: faHeart,
-      onClick: () => {
-        setMethod('From Favorites')
-        setNominations([])
-        setFetching(true)
-      },
-    },
-    {
-      title: t('manual_selection'),
-      subtitle: t('manualSelectionSubtitle'),
-      icon: faUserEdit,
-      onClick: () => {
-        setMethod('Manual')
-        setNominations([])
-      },
-    },
-  ]
-
-  // accumulate actions
+  // Accumulate actions
   const actions = [
     {
       title: t('addFromFavorites'),
-      onClick: cbAddNominations,
+      onClick: () => () => {
+        const updateList = (newNominations: Validator[]) => {
+          setNominations([...newNominations])
+          updateSetters(newNominations)
+          closePrompt()
+        }
+        openPromptWith(
+          <FavoritesPrompt callback={updateList} nominations={nominations} />
+        )
+      },
       onSelected: false,
       isDisabled: disabledAddFavorites,
     },
     {
       title: `${t('removeSelected')}`,
-      onClick: cbRemoveSelected,
+      onClick: ({
+        selected,
+        resetSelected,
+      }: {
+        selected: AnyJson
+        resetSelected: AnyFunction
+      }) => {
+        const newNominations = [...nominations].filter(
+          (n) =>
+            !selected
+              .map(({ address }: { address: string }) => address)
+              .includes(n.address)
+        )
+        setNominations([...newNominations])
+        updateSetters([...newNominations])
+        resetSelected()
+      },
       onSelected: true,
       isDisabled: () => false,
     },
@@ -289,7 +220,11 @@ export const GenerateNominations = ({
             text={t('backToMethods')}
             iconLeft={faChevronLeft}
             iconTransform="shrink-2"
-            onClick={() => clearNominations()}
+            onClick={() => {
+              setMethod(null)
+              setNominations([])
+              updateSetters([])
+            }}
             marginRight
           />
           {['Active Low Commission', 'Optimal Selection'].includes(
@@ -323,27 +258,15 @@ export const GenerateNominations = ({
                   })}
                 </h4>
               </Subheading>
-              <SelectItems layout="three-col">
-                {methods.map((m, n: number) => (
-                  <SelectItem
-                    key={`gen_method_${n}`}
-                    title={m.title}
-                    subtitle={m.subtitle}
-                    icon={m.icon}
-                    selected={false}
-                    onClick={m.onClick}
-                    disabled={isFastUnstaking}
-                    includeToggle={false}
-                    grow={false}
-                    hoverBorder
-                    layout="three-col"
-                  />
-                ))}
-              </SelectItems>
+              <Methods
+                setMethod={setMethod}
+                setNominations={setNominations}
+                setFetching={setFetching}
+                key="methods"
+              />
             </>
           )}
         </div>
-
         {fetching
           ? null
           : isReady &&
