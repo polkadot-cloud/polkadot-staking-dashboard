@@ -15,7 +15,6 @@ export const ListContext = createContext<ListContextInterface>(defaultContext)
 export const useList = () => useContext(ListContext)
 
 export const ListProvider = ({
-  selectToggleable = true,
   selectable: initialSelectable = false,
   children,
 }: ListProviderProps) => {
@@ -57,7 +56,6 @@ export const ListProvider = ({
         selected,
         selectable,
         listFormat,
-        selectToggleable,
         pagination: {
           page,
           setPage,

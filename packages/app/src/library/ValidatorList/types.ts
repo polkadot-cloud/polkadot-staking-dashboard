@@ -24,7 +24,6 @@ export interface ValidatorListProps {
   allowListFormat?: boolean
   defaultFilters?: AnyJson
   defaultOrder?: string
-  selectToggleable?: boolean
 }
 
 export interface ItemProps {

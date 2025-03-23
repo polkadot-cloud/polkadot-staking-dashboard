@@ -14,7 +14,6 @@ export interface ListContextInterface {
   selected: AnyJson[]
   selectable: boolean
   listFormat: ListFormat
-  selectToggleable: boolean
   pagination: {
     page: number
     setPage: Dispatch<SetStateAction<number>>
@@ -22,7 +21,6 @@ export interface ListContextInterface {
 }
 
 export interface ListProviderProps {
-  selectToggleable?: boolean
   selectable?: boolean
   children: ReactNode
 }

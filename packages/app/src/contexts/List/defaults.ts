@@ -12,7 +12,6 @@ export const defaultContext: ListContextInterface = {
   selectable: false,
   selected: [],
   listFormat: 'col',
-  selectToggleable: true,
   pagination: {
     page: 0,
     setPage: (page) => {},

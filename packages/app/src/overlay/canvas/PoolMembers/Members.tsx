@@ -24,7 +24,6 @@ export const Members = () => {
   const membersListProps = {
     batchKey: 'active_pool_members',
     pagination: true,
-    selectToggleable: false,
     allowMoreCols: true,
   }
 
