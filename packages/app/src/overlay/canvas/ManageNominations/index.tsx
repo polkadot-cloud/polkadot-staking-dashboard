@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { PoolNominate } from 'api/tx/poolNominate'
 import { StakingNominate } from 'api/tx/stakingNominate'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -162,7 +161,6 @@ export const ManageNominations = () => {
             text={t('cancel', { ns: 'app' })}
             size="lg"
             onClick={() => closeCanvas()}
-            iconLeft={faTimes}
             style={{ marginLeft: '1.1rem' }}
           />
         </Head>
