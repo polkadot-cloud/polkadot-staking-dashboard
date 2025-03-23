@@ -121,7 +121,7 @@ export const Item = ({
               )}
             </HeaderButtonRow>
             {typeof removeHandler === 'function' && (
-              <HeaderButton outline>
+              <HeaderButton outline={['modal', 'canvas'].includes(displayFor)}>
                 <button
                   type="button"
                   onClick={() => {
