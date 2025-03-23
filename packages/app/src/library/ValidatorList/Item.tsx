@@ -4,6 +4,7 @@
 import { faBars, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
+import classNames from 'classnames'
 import { useList } from 'contexts/List'
 import { useMenu } from 'contexts/Menu'
 import { usePlugins } from 'contexts/Plugins'
@@ -40,7 +41,7 @@ export const Item = ({
   eraPoints,
 }: ItemProps) => {
   const { t } = useTranslation('app')
-  const { selectable } = useList()
+  const { selectable, selected } = useList()
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
@@ -73,16 +74,25 @@ export const Item = ({
     })
   }
 
-  // Handler for opening menu.
+  // Handler for opening menu
   const toggleMenu = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
       openMenu(ev, <MenuList items={menuItems} />)
     }
   }
 
+  const isSelected = !!selected.filter(
+    (item) => item.address === validator.address
+  ).length
+
+  const innerClasses = classNames('inner', {
+    [displayFor]: true,
+    selected: isSelected,
+  })
+
   return (
     <Wrapper>
-      <div className={`inner ${displayFor}`}>
+      <div className={innerClasses}>
         <div className="row top">
           {selectable && <Select item={validator} />}
           <Identity address={address} />

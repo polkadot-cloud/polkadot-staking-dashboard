@@ -3,16 +3,23 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
 import type { CheckboxProps } from '../types'
 import classes from './index.module.scss'
 
-export const Checkbox = ({ style, onClick, checked }: CheckboxProps) => (
-  <button
-    type="button"
-    className={classes.checkbox}
-    style={style}
-    onClick={() => onClick()}
-  >
-    {checked && <FontAwesomeIcon icon={faCheck} transform="shrink-2" />}
-  </button>
-)
+export const Checkbox = ({ style, onClick, checked }: CheckboxProps) => {
+  const allClasses = classNames(classes.checkbox, {
+    [classes.checked]: checked,
+  })
+
+  return (
+    <button
+      type="button"
+      className={allClasses}
+      style={style}
+      onClick={() => onClick()}
+    >
+      {checked && <FontAwesomeIcon icon={faCheck} transform="shrink-2" />}
+    </button>
+  )
+}
