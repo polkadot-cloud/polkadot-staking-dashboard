@@ -1,9 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faGlobe, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
+import classNames from 'classnames'
 import { useList } from 'contexts/List'
 import { useMenu } from 'contexts/Menu'
 import { usePlugins } from 'contexts/Plugins'
@@ -38,12 +39,13 @@ export const Item = ({
   toggleFavorites,
   displayFor,
   eraPoints,
+  removeHandler,
 }: ItemProps) => {
   const { t } = useTranslation('app')
-  const { selectActive } = useList()
   const { openMenu, open } = useMenu()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
+  const { selectable, selected } = useList()
   const { validatorIdentities, validatorSupers } = useValidators()
   const { address, prefs, validatorStatus } = validator
   const commission = prefs?.commission ?? null
@@ -53,7 +55,7 @@ export const Item = ({
     validatorSupers[address]
   ).node
 
-  // Configure menu.
+  // Configure menu
   const menuItems: AnyJson[] = []
 
   if (pluginEnabled('polkawatch')) {
@@ -73,18 +75,27 @@ export const Item = ({
     })
   }
 
-  // Handler for opening menu.
+  // Handler for opening menu
   const toggleMenu = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
       openMenu(ev, <MenuList items={menuItems} />)
     }
   }
 
+  const isSelected = !!selected.filter(
+    (item) => item.address === validator.address
+  ).length
+
+  const innerClasses = classNames('inner', {
+    [displayFor]: true,
+    selected: isSelected,
+  })
+
   return (
     <Wrapper>
-      <div className={`inner ${displayFor}`}>
+      <div className={innerClasses}>
         <div className="row top">
-          {selectActive && <Select item={validator} />}
+          {selectable && <Select item={validator} />}
           <Identity address={address} />
           <div>
             <HeaderButtonRow>
@@ -109,6 +120,18 @@ export const Item = ({
                 />
               )}
             </HeaderButtonRow>
+            {typeof removeHandler === 'function' && (
+              <HeaderButton outline={['modal', 'canvas'].includes(displayFor)}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    removeHandler({ selected: [validator] })
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTimes} transform="shrink-1" />
+                </button>
+              </HeaderButton>
+            )}
           </div>
         </div>
         <Separator />

@@ -123,12 +123,8 @@ export const MembersListInner = ({
   )
 }
 
-export const MembersList = (props: MembersListProps) => {
-  const { selectToggleable } = props
-
-  return (
-    <ListProvider selectToggleable={selectToggleable}>
-      <MembersListInner {...props} />
-    </ListProvider>
-  )
-}
+export const MembersList = (props: MembersListProps) => (
+  <ListProvider>
+    <MembersListInner {...props} />
+  </ListProvider>
+)
