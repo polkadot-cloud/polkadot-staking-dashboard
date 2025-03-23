@@ -51,7 +51,7 @@ export const ButtonPrimaryInvert = (
       [commonClasses.btnMarginX]: marginX,
       [commonClasses.btnDisabled]: disabled,
       [commonClasses.btnActiveTransforms]: !disabled,
-      [classes.btnPrimaryInvertSecondaryColor]: colorSecondary,
+      [classes.secondary]: colorSecondary,
     },
     className
   )

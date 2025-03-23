@@ -3,23 +3,20 @@
 
 import { useList } from 'contexts/List'
 import { useUnstaking } from 'hooks/useUnstaking'
-import { useTranslation } from 'react-i18next'
 import { ButtonMonoInvert } from 'ui-buttons'
 import { SelectableWrapper } from '.'
 import type { SelectableProps } from './types'
 
 export const Selectable = ({
-  actionsAll,
-  actionsSelected,
-  canSelect,
+  selectHandlers,
+  filterHandlers,
   displayFor,
 }: SelectableProps) => {
-  const { t } = useTranslation('app')
   const provider = useList()
   const { isFastUnstaking } = useUnstaking()
 
   // Get list provider props.
-  const { selectActive, setSelectActive, selected, selectToggleable } = provider
+  const { selected } = provider
 
   // Determine button style depending on in canvas. Same for now, may change as design evolves.
   const ButtonType =
@@ -27,19 +24,9 @@ export const Selectable = ({
 
   return (
     <SelectableWrapper className="list">
-      {selectToggleable === true ? (
-        <ButtonType
-          text={selectActive ? t('cancel') : t('select')}
-          disabled={!canSelect || isFastUnstaking}
-          onClick={() => {
-            setSelectActive(!selectActive)
-          }}
-          marginRight
-        />
-      ) : null}
-      {selected.length > 0 ? (
+      {selected.length > 0 && (
         <>
-          {actionsSelected.map((a, i: number) => (
+          {selectHandlers.map((a, i: number) => (
             <ButtonType
               key={`a_selected_${i}`}
               text={a.title}
@@ -51,8 +38,8 @@ export const Selectable = ({
             />
           ))}
         </>
-      ) : null}
-      {actionsAll.map((a, i: number) => (
+      )}
+      {filterHandlers.map((a, i: number) => (
         <ButtonType
           text={a.title}
           key={`a_all_${i}`}
