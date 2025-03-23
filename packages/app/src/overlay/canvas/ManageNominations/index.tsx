@@ -175,12 +175,6 @@ export const ManageNominations = () => {
               outline
             />
           </h1>
-          <h3>
-            {t('chooseValidators', {
-              ns: 'app',
-              maxNominations: maxNominations.toString(),
-            })}
-          </h3>
         </Title>
         <GenerateNominations
           displayFor="canvas"

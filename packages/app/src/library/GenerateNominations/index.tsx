@@ -17,7 +17,7 @@ import { FavoritesPrompt } from 'overlay/canvas/ManageNominations/Prompts/Favori
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons'
 import { Methods } from './Methods'
 import type { AddNominationsType, GenerateNominationsProps } from './types'
 import { useFetchMehods } from './useFetchMethods'
@@ -216,7 +216,7 @@ export const GenerateNominations = ({
 
   // Determine button style depending on in canvas
   const ButtonType =
-    displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonMonoInvert
+    displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonSecondary
 
   return (
     <>
