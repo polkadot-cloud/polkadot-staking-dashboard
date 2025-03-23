@@ -9,7 +9,6 @@ export interface ManageNominationsInterface {
   addToSelected: (item: AnyJson) => void
   removeFromSelected: (item: AnyJson) => void
   setListFormat: (format: ListFormat) => void
-  setSelectActive: (active: boolean) => void
   resetSelected: () => void
   selected: Validator[]
   listFormat: ListFormat

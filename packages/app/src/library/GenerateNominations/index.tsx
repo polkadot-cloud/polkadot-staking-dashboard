@@ -147,9 +147,7 @@ export const GenerateNominations = ({
   }
 
   // callback function for adding nominations.
-  const cbAddNominations = ({ setSelectActive }: AnyFunction) => {
-    setSelectActive(false)
-
+  const cbAddNominations = () => {
     const updateList = (newNominations: Validator[]) => {
       setNominations([...newNominations])
       updateSetters(newNominations)
@@ -172,11 +170,9 @@ export const GenerateNominations = ({
   const cbRemoveSelected = ({
     selected,
     resetSelected,
-    setSelectActive,
   }: {
     selected: AnyJson
     resetSelected: AnyFunction
-    setSelectActive: AnyFunction
   }) => {
     const newNominations = [...nominations].filter(
       (n) =>
@@ -186,7 +182,6 @@ export const GenerateNominations = ({
     )
     setNominations([...newNominations])
     updateSetters([...newNominations])
-    setSelectActive(false)
     resetSelected()
   }
 
