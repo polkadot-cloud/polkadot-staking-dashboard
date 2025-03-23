@@ -171,7 +171,7 @@ export const GenerateNominations = ({
     filters: {
       addFromFavorites: {
         title: t('addFromFavorites'),
-        onClick: () => () => {
+        onClick: () => {
           const updateList = (newNominations: Validator[]) => {
             setNominations([...newNominations])
             updateSetters(newNominations)

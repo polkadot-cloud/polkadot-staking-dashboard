@@ -167,17 +167,19 @@ export const ManageNominations = () => {
           />
         </Head>
         <Title>
-          <h1>{t('manageNominations', { ns: 'modals' })}</h1>
-          <h3>
-            {t('chooseValidators', {
-              ns: 'app',
-              maxNominations: maxNominations.toString(),
-            })}
+          <h1>
+            {t('manageNominations', { ns: 'modals' })}
             <ButtonHelp
               onClick={() => openHelp('Nominations')}
               background="none"
               outline
             />
+          </h1>
+          <h3>
+            {t('chooseValidators', {
+              ns: 'app',
+              maxNominations: maxNominations.toString(),
+            })}
           </h3>
         </Title>
         <GenerateNominations
