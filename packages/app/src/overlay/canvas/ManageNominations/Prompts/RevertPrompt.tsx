@@ -12,7 +12,7 @@ export const RevertPrompt = ({ onRevert }: RevertPromptProps) => {
 
   return (
     <>
-      <Title title={t('revertNominations')} closeText={t('cancel')} />
+      <Title title={t('revertNominations')} />
       <div className="body">
         <h4 className="subheading">{t('revertNominationChanges')}</h4>
         <FooterWrapper>

@@ -40,7 +40,7 @@ export const FavoritesPrompt = ({
 
   return (
     <>
-      <Title title={t('nominateFavorites')} closeText={t('cancel')} />
+      <Title title={t('nominateFavorites')} />
       <div className="padded">
         {remaining.isLessThanOrEqualTo(0) ? (
           <h4 className="subheading">

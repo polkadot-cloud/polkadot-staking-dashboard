@@ -19,10 +19,7 @@ export const ProvidersPrompt = () => {
   const rpcProviders = NetworkList[network].endpoints.rpcEndpoints
   return (
     <>
-      <Title
-        title={t('rpcProviders', { ns: 'modals' })}
-        closeText={t('cancel', { ns: 'modals' })}
-      />
+      <Title title={t('rpcProviders', { ns: 'modals' })} />
       <div className="padded">
         <h4 className="subheading">
           {t('selectRpcProvider', {

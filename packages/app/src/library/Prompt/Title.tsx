@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
 import { usePrompt } from 'contexts/Prompt'
 import type { FunctionComponent, SVGProps } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonSecondary } from 'ui-buttons'
+import { ButtonHelp } from 'ui-buttons'
+import { Close } from 'ui-core/modal'
 import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {
@@ -16,18 +16,9 @@ interface TitleProps {
   Svg?: FunctionComponent<SVGProps<SVGElement>>
   helpKey?: string
   hideDone?: boolean
-  closeText?: string
 }
 
-export const Title = ({
-  helpKey,
-  title,
-  icon,
-  Svg,
-  hideDone,
-  closeText,
-}: TitleProps) => {
-  const { t } = useTranslation('app')
+export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
   const { closePrompt } = usePrompt()
   const { openHelp } = useHelp()
 
@@ -48,10 +39,7 @@ export const Title = ({
       </div>
       {hideDone !== true ? (
         <div>
-          <ButtonSecondary
-            text={closeText || t('done')}
-            onClick={() => closePrompt()}
-          />
+          <Close onClose={closePrompt} />
         </div>
       ) : null}
     </TitleWrapper>
