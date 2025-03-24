@@ -14,10 +14,14 @@ import { ButtonPrimary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
 import type { PromptProps } from '../types'
 
-export const FavoritesPrompt = ({ callback, nominations }: PromptProps) => {
+export const SearchValidatorsPrompt = ({
+  callback,
+  nominations,
+}: PromptProps) => {
   const { t } = useTranslation('modals')
   const { consts } = useApi()
   const { favoritesList } = useFavoriteValidators()
+
   const { maxNominations } = consts
 
   // Store the total number of selected favorites
@@ -37,30 +41,20 @@ export const FavoritesPrompt = ({ callback, nominations }: PromptProps) => {
 
   return (
     <>
-      <Title title={t('nominateFavorites')} />
+      <Title title={'Search Validators'} />
       <div className="padded">
-        {remaining.isLessThanOrEqualTo(0) ? (
-          <h4 className="subheading">
-            {t('moreFavoritesSurpassLimit', {
-              max: maxNominations.toString(),
-            })}
-          </h4>
-        ) : (
-          <h4 className="subheading">
-            {t('addUpToFavorites', { count: remaining.toNumber() })}.
-          </h4>
-        )}
+        <h4 className="subheading">Add validators to your nomination list.</h4>
 
         {favoritesList?.map((favorite: Validator, i) => {
           const inInitial = !!nominations.find(
             ({ address }) => address === favorite.address
           )
-          const isDisabled = selected.includes(favorite) || !canAdd || inInitial
+          const disabled = !canAdd || inInitial
 
           return (
             <PromptListItem
               key={`favorite_${i}`}
-              className={isDisabled && inInitial ? 'inactive' : undefined}
+              className={disabled && inInitial ? 'inactive' : undefined}
             >
               <Checkbox
                 checked={inInitial || selected.includes(favorite)}
@@ -76,6 +70,7 @@ export const FavoritesPrompt = ({ callback, nominations }: PromptProps) => {
             </PromptListItem>
           )
         })}
+
         <FooterWrapper>
           <ButtonPrimary
             text={t('addToNominations')}

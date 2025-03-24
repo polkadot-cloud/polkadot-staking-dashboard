@@ -18,6 +18,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { SelectableWrapper } from 'library/List'
 import { ValidatorList } from 'library/ValidatorList'
 import { FavoritesPrompt } from 'overlay/canvas/ManageNominations/Prompts/FavoritesPrompt'
+import { SearchValidatorsPrompt } from 'overlay/canvas/ManageNominations/Prompts/SearchValidatorsPrompt'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -187,7 +188,10 @@ export const GenerateNominations = ({
             closePrompt()
           }
           openPromptWith(
-            <FavoritesPrompt callback={updateList} nominations={nominations} />,
+            <SearchValidatorsPrompt
+              callback={updateList}
+              nominations={nominations}
+            />,
             'lg'
           )
         },

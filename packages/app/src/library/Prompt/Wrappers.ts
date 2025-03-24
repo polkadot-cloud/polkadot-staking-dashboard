@@ -39,7 +39,7 @@ export const PromptWrapper = styled.div`
 
     @keyframes fadeIn {
       from {
-        opacity: 0.75;
+        opacity: 0.8;
       }
       to {
         opacity: 1;
@@ -48,7 +48,7 @@ export const PromptWrapper = styled.div`
 
     @keyframes fadeScale {
       from {
-        transform: scale(0.75);
+        transform: scale(0.8);
       }
       to {
         transform: scale(1);

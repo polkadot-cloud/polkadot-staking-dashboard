@@ -3,7 +3,7 @@
 
 import type { Validator } from 'contexts/Validators/types'
 
-export interface FavoritesPromptProps {
+export interface PromptProps {
   callback: (newNominations: Validator[]) => void
   nominations: Validator[]
 }
