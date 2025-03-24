@@ -20,8 +20,7 @@ import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { GeoDonut } from 'library/Graphs/GeoDonut'
-import { GraphWrapper } from 'library/Graphs/Wrapper'
-import { PluginLabel } from 'library/PluginLabel'
+import { NominatorGeoWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
@@ -120,7 +119,6 @@ export const NominationGeo = () => {
       </Stat.Row>
       <Page.Row>
         <CardWrapper>
-          <PluginLabel plugin="polkawatch" />
           <CardHeader>
             <h4>
               {t('payoutDistribution', { ns: 'pages' })}
@@ -165,36 +163,36 @@ export const NominationGeo = () => {
             )}
             {enabled && analyticsAvailable && (
               <>
-                <GraphWrapper>
+                <NominatorGeoWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topRegionalDistributionChart}
-                    height={donutSize}
+                    maxHeight={donutSize}
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={0}
                   />
-                </GraphWrapper>
-                <GraphWrapper>
+                </NominatorGeoWrapper>
+                <NominatorGeoWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topCountryDistributionChart}
-                    height={donutSize}
+                    maxHeight={donutSize}
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={maxLabelLen}
                   />
-                </GraphWrapper>
-                <GraphWrapper>
+                </NominatorGeoWrapper>
+                <NominatorGeoWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topNetworkDistributionChart}
-                    height={donutSize}
+                    maxHeight={donutSize}
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={maxLabelLen}
                   />
-                </GraphWrapper>
+                </NominatorGeoWrapper>
               </>
             )}
           </GraphsWrapper>
