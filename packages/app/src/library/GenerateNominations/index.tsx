@@ -305,12 +305,7 @@ export const GenerateNominations = ({
           ? null
           : isReady &&
             method !== null && (
-              <div
-                ref={heightRef}
-                style={{
-                  width: '100%',
-                }}
-              >
+              <div ref={heightRef}>
                 <ValidatorList
                   bondFor="nominator"
                   validators={nominations}
