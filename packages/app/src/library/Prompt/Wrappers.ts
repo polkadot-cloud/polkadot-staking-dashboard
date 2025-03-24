@@ -9,6 +9,7 @@ export const PromptWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 11;
+  animation: fadeIn 0.3s cubic-bezier(0, 1, 0, 1) forwards;
 
   /* content wrapper */
   > div {
@@ -18,8 +19,8 @@ export const PromptWrapper = styled.div`
     justify-content: center;
     align-items: center;
     padding: 2rem 2rem;
+    animation: fadeScale 0.3s cubic-bezier(0, 1, 0, 1) forwards;
 
-    /* click anywhere behind overlay to close */
     .close {
       position: fixed;
       width: 100%;
@@ -28,14 +29,30 @@ export const PromptWrapper = styled.div`
       cursor: default;
     }
 
-    /* status message placed below title */
     h4.subheading {
       margin-bottom: 1rem;
     }
 
-    /* padded content to give extra spacing */
     .padded {
       padding: 1rem 1.5rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0.75;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeScale {
+      from {
+        transform: scale(0.75);
+      }
+      to {
+        transform: scale(1);
+      }
     }
   }
 `
