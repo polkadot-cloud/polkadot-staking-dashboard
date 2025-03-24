@@ -50,6 +50,7 @@ export const ValidatorListInner = ({
   allowListFormat = true,
   defaultOrder = undefined,
   defaultFilters = undefined,
+  onRemove,
 }: ValidatorListProps) => {
   const { t } = useTranslation()
   const {
@@ -380,7 +381,7 @@ export const ValidatorListInner = ({
                     nominationStatus={
                       nominationStatus.current[validator.address]
                     }
-                    removeHandler={selectHandlers?.['removeSelected']?.onClick}
+                    onRemove={onRemove}
                   />
                 </motion.div>
               ))}

@@ -318,6 +318,7 @@ export const GenerateNominations = ({
                   allowListFormat={false}
                   displayFor={displayFor}
                   selectable
+                  onRemove={handlers?.select?.['removeSelected']?.onClick}
                 />
               </div>
             )}

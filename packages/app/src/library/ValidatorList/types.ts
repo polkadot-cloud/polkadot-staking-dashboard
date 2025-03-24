@@ -24,6 +24,10 @@ export interface ValidatorListProps {
   allowListFormat?: boolean
   defaultFilters?: AnyJson
   defaultOrder?: string
+  onRemove?: (params: {
+    selected: Validator[]
+    resetSelection?: AnyFunction
+  }) => void
 }
 
 export interface ItemProps {
@@ -35,7 +39,7 @@ export interface ItemProps {
   toggleFavorites?: boolean
   nominationStatus?: NominationStatus
   eraPoints: ValidatorEraPoints[]
-  removeHandler?: (params: {
+  onRemove?: (params: {
     selected: Validator[]
     resetSelection?: AnyFunction
   }) => void
