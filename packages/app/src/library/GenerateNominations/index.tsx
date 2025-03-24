@@ -16,6 +16,7 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import type { Validator } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { SelectableWrapper } from 'library/List'
+import { Selectable } from 'library/List/Selectable'
 import { ValidatorList } from 'library/ValidatorList'
 import { FavoritesPrompt } from 'overlay/canvas/ManageNominations/Prompts/FavoritesPrompt'
 import { SearchValidatorsPrompt } from 'overlay/canvas/ManageNominations/Prompts/SearchValidatorsPrompt'
@@ -318,6 +319,13 @@ export const GenerateNominations = ({
                   allowListFormat={false}
                   displayFor={displayFor}
                   selectable
+                  ListControls={
+                    <Selectable
+                      filterHandlers={Object.values(handlers.filters)}
+                      selectHandlers={Object.values(handlers.select)}
+                      displayFor={displayFor}
+                    />
+                  }
                   onRemove={handlers?.select?.['removeSelected']?.onClick}
                 />
               </div>

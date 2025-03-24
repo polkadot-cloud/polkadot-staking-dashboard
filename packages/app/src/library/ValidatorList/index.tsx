@@ -18,7 +18,6 @@ import { FilterHeaderWrapper, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
-import { Selectable } from 'library/List/Selectable'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
@@ -42,14 +41,13 @@ export const ValidatorListInner = ({
   allowFilters,
   toggleFavorites,
   itemsPerPage,
-  selectable,
   onSelected,
-  handlers = undefined,
   displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
   defaultOrder = undefined,
   defaultFilters = undefined,
+  ListControls = null,
   onRemove,
 }: ValidatorListProps) => {
   const { t } = useTranslation()
@@ -85,9 +83,6 @@ export const ValidatorListInner = ({
   const excludes = getFilters('exclude', 'validators')
   const order = getOrder('validators')
   const searchTerm = getSearchTerm('validators')
-
-  const selectHandlers = handlers?.select || {}
-  const filterHandlers = handlers?.filters || {}
 
   // Track whether filter bootstrapping has been applied.
   const [bootstrapped, setBootstrapped] = useState<boolean>(false)
@@ -341,14 +336,7 @@ export const ValidatorListInner = ({
         {listItems.length > 0 && itemsPerPage && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-        {selectable ? (
-          <Selectable
-            canSelect={listItems.length > 0}
-            filterHandlers={Object.values(filterHandlers)}
-            selectHandlers={Object.values(selectHandlers)}
-            displayFor={displayFor}
-          />
-        ) : null}
+        {ListControls}
         <MotionContainer>
           {listItems.length ? (
             <>

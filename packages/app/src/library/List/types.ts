@@ -30,7 +30,6 @@ export interface SearchInputProps {
 export interface SelectableProps {
   selectHandlers: AnyJson[]
   filterHandlers: AnyJson[]
-  canSelect: boolean
   displayFor: DisplayFor
 }
 
