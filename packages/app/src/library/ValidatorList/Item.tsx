@@ -40,6 +40,7 @@ export const Item = ({
   displayFor,
   eraPoints,
   onRemove,
+  showParaValidator,
 }: ItemProps) => {
   const { t } = useTranslation('app')
   const { openMenu, open } = useMenu()
@@ -152,7 +153,7 @@ export const Item = ({
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
-              <ParaValidator address={address} />
+              {showParaValidator && <ParaValidator address={address} />}
             </LabelRow>
             <EraStatus address={address} status={validatorStatus} noMargin />
           </div>

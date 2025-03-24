@@ -45,4 +45,5 @@ export interface ItemProps {
     selected: Validator[]
     resetSelection?: AnyFunction
   }) => void
+  showParaValidator?: boolean
 }
