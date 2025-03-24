@@ -12,6 +12,10 @@
   font-size: inherit;
   margin: 0 0.4em;
 
+  &:last-child {
+    margin-right: 0;
+  }
+
   > button {
     background: var(--shimmer-foreground);
     color: var(--text-color-secondary);
