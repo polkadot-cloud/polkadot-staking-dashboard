@@ -14,8 +14,6 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 export const GeoDonut = ({
   title,
   series = { labels: [], data: [] },
-  height = 'auto',
-  width = 'auto',
   legendHeight = 25,
   maxLabelLen = 3,
 }: GeoDonutProps) => {
@@ -92,7 +90,7 @@ export const GeoDonut = ({
   }
 
   return (
-    <div style={{ width, height }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <Doughnut options={options} data={chartData} />
     </div>
   )
