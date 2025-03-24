@@ -142,7 +142,8 @@ export const GenerateNominations = ({
             closePrompt()
           }
           openPromptWith(
-            <FavoritesPrompt callback={updateList} nominations={nominations} />
+            <FavoritesPrompt callback={updateList} nominations={nominations} />,
+            'lg'
           )
         },
         onSelected: false,
@@ -186,7 +187,8 @@ export const GenerateNominations = ({
             closePrompt()
           }
           openPromptWith(
-            <FavoritesPrompt callback={updateList} nominations={nominations} />
+            <FavoritesPrompt callback={updateList} nominations={nominations} />,
+            'lg'
           )
         },
         icon: faMagnifyingGlass,
