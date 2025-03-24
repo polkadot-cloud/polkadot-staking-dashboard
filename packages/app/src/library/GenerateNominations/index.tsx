@@ -19,6 +19,7 @@ import { SelectableWrapper } from 'library/List'
 import { Selectable } from 'library/List/Selectable'
 import { ValidatorList } from 'library/ValidatorList'
 import { FavoritesPrompt } from 'overlay/canvas/ManageNominations/Prompts/FavoritesPrompt'
+import { RevertPrompt } from 'overlay/canvas/ManageNominations/Prompts/RevertPrompt'
 import { SearchValidatorsPrompt } from 'overlay/canvas/ManageNominations/Prompts/SearchValidatorsPrompt'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
@@ -34,7 +35,7 @@ export const GenerateNominations = ({
   nominations: defaultNominations,
   displayFor = 'default',
 }: GenerateNominationsProps) => {
-  const { t } = useTranslation('app')
+  const { t } = useTranslation()
   const { isReady, consts } = useApi()
   const { stakers } = useStaking().eraStakers
   const { activeAccount } = useActiveAccounts()
@@ -57,6 +58,11 @@ export const GenerateNominations = ({
 
   // Store whether validators are being fetched
   const [fetching, setFetching] = useState<boolean>(false)
+
+  // Store the initial nominations
+  const [initialNominations] = useState<Validator[]>(
+    defaultNominations.nominations
+  )
 
   // Store the currently selected set of nominations
   const [nominations, setNominations] = useState<Validator[]>(
@@ -110,7 +116,7 @@ export const GenerateNominations = ({
   const handlers = {
     select: {
       removeSelected: {
-        title: `${t('removeSelected')}`,
+        title: `${t('removeSelected', { ns: 'app' })}`,
         onClick: ({
           selected,
           resetSelected,
@@ -136,7 +142,7 @@ export const GenerateNominations = ({
     },
     filters: {
       addFromFavorites: {
-        title: t('addFromFavorites'),
+        title: t('addFromFavorites', { ns: 'app' }),
         onClick: () => {
           const updateList = (newNominations: Validator[]) => {
             setNominations([...newNominations])
@@ -154,7 +160,7 @@ export const GenerateNominations = ({
           maxNominations.isLessThanOrEqualTo(nominations?.length),
       },
       highPerformance: {
-        title: t('highPerformanceValidator'),
+        title: t('highPerformanceValidator', { ns: 'app' }),
         onClick: () => addNominationByType('High Performance Validator'),
         onSelected: false,
         icon: faPlus,
@@ -163,7 +169,7 @@ export const GenerateNominations = ({
           !availableToNominate(nominations).highPerformance.length,
       },
       getActive: {
-        title: t('activeValidator'),
+        title: t('activeValidator', { ns: 'app' }),
         onClick: () => addNominationByType('Active Validator'),
         onSelected: false,
         icon: faPlus,
@@ -172,7 +178,7 @@ export const GenerateNominations = ({
           !availableToNominate(nominations).activeValidators.length,
       },
       getRandom: {
-        title: t('randomValidator'),
+        title: t('randomValidator', { ns: 'app' }),
         onClick: () => addNominationByType('Random Validator'),
         onSelected: false,
         icon: faPlus,
@@ -251,7 +257,7 @@ export const GenerateNominations = ({
       {method && (
         <SelectableWrapper>
           <ButtonType
-            text={t('methods')}
+            text={t('methods', { ns: 'app' })}
             iconLeft={faChevronLeft}
             iconTransform="shrink-2"
             onClick={() => {
@@ -261,19 +267,34 @@ export const GenerateNominations = ({
             }}
             marginRight
           />
-          {['Active Low Commission', 'Optimal Selection'].includes(
-            method || ''
-          ) && (
+          {['Active Low Commission', 'Optimal Selection'].includes(method) && (
             <ButtonType
-              text={t('reGenerate')}
+              text={t('reGenerate', { ns: 'app' })}
               onClick={() => {
                 // Set a temporary height to prevent height snapping on re-renders
                 setHeight(heightRef.current?.clientHeight || null)
                 setTimeout(() => setHeight(null), 200)
                 setFetching(true)
               }}
+              marginRight
             />
           )}
+          <ButtonType
+            text={t('revertChanges', { ns: 'modals' })}
+            onClick={() => {
+              openPromptWith(
+                <RevertPrompt
+                  onRevert={() => {
+                    updateSetters(initialNominations)
+                    setNominations(initialNominations)
+                    closePrompt()
+                  }}
+                />
+              )
+            }}
+            disabled={nominations === initialNominations}
+            marginRight
+          />
         </SelectableWrapper>
       )}
       <Wrapper
@@ -289,6 +310,7 @@ export const GenerateNominations = ({
                 <h4>
                   {t('chooseValidators2', {
                     maxNominations: maxNominations.toString(),
+                    ns: 'app',
                   })}
                 </h4>
               </Subheading>
