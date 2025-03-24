@@ -152,7 +152,7 @@ export const useSubmitExtrinsic = ({
                   onComplete={onComplete}
                   toSign={toSign}
                 />,
-                'small',
+                'sm',
                 false
               )
             },

@@ -105,7 +105,7 @@ const Item = ({
               onClick={() =>
                 openPromptWith(
                   <Tip title={title} description={description} page={page} />,
-                  'large'
+                  'lg'
                 )
               }
               type="button"
