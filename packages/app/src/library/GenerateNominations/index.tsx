@@ -34,6 +34,7 @@ export const GenerateNominations = ({
   setters = [],
   nominations: defaultNominations,
   displayFor = 'default',
+  allowRevert = false,
 }: GenerateNominationsProps) => {
   const { t } = useTranslation()
   const { isReady, consts } = useApi()
@@ -257,7 +258,7 @@ export const GenerateNominations = ({
       {method && (
         <SelectableWrapper>
           <ButtonType
-            text={t('methods', { ns: 'app' })}
+            text={t('startAgain', { ns: 'app' })}
             iconLeft={faChevronLeft}
             iconTransform="shrink-2"
             onClick={() => {
@@ -279,22 +280,24 @@ export const GenerateNominations = ({
               marginRight
             />
           )}
-          <ButtonType
-            text={t('revertChanges', { ns: 'modals' })}
-            onClick={() => {
-              openPromptWith(
-                <RevertPrompt
-                  onRevert={() => {
-                    updateSetters(initialNominations)
-                    setNominations(initialNominations)
-                    closePrompt()
-                  }}
-                />
-              )
-            }}
-            disabled={nominations === initialNominations}
-            marginRight
-          />
+          {allowRevert && (
+            <ButtonType
+              text={t('revertChanges', { ns: 'modals' })}
+              onClick={() => {
+                openPromptWith(
+                  <RevertPrompt
+                    onRevert={() => {
+                      updateSetters(initialNominations)
+                      setNominations(initialNominations)
+                      closePrompt()
+                    }}
+                  />
+                )
+              }}
+              disabled={nominations === initialNominations}
+              marginRight
+            />
+          )}
         </SelectableWrapper>
       )}
       <Wrapper

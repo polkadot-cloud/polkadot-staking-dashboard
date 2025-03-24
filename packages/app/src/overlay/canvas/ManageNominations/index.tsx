@@ -157,6 +157,7 @@ export const ManageNominations = () => {
             },
           ]}
           nominations={newNominations}
+          allowRevert
         />
       </Main>
       <Footer>
