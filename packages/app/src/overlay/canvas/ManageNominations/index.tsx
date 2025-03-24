@@ -160,7 +160,7 @@ export const ManageNominations = () => {
           <ButtonPrimary
             text={t('cancel', { ns: 'app' })}
             size="lg"
-            onClick={() => closeCanvas()}
+            onClick={closeCanvas}
             style={{ marginLeft: '1.1rem' }}
           />
         </Head>

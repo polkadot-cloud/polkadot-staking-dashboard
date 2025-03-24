@@ -1,7 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronLeft,
+  faMagnifyingGlass,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -63,44 +67,6 @@ export const GenerateNominations = ({
   // Ref for the height of the container
   const heightRef = useRef<HTMLDivElement>(null)
 
-  // Update nominations on account switch, or if `defaultNominations` change
-  useEffect(() => {
-    if (
-      JSON.stringify(nominations) !==
-        JSON.stringify(defaultNominations.nominations) &&
-      defaultNominationsCount > 0
-    ) {
-      setNominations([...(defaultNominations.nominations || [])])
-      if (defaultNominationsCount) {
-        setMethod('manual')
-      }
-    }
-  }, [activeAccount, defaultNominations])
-
-  // Refetch if fetching is triggered
-  useEffect(() => {
-    if (
-      !isReady ||
-      !getValidators()?.length ||
-      !stakers?.length ||
-      validatorsFetched !== 'synced'
-    ) {
-      return
-    }
-
-    if (fetching) {
-      fetchNominationsForMethod()
-    }
-  })
-
-  // Reset fixed height on window size change
-  useEffect(() => {
-    window.addEventListener('resize', resizeCallback)
-    return () => {
-      window.removeEventListener('resize', resizeCallback)
-    }
-  }, [])
-
   const resizeCallback = () => {
     setHeight(null)
   }
@@ -134,11 +100,9 @@ export const GenerateNominations = ({
     }
   }
 
-  const disabledMaxNominations = () =>
-    maxNominations.isLessThanOrEqualTo(nominations?.length)
-  const disabledAddFavorites = () =>
-    !favoritesList?.length ||
-    maxNominations.isLessThanOrEqualTo(nominations?.length)
+  const maxNominationsReached = maxNominations.isLessThanOrEqualTo(
+    nominations?.length
+  )
 
   // Define handlers
   const handlers = {
@@ -182,7 +146,9 @@ export const GenerateNominations = ({
           )
         },
         onSelected: false,
-        isDisabled: disabledAddFavorites,
+        isDisabled: () =>
+          !favoritesList?.length ||
+          maxNominations.isLessThanOrEqualTo(nominations?.length),
       },
       highPerformance: {
         title: t('highPerformanceValidator'),
@@ -190,7 +156,7 @@ export const GenerateNominations = ({
         onSelected: false,
         icon: faPlus,
         isDisabled: () =>
-          disabledMaxNominations() ||
+          maxNominationsReached ||
           !availableToNominate(nominations).highPerformance.length,
       },
       getActive: {
@@ -199,7 +165,7 @@ export const GenerateNominations = ({
         onSelected: false,
         icon: faPlus,
         isDisabled: () =>
-          disabledMaxNominations() ||
+          maxNominationsReached ||
           !availableToNominate(nominations).activeValidators.length,
       },
       getRandom: {
@@ -208,8 +174,25 @@ export const GenerateNominations = ({
         onSelected: false,
         icon: faPlus,
         isDisabled: () =>
-          disabledMaxNominations() ||
+          maxNominationsReached ||
           !availableToNominate(nominations).randomValidators.length,
+      },
+      searchValidators: {
+        title: 'Search Validators',
+        onClick: () => {
+          const updateList = (newNominations: Validator[]) => {
+            setNominations([...newNominations])
+            updateSetters(newNominations)
+            closePrompt()
+          }
+          openPromptWith(
+            <FavoritesPrompt callback={updateList} nominations={nominations} />
+          )
+        },
+        icon: faMagnifyingGlass,
+        onSelected: false,
+        isDisabled: () =>
+          maxNominations.isLessThanOrEqualTo(nominations?.length),
       },
     },
   }
@@ -217,6 +200,44 @@ export const GenerateNominations = ({
   // Determine button style depending on in canvas
   const ButtonType =
     displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonSecondary
+
+  // Update nominations on account switch, or if `defaultNominations` change
+  useEffect(() => {
+    if (
+      JSON.stringify(nominations) !==
+        JSON.stringify(defaultNominations.nominations) &&
+      defaultNominationsCount > 0
+    ) {
+      setNominations([...(defaultNominations.nominations || [])])
+      if (defaultNominationsCount) {
+        setMethod('manual')
+      }
+    }
+  }, [activeAccount, defaultNominations])
+
+  // Refetch if fetching is triggered
+  useEffect(() => {
+    if (
+      !isReady ||
+      !getValidators()?.length ||
+      !stakers?.length ||
+      validatorsFetched !== 'synced'
+    ) {
+      return
+    }
+
+    if (fetching) {
+      fetchNominationsForMethod()
+    }
+  })
+
+  // Reset fixed height on window size change
+  useEffect(() => {
+    window.addEventListener('resize', resizeCallback)
+    return () => {
+      window.removeEventListener('resize', resizeCallback)
+    }
+  }, [])
 
   return (
     <>
