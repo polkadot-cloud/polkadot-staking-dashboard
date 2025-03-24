@@ -55,7 +55,7 @@ export interface GeoDonutProps {
   title: string
   series: AnyApi
   width?: string | number
-  height?: string | number
+  maxHeight?: string | number
   legendHeight?: number
   maxLabelLen?: number
 }
