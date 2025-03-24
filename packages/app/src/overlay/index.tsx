@@ -34,7 +34,6 @@ import { UnlockChunks } from './modals/UnlockChunks'
 import { Unstake } from './modals/Unstake'
 import { UpdatePayee } from './modals/UpdatePayee'
 import { UpdateReserve } from './modals/UpdateReserve'
-import { ValidatorGeo } from './modals/ValidatorGeo'
 
 export const Overlays = () => {
   const { status } = useHelp()
@@ -62,7 +61,6 @@ export const Overlays = () => {
         RewardCalculator,
         SelectCurrency,
         Plugins,
-        ValidatorGeo,
         UnlockChunks,
         Unstake,
         Unbond,
