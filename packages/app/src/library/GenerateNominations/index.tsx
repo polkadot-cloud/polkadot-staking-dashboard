@@ -24,7 +24,7 @@ import { SearchValidatorsPrompt } from 'overlay/canvas/ManageNominations/Prompts
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonSecondary, ButtonText } from 'ui-buttons'
+import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Methods } from './Methods'
 import type { AddNominationsType, GenerateNominationsProps } from './types'
 import { useFetchMehods } from './useFetchMethods'
@@ -210,7 +210,7 @@ export const GenerateNominations = ({
   }
 
   // Determine button style depending on in canvas
-  const ButtonType = displayFor === 'canvas' ? ButtonText : ButtonSecondary
+  const ButtonType = displayFor === 'canvas' ? ButtonPrimary : ButtonSecondary
 
   // Update nominations on account switch, or if `defaultNominations` change
   useEffect(() => {
@@ -255,7 +255,6 @@ export const GenerateNominations = ({
       {method && (
         <SelectableWrapper>
           <ButtonType
-            style={{ color: 'var(--accent-color-primary' }}
             text={t('startAgain', { ns: 'app' })}
             iconLeft={faChevronLeft}
             iconTransform="shrink-2"
@@ -268,7 +267,6 @@ export const GenerateNominations = ({
           />
           {['Active Low Commission', 'Optimal Selection'].includes(method) && (
             <ButtonType
-              style={{ color: 'var(--accent-color-primary' }}
               text={t('reGenerate', { ns: 'app' })}
               onClick={() => {
                 // Set a temporary height to prevent height snapping on re-renders
@@ -281,7 +279,6 @@ export const GenerateNominations = ({
           )}
           {allowRevert && (
             <ButtonType
-              style={{ color: 'var(--accent-color-primary' }}
               text={t('revertChanges', { ns: 'modals' })}
               onClick={() => {
                 openPromptWith(

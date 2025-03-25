@@ -19,14 +19,13 @@ import type {
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonHelp } from 'ui-buttons'
 import { Footer, Head, Main, Title } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { CloseCanvas, useOverlay } from 'ui-overlay'
 
 export const ManageNominations = () => {
   const { t } = useTranslation('app')
   const {
-    closeCanvas,
     setCanvasStatus,
     config: { options },
   } = useOverlay().canvas
@@ -128,12 +127,7 @@ export const ManageNominations = () => {
     <>
       <Main>
         <Head>
-          <ButtonPrimary
-            text={t('cancel', { ns: 'app' })}
-            size="lg"
-            onClick={closeCanvas}
-            style={{ marginLeft: '1.1rem' }}
-          />
+          <CloseCanvas />
         </Head>
         <Title>
           <h1>
