@@ -7,7 +7,7 @@ import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
 import { SelectableWrapper } from '.'
 import type { SelectableProps } from './types'
 
-export const Selectable = ({
+export const ListControls = ({
   selectHandlers,
   filterHandlers,
 }: SelectableProps) => {

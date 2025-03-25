@@ -16,7 +16,7 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import type { Validator } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { SelectableWrapper } from 'library/List'
-import { Selectable } from 'library/List/Selectable'
+import { ListControls } from 'library/List/ListControls'
 import { ValidatorList } from 'library/ValidatorList'
 import { FavoritesPrompt } from 'overlay/canvas/ManageNominations/Prompts/FavoritesPrompt'
 import { RevertPrompt } from 'overlay/canvas/ManageNominations/Prompts/RevertPrompt'
@@ -337,7 +337,7 @@ export const GenerateNominations = ({
                   displayFor={displayFor}
                   selectable
                   ListControls={
-                    <Selectable
+                    <ListControls
                       selectHandlers={Object.values(selectHandlers)}
                       filterHandlers={Object.values(filterHandlers)}
                       displayFor={displayFor}
