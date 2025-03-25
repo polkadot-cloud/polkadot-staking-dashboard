@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { useList } from 'contexts/List'
@@ -75,14 +75,17 @@ export const Item = ({
               )}
             </HeaderButtonRow>
             {typeof onRemove === 'function' && (
-              <HeaderButton outline={['modal', 'canvas'].includes(displayFor)}>
+              <HeaderButton
+                outline={['modal', 'canvas'].includes(displayFor)}
+                noMargin
+              >
                 <button
                   type="button"
                   onClick={() => {
                     onRemove({ selected: [validator] })
                   }}
                 >
-                  <FontAwesomeIcon icon={faTimes} transform="shrink-1" />
+                  <FontAwesomeIcon icon={faXmark} transform="grow-4" />
                 </button>
               </HeaderButton>
             )}
