@@ -263,7 +263,7 @@ export const GenerateNominations = ({
               setNominations([])
               updateSetters([])
             }}
-            marginRight
+            style={{ marginRight: '1rem' }}
           />
           {['Active Low Commission', 'Optimal Selection'].includes(method) && (
             <ButtonType
@@ -274,6 +274,7 @@ export const GenerateNominations = ({
                 setTimeout(() => setHeight(null), 200)
                 setFetching(true)
               }}
+              style={{ marginRight: '1rem' }}
               marginRight
             />
           )}
@@ -292,7 +293,7 @@ export const GenerateNominations = ({
                 )
               }}
               disabled={nominations === initialNominations}
-              marginRight
+              style={{ marginRight: '1rem' }}
             />
           )}
         </SelectableWrapper>

@@ -106,7 +106,7 @@ export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
 export type ButtonSecondaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    lg?: boolean
+    size?: ButtonSize
     text: string
   }
 
