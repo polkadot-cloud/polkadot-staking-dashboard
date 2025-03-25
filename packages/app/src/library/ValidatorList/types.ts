@@ -19,7 +19,6 @@ export interface ValidatorListProps {
   title?: string
   selectable?: boolean
   onSelected?: AnyFunction
-  handlers?: Record<string, Record<string, AnyFunction>>
   displayFor?: DisplayFor
   allowSearch?: boolean
   allowListFormat?: boolean
@@ -28,7 +27,7 @@ export interface ValidatorListProps {
   ListControls?: ReactNode
   onRemove?: (params: {
     selected: Validator[]
-    resetSelection?: AnyFunction
+    resetSelection?: () => void
   }) => void
 }
 
@@ -43,7 +42,7 @@ export interface ItemProps {
   eraPoints: ValidatorEraPoints[]
   onRemove?: (params: {
     selected: Validator[]
-    resetSelection?: AnyFunction
+    resetSelection?: () => void
   }) => void
   showParaValidator?: boolean
 }
