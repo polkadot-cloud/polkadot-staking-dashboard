@@ -14,7 +14,7 @@ export const ListControls = ({
   const provider = useList()
   const { isFastUnstaking } = useUnstaking()
 
-  // Get list provider props.
+  // Get selected items
   const { selected } = provider
 
   return (

@@ -6,7 +6,7 @@
   flex-flow: row wrap;
   flex-grow: 1;
   width: 100%;
-  
+
   > div {
     display: flex;
     &.main {
@@ -18,7 +18,7 @@
         flex-basis: 100%;
       }
     }
-    
+
     &.side {
       min-width: 460px;
       max-width: 460px;
@@ -27,7 +27,7 @@
       @media (max-width: 1200px) {
         flex-grow: 1;
         flex-basis: 100%;
-        margin-top: .5rem;
+        margin-top: 0.5rem;
         padding-left: 0;
         max-width: 100%;
       }
