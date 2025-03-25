@@ -3,14 +3,13 @@
 
 import { useList } from 'contexts/List'
 import { useUnstaking } from 'hooks/useUnstaking'
-import { ButtonMonoInvert } from 'ui-buttons'
+import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
 import { SelectableWrapper } from '.'
 import type { SelectableProps } from './types'
 
 export const Selectable = ({
   selectHandlers,
   filterHandlers,
-  displayFor,
 }: SelectableProps) => {
   const provider = useList()
   const { isFastUnstaking } = useUnstaking()
@@ -18,16 +17,12 @@ export const Selectable = ({
   // Get list provider props.
   const { selected } = provider
 
-  // Determine button style depending on in canvas. Same for now, may change as design evolves.
-  const ButtonType =
-    displayFor === 'canvas' ? ButtonMonoInvert : ButtonMonoInvert
-
   return (
     <SelectableWrapper className="list">
       {selected.length > 0 && (
         <>
           {selectHandlers.map((a, i: number) => (
-            <ButtonType
+            <ButtonPrimaryInvert
               key={`a_selected_${i}`}
               text={a.title}
               disabled={
@@ -40,7 +35,7 @@ export const Selectable = ({
         </>
       )}
       {filterHandlers.map((a, i: number) => (
-        <ButtonType
+        <ButtonMonoInvert
           text={a.title}
           key={`a_all_${i}`}
           disabled={isFastUnstaking || (a?.isDisabled ? a.isDisabled() : false)}

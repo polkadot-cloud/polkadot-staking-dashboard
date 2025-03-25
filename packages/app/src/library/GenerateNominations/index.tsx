@@ -24,7 +24,7 @@ import { SearchValidatorsPrompt } from 'overlay/canvas/ManageNominations/Prompts
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons'
+import { ButtonSecondary, ButtonText } from 'ui-buttons'
 import { Methods } from './Methods'
 import type { AddNominationsType, GenerateNominationsProps } from './types'
 import { useFetchMehods } from './useFetchMethods'
@@ -114,106 +114,103 @@ export const GenerateNominations = ({
   )
 
   // Define handlers
-  const handlers = {
-    select: {
-      removeSelected: {
-        title: `${t('removeSelected', { ns: 'app' })}`,
-        onClick: ({
-          selected,
-          resetSelected,
-        }: {
-          selected: AnyJson
-          resetSelected?: AnyFunction
-        }) => {
-          const newNominations = [...nominations].filter(
-            (n) =>
-              !selected
-                .map(({ address }: { address: string }) => address)
-                .includes(n.address)
-          )
-          setNominations([...newNominations])
-          updateSetters([...newNominations])
-          if (typeof resetSelected === 'function') {
-            resetSelected()
-          }
-        },
-        onSelected: true,
-        isDisabled: () => false,
+  const selectHandlers = {
+    removeSelected: {
+      title: `${t('removeSelected', { ns: 'app' })}`,
+      onClick: ({
+        selected,
+        resetSelected,
+      }: {
+        selected: AnyJson
+        resetSelected?: AnyFunction
+      }) => {
+        const newNominations = [...nominations].filter(
+          (n) =>
+            !selected
+              .map(({ address }: { address: string }) => address)
+              .includes(n.address)
+        )
+        setNominations([...newNominations])
+        updateSetters([...newNominations])
+        if (typeof resetSelected === 'function') {
+          resetSelected()
+        }
       },
+      onSelected: true,
+      isDisabled: () => false,
     },
-    filters: {
-      addFromFavorites: {
-        title: t('addFromFavorites', { ns: 'app' }),
-        onClick: () => {
-          const updateList = (newNominations: Validator[]) => {
-            setNominations([...newNominations])
-            updateSetters(newNominations)
-            closePrompt()
-          }
-          openPromptWith(
-            <FavoritesPrompt callback={updateList} nominations={nominations} />,
-            'lg'
-          )
-        },
-        onSelected: false,
-        isDisabled: () =>
-          !favoritesList?.length ||
-          maxNominations.isLessThanOrEqualTo(nominations?.length),
+  }
+
+  const filterHandlers = {
+    addFromFavorites: {
+      title: t('addFromFavorites', { ns: 'app' }),
+      onClick: () => {
+        const updateList = (newNominations: Validator[]) => {
+          setNominations([...newNominations])
+          updateSetters(newNominations)
+          closePrompt()
+        }
+        openPromptWith(
+          <FavoritesPrompt callback={updateList} nominations={nominations} />,
+          'lg'
+        )
       },
-      highPerformance: {
-        title: t('highPerformanceValidator', { ns: 'app' }),
-        onClick: () => addNominationByType('High Performance Validator'),
-        onSelected: false,
-        icon: faPlus,
-        isDisabled: () =>
-          maxNominationsReached ||
-          !availableToNominate(nominations).highPerformance.length,
+      onSelected: false,
+      isDisabled: () =>
+        !favoritesList?.length ||
+        maxNominations.isLessThanOrEqualTo(nominations?.length),
+    },
+    highPerformance: {
+      title: t('highPerformanceValidator', { ns: 'app' }),
+      onClick: () => addNominationByType('High Performance Validator'),
+      onSelected: false,
+      icon: faPlus,
+      isDisabled: () =>
+        maxNominationsReached ||
+        !availableToNominate(nominations).highPerformance.length,
+    },
+    getActive: {
+      title: t('activeValidator', { ns: 'app' }),
+      onClick: () => addNominationByType('Active Validator'),
+      onSelected: false,
+      icon: faPlus,
+      isDisabled: () =>
+        maxNominationsReached ||
+        !availableToNominate(nominations).activeValidators.length,
+    },
+    getRandom: {
+      title: t('randomValidator', { ns: 'app' }),
+      onClick: () => addNominationByType('Random Validator'),
+      onSelected: false,
+      icon: faPlus,
+      isDisabled: () =>
+        maxNominationsReached ||
+        !availableToNominate(nominations).randomValidators.length,
+    },
+    searchValidators: {
+      title: 'Search Validators',
+      onClick: () => {
+        const updateList = (newNominations: Validator[]) => {
+          setNominations([...newNominations])
+          updateSetters(newNominations)
+          closePrompt()
+        }
+        openPromptWith(
+          <SearchValidatorsPrompt
+            callback={updateList}
+            nominations={nominations}
+          />,
+          'lg'
+        )
       },
-      getActive: {
-        title: t('activeValidator', { ns: 'app' }),
-        onClick: () => addNominationByType('Active Validator'),
-        onSelected: false,
-        icon: faPlus,
-        isDisabled: () =>
-          maxNominationsReached ||
-          !availableToNominate(nominations).activeValidators.length,
-      },
-      getRandom: {
-        title: t('randomValidator', { ns: 'app' }),
-        onClick: () => addNominationByType('Random Validator'),
-        onSelected: false,
-        icon: faPlus,
-        isDisabled: () =>
-          maxNominationsReached ||
-          !availableToNominate(nominations).randomValidators.length,
-      },
-      searchValidators: {
-        title: 'Search Validators',
-        onClick: () => {
-          const updateList = (newNominations: Validator[]) => {
-            setNominations([...newNominations])
-            updateSetters(newNominations)
-            closePrompt()
-          }
-          openPromptWith(
-            <SearchValidatorsPrompt
-              callback={updateList}
-              nominations={nominations}
-            />,
-            'lg'
-          )
-        },
-        icon: faMagnifyingGlass,
-        onSelected: false,
-        isDisabled: () =>
-          maxNominations.isLessThanOrEqualTo(nominations?.length),
-      },
+      icon: faMagnifyingGlass,
+      onSelected: false,
+      isDisabled: () => maxNominations.isLessThanOrEqualTo(nominations?.length),
     },
   }
 
   // Determine button style depending on in canvas
-  const ButtonType =
-    displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonSecondary
+  const ButtonType = displayFor === 'canvas' ? ButtonText : ButtonSecondary
 
   // Update nominations on account switch, or if `defaultNominations` change
   useEffect(() => {
@@ -258,6 +255,7 @@ export const GenerateNominations = ({
       {method && (
         <SelectableWrapper>
           <ButtonType
+            style={{ color: 'var(--accent-color-primary' }}
             text={t('startAgain', { ns: 'app' })}
             iconLeft={faChevronLeft}
             iconTransform="shrink-2"
@@ -270,6 +268,7 @@ export const GenerateNominations = ({
           />
           {['Active Low Commission', 'Optimal Selection'].includes(method) && (
             <ButtonType
+              style={{ color: 'var(--accent-color-primary' }}
               text={t('reGenerate', { ns: 'app' })}
               onClick={() => {
                 // Set a temporary height to prevent height snapping on re-renders
@@ -282,6 +281,7 @@ export const GenerateNominations = ({
           )}
           {allowRevert && (
             <ButtonType
+              style={{ color: 'var(--accent-color-primary' }}
               text={t('revertChanges', { ns: 'modals' })}
               onClick={() => {
                 openPromptWith(
@@ -340,12 +340,12 @@ export const GenerateNominations = ({
                   selectable
                   ListControls={
                     <Selectable
-                      filterHandlers={Object.values(handlers.filters)}
-                      selectHandlers={Object.values(handlers.select)}
+                      selectHandlers={Object.values(selectHandlers)}
+                      filterHandlers={Object.values(filterHandlers)}
                       displayFor={displayFor}
                     />
                   }
-                  onRemove={handlers?.select?.['removeSelected']?.onClick}
+                  onRemove={selectHandlers?.['removeSelected']?.onClick}
                 />
               </div>
             )}
