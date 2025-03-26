@@ -8,7 +8,6 @@ import { useState } from 'react'
 import { ButtonMonoInvert } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { SelectableWrapper } from '../List'
-import { RemoveSelected } from './Prompts/RemoveSelected'
 import type { ListControlsProps } from './types'
 
 export const ListControls = ({
@@ -31,6 +30,7 @@ export const ListControls = ({
         <>
           {Object.entries(selectHandlers).map(([k, a], i: number) => {
             const open = opens[k] || false
+            const Content = a.popover.node
             return (
               <Popover
                 open={open}
@@ -40,7 +40,7 @@ export const ListControls = ({
                   setOpens({ ...opens, [k]: true })
                 }}
                 content={
-                  <RemoveSelected
+                  <Content
                     controlKey={k}
                     onClose={() => setOpens({ ...opens, [k]: false })}
                     onRevert={() => {

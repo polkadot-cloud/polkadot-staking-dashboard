@@ -20,7 +20,7 @@ export const RemoveSelected = ({
   }, [controlKey])
 
   return (
-    <div ref={popoverRef}>
+    <div ref={popoverRef} style={{ padding: '0.75rem' }}>
       <h3>Confirm Remove Selected</h3>
       <div className="body">
         <FooterWrapper>
