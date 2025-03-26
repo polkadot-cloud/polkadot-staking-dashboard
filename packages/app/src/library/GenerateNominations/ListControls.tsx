@@ -52,7 +52,13 @@ export const ListControls = ({
                   />
                 }
               >
-                <p className={k} style={{ margin: '0 0.75rem 0 0' }}>
+                <p
+                  className={k}
+                  style={{
+                    margin: '0 1rem 0 0',
+                    fontFamily: 'InterSemiBold, sans-serif',
+                  }}
+                >
                   {a.title}
                 </p>
               </Popover>
