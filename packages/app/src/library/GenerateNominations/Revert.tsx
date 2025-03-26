@@ -5,7 +5,7 @@ import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Popover } from 'ui-core/popover'
-import { Confirm } from './Prompts/Confirm'
+import { Confirm } from './Popovers/Confirm'
 
 export const Revert = ({
   disabled,
@@ -14,7 +14,7 @@ export const Revert = ({
   disabled: boolean
   onClick: () => void
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modals')
   const { themeElementRef } = useTheme()
 
   const [open, setOpen] = useState<boolean>(false)
@@ -29,7 +29,7 @@ export const Revert = ({
       }}
       content={
         <Confirm
-          text="Revert all changes?"
+          text={t('revertNominationChanges')}
           controlKey={buttonClass}
           onClose={() => setOpen(false)}
           onRevert={() => {
@@ -50,7 +50,7 @@ export const Revert = ({
           fontFamily: 'InterSemiBold, sans-serif',
         }}
       >
-        {t('revertChanges', { ns: 'modals' })}
+        {t('revertChanges')}
       </p>
     </Popover>
   )
