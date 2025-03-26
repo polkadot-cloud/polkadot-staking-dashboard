@@ -30,12 +30,12 @@ export const Confirm = ({
         {text}
       </h4>
       <PopoverTab.Container position="bottom">
-        <PopoverTab.Button text={t('confirm')} onClick={() => onRevert()} />
         <PopoverTab.Button
           style={{ color: 'var(--status-danger-color' }}
           text={t('cancel')}
           onClick={() => onClose()}
         />
+        <PopoverTab.Button text={t('confirm')} onClick={() => onRevert()} />
       </PopoverTab.Container>
     </div>
   )
