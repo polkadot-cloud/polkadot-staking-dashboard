@@ -27,6 +27,7 @@ import { Confirm } from './Prompts/Confirm'
 import { RevertChanges } from './Prompts/RevertChanges'
 import { SearchValidators } from './Prompts/SearchValidators'
 import { SelectFavorites } from './Prompts/SelectFavorites'
+import { Revert } from './Revert'
 import type {
   AddNominationsType,
   GenerateNominationsProps,
@@ -285,9 +286,10 @@ export const GenerateNominations = ({
             />
           )}
           {allowRevert && (
-            <ButtonType
-              text={t('revertChanges', { ns: 'modals' })}
-              onClick={() => {
+            <Revert
+              displayFor={displayFor}
+              disabled={nominations === initialNominations}
+              onClick={() =>
                 openPromptWith(
                   <RevertChanges
                     onRevert={() => {
@@ -297,9 +299,7 @@ export const GenerateNominations = ({
                     }}
                   />
                 )
-              }}
-              disabled={nominations === initialNominations}
-              style={{ marginRight: '1rem' }}
+              }
             />
           )}
         </SelectableWrapper>
