@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
+import { InviteModal } from 'features/invite/components/InviteModal'
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
 import { Overlay } from 'ui-overlay'
 import { CreatePool } from './canvas/CreatePool'
@@ -66,6 +67,7 @@ export const Overlays = () => {
         Unbond,
         UpdatePayee,
         UpdateReserve,
+        InviteModal,
       }}
       canvas={{
         ManageNominations,

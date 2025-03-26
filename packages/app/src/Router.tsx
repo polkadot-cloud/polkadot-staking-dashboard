@@ -6,6 +6,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
+import { PoolInvitePage } from 'features/invite/pages/PoolInvitePage'
+import { ValidatorInvitePage } from 'features/invite/pages/ValidatorInvitePage'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
@@ -84,6 +86,18 @@ const RouterInner = () => {
                       element={<PageWithTitle page={page} />}
                     />
                   ))}
+                  <Route
+                    path="/invite/pool/:poolId"
+                    element={<PoolInvitePage />}
+                  />
+                  <Route
+                    path="/invite/validator/:address"
+                    element={<ValidatorInvitePage />}
+                  />
+                  <Route
+                    path="/invite/validator/:address/list/:list"
+                    element={<ValidatorInvitePage />}
+                  />
                   <Route
                     key="main_interface_navigate"
                     path="*"
