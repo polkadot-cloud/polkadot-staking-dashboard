@@ -31,6 +31,7 @@ export const ListControls = ({
           {Object.entries(selectHandlers).map(([k, a], i: number) => {
             const open = opens[k] || false
             const Content = a.popover.node
+            const text = a.popover.text
             return (
               <Popover
                 open={open}
@@ -41,6 +42,7 @@ export const ListControls = ({
                 }}
                 content={
                   <Content
+                    text={text}
                     controlKey={k}
                     onClose={() => setOpens({ ...opens, [k]: false })}
                     onRevert={() => {

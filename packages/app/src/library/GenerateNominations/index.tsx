@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { ListControls } from './ListControls'
 import { Methods } from './Methods'
-import { RemoveSelected } from './Prompts/RemoveSelected'
+import { Confirm } from './Prompts/Confirm'
 import { RevertChanges } from './Prompts/RevertChanges'
 import { SearchValidators } from './Prompts/SearchValidators'
 import { SelectFavorites } from './Prompts/SelectFavorites'
@@ -123,7 +123,8 @@ export const GenerateNominations = ({
     removeSelected: {
       title: `${t('removeSelected', { ns: 'app' })}`,
       popover: {
-        node: RemoveSelected,
+        text: 'Remove selected items?',
+        node: Confirm,
         callback: ({
           selected,
           callback,

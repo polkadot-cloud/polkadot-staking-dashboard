@@ -30,6 +30,7 @@ export interface SelectHandler {
   isDisabled: () => boolean
   popover: {
     node: React.FC<AnyJson>
+    text: string
     callback: (args: { selected: AnyJson[]; callback?: AnyFunction }) => void
   }
 }
@@ -50,6 +51,7 @@ export interface RevertPromptProps {
 }
 
 export interface RemoveSelectedProps {
+  text: string
   controlKey: string
   onRevert: () => void
   onClose: () => void
