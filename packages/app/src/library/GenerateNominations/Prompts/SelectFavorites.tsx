@@ -12,7 +12,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
-import type { PromptProps } from '../../../overlay/canvas/ManageNominations/types'
+import type { PromptProps } from '../types'
 
 export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
   const { t } = useTranslation('modals')

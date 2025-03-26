@@ -1,21 +1,36 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Title } from 'library/Prompt/Title'
+import { useOutsideAlerter } from '@w3ux/hooks'
 import { FooterWrapper } from 'library/Prompt/Wrappers'
+import { useRef } from 'react'
 import { ButtonPrimary } from 'ui-buttons'
-import type { RevertPromptProps } from '../../../overlay/canvas/ManageNominations/types'
+import type { RemoveSelectedProps } from '../types'
 
-export const RemoveSelected = ({ onRevert }: RevertPromptProps) => (
-  <>
-    <Title title={'Remove Selected'} />
-    <div className="body">
-      <h4 className="subheading">
-        Are you sure you want to remove the selected validators?
-      </h4>
-      <FooterWrapper>
-        <ButtonPrimary marginRight text={'Remove'} onClick={() => onRevert()} />
-      </FooterWrapper>
+export const RemoveSelected = ({
+  controlKey,
+  onRevert,
+  onClose,
+}: RemoveSelectedProps) => {
+  const popoverRef = useRef<HTMLDivElement>(null)
+
+  // Close the menu if clicked outside of its container
+  useOutsideAlerter(popoverRef, () => {
+    onClose()
+  }, [controlKey])
+
+  return (
+    <div ref={popoverRef}>
+      <h3>Confirm Remove Selected</h3>
+      <div className="body">
+        <FooterWrapper>
+          <ButtonPrimary
+            marginRight
+            text={'Remove'}
+            onClick={() => onRevert()}
+          />
+        </FooterWrapper>
+      </div>
     </div>
-  </>
-)
+  )
+}

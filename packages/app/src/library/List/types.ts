@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson, DisplayFor } from '@w3ux/types'
+import type { DisplayFor } from '@w3ux/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import type { FormEvent, ReactNode } from 'react'
 
@@ -25,12 +25,6 @@ export interface SearchInputProps {
   value: string
   handleChange: (e: FormEvent<HTMLInputElement>) => void
   placeholder: string
-}
-
-export interface SelectableProps {
-  selectHandlers: AnyJson[]
-  filterHandlers: AnyJson[]
-  displayFor: DisplayFor
 }
 
 export interface EraPointsHistoricalProps {
