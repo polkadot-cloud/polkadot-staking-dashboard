@@ -2,15 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .checkbox {
+  border: 1px solid var(--border-primary-color);
   background: var(--background-input);
-  margin: 0 0.75rem 0 0.25rem;
+  margin: 0 0.65rem 0 0.25rem;
   overflow: hidden;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  border-radius: 0.25rem;
-  width: 1.1rem;
-  height: 1.1rem;
+  justify-content: center;
+  border-radius: 0.4rem;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
   * {
     cursor: pointer;
@@ -24,7 +26,13 @@
   }
   svg {
     color: var(--text-color-primary);
-    width: 1rem;
-    height: 1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  &.checked {
+    svg {
+      color: var(--accent-color-primary);
+    }
   }
 }

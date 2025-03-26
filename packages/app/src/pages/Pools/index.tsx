@@ -126,7 +126,7 @@ export const PoolsInner = () => {
             <ListProvider>
               <PoolList
                 pools={bondedPools}
-                itemsPerPage={30}
+                itemsPerPage={50}
                 allowMoreCols
                 allowSearch
               />

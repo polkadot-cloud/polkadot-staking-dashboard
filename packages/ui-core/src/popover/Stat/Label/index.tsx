@@ -5,5 +5,5 @@ import type { ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Label = ({ children }: { children: ReactNode }) => (
-  <p className={classes.label}>{children}</p>
+  <h3 className={classes.label}>{children}</h3>
 )

@@ -44,7 +44,7 @@ export const ValidatorListInner = ({
   itemsPerPage,
   selectable,
   onSelected,
-  actions = [],
+  handlers = undefined,
   displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
@@ -84,8 +84,9 @@ export const ValidatorListInner = ({
   const excludes = getFilters('exclude', 'validators')
   const order = getOrder('validators')
   const searchTerm = getSearchTerm('validators')
-  const actionsAll = [...actions].filter((action) => !action.onSelected)
-  const actionsSelected = [...actions].filter((action) => action.onSelected)
+
+  const selectHandlers = handlers?.select || {}
+  const filterHandlers = handlers?.filters || {}
 
   // Track whether filter bootstrapping has been applied.
   const [bootstrapped, setBootstrapped] = useState<boolean>(false)
@@ -342,8 +343,8 @@ export const ValidatorListInner = ({
         {selectable ? (
           <Selectable
             canSelect={listItems.length > 0}
-            actionsAll={actionsAll}
-            actionsSelected={actionsSelected}
+            filterHandlers={Object.values(filterHandlers)}
+            selectHandlers={Object.values(selectHandlers)}
             displayFor={displayFor}
           />
         ) : null}
@@ -379,6 +380,7 @@ export const ValidatorListInner = ({
                     nominationStatus={
                       nominationStatus.current[validator.address]
                     }
+                    removeHandler={selectHandlers?.['removeSelected']?.onClick}
                   />
                 </motion.div>
               ))}
@@ -397,12 +399,9 @@ export const ValidatorListInner = ({
 }
 
 export const ValidatorList = (props: ValidatorListProps) => {
-  const { selectActive, selectToggleable } = props
+  const { selectable } = props
   return (
-    <ListProvider
-      selectActive={selectActive}
-      selectToggleable={selectToggleable}
-    >
+    <ListProvider selectable={selectable}>
       <ValidatorListInner {...props} />
     </ListProvider>
   )

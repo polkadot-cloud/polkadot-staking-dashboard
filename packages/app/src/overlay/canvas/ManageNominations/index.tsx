@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { PoolNominate } from 'api/tx/poolNominate'
 import { StakingNominate } from 'api/tx/stakingNominate'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -162,23 +161,18 @@ export const ManageNominations = () => {
             text={t('cancel', { ns: 'app' })}
             size="lg"
             onClick={() => closeCanvas()}
-            iconLeft={faTimes}
             style={{ marginLeft: '1.1rem' }}
           />
         </Head>
         <Title>
-          <h1>{t('manageNominations', { ns: 'modals' })}</h1>
-          <h3>
-            {t('chooseValidators', {
-              ns: 'app',
-              maxNominations: maxNominations.toString(),
-            })}
+          <h1>
+            {t('manageNominations', { ns: 'modals' })}
             <ButtonHelp
               onClick={() => openHelp('Nominations')}
               background="none"
               outline
             />
-          </h3>
+          </h1>
         </Title>
         <GenerateNominations
           displayFor="canvas"

@@ -24,10 +24,10 @@ export const Tooltip = ({
     <RadixTooltip.Trigger
       asChild
       onClick={(event) => {
+        event.preventDefault()
         if (typeof onTriggerClick === 'function') {
           onTriggerClick(event)
         }
-        event.preventDefault()
       }}
     >
       {children}
