@@ -24,7 +24,6 @@ import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { ListControls } from './ListControls'
 import { Methods } from './Methods'
 import { Confirm } from './Prompts/Confirm'
-import { RevertChanges } from './Prompts/RevertChanges'
 import { SearchValidators } from './Prompts/SearchValidators'
 import { SelectFavorites } from './Prompts/SelectFavorites'
 import { Revert } from './Revert'
@@ -287,19 +286,11 @@ export const GenerateNominations = ({
           )}
           {allowRevert && (
             <Revert
-              displayFor={displayFor}
               disabled={nominations === initialNominations}
-              onClick={() =>
-                openPromptWith(
-                  <RevertChanges
-                    onRevert={() => {
-                      updateSetters(initialNominations)
-                      setNominations(initialNominations)
-                      closePrompt()
-                    }}
-                  />
-                )
-              }
+              onClick={() => {
+                updateSetters(initialNominations)
+                setNominations(initialNominations)
+              }}
             />
           )}
         </SelectableWrapper>
