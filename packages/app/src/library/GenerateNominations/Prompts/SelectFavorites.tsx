@@ -12,16 +12,12 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
-import type { PromptProps } from '../types'
+import type { PromptProps } from '../../../overlay/canvas/ManageNominations/types'
 
-export const SearchValidatorsPrompt = ({
-  callback,
-  nominations,
-}: PromptProps) => {
+export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
   const { t } = useTranslation('modals')
   const { consts } = useApi()
   const { favoritesList } = useFavoriteValidators()
-
   const { maxNominations } = consts
 
   // Store the total number of selected favorites
@@ -41,20 +37,30 @@ export const SearchValidatorsPrompt = ({
 
   return (
     <>
-      <Title title={'Search Validators'} />
+      <Title title={t('nominateFavorites')} />
       <div className="padded">
-        <h4 className="subheading">Add validators to your nomination list.</h4>
+        {remaining.isLessThanOrEqualTo(0) ? (
+          <h4 className="subheading">
+            {t('moreFavoritesSurpassLimit', {
+              max: maxNominations.toString(),
+            })}
+          </h4>
+        ) : (
+          <h4 className="subheading">
+            {t('addUpToFavorites', { count: remaining.toNumber() })}.
+          </h4>
+        )}
 
         {favoritesList?.map((favorite: Validator, i) => {
           const inInitial = !!nominations.find(
             ({ address }) => address === favorite.address
           )
-          const disabled = !canAdd || inInitial
+          const isDisabled = selected.includes(favorite) || !canAdd || inInitial
 
           return (
             <PromptListItem
               key={`favorite_${i}`}
-              className={disabled && inInitial ? 'inactive' : undefined}
+              className={isDisabled && inInitial ? 'inactive' : undefined}
             >
               <Checkbox
                 checked={inInitial || selected.includes(favorite)}
@@ -70,7 +76,6 @@ export const SearchValidatorsPrompt = ({
             </PromptListItem>
           )
         })}
-
         <FooterWrapper>
           <ButtonPrimary
             text={t('addToNominations')}

@@ -15,17 +15,18 @@ import { useStaking } from 'contexts/Staking'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import type { Validator } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { RevertChanges } from 'library/GenerateNominations/Prompts/RevertChanges'
+import { SearchValidators } from 'library/GenerateNominations/Prompts/SearchValidators'
 import { SelectableWrapper } from 'library/List'
 import { ListControls } from 'library/List/ListControls'
 import { ValidatorList } from 'library/ValidatorList'
-import { FavoritesPrompt } from 'overlay/canvas/ManageNominations/Prompts/FavoritesPrompt'
-import { RevertPrompt } from 'overlay/canvas/ManageNominations/Prompts/RevertPrompt'
-import { SearchValidatorsPrompt } from 'overlay/canvas/ManageNominations/Prompts/SearchValidatorsPrompt'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Methods } from './Methods'
+import { RemoveSelected } from './Prompts/RemoveSelected'
+import { SelectFavorites } from './Prompts/SelectFavorites'
 import type { AddNominationsType, GenerateNominationsProps } from './types'
 import { useFetchMehods } from './useFetchMethods'
 import { Wrapper } from './Wrapper'
@@ -124,17 +125,22 @@ export const GenerateNominations = ({
         selected: AnyJson
         resetSelected?: AnyFunction
       }) => {
-        const newNominations = [...nominations].filter(
-          (n) =>
-            !selected
-              .map(({ address }: { address: string }) => address)
-              .includes(n.address)
-        )
-        setNominations([...newNominations])
-        updateSetters([...newNominations])
-        if (typeof resetSelected === 'function') {
-          resetSelected()
+        const onRevert = () => {
+          const newNominations = [...nominations].filter(
+            (n) =>
+              !selected
+                .map(({ address }: { address: string }) => address)
+                .includes(n.address)
+          )
+          setNominations([...newNominations])
+          updateSetters([...newNominations])
+          if (typeof resetSelected === 'function') {
+            resetSelected()
+          }
+          closePrompt()
         }
+
+        openPromptWith(<RemoveSelected onRevert={onRevert} />, 'lg')
       },
       onSelected: true,
       isDisabled: () => false,
@@ -151,7 +157,7 @@ export const GenerateNominations = ({
           closePrompt()
         }
         openPromptWith(
-          <FavoritesPrompt callback={updateList} nominations={nominations} />,
+          <SelectFavorites callback={updateList} nominations={nominations} />,
           'lg'
         )
       },
@@ -196,10 +202,7 @@ export const GenerateNominations = ({
           closePrompt()
         }
         openPromptWith(
-          <SearchValidatorsPrompt
-            callback={updateList}
-            nominations={nominations}
-          />,
+          <SearchValidators callback={updateList} nominations={nominations} />,
           'lg'
         )
       },
@@ -283,7 +286,7 @@ export const GenerateNominations = ({
               text={t('revertChanges', { ns: 'modals' })}
               onClick={() => {
                 openPromptWith(
-                  <RevertPrompt
+                  <RevertChanges
                     onRevert={() => {
                       updateSetters(initialNominations)
                       setNominations(initialNominations)
