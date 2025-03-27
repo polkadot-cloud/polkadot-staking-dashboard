@@ -118,7 +118,7 @@ export const GenerateNominations = ({
     removeSelected: {
       title: `${t('removeSelected', { ns: 'app' })}`,
       popover: {
-        text: 'Remove selected items?',
+        text: t('removeSelectedItems', { ns: 'app' }),
         node: Confirm,
         callback: ({
           selected,

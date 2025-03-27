@@ -221,6 +221,7 @@
     "recentPerformance": "Recent Performance",
     "remove": "Remove",
     "removeSelected": "Remove Selected",
+    "removeSelectedItems": "Remove Selected Items?",
     "reset": "Reset",
     "resources": "Resources",
     "revertedToActiveSelection": "Nominations have been reverted to your active selection.",
