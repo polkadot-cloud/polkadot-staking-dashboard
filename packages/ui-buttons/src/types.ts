@@ -93,6 +93,7 @@ export type ButtonPrimaryProps = ComponentBaseWithClassName &
     colorSecondary?: boolean
     size?: ButtonSize
     text: string
+    asLabel?: boolean
   }
 
 export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
