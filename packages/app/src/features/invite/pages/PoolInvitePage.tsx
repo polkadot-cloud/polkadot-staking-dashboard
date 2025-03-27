@@ -11,15 +11,22 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { AnyJson } from '@w3ux/types'
-import { ellipsisFn, rmCommas } from '@w3ux/utils'
+import { ellipsisFn, rmCommas, unitToPlanck } from '@w3ux/utils'
+import { JoinPool } from 'api/tx/joinPool'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import type { ClaimPermission } from 'contexts/Pools/types'
 import { determinePoolDisplay } from 'contexts/Pools/util'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { defaultClaimPermission } from 'controllers/ActivePools/defaults'
+import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -59,20 +66,52 @@ export const PoolInvitePage = () => {
   const {
     networkData: {
       units,
+      unit,
       brand: { token: TokenIcon },
     },
+    network,
   } = useNetwork()
   const { activeAccount } = useActiveAccounts()
   const { activePool } = useActivePool()
   const { isReady } = useApi()
-  const { bondedPools, poolsMetaData } = useBondedPools()
+  const { bondedPools, poolsMetaData, updateBondedPools } = useBondedPools()
+  const { getTransferOptions } = useTransferOptions()
+  const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
   const [poolDetails, setPoolDetails] = useState<PoolDetails | null>(null)
   const [loading, setLoading] = useState(true)
   const [joining, setJoining] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null)
+  const [claimPermission] = useState<ClaimPermission>(defaultClaimPermission)
+
+  // Bond amount state
+  const [bond, setBond] = useState<{ bond: string }>({ bond: '' })
+  const [bondValid, setBondValid] = useState<boolean>(false)
+  const [feedbackErrors, setFeedbackErrors] = useState<string[]>([])
+
+  // Get transfer options for the active account
+  const transferOptions = activeAccount
+    ? getTransferOptions(activeAccount)
+    : null
+
+  // Set initial bond value only once when component mounts
+  useEffect(() => {
+    if (transferOptions && bond.bond === '') {
+      // Use transferrableBalance instead of availableBalance
+      const initialBond = planckToUnitBn(
+        transferOptions.transferrableBalance,
+        units
+      ).toString()
+      setBond({ bond: initialBond })
+    }
+  }, [activeAccount, units])
+
+  // Handler to set bond on input change
+  const handleSetBond = (value: { bond: BigNumber }) => {
+    setBond({ bond: value.bond.toString() })
+  }
 
   // Get pool details
   useEffect(() => {
@@ -177,6 +216,43 @@ export const PoolInvitePage = () => {
   // Check if user is already in a pool
   const userAlreadyInPool = activePool !== null
 
+  // Get the transaction
+  const getTx = () => {
+    if (!activeAccount || !poolId || !bondValid) {
+      return null
+    }
+
+    // Create a transaction to join the pool with the specified bond amount
+    const bondAmount = unitToPlanck(bond.bond, units)
+
+    return new JoinPool(
+      network,
+      Number(poolId),
+      bondAmount,
+      claimPermission
+    ).tx()
+  }
+
+  // Set up the transaction submission
+  const submitExtrinsic = useSubmitExtrinsic({
+    tx: getTx(),
+    from: activeAccount,
+    shouldSubmit: bondValid,
+    callbackSubmit: () => {
+      setJoining(true)
+      setIsSubmitting(true)
+    },
+    callbackInBlock: () => {
+      // Refresh pools data
+      updateBondedPools(bondedPools)
+
+      // Navigate to pools page after successful transaction
+      setTimeout(() => {
+        navigate('/pools')
+      }, 2000)
+    },
+  })
+
   // Handle address copy
   const handleCopyAddress = (address: string) => {
     navigator.clipboard.writeText(address)
@@ -184,24 +260,14 @@ export const PoolInvitePage = () => {
     setTimeout(() => setCopiedAddress(null), 3000)
   }
 
-  // Join pool transaction
+  // Handle joining the pool
   const handleJoinPool = () => {
     if (!activeAccount || !poolId) {
       return
     }
-    setJoining(true)
-    setIsSubmitting(true)
 
-    // Simulate transaction completion
-    setTimeout(() => {
-      setIsSubmitting(false)
-      navigate('/pools')
-    }, 2000)
-  }
-
-  // Mock submitExtrinsic object
-  const submitExtrinsic = {
-    isSubmitting,
+    // Submit the transaction
+    submitExtrinsic.onSubmit()
   }
 
   // Format DOT amount for display
@@ -209,6 +275,9 @@ export const PoolInvitePage = () => {
     const bn = new BigNumber(amount)
     return bn.isNaN() ? '0' : bn.toFormat(3)
   }
+
+  // Whether the form is ready to submit
+  const formValid = bondValid && feedbackErrors.length === 0
 
   return (
     <>
@@ -377,12 +446,29 @@ export const PoolInvitePage = () => {
                     <WarningMessage>{t('alreadyInPool')}</WarningMessage>
                   )}
 
+                  <SectionDivider />
+
+                  <h4>{t('bondAmount', { unit })}</h4>
+                  <div style={{ margin: '1rem 0' }}>
+                    <BondFeedback
+                      joiningPool
+                      displayFirstWarningOnly
+                      syncing={largestTxFee.isZero()}
+                      bondFor={'pool'}
+                      listenIsValid={(valid, errors) => {
+                        setBondValid(valid)
+                        setFeedbackErrors(errors)
+                      }}
+                      defaultBond={null}
+                      setters={[handleSetBond]}
+                      txFees={BigInt(largestTxFee.toString())}
+                    />
+                  </div>
+
                   <ActionSection>
                     <ButtonPrimary
                       text={joining ? t('joining') : t('joinPool')}
-                      disabled={
-                        userAlreadyInPool || submitExtrinsic.isSubmitting
-                      }
+                      disabled={userAlreadyInPool || isSubmitting || !formValid}
                       onClick={handleJoinPool}
                     />
                   </ActionSection>

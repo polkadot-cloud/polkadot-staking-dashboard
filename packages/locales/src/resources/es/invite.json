@@ -5,6 +5,7 @@
     "alreadyNominatingOthers": "Ya estás nominando a otros validadores. Continuar reemplazará tus nominaciones actuales.",
     "alreadyNominatingThese": "Ya estás nominando a estos validadores.",
     "averageCommission": "Comisión Promedio",
+    "bondAmount": "Cantidad a Vincular ({{unit}})",
     "browseValidators": "Explorar Validadores",
     "commission": "Comisión",
     "connectWallet": "Conectar Wallet",

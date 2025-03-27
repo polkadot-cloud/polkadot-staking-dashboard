@@ -5,6 +5,7 @@
     "alreadyNominatingOthers": "You are already nominating other validators. Continuing will replace your current nominations.",
     "alreadyNominatingThese": "You are already nominating these validators.",
     "averageCommission": "Average Commission",
+    "bondAmount": "Bond Amount ({{unit}})",
     "browseValidators": "Browse Validators",
     "commission": "Commission",
     "connectWallet": "Connect Wallet",

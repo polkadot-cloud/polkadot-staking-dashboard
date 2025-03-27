@@ -5,6 +5,7 @@
     "alreadyNominatingOthers": "您已经在提名其他验证人。继续将替换您当前的提名。",
     "alreadyNominatingThese": "您已经在提名这些验证人。",
     "averageCommission": "平均佣金",
+    "bondAmount": "绑定金额 ({{unit}})",
     "browseValidators": "浏览验证人",
     "commission": "佣金",
     "connectWallet": "连接钱包",
