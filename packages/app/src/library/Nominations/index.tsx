@@ -123,7 +123,6 @@ export const Nominations = ({
                     nominator,
                     nominated,
                   },
-                  size: 'xl',
                 })
               }
             />
