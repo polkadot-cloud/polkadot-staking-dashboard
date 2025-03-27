@@ -282,7 +282,10 @@ export const GenerateNominations = ({
           )}
           {allowRevert && (
             <Revert
-              disabled={nominations === initialNominations}
+              disabled={
+                JSON.stringify(nominations) ===
+                JSON.stringify(initialNominations)
+              }
               onClick={() => {
                 updateSetters(initialNominations)
                 setNominations(initialNominations)
