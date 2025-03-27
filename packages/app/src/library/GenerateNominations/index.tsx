@@ -6,16 +6,17 @@ import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useManageNominations } from 'contexts/ManageNominations'
 import { usePrompt } from 'contexts/Prompt'
 import { useStaking } from 'contexts/Staking'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
-import type { Validator } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { SelectableWrapper } from 'library/List'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { Validator } from 'types'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { ListControls } from './ListControls'
 import { Methods } from './Methods'
@@ -32,11 +33,15 @@ import { Wrapper } from './Wrapper'
 
 export const GenerateNominations = ({
   setters = [],
-  nominations: defaultNominations,
   displayFor = 'default',
   allowRevert = false,
 }: GenerateNominationsProps) => {
   const { t } = useTranslation()
+  const {
+    fetch: fetchFromMethod,
+    add: addNomination,
+    available: availableToNominate,
+  } = useFetchMehods()
   const { isReady, consts } = useApi()
   const { stakers } = useStaking().eraStakers
   const { activeAccount } = useActiveAccounts()
@@ -44,13 +49,11 @@ export const GenerateNominations = ({
   const { openPromptWith, closePrompt } = usePrompt()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getValidators, validatorsFetched } = useValidators()
-  const {
-    fetch: fetchFromMethod,
-    add: addNomination,
-    available: availableToNominate,
-  } = useFetchMehods()
+  const { defaultNominations, nominations, setNominations } =
+    useManageNominations()
+
   const { maxNominations } = consts
-  const defaultNominationsCount = defaultNominations.nominations?.length || 0
+  const defaultNominationsCount = defaultNominations?.length || 0
 
   // Store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
@@ -59,16 +62,6 @@ export const GenerateNominations = ({
 
   // Store whether validators are being fetched
   const [fetching, setFetching] = useState<boolean>(false)
-
-  // Store the initial nominations
-  const [initialNominations] = useState<Validator[]>(
-    defaultNominations.nominations
-  )
-
-  // Store the currently selected set of nominations
-  const [nominations, setNominations] = useState<Validator[]>(
-    defaultNominations.nominations
-  )
 
   // Store the height of the container
   const [height, setHeight] = useState<number | null>(null)
@@ -217,11 +210,10 @@ export const GenerateNominations = ({
   // Update nominations on account switch, or if `defaultNominations` change
   useEffect(() => {
     if (
-      JSON.stringify(nominations) !==
-        JSON.stringify(defaultNominations.nominations) &&
+      JSON.stringify(nominations) !== JSON.stringify(defaultNominations) &&
       defaultNominationsCount > 0
     ) {
-      setNominations([...(defaultNominations.nominations || [])])
+      setNominations([...(defaultNominations || [])])
       if (defaultNominationsCount) {
         setMethod('manual')
       }
@@ -254,6 +246,7 @@ export const GenerateNominations = ({
 
   return (
     <>
+      {/* TODO: Move this to separate `Controls/Inline` component, alongside `Controls/Menu` component */}
       {method && (
         <SelectableWrapper>
           <ButtonType
@@ -284,11 +277,11 @@ export const GenerateNominations = ({
             <Revert
               disabled={
                 JSON.stringify(nominations) ===
-                JSON.stringify(initialNominations)
+                JSON.stringify(defaultNominations)
               }
               onClick={() => {
-                updateSetters(initialNominations)
-                setNominations(initialNominations)
+                updateSetters(defaultNominations)
+                setNominations(defaultNominations)
               }}
             />
           )}

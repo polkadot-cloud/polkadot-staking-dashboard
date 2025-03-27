@@ -19,4 +19,15 @@
       color: var(--accent-color-primary);
     }
   }
+
+  &.sm {
+    > button {
+      border-radius: 1.05rem;
+      width: 2.1rem;
+      height: 2.1rem;
+      >svg {
+        width: 0.75rem;
+      }
+    }
+  }
 }

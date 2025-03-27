@@ -4,8 +4,8 @@
 import { Close as Wrapper } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
-export const CloseCanvas = () => {
+export const CloseCanvas = ({ sm }: { sm?: boolean }) => {
   const { setCanvasStatus } = useOverlay().canvas
 
-  return <Wrapper onClose={() => setCanvasStatus('closing')} />
+  return <Wrapper sm={sm} onClose={() => setCanvasStatus('closing')} />
 }
