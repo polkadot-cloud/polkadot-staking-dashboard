@@ -102,8 +102,10 @@ export const SelectableWrapper = styled.div`
   align-items: center;
   padding: 0 0.15rem;
   margin-top: 0.25rem;
+  min-height: 2rem;
 
-  > button {
+  &.menu {
+    height: 2rem;
     margin-bottom: 0.75rem;
   }
 `

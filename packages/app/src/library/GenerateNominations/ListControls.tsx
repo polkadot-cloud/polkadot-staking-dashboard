@@ -5,7 +5,7 @@ import { useList } from 'contexts/List'
 import { useTheme } from 'contexts/Themes'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { useState } from 'react'
-import { ButtonMonoInvert } from 'ui-buttons'
+import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { SelectableWrapper } from '../List'
 import type { ListControlsProps } from './types'
@@ -25,7 +25,7 @@ export const ListControls = ({
   const [opens, setOpens] = useState<Record<string, boolean>>({})
 
   return (
-    <SelectableWrapper className="list">
+    <SelectableWrapper className="menu">
       {selected.length > 0 && (
         <>
           {Object.entries(selectHandlers).map(([k, a], i: number) => {
@@ -52,15 +52,7 @@ export const ListControls = ({
                   />
                 }
               >
-                <p
-                  className={k}
-                  style={{
-                    margin: '0 1rem 0 0',
-                    fontFamily: 'InterSemiBold, sans-serif',
-                  }}
-                >
-                  {a.title}
-                </p>
+                <ButtonPrimaryInvert text={a.title} asLabel marginRight />
               </Popover>
             )
           })}

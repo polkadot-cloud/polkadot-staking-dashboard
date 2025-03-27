@@ -102,6 +102,7 @@ export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
     colorSecondary?: boolean
     lg?: boolean
     text: string
+    asLabel?: boolean
   }
 
 export type ButtonSecondaryProps = ComponentBaseWithClassName &

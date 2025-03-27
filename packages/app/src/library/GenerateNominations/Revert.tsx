@@ -4,6 +4,7 @@
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ButtonPrimary } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { Confirm } from './Popovers/Confirm'
 
@@ -41,17 +42,7 @@ export const Revert = ({
         />
       }
     >
-      <p
-        className={buttonClass}
-        style={{
-          cursor: disabled ? 'default' : 'pointer',
-          opacity: disabled ? 0.5 : 1,
-          margin: '0 1rem 0 0',
-          fontFamily: 'InterSemiBold, sans-serif',
-        }}
-      >
-        {t('revertChanges')}
-      </p>
+      <ButtonPrimary text={t('revertChanges')} asLabel disabled={disabled} />
     </Popover>
   )
 }
