@@ -12,7 +12,6 @@
     "dev": "cd packages/app && yarn dev",
     "lint:check": "eslint './**' && prettier --check .",
     "lint:fix": "eslint './**' --fix && prettier --write .",
-    "preview": "cd packages/app && yarn preview",
     "reset": "npm run clear && rm -rf node_modules yarn.lock && yarn",
     "test": "npm run test --workspaces --if-present"
   },
