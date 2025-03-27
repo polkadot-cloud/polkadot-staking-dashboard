@@ -111,7 +111,7 @@ export const Stat = ({
                   <Button
                     key={`btn_${index}_${Math.random()}`}
                     text={btn.title}
-                    lg={btn.large ?? undefined}
+                    size={btn.large ? 'lg' : undefined}
                     iconLeft={btn.icon ?? undefined}
                     iconTransform={btn.transform ?? undefined}
                     disabled={btn.disabled ?? false}

@@ -3,23 +3,16 @@
 
 import { Members } from 'overlay/canvas/PoolMembers/Members'
 import { useTranslation } from 'react-i18next'
-import { ButtonPrimary } from 'ui-buttons'
 import { Head, Main, Title } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { CloseCanvas } from 'ui-overlay'
 
 export const PoolMembers = () => {
   const { t } = useTranslation()
-  const { closeCanvas } = useOverlay().canvas
 
   return (
     <Main>
       <Head>
-        <ButtonPrimary
-          text={t('cancel', { ns: 'app' })}
-          size="lg"
-          onClick={() => closeCanvas()}
-          style={{ marginLeft: '1.1rem' }}
-        />
+        <CloseCanvas />
       </Head>
       <Title>
         <h1>{t('poolMembers', { ns: 'modals' })}</h1>

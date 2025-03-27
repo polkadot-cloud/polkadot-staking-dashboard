@@ -10,8 +10,10 @@ export const HeaderButton = ({
   style,
   outline,
   withText,
+  noMargin,
 }: HeaderButtonProps) => {
   const allClasses = classNames(classes.headerButton, {
+    [classes.noMargin]: !!noMargin,
     [classes.text]: !!withText,
     [classes.outline]: !!outline,
   })

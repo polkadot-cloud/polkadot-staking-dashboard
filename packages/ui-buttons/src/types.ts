@@ -102,12 +102,13 @@ export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
     colorSecondary?: boolean
     lg?: boolean
     text: string
+    asLabel?: boolean
   }
 
 export type ButtonSecondaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    lg?: boolean
+    size?: ButtonSize
     text: string
   }
 
