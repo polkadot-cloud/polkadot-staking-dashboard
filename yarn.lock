@@ -12349,6 +12349,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ui-overlay@workspace:packages/ui-overlay"
   dependencies:
+    types: "workspace:*"
     ui-core: "workspace:*"
   peerDependencies:
     "@fortawesome/fontawesome-svg-core": "*"

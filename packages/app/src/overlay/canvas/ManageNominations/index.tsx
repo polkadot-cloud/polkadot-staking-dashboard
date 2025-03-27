@@ -145,7 +145,7 @@ export const ManageNominations = () => {
 
   return (
     <>
-      <Main>
+      <Main size="xl">
         <Head>
           <ButtonPrimaryInvert
             text={t('revertChanges', { ns: 'modals' })}
@@ -188,7 +188,7 @@ export const ManageNominations = () => {
           nominations={newNominations}
         />
       </Main>
-      <Footer>
+      <Footer size="xl">
         <SubmitTx
           noMargin
           fromController={!isPool}
