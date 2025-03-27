@@ -31,7 +31,7 @@ export const Confirm = ({
       </h4>
       <PopoverTab.Container position="bottom">
         <PopoverTab.Button
-          style={{ color: 'var(--status-danger-color' }}
+          style={{ color: 'var(--status-danger-color)' }}
           text={t('cancel')}
           onClick={() => onClose()}
         />
