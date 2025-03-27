@@ -4,6 +4,7 @@
 import type { AnyFunction, AnyJson, DisplayFor } from '@w3ux/types'
 import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
+import type { ReactNode } from 'react'
 import type { BondFor, MaybeAddress, NominationStatus } from 'types'
 
 export interface ValidatorListProps {
@@ -18,12 +19,16 @@ export interface ValidatorListProps {
   title?: string
   selectable?: boolean
   onSelected?: AnyFunction
-  handlers?: Record<string, Record<string, AnyFunction>>
   displayFor?: DisplayFor
   allowSearch?: boolean
   allowListFormat?: boolean
   defaultFilters?: AnyJson
   defaultOrder?: string
+  ListControls?: ReactNode
+  onRemove?: (params: {
+    selected: Validator[]
+    resetSelection?: () => void
+  }) => void
 }
 
 export interface ItemProps {
@@ -35,8 +40,9 @@ export interface ItemProps {
   toggleFavorites?: boolean
   nominationStatus?: NominationStatus
   eraPoints: ValidatorEraPoints[]
-  removeHandler?: (params: {
+  onRemove?: (params: {
     selected: Validator[]
-    resetSelection?: AnyFunction
+    resetSelection?: () => void
   }) => void
+  showParaValidator?: boolean
 }

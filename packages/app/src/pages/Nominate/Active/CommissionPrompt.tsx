@@ -62,7 +62,6 @@ export const CommissionPrompt = () => {
                     nominator: activeAccount,
                     nominated,
                   },
-                  size: 'xl',
                 })
               }
             />

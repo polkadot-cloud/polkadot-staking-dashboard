@@ -59,7 +59,7 @@ export const Title = ({ title, button, tabs = [] }: PageTitleProps) => {
                 onClick={button.onClick}
                 iconRight={faBars}
                 iconTransform="shrink-4"
-                lg
+                size="lg"
               />
             </div>
           )}

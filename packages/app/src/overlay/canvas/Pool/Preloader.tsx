@@ -8,9 +8,8 @@ import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
-import { ButtonPrimary } from 'ui-buttons'
 import { Head, Preload, Title } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { CloseCanvas } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
 export const Preloader = () => {
@@ -23,7 +22,6 @@ export const Preloader = () => {
   const {
     poolsConfig: { counterForPoolMembers },
   } = useApi()
-  const { closeCanvas } = useOverlay().canvas
 
   let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {
@@ -36,12 +34,7 @@ export const Preloader = () => {
   return (
     <>
       <Head>
-        <ButtonPrimary
-          text={t('close', { ns: 'modals' })}
-          size="lg"
-          onClick={() => closeCanvas()}
-          style={{ marginLeft: '1.1rem' }}
-        />
+        <CloseCanvas />
       </Head>
       <Title>
         <h1>{t('pools')}</h1>

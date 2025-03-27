@@ -63,6 +63,7 @@ export const Nominate = ({ bondFor, section }: NominationsProps) => {
               set: handleSetupUpdate,
             },
           ]}
+          displayFor="modal"
           nominations={{ nominations: progress.nominations }}
         />
 

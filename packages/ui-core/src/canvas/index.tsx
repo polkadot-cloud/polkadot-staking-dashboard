@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './AccountTitle'
+export * from './Close'
 export * from './Container'
 export * from './Content'
 export * from './Footer'

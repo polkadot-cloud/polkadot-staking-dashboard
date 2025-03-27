@@ -5,19 +5,21 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode, RefObject } from 'react'
 import { createContext, useContext, useRef, useState } from 'react'
+import type {
+  ActiveOverlayInstance,
+  CanvasStatus,
+  ModalStatus,
+  OverlayInstanceDirection,
+} from 'types'
 import {
   defaultCanvasConfig,
   defaultModalConfig,
   defaultOverlayContext,
 } from './defaults'
 import type {
-  ActiveOverlayInstance,
   CanvasConfig,
-  CanvasStatus,
   ModalConfig,
-  ModalStatus,
   OverlayContextInterface,
-  OverlayInstanceDirection,
 } from './types'
 
 export const OverlayContext = createContext<OverlayContextInterface>(
@@ -170,12 +172,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
   })
 
   // Open the canvas
-  const openCanvas = ({
-    key,
-    size = 'lg',
-    scroll = true,
-    options,
-  }: CanvasConfig) => {
+  const openCanvas = ({ key, size, scroll = true, options }: CanvasConfig) => {
     setCanvasStatus('open')
     setOpenOverlayInstances('inc', 'canvas')
     setCanvasConfig({

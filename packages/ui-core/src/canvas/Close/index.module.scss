@@ -1,0 +1,22 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.close {
+  z-index: 2;
+  > button {
+    transition: opacity var(--transition-duration) ease-in-out;
+    border: 1px solid var(--accent-color-primary);
+    box-shadow: var(--card-shadow);
+    border-radius: 1.375rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+    > svg {
+      color: var(--accent-color-primary);
+    }
+  }
+}

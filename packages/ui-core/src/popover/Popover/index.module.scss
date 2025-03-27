@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   &[data-state='open'][data-side='bottom'] {
     animation-name: slideUpAndFade;
   }
-  z-index: 9;
+  z-index: 99;
 
   > div > p {
     margin: 0.5rem 0 0 0;

@@ -4,12 +4,12 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "build": "npx tsc && npx vite build --base '/'",
-    "build:verify": "npx tsc --noEmit --skipLibCheck && npx vite build --base '/' --mode development --emptyOutDir",
+    "build": "yarn g:build",
+    "build:verify": "yarn g:build:verify",
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
-    "dev": "npx vite",
-    "preview": "npx vite preview",
+    "dev": "yarn g:dev",
+    "preview": "yarn g:preview",
     "test": "vitest",
     "visualizer": "vite-bundle-visualizer"
   },
@@ -78,7 +78,6 @@
     "@w3ux/react-polkicon": "*",
     "eslint": "*",
     "radix-ui": "*",
-    "react": "*",
-    "vite": "*"
+    "react": "*"
   }
 }

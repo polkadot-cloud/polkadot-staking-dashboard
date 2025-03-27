@@ -16,6 +16,7 @@ export type CheckboxProps = ComponentBase & {
 export type HeaderButtonProps = ComponentBase & {
   outline?: boolean
   withText?: boolean
+  noMargin?: boolean
 }
 
 export type LabelRowProps = ComponentBase & {

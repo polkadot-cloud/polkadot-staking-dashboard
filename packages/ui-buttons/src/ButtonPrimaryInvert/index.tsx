@@ -37,6 +37,7 @@ export const ButtonPrimaryInvert = (
     onMouseOver,
     onMouseMove,
     onMouseOut,
+    asLabel,
   } = props
 
   const buttonClasses = classNames(
@@ -56,14 +57,8 @@ export const ButtonPrimaryInvert = (
     className
   )
 
-  return (
-    <button
-      className={buttonClasses}
-      style={style}
-      type="button"
-      disabled={disabled}
-      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
-    >
+  const buttonContent = (
+    <>
       {iconLeft && (
         <FontAwesomeIcon
           icon={iconLeft}
@@ -79,6 +74,26 @@ export const ButtonPrimaryInvert = (
           transform={iconTransform}
         />
       )}
+    </>
+  )
+
+  if (asLabel) {
+    return (
+      <div className={buttonClasses} style={style}>
+        {buttonContent}
+      </div>
+    )
+  }
+
+  return (
+    <button
+      className={buttonClasses}
+      style={style}
+      type="button"
+      disabled={disabled}
+      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+    >
+      {buttonContent}
     </button>
   )
 }

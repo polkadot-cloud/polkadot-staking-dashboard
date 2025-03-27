@@ -5589,7 +5589,6 @@ __metadata:
     eslint: "*"
     radix-ui: "*"
     react: "*"
-    vite: "*"
   languageName: unknown
   linkType: soft
 
@@ -10058,10 +10057,10 @@ __metadata:
     simplebar: "npm:^6.3.0"
     simplebar-react: "npm:^3.3.0"
     styled-components: "npm:^6.1.13"
+    tsc: "npm:^2.0.4"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.27.0"
     vite: "npm:^6.2.2"
-    vitest: "npm:^3.0.9"
   languageName: unknown
   linkType: soft
 
@@ -12081,6 +12080,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tsc@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "tsc@npm:2.0.4"
+  bin:
+    tsc: bin/tsc
+  checksum: 10c0/4651d344891d995e62ab7ca64ce0a8597bbdc2d392886c9956d15caab4dc9bfe86e759d3385b3f97c49fb5294194a161d6812673e3f51e46357c82482f32c3ab
+  languageName: node
+  linkType: hard
+
 "tsconfck@npm:^3.0.3":
   version: 3.1.5
   resolution: "tsconfck@npm:3.1.5"
@@ -12349,6 +12357,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ui-overlay@workspace:packages/ui-overlay"
   dependencies:
+    types: "workspace:*"
     ui-core: "workspace:*"
   peerDependencies:
     "@fortawesome/fontawesome-svg-core": "*"

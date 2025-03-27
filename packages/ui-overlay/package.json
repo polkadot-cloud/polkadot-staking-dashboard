@@ -12,6 +12,7 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
+    "types": "workspace:*",
     "ui-core": "workspace:*"
   },
   "peerDependencies": {
