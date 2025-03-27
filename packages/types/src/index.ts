@@ -4,4 +4,5 @@
 export * from './accounts'
 export * from './identity'
 export * from './nominate'
+export * from './overlay'
 export * from './pools'

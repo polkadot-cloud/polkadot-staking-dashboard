@@ -3,6 +3,15 @@
 
 import type { AnyJson } from '@w3ux/types'
 import type { FC, RefObject } from 'react'
+import type {
+  ActiveOverlayInstance,
+  CanvasSize,
+  CanvasStatus,
+  ModalSize,
+  ModalStatus,
+  OverlayInstanceDirection,
+  OverlayType,
+} from 'types'
 
 export interface OverlayContextInterface {
   openOverlayInstances: number
@@ -48,25 +57,7 @@ export type ModalProps = Fallback & {
   externalOverlayStatus: CanvasStatus
 }
 export type OverlayProps = ModalProps & CanvasProps
-
-export type OverlayInstanceDirection = 'inc' | 'dec'
-
-export type ActiveOverlayInstance = 'modal' | 'canvas' | null
-
-export type OverlayType = 'modal' | 'canvas'
-
-export type CanvasStatus = 'open' | 'closing' | 'closed'
-
-export type ModalStatus =
-  | 'opening'
-  | 'open'
-  | 'closing'
-  | 'closed'
-  | 'replacing'
-
 export type ConfigOptions = Record<string, AnyJson>
-
-export type ModalSize = 'xs' | 'sm' | 'lg' | 'xl'
 
 export interface ModalConfig {
   key: string
@@ -80,5 +71,3 @@ export interface CanvasConfig {
   size?: CanvasSize
   options?: ConfigOptions
 }
-
-export type CanvasSize = 'lg' | 'xl'
