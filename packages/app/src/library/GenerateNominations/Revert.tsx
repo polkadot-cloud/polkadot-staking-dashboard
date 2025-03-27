@@ -25,7 +25,9 @@ export const Revert = ({
       open={open}
       portalContainer={themeElementRef.current || undefined}
       onTriggerClick={() => {
-        setOpen(true)
+        if (!disabled) {
+          setOpen(true)
+        }
       }}
       content={
         <Confirm
@@ -33,9 +35,6 @@ export const Revert = ({
           controlKey={buttonClass}
           onClose={() => setOpen(false)}
           onRevert={() => {
-            if (disabled) {
-              return
-            }
             onClick()
             setOpen(false)
           }}
@@ -45,6 +44,7 @@ export const Revert = ({
       <p
         className={buttonClass}
         style={{
+          cursor: disabled ? 'default' : 'pointer',
           opacity: disabled ? 0.5 : 1,
           margin: '0 1rem 0 0',
           fontFamily: 'InterSemiBold, sans-serif',
