@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.2.0...ui-overlay-v1.3.0) (2025-03-27)
+
+
+### Features
+
+* **ux:** Add canvas max width support ([#2609](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2609)) ([077ba6b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/077ba6b790acbc2a4becdae5f9a6867b3a3c7877))
+* **ux:** nomination management UI improvements, confirm dialogues ([#2604](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2604)) ([ee1dfef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ee1dfefb6d1337c1d1d5b913bfd505d0d10cdc04))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.1.0...ui-overlay-v1.2.0) (2025-02-24)
 
 
