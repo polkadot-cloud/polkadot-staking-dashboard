@@ -172,12 +172,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
   })
 
   // Open the canvas
-  const openCanvas = ({
-    key,
-    size = 'lg',
-    scroll = true,
-    options,
-  }: CanvasConfig) => {
+  const openCanvas = ({ key, size, scroll = true, options }: CanvasConfig) => {
     setCanvasStatus('open')
     setOpenOverlayInstances('inc', 'canvas')
     setCanvasConfig({
