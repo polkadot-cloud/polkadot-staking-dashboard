@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.2.0...ui-buttons-v1.3.0) (2025-03-27)
+
+
+### Features
+
+* **locales:** Add multi-currency support for staking rewards & balances ([#2563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2563)) ([c25e64f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c25e64f0b35beb555641a1a6f018b63bb3cf32db))
+* **ux:** Button primary as label support ([#2611](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2611)) ([0e96208](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0e96208e87515e161161e724b5d56695bf47759f))
+* **ux:** Improved nomination management selection UI ([#2603](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2603)) ([f75ff6f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f75ff6ff07409b8b90c73f9b7f0b0b10c1d592ea))
+* **ux:** nomination management UI improvements, confirm dialogues ([#2604](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2604)) ([ee1dfef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ee1dfefb6d1337c1d1d5b913bfd505d0d10cdc04))
+* **ux:** Revised wallet & hardware account management flow ([#2595](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2595)) ([2f7faea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2f7faea0080322e67f62f1f02ac70ead7865caf9))
+* **ux:** Simplified header UI, new Account, Settings popovers ([#2573](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2573)) ([d384b83](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d384b83409e6941187da2fd910a96b803644fcdc))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.1.0...ui-buttons-v1.2.0) (2025-02-24)
 
 
