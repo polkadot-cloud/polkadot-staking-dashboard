@@ -1,11 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  faChevronLeft,
-  faMagnifyingGlass,
-  faPlus,
-} from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -24,7 +20,6 @@ import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { ListControls } from './ListControls'
 import { Methods } from './Methods'
 import { Confirm } from './Popovers/Confirm'
-import { SearchValidators } from './Prompts/SearchValidators'
 import { SelectFavorites } from './Prompts/SelectFavorites'
 import { Revert } from './Revert'
 import type {
@@ -196,23 +191,24 @@ export const GenerateNominations = ({
         maxNominationsReached ||
         !availableToNominate(nominations).randomValidators.length,
     },
-    searchValidators: {
-      title: 'Search Validators',
-      onClick: () => {
-        const updateList = (newNominations: Validator[]) => {
-          setNominations([...newNominations])
-          updateSetters(newNominations)
-          closePrompt()
-        }
-        openPromptWith(
-          <SearchValidators callback={updateList} nominations={nominations} />,
-          'lg'
-        )
-      },
-      icon: faMagnifyingGlass,
-      onSelected: false,
-      isDisabled: () => maxNominations.isLessThanOrEqualTo(nominations?.length),
-    },
+    // TODO: Enable feature in future PR
+    // searchValidators: {
+    //   title: 'Search Validators',
+    //   onClick: () => {
+    //     const updateList = (newNominations: Validator[]) => {
+    //       setNominations([...newNominations])
+    //       updateSetters(newNominations)
+    //       closePrompt()
+    //     }
+    //     openPromptWith(
+    //       <SearchValidators callback={updateList} nominations={nominations} />,
+    //       'lg'
+    //     )
+    //   },
+    //   icon: faMagnifyingGlass,
+    //   onSelected: false,
+    //   isDisabled: () => maxNominations.isLessThanOrEqualTo(nominations?.length),
+    // },
   }
 
   // Determine button style depending on in canvas

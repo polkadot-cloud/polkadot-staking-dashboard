@@ -67,7 +67,6 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
             </PromptListItem>
           )
         })}
-
         <FooterWrapper>
           <ButtonPrimary
             text={t('addToNominations')}
