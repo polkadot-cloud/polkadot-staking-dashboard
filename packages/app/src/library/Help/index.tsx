@@ -157,7 +157,7 @@ export const Help = () => {
         zIndex: 20,
       }}
     >
-      <Scroll>
+      <Scroll size="lg">
         <Content>
           <div
             style={{
