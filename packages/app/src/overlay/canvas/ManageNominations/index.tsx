@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { DisplayFor } from '@w3ux/types'
 import { PoolNominate } from 'api/tx/poolNominate'
 import { StakingNominate } from 'api/tx/stakingNominate'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -16,6 +17,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { GenerateNominations } from 'library/GenerateNominations'
+import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -123,6 +125,18 @@ export const Inner = () => {
     padding: '0 1.5rem',
   }
 
+  // Generation component props
+  const displayFor: DisplayFor = 'canvas'
+  const setters = [
+    {
+      current: {
+        callable: true,
+        fn: () => nominations,
+      },
+      set: handleSetupUpdate,
+    },
+  ]
+
   return (
     <>
       <div
@@ -156,17 +170,10 @@ export const Inner = () => {
         <p>Button Placeholder</p>
       </div>
       <Main size={canvasSize} withMenu>
+        <InlineControls displayFor={displayFor} allowRevert setters={setters} />
         <GenerateNominations
-          displayFor="canvas"
-          setters={[
-            {
-              current: {
-                callable: true,
-                fn: () => nominations,
-              },
-              set: handleSetupUpdate,
-            },
-          ]}
+          displayFor={displayFor}
+          setters={setters}
           allowRevert
         />
       </Main>
@@ -175,7 +182,7 @@ export const Inner = () => {
           noMargin
           fromController={!isPool}
           valid={valid}
-          displayFor="canvas"
+          displayFor={displayFor}
           {...submitExtrinsic}
         />
       </Footer>

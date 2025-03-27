@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -11,18 +11,15 @@ import { usePrompt } from 'contexts/Prompt'
 import { useStaking } from 'contexts/Staking'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { SelectableWrapper } from 'library/List'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Validator } from 'types'
-import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { ListControls } from './ListControls'
 import { Methods } from './Methods'
 import { Confirm } from './Popovers/Confirm'
 import { SelectFavorites } from './Prompts/SelectFavorites'
-import { Revert } from './Revert'
 import type {
   AddNominationsType,
   GenerateNominationsProps,
@@ -34,7 +31,6 @@ import { Wrapper } from './Wrapper'
 export const GenerateNominations = ({
   setters = [],
   displayFor = 'default',
-  allowRevert = false,
 }: GenerateNominationsProps) => {
   const { t } = useTranslation()
   const {
@@ -49,25 +45,22 @@ export const GenerateNominations = ({
   const { openPromptWith, closePrompt } = usePrompt()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getValidators, validatorsFetched } = useValidators()
-  const { defaultNominations, nominations, setNominations } =
-    useManageNominations()
+  const {
+    method,
+    height,
+    fetching,
+    setHeight,
+    heightRef,
+    setMethod,
+    setFetching,
+    nominations,
+    updateSetters,
+    setNominations,
+    defaultNominations,
+  } = useManageNominations()
 
+  const defaultNominationsCount = defaultNominations.length
   const { maxNominations } = consts
-  const defaultNominationsCount = defaultNominations?.length || 0
-
-  // Store the method of fetching validators
-  const [method, setMethod] = useState<string | null>(
-    defaultNominationsCount ? 'Manual' : null
-  )
-
-  // Store whether validators are being fetched
-  const [fetching, setFetching] = useState<boolean>(false)
-
-  // Store the height of the container
-  const [height, setHeight] = useState<number | null>(null)
-
-  // Ref for the height of the container
-  const heightRef = useRef<HTMLDivElement>(null)
 
   const resizeCallback = () => {
     setHeight(null)
@@ -79,7 +72,7 @@ export const GenerateNominations = ({
       const newNominations = fetchFromMethod(method)
       setNominations([...newNominations])
       setFetching(false)
-      updateSetters(newNominations)
+      updateSetters(setters, newNominations)
     }
   }
 
@@ -88,17 +81,7 @@ export const GenerateNominations = ({
     if (method) {
       const newNominations = addNomination(nominations, type)
       setNominations([...newNominations])
-      updateSetters([...newNominations])
-    }
-  }
-
-  const updateSetters = (newNominations: Validator[]) => {
-    for (const { current, set } of setters) {
-      const currentValue = current?.callable ? current.fn() : current
-      set({
-        ...currentValue,
-        nominations: newNominations,
-      })
+      updateSetters(setters, [...newNominations])
     }
   }
 
@@ -127,7 +110,7 @@ export const GenerateNominations = ({
                 .includes(n.address)
           )
           setNominations([...newNominations])
-          updateSetters([...newNominations])
+          updateSetters(setters, [...newNominations])
           if (typeof callback === 'function') {
             callback()
           }
@@ -144,7 +127,7 @@ export const GenerateNominations = ({
       onClick: () => {
         const updateList = (newNominations: Validator[]) => {
           setNominations([...newNominations])
-          updateSetters(newNominations)
+          updateSetters(setters, newNominations)
           closePrompt()
         }
         openPromptWith(
@@ -204,9 +187,6 @@ export const GenerateNominations = ({
     // },
   }
 
-  // Determine button style depending on in canvas
-  const ButtonType = displayFor === 'canvas' ? ButtonPrimary : ButtonSecondary
-
   // Update nominations on account switch, or if `defaultNominations` change
   useEffect(() => {
     if (
@@ -245,100 +225,55 @@ export const GenerateNominations = ({
   }, [])
 
   return (
-    <>
-      {/* TODO: Move this to separate `Controls/Inline` component, alongside `Controls/Menu` component */}
-      {method && (
-        <SelectableWrapper>
-          <ButtonType
-            text={t('startAgain', { ns: 'app' })}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-2"
-            onClick={() => {
-              setMethod(null)
-              setNominations([])
-              updateSetters([])
-            }}
-            style={{ marginRight: '1rem' }}
-          />
-          {['Active Low Commission', 'Optimal Selection'].includes(method) && (
-            <ButtonType
-              text={t('reGenerate', { ns: 'app' })}
-              onClick={() => {
-                // Set a temporary height to prevent height snapping on re-renders
-                setHeight(heightRef.current?.clientHeight || null)
-                setTimeout(() => setHeight(null), 200)
-                setFetching(true)
-              }}
-              style={{ marginRight: '1rem' }}
-              marginRight
+    <Wrapper
+      style={{
+        height: height ? `${height}px` : 'auto',
+        marginTop: method ? '1rem' : 0,
+      }}
+    >
+      <div>
+        {!isReadOnlyAccount(activeAccount) && !method && (
+          <>
+            <Subheading>
+              <h4>
+                {t('chooseValidators2', {
+                  maxNominations: maxNominations.toString(),
+                  ns: 'app',
+                })}
+              </h4>
+            </Subheading>
+            <Methods
+              setMethod={setMethod}
+              setNominations={setNominations}
+              setFetching={setFetching}
+              key="methods"
             />
-          )}
-          {allowRevert && (
-            <Revert
-              disabled={
-                JSON.stringify(nominations) ===
-                JSON.stringify(defaultNominations)
-              }
-              onClick={() => {
-                updateSetters(defaultNominations)
-                setNominations(defaultNominations)
-              }}
-            />
-          )}
-        </SelectableWrapper>
-      )}
-      <Wrapper
-        style={{
-          height: height ? `${height}px` : 'auto',
-          marginTop: method ? '1rem' : 0,
-        }}
-      >
-        <div>
-          {!isReadOnlyAccount(activeAccount) && !method && (
-            <>
-              <Subheading>
-                <h4>
-                  {t('chooseValidators2', {
-                    maxNominations: maxNominations.toString(),
-                    ns: 'app',
-                  })}
-                </h4>
-              </Subheading>
-              <Methods
-                setMethod={setMethod}
-                setNominations={setNominations}
-                setFetching={setFetching}
-                key="methods"
+          </>
+        )}
+      </div>
+      {fetching
+        ? null
+        : isReady &&
+          method !== null && (
+            <div ref={heightRef}>
+              <ValidatorList
+                bondFor="nominator"
+                validators={nominations}
+                allowMoreCols
+                allowListFormat={false}
+                displayFor={displayFor}
+                selectable
+                ListControls={
+                  <ListControls
+                    selectHandlers={selectHandlers}
+                    filterHandlers={Object.values(filterHandlers)}
+                    displayFor={displayFor}
+                  />
+                }
+                onRemove={selectHandlers?.['removeSelected']?.popover.callback}
               />
-            </>
+            </div>
           )}
-        </div>
-        {fetching
-          ? null
-          : isReady &&
-            method !== null && (
-              <div ref={heightRef}>
-                <ValidatorList
-                  bondFor="nominator"
-                  validators={nominations}
-                  allowMoreCols
-                  allowListFormat={false}
-                  displayFor={displayFor}
-                  selectable
-                  ListControls={
-                    <ListControls
-                      selectHandlers={selectHandlers}
-                      filterHandlers={Object.values(filterHandlers)}
-                      displayFor={displayFor}
-                    />
-                  }
-                  onRemove={
-                    selectHandlers?.['removeSelected']?.popover.callback
-                  }
-                />
-              </div>
-            )}
-      </Wrapper>
-    </>
+    </Wrapper>
   )
 }

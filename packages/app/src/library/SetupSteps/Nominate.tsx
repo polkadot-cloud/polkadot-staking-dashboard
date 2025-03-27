@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { DisplayFor } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import {
@@ -9,6 +10,7 @@ import {
 } from 'contexts/ManageNominations'
 import { useSetup } from 'contexts/Setup'
 import type { NominatorProgress } from 'contexts/Setup/types'
+import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
 import { Footer } from 'library/SetupSteps/Footer'
 import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
@@ -38,6 +40,22 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
     setActiveAccountSetup(bondFor, value)
   }
 
+  // Generation component props
+  const displayFor: DisplayFor = 'modal'
+  const setters = [
+    {
+      current: {
+        callable: true,
+        fn: () =>
+          (bondFor === 'nominator'
+            ? getNominatorSetup(activeAccount)
+            : getPoolSetup(activeAccount)
+          ).progress,
+      },
+      set: handleSetupUpdate,
+    },
+  ]
+
   return (
     <>
       <Header
@@ -55,23 +73,8 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
             })}
           </h4>
         </Subheading>
-        <GenerateNominations
-          setters={[
-            {
-              current: {
-                callable: true,
-                fn: () =>
-                  (bondFor === 'nominator'
-                    ? getNominatorSetup(activeAccount)
-                    : getPoolSetup(activeAccount)
-                  ).progress,
-              },
-              set: handleSetupUpdate,
-            },
-          ]}
-          displayFor="modal"
-        />
-
+        <InlineControls displayFor={displayFor} allowRevert setters={setters} />
+        <GenerateNominations setters={setters} displayFor={displayFor} />
         <Footer complete={progress.nominations.length > 0} bondFor={bondFor} />
       </MotionContainer>
     </>
