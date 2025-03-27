@@ -158,26 +158,18 @@ export const extractPoolIdFromUrl = (url: string): string | null => {
  * @returns Array of validator addresses or empty array if not found
  */
 export const extractValidatorsFromUrl = (url: string): string[] => {
-  console.log('Extracting validators from URL:', url)
-
   // Extract the primary validator from the path
   const pathRegex = /\/invite\/validator\/([^/?#]+)/
   const pathMatch = url.match(pathRegex)
   const primaryValidator = pathMatch ? pathMatch[1] : null
-  console.log('Primary validator:', primaryValidator)
 
   // Check for compressed list format
   const compressedRegex = /\/invite\/validator\/[^/]+\/list\/([^/?#]+)/
   const compressedMatch = url.match(compressedRegex)
-  console.log(
-    'Compressed match:',
-    compressedMatch ? compressedMatch[1] : 'none'
-  )
 
   if (compressedMatch) {
     // Decompress the validator list
     const validators = decompressValidators(compressedMatch[1])
-    console.log('Decompressed validators:', validators)
     return validators
   }
 
@@ -185,16 +177,13 @@ export const extractValidatorsFromUrl = (url: string): string[] => {
   const queryRegex = /[?&]validators=([^&]+)/
   const queryMatch = url.match(queryRegex)
   const validatorsParam = queryMatch ? queryMatch[1] : ''
-  console.log('Query validators:', validatorsParam)
 
   if (validatorsParam) {
     return validatorsParam.split(',')
   } else if (primaryValidator) {
-    console.log('Using primary validator only:', primaryValidator)
     return [primaryValidator]
   }
 
-  console.log('No validators found in URL')
   return []
 }
 

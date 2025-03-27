@@ -12,12 +12,12 @@ export const AverageCommission = ({
 }) => {
   const { t } = useTranslation('invite')
 
-  // Calculate average commission
+  // Calculate average commission directly from the raw values
+  // The raw commission values appear to already be in percentage format
   const avgCommission = validators.length
     ? validators.reduce((acc, v) => {
-        const commission = v.prefs?.commission
-          ? v.prefs.commission / 10000000
-          : 0
+        // Get the raw commission value, default to 0 if not available
+        const commission = v.prefs?.commission ?? 0
         return acc + commission
       }, 0) / validators.length
     : 0

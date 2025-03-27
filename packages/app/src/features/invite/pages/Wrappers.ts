@@ -121,66 +121,88 @@ export const ValidatorListContainer = styled.div`
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+  margin-top: 1.5rem;
 
   .validator-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     width: 100%;
   }
 
-  .validator-card {
-    flex: 1;
-    min-width: 300px;
-    flex-basis: calc(50% - 0.5rem);
-    background: var(--button-primary-background);
-    border-radius: 1rem;
-    transition: all var(--transition-duration);
-    cursor: pointer;
+  .validator-item {
+    background: var(--background-list-item);
+    border-radius: 0.75rem;
+    border: 1.5px solid var(--border-primary-color);
     overflow: hidden;
     position: relative;
-
-    @media (max-width: 1024px) {
-      flex-basis: 100%;
-    }
+    cursor: pointer;
+    transition: all var(--transition-duration);
+    padding: 0.75rem;
 
     &:hover {
-      background: var(--button-hover-background);
+      border-color: var(--accent-color-transparent);
+      background-color: var(--background-list-item-hover);
     }
 
     &.selected {
-      background: var(--background-floating-card);
-      box-shadow: 0 0 0.75rem var(--shadow-primary);
+      border-color: var(--accent-color-primary);
+      background-color: var(--background-list-item-selected);
     }
 
-    .card-header {
+    .validator-header {
       display: flex;
       align-items: center;
-      padding: 1rem;
-      border-bottom: 1px solid var(--border-primary-color);
-
-      .checkbox-wrapper {
-        margin-right: 0.75rem;
-
-        input[type='checkbox'] {
-          width: 1.2rem;
-          height: 1.2rem;
-          cursor: pointer;
-        }
-      }
+      width: 100%;
 
       .identity {
         display: flex;
         align-items: center;
         flex-grow: 1;
-        gap: 0.75rem;
+        margin-right: 0.5rem;
+        overflow: hidden;
 
         .name {
-          font-size: 1rem;
+          font-size: 0.95rem;
           font-weight: 500;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          margin-left: 0.5rem;
+        }
+      }
+
+      .validator-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-right: 0.5rem;
+        min-width: 80px;
+
+        .commission-value {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: var(--text-color-primary);
+        }
+
+        .status-info {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          font-size: 0.8rem;
+          margin-top: 0.25rem;
+
+          .status {
+            &.active {
+              color: var(--status-success-color);
+            }
+          }
+
+          .dot-amount {
+            color: var(--text-color-secondary);
+            font-size: 0.75rem;
+            margin-top: 0.1rem;
+          }
         }
       }
 
@@ -189,39 +211,28 @@ export const ValidatorListContainer = styled.div`
         align-items: center;
       }
     }
+  }
 
-    .card-content {
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
+  /* Ensure we have at most 8 validators per column */
+  @media (min-width: 1024px) {
+    .validator-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-flow: column;
+      grid-template-rows: repeat(8, auto);
+    }
+  }
 
-      .era-points {
-        width: 100%;
-        height: 60px;
-      }
+  /* Responsive adjustments */
+  @media (max-width: 1023px) {
+    .validator-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 
-      .metrics {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 0.5rem;
-
-        .commission,
-        .status {
-          display: flex;
-          align-items: center;
-          font-size: 0.9rem;
-          color: var(--text-color-secondary);
-          background: var(--background-primary);
-          padding: 0.4rem 0.75rem;
-          border-radius: 0.5rem;
-
-          span {
-            margin-left: 0.25rem;
-          }
-        }
-      }
+  @media (max-width: 767px) {
+    .validator-grid {
+      grid-template-columns: 1fr;
     }
   }
 `
