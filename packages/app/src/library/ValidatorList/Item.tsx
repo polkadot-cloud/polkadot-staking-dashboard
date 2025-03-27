@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { useList } from 'contexts/List'
@@ -34,7 +34,8 @@ export const Item = ({
   toggleFavorites,
   displayFor,
   eraPoints,
-  removeHandler,
+  onRemove,
+  showParaValidator,
 }: ItemProps) => {
   const { pluginEnabled } = usePlugins()
   const { selectable, selected } = useList()
@@ -73,15 +74,18 @@ export const Item = ({
                 />
               )}
             </HeaderButtonRow>
-            {typeof removeHandler === 'function' && (
-              <HeaderButton outline={['modal', 'canvas'].includes(displayFor)}>
+            {typeof onRemove === 'function' && (
+              <HeaderButton
+                outline={['modal', 'canvas'].includes(displayFor)}
+                noMargin
+              >
                 <button
                   type="button"
                   onClick={() => {
-                    removeHandler({ selected: [validator] })
+                    onRemove({ selected: [validator] })
                   }}
                 >
-                  <FontAwesomeIcon icon={faTimes} transform="shrink-1" />
+                  <FontAwesomeIcon icon={faXmark} transform="grow-4" />
                 </button>
               </HeaderButton>
             )}
@@ -105,7 +109,7 @@ export const Item = ({
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
-              <ParaValidator address={address} />
+              {showParaValidator && <ParaValidator address={address} />}
             </LabelRow>
             <EraStatus address={address} status={validatorStatus} noMargin />
           </div>

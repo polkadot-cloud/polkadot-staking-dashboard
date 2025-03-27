@@ -16,7 +16,7 @@ import { StatusLabel } from 'library/StatusLabel'
 import { ValidatorGeo } from 'overlay/canvas/ValidatorMetrics/ValidatorGeo'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonHelp } from 'ui-buttons'
 import {
   AccountTitle,
   GraphContainer,
@@ -27,7 +27,7 @@ import {
   Stat,
   Subheading,
 } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { CloseCanvas, useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph as ActiveGraphEraPoints } from './EraPoints/ActiveGraph'
 import { InactiveGraph as InactiveGraphEraPoints } from './EraPoints/InactiveGraph'
@@ -40,7 +40,6 @@ export const ValidatorMetrics = () => {
     eraStakers: { stakers },
   } = useStaking()
   const {
-    closeCanvas,
     config: { options },
   } = useOverlay().canvas
   const {
@@ -99,12 +98,7 @@ export const ValidatorMetrics = () => {
   return (
     <Main>
       <Head>
-        <ButtonPrimary
-          text={t('close', { ns: 'modals' })}
-          size="lg"
-          onClick={() => closeCanvas()}
-          style={{ marginLeft: '1.1rem' }}
-        />
+        <CloseCanvas />
       </Head>
       <AccountTitle>
         <div>

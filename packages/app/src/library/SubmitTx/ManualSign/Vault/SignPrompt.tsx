@@ -69,7 +69,7 @@ export const SignPrompt = ({
           {stage === 2 && (
             <ButtonSecondary
               text={t('backToScan')}
-              lg
+              size="lg"
               onClick={() => setStage(1)}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
@@ -88,7 +88,7 @@ export const SignPrompt = ({
           )}
           <ButtonSecondary
             text={t('cancel')}
-            lg
+            size="lg"
             marginLeft
             onClick={() => {
               onComplete('cancelled', null)

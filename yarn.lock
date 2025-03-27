@@ -5589,7 +5589,6 @@ __metadata:
     eslint: "*"
     radix-ui: "*"
     react: "*"
-    vite: "*"
   languageName: unknown
   linkType: soft
 
@@ -10058,10 +10057,10 @@ __metadata:
     simplebar: "npm:^6.3.0"
     simplebar-react: "npm:^3.3.0"
     styled-components: "npm:^6.1.13"
+    tsc: "npm:^2.0.4"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.27.0"
     vite: "npm:^6.2.2"
-    vitest: "npm:^3.0.9"
   languageName: unknown
   linkType: soft
 
@@ -12078,6 +12077,15 @@ __metadata:
   peerDependencies:
     typescript: ">=4"
   checksum: 10c0/ca0ee722557e7974a221d6b3fa28dcbcc5e98b7bce9402bf113eae7c835d59644d24b48ac65d15c7f8dbe8cab61c54c4b0b2d252212c72bc4d09ce1fe8fbc937
+  languageName: node
+  linkType: hard
+
+"tsc@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "tsc@npm:2.0.4"
+  bin:
+    tsc: bin/tsc
+  checksum: 10c0/4651d344891d995e62ab7ca64ce0a8597bbdc2d392886c9956d15caab4dc9bfe86e759d3385b3f97c49fb5294194a161d6812673e3f51e46357c82482f32c3ab
   languageName: node
   linkType: hard
 

@@ -101,16 +101,12 @@ export const SelectableWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 0 0.15rem;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
+  min-height: 2rem;
 
-  > button {
+  &.menu {
+    height: 2rem;
     margin-bottom: 0.75rem;
-  }
-
-  &.list {
-    button {
-      color: var(--text-color-primary);
-    }
   }
 `
 

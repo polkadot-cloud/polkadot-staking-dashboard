@@ -10,8 +10,6 @@ import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { usePrompt } from 'contexts/Prompt'
-import { Notifications } from 'controllers/Notifications'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { GenerateNominations } from 'library/GenerateNominations'
 import type {
@@ -21,15 +19,13 @@ import type {
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonHelp } from 'ui-buttons'
 import { Footer, Head, Main, Title } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
-import { RevertPrompt } from './Prompts/RevertPrompt'
+import { CloseCanvas, useOverlay } from 'ui-overlay'
 
 export const ManageNominations = () => {
   const { t } = useTranslation('app')
   const {
-    closeCanvas,
     setCanvasStatus,
     config: { options },
   } = useOverlay().canvas
@@ -40,7 +36,6 @@ export const ManageNominations = () => {
   const { getBondedAccount } = useBonded()
   const { activeAccount } = useActiveAccounts()
   const { updatePoolNominations } = useBondedPools()
-  const { openPromptWith, closePrompt } = usePrompt()
 
   const { maxNominations } = consts
   const controller = getBondedAccount(activeAccount)
@@ -55,11 +50,10 @@ export const ManageNominations = () => {
   const [valid, setValid] = useState<boolean>(false)
 
   // Default nominators, from canvas options.
-  const [defaultNominations, setDefaultNominations] =
-    useState<NominationSelectionWithResetCounter>({
-      nominations: [...(options?.nominated || [])],
-      reset: 0,
-    })
+  const [defaultNominations] = useState<NominationSelectionWithResetCounter>({
+    nominations: [...(options?.nominated || [])],
+    reset: 0,
+  })
 
   // Current nominator selection, defaults to defaultNominations
   const [newNominations, setNewNominations] = useState<NominationSelection>({
@@ -71,21 +65,7 @@ export const ManageNominations = () => {
     setNewNominations(value)
   }
 
-  // Handler for reverting nomination updates
-  const handleRevertChanges = () => {
-    setNewNominations({ nominations: [...defaultNominations.nominations] })
-    setDefaultNominations({
-      nominations: defaultNominations.nominations,
-      reset: defaultNominations.reset + 1,
-    })
-    Notifications.emit({
-      title: t('nominationsReverted'),
-      subtitle: t('revertedToActiveSelection'),
-    })
-    closePrompt()
-  }
-
-  // Check if default nominations match new ones
+  // Check if default nominations match new ones.
   const nominationsMatch = () =>
     newNominations.nominations.every((n) =>
       defaultNominations.nominations.find((d) => d.address === n.address)
@@ -150,22 +130,7 @@ export const ManageNominations = () => {
     <>
       <Main size={canvasSize}>
         <Head>
-          <ButtonPrimaryInvert
-            text={t('revertChanges', { ns: 'modals' })}
-            lg
-            onClick={() => {
-              openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />)
-            }}
-            disabled={
-              newNominations.nominations === defaultNominations.nominations
-            }
-          />
-          <ButtonPrimary
-            text={t('cancel', { ns: 'app' })}
-            size="lg"
-            onClick={() => closeCanvas()}
-            style={{ marginLeft: '1.1rem' }}
-          />
+          <CloseCanvas />
         </Head>
         <Title>
           <h1>
@@ -189,6 +154,7 @@ export const ManageNominations = () => {
             },
           ]}
           nominations={newNominations}
+          allowRevert
         />
       </Main>
       <Footer size={canvasSize}>

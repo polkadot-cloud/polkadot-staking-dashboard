@@ -12,6 +12,10 @@
   font-size: inherit;
   margin: 0 0.4em;
 
+  &:last-child {
+    margin-right: 0;
+  }
+
   > button {
     background: var(--shimmer-foreground);
     color: var(--text-color-secondary);
@@ -36,7 +40,6 @@
   }
 
   &.outline > button {
-    border: 1px solid var(--border-secondary-color);
     background: none;
   }
 
@@ -59,5 +62,9 @@
       margin-left: 0.2rem;
       margin-right: 0.5rem;
     }
+  }
+
+  &.noMargin {
+    margin: 0;
   }
 }

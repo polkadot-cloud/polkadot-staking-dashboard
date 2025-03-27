@@ -64,11 +64,8 @@
   transition:
     opacity var(--transition-duration),
     color var(--transition-duration);
-
-  &:disabled {
-    opacity: var(--opacity-disabled);
-    cursor: default;
-  }
+  opacity: var(--opacity-disabled);
+  cursor: default;
 }
 
 .btnActiveTransforms {

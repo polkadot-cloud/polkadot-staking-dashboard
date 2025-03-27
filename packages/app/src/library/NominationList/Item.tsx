@@ -27,6 +27,7 @@ export const Item = ({
   displayFor,
   nominationStatus,
   eraPoints,
+  showParaValidator = false,
 }: ItemProps) => {
   const { pluginEnabled } = usePlugins()
   const { validatorIdentities, validatorSupers } = useValidators()
@@ -80,7 +81,7 @@ export const Item = ({
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
-              <ParaValidator address={address} />
+              {showParaValidator && <ParaValidator address={address} />}
             </LabelRow>
             <NominationStatus
               address={address}
