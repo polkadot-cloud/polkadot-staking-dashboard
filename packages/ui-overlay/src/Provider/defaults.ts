@@ -11,7 +11,7 @@ import type {
 
 export const defaultModalConfig: ModalConfig = {
   key: '',
-  size: 'lg',
+  size: undefined,
   options: {},
 }
 
