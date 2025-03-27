@@ -91,7 +91,6 @@ export const Active = () => {
                             nominator: activeAccount,
                             nominated,
                           },
-                          size: 'xl',
                         })
                       }
                     />

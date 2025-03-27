@@ -48,7 +48,10 @@ export const ManageNominations = () => {
   const isPool = bondFor === 'pool'
   const signingAccount = isPool ? activeAccount : controller
 
-  // Valid to submit transaction.
+  // Canvas content and footer size
+  const canvasSize = 'xl'
+
+  // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)
 
   // Default nominators, from canvas options.
@@ -58,17 +61,17 @@ export const ManageNominations = () => {
       reset: 0,
     })
 
-  // Current nominator selection, defaults to defaultNominations.
+  // Current nominator selection, defaults to defaultNominations
   const [newNominations, setNewNominations] = useState<NominationSelection>({
     nominations: options?.nominated || [],
   })
 
-  // Handler for updating setup.
+  // Handler for updating setup
   const handleSetupUpdate = (value: NominationSelection) => {
     setNewNominations(value)
   }
 
-  // Handler for reverting nomination updates.
+  // Handler for reverting nomination updates
   const handleRevertChanges = () => {
     setNewNominations({ nominations: [...defaultNominations.nominations] })
     setDefaultNominations({
@@ -82,7 +85,7 @@ export const ManageNominations = () => {
     closePrompt()
   }
 
-  // Check if default nominations match new ones.
+  // Check if default nominations match new ones
   const nominationsMatch = () =>
     newNominations.nominations.every((n) =>
       defaultNominations.nominations.find((d) => d.address === n.address)
@@ -123,7 +126,7 @@ export const ManageNominations = () => {
     },
     callbackInBlock: () => {
       if (isPool && activePool) {
-        // Update bonded pool targets if updating pool nominations.
+        // Update bonded pool targets if updating pool nominations
         updatePoolNominations(
           activePool.id,
           newNominations.nominations.map((n) => n.address)
@@ -132,7 +135,7 @@ export const ManageNominations = () => {
     },
   })
 
-  // Valid if there are between 1 and `maxNominations` nominations.
+  // Valid if there are between 1 and `maxNominations` nominations
   useEffect(() => {
     setValid(
       maxNominations.isGreaterThanOrEqualTo(
@@ -145,7 +148,7 @@ export const ManageNominations = () => {
 
   return (
     <>
-      <Main>
+      <Main size={canvasSize}>
         <Head>
           <ButtonPrimaryInvert
             text={t('revertChanges', { ns: 'modals' })}
@@ -188,7 +191,7 @@ export const ManageNominations = () => {
           nominations={newNominations}
         />
       </Main>
-      <Footer>
+      <Footer size={canvasSize}>
         <SubmitTx
           noMargin
           fromController={!isPool}

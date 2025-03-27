@@ -3,9 +3,9 @@
 
 import { useAnimation } from 'framer-motion'
 import { useEffect } from 'react'
+import type { CanvasStatus } from 'types'
 import { Backdrop } from 'ui-core/overlay'
 import { useOverlay } from './Provider'
-import type { CanvasStatus } from './Provider/types'
 
 export const Background = ({
   externalOverlayStatus,
