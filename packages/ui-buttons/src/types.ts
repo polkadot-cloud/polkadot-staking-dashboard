@@ -150,6 +150,13 @@ export type ButtonTextProps = ComponentBaseWithClassName &
     status?: 'danger'
   }
 
+export type ButtonMenuProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    text: string
+    status?: 'danger'
+  }
+
 export type MultiButtonContainerProps = ComponentBase & {
   marginLeft?: boolean
   marginRight?: boolean

@@ -18,6 +18,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { GenerateNominations } from 'library/GenerateNominations'
 import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
+import { MenuControls } from 'library/GenerateNominations/Controls/MenuControls'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -159,18 +160,17 @@ export const Inner = () => {
         </Title>
         <CloseCanvas sm />
       </div>
-      <div
-        style={{
-          ...outerContainerStyles,
-          background: 'var(--background-default)',
-          height: '3rem',
-        }}
-      >
-        {/* TODO: add buttons here */}
-        <p>Button Placeholder</p>
-      </div>
+      {displayFor === 'canvas' && (
+        <MenuControls allowRevert setters={setters} />
+      )}
       <Main size={canvasSize} withMenu>
-        <InlineControls displayFor={displayFor} allowRevert setters={setters} />
+        {displayFor !== 'canvas' && (
+          <InlineControls
+            displayFor={displayFor}
+            allowRevert
+            setters={setters}
+          />
+        )}
         <GenerateNominations
           displayFor={displayFor}
           setters={setters}

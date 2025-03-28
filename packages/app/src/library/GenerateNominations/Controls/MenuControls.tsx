@@ -1,21 +1,18 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import type { AnyFunction, DisplayFor } from '@w3ux/types'
+import type { AnyFunction } from '@w3ux/types'
 import { useManageNominations } from 'contexts/ManageNominations'
-import { SelectableWrapper } from 'library/List'
 import { useTranslation } from 'react-i18next'
-import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
+import { ButtonMenu } from 'ui-buttons'
 import { Revert } from '../Revert'
+import { MenuWrapper } from './Wrappers'
 
-export const InlineControls = ({
+export const MenuControls = ({
   setters,
-  displayFor,
   allowRevert,
 }: {
   setters: AnyFunction[]
-  displayFor: DisplayFor
   allowRevert: boolean
 }) => {
   const { t } = useTranslation()
@@ -32,26 +29,20 @@ export const InlineControls = ({
     defaultNominations,
   } = useManageNominations()
 
-  // Determine button style depending on in canvas
-  const ButtonType = displayFor === 'canvas' ? ButtonPrimary : ButtonSecondary
-
   return (
-    <SelectableWrapper>
+    <MenuWrapper>
       {method && (
         <>
-          <ButtonType
+          <ButtonMenu
             text={t('startAgain', { ns: 'app' })}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-2"
             onClick={() => {
               setMethod(null)
               setNominations([])
               updateSetters(setters, [])
             }}
-            style={{ marginRight: '1rem' }}
           />
           {['Active Low Commission', 'Optimal Selection'].includes(method) && (
-            <ButtonType
+            <ButtonMenu
               text={t('reGenerate', { ns: 'app' })}
               onClick={() => {
                 // Set a temporary height to prevent height snapping on re-renders
@@ -59,13 +50,13 @@ export const InlineControls = ({
                 setTimeout(() => setHeight(null), 200)
                 setFetching(true)
               }}
-              style={{ marginRight: '1rem' }}
             />
           )}
         </>
       )}
       {allowRevert && (
         <Revert
+          inMenu
           disabled={
             JSON.stringify(nominations) === JSON.stringify(defaultNominations)
           }
@@ -75,6 +66,6 @@ export const InlineControls = ({
           }}
         />
       )}
-    </SelectableWrapper>
+    </MenuWrapper>
   )
 }
