@@ -8,6 +8,7 @@ import {
   faPuzzlePiece,
   faToggleOff,
   faToggleOn,
+  faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
@@ -73,6 +74,19 @@ export const MenuPopover = ({
         </div>
         <div>
           <h3>{t('plugins', { ns: 'modals' })}</h3>
+        </div>
+      </MenuItemButton>
+      <MenuItemButton
+        onClick={() => {
+          setOpen(false)
+          openModal({ key: 'InviteModal', size: 'sm' })
+        }}
+      >
+        <div>
+          <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
+        </div>
+        <div>
+          <h3>{t('inviteToStake', { ns: 'invite' })}</h3>
         </div>
       </MenuItemButton>
       <MenuItemButton
