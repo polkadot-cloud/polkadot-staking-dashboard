@@ -25,6 +25,7 @@ import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
 import { ManagePool } from './modals/ManagePool'
 import { Networks } from './modals/Networks'
+import { NominateValidators } from './modals/NominateValidators'
 import { Plugins } from './modals/Plugins'
 import { RewardCalculator } from './modals/RewardCalculator'
 import { SelectCurrency } from './modals/SelectCurrency'
@@ -59,6 +60,7 @@ export const Overlays = () => {
         ManagePool,
         ManageFastUnstake,
         Networks,
+        NominateValidators,
         RewardCalculator,
         SelectCurrency,
         Plugins,
