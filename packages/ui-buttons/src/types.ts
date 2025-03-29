@@ -155,6 +155,7 @@ export type ButtonMenuProps = ComponentBaseWithClassName &
   ButtonCommonProps & {
     text: string
     status?: 'danger'
+    asLabel?: boolean
   }
 
 export type MultiButtonContainerProps = ComponentBase & {

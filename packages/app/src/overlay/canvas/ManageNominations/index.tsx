@@ -180,7 +180,7 @@ export const Inner = () => {
       <div
         style={{
           borderTop: '1px solid var(--border-secondary-color)',
-          background: ' var(--background-modal-footer)',
+          background: 'var(--background-modal-footer)',
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
