@@ -177,15 +177,27 @@ export const Inner = () => {
           allowRevert
         />
       </Main>
-      <Footer size={canvasSize}>
-        <SubmitTx
-          noMargin
-          fromController={!isPool}
-          valid={valid}
-          displayFor={displayFor}
-          {...submitExtrinsic}
-        />
-      </Footer>
+      <div
+        style={{
+          borderTop: '1px solid var(--border-secondary-color)',
+          background: ' var(--background-modal-footer)',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '1rem 1rem 0 1rem',
+        }}
+      >
+        <Footer size={canvasSize}>
+          <SubmitTx
+            noMargin
+            transparent
+            fromController={!isPool}
+            valid={valid}
+            displayFor="modal"
+            {...submitExtrinsic}
+          />
+        </Footer>
+      </div>
     </>
   )
 }
