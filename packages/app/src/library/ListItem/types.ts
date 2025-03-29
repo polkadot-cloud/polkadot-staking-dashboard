@@ -1,9 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ValidatorPrefs, ValidatorStatus } from 'contexts/Validators/types'
 import type { ReactNode } from 'react'
-import type { BondedPool, BondFor, MaybeAddress, NominationStatus } from 'types'
+import type {
+  BondedPool,
+  BondFor,
+  MaybeAddress,
+  NominationStatus,
+  ValidatorPrefs,
+  ValidatorStatus,
+} from 'types'
 
 export interface Outline {
   outline?: boolean

@@ -4,14 +4,16 @@
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonPrimary } from 'ui-buttons'
+import { ButtonMenu, ButtonPrimary } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { Confirm } from './Popovers/Confirm'
 
 export const Revert = ({
+  inMenu,
   disabled,
   onClick,
 }: {
+  inMenu?: boolean
   disabled: boolean
   onClick: () => void
 }) => {
@@ -19,7 +21,6 @@ export const Revert = ({
   const { themeElementRef } = useTheme()
 
   const [open, setOpen] = useState<boolean>(false)
-  const buttonClass = 'button-revert'
 
   return (
     <Popover
@@ -33,7 +34,7 @@ export const Revert = ({
       content={
         <Confirm
           text={t('revertNominationChanges')}
-          controlKey={buttonClass}
+          controlKey="button-revert"
           onClose={() => setOpen(false)}
           onRevert={() => {
             onClick()
@@ -42,7 +43,11 @@ export const Revert = ({
         />
       }
     >
-      <ButtonPrimary text={t('revertChanges')} asLabel disabled={disabled} />
+      {inMenu ? (
+        <ButtonMenu text={t('revertChanges')} disabled={disabled} />
+      ) : (
+        <ButtonPrimary text={t('revertChanges')} asLabel disabled={disabled} />
+      )}
     </Popover>
   )
 }

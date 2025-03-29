@@ -1,0 +1,31 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.btnMenu {
+  color: var(--accent-color-primary);
+  font-size: 1.15rem;
+  opacity: 0.8;
+  border-right: 1px solid var(--border-secondary-color);
+  height: 3rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  &.danger {
+    color: var(--status-danger-color);
+    &:hover {
+      color: var(--status-danger-color);
+    }
+  }
+}

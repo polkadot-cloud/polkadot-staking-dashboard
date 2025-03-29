@@ -15,4 +15,5 @@ export interface TxProps extends SignerProps {
   margin?: boolean
   SignerComponent: ReactElement
   displayFor?: DisplayFor
+  transparent?: boolean
 }

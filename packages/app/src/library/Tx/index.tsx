@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { appendOrEmpty } from '@w3ux/utils'
+import classNames from 'classnames'
 import { Signer } from './Signer'
 import type { TxProps } from './types'
 import { Wrapper } from './Wrapper'
@@ -18,18 +18,23 @@ export const Tx = ({
   dangerMessage,
   SignerComponent,
   displayFor = 'default',
-}: TxProps) => (
-  <Wrapper className={margin ? 'margin' : undefined}>
-    <div
-      className={`inner${appendOrEmpty(['canvas', 'card'].includes(displayFor), displayFor)}`}
-    >
-      <Signer
-        dangerMessage={dangerMessage}
-        notEnoughFunds={notEnoughFunds}
-        name={name}
-        label={label}
-      />
-      <section>{SignerComponent}</section>
-    </div>
-  </Wrapper>
-)
+  transparent,
+}: TxProps) => {
+  const innerClasses = classNames('inner', {
+    [displayFor]: ['canvas', 'card'].includes(displayFor),
+    transparent: !!transparent,
+  })
+  return (
+    <Wrapper className={margin ? 'margin' : undefined}>
+      <div className={innerClasses}>
+        <Signer
+          dangerMessage={dangerMessage}
+          notEnoughFunds={notEnoughFunds}
+          name={name}
+          label={label}
+        />
+        <section>{SignerComponent}</section>
+      </div>
+    </Wrapper>
+  )
+}

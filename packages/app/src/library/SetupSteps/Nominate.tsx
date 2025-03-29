@@ -1,10 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
+import type { DisplayFor } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import {
+  ManageNominationsProvider,
+  useManageNominations,
+} from 'contexts/ManageNominations'
 import { useSetup } from 'contexts/Setup'
+import type { NominatorProgress } from 'contexts/Setup/types'
+import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
 import { Footer } from 'library/SetupSteps/Footer'
 import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
@@ -13,10 +19,11 @@ import { useTranslation } from 'react-i18next'
 import { GenerateNominations } from '../GenerateNominations'
 import type { NominationsProps } from './types'
 
-export const Nominate = ({ bondFor, section }: NominationsProps) => {
+export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('app')
   const { consts } = useApi()
   const { activeAccount } = useActiveAccounts()
+  const { setNominations } = useManageNominations()
   const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()
 
   const setup =
@@ -28,9 +35,26 @@ export const Nominate = ({ bondFor, section }: NominationsProps) => {
   const { maxNominations } = consts
 
   // Handler for updating setup.
-  const handleSetupUpdate = (value: AnyJson) => {
+  const handleSetupUpdate = (value: NominatorProgress) => {
+    setNominations(value.nominations)
     setActiveAccountSetup(bondFor, value)
   }
+
+  // Generation component props
+  const displayFor: DisplayFor = 'modal'
+  const setters = [
+    {
+      current: {
+        callable: true,
+        fn: () =>
+          (bondFor === 'nominator'
+            ? getNominatorSetup(activeAccount)
+            : getPoolSetup(activeAccount)
+          ).progress,
+      },
+      set: handleSetupUpdate,
+    },
+  ]
 
   return (
     <>
@@ -49,26 +73,27 @@ export const Nominate = ({ bondFor, section }: NominationsProps) => {
             })}
           </h4>
         </Subheading>
-        <GenerateNominations
-          setters={[
-            {
-              current: {
-                callable: true,
-                fn: () =>
-                  (bondFor === 'nominator'
-                    ? getNominatorSetup(activeAccount)
-                    : getPoolSetup(activeAccount)
-                  ).progress,
-              },
-              set: handleSetupUpdate,
-            },
-          ]}
-          displayFor="modal"
-          nominations={{ nominations: progress.nominations }}
-        />
-
+        <InlineControls displayFor={displayFor} allowRevert setters={setters} />
+        <GenerateNominations setters={setters} displayFor={displayFor} />
         <Footer complete={progress.nominations.length > 0} bondFor={bondFor} />
       </MotionContainer>
     </>
+  )
+}
+
+export const Nominate = (props: NominationsProps) => {
+  const { activeAccount } = useActiveAccounts()
+  const { getNominatorSetup, getPoolSetup } = useSetup()
+  const setup =
+    props.bondFor === 'nominator'
+      ? getNominatorSetup(activeAccount)
+      : getPoolSetup(activeAccount)
+
+  const { progress } = setup
+
+  return (
+    <ManageNominationsProvider nominations={progress.nominations}>
+      <Inner {...props} />
+    </ManageNominationsProvider>
   )
 }

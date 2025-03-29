@@ -3,7 +3,7 @@
 
 import type { AnyJson, Sync } from '@w3ux/types'
 import type BigNumber from 'bignumber.js'
-import type { Identity } from 'types'
+import type { Identity, Validator, ValidatorStatus } from 'types'
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>
@@ -27,8 +27,6 @@ export interface Validators {
   validators: Validator[]
 }
 
-export type ValidatorStatus = 'waiting' | 'active'
-
 export interface AverageEraValidatorReward {
   days: number
   reward: BigNumber
@@ -44,16 +42,6 @@ export interface FavoriteValidatorsContextInterface {
 export type ValidatorAddresses = {
   address: string
 }[]
-
-export interface Validator {
-  address: string
-  prefs: ValidatorPrefs
-}
-
-export interface ValidatorPrefs {
-  commission: number
-  blocked: boolean
-}
 
 export interface LocalValidatorEntriesData {
   avgCommission: number

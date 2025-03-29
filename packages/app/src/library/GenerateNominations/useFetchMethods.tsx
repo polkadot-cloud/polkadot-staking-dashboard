@@ -4,8 +4,8 @@
 import { shuffle } from '@w3ux/utils'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import type { Validator } from 'contexts/Validators/types'
 import { useValidatorFilters } from 'hooks/useValidatorFilters'
+import type { Validator } from 'types'
 import type { AddNominationsType } from './types'
 
 export const useFetchMehods = () => {

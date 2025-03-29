@@ -24,15 +24,13 @@ import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import type { Identity, SuperIdentity } from 'types'
+import type { Identity, SuperIdentity, Validator, ValidatorStatus } from 'types'
 import { perbillToPercent } from 'utils'
 import type {
-  Validator,
   ValidatorAddresses,
   ValidatorListEntry,
   Validators,
   ValidatorsContextInterface,
-  ValidatorStatus,
 } from '../types'
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils'
 import {

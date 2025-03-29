@@ -7,12 +7,12 @@ import {
   faHeart,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons'
-import type { Validator } from 'contexts/Validators/types'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { SelectItems } from 'library/SelectItems'
 import { SelectItem } from 'library/SelectItems/Item'
 import type { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { Validator } from 'types'
 
 export const Methods = ({
   setMethod,

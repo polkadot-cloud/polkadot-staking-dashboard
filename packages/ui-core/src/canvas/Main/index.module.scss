@@ -5,9 +5,15 @@
 
 .main {
   padding-top: 3rem;
-  min-height: calc(100vh - 12rem);
   padding-bottom: 2rem;
   width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  min-height: calc(100vh - 12rem);
+
+  &.withMenu {
+    min-height: calc(100vh - 18rem);
+  }
 
   &.lg {
     max-width: $canvas-width-lg;
