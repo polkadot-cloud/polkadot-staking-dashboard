@@ -21,7 +21,6 @@ export const Revert = ({
   const { themeElementRef } = useTheme()
 
   const [open, setOpen] = useState<boolean>(false)
-  const buttonClass = 'button-revert'
 
   return (
     <Popover
@@ -35,7 +34,7 @@ export const Revert = ({
       content={
         <Confirm
           text={t('revertNominationChanges')}
-          controlKey={buttonClass}
+          controlKey="button-revert"
           onClose={() => setOpen(false)}
           onRevert={() => {
             onClick()

@@ -61,6 +61,7 @@ export const MenuControls = ({
             JSON.stringify(nominations) === JSON.stringify(defaultNominations)
           }
           onClick={() => {
+            setMethod('manual')
             updateSetters(setters, defaultNominations)
             setNominations(defaultNominations)
           }}
