@@ -6,14 +6,15 @@
 .footer {
   border-radius: 1rem;
   overflow: hidden;
-  margin-bottom: 2rem;
   width: 100%;
 
   &.lg {
     max-width: $canvas-width-lg;
+    margin-bottom: 2rem;
   }
 
   &.xl {
     max-width: $canvas-width-xl;
+    margin-bottom: 2rem;
   }
 }

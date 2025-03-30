@@ -28,6 +28,7 @@ export const SubmitTx = ({
   displayFor = 'default',
   fromController = false,
   onResize,
+  transparent,
 }: SubmitTxProps) => {
   const { t } = useTranslation()
   const { getBondedAccount } = useBonded()
@@ -79,7 +80,7 @@ export const SubmitTx = ({
         : t('submit', { ns: 'modals' })
     }`
 
-  // Set resize on submit footer UI height changes.
+  // Set resize on submit footer UI height changes
   useEffect(() => {
     setModalResize()
     if (onResize) {
@@ -95,6 +96,7 @@ export const SubmitTx = ({
       name={signingOpts.who?.name || ''}
       notEnoughFunds={notEnoughFunds}
       dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
+      transparent={transparent}
       SignerComponent={
         requiresManualSign(from) ? (
           <ManualSign
