@@ -48,7 +48,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^7.1.1",
+    "react-router-dom": "^7.4.1",
     "rxjs": "^7.8.2",
     "styles": "workspace:*",
     "types": "workspace:*",
