@@ -16,9 +16,9 @@ import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Validator } from 'types'
+import { Confirm } from '../Prompt/Confirm'
 import { ListControls } from './ListControls'
 import { Methods } from './Methods'
-import { Confirm } from './Popovers/Confirm'
 import { SelectFavorites } from './Prompts/SelectFavorites'
 import type {
   AddNominationsType,

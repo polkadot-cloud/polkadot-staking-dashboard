@@ -3,7 +3,7 @@
 
 import { usePoolCommission } from 'hooks/usePoolCommission'
 import { useSyncing } from 'hooks/useSyncing'
-import { FavoritePool } from 'library/ListItem/Labels/FavoritePool'
+import { FavoritePool } from 'library/ListItem/Buttons/FavoritePool'
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded'
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'

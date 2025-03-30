@@ -219,6 +219,7 @@
     "remove": "删除",
     "removeSelected": "移除选定项",
     "removeSelectedItems": "移除选定项？",
+    "removeFromNominees": "是否从您的提名人中删除该验证者？",
     "reset": "重设",
     "resources": "信息",
     "revertedToActiveSelection": "提名已恢复为您原来的选择",

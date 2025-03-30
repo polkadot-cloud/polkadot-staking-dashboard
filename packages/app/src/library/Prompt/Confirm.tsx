@@ -5,7 +5,7 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
-import type { RemoveSelectedProps } from '../types'
+import type { RemoveSelectedProps } from '../GenerateNominations/types'
 
 export const Confirm = ({
   text,

@@ -222,6 +222,7 @@
     "remove": "Eliminar",
     "removeSelected": "Eliminar Seleccionados",
     "removeSelectedItems": "¿Eliminar elementos seleccionados?",
+    "removeFromNominees": "¿Eliminar este validador de tus nominados?",
     "reset": "Reiniciar",
     "resources": "Recursos",
     "revertedToActiveSelection": "Las nominaciones se han revertido a tu selección activa.",
