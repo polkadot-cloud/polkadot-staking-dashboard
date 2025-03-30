@@ -10,12 +10,12 @@ import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { HistoricalEraPoints } from '../List/EraPointsGraph/HistoricalEraPoints'
+import { CopyAddress } from '../ListItem/Buttons/CopyAddress'
+import { Favorite } from '../ListItem/Buttons/Favorite'
+import { Metrics } from '../ListItem/Buttons/Metrics'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
-import { CopyAddress } from '../ListItem/Labels/CopyAddress'
-import { FavoriteValidator } from '../ListItem/Labels/FavoriteValidator'
 import { Identity } from '../ListItem/Labels/Identity'
-import { Metrics } from '../ListItem/Labels/Metrics'
 import { NominationStatus } from '../ListItem/Labels/NominationStatus'
 import type { ItemProps } from './types'
 
@@ -46,7 +46,7 @@ export const Item = ({
             <HeaderButtonRow>
               <CopyAddress address={address} />
               {toggleFavorites && (
-                <FavoriteValidator address={address} outline={outline} />
+                <Favorite address={address} outline={outline} />
               )}
               {displayFor !== 'canvas' && (
                 <Metrics

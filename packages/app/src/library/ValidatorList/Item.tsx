@@ -6,11 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { useList } from 'contexts/List'
 import { usePlugins } from 'contexts/Plugins'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
 import { HistoricalEraPoints } from 'library/List/EraPointsGraph/HistoricalEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
-import { Metrics } from 'library/ListItem/Labels/Metrics'
+import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
+import { Metrics } from 'library/ListItem/Buttons/Metrics'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
@@ -20,13 +21,12 @@ import {
   LabelRow,
   Separator,
 } from 'ui-core/list'
-import { useValidators } from '../../contexts/Validators/ValidatorEntries'
+import { Favorite } from '../ListItem/Buttons/Favorite'
+import { Select } from '../ListItem/Buttons/Select'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
 import { EraStatus } from '../ListItem/Labels/EraStatus'
-import { FavoriteValidator } from '../ListItem/Labels/FavoriteValidator'
 import { Identity } from '../ListItem/Labels/Identity'
-import { Select } from '../ListItem/Labels/Select'
 import type { ItemProps } from './types'
 
 export const Item = ({
@@ -61,7 +61,7 @@ export const Item = ({
           <div>
             <HeaderButtonRow>
               <CopyAddress address={address} />
-              {toggleFavorites && <FavoriteValidator address={address} />}
+              {toggleFavorites && <Favorite address={address} />}
               {displayFor === 'default' && (
                 <Metrics
                   address={address}
