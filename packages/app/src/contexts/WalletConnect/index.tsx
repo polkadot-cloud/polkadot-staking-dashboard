@@ -56,7 +56,7 @@ export const WalletConnectProvider = ({
   const [wcSessionActive, setWcSessionActive] = useState<boolean>(false)
 
   // Store the set of chain id the most recent session is connected to
-  const sessionChain = useRef<string>()
+  const sessionChain = useRef<string | null>(null)
 
   // Init WalletConnect provider & modal, and update as wcInitialized
   const initProvider = async () => {

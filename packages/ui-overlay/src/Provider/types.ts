@@ -39,8 +39,8 @@ export interface OverlayContextInterface {
     setModalHeight: (height: number) => void
     setModalResize: () => void
     setModalStatus: (status: ModalStatus) => void
-    setModalRef: (modalRef: RefObject<HTMLDivElement>) => void
-    setModalHeightRef: (heightRef: RefObject<HTMLDivElement>) => void
+    setModalRef: (modalRef: RefObject<HTMLDivElement | null>) => void
+    setModalHeightRef: (heightRef: RefObject<HTMLDivElement | null>) => void
   }
 }
 export interface Fallback {

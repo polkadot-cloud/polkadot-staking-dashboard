@@ -38,7 +38,7 @@ export const ManageNominationsProvider = ({
   const [height, setHeight] = useState<number | null>(null)
 
   // Ref for the height of the validator list container
-  const heightRef = useRef<HTMLDivElement>(null)
+  const heightRef = useRef<HTMLDivElement | null>(null)
 
   // Utility to update povided setters with new nominations
   const updateSetters = (

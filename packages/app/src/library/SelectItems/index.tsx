@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types'
-import type { MutableRefObject, ReactElement, ReactNode } from 'react'
+import type { ReactElement, ReactNode, RefObject } from 'react'
 import {
   Fragment,
   cloneElement,
@@ -15,8 +15,8 @@ import type { SelectItemsProps } from './types'
 
 export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   // Initialise refs for container and body of items.
-  const containerRefs: MutableRefObject<HTMLDivElement | null>[] = []
-  const bodyRefs: MutableRefObject<HTMLDivElement | null>[] = []
+  const containerRefs: RefObject<HTMLDivElement | null>[] = []
+  const bodyRefs: RefObject<HTMLDivElement | null>[] = []
 
   if (children) {
     children.forEach(() => {
@@ -97,7 +97,7 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
             if (child !== undefined) {
               return (
                 <Fragment key={`select_${i}`}>
-                  {cloneElement(child as ReactElement, {
+                  {cloneElement<AnyJson>(child as ReactElement, {
                     bodyRef: bodyRefs[i],
                     containerRef: containerRefs[i],
                   })}

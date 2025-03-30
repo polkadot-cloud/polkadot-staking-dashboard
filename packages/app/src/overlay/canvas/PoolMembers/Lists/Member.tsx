@@ -38,7 +38,7 @@ export const Member = ({
   const { activePool, isOwner, isBouncer } = useActivePool()
 
   // Ref for the member container.
-  const memberRef = useRef<HTMLDivElement>(null)
+  const memberRef = useRef<HTMLDivElement | null>(null)
 
   const { state, roles } = activePool?.bondedPool || {}
   const { bouncer, root, depositor } = roles || {}

@@ -4494,19 +4494,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
-  version: 15.7.14
-  resolution: "@types/prop-types@npm:15.7.14"
-  checksum: 10c0/1ec775160bfab90b67a782d735952158c7e702ca4502968aa82565bd8e452c2de8601c8dfe349733073c31179116cf7340710160d3836aa8a1ef76d1532893b1
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^18.2.25":
-  version: 18.3.5
-  resolution: "@types/react-dom@npm:18.3.5"
+"@types/react-dom@npm:^19.0.4":
+  version: 19.0.4
+  resolution: "@types/react-dom@npm:19.0.4"
   peerDependencies:
-    "@types/react": ^18.0.0
-  checksum: 10c0/b163d35a6b32a79f5782574a7aeb12a31a647e248792bf437e6d596e2676961c394c5e3c6e91d1ce44ae90441dbaf93158efb4f051c0d61e2612f1cb04ce4faa
+    "@types/react": ^19.0.0
+  checksum: 10c0/4e71853919b94df9e746a4bd73f8180e9ae13016333ce9c543dcba9f4f4c8fe6e28b038ca6ee61c24e291af8e03ca3bc5ded17c46dee938fcb32d71186fda7a3
   languageName: node
   linkType: hard
 
@@ -4519,22 +4512,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
+"@types/react@npm:*, @types/react@npm:^19.0.12":
   version: 19.0.12
   resolution: "@types/react@npm:19.0.12"
   dependencies:
     csstype: "npm:^3.0.2"
   checksum: 10c0/c814b6af5c0fbcf5c65d031b1c9bf98c5b857e015254d95811f2851b27b869c3d31c6f35dab127dc6921a3dbda0b0622c6323d493a14b31b231a6a58c41c5e84
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^18.3.3":
-  version: 18.3.19
-  resolution: "@types/react@npm:18.3.19"
-  dependencies:
-    "@types/prop-types": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: 10c0/236bfe0c4748ada1a640f13573eca3e0fc7c9d847b442947adb352b0718d6d285357fd84c33336c8ffb8cbfabc0d58a43a647c7fd79857fecd61fb58ab6f7918
   languageName: node
   linkType: hard
 
@@ -4932,85 +4915,94 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/extension-assets@npm:1.0.0, @w3ux/extension-assets@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@w3ux/extension-assets@npm:1.0.0"
+"@w3ux/extension-assets@npm:2.0.0-alpha.1":
+  version: 2.0.0-alpha.1
+  resolution: "@w3ux/extension-assets@npm:2.0.0-alpha.1"
   peerDependencies:
-    react: ^18
-  checksum: 10c0/9bfb505d485e10f3d5f8a346be4232c630bc76bf9b3cf172fbe75d6253c3e178e6025863f63b23343bf769bdd11ddafdc8a7b9fae96beee90f03e57d512c1047
+    react: ^19
+  checksum: 10c0/0177e4bf214ff41e7f6fc5a05904ec0a94fc1a1ea901b285331a61d51c98653160aafa7a95646a59f2b219162d88980c2ada282ba95e2aa8bf253ff8307ce8e4
   languageName: node
   linkType: hard
 
-"@w3ux/factories@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@w3ux/factories@npm:1.0.0"
+"@w3ux/factories@npm:^2.0.0-alpha.1":
+  version: 2.0.0-alpha.1
+  resolution: "@w3ux/factories@npm:2.0.0-alpha.1"
   peerDependencies:
-    react: ^18
-  checksum: 10c0/c1c02d40d60fc242cdec74be93f2d24b04f87ea908ef9a523ea3811bc13199d07941b267424b6316c2a4d2f003ad5a65a8aaf9937fe48a6da1dba2f7c36ef8a5
+    react: ^19
+  checksum: 10c0/654513529139cc7252ae02b1de78327963f27ba6aceac921e628d5194685c5a98a27459cf53a8367a0925fabbfdc094a3e7b85373b4786cf97f27df011e5082e
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@w3ux/hooks@npm:1.4.0"
-  dependencies:
-    "@w3ux/utils": "npm:^1.1.1-beta.9"
-    date-fns: "npm:^4.1.0"
-  peerDependencies:
-    react: ^18
-  checksum: 10c0/4b48856734e85d39d288f61c6636cb4b2075afd42b49b97b746036ec2365e852b4540c7cfb82b93c59b204c4fa18c4d9687d05478fa5df5f668ea7ead377238a
-  languageName: node
-  linkType: hard
-
-"@w3ux/hooks@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "@w3ux/hooks@npm:1.5.0"
+"@w3ux/hooks@npm:2.0.0-alpha.1":
+  version: 2.0.0-alpha.1
+  resolution: "@w3ux/hooks@npm:2.0.0-alpha.1"
   dependencies:
     "@w3ux/utils": "npm:^1.2.0"
     date-fns: "npm:^4.1.0"
   peerDependencies:
-    react: ^18
-  checksum: 10c0/dc08d8301f47b76709763b90385dcfbaf7d2dc2605616d3867ce2898dd7356ab0ffcb94b4ac935bd586009977f5ef5b3a875973ed7a4296f545f0a99f491a6ff
+    react: ^19
+  checksum: 10c0/2c751fa172415abb6d01f85fd7a0aa3534eae7015d02e63b3f6ed33bdc00825c997c9a8f428ef0005f5e086f869ba6120ee7e762888a461777b7279027d133e9
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^2.1.3":
-  version: 2.1.3
-  resolution: "@w3ux/react-connect-kit@npm:2.1.3"
+"@w3ux/hooks@npm:^2.0.0-alpha.2":
+  version: 2.0.0-alpha.2
+  resolution: "@w3ux/hooks@npm:2.0.0-alpha.2"
+  dependencies:
+    "@w3ux/utils": "npm:^2.0.0-alpha.2"
+    date-fns: "npm:^4.1.0"
+  peerDependencies:
+    react: ^19
+  checksum: 10c0/5793e9dc3f4f362d26373b2234f9b2efdba604f1dcb24d7fe3cd7a62e3c5c32520fca92542fafe8b1dcbfb9f4a005afd4dde8d45f991c8c1d06a96c9da2b922d
+  languageName: node
+  linkType: hard
+
+"@w3ux/react-connect-kit@npm:^3.0.0-alpha.1":
+  version: 3.0.0-alpha.1
+  resolution: "@w3ux/react-connect-kit@npm:3.0.0-alpha.1"
   dependencies:
     "@polkagate/extension-dapp": "npm:^0.48.2"
-    "@w3ux/extension-assets": "npm:1.0.0"
-    "@w3ux/hooks": "npm:1.4.0"
-    "@w3ux/utils": "npm:1.2.0"
-  checksum: 10c0/19d1af6973a3638924a95099c17bada9976df0cca4360db98f9e1fa81a167c83b0b8a953c41b7d9a20ce446eecf1c0de5c0433a85fb74031522e1738971e89dd
+    "@w3ux/extension-assets": "npm:2.0.0-alpha.1"
+    "@w3ux/hooks": "npm:2.0.0-alpha.1"
+    "@w3ux/utils": "npm:2.0.0-alpha.1"
+  checksum: 10c0/a2b088d2a9646b8fd875792d89ad3a9080276672658d0a677db5b5dd9c02f944577106677bbc6e473facf564a6e09d3c5469c8eb97bb63189c6e68149cefc586
   languageName: node
   linkType: hard
 
-"@w3ux/react-odometer@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@w3ux/react-odometer@npm:1.1.1"
-  checksum: 10c0/27f9e6970f230f9f0b594a0caddd20aac3205ad784cef5f4a5b4ff0795bff5e07fc4a84d2949a1fbc9389decac76f9cfc9ab29b63b91cafaabeaa5b9192d3f4a
+"@w3ux/react-odometer@npm:^2.0.0-alpha.1":
+  version: 2.0.0-alpha.1
+  resolution: "@w3ux/react-odometer@npm:2.0.0-alpha.1"
+  checksum: 10c0/cddecaac4430875a84cb6ad706ae286197d27409597c5b95f9ded0a1153affd022fbd75c85fb0c11cbfe3a1b396026dfc835feb0b8b7f77f13a29739bab3b5eb
   languageName: node
   linkType: hard
 
-"@w3ux/react-polkicon@npm:^2.0.1-alpha.0":
-  version: 2.0.1-alpha.0
-  resolution: "@w3ux/react-polkicon@npm:2.0.1-alpha.0"
+"@w3ux/react-polkicon@npm:^3.0.0-alpha.1":
+  version: 3.0.0-alpha.1
+  resolution: "@w3ux/react-polkicon@npm:3.0.0-alpha.1"
   dependencies:
     "@polkadot-api/substrate-bindings": "npm:^0.9.3"
     "@w3ux/crypto": "npm:1.0.0"
-  checksum: 10c0/4390646debb6f4f09717806a10ecb811d48e96c32ac7a958944e321a9c4b3330d538b154e7a23891b4808b764bf8525203c26d7075270a3b280504d14cda555e
+  checksum: 10c0/8f7f0d09e6007e28460f43d83bc526b1cf958ac2dd8ceae5b0540b9c742f29afa2d106c00eceac6e9a0c631f68ca0407edcfbeee7329fc3a967cac759958817d
   languageName: node
   linkType: hard
 
-"@w3ux/types@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@w3ux/types@npm:1.0.2"
-  checksum: 10c0/32f48b7b0b3e01ed9938139117cb9c12ea5df848a4d9e9809ad93d2d1cce5ed94ed3d578fff8060d889d27115fee859529039d8d32d7757c041f1348c9d9237d
+"@w3ux/types@npm:^2.0.0-alpha.1":
+  version: 2.0.0-alpha.1
+  resolution: "@w3ux/types@npm:2.0.0-alpha.1"
+  checksum: 10c0/066b110f276b28696f612e98b2cee78d0ae497aeb4ae0397317c461d0095a8b0b4a2236999fbf19fcf438e4303df55f55c94a9768013ecf1c6ab559d2eb5ab46
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:1.2.0, @w3ux/utils@npm:^1.1.1-beta.9, @w3ux/utils@npm:^1.2.0":
+"@w3ux/utils@npm:2.0.0-alpha.1":
+  version: 2.0.0-alpha.1
+  resolution: "@w3ux/utils@npm:2.0.0-alpha.1"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+  checksum: 10c0/65721d459ece2879b3487bd3657f2feabd260fd7838cb83e4364dfc1a1e15a7fd127ce9725b330eb071225893e398f894b4aa1b4142a557f3e427f47ba405af6
+  languageName: node
+  linkType: hard
+
+"@w3ux/utils@npm:^1.2.0":
   version: 1.2.0
   resolution: "@w3ux/utils@npm:1.2.0"
   dependencies:
@@ -5019,12 +5011,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/validator-assets@npm:^0.3.3":
-  version: 0.3.3
-  resolution: "@w3ux/validator-assets@npm:0.3.3"
+"@w3ux/utils@npm:^2.0.0-alpha.2":
+  version: 2.0.0-alpha.2
+  resolution: "@w3ux/utils@npm:2.0.0-alpha.2"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+  checksum: 10c0/40f690924d8f1778c34500c0e3ebaa82d25cb9d2c2f80978a76a16c19b67f41433e2b0f9dd6986bac98b6b03af3a974525eced73269619b94417c9c303e1db1f
+  languageName: node
+  linkType: hard
+
+"@w3ux/validator-assets@npm:^1.0.0-alpha.1":
+  version: 1.0.0-alpha.1
+  resolution: "@w3ux/validator-assets@npm:1.0.0-alpha.1"
   peerDependencies:
-    react: ^18
-  checksum: 10c0/69d7965d8d8726d2c7f95e0763a2eb9a8b54ac295d9bc0672c0c3310ad80175e8049ef1aced94e402cafe1f6f3a6d70d2f99ff102632f3f30051d5e24bd840fb
+    react: ^19
+  checksum: 10c0/d768d3d4b6ecdfcad1ec1f4b83285e6c0e0c2d4e3e33a5b7fd2857b9bc327cc78d6cea81c92ba40d04356bf5742e4202dd6d0fd916efd0ccbd162c5208b15ec2
   languageName: node
   linkType: hard
 
@@ -5578,11 +5579,11 @@ __metadata:
     "@polkadot-api/substrate-bindings": "npm:^0.11.1"
     "@polkadot/util": "npm:^13.4.3"
     "@polkawatch/ddp-client": "npm:^2.0.20"
-    "@w3ux/extension-assets": "npm:^1.0.0"
-    "@w3ux/factories": "npm:^1.0.0"
-    "@w3ux/react-connect-kit": "npm:^2.1.3"
-    "@w3ux/react-odometer": "npm:^1.1.1"
-    "@w3ux/validator-assets": "npm:^0.3.3"
+    "@w3ux/extension-assets": "npm:2.0.0-alpha.1"
+    "@w3ux/factories": "npm:^2.0.0-alpha.1"
+    "@w3ux/react-connect-kit": "npm:^3.0.0-alpha.1"
+    "@w3ux/react-odometer": "npm:^2.0.0-alpha.1"
+    "@w3ux/validator-assets": "npm:^1.0.0-alpha.1"
     "@zondax/ledger-substrate": "npm:^1.0.1"
     assets: "workspace:*"
     buffer: "npm:^6.0.3"
@@ -5599,7 +5600,7 @@ __metadata:
     radix-ui: "npm:^1.1.3"
     rc-slider: "npm:^11.1.6"
     react-chartjs-2: "npm:^5.2.0"
-    react-dom: "npm:^18.2.0"
+    react-dom: "npm:^19.1.0"
     react-helmet-async: "npm:^2.0.5"
     react-router-dom: "npm:^7.4.1"
     rxjs: "npm:^7.8.2"
@@ -9028,7 +9029,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -10070,15 +10071,15 @@ __metadata:
     "@polkadot-api/merkleize-metadata": "npm:^1.1.14"
     "@tanstack/react-query": "npm:^5.69.0"
     "@types/chroma-js": "npm:^3.1.1"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.2.25"
+    "@types/react": "npm:^19.0.12"
+    "@types/react-dom": "npm:^19.0.4"
     "@types/react-helmet": "npm:^6.1.11"
     "@typescript-eslint/parser": "npm:^8.28.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
-    "@w3ux/hooks": "npm:^1.5.0"
-    "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
-    "@w3ux/types": "npm:^1.0.2"
-    "@w3ux/utils": "npm:^1.2.0"
+    "@w3ux/hooks": "npm:^2.0.0-alpha.2"
+    "@w3ux/react-polkicon": "npm:^3.0.0-alpha.1"
+    "@w3ux/types": "npm:^2.0.0-alpha.1"
+    "@w3ux/utils": "npm:^2.0.0-alpha.2"
     bignumber.js: "npm:^9.1.2"
     classnames: "npm:^2.5.1"
     date-fns: "npm:^4.1.0"
@@ -10097,7 +10098,7 @@ __metadata:
     prettier: "npm:^3.5.2"
     prettier-plugin-organize-imports: "npm:^4.1.0"
     radix-ui: "npm:^1.1.3"
-    react: "npm:^18.3.1"
+    react: "npm:^19.1.0"
     react-error-boundary: "npm:^5.0.0"
     react-i18next: "npm:^15.4.0"
     sass: "npm:1.77.6"
@@ -10478,15 +10479,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
+"react-dom@npm:^19.1.0":
+  version: 19.1.0
+  resolution: "react-dom@npm:19.1.0"
   dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.2"
+    scheduler: "npm:^0.26.0"
   peerDependencies:
-    react: ^18.3.1
-  checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+    react: ^19.1.0
+  checksum: 10c0/3e26e89bb6c67c9a6aa86cb888c7a7f8258f2e347a6d2a15299c17eb16e04c19194e3452bc3255bd34000a61e45e2cb51e46292392340432f133e5a5d2dfb5fc
   languageName: node
   linkType: hard
 
@@ -10634,12 +10634,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.3.1":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
+"react@npm:^19.1.0":
+  version: 19.1.0
+  resolution: "react@npm:19.1.0"
+  checksum: 10c0/530fb9a62237d54137a13d2cfb67a7db6a2156faed43eecc423f4713d9b20c6f2728b026b45e28fcd72e8eadb9e9ed4b089e99f5e295d2f0ad3134251bdd3698
   languageName: node
   linkType: hard
 
@@ -11100,12 +11098,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.2":
-  version: 0.23.2
-  resolution: "scheduler@npm:0.23.2"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/26383305e249651d4c58e6705d5f8425f153211aef95f15161c151f7b8de885f24751b377e4a0b3dd42cce09aad3f87a61dab7636859c0d89b7daf1a1e2a5c78
+"scheduler@npm:^0.26.0":
+  version: 0.26.0
+  resolution: "scheduler@npm:0.26.0"
+  checksum: 10c0/5b8d5bfddaae3513410eda54f2268e98a376a429931921a81b5c3a2873aab7ca4d775a8caac5498f8cbc7d0daeab947cf923dbd8e215d61671f9f4e392d34356
   languageName: node
   linkType: hard
 
@@ -12310,9 +12306,9 @@ __metadata:
   resolution: "ui-buttons@workspace:packages/ui-buttons"
   dependencies:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
-    "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
-    "@w3ux/types": "npm:^1.0.2"
-    "@w3ux/utils": "npm:^1.2.0"
+    "@w3ux/react-polkicon": "npm:^3.0.0-alpha.1"
+    "@w3ux/types": "npm:^2.0.0-alpha.1"
+    "@w3ux/utils": "npm:^2.0.0-alpha.2"
     types: "workspace:*"
     ui-core: "workspace:*"
   peerDependencies:

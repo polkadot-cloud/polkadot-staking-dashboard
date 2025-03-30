@@ -11,7 +11,7 @@ export interface MenuContextInterface {
   openMenu: (ev: MenuMouseEvent, newInner?: ReactNode) => void
   closeMenu: () => void
   setMenuInner: (items: ReactNode) => void
-  checkMenuPosition: (ref: RefObject<HTMLDivElement>) => void
+  checkMenuPosition: (ref: RefObject<HTMLDivElement | null>) => void
 }
 
 export interface MenuItem {

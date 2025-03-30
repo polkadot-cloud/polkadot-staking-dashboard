@@ -28,8 +28,8 @@ export const Stat = ({
   } = useNetwork().networkData
   const { openHelp } = useHelp()
 
-  const containerRef = useRef<HTMLDivElement>(null)
-  const subjectRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const subjectRef = useRef<HTMLDivElement | null>(null)
 
   const handleAdjustLayout = () => {
     applyWidthAsPadding(subjectRef, containerRef)
