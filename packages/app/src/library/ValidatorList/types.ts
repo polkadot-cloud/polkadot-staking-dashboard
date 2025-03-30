@@ -24,7 +24,7 @@ export interface ValidatorListProps {
   allowListFormat?: boolean
   defaultFilters?: AnyJson
   defaultOrder?: string
-  ListControls?: ReactNode
+  BeforeListNode?: ReactNode
   onRemove?: (params: {
     selected: Validator[]
     resetSelection?: () => void

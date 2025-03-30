@@ -17,7 +17,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Validator } from 'types'
 import { Confirm } from '../Prompt/Confirm'
-import { ListControls } from './ListControls'
+import { ListControls } from './Controls/ListControls'
 import { Methods } from './Methods'
 import { SelectFavorites } from './Prompts/SelectFavorites'
 import type {
@@ -263,7 +263,7 @@ export const GenerateNominations = ({
                 allowListFormat={false}
                 displayFor={displayFor}
                 selectable
-                ListControls={
+                BeforeListNode={
                   <ListControls
                     selectHandlers={selectHandlers}
                     filterHandlers={Object.values(filterHandlers)}

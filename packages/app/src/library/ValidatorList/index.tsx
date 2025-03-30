@@ -47,7 +47,7 @@ export const ValidatorListInner = ({
   allowListFormat = true,
   defaultOrder = undefined,
   defaultFilters = undefined,
-  ListControls = null,
+  BeforeListNode = null,
   onRemove,
 }: ValidatorListProps) => {
   const { t } = useTranslation()
@@ -336,7 +336,7 @@ export const ValidatorListInner = ({
         {listItems.length > 0 && itemsPerPage && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-        {ListControls}
+        {BeforeListNode}
         <MotionContainer>
           {listItems.length ? (
             <>

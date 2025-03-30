@@ -23,7 +23,8 @@
     padding: 0;
   }
 
-  > button, > span {
+  > button,
+  > span {
     background: var(--shimmer-foreground);
     color: var(--text-color-secondary);
     padding: 0 0.1rem;
@@ -46,11 +47,13 @@
     }
   }
 
-  &.outline > button, &.outline > span {
+  &.outline > button,
+  &.outline > span {
     background: none;
   }
 
-  &.text > button, &.outline > span {
+  &.text > button,
+  &.outline > span {
     font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;
     display: flex;
@@ -71,7 +74,8 @@
     }
   }
 
-  &.text > button, &.outline > span {
+  &.text > button,
+  &.outline > span {
     > svg {
       margin: 0;
     }
