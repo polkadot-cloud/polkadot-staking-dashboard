@@ -1,12 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTheme } from 'contexts/Themes'
-import { useState } from 'react'
+import { usePrompt } from 'contexts/Prompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonMenu, ButtonPrimary } from 'ui-buttons'
-import { Popover } from 'ui-core/popover'
-import { Confirm } from './Popovers/Confirm'
+import { RevertChanges } from './Prompts/RevertChanges'
 
 export const Revert = ({
   inMenu,
@@ -18,36 +16,28 @@ export const Revert = ({
   onClick: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const { themeElementRef } = useTheme()
+  const { openPromptWith, closePrompt } = usePrompt()
 
-  const [open, setOpen] = useState<boolean>(false)
+  const onRevert = () => {
+    onClick()
+    closePrompt()
+  }
 
-  return (
-    <Popover
-      open={open}
-      portalContainer={themeElementRef.current || undefined}
-      onTriggerClick={() => {
-        if (!disabled) {
-          setOpen(true)
-        }
+  return inMenu ? (
+    <ButtonMenu
+      text={t('revertChanges')}
+      disabled={disabled}
+      onClick={() => {
+        openPromptWith(<RevertChanges onRevert={onRevert} />)
       }}
-      content={
-        <Confirm
-          text={t('revertNominationChanges')}
-          controlKey="button-revert"
-          onClose={() => setOpen(false)}
-          onRevert={() => {
-            onClick()
-            setOpen(false)
-          }}
-        />
-      }
-    >
-      {inMenu ? (
-        <ButtonMenu text={t('revertChanges')} disabled={disabled} />
-      ) : (
-        <ButtonPrimary text={t('revertChanges')} asLabel disabled={disabled} />
-      )}
-    </Popover>
+    />
+  ) : (
+    <ButtonPrimary
+      text={t('revertChanges')}
+      disabled={disabled}
+      onClick={() => {
+        openPromptWith(<RevertChanges onRevert={onRevert} />)
+      }}
+    />
   )
 }
