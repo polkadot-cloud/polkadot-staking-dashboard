@@ -17,4 +17,6 @@ export interface ManageNominationsContextInterface {
   setNominations: Dispatch<SetStateAction<Validator[]>>
   heightRef: RefObject<HTMLDivElement>
   updateSetters: (setters: AnyFunction[], nominations: Validator[]) => void
+  resetNominations: (setters: AnyFunction[]) => void
+  revertNominations: () => void
 }

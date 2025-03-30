@@ -16,4 +16,6 @@ export const defaultContext: ManageNominationsContextInterface = {
   setNominations: () => {},
   heightRef: { current: null },
   updateSetters: (setters, newNominations) => {},
+  resetNominations: (setters) => {},
+  revertNominations: () => {},
 }

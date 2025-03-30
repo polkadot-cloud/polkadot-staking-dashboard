@@ -19,13 +19,12 @@ export const MenuControls = ({
 
   const {
     method,
-    setHeight,
-    heightRef,
     setMethod,
     nominations,
-    setFetching,
     updateSetters,
     setNominations,
+    resetNominations,
+    revertNominations,
     defaultNominations,
   } = useManageNominations()
 
@@ -35,21 +34,12 @@ export const MenuControls = ({
         <>
           <ButtonMenu
             text={t('startAgain', { ns: 'app' })}
-            onClick={() => {
-              setMethod(null)
-              setNominations([])
-              updateSetters(setters, [])
-            }}
+            onClick={() => resetNominations(setters)}
           />
           {['Active Low Commission', 'Optimal Selection'].includes(method) && (
             <ButtonMenu
               text={t('reGenerate', { ns: 'app' })}
-              onClick={() => {
-                // Set a temporary height to prevent height snapping on re-renders
-                setHeight(heightRef.current?.clientHeight || null)
-                setTimeout(() => setHeight(null), 200)
-                setFetching(true)
-              }}
+              onClick={() => revertNominations()}
             />
           )}
         </>

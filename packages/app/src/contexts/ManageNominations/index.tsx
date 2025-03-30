@@ -56,6 +56,21 @@ export const ManageNominationsProvider = ({
     }
   }
 
+  // Handle resetting manage nominations
+  const resetNominations = (setters: AnyFunction[]) => {
+    setMethod(null)
+    setNominations([])
+    updateSetters(setters, [])
+  }
+
+  // Handle reverting nomination changes
+  const revertNominations = () => {
+    // Set a temporary height to prevent height snapping on re-renders
+    setHeight(heightRef.current?.clientHeight || null)
+    setTimeout(() => setHeight(null), 200)
+    setFetching(true)
+  }
+
   return (
     <ManageNominationsContext.Provider
       value={{
@@ -70,6 +85,8 @@ export const ManageNominationsProvider = ({
         setNominations,
         heightRef,
         updateSetters,
+        resetNominations,
+        revertNominations,
       }}
     >
       {children}
