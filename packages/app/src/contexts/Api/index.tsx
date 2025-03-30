@@ -3,9 +3,9 @@
 
 import { setStateWithRef } from '@w3ux/utils'
 import { NetworkList } from 'config/networks'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { Era } from 'api/query/era'
 import { NetworkMeta } from 'api/query/networkMeta'
 import { ActiveEra } from 'api/subscribe/activeEra'
@@ -21,7 +21,6 @@ import { isCustomEvent } from 'controllers/utils'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,
-  defaultApiContext,
   defaultChainSpecs,
   defaultConsts,
   defaultNetworkMetrics,
@@ -39,9 +38,7 @@ import type {
   PapiChainSpecContext,
 } from './types'
 
-export const APIContext = createContext<APIContextInterface>(defaultApiContext)
-
-export const useApi = () => useContext(APIContext)
+export const [APIContext, useApi] = createSafeContext<APIContextInterface>()
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store Api connection status for the current network

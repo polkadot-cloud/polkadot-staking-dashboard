@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
 import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types'
 import { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
@@ -13,19 +14,15 @@ import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
 import type { FastUnstakeResult } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
-import { defaultFastUnstakeContext } from './defaults'
 import type {
   FastUnstakeContextInterface,
   FastUnstakeQueueDeposit,
 } from './types'
 
-export const FastUnstakeContext = createContext<FastUnstakeContextInterface>(
-  defaultFastUnstakeContext
-)
-
-export const useFastUnstake = () => useContext(FastUnstakeContext)
+export const [FastUnstakeContext, useFastUnstake] =
+  createSafeContext<FastUnstakeContextInterface>()
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

@@ -1,13 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { stringToU8a } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
 import type {
   APIActiveEra,
   APIConstants,
-  APIContextInterface,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
@@ -77,21 +75,4 @@ export const defaultStakingMetrics: APIStakingMetrics = {
   minNominatorBond: new BigNumber(0),
   totalStaked: new BigNumber(0),
   counterForNominators: new BigNumber(0),
-}
-
-export const defaultApiContext: APIContextInterface = {
-  chainSpecs: defaultChainSpecs,
-  isReady: false,
-  apiStatus: 'disconnected',
-  peopleApiStatus: 'disconnected',
-  connectionType: 'ws',
-  setConnectionType: (connectionType) => {},
-  rpcEndpoint: '',
-  setRpcEndpoint: (key) => {},
-  consts: defaultConsts,
-  networkMetrics: defaultNetworkMetrics,
-  activeEra: defaultActiveEra,
-  activeEraRef: { current: defaultActiveEra },
-  poolsConfig: defaultPoolsConfig,
-  stakingMetrics: defaultStakingMetrics,
 }

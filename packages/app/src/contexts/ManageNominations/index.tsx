@@ -1,17 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { AnyFunction } from '@w3ux/types'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { Validator } from 'types'
-import { defaultContext } from './defaults'
 import type { ManageNominationsContextInterface } from './types'
 
-export const ManageNominationsContext =
-  createContext<ManageNominationsContextInterface>(defaultContext)
-
-export const useManageNominations = () => useContext(ManageNominationsContext)
+export const [ManageNominationsContext, useManageNominations] =
+  createSafeContext<ManageNominationsContextInterface>()
 
 export const ManageNominationsProvider = ({
   children,
