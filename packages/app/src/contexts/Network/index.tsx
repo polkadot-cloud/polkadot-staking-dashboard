@@ -5,16 +5,14 @@ import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
 import type { NetworkId } from 'common-types'
 import { NetworkList } from 'config/networks'
 import { Apis } from 'controllers/Apis'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
-import { defaultNetwork, defaultNetworkContext } from './defaults'
+import { useState } from 'react'
+import { defaultNetwork } from './defaults'
 import type { NetworkContextInterface, NetworkState } from './types'
 
-export const NetworkContext = createContext<NetworkContextInterface>(
-  defaultNetworkContext
-)
-
-export const useNetwork = () => useContext(NetworkContext)
+export const [NetworkContext, useNetwork] =
+  createSafeContext<NetworkContextInterface>()
 
 export const NetworkProvider = ({ children }: { children: ReactNode }) => {
   // Get the initial network and prepare meta tags if necessary

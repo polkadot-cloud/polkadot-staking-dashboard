@@ -7,14 +7,11 @@ import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
+import { useState } from 'react'
 import type { BondFor, MaybeAddress } from 'types'
-import {
-  defaultNominatorProgress,
-  defaultPoolProgress,
-  defaultSetupContext,
-} from './defaults'
+import { defaultNominatorProgress, defaultPoolProgress } from './defaults'
 import type {
   NominatorProgress,
   NominatorSetup,
@@ -25,10 +22,8 @@ import type {
   SetupContextInterface,
 } from './types'
 
-export const SetupContext =
-  createContext<SetupContextInterface>(defaultSetupContext)
-
-export const useSetup = () => useContext(SetupContext)
+export const [SetupContext, useSetup] =
+  createSafeContext<SetupContextInterface>()
 
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
   const {

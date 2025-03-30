@@ -2,13 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyFunction, AnyJson } from '@w3ux/types'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
-import {
-  defaultExcludes,
-  defaultFiltersInterface,
-  defaultIncludes,
-} from './defaults'
+import { useState } from 'react'
+import { defaultExcludes, defaultIncludes } from './defaults'
 import type {
   FilterItem,
   FilterItems,
@@ -20,11 +17,8 @@ import type {
   FiltersContextInterface,
 } from './types'
 
-export const FiltersContext = createContext<FiltersContextInterface>(
-  defaultFiltersInterface
-)
-
-export const useFilters = () => useContext(FiltersContext)
+export const [FiltersContext, useFilters] =
+  createSafeContext<FiltersContextInterface>()
 
 export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   // groups along with their includes

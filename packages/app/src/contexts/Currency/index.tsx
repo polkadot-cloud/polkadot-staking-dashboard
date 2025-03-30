@@ -3,17 +3,14 @@
 
 import { FiatCurrencyKey } from 'consts'
 import { SupportedCurrencies } from 'consts/currencies'
+import { createSafeContext } from 'hooks/useSafeContext'
 import { getUserFiatCurrency } from 'locales/util'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
-import { defaultCurrencyContext } from './defaults'
+import { useState } from 'react'
 import type { CurrencyContextInterface } from './types'
 
-export const CurrencyContext = createContext<CurrencyContextInterface>(
-  defaultCurrencyContext
-)
-
-export const useCurrency = () => useContext(CurrencyContext)
+export const [CurrencyContext, useCurrency] =
+  createSafeContext<CurrencyContextInterface>()
 
 export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   const [currency, setCurrencyState] = useState<string>(getUserFiatCurrency())

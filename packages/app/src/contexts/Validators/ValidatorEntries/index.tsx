@@ -20,10 +20,11 @@ import { Apis } from 'controllers/Apis'
 import { Identities } from 'controllers/Identities'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { createSafeContext } from 'hooks/useSafeContext'
 import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Identity, SuperIdentity, Validator, ValidatorStatus } from 'types'
 import { perbillToPercent } from 'utils'
 import type {
@@ -35,15 +36,11 @@ import type {
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils'
 import {
   defaultAverageEraValidatorReward,
-  defaultValidatorsContext,
   defaultValidatorsData,
 } from './defaults'
 
-export const ValidatorsContext = createContext<ValidatorsContextInterface>(
-  defaultValidatorsContext
-)
-
-export const useValidators = () => useContext(ValidatorsContext)
+export const [ValidatorsContext, useValidators] =
+  createSafeContext<ValidatorsContextInterface>()
 
 export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()

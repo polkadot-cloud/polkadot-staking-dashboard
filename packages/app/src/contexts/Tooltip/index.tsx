@@ -2,16 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
-import { defaultTooltipContext } from './defaults'
+import { useRef, useState } from 'react'
 import type { TooltipContextInterface } from './types'
 
-export const TooltipContext = createContext<TooltipContextInterface>(
-  defaultTooltipContext
-)
-
-export const useTooltip = () => useContext(TooltipContext)
+export const [TooltipContext, useTooltip] =
+  createSafeContext<TooltipContextInterface>()
 
 export const TooltipProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState<number>(0)

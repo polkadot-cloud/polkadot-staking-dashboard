@@ -3,17 +3,14 @@
 
 import type { TxSubmissionItem } from 'api/types'
 import { isCustomEvent } from 'controllers/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
-import * as defaults from './defaults'
 import type { TxMetaContextInterface } from './types'
 
-export const TxMetaContext = createContext<TxMetaContextInterface>(
-  defaults.defaultTxMeta
-)
-
-export const useTxMeta = () => useContext(TxMetaContext)
+export const [TxMetaContext, useTxMeta] =
+  createSafeContext<TxMetaContextInterface>()
 
 export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   // Store uids of transactions, along with their status

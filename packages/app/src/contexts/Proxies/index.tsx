@@ -24,11 +24,11 @@ import { useNetwork } from 'contexts/Network'
 import { defaultNetwork } from 'contexts/Network/defaults'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
-import * as defaults from './defaults'
 import type {
   Delegates,
   ProxiedAccounts,
@@ -38,11 +38,8 @@ import type {
   ProxyDelegate,
 } from './types'
 
-export const ProxiesContext = createContext<ProxiesContextInterface>(
-  defaults.defaultProxiesContext
-)
-
-export const useProxies = () => useContext(ProxiesContext)
+export const [ProxiesContext, useProxies] =
+  createSafeContext<ProxiesContextInterface>()
 
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

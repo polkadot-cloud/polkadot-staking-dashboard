@@ -9,20 +9,16 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Balances } from 'controllers/Balances'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import type { MaybeAddress } from 'types'
 import { useOtherAccounts } from '../OtherAccounts'
 import { getActiveAccountLocal, getActiveProxyLocal } from '../Utils'
-import { defaultImportedAccountsContext } from './defaults'
 import type { ImportedAccountsContextInterface } from './types'
 
-export const ImportedAccountsContext =
-  createContext<ImportedAccountsContextInterface>(
-    defaultImportedAccountsContext
-  )
-
-export const useImportedAccounts = () => useContext(ImportedAccountsContext)
+export const [ImportedAccountsContext, useImportedAccounts] =
+  createSafeContext<ImportedAccountsContextInterface>()
 
 export const ImportedAccountsProvider = ({
   children,

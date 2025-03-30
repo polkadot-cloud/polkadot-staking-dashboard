@@ -2,15 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
-import { defaultThemeContext } from './defaults'
+import { useRef, useState } from 'react'
 import type { Theme, ThemeContextInterface } from './types'
 
-export const ThemeContext =
-  createContext<ThemeContextInterface>(defaultThemeContext)
-
-export const useTheme = () => useContext(ThemeContext)
+export const [ThemeContext, useTheme] =
+  createSafeContext<ThemeContextInterface>()
 
 export const ThemesProvider = ({ children }: { children: ReactNode }) => {
   let initialTheme: Theme = 'light'

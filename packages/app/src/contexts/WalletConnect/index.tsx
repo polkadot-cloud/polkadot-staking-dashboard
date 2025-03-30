@@ -9,15 +9,13 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import * as defaults from './defaults'
+import { useEffect, useRef, useState } from 'react'
 import type { WalletConnectContextInterface } from './types'
 
-export const WalletConnectContext =
-  createContext<WalletConnectContextInterface>(defaults.defaultWalletConnect)
-
-export const useWalletConnect = () => useContext(WalletConnectContext)
+export const [WalletConnectContext, useWalletConnect] =
+  createSafeContext<WalletConnectContextInterface>()
 
 // `projectId` is configured on `https://cloud.walletconnect.com/`
 const wcProjectId = 'dcb8a7c6d01ace818286c005f75d70b9'

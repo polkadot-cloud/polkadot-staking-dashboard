@@ -4,20 +4,16 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
+import { useState } from 'react'
 import type { Validator } from 'types'
 import type { FavoriteValidatorsContextInterface } from '../types'
 import { getLocalFavorites } from '../Utils'
 import { useValidators } from '../ValidatorEntries'
-import { defaultFavoriteValidatorsContext } from './defaults'
 
-export const FavoriteValidatorsContext =
-  createContext<FavoriteValidatorsContextInterface>(
-    defaultFavoriteValidatorsContext
-  )
-
-export const useFavoriteValidators = () => useContext(FavoriteValidatorsContext)
+export const [FavoriteValidatorsContext, useFavoriteValidators] =
+  createSafeContext<FavoriteValidatorsContextInterface>()
 
 export const FavoriteValidatorsProvider = ({
   children,

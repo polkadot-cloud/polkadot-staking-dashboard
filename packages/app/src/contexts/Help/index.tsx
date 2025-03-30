@@ -3,8 +3,8 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { MaybeString } from '@w3ux/types'
-import { createContext, useContext, useState } from 'react'
-import * as defaults from './defaults'
+import { createSafeContext } from 'hooks/useSafeContext'
+import { useState } from 'react'
 import type {
   HelpContextInterface,
   HelpContextProps,
@@ -12,11 +12,7 @@ import type {
   HelpStatus,
 } from './types'
 
-export const HelpContext = createContext<HelpContextInterface>(
-  defaults.defaultHelpContext
-)
-
-export const useHelp = () => useContext(HelpContext)
+export const [HelpContext, useHelp] = createSafeContext<HelpContextInterface>()
 
 export const HelpProvider = ({ children }: HelpContextProps) => {
   const [state, setState] = useState<HelpContextState>({

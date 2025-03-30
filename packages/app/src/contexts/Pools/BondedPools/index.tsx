@@ -13,8 +13,9 @@ import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type {
   BondedPool,
   MaybeAddress,
@@ -24,14 +25,10 @@ import type {
   PoolTab,
 } from 'types'
 import { useApi } from '../../Api'
-import { defaultBondedPoolsContext } from './defaults'
 import type { BondedPoolsContextState } from './types'
 
-export const BondedPoolsContext = createContext<BondedPoolsContextState>(
-  defaultBondedPoolsContext
-)
-
-export const useBondedPools = () => useContext(BondedPoolsContext)
+export const [BondedPoolsContext, useBondedPools] =
+  createSafeContext<BondedPoolsContextState>()
 
 export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()

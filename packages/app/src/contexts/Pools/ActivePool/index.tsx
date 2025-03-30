@@ -9,18 +9,15 @@ import { ActivePools } from 'controllers/ActivePools'
 import { Syncs } from 'controllers/Syncs'
 import { useActivePools } from 'hooks/useActivePools'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext } from 'react'
 import type { ActivePoolItem } from 'types'
 import { useApi } from '../../Api'
-import { defaultActivePoolContext, defaultPoolRoles } from './defaults'
+import { defaultPoolRoles } from './defaults'
 import type { ActivePoolContextState } from './types'
 
-export const ActivePoolContext = createContext<ActivePoolContextState>(
-  defaultActivePoolContext
-)
-
-export const useActivePool = () => useContext(ActivePoolContext)
+export const [ActivePoolContext, useActivePool] =
+  createSafeContext<ActivePoolContextState>()
 
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

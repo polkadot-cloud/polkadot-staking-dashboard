@@ -16,18 +16,15 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
-import * as defaults from './defaults'
 import type { BondedAccount, BondedContextInterface } from './types'
 
-export const BondedContext = createContext<BondedContextInterface>(
-  defaults.defaultBondedContext
-)
-
-export const useBonded = () => useContext(BondedContext)
+export const [BondedContext, useBonded] =
+  createSafeContext<BondedContextInterface>()
 
 export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

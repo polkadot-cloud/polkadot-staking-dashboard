@@ -2,16 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
-import { defaultFavoritePoolsContext } from './defaults'
+import { useState } from 'react'
 import type { FavoritePoolsContextState } from './types'
 
-export const FavoritePoolsContext = createContext<FavoritePoolsContextState>(
-  defaultFavoritePoolsContext
-)
-
-export const useFavoritePools = () => useContext(FavoritePoolsContext)
+export const [FavoritePoolsContext, useFavoritePools] =
+  createSafeContext<FavoritePoolsContextState>()
 
 export const FavoritePoolsProvider = ({
   children,

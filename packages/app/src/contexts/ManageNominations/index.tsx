@@ -2,16 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyFunction } from '@w3ux/types'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { Validator } from 'types'
-import { defaultContext } from './defaults'
 import type { ManageNominationsContextInterface } from './types'
 
-export const ManageNominationsContext =
-  createContext<ManageNominationsContextInterface>(defaultContext)
-
-export const useManageNominations = () => useContext(ManageNominationsContext)
+export const [ManageNominationsContext, useManageNominations] =
+  createSafeContext<ManageNominationsContextInterface>()
 
 export const ManageNominationsProvider = ({
   children,

@@ -12,20 +12,19 @@ import type { NetworkId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { isCustomEvent } from 'controllers/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import { useExternalAccounts } from '../ExternalAccounts'
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 import { getActiveAccountLocal } from '../Utils'
-import { defaultOtherAccountsContext } from './defaults'
 import type { OtherAccountsContextInterface } from './types'
-export const OtherAccountsContext =
-  createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext)
 
-export const useOtherAccounts = () => useContext(OtherAccountsContext)
+export const [OtherAccountsContext, useOtherAccounts] =
+  createSafeContext<OtherAccountsContextInterface>()
 
 export const OtherAccountsProvider = ({
   children,

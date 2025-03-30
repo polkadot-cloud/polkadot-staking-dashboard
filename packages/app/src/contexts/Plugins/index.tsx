@@ -10,17 +10,14 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Subscan } from 'controllers/Subscan'
 import { Subscriptions } from 'controllers/Subscriptions'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
-import * as defaults from './defaults'
+import { useRef, useState } from 'react'
 import type { PluginsContextInterface } from './types'
 import { getAvailablePlugins } from './Utils'
 
-export const PluginsContext = createContext<PluginsContextInterface>(
-  defaults.defaultPluginsContext
-)
-
-export const usePlugins = () => useContext(PluginsContext)
+export const [PluginsContext, usePlugins] =
+  createSafeContext<PluginsContextInterface>()
 
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()

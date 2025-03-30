@@ -11,21 +11,18 @@ import { useNetwork } from 'contexts/Network'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { FastUnstakeResult } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
-import { defaultFastUnstakeContext } from './defaults'
 import type {
   FastUnstakeContextInterface,
   FastUnstakeQueueDeposit,
 } from './types'
 
-export const FastUnstakeContext = createContext<FastUnstakeContextInterface>(
-  defaultFastUnstakeContext
-)
-
-export const useFastUnstake = () => useContext(FastUnstakeContext)
+export const [FastUnstakeContext, useFastUnstake] =
+  createSafeContext<FastUnstakeContextInterface>()
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

@@ -8,18 +8,16 @@ import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { getUnlocking } from 'contexts/Balances/Utils'
 import { useNetwork } from 'contexts/Network'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
+import { useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { planckToUnitBn } from 'utils'
-import { defaultTransferOptionsContext } from './defaults'
 import type { TransferOptions, TransferOptionsContextInterface } from './types'
 import { getLocalFeeReserve, setLocalFeeReserve } from './Utils'
 
-export const TransferOptionsContext =
-  createContext<TransferOptionsContextInterface>(defaultTransferOptionsContext)
-
-export const useTransferOptions = () => useContext(TransferOptionsContext)
+export const [TransferOptionsContext, useTransferOptions] =
+  createSafeContext<TransferOptionsContextInterface>()
 
 export const TransferOptionsProvider = ({
   children,

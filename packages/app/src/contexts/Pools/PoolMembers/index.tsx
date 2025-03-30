@@ -11,18 +11,16 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress, PoolMember } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import { useApi } from '../../Api'
-import { defaultPoolMembers } from './defaults'
 import type { PoolMemberContext } from './types'
 
-export const PoolMembersContext =
-  createContext<PoolMemberContext>(defaultPoolMembers)
-
-export const usePoolMembers = () => useContext(PoolMembersContext)
+export const [PoolMembersContext, usePoolMembers] =
+  createSafeContext<PoolMemberContext>()
 
 export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

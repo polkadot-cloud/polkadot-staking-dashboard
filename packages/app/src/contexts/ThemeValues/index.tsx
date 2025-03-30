@@ -5,22 +5,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTheme } from 'contexts/Themes'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
-import { defaultThemeValuesContext } from './defaults'
+import { useCallback, useEffect, useState } from 'react'
 import type { ThemeValuesContextInterface } from './types'
 
-export const ThemeValuesContext = createContext<ThemeValuesContextInterface>(
-  defaultThemeValuesContext
-)
-
-export const useThemeValues = () => useContext(ThemeValuesContext)
+export const [ThemeValuesContext, useThemeValues] =
+  createSafeContext<ThemeValuesContextInterface>()
 
 export const ThemeValuesProvider = ({ children }: { children: ReactNode }) => {
   const { themeElementRef } = useTheme()

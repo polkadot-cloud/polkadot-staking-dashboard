@@ -17,23 +17,21 @@ import type {
   StakingContextInterface,
 } from 'contexts/Staking/types'
 import { Syncs } from 'controllers/Syncs'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress, NominationStatus } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
 import { useBonded } from '../Bonded'
-import { defaultEraStakers, defaultStakingContext } from './defaults'
+import { defaultEraStakers } from './defaults'
 import { getLocalEraExposures, setLocalEraExposures } from './Utils'
 
 const worker = new Worker()
 
-export const StakingContext = createContext<StakingContextInterface>(
-  defaultStakingContext
-)
-
-export const useStaking = () => useContext(StakingContext)
+export const [StakingContext, useStaking] =
+  createSafeContext<StakingContextInterface>()
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded()

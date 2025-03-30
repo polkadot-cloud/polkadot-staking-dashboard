@@ -5,11 +5,12 @@ import type { AnyJson, MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { compare } from 'compare-versions'
 import { useApi } from 'contexts/Api'
+import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getLedgerErrorType } from './Utils'
-import { defaultFeedback, defaultLedgerHardwareContext } from './defaults'
+import { defaultFeedback } from './defaults'
 import { Ledger } from './static/ledger'
 import type {
   FeedbackMessage,
@@ -19,10 +20,8 @@ import type {
   LedgerStatusCode,
 } from './types'
 
-export const LedgerHardwareContext =
-  createContext<LedgerHardwareContextInterface>(defaultLedgerHardwareContext)
-
-export const useLedgerHardware = () => useContext(LedgerHardwareContext)
+export const [LedgerHardwareContext, useLedgerHardware] =
+  createSafeContext<LedgerHardwareContextInterface>()
 
 export const LedgerHardwareProvider = ({
   children,

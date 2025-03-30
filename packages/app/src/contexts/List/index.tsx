@@ -2,18 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types'
-import { createContext, useContext, useState } from 'react'
-import { defaultContext } from './defaults'
+import { createSafeContext } from 'hooks/useSafeContext'
+import { useState } from 'react'
 import type {
   ListContextInterface,
   ListFormat,
   ListProviderProps,
 } from './types'
 
-export const ListContext = createContext<ListContextInterface>(defaultContext)
+export const [ListContext, useList] = createSafeContext<ListContextInterface>()
 
-export const useList = () => useContext(ListContext)
-
+export const useListContext = () => {
+  const context = useList()
+  return context
+}
 export const ListProvider = ({
   selectable: initialSelectable = false,
   children,
