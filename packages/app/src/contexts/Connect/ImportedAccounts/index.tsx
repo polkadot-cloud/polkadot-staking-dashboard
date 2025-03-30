@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts } from '@w3ux/react-connect-kit'
 import type { ExternalAccount, ImportedAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
@@ -9,7 +9,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Balances } from 'controllers/Balances'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useCallback } from 'react'
 import type { MaybeAddress } from 'types'

@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import { FiatCurrencyKey } from 'consts'
 import { SupportedCurrencies } from 'consts/currencies'
-import { createSafeContext } from 'hooks/useSafeContext'
 import { getUserFiatCurrency } from 'locales/util'
 import type { ReactNode } from 'react'
 import { useState } from 'react'

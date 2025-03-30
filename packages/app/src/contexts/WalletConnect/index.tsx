@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { WalletConnectModal } from '@walletconnect/modal'
 import UniversalProvider from '@walletconnect/universal-provider'
@@ -9,7 +10,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { WalletConnectContextInterface } from './types'

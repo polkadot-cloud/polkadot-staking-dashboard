@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
 import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types'
 import { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
@@ -11,7 +12,6 @@ import { useNetwork } from 'contexts/Network'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { FastUnstakeResult } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'

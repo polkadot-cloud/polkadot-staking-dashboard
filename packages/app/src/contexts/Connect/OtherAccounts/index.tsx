@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { getLocalLedgerAccounts } from '@w3ux/react-connect-kit/LedgerAccountsProvider/utils'
 import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProvider/utils'
@@ -12,7 +12,6 @@ import type { NetworkId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { isCustomEvent } from 'controllers/utils'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'

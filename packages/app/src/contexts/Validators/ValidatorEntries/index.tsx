@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
 import { ValidatorsEntries } from 'api/entries/validatorsEntries'
@@ -20,7 +20,6 @@ import { Apis } from 'controllers/Apis'
 import { Identities } from 'controllers/Identities'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { useErasPerDay } from 'hooks/useErasPerDay'
-import { createSafeContext } from 'hooks/useSafeContext'
 import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'

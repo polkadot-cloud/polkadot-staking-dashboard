@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import type { Plugin } from 'config/plugins'
@@ -10,7 +10,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Subscan } from 'controllers/Subscan'
 import { Subscriptions } from 'controllers/Subscriptions'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type { PluginsContextInterface } from './types'

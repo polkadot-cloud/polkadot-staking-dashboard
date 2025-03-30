@@ -1,14 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { getUnlocking } from 'contexts/Balances/Utils'
 import { useNetwork } from 'contexts/Network'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { MaybeAddress } from 'types'

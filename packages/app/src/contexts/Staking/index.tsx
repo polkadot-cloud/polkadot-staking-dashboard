@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { AnyJson, ExternalAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
@@ -17,7 +17,6 @@ import type {
   StakingContextInterface,
 } from 'contexts/Staking/types'
 import { Syncs } from 'controllers/Syncs'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type { MaybeAddress, NominationStatus } from 'types'

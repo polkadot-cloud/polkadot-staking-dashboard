@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { SystemChainId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -14,7 +15,6 @@ import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
 import { useActiveBalances } from 'hooks/useActiveBalances'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useEffect, useRef } from 'react'
 import type { ActivePoolItem, MaybeAddress } from 'types'

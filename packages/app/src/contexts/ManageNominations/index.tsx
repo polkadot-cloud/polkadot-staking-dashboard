@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { AnyFunction } from '@w3ux/types'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type { Validator } from 'types'

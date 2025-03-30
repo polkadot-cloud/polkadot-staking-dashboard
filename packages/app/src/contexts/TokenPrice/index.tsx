@@ -1,11 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { isCustomEvent } from 'controllers/utils'
-import { createSafeContext } from 'hooks/useSafeContext'
 import { fetchTokenPrice, formatTokenPrice } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'

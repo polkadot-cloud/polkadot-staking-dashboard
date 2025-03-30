@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -9,7 +9,6 @@ import { ActivePools } from 'controllers/ActivePools'
 import { Syncs } from 'controllers/Syncs'
 import { useActivePools } from 'hooks/useActivePools'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import type { ActivePoolItem } from 'types'
 import { useApi } from '../../Api'

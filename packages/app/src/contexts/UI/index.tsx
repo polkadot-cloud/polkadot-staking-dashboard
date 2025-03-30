@@ -1,11 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { AnyJson } from '@w3ux/types'
 import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
 import { PageWidthMediumThreshold } from 'consts'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { MutableRefObject, ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { UIContextInterface } from './types'

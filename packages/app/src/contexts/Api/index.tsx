@@ -5,7 +5,7 @@ import { setStateWithRef } from '@w3ux/utils'
 import { NetworkList } from 'config/networks'
 import { useEffect, useRef, useState } from 'react'
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { Era } from 'api/query/era'
 import { NetworkMeta } from 'api/query/networkMeta'
 import { ActiveEra } from 'api/subscribe/activeEra'
@@ -18,7 +18,6 @@ import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
-import { createSafeContext } from 'hooks/useSafeContext'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,

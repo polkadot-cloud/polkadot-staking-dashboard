@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import {
   addedTo,
   ellipsisFn,
@@ -24,7 +24,6 @@ import { useNetwork } from 'contexts/Network'
 import { defaultNetwork } from 'contexts/Network/defaults'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'

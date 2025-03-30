@@ -1,11 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
 import type { NetworkId } from 'common-types'
 import { NetworkList } from 'config/networks'
 import { Apis } from 'controllers/Apis'
-import { createSafeContext } from 'hooks/useSafeContext'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { defaultNetwork } from './defaults'
