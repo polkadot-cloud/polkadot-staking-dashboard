@@ -4922,7 +4922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:1.4.0, @w3ux/hooks@npm:^1.4.0":
+"@w3ux/hooks@npm:1.4.0":
   version: 1.4.0
   resolution: "@w3ux/hooks@npm:1.4.0"
   dependencies:
@@ -4931,6 +4931,18 @@ __metadata:
   peerDependencies:
     react: ^18
   checksum: 10c0/4b48856734e85d39d288f61c6636cb4b2075afd42b49b97b746036ec2365e852b4540c7cfb82b93c59b204c4fa18c4d9687d05478fa5df5f668ea7ead377238a
+  languageName: node
+  linkType: hard
+
+"@w3ux/hooks@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@w3ux/hooks@npm:1.5.0"
+  dependencies:
+    "@w3ux/utils": "npm:^1.2.0"
+    date-fns: "npm:^4.1.0"
+  peerDependencies:
+    react: ^18
+  checksum: 10c0/dc08d8301f47b76709763b90385dcfbaf7d2dc2605616d3867ce2898dd7356ab0ffcb94b4ac935bd586009977f5ef5b3a875973ed7a4296f545f0a99f491a6ff
   languageName: node
   linkType: hard
 
@@ -10028,7 +10040,7 @@ __metadata:
     "@types/react-helmet": "npm:^6.1.11"
     "@typescript-eslint/parser": "npm:^8.27.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
-    "@w3ux/hooks": "npm:^1.4.0"
+    "@w3ux/hooks": "npm:^1.5.0"
     "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
     "@w3ux/types": "npm:^1.0.2"
     "@w3ux/utils": "npm:^1.2.0"

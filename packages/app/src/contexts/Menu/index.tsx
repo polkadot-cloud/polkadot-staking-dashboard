@@ -1,15 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { ReactNode, RefObject } from 'react'
-import { createContext, useContext, useState } from 'react'
-import { defaultMenuContext } from './defaults'
+import { useState } from 'react'
 import type { MenuContextInterface, MenuMouseEvent } from './types'
 
-export const MenuContext =
-  createContext<MenuContextInterface>(defaultMenuContext)
-
-export const useMenu = () => useContext(MenuContext)
+export const [MenuContext, useMenu] = createSafeContext<MenuContextInterface>()
 
 export const MenuProvider = ({ children }: { children: ReactNode }) => {
   // Whether the menu is currently open. This initiates menu state but does not reflect whether the

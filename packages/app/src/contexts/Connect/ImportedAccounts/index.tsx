@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts } from '@w3ux/react-connect-kit'
 import type { ExternalAccount, ImportedAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
@@ -10,19 +10,14 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Balances } from 'controllers/Balances'
 import type { ReactNode } from 'react'
-import { createContext, useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import type { MaybeAddress } from 'types'
 import { useOtherAccounts } from '../OtherAccounts'
 import { getActiveAccountLocal, getActiveProxyLocal } from '../Utils'
-import { defaultImportedAccountsContext } from './defaults'
 import type { ImportedAccountsContextInterface } from './types'
 
-export const ImportedAccountsContext =
-  createContext<ImportedAccountsContextInterface>(
-    defaultImportedAccountsContext
-  )
-
-export const useImportedAccounts = () => useContext(ImportedAccountsContext)
+export const [ImportedAccountsContext, useImportedAccounts] =
+  createSafeContext<ImportedAccountsContextInterface>()
 
 export const ImportedAccountsProvider = ({
   children,

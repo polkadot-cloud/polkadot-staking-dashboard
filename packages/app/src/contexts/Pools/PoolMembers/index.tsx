@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { PoolMembers } from 'api/subscribe/poolMembers'
@@ -12,17 +12,14 @@ import { usePlugins } from 'contexts/Plugins'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress, PoolMember } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import { useApi } from '../../Api'
-import { defaultPoolMembers } from './defaults'
 import type { PoolMemberContext } from './types'
 
-export const PoolMembersContext =
-  createContext<PoolMemberContext>(defaultPoolMembers)
-
-export const usePoolMembers = () => useContext(PoolMembersContext)
+export const [PoolMembersContext, usePoolMembers] =
+  createSafeContext<PoolMemberContext>()
 
 export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

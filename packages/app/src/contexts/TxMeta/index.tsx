@@ -1,19 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { TxSubmissionItem } from 'api/types'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
-import * as defaults from './defaults'
 import type { TxMetaContextInterface } from './types'
 
-export const TxMetaContext = createContext<TxMetaContextInterface>(
-  defaults.defaultTxMeta
-)
-
-export const useTxMeta = () => useContext(TxMetaContext)
+export const [TxMetaContext, useTxMeta] =
+  createSafeContext<TxMetaContextInterface>()
 
 export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   // Store uids of transactions, along with their status

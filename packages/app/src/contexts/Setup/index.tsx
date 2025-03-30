@@ -1,20 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
+import { useState } from 'react'
 import type { BondFor, MaybeAddress } from 'types'
-import {
-  defaultNominatorProgress,
-  defaultPoolProgress,
-  defaultSetupContext,
-} from './defaults'
+import { defaultNominatorProgress, defaultPoolProgress } from './defaults'
 import type {
   NominatorProgress,
   NominatorSetup,
@@ -25,10 +21,8 @@ import type {
   SetupContextInterface,
 } from './types'
 
-export const SetupContext =
-  createContext<SetupContextInterface>(defaultSetupContext)
-
-export const useSetup = () => useContext(SetupContext)
+export const [SetupContext, useSetup] =
+  createSafeContext<SetupContextInterface>()
 
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
   const {
