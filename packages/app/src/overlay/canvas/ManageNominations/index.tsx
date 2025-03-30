@@ -40,7 +40,7 @@ export const Inner = () => {
   const { getBondedAccount } = useBonded()
   const { activeAccount } = useActiveAccounts()
   const { updatePoolNominations } = useBondedPools()
-  const { defaultNominations, nominations, setNominations } =
+  const { defaultNominations, nominations, setNominations, method } =
     useManageNominations()
 
   const { maxNominations } = consts
@@ -48,6 +48,9 @@ export const Inner = () => {
   const bondFor = options?.bondFor || 'nominator'
   const isPool = bondFor === 'pool'
   const signingAccount = isPool ? activeAccount : controller
+
+  // Whether to display revert changes button
+  const allowRevert = !!method
 
   // Canvas content and footer size
   const canvasSize = 'xl'
@@ -161,20 +164,20 @@ export const Inner = () => {
         <CloseCanvas sm />
       </div>
       {displayFor === 'canvas' && (
-        <MenuControls allowRevert setters={setters} />
+        <MenuControls allowRevert={allowRevert} setters={setters} />
       )}
       <Main size={canvasSize} withMenu>
         {displayFor !== 'canvas' && (
           <InlineControls
             displayFor={displayFor}
-            allowRevert
+            allowRevert={allowRevert}
             setters={setters}
           />
         )}
         <GenerateNominations
           displayFor={displayFor}
           setters={setters}
-          allowRevert
+          allowRevert={allowRevert}
         />
       </Main>
       <div
