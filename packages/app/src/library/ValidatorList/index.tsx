@@ -10,7 +10,7 @@ import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useThemeValues } from 'contexts/ThemeValues'
-import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
+import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { motion } from 'framer-motion'
 import { useSyncing } from 'hooks/useSyncing'
@@ -23,7 +23,7 @@ import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { NominationStatus } from 'types'
+import type { NominationStatus, Validator } from 'types'
 import { useOverlay } from 'ui-overlay'
 import { useValidatorFilters } from '../../hooks/useValidatorFilters'
 import { FilterBadges } from './Filters/FilterBadges'
@@ -47,7 +47,7 @@ export const ValidatorListInner = ({
   allowListFormat = true,
   defaultOrder = undefined,
   defaultFilters = undefined,
-  ListControls = null,
+  BeforeListNode = null,
   onRemove,
 }: ValidatorListProps) => {
   const { t } = useTranslation()
@@ -336,7 +336,7 @@ export const ValidatorListInner = ({
         {listItems.length > 0 && itemsPerPage && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-        {ListControls}
+        {BeforeListNode}
         <MotionContainer>
           {listItems.length ? (
             <>
