@@ -2,22 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import type { AnyFunction, DisplayFor } from '@w3ux/types'
 import { useManageNominations } from 'contexts/ManageNominations'
 import { SelectableWrapper } from 'library/List'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Revert } from '../Revert'
+import type { InlineControlsProps } from './types'
 
 export const InlineControls = ({
   setters,
   displayFor,
   allowRevert,
-}: {
-  setters: AnyFunction[]
-  displayFor: DisplayFor
-  allowRevert: boolean
-}) => {
+}: InlineControlsProps) => {
   const { t } = useTranslation()
 
   const {

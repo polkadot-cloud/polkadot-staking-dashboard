@@ -30,12 +30,6 @@ export interface SelectHandler {
   }
 }
 
-export interface ListControlsProps {
-  selectHandlers: Record<string, SelectHandler>
-  filterHandlers: AnyJson[]
-  displayFor: DisplayFor
-}
-
 export interface PromptProps {
   callback: (newNominations: Validator[]) => void
   nominations: Validator[]

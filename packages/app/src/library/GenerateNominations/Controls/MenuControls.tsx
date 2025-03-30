@@ -1,20 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFunction } from '@w3ux/types'
 import { useManageNominations } from 'contexts/ManageNominations'
 import { useTranslation } from 'react-i18next'
 import { ButtonMenu } from 'ui-buttons'
 import { Revert } from '../Revert'
 import { MenuWrapper } from './Wrappers'
+import type { MenuControlsProps } from './types'
 
-export const MenuControls = ({
-  setters,
-  allowRevert,
-}: {
-  setters: AnyFunction[]
-  allowRevert: boolean
-}) => {
+export const MenuControls = ({ setters, allowRevert }: MenuControlsProps) => {
   const { t } = useTranslation()
 
   const {

@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { SelectableWrapper } from '../../List'
-import type { ListControlsProps } from '../types'
+import type { ListControlsProps } from './types'
 
 export const ListControls = ({
   selectHandlers,
