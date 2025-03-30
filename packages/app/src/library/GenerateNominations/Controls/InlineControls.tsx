@@ -43,13 +43,11 @@ export const InlineControls = ({
             iconLeft={faChevronLeft}
             iconTransform="shrink-2"
             onClick={() => resetNominations(setters)}
-            style={{ marginRight: '1rem' }}
           />
           {['Active Low Commission', 'Optimal Selection'].includes(method) && (
             <ButtonType
               text={t('reGenerate', { ns: 'app' })}
               onClick={() => revertNominations()}
-              style={{ marginRight: '1rem' }}
             />
           )}
         </>

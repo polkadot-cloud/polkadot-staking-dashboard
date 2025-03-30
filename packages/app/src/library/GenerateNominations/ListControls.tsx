@@ -25,7 +25,7 @@ export const ListControls = ({
   const [opens, setOpens] = useState<Record<string, boolean>>({})
 
   return (
-    <SelectableWrapper className="menu">
+    <SelectableWrapper>
       {selected.length > 0 && (
         <>
           {Object.entries(selectHandlers).map(([k, a], i: number) => {
