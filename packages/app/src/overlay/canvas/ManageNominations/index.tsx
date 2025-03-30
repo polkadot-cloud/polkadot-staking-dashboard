@@ -24,7 +24,13 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NominationSelection } from 'types'
 import { ButtonHelp } from 'ui-buttons'
-import { Footer, Main, Title } from 'ui-core/canvas'
+import {
+  Footer,
+  FootFullWidth,
+  HeadFullWidth,
+  Main,
+  Title,
+} from 'ui-core/canvas'
 import { CloseCanvas, useOverlay } from 'ui-overlay'
 
 export const Inner = () => {
@@ -122,13 +128,6 @@ export const Inner = () => {
     )
   }, [nominations])
 
-  const outerContainerStyles = {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 1.5rem',
-  }
-
   // Generation component props
   const displayFor: DisplayFor = 'canvas'
   const setters = [
@@ -143,16 +142,9 @@ export const Inner = () => {
 
   return (
     <>
-      <div
-        style={{
-          ...outerContainerStyles,
-          borderBottom: '1px solid var(--border-secondary-color)',
-          justifyContent: 'center',
-          height: '4.5rem',
-        }}
-      >
-        <Title style={{ margin: 0, borderBottom: 'none' }}>
-          <h1 style={{ margin: 0 }}>
+      <HeadFullWidth>
+        <Title fullWidth>
+          <h1>
             {t('manageNominations', { ns: 'modals' })}
             <ButtonHelp
               onClick={() => openHelp('Nominations')}
@@ -162,7 +154,7 @@ export const Inner = () => {
           </h1>
         </Title>
         <CloseCanvas sm />
-      </div>
+      </HeadFullWidth>
       {displayFor === 'canvas' && (
         <MenuControls allowRevert={allowRevert} setters={setters} />
       )}
@@ -180,16 +172,7 @@ export const Inner = () => {
           allowRevert={allowRevert}
         />
       </Main>
-      <div
-        style={{
-          borderTop: '1px solid var(--border-secondary-color)',
-          background: 'var(--background-modal-footer)',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          padding: '1rem 1rem 0 1rem',
-        }}
-      >
+      <FootFullWidth>
         <Footer size={canvasSize}>
           <SubmitTx
             noMargin
@@ -200,7 +183,7 @@ export const Inner = () => {
             {...submitExtrinsic}
           />
         </Footer>
-      </div>
+      </FootFullWidth>
     </>
   )
 }

@@ -34,4 +34,13 @@
       margin-left: 0.75rem;
     }
   }
+
+  &.fullWidth {
+    margin: 0;
+    border-bottom: none;
+
+    > h1 {
+      margin: 0
+    }
+  }
 }
