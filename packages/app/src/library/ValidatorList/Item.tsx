@@ -15,7 +15,7 @@ import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
-import { Favorite } from '../ListItem/Buttons/Favorite'
+import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
 import { Select } from '../ListItem/Buttons/Select'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
@@ -55,7 +55,7 @@ export const Item = ({
           <div>
             <HeaderButtonRow>
               <CopyAddress address={address} />
-              {toggleFavorites && <Favorite address={address} />}
+              {toggleFavorites && <FavoriteValidator address={address} />}
               {displayFor === 'default' && (
                 <Metrics
                   address={address}

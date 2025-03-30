@@ -11,7 +11,7 @@ import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { HistoricalEraPoints } from '../List/EraPointsGraph/HistoricalEraPoints'
 import { CopyAddress } from '../ListItem/Buttons/CopyAddress'
-import { Favorite } from '../ListItem/Buttons/Favorite'
+import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
 import { Metrics } from '../ListItem/Buttons/Metrics'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
@@ -46,7 +46,7 @@ export const Item = ({
             <HeaderButtonRow>
               <CopyAddress address={address} />
               {toggleFavorites && (
-                <Favorite address={address} outline={outline} />
+                <FavoriteValidator address={address} outline={outline} />
               )}
               {displayFor !== 'canvas' && (
                 <Metrics
