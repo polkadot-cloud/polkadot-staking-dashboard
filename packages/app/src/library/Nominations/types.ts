@@ -3,7 +3,7 @@
 
 import type { AnyJson } from '@w3ux/types'
 import type { ListFormat } from 'contexts/List/types'
-import type { Validator } from 'contexts/Validators/types'
+import type { Validator } from 'types'
 
 export interface ManageNominationsInterface {
   addToSelected: (item: AnyJson) => void

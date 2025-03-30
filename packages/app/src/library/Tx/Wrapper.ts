@@ -23,6 +23,10 @@ export const Wrapper = styled.div`
       background: var(--background-canvas-card);
     }
 
+    &.transparent {
+      background: none;
+    }
+
     &.card {
       border-radius: 0.5rem;
     }

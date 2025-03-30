@@ -10,10 +10,13 @@ export const Main = ({
   children,
   style,
   size,
+  withMenu,
 }: ComponentBase & {
   size?: CanvasSize
+  withMenu?: boolean
 }) => {
   const allClasses = classNames(classes.main, {
+    [classes.withMenu]: !!withMenu,
     [classes.lg]: size === 'lg',
     [classes.xl]: size === 'xl',
   })

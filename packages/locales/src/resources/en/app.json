@@ -221,6 +221,7 @@
     "readyToJoinPool": "Ready to Join Pool",
     "recentPerformance": "Recent Performance",
     "remove": "Remove",
+    "removeFromNominees": "Remove this validator from your nominees?",
     "removeSelected": "Remove Selected",
     "removeSelectedItems": "Remove Selected Items?",
     "reset": "Reset",

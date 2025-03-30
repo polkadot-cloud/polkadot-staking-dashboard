@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyFunction, AnyJson, DisplayFor } from '@w3ux/types'
-import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
+import type { ValidatorListEntry } from 'contexts/Validators/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
-import type { BondFor, MaybeAddress, NominationStatus } from 'types'
+import type { BondFor, MaybeAddress, NominationStatus, Validator } from 'types'
 
 export interface ValidatorListProps {
   validators: Validator[]
@@ -24,7 +24,7 @@ export interface ValidatorListProps {
   allowListFormat?: boolean
   defaultFilters?: AnyJson
   defaultOrder?: string
-  ListControls?: ReactNode
+  BeforeListNode?: ReactNode
   onRemove?: (params: {
     selected: Validator[]
     resetSelection?: () => void

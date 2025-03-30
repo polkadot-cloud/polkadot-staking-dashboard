@@ -14,6 +14,7 @@ export type SubmitTxProps = SubmitProps & {
   submitAddress?: MaybeAddress
   noMargin?: boolean
   onResize?: () => void
+  transparent?: boolean
 }
 
 export interface SubmitProps {
