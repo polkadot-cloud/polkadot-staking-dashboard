@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
-import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
+import type { AnyJson } from 'types'
 import type { IdentityDisplay } from './types'
 
 export const getIdentityDisplay = (

@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import { IdentityOfMulti } from 'api/queryMulti/identityOfMulti'
 import { SuperOfMulti } from 'api/queryMulti/superOfMulti'
 import type { AnyApi, ChainId } from 'common-types'
+import type { AnyJson } from 'types'
 
 export class Identities {
   static fetch = async (network: ChainId, addresses: string[]) => {

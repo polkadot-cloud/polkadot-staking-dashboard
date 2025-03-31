@@ -1,8 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson, MaybeString } from '@w3ux/types'
-import type { BondFor, MaybeAddress, PoolRoles, ValidatorPrefs } from 'types'
+import type { MaybeString } from '@w3ux/types'
+import type {
+  AnyJson,
+  BondFor,
+  MaybeAddress,
+  PoolRoles,
+  ValidatorPrefs,
+} from 'types'
 
 export type PayeeOptions =
   | 'Staked'

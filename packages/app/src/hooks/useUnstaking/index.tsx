@@ -1,12 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useStaking } from 'contexts/Staking'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTranslation } from 'react-i18next'
+import type { AnyJson } from 'types'
 import { useNominationStatus } from '../useNominationStatus'
 
 export const useUnstaking = () => {

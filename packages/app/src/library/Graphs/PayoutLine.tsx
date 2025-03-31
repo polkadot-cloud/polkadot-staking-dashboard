@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
 import type { FontSpec } from 'chart.js'
 import {
@@ -21,6 +20,7 @@ import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
+import type { AnyJson } from 'types'
 import { Spinner } from 'ui-core/base'
 import type { PayoutLineEntry } from './types'
 

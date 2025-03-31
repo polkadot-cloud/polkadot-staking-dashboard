@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useVaultAccounts } from '@w3ux/react-connect-kit'
-import type { AnyJson } from '@w3ux/types'
 import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { AnyJson } from 'types'
 import type { QrReaderProps } from './types'
 import { Wrapper } from './Wrapper'
 

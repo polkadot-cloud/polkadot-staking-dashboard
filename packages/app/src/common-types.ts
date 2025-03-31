@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types'
-import type { AnyJson } from '@w3ux/types'
 import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
 import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types'
 import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types'
@@ -27,7 +26,7 @@ import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
 import type { FC, FunctionComponent, SVGProps } from 'react'
-import type { DetailActivePool } from 'types'
+import type { AnyJson, DetailActivePool } from 'types'
 
 declare global {
   interface Window {

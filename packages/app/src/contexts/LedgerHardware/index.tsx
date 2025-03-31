@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { AnyJson, MaybeString } from '@w3ux/types'
+import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { compare } from 'compare-versions'
 import { useApi } from 'contexts/Api'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { AnyJson } from 'types'
 import { getLedgerErrorType } from './Utils'
 import { defaultFeedback } from './defaults'
 import { Ledger } from './static/ledger'
@@ -88,7 +89,11 @@ export const LedgerHardwareProvider = ({
     try {
       setIsExecuting(true)
       const { app } = await Ledger.initialise(txMetadataChainId)
-      const result = await Ledger.getVersion(app)
+      const result = (await Ledger.getVersion(app)) as {
+        major?: number
+        minor?: number
+        patch?: number
+      }
       const major = result?.major || 0
       const minor = result?.minor || 0
       const patch = result?.major || 0

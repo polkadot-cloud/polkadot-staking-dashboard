@@ -3,11 +3,11 @@
 
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { DisplayFor } from '@w3ux/types'
 import { useTheme } from 'contexts/Themes'
 import { Confirm } from 'library/Prompt/Confirm'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { DisplayFor } from 'types'
 import { HeaderButton } from 'ui-core/list'
 import { Popover } from 'ui-core/popover'
 
