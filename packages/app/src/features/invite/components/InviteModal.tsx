@@ -7,13 +7,12 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
-import type { Validator } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
-import type { Identity } from 'types'
+import type { Identity, Validator } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
@@ -112,8 +111,13 @@ export const InviteModal = () => {
 
   // Resize modal when content changes
   useEffect(() => {
-    setModalResize()
-  }, [inviteGenerated, inviteType, setModalResize])
+    // Use requestAnimationFrame to debounce the resize
+    const timeoutId = setTimeout(() => {
+      setModalResize()
+    }, 100)
+
+    return () => clearTimeout(timeoutId)
+  }, [inviteGenerated, selectedValidators.length])
 
   if (!activeAccount) {
     return (

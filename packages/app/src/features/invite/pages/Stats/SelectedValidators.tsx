@@ -4,14 +4,20 @@
 import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
-export const SelectedValidators = ({ count }: { count: number }) => {
+export const SelectedValidators = ({
+  count,
+  hideHelp,
+}: {
+  count: number
+  hideHelp?: boolean
+}) => {
   const { t } = useTranslation('invite')
 
   const params = {
     label: t('selectedValidators'),
     value: count,
     unit: '',
-    helpKey: 'Selected Validators',
+    helpKey: hideHelp ? undefined : 'Selected Validators',
   }
   return <Number {...params} />
 }
