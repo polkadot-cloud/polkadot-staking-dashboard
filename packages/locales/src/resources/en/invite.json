@@ -1,5 +1,6 @@
 {
   "invite": {
+    "active": "Active",
     "alreadyInPool": "You are already a member of a pool. You need to leave your current pool before joining a new one.",
     "alreadyNominating": "You are already nominating these validators.",
     "alreadyNominatingOthers": "You are already nominating other validators.",
@@ -7,6 +8,8 @@
     "averageCommission": "Average Commission",
     "back": "Back",
     "bondAmount": "Bond Amount",
+    "bondDescription": "Choose how many {{unit}} you would like to stake. You can increase or decrease this amount later.",
+    "bondStep": "Bond",
     "browseValidators": "Browse Validators",
     "commission": "Commission",
     "complete": "Complete",
@@ -20,6 +23,7 @@
     "errorFetchingValidators": "Error fetching validator details. There may be a network issue.",
     "errorTitle": "Something Went Wrong",
     "generateInvite": "Generate Invite Link",
+    "inactive": "Inactive",
     "incomplete": "Incomplete",
     "invalidValidatorsInUrl": "Invalid validator list in URL.",
     "inviteToStake": "Invite",
@@ -32,6 +36,7 @@
     "loadingPoolDetails": "Loading pool details...",
     "loadingValidators": "Loading validator details...",
     "members": "Members",
+    "minimumBondRequired": "Minimum bond of {{minimum}} {{unit}} required.",
     "noActiveAccount": "No Active Account",
     "noCurrentNominations": "You are not currently staking - please join a pool or nominate validators",
     "noPoolsFound": "You are not a member of any pools",

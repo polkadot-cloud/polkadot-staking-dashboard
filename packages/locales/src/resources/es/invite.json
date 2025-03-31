@@ -1,5 +1,6 @@
 {
   "invite": {
+    "active": "Activo",
     "alreadyInPool": "Ya eres miembro de un pool. Necesitas abandonar tu pool actual antes de unirte a uno nuevo.",
     "alreadyNominating": "Ya estás nominando a estos validadores.",
     "alreadyNominatingOthers": "Ya estás nominando a otros validadores.",
@@ -7,6 +8,8 @@
     "averageCommission": "Comisión Promedio",
     "back": "Atrás",
     "bondAmount": "Cantidad de Fianza",
+    "bondDescription": "Elige cuántos {{unit}} deseas hacer stake. Puedes aumentar o disminuir esta cantidad más tarde.",
+    "bondStep": "Fianza",
     "browseValidators": "Explorar Validadores",
     "commission": "Comisión",
     "complete": "Completo",
@@ -20,6 +23,7 @@
     "errorFetchingValidators": "Error al obtener detalles del validador. Puede haber un problema de red.",
     "errorTitle": "Algo Salió Mal",
     "generateInvite": "Generar Enlace de Invitación",
+    "inactive": "Inactivo",
     "incomplete": "Incompleto",
     "insufficientFunds": "Fondos Insuficientes",
     "insufficientFundsDescription": "No tienes suficientes fondos en tu cuenta para hacer staking en {{network}}.",
@@ -34,6 +38,7 @@
     "loadingPoolDetails": "Cargando detalles del pool...",
     "loadingValidators": "Cargando detalles del validador...",
     "members": "Miembros",
+    "minimumBondRequired": "Se requiere una fianza mínima de {{minimum}} {{unit}}.",
     "noActiveAccount": "Sin Cuenta Activa",
     "noCurrentNominations": "Actualmente no estás nominando a ningún validador",
     "noPoolsFound": "No eres miembro de ningún pool",

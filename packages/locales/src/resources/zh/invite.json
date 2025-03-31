@@ -1,5 +1,6 @@
 {
   "invite": {
+    "active": "活跃",
     "alreadyInPool": "您已经是矿池成员。您需要先离开当前矿池才能加入新矿池。",
     "alreadyNominating": "您已经在提名这些验证人。",
     "alreadyNominatingOthers": "您已经在提名其他验证人。",
@@ -7,6 +8,8 @@
     "averageCommission": "平均佣金",
     "back": "返回",
     "bondAmount": "抵押金额",
+    "bondDescription": "选择您想要质押的 {{unit}} 数量。您可以在以后增加或减少此数量。",
+    "bondStep": "抵押",
     "browseValidators": "浏览验证人",
     "commission": "佣金",
     "complete": "完成",
@@ -20,6 +23,7 @@
     "errorFetchingValidators": "获取验证人详情时出错。可能存在网络问题。",
     "errorTitle": "出现错误",
     "generateInvite": "生成邀请链接",
+    "inactive": "非活跃",
     "incomplete": "未完成",
     "insufficientFunds": "资金不足",
     "insufficientFundsDescription": "您的账户没有足够的资金在 {{network}} 上进行质押。",
@@ -34,6 +38,7 @@
     "loadingPoolDetails": "加载矿池详情...",
     "loadingValidators": "加载验证人详情...",
     "members": "成员",
+    "minimumBondRequired": "需要最低抵押 {{minimum}} {{unit}}。",
     "noActiveAccount": "无活动账户",
     "noCurrentNominations": "您当前未提名任何验证人",
     "noPoolsFound": "您不是任何矿池的成员",

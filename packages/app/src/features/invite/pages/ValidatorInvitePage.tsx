@@ -41,88 +41,54 @@ import { AverageCommission } from './Stats/AverageCommission'
 import { SelectedValidators } from './Stats/SelectedValidators'
 import {
   ActionButtonsWrapper,
+  ErrorState,
+  LoadingState,
   ValidatorListContainer,
-  Wrapper,
 } from './Wrappers'
-
-// Styled components for loading and error states
-const LoadingState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  text-align: center;
-
-  h3 {
-    margin-bottom: 1rem;
-  }
-`
-
-const ErrorState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  text-align: center;
-
-  h3 {
-    margin-bottom: 1rem;
-    color: var(--status-error-color);
-  }
-`
-
-const WarningsWrapper = styled.div`
-  margin: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`
 
 const NominationSteps = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
   width: 100%;
-  gap: 1rem;
 `
 
 const StepContainer = styled.div`
-  background: var(--background-primary);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--border-primary-color);
-
-  h3 {
-    margin: 0 0 1rem 0;
-    font-size: 1.1rem;
-    color: var(--text-color-primary);
-  }
-
-  p {
-    color: var(--text-color-secondary);
-    margin-bottom: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 `
 
 const StepNumber = styled.div<{ $active: boolean; $complete: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
-  color: var(--text-color-secondary);
-  opacity: ${({ $active }) => ($active ? 1 : 0.5)};
+  font-size: 1.1rem;
+  color: ${({ $active, $complete }) =>
+    $active
+      ? 'var(--accent-color-primary)'
+      : $complete
+        ? 'var(--text-color-secondary)'
+        : 'var(--text-color-tertiary)'};
 
   .number {
-    font-size: 1rem;
-    font-family: InterSemiBold, sans-serif;
+    font-weight: 600;
   }
 
   .label {
-    font-size: 1rem;
-    font-family: InterSemiBold, sans-serif;
+    font-weight: 500;
   }
+`
+
+const PayeeInputWrapper = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 500px;
+`
+
+const WarningsWrapper = styled.div`
+  margin: 1rem 0;
 `
 
 const SummaryItem = styled.div`
@@ -144,31 +110,98 @@ const SummaryItem = styled.div`
   }
 `
 
-const PayeeInputWrapper = styled.div`
-  width: 100%;
-  margin: 1rem 0;
+const ValidatorInviteWrapper = styled.div`
+  .validator-item {
+    background: var(--background-primary);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid transparent;
+    transition: background-color 0.1s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 
-  .input-wrap {
-    width: 100%;
+    &:hover {
+      background: var(--background-primary-hover);
+    }
+
+    &.selected {
+      border-color: var(--accent-color-primary);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .validator-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .identity {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+
+    .name {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+  }
+
+  .validator-info {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .commission-value {
+    display: flex;
+    align-items: center;
     gap: 0.5rem;
 
-    > div {
-      width: 100%;
-      padding: 1rem;
-      background: var(--background-primary);
-      border-radius: 1rem;
-      display: flex;
-      align-items: center;
+    .label {
+      color: var(--text-color-secondary);
+    }
 
-      > div {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        width: 100%;
+    .value {
+      font-weight: 500;
+    }
+  }
+
+  .status-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      background: var(--background-secondary);
+      color: var(--text-color-secondary);
+
+      &.active {
+        background: var(--background-success);
+        color: var(--text-color-invert);
+        font-weight: 500;
       }
     }
+
+    .dot-amount {
+      font-weight: 500;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 `
 
@@ -193,12 +226,15 @@ export const ValidatorInvitePage = () => {
   } = useValidators()
   const { network } = useNetwork()
   const {
-    networkData: { units },
+    networkData: { units, unit },
   } = useNetwork()
   const { getTransferOptions } = useTransferOptions()
   const largestTxFee = useBondGreatestFee({ bondFor: 'nominator' })
   const { getPayeeItems } = usePayeeConfig()
   const { newBatchCall } = useBatchCall()
+  const {
+    eraStakers: { stakers },
+  } = useStaking()
 
   // State for validators from URL
   const [urlValidators, setUrlValidators] = useState<string[]>([])
@@ -248,15 +284,10 @@ export const ValidatorInvitePage = () => {
   useEffect(() => {
     if (validators) {
       try {
-        console.log('=== Validator Extraction Debug ===')
-        console.log('Validators from params:', validators)
-
         // Split the list by delimiter and filter out empty values
         const extractedValidators = validators.split('|').filter(Boolean)
-        console.log('Extracted validators:', extractedValidators)
 
         if (extractedValidators.length > 0) {
-          console.log('Setting validators in state:', extractedValidators)
           setUrlValidators(extractedValidators)
           setSelectedValidators(extractedValidators)
 
@@ -267,29 +298,15 @@ export const ValidatorInvitePage = () => {
           const validatorAddresses = extractedValidators.map((address) => ({
             address,
           }))
-          console.log('Fetching preferences for:', validatorAddresses)
           fetchValidatorPrefs(validatorAddresses)
-
-          // Don't automatically move to the bond step
-          // Let the user go through the steps in order
         } else {
-          console.warn('No validators found in URL params')
           setLoadingError(t('noValidatorsInUrl'))
         }
       } catch (error) {
-        console.error('Error extracting validators from URL params:', error)
         setLoadingError(t('invalidValidatorsInUrl'))
       }
     }
   }, [validators, fetchValidatorPrefs, t])
-
-  // Add effect to monitor state changes
-  useEffect(() => {
-    console.log('=== State Update Debug ===')
-    console.log('urlValidators:', urlValidators)
-    console.log('selectedValidators:', selectedValidators)
-    console.log('validValidators:', formatWithPrefs(urlValidators))
-  }, [urlValidators, selectedValidators])
 
   // Set initial bond value when account or transfer options change
   useEffect(() => {
@@ -320,10 +337,34 @@ export const ValidatorInvitePage = () => {
     setNominateComplete(selectedValidators.length > 0)
   }, [selectedValidators])
 
-  // Update bond completion status when bond is valid
+  // Update bond completion status when bond is valid and meets minimum requirement
   useEffect(() => {
-    setBondComplete(bondValid && feedbackErrors.length === 0)
-  }, [bondValid, feedbackErrors])
+    const bondValue = new BigNumber(bond.bond || '0')
+    const minimumBond = new BigNumber('260') // 260 DOT minimum
+    const newErrors = [...feedbackErrors]
+    const minimumBondError = t('minimumBondRequired', {
+      minimum: '260',
+      unit: units,
+    })
+
+    // Remove any existing minimum bond error
+    const filteredErrors = newErrors.filter(
+      (error) => error !== minimumBondError
+    )
+
+    // Add minimum bond error if needed
+    if (bondValue.isLessThan(minimumBond)) {
+      filteredErrors.push(minimumBondError)
+      setBondValid(false)
+    }
+
+    // Only update if errors have changed
+    if (JSON.stringify(filteredErrors) !== JSON.stringify(feedbackErrors)) {
+      setFeedbackErrors(filteredErrors)
+    }
+
+    setBondComplete(bondValid && filteredErrors.length === 0)
+  }, [bond.bond, units, t])
 
   // Handler to set bond on input change
   const handleSetBond = (value: { bond: BigNumber }) => {
@@ -473,23 +514,23 @@ export const ValidatorInvitePage = () => {
   // If not ready, show loading state
   if (!isReady) {
     return (
-      <Wrapper>
+      <ValidatorInviteWrapper>
         <Page.Title title={t('validatorInvite')} />
         <LoadingState>
           <h3>{t('connecting')}</h3>
         </LoadingState>
-      </Wrapper>
+      </ValidatorInviteWrapper>
     )
   }
 
   if (loadingError) {
     return (
-      <Wrapper>
+      <ValidatorInviteWrapper>
         <Page.Title title={t('validatorInvite')} />
         <ErrorState>
           <h3>{loadingError}</h3>
         </ErrorState>
-      </Wrapper>
+      </ValidatorInviteWrapper>
     )
   }
 
@@ -510,14 +551,18 @@ export const ValidatorInvitePage = () => {
         },
         {
           id: 3,
-          label: t('bond'),
+          label: t('bondStep'),
           complete: payoutComplete && nominateComplete && bondComplete,
         },
         { id: 4, label: t('summary'), complete: false },
       ]
     : [
         { id: 1, label: t('nominate'), complete: nominateComplete },
-        { id: 2, label: t('bond'), complete: nominateComplete && bondComplete },
+        {
+          id: 2,
+          label: t('bondStep'),
+          complete: nominateComplete && bondComplete,
+        },
         { id: 3, label: t('summary'), complete: false },
       ]
 
@@ -531,7 +576,7 @@ export const ValidatorInvitePage = () => {
   }
 
   return (
-    <Wrapper>
+    <ValidatorInviteWrapper>
       <Page.Title title={t('validatorInvite')} />
       <Page.Row>
         <CardWrapper>
@@ -617,28 +662,29 @@ export const ValidatorInvitePage = () => {
                               )
 
                               // Format stake and commission values
-                              const totalStake = getValidatorTotalStake(address)
-                              const formattedStake = totalStake
-                                ? new BigNumber(totalStake.toString())
-                                    .dividedBy(10000000000)
-                                    .toFormat()
-                                : '0'
                               const commissionValue = prefs?.commission ?? 0
-                              console.log('Raw commission data:', {
-                                address,
-                                rawPrefs: prefs,
-                                commissionValue,
-                                commissionPercent: commissionValue.toFixed(2),
-                              })
                               const commissionPercent =
                                 commissionValue.toFixed(2)
+
+                              // Get validator's total stake and format to 2 decimal places
+                              const totalStake = getValidatorTotalStake(address)
+                              const formattedStake = planckToUnitBn(
+                                new BigNumber(totalStake.toString()),
+                                units
+                              ).toFormat(2)
+
+                              // Check if validator is active
+                              const isActive = stakers.some(
+                                (s) => s.address === address
+                              )
 
                               return (
                                 <div
                                   key={address}
                                   className={`validator-item ${selectedValidators.includes(address) ? 'selected' : ''}`}
                                   data-testid={`validator-card-${address}`}
-                                  onClick={() => {
+                                  onClick={(e) => {
+                                    e.preventDefault()
                                     const newSelection =
                                       selectedValidators.includes(address)
                                         ? selectedValidators.filter(
@@ -647,6 +693,8 @@ export const ValidatorInvitePage = () => {
                                         : [...selectedValidators, address]
                                     setSelectedValidators(newSelection)
                                   }}
+                                  role="button"
+                                  tabIndex={0}
                                   style={{ cursor: 'pointer' }}
                                 >
                                   <div className="validator-header">
@@ -667,11 +715,15 @@ export const ValidatorInvitePage = () => {
                                         </span>
                                       </div>
                                       <div className="status-info">
-                                        <span className="status active">
-                                          Active
+                                        <span
+                                          className={`status ${isActive ? 'active' : ''}`}
+                                        >
+                                          {isActive
+                                            ? t('active')
+                                            : t('inactive')}
                                         </span>
                                         <span className="dot-amount">
-                                          {formattedStake} DOT
+                                          {formattedStake} {unit}
                                         </span>
                                       </div>
                                     </div>
@@ -690,18 +742,22 @@ export const ValidatorInvitePage = () => {
                     {/* Bond Step */}
                     {((isNewNominator && step.id === 3) ||
                       (!isNewNominator && step.id === 2)) && (
-                      <BondFeedback
-                        bondFor="nominator"
-                        displayFirstWarningOnly
-                        syncing={largestTxFee.isZero()}
-                        listenIsValid={(valid, errors) => {
-                          setBondValid(valid)
-                          setFeedbackErrors(errors)
-                        }}
-                        defaultBond={bond.bond !== '' ? bond.bond : null}
-                        setters={[handleSetBond]}
-                        txFees={BigInt(largestTxFee.toString())}
-                      />
+                      <>
+                        <p>{t('bondDescription', { unit })}</p>
+                        <BondFeedback
+                          bondFor="nominator"
+                          displayFirstWarningOnly
+                          syncing={largestTxFee.isZero()}
+                          listenIsValid={(valid, errors) => {
+                            setBondValid(valid)
+                            setFeedbackErrors(errors)
+                          }}
+                          defaultBond={bond.bond !== '' ? bond.bond : null}
+                          setters={[handleSetBond]}
+                          txFees={BigInt(largestTxFee.toString())}
+                          maxWidth
+                        />
+                      </>
                     )}
 
                     {/* Summary Step */}
@@ -748,6 +804,7 @@ export const ValidatorInvitePage = () => {
                         <ButtonSecondary
                           text={t('back')}
                           onClick={goToPrevStep}
+                          marginLeft
                         />
                       )}
                       {step.id < steps.length ? (
@@ -790,6 +847,6 @@ export const ValidatorInvitePage = () => {
           </NominationSteps>
         </CardWrapper>
       </Page.Row>
-    </Wrapper>
+    </ValidatorInviteWrapper>
   )
 }
