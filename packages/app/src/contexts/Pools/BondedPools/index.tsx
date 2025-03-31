@@ -3,7 +3,7 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { AnyJson, Sync } from '@w3ux/types'
+import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
 import { BondedPoolsEntries } from 'api/entries/bondedPoolsEntries'
 import { NominatorsMulti } from 'api/queryMulti/nominatorsMulti'
@@ -16,6 +16,7 @@ import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type {
+  AnyJson,
   BondedPool,
   MaybeAddress,
   MaybePool,

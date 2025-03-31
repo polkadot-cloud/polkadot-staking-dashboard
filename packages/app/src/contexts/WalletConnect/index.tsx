@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { AnyFunction, AnyJson } from '@w3ux/types'
+import type { AnyFunction } from '@w3ux/types'
 import { WalletConnectModal } from '@walletconnect/modal'
 import UniversalProvider from '@walletconnect/universal-provider'
 import { getSdkError } from '@walletconnect/utils'
@@ -12,6 +12,7 @@ import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
+import type { AnyJson } from 'types'
 import type { WalletConnectContextInterface } from './types'
 
 export const [WalletConnectContext, useWalletConnect] =

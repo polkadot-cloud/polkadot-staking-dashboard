@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { AnyJson } from '@w3ux/types'
 import { useState } from 'react'
+import type { AnyJson } from 'types'
 import type {
   ListContextInterface,
   ListFormat,

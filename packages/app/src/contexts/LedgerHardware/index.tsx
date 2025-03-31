@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { AnyJson, MaybeString } from '@w3ux/types'
+import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { compare } from 'compare-versions'
 import { useApi } from 'contexts/Api'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { AnyJson } from 'types'
 import { getLedgerErrorType } from './Utils'
 import { defaultFeedback } from './defaults'
 import { Ledger } from './static/ledger'
