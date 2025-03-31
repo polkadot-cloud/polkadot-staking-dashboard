@@ -1132,21 +1132,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lottiefiles/dotlottie-react@npm:^0.13.2":
-  version: 0.13.2
-  resolution: "@lottiefiles/dotlottie-react@npm:0.13.2"
+"@lottiefiles/dotlottie-react@npm:^0.13.3":
+  version: 0.13.3
+  resolution: "@lottiefiles/dotlottie-react@npm:0.13.3"
   dependencies:
-    "@lottiefiles/dotlottie-web": "npm:0.41.0"
+    "@lottiefiles/dotlottie-web": "npm:0.42.0"
   peerDependencies:
     react: ^17 || ^18 || ^19
-  checksum: 10c0/31ecf3485d50e7358eaf50023cefbfbdebdb14c7d06ed8a16a839bdae38c7db40f75a6a4fb7281295e7097a0e633dcb7ac687560be1fae2d70722ced2eb0e97b
+  checksum: 10c0/195e56a886574c87f5cc15d4e72d26a6350a6a5d1606391a2e4b3ef64764b3e126d6dc9d8e860bf5f64539377b9a2a70740f1ad67d2729a2e5c011aaf001e764
   languageName: node
   linkType: hard
 
-"@lottiefiles/dotlottie-web@npm:0.41.0":
-  version: 0.41.0
-  resolution: "@lottiefiles/dotlottie-web@npm:0.41.0"
-  checksum: 10c0/8fc17d5c38e5e4fe6efa8dd796c2e53fa2fb1927a4e7e65d295125bd6ce3a6b8b54569e107d1748260059d369e7d4d8f6da3cfbb8a2dda70d918bbbb34def602
+"@lottiefiles/dotlottie-web@npm:0.42.0":
+  version: 0.42.0
+  resolution: "@lottiefiles/dotlottie-web@npm:0.42.0"
+  checksum: 10c0/c0f7cd42c343585e2cc5e2a8242b8f1fe69be9f72adf7a649f3c275133824046a242e2c6a895b9e2cff867330947b88de4a6ad1f9820c55105bb8b7f886e3683
   languageName: node
   linkType: hard
 
@@ -5543,7 +5543,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^6.7.2"
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.30.0"
-    "@lottiefiles/dotlottie-react": "npm:^0.13.2"
+    "@lottiefiles/dotlottie-react": "npm:^0.13.3"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.14"
     "@polkadot-api/signers-common": "npm:^0.1.6"
     "@polkadot-api/substrate-bindings": "npm:^0.11.1"
