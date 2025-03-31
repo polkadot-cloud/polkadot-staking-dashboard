@@ -29,7 +29,7 @@ export const WithdrawMember = ({
 }: {
   who: string
   member: PoolMembership
-  memberRef: RefObject<HTMLDivElement>
+  memberRef: RefObject<HTMLDivElement | null>
 }) => {
   const { t } = useTranslation('modals')
   const {

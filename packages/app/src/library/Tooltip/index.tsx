@@ -18,7 +18,7 @@ export const Tooltip = () => {
   } = useTooltip()
 
   // Ref for the tooltip element itself.
-  const tooltipRef: RefObject<HTMLDivElement> = useRef(null)
+  const tooltipRef: RefObject<HTMLDivElement | null> = useRef(null)
 
   useEffect(() => {
     if (open === 1) {
