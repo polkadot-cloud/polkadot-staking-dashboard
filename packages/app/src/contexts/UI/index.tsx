@@ -1,20 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { AnyJson } from '@w3ux/types'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
 import { PageWidthMediumThreshold } from 'consts'
 import type { MutableRefObject, ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import * as defaults from './defaults'
+import { useEffect, useRef, useState } from 'react'
+import type { AnyJson } from 'types'
 import type { UIContextInterface } from './types'
 
-export const UIContext = createContext<UIContextInterface>(
-  defaults.defaultUIContext
-)
-
-export const useUi = () => useContext(UIContext)
+export const [UIContext, useUi] = createSafeContext<UIContextInterface>()
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   // Side whether the side menu is open

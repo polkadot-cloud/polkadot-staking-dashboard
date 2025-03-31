@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import type { FC, RefObject } from 'react'
 import type {
   ActiveOverlayInstance,
+  AnyJson,
   CanvasSize,
   CanvasStatus,
   ModalSize,
@@ -39,8 +39,8 @@ export interface OverlayContextInterface {
     setModalHeight: (height: number) => void
     setModalResize: () => void
     setModalStatus: (status: ModalStatus) => void
-    setModalRef: (modalRef: RefObject<HTMLDivElement>) => void
-    setModalHeightRef: (heightRef: RefObject<HTMLDivElement>) => void
+    setModalRef: (modalRef: RefObject<HTMLDivElement | null>) => void
+    setModalHeightRef: (heightRef: RefObject<HTMLDivElement | null>) => void
   }
 }
 export interface Fallback {

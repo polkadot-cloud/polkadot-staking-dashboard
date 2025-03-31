@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
-import type { AnyJson } from '@w3ux/types'
 import { withTimeout } from '@w3ux/utils'
 import { PolkadotGenericApp } from '@zondax/ledger-substrate'
+import type { AnyJson } from 'types'
 
 export class Ledger {
   // The ledger device transport. `null` when not actively in use

@@ -16,7 +16,7 @@ export const Menu = () => {
     checkMenuPosition,
   } = useMenu()
 
-  const menuRef = useRef(null)
+  const menuRef = useRef<HTMLDivElement | null>(null)
 
   // Handler for closing the menu on window resize.
   const resizeCallback = () => {

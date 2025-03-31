@@ -3,7 +3,6 @@
 
 import { faBars, faShare, faUnlockAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { AnyJson } from '@w3ux/types'
 import { useApi } from 'contexts/Api'
 import { useMenu } from 'contexts/Menu'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -17,6 +16,7 @@ import { MenuList } from 'library/Menu/List'
 import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { AnyJson } from 'types'
 import { HeaderButtonRow, Separator } from 'ui-core/list'
 import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
@@ -38,7 +38,7 @@ export const Member = ({
   const { activePool, isOwner, isBouncer } = useActivePool()
 
   // Ref for the member container.
-  const memberRef = useRef<HTMLDivElement>(null)
+  const memberRef = useRef<HTMLDivElement | null>(null)
 
   const { state, roles } = activePool?.bondedPool || {}
   const { bouncer, root, depositor } = roles || {}

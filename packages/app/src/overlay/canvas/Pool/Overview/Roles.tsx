@@ -4,7 +4,7 @@
 import { useHelp } from 'contexts/Help'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { getIdentityDisplay } from 'library/List/Utils'
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
+import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { Subheading } from 'ui-core/canvas'

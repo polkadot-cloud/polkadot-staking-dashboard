@@ -5,12 +5,9 @@ import type {
   IconDefinition,
   IconProp,
 } from '@fortawesome/fontawesome-svg-core'
-import type {
-  ComponentBase,
-  ComponentBaseWithClassName,
-  ImportedAccount,
-} from '@w3ux/types'
+import type { ImportedAccount } from '@w3ux/types'
 import type { MouseEvent } from 'react'
+import type { ComponentBase, ComponentBaseWithClassName } from 'types'
 
 // Common button props, applied to all buttons.
 export interface ButtonCommonProps {
@@ -148,6 +145,14 @@ export type ButtonTextProps = ComponentBaseWithClassName &
     text: string
     size?: Omit<ButtonSize, 'lg'>
     status?: 'danger'
+  }
+
+export type ButtonMenuProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    text: string
+    status?: 'danger'
+    asLabel?: boolean
   }
 
 export type MultiButtonContainerProps = ComponentBase & {

@@ -1,10 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DisplayFor } from '@w3ux/types'
-import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
+import type { ValidatorListEntry } from 'contexts/Validators/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
-import type { BondFor, MaybeAddress, NominationStatus } from 'types'
+import type {
+  BondFor,
+  DisplayFor,
+  MaybeAddress,
+  NominationStatus,
+  Validator,
+} from 'types'
 
 export interface NominationListProps {
   validators: Validator[]

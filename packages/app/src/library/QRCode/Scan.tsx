@@ -57,10 +57,10 @@ export const Html5QrCodePlugin = ({
 }: Html5QrScannerProps) => {
   const { setOnClosePrompt } = usePrompt()
 
-  const html5QrCodeRef = useRef<Html5Qrcode>()
+  const html5QrCodeRef = useRef<Html5Qrcode | null>(null)
 
   // Reference of the HTML element used to scan the QR code.
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
 
   const handleHtmlQrCode = async (): Promise<void> => {
     if (!ref.current || !html5QrCodeRef.current) {

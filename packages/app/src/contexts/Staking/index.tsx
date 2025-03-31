@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { AnyJson, ExternalAccount } from '@w3ux/types'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import type { ExternalAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
 import { ErasStakersOverview } from 'api/query/erasStakersOverview'
@@ -18,22 +18,19 @@ import type {
 } from 'contexts/Staking/types'
 import { Syncs } from 'controllers/Syncs'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
-import type { MaybeAddress, NominationStatus } from 'types'
+import { useRef, useState } from 'react'
+import type { AnyJson, MaybeAddress, NominationStatus } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
 import { useBonded } from '../Bonded'
-import { defaultEraStakers, defaultStakingContext } from './defaults'
+import { defaultEraStakers } from './defaults'
 import { getLocalEraExposures, setLocalEraExposures } from './Utils'
 
 const worker = new Worker()
 
-export const StakingContext = createContext<StakingContextInterface>(
-  defaultStakingContext
-)
-
-export const useStaking = () => useContext(StakingContext)
+export const [StakingContext, useStaking] =
+  createSafeContext<StakingContextInterface>()
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded()

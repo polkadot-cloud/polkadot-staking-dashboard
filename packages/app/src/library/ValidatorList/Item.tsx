@@ -1,32 +1,26 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { useList } from 'contexts/List'
 import { usePlugins } from 'contexts/Plugins'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
 import { HistoricalEraPoints } from 'library/List/EraPointsGraph/HistoricalEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
-import { Metrics } from 'library/ListItem/Labels/Metrics'
+import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
+import { Metrics } from 'library/ListItem/Buttons/Metrics'
+import { Remove } from 'library/ListItem/Buttons/Remove'
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
-import {
-  HeaderButton,
-  HeaderButtonRow,
-  LabelRow,
-  Separator,
-} from 'ui-core/list'
-import { useValidators } from '../../contexts/Validators/ValidatorEntries'
+import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
+import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
+import { Select } from '../ListItem/Buttons/Select'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
 import { EraStatus } from '../ListItem/Labels/EraStatus'
-import { FavoriteValidator } from '../ListItem/Labels/FavoriteValidator'
 import { Identity } from '../ListItem/Labels/Identity'
-import { Select } from '../ListItem/Labels/Select'
 import type { ItemProps } from './types'
 
 export const Item = ({
@@ -75,19 +69,11 @@ export const Item = ({
               )}
             </HeaderButtonRow>
             {typeof onRemove === 'function' && (
-              <HeaderButton
-                outline={['modal', 'canvas'].includes(displayFor)}
-                noMargin
-              >
-                <button
-                  type="button"
-                  onClick={() => {
-                    onRemove({ selected: [validator] })
-                  }}
-                >
-                  <FontAwesomeIcon icon={faXmark} transform="grow-4" />
-                </button>
-              </HeaderButton>
+              <Remove
+                address={address}
+                onRemove={() => onRemove({ selected: [validator] })}
+                displayFor={displayFor}
+              />
             )}
           </div>
         </div>

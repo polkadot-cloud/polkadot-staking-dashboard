@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
 import { ValidatorsEntries } from 'api/entries/validatorsEntries'
@@ -23,29 +23,23 @@ import { useErasPerDay } from 'hooks/useErasPerDay'
 import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useState } from 'react'
-import type { Identity, SuperIdentity } from 'types'
+import { useEffect, useState } from 'react'
+import type { Identity, SuperIdentity, Validator, ValidatorStatus } from 'types'
 import { perbillToPercent } from 'utils'
 import type {
-  Validator,
   ValidatorAddresses,
   ValidatorListEntry,
   Validators,
   ValidatorsContextInterface,
-  ValidatorStatus,
 } from '../types'
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils'
 import {
   defaultAverageEraValidatorReward,
-  defaultValidatorsContext,
   defaultValidatorsData,
 } from './defaults'
 
-export const ValidatorsContext = createContext<ValidatorsContextInterface>(
-  defaultValidatorsContext
-)
-
-export const useValidators = () => useContext(ValidatorsContext)
+export const [ValidatorsContext, useValidators] =
+  createSafeContext<ValidatorsContextInterface>()
 
 export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()

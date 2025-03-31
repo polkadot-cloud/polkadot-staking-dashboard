@@ -3,6 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
+import type { JSX } from 'react'
 import commonClasses from '../common.module.scss'
 import type { ButtonTertiaryProps } from '../types'
 import { onMouseHandlers } from '../util'

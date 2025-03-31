@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
 import { MaxPayoutDays } from 'consts'
@@ -22,6 +21,7 @@ import type {
   RewardResult,
   RewardResults,
 } from 'plugin-staking-api/types'
+import type { AnyJson } from 'types'
 import { planckToUnitBn } from 'utils'
 import type { PayoutDayCursor } from './types'
 

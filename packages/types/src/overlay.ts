@@ -19,3 +19,5 @@ export type ModalStatus =
 export type ModalSize = 'xs' | 'sm' | 'lg' | 'xl'
 
 export type CanvasSize = 'lg' | 'xl'
+
+export type DisplayFor = 'default' | 'modal' | 'canvas' | 'card'

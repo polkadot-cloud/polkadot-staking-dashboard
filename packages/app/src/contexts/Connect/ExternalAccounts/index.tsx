@@ -1,12 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { ExternalAccount, ExternalAccountAddedBy } from '@w3ux/types'
 import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
-import { createContext, useContext, type ReactNode } from 'react'
-import { defaultExternalAccountsContext } from './defaults'
+import { type ReactNode } from 'react'
 import type {
   AddExternalAccountResult,
   ExternalAccountImportType,
@@ -18,12 +18,8 @@ import {
   removeLocalExternalAccounts,
 } from './Utils'
 
-export const ExternalAccountsContext =
-  createContext<ExternalAccountsContextInterface>(
-    defaultExternalAccountsContext
-  )
-
-export const useExternalAccounts = () => useContext(ExternalAccountsContext)
+export const [ExternalAccountsContext, useExternalAccounts] =
+  createSafeContext<ExternalAccountsContextInterface>()
 
 export const ExternalAccountsProvider = ({
   children,

@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import {
   addedTo,
   matchedProperties,
@@ -17,17 +17,13 @@ import { useNetwork } from 'contexts/Network'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
-import * as defaults from './defaults'
 import type { BondedAccount, BondedContextInterface } from './types'
 
-export const BondedContext = createContext<BondedContextInterface>(
-  defaults.defaultBondedContext
-)
-
-export const useBonded = () => useContext(BondedContext)
+export const [BondedContext, useBonded] =
+  createSafeContext<BondedContextInterface>()
 
 export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

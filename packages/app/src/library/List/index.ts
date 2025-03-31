@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DisplayFor } from '@w3ux/types'
 import styled from 'styled-components'
+import type { DisplayFor } from 'types'
 import type { ListProps, PaginationWrapperProps } from './types'
 
 export const Wrapper = styled.div`
@@ -103,10 +103,11 @@ export const SelectableWrapper = styled.div`
   padding: 0 0.15rem;
   margin-top: 0.25rem;
   min-height: 2rem;
+  margin-bottom: 0.75rem;
 
-  &.menu {
-    height: 2rem;
-    margin-bottom: 0.75rem;
+  > div,
+  button {
+    margin-right: 1rem;
   }
 `
 

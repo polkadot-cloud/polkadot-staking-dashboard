@@ -9,7 +9,7 @@ export const PromptWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 11;
-  animation: fadeIn 0.3s cubic-bezier(0, 1, 0, 1) forwards;
+  animation: fadeIn 0.075s ease-in-out forwards;
 
   /* content wrapper */
   > div {
@@ -39,7 +39,7 @@ export const PromptWrapper = styled.div`
 
     @keyframes fadeIn {
       from {
-        opacity: 0.8;
+        opacity: 0;
       }
       to {
         opacity: 1;
@@ -62,7 +62,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
   width: 100%;
   max-width: ${(props) => (props.size === 'sm' ? '500px' : '700px')};
   max-height: 100%;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   z-index: 9;
   position: relative;
   overflow: auto;

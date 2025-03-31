@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useOnResize } from '@w3ux/hooks'
-import type { AnyJson } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { TipsConfig } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
@@ -17,6 +16,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { DefaultLocale } from 'locales'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { AnyJson } from 'types'
 import { Items } from './Items'
 import { PageToggle } from './PageToggle'
 import { Syncing } from './Syncing'

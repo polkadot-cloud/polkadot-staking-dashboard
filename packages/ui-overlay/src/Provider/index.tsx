@@ -1,32 +1,25 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode, RefObject } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type {
   ActiveOverlayInstance,
   CanvasStatus,
   ModalStatus,
   OverlayInstanceDirection,
 } from 'types'
-import {
-  defaultCanvasConfig,
-  defaultModalConfig,
-  defaultOverlayContext,
-} from './defaults'
+import { defaultCanvasConfig, defaultModalConfig } from './defaults'
 import type {
   CanvasConfig,
   ModalConfig,
   OverlayContextInterface,
 } from './types'
 
-export const OverlayContext = createContext<OverlayContextInterface>(
-  defaultOverlayContext
-)
-
-export const useOverlay = () => useContext(OverlayContext)
+export const [OverlayContext, useOverlay] =
+  createSafeContext<OverlayContextInterface>()
 
 export const OverlayProvider = ({ children }: { children: ReactNode }) => {
   // Store the modal status
@@ -65,11 +58,11 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
   const [modalResizeCounter, setModalResizeCounterState] = useState<number>(0)
 
   // Store the ref to the modal height container. Used for controlling whether height is transitionable
-  const [modalRef, setModalRef] = useState<RefObject<HTMLDivElement>>()
+  const [modalRef, setModalRef] = useState<RefObject<HTMLDivElement | null>>()
 
   // Store the ref to the modal height container. Used for controlling whether height is transitionable
   const [modalHeightRef, setModalHeightRef] =
-    useState<RefObject<HTMLDivElement>>()
+    useState<RefObject<HTMLDivElement | null>>()
 
   // The maximum allowed height for the modal
   const modalMaxHeight = window.innerHeight * 0.8

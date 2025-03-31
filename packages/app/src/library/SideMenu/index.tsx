@@ -50,7 +50,7 @@ export const SideMenu = () => {
   })
 
   // Define side menu ref and close the side menu when clicking outside of it.
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement | null>(null)
   useOutsideAlerter(ref, () => {
     setSideMenu(false)
   })
