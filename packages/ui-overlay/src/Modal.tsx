@@ -32,8 +32,9 @@ export const Modal = ({
   } = useOverlay()
   const controls = useAnimation()
   const { status: canvasStatus } = useOverlay().canvas
-  const modalRef = useRef<HTMLDivElement>(null)
-  const heightRef = useRef<HTMLDivElement>(null)
+
+  const modalRef = useRef<HTMLDivElement | null>(null)
+  const heightRef = useRef<HTMLDivElement | null>(null)
 
   // Whether the modal card is currently dimmed
   const dimmed = externalOverlayStatus === 'open' || canvasStatus === 'open'

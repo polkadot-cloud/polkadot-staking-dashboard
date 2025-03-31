@@ -11,7 +11,7 @@ export const useDotLottieButton = (
   options?: { autoLoop?: boolean }
 ) => {
   const { mode } = useTheme()
-  const lottieRef = useRef<DotLottie>()
+  const lottieRef = useRef<DotLottie | null>(null)
 
   const lottieRefCallback = (dotLottie: DotLottie) => {
     lottieRef.current = dotLottie

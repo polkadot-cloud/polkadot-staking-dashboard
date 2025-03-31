@@ -55,8 +55,8 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Adjusts menu position and shows the menu
-  const checkMenuPosition = (ref: RefObject<HTMLDivElement>) => {
-    if (!ref?.current) {
+  const checkMenuPosition = (ref: RefObject<HTMLDivElement | null>) => {
+    if (!ref.current) {
       return
     }
 
