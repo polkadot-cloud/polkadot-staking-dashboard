@@ -26,12 +26,8 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
   const nominatedAddresses = activeAccount ? getNominations(activeAccount) : []
   const nominatedValidators = formatWithPrefs(nominatedAddresses)
 
-  const [selectedPool, setSelectedPool] = useState<string | null>(
-    activePool?.id?.toString() || null
-  )
-  const [selectedValidators, setSelectedValidators] = useState<string[]>(
-    nominatedAddresses || []
-  )
+  const [selectedPool, setSelectedPool] = useState<string | null>(null)
+  const [selectedValidators, setSelectedValidators] = useState<string[]>([])
   const [copiedToClipboard, setCopiedToClipboard] = useState<boolean>(false)
   const [inviteUrl, setInviteUrl] = useState<string>('')
 

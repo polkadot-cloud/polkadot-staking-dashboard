@@ -1,11 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Polkicon } from '@w3ux/react-polkicon'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import type { Validator } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { getIdentityDisplay } from 'library/List/Utils'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -27,8 +31,11 @@ export const InviteModal = () => {
   const { inPool, activePool } = useActivePool()
   const { inSetup } = useStaking()
   const { activeAccount } = useActiveAccounts()
+  const { validatorIdentities, validatorSupers, validatorsFetched } =
+    useValidators()
 
   const [inviteGenerated, setInviteGenerated] = useState(false)
+  const [selectedValidators, setSelectedValidators] = useState<string[]>([])
 
   // Determine invite type based on user's staking status
   const inviteType = useMemo(() => {
@@ -44,71 +51,69 @@ export const InviteModal = () => {
   const poolInviteGenerator = useInviteGenerator({ type: 'pool' })
   const validatorInviteGenerator = useInviteGenerator({ type: 'validator' })
 
-  // Set the active pool as the selected pool
-  useEffect(() => {
-    if (activePool?.id) {
-      poolInviteGenerator.setSelectedPool(activePool.id.toString())
-      handleGenerateInvite()
-    }
-  }, [activePool])
-
-  const { getValidators } = useValidators()
-
-  // Get validators
-  const validators = getValidators()
-
   // Get the active generator based on the invite type
-  const activeGenerator =
-    inviteType === 'pool' ? poolInviteGenerator : validatorInviteGenerator
+  const activeGenerator = useMemo(
+    () =>
+      inviteType === 'pool' ? poolInviteGenerator : validatorInviteGenerator,
+    [inviteType, poolInviteGenerator, validatorInviteGenerator]
+  )
 
-  // Generate the invite URL
-  const handleGenerateInvite = () => {
-    activeGenerator.generateInviteUrl()
-    setInviteGenerated(true)
-  }
+  // Get nominated validators for the active account
+  const nominatedValidators = useMemo(
+    () =>
+      (validatorInviteGenerator.nominatedValidators ||
+        []) as ValidatorWithIdentity[],
+    [validatorInviteGenerator.nominatedValidators]
+  )
 
-  // Get entity name and address for display in share options
-  const getEntityDetails = useCallback(() => {
-    if (inviteType === 'pool' && activePool) {
-      return {
-        name: `Pool #${activePool.id}`,
-        address: activePool.addresses?.stash || '',
-      }
-    } else if (
-      inviteType === 'validator' &&
-      validatorInviteGenerator.selectedValidators.length > 0
-    ) {
-      const validatorAddress = validatorInviteGenerator.selectedValidators[0]
-      const validator = validators.find(
-        (v) => v.address === validatorAddress
-      ) as ValidatorWithIdentity | undefined
-
-      return {
-        name:
-          validator?.identity?.info?.display?.value?.asText() ||
-          validatorAddress,
-        address: validatorAddress,
-      }
+  // Initialize selected validators when nominatedValidators are loaded
+  useEffect(() => {
+    if (nominatedValidators.length > 0 && selectedValidators.length === 0) {
+      setSelectedValidators(nominatedValidators.map((v) => v.address))
     }
-    return { name: '', address: '' }
+  }, [nominatedValidators])
+
+  // Handle generate invite button click
+  const handleGenerateInvite = useCallback(() => {
+    if (inviteType === 'validator' && selectedValidators.length > 0) {
+      validatorInviteGenerator.setSelectedValidators(selectedValidators)
+      validatorInviteGenerator.generateInviteUrl()
+    } else if (inviteType === 'pool' && activePool?.id) {
+      poolInviteGenerator.setSelectedPool(activePool.id.toString())
+      poolInviteGenerator.generateInviteUrl()
+    }
+    setInviteGenerated(true)
   }, [
     inviteType,
+    selectedValidators,
+    validatorInviteGenerator,
+    poolInviteGenerator,
     activePool,
-    validatorInviteGenerator.selectedValidators,
-    validators,
   ])
 
-  // Use useMemo to calculate entityDetails only when dependencies change
-  const entityDetails = useMemo(() => getEntityDetails(), [getEntityDetails])
+  // Handle pool selection only - moved inside useEffect to prevent infinite loop
+  useEffect(() => {
+    if (!inviteGenerated && inviteType === 'pool' && activePool?.id) {
+      poolInviteGenerator.setSelectedPool(activePool.id.toString())
+      poolInviteGenerator.generateInviteUrl()
+      setInviteGenerated(true)
+    }
+  }, [inviteType, activePool?.id, poolInviteGenerator])
+
+  // Toggle validator selection
+  const toggleValidator = useCallback((address: string) => {
+    setSelectedValidators((prev) => {
+      const newSelection = prev.includes(address)
+        ? prev.filter((a) => a !== address)
+        : [...prev, address]
+      return newSelection
+    })
+  }, [])
 
   // Resize modal when content changes
   useEffect(() => {
     setModalResize()
-  }, [inviteGenerated, inviteType])
-
-  // Get nominated validators for the active account and cast to ValidatorWithIdentity[]
-  const nominatedValidators = (validatorInviteGenerator.nominatedValidators ||
-    []) as ValidatorWithIdentity[]
+  }, [inviteGenerated, inviteType, setModalResize])
 
   if (!activeAccount) {
     return (
@@ -157,30 +162,62 @@ export const InviteModal = () => {
             inviteUrl={activeGenerator.inviteUrl}
             copiedToClipboard={activeGenerator.copiedToClipboard}
             copyInviteUrl={activeGenerator.copyInviteUrl}
-            type={inviteType}
-            entityName={entityDetails.name}
-            entityAddress={entityDetails.address}
           />
-        ) : (
+        ) : !inviteGenerated ? (
           <>
             <ContentSection>
-              <SectionTitle>{t('selectValidators')}</SectionTitle>
+              <SectionHeader>
+                <SectionTitle>{t('selectValidators')}</SectionTitle>
+                <SelectedCount>
+                  {selectedValidators.length} / {nominatedValidators.length}{' '}
+                  {t('selected')}
+                </SelectedCount>
+              </SectionHeader>
               {nominatedValidators.length > 0 ? (
                 <ValidatorList>
                   {nominatedValidators.map((validator) => {
                     const validatorWithIdentity =
                       validator as ValidatorWithIdentity
+                    const isSelected = selectedValidators.includes(
+                      validatorWithIdentity.address
+                    )
+                    const identityDisplay =
+                      validatorsFetched === 'synced'
+                        ? getIdentityDisplay(
+                            validatorIdentities[validatorWithIdentity.address],
+                            validatorSupers[validatorWithIdentity.address]
+                          ).node
+                        : null
+
                     return (
-                      <ValidatorItem key={validatorWithIdentity.address}>
+                      <ValidatorItem
+                        key={validatorWithIdentity.address}
+                        onClick={() =>
+                          toggleValidator(validatorWithIdentity.address)
+                        }
+                        $selected={isSelected}
+                      >
                         <ValidatorDisplay>
-                          <ValidatorAddress>
-                            {validatorWithIdentity.address}
-                          </ValidatorAddress>
-                          {validatorWithIdentity.identity?.info?.display?.value?.asText() && (
+                          <ValidatorIcon>
+                            <Polkicon
+                              address={validatorWithIdentity.address}
+                              fontSize="2.5rem"
+                            />
+                          </ValidatorIcon>
+                          <ValidatorInfo>
                             <ValidatorName>
-                              {validatorWithIdentity.identity.info.display.value.asText()}
+                              {identityDisplay ||
+                                validatorWithIdentity.address.slice(0, 6) +
+                                  '...' +
+                                  validatorWithIdentity.address.slice(-6)}
                             </ValidatorName>
-                          )}
+                            <ValidatorAddress>
+                              {validatorWithIdentity.address}
+                            </ValidatorAddress>
+                          </ValidatorInfo>
+                          <SelectionIndicator $selected={isSelected}>
+                            <FontAwesomeIcon icon={faCheck} />
+                          </SelectionIndicator>
                         </ValidatorDisplay>
                       </ValidatorItem>
                     )
@@ -194,12 +231,44 @@ export const InviteModal = () => {
             <ButtonContainer>
               <GenerateButton
                 text={t('generateInvite')}
-                disabled={
-                  validatorInviteGenerator.selectedValidators.length === 0
-                }
+                disabled={selectedValidators.length === 0}
                 onClick={handleGenerateInvite}
               />
             </ButtonContainer>
+          </>
+        ) : (
+          <>
+            <ValidatorSummary>
+              <SectionTitle>{t('selectedValidators')}</SectionTitle>
+              <SelectedValidatorsList>
+                {selectedValidators.map((address) => {
+                  const validator = nominatedValidators.find(
+                    (v) => v.address === address
+                  )
+                  const identityDisplay =
+                    validatorsFetched === 'synced' && validator
+                      ? getIdentityDisplay(
+                          validatorIdentities[validator.address],
+                          validatorSupers[validator.address]
+                        ).node
+                      : null
+                  return (
+                    <SelectedValidatorItem key={address}>
+                      <Polkicon address={address} fontSize="1.5rem" />
+                      <span>
+                        {identityDisplay ||
+                          address.slice(0, 6) + '...' + address.slice(-6)}
+                      </span>
+                    </SelectedValidatorItem>
+                  )
+                })}
+              </SelectedValidatorsList>
+            </ValidatorSummary>
+            <ShareOptions
+              inviteUrl={activeGenerator.inviteUrl}
+              copiedToClipboard={activeGenerator.copiedToClipboard}
+              copyInviteUrl={activeGenerator.copyInviteUrl}
+            />
           </>
         )}
       </Padding>
@@ -211,9 +280,21 @@ const ContentSection = styled.div`
   margin: 1rem 0;
 `
 
-const SectionTitle = styled.h3`
+const SectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
+`
+
+const SectionTitle = styled.h3`
   font-size: 1.1rem;
+  margin: 0;
+`
+
+const SelectedCount = styled.div`
+  font-size: 0.9rem;
+  color: var(--text-color-secondary);
 `
 
 const ValidatorList = styled.div`
@@ -221,29 +302,73 @@ const ValidatorList = styled.div`
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
 `
 
-const ValidatorItem = styled.div`
-  padding: 0.75rem;
-  border-radius: 0.5rem;
+const ValidatorItem = styled.div<{ $selected: boolean }>`
+  padding: 1rem;
+  border-radius: 0.75rem;
   background-color: var(--background-primary);
-  border: 1px solid var(--border-primary-color);
+  border: 1.5px solid
+    ${({ $selected }) =>
+      $selected
+        ? 'var(--accent-color-primary)'
+        : 'var(--border-primary-color)'};
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    border-color: var(--accent-color-primary);
+    transform: translateY(-1px);
+  }
 `
 
 const ValidatorDisplay = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 1rem;
+`
+
+const ValidatorIcon = styled.div`
+  flex-shrink: 0;
+`
+
+const ValidatorInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`
+
+const ValidatorName = styled.div`
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const ValidatorAddress = styled.div`
   font-family: monospace;
   font-size: 0.8rem;
   color: var(--text-color-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
-const ValidatorName = styled.div`
-  font-weight: 500;
+const SelectionIndicator = styled.div<{ $selected: boolean }>`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${({ $selected }) =>
+    $selected ? 'var(--accent-color-primary)' : 'var(--background-secondary)'};
+  color: ${({ $selected }) => ($selected ? 'white' : 'transparent')};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease-in-out;
 `
 
 const ButtonContainer = styled.div`
@@ -262,4 +387,36 @@ const EmptyState = styled.div`
   background-color: var(--background-primary);
   border-radius: 0.5rem;
   margin: 1rem 0;
+`
+
+const ValidatorSummary = styled.div`
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--background-primary);
+  border-radius: 0.75rem;
+`
+
+const SelectedValidatorsList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+`
+
+const SelectedValidatorItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  background: var(--background-secondary);
+  border-radius: 0.5rem;
+
+  > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `

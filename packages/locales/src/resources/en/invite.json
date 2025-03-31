@@ -32,7 +32,7 @@
     "loadingValidators": "Loading validator details...",
     "members": "Members",
     "noActiveAccount": "No Active Account",
-    "noCurrentNominations": "You are not currently nominating any validators",
+    "noCurrentNominations": "You are not currently staking - please join a pool or nominate validators",
     "noPoolsFound": "You are not a member of any pools",
     "noValidatorsFound": "You are not nominating any validators",
     "noValidatorsInUrl": "No Validators in URL",
