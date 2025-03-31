@@ -4933,18 +4933,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@w3ux/hooks@npm:2.0.2"
-  dependencies:
-    "@w3ux/utils": "npm:^2.0.2"
-    date-fns: "npm:^4.1.0"
-  peerDependencies:
-    react: ^19
-  checksum: 10c0/15d24f734a9ae24723a51bd5988499a2d5edca83639e32bd4a4ee21c9868cd3c02145601944032c7a3e1c4b81ae31cc59fbfc5d6409760a7ff57f390429b458f
-  languageName: node
-  linkType: hard
-
 "@w3ux/hooks@npm:^2.0.4":
   version: 2.0.4
   resolution: "@w3ux/hooks@npm:2.0.4"
@@ -4957,15 +4945,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@w3ux/react-connect-kit@npm:3.0.2"
+"@w3ux/react-connect-kit@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@w3ux/react-connect-kit@npm:3.0.3"
   dependencies:
     "@polkagate/extension-dapp": "npm:^0.48.2"
     "@w3ux/extension-assets": "npm:^2.0.0"
-    "@w3ux/hooks": "npm:^2.0.2"
-    "@w3ux/utils": "npm:^2.0.2"
-  checksum: 10c0/c7b5e616c41920633ef121b2d67dac93fd972f32b69bdb8d29313c3c0671727e4cc49ed13d5e94e578ab5bc5d6718496d66729c7d6f9d48376ace203bfdc62de
+    "@w3ux/hooks": "npm:^2.0.4"
+    "@w3ux/utils": "npm:^2.0.6"
+  checksum: 10c0/5123bb4271f07b952440a5aecf1f962c770dfff0287550ed86f73e06cb320e7f37b473ec759aee7ee618ac250f8deddfeecd87f2e2ab5797d8fb62a82308bde8
   languageName: node
   linkType: hard
 
@@ -4990,15 +4978,6 @@ __metadata:
   version: 2.0.3
   resolution: "@w3ux/types@npm:2.0.3"
   checksum: 10c0/0f121c0db40755130769a4a138d33007650291e80dc5e9ea5a8d568d19da0068f1b1b6b9d7301cd845baa4197882f99c190f56cc6da397a665d3ddc68bde713f
-  languageName: node
-  linkType: hard
-
-"@w3ux/utils@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@w3ux/utils@npm:2.0.2"
-  dependencies:
-    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
-  checksum: 10c0/9997501321d5108003a2cc391366fa5c69cbd4cdcae2fe0e5959075f4978258b22d500f6b665a95f8af7d25b111bddc41c17a055e964123b5aed40ece52a383d
   languageName: node
   linkType: hard
 
@@ -5572,7 +5551,7 @@ __metadata:
     "@polkawatch/ddp-client": "npm:^2.0.20"
     "@w3ux/extension-assets": "npm:^2.0.0"
     "@w3ux/factories": "npm:^2.0.2"
-    "@w3ux/react-connect-kit": "npm:^3.0.2"
+    "@w3ux/react-connect-kit": "npm:^3.0.3"
     "@w3ux/react-odometer": "npm:^2.0.0"
     "@w3ux/validator-assets": "npm:^1.0.0"
     "@zondax/ledger-substrate": "npm:^1.0.1"
