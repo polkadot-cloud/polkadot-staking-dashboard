@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
-import type { DisplayFor } from '@w3ux/types'
 import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types'
 import type { ReactNode } from 'react'
-import type { MaybeAddress } from 'types'
+import type { DisplayFor, MaybeAddress } from 'types'
 
 export type SubmitTxProps = SubmitProps & {
   buttons?: ReactNode[]

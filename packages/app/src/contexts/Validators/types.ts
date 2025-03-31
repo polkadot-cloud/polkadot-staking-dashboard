@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson, Sync } from '@w3ux/types'
+import type { Sync } from '@w3ux/types'
 import type BigNumber from 'bignumber.js'
-import type { Identity, Validator, ValidatorStatus } from 'types'
+import type { AnyJson, Identity, Validator, ValidatorStatus } from 'types'
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>

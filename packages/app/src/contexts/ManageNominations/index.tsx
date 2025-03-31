@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { AnyFunction } from '@w3ux/types'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { Validator } from 'types'
+import type { AnyFunction, Validator } from 'types'
 import type { ManageNominationsContextInterface } from './types'
 
 export const [ManageNominationsContext, useManageNominations] =

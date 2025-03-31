@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import type { AnyFunction, AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -15,7 +14,7 @@ import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Validator } from 'types'
+import type { AnyFunction, AnyJson, Validator } from 'types'
 import { Confirm } from '../Prompt/Confirm'
 import { ListControls } from './Controls/ListControls'
 import { Methods } from './Methods'

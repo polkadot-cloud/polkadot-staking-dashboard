@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DisplayFor } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import {
@@ -16,6 +15,7 @@ import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useTranslation } from 'react-i18next'
+import type { DisplayFor } from 'types'
 import { GenerateNominations } from '../GenerateNominations'
 import type { NominationsProps } from './types'
 

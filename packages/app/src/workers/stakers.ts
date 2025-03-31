@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import { planckToUnit, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import type {
@@ -9,6 +8,7 @@ import type {
   ExposureOther,
   Staker,
 } from 'contexts/Staking/types'
+import type { AnyJson } from 'types'
 import type { ProcessExposuresArgs } from './types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

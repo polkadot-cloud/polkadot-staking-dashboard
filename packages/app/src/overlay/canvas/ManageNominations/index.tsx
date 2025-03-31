@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DisplayFor } from '@w3ux/types'
 import { PoolNominate } from 'api/tx/poolNominate'
 import { StakingNominate } from 'api/tx/stakingNominate'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -22,7 +21,7 @@ import { MenuControls } from 'library/GenerateNominations/Controls/MenuControls'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { NominationSelection } from 'types'
+import type { DisplayFor, NominationSelection } from 'types'
 import { ButtonHelp } from 'ui-buttons'
 import {
   Footer,
