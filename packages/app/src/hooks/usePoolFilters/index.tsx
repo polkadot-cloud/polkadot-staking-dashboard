@@ -1,12 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFunction } from '@w3ux/types'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson, BondedPool } from 'types'
+import type { AnyFunction, AnyJson, BondedPool } from 'types'
 
 export const usePoolFilters = () => {
   const { t } = useTranslation('app')

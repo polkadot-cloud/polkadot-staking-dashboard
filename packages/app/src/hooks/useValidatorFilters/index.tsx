@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
-import type { AnyFunction } from '@w3ux/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
+import type { AnyFunction, AnyJson } from 'types'
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('app')

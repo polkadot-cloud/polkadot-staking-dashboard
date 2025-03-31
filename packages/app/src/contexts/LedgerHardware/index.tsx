@@ -89,7 +89,11 @@ export const LedgerHardwareProvider = ({
     try {
       setIsExecuting(true)
       const { app } = await Ledger.initialise(txMetadataChainId)
-      const result = await Ledger.getVersion(app)
+      const result = (await Ledger.getVersion(app)) as {
+        major?: number
+        minor?: number
+        patch?: number
+      }
       const major = result?.major || 0
       const minor = result?.minor || 0
       const patch = result?.major || 0
