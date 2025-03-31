@@ -50,11 +50,7 @@ export const ShareOptions = ({
       </EntityInfo>
 
       <InviteUrlContainer>
-        <InviteUrlDisplay>
-          {inviteUrl.length > 60
-            ? `${inviteUrl.substring(0, 30)}...${inviteUrl.substring(inviteUrl.length - 30)}`
-            : inviteUrl}
-        </InviteUrlDisplay>
+        <InviteUrlDisplay>{inviteUrl}</InviteUrlDisplay>
         <CopyButtonWrapper>
           <ButtonPrimary
             text={copiedToClipboard ? t('copied') : t('copy')}
@@ -71,20 +67,19 @@ const ShareWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 100%;
-  margin-top: 1rem;
 `
 
 const ShareHeader = styled.div`
+  text-align: center;
+  margin-bottom: 0.5rem;
+
   h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
   }
 
   p {
-    margin: 0;
     color: var(--text-color-secondary);
-    font-size: 0.9rem;
   }
 `
 
@@ -92,44 +87,48 @@ const EntityInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1.25rem;
   background-color: var(--background-primary);
-  border-radius: 0.75rem;
+  border: 1px solid var(--border-primary-color);
+  border-radius: 1rem;
 `
 
 const EntityDetails = styled.div`
   h4 {
-    margin: 0 0 0.25rem 0;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
   }
 
   .address {
-    margin: 0;
-    font-size: 0.85rem;
-    color: var(--text-color-secondary);
     font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
   }
 `
 
 const InviteUrlContainer = styled.div`
   display: flex;
+  gap: 1rem;
   align-items: center;
-  width: 100%;
+  padding: 0.75rem;
   background-color: var(--background-primary);
+  border: 1px solid var(--border-primary-color);
   border-radius: 0.75rem;
-  overflow: hidden;
 `
 
 const InviteUrlDisplay = styled.div`
   flex: 1;
-  padding: 1rem;
   font-family: monospace;
   font-size: 0.9rem;
+  color: var(--text-color-primary);
+  padding: 0.5rem 0.75rem;
+  background-color: var(--background-secondary);
+  border-radius: 0.5rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `
 
 const CopyButtonWrapper = styled.div`
-  margin-right: 0.5rem;
+  flex-shrink: 0;
 `
