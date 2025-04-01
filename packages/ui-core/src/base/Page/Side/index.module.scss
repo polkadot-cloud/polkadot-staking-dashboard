@@ -26,9 +26,11 @@
   }
 }
 
-.sideMinimised {
-  min-width: $side-menu-minimised-width;
-  max-width: $side-menu-minimised-width;
+@media (min-width: ($page-width-medium-threshold + 1px)) {
+  .sideMinimised {
+    min-width: $side-menu-minimised-width;
+    max-width: $side-menu-minimised-width;
+  }
 }
 
 .sideHidden {

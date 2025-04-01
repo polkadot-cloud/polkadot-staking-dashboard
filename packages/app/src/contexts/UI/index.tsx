@@ -42,7 +42,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   // Automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState<boolean>(
     window.innerWidth <= PageWidthMediumThreshold
-      ? true
+      ? false
       : userSideMenuMinimisedRef.current
   )
 
