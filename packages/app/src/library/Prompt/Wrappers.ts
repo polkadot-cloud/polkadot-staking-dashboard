@@ -9,6 +9,7 @@ export const PromptWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 11;
+  animation: fadeIn 0.075s ease-in-out forwards;
 
   /* content wrapper */
   > div {
@@ -18,8 +19,8 @@ export const PromptWrapper = styled.div`
     justify-content: center;
     align-items: center;
     padding: 2rem 2rem;
+    animation: fadeScale 0.3s cubic-bezier(0, 1, 0, 1) forwards;
 
-    /* click anywhere behind overlay to close */
     .close {
       position: fixed;
       width: 100%;
@@ -28,14 +29,30 @@ export const PromptWrapper = styled.div`
       cursor: default;
     }
 
-    /* status message placed below title */
     h4.subheading {
       margin-bottom: 1rem;
     }
 
-    /* padded content to give extra spacing */
     .padded {
       padding: 1rem 1.5rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeScale {
+      from {
+        transform: scale(0.8);
+      }
+      to {
+        transform: scale(1);
+      }
     }
   }
 `
@@ -43,9 +60,9 @@ export const PromptWrapper = styled.div`
 export const HeightWrapper = styled.div<{ size: string }>`
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
-  max-width: ${(props) => (props.size === 'small' ? '500px' : '700px')};
+  max-width: ${(props) => (props.size === 'sm' ? '500px' : '700px')};
   max-height: 100%;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   z-index: 9;
   position: relative;
   overflow: auto;

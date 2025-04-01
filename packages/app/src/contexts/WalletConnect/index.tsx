@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFunction, AnyJson } from '@w3ux/types'
+import { createSafeContext } from '@w3ux/hooks'
 import { WalletConnectModal } from '@walletconnect/modal'
 import UniversalProvider from '@walletconnect/universal-provider'
 import { getSdkError } from '@walletconnect/utils'
@@ -10,14 +10,12 @@ import { useNetwork } from 'contexts/Network'
 import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import * as defaults from './defaults'
+import { useEffect, useRef, useState } from 'react'
+import type { AnyFunction, AnyJson } from 'types'
 import type { WalletConnectContextInterface } from './types'
 
-export const WalletConnectContext =
-  createContext<WalletConnectContextInterface>(defaults.defaultWalletConnect)
-
-export const useWalletConnect = () => useContext(WalletConnectContext)
+export const [WalletConnectContext, useWalletConnect] =
+  createSafeContext<WalletConnectContextInterface>()
 
 // `projectId` is configured on `https://cloud.walletconnect.com/`
 const wcProjectId = 'dcb8a7c6d01ace818286c005f75d70b9'
@@ -58,7 +56,7 @@ export const WalletConnectProvider = ({
   const [wcSessionActive, setWcSessionActive] = useState<boolean>(false)
 
   // Store the set of chain id the most recent session is connected to
-  const sessionChain = useRef<string>()
+  const sessionChain = useRef<string | null>(null)
 
   // Init WalletConnect provider & modal, and update as wcInitialized
   const initProvider = async () => {

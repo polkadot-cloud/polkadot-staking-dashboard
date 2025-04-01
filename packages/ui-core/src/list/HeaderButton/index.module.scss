@@ -11,7 +11,20 @@
   justify-content: center;
   font-size: inherit;
   margin: 0 0.4em;
-  > button {
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  > button,
+  > span {
     background: var(--shimmer-foreground);
     color: var(--text-color-secondary);
     padding: 0 0.1rem;
@@ -22,6 +35,7 @@
     @media (min-width: $page-width-small-threshold) {
       padding: 0 0.2rem;
     }
+
     &:hover {
       opacity: 0.75;
     }
@@ -32,12 +46,14 @@
       opacity: var(--opacity-disabled);
     }
   }
-  &.outline > button {
-    border: 1px solid var(--border-secondary-color);
-    border: none;
+
+  &.outline > button,
+  &.outline > span {
     background: none;
   }
-  &.text > button {
+
+  &.text > button,
+  &.outline > span {
     font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;
     display: flex;
@@ -55,6 +71,20 @@
     > svg {
       margin-left: 0.2rem;
       margin-right: 0.5rem;
+    }
+  }
+
+  &.text > button,
+  &.outline > span {
+    > svg {
+      margin: 0;
+    }
+  }
+
+  &.noMargin {
+    margin: 0;
+    > svg {
+      margin: 0;
     }
   }
 }

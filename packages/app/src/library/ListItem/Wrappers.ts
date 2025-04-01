@@ -6,6 +6,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   --height-top-row: 3.25rem;
   --height-bottom-row: 5rem;
+  --item-border-width: 1.25px;
 
   &.member {
     --height-bottom-row: 2.75rem;
@@ -25,19 +26,22 @@ export const Wrapper = styled.div`
 
   > .inner {
     background: var(--background-list-item);
+    border: var(--item-border-width) solid var(--background-list-item);
+
     &.modal {
       background: var(--background-modal-card);
+      border: var(--item-border-width) solid var(--background-modal-card);
     }
     &.canvas {
       background: var(--background-canvas-card);
+      border: var(--item-border-width) solid var(--background-canvas-card);
     }
     &.modal,
     &.canvas {
       box-shadow: none;
-      border: none;
     }
 
-    border-radius: 1rem;
+    border-radius: 0.75rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -48,6 +52,11 @@ export const Wrapper = styled.div`
     left: 0px;
     width: 100%;
     height: 100%;
+    transition: border var(--transition-duration) ease;
+
+    &.selected {
+      border-color: var(--accent-color-primary);
+    }
 
     .row {
       flex: 1 0 100%;
@@ -57,7 +66,13 @@ export const Wrapper = styled.div`
 
       &.top {
         height: var(--height-top-row);
+        > div {
+          height: inherit;
+          display: flex;
+          align-items: center;
+        }
       }
+
       &.bottom {
         height: var(--height-bottom-row);
 

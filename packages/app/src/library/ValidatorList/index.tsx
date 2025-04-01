@@ -10,7 +10,7 @@ import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useThemeValues } from 'contexts/ThemeValues'
-import type { Validator, ValidatorListEntry } from 'contexts/Validators/types'
+import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { motion } from 'framer-motion'
 import { useSyncing } from 'hooks/useSyncing'
@@ -18,13 +18,12 @@ import { FilterHeaderWrapper, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
-import { Selectable } from 'library/List/Selectable'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { NominationStatus } from 'types'
+import type { NominationStatus, Validator } from 'types'
 import { useOverlay } from 'ui-overlay'
 import { useValidatorFilters } from '../../hooks/useValidatorFilters'
 import { FilterBadges } from './Filters/FilterBadges'
@@ -42,14 +41,14 @@ export const ValidatorListInner = ({
   allowFilters,
   toggleFavorites,
   itemsPerPage,
-  selectable,
   onSelected,
-  actions = [],
   displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
   defaultOrder = undefined,
   defaultFilters = undefined,
+  BeforeListNode = null,
+  onRemove,
 }: ValidatorListProps) => {
   const { t } = useTranslation()
   const {
@@ -84,8 +83,6 @@ export const ValidatorListInner = ({
   const excludes = getFilters('exclude', 'validators')
   const order = getOrder('validators')
   const searchTerm = getSearchTerm('validators')
-  const actionsAll = [...actions].filter((action) => !action.onSelected)
-  const actionsSelected = [...actions].filter((action) => action.onSelected)
 
   // Track whether filter bootstrapping has been applied.
   const [bootstrapped, setBootstrapped] = useState<boolean>(false)
@@ -339,14 +336,7 @@ export const ValidatorListInner = ({
         {listItems.length > 0 && itemsPerPage && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-        {selectable ? (
-          <Selectable
-            canSelect={listItems.length > 0}
-            actionsAll={actionsAll}
-            actionsSelected={actionsSelected}
-            displayFor={displayFor}
-          />
-        ) : null}
+        {BeforeListNode}
         <MotionContainer>
           {listItems.length ? (
             <>
@@ -379,6 +369,7 @@ export const ValidatorListInner = ({
                     nominationStatus={
                       nominationStatus.current[validator.address]
                     }
+                    onRemove={onRemove}
                   />
                 </motion.div>
               ))}
@@ -397,12 +388,9 @@ export const ValidatorListInner = ({
 }
 
 export const ValidatorList = (props: ValidatorListProps) => {
-  const { selectActive, selectToggleable } = props
+  const { selectable } = props
   return (
-    <ListProvider
-      selectActive={selectActive}
-      selectToggleable={selectToggleable}
-    >
+    <ListProvider selectable={selectable}>
       <ValidatorListInner {...props} />
     </ListProvider>
   )

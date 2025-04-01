@@ -2,12 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './AccountTitle'
+export * from './Close'
 export * from './Container'
 export * from './Content'
 export * from './Footer'
+export * from './FootFullWidth'
 export * from './GraphContainer'
 export * from './GraphInner'
 export * from './Head'
+export * from './HeadFullWidth'
 export * from './HeadTags'
 export * from './Interface'
 export * from './Loader'

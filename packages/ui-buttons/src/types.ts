@@ -5,12 +5,9 @@ import type {
   IconDefinition,
   IconProp,
 } from '@fortawesome/fontawesome-svg-core'
-import type {
-  ComponentBase,
-  ComponentBaseWithClassName,
-  ImportedAccount,
-} from '@w3ux/types'
+import type { ImportedAccount } from '@w3ux/types'
 import type { MouseEvent } from 'react'
+import type { ComponentBase, ComponentBaseWithClassName } from 'types'
 
 // Common button props, applied to all buttons.
 export interface ButtonCommonProps {
@@ -93,6 +90,7 @@ export type ButtonPrimaryProps = ComponentBaseWithClassName &
     colorSecondary?: boolean
     size?: ButtonSize
     text: string
+    asLabel?: boolean
   }
 
 export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
@@ -101,12 +99,13 @@ export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
     colorSecondary?: boolean
     lg?: boolean
     text: string
+    asLabel?: boolean
   }
 
 export type ButtonSecondaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    lg?: boolean
+    size?: ButtonSize
     text: string
   }
 
@@ -146,6 +145,14 @@ export type ButtonTextProps = ComponentBaseWithClassName &
     text: string
     size?: Omit<ButtonSize, 'lg'>
     status?: 'danger'
+  }
+
+export type ButtonMenuProps = ComponentBaseWithClassName &
+  ButtonIconProps &
+  ButtonCommonProps & {
+    text: string
+    status?: 'danger'
+    asLabel?: boolean
   }
 
 export type MultiButtonContainerProps = ComponentBase & {
@@ -204,4 +211,12 @@ export type ButtonModalProps = ComponentBaseWithClassName &
     selected: boolean
     text: string
     label?: string
+  }
+
+export type ButtonPopoverTabProps = ComponentBaseWithClassName &
+  OnMouseHandlersProps & {
+    text: string
+    status?: 'warning' | 'danger'
+    disabled?: boolean
+    grow?: boolean
   }

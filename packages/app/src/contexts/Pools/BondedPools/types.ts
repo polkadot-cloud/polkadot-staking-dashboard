@@ -1,11 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import type { AnyApi } from 'common-types'
 import type { AnyFilter } from 'library/Filter/types'
 import type { Dispatch, SetStateAction } from 'react'
 import type {
+  AnyJson,
   BondedPool,
   MaybeAddress,
   NominationStatuses,

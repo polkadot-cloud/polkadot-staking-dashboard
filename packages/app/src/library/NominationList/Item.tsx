@@ -10,12 +10,12 @@ import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { HistoricalEraPoints } from '../List/EraPointsGraph/HistoricalEraPoints'
+import { CopyAddress } from '../ListItem/Buttons/CopyAddress'
+import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
+import { Metrics } from '../ListItem/Buttons/Metrics'
 import { Blocked } from '../ListItem/Labels/Blocked'
 import { Commission } from '../ListItem/Labels/Commission'
-import { CopyAddress } from '../ListItem/Labels/CopyAddress'
-import { FavoriteValidator } from '../ListItem/Labels/FavoriteValidator'
 import { Identity } from '../ListItem/Labels/Identity'
-import { Metrics } from '../ListItem/Labels/Metrics'
 import { NominationStatus } from '../ListItem/Labels/NominationStatus'
 import type { ItemProps } from './types'
 
@@ -27,6 +27,7 @@ export const Item = ({
   displayFor,
   nominationStatus,
   eraPoints,
+  showParaValidator = false,
 }: ItemProps) => {
   const { pluginEnabled } = usePlugins()
   const { validatorIdentities, validatorSupers } = useValidators()
@@ -80,7 +81,7 @@ export const Item = ({
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
-              <ParaValidator address={address} />
+              {showParaValidator && <ParaValidator address={address} />}
             </LabelRow>
             <NominationStatus
               address={address}

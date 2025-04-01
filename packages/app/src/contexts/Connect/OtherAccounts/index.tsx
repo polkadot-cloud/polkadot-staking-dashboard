@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { getLocalLedgerAccounts } from '@w3ux/react-connect-kit/LedgerAccountsProvider/utils'
 import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProvider/utils'
@@ -13,19 +13,17 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import { useExternalAccounts } from '../ExternalAccounts'
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 import { getActiveAccountLocal } from '../Utils'
-import { defaultOtherAccountsContext } from './defaults'
 import type { OtherAccountsContextInterface } from './types'
-export const OtherAccountsContext =
-  createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext)
 
-export const useOtherAccounts = () => useContext(OtherAccountsContext)
+export const [OtherAccountsContext, useOtherAccounts] =
+  createSafeContext<OtherAccountsContextInterface>()
 
 export const OtherAccountsProvider = ({
   children,

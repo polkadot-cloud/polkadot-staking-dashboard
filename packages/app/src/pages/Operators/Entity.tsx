@@ -5,11 +5,11 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import type { Validator } from 'contexts/Validators/types'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ValidatorList } from 'library/ValidatorList'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { Validator } from 'types'
 import { ButtonSecondary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { Item } from './Item'
@@ -89,7 +89,7 @@ export const Entity = () => {
                 allowListFormat={false}
                 selectable={false}
                 allowMoreCols
-                itemsPerPage={30}
+                itemsPerPage={50}
                 toggleFavorites
                 allowFilters
               />

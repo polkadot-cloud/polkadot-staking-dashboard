@@ -3,6 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
+import type { JSX } from 'react'
 import commonClasses from '../common.module.scss'
 import type { ButtonSecondaryProps } from '../types'
 import { onMouseHandlers } from '../util'
@@ -23,7 +24,7 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
     iconLeft,
     iconRight,
     iconTransform,
-    lg,
+    size = 'sm',
     marginLeft,
     marginRight,
     marginX,
@@ -40,8 +41,9 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
     commonClasses.btnCore,
     classes.btnSecondary,
     {
-      [commonClasses.btnLarge]: lg,
-      [commonClasses.btnSmall]: !lg,
+      [commonClasses.btnLarge]: size === 'lg',
+      [commonClasses.btnMedium]: size === 'md',
+      [commonClasses.btnSmall]: size === 'sm',
       [commonClasses.btnGrow]: grow,
       [commonClasses.btnSpacingLeft]: marginLeft,
       [commonClasses.btnSpacingRight]: marginRight,

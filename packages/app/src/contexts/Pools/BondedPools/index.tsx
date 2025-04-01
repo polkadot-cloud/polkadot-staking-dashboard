@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { AnyJson, Sync } from '@w3ux/types'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
 import { BondedPoolsEntries } from 'api/entries/bondedPoolsEntries'
 import { NominatorsMulti } from 'api/queryMulti/nominatorsMulti'
@@ -14,8 +14,9 @@ import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type {
+  AnyJson,
   BondedPool,
   MaybeAddress,
   MaybePool,
@@ -24,14 +25,10 @@ import type {
   PoolTab,
 } from 'types'
 import { useApi } from '../../Api'
-import { defaultBondedPoolsContext } from './defaults'
 import type { BondedPoolsContextState } from './types'
 
-export const BondedPoolsContext = createContext<BondedPoolsContextState>(
-  defaultBondedPoolsContext
-)
-
-export const useBondedPools = () => useContext(BondedPoolsContext)
+export const [BondedPoolsContext, useBondedPools] =
+  createSafeContext<BondedPoolsContextState>()
 
 export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()

@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson, MaybeString } from '@w3ux/types'
+import type { MaybeString } from '@w3ux/types'
 import type { NetworkId } from 'common-types'
-import type { FunctionComponent, SVGProps } from 'react'
+import type { AnyJson } from 'types'
 
 export interface LedgerHardwareContextInterface {
   integrityChecked: boolean
@@ -80,7 +80,6 @@ export interface LedgerAddress {
 export interface LedgerChain {
   network: NetworkId
   txMetadataChainId: string
-  Icon: FunctionComponent<SVGProps<SVGSVGElement>>
 }
 
 export interface HandleErrorFeedback {

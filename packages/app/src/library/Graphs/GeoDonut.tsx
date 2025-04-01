@@ -1,12 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import { ellipsisFn } from '@w3ux/utils'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import chroma from 'chroma-js'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { Doughnut } from 'react-chartjs-2'
+import type { AnyJson } from 'types'
 import type { GeoDonutProps } from './types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
@@ -14,8 +14,6 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 export const GeoDonut = ({
   title,
   series = { labels: [], data: [] },
-  height = 'auto',
-  width = 'auto',
   legendHeight = 25,
   maxLabelLen = 3,
 }: GeoDonutProps) => {
@@ -92,7 +90,7 @@ export const GeoDonut = ({
   }
 
   return (
-    <div style={{ width, height }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <Doughnut options={options} data={chartData} />
     </div>
   )

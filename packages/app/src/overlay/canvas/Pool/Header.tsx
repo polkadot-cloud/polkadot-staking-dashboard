@@ -6,10 +6,10 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
-import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonPrimaryInvert } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { CloseCanvas } from 'ui-overlay'
 import type { HeaderProps } from './types'
 export const Header = ({
   activeTab,
@@ -22,7 +22,6 @@ export const Header = ({
   providedPoolId,
 }: HeaderProps) => {
   const { t } = useTranslation()
-  const { closeCanvas } = useOverlay().canvas
   const poolCommission = bondedPool?.commission?.current?.[0]
 
   // Randomly select a new pool to display
@@ -56,15 +55,11 @@ export const Header = ({
             text={t('chooseAnotherPool', { ns: 'app' })}
             iconLeft={faArrowsRotate}
             onClick={() => handleChooseNewPool()}
+            style={{ marginRight: '1.25rem' }}
             lg
           />
         )}
-        <ButtonPrimary
-          text={t('close', { ns: 'modals' })}
-          size="lg"
-          onClick={() => closeCanvas()}
-          style={{ marginLeft: '1.1rem' }}
-        />
+        <CloseCanvas />
       </Head>
       <AccountTitle>
         <div>

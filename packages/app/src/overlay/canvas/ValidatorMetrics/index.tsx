@@ -13,9 +13,10 @@ import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatSize } from 'library/Graphs/Utils'
 import { StatusLabel } from 'library/StatusLabel'
+import { ValidatorGeo } from 'overlay/canvas/ValidatorMetrics/ValidatorGeo'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonHelp } from 'ui-buttons'
 import {
   AccountTitle,
   GraphContainer,
@@ -26,7 +27,7 @@ import {
   Stat,
   Subheading,
 } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { CloseCanvas, useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph as ActiveGraphEraPoints } from './EraPoints/ActiveGraph'
 import { InactiveGraph as InactiveGraphEraPoints } from './EraPoints/InactiveGraph'
@@ -39,7 +40,6 @@ export const ValidatorMetrics = () => {
     eraStakers: { stakers },
   } = useStaking()
   const {
-    closeCanvas,
     config: { options },
   } = useOverlay().canvas
   const {
@@ -98,12 +98,7 @@ export const ValidatorMetrics = () => {
   return (
     <Main>
       <Head>
-        <ButtonPrimary
-          text={t('close', { ns: 'modals' })}
-          size="lg"
-          onClick={() => closeCanvas()}
-          style={{ marginLeft: '1.1rem' }}
-        />
+        <CloseCanvas />
       </Head>
       <AccountTitle>
         <div>
@@ -144,85 +139,93 @@ export const ValidatorMetrics = () => {
             </Stat>
           </h4>
         </Subheading>
-        <div>
-          <Subheading>
-            <h3>
-              {t('recentPerformance', { ns: 'app' })}
-              <ButtonHelp
-                outline
-                marginLeft
-                onClick={() => openHelp('Era Points')}
+      </GraphContainer>
+      <div style={{ margin: '1.5rem 0 3rem 0' }}>
+        <Subheading>
+          <h3>
+            {t('recentPerformance', { ns: 'app' })}
+            <ButtonHelp
+              outline
+              marginLeft
+              onClick={() => openHelp('Era Points')}
+            />
+          </h3>
+        </Subheading>
+        <GraphInner
+          ref={graphEraPointsRef}
+          width={graphSizeEraPoints.width}
+          height={graphSizeEraPoints.height}
+        >
+          {pluginEnabled('staking_api') ? (
+            <ActiveGraphEraPoints
+              network={network}
+              validator={validator}
+              fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              width={graphSizeEraPoints.width}
+              height={graphSizeEraPoints.height}
+            />
+          ) : (
+            <>
+              <StatusLabel
+                status="active_service"
+                statusFor="staking_api"
+                title={t('stakingApiDisabled', { ns: 'pages' })}
+                topOffset="37%"
               />
-            </h3>
-          </Subheading>
-          <GraphInner
-            ref={graphEraPointsRef}
-            width={graphSizeEraPoints.width}
-            height={graphSizeEraPoints.height}
-          >
-            {pluginEnabled('staking_api') ? (
-              <ActiveGraphEraPoints
-                network={network}
-                validator={validator}
-                fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              <InactiveGraphEraPoints
                 width={graphSizeEraPoints.width}
                 height={graphSizeEraPoints.height}
               />
-            ) : (
-              <>
-                <StatusLabel
-                  status="active_service"
-                  statusFor="staking_api"
-                  title={t('stakingApiDisabled', { ns: 'pages' })}
-                  topOffset="37%"
-                />
-                <InactiveGraphEraPoints
-                  width={graphSizeEraPoints.width}
-                  height={graphSizeEraPoints.height}
-                />
-              </>
-            )}
-          </GraphInner>
-          <Subheading style={{ marginTop: '2rem' }}>
-            <h3>
-              {t('rewardHistory', { ns: 'app' })}
-              <ButtonHelp
-                outline
-                marginLeft
-                onClick={() => openHelp('Validator Reward History')}
+            </>
+          )}
+        </GraphInner>
+        <Subheading>
+          <h3>
+            {t('rewardHistory', { ns: 'app' })}
+            <ButtonHelp
+              outline
+              marginLeft
+              onClick={() => openHelp('Validator Reward History')}
+            />
+          </h3>
+        </Subheading>
+        <GraphInner
+          ref={graphRewardsRef}
+          width={graphSizeRewards.width}
+          height={graphSizeRewards.height}
+        >
+          {pluginEnabled('staking_api') ? (
+            <ActiveGraphRewards
+              network={network}
+              validator={validator}
+              fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              width={graphSizeRewards.width}
+              height={graphSizeRewards.height}
+            />
+          ) : (
+            <>
+              <StatusLabel
+                status="active_service"
+                statusFor="staking_api"
+                title={t('stakingApiDisabled', { ns: 'pages' })}
+                topOffset="37%"
               />
-            </h3>
-          </Subheading>
-          <GraphInner
-            ref={graphRewardsRef}
-            width={graphSizeRewards.width}
-            height={graphSizeRewards.height}
-          >
-            {pluginEnabled('staking_api') ? (
-              <ActiveGraphRewards
-                network={network}
-                validator={validator}
-                fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              <InactiveGraphRewards
                 width={graphSizeRewards.width}
                 height={graphSizeRewards.height}
               />
-            ) : (
-              <>
-                <StatusLabel
-                  status="active_service"
-                  statusFor="staking_api"
-                  title={t('stakingApiDisabled', { ns: 'pages' })}
-                  topOffset="37%"
-                />
-                <InactiveGraphRewards
-                  width={graphSizeRewards.width}
-                  height={graphSizeRewards.height}
-                />
-              </>
-            )}
-          </GraphInner>
-        </div>
-      </GraphContainer>
+            </>
+          )}
+        </GraphInner>
+        {pluginEnabled('polkawatch') && (
+          <>
+            <Subheading style={{ marginTop: '1rem' }}>
+              <h3>{t('decentralization', { ns: 'app' })}</h3>
+            </Subheading>
+            <ValidatorGeo address={validator} />
+          </>
+        )}
+      </div>
     </Main>
   )
 }

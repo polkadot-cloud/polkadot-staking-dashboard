@@ -59,7 +59,6 @@ export const ManagePool = () => {
                         nominator,
                         nominated: poolNominated || [],
                       },
-                      size: 'xl',
                     })
                   }
                 />

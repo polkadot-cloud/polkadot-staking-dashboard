@@ -5,8 +5,9 @@
   border: 1px solid var(--accent-color-primary);
   border-radius: var(--button-lg-border-radius);
   color: var(--accent-color-primary);
-}
-.btnPrimaryInvertSecondaryColor {
-  border: 1px solid var(--accent-color-secondary);
-  color: var(--accent-color-secondary);
+
+  &.secondary {
+    border: 1px solid var(--accent-color-secondary);
+    color: var(--accent-color-secondary);
+  }
 }

@@ -7,8 +7,8 @@ import type { ReactNode } from 'react'
 export interface PromptContextInterface {
   setOnClosePrompt: (onClosePrompt: (() => void) | null) => void
   openPromptWith: (
-    o: ReactNode | null,
-    s?: string,
+    Prompt: ReactNode | null,
+    size?: PromptSize,
     closeOnOutsideClick?: boolean
   ) => void
   closePrompt: () => void
@@ -22,10 +22,12 @@ export interface PromptContextInterface {
 }
 
 export interface PromptState {
-  size: string
+  size: PromptSize
   status: number
   Prompt: Prompt
   onClosePrompt: (() => void) | null
 }
 
 export type Prompt = ReactNode | null
+
+export type PromptSize = 'sm' | 'lg'

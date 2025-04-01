@@ -1,19 +1,22 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
-import { defaultPromptContext } from './defaults'
-import type { Prompt, PromptContextInterface, PromptState } from './types'
+import { useState } from 'react'
+import type {
+  Prompt,
+  PromptContextInterface,
+  PromptSize,
+  PromptState,
+} from './types'
 
-export const PromptContext =
-  createContext<PromptContextInterface>(defaultPromptContext)
-
-export const usePrompt = () => useContext(PromptContext)
+export const [PromptContext, usePrompt] =
+  createSafeContext<PromptContextInterface>()
 
 export const PromptProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<PromptState>({
-    size: 'large',
+    size: 'lg',
     status: 0,
     Prompt: null,
     onClosePrompt: null,
@@ -38,7 +41,7 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
 
   const openPromptWith = (
     Prompt: Prompt,
-    size = 'small',
+    size: PromptSize = 'sm',
     closeOutside = true
   ) => {
     setState({

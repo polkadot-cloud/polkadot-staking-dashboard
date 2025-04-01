@@ -8,13 +8,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Bytes } from '@polkadot-api/substrate-bindings'
 import { useApi } from 'contexts/Api'
-import { QRViewerWrapper } from 'library/Import/Wrappers'
 import { QrDisplayPayload } from 'library/QRCode/DisplayPayload'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import type { SignerPromptProps } from 'library/SubmitTx/types'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
+import { Wrapper } from './Wrapper'
 
 export const SignPrompt = ({
   submitAddress,
@@ -30,7 +30,7 @@ export const SignPrompt = ({
   const [stage, setStage] = useState<number>(1)
 
   return (
-    <QRViewerWrapper>
+    <Wrapper>
       {stage === 1 && <h3 className="title">{t('scanPolkadotVault')}</h3>}
       {stage === 2 && <h3 className="title">{t('signPolkadotVault')}</h3>}
 
@@ -69,7 +69,7 @@ export const SignPrompt = ({
           {stage === 2 && (
             <ButtonSecondary
               text={t('backToScan')}
-              lg
+              size="lg"
               onClick={() => setStage(1)}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
@@ -88,7 +88,7 @@ export const SignPrompt = ({
           )}
           <ButtonSecondary
             text={t('cancel')}
-            lg
+            size="lg"
             marginLeft
             onClick={() => {
               onComplete('cancelled', null)
@@ -96,6 +96,6 @@ export const SignPrompt = ({
           />
         </div>
       </div>
-    </QRViewerWrapper>
+    </Wrapper>
   )
 }

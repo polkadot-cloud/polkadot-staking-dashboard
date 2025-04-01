@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import {
   addedTo,
   ellipsisFn,
@@ -25,10 +25,9 @@ import { defaultNetwork } from 'contexts/Network/defaults'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
-import * as defaults from './defaults'
 import type {
   Delegates,
   ProxiedAccounts,
@@ -38,11 +37,8 @@ import type {
   ProxyDelegate,
 } from './types'
 
-export const ProxiesContext = createContext<ProxiesContextInterface>(
-  defaults.defaultProxiesContext
-)
-
-export const useProxies = () => useContext(ProxiesContext)
+export const [ProxiesContext, useProxies] =
+  createSafeContext<ProxiesContextInterface>()
 
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

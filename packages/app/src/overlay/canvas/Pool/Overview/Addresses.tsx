@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CardWrapper } from 'library/Card/Wrappers'
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
+import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { useTranslation } from 'react-i18next'
 import { Subheading } from 'ui-core/canvas'
 import { Identity } from 'ui-identity'

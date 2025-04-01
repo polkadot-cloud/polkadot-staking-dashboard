@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
+import type { JSX } from 'react'
 import commonClasses from '../common.module.scss'
 import type { ButtonHelpProps } from '../types'
 import { onMouseHandlers } from '../util'

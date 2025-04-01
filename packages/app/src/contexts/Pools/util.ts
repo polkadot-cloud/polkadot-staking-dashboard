@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
-import type { AnyJson } from '@w3ux/types'
 import { ellipsisFn } from '@w3ux/utils'
+import type { AnyJson } from 'types'
 
 /**
  * @name determinePoolDisplay

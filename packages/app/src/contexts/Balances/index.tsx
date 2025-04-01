@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import type { SystemChainId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -15,17 +16,13 @@ import { isCustomEvent } from 'controllers/utils'
 import { useActiveBalances } from 'hooks/useActiveBalances'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import type { ActivePoolItem, MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
-import * as defaults from './defaults'
 import type { BalancesContextInterface } from './types'
 
-export const BalancesContext = createContext<BalancesContextInterface>(
-  defaults.defaultBalancesContext
-)
-
-export const useBalances = () => useContext(BalancesContext)
+export const [BalancesContext, useBalances] =
+  createSafeContext<BalancesContextInterface>()
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()

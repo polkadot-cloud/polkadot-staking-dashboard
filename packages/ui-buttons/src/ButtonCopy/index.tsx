@@ -43,14 +43,13 @@ export const ButtonCopy = ({
 
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen && buttonRef.current) {
-      buttonRef.current.blur() // Unfocus trigger when tooltip closes
+      buttonRef.current.blur()
     }
   }
 
   // Unfocus trigger when tooltip closes
   useEffect(() => {
     if (!open && buttonRef.current) {
-      console.log('blur button')
       buttonRef.current.blur()
     }
   }, [open])
@@ -59,12 +58,6 @@ export const ButtonCopy = ({
     <Tooltip
       text={text}
       container={portalContainer}
-      onTriggerClick={(event) => {
-        event.preventDefault()
-      }}
-      onPointerDownOutside={(event) => {
-        event.preventDefault()
-      }}
       handleOpenChange={handleOpenChange}
     >
       <button

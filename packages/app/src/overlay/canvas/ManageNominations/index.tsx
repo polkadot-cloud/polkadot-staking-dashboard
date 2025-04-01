@@ -1,36 +1,40 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { PoolNominate } from 'api/tx/poolNominate'
 import { StakingNominate } from 'api/tx/stakingNominate'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
 import { useHelp } from 'contexts/Help'
+import {
+  ManageNominationsProvider,
+  useManageNominations,
+} from 'contexts/ManageNominations'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { usePrompt } from 'contexts/Prompt'
-import { Notifications } from 'controllers/Notifications'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { GenerateNominations } from 'library/GenerateNominations'
-import type {
-  NominationSelection,
-  NominationSelectionWithResetCounter,
-} from 'library/GenerateNominations/types'
+import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
+import { MenuControls } from 'library/GenerateNominations/Controls/MenuControls'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
-import { Footer, Head, Main, Title } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
-import { RevertPrompt } from './Prompts/RevertPrompt'
+import type { DisplayFor, NominationSelection } from 'types'
+import { ButtonHelp } from 'ui-buttons'
+import {
+  Footer,
+  FootFullWidth,
+  HeadFullWidth,
+  Main,
+  Title,
+} from 'ui-core/canvas'
+import { CloseCanvas, useOverlay } from 'ui-overlay'
 
-export const ManageNominations = () => {
+export const Inner = () => {
   const { t } = useTranslation('app')
   const {
-    closeCanvas,
     setCanvasStatus,
     config: { options },
   } = useOverlay().canvas
@@ -41,7 +45,8 @@ export const ManageNominations = () => {
   const { getBondedAccount } = useBonded()
   const { activeAccount } = useActiveAccounts()
   const { updatePoolNominations } = useBondedPools()
-  const { openPromptWith, closePrompt } = usePrompt()
+  const { defaultNominations, nominations, setNominations, method } =
+    useManageNominations()
 
   const { maxNominations } = consts
   const controller = getBondedAccount(activeAccount)
@@ -49,47 +54,27 @@ export const ManageNominations = () => {
   const isPool = bondFor === 'pool'
   const signingAccount = isPool ? activeAccount : controller
 
-  // Valid to submit transaction.
+  // Whether to display revert changes button
+  const allowRevert = !!method
+
+  // Canvas content and footer size
+  const canvasSize = 'xl'
+
+  // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)
 
-  // Default nominators, from canvas options.
-  const [defaultNominations, setDefaultNominations] =
-    useState<NominationSelectionWithResetCounter>({
-      nominations: [...(options?.nominated || [])],
-      reset: 0,
-    })
-
-  // Current nominator selection, defaults to defaultNominations.
-  const [newNominations, setNewNominations] = useState<NominationSelection>({
-    nominations: options?.nominated || [],
-  })
-
-  // Handler for updating setup.
+  // Handler for updating setup
   const handleSetupUpdate = (value: NominationSelection) => {
-    setNewNominations(value)
+    setNominations(value.nominations)
   }
 
-  // Handler for reverting nomination updates.
-  const handleRevertChanges = () => {
-    setNewNominations({ nominations: [...defaultNominations.nominations] })
-    setDefaultNominations({
-      nominations: defaultNominations.nominations,
-      reset: defaultNominations.reset + 1,
-    })
-    Notifications.emit({
-      title: t('nominationsReverted'),
-      subtitle: t('revertedToActiveSelection'),
-    })
-    closePrompt()
-  }
-
-  // Check if default nominations match new ones.
+  // Check if default nominations match new ones
   const nominationsMatch = () =>
-    newNominations.nominations.every((n) =>
-      defaultNominations.nominations.find((d) => d.address === n.address)
+    nominations.every((n) =>
+      defaultNominations.find((d) => d.address === n.address)
     ) &&
-    newNominations.nominations.length > 0 &&
-    newNominations.nominations.length === defaultNominations.nominations.length
+    nominations.length > 0 &&
+    nominations.length === defaultNominations.length
 
   const getTx = () => {
     const tx = null
@@ -99,7 +84,7 @@ export const ManageNominations = () => {
     if (!isPool) {
       return new StakingNominate(
         network,
-        newNominations.nominations.map((nominee) => ({
+        nominations.map((nominee) => ({
           type: 'Id',
           value: nominee.address,
         }))
@@ -109,7 +94,7 @@ export const ManageNominations = () => {
       return new PoolNominate(
         network,
         activePool.id,
-        newNominations.nominations.map((nominee) => nominee.address)
+        nominations.map((nominee) => nominee.address)
       ).tx()
     }
     return tx
@@ -124,85 +109,92 @@ export const ManageNominations = () => {
     },
     callbackInBlock: () => {
       if (isPool && activePool) {
-        // Update bonded pool targets if updating pool nominations.
+        // Update bonded pool targets if updating pool nominations
         updatePoolNominations(
           activePool.id,
-          newNominations.nominations.map((n) => n.address)
+          nominations.map((n) => n.address)
         )
       }
     },
   })
 
-  // Valid if there are between 1 and `maxNominations` nominations.
+  // Valid if there are between 1 and `maxNominations` nominations
   useEffect(() => {
     setValid(
-      maxNominations.isGreaterThanOrEqualTo(
-        newNominations.nominations.length
-      ) &&
-        newNominations.nominations.length > 0 &&
+      maxNominations.isGreaterThanOrEqualTo(nominations.length) &&
+        nominations.length > 0 &&
         !nominationsMatch()
     )
-  }, [newNominations])
+  }, [nominations])
+
+  // Generation component props
+  const displayFor: DisplayFor = 'canvas'
+  const setters = [
+    {
+      current: {
+        callable: true,
+        fn: () => nominations,
+      },
+      set: handleSetupUpdate,
+    },
+  ]
 
   return (
     <>
-      <Main>
-        <Head>
-          <ButtonPrimaryInvert
-            text={t('revertChanges', { ns: 'modals' })}
-            lg
-            onClick={() => {
-              openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />)
-            }}
-            disabled={
-              newNominations.nominations === defaultNominations.nominations
-            }
-          />
-          <ButtonPrimary
-            text={t('cancel', { ns: 'app' })}
-            size="lg"
-            onClick={() => closeCanvas()}
-            iconLeft={faTimes}
-            style={{ marginLeft: '1.1rem' }}
-          />
-        </Head>
-        <Title>
-          <h1>{t('manageNominations', { ns: 'modals' })}</h1>
-          <h3>
-            {t('chooseValidators', {
-              ns: 'app',
-              maxNominations: maxNominations.toString(),
-            })}
+      <HeadFullWidth>
+        <Title fullWidth>
+          <h1>
+            {t('manageNominations', { ns: 'modals' })}
             <ButtonHelp
               onClick={() => openHelp('Nominations')}
               background="none"
               outline
             />
-          </h3>
+          </h1>
         </Title>
+        <CloseCanvas sm />
+      </HeadFullWidth>
+      {displayFor === 'canvas' && (
+        <MenuControls allowRevert={allowRevert} setters={setters} />
+      )}
+      <Main size={canvasSize} withMenu>
+        {displayFor !== 'canvas' && (
+          <InlineControls
+            displayFor={displayFor}
+            allowRevert={allowRevert}
+            setters={setters}
+          />
+        )}
         <GenerateNominations
-          displayFor="canvas"
-          setters={[
-            {
-              current: {
-                callable: true,
-                fn: () => newNominations,
-              },
-              set: handleSetupUpdate,
-            },
-          ]}
-          nominations={newNominations}
+          displayFor={displayFor}
+          setters={setters}
+          allowRevert={allowRevert}
         />
       </Main>
-      <Footer>
-        <SubmitTx
-          noMargin
-          fromController={!isPool}
-          valid={valid}
-          displayFor="canvas"
-          {...submitExtrinsic}
-        />
-      </Footer>
+      <FootFullWidth>
+        <Footer size={canvasSize}>
+          <SubmitTx
+            noMargin
+            transparent
+            fromController={!isPool}
+            valid={valid}
+            displayFor="modal"
+            {...submitExtrinsic}
+          />
+        </Footer>
+      </FootFullWidth>
     </>
+  )
+}
+
+export const ManageNominations = () => {
+  const {
+    config: { options },
+  } = useOverlay().canvas
+
+  return (
+    <ManageNominationsProvider nominations={options?.nominated || []}>
+      <Inner />
+    </ManageNominationsProvider>
   )
 }

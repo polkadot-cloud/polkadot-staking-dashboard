@@ -1,16 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createSafeContext } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
-import { defaultThemeContext } from './defaults'
+import { useRef, useState } from 'react'
 import type { Theme, ThemeContextInterface } from './types'
 
-export const ThemeContext =
-  createContext<ThemeContextInterface>(defaultThemeContext)
-
-export const useTheme = () => useContext(ThemeContext)
+export const [ThemeContext, useTheme] =
+  createSafeContext<ThemeContextInterface>()
 
 export const ThemesProvider = ({ children }: { children: ReactNode }) => {
   let initialTheme: Theme = 'light'

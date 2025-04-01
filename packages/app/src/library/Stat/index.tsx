@@ -4,11 +4,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { AnyJson } from '@w3ux/types'
 import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useLayoutEffect, useRef } from 'react'
+import type { AnyJson } from 'types'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
 import type { StatAddress, StatProps } from './types'
@@ -28,8 +28,8 @@ export const Stat = ({
   } = useNetwork().networkData
   const { openHelp } = useHelp()
 
-  const containerRef = useRef<HTMLDivElement>(null)
-  const subjectRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const subjectRef = useRef<HTMLDivElement | null>(null)
 
   const handleAdjustLayout = () => {
     applyWidthAsPadding(subjectRef, containerRef)
@@ -111,7 +111,7 @@ export const Stat = ({
                   <Button
                     key={`btn_${index}_${Math.random()}`}
                     text={btn.title}
-                    lg={btn.large ?? undefined}
+                    size={btn.large ? 'lg' : undefined}
                     iconLeft={btn.icon ?? undefined}
                     iconTransform={btn.transform ?? undefined}
                     disabled={btn.disabled ?? false}
