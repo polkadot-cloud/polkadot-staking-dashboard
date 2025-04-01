@@ -4945,15 +4945,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@w3ux/react-connect-kit@npm:3.0.3"
+"@w3ux/react-connect-kit@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@w3ux/react-connect-kit@npm:3.0.4"
   dependencies:
     "@polkagate/extension-dapp": "npm:^0.48.2"
     "@w3ux/extension-assets": "npm:^2.0.0"
     "@w3ux/hooks": "npm:^2.0.4"
     "@w3ux/utils": "npm:^2.0.6"
-  checksum: 10c0/5123bb4271f07b952440a5aecf1f962c770dfff0287550ed86f73e06cb320e7f37b473ec759aee7ee618ac250f8deddfeecd87f2e2ab5797d8fb62a82308bde8
+  checksum: 10c0/e83542d04ee734ffe213405ee4bd12fb042eb921a694c3656e100a909c6371095a193be0544db104c90080bfb9fbe4a74dc7a89a8b1333d728aeafcdb521fcbc
   languageName: node
   linkType: hard
 
@@ -5550,7 +5550,7 @@ __metadata:
     "@polkawatch/ddp-client": "npm:^2.0.20"
     "@w3ux/extension-assets": "npm:^2.0.0"
     "@w3ux/factories": "npm:^2.0.2"
-    "@w3ux/react-connect-kit": "npm:^3.0.3"
+    "@w3ux/react-connect-kit": "npm:^3.0.4"
     "@w3ux/react-odometer": "npm:^2.0.0"
     "@w3ux/validator-assets": "npm:^1.0.0"
     "@zondax/ledger-substrate": "npm:^1.0.1"
