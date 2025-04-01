@@ -26,8 +26,8 @@
   }
 }
 
-@media (min-width: ($page-width-medium-threshold + 1px)) {
-  .sideMinimised {
+.sideMinimised {
+  @media (min-width: ($page-width-medium-threshold + 1px)) {
     min-width: $side-menu-minimised-width;
     max-width: $side-menu-minimised-width;
   }
