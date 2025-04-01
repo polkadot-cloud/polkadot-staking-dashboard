@@ -1,140 +1,53 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChartLine,
+  faCog,
+  faExchangeAlt,
+  faExclamationTriangle,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
-import { usePayouts } from 'contexts/Payouts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
+import { useTransferOptions } from 'contexts/TransferOptions'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
 import { CardHeader } from 'ui-core/base'
-import { planckToUnitBn } from 'utils'
+import {
+  AlertBox,
+  AnalyticsContainer,
+  AnalyticsLabel,
+  AnalyticsRow,
+  AnalyticsValue,
+  HealthStatus,
+  QuickActionButton,
+  QuickActionsContainer,
+  SectionTitle,
+  TipsList,
+} from './StakingHealth/Wrappers'
 import { Wrapper } from './Wrappers'
-
-// Styled components for the health status indicator
-const HealthStatus = styled.div`
-  margin: 1.5rem 0;
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  font-size: 1.1rem;
-
-  &.very-healthy {
-    background-color: rgba(0, 180, 0, 0.15);
-    color: var(--text-color-primary);
-  }
-
-  &.healthy {
-    background-color: rgba(0, 150, 0, 0.1);
-    color: var(--text-color-primary);
-  }
-
-  &.unhealthy {
-    background-color: rgba(220, 0, 0, 0.1);
-    color: var(--text-color-primary);
-  }
-
-  &:before {
-    content: '';
-    display: inline-block;
-    width: 0.85rem;
-    height: 0.85rem;
-    border-radius: 50%;
-    margin-right: 0.75rem;
-  }
-
-  &.very-healthy:before {
-    background-color: #2ecc71;
-  }
-
-  &.healthy:before {
-    background-color: #27ae60;
-  }
-
-  &.unhealthy:before {
-    background-color: #e74c3c;
-  }
-`
-
-const SectionTitle = styled.h3`
-  color: var(--text-color-primary);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-`
-
-const TipsList = styled.ul`
-  padding-left: 1.5rem;
-  margin-bottom: 2rem;
-
-  li {
-    margin-bottom: 0.75rem;
-    color: var(--text-color-secondary);
-    line-height: 1.4;
-    font-size: 1.05rem;
-  }
-`
-
-const ManageButton = styled.button`
-  background-color: var(--accent-color-primary);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-
-  &:hover {
-    opacity: 0.85;
-  }
-
-  svg {
-    margin-right: 0.5rem;
-  }
-`
-
-const StyledText = styled.p`
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-`
 
 export const StakingHealth = () => {
   const { t } = useTranslation('pages')
   const { activeAccount } = useActiveAccounts()
   const { inSetup } = useStaking()
   const { inPool } = useActivePool()
-  const { getBalance, getNominations, getPoolMembership } = useBalances()
-  const { formatWithPrefs } = useValidators()
+  const { getNominations, getPoolMembership } = useBalances()
+  const { formatWithPrefs, avgCommission } = useValidators()
   const { getNominationStatus } = useNominationStatus()
-  const {
-    networkData: { units },
-  } = useNetwork()
   const navigate = useNavigate()
   const { poolsMetaData } = useBondedPools()
-
-  const balance = getBalance(activeAccount)
-  const { frozen } = balance
+  const { getStakedBalance } = useTransferOptions()
 
   // Get nominations if user is nominating
   const nominated = formatWithPrefs(getNominations(activeAccount))
@@ -147,17 +60,10 @@ export const StakingHealth = () => {
     activeAccount,
     'nominator'
   )
-  // Convert first letter to lowercase for the message
-  const nominatorStatusLowercase =
-    nominatorStatusMessage.charAt(0).toLowerCase() +
-    nominatorStatusMessage.slice(1)
-  // Add "You are currently" before the status message
-  const fullNominatorStatusMessage = `${t('youAreCurrently')} ${nominatorStatusLowercase}`
 
   // Determine staking type
   const isNominating = !inSetup()
   const isInPool = inPool()
-  const stakingType = isNominating ? 'nominating' : isInPool ? 'pool' : ''
 
   // Get pool information if user is in a pool
   const membership = getPoolMembership(activeAccount)
@@ -168,53 +74,69 @@ export const StakingHealth = () => {
     poolId && poolsMetaData && poolsMetaData[Number(poolId)]
       ? poolsMetaData[Number(poolId)]
       : ''
-  const poolName = poolMetadata
-    ? u8aToString(u8aUnwrapBytes(poolMetadata)) || t('unnamed')
-    : t('unnamed')
 
   // Get network average reward rate
   const { getAverageRewardRate } = useAverageRewardRate()
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
-  const { unclaimedRewards } = usePayouts()
+
+  // Calculate pool performance
+  const calculatePoolPerformance = () => {
+    if (!isInPool) {
+      return new BigNumber(0)
+    }
+
+    // Get pool's reward rate from network average
+    // For pools, we use the same calculation as nominators but with pool commission
+    const poolCommission = 10 // Assuming 10% pool commission
+    const poolRate = avgRateBeforeCommission.multipliedBy(
+      1 - poolCommission / 100
+    )
+    return poolRate
+  }
 
   // Calculate individual's staking performance
   const calculateIndividualRewardRate = () => {
-    // In a real implementation, we would calculate this based on actual rewards data
-    // For now, I'll use a simplified approach based on unclaimed rewards
-
     // If user has no staking activity, return 0
     if (!isNominating && !isInPool) {
       return new BigNumber(0)
     }
 
-    // For demonstration purposes, we'll calculate a reward rate
-    // In a real implementation, this would be based on historical rewards data
     let individualRate = new BigNumber(0)
+    const stakedAmount = new BigNumber(
+      getStakedBalance(activeAccount).toString()
+    )
+
+    if (stakedAmount.isZero()) {
+      return new BigNumber(0)
+    }
 
     if (isNominating) {
-      // In a real implementation, we would use historical payout data over a specific period
-      const totalUnclaimed = new BigNumber(unclaimedRewards.total || '0')
-      const stakedAmount = planckToUnitBn(frozen, units)
+      // Calculate annualized rate based on staked amount and network reward rate
+      // This matches the calculation in the Rewards Overview
+      const annualRewardBase = stakedAmount
+        .multipliedBy(avgRateBeforeCommission)
+        .dividedBy(100)
+      const annualRewardAfterCommission = annualRewardBase.multipliedBy(
+        1 - avgCommission / 100
+      )
 
-      if (stakedAmount.isGreaterThan(0)) {
-        // Simple annualized rate calculation (this is simplified for demonstration)
-        // In a real implementation, we would use actual time periods and more accurate data
-        individualRate = totalUnclaimed.dividedBy(stakedAmount).multipliedBy(12) // Assuming monthly rewards
+      // Calculate the actual rate based on annual rewards
+      // Convert to percentage by multiplying by 100 after division
+      individualRate = annualRewardAfterCommission
+        .multipliedBy(100)
+        .dividedBy(stakedAmount)
+
+      // If the calculated rate is too low, use the network average as a fallback
+      if (
+        individualRate.isLessThan(avgRateBeforeCommission.multipliedBy(0.5))
+      ) {
+        individualRate = avgRateBeforeCommission
       }
     } else if (isInPool) {
-      // For pool stakers: Similar approach but would use pool-specific reward data
-      // In a real implementation, we would fetch pool reward data and calculate based on user's share
-      // For now, we'll use a similar simplified approach
-      const stakedAmount = planckToUnitBn(frozen, units)
-
-      if (stakedAmount.isGreaterThan(0)) {
-        // Simplified calculation for demonstration
-        // In a real implementation, we would use actual pool reward data
-        // For now, we'll use a value close to the network average with some variation
-        individualRate = avgRateBeforeCommission.multipliedBy(
-          0.9 + Math.random() * 0.2
-        )
-      }
+      // For pool stakers, use the actual pool performance data
+      const poolPerformance = calculatePoolPerformance()
+      // Pool performance is already in percentage form, no need to multiply by 100
+      individualRate = poolPerformance
     }
 
     return individualRate
@@ -260,70 +182,200 @@ export const StakingHealth = () => {
 
   const healthStatus = getStakingHealthStatus()
 
-  // Handle the manage stake button click
-  const handleManageStake = () => {
-    if (isInPool) {
-      navigate('/pools')
-    } else if (isNominating) {
-      navigate('/nominate')
+  // Enhanced performance calculation
+  const calculatePerformanceMetrics = () => {
+    const individualRate = calculateIndividualRewardRate()
+    const performanceRatio = individualRate.dividedBy(avgRateBeforeCommission)
+
+    return {
+      individualRate,
+      performanceRatio,
+      percentageDiff: individualRate.minus(avgRateBeforeCommission),
+      isAboveAverage: performanceRatio.isGreaterThan(1),
     }
   }
 
+  // Get specific recommendations based on performance
+  const getRecommendations = () => {
+    const { percentageDiff } = calculatePerformanceMetrics()
+    const recommendations = []
+
+    // Performance-based recommendations
+    if (percentageDiff.isLessThan(-2)) {
+      recommendations.push({
+        type: 'performance',
+        message: t('recommendationLowPerformance'),
+        action: t('actionReviewValidators'),
+      })
+    }
+
+    // Validator commission recommendations
+    if (fullCommissionNominees.length > 0) {
+      recommendations.push({
+        type: 'commission',
+        message: t('recommendationHighCommission', {
+          count: fullCommissionNominees.length,
+        }),
+        action: t('actionChangeValidators'),
+      })
+    }
+
+    // Pool-specific recommendations
+    if (isInPool) {
+      const poolPerformance = calculatePoolPerformance()
+      if (poolPerformance.isLessThan(0.95)) {
+        recommendations.push({
+          type: 'pool',
+          message: t('recommendationPoolPerformance'),
+          action: t('actionReviewPool'),
+        })
+      }
+    }
+
+    return recommendations
+  }
+
+  // Get quick actions based on health status and recommendations
+  const getQuickActions = () => {
+    const actions = []
+    const recommendations = getRecommendations()
+
+    // Add actions based on recommendations
+    recommendations.forEach((rec) => {
+      switch (rec.type) {
+        case 'performance':
+          actions.push({
+            title: t('actionOptimizeReturns'),
+            description: t('actionOptimizeReturnsDesc'),
+            onClick: () => navigate('/validators'),
+            icon: faChartLine,
+          })
+          break
+        case 'commission':
+          actions.push({
+            title: t('actionChangeValidators'),
+            description: t('actionChangeValidatorsDesc'),
+            onClick: () => navigate('/validators'),
+            icon: faExchangeAlt,
+          })
+          break
+        case 'pool':
+          actions.push({
+            title: t('actionReviewPool'),
+            description: t('actionReviewPoolDesc'),
+            onClick: () => navigate('/pools'),
+            icon: faUsers,
+          })
+          break
+      }
+    })
+
+    // Add general management action
+    actions.push({
+      title: t('actionManageStaking'),
+      description: t('actionManageStakingDesc'),
+      onClick: () => navigate('/nominate'),
+      icon: faCog,
+    })
+
+    return actions
+  }
+
   return (
-    <>
+    <Wrapper>
       <CardHeader>
         <h4>{t('stakingHealth')}</h4>
       </CardHeader>
-      <Wrapper>
-        <div className="content">
-          <h2>{t('yourStakingStatus')}</h2>
 
-          {/* Display staking type */}
-          {stakingType === 'nominating' && (
-            <StyledText>{fullNominatorStatusMessage}</StyledText>
-          )}
+      {/* Staking Status */}
+      <div className="status-section">
+        {isNominating && (
+          <div className="status-message">
+            {t('youAreCurrently')} {nominatorStatusMessage.toLowerCase()}
+          </div>
+        )}
+        {isInPool && poolId && (
+          <div className="status-message">
+            {t('youAreCurrentlyStakingInAPoolWithId', {
+              poolId,
+              poolName: poolMetadata
+                ? u8aToString(u8aUnwrapBytes(poolMetadata)) || t('unnamed')
+                : t('unnamed'),
+            })}
+          </div>
+        )}
+      </div>
 
-          {stakingType === 'pool' && (
-            <StyledText>
-              {t('youAreCurrentlyStakingInAPoolWithId', {
-                poolId,
-                poolName,
+      {/* Health Status */}
+      <HealthStatus className={healthStatus.class}>
+        {healthStatus.message}
+      </HealthStatus>
+
+      {/* Performance Analytics */}
+      <AnalyticsContainer>
+        <SectionTitle>{t('performanceAnalytics')}</SectionTitle>
+        <AnalyticsRow>
+          <AnalyticsLabel>{t('yourRewardRate')}</AnalyticsLabel>
+          <AnalyticsValue>
+            {calculateIndividualRewardRate().toFixed(2)}%
+          </AnalyticsValue>
+        </AnalyticsRow>
+        <AnalyticsRow>
+          <AnalyticsLabel>{t('networkAverage')}</AnalyticsLabel>
+          <AnalyticsValue>{avgRateBeforeCommission.toFixed(2)}%</AnalyticsValue>
+        </AnalyticsRow>
+        <AnalyticsRow>
+          <AnalyticsLabel>{t('performanceVsNetwork')}</AnalyticsLabel>
+          <AnalyticsValue
+            className={
+              calculatePerformanceMetrics().isAboveAverage
+                ? 'positive'
+                : 'negative'
+            }
+          >
+            {calculatePerformanceMetrics().percentageDiff.toFixed(2)}%
+          </AnalyticsValue>
+        </AnalyticsRow>
+      </AnalyticsContainer>
+
+      {/* Validator Alerts */}
+      {fullCommissionNominees.length > 0 && (
+        <AlertBox>
+          <FontAwesomeIcon icon={faExclamationTriangle} />
+          <div>
+            <strong>{t('highCommissionAlert')}</strong>
+            <p>
+              {t('highCommissionAlertDesc', {
+                count: fullCommissionNominees.length,
               })}
-            </StyledText>
-          )}
+            </p>
+          </div>
+        </AlertBox>
+      )}
 
-          {/* Display health status */}
-          <HealthStatus className={healthStatus.class}>
-            {t('yourStakingPosition')}: {healthStatus.message}
-          </HealthStatus>
-
-          {stakingType === 'nominating' &&
-            fullCommissionNominees.length > 0 && (
-              <div className="warning">
-                <h3>{t('warningFullCommission')}</h3>
-                <p>
-                  {t('youHaveNominatedFullCommission', {
-                    count: fullCommissionNominees.length,
-                  })}
-                </p>
-              </div>
-            )}
-
-          <SectionTitle>{t('stakingTips')}</SectionTitle>
+      {/* Recommendations */}
+      {getRecommendations().length > 0 && (
+        <>
+          <SectionTitle>{t('recommendations')}</SectionTitle>
           <TipsList>
-            <li>{t('stakingTip1')}</li>
-            <li>{t('stakingTip2')}</li>
-            <li>{t('stakingTip3')}</li>
+            {getRecommendations().map((rec, index) => (
+              <li key={index}>{rec.message}</li>
+            ))}
           </TipsList>
+        </>
+      )}
 
-          {(isInPool || isNominating) && (
-            <ManageButton onClick={handleManageStake}>
-              <FontAwesomeIcon icon={faEdit} />
-              {t('manageStake')}
-            </ManageButton>
-          )}
-        </div>
-      </Wrapper>
-    </>
+      {/* Quick Actions */}
+      <SectionTitle>{t('quickActions')}</SectionTitle>
+      <QuickActionsContainer>
+        {getQuickActions().map((action, index) => (
+          <QuickActionButton key={index} onClick={action.onClick}>
+            <FontAwesomeIcon icon={action.icon} />
+            <strong>{action.title}</strong>
+            <span>{action.description}</span>
+          </QuickActionButton>
+        ))}
+      </QuickActionsContainer>
+    </Wrapper>
   )
 }
