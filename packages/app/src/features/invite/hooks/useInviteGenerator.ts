@@ -7,6 +7,7 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   copyToClipboard,
   generatePoolInviteUrl,
@@ -23,6 +24,7 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
   const { getNominations } = useBalances()
   const { formatWithPrefs } = useValidators()
   const { network } = useNetwork()
+  const { i18n } = useTranslation()
 
   // Get nominated validators
   const nominatedAddresses = activeAccount ? getNominations(activeAccount) : []
@@ -41,7 +43,7 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
     let url = ''
 
     if (type === 'pool' && selectedPool) {
-      url = generatePoolInviteUrl(selectedPool, network)
+      url = generatePoolInviteUrl(selectedPool, network, i18n.language)
     } else if (type === 'validator' && selectedValidators.length > 0) {
       url = generateValidatorInviteUrl(selectedValidators, network)
     }

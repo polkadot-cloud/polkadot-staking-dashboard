@@ -61,7 +61,7 @@ interface PoolDetails {
 export const PoolInvitePage = () => {
   const { t } = useTranslation('invite')
   const navigate = useNavigate()
-  const { network: urlNetwork, poolId } = useParams<{
+  const { poolId } = useParams<{
     network: string
     poolId: string
   }>()
@@ -101,7 +101,6 @@ export const PoolInvitePage = () => {
   // Set initial bond value only once when component mounts
   useEffect(() => {
     if (transferOptions && bond.bond === '') {
-      // Use transferrableBalance instead of availableBalance
       const initialBond = planckToUnitBn(
         transferOptions.transferrableBalance,
         units
@@ -124,17 +123,6 @@ export const PoolInvitePage = () => {
         return
       }
 
-      // Validate network matches
-      if (network !== urlNetwork) {
-        if (isMounted) {
-          setError(
-            t('wrongNetwork', { expected: urlNetwork, current: network })
-          )
-          setLoading(false)
-        }
-        return
-      }
-
       try {
         if (isMounted) {
           setLoading(true)
@@ -145,7 +133,7 @@ export const PoolInvitePage = () => {
 
         // If bondedPools is empty, wait for data to load
         if (bondedPools.length === 0) {
-          return // Don't set any state, just wait for the next effect run when bondedPools is populated
+          return
         }
 
         // Try to find the pool by ID
@@ -175,11 +163,10 @@ export const PoolInvitePage = () => {
                 current: parseFloat(pool.commission.current[0]),
                 max: pool.commission.max
                   ? parseFloat(pool.commission.max.toString())
-                  : 100, // Default to 100% if max is not set
+                  : 100,
               }
             : undefined
 
-          // If found in bonded pools, use that data
           const details: PoolDetails = {
             id: poolId,
             metadata: poolName,
@@ -203,10 +190,8 @@ export const PoolInvitePage = () => {
 
           setPoolDetails(details)
           setLoading(false)
-          // Clear any previous errors
           setError(null)
         } else if (isMounted) {
-          // If not found in bonded pools
           setError(t('poolNotFound'))
           setLoading(false)
         }
@@ -221,20 +206,10 @@ export const PoolInvitePage = () => {
 
     getPoolDetails()
 
-    // Return cleanup function
     return () => {
       isMounted = false
     }
-  }, [
-    poolId,
-    network,
-    urlNetwork,
-    isReady,
-    bondedPools,
-    poolsMetaData,
-    t,
-    units,
-  ])
+  }, [poolId, isReady, bondedPools, poolsMetaData, t, units])
 
   // Check if user is already in a pool
   const userAlreadyInPool = activePool !== null

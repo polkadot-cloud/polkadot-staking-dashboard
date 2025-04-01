@@ -5,14 +5,24 @@
  * Generates a pool invite URL
  * @param poolId - The ID of the pool to invite to
  * @param network - The network name (polkadot/kusama/westend)
+ * @param language - Optional language code (en/es/zh)
  * @returns The full invite URL
  */
 export const generatePoolInviteUrl = (
   poolId: string,
-  network: string
+  network: string,
+  language?: string
 ): string => {
   const baseUrl = window.location.origin + window.location.pathname
-  return `${baseUrl}#/invite/pool/${network}/${poolId}`
+  const url = `${baseUrl}#/invite/pool/${network}/${poolId}`
+
+  // Add URL variables if provided
+  const params = new URLSearchParams()
+  if (language) {
+    params.append('l', language)
+  }
+
+  return params.toString() ? `${url}?${params.toString()}` : url
 }
 
 /**
