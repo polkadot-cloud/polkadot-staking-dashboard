@@ -17,50 +17,37 @@ export const [NetworkContext, useNetwork] =
 export const NetworkProvider = ({ children }: { children: ReactNode }) => {
   // Get the initial network and prepare meta tags if necessary
   const getInitialNetwork = () => {
-    const urlNetworkRaw = extractUrlValue('n')
-
-    const urlNetworkValid = !!Object.values(NetworkList).find(
-      (n) => n.name === urlNetworkRaw
-    )
-
-    // use network from url if valid
-    if (urlNetworkValid) {
-      const urlNetwork = urlNetworkRaw as NetworkId
-
+    // First check for network in invite URL path
+    const path = window.location.hash
+    const inviteMatch = path.match(/#\/invite\/(pool|validator)\/([^/]+)/)
+    if (inviteMatch) {
+      const urlNetwork = inviteMatch[2] as NetworkId
+      const urlNetworkValid = !!Object.values(NetworkList).find(
+        (n) => n.name === urlNetwork
+      )
       if (urlNetworkValid) {
         return urlNetwork
       }
     }
-    // fallback to localStorage network if there
-    const localNetwork: NetworkId = localStorage.getItem('network') as NetworkId
 
+    // Then check URL parameter 'n'
+    const urlNetworkRaw = extractUrlValue('n')
+    const urlNetworkValid = !!Object.values(NetworkList).find(
+      (n) => n.name === urlNetworkRaw
+    )
+
+    if (urlNetworkValid) {
+      const urlNetwork = urlNetworkRaw as NetworkId
+      return urlNetwork
+    }
+
+    // Then fallback to localStorage network if there
+    const localNetwork: NetworkId = localStorage.getItem('network') as NetworkId
     const localNetworkValid = !!Object.values(NetworkList).find(
       (n) => n.name === localNetwork
     )
 
-    const initialNetwork = localNetworkValid ? localNetwork : defaultNetwork
-
-    // Commit initial to local storage
-    localStorage.setItem('network', initialNetwork)
-
-    return initialNetwork
-  }
-
-  // handle network switching
-  const switchNetwork = async (name: NetworkId): Promise<void> => {
-    // Disconnect from current APIs before switching network
-    await Promise.all([
-      await Apis.destroy(network.name),
-      await Apis.destroy(`people-${network.name}`),
-    ])
-
-    setNetwork({
-      name,
-      meta: NetworkList[name],
-    })
-
-    // update url `n` if needed
-    varToUrlHash('n', name, false)
+    return localNetworkValid ? localNetwork : defaultNetwork
   }
 
   // Store the initial active network
@@ -69,13 +56,43 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
   const [network, setNetwork] = useState<NetworkState>({
     name: initialNetwork,
     meta: NetworkList[initialNetwork],
+    error: null,
   })
+
+  // handle network switching
+  const switchNetwork = async (
+    name: NetworkId,
+    saveToStorage: boolean = true
+  ): Promise<void> => {
+    // Disconnect from current APIs before switching network
+    await Promise.all([
+      await Apis.destroy(network.name),
+      await Apis.destroy(`people-${network.name}`),
+    ])
+
+    // Only save to localStorage if explicitly requested (i.e., user-initiated network switch)
+    if (saveToStorage) {
+      localStorage.setItem('network', name)
+    }
+
+    setNetwork({
+      name,
+      meta: NetworkList[name],
+      error: null,
+    })
+
+    // update url 'n' parameter if explicitly switching networks
+    if (saveToStorage) {
+      varToUrlHash('n', name, false)
+    }
+  }
 
   return (
     <NetworkContext.Provider
       value={{
         network: network.name,
         networkData: network.meta,
+        networkError: network.error,
         switchNetwork,
       }}
     >

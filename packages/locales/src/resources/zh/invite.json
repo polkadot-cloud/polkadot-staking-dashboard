@@ -1,6 +1,7 @@
 {
   "invite": {
     "active": "活跃",
+    "addresses": "地址",
     "alreadyInPool": "您已经是矿池成员。您需要先离开当前矿池才能加入新矿池。",
     "alreadyNominating": "您已经在提名这些验证人。",
     "alreadyNominatingOthers": "您已经在提名其他验证人。",
@@ -10,7 +11,7 @@
     "bondAmount": "抵押金额",
     "bondDescription": "选择您想要质押的 {{unit}} 数量。您可以在以后增加或减少此数量。",
     "bondStep": "抵押",
-    "browseValidators": "浏览验证人",
+    "browsePools": "浏览矿池",
     "commission": "佣金",
     "complete": "完成",
     "connectWallet": "连接钱包",
@@ -83,6 +84,7 @@
     "validatorsToNominate": "待提名的验证人",
     "viewYourNominations": "查看您的提名",
     "viewYourPool": "查看您的矿池",
+    "wrongNetwork": "此邀请链接是针对 {{expected}} 网络的，但您当前在 {{current}} 网络上。请切换网络以继续。",
     "yourNominations": "您的提名"
   }
 }

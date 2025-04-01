@@ -211,7 +211,10 @@ export const ValidatorInvitePage = () => {
   const { isReady } = useApi()
   const { modal } = useOverlay()
   const navigate = useNavigate()
-  const { validators } = useParams<{ validators: string }>()
+  const { network: urlNetwork, validators } = useParams<{
+    network: string
+    validators: string
+  }>()
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
   const { getAccount, accountHasSigner } = useImportedAccounts()
@@ -284,6 +287,14 @@ export const ValidatorInvitePage = () => {
   useEffect(() => {
     if (validators) {
       try {
+        // Validate network matches
+        if (network !== urlNetwork) {
+          setLoadingError(
+            t('wrongNetwork', { expected: urlNetwork, current: network })
+          )
+          return
+        }
+
         // Split the list by delimiter and filter out empty values
         const extractedValidators = validators.split('|').filter(Boolean)
 
@@ -306,7 +317,7 @@ export const ValidatorInvitePage = () => {
         setLoadingError(t('invalidValidatorsInUrl'))
       }
     }
-  }, [validators, fetchValidatorPrefs, t])
+  }, [validators, network, urlNetwork, fetchValidatorPrefs, t])
 
   // Set initial bond value when account or transfer options change
   useEffect(() => {

@@ -87,11 +87,11 @@ const RouterInner = () => {
                     />
                   ))}
                   <Route
-                    path="/invite/pool/:poolId"
+                    path="/invite/pool/:network/:poolId"
                     element={<PoolInvitePage />}
                   />
                   <Route
-                    path="/invite/validator/:validators"
+                    path="/invite/validator/:network/:validators"
                     element={<ValidatorInvitePage />}
                   />
                   <Route

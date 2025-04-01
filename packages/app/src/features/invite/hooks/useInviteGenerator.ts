@@ -3,6 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
+import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useState } from 'react'
@@ -21,6 +22,7 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
   const { activePool } = useActivePool()
   const { getNominations } = useBalances()
   const { formatWithPrefs } = useValidators()
+  const { network } = useNetwork()
 
   // Get nominated validators
   const nominatedAddresses = activeAccount ? getNominations(activeAccount) : []
@@ -39,9 +41,9 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
     let url = ''
 
     if (type === 'pool' && selectedPool) {
-      url = generatePoolInviteUrl(selectedPool)
+      url = generatePoolInviteUrl(selectedPool, network)
     } else if (type === 'validator' && selectedValidators.length > 0) {
-      url = generateValidatorInviteUrl(selectedValidators)
+      url = generateValidatorInviteUrl(selectedValidators, network)
     }
 
     setInviteUrl(url)

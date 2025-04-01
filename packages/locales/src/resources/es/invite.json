@@ -1,7 +1,8 @@
 {
   "invite": {
     "active": "Activo",
-    "alreadyInPool": "Ya eres miembro de un pool. Necesitas abandonar tu pool actual antes de unirte a uno nuevo.",
+    "addresses": "Direcciones",
+    "alreadyInPool": "Ya eres miembro de un pool. Necesitas salir de tu pool actual antes de unirte a uno nuevo.",
     "alreadyNominating": "Ya estás nominando a estos validadores.",
     "alreadyNominatingOthers": "Ya estás nominando a otros validadores.",
     "alreadyNominatingThese": "Ya estás nominando a estos validadores.",
@@ -10,7 +11,7 @@
     "bondAmount": "Cantidad de Fianza",
     "bondDescription": "Elige cuántos {{unit}} deseas hacer stake. Puedes aumentar o disminuir esta cantidad más tarde.",
     "bondStep": "Fianza",
-    "browseValidators": "Explorar Validadores",
+    "browsePools": "Explorar Pools",
     "commission": "Comisión",
     "complete": "Completo",
     "connectWallet": "Conectar Wallet",
@@ -83,6 +84,7 @@
     "validatorsToNominate": "Validadores para Nominar",
     "viewYourNominations": "Ver Tus Nominaciones",
     "viewYourPool": "Ver Tu Pool",
+    "wrongNetwork": "Esta invitación es para la red {{expected}}, pero actualmente estás en {{current}}. Por favor, cambia de red para continuar.",
     "yourNominations": "Tus Nominaciones"
   }
 }

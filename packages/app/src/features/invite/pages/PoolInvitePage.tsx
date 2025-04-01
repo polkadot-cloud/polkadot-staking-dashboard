@@ -30,7 +30,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import type { AnyJson, MaybeAddress } from 'types'
+import type { MaybeAddress } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
@@ -61,7 +61,10 @@ interface PoolDetails {
 export const PoolInvitePage = () => {
   const { t } = useTranslation('invite')
   const navigate = useNavigate()
-  const { poolId } = useParams<{ poolId: string }>()
+  const { network: urlNetwork, poolId } = useParams<{
+    network: string
+    poolId: string
+  }>()
   const {
     networkData: {
       units,
@@ -121,6 +124,17 @@ export const PoolInvitePage = () => {
         return
       }
 
+      // Validate network matches
+      if (network !== urlNetwork) {
+        if (isMounted) {
+          setError(
+            t('wrongNetwork', { expected: urlNetwork, current: network })
+          )
+          setLoading(false)
+        }
+        return
+      }
+
       try {
         if (isMounted) {
           setLoading(true)
@@ -153,25 +167,26 @@ export const PoolInvitePage = () => {
           const bondedAmount = planckToUnitBn(
             new BigNumber(rmCommas(pool.points?.toString() || '0')),
             units
-          )
+          ).toFormat(3)
+
+          // Format commission if available
+          const commission = pool.commission?.current
+            ? {
+                current: parseFloat(pool.commission.current[0]),
+                max: pool.commission.max
+                  ? parseFloat(pool.commission.max.toString())
+                  : 100, // Default to 100% if max is not set
+              }
+            : undefined
 
           // If found in bonded pools, use that data
-          const details = {
+          const details: PoolDetails = {
             id: poolId,
             metadata: poolName,
             state: pool.state?.toString() || 'Open',
             memberCount: parseInt(pool.memberCounter?.toString() || '0', 10),
-            commission: pool.commission
-              ? {
-                  current: parseFloat(
-                    ((pool.commission.current as AnyJson) / 10000000).toFixed(2)
-                  ),
-                  max: parseFloat(
-                    ((pool.commission.max as AnyJson) / 10000000).toFixed(2)
-                  ),
-                }
-              : undefined,
-            totalBonded: bondedAmount.toString(),
+            commission,
+            totalBonded: bondedAmount,
             addresses: {
               stash: pool.addresses?.stash || '',
               reward: pool.addresses?.reward || '',
@@ -210,7 +225,16 @@ export const PoolInvitePage = () => {
     return () => {
       isMounted = false
     }
-  }, [poolId, isReady, bondedPools, poolsMetaData, t, units])
+  }, [
+    poolId,
+    network,
+    urlNetwork,
+    isReady,
+    bondedPools,
+    poolsMetaData,
+    t,
+    units,
+  ])
 
   // Check if user is already in a pool
   const userAlreadyInPool = activePool !== null
@@ -272,7 +296,7 @@ export const PoolInvitePage = () => {
   // Format DOT amount for display
   const formatDOT = (amount: string) => {
     const bn = new BigNumber(amount)
-    return bn.isNaN() ? '0' : bn.toFormat(3)
+    return bn.isNaN() ? '0' : bn.toFormat(2)
   }
 
   // Whether the form is ready to submit
@@ -316,7 +340,7 @@ export const PoolInvitePage = () => {
                     <PoolInfo>
                       <h3>{poolDetails?.metadata}</h3>
                       <PoolId>ID: {poolId}</PoolId>
-                      <PoolState state={poolDetails?.state || ''}>
+                      <PoolState $state={poolDetails?.state || ''}>
                         {poolDetails?.state}
                       </PoolState>
                     </PoolInfo>
@@ -534,22 +558,22 @@ const PoolId = styled.div`
   margin-bottom: 0.5rem;
 `
 
-const PoolState = styled.div<{ state: string }>`
+const PoolState = styled.div<{ $state: string }>`
   display: inline-block;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   font-size: 0.8rem;
   font-weight: 600;
-  background-color: ${({ state }) =>
-    state === 'Open'
+  background-color: ${({ $state }) =>
+    $state === 'Open'
       ? 'var(--status-success-color-transparent)'
-      : state === 'Blocked'
+      : $state === 'Blocked'
         ? 'var(--status-warning-color-transparent)'
         : 'var(--status-danger-color-transparent)'};
-  color: ${({ state }) =>
-    state === 'Open'
+  color: ${({ $state }) =>
+    $state === 'Open'
       ? 'var(--status-success-color)'
-      : state === 'Blocked'
+      : $state === 'Blocked'
         ? 'var(--status-warning-color)'
         : 'var(--status-danger-color)'};
 `

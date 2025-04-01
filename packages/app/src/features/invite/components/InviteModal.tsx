@@ -92,7 +92,7 @@ export const InviteModal = () => {
 
   // Handle pool selection only - moved inside useEffect to prevent infinite loop
   useEffect(() => {
-    if (!inviteGenerated && inviteType === 'pool' && activePool?.id) {
+    if (inviteType === 'pool' && activePool?.id) {
       poolInviteGenerator.setSelectedPool(activePool.id.toString())
       poolInviteGenerator.generateInviteUrl()
       setInviteGenerated(true)
@@ -162,11 +162,40 @@ export const InviteModal = () => {
         <Title>{t('inviteToStake')}</Title>
 
         {inviteType === 'pool' ? (
-          <ShareOptions
-            inviteUrl={activeGenerator.inviteUrl}
-            copiedToClipboard={activeGenerator.copiedToClipboard}
-            copyInviteUrl={activeGenerator.copyInviteUrl}
-          />
+          <>
+            <ContentSection>
+              <SectionHeader>
+                <SectionTitle>{t('poolInvite')}</SectionTitle>
+              </SectionHeader>
+              {activePool ? (
+                <PoolItem>
+                  <PoolDisplay>
+                    <PoolIcon>
+                      <Polkicon
+                        address={activePool.addresses.stash}
+                        fontSize="2.5rem"
+                      />
+                    </PoolIcon>
+                    <PoolInfo>
+                      <PoolName>
+                        {activePool.id
+                          ? `Pool #${activePool.id}`
+                          : activePool.id}
+                      </PoolName>
+                      <PoolAddress>{activePool.addresses.stash}</PoolAddress>
+                    </PoolInfo>
+                  </PoolDisplay>
+                </PoolItem>
+              ) : (
+                <EmptyState>{t('noPoolsFound')}</EmptyState>
+              )}
+            </ContentSection>
+            <ShareOptions
+              inviteUrl={poolInviteGenerator.inviteUrl}
+              copiedToClipboard={poolInviteGenerator.copiedToClipboard}
+              copyInviteUrl={poolInviteGenerator.copyInviteUrl}
+            />
+          </>
         ) : !inviteGenerated ? (
           <>
             <ContentSection>
@@ -423,4 +452,44 @@ const SelectedValidatorItem = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+`
+
+const PoolItem = styled.div`
+  background: var(--background-primary);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid var(--accent-color-primary);
+`
+
+const PoolDisplay = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`
+
+const PoolIcon = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const PoolInfo = styled.div`
+  flex: 1;
+`
+
+const PoolName = styled.div`
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+`
+
+const PoolAddress = styled.div`
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--text-color-secondary);
 `

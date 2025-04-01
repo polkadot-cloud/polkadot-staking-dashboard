@@ -4,19 +4,27 @@
 /**
  * Generates a pool invite URL
  * @param poolId - The ID of the pool to invite to
+ * @param network - The network name (polkadot/kusama/westend)
  * @returns The full invite URL
  */
-export const generatePoolInviteUrl = (poolId: string): string => {
+export const generatePoolInviteUrl = (
+  poolId: string,
+  network: string
+): string => {
   const baseUrl = window.location.origin + window.location.pathname
-  return `${baseUrl}#/invite/pool/${poolId}`
+  return `${baseUrl}#/invite/pool/${network}/${poolId}`
 }
 
 /**
  * Generates a validator invite URL
  * @param validators - Array of validator addresses to invite to
+ * @param network - The network name (polkadot/kusama/westend)
  * @returns The full invite URL
  */
-export const generateValidatorInviteUrl = (validators: string[]): string => {
+export const generateValidatorInviteUrl = (
+  validators: string[],
+  network: string
+): string => {
   const baseUrl = window.location.origin + window.location.pathname
 
   if (!validators.length) {
@@ -25,46 +33,52 @@ export const generateValidatorInviteUrl = (validators: string[]): string => {
 
   // Join validators with a delimiter
   const validatorList = validators.join('|')
-  return `${baseUrl}#/invite/validator/${validatorList}`
+  return `${baseUrl}#/invite/validator/${network}/${validatorList}`
 }
 
 /**
  * Extracts pool ID from a pool invite URL
  * @param url - The pool invite URL
- * @returns The pool ID or null if not found
+ * @returns Object containing network and pool ID or null if not found
  */
-export const extractPoolIdFromUrl = (url: string): string | null => {
-  const match = url.match(/#\/invite\/pool\/([^/]+)/)
-  return match ? match[1] : null
+export const extractPoolIdFromUrl = (
+  url: string
+): { network: string; poolId: string } | null => {
+  const match = url.match(/#\/invite\/pool\/([^/]+)\/([^/]+)/)
+  return match ? { network: match[1], poolId: match[2] } : null
 }
 
 /**
  * Extracts validator addresses from a validator invite URL
  * @param url - The validator invite URL
- * @returns Array of validator addresses
+ * @returns Object containing network and array of validator addresses
  */
-export const extractValidatorsFromUrl = (url: string): string[] => {
+export const extractValidatorsFromUrl = (
+  url: string
+): { network: string; validators: string[] } => {
   console.log('Extracting validators from URL:', url)
 
-  const match = url.match(/#\/invite\/validator\/([^/]+)/)
+  const match = url.match(/#\/invite\/validator\/([^/]+)\/([^/]+)/)
   if (!match) {
     console.warn('No validator match found in URL')
-    return []
+    return { network: '', validators: [] }
   }
 
   try {
+    const network = match[1]
     // Split by delimiter and filter out empty values
-    const validators = match[1].split('|').filter(Boolean)
+    const validators = match[2].split('|').filter(Boolean)
     console.log('Extracted validators:', validators)
-    return validators
+    return { network, validators }
   } catch (error) {
     console.error('Error extracting validators:', error)
-    return []
+    return { network: '', validators: [] }
   }
 }
 
 export interface InviteData {
   type: 'pool' | 'validator'
+  network: string
   address: string
 }
 
@@ -75,14 +89,15 @@ export interface InviteData {
  */
 export const extractInviteData = (param: string): InviteData => {
   const parts = param.split('/')
-  if (parts.length < 2) {
-    return { type: 'validator', address: '' }
+  if (parts.length < 3) {
+    return { type: 'validator', network: '', address: '' }
   }
 
   const type = parts[0] as 'pool' | 'validator'
-  const address = parts[1]
+  const network = parts[1]
+  const address = parts[2]
 
-  return { type, address }
+  return { type, network, address }
 }
 
 /**
