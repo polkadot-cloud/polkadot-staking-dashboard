@@ -4,10 +4,6 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "g:build": "cd $INIT_CWD && tsc && vite build --base '/'",
-    "g:build:verify": "cd $INIT_CWD && tsc --noEmit --skipLibCheck && vite build --base '/' --mode development --emptyOutDir",
-    "g:dev": "cd $INIT_CWD && vite",
-    "g:preview": "cd $INIT_CWD && vite preview",
     "clear": "npm run --workspaces clear && rm -rf build dist tsconfig.tsbuildinfo",
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
@@ -36,13 +32,8 @@
     "prettier": "^3.5.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "sass": "1.77.6",
-    "tsc": "^2.0.4",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.29.0",
-    "vite": "^6.2.4"
-  },
-  "dependencies": {
-    "framer-motion": "^12.6.2"
+    "typescript-eslint": "^8.29.0"
   },
   "prettier": {
     "arrowParens": "always",

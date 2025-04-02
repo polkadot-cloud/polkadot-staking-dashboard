@@ -4,16 +4,15 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "build": "pnpm --workspace-root run g:build",
-    "build:verify": "pnpm --workspace-root run g:build:verify",
+    "build": "vite build --base '/'",
+    "build:verify": "tsc --noEmit --skipLibCheck && vite build --base '/' --mode development --emptyOutDir",
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
-    "dev": "pnpm --workspace-root run g:dev",
-    "preview": "pnpm --workspace-root run g:preview",
+    "dev": "vite",
+    "preview": "vite preview",
     "test": "vitest",
     "visualizer": "vite-bundle-visualizer"
   },
   "dependencies": {
-    "@dotlottie/player-component": "^2.7.12",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
@@ -67,7 +66,6 @@
     "rxjs": "^7.8.2",
     "styled-components": "^6.1.13",
     "styles": "workspace:*",
-    "types": "workspace:*",
     "ui-buttons": "workspace:*",
     "ui-core": "workspace:*",
     "ui-graphs": "workspace:*",
@@ -81,6 +79,8 @@
   },
   "devDependencies": {
     "types": "workspace:*",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.4",
     "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-checker": "^0.9.1",
     "vite-plugin-eslint": "^1.8.1",

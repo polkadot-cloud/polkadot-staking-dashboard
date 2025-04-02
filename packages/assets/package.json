@@ -9,5 +9,8 @@
   "exports": {
     "./svg/*": "./src/svg/*",
     "./tsx/*": "./src/tsx/*"
+  },
+  "dependencies": {
+    "react": "^19.1.0"
   }
 }
