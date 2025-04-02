@@ -4,20 +4,21 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "exports": {
     ".": "./src/index.tsx",
     "./types": "./src/types.ts"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@w3ux/hooks": "^2.0.4",
+    "@w3ux/utils": "2.0.7-alpha.2",
+    "framer-motion": "^12.6.2",
+    "react": "^19.1.0",
+    "react-error-boundary": "^5.0.0",
     "types": "workspace:*",
     "ui-core": "workspace:*"
-  },
-  "peerDependencies": {
-    "@fortawesome/fontawesome-svg-core": "*",
-    "@fortawesome/free-solid-svg-icons": "*",
-    "react": "*"
   }
 }

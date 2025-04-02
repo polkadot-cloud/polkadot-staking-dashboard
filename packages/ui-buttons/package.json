@@ -8,19 +8,19 @@
     "./types": "./src/types.ts"
   },
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@w3ux/react-polkicon": "^3.0.0",
     "@w3ux/types": "^2.0.3",
-    "@w3ux/utils": "^2.0.6",
+    "@w3ux/utils": "2.0.7-alpha.2",
+    "classnames": "^2.5.1",
+    "react": "^19.1.0",
     "types": "workspace:*",
     "ui-core": "workspace:*"
-  },
-  "peerDependencies": {
-    "@fortawesome/fontawesome-svg-core": "*",
-    "react": "*"
   }
 }

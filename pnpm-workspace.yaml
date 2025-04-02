@@ -1,0 +1,9 @@
+packages:
+  - packages/*
+onlyBuiltDependencies:
+  - '@swc/core'
+  - bufferutil
+  - esbuild
+  - keccak
+  - sharp
+  - utf-8-validate
