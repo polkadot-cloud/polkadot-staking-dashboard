@@ -5,7 +5,9 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
-    "reset": "pnpmrun clear &&  rm -rf node_modules pnpm-lock.yaml && pnpm"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.1.2"
   }
 }

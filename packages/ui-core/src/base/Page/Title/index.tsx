@@ -1,10 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
-import { ButtonSecondary } from 'ui-buttons'
 import type { PageTitleProps } from '../../types'
 import { TitleTabs } from '../TitleTabs'
 import classes from './index.module.scss'
@@ -15,7 +13,7 @@ import classes from './index.module.scss'
  * The element that wraps a page title. Determines the padding and position relative to top of
  * screen when the element is stuck.
  */
-export const Title = ({ title, button, tabs = [] }: PageTitleProps) => {
+export const Title = ({ title, tabs = [] }: PageTitleProps) => {
   const [sticky, setSticky] = useState(false)
   const ref = useRef<HTMLElement>(null)
 
@@ -52,17 +50,6 @@ export const Title = ({ title, button, tabs = [] }: PageTitleProps) => {
           <div>
             <h1 className={h1Classes}>{title}</h1>
           </div>
-          {button && (
-            <div className={classes.pageTitleTitleRight}>
-              <ButtonSecondary
-                text={button.title}
-                onClick={button.onClick}
-                iconRight={faBars}
-                iconTransform="shrink-4"
-                size="lg"
-              />
-            </div>
-          )}
         </section>
         {tabs.length > 0 && <TitleTabs sticky={sticky} tabs={tabs} />}
       </header>

@@ -13,10 +13,6 @@ export type PageTitleProps = PageTitleTabsProps & {
   tabClassName?: string
   inline?: boolean
   title?: string
-  button?: {
-    title: string
-    onClick: () => void
-  }
 }
 
 export interface PageTitleTabsProps {

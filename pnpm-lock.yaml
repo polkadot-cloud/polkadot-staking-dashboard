@@ -4,74 +4,25 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@typescript-eslint/utils>typescript': 5.8.2
+  '@typescript-eslint/typescript-estree>typescript': 5.8.2
+  '@polkadot/util-crypto>@polkadot/util': 13.4.3
+  '@polkadot/x-randomvalues>@polkadot/util': 13.4.3
+  react-helmet-async>react: 19.1.0
+  use-sync-external-store>react: 19.1.0
+
 importers:
 
   .:
     dependencies:
-      '@fortawesome/fontawesome-svg-core':
-        specifier: ^6.7.2
-        version: 6.7.2
-      '@fortawesome/free-solid-svg-icons':
-        specifier: ^6.7.2
-        version: 6.7.2
-      '@polkadot-api/merkleize-metadata':
-        specifier: ^1.1.14
-        version: 1.1.14
-      '@tanstack/react-query':
-        specifier: ^5.71.1
-        version: 5.71.1(react@19.1.0)
-      '@w3ux/hooks':
-        specifier: ^2.0.4
-        version: 2.0.4(react@19.1.0)
-      '@w3ux/react-polkicon':
-        specifier: ^3.0.0
-        version: 3.0.0
-      '@w3ux/utils':
-        specifier: ^2.0.6
-        version: 2.0.6
-      bignumber.js:
-        specifier: ^9.1.2
-        version: 9.1.2
-      classnames:
-        specifier: ^2.5.1
-        version: 2.5.1
-      date-fns:
-        specifier: ^4.1.0
-        version: 4.1.0
       framer-motion:
         specifier: ^12.6.2
         version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      i18next:
-        specifier: ^24.2.3
-        version: 24.2.3(typescript@5.8.2)
-      radix-ui:
-        specifier: ^1.1.3
-        version: 1.1.3(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-error-boundary:
-        specifier: ^5.0.0
-        version: 5.0.0(react@19.1.0)
-      react-i18next:
-        specifier: ^15.4.0
-        version: 15.4.1(i18next@24.2.3(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      simplebar:
-        specifier: ^6.3.0
-        version: 6.3.0
-      simplebar-react:
-        specifier: ^3.3.0
-        version: 3.3.0(react@19.1.0)
-      styled-components:
-        specifier: ^6.1.13
-        version: 6.1.16(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.23.0
         version: 9.23.0
-      '@ledgerhq/logs':
-        specifier: ^6.12.0
-        version: 6.12.0
       '@types/chroma-js':
         specifier: ^3.1.1
         version: 3.1.1
@@ -151,7 +102,7 @@ importers:
         specifier: ^2.7.12
         version: 2.7.12
       '@fortawesome/fontawesome-svg-core':
-        specifier: '*'
+        specifier: ^6.7.2
         version: 6.7.2
       '@fortawesome/free-brands-svg-icons':
         specifier: ^6.7.2
@@ -160,7 +111,7 @@ importers:
         specifier: ^6.7.2
         version: 6.7.2
       '@fortawesome/free-solid-svg-icons':
-        specifier: '*'
+        specifier: ^6.7.2
         version: 6.7.2
       '@fortawesome/react-fontawesome':
         specifier: ^0.2.2
@@ -187,7 +138,7 @@ importers:
         specifier: ^2.0.20
         version: 2.0.20
       '@tanstack/react-query':
-        specifier: '*'
+        specifier: ^5.71.1
         version: 5.71.1(react@19.1.0)
       '@w3ux/extension-assets':
         specifier: ^2.0.0
@@ -195,6 +146,9 @@ importers:
       '@w3ux/factories':
         specifier: ^2.0.2
         version: 2.0.2(react@19.1.0)
+      '@w3ux/hooks':
+        specifier: ^2.0.4
+        version: 2.0.4(react@19.1.0)
       '@w3ux/react-connect-kit':
         specifier: ^3.0.4
         version: 3.0.4(@polkadot/api@15.9.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@polkadot/util-crypto@12.6.2(@polkadot/util@12.6.2))(@polkadot/util@13.4.3)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
@@ -202,17 +156,32 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@w3ux/react-polkicon':
-        specifier: '*'
+        specifier: ^3.0.0
         version: 3.0.0
+      '@w3ux/utils':
+        specifier: ^2.0.6
+        version: 2.0.6
       '@w3ux/validator-assets':
         specifier: ^1.0.0
         version: 1.0.0(react@19.1.0)
+      '@walletconnect/modal':
+        specifier: ^2.7.0
+        version: 2.7.0(@types/react@19.0.12)(react@19.1.0)
+      '@walletconnect/universal-provider':
+        specifier: ^2.19.2
+        version: 2.19.2(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)
+      '@walletconnect/utils':
+        specifier: ^2.19.2
+        version: 2.19.2(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)
       '@zondax/ledger-substrate':
         specifier: ^1.0.1
         version: 1.0.1
       assets:
         specifier: workspace:*
         version: link:../assets
+      bignumber.js:
+        specifier: ^9.1.2
+        version: 9.1.2
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
@@ -222,15 +191,21 @@ importers:
       chroma-js:
         specifier: ^3.1.1
         version: 3.1.2
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       compare-versions:
         specifier: ^6.1.1
         version: 6.1.1
       consts:
         specifier: workspace:*
         version: link:../consts
-      eslint:
-        specifier: '*'
-        version: 9.23.0
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      framer-motion:
+        specifier: ^12.6.2
+        version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       html5-qrcode:
         specifier: ^2.3.8
         version: 2.3.8
@@ -256,7 +231,7 @@ importers:
         specifier: ^11.1.6
         version: 11.1.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
-        specifier: '*'
+        specifier: ^19.1.0
         version: 19.1.0
       react-chartjs-2:
         specifier: ^5.2.0
@@ -264,15 +239,24 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
+      react-error-boundary:
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.1.0)
       react-helmet-async:
         specifier: ^2.0.5
         version: 2.0.5(react@19.1.0)
+      react-i18next:
+        specifier: ^15.4.0
+        version: 15.4.1(i18next@24.2.3(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-router-dom:
         specifier: ^7.4.1
         version: 7.4.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
+      styled-components:
+        specifier: ^6.1.13
+        version: 6.1.16(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       styles:
         specifier: workspace:*
         version: link:../styles
@@ -335,9 +319,21 @@ importers:
 
   packages/locales:
     dependencies:
+      '@w3ux/utils':
+        specifier: ^2.0.6
+        version: 2.0.6
       consts:
         specifier: workspace:*
         version: link:../consts
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      i18next:
+        specifier: ^24.2.3
+        version: 24.2.3(typescript@5.8.2)
+      react-i18next:
+        specifier: ^15.4.0
+        version: 15.4.1(i18next@24.2.3(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   packages/plugin-staking-api:
     dependencies:
@@ -350,12 +346,22 @@ importers:
 
   packages/styles: {}
 
-  packages/types: {}
+  packages/types:
+    dependencies:
+      bignumber.js:
+        specifier: ^9.1.2
+        version: 9.1.2
 
   packages/ui-buttons:
     dependencies:
       '@fortawesome/fontawesome-svg-core':
-        specifier: '*'
+        specifier: ^6.7.2
+        version: 6.7.2
+      '@fortawesome/free-regular-svg-icons':
+        specifier: ^6.7.2
+        version: 6.7.2
+      '@fortawesome/free-solid-svg-icons':
+        specifier: ^6.7.2
         version: 6.7.2
       '@fortawesome/react-fontawesome':
         specifier: ^0.2.2
@@ -369,8 +375,11 @@ importers:
       '@w3ux/utils':
         specifier: ^2.0.6
         version: 2.0.6
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       react:
-        specifier: '*'
+        specifier: ^19.1.0
         version: 19.1.0
       types:
         specifier: workspace:*
@@ -382,49 +391,65 @@ importers:
   packages/ui-core:
     dependencies:
       '@fortawesome/fontawesome-svg-core':
-        specifier: '*'
+        specifier: ^6.7.2
         version: 6.7.2
       '@fortawesome/free-solid-svg-icons':
-        specifier: '*'
+        specifier: ^6.7.2
         version: 6.7.2
       '@fortawesome/react-fontawesome':
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.1.0)
       '@w3ux/utils':
-        specifier: '*'
+        specifier: ^2.0.6
         version: 2.0.6
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
+      framer-motion:
+        specifier: ^12.6.2
+        version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       radix-ui:
-        specifier: '*'
+        specifier: ^1.1.3
         version: 1.1.3(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
-        specifier: '*'
+        specifier: ^19.1.0
         version: 19.1.0
       simplebar:
-        specifier: '*'
+        specifier: ^6.3.0
         version: 6.3.0
       simplebar-react:
-        specifier: '*'
+        specifier: ^3.3.0
         version: 3.3.0(react@19.1.0)
+      styles:
+        specifier: workspace:*
+        version: link:../styles
+      ui-buttons:
+        specifier: workspace:*
+        version: link:../ui-buttons
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/ui-graphs:
     dependencies:
       react:
-        specifier: '*'
+        specifier: ^19.1.0
         version: 19.1.0
       styled-components:
-        specifier: '*'
+        specifier: ^6.1.13
         version: 6.1.16(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   packages/ui-identity:
     dependencies:
       '@w3ux/react-polkicon':
-        specifier: '*'
+        specifier: ^3.0.0
         version: 3.0.0
       '@w3ux/utils':
-        specifier: '*'
+        specifier: ^2.0.6
         version: 2.0.6
       react:
-        specifier: '*'
+        specifier: ^19.1.0
         version: 19.1.0
       ui-core:
         specifier: workspace:*
@@ -433,14 +458,26 @@ importers:
   packages/ui-overlay:
     dependencies:
       '@fortawesome/fontawesome-svg-core':
-        specifier: '*'
+        specifier: ^6.7.2
         version: 6.7.2
       '@fortawesome/free-solid-svg-icons':
-        specifier: '*'
+        specifier: ^6.7.2
         version: 6.7.2
+      '@w3ux/hooks':
+        specifier: ^2.0.4
+        version: 2.0.4(react@19.1.0)
+      '@w3ux/utils':
+        specifier: ^2.0.6
+        version: 2.0.6
+      framer-motion:
+        specifier: ^12.6.2
+        version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
-        specifier: '*'
+        specifier: ^19.1.0
         version: 19.1.0
+      react-error-boundary:
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.1.0)
       types:
         specifier: workspace:*
         version: link:../types
@@ -448,7 +485,23 @@ importers:
         specifier: workspace:*
         version: link:../ui-core
 
-  packages/utils: {}
+  packages/utils:
+    dependencies:
+      '@w3ux/hooks':
+        specifier: ^2.0.4
+        version: 2.0.4(react@19.1.0)
+      '@w3ux/utils':
+        specifier: ^2.0.6
+        version: 2.0.6
+      bignumber.js:
+        specifier: ^9.1.2
+        version: 9.1.2
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      i18next:
+        specifier: ^24.2.3
+        version: 24.2.3(typescript@5.8.2)
 
 packages:
 
@@ -1406,7 +1459,7 @@ packages:
     resolution: {integrity: sha512-FEWI/dJ7wDMNN1WOzZAjQoIcCP/3vz3wvAp5QQm+lOrzOLj0iDmaIGIcBkz8HVm3ErfSe/uKP0KS4jgV/ib+Mg==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@polkadot/util': 12.6.2
+      '@polkadot/util': 13.4.3
 
   '@polkadot/util-crypto@13.4.3':
     resolution: {integrity: sha512-Ml0mjhKVetMrRCIosmVNMa6lbFPa3fSAeOggf34NsDIIQOKt9FL644iGz1ZSMOnBwN9qk2qHYmcFMTDXX2yKVQ==}
@@ -1485,7 +1538,7 @@ packages:
     resolution: {integrity: sha512-Vr8uG7rH2IcNJwtyf5ebdODMcr0XjoCpUbI91Zv6AlKVYOGKZlKLYJHIwpTaKKB+7KPWyQrk4Mlym/rS7v9feg==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@polkadot/util': 12.6.2
+      '@polkadot/util': 13.4.3
       '@polkadot/wasm-util': '*'
 
   '@polkadot/x-randomvalues@13.4.3':
@@ -2610,27 +2663,27 @@ packages:
     resolution: {integrity: sha512-jk/TZwSMJlxlNnqhy0Eod1PNEvCkpY6MXOXE/WLlblZ6ibb32i2We4uByoKPv1d0OD2xebDv4hbs3fm11SMw8Q==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      typescript: '>=4.8.4 <5.8.0'
+      typescript: 5.8.2
 
   '@typescript-eslint/typescript-estree@8.29.0':
     resolution: {integrity: sha512-yOfen3jE9ISZR/hHpU/bmNvTtBW1NjRbkSFdZOksL1N+ybPEE7UVGMwqvS6CP022Rp00Sb0tdiIkhSCe6NI8ow==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      typescript: '>=4.8.4 <5.9.0'
+      typescript: 5.8.2
 
   '@typescript-eslint/utils@8.19.1':
     resolution: {integrity: sha512-IxG5gLO0Ne+KaUc8iW1A+XuKLd63o4wlbI1Zp692n1xojCl/THvgIKXJXBZixTh5dd5+yTJ/VXH7GJaaw21qXA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
-      typescript: '>=4.8.4 <5.8.0'
+      typescript: 5.8.2
 
   '@typescript-eslint/utils@8.29.0':
     resolution: {integrity: sha512-gX/A0Mz9Bskm8avSWFcK0gP7cZpbY4AIo6B0hWYFCaIsz750oaiWR4Jr2CI+PQhfW1CpcQr9OlfPS+kMFegjXA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
-      typescript: '>=4.8.4 <5.9.0'
+      typescript: 5.8.2
 
   '@typescript-eslint/visitor-keys@8.19.1':
     resolution: {integrity: sha512-fzmjU8CHK853V/avYZAvuVut3ZTfwN5YtMaoi+X9Y9MA9keaWNHC3zEQ9zvyX/7Hj+5JkNyK1l7TOR2hevHB6Q==}
@@ -4771,7 +4824,7 @@ packages:
   react-helmet-async@2.0.5:
     resolution: {integrity: sha512-rYUYHeus+i27MvFE+Jaa4WsyBKGkL6qVgbJvSBoX8mbsWoABJXdEO0bZyi0F6i+4f0NuIb8AvqPMj3iXFHkMwg==}
     peerDependencies:
-      react: ^16.6.0 || ^17.0.0 || ^18.0.0
+      react: 19.1.0
 
   react-i18next@15.4.1:
     resolution: {integrity: sha512-ahGab+IaSgZmNPYXdV1n+OYky95TGpFwnKRflX/16dY04DsYYKHtVLjeny7sBSCREEcoMbAgSkFiGLF5g5Oofw==}
@@ -5535,12 +5588,12 @@ packages:
   use-sync-external-store@1.2.0:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: 19.1.0
 
   use-sync-external-store@1.4.0:
     resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: 19.1.0
 
   usehooks-ts@3.1.1:
     resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
@@ -7248,7 +7301,7 @@ snapshots:
       '@noble/hashes': 1.7.1
       '@polkadot/networks': 12.6.2
       '@polkadot/util': 12.6.2
-      '@polkadot/wasm-crypto': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
+      '@polkadot/wasm-crypto': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
       '@polkadot/wasm-util': 7.4.1(@polkadot/util@12.6.2)
       '@polkadot/x-bigint': 12.6.2
       '@polkadot/x-randomvalues': 12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3))
@@ -7301,11 +7354,11 @@ snapshots:
       bn.js: 5.2.1
       tslib: 2.8.1
 
-  '@polkadot/wasm-bridge@7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
+  '@polkadot/wasm-bridge@7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
     dependencies:
       '@polkadot/util': 12.6.2
       '@polkadot/wasm-util': 7.4.1(@polkadot/util@12.6.2)
-      '@polkadot/x-randomvalues': 12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3))
+      '@polkadot/x-randomvalues': 12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3))
       tslib: 2.8.1
 
   '@polkadot/wasm-bridge@7.4.1(@polkadot/util@13.4.3)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
@@ -7332,14 +7385,14 @@ snapshots:
       '@polkadot/util': 13.4.3
       tslib: 2.8.1
 
-  '@polkadot/wasm-crypto-init@7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
+  '@polkadot/wasm-crypto-init@7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
     dependencies:
       '@polkadot/util': 12.6.2
-      '@polkadot/wasm-bridge': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
+      '@polkadot/wasm-bridge': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
       '@polkadot/wasm-crypto-asmjs': 7.4.1(@polkadot/util@12.6.2)
       '@polkadot/wasm-crypto-wasm': 7.4.1(@polkadot/util@12.6.2)
       '@polkadot/wasm-util': 7.4.1(@polkadot/util@12.6.2)
-      '@polkadot/x-randomvalues': 12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3))
+      '@polkadot/x-randomvalues': 12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3))
       tslib: 2.8.1
 
   '@polkadot/wasm-crypto-init@7.4.1(@polkadot/util@13.4.3)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
@@ -7374,15 +7427,15 @@ snapshots:
       '@polkadot/wasm-util': 7.4.1(@polkadot/util@13.4.3)
       tslib: 2.8.1
 
-  '@polkadot/wasm-crypto@7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
+  '@polkadot/wasm-crypto@7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':
     dependencies:
       '@polkadot/util': 12.6.2
-      '@polkadot/wasm-bridge': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
+      '@polkadot/wasm-bridge': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
       '@polkadot/wasm-crypto-asmjs': 7.4.1(@polkadot/util@12.6.2)
-      '@polkadot/wasm-crypto-init': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
+      '@polkadot/wasm-crypto-init': 7.4.1(@polkadot/util@12.6.2)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))
       '@polkadot/wasm-crypto-wasm': 7.4.1(@polkadot/util@12.6.2)
       '@polkadot/wasm-util': 7.4.1(@polkadot/util@12.6.2)
-      '@polkadot/x-randomvalues': 12.6.2(@polkadot/util@12.6.2)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3))
+      '@polkadot/x-randomvalues': 12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3))
       tslib: 2.8.1
 
   '@polkadot/wasm-crypto@7.4.1(@polkadot/util@13.4.3)(@polkadot/x-randomvalues@12.6.2(@polkadot/util@13.4.3)(@polkadot/wasm-util@7.4.1(@polkadot/util@13.4.3)))':

@@ -4,8 +4,7 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "clear": "rm -rf build dist",
-    "reset": "pnpmrun clear &&  rm -rf node_modules pnpm-lock.yaml && pnpm"
+    "clear": "rm -rf build dist"
   },
   "exports": {
     "./svg/*": "./src/svg/*",
