@@ -8,7 +8,7 @@
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
     "lint:fix": "eslint './**' --fix && prettier --write .",
-    "test": "npm run test --workspaces --if-present"
+    "test": "pnpm run test --workspaces --if-present"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
