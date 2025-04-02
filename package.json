@@ -12,7 +12,6 @@
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
     "lint:fix": "eslint './**' --fix && prettier --write .",
-    "reset": "npm run clear && rm -rf node_modules pnpm-lock.yaml && pnpm",
     "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {
