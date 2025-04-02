@@ -61,6 +61,7 @@ jobs:
       - run: pnpm install
       - run: pnpm lint:check
       - run: pnpm build:verify
+        working-directory: packages/app
       - run: pnpm test
         working-directory: packages/app
       - run: pnpm run validate
