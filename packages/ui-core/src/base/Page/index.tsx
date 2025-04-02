@@ -11,7 +11,6 @@ import { Row } from './Row'
 import { RowSection } from './RowSection'
 import { Side } from './Side'
 import { Title } from './Title'
-import { TitleTabs } from './TitleTabs'
 
 export const Page = {
   Body,
@@ -24,5 +23,4 @@ export const Page = {
   RowSection,
   Side,
   Title,
-  TitleTabs,
 }

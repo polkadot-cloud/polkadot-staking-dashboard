@@ -8,27 +8,6 @@ export type RowProps = ComponentBase & {
   xMargin?: boolean
 }
 
-export type PageTitleProps = PageTitleTabsProps & {
-  colorSecondary?: boolean
-  tabClassName?: string
-  inline?: boolean
-  title?: string
-}
-
-export interface PageTitleTabsProps {
-  sticky?: boolean
-  tabs?: PageTitleTabProps[]
-}
-
-export interface PageTitleTabProps {
-  sticky?: boolean
-  title: string
-  active: boolean
-  onClick: () => void
-  badge?: string | number
-  disabled?: boolean
-}
-
 export type TooltipAreaProps = ComponentBase & {
   text: string
   pointer?: boolean

@@ -3,8 +3,7 @@
 
 import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
-import type { PageTitleProps } from '../../types'
-import { TitleTabs } from '../TitleTabs'
+import type { PageTitleProps } from 'types'
 import classes from './index.module.scss'
 
 /**
@@ -13,7 +12,7 @@ import classes from './index.module.scss'
  * The element that wraps a page title. Determines the padding and position relative to top of
  * screen when the element is stuck.
  */
-export const Title = ({ title, tabs = [] }: PageTitleProps) => {
+export const Title = ({ title, children }: Omit<PageTitleProps, 'tabs'>) => {
   const [sticky, setSticky] = useState(false)
   const ref = useRef<HTMLElement>(null)
 
@@ -51,7 +50,7 @@ export const Title = ({ title, tabs = [] }: PageTitleProps) => {
             <h1 className={h1Classes}>{title}</h1>
           </div>
         </section>
-        {tabs.length > 0 && <TitleTabs sticky={sticky} tabs={tabs} />}
+        {children}
       </header>
     </>
   )

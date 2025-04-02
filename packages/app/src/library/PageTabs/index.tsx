@@ -2,15 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
+import type { PageTitleProps, PageTitleTabProps } from 'types'
 import { ButtonTab } from 'ui-buttons'
-import type { PageTitleProps, PageTitleTabProps } from '../../types'
 import classes from './index.module.scss'
 
-/**
- * @name TitleTabs
- * @summary The element in a page title, inculding ButtonTabs.
- */
-export const TitleTabs = ({
+export const PageTabs = ({
   sticky,
   tabs = [],
   inline = false,

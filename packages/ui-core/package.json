@@ -27,8 +27,7 @@
     "react": "^19.1.0",
     "simplebar": "^6.3.0",
     "simplebar-react": "^3.3.0",
-    "styles": "workspace:*",
-    "ui-buttons": "workspace:*"
+    "styles": "workspace:*"
   },
   "devDependencies": {
     "types": "workspace:*"

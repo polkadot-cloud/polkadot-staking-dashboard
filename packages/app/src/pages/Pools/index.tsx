@@ -7,6 +7,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { PageTabs } from 'library/PageTabs'
 import { PoolList } from 'library/PoolList'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
@@ -41,27 +42,28 @@ export const PoolsInner = () => {
 
   return (
     <>
-      <Page.Title
-        title={t('pools')}
-        tabs={[
-          {
-            title: t('overview'),
-            active: activeTab === 0,
-            onClick: () => setActiveTab(0),
-          },
-          {
-            title: t('allPools'),
-            active: activeTab === 1,
-            onClick: () => setActiveTab(1),
-          },
-          {
-            title: t('favorites'),
-            active: activeTab === 2,
-            onClick: () => setActiveTab(2),
-            badge: String(favorites.length),
-          },
-        ]}
-      />
+      <Page.Title title={t('pools')}>
+        <PageTabs
+          tabs={[
+            {
+              title: t('overview'),
+              active: activeTab === 0,
+              onClick: () => setActiveTab(0),
+            },
+            {
+              title: t('allPools'),
+              active: activeTab === 1,
+              onClick: () => setActiveTab(1),
+            },
+            {
+              title: t('favorites'),
+              active: activeTab === 2,
+              onClick: () => setActiveTab(2),
+              badge: String(favorites.length),
+            },
+          ]}
+        />
+      </Page.Title>
       {activeTab === 0 && (
         <>
           <Stat.Row>
