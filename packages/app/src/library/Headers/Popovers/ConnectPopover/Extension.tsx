@@ -35,9 +35,6 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
       ? 'nova-wallet'
       : id
   const Icon = ExtensionIcons[iconId]
-
-  const websiteText = typeof website === 'string' ? website : website.text
-  const websiteUrl = typeof website === 'string' ? website : website.url
   const disabled = !isInstalled
 
   // Handle connect and disconnect from extension.
@@ -83,10 +80,7 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
       <div>
         <div>
           <h3 className={`${connected ? ` connected` : ``}`}>{title}</h3>
-          <ConnectItem.WebUrl
-            url={`https://${websiteUrl}`}
-            text={websiteText}
-          />
+          <ConnectItem.WebUrl url={`https://${website}`} text={website} />
         </div>
         <div>
           <ButtonMonoInvert
