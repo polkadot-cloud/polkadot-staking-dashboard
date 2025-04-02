@@ -4,12 +4,12 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "build": "yarn g:build",
-    "build:verify": "yarn g:build:verify",
+    "build": "pnpm g:build",
+    "build:verify": "pnpm g:build:verify",
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
-    "dev": "yarn g:dev",
-    "preview": "yarn g:preview",
+    "reset": "pnpm run clear &&  rm -rf node_modules pnpm-lock.yaml && pnpm",
+    "dev": "pnpm g:dev",
+    "preview": "pnpm g:preview",
     "test": "vitest",
     "visualizer": "vite-bundle-visualizer"
   },

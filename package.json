@@ -9,10 +9,10 @@
     "g:dev": "cd $INIT_CWD && vite",
     "g:preview": "cd $INIT_CWD && vite preview",
     "clear": "npm run --workspaces clear && rm -rf build dist tsconfig.tsbuildinfo",
-    "dev": "cd packages/app && yarn dev",
+    "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
     "lint:fix": "eslint './**' --fix && prettier --write .",
-    "reset": "npm run clear && rm -rf node_modules yarn.lock && yarn",
+    "reset": "npm run clear && rm -rf node_modules pnpm-lock.yaml && pnpm",
     "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {
@@ -64,7 +64,6 @@
     "simplebar-react": "^3.3.0",
     "styled-components": "^6.1.13"
   },
-  "packageManager": "yarn@4.6.0",
   "prettier": {
     "arrowParens": "always",
     "trailingComma": "es5",
@@ -76,7 +75,5 @@
       "prettier-plugin-organize-imports"
     ]
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "packageManager": "pnpm@10.7.1"
 }

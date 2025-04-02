@@ -9,7 +9,7 @@
   },
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "reset": "pnpmrun clear &&  rm -rf node_modules pnpm-lock.yaml && pnpm"
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.2",

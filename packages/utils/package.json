@@ -6,6 +6,6 @@
   "main": "src/index.ts",
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "reset": "pnpmrun clear &&  rm -rf node_modules pnpm-lock.yaml && pnpm"
   }
 }

@@ -6,6 +6,6 @@
   "main": "src/",
   "scripts": {
     "clear": "rm -rf build dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "reset": "pnpmrun clear &&  rm -rf node_modules pnpm-lock.yaml && pnpm"
   }
 }

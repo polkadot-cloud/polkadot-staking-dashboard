@@ -41,7 +41,6 @@ export default [
       '**/dist/',
       '**/build/',
       '**/CHANGELOG.md',
-      '**/.yarn',
       '**/.licenserc.json',
       '**/lottie/',
       '**/vite.config.ts',
