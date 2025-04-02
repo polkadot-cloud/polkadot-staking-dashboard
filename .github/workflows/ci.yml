@@ -61,10 +61,10 @@ jobs:
       - run: pnpm install
       - run: pnpm lint:check
       - run: pnpm build:verify
+      - run: pnpm test
         working-directory: packages/app
       - run: pnpm run validate
         working-directory: packages/locales
-      - run: pnpm test
 
   all:
     needs: [check-license, markdown-link-check, verify]

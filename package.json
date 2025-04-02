@@ -4,11 +4,10 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "clear": "npm run --workspaces clear && rm -rf build dist tsconfig.tsbuildinfo",
+    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo",
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
-    "lint:fix": "eslint './**' --fix && prettier --write .",
-    "test": "pnpm run test --workspaces --if-present"
+    "lint:fix": "eslint './**' --fix && prettier --write ."
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
