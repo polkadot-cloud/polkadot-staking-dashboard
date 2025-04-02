@@ -39,11 +39,11 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: Build
         working-directory: 'packages/app'
-        run: yarn build
+        run: pnpm build
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3

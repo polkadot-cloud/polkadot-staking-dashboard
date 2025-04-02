@@ -4,20 +4,13 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "g:build": "cd $INIT_CWD && tsc && vite build --base '/'",
-    "g:build:verify": "cd $INIT_CWD && tsc --noEmit --skipLibCheck && vite build --base '/' --mode development --emptyOutDir",
-    "g:dev": "cd $INIT_CWD && vite",
-    "g:preview": "cd $INIT_CWD && vite preview",
-    "clear": "npm run --workspaces clear && rm -rf build dist tsconfig.tsbuildinfo",
-    "dev": "cd packages/app && yarn dev",
+    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo",
+    "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
-    "lint:fix": "eslint './**' --fix && prettier --write .",
-    "reset": "npm run clear && rm -rf node_modules yarn.lock && yarn",
-    "test": "npm run test --workspaces --if-present"
+    "lint:fix": "eslint './**' --fix && prettier --write ."
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
-    "@ledgerhq/logs": "^6.12.0",
     "@types/chroma-js": "^3.1.1",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
@@ -38,33 +31,9 @@
     "prettier": "^3.5.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "sass": "1.77.6",
-    "tsc": "^2.0.4",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.29.0",
-    "vite": "^6.2.4"
+    "typescript-eslint": "^8.29.0"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@polkadot-api/merkleize-metadata": "^1.1.14",
-    "@tanstack/react-query": "^5.71.1",
-    "@w3ux/hooks": "^2.0.4",
-    "@w3ux/react-polkicon": "^3.0.0",
-    "@w3ux/utils": "^2.0.6",
-    "bignumber.js": "^9.1.2",
-    "classnames": "^2.5.1",
-    "date-fns": "^4.1.0",
-    "framer-motion": "^12.6.2",
-    "i18next": "^24.2.3",
-    "radix-ui": "^1.1.3",
-    "react": "^19.1.0",
-    "react-error-boundary": "^5.0.0",
-    "react-i18next": "^15.4.0",
-    "simplebar": "^6.3.0",
-    "simplebar-react": "^3.3.0",
-    "styled-components": "^6.1.13"
-  },
-  "packageManager": "yarn@4.6.0",
   "prettier": {
     "arrowParens": "always",
     "trailingComma": "es5",
@@ -76,7 +45,15 @@
       "prettier-plugin-organize-imports"
     ]
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "pnpm": {
+    "overrides": {
+      "@typescript-eslint/utils>typescript": "5.8.2",
+      "@typescript-eslint/typescript-estree>typescript": "5.8.2",
+      "@polkadot/util-crypto>@polkadot/util": "13.4.3",
+      "@polkadot/x-randomvalues>@polkadot/util": "13.4.3",
+      "react-helmet-async>react": "19.1.0",
+      "use-sync-external-store>react": "19.1.0"
+    }
+  },
+  "packageManager": "pnpm@10.7.1"
 }

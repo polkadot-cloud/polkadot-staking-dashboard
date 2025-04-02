@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { usePlugins } from 'contexts/Plugins'
+import { PageTabs } from 'library/PageTabs'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
@@ -24,25 +25,26 @@ export const Nominate = () => {
 
   return (
     <Wrapper>
-      <Page.Title
-        title={t('nominate', { ns: 'pages' })}
-        tabs={
-          pluginEnabled('polkawatch')
-            ? [
-                {
-                  title: t('overview', { ns: 'app' }),
-                  active: activeTab === 0,
-                  onClick: () => setActiveTab(0),
-                },
-                {
-                  title: t('decentralization', { ns: 'app' }),
-                  active: activeTab === 1,
-                  onClick: () => setActiveTab(1),
-                },
-              ]
-            : undefined
-        }
-      />
+      <Page.Title title={t('nominate', { ns: 'pages' })}>
+        <PageTabs
+          tabs={
+            pluginEnabled('polkawatch')
+              ? [
+                  {
+                    title: t('overview', { ns: 'app' }),
+                    active: activeTab === 0,
+                    onClick: () => setActiveTab(0),
+                  },
+                  {
+                    title: t('decentralization', { ns: 'app' }),
+                    active: activeTab === 1,
+                    onClick: () => setActiveTab(1),
+                  },
+                ]
+              : undefined
+          }
+        />
+      </Page.Title>
       {activeTab == 0 && <Active />}
       {activeTab == 1 && <NominationGeo />}
     </Wrapper>

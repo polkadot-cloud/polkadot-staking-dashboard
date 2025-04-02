@@ -9,7 +9,6 @@
     "./countries": "./src/countries.ts"
   },
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   }
 }
