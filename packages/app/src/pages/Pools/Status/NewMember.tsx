@@ -3,17 +3,20 @@
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
+import { registerSaEvent } from 'utils'
 import { usePoolsTabs } from '../context'
 import type { NewMemberProps } from './types'
 import { useStatusButtons } from './useStatusButtons'
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation()
+  const { network } = useNetwork()
   const { inSetup } = useStaking()
   const { setActiveTab } = usePoolsTabs()
   const { openCanvas } = useOverlay().canvas
@@ -39,6 +42,10 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                 >
                   <button
                     onClick={() => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_pool_join_button_pressed`
+                      )
+
                       openCanvas({
                         key: 'Pool',
                         options: {},
@@ -60,6 +67,10 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                 >
                   <button
                     onClick={() => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_pool_create_button_pressed`
+                      )
+
                       openCanvas({
                         key: 'CreatePool',
                         options: {},

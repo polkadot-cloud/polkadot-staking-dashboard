@@ -18,6 +18,7 @@
     "consts": "workspace:*",
     "date-fns": "^4.1.0",
     "i18next": "^24.2.3",
-    "react-i18next": "^15.4.0"
+    "react-i18next": "^15.4.0",
+    "utils": "workspace:*"
   }
 }

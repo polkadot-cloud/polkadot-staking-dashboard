@@ -6,19 +6,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
+import { registerSaEvent } from 'utils'
 import type { NewNominatorProps } from '../types'
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation()
   const { isReady } = useApi()
   const navigate = useNavigate()
-
+  const { network } = useNetwork()
   const { inPool } = useActivePool()
   const { openCanvas } = useOverlay().canvas
   const { activeAccount } = useActiveAccounts()
@@ -41,6 +43,10 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                 >
                   <button
                     onClick={() => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_nominate_setup_button_pressed`
+                      )
+
                       openCanvas({
                         key: 'NominatorSetup',
                         options: {},
