@@ -5,7 +5,7 @@ import { getDurationFromNow } from '@w3ux/hooks/util'
 import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types'
 import { planckToUnit, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { fromUnixTime, getUnixTime } from 'date-fns'
+import { fromUnixTime } from 'date-fns'
 import type { TFunction } from 'i18next'
 
 // Return `planckToUnit` as a `BigNumber`.
@@ -87,23 +87,4 @@ export const perbillToPercent = (
     value = new BigNumber(value.toString())
   }
   return value.dividedBy('10000000')
-}
-
-export const registerLastVisited = (utmSource: string | null) => {
-  const attributes = utmSource ? { utmSource } : {}
-
-  if (!localStorage.getItem('last_visited')) {
-    registerSaEvent('new_user', attributes)
-  } else {
-    registerSaEvent('returning_user', attributes)
-  }
-  localStorage.setItem('last_visited', String(getUnixTime(Date.now())))
-}
-
-export const registerSaEvent = (e: string, a: unknown = {}) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const w = window as any
-  if (w.sa_event) {
-    w.sa_event(e, a)
-  }
 }
