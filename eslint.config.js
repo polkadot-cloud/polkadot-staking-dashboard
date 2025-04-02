@@ -44,6 +44,7 @@ export default [
       '**/.licenserc.json',
       '**/lottie/',
       '**/vite.config.ts',
+      'pnpm-lock.yaml',
     ],
   },
   pluginJs.configs.recommended,
