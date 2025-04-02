@@ -47,7 +47,6 @@ import { WalletConnectProvider } from 'contexts/WalletConnect'
 import { Tooltip } from 'radix-ui'
 import { ThemedRouter } from 'Themes'
 import { OverlayProvider } from 'ui-overlay'
-import { registerSaEvent } from 'utils'
 
 export const Providers = () => {
   const {
@@ -72,11 +71,6 @@ export const Providers = () => {
           ss58,
           activeAccount,
           setActiveAccount,
-          onExtensionEnabled: (id: string) => {
-            registerSaEvent(`${network.toLowerCase()}_extension_connected`, {
-              id,
-            })
-          },
         },
       ],
       WCAccountsProvider,

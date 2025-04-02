@@ -10,14 +10,12 @@ import CloudIconSVG from 'assets/svg/icons/cloud.svg?react'
 import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { usePrompt } from 'contexts/Prompt'
 import { IGNORE_NETWORKS } from 'contexts/TokenPrice'
 import { isCustomEvent } from 'controllers/utils'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { useEventListener } from 'usehooks-ts'
-import { Disclaimer } from './Disclaimer'
 import { Status } from './Status'
 import { TokenPrice } from './TokenPrice'
 import { Summary, Wrapper } from './Wrappers'
@@ -26,7 +24,6 @@ export const MainFooter = () => {
   const { t } = useTranslation('app')
   const { plugins } = usePlugins()
   const { network } = useNetwork()
-  const { openPromptWith } = usePrompt()
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL
   const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL
   const ORGANISATION = import.meta.env.VITE_ORGANISATION
@@ -86,16 +83,6 @@ export const MainFooter = () => {
                 </a>
               </p>
             )}
-            <p>
-              <button
-                type="button"
-                onClick={() => {
-                  openPromptWith(<Disclaimer />)
-                }}
-              >
-                {t('dashboardDisclaimer')}
-              </button>
-            </p>
           </section>
           <section>
             <div className="hide-small">
