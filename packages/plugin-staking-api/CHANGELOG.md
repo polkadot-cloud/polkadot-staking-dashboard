@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.2.0...plugin-staking-api-v1.3.0) (2025-04-02)
+
+
+### Features
+
+* **locales:** Add multi-currency support for staking rewards & balances ([#2563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2563)) ([c25e64f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c25e64f0b35beb555641a1a6f018b63bb3cf32db))
+* **refactor:** Migrate from yarn to pnpm ([#2628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2628)) ([7efe25e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7efe25e7e98895ad89a69c3e55a2688e088f82a5))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.1.0...plugin-staking-api-v1.2.0) (2025-02-24)
 
 
