@@ -1,0 +1,5 @@
+{
+  "wrongNetwork": "This invite is for the {{expected}} network, but you are currently on {{current}}. Please switch networks to continue.",
+  "networkMismatch": "Network mismatch",
+  "invalidNetwork": "Invalid network specified in invite link"
+}
