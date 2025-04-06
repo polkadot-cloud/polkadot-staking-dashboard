@@ -13,8 +13,8 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@w3ux/hooks": "^2.0.4",
-    "@w3ux/utils": "2.0.7-alpha.2",
+    "@w3ux/hooks": "^2.1.0",
+    "@w3ux/utils": "2.0.8",
     "framer-motion": "^12.6.2",
     "react": "^19.1.0",
     "react-error-boundary": "^5.0.0",
