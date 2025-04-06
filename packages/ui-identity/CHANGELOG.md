@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-identity-v1.1.0...ui-identity-v1.2.0) (2025-04-02)
+
+
+### Features
+
+* **refactor:** Migrate from yarn to pnpm ([#2628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2628)) ([7efe25e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7efe25e7e98895ad89a69c3e55a2688e088f82a5))
+
 ## [1.1.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-identity-v1.0.0...ui-identity-v1.1.0) (2025-02-24)
 
 
