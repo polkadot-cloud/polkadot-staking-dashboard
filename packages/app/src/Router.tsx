@@ -35,9 +35,9 @@ import { Page } from 'ui-core/base'
 
 const RouterInner = () => {
   const { network } = useNetwork()
+  const { pathname } = useLocation()
   const { setContainerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
-  const { pathname } = useLocation()
   const { activeAccount } = useActiveAccounts()
 
   // References to outer container
