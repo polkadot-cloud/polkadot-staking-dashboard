@@ -3,7 +3,7 @@
 
 import type { ApiStatus, ConnectionType, PapiChainSpec } from 'api/types'
 import type BigNumber from 'bignumber.js'
-import type { ReactNode } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import type { NetworkId } from '../../common-types'
 
 export interface APIProviderProps {
@@ -76,7 +76,7 @@ export interface APIContextInterface {
   consts: APIConstants
   networkMetrics: APINetworkMetrics
   activeEra: APIActiveEra
-  activeEraRef: React.MutableRefObject<APIActiveEra>
+  activeEraRef: RefObject<APIActiveEra>
   poolsConfig: APIPoolsConfig
   stakingMetrics: APIStakingMetrics
 }
