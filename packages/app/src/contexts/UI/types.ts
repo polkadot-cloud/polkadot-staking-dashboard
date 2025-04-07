@@ -1,17 +1,17 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MutableRefObject } from 'react'
+import type { RefObject } from 'react'
 
 export interface UIContextInterface {
   setSideMenu: (v: boolean) => void
   setUserSideMenuMinimised: (v: boolean) => void
   setContainerRefs: (
-    v: Record<string, MutableRefObject<HTMLDivElement | null>>
+    v: Record<string, RefObject<HTMLDivElement | null>>
   ) => void
   sideMenuOpen: boolean
   userSideMenuMinimised: boolean
   sideMenuMinimised: boolean
-  containerRefs: Record<string, MutableRefObject<HTMLDivElement | null>>
+  containerRefs: Record<string, RefObject<HTMLDivElement | null>>
   isBraveBrowser: boolean
 }
