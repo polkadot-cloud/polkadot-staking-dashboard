@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { stringToU8a } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
 import type {
   APIActiveEra,
@@ -22,7 +21,7 @@ export const defaultConsts: APIConstants = {
   epochDuration: new BigNumber(0),
   existentialDeposit: new BigNumber(0),
   fastUnstakeDeposit: new BigNumber(0),
-  poolsPalletId: stringToU8a('0'),
+  poolsPalletId: new Uint8Array([0]),
 }
 
 export const defaultNetworkMetrics: APINetworkMetrics = {

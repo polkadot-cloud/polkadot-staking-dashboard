@@ -1,10 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { AccountId } from '@polkadot-api/substrate-bindings'
-import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { bnToU8a, concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
 
 export const useCreatePoolAccounts = () => {
   const {
@@ -23,17 +22,14 @@ export const useCreatePoolAccounts = () => {
   }
 
   const createAccount = (poolId: BigNumber, index: number): string => {
-    const key = u8aConcat(
+    const key = concatU8a(
       stringToU8a('modl'),
       poolsPalletId,
       new Uint8Array([index]),
-      bnToU8a(BigInt(poolId.toString()), { bitLength: 32, isLe: true }),
+      bnToU8a(BigInt(poolId.toString())),
       new Uint8Array(32)
     )
-
-    const codec = AccountId(ss58Format)
-    return codec.dec(key)
+    return encodeAddress(key.slice(0, 32), ss58Format)
   }
-
   return createPoolAccounts
 }
