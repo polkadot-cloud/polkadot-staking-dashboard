@@ -9,7 +9,6 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -299,7 +298,7 @@ export const StakingHealth = () => {
             {t('youAreCurrentlyStakingInAPoolWithId', {
               poolId,
               poolName: poolMetadata
-                ? u8aToString(u8aUnwrapBytes(poolMetadata)) || t('unnamed')
+                ? poolMetadata || t('unnamed')
                 : t('unnamed'),
             })}
           </div>
