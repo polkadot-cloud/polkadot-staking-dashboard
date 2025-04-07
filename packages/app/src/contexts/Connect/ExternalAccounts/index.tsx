@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { ExternalAccount, ExternalAccountAddedBy } from '@w3ux/types'
+import type { AccountAddedBy, ExternalAccount } from '@w3ux/types'
 import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -35,7 +35,7 @@ export const ExternalAccountsProvider = ({
   // Adds an external account (non-wallet) to accounts
   const addExternalAccount = (
     address: string,
-    addedBy: ExternalAccountAddedBy
+    addedBy: AccountAddedBy
   ): AddExternalAccountResult | null => {
     const formattedAddress = formatAccountSs58(address, ss58)
 
