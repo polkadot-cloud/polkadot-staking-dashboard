@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
@@ -195,10 +194,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
       const address = pool?.addresses?.stash ?? ''
       const metadata = poolsMetaData[pool.id] || ''
-      const metadataAsBytes = u8aToString(u8aUnwrapBytes(metadata))
-      const metadataSearch = (
-        metadataAsBytes === '' ? metadata : metadataAsBytes
-      ).toLowerCase()
 
       if (pool.id.includes(searchTerm.toLowerCase())) {
         filteredList.push(pool)
@@ -206,7 +201,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(pool)
       }
-      if (metadataSearch.includes(searchTerm.toLowerCase())) {
+      if (metadata.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(pool)
       }
     }

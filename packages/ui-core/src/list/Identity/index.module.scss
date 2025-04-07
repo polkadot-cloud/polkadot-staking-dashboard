@@ -33,6 +33,14 @@
         white-space: nowrap;
         font-size: 1rem;
         width: 100%;
+
+        > span {
+          color: var(--text-color-tertiary);
+          font-size: 0.8rem;
+          position: relative;
+          top: -0.1rem;
+          margin-left: 0.35rem;
+        }
       }
     }
   }
