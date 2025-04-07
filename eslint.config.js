@@ -45,7 +45,7 @@ export default [
       '**/lottie/',
       '**/vite.config.ts',
       '**/_redirects',
-      'pnpm-lock.yaml',
+      '**/*/pnpm-lock.yaml',
     ],
   },
   pluginJs.configs.recommended,
