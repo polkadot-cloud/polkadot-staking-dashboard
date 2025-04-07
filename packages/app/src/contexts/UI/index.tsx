@@ -4,7 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
 import { PageWidthMediumThreshold } from 'consts'
-import type { MutableRefObject, ReactNode } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { AnyJson } from 'types'
 import type { UIContextInterface } from './types'
@@ -20,10 +20,10 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   // Store references for main app containers
   const [containerRefs, setContainerRefsState] = useState<
-    Record<string, MutableRefObject<HTMLDivElement | null>>
+    Record<string, RefObject<HTMLDivElement | null>>
   >({})
   const setContainerRefs = (
-    v: Record<string, MutableRefObject<HTMLDivElement | null>>
+    v: Record<string, RefObject<HTMLDivElement | null>>
   ) => {
     setContainerRefsState(v)
   }

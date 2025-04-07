@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ExtensionInjected } from '@w3ux/react-connect-kit/types'
+import type { ExtensionInjected } from '@w3ux/types'
 import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
 import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types'
 import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types'
