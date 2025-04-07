@@ -11,6 +11,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: gh-deploy
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.7.1
 
       - uses: actions/setup-node@v4
         with:
@@ -32,6 +35,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: gh-deploy
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.7.1
 
       - uses: actions/setup-node@v4
         with:
@@ -39,11 +45,11 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: Build
         working-directory: 'packages/app'
-        run: yarn build
+        run: pnpm build
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3

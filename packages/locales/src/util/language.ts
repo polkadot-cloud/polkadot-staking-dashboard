@@ -3,6 +3,7 @@
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
 import type { i18n } from 'i18next'
+
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '..'
 import type { LocaleJson, LocaleJsonValue } from '../types'
 
@@ -64,6 +65,7 @@ export const getResources = (lng: string, i18n?: i18n) => {
 }
 
 export const changeLanguage = async (lng: string, i18next: i18n) => {
+  // check whether resources exist and need to by dynamically loaded.
   const { resources, dynamicLoad } = getResources(lng, i18next)
   const r = resources?.[lng] || {}
 

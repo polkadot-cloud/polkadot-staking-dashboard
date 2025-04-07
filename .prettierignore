@@ -1,12 +1,10 @@
 **/build
 **/node_modules
 **/package.json
-**/yarn.lock
 **/package-lock.json
 **/.eslintrc.js
 **/dist
 
-.yarn
 .licenserc.json
 CHANGELOG.md
 

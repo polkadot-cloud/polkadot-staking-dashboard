@@ -4,11 +4,13 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "clear": "rm -rf build dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "clear": "rm -rf build dist"
   },
   "exports": {
     "./svg/*": "./src/svg/*",
     "./tsx/*": "./src/tsx/*"
+  },
+  "dependencies": {
+    "react": "^19.1.0"
   }
 }

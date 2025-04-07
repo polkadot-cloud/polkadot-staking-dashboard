@@ -8,6 +8,7 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { getUnixTime } from 'date-fns'
 import { removeNonZeroAmountAndSort } from 'library/Graphs/Utils'
+import { PageTabs } from 'library/PageTabs'
 import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useState } from 'react'
@@ -103,21 +104,22 @@ export const Rewards = () => {
 
   return (
     <Wrapper>
-      <Page.Title
-        title={t('rewards', { ns: 'modals' })}
-        tabs={[
-          {
-            title: t('overview', { ns: 'app' }),
-            active: activeTab === 0,
-            onClick: () => setActiveTab(0),
-          },
-          {
-            title: t('recentPayouts', { ns: 'pages' }),
-            active: activeTab === 1,
-            onClick: () => setActiveTab(1),
-          },
-        ]}
-      />
+      <Page.Title title={t('rewards', { ns: 'modals' })}>
+        <PageTabs
+          tabs={[
+            {
+              title: t('overview', { ns: 'app' }),
+              active: activeTab === 0,
+              onClick: () => setActiveTab(0),
+            },
+            {
+              title: t('recentPayouts', { ns: 'pages' }),
+              active: activeTab === 1,
+              onClick: () => setActiveTab(1),
+            },
+          ]}
+        />
+      </Page.Title>
       {activeTab === 0 && (
         <Overview
           {...pageProps}
