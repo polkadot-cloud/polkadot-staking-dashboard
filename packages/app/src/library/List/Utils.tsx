@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
 import type { AnyJson } from 'types'
 import type { IdentityDisplay } from './types'
@@ -14,19 +13,10 @@ export const getIdentityDisplay = (
   let foundSuper = false
   // Check super identity exists, get display.Raw if it does
   const superIdentity = _superIdentity?.identity ?? null
-  const superRaw = _superIdentity?.superOf?.[1]?.Raw ?? null
   const superDisplay = superIdentity?.info?.display?.value?.asText() ?? null
 
-  // Check if super raw has been encoded
-  const superRawAsBytes = u8aToString(u8aUnwrapBytes(superRaw))
-  // Check if super identity has been byte encoded
-  const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(superDisplay))
-
   // Determine final display value if super was found
-  if (superIdentityAsBytes !== '') {
-    displayFinal = superIdentityAsBytes
-    foundSuper = true
-  } else if (superDisplay !== null) {
+  if (!['', null].includes(superDisplay)) {
     displayFinal = superDisplay
     foundSuper = true
   }
@@ -35,12 +25,9 @@ export const getIdentityDisplay = (
   if (!foundSuper) {
     // Check sub-identity exists, get display.Raw if it does
     const identity = _identity?.info?.display?.value?.asText() ?? null
-    // Check if identity has been byte encoded
-    const subIdentityAsBytes = u8aToString(u8aUnwrapBytes(identity))
+
     // Add sub-identity to final display value if it exists
-    if (subIdentityAsBytes !== '') {
-      displayFinal = subIdentityAsBytes
-    } else if (identity !== null) {
+    if (!['', null].includes(identity)) {
       displayFinal = identity
     }
   }
@@ -50,12 +37,7 @@ export const getIdentityDisplay = (
 
   const data = {
     display: displayFinal,
-    super:
-      superIdentityAsBytes !== ''
-        ? superRawAsBytes
-        : superRaw !== null
-          ? superRaw
-          : null,
+    super: !['', displayFinal].includes(superDisplay) ? superDisplay : null,
   }
   return {
     node: (
