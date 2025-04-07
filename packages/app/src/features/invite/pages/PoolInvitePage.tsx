@@ -59,12 +59,13 @@ interface PoolDetails {
 }
 
 export const PoolInvitePage = () => {
-  const { t } = useTranslation('invite')
+  const { t, i18n } = useTranslation('invite')
   const navigate = useNavigate()
   const { poolId } = useParams<{
     network: string
     poolId: string
   }>()
+  const location = window.location.search
   const {
     networkData: {
       units,
@@ -276,6 +277,23 @@ export const PoolInvitePage = () => {
 
   // Whether the form is ready to submit
   const formValid = bondValid && feedbackErrors.length === 0
+
+  // Extract language from URL query parameters
+  useEffect(() => {
+    if (location) {
+      const params = new URLSearchParams(location)
+      const langParam = params.get('l')
+
+      // Change language if valid and different from current
+      if (
+        langParam &&
+        i18n.language !== langParam &&
+        i18n.languages.includes(langParam)
+      ) {
+        i18n.changeLanguage(langParam)
+      }
+    }
+  }, [location, i18n])
 
   return (
     <>
@@ -492,15 +510,21 @@ const InviteHeader = styled.div`
   h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
+    font-family: InterBold, sans-serif;
   }
 
   p {
     color: var(--text-color-secondary);
+    font-size: 0.9rem;
   }
 `
 
 const PoolCard = styled.div`
   padding: 1.5rem;
+  background: var(--background-list-item);
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--border-primary-color);
+  transition: all var(--transition-duration);
 `
 
 const PoolHeader = styled.div`
@@ -524,6 +548,7 @@ const PoolInfo = styled.div`
   h3 {
     font-size: 1.4rem;
     margin-bottom: 0.25rem;
+    font-family: InterSemiBold, sans-serif;
   }
 `
 
@@ -536,9 +561,10 @@ const PoolId = styled.div`
 const PoolState = styled.div<{ $state: string }>`
   display: inline-block;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
   font-size: 0.8rem;
   font-weight: 600;
+  font-family: InterSemiBold, sans-serif;
   background-color: ${({ $state }) =>
     $state === 'Open'
       ? 'var(--status-success-color-transparent)'
@@ -571,7 +597,7 @@ const StatIcon = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--background-primary);
+  background-color: var(--background-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -584,6 +610,7 @@ const StatContent = styled.div``
 const StatValue = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
+  font-family: InterSemiBold, sans-serif;
   margin-bottom: 0.25rem;
   display: flex;
   align-items: center;
@@ -605,6 +632,7 @@ const SectionTitle = styled.h4`
   font-size: 1.1rem;
   margin-bottom: 1rem;
   color: var(--text-color-primary);
+  font-family: InterSemiBold, sans-serif;
 `
 
 const AddressesSection = styled.div`
@@ -616,17 +644,25 @@ const AddressItem = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.75rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--background-primary);
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--background-list-item);
+  border: 1.5px solid var(--border-primary-color);
+  transition: all var(--transition-duration);
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:hover {
+    border-color: var(--accent-color-transparent);
+    background-color: var(--background-list-item-hover);
   }
 `
 
 const AddressLabel = styled.div`
   font-weight: 600;
+  font-family: InterSemiBold, sans-serif;
   color: var(--text-color-secondary);
   text-transform: capitalize;
 `
@@ -636,6 +672,7 @@ const AddressValue = styled.div`
   align-items: center;
   gap: 0.5rem;
   font-family: monospace;
+  color: var(--text-color-primary);
 `
 
 const CopyButton = styled.button`
@@ -647,7 +684,7 @@ const CopyButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s;
+  transition: color var(--transition-duration);
 
   &:hover {
     color: var(--accent-color-primary);
@@ -663,17 +700,25 @@ const RoleItem = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.75rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--background-primary);
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--background-list-item);
+  border: 1.5px solid var(--border-primary-color);
+  transition: all var(--transition-duration);
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:hover {
+    border-color: var(--accent-color-transparent);
+    background-color: var(--background-list-item-hover);
   }
 `
 
 const RoleLabel = styled.div`
   font-weight: 600;
+  font-family: InterSemiBold, sans-serif;
   color: var(--text-color-secondary);
   text-transform: capitalize;
 `
@@ -683,20 +728,23 @@ const RoleValue = styled.div`
   align-items: center;
   gap: 0.5rem;
   font-family: monospace;
+  color: var(--text-color-primary);
 `
 
 const WarningMessage = styled.div`
   background-color: var(--status-warning-color-transparent);
   color: var(--status-warning-color);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
+  border: 1.5px solid var(--status-warning-color);
 `
 
 const ActionSection = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 1.5rem;
 `
 
 const LoadingState = styled.div`
@@ -714,6 +762,7 @@ const ErrorState = styled.div`
     color: var(--status-danger-color);
     margin-bottom: 1rem;
     font-size: 1.4rem;
+    font-family: InterSemiBold, sans-serif;
   }
 
   p {

@@ -45,7 +45,11 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
     if (type === 'pool' && selectedPool) {
       url = generatePoolInviteUrl(selectedPool, network, i18n.language)
     } else if (type === 'validator' && selectedValidators.length > 0) {
-      url = generateValidatorInviteUrl(selectedValidators, network)
+      url = generateValidatorInviteUrl(
+        selectedValidators,
+        network,
+        i18n.language
+      )
     }
 
     setInviteUrl(url)

@@ -74,10 +74,12 @@ const StepNumber = styled.div<{ $active: boolean; $complete: boolean }>`
 
   .number {
     font-weight: 600;
+    font-family: InterBold, sans-serif;
   }
 
   .label {
     font-weight: 500;
+    font-family: InterSemiBold, sans-serif;
   }
 `
 
@@ -102,7 +104,8 @@ const SummaryItem = styled.div`
   }
 
   .label {
-    font-weight: bold;
+    font-weight: 500;
+    font-family: InterSemiBold, sans-serif;
   }
 
   .value {
@@ -112,21 +115,23 @@ const SummaryItem = styled.div`
 
 const ValidatorInviteWrapper = styled.div`
   .validator-item {
-    background: var(--background-primary);
-    border-radius: 1rem;
-    padding: 1rem;
+    background: var(--background-list-item);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
     margin-bottom: 1rem;
-    border: 2px solid transparent;
-    transition: background-color 0.1s;
+    border: 1.5px solid var(--border-primary-color);
+    transition: all var(--transition-duration);
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: var(--background-primary-hover);
+      background: var(--background-list-item-hover);
+      border-color: var(--accent-color-transparent);
     }
 
     &.selected {
       border-color: var(--accent-color-primary);
+      background-color: var(--background-list-item-selected);
     }
 
     &:focus {
@@ -148,8 +153,9 @@ const ValidatorInviteWrapper = styled.div`
     flex: 1;
 
     .name {
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       font-weight: 500;
+      font-family: InterSemiBold, sans-serif;
     }
   }
 
@@ -167,10 +173,12 @@ const ValidatorInviteWrapper = styled.div`
 
     .label {
       color: var(--text-color-secondary);
+      font-size: 0.9rem;
     }
 
     .value {
       font-weight: 500;
+      font-family: InterSemiBold, sans-serif;
     }
   }
 
@@ -181,20 +189,22 @@ const ValidatorInviteWrapper = styled.div`
 
     .status {
       padding: 0.25rem 0.75rem;
-      border-radius: 1rem;
+      border-radius: 0.75rem;
       font-size: 0.9rem;
       background: var(--background-secondary);
       color: var(--text-color-secondary);
 
       &.active {
-        background: var(--background-success);
-        color: var(--text-color-invert);
+        background: var(--status-success-color-transparent);
+        color: var(--status-success-color);
         font-weight: 500;
+        font-family: InterSemiBold, sans-serif;
       }
     }
 
     .dot-amount {
       font-weight: 500;
+      font-family: InterSemiBold, sans-serif;
     }
   }
 
@@ -215,6 +225,7 @@ export const ValidatorInvitePage = () => {
     network: string
     validators: string
   }>()
+  const location = window.location.search
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
   const { getAccount, accountHasSigner } = useImportedAccounts()
@@ -238,6 +249,24 @@ export const ValidatorInvitePage = () => {
   const {
     eraStakers: { stakers },
   } = useStaking()
+  const { i18n } = useTranslation()
+
+  // Extract language from URL query parameters
+  useEffect(() => {
+    if (location) {
+      const params = new URLSearchParams(location)
+      const langParam = params.get('l')
+
+      // Change language if valid and different from current
+      if (
+        langParam &&
+        i18n.language !== langParam &&
+        i18n.languages.includes(langParam)
+      ) {
+        i18n.changeLanguage(langParam)
+      }
+    }
+  }, [location, i18n])
 
   // State for validators from URL
   const [urlValidators, setUrlValidators] = useState<string[]>([])

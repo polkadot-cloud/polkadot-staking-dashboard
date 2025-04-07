@@ -311,6 +311,9 @@ export const InviteModal = () => {
 
 const ContentSection = styled.div`
   margin: 1rem 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 `
 
 const SectionHeader = styled.div`
@@ -323,6 +326,7 @@ const SectionHeader = styled.div`
 const SectionTitle = styled.h3`
   font-size: 1.1rem;
   margin: 0;
+  font-family: InterSemiBold, sans-serif;
 `
 
 const SelectedCount = styled.div`
@@ -340,20 +344,20 @@ const ValidatorList = styled.div`
 `
 
 const ValidatorItem = styled.div<{ $selected: boolean }>`
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.75rem;
-  background-color: var(--background-primary);
+  background-color: var(--background-list-item);
   border: 1.5px solid
     ${({ $selected }) =>
       $selected
         ? 'var(--accent-color-primary)'
         : 'var(--border-primary-color)'};
   cursor: pointer;
-  transition: all 0.15s ease-in-out;
+  transition: all var(--transition-duration);
 
   &:hover {
-    border-color: var(--accent-color-primary);
-    transform: translateY(-1px);
+    border-color: var(--accent-color-transparent);
+    background-color: var(--background-list-item-hover);
   }
 `
 
@@ -373,12 +377,13 @@ const ValidatorInfo = styled.div`
 `
 
 const ValidatorName = styled.div`
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: InterSemiBold, sans-serif;
 `
 
 const ValidatorAddress = styled.div`
@@ -401,12 +406,13 @@ const SelectionIndicator = styled.div<{ $selected: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all 0.15s ease-in-out;
+  transition: all var(--transition-duration);
 `
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 1rem;
 `
 
 const GenerateButton = styled(ButtonPrimary)`
@@ -415,18 +421,20 @@ const GenerateButton = styled(ButtonPrimary)`
 
 const EmptyState = styled.div`
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem;
   color: var(--text-color-secondary);
-  background-color: var(--background-primary);
-  border-radius: 0.5rem;
+  background-color: var(--background-list-item);
+  border-radius: 0.75rem;
   margin: 1rem 0;
+  border: 1.5px solid var(--border-primary-color);
 `
 
 const ValidatorSummary = styled.div`
   margin: 1rem 0;
   padding: 1rem;
-  background: var(--background-primary);
+  background: var(--background-list-item);
   border-radius: 0.75rem;
+  border: 1.5px solid var(--border-primary-color);
 `
 
 const SelectedValidatorsList = styled.div`
@@ -443,23 +451,30 @@ const SelectedValidatorItem = styled.div`
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   background: var(--background-secondary);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
 
   > span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: var(--text-color-secondary);
   }
 `
 
 const PoolItem = styled.div`
-  background: var(--background-primary);
-  border-radius: 1rem;
+  background: var(--background-list-item);
+  border-radius: 0.75rem;
   padding: 1rem;
   margin-bottom: 1rem;
-  border: 2px solid var(--accent-color-primary);
+  border: 1.5px solid var(--border-primary-color);
+  transition: all var(--transition-duration);
+
+  &:hover {
+    border-color: var(--accent-color-transparent);
+    background-color: var(--background-list-item-hover);
+  }
 `
 
 const PoolDisplay = styled.div`
@@ -480,16 +495,21 @@ const PoolIcon = styled.div`
 
 const PoolInfo = styled.div`
   flex: 1;
+  min-width: 0;
 `
 
 const PoolName = styled.div`
   font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
+  font-family: InterSemiBold, sans-serif;
 `
 
 const PoolAddress = styled.div`
   font-family: monospace;
   font-size: 0.9rem;
   color: var(--text-color-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `

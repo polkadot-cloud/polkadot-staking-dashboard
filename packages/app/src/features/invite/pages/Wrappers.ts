@@ -138,7 +138,7 @@ export const ValidatorListContainer = styled.div`
     position: relative;
     cursor: pointer;
     transition: all var(--transition-duration);
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
 
     &:hover {
       border-color: var(--accent-color-transparent);
@@ -165,6 +165,7 @@ export const ValidatorListContainer = styled.div`
         .name {
           font-size: 0.95rem;
           font-weight: 500;
+          font-family: InterSemiBold, sans-serif;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -182,6 +183,7 @@ export const ValidatorListContainer = styled.div`
         .commission-value {
           font-size: 0.9rem;
           font-weight: 500;
+          font-family: InterSemiBold, sans-serif;
           color: var(--text-color-primary);
         }
 
@@ -260,8 +262,16 @@ export const ValidatorCard = styled.div`
   max-width: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  border-radius: 0.5rem;
-  break-inside: avoid; /* Prevents cards from breaking across columns */
+  border-radius: 0.75rem;
+  background: var(--background-list-item);
+  border: 1.5px solid var(--border-primary-color);
+  padding: 0.75rem 1rem;
+  transition: all var(--transition-duration);
+
+  &:hover {
+    border-color: var(--accent-color-transparent);
+    background-color: var(--background-list-item-hover);
+  }
 
   /* Make sure content inside doesn't push the width */
   > * {
@@ -288,6 +298,7 @@ export const ErrorState = styled.div`
     color: var(--status-danger-color);
     margin-bottom: 1rem;
     font-size: 1.4rem;
+    font-family: InterSemiBold, sans-serif;
   }
 
   p {
