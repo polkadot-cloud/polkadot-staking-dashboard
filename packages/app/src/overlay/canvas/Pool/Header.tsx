@@ -3,7 +3,6 @@
 
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { determinePoolDisplay } from 'contexts/Pools/util'
 import { PageTabs } from 'library/PageTabs'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
@@ -72,12 +71,7 @@ export const Header = ({
           </div>
           <div>
             <div className="title">
-              <h1>
-                {determinePoolDisplay(
-                  bondedPool?.addresses.stash || '',
-                  metadata
-                )}
-              </h1>
+              <h1>{metadata}</h1>
             </div>
             <HeadTags>
               <h3>

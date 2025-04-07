@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import { PoolSetMetadata } from 'api/tx/poolSetMetadata'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -51,7 +50,7 @@ export const RenamePool = ({
       ({ addresses }) => addresses.stash === activePool?.addresses.stash
     )
     if (pool) {
-      setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])))
+      setMetadata(poolsMetaData[Number(pool.id)] || '')
     }
   }, [section])
 

@@ -51,6 +51,12 @@ export const PoolList = ({
   const excludes = getFilters('exclude', 'pools')
   const searchTerm = getSearchTerm('pools')
 
+  // The current page of pool list.
+  const [page, setPage] = useState<number>(1)
+
+  // Default pool list items before filtering.
+  const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || [])
+
   // Carry out filter of pool list.
   const filterPoolList = () => {
     let filteredPools = Object.assign(poolsDefault)
@@ -60,12 +66,6 @@ export const PoolList = ({
     }
     return filteredPools
   }
-
-  // The current page of pool list.
-  const [page, setPage] = useState<number>(1)
-
-  // Default pool list items before filtering.
-  const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || [])
 
   // Manipulated pool list items after filtering.
   const [listPools, setListPools] = useState<BondedPool[]>(filterPoolList())
