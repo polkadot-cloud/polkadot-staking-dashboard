@@ -59,13 +59,13 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                   className={`button standalone secondary ${createDisabled ? ` disabled` : ``}`}
                 >
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       openCanvas({
                         key: 'CreatePool',
                         options: {},
                         size: 'xl',
                       })
-                    }
+                    }}
                     disabled={createDisabled}
                   >
                     {t('createPool', { ns: 'pages' })}

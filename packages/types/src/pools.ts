@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { AnyJson } from 'types'
 import type { MaybeAddress } from './accounts'
+import type { AnyJson } from './common'
 import type { Identity, SuperIdentity } from './identity'
 import type { Nominations } from './nominate'
 

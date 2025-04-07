@@ -54,7 +54,7 @@ export const Default = ({
       {displayFor === 'card' && (
         <ButtonSubmitLarge
           disabled={disabled}
-          onSubmit={onSubmit}
+          onSubmit={() => onSubmit()}
           submitText={submitText || ''}
           icon={faArrowAltCircleUp}
           pulse={!disabled}

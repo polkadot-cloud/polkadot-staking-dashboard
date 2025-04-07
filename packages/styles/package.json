@@ -5,7 +5,6 @@
   "type": "module",
   "main": "src/",
   "scripts": {
-    "clear": "rm -rf build dist",
-    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+    "clear": "rm -rf build dist"
   }
 }

@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
@@ -210,18 +209,12 @@ export const useValidatorFilters = () => {
     for (const validator of list) {
       const identity = validatorIdentities[validator.address] ?? ''
       const identityRaw = identity?.info?.display?.value?.asText() ?? ''
-      const identityAsBytes = u8aToString(u8aUnwrapBytes(identityRaw))
-      const identitySearch = (
-        identityAsBytes === '' ? identityRaw : identityAsBytes
-      ).toLowerCase()
+      const identitySearch = (identityRaw || '').toLowerCase()
 
       const superIdentity = validatorSupers[validator.address] ?? null
       const superIdentityRaw =
         superIdentity?.identity?.info?.display?.value?.asText() ?? ''
-      const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(superIdentityRaw))
-      const superIdentitySearch = (
-        superIdentityAsBytes === '' ? superIdentityRaw : superIdentityAsBytes
-      ).toLowerCase()
+      const superIdentitySearch = (superIdentityRaw || '').toLowerCase()
 
       if (validator.address.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(validator)

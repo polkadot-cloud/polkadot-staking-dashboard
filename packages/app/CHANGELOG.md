@@ -324,7 +324,6 @@
 
 ## [1.1.5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v1.1.4...v1.1.5) (2024-02-14)
 
-
 ### Features
 
 * **refactor:** Active pools and syncing state redesign ([#1929](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/1929)) ([d2446e1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d2446e1140fff47424984ec37e6233388b9f542b))

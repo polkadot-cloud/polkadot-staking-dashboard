@@ -18,6 +18,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation()
   const { isReady } = useApi()
   const navigate = useNavigate()
+
   const { inPool } = useActivePool()
   const { openCanvas } = useOverlay().canvas
   const { activeAccount } = useActiveAccounts()
@@ -39,13 +40,13 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                   className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ` pulse`}`}
                 >
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       openCanvas({
                         key: 'NominatorSetup',
                         options: {},
                         size: 'xl',
                       })
-                    }
+                    }}
                     disabled={nominateButtonDisabled}
                   >
                     {t('startNominating', { ns: 'pages' })}

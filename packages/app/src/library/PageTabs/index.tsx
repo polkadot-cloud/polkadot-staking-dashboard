@@ -2,15 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
+import type { PageTitleProps, PageTitleTabProps } from 'types'
 import { ButtonTab } from 'ui-buttons'
-import type { PageTitleProps, PageTitleTabProps } from '../../types'
 import classes from './index.module.scss'
 
-/**
- * @name TitleTabs
- * @summary The element in a page title, inculding ButtonTabs.
- */
-export const TitleTabs = ({
+export const PageTabs = ({
   sticky,
   tabs = [],
   inline = false,
@@ -18,14 +14,14 @@ export const TitleTabs = ({
   colorSecondary,
 }: PageTitleProps) => {
   const buttonClasses = classNames(classes.pageTitleTabs, {
-    [classes.pageTitleTabsInline]: inline,
-    [classes.pageTitleTabsSticky]: sticky,
+    [classes.inline]: inline,
+    [classes.sticky]: sticky,
   })
 
   return (
     <section className={buttonClasses}>
-      <div className={classes.pageTitleTabsScroll}>
-        <div className={classes.pageTitleTabsInner}>
+      <div className={classes.scroll}>
+        <div className={classes.inner}>
           {tabs.map(
             (
               { active, onClick, title, badge, disabled }: PageTitleTabProps,
