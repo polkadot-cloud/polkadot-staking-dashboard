@@ -307,34 +307,28 @@ export const ErrorState = styled.div`
   }
 `
 
-// Components from PoolInvitePage
-export const InviteContainer = styled.div`
-  width: 100%;
-  padding: 1rem;
-`
-
+// Pool Invite Page Components
 export const InviteHeader = styled.div`
   text-align: center;
-  margin-bottom: 2rem;
+  padding: 2rem 1rem;
 
   h2 {
     font-size: 1.8rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     font-family: InterBold, sans-serif;
+    color: var(--text-color-primary);
   }
 
   p {
     color: var(--text-color-secondary);
-    font-size: 0.9rem;
+    font-size: 1rem;
+    max-width: 40rem;
+    margin: 0 auto;
   }
 `
 
 export const PoolCard = styled.div`
-  padding: 1.5rem;
-  background: var(--background-list-item);
-  border-radius: 0.75rem;
-  border: 1.5px solid var(--border-primary-color);
-  transition: all var(--transition-duration);
+  padding: 1.25rem;
 `
 
 export const PoolHeader = styled.div`
@@ -359,6 +353,7 @@ export const PoolInfo = styled.div`
     font-size: 1.4rem;
     margin-bottom: 0.25rem;
     font-family: InterSemiBold, sans-serif;
+    color: var(--text-color-primary);
   }
 `
 
@@ -366,12 +361,16 @@ export const PoolId = styled.div`
   font-size: 0.9rem;
   color: var(--text-color-secondary);
   margin-bottom: 0.5rem;
+
+  span {
+    font-weight: 600;
+  }
 `
 
 export const PoolState = styled.div<{ $state: string }>`
   display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1.5rem;
   font-size: 0.8rem;
   font-weight: 600;
   font-family: InterSemiBold, sans-serif;
@@ -393,7 +392,7 @@ export const PoolStats = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 `
 
 export const StatItem = styled.div`
@@ -425,6 +424,7 @@ export const StatValue = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  color: var(--text-color-primary);
 `
 
 export const StatLabel = styled.div`
@@ -432,21 +432,16 @@ export const StatLabel = styled.div`
   color: var(--text-color-secondary);
 `
 
-export const SectionDivider = styled.div`
-  height: 1px;
-  background-color: var(--border-primary-color);
-  margin: 1.5rem 0;
-`
-
 export const SectionTitle = styled.h4`
   font-size: 1.1rem;
   margin-bottom: 1rem;
   color: var(--text-color-primary);
   font-family: InterSemiBold, sans-serif;
+  padding: 0 0.25rem;
 `
 
 export const AddressesSection = styled.div`
-  margin-bottom: 1.5rem;
+  padding: 1.25rem;
 `
 
 export const AddressItem = styled.div`
@@ -459,6 +454,7 @@ export const AddressItem = styled.div`
   background-color: var(--background-list-item);
   border: 1.5px solid var(--border-primary-color);
   transition: all var(--transition-duration);
+  width: 100%;
 
   &:last-child {
     margin-bottom: 0;
@@ -475,14 +471,32 @@ export const AddressLabel = styled.div`
   font-family: InterSemiBold, sans-serif;
   color: var(--text-color-secondary);
   text-transform: capitalize;
+  min-width: 80px;
 `
 
 export const AddressValue = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
   font-family: monospace;
   color: var(--text-color-primary);
+  width: 100%;
+`
+
+export const IdentityWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  max-width: calc(100% - 40px);
+`
+
+export const AddressText = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 `
 
 export const CopyButton = styled.button`
@@ -495,6 +509,7 @@ export const CopyButton = styled.button`
   align-items: center;
   justify-content: center;
   transition: color var(--transition-duration);
+  min-width: 30px;
 
   &:hover {
     color: var(--accent-color-primary);
@@ -502,7 +517,7 @@ export const CopyButton = styled.button`
 `
 
 export const RolesSection = styled.div`
-  margin-bottom: 1.5rem;
+  padding: 1.25rem;
 `
 
 export const RoleItem = styled.div`
@@ -515,6 +530,7 @@ export const RoleItem = styled.div`
   background-color: var(--background-list-item);
   border: 1.5px solid var(--border-primary-color);
   transition: all var(--transition-duration);
+  width: 100%;
 
   &:last-child {
     margin-bottom: 0;
@@ -531,188 +547,63 @@ export const RoleLabel = styled.div`
   font-family: InterSemiBold, sans-serif;
   color: var(--text-color-secondary);
   text-transform: capitalize;
+  min-width: 80px;
 `
 
 export const RoleValue = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
   font-family: monospace;
   color: var(--text-color-primary);
+  width: 100%;
+`
+
+export const RoleText = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+`
+
+export const RoleIdentity = styled.div`
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-color-primary);
+  font-family: InterSemiBold, sans-serif;
+
+  span {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+    margin-left: 0.25rem;
+  }
+`
+
+export const PoolWarningMessage = styled.div`
+  background-color: var(--status-warning-color-transparent);
+  color: var(--status-warning-color);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin: 0.5rem;
+  font-size: 0.95rem;
+  border: 1.5px solid var(--status-warning-color);
+  text-align: center;
+  font-weight: 500;
+`
+
+export const BondSection = styled.div`
+  padding: 1.25rem;
+`
+
+export const BondInputWrapper = styled.div`
+  margin: 1.25rem 0;
 `
 
 export const ActionSection = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 1.5rem;
-`
-
-// Components from ValidatorInvitePage
-export const NominationSteps = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-`
-
-export const StepContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-`
-
-export const StepNumber = styled.div<{ $active: boolean; $complete: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
-  color: ${({ $active, $complete }) =>
-    $active
-      ? 'var(--accent-color-primary)'
-      : $complete
-        ? 'var(--text-color-secondary)'
-        : 'var(--text-color-tertiary)'};
-
-  .number {
-    font-weight: 600;
-    font-family: InterBold, sans-serif;
-  }
-
-  .label {
-    font-weight: 500;
-    font-family: InterSemiBold, sans-serif;
-  }
-`
-
-export const PayeeInputWrapper = styled.div`
-  margin-top: 1rem;
-  width: 100%;
-  max-width: 500px;
-`
-
-export const WarningsWrapper = styled.div`
-  margin: 1rem 0;
-`
-
-export const SummaryItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border-primary-color);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  .label {
-    font-weight: 500;
-    font-family: InterSemiBold, sans-serif;
-  }
-
-  .value {
-    color: var(--text-color-secondary);
-  }
-`
-
-export const ValidatorInviteWrapper = styled.div`
-  .validator-item {
-    background: var(--background-list-item);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
-    border: 1.5px solid var(--border-primary-color);
-    transition: all var(--transition-duration);
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-
-    &:hover {
-      background: var(--background-list-item-hover);
-      border-color: var(--accent-color-transparent);
-    }
-
-    &.selected {
-      border-color: var(--accent-color-primary);
-      background-color: var(--background-list-item-selected);
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .validator-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .identity {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex: 1;
-
-    .name {
-      font-size: 0.95rem;
-      font-weight: 500;
-      font-family: InterSemiBold, sans-serif;
-    }
-  }
-
-  .validator-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
-  }
-
-  .commission-value {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    .label {
-      color: var(--text-color-secondary);
-      font-size: 0.9rem;
-    }
-
-    .value {
-      font-weight: 500;
-      font-family: InterSemiBold, sans-serif;
-    }
-  }
-
-  .status-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    .status {
-      padding: 0.25rem 0.75rem;
-      border-radius: 0.75rem;
-      font-size: 0.9rem;
-      background: var(--background-secondary);
-      color: var(--text-color-secondary);
-
-      &.active {
-        background: var(--status-success-color-transparent);
-        color: var(--status-success-color);
-        font-weight: 500;
-        font-family: InterSemiBold, sans-serif;
-      }
-    }
-
-    .dot-amount {
-      font-weight: 500;
-      font-family: InterSemiBold, sans-serif;
-    }
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
 `
