@@ -5,6 +5,7 @@ import { PoolBondExtra } from 'api/tx/poolBondExtra'
 import { StakingBondExtra } from 'api/tx/stakingBondExtra'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useEffect, useMemo, useState } from 'react'
@@ -14,6 +15,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { isReady } = useApi()
   const transferOptions = useMemo(
     () => getTransferOptions(activeAccount),
     [activeAccount]
@@ -25,8 +27,10 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // update max tx fee on free balance change
   useEffect(() => {
-    handleFetch()
-  }, [transferOptions])
+    if (isReady) {
+      handleFetch()
+    }
+  }, [transferOptions, isReady])
 
   // handle fee fetching
   const handleFetch = async () => {
@@ -36,6 +40,10 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
+    if (!isReady) {
+      return new BigNumber(0)
+    }
+
     const bond = BigNumber.max(
       transferrableBalance.minus(feeReserve),
       0
