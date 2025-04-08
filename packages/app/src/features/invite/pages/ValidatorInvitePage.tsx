@@ -32,7 +32,6 @@ import { SelectItem } from 'library/SelectItems/Item'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Page, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
@@ -43,177 +42,15 @@ import {
   ActionButtonsWrapper,
   ErrorState,
   LoadingState,
+  NominationSteps,
+  PayeeInputWrapper,
+  StepContainer,
+  StepNumber,
+  SummaryItem,
+  ValidatorInviteWrapper,
   ValidatorListContainer,
+  WarningsWrapper,
 } from './Wrappers'
-
-const NominationSteps = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-`
-
-const StepContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-`
-
-const StepNumber = styled.div<{ $active: boolean; $complete: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
-  color: ${({ $active, $complete }) =>
-    $active
-      ? 'var(--accent-color-primary)'
-      : $complete
-        ? 'var(--text-color-secondary)'
-        : 'var(--text-color-tertiary)'};
-
-  .number {
-    font-weight: 600;
-    font-family: InterBold, sans-serif;
-  }
-
-  .label {
-    font-weight: 500;
-    font-family: InterSemiBold, sans-serif;
-  }
-`
-
-const PayeeInputWrapper = styled.div`
-  margin-top: 1rem;
-  width: 100%;
-  max-width: 500px;
-`
-
-const WarningsWrapper = styled.div`
-  margin: 1rem 0;
-`
-
-const SummaryItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border-primary-color);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  .label {
-    font-weight: 500;
-    font-family: InterSemiBold, sans-serif;
-  }
-
-  .value {
-    color: var(--text-color-secondary);
-  }
-`
-
-const ValidatorInviteWrapper = styled.div`
-  .validator-item {
-    background: var(--background-list-item);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
-    border: 1.5px solid var(--border-primary-color);
-    transition: all var(--transition-duration);
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-
-    &:hover {
-      background: var(--background-list-item-hover);
-      border-color: var(--accent-color-transparent);
-    }
-
-    &.selected {
-      border-color: var(--accent-color-primary);
-      background-color: var(--background-list-item-selected);
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .validator-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .identity {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex: 1;
-
-    .name {
-      font-size: 0.95rem;
-      font-weight: 500;
-      font-family: InterSemiBold, sans-serif;
-    }
-  }
-
-  .validator-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
-  }
-
-  .commission-value {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    .label {
-      color: var(--text-color-secondary);
-      font-size: 0.9rem;
-    }
-
-    .value {
-      font-weight: 500;
-      font-family: InterSemiBold, sans-serif;
-    }
-  }
-
-  .status-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    .status {
-      padding: 0.25rem 0.75rem;
-      border-radius: 0.75rem;
-      font-size: 0.9rem;
-      background: var(--background-secondary);
-      color: var(--text-color-secondary);
-
-      &.active {
-        background: var(--status-success-color-transparent);
-        color: var(--status-success-color);
-        font-weight: 500;
-        font-family: InterSemiBold, sans-serif;
-      }
-    }
-
-    .dot-amount {
-      font-weight: 500;
-      font-family: InterSemiBold, sans-serif;
-    }
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-`
 
 export const ValidatorInvitePage = () => {
   const { t } = useTranslation('invite')
@@ -556,9 +393,13 @@ export const ValidatorInvitePage = () => {
     return (
       <ValidatorInviteWrapper>
         <Page.Title title={t('validatorInvite')} />
-        <LoadingState>
-          <h3>{t('connecting')}</h3>
-        </LoadingState>
+        <Page.Row>
+          <Page.RowSection>
+            <LoadingState>
+              <h3>{t('connecting')}</h3>
+            </LoadingState>
+          </Page.RowSection>
+        </Page.Row>
       </ValidatorInviteWrapper>
     )
   }
@@ -567,9 +408,13 @@ export const ValidatorInvitePage = () => {
     return (
       <ValidatorInviteWrapper>
         <Page.Title title={t('validatorInvite')} />
-        <ErrorState>
-          <h3>{loadingError}</h3>
-        </ErrorState>
+        <Page.Row>
+          <Page.RowSection>
+            <ErrorState>
+              <h3>{loadingError}</h3>
+            </ErrorState>
+          </Page.RowSection>
+        </Page.Row>
       </ValidatorInviteWrapper>
     )
   }
@@ -619,273 +464,276 @@ export const ValidatorInvitePage = () => {
     <ValidatorInviteWrapper>
       <Page.Title title={t('validatorInvite')} />
       <Page.Row>
-        <CardWrapper>
-          <NominationSteps>
-            {steps.map((step) => (
-              <StepContainer key={step.id}>
-                <StepNumber
-                  $active={activeStep === step.id && isStepAvailable(step.id)}
-                  $complete={step.complete}
-                >
-                  <span className="number">{step.id}.</span>
-                  <span className="label">{step.label}</span>
-                </StepNumber>
+        <Page.RowSection>
+          <CardWrapper>
+            <NominationSteps>
+              {steps.map((step) => (
+                <StepContainer key={step.id}>
+                  <StepNumber
+                    $active={activeStep === step.id && isStepAvailable(step.id)}
+                    $complete={step.complete}
+                  >
+                    <span className="number">{step.id}.</span>
+                    <span className="label">{step.label}</span>
+                  </StepNumber>
 
-                {activeStep === step.id && isStepAvailable(step.id) && (
-                  <>
-                    {/* Payout Destination Step */}
-                    {step.id === 1 && isNewNominator && (
-                      <>
-                        <p>{t('payoutDestinationInfo')}</p>
-                        <SelectItems layout="three-col">
-                          {getPayeeItems().map((item) => (
-                            <SelectItem
-                              key={`payee_option_${item.value}`}
-                              account={payeeAccount}
-                              setAccount={setPayeeAccount}
-                              selected={payee.type === item.value}
-                              onClick={() => handlePayeeChange(item.value)}
-                              layout="three-col"
-                              icon={item.icon}
-                              title={item.title}
-                              subtitle={item.subtitle}
+                  {activeStep === step.id && isStepAvailable(step.id) && (
+                    <>
+                      {/* Payout Destination Step */}
+                      {step.id === 1 && isNewNominator && (
+                        <>
+                          <p>{t('payoutDestinationInfo')}</p>
+                          <SelectItems layout="three-col">
+                            {getPayeeItems().map((item) => (
+                              <SelectItem
+                                key={`payee_option_${item.value}`}
+                                account={payeeAccount}
+                                setAccount={setPayeeAccount}
+                                selected={payee.type === item.value}
+                                onClick={() => handlePayeeChange(item.value)}
+                                layout="three-col"
+                                icon={item.icon}
+                                title={item.title}
+                                subtitle={item.subtitle}
+                              />
+                            ))}
+                          </SelectItems>
+
+                          <Spacer />
+
+                          {payee.type === 'Account' && (
+                            <PayeeInputWrapper>
+                              <PayeeInput
+                                payee={{
+                                  destination: payee.type,
+                                  account: payeeAccount,
+                                }}
+                                account={payeeAccount}
+                                setAccount={setPayeeAccount}
+                                handleChange={handlePayeeAccountChange}
+                              />
+                            </PayeeInputWrapper>
+                          )}
+
+                          {payee.type === 'Stash' && (
+                            <p>{t('usingStashForPayouts')}</p>
+                          )}
+                        </>
+                      )}
+
+                      {/* Nominate Step */}
+                      {((isNewNominator && step.id === 2) ||
+                        (!isNewNominator && step.id === 1)) && (
+                        <>
+                          <p>{t('validatorInviteDescription')}</p>
+                          <Stat.Row>
+                            <SelectedValidators
+                              count={selectedValidators.length}
+                              hideHelp
                             />
-                          ))}
-                        </SelectItems>
-
-                        <Spacer />
-
-                        {payee.type === 'Account' && (
-                          <PayeeInputWrapper>
-                            <PayeeInput
-                              payee={{
-                                destination: payee.type,
-                                account: payeeAccount,
-                              }}
-                              account={payeeAccount}
-                              setAccount={setPayeeAccount}
-                              handleChange={handlePayeeAccountChange}
+                            <AverageCommission
+                              validators={validValidators.filter((v) =>
+                                selectedValidators.includes(v.address)
+                              )}
+                              hideHelp
                             />
-                          </PayeeInputWrapper>
-                        )}
+                          </Stat.Row>
 
-                        {payee.type === 'Stash' && (
-                          <p>{t('usingStashForPayouts')}</p>
-                        )}
-                      </>
-                    )}
+                          <ValidatorListContainer>
+                            <div className="validator-grid">
+                              {validValidators.map(({ address, prefs }) => {
+                                const identityDisplay = getIdentityDisplay(
+                                  validatorIdentities[address] || null,
+                                  validatorSupers[address] || null
+                                )
 
-                    {/* Nominate Step */}
-                    {((isNewNominator && step.id === 2) ||
-                      (!isNewNominator && step.id === 1)) && (
-                      <>
-                        <p>{t('validatorInviteDescription')}</p>
-                        <Stat.Row>
-                          <SelectedValidators
-                            count={selectedValidators.length}
-                            hideHelp
-                          />
-                          <AverageCommission
-                            validators={validValidators.filter((v) =>
-                              selectedValidators.includes(v.address)
-                            )}
-                            hideHelp
-                          />
-                        </Stat.Row>
+                                // Format stake and commission values
+                                const commissionValue = prefs?.commission ?? 0
+                                const commissionPercent =
+                                  commissionValue.toFixed(2)
 
-                        <ValidatorListContainer>
-                          <div className="validator-grid">
-                            {validValidators.map(({ address, prefs }) => {
-                              const identityDisplay = getIdentityDisplay(
-                                validatorIdentities[address] || null,
-                                validatorSupers[address] || null
-                              )
+                                // Get validator's total stake and format to 2 decimal places
+                                const totalStake =
+                                  getValidatorTotalStake(address)
+                                const formattedStake = planckToUnitBn(
+                                  new BigNumber(totalStake.toString()),
+                                  units
+                                ).toFormat(2)
 
-                              // Format stake and commission values
-                              const commissionValue = prefs?.commission ?? 0
-                              const commissionPercent =
-                                commissionValue.toFixed(2)
+                                // Check if validator is active
+                                const isActive = stakers.some(
+                                  (s) => s.address === address
+                                )
 
-                              // Get validator's total stake and format to 2 decimal places
-                              const totalStake = getValidatorTotalStake(address)
-                              const formattedStake = planckToUnitBn(
-                                new BigNumber(totalStake.toString()),
-                                units
-                              ).toFormat(2)
-
-                              // Check if validator is active
-                              const isActive = stakers.some(
-                                (s) => s.address === address
-                              )
-
-                              return (
-                                <div
-                                  key={address}
-                                  className={`validator-item ${selectedValidators.includes(address) ? 'selected' : ''}`}
-                                  data-testid={`validator-card-${address}`}
-                                  onClick={(e) => {
-                                    e.preventDefault()
-                                    const newSelection =
-                                      selectedValidators.includes(address)
-                                        ? selectedValidators.filter(
-                                            (a) => a !== address
-                                          )
-                                        : [...selectedValidators, address]
-                                    setSelectedValidators(newSelection)
-                                  }}
-                                  role="button"
-                                  tabIndex={0}
-                                  style={{ cursor: 'pointer' }}
-                                >
-                                  <div className="validator-header">
-                                    <div className="identity">
-                                      <Polkicon address={address} />
-                                      <span className="name">
-                                        {identityDisplay.node ||
-                                          ellipsisFn(address)}
-                                      </span>
-                                    </div>
-                                    <div className="validator-info">
-                                      <div className="commission-value">
-                                        <span className="label">
-                                          {t('commission')}:
-                                        </span>
-                                        <span className="value">
-                                          {commissionPercent}%
+                                return (
+                                  <div
+                                    key={address}
+                                    className={`validator-item ${selectedValidators.includes(address) ? 'selected' : ''}`}
+                                    data-testid={`validator-card-${address}`}
+                                    onClick={(e) => {
+                                      e.preventDefault()
+                                      const newSelection =
+                                        selectedValidators.includes(address)
+                                          ? selectedValidators.filter(
+                                              (a) => a !== address
+                                            )
+                                          : [...selectedValidators, address]
+                                      setSelectedValidators(newSelection)
+                                    }}
+                                    role="button"
+                                    tabIndex={0}
+                                    style={{ cursor: 'pointer' }}
+                                  >
+                                    <div className="validator-header">
+                                      <div className="identity">
+                                        <Polkicon address={address} />
+                                        <span className="name">
+                                          {identityDisplay.node ||
+                                            ellipsisFn(address)}
                                         </span>
                                       </div>
-                                      <div className="status-info">
-                                        <span
-                                          className={`status ${isActive ? 'active' : ''}`}
-                                        >
-                                          {isActive
-                                            ? t('active')
-                                            : t('inactive')}
-                                        </span>
-                                        <span className="dot-amount">
-                                          {formattedStake} {unit}
-                                        </span>
+                                      <div className="validator-info">
+                                        <div className="commission-value">
+                                          <span className="label">
+                                            {t('commission')}:
+                                          </span>
+                                          <span className="value">
+                                            {commissionPercent}%
+                                          </span>
+                                        </div>
+                                        <div className="status-info">
+                                          <span
+                                            className={`status ${isActive ? 'active' : ''}`}
+                                          >
+                                            {isActive
+                                              ? t('active')
+                                              : t('inactive')}
+                                          </span>
+                                          <span className="dot-amount">
+                                            {formattedStake} {unit}
+                                          </span>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className="actions">
-                                      <CopyAddress address={address} />
+                                      <div className="actions">
+                                        <CopyAddress address={address} />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              )
-                            })}
-                          </div>
-                        </ValidatorListContainer>
-                      </>
-                    )}
+                                )
+                              })}
+                            </div>
+                          </ValidatorListContainer>
+                        </>
+                      )}
 
-                    {/* Bond Step */}
-                    {((isNewNominator && step.id === 3) ||
-                      (!isNewNominator && step.id === 2)) && (
-                      <>
-                        <p>{t('bondDescription', { unit })}</p>
-                        <BondFeedback
-                          bondFor="nominator"
-                          displayFirstWarningOnly
-                          syncing={largestTxFee.isZero()}
-                          listenIsValid={(valid, errors) => {
-                            setBondValid(valid)
-                            setFeedbackErrors(errors)
-                          }}
-                          defaultBond={bond.bond !== '' ? bond.bond : null}
-                          setters={[handleSetBond]}
-                          txFees={BigInt(largestTxFee.toString())}
-                          maxWidth
-                        />
-                      </>
-                    )}
+                      {/* Bond Step */}
+                      {((isNewNominator && step.id === 3) ||
+                        (!isNewNominator && step.id === 2)) && (
+                        <>
+                          <p>{t('bondDescription', { unit })}</p>
+                          <BondFeedback
+                            bondFor="nominator"
+                            displayFirstWarningOnly
+                            syncing={largestTxFee.isZero()}
+                            listenIsValid={(valid, errors) => {
+                              setBondValid(valid)
+                              setFeedbackErrors(errors)
+                            }}
+                            defaultBond={bond.bond !== '' ? bond.bond : null}
+                            setters={[handleSetBond]}
+                            txFees={BigInt(largestTxFee.toString())}
+                            maxWidth
+                          />
+                        </>
+                      )}
 
-                    {/* Summary Step */}
-                    {((isNewNominator && step.id === 4) ||
-                      (!isNewNominator && step.id === 3)) && (
-                      <>
-                        <div>
-                          <SummaryItem>
-                            <span className="label">
-                              {t('selectedValidators')}
-                            </span>
-                            <span className="value">
-                              {selectedValidators.length}
-                            </span>
-                          </SummaryItem>
-                          <SummaryItem>
-                            <span className="label">{t('bondAmount')}</span>
-                            <span className="value">
-                              {bond.bond} {units}
-                            </span>
-                          </SummaryItem>
-                          {isNewNominator && (
+                      {/* Summary Step */}
+                      {((isNewNominator && step.id === 4) ||
+                        (!isNewNominator && step.id === 3)) && (
+                        <>
+                          <div>
                             <SummaryItem>
                               <span className="label">
-                                {t('payoutDestination')}
+                                {t('selectedValidators')}
                               </span>
-                              <span className="value">{t('stash')}</span>
+                              <span className="value">
+                                {selectedValidators.length}
+                              </span>
                             </SummaryItem>
+                            <SummaryItem>
+                              <span className="label">{t('bondAmount')}</span>
+                              <span className="value">
+                                {bond.bond} {units}
+                              </span>
+                            </SummaryItem>
+                            {isNewNominator && (
+                              <SummaryItem>
+                                <span className="label">
+                                  {t('payoutDestination')}
+                                </span>
+                                <span className="value">{t('stash')}</span>
+                              </SummaryItem>
+                            )}
+                          </div>
+
+                          {warnings.length > 0 && (
+                            <WarningsWrapper>
+                              {warnings.map((text, i) => (
+                                <Warning key={`warning${i}`} text={text} />
+                              ))}
+                            </WarningsWrapper>
                           )}
-                        </div>
+                        </>
+                      )}
 
-                        {warnings.length > 0 && (
-                          <WarningsWrapper>
-                            {warnings.map((text, i) => (
-                              <Warning key={`warning${i}`} text={text} />
-                            ))}
-                          </WarningsWrapper>
+                      <ActionButtonsWrapper>
+                        {step.id > 1 && (
+                          <ButtonSecondary
+                            text={t('back')}
+                            onClick={goToPrevStep}
+                            marginLeft
+                          />
                         )}
-                      </>
-                    )}
-
-                    <ActionButtonsWrapper>
-                      {step.id > 1 && (
-                        <ButtonSecondary
-                          text={t('back')}
-                          onClick={goToPrevStep}
-                          marginLeft
-                        />
-                      )}
-                      {step.id < steps.length ? (
-                        <ButtonPrimary
-                          text={t('continue')}
-                          onClick={goToNextStep}
-                          disabled={!step.complete}
-                        />
-                      ) : (
-                        <ButtonPrimary
-                          text={
-                            nominating
-                              ? t('nominating')
-                              : isNewNominator
-                                ? t('bondAndNominate', { ns: 'modals' })
-                                : t('nominateValidators')
-                          }
-                          onClick={() => {
-                            if (!activeAccount) {
-                              modal.openModal({
-                                key: 'Connect',
-                                options: { forceConnection: true },
-                              })
-                              return
+                        {step.id < steps.length ? (
+                          <ButtonPrimary
+                            text={t('continue')}
+                            onClick={goToNextStep}
+                            disabled={!step.complete}
+                          />
+                        ) : (
+                          <ButtonPrimary
+                            text={
+                              nominating
+                                ? t('nominating')
+                                : isNewNominator
+                                  ? t('bondAndNominate', { ns: 'modals' })
+                                  : t('nominateValidators')
                             }
-                            submitExtrinsic.onSubmit()
-                          }}
-                          disabled={
-                            !allStepsComplete ||
-                            warnings.length > 0 ||
-                            isSubmitting
-                          }
-                        />
-                      )}
-                    </ActionButtonsWrapper>
-                  </>
-                )}
-              </StepContainer>
-            ))}
-          </NominationSteps>
-        </CardWrapper>
+                            onClick={() => {
+                              if (!activeAccount) {
+                                modal.openModal({
+                                  key: 'Connect',
+                                  options: { forceConnection: true },
+                                })
+                                return
+                              }
+                              submitExtrinsic.onSubmit()
+                            }}
+                            disabled={
+                              !allStepsComplete ||
+                              warnings.length > 0 ||
+                              isSubmitting
+                            }
+                          />
+                        )}
+                      </ActionButtonsWrapper>
+                    </>
+                  )}
+                </StepContainer>
+              ))}
+            </NominationSteps>
+          </CardWrapper>
+        </Page.RowSection>
       </Page.Row>
     </ValidatorInviteWrapper>
   )

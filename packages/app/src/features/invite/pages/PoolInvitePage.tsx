@@ -29,11 +29,40 @@ import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import type { MaybeAddress } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
+import {
+  ActionSection,
+  AddressesSection,
+  AddressItem,
+  AddressLabel,
+  AddressValue,
+  CopyButton,
+  ErrorState,
+  InviteContainer,
+  InviteHeader,
+  LoadingState,
+  PoolCard,
+  PoolHeader,
+  PoolIcon,
+  PoolId,
+  PoolInfo,
+  PoolState,
+  PoolStats,
+  RoleItem,
+  RoleLabel,
+  RolesSection,
+  RoleValue,
+  SectionDivider,
+  SectionTitle,
+  StatContent,
+  StatIcon,
+  StatItem,
+  StatLabel,
+  StatValue,
+} from './Wrappers'
 
 // Define interface for pool details
 interface PoolDetails {
@@ -300,16 +329,24 @@ export const PoolInvitePage = () => {
       <Page.Title title={t('poolInvite')} />
 
       {loading ? (
-        <LoadingState>{t('loadingPoolDetails')}</LoadingState>
+        <Page.Row>
+          <Page.RowSection>
+            <LoadingState>{t('loadingPoolDetails')}</LoadingState>
+          </Page.RowSection>
+        </Page.Row>
       ) : error ? (
-        <ErrorState>
-          <h3>{t('errorTitle')}</h3>
-          <p>{error}</p>
-          <ButtonPrimary
-            text={t('browsePools')}
-            onClick={() => navigate('/pools')}
-          />
-        </ErrorState>
+        <Page.Row>
+          <Page.RowSection>
+            <ErrorState>
+              <h3>{t('errorTitle')}</h3>
+              <p>{error}</p>
+              <ButtonPrimary
+                text={t('browsePools')}
+                onClick={() => navigate('/pools')}
+              />
+            </ErrorState>
+          </Page.RowSection>
+        </Page.Row>
       ) : (
         <Page.Row>
           <Page.RowSection>
@@ -459,7 +496,23 @@ export const PoolInvitePage = () => {
                   )}
 
                   {userAlreadyInPool && (
-                    <WarningMessage>{t('alreadyInPool')}</WarningMessage>
+                    <>
+                      <SectionDivider />
+                      <div
+                        style={{
+                          backgroundColor:
+                            'var(--status-warning-color-transparent)',
+                          color: 'var(--status-warning-color)',
+                          padding: '1rem',
+                          borderRadius: '0.75rem',
+                          marginBottom: '1.5rem',
+                          fontSize: '0.9rem',
+                          border: '1.5px solid var(--status-warning-color)',
+                        }}
+                      >
+                        {t('alreadyInPool')}
+                      </div>
+                    </>
                   )}
 
                   <SectionDivider />
@@ -497,276 +550,3 @@ export const PoolInvitePage = () => {
     </>
   )
 }
-
-const InviteContainer = styled.div`
-  width: 100%;
-  padding: 1rem;
-`
-
-const InviteHeader = styled.div`
-  text-align: center;
-  margin-bottom: 2rem;
-
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    font-family: InterBold, sans-serif;
-  }
-
-  p {
-    color: var(--text-color-secondary);
-    font-size: 0.9rem;
-  }
-`
-
-const PoolCard = styled.div`
-  padding: 1.5rem;
-  background: var(--background-list-item);
-  border-radius: 0.75rem;
-  border: 1.5px solid var(--border-primary-color);
-  transition: all var(--transition-duration);
-`
-
-const PoolHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-`
-
-const PoolIcon = styled.div`
-  margin-right: 1rem;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const PoolInfo = styled.div`
-  h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.25rem;
-    font-family: InterSemiBold, sans-serif;
-  }
-`
-
-const PoolId = styled.div`
-  font-size: 0.9rem;
-  color: var(--text-color-secondary);
-  margin-bottom: 0.5rem;
-`
-
-const PoolState = styled.div<{ $state: string }>`
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  font-family: InterSemiBold, sans-serif;
-  background-color: ${({ $state }) =>
-    $state === 'Open'
-      ? 'var(--status-success-color-transparent)'
-      : $state === 'Blocked'
-        ? 'var(--status-warning-color-transparent)'
-        : 'var(--status-danger-color-transparent)'};
-  color: ${({ $state }) =>
-    $state === 'Open'
-      ? 'var(--status-success-color)'
-      : $state === 'Blocked'
-        ? 'var(--status-warning-color)'
-        : 'var(--status-danger-color)'};
-`
-
-const PoolStats = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-`
-
-const StatItem = styled.div`
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 150px;
-`
-
-const StatIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--background-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 0.75rem;
-  color: var(--text-color-primary);
-`
-
-const StatContent = styled.div``
-
-const StatValue = styled.div`
-  font-size: 1.2rem;
-  font-weight: 600;
-  font-family: InterSemiBold, sans-serif;
-  margin-bottom: 0.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`
-
-const StatLabel = styled.div`
-  font-size: 0.9rem;
-  color: var(--text-color-secondary);
-`
-
-const SectionDivider = styled.div`
-  height: 1px;
-  background-color: var(--border-primary-color);
-  margin: 1.5rem 0;
-`
-
-const SectionTitle = styled.h4`
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  color: var(--text-color-primary);
-  font-family: InterSemiBold, sans-serif;
-`
-
-const AddressesSection = styled.div`
-  margin-bottom: 1.5rem;
-`
-
-const AddressItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-  background-color: var(--background-list-item);
-  border: 1.5px solid var(--border-primary-color);
-  transition: all var(--transition-duration);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  &:hover {
-    border-color: var(--accent-color-transparent);
-    background-color: var(--background-list-item-hover);
-  }
-`
-
-const AddressLabel = styled.div`
-  font-weight: 600;
-  font-family: InterSemiBold, sans-serif;
-  color: var(--text-color-secondary);
-  text-transform: capitalize;
-`
-
-const AddressValue = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: monospace;
-  color: var(--text-color-primary);
-`
-
-const CopyButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color-secondary);
-  padding: 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color var(--transition-duration);
-
-  &:hover {
-    color: var(--accent-color-primary);
-  }
-`
-
-const RolesSection = styled.div`
-  margin-bottom: 1.5rem;
-`
-
-const RoleItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-  background-color: var(--background-list-item);
-  border: 1.5px solid var(--border-primary-color);
-  transition: all var(--transition-duration);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  &:hover {
-    border-color: var(--accent-color-transparent);
-    background-color: var(--background-list-item-hover);
-  }
-`
-
-const RoleLabel = styled.div`
-  font-weight: 600;
-  font-family: InterSemiBold, sans-serif;
-  color: var(--text-color-secondary);
-  text-transform: capitalize;
-`
-
-const RoleValue = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: monospace;
-  color: var(--text-color-primary);
-`
-
-const WarningMessage = styled.div`
-  background-color: var(--status-warning-color-transparent);
-  color: var(--status-warning-color);
-  padding: 1rem;
-  border-radius: 0.75rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-  border: 1.5px solid var(--status-warning-color);
-`
-
-const ActionSection = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-`
-
-const LoadingState = styled.div`
-  text-align: center;
-  padding: 3rem 0;
-  color: var(--text-color-secondary);
-  font-size: 1.2rem;
-`
-
-const ErrorState = styled.div`
-  text-align: center;
-  padding: 3rem 0;
-
-  h3 {
-    color: var(--status-danger-color);
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
-    font-family: InterSemiBold, sans-serif;
-  }
-
-  p {
-    margin-bottom: 2rem;
-    color: var(--text-color-secondary);
-  }
-`
