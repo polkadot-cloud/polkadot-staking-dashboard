@@ -45,8 +45,12 @@ export const ActionButtonsWrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0 0;
   gap: 1rem;
+
+  > button {
+    min-width: 120px;
+  }
 `
 
 export const WarningMessage = styled.div`
@@ -126,7 +130,7 @@ export const ValidatorListContainer = styled.div`
   .validator-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 1.25rem;
     width: 100%;
   }
 
@@ -138,16 +142,42 @@ export const ValidatorListContainer = styled.div`
     position: relative;
     cursor: pointer;
     transition: all var(--transition-duration);
-    padding: 0.75rem 1rem;
+    padding: 1.25rem 1rem 2.5rem 1rem; /* Increased bottom padding for actions */
+    margin-bottom: 0;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
     &:hover {
-      border-color: var(--accent-color-transparent);
-      background-color: var(--background-list-item-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     }
 
     &.selected {
       border-color: var(--accent-color-primary);
-      background-color: var(--background-list-item-selected);
+      background-color: var(--background-list-item);
+      box-shadow: 0 2px 8px var(--accent-color-transparent);
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 1.25rem;
+        right: 1rem;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: var(--accent-color-primary);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='12' height='12' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 12px;
+        box-shadow: 0 2px 4px var(--accent-color-transparent);
+      }
+    }
+
+    &:focus {
+      outline: none;
     }
 
     .validator-header {
@@ -600,6 +630,241 @@ export const BondSection = styled.div`
 
 export const BondInputWrapper = styled.div`
   margin: 1.25rem 0;
+`
+
+export const NominationStepsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.5rem;
+
+  > div:not(:last-child) {
+    border-bottom: 1px solid var(--border-secondary-color);
+    padding-bottom: 1.5rem;
+  }
+`
+
+export const StepContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  border-radius: 0.5rem;
+`
+
+export const StepHeader = styled.div<{ $active: boolean; $complete: boolean }>`
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  color: ${({ $active, $complete }) =>
+    $active
+      ? 'var(--accent-color-primary)'
+      : $complete
+        ? 'var(--text-color-primary)'
+        : 'var(--text-color-tertiary)'};
+  cursor: pointer;
+
+  .label {
+    font-weight: 600;
+    font-family: InterSemiBold, sans-serif;
+  }
+`
+
+export const StepContent = styled.div`
+  margin-left: 1.5rem;
+  border-left: 2px solid var(--border-primary-color);
+  padding: 1rem 0 1.5rem 1.5rem;
+  margin-bottom: 0.5rem;
+`
+
+export const StepDescription = styled.p`
+  color: var(--text-color-secondary);
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+`
+
+export const PayeeInputContainer = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 500px;
+`
+
+export const WarningsContainer = styled.div`
+  margin: 1rem 0 1.5rem;
+
+  > div {
+    margin-bottom: 0.75rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+`
+
+export const SummaryContainer = styled.div`
+  background: var(--background-list-item);
+  border-radius: 1rem;
+  border: 1.5px solid var(--border-primary-color);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+`
+
+export const SummaryRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-secondary-color);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  .label {
+    font-weight: 500;
+    font-family: InterSemiBold, sans-serif;
+    color: var(--text-color-secondary);
+    font-size: 0.95rem;
+  }
+
+  .value {
+    font-weight: 600;
+    font-family: InterSemiBold, sans-serif;
+    color: var(--text-color-primary);
+    font-size: 0.95rem;
+  }
+`
+
+export const ValidatorCardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 28px; /* Make space for the selection indicator */
+  margin-bottom: 0.25rem;
+`
+
+export const ValidatorIdentity = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  overflow: hidden;
+  max-width: 70%;
+
+  .name {
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: InterSemiBold, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color-primary);
+  }
+`
+
+export const ValidatorInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-right: 1rem;
+`
+
+export const CommissionDisplay = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+
+  .label {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+  }
+
+  .value {
+    font-weight: 600;
+    font-family: InterSemiBold, sans-serif;
+    color: var(--text-color-primary);
+  }
+`
+
+export const StatusDisplay = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  .status {
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    background: var(--background-secondary);
+    color: var(--text-color-secondary);
+    font-weight: 500;
+    font-family: InterSemiBold, sans-serif;
+
+    &.active {
+      background: var(--status-success-color-transparent);
+      color: var(--status-success-color);
+      font-weight: 600;
+    }
+  }
+
+  .dot-amount {
+    font-weight: 500;
+    font-family: InterSemiBold, sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+  }
+`
+
+export const ValidatorActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+`
+
+export const StepIndicator = styled.div<{
+  $active: boolean
+  $complete: boolean
+}>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${({ $active, $complete }) =>
+    $active
+      ? 'var(--accent-color-primary)'
+      : $complete
+        ? 'var(--accent-color-transparent)'
+        : 'var(--background-secondary)'};
+  color: ${({ $active, $complete }) =>
+    $active
+      ? 'white'
+      : $complete
+        ? 'var(--accent-color-primary)'
+        : 'var(--text-color-secondary)'};
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: InterSemiBold, sans-serif;
+  margin-right: 0.75rem;
+  transition: all var(--transition-duration);
 `
 
 export const ActionSection = styled.div`
