@@ -28,7 +28,7 @@
     "@w3ux/extension-assets": "^2.2.0",
     "@w3ux/factories": "^2.0.2",
     "@w3ux/hooks": "^2.1.0",
-    "@w3ux/react-connect-kit": "3.2.11",
+    "@w3ux/react-connect-kit": "3.2.17",
     "@w3ux/react-odometer": "^2.0.0",
     "@w3ux/react-polkicon": "^3.1.1",
     "@w3ux/utils": "2.0.8",

@@ -10,7 +10,7 @@ import {
   WCAccountsProvider,
 } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
 import { BondedProvider } from 'contexts/Bonded'
@@ -53,11 +53,11 @@ export const Providers = () => {
     network,
     networkData: { ss58 },
   } = useNetwork()
-  const { activeAccount, setActiveAccount } = useActiveAccounts()
 
   return withProviders(
     // !! Provider order matters.
     [
+      ActiveAccountsProvider,
       UIProvider,
       [APIProvider, { network }],
       LedgerHardwareProvider,
@@ -69,8 +69,6 @@ export const Providers = () => {
           dappName: DappName,
           network,
           ss58,
-          activeAccount,
-          setActiveAccount,
         },
       ],
       WCAccountsProvider,
