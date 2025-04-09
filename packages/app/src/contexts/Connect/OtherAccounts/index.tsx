@@ -34,11 +34,10 @@ export const OtherAccountsProvider = ({
     network,
     networkData: { ss58 },
   } = useNetwork()
-  const { extensionAccountsSynced, getExtensionAccounts } =
-    useExtensionAccounts()
   const { gettingExtensions } = useExtensions()
   const { addExternalAccount } = useExternalAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
+  const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
   const extensionAccounts = getExtensionAccounts(ss58)
 
@@ -204,7 +203,7 @@ export const OtherAccountsProvider = ({
 
   // Once extensions are fully initialised, fetch accounts from other sources
   useEffectIgnoreInitial(() => {
-    if (extensionAccountsSynced) {
+    if (extensionsSynced) {
       // Fetch accounts from supported hardware wallets
       importLocalOtherAccounts(getLocalVaultAccounts)
       importLocalOtherAccounts(getLocalLedgerAccounts)
@@ -216,14 +215,14 @@ export const OtherAccountsProvider = ({
       // Finally, fetch any read-only accounts that have been added by `system` or `user`
       importLocalOtherAccounts(getLocalExternalAccounts)
     }
-  }, [network, extensionAccountsSynced])
+  }, [network, extensionsSynced])
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts
   useEffectIgnoreInitial(() => {
-    if (extensionAccountsSynced && otherAccountsSynced === true) {
+    if (extensionsSynced && otherAccountsSynced === true) {
       setAccountsInitialised(true)
     }
-  }, [extensionAccountsSynced, otherAccountsSynced])
+  }, [extensionsSynced, otherAccountsSynced])
 
   return (
     <OtherAccountsContext.Provider
