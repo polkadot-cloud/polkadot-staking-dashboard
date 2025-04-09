@@ -10,16 +10,19 @@ import {
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { localStorageOrDefault } from '@w3ux/utils'
+import { useNetwork } from 'contexts/Network'
 import { useTranslation } from 'react-i18next'
 import { ButtonMonoInvert } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
+import { registerSaEvent } from 'utils'
 import type { ExtensionProps } from './types'
 
 export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
   const { t } = useTranslation('modals')
+  const { network } = useNetwork()
   const { openModal } = useOverlay().modal
-  const { connectExtensionAccounts } = useExtensionAccounts()
+  const { connectExtension } = useExtensionAccounts()
   const { extensionsStatus, extensionCanConnect, extensionInstalled } =
     useExtensions()
 
@@ -41,7 +44,10 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
   const handleClick = async () => {
     if (!connected) {
       if (canConnect) {
-        await connectExtensionAccounts(id)
+        await connectExtension(id)
+        registerSaEvent(`${network.toLowerCase()}_extension_connected`, {
+          id,
+        })
         setOpen(false)
         openModal({ key: 'Accounts' })
       } else {

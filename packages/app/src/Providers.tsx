@@ -10,7 +10,7 @@ import {
   WCAccountsProvider,
 } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
 import { BondedProvider } from 'contexts/Bonded'
@@ -47,18 +47,17 @@ import { WalletConnectProvider } from 'contexts/WalletConnect'
 import { Tooltip } from 'radix-ui'
 import { ThemedRouter } from 'Themes'
 import { OverlayProvider } from 'ui-overlay'
-import { registerSaEvent } from 'utils'
 
 export const Providers = () => {
   const {
     network,
     networkData: { ss58 },
   } = useNetwork()
-  const { activeAccount, setActiveAccount } = useActiveAccounts()
 
   return withProviders(
     // !! Provider order matters.
     [
+      ActiveAccountsProvider,
       UIProvider,
       [APIProvider, { network }],
       LedgerHardwareProvider,
@@ -70,13 +69,6 @@ export const Providers = () => {
           dappName: DappName,
           network,
           ss58,
-          activeAccount,
-          setActiveAccount,
-          onExtensionEnabled: (id: string) => {
-            registerSaEvent(`${network.toLowerCase()}_extension_connected`, {
-              id,
-            })
-          },
         },
       ],
       WCAccountsProvider,
