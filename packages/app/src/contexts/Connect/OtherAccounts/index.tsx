@@ -36,7 +36,7 @@ export const OtherAccountsProvider = ({
   } = useNetwork()
   const { extensionAccountsSynced, getExtensionAccounts } =
     useExtensionAccounts()
-  const { checkingInjectedWeb3 } = useExtensions()
+  const { gettingExtensions } = useExtensions()
   const { addExternalAccount } = useExternalAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
 
@@ -197,10 +197,10 @@ export const OtherAccountsProvider = ({
 
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected
   useEffect(() => {
-    if (!checkingInjectedWeb3) {
+    if (!gettingExtensions) {
       setStateWithRef([], setOtherAccounts, otherAccountsRef)
     }
-  }, [network, checkingInjectedWeb3])
+  }, [network, gettingExtensions])
 
   // Once extensions are fully initialised, fetch accounts from other sources
   useEffectIgnoreInitial(() => {
