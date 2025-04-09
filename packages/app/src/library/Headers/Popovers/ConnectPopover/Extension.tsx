@@ -19,7 +19,7 @@ import type { ExtensionProps } from './types'
 export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
   const { t } = useTranslation('modals')
   const { openModal } = useOverlay().modal
-  const { connectExtensionAccounts } = useExtensionAccounts()
+  const { connectExtension } = useExtensionAccounts()
   const { extensionsStatus, extensionCanConnect, extensionInstalled } =
     useExtensions()
 
@@ -41,7 +41,7 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
   const handleClick = async () => {
     if (!connected) {
       if (canConnect) {
-        await connectExtensionAccounts(id)
+        await connectExtension(id)
         setOpen(false)
         openModal({ key: 'Accounts' })
       } else {
