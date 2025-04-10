@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { SystemChainId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
@@ -17,7 +16,7 @@ import { useActiveBalances } from 'hooks/useActiveBalances'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useEffect, useRef } from 'react'
-import type { ActivePoolItem, MaybeAddress } from 'types'
+import type { ActivePoolItem, MaybeAddress, SystemChainId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type { BalancesContextInterface } from './types'
 

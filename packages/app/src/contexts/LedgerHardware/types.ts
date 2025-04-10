@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeString } from '@w3ux/types'
-import type { NetworkId } from 'common-types'
-import type { AnyJson } from 'types'
+import type { AnyJson, NetworkId } from 'types'
 
 export interface LedgerHardwareContextInterface {
   integrityChecked: boolean

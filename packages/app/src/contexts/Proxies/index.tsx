@@ -13,7 +13,7 @@ import {
 import { ProxiesQuery } from 'api/query/proxiesQuery'
 import { AccountProxies } from 'api/subscribe/accountProxies'
 import BigNumber from 'bignumber.js'
-import type { AnyApi, NetworkId } from 'common-types'
+import type { AnyApi } from 'common-types'
 import { isSupportedProxy } from 'config/proxies'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -26,7 +26,7 @@ import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type {
   Delegates,

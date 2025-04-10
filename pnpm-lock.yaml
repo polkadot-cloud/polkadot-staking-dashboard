@@ -314,6 +314,16 @@ importers:
 
   packages/consts: {}
 
+  packages/global-bus:
+    dependencies:
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
+
   packages/locales:
     dependencies:
       '@w3ux/utils':
@@ -378,12 +388,13 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
-      types:
-        specifier: workspace:*
-        version: link:../types
       ui-core:
         specifier: workspace:*
         version: link:../ui-core
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/ui-core:
     dependencies:
@@ -472,12 +483,13 @@ importers:
       react-error-boundary:
         specifier: ^5.0.0
         version: 5.0.0(react@19.1.0)
-      types:
-        specifier: workspace:*
-        version: link:../types
       ui-core:
         specifier: workspace:*
         version: link:../ui-core
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/utils:
     dependencies:

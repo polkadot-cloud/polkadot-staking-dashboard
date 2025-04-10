@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ChainId, SystemChainId } from 'common-types'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -9,7 +8,7 @@ import { Apis } from 'controllers/Apis'
 import { Identities } from 'controllers/Identities'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
-import type { BondedPool } from 'types'
+import type { BondedPool, ChainId, SystemChainId } from 'types'
 import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { Header } from './Header'

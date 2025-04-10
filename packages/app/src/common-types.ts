@@ -26,7 +26,7 @@ import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
 import type { FC, FunctionComponent, SVGProps } from 'react'
-import type { AnyJson, DetailActivePool } from 'types'
+import type { AnyJson, DetailActivePool, NetworkId } from 'types'
 
 declare global {
   interface Window {
@@ -62,15 +62,6 @@ declare global {
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }
-
-export type ChainId = NetworkId | SystemChainId
-
-export type NetworkId = 'polkadot' | 'kusama' | 'westend'
-
-export type SystemChainId =
-  | 'people-polkadot'
-  | 'people-kusama'
-  | 'people-westend'
 
 export type Networks = Record<string, Network>
 

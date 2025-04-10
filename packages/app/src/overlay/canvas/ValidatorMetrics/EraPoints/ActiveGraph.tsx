@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId } from 'common-types'
 import { EraPointsLine } from 'library/Graphs/EraPointsLine'
 import { useValidatorEraPoints } from 'plugin-staking-api'
+import type { NetworkId } from 'types'
 
 interface Props {
   network: NetworkId

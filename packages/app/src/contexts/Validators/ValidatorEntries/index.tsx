@@ -11,7 +11,7 @@ import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMult
 import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
 import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import BigNumber from 'bignumber.js'
-import type { AnyApi, ChainId, SystemChainId } from 'common-types'
+import type { AnyApi } from 'common-types'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -24,7 +24,14 @@ import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
-import type { Identity, SuperIdentity, Validator, ValidatorStatus } from 'types'
+import type {
+  ChainId,
+  Identity,
+  SuperIdentity,
+  SystemChainId,
+  Validator,
+  ValidatorStatus,
+} from 'types'
 import { perbillToPercent } from 'utils'
 import type {
   ValidatorAddresses,

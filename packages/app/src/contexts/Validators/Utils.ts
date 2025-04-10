@@ -1,9 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId } from 'common-types'
 import type { LocalValidatorEntriesData } from 'contexts/Validators/types'
-import type { Validator } from 'types'
+import type { NetworkId, Validator } from 'types'
 
 // Get favorite validators from local storage
 export const getLocalFavorites = (network: NetworkId) => {
