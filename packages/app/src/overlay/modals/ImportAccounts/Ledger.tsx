@@ -4,9 +4,9 @@
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useLedgerAccounts } from '@w3ux/react-connect-kit'
+import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { HardwareAccount } from '@w3ux/types'
+import type { AccountSource, HardwareAccount } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
@@ -29,13 +29,13 @@ export const Ledger = () => {
     networkData: { ss58 },
   } = useNetwork()
   const {
-    addLedgerAccount,
-    removeLedgerAccount,
-    renameLedgerAccount,
-    ledgerAccountExists,
-    getLedgerAccount,
-    getLedgerAccounts,
-  } = useLedgerAccounts()
+    addHardwareAccount,
+    removeHardwareAccount,
+    renameHardwareAccount,
+    hardwareAccountExists,
+    getHardwareAccount,
+    getHardwareAccounts,
+  } = useHardwareAccounts()
   const {
     getFeedback,
     setStatusCode,
@@ -50,9 +50,11 @@ export const Ledger = () => {
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
 
+  const source: AccountSource = 'ledger'
+
   // Store addresses retreived from Ledger device. Defaults to local addresses
   const [addresses, setAddresses] = useState<HardwareAccount[]>(
-    getLedgerAccounts(network)
+    getHardwareAccounts(source, network)
   )
   const addressesRef = useRef(addresses)
 
@@ -61,23 +63,27 @@ export const Ledger = () => {
   // Get whether the ledger device is currently executing a task
   const isExecuting = getIsExecuting()
 
+  // Handle exist check for a ledger address
+  const handleExists = (address: string) =>
+    hardwareAccountExists(source, network, address)
+
   // Handle renaming a ledger address
   const handleRename = (address: string, newName: string) => {
     renameOtherAccount(address, newName)
-    renameLedgerAccount(network, address, newName)
+    renameHardwareAccount(source, network, address, newName)
   }
 
   // Handle removing a ledger address
   const handleRemove = (address: string) => {
     if (confirm(t('areYouSure', { ns: 'app' }))) {
       // Remove from `other` accounts state
-      const existingOther = getLedgerAccount(network, address)
+      const existingOther = getHardwareAccount(source, network, address)
       if (existingOther) {
         forgetOtherAccounts([existingOther])
       }
 
       // Remove ledger account from state
-      removeLedgerAccount(network, address)
+      removeHardwareAccount(source, network, address)
       // Remove ledger account from state
       setStateWithRef(
         [...addressesRef.current.filter((a) => a.address !== address)],
@@ -122,7 +128,8 @@ export const Ledger = () => {
         setAddresses,
         addressesRef
       )
-      const account = addLedgerAccount(
+      const account = addHardwareAccount(
+        source,
         network,
         newAddress[0].address,
         options.accountIndex
@@ -140,9 +147,9 @@ export const Ledger = () => {
   // Resets ledger accounts
   const resetLedgerAccounts = () => {
     // Remove imported Ledger accounts.
-    const accountsToRemove = [...getLedgerAccounts(network)]
+    const accountsToRemove = [...getHardwareAccounts(source, network)]
     addressesRef.current.forEach((account) => {
-      removeLedgerAccount(network, account.address)
+      removeHardwareAccount(source, network, account.address)
     })
     setStateWithRef([], setAddresses, addressesRef)
     forgetOtherAccounts(accountsToRemove)
@@ -232,12 +239,11 @@ export const Ledger = () => {
             {addresses.map(({ name, address }, i) => (
               <AccountImport.Item
                 key={`ledger_imported_${i}`}
-                network="polkadot"
                 address={address}
                 last={i === addresses.length - 1}
                 initial={name}
                 Identicon={<Polkicon address={address} fontSize="3.3rem" />}
-                existsHandler={ledgerAccountExists}
+                existsHandler={handleExists}
                 renameHandler={handleRename}
                 onRemove={handleRemove}
               />

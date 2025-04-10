@@ -5,11 +5,9 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import {
   useExtensionAccounts,
   useExtensions,
-  useLedgerAccounts,
-  useVaultAccounts,
-  useWcAccounts,
+  useHardwareAccounts,
 } from '@w3ux/react-connect-kit'
-import type { ImportedAccount } from '@w3ux/types'
+import type { AccountSource, ImportedAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import type { NetworkId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -38,9 +36,7 @@ export const OtherAccountsProvider = ({
     networkData: { ss58 },
   } = useNetwork()
   const { gettingExtensions } = useExtensions()
-  const { getWcAccounts } = useWcAccounts()
-  const { getVaultAccounts } = useVaultAccounts()
-  const { getLedgerAccounts } = useLedgerAccounts()
+  const { getHardwareAccounts } = useHardwareAccounts()
   const { addExternalAccount } = useExternalAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
   const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
@@ -86,12 +82,13 @@ export const OtherAccountsProvider = ({
   // Checks `localStorage` for previously added accounts from the provided source, and adds them to
   // `accounts` state. if local active account is present, it will also be assigned as active.
   // Accounts are ignored if they are already imported through an extension
-  const importLocalOtherAccounts = (
-    getter: (n: NetworkId) => ImportedAccount[]
+  const importLocalOtherAccounts = <T extends AccountSource>(
+    source: T,
+    getter: (s: T, n: NetworkId) => ImportedAccount[]
   ) => {
     // Get accounts from provided `getter` function. The resulting array of accounts must contain an
     // `address` field
-    let localAccounts = getter(network)
+    let localAccounts = getter(source, network)
 
     if (localAccounts.length) {
       const activeAccountInSet =
@@ -211,15 +208,15 @@ export const OtherAccountsProvider = ({
   useEffectIgnoreInitial(() => {
     if (extensionsSynced) {
       // Fetch accounts from supported hardware wallets
-      importLocalOtherAccounts(getVaultAccounts)
-      importLocalOtherAccounts(getLedgerAccounts)
-      importLocalOtherAccounts(getWcAccounts)
+      importLocalOtherAccounts('vault', getHardwareAccounts)
+      importLocalOtherAccounts('ledger', getHardwareAccounts)
+      importLocalOtherAccounts('wallet_connect', getHardwareAccounts)
 
       // Mark hardware wallets as initialised
       setOtherAccountsSynced(true)
 
       // Finally, fetch any read-only accounts that have been added by `system` or `user`
-      importLocalOtherAccounts(getLocalExternalAccounts)
+      importLocalOtherAccounts('external', getLocalExternalAccounts)
     }
   }, [network, extensionsSynced])
 

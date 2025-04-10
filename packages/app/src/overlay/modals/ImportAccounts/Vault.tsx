@@ -3,8 +3,9 @@
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import { useVaultAccounts } from '@w3ux/react-connect-kit'
+import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
+import type { AccountSource } from '@w3ux/types'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
@@ -22,36 +23,42 @@ export const Vault = () => {
     networkData: { ss58 },
   } = useNetwork()
   const {
-    getVaultAccount,
-    getVaultAccounts,
-    vaultAccountExists,
-    renameVaultAccount,
-    removeVaultAccount,
-  } = useVaultAccounts()
+    getHardwareAccount,
+    getHardwareAccounts,
+    hardwareAccountExists,
+    renameHardwareAccount,
+    removeHardwareAccount,
+  } = useHardwareAccounts()
   const { setModalResize } = useOverlay().modal
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
+
+  const source: AccountSource = 'vault'
 
   // Whether the import account button is active
   const [importActive, setImportActive] = useState<boolean>(false)
 
   // Get vault accounts
-  const vaultAccounts = getVaultAccounts(network)
+  const vaultAccounts = getHardwareAccounts(source, network)
+
+  // Handle exist check for a vault address
+  const handleExists = (address: string) =>
+    hardwareAccountExists(source, network, address)
 
   // Handle renaming a vault address
   const handleRename = (address: string, newName: string) => {
     renameOtherAccount(address, newName)
-    renameVaultAccount(network, address, newName)
+    renameHardwareAccount(source, network, address, newName)
   }
 
   // Handle removing a vault address
   const handleRemove = (address: string): void => {
     if (confirm(t('areYouSure', { ns: 'app' }))) {
-      const existingOther = getVaultAccount(network, address)
+      const existingOther = getHardwareAccount(source, network, address)
       if (existingOther) {
         forgetOtherAccounts([existingOther])
       }
-      removeVaultAccount(network, address)
+      removeHardwareAccount(source, network, address)
     }
   }
 
@@ -156,12 +163,11 @@ export const Vault = () => {
             {vaultAccounts.map(({ address, name }, i) => (
               <AccountImport.Item
                 key={`vault_imported_${i}`}
-                network={network}
                 address={address}
                 initial={name}
                 last={i === vaultAccounts.length - 1}
                 Identicon={<Polkicon address={address} fontSize="3.3rem" />}
-                existsHandler={vaultAccountExists}
+                existsHandler={handleExists}
                 renameHandler={handleRename}
                 onRemove={handleRemove}
               />

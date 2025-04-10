@@ -48,7 +48,7 @@ export const ExternalAccountsProvider = ({
       address: formattedAddress,
       network,
       name: ellipsisFn(address),
-      source: 'external',
+      source: 'external' as const,
       addedBy,
     }
 
