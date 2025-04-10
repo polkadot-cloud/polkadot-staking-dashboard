@@ -127,8 +127,6 @@ export const ImportedAccountsProvider = ({
     const localActiveProxy = getActiveProxyLocal(network, ss58)
     if (getAccount(localActiveProxy?.address || null)) {
       setActiveProxy(getActiveProxyLocal(network, ss58), false)
-    } else {
-      setActiveProxy(null, false)
     }
   }, [network, extensionAccounts])
 
