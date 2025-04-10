@@ -5,9 +5,7 @@ import { withProviders } from '@w3ux/factories'
 import {
   ExtensionAccountsProvider,
   ExtensionsProvider,
-  LedgerAccountsProvider,
-  VaultAccountsProvider,
-  WCAccountsProvider,
+  HardwareAccountsProvider,
 } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
@@ -71,9 +69,7 @@ export const Providers = () => {
           ss58,
         },
       ],
-      WCAccountsProvider,
-      VaultAccountsProvider,
-      LedgerAccountsProvider,
+      HardwareAccountsProvider,
       ExternalAccountsProvider,
       OtherAccountsProvider,
       ImportedAccountsProvider,
