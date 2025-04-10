@@ -1,9 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault } from '@w3ux/utils'
 import { LedgerChains } from 'config/ledger'
-import type { LedgerAddress } from './types'
 
 // Ledger error keyed by type of error
 const LedgerErrorsByType = {
@@ -43,16 +41,3 @@ export const getLedgerErrorType = (err: string) => {
 // Gets ledger app from local storage, fallback to first entry
 export const getLedgerApp = (network: string) =>
   LedgerChains.find((a) => a.network === network) || LedgerChains[0]
-
-// Gets saved ledger addresses from local storage
-export const getLocalLedgerAddresses = (network?: string) => {
-  const localAddresses = localStorageOrDefault(
-    'ledger_addresses',
-    [],
-    true
-  ) as LedgerAddress[]
-
-  return network
-    ? localAddresses.filter((a) => a.network === network)
-    : localAddresses
-}

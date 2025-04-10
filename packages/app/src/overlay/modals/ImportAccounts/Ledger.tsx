@@ -5,17 +5,16 @@ import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useLedgerAccounts } from '@w3ux/react-connect-kit'
-import type { LedgerAddress } from '@w3ux/react-connect-kit/types'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { LedgerAccount } from '@w3ux/types'
+import type { HardwareAccount } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
-import type { LedgerResponse } from 'contexts/LedgerHardware/types'
-import {
-  getLedgerApp,
-  getLocalLedgerAddresses,
-} from 'contexts/LedgerHardware/Utils'
+import type {
+  LedgerAddress,
+  LedgerResponse,
+} from 'contexts/LedgerHardware/types'
+import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -52,7 +51,7 @@ export const Ledger = () => {
     useOtherAccounts()
 
   // Store addresses retreived from Ledger device. Defaults to local addresses
-  const [addresses, setAddresses] = useState<LedgerAccount[]>(
+  const [addresses, setAddresses] = useState<HardwareAccount[]>(
     getLedgerAccounts(network)
   )
   const addressesRef = useRef(addresses)
@@ -71,27 +70,6 @@ export const Ledger = () => {
   // Handle removing a ledger address
   const handleRemove = (address: string) => {
     if (confirm(t('areYouSure', { ns: 'app' }))) {
-      // Remove local ledger accounts.
-      let newLedgerAddresses = getLocalLedgerAddresses()
-
-      newLedgerAddresses = newLedgerAddresses.filter((a) => {
-        if (a.address !== address) {
-          return true
-        }
-        if (a.network !== network) {
-          return true
-        }
-        return false
-      })
-      if (!newLedgerAddresses.length) {
-        localStorage.removeItem('ledger_addresses')
-      } else {
-        localStorage.setItem(
-          'ledger_addresses',
-          JSON.stringify(newLedgerAddresses)
-        )
-      }
-
       // Remove from `other` accounts state
       const existingOther = getLedgerAccount(network, address)
       if (existingOther) {
@@ -138,31 +116,20 @@ export const Ledger = () => {
         name: ellipsisFn(address),
         network,
       }))
+      console.log('newAddress', newAddress)
       setStateWithRef(
         [...addressesRef.current, ...newAddress],
         setAddresses,
         addressesRef
       )
-
-      // Update the full list of local ledger addresses with new entry. NOTE: This can be deprecated
-      // once w3ux package is updated to directly import without using local `ledger_addresses`
-      const newAddresses = getLocalLedgerAddresses()
-        .filter((a) => {
-          if (a.address !== newAddress[0].address) {
-            return true
-          }
-          if (a.network !== network) {
-            return true
-          }
-          return false
-        })
-        .concat(newAddress)
-      localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses))
       const account = addLedgerAccount(
         network,
         newAddress[0].address,
         options.accountIndex
       )
+
+      console.log(account)
+
       if (account) {
         addOtherAccounts([account])
       }
@@ -173,10 +140,12 @@ export const Ledger = () => {
   // Resets ledger accounts
   const resetLedgerAccounts = () => {
     // Remove imported Ledger accounts.
+    const accountsToRemove = [...getLedgerAccounts(network)]
     addressesRef.current.forEach((account) => {
       removeLedgerAccount(network, account.address)
     })
     setStateWithRef([], setAddresses, addressesRef)
+    forgetOtherAccounts(accountsToRemove)
   }
 
   // Get last saved ledger feedback
@@ -260,7 +229,7 @@ export const Ledger = () => {
                 ns: 'modals',
               })}
             />
-            {addresses.map(({ name, address }: LedgerAccount, i) => (
+            {addresses.map(({ name, address }, i) => (
               <AccountImport.Item
                 key={`ledger_imported_${i}`}
                 network="polkadot"

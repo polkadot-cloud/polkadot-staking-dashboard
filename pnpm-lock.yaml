@@ -15,10 +15,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      '@w3ux/react-connect-kit':
-        specifier: ^3.2.23
-        version: 3.2.23(react@19.1.0)(rxjs@7.8.2)
     devDependencies:
       '@eslint/js':
         specifier: ^9.23.0
@@ -42,8 +38,8 @@ importers:
         specifier: ^3.7.0
         version: 3.8.1(vite@6.2.4(@types/node@22.13.17)(sass@1.77.6))
       '@w3ux/types':
-        specifier: ^2.1.1
-        version: 2.1.1
+        specifier: ^2.1.7
+        version: 2.1.7
       eslint:
         specifier: ^9.23.0
         version: 9.23.0
@@ -138,8 +134,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: 3.2.22
-        version: 3.2.22(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: 3.2.24-alpha.2
+        version: 3.2.24-alpha.2(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: ^2.0.0
         version: 2.0.0
@@ -2509,23 +2505,13 @@ packages:
     peerDependencies:
       react: ^19
 
-  '@w3ux/observables-connect@0.9.30':
-    resolution: {integrity: sha512-bp5H2QtmuaRrInG8Z246Z681M+PNfEsVM/kDzvauZ9SbaDqEKiJnm+rGqR4KkmiQDD1mXOfEb7Haf5ZRmQaaow==}
-    peerDependencies:
-      rxjs: ^7.8.2
-
   '@w3ux/observables-connect@0.9.31':
     resolution: {integrity: sha512-DtFUQ0GBcOViqj4YbbragdX7A+7BDEdT5GwscnuWFhz1MBM6Ngk1j/Z+Z46rsGJO6AdpnEz1Ycz5DLjOvN5lDg==}
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.2.22':
-    resolution: {integrity: sha512-2AxQDAOhD5QObbSGg9g+drtUViV9MzL6CcJUfaciGuXSLIrE2/d545605pJyrS/mpeKELlyG3v4nOzvuyjTWjw==}
-    peerDependencies:
-      rxjs: ^7.8.2
-
-  '@w3ux/react-connect-kit@3.2.23':
-    resolution: {integrity: sha512-Eza5u4npSci+wVbIYuOykztlwTJ0qomeD/8b6+25YvXrFNerUZ3lRV3xmOLVoOkvnz/xpIlJhWth8rV8HyZwYw==}
+  '@w3ux/react-connect-kit@3.2.24-alpha.2':
+    resolution: {integrity: sha512-Yfn1vXkOwdH15IJDSpYhbpIwnxV1fkVew43/O+IV+XX+9/QW9XfvopULM2eJFv1WdLYUmLtqIsGimsAj81otTw==}
     peerDependencies:
       rxjs: ^7.8.2
 
@@ -2537,6 +2523,9 @@ packages:
 
   '@w3ux/types@2.1.1':
     resolution: {integrity: sha512-AlgVwEh+ysYj8Y56Fzaaq9dzwRfBnfYviyKG+fzgmMj5MkkUAOyxa8LPnFLZmYoshsd6frKNMBto8m3JmgKwSA==}
+
+  '@w3ux/types@2.1.7':
+    resolution: {integrity: sha512-/03Fg+LrGuPR1Iqc7p1+ECPG8mfAB2E0Z5fxWeTi6Ben2AMLQ//ZwHtOyjH67QX4i67qpD/Ouetv/Lh0AfSxmg==}
 
   '@w3ux/utils@2.0.8':
     resolution: {integrity: sha512-/uRGXVe85n2UNdtwy7w62lMnq7tRe9HQWtzRNp1QRtntTZ9v85FFKOsq2QgnG1gAljE7yHbyDwOVLNqOC3amSg==}
@@ -8029,7 +8018,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/observables-connect@0.9.30(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/observables-connect@0.9.31(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/extension-assets': 2.2.0(react@19.1.0)
       '@w3ux/utils': 2.0.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -8039,33 +8028,11 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/observables-connect@0.9.31(react@19.1.0)(rxjs@7.8.2)':
-    dependencies:
-      '@w3ux/extension-assets': 2.2.0(react@19.1.0)
-      '@w3ux/utils': 2.0.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - bufferutil
-      - react
-      - utf-8-validate
-
-  '@w3ux/react-connect-kit@3.2.22(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.2.24-alpha.2(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/extension-assets': 2.2.0(react@19.1.0)
       '@w3ux/hooks': 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
-      '@w3ux/observables-connect': 0.9.30(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
-      '@w3ux/utils': 2.0.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - bufferutil
-      - react
-      - utf-8-validate
-
-  '@w3ux/react-connect-kit@3.2.23(react@19.1.0)(rxjs@7.8.2)':
-    dependencies:
-      '@w3ux/extension-assets': 2.2.0(react@19.1.0)
-      '@w3ux/hooks': 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
-      '@w3ux/observables-connect': 0.9.31(react@19.1.0)(rxjs@7.8.2)
+      '@w3ux/observables-connect': 0.9.31(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils': 2.0.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rxjs: 7.8.2
     transitivePeerDependencies:
@@ -8085,6 +8052,8 @@ snapshots:
       - utf-8-validate
 
   '@w3ux/types@2.1.1': {}
+
+  '@w3ux/types@2.1.7': {}
 
   '@w3ux/utils@2.0.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:

@@ -2,10 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
-import { getLocalLedgerAccounts } from '@w3ux/react-connect-kit/LedgerAccountsProvider/utils'
-import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProvider/utils'
-import { getLocalWcAccounts } from '@w3ux/react-connect-kit/WCAccountsProvider/utils'
+import {
+  useExtensionAccounts,
+  useExtensions,
+  useLedgerAccounts,
+  useVaultAccounts,
+  useWcAccounts,
+} from '@w3ux/react-connect-kit'
 import type { ImportedAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import type { NetworkId } from 'common-types'
@@ -35,6 +38,9 @@ export const OtherAccountsProvider = ({
     networkData: { ss58 },
   } = useNetwork()
   const { gettingExtensions } = useExtensions()
+  const { getWcAccounts } = useWcAccounts()
+  const { getVaultAccounts } = useVaultAccounts()
+  const { getLedgerAccounts } = useLedgerAccounts()
   const { addExternalAccount } = useExternalAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
   const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
@@ -205,9 +211,9 @@ export const OtherAccountsProvider = ({
   useEffectIgnoreInitial(() => {
     if (extensionsSynced) {
       // Fetch accounts from supported hardware wallets
-      importLocalOtherAccounts(getLocalVaultAccounts)
-      importLocalOtherAccounts(getLocalLedgerAccounts)
-      importLocalOtherAccounts(getLocalWcAccounts)
+      importLocalOtherAccounts(getVaultAccounts)
+      importLocalOtherAccounts(getLedgerAccounts)
+      importLocalOtherAccounts(getWcAccounts)
 
       // Mark hardware wallets as initialised
       setOtherAccountsSynced(true)

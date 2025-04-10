@@ -5,7 +5,6 @@ import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { useVaultAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { VaultAccount } from '@w3ux/types'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
@@ -154,7 +153,7 @@ export const Vault = () => {
                 count: vaultAccounts.length,
               })}
             />
-            {vaultAccounts.map(({ address, name }: VaultAccount, i) => (
+            {vaultAccounts.map(({ address, name }, i) => (
               <AccountImport.Item
                 key={`vault_imported_${i}`}
                 network={network}

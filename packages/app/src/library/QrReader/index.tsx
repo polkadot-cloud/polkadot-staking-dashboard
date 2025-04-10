@@ -12,8 +12,10 @@ import { Wrapper } from './Wrapper'
 
 export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
   const { t } = useTranslation('modals')
-  const { addVaultAccount, vaultAccountExists, vaultAccounts } =
+  const { addVaultAccount, vaultAccountExists, getVaultAccounts } =
     useVaultAccounts()
+
+  const vaultAccounts = getVaultAccounts(network)
 
   // Store data from QR Code scanner.
   const [qrData, setQrData] = useState<AnyJson>(undefined)

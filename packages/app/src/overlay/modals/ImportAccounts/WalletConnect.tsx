@@ -9,7 +9,6 @@ import {
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useWcAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { WCAccount } from '@w3ux/types'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useWalletConnect } from 'contexts/WalletConnect'
@@ -163,7 +162,7 @@ export const WalletConnect = () => {
                 ns: 'modals',
               })}
             />
-            {wcAccounts.map(({ address, name }: WCAccount, i) => (
+            {wcAccounts.map(({ address, name }, i) => (
               <AccountImport.Item
                 key={`wc_imported_${network}_${i}`}
                 network={network}
