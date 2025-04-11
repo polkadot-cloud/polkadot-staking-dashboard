@@ -8,6 +8,6 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
-    "bignumber.js": "^9.1.2"
+    "bignumber.js": "^9.2.1"
   }
 }
