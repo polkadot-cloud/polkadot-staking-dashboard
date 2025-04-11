@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue } from '@w3ux/utils'
+import { NetworkKey } from 'consts'
 import { DefaultNetwork, NetworkList } from 'consts/networks'
 import type { NetworkId } from 'types'
 
@@ -15,21 +16,21 @@ export const getInitialNetwork = () => {
 
   // Use network from url if valid
   if (urlNetworkValid) {
-    localStorage.setItem('network', urlNetwork)
+    localStorage.setItem(NetworkKey, urlNetwork)
     return urlNetwork as NetworkId
   }
 
   // Fallback 1: Use network from local storage if valid
-  const localNetwork: NetworkId = localStorage.getItem('network') as NetworkId
+  const localNetwork: NetworkId = localStorage.getItem(NetworkKey) as NetworkId
   const localNetworkValid = !!Object.values(NetworkList).find(
     (n) => n.name === localNetwork
   )
   if (localNetworkValid) {
-    localStorage.setItem('network', localNetwork)
+    localStorage.setItem(NetworkKey, localNetwork)
     return localNetwork
   }
 
   // Fallback 2: Use default network
-  localStorage.setItem('network', DefaultNetwork)
+  localStorage.setItem(NetworkKey, DefaultNetwork)
   return DefaultNetwork
 }

@@ -43,10 +43,7 @@ export class Apis {
       })
     )
 
-    // 1. Update local storage and sync status
-
-    // Persist the selected network to local storage
-    localStorage.setItem('network', network)
+    // 1. Update sync status
 
     // Set app initializing. Even though `initialization` is added by default, it is called again
     // here in case the user switches networks
