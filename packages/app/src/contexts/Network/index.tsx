@@ -3,12 +3,11 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
-import { NetworkList } from 'consts/networks'
+import { DefaultNetwork, NetworkList } from 'consts/networks'
 import { Apis } from 'controllers/Apis'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { NetworkId } from 'types'
-import { defaultNetwork } from './defaults'
 import type { NetworkContextInterface, NetworkState } from './types'
 
 export const [NetworkContext, useNetwork] =
@@ -38,7 +37,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
       (n) => n.name === localNetwork
     )
 
-    const initialNetwork = localNetworkValid ? localNetwork : defaultNetwork
+    const initialNetwork = localNetworkValid ? localNetwork : DefaultNetwork
 
     // Commit initial to local storage
     localStorage.setItem('network', initialNetwork)

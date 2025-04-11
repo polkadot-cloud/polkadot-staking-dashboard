@@ -1,7 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Networks, SystemChain } from 'types'
+import type { NetworkId, Networks, SystemChain } from 'types'
+
+export const DefaultNetwork: NetworkId = 'polkadot'
 
 export const NetworkList: Networks = {
   polkadot: {

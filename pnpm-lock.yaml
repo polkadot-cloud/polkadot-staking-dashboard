@@ -331,6 +331,12 @@ importers:
 
   packages/global-bus:
     dependencies:
+      '@w3ux/utils':
+        specifier: ^2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      consts:
+        specifier: workspace:*
+        version: link:../consts
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
