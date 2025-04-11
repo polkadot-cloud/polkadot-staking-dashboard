@@ -5,6 +5,7 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn, rmCommas } from '@w3ux/utils'
 import { PoolWithdraw } from 'api/tx/poolWithdraw'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -32,16 +33,13 @@ export const WithdrawMember = ({
   memberRef: RefObject<HTMLDivElement | null>
 }) => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { closePrompt } = usePrompt()
   const { consts, activeEra } = useApi()
   const { activeAccount } = useActiveAccounts()
   const { removePoolMember } = usePoolMembers()
   const { getSignerWarnings } = useSignerWarnings()
-
+  const { unit, units } = getNetworkData(network)
   const { historyDepth } = consts
   const { unbondingEras, points } = member
 

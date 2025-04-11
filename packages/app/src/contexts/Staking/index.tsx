@@ -7,6 +7,7 @@ import { setStateWithRef } from '@w3ux/utils'
 import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
 import { ErasStakersOverview } from 'api/query/erasStakersOverview'
 import type { AnyApi } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -33,12 +34,13 @@ export const [StakingContext, useStaking] =
   createSafeContext<StakingContextInterface>()
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
+  const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
-  const { networkData, network } = useNetwork()
   const { getLedger, getNominations } = useBalances()
   const { isReady, activeEra, apiStatus } = useApi()
   const { accounts: connectAccounts } = useImportedAccounts()
   const { activeAccount, getActiveAccount } = useActiveAccounts()
+  const { units } = getNetworkData(network)
 
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
@@ -129,7 +131,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       networkName: network,
       task: 'processExposures',
       activeAccount,
-      units: networkData.units,
+      units,
       exposures,
     })
   }

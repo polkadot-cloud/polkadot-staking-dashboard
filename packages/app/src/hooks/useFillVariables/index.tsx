@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { AnyJson } from 'types'
@@ -14,9 +15,10 @@ export const useFillVariables = () => {
     networkMetrics: { minimumActiveStake },
     poolsConfig: { minJoinBond, minCreateBond },
   } = useApi()
-  const { networkData } = useNetwork()
+  const { network } = useNetwork()
   const { maxNominations, maxExposurePageSize, existentialDeposit } = consts
   const { maxSupportedDays } = useErasPerDay()
+  const { unit, units, name } = getNetworkData(network)
 
   const fillVariables = (d: AnyJson, keys: string[]) => {
     const fields: AnyJson = Object.entries(d).filter(([k]) => keys.includes(k))
@@ -24,31 +26,27 @@ export const useFillVariables = () => {
       ([, [key, val]]: AnyJson) => {
         const varsToValues = [
           ['{AVERAGE_REWARD_RATE_DAYS}', maxSupportedDays > 30 ? '30' : '15'],
-          ['{NETWORK_UNIT}', networkData.unit],
-          ['{NETWORK_NAME}', capitalizeFirstLetter(networkData.name)],
+          ['{NETWORK_UNIT}', unit],
+          ['{NETWORK_NAME}', capitalizeFirstLetter(name)],
           ['{MAX_EXPOSURE_PAGE_SIZE}', maxExposurePageSize.toString()],
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
           [
             '{MIN_ACTIVE_STAKE}',
-            planckToUnitBn(minimumActiveStake, networkData.units)
+            planckToUnitBn(minimumActiveStake, units)
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{MIN_POOL_JOIN_BOND}',
-            planckToUnitBn(minJoinBond, networkData.units)
-              .decimalPlaces(3)
-              .toFormat(),
+            planckToUnitBn(minJoinBond, units).decimalPlaces(3).toFormat(),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
-            planckToUnitBn(minCreateBond, networkData.units)
-              .decimalPlaces(3)
-              .toFormat(),
+            planckToUnitBn(minCreateBond, units).decimalPlaces(3).toFormat(),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
-            planckToUnitBn(existentialDeposit, networkData.units).toFormat(),
+            planckToUnitBn(existentialDeposit, units).toFormat(),
           ],
         ]
 

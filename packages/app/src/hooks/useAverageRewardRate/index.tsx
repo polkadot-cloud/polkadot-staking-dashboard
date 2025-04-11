@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -16,8 +17,9 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
   const {
     networkMetrics: { totalIssuance },
   } = useApi()
-  const { units } = useNetwork().networkData
+  const { network } = useNetwork()
   const { avgCommission, averageEraValidatorReward } = useValidators()
+  const { units } = getNetworkData(network)
 
   // Get average reward rates.
   const getAverageRewardRate = (compounded: boolean): AverageRewardRate => {

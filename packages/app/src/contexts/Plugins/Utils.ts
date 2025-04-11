@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault } from '@w3ux/utils'
-import type { Plugin } from 'config/plugins'
-import { CompulsoryPluginsProd, PluginsList } from 'config/plugins'
+import { CompulsoryPluginsProduction, PluginsList } from 'consts/plugins'
+import type { Plugin } from 'types'
 
 // Get initial plugins from local storage
 export const getAvailablePlugins = () => {
@@ -14,7 +14,7 @@ export const getAvailablePlugins = () => {
   ) as Plugin[]
   // In production, add compulsory plugins to `localPlugins` if they do not exist.
   if (import.meta.env.PROD) {
-    CompulsoryPluginsProd.forEach((plugin) => {
+    CompulsoryPluginsProduction.forEach((plugin) => {
       if (!localPlugins.includes(plugin)) {
         localPlugins.push(plugin)
       }

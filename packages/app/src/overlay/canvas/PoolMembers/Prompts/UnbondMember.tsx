@@ -5,6 +5,7 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn, rmCommas } from '@w3ux/utils'
 import { PoolUnbond } from 'api/tx/poolUnbond'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -32,14 +33,12 @@ export const UnbondMember = ({
 }) => {
   const { t } = useTranslation('modals')
   const { consts } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { closePrompt } = usePrompt()
   const { activeAccount } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
+  const { unit, units } = getNetworkData(network)
 
   const { points } = member
   const { bondDuration } = consts

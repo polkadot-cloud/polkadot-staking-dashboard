@@ -5,6 +5,7 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { capitalizeFirstLetter, rmCommas, sortWithNull } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -17,16 +18,14 @@ import { planckToUnitBn } from 'utils'
 
 export const Announcements = () => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { bondedPools } = useBondedPools()
   const {
     poolsConfig: { counterForPoolMembers },
     stakingMetrics: { totalStaked, lastReward },
   } = useApi()
 
+  const { unit, units } = getNetworkData(network)
   const lastRewardUnit = planckToUnitBn(lastReward, units)
 
   let totalPoolPoints = new BigNumber(0)

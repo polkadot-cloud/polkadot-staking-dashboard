@@ -6,6 +6,7 @@ import { planckToUnit } from '@w3ux/utils'
 import { PayoutStakersByPage } from 'api/tx/payoutStakersByPage'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
@@ -30,15 +31,13 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals')
-    const {
-      network,
-      networkData: { units, unit },
-    } = useNetwork()
+    const { network } = useNetwork()
     const { newBatchCall } = useBatchCall()
     const { setModalStatus } = useOverlay().modal
     const { activeAccount } = useActiveAccounts()
     const { getSignerWarnings } = useSignerWarnings()
     const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
+    const { unit, units } = getNetworkData(network)
 
     // Get the total payout amount
     const totalPayout =

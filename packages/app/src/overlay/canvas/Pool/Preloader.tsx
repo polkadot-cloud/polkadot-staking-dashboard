@@ -3,6 +3,7 @@
 
 import { capitalizeFirstLetter, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -14,14 +15,12 @@ import { planckToUnitBn } from 'utils'
 
 export const Preloader = () => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { bondedPools } = useBondedPools()
   const {
     poolsConfig: { counterForPoolMembers },
   } = useApi()
+  const { unit, units } = getNetworkData(network)
 
   let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {

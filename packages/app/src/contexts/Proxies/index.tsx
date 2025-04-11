@@ -13,20 +13,20 @@ import {
 import { ProxiesQuery } from 'api/query/proxiesQuery'
 import { AccountProxies } from 'api/subscribe/accountProxies'
 import BigNumber from 'bignumber.js'
-import type { AnyApi, NetworkId } from 'common-types'
-import { isSupportedProxy } from 'config/proxies'
+import type { AnyApi } from 'common-types'
+import { DefaultNetwork } from 'consts/networks'
+import { isSupportedProxy } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
-import { defaultNetwork } from 'contexts/Network/defaults'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type {
   Delegates,
@@ -54,7 +54,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   // Store the last network proxies were synced on
   const [lastSyncedNetwork, setLastSyncedNetwork] =
-    useState<NetworkId>(defaultNetwork)
+    useState<NetworkId>(DefaultNetwork)
 
   // Reformats proxies into a list of delegates
   const formatProxiesToDelegates = () => {

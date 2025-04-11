@@ -6,6 +6,7 @@ import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { AccountSource } from '@w3ux/types'
+import { getNetworkData } from 'consts/util'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
@@ -18,10 +19,7 @@ import { Close, useOverlay } from 'ui-overlay'
 
 export const Vault = () => {
   const { t } = useTranslation()
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
   const {
     getHardwareAccount,
     getHardwareAccounts,
@@ -32,7 +30,7 @@ export const Vault = () => {
   const { setModalResize } = useOverlay().modal
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
-
+  const { ss58 } = getNetworkData(network)
   const source: AccountSource = 'vault'
 
   // Whether the import account button is active

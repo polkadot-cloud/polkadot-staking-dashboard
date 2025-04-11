@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
-import { NetworkList } from 'config/networks'
+import { NetworkList } from 'consts/networks'
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'

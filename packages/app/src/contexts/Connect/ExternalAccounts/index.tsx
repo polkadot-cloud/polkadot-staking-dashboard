@@ -4,6 +4,7 @@
 import { createSafeContext } from '@w3ux/hooks'
 import type { AccountAddedBy, ExternalAccount } from '@w3ux/types'
 import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { type ReactNode } from 'react'
@@ -26,11 +27,9 @@ export const ExternalAccountsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
+  const { ss58 } = getNetworkData(network)
 
   // Adds an external account (non-wallet) to accounts
   const addExternalAccount = (

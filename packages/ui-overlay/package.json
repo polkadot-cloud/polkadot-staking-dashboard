@@ -18,7 +18,9 @@
     "framer-motion": "^12.6.2",
     "react": "^19.1.0",
     "react-error-boundary": "^5.0.0",
-    "types": "workspace:*",
     "ui-core": "workspace:*"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
   }
 }

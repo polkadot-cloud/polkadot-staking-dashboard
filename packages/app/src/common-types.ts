@@ -12,7 +12,6 @@ import type {
   PapiReadyEvent,
   TxSubmissionItem,
 } from 'api/types'
-import type BigNumber from 'bignumber.js'
 import type {
   APIActiveEra,
   APINetworkMetrics,
@@ -25,7 +24,7 @@ import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
-import type { FC, FunctionComponent, SVGProps } from 'react'
+import type { FC } from 'react'
 import type { AnyJson, DetailActivePool } from 'types'
 
 declare global {
@@ -62,61 +61,6 @@ declare global {
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }
-
-export type ChainId = NetworkId | SystemChainId
-
-export type NetworkId = 'polkadot' | 'kusama' | 'westend'
-
-export type SystemChainId =
-  | 'people-polkadot'
-  | 'people-kusama'
-  | 'people-westend'
-
-export type Networks = Record<string, Network>
-
-export interface Network {
-  name: NetworkId
-  endpoints: {
-    lightClientKey: string
-    lightClient: () => Promise<AnyApi>
-    defaultRpcEndpoint: string
-    rpcEndpoints: Record<string, string>
-  }
-
-  unit: string
-  units: number
-  ss58: number
-  brand: {
-    icon: FunctionComponent<
-      SVGProps<SVGSVGElement> & { title?: string | undefined }
-    >
-    token: FunctionComponent<
-      SVGProps<SVGSVGElement> & { title?: string | undefined }
-    >
-    inline: {
-      svg: FunctionComponent<
-        SVGProps<SVGSVGElement> & { title?: string | undefined }
-      >
-      size: string
-    }
-  }
-  defaultFeeReserve: number
-  maxExposurePageSize: BigNumber
-}
-
-export interface SystemChain {
-  name: string
-  ss58: number
-  units: number
-  unit: string
-  endpoints: {
-    lightClientKey: string
-    lightClient: () => Promise<AnyApi>
-    rpcEndpoints: Record<string, string>
-  }
-  relayChain: NetworkId
-}
-
 export interface PageCategory {
   id: number
   key: string

@@ -4,6 +4,7 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import { PoolUnbond } from 'api/tx/poolUnbond'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -34,10 +35,7 @@ export const LeavePool = ({
 }) => {
   const { t } = useTranslation('modals')
   const { consts } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
   const { getPoolMembership } = useBalances()
   const { erasToSeconds } = useErasToTimeLeft()
@@ -46,6 +44,7 @@ export const LeavePool = ({
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
 
+  const { unit, units } = getNetworkData(network)
   const allTransferOptions = getTransferOptions(activeAccount)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = consts

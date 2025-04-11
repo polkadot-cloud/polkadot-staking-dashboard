@@ -3,6 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -20,16 +21,14 @@ import { useTranslation } from 'react-i18next'
 
 export const RewardTrend = () => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { unit, units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activeEra } = useApi()
   const { inSetup } = useStaking()
   const { erasPerDay } = useErasPerDay()
   const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
 
+  const { unit, units } = getNetworkData(network)
   const membership = getPoolMembership(activeAccount)
   const eras = erasPerDay.multipliedBy(30).toNumber()
   // NOTE: 30 day duration in seconds

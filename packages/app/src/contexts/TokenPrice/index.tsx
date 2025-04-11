@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
+import { getNetworkData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -20,12 +21,10 @@ export const [TokenPricesContext, useTokenPrices] =
   createSafeContext<TokenPricesContextInterface>()
 
 export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
-  const {
-    network,
-    networkData: { unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
+  const { unit } = getNetworkData(network)
 
   // Store token price and change
   const [tokenPrice, setTokenPrice] =

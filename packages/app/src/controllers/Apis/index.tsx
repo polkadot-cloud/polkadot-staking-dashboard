@@ -3,8 +3,8 @@
 
 import { Api } from 'api'
 import type { ConnectionType } from 'api/types'
-import type { ChainId, NetworkId } from 'common-types'
 import { Syncs } from 'controllers/Syncs'
+import type { ChainId, NetworkId } from 'types'
 
 export class Apis {
   // The currently instantiated API instances, keyed by network
@@ -43,10 +43,7 @@ export class Apis {
       })
     )
 
-    // 1. Update local storage and sync status
-
-    // Persist the selected network to local storage
-    localStorage.setItem('network', network)
+    // 1. Update sync status
 
     // Set app initializing. Even though `initialization` is added by default, it is called again
     // here in case the user switches networks

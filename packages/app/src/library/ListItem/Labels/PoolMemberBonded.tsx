@@ -4,6 +4,7 @@
 import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import type { AnyMetaBatch } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +20,8 @@ export const PoolMemberBonded = ({
   batchIndex: number
 }) => {
   const { t } = useTranslation('app')
-  const { units, unit } = useNetwork().networkData
+  const { network } = useNetwork()
+  const { unit, units } = getNetworkData(network)
 
   const poolMembers = meta[batchKey]?.poolMembers ?? []
   const poolMember = poolMembers[batchIndex] ?? null

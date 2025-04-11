@@ -12,18 +12,16 @@ import { getExtraSignedExtensions } from './util'
 
 export class LedgerSigner {
   #publicKey: Uint8Array
-  #txMetadataChainId: string
 
-  constructor(pubKey: Uint8Array, txMetadataChainId: string) {
+  constructor(pubKey: Uint8Array) {
     this.#publicKey = pubKey
-    this.#txMetadataChainId = txMetadataChainId
   }
 
   async getPolkadotSigner(
     networkInfo: { decimals: number; tokenSymbol: string },
     index: number
   ): Promise<PolkadotSigner> {
-    const { app } = await Ledger.initialise(this.#txMetadataChainId)
+    const { app } = await Ledger.initialise()
 
     const signTx: PolkadotSigner['signTx'] = async (
       callData,

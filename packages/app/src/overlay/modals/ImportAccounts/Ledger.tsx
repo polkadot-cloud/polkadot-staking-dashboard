@@ -8,13 +8,13 @@ import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { AccountSource, HardwareAccount } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import type {
   LedgerAddress,
   LedgerResponse,
 } from 'contexts/LedgerHardware/types'
-import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,10 +24,7 @@ import { Close, useOverlay } from 'ui-overlay'
 
 export const Ledger = () => {
   const { t } = useTranslation()
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
   const {
     addHardwareAccount,
     removeHardwareAccount,
@@ -49,7 +46,7 @@ export const Ledger = () => {
   const { setModalResize } = useOverlay().modal
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
-
+  const { ss58 } = getNetworkData(network)
   const source: AccountSource = 'ledger'
 
   // Store addresses retreived from Ledger device. Defaults to local addresses
@@ -57,8 +54,6 @@ export const Ledger = () => {
     getHardwareAccounts(source, network)
   )
   const addressesRef = useRef(addresses)
-
-  const { txMetadataChainId } = getLedgerApp(network)
 
   // Get whether the ledger device is currently executing a task
   const isExecuting = getIsExecuting()
@@ -103,7 +98,7 @@ export const Ledger = () => {
 
   // Ledger address getter
   const onGetAddress = async () => {
-    await handleGetAddress(txMetadataChainId, getNextAddressIndex(), ss58)
+    await handleGetAddress(getNextAddressIndex(), ss58)
   }
 
   // Handle new Ledger status report
@@ -122,7 +117,6 @@ export const Ledger = () => {
         name: ellipsisFn(address),
         network,
       }))
-      console.log('newAddress', newAddress)
       setStateWithRef(
         [...addressesRef.current, ...newAddress],
         setAddresses,
@@ -134,8 +128,6 @@ export const Ledger = () => {
         newAddress[0].address,
         options.accountIndex
       )
-
-      console.log(account)
 
       if (account) {
         addOtherAccounts([account])

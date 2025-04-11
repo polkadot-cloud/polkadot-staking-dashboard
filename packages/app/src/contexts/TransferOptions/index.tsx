@@ -3,6 +3,7 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -23,15 +24,14 @@ export const TransferOptionsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const {
-    network,
-    networkData: { units, defaultFeeReserve },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { consts, activeEra } = useApi()
   const { activeAccount } = useActiveAccounts()
   const { getLedger, getBalance, getLocks, getPoolMembership } = useBalances()
+
   const { existentialDeposit } = consts
   const membership = getPoolMembership(activeAccount)
+  const { units, defaultFeeReserve } = getNetworkData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
   const [feeReserve, setFeeReserve] = useState<BigNumber>(

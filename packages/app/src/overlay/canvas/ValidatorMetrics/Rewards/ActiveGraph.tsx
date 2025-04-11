@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
-import { useNetwork } from 'contexts/Network'
+import { getNetworkData } from 'consts/util'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { useValidatorRewards } from 'plugin-staking-api'
+import type { NetworkId } from 'types'
 
 interface Props {
   network: NetworkId
@@ -21,14 +21,12 @@ export const ActiveGraph = ({
   width,
   height,
 }: Props) => {
-  const {
-    networkData: { units },
-  } = useNetwork()
   const { data, loading, error } = useValidatorRewards({
     network,
     validator,
     fromEra,
   })
+  const { units } = getNetworkData(network)
 
   const list =
     loading || error || data?.validatorRewards === undefined

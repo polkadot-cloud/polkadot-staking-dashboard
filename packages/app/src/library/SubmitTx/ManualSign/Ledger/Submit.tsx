@@ -4,8 +4,6 @@
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
-import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
-import { useNetwork } from 'contexts/Network'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import type { LedgerSubmitProps } from 'library/SubmitTx/types'
 import { useTranslation } from 'react-i18next'
@@ -19,14 +17,12 @@ export const Submit = ({
   disabled,
 }: LedgerSubmitProps) => {
   const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const { txMetadataChainId } = getLedgerApp(network)
   const { getIsExecuting, integrityChecked, checkRuntimeVersion } =
     useLedgerHardware()
 
   // Check device runtime version.
   const handleCheckRuntimeVersion = async () => {
-    await checkRuntimeVersion(txMetadataChainId)
+    await checkRuntimeVersion()
   }
 
   // Is the transaction ready to be submitted?

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { unitToPlanck } from '@w3ux/utils'
 import { CreatePool } from 'api/tx/createPool'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -28,16 +29,14 @@ export const Summary = ({ section }: SetupStepProps) => {
   const {
     poolsConfig: { lastPoolId },
   } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
   const { getPoolSetup, removeSetupProgress } = useSetup()
   const { activeAccount, activeProxy } = useActiveAccounts()
   const { queryBondedPool, addToBondedPools } = useBondedPools()
+  const { unit, units } = getNetworkData(network)
 
   const poolId = lastPoolId.plus(1)
   const setup = getPoolSetup(activeAccount)

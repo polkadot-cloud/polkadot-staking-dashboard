@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -22,13 +24,7 @@ import { planckToUnitBn } from 'utils'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
-  const {
-    networkData: {
-      units,
-      unit,
-      brand: { token: Token },
-    },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
@@ -37,6 +33,8 @@ export const BalanceChart = () => {
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
 
+  const { unit, units } = getNetworkData(network)
+  const Token = getChainIcons(network).token
   const balance = getBalance(activeAccount)
   const allTransferOptions = getTransferOptions(activeAccount)
   const { edReserved } = allTransferOptions

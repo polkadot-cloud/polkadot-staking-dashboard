@@ -3,6 +3,7 @@
 
 import { unitToPlanck } from '@w3ux/utils'
 import { TransferKeepAlive } from 'api/tx/transferKeepAlive'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useBatchCall } from 'hooks/useBatchCall'
@@ -12,13 +13,11 @@ import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const BalanceTest = () => {
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
   const { activeAccount } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
+  const { units } = getNetworkData(network)
 
   const getTx = () => {
     const tx = null

@@ -6,6 +6,7 @@ import { PoolBalanceToPoints } from 'api/runtimeApi/poolBalanceToPoints'
 import { PoolUnbond } from 'api/tx/poolUnbond'
 import { StakingUnbond } from 'api/tx/stakingUnbond'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
@@ -30,10 +31,7 @@ import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const Unbond = () => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { getBondedAccount } = useBonded()
   const { activeAccount } = useActiveAccounts()
@@ -52,6 +50,7 @@ export const Unbond = () => {
     poolsConfig: { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn },
   } = useApi()
 
+  const { unit, units } = getNetworkData(network)
   const { bondFor } = options
   const pendingRewards = activePool?.pendingRewards || 0n
   const controller = getBondedAccount(activeAccount)

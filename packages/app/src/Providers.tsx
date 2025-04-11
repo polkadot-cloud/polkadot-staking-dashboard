@@ -8,6 +8,7 @@ import {
   HardwareAccountsProvider,
 } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
+import { getNetworkData } from 'consts/util'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
@@ -47,10 +48,8 @@ import { ThemedRouter } from 'Themes'
 import { OverlayProvider } from 'ui-overlay'
 
 export const Providers = () => {
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
+  const { ss58 } = getNetworkData(network)
 
   return withProviders(
     // !! Provider order matters.
