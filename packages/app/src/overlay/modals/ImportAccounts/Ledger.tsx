@@ -14,7 +14,6 @@ import type {
   LedgerAddress,
   LedgerResponse,
 } from 'contexts/LedgerHardware/types'
-import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -57,8 +56,6 @@ export const Ledger = () => {
     getHardwareAccounts(source, network)
   )
   const addressesRef = useRef(addresses)
-
-  const { txMetadataChainId } = getLedgerApp(network)
 
   // Get whether the ledger device is currently executing a task
   const isExecuting = getIsExecuting()
@@ -103,7 +100,7 @@ export const Ledger = () => {
 
   // Ledger address getter
   const onGetAddress = async () => {
-    await handleGetAddress(txMetadataChainId, getNextAddressIndex(), ss58)
+    await handleGetAddress(getNextAddressIndex(), ss58)
   }
 
   // Handle new Ledger status report
@@ -122,7 +119,6 @@ export const Ledger = () => {
         name: ellipsisFn(address),
         network,
       }))
-      console.log('newAddress', newAddress)
       setStateWithRef(
         [...addressesRef.current, ...newAddress],
         setAddresses,
@@ -134,8 +130,6 @@ export const Ledger = () => {
         newAddress[0].address,
         options.accountIndex
       )
-
-      console.log(account)
 
       if (account) {
         addOtherAccounts([account])

@@ -7,7 +7,7 @@ import type { AnyJson, NetworkId } from 'types'
 export interface LedgerHardwareContextInterface {
   integrityChecked: boolean
   setIntegrityChecked: (checked: boolean) => void
-  checkRuntimeVersion: (txMetadataChainId: string) => Promise<void>
+  checkRuntimeVersion: () => Promise<void>
   transportResponse: AnyJson
   setStatusCode: (ack: string, statusCode: LedgerStatusCode) => void
   setIsExecuting: (v: boolean) => void
@@ -20,13 +20,8 @@ export interface LedgerHardwareContextInterface {
   handleUnmount: () => void
   handleErrors: (err: unknown) => void
   runtimesInconsistent: boolean
-  handleGetAddress: (
-    txMetadataChainId: string,
-    accountIndex: number,
-    ss58Prefix: number
-  ) => Promise<void>
+  handleGetAddress: (accountIndex: number, ss58Prefix: number) => Promise<void>
   handleSignTx: (
-    txMetadataChainId: string,
     uid: number,
     index: number,
     payload: AnyJson,
@@ -74,11 +69,6 @@ export interface LedgerAddress {
   name: string
   network: NetworkId
   pubKey: string
-}
-
-export interface LedgerChain {
-  network: NetworkId
-  txMetadataChainId: string
 }
 
 export interface HandleErrorFeedback {
