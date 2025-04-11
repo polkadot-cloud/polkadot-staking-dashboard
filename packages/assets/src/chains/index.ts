@@ -26,7 +26,7 @@ export const chainIcons: Record<NetworkId, ChainIcons> = {
     token: KusamaTokenSVG,
     inline: {
       svg: KusamaInlineSVG,
-      size: '1.05em',
+      size: '1.3em',
     },
   },
   westend: {

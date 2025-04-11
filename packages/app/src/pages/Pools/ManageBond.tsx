@@ -5,6 +5,7 @@ import { faMinus, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -22,10 +23,7 @@ import { planckToUnitBn } from 'utils'
 export const ManageBond = () => {
   const { t } = useTranslation('pages')
 
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { openModal } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
@@ -33,8 +31,9 @@ export const ManageBond = () => {
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { isBonding, isMember, activePool, isDepositor } = useActivePool()
-  const Token = getChainIcons(network).token
 
+  const { units } = getNetworkData(network)
+  const Token = getChainIcons(network).token
   const allTransferOptions = getTransferOptions(activeAccount)
   const {
     pool: { active, totalUnlocking, totalUnlocked },

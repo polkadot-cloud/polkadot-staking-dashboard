@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
 import { NewNominator } from 'api/tx/newNominator'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -24,16 +25,14 @@ import { SummaryWrapper } from './Wrapper'
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
   const { getPayeeItems } = usePayeeConfig()
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
   const { activeAccount, activeProxy } = useActiveAccounts()
   const { getNominatorSetup, removeSetupProgress } = useSetup()
+  const { unit, units } = getNetworkData(network)
 
   const setup = getNominatorSetup(activeAccount)
   const { progress } = setup

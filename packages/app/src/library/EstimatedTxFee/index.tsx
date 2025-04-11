@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useTxMeta } from 'contexts/TxMeta'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +13,8 @@ import type { EstimatedTxFeeProps } from './types'
 export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('app')
   const { getTxSubmission } = useTxMeta()
-  const { unit, units } = useNetwork().networkData
+  const { network } = useNetwork()
+  const { unit, units } = getNetworkData(network)
 
   const txSubmission = getTxSubmission(uid)
   const fee = txSubmission?.fee || 0n

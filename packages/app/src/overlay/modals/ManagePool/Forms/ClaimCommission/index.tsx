@@ -5,6 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { rmCommas } from '@w3ux/utils'
 import { PoolClaimCommission } from 'api/tx/poolClaimCommission'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -29,15 +30,13 @@ export const ClaimCommission = ({
   onResize: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { setModalStatus } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
   const { isOwner, activePool } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
 
+  const { unit, units } = getNetworkData(network)
   const poolId = activePool?.id
   const pendingCommission = new BigNumber(
     rmCommas(activePool?.rewardPool?.totalCommissionPending || '0')

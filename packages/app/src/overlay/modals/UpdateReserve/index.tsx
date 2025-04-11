@@ -5,6 +5,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -24,10 +25,7 @@ import { planckToUnitBn } from 'utils'
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { setModalStatus } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
@@ -35,6 +33,7 @@ export const UpdateReserve = () => {
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions()
 
+  const { unit, units } = getNetworkData(network)
   const { edReserved } = getTransferOptions(activeAccount)
   const minReserve = planckToUnitBn(edReserved, units)
   const maxReserve = minReserve.plus(

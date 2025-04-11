@@ -7,6 +7,7 @@ import { formatAccountSs58 } from '@w3ux/utils'
 import { Proxy } from 'api/tx/proxy'
 import { TxSubmission } from 'api/txSubmission'
 import { DappName, ManualSigners } from 'consts'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -41,10 +42,7 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('app')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { getNonce } = useBalances()
   const { signWcTx } = useWalletConnect()
   const { activeProxy } = useActiveAccounts()
@@ -53,6 +51,7 @@ export const useSubmitExtrinsic = ({
   const { openPromptWith, closePrompt } = usePrompt()
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getAccount, requiresManualSign } = useImportedAccounts()
+  const { unit, units } = getNetworkData(network)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)

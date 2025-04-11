@@ -7,6 +7,7 @@ import { PoolWithdraw } from 'api/tx/poolWithdraw'
 import { StakingRebond } from 'api/tx/stakingRebond'
 import { StakingWithdraw } from 'api/tx/stakingWithdraw'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -43,10 +44,7 @@ export const Forms = forwardRef(
   ) => {
     const { t } = useTranslation('modals')
     const { consts } = useApi()
-    const {
-      network,
-      networkData: { units, unit },
-    } = useNetwork()
+    const { network } = useNetwork()
     const { activePool } = useActivePool()
     const { activeAccount } = useActiveAccounts()
     const { removePoolMember } = usePoolMembers()
@@ -60,6 +58,7 @@ export const Forms = forwardRef(
     const { getSignerWarnings } = useSignerWarnings()
     const { removeFavorite: removeFavoritePool } = useFavoritePools()
 
+    const { unit, units } = getNetworkData(network)
     const membership = getPoolMembership(activeAccount)
     const { bondFor, poolClosure } = options || {}
     const { historyDepth } = consts

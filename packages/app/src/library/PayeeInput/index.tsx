@@ -5,6 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { formatAccountSs58, isValidAddress, remToUnit } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -24,12 +25,11 @@ export const PayeeInput = ({
   const { t } = useTranslation('app')
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
-  const {
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
-  const controller = getBondedAccount(activeAccount)
 
+  const { ss58 } = getNetworkData(network)
+  const controller = getBondedAccount(activeAccount)
   const accountMeta = accounts.find((a) => a.address === activeAccount)
 
   // store whether account value is valid.

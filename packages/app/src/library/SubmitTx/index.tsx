@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -36,12 +37,13 @@ export const SubmitTx = ({
     consts: { existentialDeposit },
   } = useApi()
   const { getTxSubmission } = useTxMeta()
-  const { unit } = useNetwork().networkData
+  const { network } = useNetwork()
   const { setModalResize } = useOverlay().modal
   const { getBalance, getEdReserved } = useBalances()
   const { activeAccount, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
+  const { unit } = getNetworkData(network)
   const controller = getBondedAccount(activeAccount)
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Pie } from 'library/StatCards/Pie'
@@ -14,8 +15,9 @@ export const SupplyStaked = () => {
     networkMetrics,
     stakingMetrics: { lastTotalStake },
   } = useApi()
-  const { units, unit } = useNetwork().networkData
+  const { network } = useNetwork()
 
+  const { unit, units } = getNetworkData(network)
   const { totalIssuance } = networkMetrics
 
   // total supply as percent.

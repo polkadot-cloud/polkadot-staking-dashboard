@@ -3,6 +3,7 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
@@ -20,8 +21,9 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
     networkMetrics: { minimumActiveStake },
     stakingMetrics: { minNominatorBond },
   } = useApi()
-  const { unit, units } = useNetwork().networkData
+  const { network } = useNetwork()
   const { syncing } = useSyncing(['initialization'])
+  const { unit, units } = getNetworkData(network)
 
   const minNominatorBondUnit = planckToUnitBn(minNominatorBond, units)
   const minimumActiveStakeUnit = planckToUnitBn(minimumActiveStake, units)

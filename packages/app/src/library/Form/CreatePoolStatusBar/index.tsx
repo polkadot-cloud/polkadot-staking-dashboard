@@ -3,6 +3,7 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useSyncing } from 'hooks/useSyncing'
@@ -14,8 +15,9 @@ import { Wrapper } from './Wrapper'
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('app')
   const { minCreateBond } = useApi().poolsConfig
-  const { unit, units } = useNetwork().networkData
+  const { network } = useNetwork()
   const { syncing } = useSyncing(['initialization'])
+  const { unit, units } = getNetworkData(network)
 
   const minCreateBondUnit = planckToUnitBn(minCreateBond, units)
   const sectionClassName =

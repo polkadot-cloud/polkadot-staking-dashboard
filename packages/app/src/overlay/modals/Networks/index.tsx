@@ -32,7 +32,6 @@ export const Networks = () => {
   const { network, switchNetwork } = useNetwork()
   const { setModalStatus, setModalResize } = useOverlay().modal
   const { connectionType, setConnectionType, rpcEndpoint } = useApi()
-  const chainIcons = getChainIcons(network)
   const networkKey = network
 
   const isLightClient = connectionType === 'sc'
@@ -48,7 +47,8 @@ export const Networks = () => {
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
             {Object.entries(NetworkList).map(([key, item], index: number) => {
-              const Svg = chainIcons.inline.svg
+              const inline = getChainIcons(key as NetworkId).inline
+              const Svg = inline.svg
               const rpcDisabled = networkKey === key
 
               return (
@@ -65,10 +65,7 @@ export const Networks = () => {
                   }}
                 >
                   <div style={{ width: '1.75rem' }}>
-                    <Svg
-                      width={chainIcons.inline.size}
-                      height={chainIcons.inline.size}
-                    />
+                    <Svg width={inline.size} height={inline.size} />
                   </div>
                   <h3>{capitalizeFirstLetter(item.name)}</h3>
                   {networkKey === key && (

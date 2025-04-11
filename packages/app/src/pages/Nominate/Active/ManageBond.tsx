@@ -11,6 +11,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import type BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -37,10 +38,7 @@ export const ManageBond = () => {
     isReady,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi()
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
@@ -55,6 +53,7 @@ export const ManageBond = () => {
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
 
+  const { units } = getNetworkData(network)
   const Token = getChainIcons(network).token
   const controller = getBondedAccount(activeAccount)
   const ledger = getLedger({ stash: activeAccount })

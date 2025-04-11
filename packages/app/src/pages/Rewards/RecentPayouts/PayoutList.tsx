@@ -5,6 +5,7 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { ListProvider, useList } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
@@ -41,9 +42,7 @@ export const PayoutListInner = ({
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages')
   const { isReady, activeEra } = useApi()
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { bondedPools } = useBondedPools()
   const { getValidators } = useValidators()
   const { getThemeValue } = useThemeValues()
@@ -52,6 +51,7 @@ export const PayoutListInner = ({
     setListFormat,
     pagination: { page, setPage },
   } = useList()
+  const { unit, units } = getNetworkData(network)
 
   // Manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)

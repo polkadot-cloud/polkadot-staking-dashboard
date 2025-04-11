@@ -4,6 +4,7 @@
 import { rmCommas } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useTooltip } from 'contexts/Tooltip'
 import type { Pool } from 'library/Pool/types'
@@ -14,11 +15,9 @@ import { planckToUnitBn } from 'utils'
 
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('app')
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { setTooltipTextAndOpen } = useTooltip()
+  const { units } = getNetworkData(network)
 
   const tooltipText = t('bonded')
   const { points } = pool

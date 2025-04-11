@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { NetworkId } from 'types'
+import { NetworkList } from './networks'
 import { SupportedProxies } from './proxies'
 
 // Check if proxy type is supported in the dashboard
@@ -20,3 +22,6 @@ export const isSupportedProxyCall = (
   const calls = SupportedProxies[proxy]
   return (calls || []).find((c) => ['*', call].includes(c)) !== undefined
 }
+
+// Get network data from network list
+export const getNetworkData = (network: NetworkId) => NetworkList[network]
