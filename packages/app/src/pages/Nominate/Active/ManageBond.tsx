@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
 import type BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -37,10 +38,8 @@ export const ManageBond = () => {
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi()
   const {
-    networkData: {
-      units,
-      brand: { token: Token },
-    },
+    network,
+    networkData: { units },
   } = useNetwork()
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
@@ -56,6 +55,7 @@ export const ManageBond = () => {
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
 
+  const Token = getChainIcons(network).token
   const controller = getBondedAccount(activeAccount)
   const ledger = getLedger({ stash: activeAccount })
   const { active }: { active: BigNumber } = ledger

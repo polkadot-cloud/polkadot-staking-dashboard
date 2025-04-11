@@ -3,6 +3,7 @@
 
 import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
@@ -44,11 +45,7 @@ export const ValidatorMetrics = () => {
   } = useOverlay().canvas
   const {
     network,
-    networkData: {
-      units,
-      unit,
-      brand: { token: Token },
-    },
+    networkData: { units, unit },
   } = useNetwork()
   const { activeEra } = useApi()
   const { openHelp } = useHelp()
@@ -56,6 +53,7 @@ export const ValidatorMetrics = () => {
   const { pluginEnabled } = usePlugins()
   const { getValidators } = useValidators()
 
+  const Token = getChainIcons(network).token
   const validator = options!.validator
   const identity = options!.identity
 

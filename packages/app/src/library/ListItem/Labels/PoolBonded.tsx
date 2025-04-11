@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { rmCommas } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { useTooltip } from 'contexts/Tooltip'
@@ -14,17 +15,14 @@ import { planckToUnitBn } from 'utils'
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('app')
   const {
-    networkData: {
-      units,
-      brand: { token },
-    },
+    network,
+    networkData: { units },
   } = useNetwork()
   const { setTooltipTextAndOpen } = useTooltip()
 
   const tooltipText = t('bonded')
-
   const { points } = pool
-  const TokenIcon = token
+  const Token = getChainIcons(network).token
 
   // Format total bonded pool amount.
   const bonded = planckToUnitBn(new BigNumber(rmCommas(points)), units)
@@ -36,7 +34,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
 
-      <TokenIcon
+      <Token
         style={{
           maxWidth: '1.25rem',
           height: '1.25rem',

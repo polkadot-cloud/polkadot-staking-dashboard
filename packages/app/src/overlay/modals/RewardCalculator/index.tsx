@@ -3,6 +3,7 @@
 
 import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getChainIcons } from 'assets'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
@@ -22,15 +23,14 @@ const DEFAULT_TOKEN_INPUT = 1000
 export const RewardCalculator = () => {
   const { t } = useTranslation()
   const {
-    networkData: {
-      unit,
-      brand: { token: Token },
-    },
+    network,
+    networkData: { unit },
   } = useNetwork()
   const { config } = useOverlay().modal
   const { avgCommission } = useValidators()
   const { getAverageRewardRate } = useAverageRewardRate()
 
+  const Token = getChainIcons(network).token
   const { currency } = config.options
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()

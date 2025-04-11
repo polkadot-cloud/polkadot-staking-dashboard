@@ -311,9 +311,20 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/consts:
     dependencies:
+      assets:
+        specifier: workspace:*
+        version: link:../assets
+      polkadot-api:
+        specifier: ^1.9.5
+        version: 1.9.9(@microsoft/api-extractor@7.52.2(@types/node@22.13.17))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+    devDependencies:
       types:
         specifier: workspace:*
         version: link:../types

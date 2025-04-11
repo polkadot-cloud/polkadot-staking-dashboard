@@ -4,7 +4,8 @@
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { capitalizeFirstLetter } from '@w3ux/utils'
-import { NetworkList } from 'config/networks'
+import { getChainIcons } from 'assets'
+import { NetworkList } from 'consts/networks'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
@@ -31,6 +32,7 @@ export const Networks = () => {
   const { network, switchNetwork } = useNetwork()
   const { setModalStatus, setModalResize } = useOverlay().modal
   const { connectionType, setConnectionType, rpcEndpoint } = useApi()
+  const chainIcons = getChainIcons(network)
   const networkKey = network
 
   const isLightClient = connectionType === 'sc'
@@ -46,7 +48,7 @@ export const Networks = () => {
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
             {Object.entries(NetworkList).map(([key, item], index: number) => {
-              const Svg = item.brand.inline.svg
+              const Svg = chainIcons.inline.svg
               const rpcDisabled = networkKey === key
 
               return (
@@ -64,8 +66,8 @@ export const Networks = () => {
                 >
                   <div style={{ width: '1.75rem' }}>
                     <Svg
-                      width={item.brand.inline.size}
-                      height={item.brand.inline.size}
+                      width={chainIcons.inline.size}
+                      height={chainIcons.inline.size}
                     />
                   </div>
                   <h3>{capitalizeFirstLetter(item.name)}</h3>

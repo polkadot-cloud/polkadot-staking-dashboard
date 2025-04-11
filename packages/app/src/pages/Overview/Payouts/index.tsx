@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -27,10 +28,8 @@ import { InactiveGraph } from './InactiveGraph'
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages')
   const {
-    networkData: {
-      units,
-      brand: { token: Token },
-    },
+    network,
+    networkData: { units },
   } = useNetwork()
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
@@ -39,6 +38,7 @@ export const Payouts = () => {
   const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
 
+  const Token = getChainIcons(network).token
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
 

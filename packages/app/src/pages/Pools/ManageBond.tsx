@@ -4,6 +4,7 @@
 import { faMinus, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -22,10 +23,8 @@ export const ManageBond = () => {
   const { t } = useTranslation('pages')
 
   const {
-    networkData: {
-      units,
-      brand: { token: Token },
-    },
+    network,
+    networkData: { units },
   } = useNetwork()
   const { openHelp } = useHelp()
   const { openModal } = useOverlay().modal
@@ -34,6 +33,7 @@ export const ManageBond = () => {
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { isBonding, isMember, activePool, isDepositor } = useActivePool()
+  const Token = getChainIcons(network).token
 
   const allTransferOptions = getTransferOptions(activeAccount)
   const {

@@ -3,7 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
-import { NetworkList } from 'config/networks'
+import { NetworkList } from 'consts/networks'
 import { Apis } from 'controllers/Apis'
 import type { ReactNode } from 'react'
 import { useState } from 'react'

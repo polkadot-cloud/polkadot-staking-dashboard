@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useCurrency } from 'contexts/Currency'
@@ -41,10 +42,8 @@ import { RecentPayouts } from './RecentPayouts'
 export const Overview = (props: PayoutHistoryProps) => {
   const { t } = useTranslation('pages')
   const {
-    networkData: {
-      unit,
-      brand: { token: Token },
-    },
+    network,
+    networkData: { unit },
   } = useNetwork()
   const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
@@ -56,6 +55,7 @@ export const Overview = (props: PayoutHistoryProps) => {
   const { getAverageRewardRate } = useAverageRewardRate()
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
   const rewardRate = avgRateBeforeCommission.toNumber()
+  const Token = getChainIcons(network).token
 
   // Whether to show base or commission-adjusted rewards
   const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)

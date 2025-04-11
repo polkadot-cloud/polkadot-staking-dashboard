@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import GlassesSvg from 'assets/svg/icons/glasses.svg?react'
+import GlassesSvg from 'assets/icons/glasses.svg?react'
 import { useTranslation } from 'react-i18next'
 import { ConnectItem } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'

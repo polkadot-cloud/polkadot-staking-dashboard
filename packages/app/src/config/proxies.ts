@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+// TODO: Move this to consts package
 export const SupportedProxies: Record<string, string[]> = {
   Any: ['*'],
   Staking: [
@@ -42,6 +43,7 @@ export const UnsupportedIfUniqueController: string[] = [
   'Staking.withdraw_unbonded',
 ]
 
+// TODO: Move this to consts/util package
 export const isSupportedProxy = (proxy: string) =>
   Object.keys(SupportedProxies).includes(proxy) || proxy === 'Any'
 
