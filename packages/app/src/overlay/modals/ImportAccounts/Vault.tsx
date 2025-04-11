@@ -5,7 +5,7 @@ import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { AccountSource } from '@w3ux/types'
+import type { HardwareAccountSource } from '@w3ux/types'
 import { getNetworkData } from 'consts/util'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -31,7 +31,7 @@ export const Vault = () => {
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
   const { ss58 } = getNetworkData(network)
-  const source: AccountSource = 'vault'
+  const source: HardwareAccountSource = 'vault'
 
   // Whether the import account button is active
   const [importActive, setImportActive] = useState<boolean>(false)

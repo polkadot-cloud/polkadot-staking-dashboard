@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AccountSource, ExternalAccount } from '@w3ux/types'
+import type { ExternalAccount } from '@w3ux/types'
 import { localStorageOrDefault } from '@w3ux/utils'
 import type { NetworkId } from 'types'
 
@@ -15,10 +15,7 @@ export const externalAccountExistsLocal = (
   )
 
 // Gets local external accounts from local storage. Ensure that only `user` accounts are returned
-export const getLocalExternalAccounts = (
-  _?: AccountSource,
-  network?: NetworkId
-) => {
+export const getLocalExternalAccounts = (_?: string, network?: NetworkId) => {
   let localAccounts = localStorageOrDefault(
     'external_accounts',
     [],

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
-import type { AccountSource } from '@w3ux/types'
+import type { HardwareAccountSource } from '@w3ux/types'
 import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import { useEffect, useState } from 'react'
@@ -16,7 +16,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
   const { addHardwareAccount, hardwareAccountExists, getHardwareAccounts } =
     useHardwareAccounts()
 
-  const source: AccountSource = 'vault'
+  const source: HardwareAccountSource = 'vault'
 
   const vaultAccounts = getHardwareAccounts(source, network)
 
