@@ -12,7 +12,6 @@ import type {
   PapiReadyEvent,
   TxSubmissionItem,
 } from 'api/types'
-import type BigNumber from 'bignumber.js'
 import type {
   APIActiveEra,
   APINetworkMetrics,
@@ -92,7 +91,6 @@ export interface Network {
     }
   }
   defaultFeeReserve: number
-  maxExposurePageSize: BigNumber
 }
 
 export interface SystemChain {
