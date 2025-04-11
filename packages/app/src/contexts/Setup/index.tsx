@@ -4,6 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -25,12 +26,10 @@ export const [SetupContext, useSetup] =
   createSafeContext<SetupContextInterface>()
 
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { accounts } = useImportedAccounts()
   const { activeAccount } = useActiveAccounts()
+  const { units } = getNetworkData(network)
 
   // Store all imported accounts nominator setups
   const [nominatorSetups, setNominatorSetups] = useState<NominatorSetups>({})

@@ -1,8 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { LedgerChains } from 'config/ledger'
-
 // Ledger error keyed by type of error
 const LedgerErrorsByType = {
   timeout: ['Error: Timeout'],
@@ -37,7 +35,3 @@ export const getLedgerErrorType = (err: string) => {
   })
   return errorType || 'misc'
 }
-
-// Gets ledger app from local storage, fallback to first entry
-export const getLedgerApp = (network: string) =>
-  LedgerChains.find((a) => a.network === network) || LedgerChains[0]

@@ -1,8 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ChainId } from 'common-types'
-import type { MaybeAddress } from 'types'
+import type { ChainId, MaybeAddress } from 'types'
 
 export interface APIConfig {
   type: ConnectionType

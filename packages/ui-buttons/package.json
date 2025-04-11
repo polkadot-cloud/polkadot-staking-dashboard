@@ -20,7 +20,9 @@
     "@w3ux/utils": "2.0.8",
     "classnames": "^2.5.1",
     "react": "^19.1.0",
-    "types": "workspace:*",
     "ui-core": "workspace:*"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
   }
 }

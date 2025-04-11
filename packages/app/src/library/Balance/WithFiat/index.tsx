@@ -4,6 +4,7 @@
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import type { ReactNode } from 'react'
@@ -21,12 +22,9 @@ export const WithFiat = ({
   currency: string
   label?: string
 }) => {
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
-
+  const { units } = getNetworkData(network)
   const showFiat = pluginEnabled('staking_api') && network !== 'westend'
 
   const valueFormatted =

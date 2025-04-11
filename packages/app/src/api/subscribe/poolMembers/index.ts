@@ -1,10 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi, NetworkId } from 'common-types'
+import type { AnyApi } from 'common-types'
 import { Apis } from 'controllers/Apis'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import { combineLatest, type Subscription } from 'rxjs'
+import type { NetworkId } from 'types'
 import type { PoolMemberBatchEvent } from './types'
 
 export class PoolMembers implements Unsubscribable {

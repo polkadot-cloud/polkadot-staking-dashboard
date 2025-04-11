@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { CompulsoryPluginsProd, PluginsList } from 'config/plugins'
+import { CompulsoryPluginsProduction, PluginsList } from 'consts/plugins'
 import { usePlugins } from 'contexts/Plugins'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
@@ -23,7 +23,7 @@ export const Plugins = () => {
           {PluginsList.map((plugin) => {
             if (
               import.meta.env.PROD &&
-              CompulsoryPluginsProd.includes(plugin)
+              CompulsoryPluginsProduction.includes(plugin)
             ) {
               return null
             }

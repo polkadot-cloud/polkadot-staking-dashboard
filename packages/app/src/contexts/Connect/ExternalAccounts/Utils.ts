@@ -3,7 +3,7 @@
 
 import type { AccountSource, ExternalAccount } from '@w3ux/types'
 import { localStorageOrDefault } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
+import type { NetworkId } from 'types'
 
 // Check whether an external account exists in local storage
 export const externalAccountExistsLocal = (

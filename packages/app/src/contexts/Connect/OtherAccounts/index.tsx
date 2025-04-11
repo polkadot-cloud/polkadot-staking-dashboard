@@ -9,13 +9,13 @@ import {
 } from '@w3ux/react-connect-kit'
 import type { AccountSource, ImportedAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import { useExternalAccounts } from '../ExternalAccounts'
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils'
@@ -31,16 +31,14 @@ export const OtherAccountsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { gettingExtensions } = useExtensions()
   const { getHardwareAccounts } = useHardwareAccounts()
   const { addExternalAccount } = useExternalAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
   const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
+  const { ss58 } = getNetworkData(network)
   const extensionAccounts = getExtensionAccounts(ss58)
 
   // Store whether other (non-extension) accounts have been initialised

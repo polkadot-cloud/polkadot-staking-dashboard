@@ -5,6 +5,7 @@ import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import { PoolBondExtra } from 'api/tx/poolBondExtra'
 import { StakingBondExtra } from 'api/tx/stakingBondExtra'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -24,18 +25,16 @@ import { planckToUnitBn } from 'utils'
 export const Bond = () => {
   const { t } = useTranslation('modals')
   const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
-  const { activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
-  const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal
+  const { network } = useNetwork()
+  const { activePool } = useActivePool()
+  const { activeAccount } = useActiveAccounts()
+  const { getSignerWarnings } = useSignerWarnings()
+  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { unit, units } = getNetworkData(network)
 
   const { bondFor } = options
   const isStaking = bondFor === 'nominator'

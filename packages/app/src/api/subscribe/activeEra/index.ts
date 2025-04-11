@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import type { NetworkId } from 'common-types'
 import { defaultActiveEra } from 'contexts/Api/defaults'
 import type { APIActiveEra } from 'contexts/Api/types'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { Subscription } from 'rxjs'
+import type { NetworkId } from 'types'
 import { StakingMetrics } from '../stakingMetrics'
 
 export class ActiveEra implements Unsubscribable {

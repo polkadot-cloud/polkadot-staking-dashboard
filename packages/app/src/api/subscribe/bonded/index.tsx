@@ -1,11 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId } from 'common-types'
 import type { BondedAccount } from 'contexts/Bonded/types'
 import { Apis } from 'controllers/Apis'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { Subscription } from 'rxjs'
+import type { NetworkId } from 'types'
 
 export class Bonded implements Unsubscribable {
   // The associated network for this instance.

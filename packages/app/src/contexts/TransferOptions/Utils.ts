@@ -4,7 +4,7 @@
 import type { MaybeString } from '@w3ux/types'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type { NetworkId } from 'common-types'
+import type { NetworkId } from 'types'
 
 // Get the local storage record for an account reserve balance
 export const getLocalFeeReserve = (

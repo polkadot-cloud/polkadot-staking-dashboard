@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AccountSource, ImportedAccount } from '@w3ux/types'
-import type { NetworkId } from 'common-types'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NetworkId } from 'types'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 
 export interface OtherAccountsContextInterface {

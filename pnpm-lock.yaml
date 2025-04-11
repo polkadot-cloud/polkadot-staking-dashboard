@@ -193,6 +193,9 @@ importers:
       framer-motion:
         specifier: ^12.6.2
         version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      global-bus:
+        specifier: workspace:*
+        version: link:../global-bus
       html5-qrcode:
         specifier: ^2.3.8
         version: 2.3.8
@@ -311,8 +314,39 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
-  packages/consts: {}
+  packages/consts:
+    dependencies:
+      assets:
+        specifier: workspace:*
+        version: link:../assets
+      polkadot-api:
+        specifier: ^1.9.5
+        version: 1.9.9(@microsoft/api-extractor@7.52.2(@types/node@22.13.17))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
+
+  packages/global-bus:
+    dependencies:
+      '@w3ux/utils':
+        specifier: ^2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      consts:
+        specifier: workspace:*
+        version: link:../consts
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/locales:
     dependencies:
@@ -381,12 +415,13 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
-      types:
-        specifier: workspace:*
-        version: link:../types
       ui-core:
         specifier: workspace:*
         version: link:../ui-core
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/ui-core:
     dependencies:
@@ -475,12 +510,13 @@ importers:
       react-error-boundary:
         specifier: ^5.0.0
         version: 5.0.0(react@19.1.0)
-      types:
-        specifier: workspace:*
-        version: link:../types
       ui-core:
         specifier: workspace:*
         version: link:../ui-core
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/utils:
     dependencies:

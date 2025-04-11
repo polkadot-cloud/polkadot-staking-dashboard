@@ -3,7 +3,7 @@
 
 import { Base } from 'api/base'
 import BigNumber from 'bignumber.js'
-import type { ChainId } from 'common-types'
+import type { ChainId } from 'types'
 
 export class Era extends Base {
   constructor(network: ChainId) {

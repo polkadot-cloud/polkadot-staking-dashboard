@@ -1,0 +1,21 @@
+{
+  "name": "global-bus",
+  "version": "0.9.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./util": "./src/util.ts"
+  },
+  "dependencies": {
+    "consts": "workspace:*",
+    "@w3ux/utils": "^2.0.10",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PoolPointsToBalance } from 'api/runtimeApi/poolPointsToBalance'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
@@ -19,17 +21,11 @@ export const Stats = ({
   graphSyncing?: boolean
 }) => {
   const { t } = useTranslation('app')
-  const {
-    network,
-    networkData: {
-      units,
-      unit,
-      brand: { token: Token },
-    },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { isReady } = useApi()
   const { eraStakers } = useStaking()
-
+  const { unit, units } = getNetworkData(network)
+  const Token = getChainIcons(network).token
   const isActive = eraStakers.stakers.find((staker) =>
     staker.others.find((other) => other.who === bondedPool.addresses.stash)
   )

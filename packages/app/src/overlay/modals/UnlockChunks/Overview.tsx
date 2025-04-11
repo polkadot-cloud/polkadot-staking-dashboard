@@ -4,6 +4,7 @@
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import type { UnlockChunk } from 'contexts/Balances/types'
 import { useNetwork } from 'contexts/Network'
@@ -37,13 +38,12 @@ export const Overview = forwardRef(
   ) => {
     const { t } = useTranslation('modals')
     const { consts, activeEra } = useApi()
-    const {
-      networkData: { units, unit },
-    } = useNetwork()
+    const { network } = useNetwork()
     const { bondDuration } = consts
     const { isFastUnstaking } = useUnstaking()
     const { erasToSeconds } = useErasToTimeLeft()
 
+    const { unit, units } = getNetworkData(network)
     const bondDurationFormatted = timeleftAsString(
       t,
       getUnixTime(new Date()) + 1,

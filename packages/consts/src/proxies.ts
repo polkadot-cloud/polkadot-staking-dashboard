@@ -41,20 +41,3 @@ export const UnsupportedIfUniqueController: string[] = [
   'Staking.set_payee',
   'Staking.withdraw_unbonded',
 ]
-
-export const isSupportedProxy = (proxy: string) =>
-  Object.keys(SupportedProxies).includes(proxy) || proxy === 'Any'
-
-export const isSupportedProxyCall = (
-  proxy: string,
-  pallet: string,
-  method: string
-) => {
-  if ([method, pallet].includes('undefined')) {
-    return false
-  }
-
-  const call = `${pallet}.${method}`
-  const calls = SupportedProxies[proxy]
-  return (calls || []).find((c) => ['*', call].includes(c)) !== undefined
-}

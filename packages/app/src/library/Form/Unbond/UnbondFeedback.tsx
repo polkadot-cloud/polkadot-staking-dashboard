@@ -3,6 +3,7 @@
 
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -28,9 +29,7 @@ export const UnbondFeedback = ({
   displayFirstWarningOnly = true,
 }: UnbondFeedbackProps) => {
   const { t } = useTranslation('app')
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { isDepositor } = useActivePool()
   const { activeAccount } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
@@ -38,6 +37,8 @@ export const UnbondFeedback = ({
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi()
+
+  const { unit, units } = getNetworkData(network)
   const allTransferOptions = getTransferOptions(activeAccount)
   const defaultValue = defaultBond ? String(defaultBond) : ''
 

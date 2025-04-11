@@ -4,6 +4,7 @@
 import { unitToPlanck } from '@w3ux/utils'
 import { StakingChill } from 'api/tx/stakingChill'
 import { StakingUnbond } from 'api/tx/stakingUnbond'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -27,10 +28,7 @@ import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const Unstake = () => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { consts } = useApi()
   const { newBatchCall } = useBatchCall()
   const { getBondedAccount } = useBonded()
@@ -41,6 +39,7 @@ export const Unstake = () => {
   const { getTransferOptions } = useTransferOptions()
   const { setModalStatus, setModalResize } = useOverlay().modal
 
+  const { unit, units } = getNetworkData(network)
   const controller = getBondedAccount(activeAccount)
   const nominations = getNominations(activeAccount)
   const { bondDuration } = consts

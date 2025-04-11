@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import type { AnyApi, NetworkId } from 'common-types'
+import type { AnyApi } from 'common-types'
 import type { Balances as IBalances, Ledger } from 'contexts/Balances/types'
 import type { PoolMembership } from 'contexts/Pools/types'
 import type { PayeeConfig } from 'contexts/Setup/types'
@@ -13,7 +13,7 @@ import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { UnsafeApi } from 'polkadot-api'
 import type { Subscription } from 'rxjs'
 import { combineLatest } from 'rxjs'
-import type { Nominations } from 'types'
+import type { NetworkId, Nominations } from 'types'
 import { stringToBn } from 'utils'
 
 export class AccountBalances implements Unsubscribable {

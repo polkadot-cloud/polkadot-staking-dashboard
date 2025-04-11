@@ -3,6 +3,7 @@
 
 import { useTimeLeft } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -21,10 +22,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { t, i18n } = useTranslation('modals')
 
   const { activeEra } = useApi()
-  const {
-    networkData: { units, unit },
-    network,
-  } = useNetwork()
+  const { network } = useNetwork()
   const { isFastUnstaking } = useUnstaking()
   const { activeAccount } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
@@ -34,6 +32,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
     depsFormat: [i18n.resolvedLanguage],
   })
 
+  const { unit, units } = getNetworkData(network)
   const isStaking = bondFor === 'nominator'
   const { era, value } = chunk
   const left = new BigNumber(era).minus(activeEra.index)

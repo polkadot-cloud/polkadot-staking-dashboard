@@ -3,8 +3,8 @@
 
 import { IdentityOfMulti } from 'api/queryMulti/identityOfMulti'
 import { SuperOfMulti } from 'api/queryMulti/superOfMulti'
-import type { AnyApi, ChainId } from 'common-types'
-import type { AnyJson } from 'types'
+import type { AnyApi } from 'common-types'
+import type { AnyJson, ChainId } from 'types'
 
 export class Identities {
   static fetch = async (network: ChainId, addresses: string[]) => {

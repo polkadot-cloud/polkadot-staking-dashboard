@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
@@ -20,11 +21,9 @@ export const FavoriteValidatorsProvider = ({
   children: ReactNode
 }) => {
   const { isReady } = useApi()
-  const {
-    networkData: { name },
-    network,
-  } = useNetwork()
+  const { network } = useNetwork()
   const { fetchValidatorPrefs } = useValidators()
+  const { name } = getNetworkData(network)
 
   // Stores the user's favorite validators
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name))

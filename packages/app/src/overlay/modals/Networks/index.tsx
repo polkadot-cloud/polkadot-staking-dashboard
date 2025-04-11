@@ -4,8 +4,8 @@
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { capitalizeFirstLetter } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
-import { NetworkList } from 'config/networks'
+import { getChainIcons } from 'assets'
+import { NetworkList } from 'consts/networks'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
@@ -13,6 +13,7 @@ import { useUi } from 'contexts/UI'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { NetworkId } from 'types'
 import { ButtonTertiary } from 'ui-buttons'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
@@ -46,7 +47,8 @@ export const Networks = () => {
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
             {Object.entries(NetworkList).map(([key, item], index: number) => {
-              const Svg = item.brand.inline.svg
+              const inline = getChainIcons(key as NetworkId).inline
+              const Svg = inline.svg
               const rpcDisabled = networkKey === key
 
               return (
@@ -63,10 +65,7 @@ export const Networks = () => {
                   }}
                 >
                   <div style={{ width: '1.75rem' }}>
-                    <Svg
-                      width={item.brand.inline.size}
-                      height={item.brand.inline.size}
-                    />
+                    <Svg width={inline.size} height={inline.size} />
                   </div>
                   <h3>{capitalizeFirstLetter(item.name)}</h3>
                   {networkKey === key && (

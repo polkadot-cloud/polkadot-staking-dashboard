@@ -4,6 +4,7 @@
 import { FastUnstakeDeregister } from 'api/tx/fastUnstakeDeregister'
 import { FastUnstakeRegister } from 'api/tx/fastUnstakeRegister'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
@@ -30,10 +31,7 @@ export const ManageFastUnstake = () => {
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
     activeEra,
   } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { getBondedAccount } = useBonded()
   const { isFastUnstaking } = useUnstaking()
@@ -44,6 +42,7 @@ export const ManageFastUnstake = () => {
   const { counterForQueue, queueDeposit, fastUnstakeStatus, exposed } =
     useFastUnstake()
 
+  const { unit, units } = getNetworkData(network)
   const controller = getBondedAccount(activeAccount)
   const allTransferOptions = getTransferOptions(activeAccount)
   const { nominate, transferrableBalance } = allTransferOptions

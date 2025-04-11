@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
@@ -21,10 +22,9 @@ export const BondInput = ({
   syncing = false,
 }: BondInputProps) => {
   const { t } = useTranslation('app')
-  const {
-    networkData: { unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
+  const { unit } = getNetworkData(network)
 
   // the current local bond value
   const [localBond, setLocalBond] = useState<string>(value)

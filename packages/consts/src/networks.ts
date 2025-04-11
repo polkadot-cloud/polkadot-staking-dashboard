@@ -1,17 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import KusamaIconSVG from 'assets/svg/chains/kusamaIcon.svg?react'
-import KusamaInlineSVG from 'assets/svg/chains/kusamaInline.svg?react'
-import PolkadotIconSVG from 'assets/svg/chains/polkadotIcon.svg?react'
-import PolkadotInlineSVG from 'assets/svg/chains/polkadotInline.svg?react'
-import WestendIconSVG from 'assets/svg/chains/westendIcon.svg?react'
-import WestendInlineSVG from 'assets/svg/chains/westendInline.svg?react'
-import PolkadotTokenSVG from 'assets/svg/token/dot.svg?react'
-import KusamaTokenSVG from 'assets/svg/token/ksm.svg?react'
-import WestendTokenSVG from 'assets/svg/token/wnd.svg?react'
-import BigNumber from 'bignumber.js'
-import type { Networks, SystemChain } from 'common-types'
+import type { NetworkId, Networks, SystemChain } from 'types'
+
+export const DefaultNetwork: NetworkId = 'polkadot'
 
 export const NetworkList: Networks = {
   polkadot: {
@@ -34,16 +26,7 @@ export const NetworkList: Networks = {
     unit: 'DOT',
     units: 10,
     ss58: 0,
-    brand: {
-      icon: PolkadotIconSVG,
-      token: PolkadotTokenSVG,
-      inline: {
-        svg: PolkadotInlineSVG,
-        size: '1.05em',
-      },
-    },
     defaultFeeReserve: 0.1,
-    maxExposurePageSize: new BigNumber(512),
   },
   kusama: {
     name: 'kusama',
@@ -65,16 +48,7 @@ export const NetworkList: Networks = {
     unit: 'KSM',
     units: 12,
     ss58: 2,
-    brand: {
-      icon: KusamaIconSVG,
-      token: KusamaTokenSVG,
-      inline: {
-        svg: KusamaInlineSVG,
-        size: '1.35em',
-      },
-    },
     defaultFeeReserve: 0.05,
-    maxExposurePageSize: new BigNumber(512),
   },
   westend: {
     name: 'westend',
@@ -95,16 +69,7 @@ export const NetworkList: Networks = {
     unit: 'WND',
     units: 12,
     ss58: 42,
-    brand: {
-      icon: WestendIconSVG,
-      token: WestendTokenSVG,
-      inline: {
-        svg: WestendInlineSVG,
-        size: '0.96em',
-      },
-    },
     defaultFeeReserve: 0.1,
-    maxExposurePageSize: new BigNumber(64),
   },
 }
 

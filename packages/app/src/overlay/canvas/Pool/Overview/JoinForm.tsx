@@ -4,6 +4,7 @@
 import { unitToPlanck } from '@w3ux/utils'
 import { JoinPool } from 'api/tx/joinPool'
 import type BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ClaimPermission } from 'contexts/Pools/types'
@@ -27,10 +28,7 @@ import { JoinFormWrapper } from '../Wrappers'
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const {
     closeCanvas,
     config: { options },
@@ -40,6 +38,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { activeAccount } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
+  const { unit, units } = getNetworkData(network)
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
   const {

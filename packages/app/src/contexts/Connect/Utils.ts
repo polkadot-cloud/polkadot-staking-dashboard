@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { formatAccountSs58, localStorageOrDefault } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
 import type { ActiveProxy } from 'contexts/ActiveAccounts/types'
+import type { NetworkId } from 'types'
 
 // Gets local `activeAccount` for a network
 export const getActiveAccountLocal = (network: NetworkId, ss58: number) => {

@@ -5,6 +5,7 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts } from '@w3ux/react-connect-kit'
 import type { ExternalAccount, ImportedAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -25,16 +26,14 @@ export const ImportedAccountsProvider = ({
   children: ReactNode
 }) => {
   const { isReady } = useApi()
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { otherAccounts } = useOtherAccounts()
   const { getExtensionAccounts } = useExtensionAccounts()
   const { setActiveAccount, setActiveProxy } = useActiveAccounts()
+
+  const { ss58 } = getNetworkData(network)
   // Get the imported extension accounts formatted with the current network's ss58 prefix
   const extensionAccounts = getExtensionAccounts(ss58)
-
   const allAccounts = extensionAccounts.concat(otherAccounts)
 
   // Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`
