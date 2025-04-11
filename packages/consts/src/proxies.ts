@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// TODO: Move this to consts package
 export const SupportedProxies: Record<string, string[]> = {
   Any: ['*'],
   Staking: [
@@ -42,21 +41,3 @@ export const UnsupportedIfUniqueController: string[] = [
   'Staking.set_payee',
   'Staking.withdraw_unbonded',
 ]
-
-// TODO: Move this to consts/util package
-export const isSupportedProxy = (proxy: string) =>
-  Object.keys(SupportedProxies).includes(proxy) || proxy === 'Any'
-
-export const isSupportedProxyCall = (
-  proxy: string,
-  pallet: string,
-  method: string
-) => {
-  if ([method, pallet].includes('undefined')) {
-    return false
-  }
-
-  const call = `${pallet}.${method}`
-  const calls = SupportedProxies[proxy]
-  return (calls || []).find((c) => ['*', call].includes(c)) !== undefined
-}
