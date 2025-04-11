@@ -193,6 +193,9 @@ importers:
       framer-motion:
         specifier: ^12.6.2
         version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      global-bus:
+        specifier: workspace:*
+        version: link:../global-bus
       html5-qrcode:
         specifier: ^2.3.8
         version: 2.3.8

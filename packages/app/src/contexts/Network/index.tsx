@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
-import { DefaultNetwork, NetworkList } from 'consts/networks'
+import { varToUrlHash } from '@w3ux/utils'
+import { NetworkList } from 'consts/networks'
 import { Apis } from 'controllers/Apis'
+import { getInitialNetwork } from 'global-bus/util'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { NetworkId } from 'types'
@@ -14,37 +15,6 @@ export const [NetworkContext, useNetwork] =
   createSafeContext<NetworkContextInterface>()
 
 export const NetworkProvider = ({ children }: { children: ReactNode }) => {
-  // Get the initial network and prepare meta tags if necessary
-  const getInitialNetwork = () => {
-    const urlNetworkRaw = extractUrlValue('n')
-
-    const urlNetworkValid = !!Object.values(NetworkList).find(
-      (n) => n.name === urlNetworkRaw
-    )
-
-    // use network from url if valid
-    if (urlNetworkValid) {
-      const urlNetwork = urlNetworkRaw as NetworkId
-
-      if (urlNetworkValid) {
-        return urlNetwork
-      }
-    }
-    // fallback to localStorage network if there
-    const localNetwork: NetworkId = localStorage.getItem('network') as NetworkId
-
-    const localNetworkValid = !!Object.values(NetworkList).find(
-      (n) => n.name === localNetwork
-    )
-
-    const initialNetwork = localNetworkValid ? localNetwork : DefaultNetwork
-
-    // Commit initial to local storage
-    localStorage.setItem('network', initialNetwork)
-
-    return initialNetwork
-  }
-
   // handle network switching
   const switchNetwork = async (name: NetworkId): Promise<void> => {
     // Disconnect from current APIs before switching network

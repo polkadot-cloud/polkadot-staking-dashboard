@@ -3,6 +3,6 @@
 
 import { BehaviorSubject } from 'rxjs'
 import type { NetworkId } from 'types'
+import { getInitialNetwork } from './util'
 
-// TODO: Get initial network
-export const _network = new BehaviorSubject<NetworkId>('polkadot')
+export const _network = new BehaviorSubject<NetworkId>(getInitialNetwork())

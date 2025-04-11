@@ -48,6 +48,7 @@
     "date-fns": "^4.1.0",
     "dedot": "^0.8.1",
     "framer-motion": "^12.6.2",
+    "global-bus": "workspace:*",
     "html5-qrcode": "^2.3.8",
     "i18next-browser-languagedetector": "^8.0.4",
     "locales": "workspace:*",
