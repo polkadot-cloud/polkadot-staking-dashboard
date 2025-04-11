@@ -38,8 +38,8 @@ importers:
         specifier: ^3.7.0
         version: 3.8.1(vite@6.2.4(@types/node@22.13.17)(sass@1.77.6))
       '@w3ux/types':
-        specifier: ^2.1.10
-        version: 2.1.10
+        specifier: ^2.1.12
+        version: 2.1.12
       eslint:
         specifier: ^9.23.0
         version: 9.23.0
@@ -134,8 +134,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.2.27
-        version: 3.2.27(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.2.28
+        version: 3.2.28(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: ^2.0.1
         version: 2.0.1
@@ -404,8 +404,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/types':
-        specifier: ^2.1.10
-        version: 2.1.10
+        specifier: ^2.1.12
+        version: 2.1.12
       '@w3ux/utils':
         specifier: 2.0.8
         version: 2.0.8
@@ -2544,13 +2544,13 @@ packages:
     peerDependencies:
       react: ^19
 
-  '@w3ux/observables-connect@0.9.35':
-    resolution: {integrity: sha512-3vGb2lwN69vCWN0eErHclbuR+nMd1hVYmpBIZMRwsTpLYJzERF/TjBSkZ/NiioZVuvZvYVLn/HS167XiR3ruWw==}
+  '@w3ux/observables-connect@0.9.36':
+    resolution: {integrity: sha512-nid3HcQga9kuo12EDQznN3zJXf+aHZdTdIj0T09z8yKRG2HTotz5w7WV6ZgtEk61+9Cccp3kf/0oV172jUN/Kw==}
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.2.27':
-    resolution: {integrity: sha512-bImDvklmFqMs9Vzhnt+r0ml6cY0355xoase3b51aIKumVyO7QYmI9WGeQw5EZD4Mu4YskGfUT0iKCWZLIXuxXQ==}
+  '@w3ux/react-connect-kit@3.2.28':
+    resolution: {integrity: sha512-RvfRDaBb20xAGIwRE2wFkNJU4As5iprumCQrOkEbh59acwJmhzBUp1+6uAYDd5VfHCauLvBNtqvA9AadhNWbUg==}
     peerDependencies:
       rxjs: ^7.8.2
 
@@ -2560,8 +2560,8 @@ packages:
   '@w3ux/react-polkicon@3.1.2':
     resolution: {integrity: sha512-7N7qI7DEt9yL9/n60YZTumQfwHFpnAxXolR9wglFhgNuL30iw7NAxAkqy8jd+gyOr32NVpcJE+m0A+1O/+yyLg==}
 
-  '@w3ux/types@2.1.10':
-    resolution: {integrity: sha512-Xo5kTCU70iLFBT7o1q5zSyrZmLTzZvX3M/3io0+GeMBfcl5Oa5jGm1o1xknAv6PT7eXzQneo8zHuBBDsQL3GSA==}
+  '@w3ux/types@2.1.12':
+    resolution: {integrity: sha512-vCBMhQyXspqfDZ+4/ebH2mrEVwIq+B9Kcgd3G39q7aMshJBRI5RNMqvqi0KSsQJ5GRbs5cqxGwLvqfL6QOsigQ==}
 
   '@w3ux/utils@2.0.10':
     resolution: {integrity: sha512-utJhLwZyCTxQDxtlZIskPsM7FgckNllBT1Z/XGgAITt0UxqHhMW4mJr7TViV9s4GHCaFhBYwhUrb5PpoDgnZNw==}
@@ -8054,7 +8054,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/observables-connect@0.9.35(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/observables-connect@0.9.36(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/extension-assets': 2.2.0(react@19.1.0)
       '@w3ux/utils': 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -8064,11 +8064,11 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.2.27(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.2.28(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/extension-assets': 2.2.0(react@19.1.0)
       '@w3ux/hooks': 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
-      '@w3ux/observables-connect': 0.9.35(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+      '@w3ux/observables-connect': 0.9.36(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils': 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rxjs: 7.8.2
     transitivePeerDependencies:
@@ -8087,7 +8087,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/types@2.1.10': {}
+  '@w3ux/types@2.1.12': {}
 
   '@w3ux/utils@2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:

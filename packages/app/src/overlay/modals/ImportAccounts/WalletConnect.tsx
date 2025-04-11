@@ -9,7 +9,7 @@ import {
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { AccountSource } from '@w3ux/types'
+import type { HardwareAccountSource } from '@w3ux/types'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useWalletConnect } from 'contexts/WalletConnect'
@@ -42,7 +42,7 @@ export const WalletConnect = () => {
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
 
-  const source: AccountSource = 'wallet_connect'
+  const source: HardwareAccountSource = 'wallet_connect'
 
   // Whether the import account button is active
   const [importActive, setImportActive] = useState<boolean>(false)

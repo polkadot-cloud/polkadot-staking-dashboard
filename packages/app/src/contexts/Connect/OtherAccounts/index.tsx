@@ -7,7 +7,7 @@ import {
   useExtensions,
   useHardwareAccounts,
 } from '@w3ux/react-connect-kit'
-import type { AccountSource, ImportedAccount } from '@w3ux/types'
+import type { HardwareAccountSource, ImportedAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -80,7 +80,7 @@ export const OtherAccountsProvider = ({
   // Checks `localStorage` for previously added accounts from the provided source, and adds them to
   // `accounts` state. if local active account is present, it will also be assigned as active.
   // Accounts are ignored if they are already imported through an extension
-  const importLocalOtherAccounts = <T extends AccountSource>(
+  const importLocalOtherAccounts = <T extends HardwareAccountSource | string>(
     source: T,
     getter: (s: T, n: NetworkId) => ImportedAccount[]
   ) => {
