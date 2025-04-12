@@ -111,7 +111,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     if (isReady) {
       handleSyncAccounts()
     }
-  }, [accounts, network, isReady])
+  }, [JSON.stringify(accounts), network, isReady])
 
   // Handle new bonded account events
   useEventListener(

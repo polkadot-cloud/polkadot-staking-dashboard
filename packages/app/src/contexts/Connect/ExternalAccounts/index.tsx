@@ -28,7 +28,7 @@ export const ExternalAccountsProvider = ({
   children: ReactNode
 }) => {
   const { network } = useNetwork()
-  const { activeAccount, setActiveAccount } = useActiveAccounts()
+  const { activeAddress, setActiveAccount } = useActiveAccounts()
   const { ss58 } = getNetworkData(network)
 
   // Adds an external account to imported accounts
@@ -84,7 +84,7 @@ export const ExternalAccountsProvider = ({
     removeExternalAccounts(network, toRemove)
 
     // If the currently active account is being forgotten, disconnect
-    if (forget.find((a) => a.address === activeAccount) !== undefined) {
+    if (forget.find((a) => a.address === activeAddress) !== undefined) {
       setActiveAccount(null)
     }
   }

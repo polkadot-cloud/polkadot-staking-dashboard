@@ -32,12 +32,12 @@ export const Tips = () => {
   const { inPool } = useActivePool()
   const { isOwner } = useActivePool()
   const { isNominating } = useStaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { fillVariables } = useFillVariables()
   const { syncing } = useSyncing(['initialization'])
   const { feeReserve, getTransferOptions } = useTransferOptions()
 
-  const transferOptions = getTransferOptions(activeAccount)
+  const transferOptions = getTransferOptions(activeAddress)
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false
@@ -84,7 +84,7 @@ export const Tips = () => {
   // re-sync page when active account changes
   useEffect(() => {
     setStateWithRef(getPage(), setPage, pageRef)
-  }, [activeAccount, network])
+  }, [activeAddress, network])
 
   // store the current amount of allowed items on display
   const [itemsPerPage, setItemsPerPageState] =
@@ -97,7 +97,7 @@ export const Tips = () => {
 
   // accumulate segments to include in tips
   const segments: AnyJson = []
-  if (!activeAccount) {
+  if (!activeAddress) {
     segments.push(1)
   } else if (!isNominating() && !inPool()) {
     if (

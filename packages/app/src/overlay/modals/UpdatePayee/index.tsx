@@ -29,12 +29,12 @@ export const UpdatePayee = () => {
   const { getPayee } = useBalances()
   const { getBondedAccount } = useBonded()
   const { getPayeeItems } = usePayeeConfig()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { getSignerWarnings } = useSignerWarnings()
 
-  const controller = getBondedAccount(activeAccount)
-  const payee = getPayee(activeAccount)
+  const controller = getBondedAccount(activeAddress)
+  const payee = getPayee(activeAddress)
 
   const DefaultSelected: PayeeConfig = {
     destination: null,
@@ -100,7 +100,7 @@ export const UpdatePayee = () => {
   // Reset selected value on account change.
   useEffect(() => {
     setSelected(DefaultSelected)
-  }, [activeAccount])
+  }, [activeAddress])
 
   // Inject default value after component mount.
   useEffect(() => {
@@ -118,7 +118,7 @@ export const UpdatePayee = () => {
   }, [])
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     true,
     submitExtrinsic.proxySupported
   )

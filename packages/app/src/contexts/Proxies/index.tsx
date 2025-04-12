@@ -253,7 +253,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       activeAccount
     ) {
       try {
-        const { address, proxyType } = JSON.parse(localActiveProxy)
+        const { address, source, proxyType } = JSON.parse(localActiveProxy)
         // Add proxy address as external account if not imported
         if (!accounts.find((a) => a.address === address)) {
           const importResult = addExternalAccount(address, 'system')
@@ -263,25 +263,25 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         }
 
         const isActive = (
-          proxies.find(({ delegator }) => delegator === activeAccount)
+          proxies.find(({ delegator }) => delegator === activeAccount.address)
             ?.delegates || []
         ).find((d) => d.delegate === address && d.proxyType === proxyType)
         if (isActive) {
-          setActiveProxy({ address, proxyType })
+          setActiveProxy({ address, source, proxyType })
         }
       } catch (e) {
         // Corrupt local active proxy record. Remove it
         localStorage.removeItem(`${network}_active_proxy`)
       }
     }
-  }, [accounts, activeAccount, proxies, network])
+  }, [JSON.stringify(accounts), activeAccount, proxies, network])
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported
   useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts()
     }
-  }, [accounts, isReady])
+  }, [JSON.stringify(accounts), isReady])
 
   // Reset active proxy state on network change & unmount
   useEffectIgnoreInitial(() => {

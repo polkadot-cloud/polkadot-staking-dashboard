@@ -8,7 +8,7 @@ import { AccountButton } from '../Account'
 import type { DelegatesProps } from '../types'
 import { DelegatesWrapper } from './Wrapper'
 
-export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
+export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
   const { accounts } = useImportedAccounts()
   const { getAccount } = useImportedAccounts()
 
@@ -28,6 +28,7 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
           transferrableBalance={transferrableBalance}
           key={`_del_${i}`}
           address={delegate}
+          source={source}
           delegator={delegator}
           proxyType={proxyType}
         />

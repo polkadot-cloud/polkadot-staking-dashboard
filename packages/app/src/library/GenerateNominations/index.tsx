@@ -39,7 +39,7 @@ export const GenerateNominations = ({
   } = useFetchMehods()
   const { isReady, consts } = useApi()
   const { stakers } = useStaking().eraStakers
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { favoritesList } = useFavoriteValidators()
   const { openPromptWith, closePrompt } = usePrompt()
   const { isReadOnlyAccount } = useImportedAccounts()
@@ -197,7 +197,7 @@ export const GenerateNominations = ({
         setMethod('manual')
       }
     }
-  }, [activeAccount, defaultNominations])
+  }, [activeAddress, defaultNominations])
 
   // Refetch if fetching is triggered
   useEffect(() => {
@@ -231,7 +231,7 @@ export const GenerateNominations = ({
       }}
     >
       <div>
-        {!isReadOnlyAccount(activeAccount) && !method && (
+        {!isReadOnlyAccount(activeAddress) && !method && (
           <>
             <Subheading>
               <h4>

@@ -5,6 +5,17 @@ import type { Account, AccountCommon } from '@w3ux/types'
 
 export type MaybeAddress = string | null
 
+export type ActiveAccount = {
+  address: string
+  source: string
+} | null
+
+export type ActiveProxy = {
+  address: string
+  source: string
+  proxyType: string
+} | null
+
 export type ImportedAccount = Account | ExternalAccount
 
 export type ExternalAccount = AccountCommon & {

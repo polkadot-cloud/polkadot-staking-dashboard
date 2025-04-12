@@ -16,14 +16,14 @@ export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
   const { t } = useTranslation('app')
   const { themeElementRef } = useTheme()
   const { openModal } = useOverlay().modal
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { accountHasSigner, getAccount, accounts } = useImportedAccounts()
 
   const [open, setOpen] = useState<boolean>(false)
 
   const totalImportedAccounts = accounts.length
 
-  return !activeAccount ? (
+  return !activeAddress ? (
     <ButtonAccount.Standalone
       label={totalImportedAccounts ? t('selectAccount') : t('connectAccounts')}
       onClick={() => {
@@ -43,7 +43,7 @@ export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
         if (!totalImportedAccounts) {
           return
         }
-        if (activeAccount) {
+        if (activeAddress) {
           setOpen(!open)
         } else {
           openModal({ key: 'Accounts' })
@@ -52,9 +52,13 @@ export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
     >
       <ButtonAccount.Label
         className="header-account"
-        activeAccount={getAccount(activeAccount)}
-        label={getAccount(activeProxy) ? t('proxy', { ns: 'app' }) : undefined}
-        readOnly={!accountHasSigner(activeAccount)}
+        activeAccount={getAccount(activeAddress)}
+        label={
+          getAccount(activeProxy?.address || null)
+            ? t('proxy', { ns: 'app' })
+            : undefined
+        }
+        readOnly={!accountHasSigner(activeAddress)}
         open={open}
       />
     </Popover>

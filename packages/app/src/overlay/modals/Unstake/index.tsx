@@ -33,17 +33,17 @@ export const Unstake = () => {
   const { newBatchCall } = useBatchCall()
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { setModalStatus, setModalResize } = useOverlay().modal
 
   const { unit, units } = getNetworkData(network)
-  const controller = getBondedAccount(activeAccount)
-  const nominations = getNominations(activeAccount)
+  const controller = getBondedAccount(activeAddress)
+  const nominations = getNominations(activeAddress)
   const { bondDuration } = consts
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { active } = allTransferOptions.nominate
 
   const bondDurationFormatted = timeleftAsString(
@@ -78,7 +78,7 @@ export const Unstake = () => {
 
   const getTx = () => {
     const tx = null
-    if (!activeAccount) {
+    if (!activeAddress) {
       return tx
     }
     const bondToSubmit = unitToPlanck(String(!bondValid ? 0 : bond.bond), units)
@@ -102,7 +102,7 @@ export const Unstake = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     true,
     submitExtrinsic.proxySupported
   )

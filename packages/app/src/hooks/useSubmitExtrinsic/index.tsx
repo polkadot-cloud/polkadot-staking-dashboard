@@ -64,13 +64,13 @@ export const useSubmitExtrinsic = ({
       tx.decodedCall?.value?.type === 'proxy'
     ) {
       if (activeProxy) {
-        from = activeProxy
+        from = activeProxy.address
       }
     } else {
       if (activeProxy && isProxySupported(tx, from)) {
         // Update submit address to active proxy account
         const real = from
-        from = activeProxy
+        from = activeProxy.address
 
         // Check not a batch transactions
         if (

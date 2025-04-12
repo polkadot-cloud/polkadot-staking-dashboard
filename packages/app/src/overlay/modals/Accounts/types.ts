@@ -8,6 +8,7 @@ import type { MaybeAddress } from 'types'
 
 export interface AccountItemProps {
   address: MaybeAddress
+  source: string
   label?: string[]
   asElement?: boolean
   delegator?: string
@@ -18,21 +19,25 @@ export interface AccountItemProps {
 
 export interface DelegatesProps {
   delegator: string
+  source: string
   delegates: Proxy | undefined
 }
 
 export interface AccountInPool extends PoolMembership {
+  source: string
   delegates?: Proxy
 }
 
 export interface AccountNominating {
   address: MaybeAddress
+  source: string
   stashImported: boolean
   delegates?: Proxy
 }
 
 export interface AccountNotStaking {
   address: string
+  source: string
   delegates?: Proxy
 }
 

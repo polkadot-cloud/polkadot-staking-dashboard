@@ -31,7 +31,7 @@ export const Bond = () => {
   } = useOverlay().modal
   const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { feeReserve, getTransferOptions } = useTransferOptions()
   const { unit, units } = getNetworkData(network)
@@ -39,7 +39,7 @@ export const Bond = () => {
   const { bondFor } = options
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
-  const { nominate, transferrableBalance } = getTransferOptions(activeAccount)
+  const { nominate, transferrableBalance } = getTransferOptions(activeAddress)
 
   const freeToBond = planckToUnitBn(
     (bondFor === 'nominator'
@@ -109,7 +109,7 @@ export const Bond = () => {
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return null
     }
     return determineTx(bondToSubmit)
@@ -117,7 +117,7 @@ export const Bond = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(bondAfterTxFees),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -125,7 +125,7 @@ export const Bond = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

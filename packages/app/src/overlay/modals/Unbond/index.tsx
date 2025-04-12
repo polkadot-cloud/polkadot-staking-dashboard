@@ -34,7 +34,7 @@ export const Unbond = () => {
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { getBondedAccount } = useBonded()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
@@ -53,7 +53,7 @@ export const Unbond = () => {
   const { unit, units } = getNetworkData(network)
   const { bondFor } = options
   const pendingRewards = activePool?.pendingRewards || 0n
-  const controller = getBondedAccount(activeAccount)
+  const controller = getBondedAccount(activeAddress)
   const { bondDuration } = consts
 
   const bondDurationFormatted = timeleftAsString(
@@ -68,7 +68,7 @@ export const Unbond = () => {
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
 
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { active: activeBn } = isPooling
     ? allTransferOptions.pool
     : allTransferOptions.nominate
@@ -112,20 +112,20 @@ export const Unbond = () => {
   const getTx = () => {
     const api = Apis.getApi(network)
     let tx = null
-    if (!api || !activeAccount) {
+    if (!api || !activeAddress) {
       return tx
     }
 
     const bondToSubmit = unitToPlanck(!bondValid ? 0 : bond.bond, units)
     if (isPooling) {
-      tx = new PoolUnbond(network, activeAccount, points).tx()
+      tx = new PoolUnbond(network, activeAddress, points).tx()
     } else if (isStaking) {
       tx = new StakingUnbond(network, bondToSubmit).tx()
     }
     return tx
   }
 
-  const signingAccount = isPooling ? activeAccount : controller
+  const signingAccount = isPooling ? activeAddress : controller
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
@@ -149,7 +149,7 @@ export const Unbond = () => {
 
   // accumulate warnings.
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     isStaking,
     submitExtrinsic.proxySupported
   )

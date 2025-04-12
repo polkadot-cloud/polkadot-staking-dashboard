@@ -4,6 +4,6 @@
 import type { NetworkId } from 'types'
 
 export interface Props {
-  activeAccount: string
+  who: string
   network: NetworkId
 }

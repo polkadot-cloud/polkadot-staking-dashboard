@@ -40,10 +40,10 @@ export const [StakingContext, useStaking] =
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
+  const { activeAddress } = useActiveAccounts()
   const { getLedger, getNominations } = useBalances()
   const { isReady, activeEra, apiStatus } = useApi()
   const { accounts: connectAccounts } = useImportedAccounts()
-  const { activeAccount, getActiveAccount } = useActiveAccounts()
   const { units } = getNetworkData(network)
 
   // Store eras stakers in state
@@ -73,7 +73,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       } = data
 
       // Check if account hasn't changed since worker started
-      if (getActiveAccount() === who) {
+      if (activeAddress === who) {
         // Syncing current eraStakers is now complete
         Syncs.dispatch('era-stakers', 'complete')
 
@@ -134,7 +134,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       era: activeEra.index.toString(),
       networkName: network,
       task: 'processExposures',
-      activeAccount,
+      activeAccount: activeAddress,
       units,
       exposures,
     })
@@ -176,12 +176,12 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     if (!connectAccounts.find((acc) => acc.address === address)) {
       return false
     }
-    return address !== activeAccount && activeAccount !== null
+    return address !== activeAddress && activeAddress !== null
   }
 
   // Helper function to determine whether the controller account has been imported
   const getControllerNotImported = (address: MaybeAddress) => {
-    if (address === null || !activeAccount) {
+    if (address === null || !activeAddress) {
       return false
     }
     // Check if controller is imported
@@ -204,23 +204,23 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper function to determine whether the active account
-  const hasController = () => getBondedAccount(activeAccount) !== null
+  const hasController = () => getBondedAccount(activeAddress) !== null
 
   // Helper function to determine whether the active account is bonding, or is yet to start
   const isBonding = () =>
     hasController() &&
-    getLedger({ stash: activeAccount }).active.isGreaterThan(0)
+    getLedger({ stash: activeAddress }).active.isGreaterThan(0)
 
   // Helper function to determine whether the active account
   const isUnlocking = () =>
-    hasController() && getLedger({ stash: activeAccount }).unlocking.length
+    hasController() && getLedger({ stash: activeAddress }).unlocking.length
 
   // Helper function to determine whether the active account is nominating, or is yet to start
-  const isNominating = () => getNominations(activeAccount).length > 0
+  const isNominating = () => getNominations(activeAddress).length > 0
 
   // Helper function to determine whether the active account is nominating, or is yet to start
   const inSetup = () =>
-    !activeAccount ||
+    !activeAddress ||
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
 
   // Fetch eras stakers from storage
@@ -289,7 +289,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     if (isReady) {
       fetchActiveEraStakers()
     }
-  }, [isReady, activeEra.index, activeAccount])
+  }, [isReady, activeEra.index, activeAddress])
 
   return (
     <StakingContext.Provider

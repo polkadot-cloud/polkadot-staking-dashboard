@@ -35,7 +35,7 @@ export const OtherAccountsProvider = ({
   const { gettingExtensions } = useExtensions()
   const { getHardwareAccounts } = useHardwareAccounts()
   const { addExternalAccount } = useExternalAccounts()
-  const { activeAccount, setActiveAccount } = useActiveAccounts()
+  const { activeAddress, setActiveAccount } = useActiveAccounts()
   const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
   const { ss58 } = getNetworkData(network)
@@ -68,8 +68,8 @@ export const OtherAccountsProvider = ({
       // If the currently active account is being forgotten, and it is not present in extension
       // accounts, disconnect
       if (
-        forget.find(({ address }) => address === activeAccount) !== undefined &&
-        extensionAccounts.find(({ address }) => address === activeAccount) ===
+        forget.find(({ address }) => address === activeAddress) !== undefined &&
+        extensionAccounts.find(({ address }) => address === activeAddress) ===
           undefined
       ) {
         setActiveAccount(null)
@@ -91,7 +91,8 @@ export const OtherAccountsProvider = ({
     if (localAccounts.length) {
       const activeAccountInSet =
         localAccounts.find(
-          ({ address }) => address === getActiveAccountLocal(network, ss58)
+          ({ address }) =>
+            address === getActiveAccountLocal(network, ss58)?.address
         ) ?? null
 
       // remove accounts that are already imported via web extension
@@ -121,7 +122,10 @@ export const OtherAccountsProvider = ({
 
       // set active account for networkData
       if (activeAccountInSet) {
-        setActiveAccount(activeAccountInSet.address)
+        setActiveAccount({
+          address: activeAccountInSet.address,
+          source: activeAccountInSet.source,
+        })
       }
 
       // add accounts to imported

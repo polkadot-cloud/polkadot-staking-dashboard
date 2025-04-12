@@ -28,7 +28,7 @@ export const [SetupContext, useSetup] =
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { accounts } = useImportedAccounts()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { units } = getNetworkData(network)
 
   // Store all imported accounts nominator setups
@@ -112,29 +112,29 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     type: BondFor,
     progress: NominatorProgress | PoolProgress
   ) => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return
     }
 
     const updatedSetups = updateSetups(
       assignSetups(type),
       progress,
-      activeAccount
+      activeAddress
     )
     setSetups(type, updatedSetups)
   }
 
   // Sets active setup section for an address
   const setActiveAccountSetupSection = (type: BondFor, section: number) => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return
     }
 
     const setups = assignSetups(type)
     const updatedSetups = updateSetups(
       setups,
-      setups[activeAccount]?.progress ?? defaultProgress(type),
-      activeAccount,
+      setups[activeAddress]?.progress ?? defaultProgress(type),
+      activeAddress,
       section
     )
     setSetups(type, updatedSetups)
@@ -253,12 +253,12 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Update setup state when activeAccount changes
+  // Update setup state when activeAddress changes
   useEffectIgnoreInitial(() => {
     if (accounts.length) {
       refreshSetups()
     }
-  }, [activeAccount, network, accounts])
+  }, [activeAddress, network, JSON.stringify(accounts)])
 
   return (
     <SetupContext.Provider

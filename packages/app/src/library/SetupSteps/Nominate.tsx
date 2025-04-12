@@ -22,14 +22,14 @@ import type { NominationsProps } from './types'
 export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('app')
   const { consts } = useApi()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setNominations } = useManageNominations()
   const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()
 
   const setup =
     bondFor === 'nominator'
-      ? getNominatorSetup(activeAccount)
-      : getPoolSetup(activeAccount)
+      ? getNominatorSetup(activeAddress)
+      : getPoolSetup(activeAddress)
 
   const { progress } = setup
   const { maxNominations } = consts
@@ -48,8 +48,8 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
         callable: true,
         fn: () =>
           (bondFor === 'nominator'
-            ? getNominatorSetup(activeAccount)
-            : getPoolSetup(activeAccount)
+            ? getNominatorSetup(activeAddress)
+            : getPoolSetup(activeAddress)
           ).progress,
       },
       set: handleSetupUpdate,
@@ -82,12 +82,12 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
 }
 
 export const Nominate = (props: NominationsProps) => {
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getNominatorSetup, getPoolSetup } = useSetup()
   const setup =
     props.bondFor === 'nominator'
-      ? getNominatorSetup(activeAccount)
-      : getPoolSetup(activeAccount)
+      ? getNominatorSetup(activeAddress)
+      : getPoolSetup(activeAddress)
 
   const { progress } = setup
 

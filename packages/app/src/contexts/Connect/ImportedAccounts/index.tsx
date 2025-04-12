@@ -116,7 +116,7 @@ export const ImportedAccountsProvider = ({
   // Re-sync the active account and active proxy on network change
   useEffectIgnoreInitial(() => {
     const localActiveAccount = getActiveAccountLocal(network, ss58)
-    if (getAccount(localActiveAccount) !== null) {
+    if (getAccount(localActiveAccount?.address || null) !== null) {
       setActiveAccount(localActiveAccount, false)
     } else {
       setActiveAccount(null, false)
@@ -126,7 +126,7 @@ export const ImportedAccountsProvider = ({
     if (getAccount(localActiveProxy?.address || null)) {
       setActiveProxy(getActiveProxyLocal(network, ss58), false)
     }
-  }, [network, extensionAccounts])
+  }, [network, allAccountsStringified])
 
   return (
     <ImportedAccountsContext.Provider

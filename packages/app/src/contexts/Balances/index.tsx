@@ -29,8 +29,8 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
   const createPoolAccounts = useCreatePoolAccounts()
-  const { activeAccount, activeProxy } = useActiveAccounts()
-  const controller = getBondedAccount(activeAccount)
+  const { activeAddress, activeProxy } = useActiveAccounts()
+  const controller = getBondedAccount(activeAddress)
 
   // Listen to balance updates for the active account, active proxy and controller
   const {
@@ -43,7 +43,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     getNominations,
     getEdReserved,
   } = useActiveBalances({
-    accounts: [activeAccount, activeProxy, controller],
+    accounts: [activeAddress, activeProxy?.address || null, controller],
   })
 
   // Check all accounts have been synced. App-wide syncing state for all accounts

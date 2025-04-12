@@ -35,7 +35,7 @@ export const ManageFastUnstake = () => {
   const { getTxSubmission } = useTxMeta()
   const { getBondedAccount } = useBonded()
   const { isFastUnstaking } = useUnstaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { setModalResize, setModalStatus } = useOverlay().modal
   const { feeReserve, getTransferOptions } = useTransferOptions()
@@ -43,8 +43,8 @@ export const ManageFastUnstake = () => {
     useFastUnstake()
 
   const { unit, units } = getNetworkData(network)
-  const controller = getBondedAccount(activeAccount)
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const controller = getBondedAccount(activeAddress)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { nominate, transferrableBalance } = allTransferOptions
   const { totalUnlockChunks } = nominate
 
@@ -104,7 +104,7 @@ export const ManageFastUnstake = () => {
 
   // warnings
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     true,
     submitExtrinsic.proxySupported
   )

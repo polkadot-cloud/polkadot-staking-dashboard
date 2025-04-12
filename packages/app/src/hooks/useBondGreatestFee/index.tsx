@@ -12,11 +12,11 @@ import type { BondFor } from 'types'
 
 export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   const { network } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
   const transferOptions = useMemo(
-    () => getTransferOptions(activeAccount),
-    [activeAccount]
+    () => getTransferOptions(activeAddress),
+    [activeAddress]
   )
   const { transferrableBalance } = transferOptions
 
@@ -48,9 +48,9 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
       tx = new StakingBondExtra(network, BigInt(bond)).tx()
     }
 
-    if (tx && activeAccount) {
+    if (tx && activeAddress) {
       const partial_fee =
-        (await tx?.getPaymentInfo(activeAccount))?.partial_fee || 0n
+        (await tx?.getPaymentInfo(activeAddress))?.partial_fee || 0n
 
       return new BigNumber(partial_fee.toString())
     }

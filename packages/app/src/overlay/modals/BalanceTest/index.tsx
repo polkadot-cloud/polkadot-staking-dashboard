@@ -15,13 +15,13 @@ import { Close, useOverlay } from 'ui-overlay'
 export const BalanceTest = () => {
   const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { units } = getNetworkData(network)
 
   const getTx = () => {
     const tx = null
-    if (!activeAccount) {
+    if (!activeAddress) {
       return tx
     }
 
@@ -37,13 +37,13 @@ export const BalanceTest = () => {
         unitToPlanck('0.1', units)
       ).tx(),
     ]
-    const batch = newBatchCall(txs, activeAccount)
+    const batch = newBatchCall(txs, activeAddress)
     return batch
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')

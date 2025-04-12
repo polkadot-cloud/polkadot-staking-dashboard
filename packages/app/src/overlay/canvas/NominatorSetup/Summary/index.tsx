@@ -30,16 +30,16 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { getPayeeItems } = usePayeeConfig()
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { getNominatorSetup, removeSetupProgress } = useSetup()
   const { unit, units } = getNetworkData(network)
 
-  const setup = getNominatorSetup(activeAccount)
+  const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
   const { bond, nominations, payee } = progress
 
   const getTxs = () => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return null
     }
     if (payee.destination === 'Account' && !payee.account) {
@@ -69,20 +69,20 @@ export const Summary = ({ section }: SetupStepProps) => {
     if (!tx) {
       return null
     }
-    return newBatchCall(tx, activeAccount)
+    return newBatchCall(tx, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tag: 'nominatorSetup',
     tx: getTxs(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackInBlock: () => {
       // Close the canvas after the extrinsic is included in a block.
       closeCanvas()
 
       // Reset setup progress.
-      removeSetupProgress('nominator', activeAccount)
+      removeSetupProgress('nominator', activeAddress)
     },
   })
 
@@ -100,7 +100,8 @@ export const Summary = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
-          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+          accountHasSigner(activeAddress) ||
+          accountHasSigner(activeProxy?.address || null)
         ) && <Warning text={t('readOnly')} />}
         <SummaryWrapper>
           <section>
