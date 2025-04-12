@@ -13,12 +13,12 @@ import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { isCustomEvent } from 'controllers/utils'
+import { getInitialExternalAccounts } from 'global-bus/util'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import { useExternalAccounts } from '../ExternalAccounts'
-import { getLocalExternalAccounts } from '../ExternalAccounts/Utils'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 import { getActiveAccountLocal } from '../Utils'
 import type { OtherAccountsContextInterface } from './types'
@@ -214,7 +214,7 @@ export const OtherAccountsProvider = ({
       setOtherAccountsSynced(true)
 
       // Finally, fetch any read-only accounts that have been added by `system` or `user`
-      importLocalOtherAccounts('external', getLocalExternalAccounts)
+      importLocalOtherAccounts('external', getInitialExternalAccounts)
     }
   }, [network, extensionsSynced])
 

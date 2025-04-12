@@ -344,6 +344,9 @@ importers:
         specifier: ^7.8.2
         version: 7.8.2
     devDependencies:
+      '@w3ux/types':
+        specifier: ^2.1.12
+        version: 2.1.12
       types:
         specifier: workspace:*
         version: link:../types

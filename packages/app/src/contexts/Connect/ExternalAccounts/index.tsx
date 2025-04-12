@@ -7,17 +7,17 @@ import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
+import {
+  addExternalAccount as addExternalAccountBus,
+  externalAccountExists,
+  removeExternalAccounts,
+} from 'global-bus'
 import { type ReactNode } from 'react'
 import type {
   AddExternalAccountResult,
   ExternalAccountImportType,
   ExternalAccountsContextInterface,
 } from './types'
-import {
-  addLocalExternalAccount,
-  externalAccountExistsLocal,
-  removeLocalExternalAccounts,
-} from './Utils'
 
 export const [ExternalAccountsContext, useExternalAccounts] =
   createSafeContext<ExternalAccountsContextInterface>()
@@ -31,57 +31,48 @@ export const ExternalAccountsProvider = ({
   const { activeAccount, setActiveAccount } = useActiveAccounts()
   const { ss58 } = getNetworkData(network)
 
-  // Adds an external account (non-wallet) to accounts
+  // Adds an external account to imported accounts
   const addExternalAccount = (
     address: string,
     addedBy: AccountAddedBy
   ): AddExternalAccountResult | null => {
-    const formattedAddress = formatAccountSs58(address, ss58)
-
-    // Address should be valid, but if not, return null early
-    if (!formattedAddress) {
+    const formatted = formatAccountSs58(address, ss58)
+    if (!formatted) {
       return null
     }
 
     let newEntry = {
-      address: formattedAddress,
+      address: formatted,
       network,
       name: ellipsisFn(address),
-      source: 'external' as const,
+      source: 'external',
       addedBy,
     }
 
-    const existsLocal = externalAccountExistsLocal(newEntry.address, network)
+    const exists = externalAccountExists(network, newEntry.address)
 
-    // Whether the account needs to remain imported as a system account
+    // Whether the account needs to be imported as a system account
     const toSystem =
-      existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system'
+      exists && addedBy === 'system' && exists.addedBy !== 'system'
 
-    let isImported = true
     let importType: ExternalAccountImportType = 'new'
 
-    if (!existsLocal) {
-      // Only add `user` accounts to localStorage
-      if (addedBy === 'user') {
-        addLocalExternalAccount(newEntry)
-      }
-    } else if (toSystem) {
+    if (toSystem) {
       // If account is being added by `system`, but is already imported, update it to be a system
       // account. `system` accounts are not persisted to local storage
       //
       // update the entry to a system account
       newEntry = { ...newEntry, addedBy: 'system' }
       importType = 'replace'
-    } else {
-      isImported = false
     }
 
-    return isImported
-      ? {
-          type: importType,
-          account: newEntry,
-        }
-      : null
+    // Add account to global bus
+    addExternalAccountBus(network, newEntry, newEntry.addedBy === 'system')
+
+    return {
+      type: importType,
+      account: newEntry,
+    }
   }
 
   // Get any external accounts and remove from localStorage
@@ -89,10 +80,8 @@ export const ExternalAccountsProvider = ({
     if (!forget.length) {
       return
     }
-    removeLocalExternalAccounts(
-      network,
-      forget.filter((i) => 'network' in i) as ExternalAccount[]
-    )
+    const toRemove = forget.filter((i) => 'network' in i) as ExternalAccount[]
+    removeExternalAccounts(network, toRemove)
 
     // If the currently active account is being forgotten, disconnect
     if (forget.find((a) => a.address === activeAccount) !== undefined) {
