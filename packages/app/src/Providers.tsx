@@ -3,7 +3,6 @@
 
 import { withProviders } from '@w3ux/factories'
 import {
-  ExtensionAccountsProvider,
   ExtensionsProvider,
   HardwareAccountsProvider,
 } from '@w3ux/react-connect-kit'
@@ -58,13 +57,11 @@ export const Providers = () => {
       UIProvider,
       [APIProvider, { network }],
       LedgerHardwareProvider,
-      ExtensionsProvider,
       [
-        ExtensionAccountsProvider,
+        ExtensionsProvider,
 
         {
           dappName: DappName,
-          network,
           ss58,
         },
       ],
