@@ -7,7 +7,7 @@ import {
   useExtensions,
   useHardwareAccounts,
 } from '@w3ux/react-connect-kit'
-import type { HardwareAccountSource, ImportedAccount } from '@w3ux/types'
+import type { HardwareAccountSource } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -16,7 +16,7 @@ import { isCustomEvent } from 'controllers/utils'
 import { getInitialExternalAccounts } from 'global-bus/util'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import type { MaybeAddress, NetworkId } from 'types'
+import type { ImportedAccount, MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import { useExternalAccounts } from '../ExternalAccounts'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'

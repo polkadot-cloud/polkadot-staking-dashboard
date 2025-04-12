@@ -1,4 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { Account, AccountCommon } from '@w3ux/types'
+
 export type MaybeAddress = string | null
+
+export type ImportedAccount = Account | ExternalAccount
+
+export type ExternalAccount = AccountCommon & {
+  network: string
+  addedBy: AccountAddedBy
+}
+
+export type AccountAddedBy = 'system' | 'user'

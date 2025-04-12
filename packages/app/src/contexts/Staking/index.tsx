@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { ExternalAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
 import { ErasStakersOverview } from 'api/query/erasStakersOverview'
@@ -20,7 +19,12 @@ import type {
 import { Syncs } from 'controllers/Syncs'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { AnyJson, MaybeAddress, NominationStatus } from 'types'
+import type {
+  AnyJson,
+  ExternalAccount,
+  MaybeAddress,
+  NominationStatus,
+} from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'

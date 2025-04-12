@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { AccountAddedBy, ExternalAccount } from '@w3ux/types'
 import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -13,6 +12,7 @@ import {
   removeExternalAccounts,
 } from 'global-bus'
 import { type ReactNode } from 'react'
+import type { AccountAddedBy, ExternalAccount } from 'types'
 import type {
   AddExternalAccountResult,
   ExternalAccountImportType,
