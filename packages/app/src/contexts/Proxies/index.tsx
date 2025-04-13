@@ -24,8 +24,9 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
+import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type {
@@ -43,6 +44,7 @@ export const [ProxiesContext, useProxies] =
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
+  const { syncing } = useSyncing()
   const { accounts } = useImportedAccounts()
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
@@ -277,11 +279,11 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   }, [JSON.stringify(accounts), activeAccount, proxies, network])
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported
-  useEffectIgnoreInitial(() => {
+  useEffect(() => {
     if (isReady) {
       handleSyncAccounts()
     }
-  }, [JSON.stringify(accounts), isReady])
+  }, [JSON.stringify(accounts), isReady, syncing])
 
   // Reset active proxy state on network change & unmount
   useEffectIgnoreInitial(() => {
