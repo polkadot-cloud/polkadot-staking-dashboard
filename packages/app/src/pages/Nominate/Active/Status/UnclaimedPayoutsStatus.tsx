@@ -23,7 +23,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
     unclaimedRewards: { total },
   } = usePayouts()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { units } = getNetworkData(network)
   return (
@@ -44,7 +44,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
               {
                 title: t('claim', { ns: 'modals' }),
                 icon: faCircleDown,
-                disabled: !isReady || isReadOnlyAccount(activeAccount),
+                disabled: !isReady || isReadOnlyAccount(activeAddress),
                 small: true,
                 onClick: () =>
                   openModal({

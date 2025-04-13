@@ -23,7 +23,7 @@ export const UnbondInput = ({
 }: UnbondInputProps) => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   const { unit, units } = getNetworkData(network)
   // get the actively bonded amount
@@ -35,7 +35,7 @@ export const UnbondInput = ({
   // reset value to default when changing account.
   useEffect(() => {
     setLocalBond(defaultValue ?? '0')
-  }, [activeAccount])
+  }, [activeAddress])
 
   // handle change for unbonding.
   const handleChangeUnbond = (e: ChangeEvent<HTMLInputElement>) => {

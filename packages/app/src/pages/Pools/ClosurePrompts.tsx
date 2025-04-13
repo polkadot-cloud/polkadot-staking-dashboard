@@ -17,14 +17,14 @@ export const ClosurePrompts = () => {
   const { t } = useTranslation('pages')
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { getTransferOptions } = useTransferOptions()
   const { isBonding, activePool, isDepositor, activePoolNominations } =
     useActivePool()
 
   const { state, memberCounter } = activePool?.bondedPool || {}
-  const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool
+  const { active, totalUnlockChunks } = getTransferOptions(activeAddress).pool
   const targets = activePoolNominations?.targets ?? []
 
   // is the pool in a state for the depositor to close

@@ -451,7 +451,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && earliestStoredSession.isGreaterThan(0)) {
       getParachainValidators()
     }
-  }, [isReady, earliestStoredSession])
+  }, [isReady, earliestStoredSession.toString()])
 
   return (
     <ValidatorsContext.Provider

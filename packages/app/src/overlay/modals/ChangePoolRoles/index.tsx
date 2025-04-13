@@ -17,7 +17,7 @@ export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { replacePoolRoles } = useBondedPools()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const {
     setModalStatus,
     config: { options },
@@ -33,7 +33,7 @@ export const ChangePoolRoles = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')

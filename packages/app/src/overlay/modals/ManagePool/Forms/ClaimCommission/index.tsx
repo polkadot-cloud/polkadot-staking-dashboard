@@ -32,7 +32,7 @@ export const ClaimCommission = ({
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isOwner, activePool } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
 
@@ -58,7 +58,7 @@ export const ClaimCommission = ({
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -66,7 +66,7 @@ export const ClaimCommission = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

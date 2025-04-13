@@ -24,7 +24,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { isFastUnstaking } = useUnstaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
 
   const { timeleft, setFromNow } = useTimeLeft({
@@ -46,7 +46,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   // reset timer on account or network change.
   useEffect(() => {
     setFromNow(dateFrom, dateTo)
-  }, [activeAccount, network])
+  }, [activeAddress, network])
 
   return (
     <ChunkWrapper>

@@ -23,6 +23,7 @@ import type { AccountItemProps } from './types'
 export const AccountButton = ({
   label,
   address,
+  source,
   delegator,
   proxyType,
   noBorder = false,
@@ -32,7 +33,7 @@ export const AccountButton = ({
   const { getAccount } = useImportedAccounts()
   const {
     activeProxy,
-    activeAccount,
+    activeAddress,
     setActiveAccount,
     setActiveProxy,
     activeProxyType,
@@ -60,8 +61,8 @@ export const AccountButton = ({
 
   // Determine if this account is active (active account or proxy).
   const isActive =
-    (connectTo === activeAccount &&
-      address === activeAccount &&
+    (connectTo === activeAddress &&
+      address === activeAddress &&
       !activeProxy) ||
     (connectProxy === activeProxy &&
       proxyType === activeProxyType &&
@@ -72,8 +73,15 @@ export const AccountButton = ({
     if (!imported) {
       return
     }
-    setActiveAccount(getAccount(connectTo)?.address || null)
-    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null)
+    const account = getAccount(connectTo)
+    setActiveAccount(
+      account ? { address: account.address, source: account.source } : null
+    )
+    setActiveProxy(
+      proxyType && connectProxy
+        ? { address: connectProxy, source, proxyType }
+        : null
+    )
     setModalStatus('closing')
   }
 

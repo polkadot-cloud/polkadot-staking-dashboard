@@ -38,8 +38,8 @@ importers:
         specifier: ^3.7.0
         version: 3.8.1(vite@6.2.4(@types/node@22.13.17)(sass@1.77.6))
       '@w3ux/types':
-        specifier: ^2.1.12
-        version: 2.1.12
+        specifier: ^2.1.13
+        version: 2.1.13
       eslint:
         specifier: ^9.23.0
         version: 9.23.0
@@ -344,6 +344,9 @@ importers:
         specifier: ^7.8.2
         version: 7.8.2
     devDependencies:
+      '@w3ux/types':
+        specifier: ^2.1.12
+        version: 2.1.12
       types:
         specifier: workspace:*
         version: link:../types
@@ -2559,6 +2562,9 @@ packages:
 
   '@w3ux/types@2.1.12':
     resolution: {integrity: sha512-vCBMhQyXspqfDZ+4/ebH2mrEVwIq+B9Kcgd3G39q7aMshJBRI5RNMqvqi0KSsQJ5GRbs5cqxGwLvqfL6QOsigQ==}
+
+  '@w3ux/types@2.1.13':
+    resolution: {integrity: sha512-+b1wjIGRUn44tQ892er0W1NTmgu9DYjJoEbGJQ8WriZz+cQo+oT2q69P2qvofUhYdtPTroZiJcwEmoITHiL8Dg==}
 
   '@w3ux/utils@2.0.10':
     resolution: {integrity: sha512-utJhLwZyCTxQDxtlZIskPsM7FgckNllBT1Z/XGgAITt0UxqHhMW4mJr7TViV9s4GHCaFhBYwhUrb5PpoDgnZNw==}
@@ -8085,6 +8091,8 @@ snapshots:
       - utf-8-validate
 
   '@w3ux/types@2.1.12': {}
+
+  '@w3ux/types@2.1.13': {}
 
   '@w3ux/utils@2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:

@@ -23,7 +23,7 @@ export const BondInput = ({
 }: BondInputProps) => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { unit } = getNetworkData(network)
 
   // the current local bond value
@@ -32,7 +32,7 @@ export const BondInput = ({
   // reset value to default when changing account.
   useEffect(() => {
     setLocalBond(defaultValue ?? '0')
-  }, [activeAccount])
+  }, [activeAddress])
 
   useEffect(() => {
     if (!disableTxFeeUpdate) {

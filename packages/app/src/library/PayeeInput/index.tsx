@@ -26,11 +26,11 @@ export const PayeeInput = ({
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
   const { network } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   const { ss58 } = getNetworkData(network)
-  const controller = getBondedAccount(activeAccount)
-  const accountMeta = accounts.find((a) => a.address === activeAccount)
+  const controller = getBondedAccount(activeAddress)
+  const accountMeta = accounts.find((a) => a.address === activeAddress)
 
   // store whether account value is valid.
   const [valid, setValid] = useState<boolean>(isValidAddress(account || ''))
@@ -91,7 +91,7 @@ export const PayeeInput = ({
         ? ''
         : payee.destination === 'Controller'
           ? controller
-          : activeAccount
+          : activeAddress
 
   const placeholderDisplay =
     payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress')
@@ -117,7 +117,7 @@ export const PayeeInput = ({
               onChange={handleChangeAccount}
             />
             <div ref={hiddenRef} className="hidden">
-              {payee.destination === 'Account' ? activeAccount : accountDisplay}
+              {payee.destination === 'Account' ? activeAddress : accountDisplay}
             </div>
           </div>
         </div>

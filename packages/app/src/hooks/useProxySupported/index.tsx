@@ -32,7 +32,10 @@ export const useProxySupported = () => {
       return true
     }
 
-    const proxyDelegate = getProxyDelegate(delegator, activeProxy)
+    const proxyDelegate = getProxyDelegate(
+      delegator,
+      activeProxy?.address || null
+    )
     const proxyType = proxyDelegate?.proxyType || ''
     const pallet: string = tx?.decodedCall?.type || ''
     const method: string = tx?.decodedCall?.value?.type || ''

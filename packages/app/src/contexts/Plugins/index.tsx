@@ -21,7 +21,7 @@ export const [PluginsContext, usePlugins] =
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { isReady, activeEra } = useApi()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // Store the currently active plugins
   const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins())
@@ -50,7 +50,7 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
     if (plugins.includes('subscan')) {
       Subscan.network = network
     }
-  }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra])
+  }, [plugins.includes('subscan'), isReady, network, activeAddress, activeEra])
 
   // Handle api subscriptions when Staking API is toggled
   useEffectIgnoreInitial(() => {

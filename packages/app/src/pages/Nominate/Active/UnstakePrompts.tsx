@@ -23,13 +23,13 @@ export const UnstakePrompts = () => {
   const { network } = useNetwork()
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
 
   const { unit } = getNetworkData(network)
   const { getTransferOptions } = useTransferOptions()
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
-    getTransferOptions(activeAccount).nominate
+    getTransferOptions(activeAddress).nominate
 
   // unstaking can withdraw
   const canWithdrawUnlocks =

@@ -27,7 +27,7 @@ export const ClaimReward = () => {
   } = useOverlay().modal
   const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { unit, units } = getNetworkData(network)
   const { claimType } = options
@@ -58,7 +58,7 @@ export const ClaimReward = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -66,7 +66,7 @@ export const ClaimReward = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

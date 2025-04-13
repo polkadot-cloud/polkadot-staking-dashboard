@@ -26,16 +26,16 @@ export const TransferOptionsProvider = ({
 }) => {
   const { network } = useNetwork()
   const { consts, activeEra } = useApi()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getLedger, getBalance, getLocks, getPoolMembership } = useBalances()
 
   const { existentialDeposit } = consts
-  const membership = getPoolMembership(activeAccount)
+  const membership = getPoolMembership(activeAddress)
   const { units, defaultFeeReserve } = getNetworkData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
   const [feeReserve, setFeeReserve] = useState<BigNumber>(
-    getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })
+    getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
   )
 
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
@@ -113,10 +113,10 @@ export const TransferOptionsProvider = ({
 
   // Updates account's reserve amount in state and in local storage
   const setFeeReserveBalance = (amount: BigNumber) => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return
     }
-    setLocalFeeReserve(activeAccount, amount, network)
+    setLocalFeeReserve(activeAddress, amount, network)
     setFeeReserve(amount)
   }
 
@@ -155,9 +155,9 @@ export const TransferOptionsProvider = ({
   // Update an account's reserve amount on account or network change
   useEffectIgnoreInitial(() => {
     setFeeReserve(
-      getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })
+      getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
     )
-  }, [activeAccount, network])
+  }, [activeAddress, network])
 
   return (
     <TransferOptionsContext.Provider

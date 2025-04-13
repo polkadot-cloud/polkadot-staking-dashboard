@@ -34,7 +34,7 @@ export const Forms = forwardRef(
     const { network } = useNetwork()
     const { newBatchCall } = useBatchCall()
     const { setModalStatus } = useOverlay().modal
-    const { activeAccount } = useActiveAccounts()
+    const { activeAddress } = useActiveAccounts()
     const { getSignerWarnings } = useSignerWarnings()
     const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
     const { unit, units } = getNetworkData(network)
@@ -88,18 +88,18 @@ export const Forms = forwardRef(
       }
       return calls.length === 1
         ? calls.pop()
-        : newBatchCall(calls, activeAccount)
+        : newBatchCall(calls, activeAddress)
     }
 
     const submitExtrinsic = useSubmitExtrinsic({
       tx: getTx(),
-      from: activeAccount,
+      from: activeAddress,
       shouldSubmit: valid,
       callbackSubmit: () => {
         setModalStatus('closing')
       },
       callbackInBlock: () => {
-        if (payouts && activeAccount) {
+        if (payouts && activeAddress) {
           // Deduct unclaimed payout value from state value
           const eraPayouts: string[] = []
           payouts.forEach(({ era }) => {
@@ -121,7 +121,7 @@ export const Forms = forwardRef(
     })
 
     const warnings = getSignerWarnings(
-      activeAccount,
+      activeAddress,
       false,
       submitExtrinsic.proxySupported
     )

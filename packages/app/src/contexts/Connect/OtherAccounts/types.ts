@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { HardwareAccountSource, ImportedAccount } from '@w3ux/types'
-import type { MaybeAddress, NetworkId } from 'types'
+import type { HardwareAccountSource } from '@w3ux/types'
+import type { ImportedAccount, MaybeAddress, NetworkId } from 'types'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 
 export interface OtherAccountsContextInterface {

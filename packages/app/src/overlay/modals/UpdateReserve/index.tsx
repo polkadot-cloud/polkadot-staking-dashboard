@@ -28,13 +28,13 @@ export const UpdateReserve = () => {
   const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions()
 
   const { unit, units } = getNetworkData(network)
-  const { edReserved } = getTransferOptions(activeAccount)
+  const { edReserved } = getTransferOptions(activeAddress)
   const minReserve = planckToUnitBn(edReserved, units)
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
@@ -124,7 +124,7 @@ export const UpdateReserve = () => {
           <ButtonPrimaryInvert
             text={t('done')}
             onClick={() => setModalStatus('closing')}
-            disabled={!accountHasSigner(activeAccount)}
+            disabled={!accountHasSigner(activeAddress)}
           />
         </div>
       </SliderWrapper>

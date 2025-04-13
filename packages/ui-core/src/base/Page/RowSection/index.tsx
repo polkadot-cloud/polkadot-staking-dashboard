@@ -17,23 +17,11 @@ export const RowSection = ({
   secondary,
   standalone,
 }: RowSectionProps) => {
-  const mainClass = secondary
-    ? classes.rowSecondaryWrapper
-    : classes.rowPrimaryWrapper
-
-  let hClass
-  if (secondary) {
-    hClass = hLast
-      ? classes.rowSecondaryWrapperFirst
-      : classes.rowSecondaryWrapperLast
-  } else {
-    hClass = hLast
-      ? classes.rowPrimaryWrapperFirst
-      : classes.rowPrimaryWrapperLast
-  }
+  const mainClass = secondary ? classes.secondary : classes.primary
+  const hClass = hLast ? classes.first : classes.last
 
   const rowClasses = classNames(mainClass, hClass, {
-    [classes.rowSectionVLast]: vLast,
+    [classes.vLast]: vLast,
     [classes.standalone]: standalone,
   })
 

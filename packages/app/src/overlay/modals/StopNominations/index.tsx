@@ -22,7 +22,7 @@ export const StopNominations = () => {
   const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const {
     setModalStatus,
@@ -34,13 +34,13 @@ export const StopNominations = () => {
   const { bondFor } = options
   const isPool = bondFor === 'pool'
   const isStaking = bondFor === 'nominator'
-  const controller = getBondedAccount(activeAccount)
-  const signingAccount = isPool ? activeAccount : controller
+  const controller = getBondedAccount(activeAddress)
+  const signingAccount = isPool ? activeAddress : controller
 
   const nominations =
     isPool === true
       ? activePoolNominations?.targets || []
-      : getNominations(activeAccount)
+      : getNominations(activeAddress)
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)
@@ -79,7 +79,7 @@ export const StopNominations = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     isStaking,
     submitExtrinsic.proxySupported
   )

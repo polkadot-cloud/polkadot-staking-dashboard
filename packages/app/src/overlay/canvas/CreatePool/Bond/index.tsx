@@ -17,13 +17,13 @@ import { useTranslation } from 'react-i18next'
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { getTxSubmissionByTag } = useTxMeta()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getPoolSetup, setActiveAccountSetup } = useSetup()
 
   const txSubmission = getTxSubmissionByTag('createPool')
   const fee = txSubmission?.fee || 0n
 
-  const setup = getPoolSetup(activeAccount)
+  const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
   // either free to bond or existing setup value
@@ -55,7 +55,7 @@ export const Bond = ({ section }: SetupStepProps) => {
     setBond({
       bond: initialBondValue,
     })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // apply initial bond value to setup progress
   useEffect(() => {

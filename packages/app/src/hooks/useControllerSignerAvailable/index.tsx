@@ -29,7 +29,7 @@ export const useControllerSignerAvailable = () => {
         return 'read_only'
       }
     } else if (
-      (!proxySupported || !accountHasSigner(activeProxy)) &&
+      (!proxySupported || !accountHasSigner(activeProxy?.address || null)) &&
       !accountHasSigner(stash)
     ) {
       return 'read_only'

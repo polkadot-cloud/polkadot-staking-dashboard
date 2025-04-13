@@ -25,10 +25,10 @@ export const CommissionPrompt = () => {
   const { openCanvas } = useOverlay().canvas
   const { getThemeValue } = useThemeValues()
   const { formatWithPrefs } = useValidators()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
 
-  const nominated = formatWithPrefs(getNominations(activeAccount))
+  const nominated = formatWithPrefs(getNominations(activeAddress))
   const fullCommissionNominees = nominated.filter(
     (nominee) => nominee.prefs.commission === 100
   )
@@ -59,7 +59,7 @@ export const CommissionPrompt = () => {
                   scroll: false,
                   options: {
                     bondFor: 'nominator',
-                    nominator: activeAccount,
+                    nominator: activeAddress,
                     nominated,
                   },
                 })

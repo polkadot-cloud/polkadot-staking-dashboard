@@ -27,7 +27,7 @@ export const BalanceChart = () => {
   const { network } = useNetwork()
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getBalance, getLocks } = useBalances()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
@@ -35,8 +35,8 @@ export const BalanceChart = () => {
 
   const { unit, units } = getNetworkData(network)
   const Token = getChainIcons(network).token
-  const balance = getBalance(activeAccount)
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const balance = getBalance(activeAddress)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { edReserved } = allTransferOptions
   const poolBondOpions = allTransferOptions.pool
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
@@ -67,7 +67,7 @@ export const BalanceChart = () => {
   )
 
   // Check account non-staking locks.
-  const { locks } = getLocks(activeAccount)
+  const { locks } = getLocks(activeAddress)
   const locksStaking = locks.find(({ id }) => id === 'staking')
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
@@ -241,9 +241,9 @@ export const BalanceChart = () => {
                     }
                     iconTransform="shrink-1"
                     disabled={
-                      !activeAccount ||
+                      !activeAddress ||
                       syncing ||
-                      !accountHasSigner(activeAccount)
+                      !accountHasSigner(activeAddress)
                     }
                   />
                 }
