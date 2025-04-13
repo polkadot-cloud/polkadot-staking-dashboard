@@ -7,12 +7,12 @@ import { useUnclaimedRewards } from 'plugin-staking-api'
 import { useEffect } from 'react'
 import type { Props } from './types'
 
-export const UnclaimedRewardsApi = ({ activeAccount, network }: Props) => {
+export const UnclaimedRewardsApi = ({ who, network }: Props) => {
   const { activeEra } = useApi()
   const { setUnclaimedRewards } = usePayouts()
   const { data, loading, error } = useUnclaimedRewards({
     network,
-    who: activeAccount,
+    who,
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
 

@@ -31,7 +31,7 @@ export const UnbondFeedback = ({
   const { t } = useTranslation('app')
   const { network } = useNetwork()
   const { isDepositor } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const {
     poolsConfig: { minJoinBond, minCreateBond },
@@ -39,7 +39,7 @@ export const UnbondFeedback = ({
   } = useApi()
 
   const { unit, units } = getNetworkData(network)
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const defaultValue = defaultBond ? String(defaultBond) : ''
 
   // get bond options for either nominating or pooling.
@@ -141,7 +141,7 @@ export const UnbondFeedback = ({
   // update bond on account change
   useEffect(() => {
     setBond({ bond: defaultValue })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // handle errors on input change
   useEffect(() => {

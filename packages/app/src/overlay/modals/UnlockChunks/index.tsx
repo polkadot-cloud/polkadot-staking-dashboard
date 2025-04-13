@@ -24,7 +24,7 @@ export const UnlockChunks = () => {
   } = useOverlay().modal
   const { getLedger } = useBalances()
   const { getPoolUnlocking } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { integrityChecked } = useLedgerHardware()
   const { bondFor } = options || {}
 
@@ -37,7 +37,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking()
         break
       default:
-        ledger = getLedger({ stash: activeAccount })
+        ledger = getLedger({ stash: activeAddress })
         unlocking = ledger.unlocking
     }
     return unlocking

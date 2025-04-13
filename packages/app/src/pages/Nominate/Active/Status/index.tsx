@@ -17,7 +17,7 @@ export const Status = ({ height }: { height: number }) => {
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
   return (
@@ -38,7 +38,7 @@ export const Status = ({ height }: { height: number }) => {
             <PayoutDestinationStatus />
           </>
         ) : (
-          !isReadOnlyAccount(activeAccount) && (
+          !isReadOnlyAccount(activeAddress) && (
             <NewNominator syncing={syncing} />
           )
         )

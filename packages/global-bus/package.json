@@ -16,6 +16,7 @@
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
-    "types": "workspace:*"
+    "types": "workspace:*",
+    "@w3ux/types": "^2.1.12"
   }
 }

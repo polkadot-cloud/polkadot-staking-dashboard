@@ -20,7 +20,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { isReady } = useApi()
   const { activePool } = useActivePool()
   const { openModal } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
 
@@ -34,7 +34,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
       : '0'
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
-  const buttonsRewards = isReadOnlyAccount(activeAccount)
+  const buttonsRewards = isReadOnlyAccount(activeAddress)
     ? []
     : pendingRewards > minUnclaimedDisplay
       ? [

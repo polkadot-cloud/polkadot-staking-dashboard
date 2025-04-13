@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AccountAddedBy, ExternalAccount } from '@w3ux/types'
+import type { AccountAddedBy, ExternalAccount } from 'types'
 
 export interface ExternalAccountsContextInterface {
   addExternalAccount: (

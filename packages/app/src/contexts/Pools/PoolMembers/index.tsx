@@ -25,7 +25,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // Store pool members from Subscan api
   const [poolMembersApi, setPoolMembersApi] = useState<PoolMember[]>([])
@@ -52,10 +52,10 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     unsubscribeAndResetMeta()
   }, [network])
 
-  // Clear meta state when activeAccount changes
+  // Clear meta state when activeAddress changes
   useEffectIgnoreInitial(() => {
     unsubscribeAndResetMeta()
-  }, [activeAccount])
+  }, [activeAddress])
 
   // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
   // subscan is disabled

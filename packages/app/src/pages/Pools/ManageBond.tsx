@@ -26,7 +26,7 @@ export const ManageBond = () => {
   const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { openModal } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
@@ -34,7 +34,7 @@ export const ManageBond = () => {
 
   const { units } = getNetworkData(network)
   const Token = getChainIcons(network).token
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const {
     pool: { active, totalUnlocking, totalUnlocked },
     transferrableBalance,
@@ -45,7 +45,7 @@ export const ManageBond = () => {
     syncing ||
     !isBonding() ||
     !isMember() ||
-    isReadOnlyAccount(activeAccount) ||
+    isReadOnlyAccount(activeAddress) ||
     state === 'Destroying'
   const canLeavePool = isMember() && !isDepositor() && active?.isGreaterThan(0)
 

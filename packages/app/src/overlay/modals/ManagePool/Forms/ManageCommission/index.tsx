@@ -53,7 +53,7 @@ export const ManageCommission = ({
   } = usePoolCommission()
   const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { isOwner, activePool } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
@@ -160,12 +160,12 @@ export const ManageCommission = ({
     if (txs.length === 1) {
       return txs[0]
     }
-    return newBatchCall(txs, activeAccount)
+    return newBatchCall(txs, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -218,7 +218,7 @@ export const ManageCommission = ({
 
   // Get transaction signer warnings.
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

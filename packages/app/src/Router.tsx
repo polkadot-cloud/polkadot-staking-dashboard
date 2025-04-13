@@ -43,7 +43,7 @@ const RouterInner = () => {
   const { openPromptWith } = usePrompt()
   const { pluginEnabled } = usePlugins()
   const { pathname, search } = useLocation()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // register landing source from URL
   useEffect(() => {
@@ -81,8 +81,8 @@ const RouterInner = () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       <ApolloProvider client={client}>
-        {pluginEnabled('staking_api') && activeAccount && (
-          <StakingApi activeAccount={activeAccount} network={network} />
+        {pluginEnabled('staking_api') && activeAddress && (
+          <StakingApi who={activeAddress} network={network} />
         )}
         <NotificationPrompts />
         <Page.Body>

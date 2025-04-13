@@ -26,14 +26,14 @@ export const Main = () => {
   const { getNominations } = useBalances()
   const { getBondedAccount } = useBonded()
   const { formatWithPrefs } = useValidators()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { sideMenuMinimised }: UIContextInterface = useUi()
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking()
 
-  const controller = getBondedAccount(activeAccount)
+  const controller = getBondedAccount(activeAddress)
   const controllerDifferentToStash = addressDifferentToStash(controller)
 
-  const nominated = formatWithPrefs(getNominations(activeAccount))
+  const nominated = formatWithPrefs(getNominations(activeAddress))
   const fullCommissionNominees = nominated.filter(
     (nominee) => nominee.prefs.commission === 100
   )

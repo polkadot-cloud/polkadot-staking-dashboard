@@ -17,9 +17,9 @@ import { useTranslation } from 'react-i18next'
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { getTxSubmissionByTag } = useTxMeta()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getNominatorSetup, setActiveAccountSetup } = useSetup()
-  const setup = getNominatorSetup(activeAccount)
+  const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
 
   const txSubmission = getTxSubmissionByTag('nominatorSetup')
@@ -54,7 +54,7 @@ export const Bond = ({ section }: SetupStepProps) => {
     setBond({
       bond: initialBondValue,
     })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // apply initial bond value to setup progress
   useEffect(() => {

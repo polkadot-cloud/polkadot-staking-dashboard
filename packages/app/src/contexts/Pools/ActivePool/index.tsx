@@ -22,18 +22,18 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
   const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const createPoolAccounts = useCreatePoolAccounts()
 
-  const membership = getPoolMembership(activeAccount)
+  const membership = getPoolMembership(activeAddress)
   // Determine active pool to subscribe to based on the membership pool id
   const accountPoolId = membership?.poolId ? String(membership.poolId) : null
 
   // Only listen to the active account's active pool
   const { getActivePool, getPoolNominations } = useActivePools({
-    who: activeAccount,
+    who: activeAddress,
     onCallback: async () => {
-      if (ActivePools.getPool(network, activeAccount)) {
+      if (ActivePools.getPool(network, activeAddress)) {
         Syncs.dispatch('active-pools', 'complete')
       }
     },
@@ -60,7 +60,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         // No active pools to sync. Mark as complete.
         Syncs.dispatch('active-pools', 'complete')
       }
-      ActivePools.syncPools(network, activeAccount, newActivePool)
+      ActivePools.syncPools(network, activeAddress, newActivePool)
     }
   }
 
@@ -70,19 +70,19 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Returns whether the active account is the nominator in the active pool
   const isNominator = () => {
     const roles = activePool?.bondedPool?.roles
-    if (!activeAccount || !roles) {
+    if (!activeAddress || !roles) {
       return false
     }
-    return activeAccount === roles?.nominator
+    return activeAddress === roles?.nominator
   }
 
   // Returns whether the active account is the owner of the active pool
   const isOwner = () => {
     const roles = activePool?.bondedPool?.roles
-    if (!activeAccount || !roles) {
+    if (!activeAddress || !roles) {
       return false
     }
-    return activeAccount === roles?.root
+    return activeAddress === roles?.root
   }
 
   // Returns whether the active account is a member of the active pool
@@ -92,24 +92,24 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Returns whether the active account is in a pool.
-  const inPool = () => !!(membership?.address === activeAccount)
+  const inPool = () => !!(membership?.address === activeAddress)
 
   // Returns whether the active account is the depositor of the active pool
   const isDepositor = () => {
     const roles = activePool?.bondedPool?.roles
-    if (!activeAccount || !roles) {
+    if (!activeAddress || !roles) {
       return false
     }
-    return activeAccount === roles?.depositor
+    return activeAddress === roles?.depositor
   }
 
   // Returns whether the active account is the depositor of the active pool
   const isBouncer = () => {
     const roles = activePool?.bondedPool?.roles
-    if (!activeAccount || !roles) {
+    if (!activeAddress || !roles) {
       return false
     }
-    return activeAccount === roles?.bouncer
+    return activeAddress === roles?.bouncer
   }
 
   // Returns the active pool's roles or the default roles object

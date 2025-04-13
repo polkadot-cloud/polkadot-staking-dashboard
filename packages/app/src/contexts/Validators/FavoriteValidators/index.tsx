@@ -71,7 +71,7 @@ export const FavoriteValidatorsProvider = ({
     if (isReady) {
       fetchFavoriteList()
     }
-  }, [isReady, favorites])
+  }, [isReady, JSON.stringify(favorites)])
 
   return (
     <FavoriteValidatorsContext.Provider

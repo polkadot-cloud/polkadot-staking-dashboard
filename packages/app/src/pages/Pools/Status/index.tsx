@@ -15,7 +15,7 @@ import type { StatusProps } from './types'
 
 export const Status = ({ height }: StatusProps) => {
   const { poolMembersipSyncing } = useSyncing()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { activePool, inPool } = useActivePool()
   const { isReadOnlyAccount } = useImportedAccounts()
 
@@ -37,7 +37,7 @@ export const Status = ({ height }: StatusProps) => {
           </>
         ) : (
           !inPool() &&
-          !isReadOnlyAccount(activeAccount) && <NewMember syncing={syncing} />
+          !isReadOnlyAccount(activeAddress) && <NewMember syncing={syncing} />
         )
       ) : (
         <NewMember syncing={syncing} />

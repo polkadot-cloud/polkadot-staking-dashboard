@@ -27,7 +27,7 @@ export const [FastUnstakeContext, useFastUnstake] =
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // Store fast unstake status
   const [fastUnstakeStatus, setFastUnstakeStatus] =
@@ -49,14 +49,14 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     // Re-subscribe to fast unstake queue
     Subscriptions.remove(network, 'fastUnstakeQueue')
 
-    if (activeAccount) {
+    if (activeAddress) {
       Subscriptions.set(
         network,
         'fastUnstakeQueue',
-        new FastUnstakeQueue(network, activeAccount)
+        new FastUnstakeQueue(network, activeAddress)
       )
     }
-  }, [activeAccount])
+  }, [activeAddress])
 
   // Reset state on network change
   useEffect(() => {

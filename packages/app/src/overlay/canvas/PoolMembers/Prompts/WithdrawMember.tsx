@@ -36,7 +36,7 @@ export const WithdrawMember = ({
   const { network } = useNetwork()
   const { closePrompt } = usePrompt()
   const { consts, activeEra } = useApi()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { removePoolMember } = usePoolMembers()
   const { getSignerWarnings } = useSignerWarnings()
   const { unit, units } = getNetworkData(network)
@@ -69,7 +69,7 @@ export const WithdrawMember = ({
   }
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
       // remove the pool member from member list.
@@ -85,7 +85,7 @@ export const WithdrawMember = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

@@ -6,11 +6,11 @@ import { useCanFastUnstake } from 'plugin-staking-api'
 import { useEffect } from 'react'
 import type { Props } from './types'
 
-export const FastUnstakeApi = ({ activeAccount, network }: Props) => {
+export const FastUnstakeApi = ({ who, network }: Props) => {
   const { setFastUnstakeStatus } = useFastUnstake()
   const { data, loading, error } = useCanFastUnstake({
     network,
-    who: activeAccount,
+    who,
   })
 
   // Update fast unstake status on active account change. Must be bonding

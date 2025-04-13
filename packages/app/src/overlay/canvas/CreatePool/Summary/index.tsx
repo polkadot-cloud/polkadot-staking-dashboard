@@ -34,24 +34,24 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
   const { getPoolSetup, removeSetupProgress } = useSetup()
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { queryBondedPool, addToBondedPools } = useBondedPools()
   const { unit, units } = getNetworkData(network)
 
   const poolId = lastPoolId.plus(1)
-  const setup = getPoolSetup(activeAccount)
+  const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
   const { metadata, bond, roles, nominations } = progress
 
   const getTx = () => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return null
     }
 
     const tx = new CreatePool(
       network,
-      activeAccount,
+      activeAddress,
       poolId.toNumber(),
       unitToPlanck(bond, units),
       metadata,
@@ -62,12 +62,12 @@ export const Summary = ({ section }: SetupStepProps) => {
     if (!tx) {
       return null
     }
-    return newBatchCall(tx, activeAccount)
+    return newBatchCall(tx, activeAddress)
   }
   const submitExtrinsic = useSubmitExtrinsic({
     tag: 'createPool',
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackInBlock: async () => {
       // Close canvas.
@@ -78,7 +78,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       addToBondedPools(pool)
 
       // Reset setup progress.
-      removeSetupProgress('pool', activeAccount)
+      removeSetupProgress('pool', activeAddress)
     },
   })
 
@@ -92,7 +92,8 @@ export const Summary = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
-          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+          accountHasSigner(activeAddress) ||
+          accountHasSigner(activeProxy?.address || null)
         ) && <Warning text={t('readOnly')} />}
         <SummaryWrapper>
           <section>

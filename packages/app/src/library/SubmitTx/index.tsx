@@ -40,11 +40,11 @@ export const SubmitTx = ({
   const { network } = useNetwork()
   const { setModalResize } = useOverlay().modal
   const { getBalance, getEdReserved } = useBalances()
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
   const { unit } = getNetworkData(network)
-  const controller = getBondedAccount(activeAccount)
+  const controller = getBondedAccount(activeAddress)
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
@@ -59,13 +59,13 @@ export const SubmitTx = ({
   // Default to active account
   let signingOpts = {
     label: t('signer', { ns: 'app' }),
-    who: getAccount(activeAccount),
+    who: getAccount(activeAddress),
   }
 
   if (activeProxy && proxySupported) {
     signingOpts = {
       label: t('signedByProxy', { ns: 'app' }),
-      who: getAccount(activeProxy),
+      who: getAccount(activeProxy.address),
     }
   } else if (!(activeProxy && proxySupported) && fromController) {
     signingOpts = {

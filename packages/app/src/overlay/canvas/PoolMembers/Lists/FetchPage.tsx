@@ -26,7 +26,7 @@ export const MembersListInner = ({
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { activePool } = useActivePool()
   const {
     poolMembersApi,
@@ -75,7 +75,7 @@ export const MembersListInner = ({
       setFetchedPoolMembersApi('unsynced')
       setPoolMembersApi([])
     }
-  }, [page, activeAccount, pluginEnabled('subscan')])
+  }, [page, activeAddress, pluginEnabled('subscan')])
 
   // Refetch list when network changes.
   useEffect(() => {

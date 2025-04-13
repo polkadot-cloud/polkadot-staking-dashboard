@@ -35,7 +35,7 @@ export const UnbondMember = ({
   const { consts } = useApi()
   const { network } = useNetwork()
   const { closePrompt } = usePrompt()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
   const { unit, units } = getNetworkData(network)
@@ -58,7 +58,7 @@ export const UnbondMember = ({
 
   const getTx = () => {
     let tx = null
-    if (!activeAccount) {
+    if (!activeAddress) {
       return tx
     }
     tx = new PoolUnbond(network, who, BigInt(points)).tx()
@@ -67,7 +67,7 @@ export const UnbondMember = ({
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: paramsValid,
     callbackSubmit: () => {
       closePrompt()
@@ -75,7 +75,7 @@ export const UnbondMember = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

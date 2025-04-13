@@ -21,10 +21,10 @@ export const PayoutDestinationStatus = () => {
   const { openModal } = useOverlay().modal
   const { isFastUnstaking } = useUnstaking()
   const { getPayeeItems } = usePayeeConfig()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const payee = getPayee(activeAccount)
+  const payee = getPayee(activeAddress)
 
   // Get payee status text to display.
   const getPayeeStatus = () => {
@@ -63,7 +63,7 @@ export const PayoutDestinationStatus = () => {
                 disabled:
                   syncing ||
                   inSetup() ||
-                  isReadOnlyAccount(activeAccount) ||
+                  isReadOnlyAccount(activeAddress) ||
                   isFastUnstaking,
                 onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
               },

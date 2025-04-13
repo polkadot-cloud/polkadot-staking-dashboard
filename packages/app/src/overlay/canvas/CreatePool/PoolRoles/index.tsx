@@ -15,18 +15,18 @@ import type { PoolRoles as PoolRolesInterface } from 'types'
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getPoolSetup, setActiveAccountSetup } = useSetup()
-  const setup = getPoolSetup(activeAccount)
+  const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
-  // if no roles in setup already, inject `activeAccount` to be
+  // if no roles in setup already, inject `activeAddress` to be
   // root and depositor roles.
   const initialValue = progress.roles ?? {
-    root: activeAccount,
-    depositor: activeAccount,
-    nominator: activeAccount,
-    bouncer: activeAccount,
+    root: activeAddress,
+    depositor: activeAddress,
+    nominator: activeAddress,
+    bouncer: activeAddress,
   }
 
   // store local pool name for form control
@@ -47,7 +47,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
     setRoles({
       roles: initialValue,
     })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // apply initial pool roles to setup progress
   useEffect(() => {

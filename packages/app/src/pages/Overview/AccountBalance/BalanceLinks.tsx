@@ -14,7 +14,7 @@ export const BalanceLinks = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { isNominating } = useStaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   return (
     <MoreWrapper>
@@ -25,7 +25,7 @@ export const BalanceLinks = () => {
           lg
           onClick={() =>
             window.open(
-              `https://${network}.subscan.io/account/${activeAccount}`,
+              `https://${network}.subscan.io/account/${activeAddress}`,
               '_blank'
             )
           }
@@ -33,13 +33,13 @@ export const BalanceLinks = () => {
           iconTransform="shrink-2"
           text="Subscan"
           marginRight
-          disabled={!activeAccount}
+          disabled={!activeAddress}
         />
         <ButtonPrimaryInvert
           lg
           onClick={() =>
             window.open(
-              `https://${network}.polkawatch.app/nomination/${activeAccount}`,
+              `https://${network}.polkawatch.app/nomination/${activeAddress}`,
               '_blank'
             )
           }
@@ -48,7 +48,7 @@ export const BalanceLinks = () => {
           text="Polkawatch"
           disabled={
             !(
-              activeAccount &&
+              activeAddress &&
               ['polkadot', 'kusama'].includes(network) &&
               isNominating()
             )

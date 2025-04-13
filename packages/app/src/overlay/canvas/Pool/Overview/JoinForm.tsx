@@ -35,7 +35,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   } = useOverlay().canvas
   const { newBatchCall } = useBatchCall()
   const { setActiveAccountSetup } = useSetup()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { unit, units } = getNetworkData(network)
@@ -43,7 +43,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   const {
     pool: { totalPossibleBond },
-  } = getTransferOptions(activeAccount)
+  } = getTransferOptions(activeAddress)
 
   // Pool claim permission value.
   const [claimPermission, setClaimPermission] = useState<ClaimPermission>(
@@ -87,12 +87,12 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     if (!Array.isArray(tx)) {
       return tx
     }
-    return newBatchCall(tx, activeAccount)
+    return newBatchCall(tx, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       closeCanvas()
@@ -109,7 +109,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

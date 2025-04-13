@@ -34,14 +34,14 @@ export const BondFeedback = ({
   const { t } = useTranslation('app')
   const { network } = useNetwork()
   const { isDepositor } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const {
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi()
   const { unit, units } = getNetworkData(network)
   const { getTransferOptions } = useTransferOptions()
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
 
   const defaultBondStr = defaultBond ? String(defaultBond) : ''
 
@@ -158,7 +158,7 @@ export const BondFeedback = ({
     setBond({
       bond: defaultBondStr,
     })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // handle errors on input change
   useEffect(() => {
