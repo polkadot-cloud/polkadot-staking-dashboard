@@ -26,7 +26,7 @@ import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
 import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type {
@@ -279,7 +279,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   }, [JSON.stringify(accounts), activeAccount, proxies, network])
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts()
     }
