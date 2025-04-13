@@ -20,8 +20,7 @@ export const addExternalAccount = (
   account: ExternalAccount,
   noLocal: boolean = false
 ) => {
-  const newAccounts = _externalAccounts
-    .getValue()
+  const newAccounts = [..._externalAccounts.getValue()]
     .filter((a) => a.address !== account.address && a.network !== network)
     .concat(account)
 
@@ -36,14 +35,11 @@ export const removeExternalAccounts = (
   network: NetworkId,
   accounts: ExternalAccount[]
 ) => {
-  const newAccounts = _externalAccounts
-    .getValue()
-    .filter(
-      (a) =>
-        accounts.find(
-          (b) => b.address === a.address && a.network === network
-        ) === undefined
-    )
+  const newAccounts = [..._externalAccounts.getValue()].filter(
+    (a) =>
+      accounts.find((b) => b.address === a.address && a.network === network) ===
+      undefined
+  )
 
   localStorage.setItem(ExternalAccountsKey, JSON.stringify(newAccounts))
   _externalAccounts.next(newAccounts)
