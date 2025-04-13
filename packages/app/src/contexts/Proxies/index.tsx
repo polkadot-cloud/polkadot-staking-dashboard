@@ -45,9 +45,9 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
   const { syncing } = useSyncing()
-  const { accounts } = useImportedAccounts()
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
+  const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts()
 
   // Store the proxy accounts of each imported account
@@ -276,14 +276,14 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem(`${network}_active_proxy`)
       }
     }
-  }, [JSON.stringify(accounts), activeAccount, proxies, network])
+  }, [stringifiedAccountsKey, activeAccount, proxies, network])
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported
   useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts()
     }
-  }, [JSON.stringify(accounts), isReady, syncing])
+  }, [stringifiedAccountsKey, isReady, syncing])
 
   // Reset active proxy state on network change & unmount
   useEffectIgnoreInitial(() => {

@@ -27,8 +27,8 @@ export const [SetupContext, useSetup] =
 
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const { accounts } = useImportedAccounts()
   const { activeAddress } = useActiveAccounts()
+  const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { units } = getNetworkData(network)
 
   // Store all imported accounts nominator setups
@@ -258,7 +258,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     if (accounts.length) {
       refreshSetups()
     }
-  }, [activeAddress, network, JSON.stringify(accounts)])
+  }, [activeAddress, network, stringifiedAccountsKey])
 
   return (
     <SetupContext.Provider

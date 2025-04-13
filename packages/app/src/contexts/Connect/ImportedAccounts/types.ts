@@ -9,4 +9,5 @@ export interface ImportedAccountsContextInterface {
   isReadOnlyAccount: (address: MaybeAddress) => boolean
   accountHasSigner: (address: MaybeAddress) => boolean
   requiresManualSign: (address: MaybeAddress) => boolean
+  stringifiedAccountsKey: string
 }
