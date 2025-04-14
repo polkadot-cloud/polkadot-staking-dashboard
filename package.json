@@ -12,8 +12,8 @@
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@types/chroma-js": "^3.1.1",
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
+    "@types/react": "^19.1.1",
+    "@types/react-dom": "^19.1.2",
     "@types/react-helmet": "^6.1.11",
     "@typescript-eslint/parser": "^8.29.1",
     "@vitejs/plugin-react-swc": "^3.7.0",
