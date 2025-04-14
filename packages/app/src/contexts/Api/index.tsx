@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
-import { NetworkList } from 'consts/networks'
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
@@ -18,6 +17,8 @@ import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
+import { getRpcEndpoints, rpcEndpoints$ } from 'global-bus'
+import { getInitialRpcEndpoints } from 'global-bus/util'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,
@@ -69,33 +70,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     localStorage.setItem('useWebsocket', 'true')
   }
 
-  // Store the active RPC provider
-  const initialRpcEndpoint = () => {
-    const local = localStorage.getItem(`${network}_rpc_endpoint`)
-    if (local) {
-      if (NetworkList[network].endpoints.rpcEndpoints[local]) {
-        return local
-      } else {
-        localStorage.removeItem(`${network}_rpc_endpoint`)
-      }
-    }
-    return NetworkList[network].endpoints.defaultRpcEndpoint
-  }
-
   // The current RPC endpoint for the network
-  const [rpcEndpoint, setRpcEndpointState] =
-    useState<string>(initialRpcEndpoint())
-  const rpcEndpointRef = useRef(rpcEndpoint)
-
-  // Set RPC provider with local storage and validity checks
-  const setRpcEndpoint = (key: string) => {
-    if (!NetworkList[network].endpoints.rpcEndpoints[key]) {
-      return
-    }
-    localStorage.setItem(`${network}_rpc_endpoint`, key)
-    rpcEndpointRef.current = key
-    setRpcEndpointState(key)
-  }
+  const [rpcEndpoints, setRpcEndpoints] = useState<Record<string, string>>(
+    getInitialRpcEndpoints(network)
+  )
 
   // Store network constants
   const [consts, setConsts] = useState<APIConstants>(defaultConsts)
@@ -294,7 +272,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (
       eventNetwork !== network ||
       connectionTypeRef.current !== eventConnectionType ||
-      rpcEndpointRef.current !== eventRpcEndpoint
+      getRpcEndpoints()[network] !== eventRpcEndpoint
     ) {
       return
     }
@@ -443,14 +421,20 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   }
 
+  // Get an RPC endpoint for a given chain
+  const getRpcEndpoint = (chain: string): string => {
+    const endpoints = getRpcEndpoints()
+    return endpoints[chain]
+  }
+
   const reInitialiseApi = async (type: ConnectionType) => {
     setApiStatus('disconnected')
 
     // Dispatch all default syncIds as syncing
     Syncs.dispatchAllDefault()
 
-    // Instanaite new API instance
-    await Apis.instantiate(network, type, rpcEndpoint)
+    // Instanaite new Relay chain API instance
+    await Apis.instantiate(network, type, getRpcEndpoint(network))
   }
 
   // Handle initial api connection
@@ -467,7 +451,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (connectionType !== 'sc') {
       reInitialiseApi('ws')
     }
-  }, [rpcEndpoint])
+  }, [Object.values(rpcEndpoints)])
 
   // If connection type changes, re-initialise API
   useEffectIgnoreInitial(async () => {
@@ -476,7 +460,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
-    setRpcEndpoint(initialRpcEndpoint())
+    // TODO: Move to dedot-api service
+    setRpcEndpoints(getInitialRpcEndpoints(network))
 
     // Reset consts and chain state
     setChainSpecs(defaultChainSpecs)
@@ -515,6 +500,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     documentRef
   )
 
+  // Subscribe to global bus
+  useEffect(() => {
+    const sub = rpcEndpoints$.subscribe((endpoints) => {
+      setRpcEndpoints(endpoints)
+    })
+    return () => {
+      sub.unsubscribe()
+    }
+  }, [])
+
   return (
     <APIContext.Provider
       value={{
@@ -523,8 +518,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         peopleApiStatus,
         connectionType,
         setConnectionType,
-        rpcEndpoint,
-        setRpcEndpoint,
+        getRpcEndpoint,
         isReady,
         consts,
         networkMetrics,

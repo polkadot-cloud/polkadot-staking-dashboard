@@ -38,6 +38,7 @@ export interface SystemChain {
     lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
+    defaultRpcEndpoint: string
     rpcEndpoints: Record<string, string>
   }
   relayChain: NetworkId

@@ -71,8 +71,7 @@ export interface APIContextInterface {
   peopleApiStatus: ApiStatus
   connectionType: ConnectionType
   setConnectionType: (connectionType: ConnectionType) => void
-  rpcEndpoint: string
-  setRpcEndpoint: (key: string) => void
+  getRpcEndpoint: (chain: string) => string
   consts: APIConstants
   networkMetrics: APINetworkMetrics
   activeEra: APIActiveEra

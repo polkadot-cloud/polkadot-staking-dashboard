@@ -3,3 +3,4 @@
 
 export * from './externalAccounts/util'
 export * from './network/util'
+export * from './rpcEndpoint/util'

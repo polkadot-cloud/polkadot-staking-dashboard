@@ -31,7 +31,7 @@ export const Networks = () => {
   const { openPromptWith } = usePrompt()
   const { network, switchNetwork } = useNetwork()
   const { setModalStatus, setModalResize } = useOverlay().modal
-  const { connectionType, setConnectionType, rpcEndpoint } = useApi()
+  const { connectionType, setConnectionType, getRpcEndpoint } = useApi()
   const networkKey = network
 
   const isLightClient = connectionType === 'sc'
@@ -117,7 +117,7 @@ export const Networks = () => {
               <div className="provider">
                 <p>{t('provider')}:</p>
                 <ButtonTertiary
-                  text={rpcEndpoint}
+                  text={getRpcEndpoint(network)}
                   onClick={() => openPromptWith(<ProvidersPrompt />)}
                   marginLeft
                 />
