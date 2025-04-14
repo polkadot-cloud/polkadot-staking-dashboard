@@ -51,7 +51,7 @@ export const EraPointsLine = ({
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
     ? []
-    : entries.map((entry) => new BigNumber(entry.points))
+    : entries.map((entry) => new BigNumber(entry.points)).toString()
 
   // Use primary color for line
   const color = getThemeValue('--accent-color-primary')
