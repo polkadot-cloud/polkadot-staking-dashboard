@@ -385,12 +385,11 @@ const ValidatorInfo = styled.div`
 `
 
 const ValidatorName = styled.div`
-  font-size: 0.95rem;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
   margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-family: InterSemiBold, sans-serif;
 `
 
@@ -499,15 +498,17 @@ const PoolInfo = styled.div`
 `
 
 const PoolName = styled.div`
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
   font-family: InterSemiBold, sans-serif;
 `
 
 const PoolAddress = styled.div`
   font-family: monospace;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-color-secondary);
   white-space: nowrap;
   overflow: hidden;

@@ -63,7 +63,7 @@ const InviteUrlContainer = styled.div`
   gap: 1rem;
   align-items: center;
   padding: 0.75rem 1rem;
-  background: var(--background-list-item);
+  background: var(--button-secondary-background);
   border-radius: 0.75rem;
   border: 1.5px solid var(--border-primary-color);
   transition: all var(--transition-duration);
