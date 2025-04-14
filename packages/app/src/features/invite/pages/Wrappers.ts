@@ -96,7 +96,7 @@ export const ShareUrl = styled.div`
   box-sizing: border-box;
   max-width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 826px) {
     flex-direction: column;
     align-items: flex-start;
 
@@ -246,7 +246,7 @@ export const ValidatorListContainer = styled.div`
   }
 
   /* Ensure we have at most 8 validators per column */
-  @media (min-width: 1024px) {
+  @media (min-width: 1150px) {
     .validator-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -256,13 +256,13 @@ export const ValidatorListContainer = styled.div`
   }
 
   /* Responsive adjustments */
-  @media (max-width: 1023px) {
+  @media (max-width: 1149px) {
     .validator-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 826px) {
     .validator-grid {
       grid-template-columns: 1fr;
     }
