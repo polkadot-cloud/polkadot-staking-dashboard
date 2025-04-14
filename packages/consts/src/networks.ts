@@ -10,7 +10,8 @@ export const NetworkList: Networks = {
     name: 'polkadot',
     endpoints: {
       lightClientKey: 'polkadot',
-      lightClient: async () => await import('polkadot-api/chains/polkadot'),
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/polkadot'),
       defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
@@ -32,7 +33,8 @@ export const NetworkList: Networks = {
     name: 'kusama',
     endpoints: {
       lightClientKey: 'ksmcc3',
-      lightClient: async () => await import('polkadot-api/chains/ksmcc3'),
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/ksmcc3'),
       defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
@@ -54,7 +56,8 @@ export const NetworkList: Networks = {
     name: 'westend',
     endpoints: {
       lightClientKey: 'westend2',
-      lightClient: async () => await import('polkadot-api/chains/westend2'),
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/westend2'),
       defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
@@ -82,7 +85,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClientKey: 'polkadot_people',
       lightClient: async () =>
-        await import('polkadot-api/chains/polkadot_people'),
+        await import('@substrate/connect-known-chains/polkadot_people'),
       rpcEndpoints: {
         IBP1: 'wss://sys.ibp.network/people-polkadot',
         IBP2: 'wss://people-polkadot.dotters.network',
@@ -98,7 +101,8 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClientKey: 'ksmcc3_people',
       lightClient: async () =>
-        await import('polkadot-api/chains/ksmcc3_people'),
+        // TODO: Replace with `ksmcc3_people` when available
+        await import('@substrate/connect-known-chains/westend_people'),
       rpcEndpoints: {
         IBP1: 'wss://sys.ibp.network/people-kusama',
         IBP2: 'wss://people-kusama.dotters.network',
@@ -114,7 +118,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClientKey: 'westend2_people',
       lightClient: async () =>
-        await import('polkadot-api/chains/westend2_people'),
+        await import('@substrate/connect-known-chains/westend_people'),
       rpcEndpoints: {
         IBP1: 'wss://sys.ibp.network/people-westend',
         IBP2: 'wss://people-westend.dotters.network',
