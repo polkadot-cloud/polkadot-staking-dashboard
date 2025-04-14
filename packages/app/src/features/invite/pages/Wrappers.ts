@@ -256,7 +256,7 @@ export const ValidatorListContainer = styled.div`
   }
 
   /* Responsive adjustments */
-  @media (max-width: 1149px) {
+  @media (max-width: 1150px) {
     .validator-grid {
       grid-template-columns: repeat(2, 1fr);
     }
