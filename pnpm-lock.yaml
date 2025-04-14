@@ -164,8 +164,8 @@ importers:
         specifier: workspace:*
         version: link:../assets
       bignumber.js:
-        specifier: ^9.1.2
-        version: 9.1.2
+        specifier: ^9.2.1
+        version: 9.2.1
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
@@ -386,8 +386,8 @@ importers:
   packages/types:
     dependencies:
       bignumber.js:
-        specifier: ^9.1.2
-        version: 9.1.2
+        specifier: ^9.2.1
+        version: 9.2.1
 
   packages/ui-buttons:
     dependencies:
@@ -530,8 +530,8 @@ importers:
         specifier: 2.0.8
         version: 2.0.8
       bignumber.js:
-        specifier: ^9.1.2
-        version: 9.1.2
+        specifier: ^9.2.1
+        version: 9.2.1
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -2858,8 +2858,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  bignumber.js@9.1.2:
-    resolution: {integrity: sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==}
+  bignumber.js@9.2.1:
+    resolution: {integrity: sha512-+NzaKgOUvInq9TIUZ1+DRspzf/HApkCwD4btfuasFTdrfnOxqx853TgDpMolp+uv4RpRp7bPcEU2zKr9+fRmyw==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -8739,7 +8739,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  bignumber.js@9.1.2: {}
+  bignumber.js@9.2.1: {}
 
   binary-extensions@2.3.0: {}
 
