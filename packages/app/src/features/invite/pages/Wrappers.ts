@@ -135,7 +135,7 @@ export const ValidatorListContainer = styled.div`
   }
 
   .validator-item {
-    background: var(--background-list-item);
+    background: var(--button-secondary-background);
     border-radius: 0.75rem;
     border: 1.5px solid var(--border-primary-color);
     overflow: hidden;
@@ -155,7 +155,7 @@ export const ValidatorListContainer = styled.div`
 
     &.selected {
       border-color: var(--accent-color-primary);
-      background-color: var(--background-list-item);
+      background-color: var(--button-secondary-background);
       box-shadow: 0 2px 8px var(--accent-color-transparent);
       position: relative;
 
@@ -293,14 +293,14 @@ export const ValidatorCard = styled.div`
   overflow: hidden;
   box-sizing: border-box;
   border-radius: 0.75rem;
-  background: var(--background-list-item);
+  background: var(--button-secondary-background);
   border: 1.5px solid var(--border-primary-color);
   padding: 0.75rem 1rem;
   transition: all var(--transition-duration);
 
   &:hover {
     border-color: var(--accent-color-transparent);
-    background-color: var(--background-list-item-hover);
+    background-color: var(--button-hover-background);
   }
 
   /* Make sure content inside doesn't push the width */
@@ -481,7 +481,7 @@ export const AddressItem = styled.div`
   margin-bottom: 0.75rem;
   padding: 0.75rem;
   border-radius: 0.75rem;
-  background-color: var(--background-list-item);
+  background-color: var(--button-secondary-background);
   border: 1.5px solid var(--border-primary-color);
   transition: all var(--transition-duration);
   width: 100%;
@@ -492,7 +492,7 @@ export const AddressItem = styled.div`
 
   &:hover {
     border-color: var(--accent-color-transparent);
-    background-color: var(--background-list-item-hover);
+    background-color: var(--button-hover-background);
   }
 `
 
@@ -557,7 +557,7 @@ export const RoleItem = styled.div`
   margin-bottom: 0.75rem;
   padding: 0.75rem;
   border-radius: 0.75rem;
-  background-color: var(--background-list-item);
+  background-color: var(--button-secondary-background);
   border: 1.5px solid var(--border-primary-color);
   transition: all var(--transition-duration);
   width: 100%;
@@ -568,7 +568,7 @@ export const RoleItem = styled.div`
 
   &:hover {
     border-color: var(--accent-color-transparent);
-    background-color: var(--background-list-item-hover);
+    background-color: var(--button-hover-background);
   }
 `
 
@@ -706,7 +706,7 @@ export const WarningsContainer = styled.div`
 `
 
 export const SummaryContainer = styled.div`
-  background: var(--background-list-item);
+  background: var(--button-secondary-background);
   border-radius: 1rem;
   border: 1.5px solid var(--border-primary-color);
   padding: 1.25rem;
