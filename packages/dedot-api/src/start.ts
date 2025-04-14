@@ -12,6 +12,8 @@ export const startDefaultService = async <T extends NetworkId>(
   network: T,
   callback: DefaultServiceCallback<ServiceApiMap[T][0], ServiceApiMap[T][1]>
 ) => {
+  // TODO: Add light client support
+
   const endpointKeys = getRpcEndpoints()
 
   const apiRelay = await DedotClient.new<ServiceApiMap[T][0]>(
