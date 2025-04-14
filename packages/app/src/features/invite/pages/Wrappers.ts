@@ -652,7 +652,7 @@ export const StepContainer = styled.div`
   gap: 0.5rem;
   width: 100%;
   padding: 0.5rem 0;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
 `
 
 export const StepHeader = styled.div<{ $active: boolean; $complete: boolean }>`
@@ -837,6 +837,12 @@ export const ValidatorActions = styled.div`
   bottom: 0.75rem;
   right: 0.75rem;
   z-index: 1;
+
+  button,
+  .icon-btn,
+  .action-btn {
+    border-radius: 0.25rem;
+  }
 `
 
 export const StepIndicator = styled.div<{
@@ -848,7 +854,7 @@ export const StepIndicator = styled.div<{
   justify-content: center;
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: 0.25rem;
   background-color: ${({ $active, $complete }) =>
     $active
       ? 'var(--accent-color-primary)'
