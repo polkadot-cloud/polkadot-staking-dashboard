@@ -256,10 +256,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           sessionsPerEra: new BigNumber(sessionsPerEra),
           maxExposurePageSize: new BigNumber(maxExposurePageSize),
           historyDepth: new BigNumber(historyDepth),
-          expectedBlockTime: new BigNumber(expectedBlockTime.toString()),
-          epochDuration: new BigNumber(epochDuration.toString()),
-          existentialDeposit: new BigNumber(existentialDeposit.toString()),
-          fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit.toString()),
+          expectedBlockTime: new BigNumber(expectedBlockTime),
+          epochDuration: new BigNumber(epochDuration),
+          existentialDeposit: new BigNumber(existentialDeposit),
+          fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit),
           poolsPalletId,
         })
 

@@ -84,7 +84,7 @@ export const perbillToPercent = (
   value: BigNumber | bigint | number
 ): BigNumber => {
   if (typeof value === 'bigint' || typeof value === 'number') {
-    value = new BigNumber(value.toString())
+    value = new BigNumber(value)
   }
   return value.dividedBy('10000000')
 }

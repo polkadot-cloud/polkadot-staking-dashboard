@@ -196,7 +196,7 @@ export class AccountBalances implements Unsubscribable {
       poolMembers.points,
       { at: 'best' }
     )
-    const balance = new BigNumber(apiResult?.toString() || 0)
+    const balance = new BigNumber(apiResult || 0)
     const claimPermission = claimPermissionResult?.type || 'Permissioned'
 
     this.poolMembership = {

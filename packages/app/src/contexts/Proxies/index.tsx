@@ -207,7 +207,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       const { address: eventAddress, proxies: eventProxies } = e.detail
 
       const newProxies = eventProxies[0]
-      const reserved = new BigNumber(eventProxies[1].toString())
+      const reserved = new BigNumber(eventProxies[1])
 
       if (newProxies.length) {
         setStateWithRef(

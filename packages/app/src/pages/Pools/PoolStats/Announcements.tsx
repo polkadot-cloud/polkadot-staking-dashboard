@@ -29,9 +29,7 @@ export const Announcements = () => {
   // calculate the latest reward account balance
   const rewardPoolBalance = BigNumber.max(
     0,
-    new BigNumber(rewardAccountBalance?.toString() || 0).minus(
-      existentialDeposit
-    )
+    new BigNumber(rewardAccountBalance || 0).minus(existentialDeposit)
   )
   const rewardBalance = planckToUnitBn(rewardPoolBalance, units)
 

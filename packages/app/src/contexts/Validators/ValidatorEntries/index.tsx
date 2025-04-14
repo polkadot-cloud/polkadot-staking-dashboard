@@ -337,7 +337,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
     const reward = results
       .map((v) => {
-        const value = new BigNumber(!v ? 0 : v.toString())
+        const value = new BigNumber(!v ? 0 : v)
         if (value.isNaN()) {
           return new BigNumber(0)
         }

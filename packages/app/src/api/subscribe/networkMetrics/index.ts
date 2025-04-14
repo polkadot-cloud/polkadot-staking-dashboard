@@ -43,11 +43,11 @@ export class NetworkMetrics implements Unsubscribable {
             minimumActiveStake,
           ]) => {
             const networkMetrics = {
-              totalIssuance: new BigNumber(totalIssuance.toString()),
+              totalIssuance: new BigNumber(totalIssuance),
               auctionCounter: new BigNumber(auctionCounter),
               earliestStoredSession: new BigNumber(earliestStoredSession),
               fastUnstakeErasToCheckPerBlock: Number(erasToCheckPerBlock),
-              minimumActiveStake: new BigNumber(minimumActiveStake.toString()),
+              minimumActiveStake: new BigNumber(minimumActiveStake),
             }
 
             document.dispatchEvent(

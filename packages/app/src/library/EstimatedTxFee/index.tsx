@@ -19,10 +19,7 @@ export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
   const txSubmission = getTxSubmission(uid)
   const fee = txSubmission?.fee || 0n
 
-  const txFeesUnit = planckToUnitBn(
-    new BigNumber(fee.toString()),
-    units
-  ).toFormat()
+  const txFeesUnit = planckToUnitBn(new BigNumber(fee), units).toFormat()
 
   return format === 'table' ? (
     <>
