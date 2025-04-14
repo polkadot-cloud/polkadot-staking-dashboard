@@ -354,7 +354,7 @@ const ValidatorList = styled.div`
 const ValidatorItem = styled.div<{ $selected: boolean }>`
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
-  background-color: var(--background-list-item);
+  background-color: var(--button-secondary-background);
   border: 1.5px solid
     ${({ $selected }) =>
       $selected
@@ -365,7 +365,7 @@ const ValidatorItem = styled.div<{ $selected: boolean }>`
 
   &:hover {
     border-color: var(--accent-color-transparent);
-    background-color: var(--background-list-item-hover);
+    background-color: var(--button-hover-background);
   }
 `
 
@@ -408,7 +408,9 @@ const SelectionIndicator = styled.div<{ $selected: boolean }>`
   height: 24px;
   border-radius: 0.25rem;
   background-color: ${({ $selected }) =>
-    $selected ? 'var(--accent-color-primary)' : 'var(--background-secondary)'};
+    $selected
+      ? 'var(--accent-color-primary)'
+      : 'var(--button-secondary-background)'};
   color: ${({ $selected }) => ($selected ? 'white' : 'transparent')};
   display: flex;
   align-items: center;
@@ -421,7 +423,7 @@ const EmptyState = styled.div`
   text-align: center;
   padding: 1.5rem;
   color: var(--text-color-secondary);
-  background-color: var(--background-list-item);
+  background-color: var(--button-secondary-background);
   border-radius: 0.75rem;
   margin: 1rem 0;
   border: 1.5px solid var(--border-primary-color);
@@ -430,7 +432,7 @@ const EmptyState = styled.div`
 const ValidatorSummary = styled.div`
   margin: 1rem 0;
   padding: 1rem;
-  background: var(--background-list-item);
+  background: var(--button-secondary-background);
   border-radius: 0.75rem;
   border: 1.5px solid var(--border-primary-color);
 `
@@ -450,7 +452,7 @@ const SelectedValidatorItem = styled.div`
   gap: 0.5rem;
   font-size: 0.9rem;
   padding: 0.5rem 0.75rem;
-  background: var(--background-secondary);
+  background: var(--button-secondary-background);
   border-radius: 0.25rem;
 
   > span {
@@ -462,7 +464,7 @@ const SelectedValidatorItem = styled.div`
 `
 
 const PoolItem = styled.div`
-  background: var(--background-list-item);
+  background: var(--button-secondary-background);
   border-radius: 0.75rem;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -471,7 +473,7 @@ const PoolItem = styled.div`
 
   &:hover {
     border-color: var(--accent-color-transparent);
-    background-color: var(--background-list-item-hover);
+    background-color: var(--button-hover-background);
   }
 `
 

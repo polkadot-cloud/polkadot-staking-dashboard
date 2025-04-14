@@ -96,14 +96,14 @@ const InviteUrl = styled.div`
   overflow-y: auto;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
-  background: var(--background-secondary);
+  background: var(--button-secondary-background);
 
   &::-webkit-scrollbar {
     width: 0.25rem;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--border-primary-color);
+    background-color: var(--button-hover-background);
     border-radius: 0.25rem;
   }
 `
@@ -122,7 +122,7 @@ const ViewToggle = styled.button`
 
   &:hover {
     color: var(--accent-color-primary);
-    background: var(--background-secondary);
+    background: var(--button-secondary-background);
     border-radius: 0.25rem;
   }
 `
