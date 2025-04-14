@@ -146,17 +146,17 @@ export const ValidatorListContainer = styled.div`
     margin-bottom: 0;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--card-shadow-secondary);
 
     &:hover {
       transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--card-shadow-secondary);
     }
 
     &.selected {
       border-color: var(--accent-color-primary);
       background-color: var(--button-secondary-background);
-      box-shadow: 0 2px 8px var(--accent-color-transparent);
+      box-shadow: var(--card-shadow-secondary);
       position: relative;
 
       &::after {
@@ -172,7 +172,7 @@ export const ValidatorListContainer = styled.div`
         background-repeat: no-repeat;
         background-position: center;
         background-size: 12px;
-        box-shadow: 0 2px 4px var(--accent-color-transparent);
+        box-shadow: var(--card-shadow-secondary);
       }
     }
 
@@ -712,7 +712,7 @@ export const SummaryContainer = styled.div`
   border: 1.5px solid var(--border-primary-color);
   padding: 1.25rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--card-shadow-secondary);
 `
 
 export const SummaryRow = styled.div`
