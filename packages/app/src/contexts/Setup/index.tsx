@@ -169,9 +169,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('nominator', address) as NominatorSetup
     const { progress } = setup
-    const bond = new BigNumber(
-      unitToPlanck(progress?.bond || '0', units).toString()
-    )
+    const bond = new BigNumber(unitToPlanck(progress?.bond || '0', units))
 
     const p = 33
     let percentage = 0
@@ -194,9 +192,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('pool', address) as PoolSetup
     const { progress } = setup
-    const bond = new BigNumber(
-      unitToPlanck(progress?.bond || '0', units).toString()
-    )
+    const bond = new BigNumber(unitToPlanck(progress?.bond || '0', units))
 
     const p = 25
     let percentage = 0

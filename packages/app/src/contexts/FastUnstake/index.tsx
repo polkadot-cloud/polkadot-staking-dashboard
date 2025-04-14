@@ -95,7 +95,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const handleNewFastUnstakeDeposit = (e: Event) => {
     if (isCustomEvent(e)) {
       const { address, deposit } = e.detail
-      setQueueDeposit({ address, deposit: new BigNumber(deposit.toString()) })
+      setQueueDeposit({ address, deposit: new BigNumber(deposit) })
     }
   }
 

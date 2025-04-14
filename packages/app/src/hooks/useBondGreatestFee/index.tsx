@@ -52,7 +52,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
       const partial_fee =
         (await tx?.getPaymentInfo(activeAddress))?.partial_fee || 0n
 
-      return new BigNumber(partial_fee.toString())
+      return new BigNumber(partial_fee)
     }
     return new BigNumber(0)
   }

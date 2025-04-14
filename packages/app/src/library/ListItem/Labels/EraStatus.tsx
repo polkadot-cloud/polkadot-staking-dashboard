@@ -29,7 +29,7 @@ export const EraStatus = ({ address, noMargin, status }: EraStatusProps) => {
           ? t('syncing')
           : validatorStatus !== 'waiting'
             ? `${t('listItemActive')} / ${planckToUnitBn(
-                new BigNumber(getValidatorTotalStake(address).toString()),
+                new BigNumber(getValidatorTotalStake(address)),
                 units
               )
                 .integerValue()
