@@ -11,8 +11,8 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
-    "assets": "workspace:*",
-    "polkadot-api": "^1.9.5"
+    "@substrate/connect-known-chains": "^1.10.0",
+    "assets": "workspace:*"
   },
   "devDependencies": {
     "types": "workspace:*"
