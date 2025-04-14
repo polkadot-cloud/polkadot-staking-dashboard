@@ -4,13 +4,22 @@
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
+import type { ServiceClass } from '../types'
 
-// TODO: start westend service apis
+export class WestendService implements ServiceClass {
+  constructor(
+    public apiRelay: DedotClient<WestendApi>,
+    public apiPeople: DedotClient<WestendPeopleApi>
+  ) {
+    this.apiRelay = apiRelay
+    this.apiPeople = apiPeople
+  }
 
-export const westendService = async (
-  apiRelay: DedotClient<WestendApi>,
-  apiPeople: DedotClient<WestendPeopleApi>
-) => {
-  // TODO: implement service logic
-  console.debug(apiRelay, apiPeople)
+  start = async () => {
+    console.log('Starting Westend service')
+  }
+
+  unsubscribe = async () => {
+    await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
+  }
 }

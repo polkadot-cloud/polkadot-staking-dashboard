@@ -17,7 +17,7 @@ export const ProvidersPrompt = () => {
   const { closePrompt } = usePrompt()
   const { getRpcEndpoint } = useApi()
 
-  const rpcProviders = NetworkList[network].endpoints.rpcEndpoints
+  const rpcProviders = NetworkList[network].endpoints.rpc
   return (
     <>
       <Title title={t('rpcProviders', { ns: 'modals' })} />

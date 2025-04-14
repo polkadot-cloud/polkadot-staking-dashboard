@@ -20,8 +20,8 @@ export interface Network {
     lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
-    defaultRpcEndpoint: string
-    rpcEndpoints: Record<string, string>
+    defaultRpc: string
+    rpc: Record<string, string>
   }
   unit: string
   units: number
@@ -38,8 +38,8 @@ export interface SystemChain {
     lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
-    defaultRpcEndpoint: string
-    rpcEndpoints: Record<string, string>
+    defaultRpc: string
+    rpc: Record<string, string>
   }
   relayChain: NetworkId
 }

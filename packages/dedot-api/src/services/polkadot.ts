@@ -4,11 +4,22 @@
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
+import type { ServiceClass } from '../types'
 
-export const polkadotService = async (
-  apiRelay: DedotClient<PolkadotApi>,
-  apiPeople: DedotClient<PolkadotPeopleApi>
-) => {
-  // TODO: implement service logic
-  console.debug(apiRelay, apiPeople)
+export class PolkadotService implements ServiceClass {
+  constructor(
+    public apiRelay: DedotClient<PolkadotApi>,
+    public apiPeople: DedotClient<PolkadotPeopleApi>
+  ) {
+    this.apiRelay = apiRelay
+    this.apiPeople = apiPeople
+  }
+
+  start = async () => {
+    console.log('Starting Polkadot service')
+  }
+
+  unsubscribe = async () => {
+    await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
+  }
 }

@@ -95,10 +95,8 @@ export class Api {
   initWsProvider() {
     const endpoint =
       this.#chainType === 'relay'
-        ? NetworkList[this.network].endpoints.rpcEndpoints[this.#rpcEndpoint]
-        : SystemChainList[this.network].endpoints.rpcEndpoints[
-            this.#rpcEndpoint
-          ]
+        ? NetworkList[this.network].endpoints.rpc[this.#rpcEndpoint]
+        : SystemChainList[this.network].endpoints.rpc[this.#rpcEndpoint]
 
     // Initialize Polkadot API Client
     this.#apiClient = createClient(getWsProvider(endpoint))

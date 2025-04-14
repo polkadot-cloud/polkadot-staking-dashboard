@@ -9,9 +9,12 @@ import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 
 import type { DedotClient } from 'dedot'
+import type { KusamaService } from './services/kusama'
+import type { PolkadotService } from './services/polkadot'
+import type { WestendService } from './services/westend'
 
 // All available chain types
-export type ChainTypes =
+export type ChainType =
   | PolkadotApi
   | PolkadotPeopleApi
   | KusamaApi
@@ -19,8 +22,15 @@ export type ChainTypes =
   | WestendApi
   | WestendPeopleApi
 
+// All available service types
+export interface ServiceType {
+  polkadot: typeof PolkadotService
+  kusama: typeof KusamaService
+  westend: typeof WestendService
+}
+
 // Mapping of the required chain types for each network
-export type ServiceApiMap = {
+export type ServiceApis = {
   polkadot: [PolkadotApi, PolkadotPeopleApi]
   kusama: [KusamaApi, KusamaPeopleApi]
   westend: [WestendApi, WestendPeopleApi]
@@ -28,9 +38,15 @@ export type ServiceApiMap = {
 
 // A default service requires Relay chain and People chain
 export type DefaultServiceCallback<
-  RelayApi extends ChainTypes,
-  PeopleApi extends ChainTypes,
+  RelayApi extends ChainType,
+  PeopleApi extends ChainType,
 > = (
   apiRelay: DedotClient<RelayApi>,
   apiPeople: DedotClient<PeopleApi>
 ) => Promise<void>
+
+// A base service class that all services should implement
+export abstract class ServiceClass {
+  abstract start(): Promise<void>
+  abstract unsubscribe(): Promise<void>
+}

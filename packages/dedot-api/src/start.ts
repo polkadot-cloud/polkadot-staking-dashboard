@@ -1,32 +1,34 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { NetworkList, SystemChainList } from 'consts/networks'
+import { getNetworkData, getSystemChainData } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
-import { getRpcEndpoints } from 'global-bus'
-import type { NetworkId } from 'types'
-import type { DefaultServiceCallback, ServiceApiMap } from './types'
+import { getInitialRpcEndpoints } from 'global-bus/util'
+import type { NetworkId, SystemChainId } from 'types'
+import { Services } from './services'
+import type { ServiceApis, ServiceType } from './types'
 
-// Starts dedot api service for a network with the corresponding chain types
-export const startDefaultService = async <T extends NetworkId>(
-  network: T,
-  callback: DefaultServiceCallback<ServiceApiMap[T][0], ServiceApiMap[T][1]>
-) => {
+// Determines service class and apis for a network
+export const getDefaultService = async <T extends NetworkId>(
+  network: T
+): Promise<{
+  Service: ServiceType[T]
+  apis: [DedotClient<ServiceApis[T][0]>, DedotClient<ServiceApis[T][1]>]
+}> => {
   // TODO: Add light client support
+  const keys = getInitialRpcEndpoints(network)
+  const peopleChainId: SystemChainId = `people-${network}`
 
-  const endpointKeys = getRpcEndpoints()
+  const relayEndpoint = getNetworkData(network).endpoints.rpc[keys[network]]
+  const peopleEndpoint =
+    getSystemChainData(peopleChainId).endpoints.rpc[keys[peopleChainId]]
 
-  const apiRelay = await DedotClient.new<ServiceApiMap[T][0]>(
-    new WsProvider(
-      NetworkList[network].endpoints.rpcEndpoints[endpointKeys[network]]
-    )
-  )
-  const apiPeople = await DedotClient.new<ServiceApiMap[T][1]>(
-    new WsProvider(
-      SystemChainList[`people-${network}`].endpoints.rpcEndpoints[
-        endpointKeys[`people-${network}`]
-      ]
-    )
-  )
-  await callback(apiRelay, apiPeople)
+  const [apiRelay, apiPeople] = [
+    await DedotClient.new<ServiceApis[T][0]>(new WsProvider(relayEndpoint)),
+    await DedotClient.new<ServiceApis[T][1]>(new WsProvider(peopleEndpoint)),
+  ]
+  return {
+    Service: Services[network],
+    apis: [apiRelay, apiPeople],
+  }
 }
