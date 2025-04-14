@@ -57,7 +57,7 @@ export const WarningMessage = styled.div`
   background-color: var(--status-warning-color-transparent);
   color: var(--status-warning-color);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   font-size: 0.9rem;
   margin-bottom: 1rem;
 `
@@ -89,7 +89,7 @@ export const ShareUrl = styled.div`
   align-items: center;
   gap: 1rem;
   background-color: var(--background-secondary);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   padding: 0.75rem;
   overflow: hidden;
   width: 100%;
@@ -400,7 +400,7 @@ export const PoolId = styled.div`
 export const PoolState = styled.div<{ $state: string }>`
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  border-radius: 1.5rem;
+  border-radius: 0.25rem;
   font-size: 0.8rem;
   font-weight: 600;
   font-family: InterSemiBold, sans-serif;
@@ -435,7 +435,7 @@ export const StatItem = styled.div`
 export const StatIcon = styled.div`
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 0.25rem;
   background-color: var(--background-secondary);
   display: flex;
   align-items: center;
@@ -532,9 +532,10 @@ export const AddressText = styled.div`
 export const CopyButton = styled.button`
   background: none;
   border: none;
-  cursor: pointer;
   color: var(--text-color-secondary);
+  cursor: pointer;
   padding: 0.25rem;
+  border-radius: 0.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -707,7 +708,7 @@ export const WarningsContainer = styled.div`
 
 export const SummaryContainer = styled.div`
   background: var(--button-secondary-background);
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   border: 1.5px solid var(--border-primary-color);
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -806,7 +807,7 @@ export const StatusDisplay = styled.div`
 
   .status {
     padding: 0.2rem 0.6rem;
-    border-radius: 1rem;
+    border-radius: 0.25rem;
     font-size: 0.8rem;
     background: var(--background-secondary);
     color: var(--text-color-secondary);
