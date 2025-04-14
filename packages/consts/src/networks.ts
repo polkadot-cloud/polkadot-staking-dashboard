@@ -86,6 +86,7 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClientKey: 'polkadot_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
+      defaultRpcEndpoint: 'IBP1',
       rpcEndpoints: {
         IBP1: 'wss://sys.ibp.network/people-polkadot',
         IBP2: 'wss://people-polkadot.dotters.network',
@@ -102,6 +103,7 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClientKey: 'ksmcc3_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_people'),
+      defaultRpcEndpoint: 'IBP1',
       rpcEndpoints: {
         IBP1: 'wss://sys.ibp.network/people-kusama',
         IBP2: 'wss://people-kusama.dotters.network',
@@ -118,6 +120,7 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClientKey: 'westend2_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend_people'),
+      defaultRpcEndpoint: 'IBP1',
       rpcEndpoints: {
         IBP1: 'wss://sys.ibp.network/people-westend',
         IBP2: 'wss://people-westend.dotters.network',
