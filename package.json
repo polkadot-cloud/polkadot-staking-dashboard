@@ -30,7 +30,7 @@
     "globals": "^16.0.0",
     "prettier": "^3.5.2",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "sass": "1.77.6",
+    "sass": "1.86.3",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.29.1"
   },
