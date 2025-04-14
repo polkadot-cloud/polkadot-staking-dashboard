@@ -45,7 +45,7 @@ export const Stats = ({
       bondedPool.id,
       BigInt(bondedPool.points)
     ).fetch()
-    const balance = new BigNumber(apiResult?.toString() || 0)
+    const balance = new BigNumber(apiResult || 0)
 
     if (balance) {
       setPoolBalance(new BigNumber(balance))

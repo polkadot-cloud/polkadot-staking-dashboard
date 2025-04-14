@@ -80,12 +80,10 @@ export const Bond = () => {
   let bondAfterTxFees: BigNumber
 
   if (enoughToCoverTxFees) {
-    bondAfterTxFees = new BigNumber(unitToPlanck(bond.bond, units).toString())
+    bondAfterTxFees = new BigNumber(unitToPlanck(bond.bond, units))
   } else {
     bondAfterTxFees = BigNumber.max(
-      new BigNumber(unitToPlanck(String(bond.bond), units).toString()).minus(
-        largestTxFee
-      ),
+      new BigNumber(unitToPlanck(String(bond.bond), units)).minus(largestTxFee),
       0
     )
   }

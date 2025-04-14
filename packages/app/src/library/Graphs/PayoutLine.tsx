@@ -55,7 +55,7 @@ export const PayoutLine = ({
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
     ? []
-    : entries.map((entry) => new BigNumber(entry.reward).toString())
+    : entries.map((entry) => new BigNumber(entry.reward))
 
   // Use primary color for line
   const color = getThemeValue('--accent-color-primary')

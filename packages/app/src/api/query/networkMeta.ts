@@ -82,36 +82,36 @@ export class NetworkMeta extends Base {
 
     // Format max pool members to be a BigNumber, or null if it's not set.
     const maxPoolMembers = maxPoolMembersRaw
-      ? new BigNumber(maxPoolMembersRaw.toString())
+      ? new BigNumber(maxPoolMembersRaw)
       : null
 
     // Format max pool members per pool to be a BigNumber, or null if it's not set.
     const maxPoolMembersPerPool = maxPoolMembersPerPoolRaw
-      ? new BigNumber(maxPoolMembersPerPoolRaw.toString())
+      ? new BigNumber(maxPoolMembersPerPoolRaw)
       : null
 
     // Format max pools to be a BigNumber, or null if it's not set.
-    const maxPools = maxPoolsRaw ? new BigNumber(maxPoolsRaw.toString()) : null
+    const maxPools = maxPoolsRaw ? new BigNumber(maxPoolsRaw) : null
 
     return {
       networkMetrics: {
-        totalIssuance: new BigNumber(totalIssuance.toString()),
-        auctionCounter: new BigNumber(auctionCounter.toString()),
-        earliestStoredSession: new BigNumber(earliestStoredSession.toString()),
-        fastUnstakeErasToCheckPerBlock: Number(erasToCheckPerBlock.toString()),
-        minimumActiveStake: new BigNumber(minimumActiveStake.toString()),
+        totalIssuance: new BigNumber(totalIssuance),
+        auctionCounter: new BigNumber(auctionCounter),
+        earliestStoredSession: new BigNumber(earliestStoredSession),
+        fastUnstakeErasToCheckPerBlock: Number(erasToCheckPerBlock),
+        minimumActiveStake: new BigNumber(minimumActiveStake),
       },
       poolsConfig: {
-        counterForPoolMembers: stringToBn(counterForPoolMembers.toString()),
-        counterForBondedPools: stringToBn(counterForBondedPools.toString()),
-        counterForRewardPools: stringToBn(counterForRewardPools.toString()),
+        counterForPoolMembers: stringToBn(counterForPoolMembers),
+        counterForBondedPools: stringToBn(counterForBondedPools),
+        counterForRewardPools: stringToBn(counterForRewardPools),
         lastPoolId: stringToBn(lastPoolId.toString()),
         maxPoolMembers,
         maxPoolMembersPerPool,
         maxPools,
-        minCreateBond: stringToBn(minCreateBond.toString()),
-        minJoinBond: stringToBn(minJoinBond.toString()),
-        globalMaxCommission: Number(globalMaxCommissionAsPercent.toString()),
+        minCreateBond: stringToBn(minCreateBond),
+        minJoinBond: stringToBn(minJoinBond),
+        globalMaxCommission: Number(globalMaxCommissionAsPercent),
       },
       stakingMetrics: {
         totalValidators: stringToBn(counterForValidators.toString()),

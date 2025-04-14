@@ -53,7 +53,7 @@ export const UpdateReserve = () => {
     const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber()
     const actualReservePlanck = unitToPlanck(actualReserve.toString(), units)
     setSliderReserve(val.decimalPlaces(3).toNumber())
-    setFeeReserveBalance(new BigNumber(actualReservePlanck.toString()))
+    setFeeReserveBalance(new BigNumber(actualReservePlanck))
   }
 
   return (
