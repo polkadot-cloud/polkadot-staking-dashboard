@@ -47,6 +47,7 @@
     "consts": "workspace:*",
     "date-fns": "^4.1.0",
     "dedot": "^0.9.1",
+    "dedot-api": "workspace:*",
     "framer-motion": "^12.6.2",
     "global-bus": "workspace:*",
     "html5-qrcode": "^2.3.8",

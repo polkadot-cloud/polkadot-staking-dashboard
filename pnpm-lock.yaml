@@ -190,6 +190,9 @@ importers:
       dedot:
         specifier: ^0.9.1
         version: 0.9.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      dedot-api:
+        specifier: workspace:*
+        version: link:../dedot-api
       framer-motion:
         specifier: ^12.6.2
         version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
