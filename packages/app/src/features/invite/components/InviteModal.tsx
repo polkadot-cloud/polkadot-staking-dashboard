@@ -261,13 +261,21 @@ export const InviteModal = () => {
               )}
             </ContentSection>
 
-            <ButtonContainer>
-              <GenerateButton
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                marginTop: '1rem',
+              }}
+            >
+              <ButtonPrimary
                 text={t('generateInvite')}
-                disabled={selectedValidators.length === 0}
                 onClick={handleGenerateInvite}
+                size="md"
+                style={{ padding: '0.75rem 1.5rem' }}
+                disabled={selectedValidators.length === 0}
               />
-            </ButtonContainer>
+            </div>
           </>
         ) : (
           <>
@@ -407,16 +415,6 @@ const SelectionIndicator = styled.div<{ $selected: boolean }>`
   justify-content: center;
   flex-shrink: 0;
   transition: all var(--transition-duration);
-`
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-`
-
-const GenerateButton = styled(ButtonPrimary)`
-  padding: 0.75rem 1.5rem;
 `
 
 const EmptyState = styled.div`

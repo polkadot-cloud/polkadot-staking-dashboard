@@ -42,9 +42,11 @@ export const ShareOptions = ({
             <FontAwesomeIcon icon={showFullUrl ? faCompressAlt : faExpandAlt} />
           </ViewToggle>
         </InviteUrlWrapper>
-        <CopyButton
+        <ButtonPrimary
           text={copiedToClipboard ? t('copied') : t('copy')}
           onClick={copyInviteUrl}
+          size="sm"
+          style={{ flexShrink: 0 }}
         />
       </InviteUrlContainer>
     </Container>
@@ -122,14 +124,5 @@ const ViewToggle = styled.button`
     color: var(--accent-color-primary);
     background: var(--background-secondary);
     border-radius: 0.25rem;
-  }
-`
-
-const CopyButton = styled(ButtonPrimary)`
-  flex-shrink: 0;
-
-  @media (max-width: 768px) {
-    margin-top: 0.5rem;
-    align-self: flex-end;
   }
 `
