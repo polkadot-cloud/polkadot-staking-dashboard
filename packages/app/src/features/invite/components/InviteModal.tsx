@@ -398,7 +398,7 @@ const ValidatorAddress = styled.div`
 const SelectionIndicator = styled.div<{ $selected: boolean }>`
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: 0.25rem;
   background-color: ${({ $selected }) =>
     $selected ? 'var(--accent-color-primary)' : 'var(--background-secondary)'};
   color: ${({ $selected }) => ($selected ? 'white' : 'transparent')};
@@ -453,7 +453,7 @@ const SelectedValidatorItem = styled.div`
   font-size: 0.9rem;
   padding: 0.5rem 0.75rem;
   background: var(--background-secondary);
-  border-radius: 0.75rem;
+  border-radius: 0.25rem;
 
   > span {
     overflow: hidden;
@@ -486,7 +486,7 @@ const PoolDisplay = styled.div`
 const PoolIcon = styled.div`
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  border-radius: 0.75rem;
   overflow: hidden;
   display: flex;
   align-items: center;

@@ -121,6 +121,7 @@ const ViewToggle = styled.button`
   &:hover {
     color: var(--accent-color-primary);
     background: var(--background-secondary);
+    border-radius: 0.25rem;
   }
 `
 
