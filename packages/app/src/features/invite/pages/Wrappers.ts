@@ -88,7 +88,7 @@ export const ShareUrl = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  background-color: var(--background-secondary);
+  background-color: var(--button-secondary-background);
   border-radius: 0.75rem;
   padding: 0.75rem;
   overflow: hidden;
@@ -436,7 +436,7 @@ export const StatIcon = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 0.25rem;
-  background-color: var(--background-secondary);
+  background-color: var(--button-secondary-background);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -809,7 +809,7 @@ export const StatusDisplay = styled.div`
     padding: 0.2rem 0.6rem;
     border-radius: 0.25rem;
     font-size: 0.8rem;
-    background: var(--background-secondary);
+    background: var(--button-secondary-background);
     color: var(--text-color-secondary);
     font-weight: 500;
     font-family: InterSemiBold, sans-serif;
@@ -854,7 +854,7 @@ export const StepIndicator = styled.div<{
       ? 'var(--accent-color-primary)'
       : $complete
         ? 'var(--accent-color-transparent)'
-        : 'var(--background-secondary)'};
+        : 'var(--button-secondary-background)'};
   color: ${({ $active, $complete }) =>
     $active
       ? 'white'
