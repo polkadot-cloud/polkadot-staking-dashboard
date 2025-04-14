@@ -321,12 +321,12 @@ importers:
 
   packages/consts:
     dependencies:
+      '@substrate/connect-known-chains':
+        specifier: ^1.10.0
+        version: 1.10.0
       assets:
         specifier: workspace:*
         version: link:../assets
-      polkadot-api:
-        specifier: ^1.9.5
-        version: 1.9.9(@microsoft/api-extractor@7.52.2(@types/node@22.13.17))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(rxjs@7.8.2)(utf-8-validate@5.0.10)
     devDependencies:
       types:
         specifier: workspace:*
@@ -2137,6 +2137,9 @@ packages:
 
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
+
+  '@substrate/connect-known-chains@1.10.0':
+    resolution: {integrity: sha512-k0GwwxJE1twaob6qMOBalENDfOEnMt/zdAuUjbrqhjBD6EL1SAWVuTu+bpwXrznd/ims6NSN4TLp9aTf1yE5tg==}
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0':
     resolution: {integrity: sha512-b9MIk7yhdS1pMCZM8VeNfUlSKVRhsHZNMl5O9SfaX0l0t5wjdgu4IDzGB8bpnGBBOjGST3rRFVsaaEtI4W6f7g==}
@@ -7648,6 +7651,8 @@ snapshots:
   '@sindresorhus/merge-streams@4.0.0': {}
 
   '@socket.io/component-emitter@3.1.2': {}
+
+  '@substrate/connect-known-chains@1.10.0': {}
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.26.10)':
     dependencies:
