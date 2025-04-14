@@ -429,11 +429,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const reInitialiseApi = async (type: ConnectionType) => {
     setApiStatus('disconnected')
-
     // Dispatch all default syncIds as syncing
     Syncs.dispatchAllDefault()
 
-    // Instanaite new Relay chain API instance
+    // Instantiate new Relay chain API instance
     await Apis.instantiate(network, type, getRpcEndpoint(network))
   }
 
@@ -451,7 +450,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (connectionType !== 'sc') {
       reInitialiseApi('ws')
     }
-  }, [Object.values(rpcEndpoints)])
+  }, [rpcEndpoints[network]])
 
   // If connection type changes, re-initialise API
   useEffectIgnoreInitial(async () => {
