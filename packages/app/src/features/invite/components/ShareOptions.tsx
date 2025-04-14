@@ -70,7 +70,7 @@ const InviteUrlContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @media (max-width: 826px) {
     flex-direction: column;
     align-items: stretch;
   }
