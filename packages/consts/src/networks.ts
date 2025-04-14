@@ -101,8 +101,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClientKey: 'ksmcc3_people',
       lightClient: async () =>
-        // TODO: Replace with `ksmcc3_people` when available
-        await import('@substrate/connect-known-chains/westend_people'),
+        await import('@substrate/connect-known-chains/ksmcc3_people'),
       rpcEndpoints: {
         IBP1: 'wss://sys.ibp.network/people-kusama',
         IBP2: 'wss://people-kusama.dotters.network',

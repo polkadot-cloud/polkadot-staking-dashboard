@@ -11,7 +11,7 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
-    "@substrate/connect-known-chains": "^1.9.3",
+    "@substrate/connect-known-chains": "^1.10.0",
     "assets": "workspace:*"
   },
   "devDependencies": {
