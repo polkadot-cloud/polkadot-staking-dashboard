@@ -21,7 +21,7 @@ export const [NetworkContext, useNetwork] =
 
 export const NetworkProvider = ({ children }: { children: ReactNode }) => {
   // Store the active network in state
-  const [network, setNetworkState] = useState<NetworkId>(getNetwork())
+  const [network, setNetwork] = useState<NetworkId>(getNetwork())
 
   // handle network switching
   const switchNetwork = async (name: NetworkId): Promise<void> => {
@@ -37,7 +37,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
   // Subscribe to global bus network changes
   useEffect(() => {
     const sub = networkConfig$.subscribe((result) => {
-      setNetworkState(result.network)
+      setNetwork(result.network)
     })
     return () => {
       sub.unsubscribe()
