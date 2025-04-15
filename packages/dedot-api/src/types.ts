@@ -7,11 +7,13 @@ import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
-
 import type { DedotClient } from 'dedot'
+import type { CoreConsts } from './consts/core'
+import type { StakingConsts } from './consts/staking'
 import type { KusamaService } from './services/kusama'
 import type { PolkadotService } from './services/polkadot'
 import type { WestendService } from './services/westend'
+import type { ChainSpecs } from './spec/chainSpecs'
 
 // All available chain types
 export type ChainType =
@@ -21,6 +23,12 @@ export type ChainType =
   | KusamaPeopleApi
   | WestendApi
   | WestendPeopleApi
+
+// Chains that are used for staking and nomination pools
+export type StakingChainType = PolkadotApi | KusamaApi | WestendApi
+
+// Base / Relay chain types
+export type BaseChainType = PolkadotApi | KusamaApi | WestendApi
 
 // All available service types
 export interface ServiceType {
@@ -46,7 +54,18 @@ export type DefaultServiceCallback<
 ) => Promise<void>
 
 // A base service class that all services should implement
-export abstract class ServiceClass {
+export abstract class DefaultServiceClass<
+  RelayApi extends BaseChainType,
+  PeopleApi extends ChainType,
+  BaseApi extends BaseChainType,
+  StakingApi extends StakingChainType,
+> {
+  abstract relayChainSpec: ChainSpecs<RelayApi>
+  abstract peopleChainSpec: ChainSpecs<PeopleApi>
+
+  abstract coreConsts: CoreConsts<BaseApi>
+  abstract stakingConsts: StakingConsts<StakingApi>
+
   abstract start(): Promise<void>
   abstract unsubscribe(): Promise<void>
 }
