@@ -30,5 +30,4 @@ export const NetworkKey = 'network'
 export const ExternalAccountsKey = 'external_accounts'
 export const ProviderTypeKey = 'providerType'
 
-export const rpcEndpointKey = (network: string) => `${network}_rpc_endpoints
-`
+export const rpcEndpointKey = (network: string) => `${network}_rpc_endpoints`;
