@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Api } from 'api'
-import type { ConnectionType } from 'api/types'
 import { Syncs } from 'controllers/Syncs'
-import type { ChainId, NetworkId } from 'types'
+import type { ChainId, ConnectionType, NetworkId } from 'types'
 
 export class Apis {
   // The currently instantiated API instances, keyed by network

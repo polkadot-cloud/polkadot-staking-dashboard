@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ApiStatus, ConnectionType, PapiChainSpec } from 'api/types'
+import type { ApiStatus, PapiChainSpec } from 'api/types'
 import type BigNumber from 'bignumber.js'
 import type { ReactNode, RefObject } from 'react'
-import type { NetworkId } from 'types'
+import type { ConnectionType, NetworkId } from 'types'
 
 export interface APIProviderProps {
   children: ReactNode
@@ -70,7 +70,6 @@ export interface APIContextInterface {
   apiStatus: ApiStatus
   peopleApiStatus: ApiStatus
   connectionType: ConnectionType
-  setConnectionType: (connectionType: ConnectionType) => void
   getRpcEndpoint: (chain: string) => string
   consts: APIConstants
   networkMetrics: APINetworkMetrics

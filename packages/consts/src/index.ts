@@ -28,4 +28,8 @@ export const MaxEraRewardPointsEras = 10
 export const FiatCurrencyKey = 'currency'
 export const NetworkKey = 'network'
 export const ExternalAccountsKey = 'external_accounts'
-export const rpcEndpointKey = (network: string) => `${network}_rpc_endpoints`
+// TODO: Rename to providerType
+export const ConnectionTypeKey = 'connection_type'
+
+export const rpcEndpointKey = (network: string) => `${network}_rpc_endpoints
+`

@@ -4,7 +4,13 @@
 import { createSafeContext } from '@w3ux/hooks'
 import { varToUrlHash } from '@w3ux/utils'
 import { Apis } from 'controllers/Apis'
-import { getNetwork, network$, setNetwork } from 'global-bus'
+import {
+  getConnectionType,
+  getNetwork,
+  networkConfig$,
+  setNetworkConfig,
+} from 'global-bus'
+import { getInitialRpcEndpoints } from 'global-bus/util'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { NetworkId } from 'types'
@@ -24,14 +30,14 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
       await Apis.destroy(network),
       await Apis.destroy(`people-${network}`),
     ])
-    setNetwork(name)
+    setNetworkConfig(name, getInitialRpcEndpoints(name), getConnectionType())
     varToUrlHash('n', name, false)
   }
 
   // Subscribe to global bus network changes
   useEffect(() => {
-    const sub = network$.subscribe((n) => {
-      setNetworkState(n)
+    const sub = networkConfig$.subscribe((result) => {
+      setNetworkState(result.network)
     })
     return () => {
       sub.unsubscribe()

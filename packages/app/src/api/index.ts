@@ -9,11 +9,10 @@ import { getSmProvider } from 'polkadot-api/sm-provider'
 import { startFromWorker } from 'polkadot-api/smoldot/from-worker'
 import SmWorker from 'polkadot-api/smoldot/worker?worker'
 import { getWsProvider } from 'polkadot-api/ws-provider/web'
-import type { ChainId } from 'types'
+import type { ChainId, ConnectionType } from 'types'
 import type {
   ApiChainType,
   APIEventDetail,
-  ConnectionType,
   EventApiStatus,
   PapiChainSpec,
   PapiReadyEvent,

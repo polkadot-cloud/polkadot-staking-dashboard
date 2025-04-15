@@ -3,25 +3,29 @@
 
 import { getNetworkData, getSystemChainData } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
-import { getInitialRpcEndpoints } from 'global-bus/util'
-import type { NetworkId, SystemChainId } from 'types'
+import type { ConnectionType, NetworkId, SystemChainId } from 'types'
 import { Services } from './services'
 import type { ServiceApis, ServiceType } from './types'
 
 // Determines service class and apis for a network
 export const getDefaultService = async <T extends NetworkId>(
-  network: T
+  network: T,
+  {
+    rpcEndpoints,
+    connectionType,
+  }: { rpcEndpoints: Record<string, string>; connectionType: ConnectionType }
 ): Promise<{
   Service: ServiceType[T]
   apis: [DedotClient<ServiceApis[T][0]>, DedotClient<ServiceApis[T][1]>]
 }> => {
-  // TODO: Add light client support
-  const keys = getInitialRpcEndpoints(network)
+  // TODO: Add light client provider support
+  console.debug(connectionType)
   const peopleChainId: SystemChainId = `people-${network}`
 
-  const relayEndpoint = getNetworkData(network).endpoints.rpc[keys[network]]
+  const relayEndpoint =
+    getNetworkData(network).endpoints.rpc[rpcEndpoints[network]]
   const peopleEndpoint =
-    getSystemChainData(peopleChainId).endpoints.rpc[keys[peopleChainId]]
+    getSystemChainData(peopleChainId).endpoints.rpc[rpcEndpoints[peopleChainId]]
 
   const [apiRelay, apiPeople] = [
     await DedotClient.new<ServiceApis[T][0]>(new WsProvider(relayEndpoint)),

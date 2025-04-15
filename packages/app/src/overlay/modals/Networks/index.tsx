@@ -10,6 +10,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
+import { setConnectionType } from 'global-bus'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,8 +31,8 @@ export const Networks = () => {
   const { isBraveBrowser } = useUi()
   const { openPromptWith } = usePrompt()
   const { network, switchNetwork } = useNetwork()
+  const { connectionType, getRpcEndpoint } = useApi()
   const { setModalStatus, setModalResize } = useOverlay().modal
-  const { connectionType, setConnectionType, getRpcEndpoint } = useApi()
   const networkKey = network
 
   const isLightClient = connectionType === 'sc'

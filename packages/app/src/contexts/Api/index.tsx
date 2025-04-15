@@ -11,14 +11,18 @@ import { ActiveEra } from 'api/subscribe/activeEra'
 import { BlockNumber } from 'api/subscribe/blockNumber'
 import { NetworkMetrics } from 'api/subscribe/networkMetrics'
 import { PoolsConfig } from 'api/subscribe/poolsConfig'
-import type { APIEventDetail, ApiStatus, ConnectionType } from 'api/types'
+import type { APIEventDetail, ApiStatus } from 'api/types'
 import BigNumber from 'bignumber.js'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
-import { getRpcEndpoints, rpcEndpoints$ } from 'global-bus'
-import { getInitialRpcEndpoints } from 'global-bus/util'
+import { getConnectionType, getRpcEndpoints, networkConfig$ } from 'global-bus'
+import {
+  getInitialConnectionType,
+  getInitialRpcEndpoints,
+} from 'global-bus/util'
+import type { ConnectionType } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,
@@ -50,30 +54,17 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     useState<ApiStatus>('disconnected')
 
   // Store whether light client is active
-  const [connectionType, setConnectionTypeState] = useState<ConnectionType>(
-    localStorage.getItem('useWebsocket') ? 'ws' : 'sc'
+  const [connectionType, setConnectionType] = useState<ConnectionType>(
+    getInitialConnectionType()
   )
-  const connectionTypeRef = useRef(connectionType)
-
-  // Whether this context has initialised
-  const initialisedRef = useRef<boolean>(false)
-
-  // Setter for whether light client is active. Updates state and local storage
-  const setConnectionType = (value: ConnectionType) => {
-    connectionTypeRef.current = value
-    setConnectionTypeState(value)
-
-    if (value === 'sc') {
-      localStorage.removeItem('useWebsocket')
-      return
-    }
-    localStorage.setItem('useWebsocket', 'true')
-  }
 
   // The current RPC endpoint for the network
   const [rpcEndpoints, setRpcEndpoints] = useState<Record<string, string>>(
     getInitialRpcEndpoints(network)
   )
+
+  // Whether this context has initialised
+  const initialisedRef = useRef<boolean>(false)
 
   // Store network constants
   const [consts, setConsts] = useState<APIConstants>(defaultConsts)
@@ -271,7 +262,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // UI is only interested in events for the current network
     if (
       eventNetwork !== network ||
-      connectionTypeRef.current !== eventConnectionType ||
+      getConnectionType() !== eventConnectionType ||
       getRpcEndpoints()[network] !== eventRpcEndpoint
     ) {
       return
@@ -305,7 +296,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // UI is only interested in events for the People system chain
     if (
       eventNetwork !== `people-${network}` ||
-      connectionTypeRef.current !== eventConnectionType
+      getConnectionType() !== eventConnectionType
       /* || rpcEndpointRef.current !== eventRpcEndpoint // NOTE: Only `Parity` being used currently. */
     ) {
       return
@@ -501,8 +492,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Subscribe to global bus
   useEffect(() => {
-    const sub = rpcEndpoints$.subscribe((endpoints) => {
-      setRpcEndpoints(endpoints)
+    const sub = networkConfig$.subscribe((result) => {
+      setRpcEndpoints(result.rpcEndpoints)
+      setConnectionType(result.connectionType)
     })
     return () => {
       sub.unsubscribe()
@@ -516,7 +508,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         apiStatus,
         peopleApiStatus,
         connectionType,
-        setConnectionType,
         getRpcEndpoint,
         isReady,
         consts,

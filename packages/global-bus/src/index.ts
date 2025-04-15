@@ -2,5 +2,4 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './externalAccounts'
-export * from './network'
-export * from './rpcEndpoint'
+export * from './networkConfig'
