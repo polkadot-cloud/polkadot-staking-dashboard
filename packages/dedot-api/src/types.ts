@@ -24,11 +24,17 @@ export type ChainType =
   | WestendApi
   | WestendPeopleApi
 
+// Relay chain types
+export type RelayChainType = PolkadotApi | KusamaApi | WestendApi
+
+// People chain types
+export type PeopleChainType =
+  | PolkadotPeopleApi
+  | KusamaPeopleApi
+  | WestendPeopleApi
+
 // Chains that are used for staking and nomination pools
 export type StakingChainType = PolkadotApi | KusamaApi | WestendApi
-
-// Base / Relay chain types
-export type BaseChainType = PolkadotApi | KusamaApi | WestendApi
 
 // All available service types
 export interface ServiceType {
@@ -46,26 +52,28 @@ export type ServiceApis = {
 
 // A default service requires Relay chain and People chain
 export type DefaultServiceCallback<
-  RelayApi extends ChainType,
-  PeopleApi extends ChainType,
+  RelayApi extends RelayChainType,
+  PeopleApi extends PeopleChainType,
 > = (
   apiRelay: DedotClient<RelayApi>,
   apiPeople: DedotClient<PeopleApi>
 ) => Promise<void>
 
-// A base service class that all services should implement
+// Default service class that all services should implement
+
+export abstract class ServiceClass {
+  abstract start(): Promise<void>
+  abstract unsubscribe(): Promise<void>
+}
 export abstract class DefaultServiceClass<
-  RelayApi extends BaseChainType,
-  PeopleApi extends ChainType,
-  BaseApi extends BaseChainType,
+  RelayApi extends RelayChainType,
+  PeopleApi extends PeopleChainType,
+  BaseApi extends RelayChainType,
   StakingApi extends StakingChainType,
-> {
+> extends ServiceClass {
   abstract relayChainSpec: ChainSpecs<RelayApi>
   abstract peopleChainSpec: ChainSpecs<PeopleApi>
 
   abstract coreConsts: CoreConsts<BaseApi>
   abstract stakingConsts: StakingConsts<StakingApi>
-
-  abstract start(): Promise<void>
-  abstract unsubscribe(): Promise<void>
 }
