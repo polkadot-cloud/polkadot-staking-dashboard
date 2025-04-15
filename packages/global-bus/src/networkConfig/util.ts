@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
-import { ConnectionTypeKey, NetworkKey, rpcEndpointKey } from 'consts'
+import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList } from 'consts/networks'
 import { getDefaultRpcEndpoints } from 'consts/util'
 import type { NetworkConfig, NetworkId } from 'types'
@@ -60,8 +60,8 @@ export const getInitialRpcEndpoints = (
   return fallback
 }
 
-export const getInitialConnectionType = () => {
-  const result = localStorage.getItem(ConnectionTypeKey) ? 'ws' : 'sc'
+export const getInitialProviderType = () => {
+  const result = localStorage.getItem(ProviderTypeKey) ? 'ws' : 'sc'
   if (['ws', 'sc'].includes(result)) {
     return result
   }
@@ -71,10 +71,10 @@ export const getInitialConnectionType = () => {
 export const getInitialNetworkConfig = (): NetworkConfig => {
   const network = getInitialNetwork()
   const rpcEndpoints = getInitialRpcEndpoints(network)
-  const connectionType = getInitialConnectionType()
+  const providerType = getInitialProviderType()
   return {
     network,
     rpcEndpoints,
-    connectionType,
+    providerType,
   }
 }

@@ -4,7 +4,7 @@
 import type { ApiStatus, PapiChainSpec } from 'api/types'
 import type BigNumber from 'bignumber.js'
 import type { ReactNode, RefObject } from 'react'
-import type { ConnectionType, NetworkId } from 'types'
+import type { NetworkId, ProviderType } from 'types'
 
 export interface APIProviderProps {
   children: ReactNode
@@ -69,7 +69,7 @@ export interface APIContextInterface {
   isReady: boolean
   apiStatus: ApiStatus
   peopleApiStatus: ApiStatus
-  connectionType: ConnectionType
+  providerType: ProviderType
   getRpcEndpoint: (chain: string) => string
   consts: APIConstants
   networkMetrics: APINetworkMetrics

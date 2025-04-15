@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ConnectionTypeKey, NetworkKey, rpcEndpointKey } from 'consts'
-import type { ConnectionType, NetworkId } from 'types'
+import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
+import type { NetworkId, ProviderType } from 'types'
 
 export const setLocalNetwork = (network: NetworkId) => {
   localStorage.setItem(NetworkKey, network)
@@ -15,6 +15,6 @@ export const setLocalRpcEndpoints = (
   localStorage.setItem(rpcEndpointKey(network), JSON.stringify(rpcEndpoints))
 }
 
-export const setLocalConnectionType = (connectionType: ConnectionType) => {
-  localStorage.setItem(ConnectionTypeKey, connectionType)
+export const setLocalProviderType = (providerType: ProviderType) => {
+  localStorage.setItem(ProviderTypeKey, providerType)
 }

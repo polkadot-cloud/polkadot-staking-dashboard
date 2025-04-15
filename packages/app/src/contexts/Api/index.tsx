@@ -17,12 +17,9 @@ import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
-import { getConnectionType, getRpcEndpoints, networkConfig$ } from 'global-bus'
-import {
-  getInitialConnectionType,
-  getInitialRpcEndpoints,
-} from 'global-bus/util'
-import type { ConnectionType } from 'types'
+import { getProviderType, getRpcEndpoints, networkConfig$ } from 'global-bus'
+import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
+import type { ProviderType } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,
@@ -54,8 +51,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     useState<ApiStatus>('disconnected')
 
   // Store whether light client is active
-  const [connectionType, setConnectionType] = useState<ConnectionType>(
-    getInitialConnectionType()
+  const [providerType, setProviderType] = useState<ProviderType>(
+    getInitialProviderType()
   )
 
   // The current RPC endpoint for the network
@@ -255,14 +252,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const {
       status,
       network: eventNetwork,
-      connectionType: eventConnectionType,
+      providerType: eventProviderType,
       rpcEndpoint: eventRpcEndpoint,
     } = detail
 
     // UI is only interested in events for the current network
     if (
       eventNetwork !== network ||
-      getConnectionType() !== eventConnectionType ||
+      getProviderType() !== eventProviderType ||
       getRpcEndpoints()[network] !== eventRpcEndpoint
     ) {
       return
@@ -280,7 +277,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       case 'error':
         // Reinitialise api on error. We can confidently do this with well-known RPC providers,
         // but not with custom endpoints
-        reInitialiseApi(eventConnectionType)
+        reInitialiseApi(eventProviderType)
         break
     }
   }
@@ -290,13 +287,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const {
       status,
       network: eventNetwork,
-      connectionType: eventConnectionType,
+      providerType: eventProviderType,
     } = detail
 
     // UI is only interested in events for the People system chain
     if (
       eventNetwork !== `people-${network}` ||
-      getConnectionType() !== eventConnectionType
+      getProviderType() !== eventProviderType
       /* || rpcEndpointRef.current !== eventRpcEndpoint // NOTE: Only `Parity` being used currently. */
     ) {
       return
@@ -418,7 +415,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     return endpoints[chain]
   }
 
-  const reInitialiseApi = async (type: ConnectionType) => {
+  const reInitialiseApi = async (type: ProviderType) => {
     setApiStatus('disconnected')
     // Dispatch all default syncIds as syncing
     Syncs.dispatchAllDefault()
@@ -432,21 +429,21 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Uses initialisation ref to check whether this is the first context render, and initializes an Api instance for the current network if that is the case
     if (!initialisedRef.current) {
       initialisedRef.current = true
-      reInitialiseApi(connectionType)
+      reInitialiseApi(providerType)
     }
   })
 
   // If RPC endpoint changes, and not on light client, re-initialise API
   useEffectIgnoreInitial(async () => {
-    if (connectionType !== 'sc') {
+    if (providerType !== 'sc') {
       reInitialiseApi('ws')
     }
   }, [rpcEndpoints[network]])
 
   // If connection type changes, re-initialise API
   useEffectIgnoreInitial(async () => {
-    reInitialiseApi(connectionType)
-  }, [connectionType])
+    reInitialiseApi(providerType)
+  }, [providerType])
 
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
@@ -461,7 +458,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef)
     setStateWithRef(defaultStakingMetrics, setStakingMetrics, stakingMetricsRef)
 
-    reInitialiseApi(connectionType)
+    reInitialiseApi(providerType)
   }, [network])
 
   // Call `unsubscribe` on active instance on unmount
@@ -494,7 +491,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   useEffect(() => {
     const sub = networkConfig$.subscribe((result) => {
       setRpcEndpoints(result.rpcEndpoints)
-      setConnectionType(result.connectionType)
+      setProviderType(result.providerType)
     })
     return () => {
       sub.unsubscribe()
@@ -507,7 +504,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         chainSpecs,
         apiStatus,
         peopleApiStatus,
-        connectionType,
+        providerType,
         getRpcEndpoint,
         isReady,
         consts,

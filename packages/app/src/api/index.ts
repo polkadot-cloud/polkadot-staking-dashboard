@@ -9,7 +9,7 @@ import { getSmProvider } from 'polkadot-api/sm-provider'
 import { startFromWorker } from 'polkadot-api/smoldot/from-worker'
 import SmWorker from 'polkadot-api/smoldot/worker?worker'
 import { getWsProvider } from 'polkadot-api/ws-provider/web'
-import type { ChainId, ConnectionType } from 'types'
+import type { ChainId, ProviderType } from 'types'
 import type {
   ApiChainType,
   APIEventDetail,
@@ -36,7 +36,7 @@ export class Api {
   #rpcEndpoint: string
 
   // The current connection type
-  #connectionType: ConnectionType
+  #providerType: ProviderType
 
   get apiClient() {
     return this.#apiClient
@@ -50,8 +50,8 @@ export class Api {
     return this.#chainSpec
   }
 
-  get connectionType() {
-    return this.#connectionType
+  get providerType() {
+    return this.#providerType
   }
 
   constructor(network: ChainId, chainType: ApiChainType) {
@@ -60,10 +60,10 @@ export class Api {
   }
 
   // Class initialization. Sets the `provider` and `api` class members
-  async initialize(type: ConnectionType, rpcEndpoint: string) {
+  async initialize(type: ProviderType, rpcEndpoint: string) {
     // Set connection metadata.
     this.#rpcEndpoint = rpcEndpoint
-    this.#connectionType = type
+    this.#providerType = type
 
     // Connect to api.
     await this.connect()
@@ -73,7 +73,7 @@ export class Api {
   async connect() {
     try {
       // Initiate provider based on connection type
-      if (this.#connectionType === 'ws') {
+      if (this.#providerType === 'ws') {
         this.initWsProvider()
       } else {
         await this.initScProvider()
@@ -208,7 +208,7 @@ export class Api {
       network: this.network,
       chainType: this.#chainType,
       status,
-      connectionType: this.#connectionType,
+      providerType: this.#providerType,
       rpcEndpoint: this.#rpcEndpoint,
     }
     if (options?.err) {

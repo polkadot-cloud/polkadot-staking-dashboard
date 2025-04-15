@@ -3,7 +3,7 @@
 
 import { getNetworkData, getSystemChainData } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
-import type { ConnectionType, NetworkId, SystemChainId } from 'types'
+import type { NetworkId, ProviderType, SystemChainId } from 'types'
 import { Services } from './services'
 import type { ServiceApis, ServiceType } from './types'
 
@@ -12,14 +12,14 @@ export const getDefaultService = async <T extends NetworkId>(
   network: T,
   {
     rpcEndpoints,
-    connectionType,
-  }: { rpcEndpoints: Record<string, string>; connectionType: ConnectionType }
+    providerType,
+  }: { rpcEndpoints: Record<string, string>; providerType: ProviderType }
 ): Promise<{
   Service: ServiceType[T]
   apis: [DedotClient<ServiceApis[T][0]>, DedotClient<ServiceApis[T][1]>]
 }> => {
   // TODO: Add light client provider support
-  console.debug(connectionType)
+  console.debug(providerType)
   const peopleChainId: SystemChainId = `people-${network}`
 
   const relayEndpoint =

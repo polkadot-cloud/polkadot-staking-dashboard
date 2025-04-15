@@ -19,7 +19,7 @@ export const initDedotService = async () => {
       // Unsubscribe from previous service if on new network config
       if (
         prev.network !== cur.network ||
-        prev.connectionType !== cur.connectionType
+        prev.providerType !== cur.providerType
       ) {
         await service.unsubscribe()
       }

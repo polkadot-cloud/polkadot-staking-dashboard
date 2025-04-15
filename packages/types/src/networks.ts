@@ -12,14 +12,14 @@ export type SystemChainId =
   | 'people-kusama'
   | 'people-westend'
 
-export type ConnectionType = 'ws' | 'sc'
+export type ProviderType = 'ws' | 'sc'
 
 export type Networks = Record<string, Network>
 
 export interface NetworkConfig {
   network: NetworkId
   rpcEndpoints: Record<string, string>
-  connectionType: ConnectionType
+  providerType: ProviderType
 }
 
 export interface Network {

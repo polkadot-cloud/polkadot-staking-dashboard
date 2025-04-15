@@ -5,8 +5,8 @@ import { createSafeContext } from '@w3ux/hooks'
 import { varToUrlHash } from '@w3ux/utils'
 import { Apis } from 'controllers/Apis'
 import {
-  getConnectionType,
   getNetwork,
+  getProviderType,
   networkConfig$,
   setNetworkConfig,
 } from 'global-bus'
@@ -30,7 +30,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
       await Apis.destroy(network),
       await Apis.destroy(`people-${network}`),
     ])
-    setNetworkConfig(name, getInitialRpcEndpoints(name), getConnectionType())
+    setNetworkConfig(name, getInitialRpcEndpoints(name), getProviderType())
     varToUrlHash('n', name, false)
   }
 

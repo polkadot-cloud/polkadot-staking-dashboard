@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ChainId, ConnectionType, MaybeAddress } from 'types'
+import type { ChainId, MaybeAddress, ProviderType } from 'types'
 
 export interface APIConfig {
-  type: ConnectionType
+  type: ProviderType
   rpcEndpoint: string
 }
 
@@ -12,7 +12,7 @@ export interface APIEventDetail {
   status: EventApiStatus
   network: ChainId
   chainType: ApiChainType
-  connectionType: ConnectionType
+  providerType: ProviderType
   rpcEndpoint: string
   err?: string
 }

@@ -58,7 +58,7 @@
     "connect": "Conectar",
     "connectLedgerToContinue": "Conecta tu dispositivo Ledger para continuar.",
     "connected": "Conectado",
-    "connectionType": "Tipo de conexión",
+    "providerType": "Tipo de conexión",
     "continue": "Continuar",
     "controllerImported": "Debes tener tu cuenta controladora importada para firmar esta transacción.",
     "currencies": {

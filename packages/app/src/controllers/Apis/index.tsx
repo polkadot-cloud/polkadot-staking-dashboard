@@ -3,7 +3,7 @@
 
 import { Api } from 'api'
 import { Syncs } from 'controllers/Syncs'
-import type { ChainId, ConnectionType, NetworkId } from 'types'
+import type { ChainId, NetworkId, ProviderType } from 'types'
 
 export class Apis {
   // The currently instantiated API instances, keyed by network
@@ -31,7 +31,7 @@ export class Apis {
   // Instantiate a new `Api` instance with the supplied chain id and endpoint
   static async instantiate(
     network: NetworkId,
-    type: ConnectionType,
+    type: ProviderType,
     rpcEndpoint: string
   ) {
     // NOTE: This method should only be called to connect to a new network. We therefore assume we
