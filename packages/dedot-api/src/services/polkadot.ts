@@ -9,25 +9,19 @@ import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
 import type { DefaultServiceClass } from '../types'
 
-// Define the types for the chains being used in this service
-type RelayApi = PolkadotApi
-type PeopleApi = PolkadotPeopleApi
-
 // Define the types based on chain features
-type BaseApi = PolkadotApi
-type StakingApi = PolkadotApi
 
 export class PolkadotService
-  implements DefaultServiceClass<RelayApi, PeopleApi, BaseApi, StakingApi>
+  implements DefaultServiceClass<PolkadotApi, PolkadotPeopleApi, PolkadotApi>
 {
-  relayChainSpec: ChainSpecs<RelayApi>
-  peopleChainSpec: ChainSpecs<PeopleApi>
-  coreConsts: CoreConsts<BaseApi>
-  stakingConsts: StakingConsts<StakingApi>
+  relayChainSpec: ChainSpecs<PolkadotApi>
+  peopleChainSpec: ChainSpecs<PolkadotPeopleApi>
+  coreConsts: CoreConsts<PolkadotApi>
+  stakingConsts: StakingConsts<PolkadotApi>
 
   constructor(
-    public apiRelay: DedotClient<RelayApi>,
-    public apiPeople: DedotClient<PeopleApi>
+    public apiRelay: DedotClient<PolkadotApi>,
+    public apiPeople: DedotClient<PolkadotPeopleApi>
   ) {
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople

@@ -9,25 +9,17 @@ import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
 import type { DefaultServiceClass } from '../types'
 
-// Define the types for the chains being used in this service
-type RelayApi = KusamaApi
-type PeopleApi = KusamaPeopleApi
-
-// Define the types based on chain features
-type BaseApi = KusamaApi
-type StakingApi = KusamaApi
-
 export class KusamaService
-  implements DefaultServiceClass<RelayApi, PeopleApi, BaseApi, StakingApi>
+  implements DefaultServiceClass<KusamaApi, KusamaPeopleApi, KusamaApi>
 {
-  relayChainSpec: ChainSpecs<RelayApi>
-  peopleChainSpec: ChainSpecs<PeopleApi>
-  coreConsts: CoreConsts<BaseApi>
-  stakingConsts: StakingConsts<StakingApi>
+  relayChainSpec: ChainSpecs<KusamaApi>
+  peopleChainSpec: ChainSpecs<KusamaPeopleApi>
+  coreConsts: CoreConsts<KusamaApi>
+  stakingConsts: StakingConsts<KusamaApi>
 
   constructor(
-    public apiRelay: DedotClient<RelayApi>,
-    public apiPeople: DedotClient<PeopleApi>
+    public apiRelay: DedotClient<KusamaApi>,
+    public apiPeople: DedotClient<KusamaPeopleApi>
   ) {
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople

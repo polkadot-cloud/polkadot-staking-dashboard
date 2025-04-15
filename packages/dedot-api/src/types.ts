@@ -50,7 +50,7 @@ export type ServiceApis = {
   westend: [WestendApi, WestendPeopleApi]
 }
 
-// A default service requires Relay chain and People chain
+// Default service - requires a Relay chain and People chain
 export type DefaultServiceCallback<
   RelayApi extends RelayChainType,
   PeopleApi extends PeopleChainType,
@@ -60,7 +60,6 @@ export type DefaultServiceCallback<
 ) => Promise<void>
 
 // Default service class that all services should implement
-
 export abstract class ServiceClass {
   abstract start(): Promise<void>
   abstract unsubscribe(): Promise<void>
@@ -68,12 +67,11 @@ export abstract class ServiceClass {
 export abstract class DefaultServiceClass<
   RelayApi extends RelayChainType,
   PeopleApi extends PeopleChainType,
-  BaseApi extends RelayChainType,
   StakingApi extends StakingChainType,
 > extends ServiceClass {
   abstract relayChainSpec: ChainSpecs<RelayApi>
   abstract peopleChainSpec: ChainSpecs<PeopleApi>
 
-  abstract coreConsts: CoreConsts<BaseApi>
+  abstract coreConsts: CoreConsts<RelayApi>
   abstract stakingConsts: StakingConsts<StakingApi>
 }

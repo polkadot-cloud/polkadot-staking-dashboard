@@ -9,25 +9,17 @@ import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
 import type { DefaultServiceClass } from '../types'
 
-// Define the types for the chains being used in this service
-type RelayApi = WestendApi
-type PeopleApi = WestendPeopleApi
-
-// Define the types based on chain features
-type BaseApi = WestendApi
-type StakingApi = WestendApi
-
 export class WestendService
-  implements DefaultServiceClass<RelayApi, PeopleApi, BaseApi, StakingApi>
+  implements DefaultServiceClass<WestendApi, WestendPeopleApi, WestendApi>
 {
-  relayChainSpec: ChainSpecs<RelayApi>
-  peopleChainSpec: ChainSpecs<PeopleApi>
-  coreConsts: CoreConsts<BaseApi>
-  stakingConsts: StakingConsts<StakingApi>
+  relayChainSpec: ChainSpecs<WestendApi>
+  peopleChainSpec: ChainSpecs<WestendPeopleApi>
+  coreConsts: CoreConsts<WestendApi>
+  stakingConsts: StakingConsts<WestendApi>
 
   constructor(
-    public apiRelay: DedotClient<RelayApi>,
-    public apiPeople: DedotClient<PeopleApi>
+    public apiRelay: DedotClient<WestendApi>,
+    public apiPeople: DedotClient<WestendPeopleApi>
   ) {
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople
