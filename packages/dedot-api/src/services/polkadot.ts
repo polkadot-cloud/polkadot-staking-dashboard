@@ -9,8 +9,6 @@ import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
 import type { DefaultServiceClass } from '../types/service'
 
-// Define the types based on chain features
-
 export class PolkadotService
   implements DefaultServiceClass<PolkadotApi, PolkadotPeopleApi, PolkadotApi>
 {
