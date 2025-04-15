@@ -4,6 +4,7 @@
 import { getNetworkData, getSystemChainData } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
 import type { NetworkId, ProviderType, SystemChainId } from 'types'
+import { newRelayProvider, newSystemChainProvider } from './providers'
 import { Services } from './services'
 import type { ServiceApis, ServiceType } from './types'
 
@@ -18,18 +19,23 @@ export const getDefaultService = async <T extends NetworkId>(
   Service: ServiceType[T]
   apis: [DedotClient<ServiceApis[T][0]>, DedotClient<ServiceApis[T][1]>]
 }> => {
-  // TODO: Add light client provider support
-  console.debug(providerType)
+  const relayData = getNetworkData(network)
+  const peopleData = getSystemChainData(`people-${network}`)
   const peopleChainId: SystemChainId = `people-${network}`
 
-  const relayEndpoint =
-    getNetworkData(network).endpoints.rpc[rpcEndpoints[network]]
-  const peopleEndpoint =
-    getSystemChainData(peopleChainId).endpoints.rpc[rpcEndpoints[peopleChainId]]
+  const relayProvider =
+    providerType === 'ws'
+      ? new WsProvider(relayData.endpoints.rpc[rpcEndpoints[network]])
+      : await newRelayProvider(relayData)
+
+  const peopleProvider =
+    providerType === 'ws'
+      ? new WsProvider(peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]])
+      : await newSystemChainProvider(relayData, peopleData)
 
   const [apiRelay, apiPeople] = [
-    await DedotClient.new<ServiceApis[T][0]>(new WsProvider(relayEndpoint)),
-    await DedotClient.new<ServiceApis[T][1]>(new WsProvider(peopleEndpoint)),
+    await DedotClient.new<ServiceApis[T][0]>(relayProvider),
+    await DedotClient.new<ServiceApis[T][1]>(peopleProvider),
   ]
   return {
     Service: Services[network],

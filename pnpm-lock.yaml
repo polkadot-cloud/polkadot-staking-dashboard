@@ -355,6 +355,9 @@ importers:
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
+      smoldot:
+        specifier: ^2.0.34
+        version: 2.0.34(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     devDependencies:
       '@w3ux/types':
         specifier: ^2.1.12
