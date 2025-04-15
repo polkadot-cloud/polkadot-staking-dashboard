@@ -66,7 +66,7 @@ export const WalletConnectProvider = ({
         name: 'Polkadot Cloud Staking',
         description:
           'A fully featured dashboard for Polkadot staking and nomination pools',
-        url: 'https://staking.polkadot.cloud/',
+        url: 'https://staking.polkadot.cloud',
         icons: ['https://staking.polkadot.cloud/img/wc-icon.png'],
       },
       relayUrl: 'wss://relay.walletconnect.com',
