@@ -58,7 +58,6 @@
     "connect": "Connect",
     "connectLedgerToContinue": "Connect your Ledger device to continue.",
     "connected": "Connected",
-    "providerType": "Connection Type",
     "continue": "Continue",
     "controllerImported": "You must have your controller account imported to sign this transaction.",
     "currencies": {
@@ -223,6 +222,7 @@
     "poolName": "Pool Name",
     "poolNominations": "Pool Nominations",
     "provider": "Provider",
+    "providerType": "Connection Type",
     "proxies": "Proxies",
     "proxy": "Proxy",
     "proxyAccounts": "Proxy Accounts",
