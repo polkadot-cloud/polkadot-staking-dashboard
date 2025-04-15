@@ -34,8 +34,6 @@ export class PolkadotService
     this.stakingConsts = new StakingConsts(this.apiRelay)
 
     this.stakingConsts.get()
-
-    // TODO: send consts and chain spec to UI.
   }
 
   unsubscribe = async () => {
