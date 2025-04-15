@@ -33,6 +33,7 @@ export class PolkadotService
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
 
+    this.coreConsts.get()
     this.stakingConsts.get()
   }
 
