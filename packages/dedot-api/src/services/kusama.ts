@@ -7,7 +7,7 @@ import type { DedotClient } from 'dedot'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
-import type { DefaultServiceClass } from '../types'
+import type { DefaultServiceClass } from '../types/service'
 
 export class KusamaService
   implements DefaultServiceClass<KusamaApi, KusamaPeopleApi, KusamaApi>

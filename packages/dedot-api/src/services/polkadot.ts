@@ -7,7 +7,7 @@ import type { DedotClient } from 'dedot'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
-import type { DefaultServiceClass } from '../types'
+import type { DefaultServiceClass } from '../types/service'
 
 // Define the types based on chain features
 

@@ -5,7 +5,7 @@ import { networkConfig$ } from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
 import { getDefaultService } from './start'
-import type { ServiceClass } from './types'
+import type { ServiceClass } from './types/service'
 
 // The active service
 let service: ServiceClass
