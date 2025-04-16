@@ -48,11 +48,13 @@ export type Service = {
   westend: [WestendApi, WestendPeopleApi]
 }
 
-// Default service class that all services should implement
+// Generic service class that all services must implement
 export abstract class ServiceClass {
   abstract start(): Promise<void>
   abstract unsubscribe(): Promise<void>
 }
+
+// Required interface default services must implement
 export abstract class DefaultServiceClass<
   RelayApi extends RelayChain,
   PeopleApi extends PeopleChain,
