@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId, ProviderType } from 'types'
+import type { NetworkId, ProviderType, RpcEndpoints } from 'types'
 import {
   setLocalNetwork,
   setLocalProviderType,
@@ -13,7 +13,7 @@ export const networkConfig$ = _networkConfig.asObservable()
 
 export const setNetworkConfig = (
   network: NetworkId,
-  rpcEndpoints: Record<string, string>,
+  rpcEndpoints: RpcEndpoints,
   providerType: ProviderType
 ) => {
   setLocalNetwork(network)
@@ -40,7 +40,7 @@ export const getRpcEndpoints = () => _networkConfig.getValue().rpcEndpoints
 
 export const setRpcEndpoints = (
   network: NetworkId,
-  rpcEndpoints: Record<string, string>
+  rpcEndpoints: RpcEndpoints
 ) => {
   setLocalRpcEndpoints(network, rpcEndpoints)
   _networkConfig.next({

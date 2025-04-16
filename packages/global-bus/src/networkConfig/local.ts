@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
-import type { NetworkId, ProviderType } from 'types'
+import type { NetworkId, ProviderType, RpcEndpoints } from 'types'
 
 export const setLocalNetwork = (network: NetworkId) => {
   localStorage.setItem(NetworkKey, network)
@@ -10,7 +10,7 @@ export const setLocalNetwork = (network: NetworkId) => {
 
 export const setLocalRpcEndpoints = (
   network: NetworkId,
-  rpcEndpoints: Record<string, string>
+  rpcEndpoints: RpcEndpoints
 ) => {
   localStorage.setItem(rpcEndpointKey(network), JSON.stringify(rpcEndpoints))
 }

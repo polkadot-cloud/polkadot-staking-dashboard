@@ -3,22 +3,17 @@
 
 import { getNetworkData, getSystemChainData } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
-import type { NetworkId, ProviderType, SystemChainId } from 'types'
+import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { newRelayProvider, newSystemChainProvider } from './providers'
 import { Services } from './services'
-import type { ServiceApis, ServiceType } from './types/service'
+import type { Service } from './types'
+import type { DefaultService } from './types/util'
 
 // Determines service class and apis for a network
 export const getDefaultService = async <T extends NetworkId>(
   network: T,
-  {
-    rpcEndpoints,
-    providerType,
-  }: { rpcEndpoints: Record<string, string>; providerType: ProviderType }
-): Promise<{
-  Service: ServiceType[T]
-  apis: [DedotClient<ServiceApis[T][0]>, DedotClient<ServiceApis[T][1]>]
-}> => {
+  { rpcEndpoints, providerType }: Omit<NetworkConfig, 'network'>
+): Promise<DefaultService<T>> => {
   const relayData = getNetworkData(network)
   const peopleData = getSystemChainData(`people-${network}`)
   const peopleChainId: SystemChainId = `people-${network}`
@@ -34,8 +29,8 @@ export const getDefaultService = async <T extends NetworkId>(
       : await newSystemChainProvider(relayData, peopleData)
 
   const [apiRelay, apiPeople] = [
-    await DedotClient.new<ServiceApis[T][0]>(relayProvider),
-    await DedotClient.new<ServiceApis[T][1]>(peopleProvider),
+    await DedotClient.new<Service[T][0]>(relayProvider),
+    await DedotClient.new<Service[T][1]>(peopleProvider),
   ]
   return {
     Service: Services[network],

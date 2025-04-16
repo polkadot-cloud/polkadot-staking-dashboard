@@ -4,9 +4,9 @@
 import type { DedotClient } from 'dedot'
 import type { ChainProperties } from 'dedot/types/json-rpc'
 import type { HexString } from 'dedot/utils'
-import type { ChainType } from '../types'
+import type { Chain } from '../types'
 
-export class ChainSpecs<T extends ChainType> {
+export class ChainSpecs<T extends Chain> {
   genesisHash: HexString
   properties: ChainProperties
   existentialDeposit: bigint

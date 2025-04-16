@@ -16,6 +16,8 @@ export type ProviderType = 'ws' | 'sc'
 
 export type Networks = Record<string, Network>
 
+export type RpcEndpoints = Record<string, string>
+
 export interface NetworkConfig {
   network: NetworkId
   rpcEndpoints: Record<string, string>

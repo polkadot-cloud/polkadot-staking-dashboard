@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
-import type { RelayChainType } from '../types'
+import type { RelayChain } from '../types'
 
-export class CoreConsts<T extends RelayChainType> {
+export class CoreConsts<T extends RelayChain> {
   expectedBlockTime: bigint
   epochDuration: bigint
 

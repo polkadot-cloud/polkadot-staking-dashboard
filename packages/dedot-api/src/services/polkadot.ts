@@ -7,7 +7,7 @@ import type { DedotClient } from 'dedot'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
-import type { DefaultServiceClass } from '../types/service'
+import type { DefaultServiceClass } from '../types'
 
 export class PolkadotService
   implements DefaultServiceClass<PolkadotApi, PolkadotPeopleApi, PolkadotApi>

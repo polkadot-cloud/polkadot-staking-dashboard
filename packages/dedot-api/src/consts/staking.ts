@@ -3,9 +3,9 @@
 
 import type { DedotClient } from 'dedot'
 import { toU8a } from 'dedot/utils'
-import type { StakingChainType } from '../types'
+import type { StakingChain } from '../types'
 
-export class StakingConsts<T extends StakingChainType> {
+export class StakingConsts<T extends StakingChain> {
   bondDuration: number
   sessionsPerEra: number
   maxExposurePageSize: number

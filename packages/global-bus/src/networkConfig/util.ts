@@ -5,7 +5,7 @@ import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList } from 'consts/networks'
 import { getDefaultRpcEndpoints } from 'consts/util'
-import type { NetworkConfig, NetworkId } from 'types'
+import type { NetworkConfig, NetworkId, RpcEndpoints } from 'types'
 
 export const getInitialNetwork = () => {
   // Attempt to get network from URL
@@ -35,9 +35,7 @@ export const getInitialNetwork = () => {
   return DefaultNetwork
 }
 
-export const getInitialRpcEndpoints = (
-  network: NetworkId
-): Record<string, string> => {
+export const getInitialRpcEndpoints = (network: NetworkId): RpcEndpoints => {
   // Validates local RPC endpoints by checking against the default values
   const validateRpcEndpoints = (a: object, b: object) =>
     JSON.stringify(Object.keys(a).sort()) ===
@@ -45,11 +43,11 @@ export const getInitialRpcEndpoints = (
     Object.values(a).every((v) => typeof v === 'string') &&
     Object.values(b).every((v) => typeof v === 'string')
 
-  const local = localStorageOrDefault<Record<string, string>>(
+  const local = localStorageOrDefault<RpcEndpoints>(
     rpcEndpointKey(network),
     {},
     true
-  ) as Record<string, string>
+  ) as RpcEndpoints
 
   const fallback = getDefaultRpcEndpoints(network)
   if (local) {
