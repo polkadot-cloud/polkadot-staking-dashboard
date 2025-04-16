@@ -30,10 +30,12 @@ const BalanceDisplay = styled.div`
   align-items: center;
   margin-bottom: 1rem;
   font-size: 1.1rem;
+  color: var(--text-color-primary);
 
   span.amount {
     font-weight: 600;
     margin-left: 0.5rem;
+    color: var(--text-color-primary);
   }
 `
 
@@ -63,6 +65,7 @@ const BulletList = styled.ul`
     padding-left: 1.5rem;
     margin-bottom: 0.75rem;
     line-height: 1.4;
+    color: var(--text-color-primary);
 
     &:before {
       content: '•';
@@ -85,11 +88,12 @@ const AlternativeBox = styled.div`
     margin-top: 0;
     margin-bottom: 0.75rem;
     font-size: 1.1rem;
+    color: var(--text-color-primary);
   }
 
   p {
     margin-bottom: 1rem;
-    opacity: 0.85;
+    color: var(--text-color-secondary);
   }
 `
 
@@ -121,7 +125,9 @@ export const StakingRecommendation = () => {
   return (
     <>
       <CardHeader>
-        <h4>{t('smartStakingRecommendation')}</h4>
+        <h4 style={{ color: 'var(--text-color-primary)' }}>
+          {t('smartStakingRecommendation')}
+        </h4>
       </CardHeader>
       <RecommendationWrapper>
         {!activeAccount ? (
@@ -134,7 +140,13 @@ export const StakingRecommendation = () => {
               padding: '2rem',
             }}
           >
-            <p style={{ fontSize: '1.1rem', textAlign: 'center' }}>
+            <p
+              style={{
+                fontSize: '1.1rem',
+                textAlign: 'center',
+                color: 'var(--text-color-primary)',
+              }}
+            >
               {t('connectWalletForRecommendation')}
             </p>
           </div>
@@ -142,7 +154,9 @@ export const StakingRecommendation = () => {
           <>
             <RecommendationHeader>
               <BalanceDisplay>
-                {t('yourBalance')}:{' '}
+                <span style={{ color: 'var(--text-color-primary)' }}>
+                  {t('balance')}:
+                </span>{' '}
                 <span className="amount">
                   {freeBalance.toFormat()} {unit}
                 </span>

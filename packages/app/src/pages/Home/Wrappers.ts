@@ -173,7 +173,7 @@ export const WelcomeWrapper = styled.div`
       background-color: var(--background-primary);
       padding: 1rem;
       border-radius: 0.75rem;
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
+      box-shadow: var(--card-shadow-secondary);
 
       .wallet-icon {
         font-size: 1.5rem;

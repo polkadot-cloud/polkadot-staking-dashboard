@@ -21,6 +21,7 @@ import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 import { CardHeader } from 'ui-core/base'
 import {
   AlertBox,
@@ -35,6 +36,12 @@ import {
   TipsList,
 } from './StakingHealth/Wrappers'
 import { Wrapper } from './Wrappers'
+
+const StatusMessage = styled.div`
+  color: var(--text-color-primary);
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+`
 
 export const StakingHealth = () => {
   const { t } = useTranslation('pages')
@@ -289,19 +296,19 @@ export const StakingHealth = () => {
       {/* Staking Status */}
       <div className="status-section">
         {isNominating && (
-          <div className="status-message">
+          <StatusMessage>
             {t('youAreCurrently')} {nominatorStatusMessage.toLowerCase()}
-          </div>
+          </StatusMessage>
         )}
         {isInPool && poolId && (
-          <div className="status-message">
+          <StatusMessage>
             {t('youAreCurrentlyStakingInAPoolWithId', {
               poolId,
               poolName: poolMetadata
                 ? poolMetadata || t('unnamed')
                 : t('unnamed'),
             })}
-          </div>
+          </StatusMessage>
         )}
       </div>
 

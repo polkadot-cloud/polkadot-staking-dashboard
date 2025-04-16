@@ -14,17 +14,17 @@ export const HealthStatus = styled.div`
   font-size: 1.1rem;
 
   &.very-healthy {
-    background-color: rgba(0, 180, 0, 0.15);
+    background-color: var(--status-success-color-transparent);
     color: var(--text-color-primary);
   }
 
   &.healthy {
-    background-color: rgba(0, 150, 0, 0.1);
+    background-color: var(--status-success-color-transparent);
     color: var(--text-color-primary);
   }
 
   &.unhealthy {
-    background-color: rgba(220, 0, 0, 0.1);
+    background-color: var(--status-danger-color-transparent);
     color: var(--text-color-primary);
   }
 
@@ -38,15 +38,15 @@ export const HealthStatus = styled.div`
   }
 
   &.very-healthy:before {
-    background-color: #2ecc71;
+    background-color: var(--status-success-color);
   }
 
   &.healthy:before {
-    background-color: #27ae60;
+    background-color: var(--status-success-color);
   }
 
   &.unhealthy:before {
-    background-color: #e74c3c;
+    background-color: var(--status-danger-color);
   }
 `
 
@@ -100,10 +100,19 @@ export const AnalyticsLabel = styled.div`
 export const AnalyticsValue = styled.div`
   font-weight: 600;
   font-size: 1.1rem;
+  color: var(--text-color-primary);
+
+  &.positive {
+    color: var(--status-success-color);
+  }
+
+  &.negative {
+    color: var(--status-danger-color);
+  }
 `
 
 export const AlertBox = styled.div`
-  background: rgba(220, 0, 0, 0.1);
+  background: var(--status-danger-color-transparent);
   border-radius: 0.75rem;
   padding: 0.75rem;
   margin: 0.75rem 0;
