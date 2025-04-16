@@ -12,9 +12,21 @@ import { BarSegment } from 'library/BarChart/BarSegment'
 import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { styled } from 'styled-components'
 import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
+
+const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`
+
+const SendButton = styled(ButtonPrimary)`
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+`
 
 export const WalletBalance = () => {
   const { t } = useTranslation('pages')
@@ -126,19 +138,18 @@ export const WalletBalance = () => {
     <>
       <CardHeader>
         <h4>{t('walletBalance')}</h4>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <HeaderActions>
           <Balance.WithFiat
             Token={<Token />}
             value={totalBalance.toNumber()}
             currency={currency}
           />
-          <ButtonPrimary
+          <SendButton
             text={t('send')}
             disabled={!activeAccount || totalBalance.isZero()}
             onClick={() => {}}
-            style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
           />
-        </div>
+        </HeaderActions>
       </CardHeader>
       <BarChartWrapper>
         <Legend>

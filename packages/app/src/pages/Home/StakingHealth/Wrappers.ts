@@ -4,8 +4,8 @@
 import styled from 'styled-components'
 
 export const HealthStatus = styled.div`
-  margin: 1.5rem 0;
-  padding: 1.25rem;
+  margin: 1rem 0;
+  padding: 1rem;
   border-radius: 0.75rem;
   font-weight: 600;
   display: flex;
@@ -52,15 +52,15 @@ export const HealthStatus = styled.div`
 
 export const SectionTitle = styled.h3`
   color: var(--text-color-primary);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
   font-size: 1.3rem;
   font-weight: 600;
 `
 
 export const TipsList = styled.ul`
   padding-left: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 
   li {
     margin-bottom: 0.75rem;
@@ -73,8 +73,8 @@ export const TipsList = styled.ul`
 export const AnalyticsContainer = styled.div`
   background: var(--background-secondary);
   border-radius: 0.75rem;
-  padding: 1.25rem;
-  margin: 1rem 0;
+  padding: 1rem;
+  margin: 0.75rem 0;
 `
 
 export const AnalyticsRow = styled.div`
@@ -105,8 +105,8 @@ export const AnalyticsValue = styled.div`
 export const AlertBox = styled.div`
   background: rgba(220, 0, 0, 0.1);
   border-radius: 0.75rem;
-  padding: 1rem;
-  margin: 1rem 0;
+  padding: 0.75rem;
+  margin: 0.75rem 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;

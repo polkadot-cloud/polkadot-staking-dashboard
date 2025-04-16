@@ -16,7 +16,6 @@ const DIRECT_NOMINATION_MINIMUM = 250
 
 // Styled components for the recommendation UI
 const RecommendationWrapper = styled.div`
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -41,8 +40,8 @@ const BalanceDisplay = styled.div`
 const RecommendationBox = styled.div`
   background: var(--button-primary-background);
   border-radius: 1rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
 
   h3 {
     color: var(--text-color-primary);
@@ -79,7 +78,7 @@ const AlternativeBox = styled.div`
   background: var(--background-primary);
   border: 1px solid var(--border-primary-color);
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1rem;
   margin-top: 1rem;
 
   h4 {

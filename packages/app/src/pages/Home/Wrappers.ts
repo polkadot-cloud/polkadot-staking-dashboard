@@ -87,7 +87,6 @@ export const Wrapper = styled.div`
 
 export const WelcomeWrapper = styled.div`
   background: transparent;
-  padding: 1.5rem;
   width: 100%;
 
   .welcome-header {

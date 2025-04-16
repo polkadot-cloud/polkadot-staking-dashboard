@@ -46,12 +46,16 @@ export const Home = () => {
       {activeAccount && (
         <Page.Row>
           <Page.RowSection secondary>
-            <CardWrapper height={COMPONENT_HEIGHT}>
+            <CardWrapper
+              style={{ minHeight: COMPONENT_HEIGHT, overflow: 'auto' }}
+            >
               <WalletBalance />
             </CardWrapper>
           </Page.RowSection>
           <Page.RowSection hLast vLast>
-            <CardWrapper style={{ minHeight: COMPONENT_HEIGHT }}>
+            <CardWrapper
+              style={{ minHeight: COMPONENT_HEIGHT, overflow: 'auto' }}
+            >
               {isStaking ? <StakingHealth /> : <StakingRecommendation />}
             </CardWrapper>
           </Page.RowSection>
