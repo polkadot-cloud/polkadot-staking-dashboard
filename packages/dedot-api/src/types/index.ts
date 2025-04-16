@@ -16,6 +16,7 @@ import type { StakingConsts } from '../consts/staking'
 import type { KusamaService } from '../services/kusama'
 import type { PolkadotService } from '../services/polkadot'
 import type { WestendService } from '../services/westend'
+import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
 
 // All available chains
@@ -69,10 +70,19 @@ export abstract class DefaultServiceClass<
   ) {
     super()
   }
-
+  abstract apiEvents: {
+    relay: ApiStatus<RelayApi>
+    people: ApiStatus<PeopleApi>
+  }
   abstract relayChainSpec: ChainSpecs<RelayApi>
   abstract peopleChainSpec: ChainSpecs<PeopleApi>
 
   abstract coreConsts: CoreConsts<RelayApi>
   abstract stakingConsts: StakingConsts<StakingApi>
+}
+
+// Default service returns the service itself, along with relay & people chain apis
+export type DefaultService<T extends keyof ServiceType> = {
+  Service: ServiceType[T]
+  apis: [DedotClient<Service[T][0]>, DedotClient<Service[T][1]>]
 }

@@ -7,6 +7,7 @@ import type { DedotClient } from 'dedot'
 import type { NetworkConfig } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
+import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import type { DefaultServiceClass } from '../types'
 
@@ -15,6 +16,10 @@ export class KusamaService
 {
   relayChainSpec: ChainSpecs<KusamaApi>
   peopleChainSpec: ChainSpecs<KusamaPeopleApi>
+  apiEvents: {
+    relay: ApiStatus<KusamaApi>
+    people: ApiStatus<KusamaPeopleApi>
+  }
   coreConsts: CoreConsts<KusamaApi>
   stakingConsts: StakingConsts<KusamaApi>
 
@@ -25,6 +30,10 @@ export class KusamaService
   ) {
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople
+    this.apiEvents = {
+      relay: new ApiStatus(this.apiRelay, networkConfig),
+      people: new ApiStatus(this.apiPeople, networkConfig),
+    }
   }
 
   start = async () => {

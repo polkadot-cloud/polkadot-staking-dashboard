@@ -6,8 +6,7 @@ import { DedotClient, WsProvider } from 'dedot'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { newRelayProvider, newSystemChainProvider } from './providers'
 import { Services } from './services'
-import type { Service } from './types'
-import type { DefaultService } from './types/util'
+import type { DefaultService, Service } from './types'
 
 // Determines service class and apis for a network
 export const getDefaultService = async <T extends NetworkId>(
