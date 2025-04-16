@@ -125,9 +125,7 @@ export const StakingRecommendation = () => {
   return (
     <>
       <CardHeader>
-        <h4 style={{ color: 'var(--text-color-primary)' }}>
-          {t('smartStakingRecommendation')}
-        </h4>
+        <h4>{t('smartStakingRecommendation')}</h4>
       </CardHeader>
       <RecommendationWrapper>
         {!activeAccount ? (
