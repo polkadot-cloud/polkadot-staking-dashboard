@@ -191,8 +191,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       dedot:
-        specifier: ^0.8.1
-        version: 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^0.9.2
+        version: 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       framer-motion:
         specifier: ^12.6.2
         version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -648,8 +648,17 @@ packages:
     resolution: {integrity: sha512-2Vms0ikA4hCJZLzBJ2HSpnmSwDaJBWE1JALgQ12zSs4YqM9vxqL8CpQPsOxsuXZzryaGFEP0mLFednc88DynSA==}
     engines: {node: '>=18'}
 
+  '@dedot/api@0.9.2':
+    resolution: {integrity: sha512-5PU/K9diBFljyXujNKnZFdVYBChtEgJySbWypgZbM05VeJRtksTLdEL/1HPhKDM0PiFRQJz5can116HjcHyxkw==}
+    engines: {node: '>=18'}
+
   '@dedot/cli@0.8.1':
     resolution: {integrity: sha512-bS7K6JvBNJrhqcOSLBpAFfezFKsagehngraL1c2VAsPC+NC6P6tz/zSahi4g0IUNGf5UCh73v+88WAR1EAd0eg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@dedot/cli@0.9.2':
+    resolution: {integrity: sha512-nCu2fcWEJnYOXATBEwP0FXQmwGDm38X+R98hD9jHbDOLGC6hM+z/wXv9+PE038n/XcMhHsD+J6ohj0aqUMDHZQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -657,36 +666,72 @@ packages:
     resolution: {integrity: sha512-2PuSFYbFPpBmMlMeDqHzHeTJ1KP/1jV2pKoNg9THpYjX2vZUHCp/XQmn0ELWicDKDr+KGfR32tBj1V+DAfwbGg==}
     engines: {node: '>=18'}
 
+  '@dedot/codecs@0.9.2':
+    resolution: {integrity: sha512-n1SkPM4EKVKxTSuNYegbLXmKQh0yrkaWDXiidUDv9DWIs1C/6rxLOUEFMwmdy3ptkhzdasT6f4Ioswwrw0zGlA==}
+    engines: {node: '>=18'}
+
   '@dedot/codegen@0.8.1':
     resolution: {integrity: sha512-yhLIfi19zLionA5RD+TfGZ7Ssdm4ml0v/dgcM5BVdQTiXhDv7AWtTftsMZsaxkFMmjVOcPrS9NtGzPD/haKGng==}
+    engines: {node: '>=18'}
+
+  '@dedot/codegen@0.9.2':
+    resolution: {integrity: sha512-ggSNZEyEyRr+cpC1fDdGvIsFNVYcHkFQcGnxnAthayzruu0oP7VZdbYaOKMnI2/APQzsh/JQJ2nKjpQXvbVKfw==}
     engines: {node: '>=18'}
 
   '@dedot/contracts@0.8.1':
     resolution: {integrity: sha512-9mFZIKLvUrue2Tyunvsawuh7rVVoeUoO1R+WZzfUpRYFiHN2ix/KwZckpQTgksJrrW82El22A8tYTD72GTrB7g==}
     engines: {node: '>=18'}
 
+  '@dedot/contracts@0.9.2':
+    resolution: {integrity: sha512-3IN3e+wIfsx8eoLCCNlAwiIwgCorBrM/Tau9nh2qdze8AipuhUZq0ouXb7Au/gInjktfw2XdHaCt9TYtLJq4HA==}
+    engines: {node: '>=18'}
+
   '@dedot/providers@0.8.1':
     resolution: {integrity: sha512-NXN33se+O1ChiC9heTVHdWTrZg2Le1Tqo6rj6LwZ9pGcgKkGs2lov8Aq9zKLgOVMKSUA93UpXx3EY6iC+cUhcg==}
+    engines: {node: '>=18'}
+
+  '@dedot/providers@0.9.2':
+    resolution: {integrity: sha512-m+093wvJLScovoodGY8G0ntC2EuKdAmiyOACdSmSxGwWRSC0lm18yPtdPvsCF/NcgK0dpClQZuWXu2+sdOjGfQ==}
     engines: {node: '>=18'}
 
   '@dedot/runtime-specs@0.8.1':
     resolution: {integrity: sha512-jwGce7JCO+QXZpgunv49ie/ETm45iiR7UB4F/54A8Uo1wvkvqqWJ4V75poBhSt8Zj8Ny0CUr1E2A8NvuJp+Ffw==}
     engines: {node: '>=18'}
 
+  '@dedot/runtime-specs@0.9.2':
+    resolution: {integrity: sha512-oZi8/7IkHN2r1IiV4EmCZXoMlAoOMskW97b0S8LGXmhifKv3eX4ZxSSXPWLq6THb1bbGguI/ZfG+t6KKOEasOg==}
+    engines: {node: '>=18'}
+
   '@dedot/shape@0.8.1':
     resolution: {integrity: sha512-Jsi/hdqA457Z4ihwJ0KxCNA6iOCNxtpF7nix9pj+kJt+ZbDkwni1R+DRuSOX2OXm0hpudluuNNAF6QJqLBZCdQ==}
+    engines: {node: '>=18'}
+
+  '@dedot/shape@0.9.2':
+    resolution: {integrity: sha512-z9H4hzHFD5u8qXb5ur3PVuvemKPNsKteVvjBPUnDTX0CRY6OpjEk/xZuMIwJ/81LVGQrhzDcgalCu8QvUQHu7Q==}
     engines: {node: '>=18'}
 
   '@dedot/storage@0.8.1':
     resolution: {integrity: sha512-k9jVFME2nE1laaUfK5jArBa8rEolhPeo3hdP0Ow1KQLCfeqSONvqmTWR8VjHtFGeqk+mEYRMpY7EoESzLR2+ww==}
     engines: {node: '>=18'}
 
+  '@dedot/storage@0.9.2':
+    resolution: {integrity: sha512-l7GmOK7Za+AyaB5Zzz+Cdog2YyEsjSlICtRMNE16ROtSGTCKELYTaIZ5PmkgB1/00EYJpLpFJzcgqVcoFOpMPQ==}
+    engines: {node: '>=18'}
+
   '@dedot/types@0.8.1':
     resolution: {integrity: sha512-f2xIInBeXhPxiC7YC3GkE3IObdKknXdNw2Ys3Md48PCjjlfpTF9g0vCbRuNJpwfoI5aJlYclkzGsWYaOOOHV/w==}
     engines: {node: '>=18'}
 
+  '@dedot/types@0.9.2':
+    resolution: {integrity: sha512-YgYnY9n67NLDHNwl/uBYXJwu4ms0GTas9RuWWIrKecD+4VKsT9rd0F/UgysGPIQx7nTCW0dhD/NDngGrg7iriA==}
+    engines: {node: '>=18'}
+
   '@dedot/utils@0.8.1':
     resolution: {integrity: sha512-DuTL4UpjjrUUiw0sruBfHRJG/pgJMBGIwE4hGSr7tP+yZ1LtKHkiOInd7w0WLpU+amylpPZBF9HixGaeDaAQqg==}
+    engines: {node: '>=18'}
+
+  '@dedot/utils@0.9.2':
+    resolution: {integrity: sha512-BNQ5ggP0/OLnn4NVEp1Md9sX9oGw8Wr5HrB9DAZJf18QDx2JFRPbHBrHphNDdJh4KVDcMw/zcrlSnu3/JUf8pw==}
     engines: {node: '>=18'}
 
   '@ecies/ciphers@0.2.3':
@@ -1184,6 +1229,10 @@ packages:
     resolution: {integrity: sha512-B8XBPsn4vT/KJAGqDzbwztd+6Yte3P4V7iafm24bxgDe/mlRuK6xmWPuCNrKt2vDafZ8MfJLlchDG/vYafQEjQ==}
     engines: {node: ^14.21.3 || >=16}
 
+  '@noble/hashes@1.7.2':
+    resolution: {integrity: sha512-biZ0NUSxyjLLqo6KxEJ1b+C2NAx0wtDoFvCaXHGgUkeHzf3Xc1xKumFKREuT7f7DARNZ/slvYUwFG6B0f2b6hQ==}
+    engines: {node: ^14.21.3 || >=16}
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1283,8 +1332,8 @@ packages:
   '@polkadot-api/ws-provider@0.4.0':
     resolution: {integrity: sha512-ZurjUHHAlQ1Ux8HiZz7mtkg1qjq6LmqxcHljcZxne0U7foCZrXdWHsohwlV8kUQUir5kXuDsNvdZN/MFCUMaVw==}
 
-  '@polkadot/types-support@15.9.1':
-    resolution: {integrity: sha512-KpJ/q5Bc0kYvGVK6cUJQmaq+zAFpTJB3cv+C7EgeBowgWRzz9tPKG9kEFlEw6ZumOz2jk/1eVMJ8dajFSeqs4w==}
+  '@polkadot/types-support@15.9.2':
+    resolution: {integrity: sha512-0pt5vN5qcSWkzodzZimtPirAEYCSmE3YpzCLL81PEgfUyCf7gzWACvgFK7D9lC8S6Qz7Eg5pOQvSBNscFhnLXA==}
     engines: {node: '>=18'}
 
   '@polkadot/util@13.4.4':
@@ -1293,10 +1342,6 @@ packages:
 
   '@polkadot/x-bigint@13.4.4':
     resolution: {integrity: sha512-XjChwagc8TbIoWx9N1JwCMOyte417ngobin6vTmLQsgaOlK84LU0/3uc0ea9qUurPopc/Spf1mSMOFp7lRBrIA==}
-    engines: {node: '>=18'}
-
-  '@polkadot/x-global@13.4.3':
-    resolution: {integrity: sha512-6c98kxZdoGRct3ua9Dz6/qz8wb3XFRUkaY+4+RzIgehKMPhu19pGWTrzmbJSyY9FtIpThuWKuDaBEvd5KgSxjA==}
     engines: {node: '>=18'}
 
   '@polkadot/x-global@13.4.4':
@@ -1311,8 +1356,8 @@ packages:
     resolution: {integrity: sha512-WpPR2vMAiXS2AN8MfolzWbo5WPEmy5FVZFgwZraJZP8RKfzEuntbY5Nb25p/PIjsPJ1zKU0DE8uVvDcGjxIo7A==}
     engines: {node: '>=18'}
 
-  '@polkadot/x-ws@13.4.3':
-    resolution: {integrity: sha512-GS0I6MYLD/xNAAjODZi/pbG7Ba0e/5sbvDIrT01iKH3SPGN+PZoyAsc04t2IOXA6QmPa1OBHnaU3N4K8gGmJ+w==}
+  '@polkadot/x-ws@13.4.4':
+    resolution: {integrity: sha512-qfbFb0Tdjsx5QawICduPTc3326SP+lEdggfyT4HmfrM50nvmCR/82TRAtEWKK7EPhXjoE/cBL/i5VO4d68DBQQ==}
     engines: {node: '>=18'}
 
   '@polkawatch/ddp-client@2.0.20':
@@ -3136,6 +3181,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  dedot@0.9.2:
+    resolution: {integrity: sha512-jMaw46+lk6EWJ9TCzkf17QL9LgLM5TEp9UGv0i88bu9uubiXKpwk1nxd7n48steYIO9rZUTVFtDkSJ700Rywfg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
@@ -3168,6 +3218,9 @@ packages:
 
   deshape@0.0.1:
     resolution: {integrity: sha512-ZwrsnoB4t0gu0NOANDAh4Eww8X8CaQ6yHSjhO4Fi4D9PAX/NmPsTevGirXzTz/+VArJcMf4fO78iQdedDIWrdA==}
+
+  deshape@0.1.0:
+    resolution: {integrity: sha512-6Z941WJcKPE2nMz2lqq5H3OlOAgxECQqOj/OtHluaqgM8ajKESt/vcexMkUw7JGzeuLVKXkGe7+vsCC71NC9SQ==}
 
   destr@2.0.3:
     resolution: {integrity: sha512-2N3BOUU4gYMpTP24s5rF5iP7BDr7uNTCs4ozw3kf/eKfvWSIu93GEBi5m427YoyJoeOzQ5smuu4nNAPGb8idSQ==}
@@ -5895,7 +5948,7 @@ snapshots:
 
   '@coinbase/wallet-sdk@4.3.0':
     dependencies:
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.7.2
       clsx: 1.2.1
       eventemitter3: 5.0.1
       preact: 10.26.4
@@ -5917,13 +5970,39 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  '@dedot/api@0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/codecs': 0.9.2
+      '@dedot/providers': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 0.9.2
+      '@dedot/shape': 0.9.2
+      '@dedot/storage': 0.9.2
+      '@dedot/types': 0.9.2
+      '@dedot/utils': 0.9.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@dedot/cli@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.8.1
       '@dedot/codegen': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@polkadot-api/wasm-executor': 0.1.2
-      '@polkadot/types-support': 15.9.1
+      '@polkadot/types-support': 15.9.2
+      ora: 8.2.0
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@dedot/cli@0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/api': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.9.2
+      '@dedot/codegen': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@polkadot-api/wasm-executor': 0.1.2
+      '@polkadot/types-support': 15.9.2
       ora: 8.2.0
       yargs: 17.7.2
     transitivePeerDependencies:
@@ -5934,6 +6013,11 @@ snapshots:
     dependencies:
       '@dedot/shape': 0.8.1
       '@dedot/utils': 0.8.1
+
+  '@dedot/codecs@0.9.2':
+    dependencies:
+      '@dedot/shape': 0.9.2
+      '@dedot/utils': 0.9.2
 
   '@dedot/codegen@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
@@ -5951,6 +6035,22 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  '@dedot/codegen@0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/api': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.9.2
+      '@dedot/contracts': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/providers': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 0.9.2
+      '@dedot/shape': 0.9.2
+      '@dedot/types': 0.9.2
+      '@dedot/utils': 0.9.2
+      handlebars: 4.7.8
+      prettier: 3.5.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@dedot/contracts@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -5961,10 +6061,28 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  '@dedot/contracts@0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/api': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.9.2
+      '@dedot/types': 0.9.2
+      '@dedot/utils': 0.9.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@dedot/providers@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/utils': 0.8.1
-      '@polkadot/x-ws': 13.4.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@polkadot/x-ws': 13.4.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@dedot/providers@0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/utils': 0.9.2
+      '@polkadot/x-ws': 13.4.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -5975,12 +6093,25 @@ snapshots:
       '@dedot/shape': 0.8.1
       '@dedot/types': 0.8.1
 
+  '@dedot/runtime-specs@0.9.2':
+    dependencies:
+      '@dedot/codecs': 0.9.2
+      '@dedot/shape': 0.9.2
+      '@dedot/types': 0.9.2
+
   '@dedot/shape@0.8.1':
     dependencies:
       '@dedot/utils': 0.8.1
       deshape: 0.0.1
 
+  '@dedot/shape@0.9.2':
+    dependencies:
+      '@dedot/utils': 0.9.2
+      deshape: 0.1.0
+
   '@dedot/storage@0.8.1': {}
+
+  '@dedot/storage@0.9.2': {}
 
   '@dedot/types@0.8.1':
     dependencies:
@@ -5988,9 +6119,21 @@ snapshots:
       '@dedot/shape': 0.8.1
       '@dedot/utils': 0.8.1
 
+  '@dedot/types@0.9.2':
+    dependencies:
+      '@dedot/codecs': 0.9.2
+      '@dedot/shape': 0.9.2
+      '@dedot/utils': 0.9.2
+
   '@dedot/utils@0.8.1':
     dependencies:
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.7.2
+      '@scure/base': 1.2.4
+      eventemitter3: 5.0.1
+
+  '@dedot/utils@0.9.2':
+    dependencies:
+      '@noble/hashes': 1.7.2
       '@scure/base': 1.2.4
       eventemitter3: 5.0.1
 
@@ -6435,7 +6578,7 @@ snapshots:
     dependencies:
       '@ethereumjs/tx': 4.2.0
       '@metamask/superstruct': 3.1.0
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.7.2
       '@scure/base': 1.2.4
       '@types/debug': 4.1.12
       debug: 4.4.0
@@ -6449,7 +6592,7 @@ snapshots:
     dependencies:
       '@ethereumjs/tx': 4.2.0
       '@metamask/superstruct': 3.1.0
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.7.2
       '@scure/base': 1.2.4
       '@types/debug': 4.1.12
       debug: 4.4.0
@@ -6569,6 +6712,8 @@ snapshots:
   '@noble/hashes@1.7.0': {}
 
   '@noble/hashes@1.7.1': {}
+
+  '@noble/hashes@1.7.2': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -6744,7 +6889,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@polkadot/types-support@15.9.1':
+  '@polkadot/types-support@15.9.2':
     dependencies:
       '@polkadot/util': 13.4.4
       tslib: 2.8.1
@@ -6764,10 +6909,6 @@ snapshots:
       '@polkadot/x-global': 13.4.4
       tslib: 2.8.1
 
-  '@polkadot/x-global@13.4.3':
-    dependencies:
-      tslib: 2.8.1
-
   '@polkadot/x-global@13.4.4':
     dependencies:
       tslib: 2.8.1
@@ -6782,9 +6923,9 @@ snapshots:
       '@polkadot/x-global': 13.4.4
       tslib: 2.8.1
 
-  '@polkadot/x-ws@13.4.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@polkadot/x-ws@13.4.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@polkadot/x-global': 13.4.3
+      '@polkadot/x-global': 13.4.4
       tslib: 2.8.1
       ws: 8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
@@ -9016,6 +9157,21 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  dedot@0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    dependencies:
+      '@dedot/api': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/cli': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.9.2
+      '@dedot/contracts': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/providers': 0.9.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 0.9.2
+      '@dedot/shape': 0.9.2
+      '@dedot/types': 0.9.2
+      '@dedot/utils': 0.9.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   deep-eql@5.0.2: {}
 
   deep-is@0.1.4: {}
@@ -9041,6 +9197,8 @@ snapshots:
   delayed-stream@1.0.0: {}
 
   deshape@0.0.1: {}
+
+  deshape@0.1.0: {}
 
   destr@2.0.3: {}
 
@@ -9081,7 +9239,7 @@ snapshots:
       '@ecies/ciphers': 0.2.3(@noble/ciphers@1.2.1)
       '@noble/ciphers': 1.2.1
       '@noble/curves': 1.8.1
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.7.2
 
   electron-to-chromium@1.5.129: {}
 
