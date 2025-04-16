@@ -6,7 +6,7 @@ import * as smoldot from 'smoldot'
 import type { Network, SystemChain } from 'types'
 
 // Instantiate a new relay chain smoldot provider
-export const newRelayProvider = async (networkData: Network) => {
+export const newRelayChainSmProvider = async (networkData: Network) => {
   const client = smoldot.start()
   const { chainSpec } = await networkData.endpoints.lightClient()
   const chain = await client.addChain({ chainSpec })
@@ -14,7 +14,7 @@ export const newRelayProvider = async (networkData: Network) => {
 }
 
 // Instantiate a new system chain smoldot provider
-export const newSystemChainProvider = async (
+export const newSystemChainSmProvider = async (
   networkData: Network,
   systemChainData: SystemChain
 ) => {

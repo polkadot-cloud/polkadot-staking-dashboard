@@ -5,7 +5,7 @@ import { getNetworkData, getSystemChainData } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
 import { setMultiApiStatus } from 'global-bus'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
-import { newRelayProvider, newSystemChainProvider } from './providers'
+import { newRelayChainSmProvider, newSystemChainSmProvider } from './providers'
 import { Services } from './services'
 import type { DefaultService, Service } from './types'
 
@@ -23,12 +23,12 @@ export const getDefaultService = async <T extends NetworkId>(
   const relayProvider =
     providerType === 'ws'
       ? new WsProvider(relayData.endpoints.rpc[rpcEndpoints[network]])
-      : await newRelayProvider(relayData)
+      : await newRelayChainSmProvider(relayData)
 
   const peopleProvider =
     providerType === 'ws'
       ? new WsProvider(peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]])
-      : await newSystemChainProvider(relayData, peopleData)
+      : await newSystemChainSmProvider(relayData, peopleData)
 
   setMultiApiStatus({
     [network]: 'connecting',
