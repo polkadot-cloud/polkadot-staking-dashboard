@@ -4,6 +4,7 @@
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { DedotClient } from 'dedot'
+import type { NetworkConfig } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -18,6 +19,7 @@ export class KusamaService
   stakingConsts: StakingConsts<KusamaApi>
 
   constructor(
+    public networkConfig: NetworkConfig,
     public apiRelay: DedotClient<KusamaApi>,
     public apiPeople: DedotClient<KusamaPeopleApi>
   ) {

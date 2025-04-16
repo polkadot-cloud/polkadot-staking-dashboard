@@ -4,6 +4,7 @@
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
+import type { NetworkConfig } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -18,11 +19,13 @@ export class WestendService
   stakingConsts: StakingConsts<WestendApi>
 
   constructor(
+    public networkConfig: NetworkConfig,
     public apiRelay: DedotClient<WestendApi>,
     public apiPeople: DedotClient<WestendPeopleApi>
   ) {
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople
+    this.networkConfig = networkConfig
   }
 
   start = async () => {

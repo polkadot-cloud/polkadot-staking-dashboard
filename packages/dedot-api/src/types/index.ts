@@ -9,6 +9,8 @@ import type {
 } from '@dedot/chaintypes'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
+import type { DedotClient } from 'dedot'
+import type { NetworkConfig } from 'types'
 import type { CoreConsts } from '../consts/core'
 import type { StakingConsts } from '../consts/staking'
 import type { KusamaService } from '../services/kusama'
@@ -60,6 +62,14 @@ export abstract class DefaultServiceClass<
   PeopleApi extends PeopleChain,
   StakingApi extends StakingChain,
 > extends ServiceClass {
+  constructor(
+    public networkConfig: NetworkConfig,
+    public apiRelay: DedotClient<RelayApi>,
+    public apiPeople: DedotClient<PeopleApi>
+  ) {
+    super()
+  }
+
   abstract relayChainSpec: ChainSpecs<RelayApi>
   abstract peopleChainSpec: ChainSpecs<PeopleApi>
 

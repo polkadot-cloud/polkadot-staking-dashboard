@@ -4,6 +4,7 @@
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
+import type { NetworkConfig } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -18,11 +19,13 @@ export class PolkadotService
   stakingConsts: StakingConsts<PolkadotApi>
 
   constructor(
+    public networkConfig: NetworkConfig,
     public apiRelay: DedotClient<PolkadotApi>,
     public apiPeople: DedotClient<PolkadotPeopleApi>
   ) {
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople
+    this.networkConfig = networkConfig
   }
 
   start = async () => {
