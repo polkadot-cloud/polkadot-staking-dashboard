@@ -5,10 +5,10 @@ import { faWallet } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import HandWaveIcon from 'assets/svg/icons/hand.svg?react'
 import { useTranslation } from 'react-i18next'
+import { CardHeader } from 'ui-core/base'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
 import { useImportedAccounts } from '../../contexts/Connect/ImportedAccounts'
 import { ButtonCopy } from '../../library/ButtonCopy'
-import { CardHeader } from 'ui-core/base'
 import { WelcomeWrapper } from './Wrappers'
 
 export const WelcomeSection = () => {
