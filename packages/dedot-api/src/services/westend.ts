@@ -16,7 +16,7 @@ export class WestendService
 {
   relayChainSpec: ChainSpecs<WestendApi>
   peopleChainSpec: ChainSpecs<WestendPeopleApi>
-  apiEvents: {
+  apiStatus: {
     relay: ApiStatus<WestendApi>
     people: ApiStatus<WestendPeopleApi>
   }
@@ -33,7 +33,7 @@ export class WestendService
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople
     this.networkConfig = networkConfig
-    this.apiEvents = {
+    this.apiStatus = {
       relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
       people: new ApiStatus(this.apiPeople, ids[1], networkConfig),
     }

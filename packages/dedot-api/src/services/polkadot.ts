@@ -16,7 +16,7 @@ export class PolkadotService
 {
   relayChainSpec: ChainSpecs<PolkadotApi>
   peopleChainSpec: ChainSpecs<PolkadotPeopleApi>
-  apiEvents: {
+  apiStatus: {
     relay: ApiStatus<PolkadotApi>
     people: ApiStatus<PolkadotPeopleApi>
   }
@@ -33,7 +33,7 @@ export class PolkadotService
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople
     this.networkConfig = networkConfig
-    this.apiEvents = {
+    this.apiStatus = {
       relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
       people: new ApiStatus(this.apiPeople, ids[1], networkConfig),
     }

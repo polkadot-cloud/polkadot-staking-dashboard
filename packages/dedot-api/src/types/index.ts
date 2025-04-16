@@ -72,7 +72,7 @@ export abstract class DefaultServiceClass<
   }
   abstract ids: [NetworkId, SystemChainId]
 
-  abstract apiEvents: {
+  abstract apiStatus: {
     relay: ApiStatus<RelayApi>
     people: ApiStatus<PeopleApi>
   }

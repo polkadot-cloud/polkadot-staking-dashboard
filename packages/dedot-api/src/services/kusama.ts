@@ -16,7 +16,7 @@ export class KusamaService
 {
   relayChainSpec: ChainSpecs<KusamaApi>
   peopleChainSpec: ChainSpecs<KusamaPeopleApi>
-  apiEvents: {
+  apiStatus: {
     relay: ApiStatus<KusamaApi>
     people: ApiStatus<KusamaPeopleApi>
   }
@@ -32,7 +32,7 @@ export class KusamaService
     this.ids = ids
     this.apiRelay = apiRelay
     this.apiPeople = apiPeople
-    this.apiEvents = {
+    this.apiStatus = {
       relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
       people: new ApiStatus(this.apiPeople, ids[1], networkConfig),
     }
