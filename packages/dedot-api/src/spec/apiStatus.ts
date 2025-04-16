@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
-import type { NetworkConfig } from 'types'
+import type { ChainId, NetworkConfig } from 'types'
 import type { Chain } from '../types'
-import type { EventApiStatus } from '../types/events'
-import { disaptch } from '../util'
+import { disaptch, formatApiStatusEvent } from '../util'
 
 export class ApiStatus<T extends Chain> {
   constructor(
     public api: DedotClient<T>,
+    public chainId: ChainId,
     public networkConfig: NetworkConfig
   ) {
     this.api = api
@@ -22,7 +22,7 @@ export class ApiStatus<T extends Chain> {
       this.dispatchEvent('disconnected')
     })
     this.api.on('reconnecting', () => {
-      this.dispatchEvent('connecting')
+      this.dispatchEvent('reconnecting')
     })
     this.api.on('ready', () => {
       this.dispatchEvent('ready')
@@ -32,18 +32,15 @@ export class ApiStatus<T extends Chain> {
     })
   }
 
-  formatEvent(status: string, err?: Error): EventApiStatus {
-    return {
-      network: this.networkConfig.network,
-      rpcEndpoints: this.networkConfig.rpcEndpoints,
-      providerType: this.networkConfig.providerType,
-      status,
-      err,
-    }
-  }
-
   dispatchEvent(status: string, err?: Error) {
-    console.log(status)
-    disaptch('apiStatus', this.formatEvent(status, err))
+    disaptch(
+      'apiStatus',
+      formatApiStatusEvent(
+        this.networkConfig.network,
+        this.chainId,
+        status,
+        err
+      )
+    )
   }
 }

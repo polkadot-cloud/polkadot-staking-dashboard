@@ -10,7 +10,7 @@ import type {
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
-import type { NetworkConfig } from 'types'
+import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import type { CoreConsts } from '../consts/core'
 import type { StakingConsts } from '../consts/staking'
 import type { KusamaService } from '../services/kusama'
@@ -70,6 +70,8 @@ export abstract class DefaultServiceClass<
   ) {
     super()
   }
+  abstract ids: [NetworkId, SystemChainId]
+
   abstract apiEvents: {
     relay: ApiStatus<RelayApi>
     people: ApiStatus<PeopleApi>
@@ -85,4 +87,5 @@ export abstract class DefaultServiceClass<
 export type DefaultService<T extends keyof ServiceType> = {
   Service: ServiceType[T]
   apis: [DedotClient<Service[T][0]>, DedotClient<Service[T][1]>]
+  ids: [NetworkId, SystemChainId]
 }

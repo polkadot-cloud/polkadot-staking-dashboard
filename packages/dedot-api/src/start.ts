@@ -7,6 +7,7 @@ import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { newRelayProvider, newSystemChainProvider } from './providers'
 import { Services } from './services'
 import type { DefaultService, Service } from './types'
+import { disaptch, formatApiStatusEvent } from './util'
 
 // Determines service class and apis for a network
 export const getDefaultService = async <T extends NetworkId>(
@@ -16,6 +17,8 @@ export const getDefaultService = async <T extends NetworkId>(
   const relayData = getNetworkData(network)
   const peopleData = getSystemChainData(`people-${network}`)
   const peopleChainId: SystemChainId = `people-${network}`
+
+  const ids = [network, peopleChainId] as [NetworkId, SystemChainId]
 
   const relayProvider =
     providerType === 'ws'
@@ -27,12 +30,20 @@ export const getDefaultService = async <T extends NetworkId>(
       ? new WsProvider(peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]])
       : await newSystemChainProvider(relayData, peopleData)
 
-  const [apiRelay, apiPeople] = [
-    await DedotClient.new<Service[T][0]>(relayProvider),
-    await DedotClient.new<Service[T][1]>(peopleProvider),
-  ]
+  for (const chain of ids) {
+    disaptch('apiStatus', formatApiStatusEvent(network, chain, 'connecting'))
+  }
+  const [apiRelay, apiPeople] = await Promise.all([
+    DedotClient.new<Service[T][0]>(relayProvider),
+    DedotClient.new<Service[T][1]>(peopleProvider),
+  ])
+  for (const chain of ids) {
+    disaptch('apiStatus', formatApiStatusEvent(network, chain, 'ready'))
+  }
+
   return {
     Service: Services[network],
     apis: [apiRelay, apiPeople],
+    ids,
   }
 }
