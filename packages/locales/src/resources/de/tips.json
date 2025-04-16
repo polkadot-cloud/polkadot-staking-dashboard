@@ -1,0 +1,99 @@
+{
+  "tips": {
+    "connectExtensions": [
+      "Erweiterungen verbinden",
+      "Verbinden Sie Ihre Konten, um Polkadot Cloud Staking zu nutzen.",
+      [
+        "Verbinden Sie Ihre Konten, um Polkadot Cloud Staking zu nutzen.",
+        "Auf Konten wird über Web-Erweiterungen zugegriffen, die als Wallets fungieren. Ihr Wallet wird verwendet, um Transaktionen zu signieren, die Sie im Dashboard einreichen.",
+        "Verbinden Sie Ihre Wallets über den Verbinden-Button oben rechts im Dashboard und wählen Sie das Konto aus, mit dem Sie staken möchten, um fortzufahren.",
+        "Cloud Staking unterstützt eine Reihe von Erweiterungen und Wallets."
+      ]
+    ],
+    "howToStake": [
+      "Wie möchten Sie staken?",
+      "Werden Sie entweder Nominator oder Mitglied eines Pools.",
+      [
+        "Es gibt mehrere Möglichkeiten, auf {NETWORK_NAME} zu staken.",
+        "Sie können entweder Nominator werden oder Mitglied eines Pools werden.",
+        "Direkte Nominierung erfordert, dass Sie {NETWORK_UNIT} binden und Validatoren auswählen, die Sie unterstützen möchten, und bis zu {MAX_NOMINATIONS} von ihnen nominieren. Um als Nominator Belohnungen zu erhalten, müssen Sie derzeit mindestens {MIN_ACTIVE_STAKE} {NETWORK_UNIT} binden.",
+        "Der Beitritt zu einem Pool ist viel günstiger und erfordert eine Mindesteinzahlung von {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. Die Nominierung von Validatoren erfolgt in Ihrem Namen, und Sie beanspruchen einfach Belohnungen vom Pool.",
+        "Die Erstellung eines Pools ist ebenfalls möglich und erfordert mindestens {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
+      ]
+    ],
+    "joinAnotherPool": [
+      "Einem anderen Pool beitreten",
+      "Wechseln Sie zu einem anderen Konto, um einem weiteren Pool beizutreten.",
+      [
+        "Auf {NETWORK_NAME} kann pro Konto nur einem Pool beigetreten werden. Um mehreren Pools beizutreten, wechseln Sie zunächst zu einem anderen Konto."
+      ]
+    ],
+    "keepPoolNominating": [
+      "Verwaltung Ihres Pools",
+      "Es ist wichtig, dass Ihr Pool aktiv nominiert.",
+      [
+        "Es ist wichtig, dass Ihr Pool aktiv nominiert.",
+        "Wenn Ihr Pool keine Belohnungen erhält, werden Mitglieder versucht sein, ihn zu verlassen und einem anderen Pool beizutreten.",
+        "Ihre Root- und Nominator-Rollen sind wichtig für die Verwaltung Ihrer Nominierungen. Wenn Nominierungen nicht gut performen, wählen Sie andere aus, um die Chancen Ihres Pools auf Belohnungen zu erhöhen."
+      ]
+    ],
+    "managingNominations": [
+      "Verwaltung von Nominierungen",
+      "Überprüfen Sie regelmäßig die Performance Ihrer Nominierungen.",
+      [
+        "Überprüfen Sie regelmäßig die Performance Ihrer Nominierungen.",
+        "Um Vielfalt und eine dezentrale Mischung von Validatoren zu maximieren, wählen Sie Validatoren aus verschiedenen Entitäten."
+      ]
+    ],
+    "module": {
+      "cancel": "Abbrechen",
+      "close": "Schließen",
+      "more": "Mehr",
+      "of": "von",
+      "oneMoment": "Einen Moment bitte",
+      "syncingWith": "Synchronisiere mit {{network}}",
+      "tips": "Tipps"
+    },
+    "monitoringPool": [
+      "Verwaltung der Pool-Mitgliedschaft",
+      "Es ist ratsam, regelmäßig zu überprüfen, ob Ihr Pool aktiv Belohnungen erhält.",
+      [
+        "Pools verwalten Nominierungen in Ihrem Namen, aber es ist dennoch ratsam, regelmäßig zu überprüfen, ob Ihr Pool aktiv Belohnungen erhält.",
+        "Überwachen Sie den Status Ihres Pools, um sicherzustellen, dass er regelmäßig gut performt, und erwägen Sie den Beitritt zu einem anderen Pool, wenn Sie keine Belohnungen erhalten."
+      ]
+    ],
+    "recommendedJoinPool": [
+      "Empfohlen: Pool beitreten",
+      "Ihr Konto eignet sich am besten für den Beitritt zu einem Pool.",
+      [
+        "Basierend auf der Menge an {NETWORK_UNIT}, die Ihr Konto derzeit hält, ist der Beitritt zu einem Pool der beste Weg, um mit dem Staking zu beginnen.",
+        "Der Beitritt zu einem Pool erfordert eine Mindesteinzahlung von {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
+      ]
+    ],
+    "recommendedNominator": [
+      "Empfohlen: Nominator werden",
+      "Sie haben genug {NETWORK_UNIT}, um Nominator zu werden.",
+      [
+        "Sie haben genug {NETWORK_UNIT}, um Nominator zu werden und Belohnungen zu erhalten.",
+        "Direkte Nominierung erfordert jedoch, dass Sie Ihre unterstützten Validatoren aktiv überprüfen."
+      ]
+    ],
+    "reviewingPayouts": [
+      "Überprüfung von Auszahlungen",
+      "Die regelmäßige Überprüfung Ihrer Auszahlungen ist eine gute Möglichkeit, die Performance Ihrer Nominierungen zu beurteilen.",
+      [
+        "Die regelmäßige Überprüfung Ihrer Auszahlungen ist eine gute Möglichkeit, die Performance Ihrer Nominierungen zu beurteilen.",
+        "Gehen Sie zur Auszahlungsseite, um eine detaillierte Aufschlüsselung jeder Auszahlung zu erhalten, die Sie erhalten, und von welchem Validator (oder Pool) die Auszahlung stammt."
+      ]
+    ],
+    "understandingValidatorPerformance": [
+      "Messung der Validator-Performance",
+      "Verschiedene Faktoren beeinflussen, wie viel Validatoren belohnt werden.",
+      [
+        "Verschiedene Faktoren beeinflussen, wie viel Validatoren belohnt werden, wie z.B. die Anzahl der Era-Punkte, die sie generieren, und wie viele Nominatoren sie unterstützen.",
+        "Alle diese Metriken ändern sich mit der Zeit, manchmal auf unvorhersehbare Weise. Daher ist es wichtig, dass Nominatoren Validatoren und ihre Performance aktiv überwachen.",
+        "Cloud Staking bietet eine Reihe von Metriken, die Ihnen helfen zu verstehen, wie ein Validator performt."
+      ]
+    ]
+  }
+}
