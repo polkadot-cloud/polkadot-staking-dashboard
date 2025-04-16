@@ -11,15 +11,14 @@ import { ActiveEra } from 'api/subscribe/activeEra'
 import { BlockNumber } from 'api/subscribe/blockNumber'
 import { NetworkMetrics } from 'api/subscribe/networkMetrics'
 import { PoolsConfig } from 'api/subscribe/poolsConfig'
-import type { APIEventDetail, ApiStatus } from 'api/types'
 import BigNumber from 'bignumber.js'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
-import { getProviderType, getRpcEndpoints, networkConfig$ } from 'global-bus'
+import { apiStatus$, getRpcEndpoints, networkConfig$ } from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
-import type { ProviderType } from 'types'
+import type { ApiStatus, ChainId, ProviderType } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,
@@ -43,12 +42,10 @@ import type {
 export const [APIContext, useApi] = createSafeContext<APIContextInterface>()
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
-  // Store Api connection status for the current network
-  const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected')
+  // Store Api connection status for active chain apis
+  const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
 
-  // Store Api connection status for People system chain
-  const [peopleApiStatus, setPeopleApiStatus] =
-    useState<ApiStatus>('disconnected')
+  const getApiStatus = (id: ChainId) => apiStatus[id] || 'disconnected'
 
   // Store whether light client is active
   const [providerType, setProviderType] = useState<ProviderType>(
@@ -92,7 +89,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     useState<PapiChainSpecContext>(defaultChainSpecs)
 
   // Whether the api is ready for querying
-  const isReady = apiStatus === 'ready' && chainSpecs.received === true
+  const isReady =
+    getApiStatus(network) === 'ready' && chainSpecs.received === true
 
   // Bootstrap app-wide chain state
   const bootstrapNetworkConfig = async () => {
@@ -117,9 +115,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setStateWithRef({ index, start }, setActiveEra, activeEraRef)
     setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef)
     setStateWithRef(newStakingMetrics, setStakingMetrics, stakingMetricsRef)
-
-    // API is now ready to be used
-    setApiStatus('ready')
 
     // Set `initialization` syncing to complete. NOTE: This synchonisation is only considering the
     // relay chain sync state, and not system/para chains
@@ -235,87 +230,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   }
 
   // Handle api status events
-  const handleNewApiStatus = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const { chainType } = e.detail
-
-      if (chainType === 'relay') {
-        handleRelayApiStatus(e.detail)
-      } else if (chainType === 'system') {
-        handleSystemApiStatus(e.detail)
-      }
-    }
-  }
-
-  // Handle an Api status event for a relay chain
-  const handleRelayApiStatus = (detail: APIEventDetail) => {
-    const {
-      status,
-      network: eventNetwork,
-      providerType: eventProviderType,
-      rpcEndpoint: eventRpcEndpoint,
-    } = detail
-
-    // UI is only interested in events for the current network
-    if (
-      eventNetwork !== network ||
-      getProviderType() !== eventProviderType ||
-      getRpcEndpoints()[network] !== eventRpcEndpoint
-    ) {
-      return
-    }
-    switch (status) {
-      case 'connecting':
-        setApiStatus('connecting')
-        break
-      case 'connected':
-        setApiStatus('connected')
-        break
-      case 'disconnected':
-        setApiStatus('disconnected')
-        break
-      case 'error':
-        // Reinitialise api on error. We can confidently do this with well-known RPC providers,
-        // but not with custom endpoints
-        reInitialiseApi(eventProviderType)
-        break
-    }
-  }
 
   // Handle an Api status event for a system chain. NOTE: Only People chain is currently being used
-  const handleSystemApiStatus = (detail: APIEventDetail) => {
-    const {
-      status,
-      network: eventNetwork,
-      providerType: eventProviderType,
-    } = detail
-
-    // UI is only interested in events for the People system chain
-    if (
-      eventNetwork !== `people-${network}` ||
-      getProviderType() !== eventProviderType
-      /* || rpcEndpointRef.current !== eventRpcEndpoint // NOTE: Only `Parity` being used currently. */
-    ) {
-      return
-    }
-    switch (status) {
-      case 'ready':
-        setPeopleApiStatus('ready')
-        break
-      case 'connecting':
-        setPeopleApiStatus('connecting')
-        break
-      case 'connected':
-        setPeopleApiStatus('connected')
-        break
-      case 'disconnected':
-        setPeopleApiStatus('disconnected')
-        break
-      case 'error':
-        // Silently fail
-        break
-    }
-  }
 
   // Handle new network metrics updates
   const handleNetworkMetricsUpdate = (e: Event): void => {
@@ -416,7 +332,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   }
 
   const reInitialiseApi = async (type: ProviderType) => {
-    setApiStatus('disconnected')
     // Dispatch all default syncIds as syncing
     Syncs.dispatchAllDefault()
 
@@ -472,7 +387,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Add event listener for api events and subscription updates
   const documentRef = useRef<Document>(document)
-  useEventListener('api-status', handleNewApiStatus, documentRef)
   useEventListener('api-ready', handlePapiReady, documentRef)
   useEventListener(
     'new-network-metrics',
@@ -489,21 +403,24 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Subscribe to global bus
   useEffect(() => {
-    const sub = networkConfig$.subscribe((result) => {
+    const subNetwork = networkConfig$.subscribe((result) => {
       setRpcEndpoints(result.rpcEndpoints)
       setProviderType(result.providerType)
     })
+    const subApiStatus = apiStatus$.subscribe((result) => {
+      setApiStatus(result)
+    })
     return () => {
-      sub.unsubscribe()
+      subNetwork.unsubscribe()
+      subApiStatus.unsubscribe()
     }
   }, [])
 
   return (
     <APIContext.Provider
       value={{
+        getApiStatus,
         chainSpecs,
-        apiStatus,
-        peopleApiStatus,
         providerType,
         getRpcEndpoint,
         isReady,

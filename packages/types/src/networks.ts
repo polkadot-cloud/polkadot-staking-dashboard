@@ -18,6 +18,8 @@ export type Networks = Record<string, Network>
 
 export type RpcEndpoints = Record<string, string>
 
+export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready'
+
 export interface NetworkConfig {
   network: NetworkId
   rpcEndpoints: Record<string, string>

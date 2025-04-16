@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
+import { setApiStatus } from 'global-bus'
 import type { ChainId, NetworkConfig } from 'types'
 import type { Chain } from '../types'
-import { disaptch, formatApiStatusEvent } from '../util'
 
 export class ApiStatus<T extends Chain> {
   constructor(
@@ -16,31 +16,20 @@ export class ApiStatus<T extends Chain> {
     this.networkConfig = networkConfig
 
     this.api.on('connected', () => {
-      this.dispatchEvent('connected')
+      setApiStatus(this.chainId, 'connected')
     })
     this.api.on('disconnected', () => {
-      this.dispatchEvent('disconnected')
+      setApiStatus(this.chainId, 'disconnected')
     })
     this.api.on('reconnecting', () => {
-      this.dispatchEvent('reconnecting')
+      setApiStatus(this.chainId, 'connecting')
     })
     this.api.on('ready', () => {
-      this.dispatchEvent('ready')
+      setApiStatus(this.chainId, 'ready')
     })
     this.api.on('error', (err: Error) => {
-      this.dispatchEvent('connecting', err)
+      setApiStatus(this.chainId, 'disconnected')
+      console.debug(err)
     })
-  }
-
-  dispatchEvent(status: string, err?: Error) {
-    disaptch(
-      'apiStatus',
-      formatApiStatusEvent(
-        this.networkConfig.network,
-        this.chainId,
-        status,
-        err
-      )
-    )
   }
 }

@@ -52,7 +52,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const {
     isReady,
-    peopleApiStatus,
+    getApiStatus,
     consts: { historyDepth },
     networkMetrics: { earliestStoredSession },
   } = useApi()
@@ -433,7 +433,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && activeEra.index.isGreaterThan(0)) {
       fetchValidators()
     }
-  }, [validators.status, isReady, peopleApiStatus, activeEra])
+  }, [validators.status, isReady, getApiStatus(`people-${network}`), activeEra])
 
   // Mark unsynced and fetch session validators and average reward when activeEra changes
   useEffectIgnoreInitial(() => {

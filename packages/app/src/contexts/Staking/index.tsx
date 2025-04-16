@@ -42,7 +42,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { getLedger, getNominations } = useBalances()
-  const { isReady, activeEra, apiStatus } = useApi()
+  const { isReady, activeEra, getApiStatus } = useApi()
   const { accounts: connectAccounts } = useImportedAccounts()
   const { units } = getNetworkData(network)
 
@@ -279,10 +279,10 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffectIgnoreInitial(() => {
-    if (apiStatus === 'connecting') {
+    if (getApiStatus(network) === 'connecting') {
       setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef)
     }
-  }, [apiStatus])
+  }, [getApiStatus(network)])
 
   // Handle syncing with eraStakers
   useEffectIgnoreInitial(() => {
