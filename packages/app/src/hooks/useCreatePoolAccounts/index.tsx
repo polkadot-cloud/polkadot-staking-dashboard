@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
+import { bnToU8a } from '@polkadot/util'
 import { useApi } from 'contexts/Api'
-import { bnToU8a, concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
+import { concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
 
 export const useCreatePoolAccounts = () => {
   const {
@@ -13,15 +13,12 @@ export const useCreatePoolAccounts = () => {
   const { poolsPalletId } = consts
 
   // Generates pool stash and reward accounts. Assumes `poolsPalletId` is synced.
-  const createPoolAccounts = (poolId: number) => {
-    const poolIdBigNumber = new BigNumber(poolId)
-    return {
-      stash: createAccount(poolIdBigNumber, 0),
-      reward: createAccount(poolIdBigNumber, 1),
-    }
-  }
+  const createPoolAccounts = (poolId: number) => ({
+    stash: createAccount(Number(poolId), 0),
+    reward: createAccount(Number(poolId), 1),
+  })
 
-  const createAccount = (poolId: BigNumber, index: number): string => {
+  const createAccount = (poolId: number, index: number): string => {
     const key = concatU8a(
       stringToU8a('modl'),
       poolsPalletId,

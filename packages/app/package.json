@@ -23,6 +23,7 @@
     "@polkadot-api/merkleize-metadata": "^1.1.14",
     "@polkadot-api/signers-common": "^0.1.6",
     "@polkadot-api/substrate-bindings": "^0.11.1",
+    "@polkadot/util": "^13.4.4",
     "@polkawatch/ddp-client": "^2.0.20",
     "@tanstack/react-query": "^5.74.0",
     "@w3ux/extension-assets": "^2.2.0",
