@@ -19,7 +19,7 @@ export interface InviteGeneratorProps {
 }
 
 export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { activePool } = useActivePool()
   const { getNominations } = useBalances()
   const { formatWithPrefs } = useValidators()
@@ -27,7 +27,7 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
   const { i18n } = useTranslation()
 
   // Get nominated validators
-  const nominatedAddresses = activeAccount ? getNominations(activeAccount) : []
+  const nominatedAddresses = activeAddress ? getNominations(activeAddress) : []
   const nominatedValidators = formatWithPrefs(nominatedAddresses)
 
   const [selectedPool, setSelectedPool] = useState<string | null>(null)
@@ -76,7 +76,7 @@ export const useInviteGenerator = ({ type }: InviteGeneratorProps) => {
   }
 
   return {
-    activeAccount,
+    activeAddress,
     userPools,
     selectedPool,
     setSelectedPool,

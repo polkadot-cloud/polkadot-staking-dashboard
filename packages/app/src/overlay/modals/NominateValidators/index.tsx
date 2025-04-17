@@ -23,7 +23,7 @@ export const NominateValidators = () => {
   const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, accountHasSigner } = useImportedAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { inSetup } = useStaking()
@@ -37,17 +37,17 @@ export const NominateValidators = () => {
   const isNominator = bondFor === 'nominator'
 
   // Get controller account
-  const controller = getBondedAccount(activeAccount)
+  const controller = getBondedAccount(activeAddress)
 
   // For staking operations, we need to use the controller account to sign
   // This is crucial - for nominator operations, we must use the controller account
-  const signingAccount = isNominator ? controller : activeAccount
+  const signingAccount = isNominator ? controller : activeAddress
 
   // Check if this is a new nominator or existing one
   const isNewNominator = inSetup()
 
   // Get existing nominations for validation
-  const existingNominations = getNominations(activeAccount)
+  const existingNominations = getNominations(activeAddress)
 
   // valid to submit transaction
   const [valid, setValid] = useState(false)
@@ -63,7 +63,7 @@ export const NominateValidators = () => {
 
   // Get the transaction to submit
   const getTx = () => {
-    if (!valid || !activeAccount) {
+    if (!valid || !activeAddress) {
       return null
     }
 
@@ -96,8 +96,8 @@ export const NominateValidators = () => {
   const controllerAccount = getAccount(controller)
   const controllerImported = !!controllerAccount
   const canSign =
-    accountHasSigner(activeAccount) ||
-    (activeProxy && accountHasSigner(activeProxy)) ||
+    accountHasSigner(activeAddress) ||
+    (activeProxy && accountHasSigner(activeProxy.address)) ||
     (isNominator && controllerImported && accountHasSigner(controller))
 
   // Submit extrinsic
@@ -112,7 +112,7 @@ export const NominateValidators = () => {
 
   // Get signer warnings
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     isNominator,
     submitExtrinsic.proxySupported
   )

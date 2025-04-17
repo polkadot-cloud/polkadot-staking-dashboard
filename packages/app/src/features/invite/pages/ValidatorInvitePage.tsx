@@ -6,6 +6,7 @@ import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
 import { NewNominator } from 'api/tx/newNominator'
 import { StakingNominate } from 'api/tx/stakingNominate'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -207,7 +208,7 @@ const ValidatorInviteWrapper = styled.div`
 
 export const ValidatorInvitePage = () => {
   const { t } = useTranslation('invite')
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { isReady } = useApi()
   const { modal } = useOverlay()
   const navigate = useNavigate()
@@ -228,9 +229,6 @@ export const ValidatorInvitePage = () => {
     getValidatorTotalStake,
   } = useValidators()
   const { network } = useNetwork()
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
   const { getTransferOptions } = useTransferOptions()
   const largestTxFee = useBondGreatestFee({ bondFor: 'nominator' })
   const { getPayeeItems } = usePayeeConfig()
@@ -238,6 +236,8 @@ export const ValidatorInvitePage = () => {
   const {
     eraStakers: { stakers },
   } = useStaking()
+
+  const { units, unit } = getNetworkData(network)
 
   // State for validators from URL
   const [urlValidators, setUrlValidators] = useState<string[]>([])
@@ -266,22 +266,22 @@ export const ValidatorInvitePage = () => {
   const [payeeAccount, setPayeeAccount] = useState<string | null>(null)
 
   // Get transfer options for the active account
-  const transferOptions = activeAccount
-    ? getTransferOptions(activeAccount)
+  const transferOptions = activeAddress
+    ? getTransferOptions(activeAddress)
     : null
 
   // Check if this is a new nominator setup
   const isNewNominator = inSetup()
 
   // Get controller account for signing transactions
-  const controller = activeAccount ? getBondedAccount(activeAccount) : null
+  const controller = activeAddress ? getBondedAccount(activeAddress) : null
 
   // For staking operations, we need to use the controller account to sign
   // This is crucial - for nominator operations, we must use the controller account
-  const signingAccount = isNewNominator ? activeAccount : controller
+  const signingAccount = isNewNominator ? activeAddress : controller
 
   // Get existing nominations for validation
-  const existingNominations = getNominations(activeAccount)
+  const existingNominations = getNominations(activeAddress)
 
   // Extract validators from URL params
   useEffect(() => {
@@ -321,7 +321,7 @@ export const ValidatorInvitePage = () => {
 
   // Set initial bond value when account or transfer options change
   useEffect(() => {
-    if (activeAccount && transferOptions && bond.bond === '') {
+    if (activeAddress && transferOptions && bond.bond === '') {
       // Use transferrableBalance directly
       const initialBond = planckToUnitBn(
         transferOptions.transferrableBalance,
@@ -332,7 +332,7 @@ export const ValidatorInvitePage = () => {
         setBond({ bond: initialBond })
       }
     }
-  }, [activeAccount, transferOptions, units, bond.bond])
+  }, [activeAddress, transferOptions, units, bond.bond])
 
   // Update payout completion status when payee is valid
   useEffect(() => {
@@ -401,7 +401,7 @@ export const ValidatorInvitePage = () => {
 
   // Get the transaction to submit
   const getTx = () => {
-    if (!activeAccount || !bondValid || selectedValidators.length === 0) {
+    if (!activeAddress || !bondValid || selectedValidators.length === 0) {
       return null
     }
 
@@ -436,7 +436,7 @@ export const ValidatorInvitePage = () => {
         }
 
         // Batch the bond and nominate transactions together
-        return newBatchCall(tx, activeAccount)
+        return newBatchCall(tx, activeAddress)
       } else {
         // For existing nominators, just nominate
         return new StakingNominate(network, formattedNominees).tx()
@@ -451,8 +451,8 @@ export const ValidatorInvitePage = () => {
   const controllerAccount = getAccount(controller)
   const controllerImported = !!controllerAccount
   const canSign =
-    accountHasSigner(activeAccount) ||
-    (activeProxy && accountHasSigner(activeProxy)) ||
+    accountHasSigner(activeAddress) ||
+    (activeProxy && accountHasSigner(activeProxy.address)) ||
     (!isNewNominator && controllerImported && accountHasSigner(controller))
 
   // Set up the transaction submission
@@ -474,7 +474,7 @@ export const ValidatorInvitePage = () => {
 
   // Get signer warnings
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     !isNewNominator,
     submitExtrinsic.proxySupported
   )
@@ -834,7 +834,7 @@ export const ValidatorInvitePage = () => {
                                 : t('nominateValidators')
                           }
                           onClick={() => {
-                            if (!activeAccount) {
+                            if (!activeAddress) {
                               modal.openModal({
                                 key: 'Connect',
                                 options: { forceConnection: true },

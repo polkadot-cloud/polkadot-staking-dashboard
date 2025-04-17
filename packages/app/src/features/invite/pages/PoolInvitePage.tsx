@@ -12,7 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn, rmCommas, unitToPlanck } from '@w3ux/utils'
 import { JoinPool } from 'api/tx/joinPool'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -65,15 +67,8 @@ export const PoolInvitePage = () => {
     network: string
     poolId: string
   }>()
-  const {
-    networkData: {
-      units,
-      unit,
-      brand: { token: TokenIcon },
-    },
-    network,
-  } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
   const { activePool } = useActivePool()
   const { isReady } = useApi()
   const { bondedPools, poolsMetaData, updateBondedPools } = useBondedPools()
@@ -88,14 +83,17 @@ export const PoolInvitePage = () => {
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null)
   const [claimPermission] = useState<ClaimPermission>(defaultClaimPermission)
 
+  const { units, unit } = getNetworkData(network)
+  const TokenIcon = getChainIcons(network).icon
+
   // Bond amount state
   const [bond, setBond] = useState<{ bond: string }>({ bond: '' })
   const [bondValid, setBondValid] = useState<boolean>(false)
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([])
 
   // Get transfer options for the active account
-  const transferOptions = activeAccount
-    ? getTransferOptions(activeAccount)
+  const transferOptions = activeAddress
+    ? getTransferOptions(activeAddress)
     : null
 
   // Set initial bond value only once when component mounts
@@ -107,7 +105,7 @@ export const PoolInvitePage = () => {
       ).toString()
       setBond({ bond: initialBond })
     }
-  }, [activeAccount, units])
+  }, [activeAddress, units])
 
   // Handler to set bond on input change
   const handleSetBond = (value: { bond: BigNumber }) => {
@@ -216,7 +214,7 @@ export const PoolInvitePage = () => {
 
   // Get the transaction
   const getTx = () => {
-    if (!activeAccount || !poolId || !bondValid) {
+    if (!activeAddress || !poolId || !bondValid) {
       return null
     }
 
@@ -234,7 +232,7 @@ export const PoolInvitePage = () => {
   // Set up the transaction submission
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setJoining(true)
@@ -260,7 +258,7 @@ export const PoolInvitePage = () => {
 
   // Handle joining the pool
   const handleJoinPool = () => {
-    if (!activeAccount || !poolId) {
+    if (!activeAddress || !poolId) {
       return
     }
 
