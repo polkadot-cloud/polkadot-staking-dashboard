@@ -86,7 +86,7 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
       <div>
         <div>
           <h3 className={`${connected ? ` connected` : ``}`}>{title}</h3>
-          <ConnectItem.WebUrl url={website} text={website} />
+          <ConnectItem.WebUrl url={`https://${website}`} text={website} />
         </div>
         <div>
           <ButtonMonoInvert
