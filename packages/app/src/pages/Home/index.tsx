@@ -5,10 +5,9 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
-import { useNetwork } from '../../contexts/Network'
-import { usePlugins } from '../../contexts/Plugins'
 import { useActivePool } from '../../contexts/Pools/ActivePool'
 import { useStaking } from '../../contexts/Staking'
+import { NetworkStats } from './NetworkStats'
 import { PriceWidget } from './PriceWidget'
 import { StakingHealth } from './StakingHealth'
 import { StakingRecommendation } from './StakingRecommendation'
@@ -17,24 +16,21 @@ import { WelcomeSection } from './WelcomeSection'
 
 export const Home = () => {
   const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { pluginEnabled } = usePlugins()
   const { inSetup } = useStaking()
   const { inPool } = useActivePool()
   const { activeAccount } = useActiveAccounts()
 
-  // Determine if user is staking (either in a pool or nominating)
-  const isStaking = !inSetup() || inPool()
+  // Check if user is staking
+  const isStakingUser = !inSetup() || inPool()
 
-  // Fiat values result in a slightly larger height for components
-  const showFiat = pluginEnabled('staking_api') && network !== 'westend'
-  const COMPONENT_HEIGHT = showFiat ? 385 : 380
+  // Define height for staking health card
+  const STAKING_HEALTH_HEIGHT = 450
 
   return (
     <>
       <Page.Title title={t('home')} />
 
-      {/* Welcome Section - shown to all users */}
+      {/* Welcome Section - full width */}
       <Page.Row>
         <Page.RowSection>
           <CardWrapper>
@@ -43,30 +39,49 @@ export const Home = () => {
         </Page.RowSection>
       </Page.Row>
 
-      {/* Price Widget - shown to all users */}
-      <Page.Row>
-        <Page.RowSection>
-          <CardWrapper>
-            <PriceWidget />
-          </CardWrapper>
-        </Page.RowSection>
-      </Page.Row>
-
       {/* Only show additional cards if user has an active account */}
       {activeAccount && (
+        <>
+          {/* Row with side-by-side content */}
+          <Page.Row>
+            <Page.RowSection secondary>
+              <CardWrapper>
+                <WalletBalance />
+              </CardWrapper>
+            </Page.RowSection>
+            <Page.RowSection hLast>
+              <CardWrapper style={{ marginBottom: '1rem' }}>
+                <PriceWidget />
+              </CardWrapper>
+              <CardWrapper>
+                <NetworkStats />
+              </CardWrapper>
+            </Page.RowSection>
+          </Page.Row>
+
+          {/* Staking Health - full width */}
+          <Page.Row>
+            <Page.RowSection>
+              <CardWrapper
+                style={{
+                  minHeight: STAKING_HEALTH_HEIGHT,
+                  overflow: 'visible',
+                  paddingBottom: '3rem',
+                }}
+              >
+                {isStakingUser ? <StakingHealth /> : <StakingRecommendation />}
+              </CardWrapper>
+            </Page.RowSection>
+          </Page.Row>
+        </>
+      )}
+
+      {/* Show Price Widget for users without an active account */}
+      {!activeAccount && (
         <Page.Row>
-          <Page.RowSection secondary>
-            <CardWrapper
-              style={{ minHeight: COMPONENT_HEIGHT, overflow: 'auto' }}
-            >
-              <WalletBalance />
-            </CardWrapper>
-          </Page.RowSection>
-          <Page.RowSection hLast vLast>
-            <CardWrapper
-              style={{ minHeight: COMPONENT_HEIGHT, overflow: 'auto' }}
-            >
-              {isStaking ? <StakingHealth /> : <StakingRecommendation />}
+          <Page.RowSection>
+            <CardWrapper>
+              <PriceWidget />
             </CardWrapper>
           </Page.RowSection>
         </Page.Row>

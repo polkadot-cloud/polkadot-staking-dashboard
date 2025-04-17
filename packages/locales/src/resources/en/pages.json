@@ -31,6 +31,7 @@
     "automaticallyBonded": "Automatically bond payouts to your existing staked balance.",
     "available": "Available",
     "availableToClaim": "The outstanding amount of {{unit}} available to claim by pool members.",
+    "averageApy": "Average APY",
     "averageCommission": "Average Commission",
     "averageRewardRate": "Average Reward Rate",
     "back": "Back",

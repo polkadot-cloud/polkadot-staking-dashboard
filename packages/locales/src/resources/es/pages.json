@@ -9,6 +9,7 @@
     "actionOptimizeReturnsDesc": "Mejora tu tasa de recompensa ajustando tu estrategia de staking",
     "actionReviewPool": "Revisar Pool",
     "actionReviewPoolDesc": "Analiza el rendimiento y la salud de tu pool de staking",
+    "activeAccount": "Cuenta Activa",
     "activeEra": "Era Activa",
     "activeNominations": "Nominaciones Activas",
     "activeNominators": "Nominadores Activos",
@@ -311,6 +312,7 @@
     "yourCurrentBalance": "Tu saldo actual: {{balance}} {{unit}}",
     "yourRewardRate": "Tu Tasa de Recompensa",
     "yourStakingPosition": "Tu posición de staking es",
-    "yourStakingStatus": "Tu estado de staking"
+    "yourStakingStatus": "Tu estado de staking",
+    "averageApy": "APY Promedio"
   }
 }

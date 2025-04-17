@@ -188,3 +188,32 @@ export const WelcomeWrapper = styled.div`
     }
   }
 `
+
+export const HomeWrapper = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+`
+
+export const CardRow = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+`
+
+export const LeftColumn = styled.div`
+  flex: 0.4;
+  display: flex;
+`
+
+export const RightColumn = styled.div`
+  flex: 0.6;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
