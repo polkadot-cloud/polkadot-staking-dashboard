@@ -3,5 +3,6 @@
 
 export * from './apiStatus'
 export * from './chainSpecs'
+export * from './consts'
 export * from './externalAccounts'
 export * from './networkConfig'

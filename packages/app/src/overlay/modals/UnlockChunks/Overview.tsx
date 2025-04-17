@@ -37,9 +37,9 @@ export const Overview = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals')
-    const { consts, activeEra } = useApi()
     const { network } = useNetwork()
-    const { bondDuration } = consts
+    const { getConsts, activeEra } = useApi()
+    const { bondDuration } = getConsts(network)
     const { isFastUnstaking } = useUnstaking()
     const { erasToSeconds } = useErasToTimeLeft()
 

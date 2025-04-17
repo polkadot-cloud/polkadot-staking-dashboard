@@ -4,33 +4,11 @@
 import BigNumber from 'bignumber.js'
 import type {
   APIActiveEra,
-  APIConstants,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types'
-import type { ChainSpec } from 'types'
-
-export const defaultConsts: APIConstants = {
-  bondDuration: new BigNumber(0),
-  maxNominations: new BigNumber(0),
-  sessionsPerEra: new BigNumber(0),
-  maxExposurePageSize: new BigNumber(0),
-  historyDepth: new BigNumber(0),
-  expectedBlockTime: new BigNumber(0),
-  epochDuration: new BigNumber(0),
-  existentialDeposit: new BigNumber(0),
-  fastUnstakeDeposit: new BigNumber(0),
-  poolsPalletId: new Uint8Array([0]),
-}
-
-export const defaultNetworkMetrics: APINetworkMetrics = {
-  totalIssuance: new BigNumber(0),
-  auctionCounter: new BigNumber(0),
-  earliestStoredSession: new BigNumber(0),
-  fastUnstakeErasToCheckPerBlock: 0,
-  minimumActiveStake: new BigNumber(0),
-}
+import type { ChainConsts, ChainSpec } from 'types'
 
 export const defaultChainSpecs: ChainSpec = {
   genesisHash: '0x',
@@ -51,6 +29,25 @@ export const defaultChainSpecs: ChainSpec = {
     stateVersion: 0,
     transactionVersion: 0,
   },
+}
+
+export const defaultConsts: ChainConsts = {
+  bondDuration: 0,
+  sessionsPerEra: 0,
+  maxExposurePageSize: 0,
+  historyDepth: 0,
+  expectedBlockTime: 0n,
+  epochDuration: 0n,
+  fastUnstakeDeposit: 0n,
+  poolsPalletId: new Uint8Array([0]),
+}
+
+export const defaultNetworkMetrics: APINetworkMetrics = {
+  totalIssuance: new BigNumber(0),
+  auctionCounter: new BigNumber(0),
+  earliestStoredSession: new BigNumber(0),
+  fastUnstakeErasToCheckPerBlock: 0,
+  minimumActiveStake: new BigNumber(0),
 }
 
 export const defaultActiveEra: APIActiveEra = {

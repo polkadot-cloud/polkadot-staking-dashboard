@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
 import { useProxies } from 'contexts/Proxies'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useActiveBalances } from 'hooks/useActiveBalances'
@@ -26,15 +27,15 @@ import type {
 
 export const Accounts = () => {
   const { t } = useTranslation('modals')
-  const {
-    consts: { existentialDeposit },
-  } = useApi()
+  const { network } = useNetwork()
+  const { getChainSpec } = useApi()
   const { getDelegates } = useProxies()
   const { accounts } = useImportedAccounts()
   const { activeAddress } = useActiveAccounts()
   const { getFeeReserve } = useTransferOptions()
   const { status: modalStatus, setModalResize } = useOverlay().modal
 
+  const { existentialDeposit } = getChainSpec(network)
   // Listen to balance updates for entire accounts list.
   const { getLocks, getBalance, getEdReserved, getPoolMembership } =
     useActiveBalances({
@@ -46,7 +47,7 @@ export const Accounts = () => {
     // Get fee reserve from local storage.
     const feeReserve = getFeeReserve(address)
     // Get amount required for existential deposit.
-    const edReserved = getEdReserved(address, existentialDeposit)
+    const edReserved = getEdReserved(address, new BigNumber(existentialDeposit))
     // Gets actual balance numbers.
     const { free, frozen } = getBalance(address)
     // Minus reserves and frozen balance from free to get transferrable.

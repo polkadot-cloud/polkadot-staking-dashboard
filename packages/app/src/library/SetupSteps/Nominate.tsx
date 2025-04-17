@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import {
   ManageNominationsProvider,
   useManageNominations,
@@ -21,7 +21,6 @@ import type { NominationsProps } from './types'
 
 export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('app')
-  const { consts } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { setNominations } = useManageNominations()
   const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()
@@ -32,7 +31,6 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
       : getPoolSetup(activeAddress)
 
   const { progress } = setup
-  const { maxNominations } = consts
 
   // Handler for updating setup.
   const handleSetupUpdate = (value: NominatorProgress) => {
@@ -69,7 +67,7 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
         <Subheading>
           <h4>
             {t('chooseValidators', {
-              maxNominations: maxNominations.toString(),
+              maxNominations: MaxNominations,
             })}
           </h4>
         </Subheading>

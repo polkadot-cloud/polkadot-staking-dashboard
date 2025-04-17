@@ -3,8 +3,8 @@
 
 import { PoolNominate } from 'api/tx/poolNominate'
 import { StakingNominate } from 'api/tx/stakingNominate'
+import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
 import { useHelp } from 'contexts/Help'
 import {
@@ -38,7 +38,6 @@ export const Inner = () => {
     setCanvasStatus,
     config: { options },
   } = useOverlay().canvas
-  const { consts } = useApi()
   const { openHelp } = useHelp()
   const { network } = useNetwork()
   const { activePool } = useActivePool()
@@ -48,7 +47,6 @@ export const Inner = () => {
   const { defaultNominations, nominations, setNominations, method } =
     useManageNominations()
 
-  const { maxNominations } = consts
   const controller = getBondedAccount(activeAddress)
   const bondFor = options?.bondFor || 'nominator'
   const isPool = bondFor === 'pool'
@@ -118,10 +116,10 @@ export const Inner = () => {
     },
   })
 
-  // Valid if there are between 1 and `maxNominations` nominations
+  // Valid if there are between 1 and `MaxNominations` nominations
   useEffect(() => {
     setValid(
-      maxNominations.isGreaterThanOrEqualTo(nominations.length) &&
+      MaxNominations >= nominations.length &&
         nominations.length > 0 &&
         !nominationsMatch()
     )

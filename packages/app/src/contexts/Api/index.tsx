@@ -19,12 +19,14 @@ import { isCustomEvent } from 'controllers/utils'
 import {
   apiStatus$,
   chainSpecs$,
+  consts$,
   getRpcEndpoints,
   networkConfig$,
 } from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
 import type {
   ApiStatus,
+  ChainConsts,
   ChainId,
   ChainSpec,
   ProviderType,
@@ -41,7 +43,6 @@ import {
 } from './defaults'
 import type {
   APIActiveEra,
-  APIConstants,
   APIContextInterface,
   APINetworkMetrics,
   APIPoolsConfig,
@@ -66,9 +67,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Chain specs for active chains
   const [chainSpecs, setChainSpecs] = useState<Record<string, ChainSpec>>({})
 
-  // Store network constants for active chains
-  // TODO: Store consts for all apis via global bus
-  const [consts, setConsts] = useState<APIConstants>(defaultConsts)
+  // Chain consts
+  const [consts, setConsts] = useState<Record<string, ChainConsts>>({})
 
   // Whether this context has initialised
   const initialisedRef = useRef<boolean>(false)
@@ -101,6 +101,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const getChainSpec = (chain: ChainId): ChainSpec =>
     chainSpecs[chain] || defaultChainSpecs
+
+  const getConsts = (chain: ChainId): ChainConsts =>
+    consts[chain] || defaultConsts
 
   // Whether the api is ready for querying
   const isReady = getApiStatus(network) === 'ready' && papiSpecReceived === true
@@ -151,64 +154,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const handlePapiReady = async (e: Event) => {
     if (isCustomEvent(e)) {
-      const { chainType } = e.detail
-
-      if (chainType === 'relay') {
-        // TODO: Remove and use dedot api for consts. Tidy up legacy constant utils
-        // ------
-        const api = Apis.get(network)
-        const bondingDuration = await api.getConstant(
-          'Staking',
-          'BondingDuration',
-          0
-        )
-        const sessionsPerEra = await api.getConstant(
-          'Staking',
-          'SessionsPerEra',
-          0
-        )
-        const maxExposurePageSize = await api.getConstant(
-          'Staking',
-          'MaxExposurePageSize',
-          0
-        )
-        const historyDepth = await api.getConstant('Staking', 'HistoryDepth', 0)
-        const expectedBlockTime = await api.getConstant(
-          'Babe',
-          'ExpectedBlockTime',
-          0
-        )
-        const epochDuration = await api.getConstant('Babe', 'EpochDuration', 0)
-        const existentialDeposit = await api.getConstant(
-          'Balances',
-          'ExistentialDeposit',
-          0
-        )
-        const fastUnstakeDeposit = await api.getConstant(
-          'FastUnstake',
-          'Deposit',
-          0
-        )
-        const poolsPalletId = await api.getConstant(
-          'NominationPools',
-          'PalletId',
-          new Uint8Array(0),
-          'asBytes'
-        )
-        setConsts({
-          maxNominations: new BigNumber(16),
-          bondDuration: new BigNumber(bondingDuration),
-          sessionsPerEra: new BigNumber(sessionsPerEra),
-          maxExposurePageSize: new BigNumber(maxExposurePageSize),
-          historyDepth: new BigNumber(historyDepth),
-          expectedBlockTime: new BigNumber(expectedBlockTime),
-          epochDuration: new BigNumber(epochDuration),
-          existentialDeposit: new BigNumber(existentialDeposit),
-          fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit),
-          poolsPalletId,
-        })
-        // ------
-
+      if (e.detail.chainType === 'relay') {
         setPapiSpecReceived(true)
         bootstrapNetworkConfig()
       }
@@ -332,9 +278,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // If RPC endpoint changes, and not on light client, re-initialise API
   useEffectIgnoreInitial(async () => {
-    if (providerType !== 'sc') {
-      reInitialiseApi('ws')
-    }
+    reInitialiseApi('ws')
   }, [rpcEndpoints[network]])
 
   // If connection type changes, re-initialise API
@@ -344,7 +288,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
-    setConsts(defaultConsts)
     setStateWithRef(defaultNetworkMetrics, setNetworkMetrics, networkMetricsRef)
     setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef)
     setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef)
@@ -390,10 +333,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const subChainSpecs = chainSpecs$.subscribe((result) => {
       setChainSpecs(result)
     })
+    const subConsts = consts$.subscribe((result) => {
+      setConsts(result)
+    })
     return () => {
       subNetwork.unsubscribe()
       subApiStatus.unsubscribe()
       subChainSpecs.unsubscribe()
+      subConsts.unsubscribe()
     }
   }, [])
 
@@ -405,7 +352,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         providerType,
         getRpcEndpoint,
         isReady,
-        consts,
+        getConsts,
         networkMetrics,
         activeEra,
         activeEraRef,

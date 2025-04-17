@@ -60,30 +60,7 @@ export class Api {
       this.#chainType === 'relay'
         ? NetworkList[this.network].endpoints.rpc[this.#rpcEndpoint]
         : SystemChainList[this.network].endpoints.rpc[this.#rpcEndpoint]
-
-    // Initialize Polkadot API Client
     this.#apiClient = createClient(getWsProvider(endpoint))
-  }
-
-  // Get a pallet constant, with a fallback value
-  getConstant = async <T>(
-    pallet: string,
-    key: string,
-    fallback: T,
-    formatter?: 'asBytes'
-  ): Promise<T> => {
-    try {
-      const result = await this.unsafeApi.constants[pallet][key]()
-
-      switch (formatter) {
-        case 'asBytes':
-          return result.asBytes()
-        default:
-          return result
-      }
-    } catch (e) {
-      return fallback
-    }
   }
 
   // Unsubscribe from all active subscriptions and remove them from subscriptions controller

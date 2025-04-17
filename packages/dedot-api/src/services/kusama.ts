@@ -4,7 +4,7 @@
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { DedotClient } from 'dedot'
-import { setMultiChainSpecs } from 'global-bus'
+import { setConsts, setMultiChainSpecs } from 'global-bus'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
@@ -52,6 +52,10 @@ export class KusamaService
     setMultiChainSpecs({
       [this.ids[0]]: this.relayChainSpec.get(),
       [this.ids[1]]: this.peopleChainSpec.get(),
+    })
+    setConsts(this.ids[0], {
+      ...this.coreConsts.get(),
+      ...this.stakingConsts.get(),
     })
   }
 

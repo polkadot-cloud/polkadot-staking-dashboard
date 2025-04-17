@@ -33,9 +33,7 @@ export const SubmitTx = ({
 }: SubmitTxProps) => {
   const { t } = useTranslation()
   const { getBondedAccount } = useBonded()
-  const {
-    consts: { existentialDeposit },
-  } = useApi()
+  const { getChainSpec } = useApi()
   const { getTxSubmission } = useTxMeta()
   const { network } = useNetwork()
   const { setModalResize } = useOverlay().modal
@@ -44,13 +42,14 @@ export const SubmitTx = ({
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
   const { unit } = getNetworkData(network)
+  const { existentialDeposit } = getChainSpec(network)
   const controller = getBondedAccount(activeAddress)
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
 
-  const edReserved = getEdReserved(from, existentialDeposit)
+  const edReserved = getEdReserved(from, new BigNumber(existentialDeposit))
   const { free, frozen } = getBalance(from)
   const balanceforTxFees = free.minus(edReserved).minus(frozen)
   const notEnoughFunds =

@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { planckToUnit } from '@w3ux/utils'
 import { FastUnstakeDeregister } from 'api/tx/fastUnstakeDeregister'
 import { FastUnstakeRegister } from 'api/tx/fastUnstakeRegister'
 import BigNumber from 'bignumber.js'
@@ -22,12 +23,11 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals')
   const {
-    consts: { bondDuration, fastUnstakeDeposit },
+    getConsts,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
     activeEra,
   } = useApi()
@@ -44,6 +44,7 @@ export const ManageFastUnstake = () => {
 
   const { unit, units } = getNetworkData(network)
   const controller = getBondedAccount(activeAddress)
+  const { bondDuration, fastUnstakeDeposit } = getConsts(network)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { nominate, transferrableBalance } = allTransferOptions
   const { totalUnlockChunks } = nominate
@@ -112,7 +113,7 @@ export const ManageFastUnstake = () => {
   if (!isFastUnstaking) {
     if (!enoughForDeposit) {
       warnings.push(
-        `${t('noEnough')} ${planckToUnitBn(
+        `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,
           units
         ).toString()} ${unit}`
@@ -134,7 +135,10 @@ export const ManageFastUnstake = () => {
       ? new BigNumber(0)
       : activeEra.index.minus(fastUnstakeStatus.lastExposed.toString())
 
-  const erasRemaining = BigNumber.max(1, bondDuration.minus(lastExposedAgo))
+  const erasRemaining = BigNumber.max(
+    1,
+    new BigNumber(bondDuration).minus(lastExposedAgo)
+  )
 
   return (
     <>
@@ -173,7 +177,7 @@ export const ManageFastUnstake = () => {
             <Notes>
               <p>
                 {t('registerFastUnstake')}{' '}
-                {planckToUnitBn(fastUnstakeDeposit, units).toString()} {unit}.{' '}
+                {planckToUnit(fastUnstakeDeposit, units).toString()} {unit}.{' '}
                 {t('fastUnstakeOnceRegistered')}
               </p>
               <p>

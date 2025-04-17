@@ -32,7 +32,7 @@ export const UnbondMember = ({
   member: PoolMembership
 }) => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
+  const { getConsts } = useApi()
   const { network } = useNetwork()
   const { closePrompt } = usePrompt()
   const { activeAddress } = useActiveAccounts()
@@ -41,7 +41,7 @@ export const UnbondMember = ({
   const { unit, units } = getNetworkData(network)
 
   const { points } = member
-  const { bondDuration } = consts
+  const { bondDuration } = getConsts(network)
   const freeToUnbond = planckToUnitBn(new BigNumber(rmCommas(points)), units)
   const bondDurationFormatted = timeleftAsString(
     t,

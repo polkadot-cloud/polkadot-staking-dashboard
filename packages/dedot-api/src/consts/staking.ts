@@ -10,6 +10,7 @@ export class StakingConsts<T extends StakingChain> {
   sessionsPerEra: number
   maxExposurePageSize: number
   historyDepth: number
+  fastUnstakeDeposit: bigint
   poolsPalletId: Uint8Array
 
   constructor(public api: DedotClient<T>) {
@@ -22,6 +23,18 @@ export class StakingConsts<T extends StakingChain> {
     this.sessionsPerEra = this.api.consts.staking.sessionsPerEra
     this.maxExposurePageSize = this.api.consts.staking.maxExposurePageSize
     this.historyDepth = this.api.consts.staking.historyDepth
+    this.fastUnstakeDeposit = this.api.consts.fastUnstake.deposit
     this.poolsPalletId = toU8a(this.api.consts.nominationPools.palletId)
+  }
+
+  get() {
+    return {
+      bondDuration: this.bondDuration,
+      sessionsPerEra: this.sessionsPerEra,
+      maxExposurePageSize: this.maxExposurePageSize,
+      historyDepth: this.historyDepth,
+      fastUnstakeDeposit: this.fastUnstakeDeposit,
+      poolsPalletId: this.poolsPalletId,
+    }
   }
 }

@@ -16,7 +16,7 @@ export const useInjectBlockTimestamp = () => {
     entries.forEach((p) => {
       p.timestamp = activeEra.start
         .multipliedBy(0.001)
-        .minus(erasToSeconds(activeEra.index.minus(p.era).minus(1)))
+        .minus(erasToSeconds(activeEra.index.minus(p.era).minus(1).toNumber()))
         .toNumber()
     })
     return entries

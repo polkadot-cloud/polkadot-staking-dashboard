@@ -29,7 +29,7 @@ import { planckToUnitBn, timeleftAsString } from 'utils'
 export const Unstake = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
-  const { consts } = useApi()
+  const { getConsts } = useApi()
   const { newBatchCall } = useBatchCall()
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
@@ -39,10 +39,10 @@ export const Unstake = () => {
   const { getTransferOptions } = useTransferOptions()
   const { setModalStatus, setModalResize } = useOverlay().modal
 
+  const { bondDuration } = getConsts(network)
   const { unit, units } = getNetworkData(network)
   const controller = getBondedAccount(activeAddress)
   const nominations = getNominations(activeAddress)
-  const { bondDuration } = consts
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active } = allTransferOptions.nominate
 

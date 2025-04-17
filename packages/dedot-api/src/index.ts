@@ -1,7 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { networkConfig$, resetApiStatus, resetChainSpecs } from 'global-bus'
+import {
+  networkConfig$,
+  resetApiStatus,
+  resetChainSpecs,
+  resetConsts,
+} from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
 import { getDefaultService } from './start'
@@ -24,6 +29,7 @@ export const initDedotService = async () => {
         await service.unsubscribe()
         resetApiStatus()
         resetChainSpecs()
+        resetConsts()
       }
 
       const { network, ...rest } = cur

@@ -46,15 +46,15 @@ export const Unbond = () => {
     config: { options },
   } = useOverlay().modal
   const {
-    consts,
+    getConsts,
     poolsConfig: { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn },
   } = useApi()
 
-  const { unit, units } = getNetworkData(network)
   const { bondFor } = options
+  const { bondDuration } = getConsts(network)
+  const { unit, units } = getNetworkData(network)
   const pendingRewards = activePool?.pendingRewards || 0n
   const controller = getBondedAccount(activeAddress)
-  const { bondDuration } = consts
 
   const bondDurationFormatted = timeleftAsString(
     t,

@@ -8,9 +8,8 @@ import { concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
 
 export const useCreatePoolAccounts = () => {
   const { network } = useNetwork()
-  const { getChainSpec, consts } = useApi()
-
-  const { poolsPalletId } = consts
+  const { getChainSpec, getConsts } = useApi()
+  const { poolsPalletId } = getConsts(network)
   const { ss58Format } = getChainSpec(network).properties
 
   // Generates pool stash and reward accounts. Assumes `poolsPalletId` is synced.

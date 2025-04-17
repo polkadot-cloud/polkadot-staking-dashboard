@@ -21,6 +21,7 @@ export const TipsThresholdSmall = 750
 export const TipsThresholdMedium = 1200
 
 // Misc Values
+export const MaxNominations = 16
 export const MaxPayoutDays = 60
 export const MaxEraRewardPointsEras = 10
 

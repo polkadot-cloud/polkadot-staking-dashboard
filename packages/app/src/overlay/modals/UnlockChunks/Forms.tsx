@@ -43,7 +43,7 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals')
-    const { consts } = useApi()
+    const { getConsts } = useApi()
     const { network } = useNetwork()
     const { activePool } = useActivePool()
     const { activeAddress } = useActiveAccounts()
@@ -61,7 +61,7 @@ export const Forms = forwardRef(
     const { unit, units } = getNetworkData(network)
     const membership = getPoolMembership(activeAddress)
     const { bondFor, poolClosure } = options || {}
-    const { historyDepth } = consts
+    const { historyDepth } = getConsts(network)
     const controller = getBondedAccount(activeAddress)
 
     const isStaking = bondFor === 'nominator'
@@ -83,15 +83,11 @@ export const Forms = forwardRef(
         ).tx()
       }
       if (task === 'withdraw' && isStaking) {
-        return new StakingWithdraw(network, historyDepth.toNumber()).tx()
+        return new StakingWithdraw(network, historyDepth).tx()
       }
       if (task === 'withdraw' && isPooling && activePool) {
         if (activeAddress) {
-          return new PoolWithdraw(
-            network,
-            activeAddress,
-            historyDepth.toNumber()
-          ).tx()
+          return new PoolWithdraw(network, activeAddress, historyDepth).tx()
         }
       }
       return null

@@ -17,4 +17,11 @@ export class CoreConsts<T extends RelayChain> {
     this.expectedBlockTime = this.api.consts.babe.expectedBlockTime
     this.epochDuration = this.api.consts.babe.epochDuration
   }
+
+  get() {
+    return {
+      expectedBlockTime: this.expectedBlockTime,
+      epochDuration: this.epochDuration,
+    }
+  }
 }

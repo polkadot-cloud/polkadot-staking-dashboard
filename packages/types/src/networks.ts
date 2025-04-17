@@ -40,6 +40,17 @@ export interface ChainSpecVersion {
   stateVersion: number
 }
 
+export interface ChainConsts {
+  bondDuration: number
+  sessionsPerEra: number
+  maxExposurePageSize: number
+  historyDepth: number
+  epochDuration: bigint
+  expectedBlockTime: bigint
+  fastUnstakeDeposit: bigint
+  poolsPalletId: Uint8Array
+}
+
 export interface NetworkConfig {
   network: NetworkId
   rpcEndpoints: Record<string, string>

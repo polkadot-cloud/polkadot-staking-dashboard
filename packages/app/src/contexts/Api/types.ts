@@ -5,6 +5,7 @@ import type BigNumber from 'bignumber.js'
 import type { ReactNode, RefObject } from 'react'
 import type {
   ApiStatus,
+  ChainConsts,
   ChainId,
   ChainSpec,
   NetworkId,
@@ -14,19 +15,6 @@ import type {
 export interface APIProviderProps {
   children: ReactNode
   network: NetworkId
-}
-
-export interface APIConstants {
-  bondDuration: BigNumber
-  maxNominations: BigNumber
-  sessionsPerEra: BigNumber
-  maxExposurePageSize: BigNumber
-  historyDepth: BigNumber
-  expectedBlockTime: BigNumber
-  epochDuration: BigNumber
-  existentialDeposit: BigNumber
-  fastUnstakeDeposit: BigNumber
-  poolsPalletId: Uint8Array
 }
 
 export interface APINetworkMetrics {
@@ -67,12 +55,12 @@ export interface APIStakingMetrics {
 }
 
 export interface APIContextInterface {
+  getRpcEndpoint: (chain: ChainId) => string
   getApiStatus: (id: ChainId) => ApiStatus
   getChainSpec: (chain: ChainId) => ChainSpec
+  getConsts: (chain: ChainId) => ChainConsts
   isReady: boolean
   providerType: ProviderType
-  getRpcEndpoint: (chain: string) => string
-  consts: APIConstants
   networkMetrics: APINetworkMetrics
   activeEra: APIActiveEra
   activeEraRef: RefObject<APIActiveEra>

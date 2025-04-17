@@ -25,12 +25,12 @@ export const TransferOptionsProvider = ({
   children: ReactNode
 }) => {
   const { network } = useNetwork()
-  const { consts, activeEra } = useApi()
+  const { getChainSpec, activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { getLedger, getBalance, getLocks, getPoolMembership } = useBalances()
 
-  const { existentialDeposit } = consts
   const membership = getPoolMembership(activeAddress)
+  const { existentialDeposit } = getChainSpec(network)
   const { units, defaultFeeReserve } = getNetworkData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
@@ -48,7 +48,10 @@ export const TransferOptionsProvider = ({
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed
-    const edReserved = BigNumber.max(existentialDeposit.minus(maxLock), 0)
+    const edReserved = BigNumber.max(
+      new BigNumber(existentialDeposit).minus(maxLock),
+      0
+    )
 
     // Total free balance after `edReserved` is subtracted
     const freeMinusReserve = BigNumber.max(

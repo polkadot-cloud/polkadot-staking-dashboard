@@ -17,14 +17,14 @@ import { planckToUnitBn } from 'utils'
 
 export const Announcements = () => {
   const { t } = useTranslation('pages')
-  const { consts } = useApi()
   const { network } = useNetwork()
+  const { getChainSpec } = useApi()
   const { activePool } = useActivePool()
 
   const { unit, units } = getNetworkData(network)
   const { rewardAccountBalance } = activePool || {}
   const { totalRewardsClaimed } = activePool?.rewardPool || {}
-  const { existentialDeposit } = consts
+  const { existentialDeposit } = getChainSpec(network)
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BigNumber.max(

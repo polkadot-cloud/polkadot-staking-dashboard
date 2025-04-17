@@ -35,12 +35,12 @@ export const WithdrawMember = ({
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { closePrompt } = usePrompt()
-  const { consts, activeEra } = useApi()
+  const { getConsts, activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { removePoolMember } = usePoolMembers()
   const { getSignerWarnings } = useSignerWarnings()
   const { unit, units } = getNetworkData(network)
-  const { historyDepth } = consts
+  const { historyDepth } = getConsts(network)
   const { unbondingEras, points } = member
 
   // calculate total for withdraw
@@ -65,7 +65,7 @@ export const WithdrawMember = ({
     if (!valid) {
       return null
     }
-    return new PoolWithdraw(network, who, historyDepth.toNumber()).tx()
+    return new PoolWithdraw(network, who, historyDepth).tx()
   }
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),

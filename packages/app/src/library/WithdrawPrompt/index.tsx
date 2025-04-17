@@ -4,6 +4,7 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useTransferOptions } from 'contexts/TransferOptions'
@@ -20,7 +21,8 @@ import { timeleftAsString } from 'utils'
 
 export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
+  const { getConsts } = useApi()
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
@@ -31,7 +33,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { getTransferOptions } = useTransferOptions()
   const { state } = activePool?.bondedPool || {}
 
-  const { bondDuration } = consts
+  const { bondDuration } = getConsts(network)
   const allTransferOptions = getTransferOptions(activeAddress)
 
   const totalUnlockChunks =

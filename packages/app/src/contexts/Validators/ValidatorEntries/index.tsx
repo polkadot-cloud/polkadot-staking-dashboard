@@ -52,14 +52,15 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const {
     isReady,
+    getConsts,
     getApiStatus,
-    consts: { historyDepth },
     networkMetrics: { earliestStoredSession },
   } = useApi()
   const { activeEra } = useApi()
   const { pluginEnabled } = usePlugins()
   const { stakers } = useStaking().eraStakers
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
+  const { historyDepth } = getConsts(network)
 
   // Store validator entries and sync status
   const [validators, setValidators] = useState<Validators>({
