@@ -11,7 +11,7 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.13.6",
+    "@apollo/client": "^3.13.7",
     "graphql": "^16.10.0"
   }
 }
