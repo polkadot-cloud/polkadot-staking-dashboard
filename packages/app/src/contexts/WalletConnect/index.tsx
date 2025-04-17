@@ -26,10 +26,8 @@ export const WalletConnectProvider = ({
   children: ReactNode
 }) => {
   const { network } = useNetwork()
-  const {
-    isReady,
-    chainSpecs: { genesisHash },
-  } = useApi()
+  const { isReady, getChainSpec } = useApi()
+  const { genesisHash } = getChainSpec(network)
 
   // Check if the API is present
   const apiPresent = !!Apis.get(network)

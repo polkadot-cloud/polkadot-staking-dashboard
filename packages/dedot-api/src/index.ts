@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { networkConfig$ } from 'global-bus'
+import { networkConfig$, resetApiStatus, resetChainSpecs } from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
 import { getDefaultService } from './start'
@@ -16,12 +16,14 @@ export const initDedotService = async () => {
   networkConfig$
     .pipe(startWith(getInitialNetworkConfig()), pairwise())
     .subscribe(async ([prev, cur]) => {
-      // Unsubscribe from previous service if on new network config
+      // Unsubscribe from previous service if on new network config, and clear stale global state
       if (
         prev.network !== cur.network ||
         prev.providerType !== cur.providerType
       ) {
         await service.unsubscribe()
+        resetApiStatus()
+        resetChainSpecs()
       }
 
       const { network, ...rest } = cur

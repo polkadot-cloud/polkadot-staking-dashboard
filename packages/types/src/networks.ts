@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ChainProperties } from 'dedot/types/json-rpc'
+import type { HexString } from 'dedot/utils'
 import type { FunctionComponent, SVGProps } from 'react'
 
 export type ChainId = NetworkId | SystemChainId
@@ -19,6 +21,24 @@ export type Networks = Record<string, Network>
 export type RpcEndpoints = Record<string, string>
 
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready'
+
+export interface ChainSpec {
+  genesisHash: HexString
+  properties: ChainProperties
+  existentialDeposit: bigint
+  version: ChainSpecVersion
+}
+
+export interface ChainSpecVersion {
+  specName: string
+  implName: string
+  authoringVersion: number
+  specVersion: number
+  implVersion: number
+  apis: (readonly [`0x${string}`, number])[]
+  transactionVersion: number
+  stateVersion: number
+}
 
 export interface NetworkConfig {
   network: NetworkId

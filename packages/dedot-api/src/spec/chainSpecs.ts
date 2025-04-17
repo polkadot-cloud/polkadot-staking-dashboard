@@ -4,31 +4,32 @@
 import type { DedotClient } from 'dedot'
 import type { ChainProperties } from 'dedot/types/json-rpc'
 import type { HexString } from 'dedot/utils'
+import type { ChainSpecVersion } from 'types'
 import type { Chain } from '../types'
 
 export class ChainSpecs<T extends Chain> {
   genesisHash: HexString
   properties: ChainProperties
   existentialDeposit: bigint
-  version: {
-    specName: string
-    implName: string
-    authoringVersion: number
-    specVersion: number
-    implVersion: number
-    apis: (readonly [`0x${string}`, number])[]
-    transactionVersion: number
-    stateVersion: number
-  }
+  version: ChainSpecVersion
 
   constructor(public api: DedotClient<T>) {
     this.api = api
   }
 
-  async get() {
+  async fetch() {
     this.genesisHash = await this.api.chainSpec.genesisHash()
     this.properties = await this.api.chainSpec.properties()
     this.existentialDeposit = this.api.consts.balances.existentialDeposit
     this.version = this.api.consts.system.version
+  }
+
+  get() {
+    return {
+      genesisHash: this.genesisHash,
+      properties: this.properties,
+      existentialDeposit: this.existentialDeposit,
+      version: this.version,
+    }
   }
 }

@@ -4,6 +4,7 @@
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
+import { setMultiChainSpecs } from 'global-bus'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
@@ -45,8 +46,14 @@ export class WestendService
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
 
-    this.coreConsts.get()
-    this.stakingConsts.get()
+    await Promise.all([
+      this.relayChainSpec.fetch(),
+      this.peopleChainSpec.fetch(),
+    ])
+    setMultiChainSpecs({
+      [this.ids[0]]: this.relayChainSpec.get(),
+      [this.ids[1]]: this.peopleChainSpec.get(),
+    })
   }
 
   unsubscribe = async () => {

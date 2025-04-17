@@ -1,10 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiChainSpec } from 'api/types'
 import type BigNumber from 'bignumber.js'
 import type { ReactNode, RefObject } from 'react'
-import type { ApiStatus, ChainId, NetworkId, ProviderType } from 'types'
+import type {
+  ApiStatus,
+  ChainId,
+  ChainSpec,
+  NetworkId,
+  ProviderType,
+} from 'types'
 
 export interface APIProviderProps {
   children: ReactNode
@@ -32,9 +37,6 @@ export interface APINetworkMetrics {
   minimumActiveStake: BigNumber
 }
 
-export type PapiChainSpecContext = PapiChainSpec & {
-  received: boolean
-}
 export interface APIActiveEra {
   index: BigNumber
   start: BigNumber
@@ -66,7 +68,7 @@ export interface APIStakingMetrics {
 
 export interface APIContextInterface {
   getApiStatus: (id: ChainId) => ApiStatus
-  chainSpecs: PapiChainSpecContext
+  getChainSpec: (chain: ChainId) => ChainSpec
   isReady: boolean
   providerType: ProviderType
   getRpcEndpoint: (chain: string) => string

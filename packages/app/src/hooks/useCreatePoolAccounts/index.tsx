@@ -3,14 +3,15 @@
 
 import { bnToU8a } from '@polkadot/util'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import { concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
 
 export const useCreatePoolAccounts = () => {
-  const {
-    consts,
-    chainSpecs: { ss58Format },
-  } = useApi()
+  const { network } = useNetwork()
+  const { getChainSpec, consts } = useApi()
+
   const { poolsPalletId } = consts
+  const { ss58Format } = getChainSpec(network).properties
 
   // Generates pool stash and reward accounts. Assumes `poolsPalletId` is synced.
   const createPoolAccounts = (poolId: number) => ({

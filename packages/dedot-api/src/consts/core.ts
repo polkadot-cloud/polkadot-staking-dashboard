@@ -10,9 +10,10 @@ export class CoreConsts<T extends RelayChain> {
 
   constructor(public api: DedotClient<T>) {
     this.api = api
+    this.fetch()
   }
 
-  get() {
+  fetch() {
     this.expectedBlockTime = this.api.consts.babe.expectedBlockTime
     this.epochDuration = this.api.consts.babe.epochDuration
   }

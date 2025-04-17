@@ -8,8 +8,8 @@ import type {
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
-  PapiChainSpecContext,
 } from 'contexts/Api/types'
+import type { ChainSpec } from 'types'
 
 export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
@@ -32,19 +32,25 @@ export const defaultNetworkMetrics: APINetworkMetrics = {
   minimumActiveStake: new BigNumber(0),
 }
 
-export const defaultChainSpecs: PapiChainSpecContext = {
-  genesisHash: '',
-  ss58Format: 0,
-  tokenDecimals: 0,
-  tokenSymbol: '',
-  received: false,
-  authoringVersion: 0,
-  implName: '',
-  implVersion: 0,
-  specName: '',
-  specVersion: 0,
-  stateVersion: 0,
-  transactionVersion: 0,
+export const defaultChainSpecs: ChainSpec = {
+  genesisHash: '0x',
+  properties: {
+    isEthereum: false,
+    ss58Format: 0,
+    tokenDecimals: 0,
+    tokenSymbol: '',
+  },
+  existentialDeposit: 0n,
+  version: {
+    apis: [],
+    authoringVersion: 0,
+    implName: '',
+    implVersion: 0,
+    specName: '',
+    specVersion: 0,
+    stateVersion: 0,
+    transactionVersion: 0,
+  },
 }
 
 export const defaultActiveEra: APIActiveEra = {

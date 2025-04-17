@@ -14,7 +14,6 @@ import type {
   ApiChainType,
   APIEventDetail,
   EventApiStatus,
-  PapiChainSpec,
   PapiReadyEvent,
 } from './types'
 import { getLightClientMetadata } from './util'
@@ -29,9 +28,6 @@ export class Api {
   // API client.
   #apiClient: PolkadotClient
 
-  // The fetched chain spec
-  #chainSpec: PapiChainSpec
-
   // The current RPC endpoint
   #rpcEndpoint: string
 
@@ -44,10 +40,6 @@ export class Api {
 
   get unsafeApi() {
     return this.#apiClient.getUnsafeApi()
-  }
-
-  get chainSpec() {
-    return this.#chainSpec
   }
 
   get providerType() {
@@ -82,8 +74,8 @@ export class Api {
       // Tell UI api is connecting
       this.dispatchEvent(this.ensureEventStatus('connecting'))
 
-      // Fetch chain spec and metadata from api client
-      await this.fetchChainSpec()
+      // Dispatch ready eventd to let contexts populate constants
+      this.dispatchReadyEvent()
     } catch (e) {
       // TODO: Handle unsupported chains in UI
       // this.dispatchEvent(this.ensureEventStatus('error'));
@@ -126,45 +118,6 @@ export class Api {
     }
   }
 
-  async fetchChainSpec() {
-    try {
-      const chainSpecData = await this.#apiClient.getChainSpecData()
-      const version = await this.unsafeApi.constants.System.Version()
-
-      const { genesisHash, properties } = chainSpecData
-      const { ss58Format, tokenDecimals, tokenSymbol } = properties
-      const {
-        authoring_version: authoringVersion,
-        impl_name: implName,
-        impl_version: implVersion,
-        spec_name: specName,
-        spec_version: specVersion,
-        state_version: stateVersion,
-        transaction_version: transactionVersion,
-      } = version
-
-      this.#chainSpec = {
-        genesisHash,
-        ss58Format,
-        tokenDecimals,
-        tokenSymbol,
-        authoringVersion,
-        implName,
-        implVersion,
-        specName,
-        specVersion,
-        stateVersion,
-        transactionVersion,
-      }
-
-      // Dispatch ready eventd to let contexts populate constants
-      this.dispatchReadyEvent()
-    } catch (e) {
-      // TODO: Handle unsupported chains in UI
-      //this.dispatchEvent(this.ensureEventStatus('error'), { err: 'ChainSpecError' });
-    }
-  }
-
   // Get a pallet constant, with a fallback value
   getConstant = async <T>(
     pallet: string,
@@ -189,9 +142,7 @@ export class Api {
   // Handler for dispatching ready events
   dispatchReadyEvent() {
     const detail: PapiReadyEvent = {
-      network: this.network,
       chainType: this.#chainType,
-      ...this.#chainSpec,
     }
     this.dispatchEvent(this.ensureEventStatus('ready'))
     document.dispatchEvent(new CustomEvent('api-ready', { detail }))

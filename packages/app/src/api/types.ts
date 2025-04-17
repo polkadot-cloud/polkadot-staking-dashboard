@@ -17,22 +17,7 @@ export interface APIEventDetail {
   err?: string
 }
 
-export interface PapiChainSpec {
-  genesisHash: string
-  ss58Format: number
-  tokenDecimals: number
-  tokenSymbol: string
-  authoringVersion: number
-  implName: string
-  implVersion: number
-  specName: string
-  specVersion: number
-  stateVersion: number
-  transactionVersion: number
-}
-
-export type PapiReadyEvent = PapiChainSpec & {
-  network: ChainId
+export type PapiReadyEvent = {
   chainType: string
 }
 

@@ -16,9 +16,14 @@ import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
-import { apiStatus$, getRpcEndpoints, networkConfig$ } from 'global-bus'
+import {
+  apiStatus$,
+  chainSpecs$,
+  getRpcEndpoints,
+  networkConfig$,
+} from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
-import type { ApiStatus, ChainId, ProviderType } from 'types'
+import type { ApiStatus, ChainId, ChainSpec, ProviderType } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,
@@ -36,7 +41,6 @@ import type {
   APIPoolsConfig,
   APIProviderProps,
   APIStakingMetrics,
-  PapiChainSpecContext,
 } from './types'
 
 export const [APIContext, useApi] = createSafeContext<APIContextInterface>()
@@ -85,12 +89,17 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const stakingMetricsRef = useRef(stakingMetrics)
 
   // Store chain specs
-  const [chainSpecs, setChainSpecs] =
-    useState<PapiChainSpecContext>(defaultChainSpecs)
+  const [chainSpecs, setChainSpecs] = useState<Record<string, ChainSpec>>({})
+
+  // Temporary state object to check if chain spec from papi is received
+  const [papiSpecReceived, setPapiSpecReceived] = useState<boolean>(false)
 
   // Whether the api is ready for querying
-  const isReady =
-    getApiStatus(network) === 'ready' && chainSpecs.received === true
+  const isReady = getApiStatus(network) === 'ready' && papiSpecReceived === true
+
+  // Get a chain spec, or return an empty chain spec if not found
+  const getChainSpec = (chain: ChainId): ChainSpec =>
+    chainSpecs[chain] || defaultChainSpecs
 
   // Bootstrap app-wide chain state
   const bootstrapNetworkConfig = async () => {
@@ -138,37 +147,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const handlePapiReady = async (e: Event) => {
     if (isCustomEvent(e)) {
-      const {
-        chainType,
-        genesisHash,
-        ss58Format,
-        tokenDecimals,
-        tokenSymbol,
-        authoringVersion,
-        implName,
-        implVersion,
-        specName,
-        specVersion,
-        stateVersion,
-        transactionVersion,
-      } = e.detail
+      const { chainType } = e.detail
 
       if (chainType === 'relay') {
-        const newChainSpecs: PapiChainSpecContext = {
-          genesisHash,
-          ss58Format,
-          tokenDecimals,
-          tokenSymbol,
-          authoringVersion,
-          implName,
-          implVersion,
-          specName,
-          specVersion,
-          stateVersion,
-          transactionVersion,
-          received: true,
-        }
-
         const api = Apis.get(network)
         const bondingDuration = await api.getConstant(
           'Staking',
@@ -209,7 +190,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           'asBytes'
         )
 
-        setChainSpecs({ ...newChainSpecs, received: true })
+        setPapiSpecReceived(true)
 
         setConsts({
           maxNominations: new BigNumber(16),
@@ -362,11 +343,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
-    // TODO: Move to dedot-api service
-    setRpcEndpoints(getInitialRpcEndpoints(network))
-
-    // Reset consts and chain state
-    setChainSpecs(defaultChainSpecs)
     setConsts(defaultConsts)
     setStateWithRef(defaultNetworkMetrics, setNetworkMetrics, networkMetricsRef)
     setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef)
@@ -410,9 +386,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const subApiStatus = apiStatus$.subscribe((result) => {
       setApiStatus(result)
     })
+    const subChainSpecs = chainSpecs$.subscribe((result) => {
+      setChainSpecs(result)
+    })
     return () => {
       subNetwork.unsubscribe()
       subApiStatus.unsubscribe()
+      subChainSpecs.unsubscribe()
     }
   }, [])
 
@@ -420,7 +400,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     <APIContext.Provider
       value={{
         getApiStatus,
-        chainSpecs,
+        getChainSpec,
         providerType,
         getRpcEndpoint,
         isReady,

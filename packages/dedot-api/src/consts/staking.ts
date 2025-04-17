@@ -14,9 +14,10 @@ export class StakingConsts<T extends StakingChain> {
 
   constructor(public api: DedotClient<T>) {
     this.api = api
+    this.fetch()
   }
 
-  get() {
+  fetch() {
     this.bondDuration = this.api.consts.staking.bondingDuration
     this.sessionsPerEra = this.api.consts.staking.sessionsPerEra
     this.maxExposurePageSize = this.api.consts.staking.maxExposurePageSize
