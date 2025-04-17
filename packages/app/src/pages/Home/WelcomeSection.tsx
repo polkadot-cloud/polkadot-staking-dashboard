@@ -5,7 +5,6 @@ import { faWallet } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import HandWaveIcon from 'assets/icons/hand.svg?react'
 import { useTranslation } from 'react-i18next'
-import { CardHeader } from 'ui-core/base'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
 import { useImportedAccounts } from '../../contexts/Connect/ImportedAccounts'
 import { ButtonCopy } from '../../library/ButtonCopy'
@@ -24,9 +23,6 @@ export const WelcomeSection = () => {
   if (activeAddress) {
     return (
       <WelcomeWrapper>
-        <CardHeader>
-          <h4>{t('welcome')}</h4>
-        </CardHeader>
         <div className="welcome-header">
           <HandWaveIcon className="wave-icon" aria-hidden="true" />
           <h2>{t('welcomeBack')}</h2>
@@ -48,9 +44,6 @@ export const WelcomeSection = () => {
   // If no active account, show general welcome with features list
   return (
     <WelcomeWrapper>
-      <CardHeader>
-        <h4>{t('welcome')}</h4>
-      </CardHeader>
       <div className="welcome-header">
         <HandWaveIcon className="wave-icon" aria-hidden="true" />
         <h2>{t('welcomeToStakingDashboard')}</h2>
