@@ -53,9 +53,6 @@ import type {
 export const [APIContext, useApi] = createSafeContext<APIContextInterface>()
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
-  // Store Api connection status for active chain apis
-  const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
-
   // Store the active provider type
   const [providerType, setProviderType] = useState<ProviderType>(
     getInitialProviderType()
@@ -64,6 +61,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [rpcEndpoints, setRpcEndpoints] = useState<RpcEndpoints>(
     getInitialRpcEndpoints(network)
   )
+  // Store Api connection status for active chains
+  const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
+
   // Chain specs for active chains
   const [chainSpecs, setChainSpecs] = useState<Record<string, ChainSpec>>({})
 
