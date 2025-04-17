@@ -23,7 +23,13 @@ import {
   networkConfig$,
 } from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
-import type { ApiStatus, ChainId, ChainSpec, ProviderType } from 'types'
+import type {
+  ApiStatus,
+  ChainId,
+  ChainSpec,
+  ProviderType,
+  RpcEndpoints,
+} from 'types'
 import { useEventListener } from 'usehooks-ts'
 import {
   defaultActiveEra,
@@ -49,23 +55,23 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store Api connection status for active chain apis
   const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
 
-  const getApiStatus = (id: ChainId) => apiStatus[id] || 'disconnected'
-
-  // Store whether light client is active
+  // Store the active provider type
   const [providerType, setProviderType] = useState<ProviderType>(
     getInitialProviderType()
   )
-
-  // The current RPC endpoint for the network
-  const [rpcEndpoints, setRpcEndpoints] = useState<Record<string, string>>(
+  // RPC endpoints for active chains
+  const [rpcEndpoints, setRpcEndpoints] = useState<RpcEndpoints>(
     getInitialRpcEndpoints(network)
   )
+  // Chain specs for active chains
+  const [chainSpecs, setChainSpecs] = useState<Record<string, ChainSpec>>({})
+
+  // Store network constants for active chains
+  // TODO: Store consts for all apis via global bus
+  const [consts, setConsts] = useState<APIConstants>(defaultConsts)
 
   // Whether this context has initialised
   const initialisedRef = useRef<boolean>(false)
-
-  // Store network constants
-  const [consts, setConsts] = useState<APIConstants>(defaultConsts)
 
   // Store network metrics in state
   const [networkMetrics, setNetworkMetrics] = useState<APINetworkMetrics>(
@@ -88,18 +94,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   )
   const stakingMetricsRef = useRef(stakingMetrics)
 
-  // Store chain specs
-  const [chainSpecs, setChainSpecs] = useState<Record<string, ChainSpec>>({})
-
   // Temporary state object to check if chain spec from papi is received
   const [papiSpecReceived, setPapiSpecReceived] = useState<boolean>(false)
 
-  // Whether the api is ready for querying
-  const isReady = getApiStatus(network) === 'ready' && papiSpecReceived === true
+  const getApiStatus = (id: ChainId) => apiStatus[id] || 'disconnected'
 
-  // Get a chain spec, or return an empty chain spec if not found
   const getChainSpec = (chain: ChainId): ChainSpec =>
     chainSpecs[chain] || defaultChainSpecs
+
+  // Whether the api is ready for querying
+  const isReady = getApiStatus(network) === 'ready' && papiSpecReceived === true
 
   // Bootstrap app-wide chain state
   const bootstrapNetworkConfig = async () => {
@@ -150,6 +154,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       const { chainType } = e.detail
 
       if (chainType === 'relay') {
+        // TODO: Remove and use dedot api for consts. Tidy up legacy constant utils
+        // ------
         const api = Apis.get(network)
         const bondingDuration = await api.getConstant(
           'Staking',
@@ -189,9 +195,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           new Uint8Array(0),
           'asBytes'
         )
-
-        setPapiSpecReceived(true)
-
         setConsts({
           maxNominations: new BigNumber(16),
           bondDuration: new BigNumber(bondingDuration),
@@ -204,15 +207,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit),
           poolsPalletId,
         })
+        // ------
 
+        setPapiSpecReceived(true)
         bootstrapNetworkConfig()
       }
     }
   }
-
-  // Handle api status events
-
-  // Handle an Api status event for a system chain. NOTE: Only People chain is currently being used
 
   // Handle new network metrics updates
   const handleNetworkMetricsUpdate = (e: Event): void => {
