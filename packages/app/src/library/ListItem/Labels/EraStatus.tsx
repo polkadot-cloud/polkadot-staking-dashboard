@@ -3,6 +3,7 @@
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
@@ -14,8 +15,9 @@ import type { EraStatusProps } from '../types'
 export const EraStatus = ({ address, noMargin, status }: EraStatusProps) => {
   const { t } = useTranslation('app')
   const { syncing } = useSyncing()
-  const { unit, units } = useNetwork().networkData
+  const { network } = useNetwork()
   const { getValidatorTotalStake } = useValidators()
+  const { unit, units } = getNetworkData(network)
 
   // Fallback to `waiting` status if still syncing.
   const validatorStatus = syncing ? 'waiting' : status
@@ -27,7 +29,7 @@ export const EraStatus = ({ address, noMargin, status }: EraStatusProps) => {
           ? t('syncing')
           : validatorStatus !== 'waiting'
             ? `${t('listItemActive')} / ${planckToUnitBn(
-                new BigNumber(getValidatorTotalStake(address).toString()),
+                new BigNumber(getValidatorTotalStake(address)),
                 units
               )
                 .integerValue()

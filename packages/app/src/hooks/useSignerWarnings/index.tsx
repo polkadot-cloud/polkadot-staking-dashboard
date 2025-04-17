@@ -34,7 +34,7 @@ export const useSignerWarnings = () => {
     } else if (
       !(
         accountHasSigner(account) ||
-        (accountHasSigner(activeProxy) && proxySupported)
+        (accountHasSigner(activeProxy?.address || null) && proxySupported)
       )
     ) {
       warnings.push(`${t('readOnlyCannotSign')}`)

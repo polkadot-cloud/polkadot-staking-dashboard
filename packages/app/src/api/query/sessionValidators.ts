@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base'
-import type { ChainId } from 'common-types'
+import type { ChainId } from 'types'
 
 export class SessionValidators extends Base {
   constructor(network: ChainId) {

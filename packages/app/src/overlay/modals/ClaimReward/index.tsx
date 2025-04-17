@@ -4,6 +4,7 @@
 import { planckToUnit } from '@w3ux/utils'
 import { PoolBondExtra } from 'api/tx/poolBondExtra'
 import { PoolClaimPayout } from 'api/tx/poolClaimPayout'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -20,18 +21,15 @@ import { Close, useOverlay } from 'ui-overlay'
 export const ClaimReward = () => {
   const { t } = useTranslation('modals')
   const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
-  const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
-
+  const { unit, units } = getNetworkData(network)
   const { claimType } = options
   const pendingRewards = activePool?.pendingRewards || 0n
 
@@ -60,7 +58,7 @@ export const ClaimReward = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -68,7 +66,7 @@ export const ClaimReward = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

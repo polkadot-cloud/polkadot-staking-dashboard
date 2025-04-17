@@ -5,6 +5,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -24,18 +25,16 @@ import { planckToUnitBn } from 'utils'
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions()
 
-  const { edReserved } = getTransferOptions(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const { edReserved } = getTransferOptions(activeAddress)
   const minReserve = planckToUnitBn(edReserved, units)
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
@@ -54,7 +53,7 @@ export const UpdateReserve = () => {
     const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber()
     const actualReservePlanck = unitToPlanck(actualReserve.toString(), units)
     setSliderReserve(val.decimalPlaces(3).toNumber())
-    setFeeReserveBalance(new BigNumber(actualReservePlanck.toString()))
+    setFeeReserveBalance(new BigNumber(actualReservePlanck))
   }
 
   return (
@@ -125,7 +124,7 @@ export const UpdateReserve = () => {
           <ButtonPrimaryInvert
             text={t('done')}
             onClick={() => setModalStatus('closing')}
-            disabled={!accountHasSigner(activeAccount)}
+            disabled={!accountHasSigner(activeAddress)}
           />
         </div>
       </SliderWrapper>

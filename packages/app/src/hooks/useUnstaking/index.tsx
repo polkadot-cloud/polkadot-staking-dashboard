@@ -12,20 +12,20 @@ import { useNominationStatus } from '../useNominationStatus'
 export const useUnstaking = () => {
   const { t } = useTranslation('app')
   const { inSetup } = useStaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
 
-  const transferOptions = getTransferOptions(activeAccount).nominate
-  const { nominees } = getNominationStatus(activeAccount, 'nominator')
+  const transferOptions = getTransferOptions(activeAddress).nominate
+  const { nominees } = getNominationStatus(activeAddress, 'nominator')
 
   // determine if user is regular unstaking
   const { active } = transferOptions
 
   // determine if user is fast unstaking.
   const inHead =
-    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? undefined
+    head?.stashes.find((s: AnyJson) => s[0] === activeAddress) ?? undefined
   const inQueue = queueDeposit?.deposit?.isGreaterThan(0) ?? false
 
   const registered = inHead || inQueue

@@ -4,6 +4,7 @@
 import { unitToPlanck } from '@w3ux/utils'
 import { StakingChill } from 'api/tx/stakingChill'
 import { StakingUnbond } from 'api/tx/stakingUnbond'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -27,24 +28,22 @@ import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const Unstake = () => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { consts } = useApi()
   const { newBatchCall } = useBatchCall()
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { setModalStatus, setModalResize } = useOverlay().modal
 
-  const controller = getBondedAccount(activeAccount)
-  const nominations = getNominations(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const controller = getBondedAccount(activeAddress)
+  const nominations = getNominations(activeAddress)
   const { bondDuration } = consts
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { active } = allTransferOptions.nominate
 
   const bondDurationFormatted = timeleftAsString(
@@ -79,7 +78,7 @@ export const Unstake = () => {
 
   const getTx = () => {
     const tx = null
-    if (!activeAccount) {
+    if (!activeAddress) {
       return tx
     }
     const bondToSubmit = unitToPlanck(String(!bondValid ? 0 : bond.bond), units)
@@ -103,7 +102,7 @@ export const Unstake = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     true,
     submitExtrinsic.proxySupported
   )

@@ -3,7 +3,7 @@
 
 import { Base } from 'api/base'
 import BigNumber from 'bignumber.js'
-import type { ChainId } from 'common-types'
+import type { ChainId } from 'types'
 
 export class Era extends Base {
   constructor(network: ChainId) {
@@ -33,7 +33,7 @@ export class Era extends Base {
 
     // Store active era as BigNumbers.
     const activeEra = {
-      start: new BigNumber(era.start.toString()),
+      start: new BigNumber(era.start),
       index: new BigNumber(era.index),
     }
 

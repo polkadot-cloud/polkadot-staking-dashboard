@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import ArrowsSvg from 'assets/svg/icons/arrows.svg?react'
+import ArrowsSvg from 'assets/icons/arrows.svg?react'
 import { useTranslation } from 'react-i18next'
 import { ConnectItem } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'

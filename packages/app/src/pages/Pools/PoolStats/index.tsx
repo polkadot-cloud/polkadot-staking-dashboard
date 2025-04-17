@@ -3,6 +3,7 @@
 
 import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -20,13 +21,12 @@ import { Announcements } from './Announcements'
 export const PoolStats = () => {
   const { t } = useTranslation('pages')
   const { openCanvas } = useOverlay().canvas
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { activePool } = useActivePool()
   const { getCurrentCommission } = usePoolCommission()
 
+  const { unit, units } = getNetworkData(network)
   const poolId = activePool?.id || 0
 
   const { state, points, memberCounter } = activePool?.bondedPool || {}

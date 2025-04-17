@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { SystemChainId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
@@ -17,7 +16,7 @@ import { useActiveBalances } from 'hooks/useActiveBalances'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useEffect, useRef } from 'react'
-import type { ActivePoolItem, MaybeAddress } from 'types'
+import type { ActivePoolItem, MaybeAddress, SystemChainId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type { BalancesContextInterface } from './types'
 
@@ -30,8 +29,8 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
   const createPoolAccounts = useCreatePoolAccounts()
-  const { activeAccount, activeProxy } = useActiveAccounts()
-  const controller = getBondedAccount(activeAccount)
+  const { activeAddress, activeProxy } = useActiveAccounts()
+  const controller = getBondedAccount(activeAddress)
 
   // Listen to balance updates for the active account, active proxy and controller
   const {
@@ -44,7 +43,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     getNominations,
     getEdReserved,
   } = useActiveBalances({
-    accounts: [activeAccount, activeProxy, controller],
+    accounts: [activeAddress, activeProxy?.address || null, controller],
   })
 
   // Check all accounts have been synced. App-wide syncing state for all accounts

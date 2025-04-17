@@ -3,6 +3,7 @@
 
 import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -15,16 +16,15 @@ import { useOverlay } from 'ui-overlay'
 
 export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation('pages')
-  const {
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { isReady } = useApi()
   const { activePool } = useActivePool()
   const { openModal } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
 
+  const { units } = getNetworkData(network)
   const pendingRewards = activePool?.pendingRewards || 0n
   const minUnclaimedDisplay = 1000000n
 
@@ -34,7 +34,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
       : '0'
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
-  const buttonsRewards = isReadOnlyAccount(activeAccount)
+  const buttonsRewards = isReadOnlyAccount(activeAddress)
     ? []
     : pendingRewards > minUnclaimedDisplay
       ? [

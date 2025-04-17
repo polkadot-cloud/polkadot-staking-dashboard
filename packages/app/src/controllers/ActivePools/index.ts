@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ActivePoolAccount } from 'api/subscribe/activePoolAccount'
-import type { ChainId, NetworkId } from 'common-types'
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
@@ -10,9 +9,11 @@ import type {
   AccountActivePools,
   AccountPoolNominations,
   ActivePoolItem,
+  ChainId,
   DetailActivePool,
   DetailRemovedPool,
   MaybeAddress,
+  NetworkId,
 } from 'types'
 
 export class ActivePools {

@@ -34,3 +34,5 @@ export const MaxEraRewardPointsEras = 10
  * Local storage keys
  */
 export const FiatCurrencyKey = 'currency'
+export const NetworkKey = 'network'
+export const ExternalAccountsKey = 'external_accounts'

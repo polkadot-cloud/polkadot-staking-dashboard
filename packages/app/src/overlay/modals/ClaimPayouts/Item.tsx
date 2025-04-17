@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
@@ -16,9 +17,8 @@ export const Item = ({
   setSection,
 }: ItemProps) => {
   const { t } = useTranslation('modals')
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
+  const { unit, units } = getNetworkData(network)
   const totalPayout = getTotalPayout(validators)
   const numPayouts = validators.length
 

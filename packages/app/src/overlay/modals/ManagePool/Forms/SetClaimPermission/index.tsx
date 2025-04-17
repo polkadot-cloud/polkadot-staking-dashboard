@@ -33,12 +33,12 @@ export const SetClaimPermission = ({
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { isOwner, isMember } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
 
-  const membership = getPoolMembership(activeAccount)
+  const membership = getPoolMembership(activeAddress)
 
   // Valid to submit transaction.
   const [valid, setValid] = useState<boolean>(false)
@@ -69,7 +69,7 @@ export const SetClaimPermission = ({
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -77,7 +77,7 @@ export const SetClaimPermission = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

@@ -4,6 +4,7 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import { PoolUnbond } from 'api/tx/poolUnbond'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -34,23 +35,21 @@ export const LeavePool = ({
 }) => {
   const { t } = useTranslation('modals')
   const { consts } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
   const { getPoolMembership } = useBalances()
   const { erasToSeconds } = useErasToTimeLeft()
   const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
 
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = consts
   const pendingRewards = activePool?.pendingRewards || 0n
-  const membership = getPoolMembership(activeAccount)
+  const membership = getPoolMembership(activeAddress)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
@@ -68,16 +67,16 @@ export const LeavePool = ({
 
   const getTx = () => {
     let tx = null
-    if (!activeAccount || !membership) {
+    if (!activeAddress || !membership) {
       return tx
     }
-    tx = new PoolUnbond(network, activeAccount, BigInt(membership.points)).tx()
+    tx = new PoolUnbond(network, activeAddress, BigInt(membership.points)).tx()
     return tx
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: paramsValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -85,7 +84,7 @@ export const LeavePool = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

@@ -21,11 +21,11 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 
   const { inPool } = useActivePool()
   const { openCanvas } = useOverlay().canvas
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
   const nominateButtonDisabled =
-    !isReady || !activeAccount || isReadOnlyAccount(activeAccount) || inPool()
+    !isReady || !activeAddress || isReadOnlyAccount(activeAddress) || inPool()
 
   return (
     <CallToActionWrapper>

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import type { NetworkId } from 'common-types'
 import { Apis } from 'controllers/Apis'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { Subscription } from 'rxjs'
 import { combineLatest } from 'rxjs'
+import type { NetworkId } from 'types'
 
 export class NetworkMetrics implements Unsubscribable {
   // The associated network for this instance.
@@ -43,11 +43,11 @@ export class NetworkMetrics implements Unsubscribable {
             minimumActiveStake,
           ]) => {
             const networkMetrics = {
-              totalIssuance: new BigNumber(totalIssuance.toString()),
+              totalIssuance: new BigNumber(totalIssuance),
               auctionCounter: new BigNumber(auctionCounter),
               earliestStoredSession: new BigNumber(earliestStoredSession),
               fastUnstakeErasToCheckPerBlock: Number(erasToCheckPerBlock),
-              minimumActiveStake: new BigNumber(minimumActiveStake.toString()),
+              minimumActiveStake: new BigNumber(minimumActiveStake),
             }
 
             document.dispatchEvent(

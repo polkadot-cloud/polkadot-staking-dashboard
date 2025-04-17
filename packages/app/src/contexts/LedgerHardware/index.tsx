@@ -85,10 +85,10 @@ export const LedgerHardwareProvider = ({
   const runtimesInconsistent = useRef<boolean>(false)
 
   // Checks whether runtime version is inconsistent with device metadata
-  const checkRuntimeVersion = async (txMetadataChainId: string) => {
+  const checkRuntimeVersion = async () => {
     try {
       setIsExecuting(true)
-      const { app } = await Ledger.initialise(txMetadataChainId)
+      const { app } = await Ledger.initialise()
       const result = (await Ledger.getVersion(app)) as {
         major?: number
         minor?: number
@@ -122,14 +122,10 @@ export const LedgerHardwareProvider = ({
   }
 
   // Gets an address from Ledger device
-  const handleGetAddress = async (
-    txMetadataChainId: string,
-    accountIndex: number,
-    ss58Prefix: number
-  ) => {
+  const handleGetAddress = async (accountIndex: number, ss58Prefix: number) => {
     try {
       setIsExecuting(true)
-      const { app, productName } = await Ledger.initialise(txMetadataChainId)
+      const { app, productName } = await Ledger.initialise()
       const result = await Ledger.getAddress(app, accountIndex, ss58Prefix)
 
       setIsExecuting(false)
@@ -150,7 +146,6 @@ export const LedgerHardwareProvider = ({
 
   // Signs a payload on Ledger device
   const handleSignTx = async (
-    txMetadataChainId: string,
     uid: number,
     index: number,
     payload: AnyJson,
@@ -158,7 +153,7 @@ export const LedgerHardwareProvider = ({
   ) => {
     try {
       setIsExecuting(true)
-      const { app, productName } = await Ledger.initialise(txMetadataChainId)
+      const { app, productName } = await Ledger.initialise()
       setFeedback(t('approveTransactionLedger'))
 
       const result = await Ledger.signPayload(app, index, payload, txMetadata)

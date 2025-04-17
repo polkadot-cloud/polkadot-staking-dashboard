@@ -40,7 +40,7 @@ const RouterInner = () => {
   const { pathname } = useLocation()
   const { setContainerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // References to outer container
   const mainInterfaceRef = useRef<HTMLDivElement>(null)
@@ -63,8 +63,8 @@ const RouterInner = () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       <ApolloProvider client={client}>
-        {pluginEnabled('staking_api') && activeAccount && (
-          <StakingApi activeAccount={activeAccount} network={network} />
+        {pluginEnabled('staking_api') && activeAddress && (
+          <StakingApi who={activeAddress} network={network} />
         )}
         <NotificationPrompts />
         <Page.Body>

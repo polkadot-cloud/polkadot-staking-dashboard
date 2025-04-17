@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { EraRewardPoints } from 'api/types'
-import type { NetworkId } from 'common-types'
 import { Apis } from 'controllers/Apis'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { Subscription } from 'rxjs'
+import type { NetworkId } from 'types'
 
 export class ErasRewardPoints implements Unsubscribable {
   // The associated network for this instance

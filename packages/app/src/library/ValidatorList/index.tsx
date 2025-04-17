@@ -68,7 +68,7 @@ export const ValidatorListInner = ({
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { getThemeValue } = useThemeValues()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
   const { injectValidatorListData } = useValidators()
   const { isReady, activeEra, peopleApiStatus } = useApi()
@@ -87,8 +87,8 @@ export const ValidatorListInner = ({
   // Track whether filter bootstrapping has been applied.
   const [bootstrapped, setBootstrapped] = useState<boolean>(false)
 
-  // Determine the nominator of the validator list. Fallback to activeAccount if not provided
-  const nominator = initialNominator || activeAccount
+  // Determine the nominator of the validator list. Fallback to activeAddress if not provided
+  const nominator = initialNominator || activeAddress
 
   // Store the current nomination status of validator records relative to the supplied nominator
   const nominationStatus = useRef<Record<string, NominationStatus>>({})

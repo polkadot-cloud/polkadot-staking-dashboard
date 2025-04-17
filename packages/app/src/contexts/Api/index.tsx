@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
-import { NetworkList } from 'config/networks'
+import { NetworkList } from 'consts/networks'
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
@@ -256,10 +256,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           sessionsPerEra: new BigNumber(sessionsPerEra),
           maxExposurePageSize: new BigNumber(maxExposurePageSize),
           historyDepth: new BigNumber(historyDepth),
-          expectedBlockTime: new BigNumber(expectedBlockTime.toString()),
-          epochDuration: new BigNumber(epochDuration.toString()),
-          existentialDeposit: new BigNumber(existentialDeposit.toString()),
-          fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit.toString()),
+          expectedBlockTime: new BigNumber(expectedBlockTime),
+          epochDuration: new BigNumber(epochDuration),
+          existentialDeposit: new BigNumber(existentialDeposit),
+          fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit),
           poolsPalletId,
         })
 

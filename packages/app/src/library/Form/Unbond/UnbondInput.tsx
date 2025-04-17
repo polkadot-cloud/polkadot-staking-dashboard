@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
@@ -21,11 +22,12 @@ export const UnbondInput = ({
   active,
 }: UnbondInputProps) => {
   const { t } = useTranslation('app')
-  const { networkData } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
 
-  // get the actively bonded amount.
-  const activeUnit = planckToUnitBn(active, networkData.units)
+  const { unit, units } = getNetworkData(network)
+  // get the actively bonded amount
+  const activeUnit = planckToUnitBn(active, units)
 
   // the current local bond value.
   const [localBond, setLocalBond] = useState<string>(value)
@@ -33,7 +35,7 @@ export const UnbondInput = ({
   // reset value to default when changing account.
   useEffect(() => {
     setLocalBond(defaultValue ?? '0')
-  }, [activeAccount])
+  }, [activeAddress])
 
   // handle change for unbonding.
   const handleChangeUnbond = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,12 +60,12 @@ export const UnbondInput = ({
   }
 
   // unbond to min as unit.
-  const unbondToMinUnit = planckToUnitBn(unbondToMin, networkData.units)
+  const unbondToMinUnit = planckToUnitBn(unbondToMin, units)
 
   // available funds as jsx.
   const maxBondedJsx = (
     <p>
-      {activeUnit.toFormat()} {networkData.unit} {t('bonded')}
+      {activeUnit.toFormat()} {unit} {t('bonded')}
     </p>
   )
 
@@ -75,7 +77,7 @@ export const UnbondInput = ({
             <div>
               <input
                 type="text"
-                placeholder={`0 ${networkData.unit}`}
+                placeholder={`0 ${unit}`}
                 value={localBond}
                 onChange={(e) => {
                   handleChangeUnbond(e)

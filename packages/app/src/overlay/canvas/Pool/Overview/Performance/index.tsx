@@ -14,6 +14,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
@@ -43,14 +44,11 @@ ChartJS.register(
 export const Performance = ({ bondedPool }: OverviewSectionProps) => {
   const { activeEra } = useApi()
   const { t } = useTranslation()
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
-
+  const { units } = getNetworkData(network)
   // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement | null>(null)
 

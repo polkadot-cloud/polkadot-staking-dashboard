@@ -4,7 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
-import type { Plugin } from 'config/plugins'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -12,6 +11,7 @@ import { Subscan } from 'controllers/Subscan'
 import { Subscriptions } from 'controllers/Subscriptions'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
+import type { Plugin } from 'types'
 import type { PluginsContextInterface } from './types'
 import { getAvailablePlugins } from './Utils'
 
@@ -21,7 +21,7 @@ export const [PluginsContext, usePlugins] =
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { isReady, activeEra } = useApi()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // Store the currently active plugins
   const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins())
@@ -50,7 +50,7 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
     if (plugins.includes('subscan')) {
       Subscan.network = network
     }
-  }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra])
+  }, [plugins.includes('subscan'), isReady, network, activeAddress, activeEra])
 
   // Handle api subscriptions when Staking API is toggled
   useEffectIgnoreInitial(() => {

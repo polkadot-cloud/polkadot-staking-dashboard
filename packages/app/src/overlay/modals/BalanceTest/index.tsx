@@ -3,6 +3,7 @@
 
 import { unitToPlanck } from '@w3ux/utils'
 import { TransferKeepAlive } from 'api/tx/transferKeepAlive'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useBatchCall } from 'hooks/useBatchCall'
@@ -12,17 +13,15 @@ import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const BalanceTest = () => {
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
+  const { units } = getNetworkData(network)
 
   const getTx = () => {
     const tx = null
-    if (!activeAccount) {
+    if (!activeAddress) {
       return tx
     }
 
@@ -38,13 +37,13 @@ export const BalanceTest = () => {
         unitToPlanck('0.1', units)
       ).tx(),
     ]
-    const batch = newBatchCall(txs, activeAccount)
+    const batch = newBatchCall(txs, activeAddress)
     return batch
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')

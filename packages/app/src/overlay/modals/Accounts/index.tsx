@@ -31,7 +31,7 @@ export const Accounts = () => {
   } = useApi()
   const { getDelegates } = useProxies()
   const { accounts } = useImportedAccounts()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getFeeReserve } = useTransferOptions()
   const { status: modalStatus, setModalResize } = useOverlay().modal
 
@@ -73,7 +73,7 @@ export const Accounts = () => {
   const nominatingAndPool: AccountNominatingAndInPool[] = []
   const notStaking: AccountNotStaking[] = []
 
-  for (const { address } of accounts) {
+  for (const { address, source } of accounts) {
     let isNominating = false
     let isInPool = false
     const isStash = stashes[stashes.indexOf(address)] ?? null
@@ -110,7 +110,7 @@ export const Accounts = () => {
       !poolMember &&
       !notStaking.find((n) => n.address === address)
     ) {
-      notStaking.push({ address, delegates })
+      notStaking.push({ address, source, delegates })
       continue
     }
 
@@ -124,6 +124,7 @@ export const Accounts = () => {
       nominatingAndPool.push({
         ...poolMember,
         address,
+        source,
         stashImported: true,
         delegates,
       })
@@ -132,13 +133,13 @@ export const Accounts = () => {
 
     // Nominating only.
     if (isNominating && !isInPool) {
-      nominating.push({ address, stashImported: true, delegates })
+      nominating.push({ address, source, stashImported: true, delegates })
       continue
     }
 
     // In pool only.
     if (!isNominating && isInPool && poolMember) {
-      inPool.push({ ...poolMember, delegates })
+      inPool.push({ ...poolMember, source, delegates })
     }
   }
 
@@ -149,7 +150,7 @@ export const Accounts = () => {
     }
   }, [
     accounts,
-    activeAccount,
+    activeAddress,
     JSON.stringify(nominating),
     JSON.stringify(inPool),
     JSON.stringify(nominatingAndPool),
@@ -165,7 +166,7 @@ export const Accounts = () => {
             <h1>{t('accounts')}</h1>
           </div>
         </CustomHeader>
-        {!activeAccount && !accounts.length && (
+        {!activeAddress && !accounts.length && (
           <AccountWrapper style={{ marginTop: '1.5rem' }}>
             <div>
               <div>
@@ -182,14 +183,19 @@ export const Accounts = () => {
           <>
             <AccountSeparator />
             <ActionItem text={t('nominatingAndInPool')} />
-            {nominatingAndPool.map(({ address, delegates }, i) => (
+            {nominatingAndPool.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_nominating_and_pool_${i}`}>
                 <AccountButton
                   transferrableBalance={getTransferrableBalance(address)}
                   address={address}
+                  source={source}
                 />
                 {address && (
-                  <Delegates delegator={address} delegates={delegates} />
+                  <Delegates
+                    delegator={address}
+                    source={source}
+                    delegates={delegates}
+                  />
                 )}
               </Fragment>
             ))}
@@ -200,14 +206,19 @@ export const Accounts = () => {
           <>
             <AccountSeparator />
             <ActionItem text={t('nominating')} />
-            {nominating.map(({ address, delegates }, i) => (
+            {nominating.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_nominating_${i}`}>
                 <AccountButton
                   transferrableBalance={getTransferrableBalance(address)}
                   address={address}
+                  source={source}
                 />
                 {address && (
-                  <Delegates delegator={address} delegates={delegates} />
+                  <Delegates
+                    delegator={address}
+                    source={source}
+                    delegates={delegates}
+                  />
                 )}
               </Fragment>
             ))}
@@ -218,14 +229,19 @@ export const Accounts = () => {
           <>
             <AccountSeparator />
             <ActionItem text={t('inPool')} />
-            {inPool.map(({ address, delegates }, i) => (
+            {inPool.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_in_pool_${i}`}>
                 <AccountButton
                   transferrableBalance={getTransferrableBalance(address)}
                   address={address}
+                  source={source}
                 />
                 {address && (
-                  <Delegates delegator={address} delegates={delegates} />
+                  <Delegates
+                    delegator={address}
+                    source={source}
+                    delegates={delegates}
+                  />
                 )}
               </Fragment>
             ))}
@@ -236,14 +252,19 @@ export const Accounts = () => {
           <>
             <AccountSeparator />
             <ActionItem text={t('notStaking')} />
-            {notStaking.map(({ address, delegates }, i) => (
+            {notStaking.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_not_staking_${i}`}>
                 <AccountButton
                   transferrableBalance={getTransferrableBalance(address)}
                   address={address}
+                  source={source}
                 />
                 {address && (
-                  <Delegates delegator={address} delegates={delegates} />
+                  <Delegates
+                    delegator={address}
+                    source={source}
+                    delegates={delegates}
+                  />
                 )}
               </Fragment>
             ))}

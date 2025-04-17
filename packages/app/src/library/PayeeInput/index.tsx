@@ -5,6 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { formatAccountSs58, isValidAddress, remToUnit } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -24,13 +25,12 @@ export const PayeeInput = ({
   const { t } = useTranslation('app')
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
-  const {
-    networkData: { ss58 },
-  } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
-  const controller = getBondedAccount(activeAccount)
+  const { network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
 
-  const accountMeta = accounts.find((a) => a.address === activeAccount)
+  const { ss58 } = getNetworkData(network)
+  const controller = getBondedAccount(activeAddress)
+  const accountMeta = accounts.find((a) => a.address === activeAddress)
 
   // store whether account value is valid.
   const [valid, setValid] = useState<boolean>(isValidAddress(account || ''))
@@ -91,7 +91,7 @@ export const PayeeInput = ({
         ? ''
         : payee.destination === 'Controller'
           ? controller
-          : activeAccount
+          : activeAddress
 
   const placeholderDisplay =
     payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress')
@@ -117,7 +117,7 @@ export const PayeeInput = ({
               onChange={handleChangeAccount}
             />
             <div ref={hiddenRef} className="hidden">
-              {payee.destination === 'Account' ? activeAccount : accountDisplay}
+              {payee.destination === 'Account' ? activeAddress : accountDisplay}
             </div>
           </div>
         </div>

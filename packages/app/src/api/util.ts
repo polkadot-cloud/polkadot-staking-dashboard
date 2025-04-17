@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ApiChainType } from 'api/types'
-import type { AnyApi, ChainId } from 'common-types'
-import { NetworkList, SystemChainList } from 'config/networks'
+import type { AnyApi } from 'common-types'
+import { NetworkList, SystemChainList } from 'consts/networks'
+import type { ChainId } from 'types'
 
 // Get the light client metadata for the given chain type and network.
 export const getLightClientMetadata = (

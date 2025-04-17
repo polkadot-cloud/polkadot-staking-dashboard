@@ -4,6 +4,7 @@
 import { FastUnstakeDeregister } from 'api/tx/fastUnstakeDeregister'
 import { FastUnstakeRegister } from 'api/tx/fastUnstakeRegister'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
@@ -30,22 +31,20 @@ export const ManageFastUnstake = () => {
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
     activeEra,
   } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { getBondedAccount } = useBonded()
   const { isFastUnstaking } = useUnstaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { setModalResize, setModalStatus } = useOverlay().modal
   const { feeReserve, getTransferOptions } = useTransferOptions()
   const { counterForQueue, queueDeposit, fastUnstakeStatus, exposed } =
     useFastUnstake()
 
-  const controller = getBondedAccount(activeAccount)
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const controller = getBondedAccount(activeAddress)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { nominate, transferrableBalance } = allTransferOptions
   const { totalUnlockChunks } = nominate
 
@@ -105,7 +104,7 @@ export const ManageFastUnstake = () => {
 
   // warnings
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     true,
     submitExtrinsic.proxySupported
   )
