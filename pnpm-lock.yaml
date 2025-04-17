@@ -348,8 +348,8 @@ importers:
         version: 7.8.2
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.1.12
-        version: 2.1.12
+        specifier: ^2.1.13
+        version: 2.1.13
       types:
         specifier: workspace:*
         version: link:../types
@@ -357,8 +357,8 @@ importers:
   packages/locales:
     dependencies:
       '@w3ux/utils':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       consts:
         specifier: workspace:*
         version: link:../consts
@@ -407,11 +407,11 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/types':
-        specifier: ^2.1.12
-        version: 2.1.12
+        specifier: ^2.1.13
+        version: 2.1.13
       '@w3ux/utils':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -438,8 +438,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.1.0)
       '@w3ux/utils':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -481,8 +481,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -502,8 +502,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       framer-motion:
         specifier: ^12.6.2
         version: 12.6.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -527,8 +527,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.10
+        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bignumber.js:
         specifier: ^9.2.1
         version: 9.2.1
@@ -2575,17 +2575,11 @@ packages:
   '@w3ux/react-polkicon@3.1.2':
     resolution: {integrity: sha512-7N7qI7DEt9yL9/n60YZTumQfwHFpnAxXolR9wglFhgNuL30iw7NAxAkqy8jd+gyOr32NVpcJE+m0A+1O/+yyLg==}
 
-  '@w3ux/types@2.1.12':
-    resolution: {integrity: sha512-vCBMhQyXspqfDZ+4/ebH2mrEVwIq+B9Kcgd3G39q7aMshJBRI5RNMqvqi0KSsQJ5GRbs5cqxGwLvqfL6QOsigQ==}
-
   '@w3ux/types@2.1.13':
     resolution: {integrity: sha512-+b1wjIGRUn44tQ892er0W1NTmgu9DYjJoEbGJQ8WriZz+cQo+oT2q69P2qvofUhYdtPTroZiJcwEmoITHiL8Dg==}
 
   '@w3ux/utils@2.0.10':
     resolution: {integrity: sha512-utJhLwZyCTxQDxtlZIskPsM7FgckNllBT1Z/XGgAITt0UxqHhMW4mJr7TViV9s4GHCaFhBYwhUrb5PpoDgnZNw==}
-
-  '@w3ux/utils@2.0.8':
-    resolution: {integrity: sha512-/uRGXVe85n2UNdtwy7w62lMnq7tRe9HQWtzRNp1QRtntTZ9v85FFKOsq2QgnG1gAljE7yHbyDwOVLNqOC3amSg==}
 
   '@w3ux/validator-assets@1.0.0':
     resolution: {integrity: sha512-smxDhXQejl8BGmTTy7HKjNp3xowM8ITsIoeT/rbzrUaIr7gHirqXtVcF6JGzTJ5zGKqJHVhpJEOY5NZSxZFF5A==}
@@ -8114,18 +8108,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/types@2.1.12': {}
-
   '@w3ux/types@2.1.13': {}
 
   '@w3ux/utils@2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      dedot: 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
-  '@w3ux/utils@2.0.8':
     dependencies:
       dedot: 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
