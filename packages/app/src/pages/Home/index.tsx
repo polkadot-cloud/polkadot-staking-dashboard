@@ -9,6 +9,7 @@ import { useNetwork } from '../../contexts/Network'
 import { usePlugins } from '../../contexts/Plugins'
 import { useActivePool } from '../../contexts/Pools/ActivePool'
 import { useStaking } from '../../contexts/Staking'
+import { PriceWidget } from './PriceWidget'
 import { StakingHealth } from './StakingHealth'
 import { StakingRecommendation } from './StakingRecommendation'
 import { WalletBalance } from './WalletBalance'
@@ -38,6 +39,15 @@ export const Home = () => {
         <Page.RowSection>
           <CardWrapper>
             <WelcomeSection />
+          </CardWrapper>
+        </Page.RowSection>
+      </Page.Row>
+
+      {/* Price Widget - shown to all users */}
+      <Page.Row>
+        <Page.RowSection>
+          <CardWrapper>
+            <PriceWidget />
           </CardWrapper>
         </Page.RowSection>
       </Page.Row>
