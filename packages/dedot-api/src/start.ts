@@ -7,7 +7,8 @@ import { setMultiApiStatus } from 'global-bus'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { newRelayChainSmProvider, newSystemChainSmProvider } from './providers'
 import { Services } from './services'
-import type { DefaultService, Service } from './types'
+import type { Service } from './types'
+import type { DefaultService } from './types/serviceDefault'
 
 // Determines service class and apis for a network
 export const getDefaultService = async <T extends NetworkId>(

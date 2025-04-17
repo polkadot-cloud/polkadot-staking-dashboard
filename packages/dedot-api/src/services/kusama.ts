@@ -9,7 +9,7 @@ import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
-import type { DefaultServiceClass } from '../types'
+import type { DefaultServiceClass } from '../types/serviceDefault'
 
 export class KusamaService
   implements DefaultServiceClass<KusamaApi, KusamaPeopleApi, KusamaApi>

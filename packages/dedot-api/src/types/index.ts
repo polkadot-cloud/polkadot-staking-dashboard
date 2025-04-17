@@ -9,15 +9,10 @@ import type {
 } from '@dedot/chaintypes'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
-import type { DedotClient } from 'dedot'
-import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
-import type { CoreConsts } from '../consts/core'
-import type { StakingConsts } from '../consts/staking'
+import type { ApiStatus } from 'types'
 import type { KusamaService } from '../services/kusama'
 import type { PolkadotService } from '../services/polkadot'
 import type { WestendService } from '../services/westend'
-import type { ApiStatus } from '../spec/apiStatus'
-import type { ChainSpecs } from '../spec/chainSpecs'
 
 // All available chains
 export type Chain =
@@ -57,35 +52,8 @@ export abstract class ServiceClass {
   abstract unsubscribe(): Promise<void>
 }
 
-// Required interface default services must implement
-export abstract class DefaultServiceClass<
-  RelayApi extends RelayChain,
-  PeopleApi extends PeopleChain,
-  StakingApi extends StakingChain,
-> extends ServiceClass {
-  constructor(
-    public networkConfig: NetworkConfig,
-    public apiRelay: DedotClient<RelayApi>,
-    public apiPeople: DedotClient<PeopleApi>
-  ) {
-    super()
-  }
-  abstract ids: [NetworkId, SystemChainId]
-
-  abstract apiStatus: {
-    relay: ApiStatus<RelayApi>
-    people: ApiStatus<PeopleApi>
-  }
-  abstract relayChainSpec: ChainSpecs<RelayApi>
-  abstract peopleChainSpec: ChainSpecs<PeopleApi>
-
-  abstract coreConsts: CoreConsts<RelayApi>
-  abstract stakingConsts: StakingConsts<StakingApi>
+// NOTE: Events not currently in use
+export interface DisaptchEvent {
+  apiStatus: ApiStatus
 }
-
-// Default service returns the service itself, along with relay & people chain apis
-export type DefaultService<T extends keyof ServiceType> = {
-  Service: ServiceType[T]
-  apis: [DedotClient<Service[T][0]>, DedotClient<Service[T][1]>]
-  ids: [NetworkId, SystemChainId]
-}
+export type EventKey = keyof DisaptchEvent
