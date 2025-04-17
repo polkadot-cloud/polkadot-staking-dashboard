@@ -58,10 +58,10 @@ export class Apis {
 
     //3. Initialize chain instances
 
-    this.instances[network].initialize(type, rpcEndpoint)
+    this.instances[network].initialize(rpcEndpoint)
 
     // NOTE: Currently defaulting to websocket connection for system chains:
-    this.instances[`people-${network}`].initialize(type, 'IBP2')
+    this.instances[`people-${network}`].initialize('IBP2')
   }
 
   // Gracefully disconnect and then destroy an Api instance
@@ -69,14 +69,14 @@ export class Apis {
     // Disconnect from relay chain Api instance
     const api = this.instances[network]
     if (api) {
-      await api.disconnect(true)
+      await api.disconnect()
       delete this.instances[network]
     }
 
     // Disconnect from People chain Api instance
     const peopleApi = this.instances[`people-${network}`]
     if (peopleApi) {
-      await peopleApi.disconnect(true)
+      await peopleApi.disconnect()
       delete this.instances[`people-${network}`]
     }
   }

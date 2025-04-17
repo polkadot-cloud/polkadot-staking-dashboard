@@ -7,7 +7,6 @@ import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types'
 import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types'
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type {
-  APIEventDetail,
   EraRewardPointsEvent,
   PapiReadyEvent,
   TxSubmissionItem,
@@ -35,7 +34,6 @@ declare global {
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>
-    'api-status': CustomEvent<APIEventDetail>
     'api-ready': CustomEvent<PapiReadyEvent>
     'online-status': CustomEvent<OnlineStatusEvent>
     'new-block-number': CustomEvent<BlockNumberEventDetail>
