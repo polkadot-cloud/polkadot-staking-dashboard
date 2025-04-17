@@ -1,9 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ExternalAccount } from '@w3ux/types'
 import { ExternalAccountsKey } from 'consts'
-import type { NetworkId } from 'types'
+import type { ExternalAccount, NetworkId } from 'types'
 import { _externalAccounts } from './private'
 
 export const externalAccounts$ = _externalAccounts.asObservable()
