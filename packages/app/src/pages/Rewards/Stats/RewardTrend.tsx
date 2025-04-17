@@ -3,6 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -20,17 +21,15 @@ import { useTranslation } from 'react-i18next'
 
 export const RewardTrend = () => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { unit, units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activeEra } = useApi()
   const { inSetup } = useStaking()
   const { erasPerDay } = useErasPerDay()
   const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
-  const membership = getPoolMembership(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const membership = getPoolMembership(activeAddress)
   const eras = erasPerDay.multipliedBy(30).toNumber()
   // NOTE: 30 day duration in seconds
   const duration = 2592000
@@ -40,10 +39,10 @@ export const RewardTrend = () => {
 
   // Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
   const getRewardTrend = async () => {
-    if (activeAccount && activeEra.index.isGreaterThan(0)) {
+    if (activeAddress && activeEra.index.isGreaterThan(0)) {
       const result = membership
-        ? await fetchPoolRewardTrend(network, activeAccount, duration)
-        : await fetchNominatorRewardTrend(network, activeAccount, eras)
+        ? await fetchPoolRewardTrend(network, activeAddress, duration)
+        : await fetchNominatorRewardTrend(network, activeAddress, eras)
       setRewardTrend(result)
     }
   }
@@ -54,7 +53,7 @@ export const RewardTrend = () => {
       getRewardTrend()
     }
   }, [
-    activeAccount,
+    activeAddress,
     network,
     activeEra.index.toString(),
     membership,

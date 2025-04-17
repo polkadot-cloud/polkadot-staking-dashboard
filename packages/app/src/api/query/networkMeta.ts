@@ -3,8 +3,8 @@
 
 import { Base } from 'api/base'
 import BigNumber from 'bignumber.js'
-import type { ChainId } from 'common-types'
 import type { APIActiveEra } from 'contexts/Api/types'
+import type { ChainId } from 'types'
 import { perbillToPercent, stringToBn } from 'utils'
 
 export class NetworkMeta extends Base {
@@ -82,16 +82,16 @@ export class NetworkMeta extends Base {
 
     // Format max pool members to be a BigNumber, or null if it's not set.
     const maxPoolMembers = maxPoolMembersRaw
-      ? new BigNumber(maxPoolMembersRaw.toString())
+      ? new BigNumber(maxPoolMembersRaw)
       : null
 
     // Format max pool members per pool to be a BigNumber, or null if it's not set.
     const maxPoolMembersPerPool = maxPoolMembersPerPoolRaw
-      ? new BigNumber(maxPoolMembersPerPoolRaw.toString())
+      ? new BigNumber(maxPoolMembersPerPoolRaw)
       : null
 
     // Format max pools to be a BigNumber, or null if it's not set.
-    const maxPools = maxPoolsRaw ? new BigNumber(maxPoolsRaw.toString()) : null
+    const maxPools = maxPoolsRaw ? new BigNumber(maxPoolsRaw) : null
 
     return {
       networkMetrics: {

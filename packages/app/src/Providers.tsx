@@ -3,14 +3,12 @@
 
 import { withProviders } from '@w3ux/factories'
 import {
-  ExtensionAccountsProvider,
   ExtensionsProvider,
-  LedgerAccountsProvider,
-  VaultAccountsProvider,
-  WCAccountsProvider,
+  HardwareAccountsProvider,
 } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { getNetworkData } from 'consts/util'
+import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
 import { BondedProvider } from 'contexts/Bonded'
@@ -49,33 +47,25 @@ import { ThemedRouter } from 'Themes'
 import { OverlayProvider } from 'ui-overlay'
 
 export const Providers = () => {
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
-  const { activeAccount, setActiveAccount } = useActiveAccounts()
+  const { network } = useNetwork()
+  const { ss58 } = getNetworkData(network)
 
   return withProviders(
     // !! Provider order matters.
     [
+      ActiveAccountsProvider,
       UIProvider,
       [APIProvider, { network }],
       LedgerHardwareProvider,
-      ExtensionsProvider,
       [
-        ExtensionAccountsProvider,
+        ExtensionsProvider,
 
         {
           dappName: DappName,
-          network,
           ss58,
-          activeAccount,
-          setActiveAccount,
         },
       ],
-      WCAccountsProvider,
-      VaultAccountsProvider,
-      LedgerAccountsProvider,
+      HardwareAccountsProvider,
       ExternalAccountsProvider,
       OtherAccountsProvider,
       ImportedAccountsProvider,

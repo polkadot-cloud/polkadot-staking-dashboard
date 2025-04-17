@@ -4,6 +4,8 @@
 import { faMinus, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -21,21 +23,18 @@ import { planckToUnitBn } from 'utils'
 export const ManageBond = () => {
   const { t } = useTranslation('pages')
 
-  const {
-    networkData: {
-      units,
-      brand: { token: Token },
-    },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { openModal } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { isBonding, isMember, activePool, isDepositor } = useActivePool()
 
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const { units } = getNetworkData(network)
+  const Token = getChainIcons(network).token
+  const allTransferOptions = getTransferOptions(activeAddress)
   const {
     pool: { active, totalUnlocking, totalUnlocked },
     transferrableBalance,
@@ -46,7 +45,7 @@ export const ManageBond = () => {
     syncing ||
     !isBonding() ||
     !isMember() ||
-    isReadOnlyAccount(activeAccount) ||
+    isReadOnlyAccount(activeAddress) ||
     state === 'Destroying'
   const canLeavePool = isMember() && !isDepositor() && active?.isGreaterThan(0)
 

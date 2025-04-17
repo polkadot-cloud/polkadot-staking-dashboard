@@ -1,11 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ExtensionAccount, ExternalAccount } from '@w3ux/types'
+import type { ExtensionAccount } from '@w3ux/types'
 import type BigNumber from 'bignumber.js'
 import type { Balance } from 'contexts/Balances/types'
 import type { ClaimPermission } from 'contexts/Pools/types'
-import type { BondFor, MaybeAddress } from 'types'
+import type { BondFor, ExternalAccount, MaybeAddress } from 'types'
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean

@@ -5,6 +5,7 @@ import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import { PoolBondExtra } from 'api/tx/poolBondExtra'
 import { StakingBondExtra } from 'api/tx/stakingBondExtra'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -24,23 +25,21 @@ import { planckToUnitBn } from 'utils'
 export const Bond = () => {
   const { t } = useTranslation('modals')
   const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
-  const { activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
-  const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal
+  const { network } = useNetwork()
+  const { activePool } = useActivePool()
+  const { activeAddress } = useActiveAccounts()
+  const { getSignerWarnings } = useSignerWarnings()
+  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { unit, units } = getNetworkData(network)
 
   const { bondFor } = options
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
-  const { nominate, transferrableBalance } = getTransferOptions(activeAccount)
+  const { nominate, transferrableBalance } = getTransferOptions(activeAddress)
 
   const freeToBond = planckToUnitBn(
     (bondFor === 'nominator'
@@ -81,12 +80,10 @@ export const Bond = () => {
   let bondAfterTxFees: BigNumber
 
   if (enoughToCoverTxFees) {
-    bondAfterTxFees = new BigNumber(unitToPlanck(bond.bond, units).toString())
+    bondAfterTxFees = new BigNumber(unitToPlanck(bond.bond, units))
   } else {
     bondAfterTxFees = BigNumber.max(
-      new BigNumber(unitToPlanck(String(bond.bond), units).toString()).minus(
-        largestTxFee
-      ),
+      new BigNumber(unitToPlanck(String(bond.bond), units)).minus(largestTxFee),
       0
     )
   }
@@ -110,7 +107,7 @@ export const Bond = () => {
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return null
     }
     return determineTx(bondToSubmit)
@@ -118,7 +115,7 @@ export const Bond = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(bondAfterTxFees),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -126,7 +123,7 @@ export const Bond = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

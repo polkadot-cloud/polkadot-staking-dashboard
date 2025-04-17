@@ -22,10 +22,10 @@ import type { MaybeAddress } from 'types'
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { getPayeeItems } = usePayeeConfig()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getNominatorSetup, setActiveAccountSetup } = useSetup()
 
-  const setup = getNominatorSetup(activeAccount)
+  const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
   const { payee } = progress
 
@@ -63,7 +63,7 @@ export const Payee = ({ section }: SetupStepProps) => {
         payee: defaultPayee,
       })
     }
-  }, [activeAccount])
+  }, [activeAddress])
 
   return (
     <>

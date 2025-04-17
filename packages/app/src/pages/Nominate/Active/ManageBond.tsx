@@ -9,7 +9,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
 import type BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -36,12 +38,7 @@ export const ManageBond = () => {
     isReady,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi()
-  const {
-    networkData: {
-      units,
-      brand: { token: Token },
-    },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
@@ -49,21 +46,23 @@ export const ManageBond = () => {
   const { getBondedAccount } = useBonded()
   const { openModal } = useOverlay().modal
   const { isFastUnstaking } = useUnstaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getFastUnstakeText } = useUnstaking()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
 
-  const controller = getBondedAccount(activeAccount)
-  const ledger = getLedger({ stash: activeAccount })
+  const { units } = getNetworkData(network)
+  const Token = getChainIcons(network).token
+  const controller = getBondedAccount(activeAddress)
+  const ledger = getLedger({ stash: activeAddress })
   const { active }: { active: BigNumber } = ledger
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
 
   const { freeBalance } = allTransferOptions
   const { totalUnlocking, totalUnlocked } = allTransferOptions.nominate
-  const nominationStatus = getNominationStatus(activeAccount, 'nominator')
+  const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
   // Determine whether to display fast unstake button or regular unstake button.
   const unstakeButton =
@@ -85,13 +84,13 @@ export const ManageBond = () => {
         size="md"
         text={t('unstake')}
         iconLeft={faSignOutAlt}
-        disabled={!isReady || isReadOnlyAccount(controller) || !activeAccount}
+        disabled={!isReady || isReadOnlyAccount(controller) || !activeAddress}
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
       />
     )
 
   const unstakeDisabled =
-    inSetup() || syncing || isReadOnlyAccount(activeAccount)
+    inSetup() || syncing || isReadOnlyAccount(activeAddress)
 
   const bondDisabled = unstakeDisabled || isFastUnstaking
 

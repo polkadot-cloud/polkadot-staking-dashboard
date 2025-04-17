@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -22,23 +24,19 @@ import { planckToUnitBn } from 'utils'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
-  const {
-    networkData: {
-      units,
-      unit,
-      brand: { token: Token },
-    },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getBalance, getLocks } = useBalances()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
 
-  const balance = getBalance(activeAccount)
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const Token = getChainIcons(network).token
+  const balance = getBalance(activeAddress)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { edReserved } = allTransferOptions
   const poolBondOpions = allTransferOptions.pool
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
@@ -69,7 +67,7 @@ export const BalanceChart = () => {
   )
 
   // Check account non-staking locks.
-  const { locks } = getLocks(activeAccount)
+  const { locks } = getLocks(activeAddress)
   const locksStaking = locks.find(({ id }) => id === 'staking')
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
@@ -243,9 +241,9 @@ export const BalanceChart = () => {
                     }
                     iconTransform="shrink-1"
                     disabled={
-                      !activeAccount ||
+                      !activeAddress ||
                       syncing ||
-                      !accountHasSigner(activeAccount)
+                      !accountHasSigner(activeAddress)
                     }
                   />
                 }

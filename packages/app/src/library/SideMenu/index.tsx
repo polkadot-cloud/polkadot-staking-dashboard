@@ -8,11 +8,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
-import DiscordSVG from 'assets/svg/brands/discord.svg?react'
-import BookSVG from 'assets/svg/icons/book.svg?react'
-import CloudSVG from 'assets/svg/icons/cloud.svg?react'
-import EnvelopeSVG from 'assets/svg/icons/envelope.svg?react'
-import LogoSVG from 'assets/svg/icons/logo.svg?react'
+import { getChainIcons } from 'assets'
+import DiscordSVG from 'assets/brands/discord.svg?react'
+import BookSVG from 'assets/icons/book.svg?react'
+import CloudSVG from 'assets/icons/cloud.svg?react'
+import EnvelopeSVG from 'assets/icons/envelope.svg?react'
+import LogoSVG from 'assets/icons/logo.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
@@ -39,8 +40,9 @@ export const SideMenu = () => {
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi()
+  const { network } = useNetwork()
   const { openModal } = useOverlay().modal
-  const { networkData, network } = useNetwork()
+  const chainIcons = getChainIcons(network)
 
   // Listen to window resize to automatically hide the side menu on window resize.
   useOnResize(() => {
@@ -104,8 +106,8 @@ export const SideMenu = () => {
             name={capitalizeFirstLetter(network)}
             onClick={() => openModal({ key: 'Networks' })}
             icon={{
-              Svg: networkData.brand.inline.svg,
-              size: networkData.brand.inline.size,
+              Svg: chainIcons.inline.svg,
+              size: chainIcons.inline.size,
             }}
             minimised={sideMenuMinimised}
             bullet={apiStatusClass}

@@ -24,7 +24,7 @@ export const Rewards = () => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // Store page active tab
   const [activeTab, setActiveTab] = useState<number>(0)
@@ -57,10 +57,10 @@ export const Rewards = () => {
     const [allRewards, poolRewards] = await Promise.all([
       fetchRewards(
         network,
-        activeAccount || '',
+        activeAddress || '',
         Math.max(activeEra.index.minus(1).toNumber(), 0)
       ),
-      fetchPoolRewards(network, activeAccount || '', getUnixTime(fromDate)),
+      fetchPoolRewards(network, activeAddress || '', getUnixTime(fromDate)),
     ])
 
     const payouts =
@@ -91,16 +91,16 @@ export const Rewards = () => {
         unclaimedPayouts: [],
         poolClaims: [],
       })
-    } else if (activeAccount && activeEra.index.isGreaterThan(0)) {
+    } else if (activeAddress && activeEra.index.isGreaterThan(0)) {
       setLoading(true)
       getPayoutData()
     }
-  }, [network, activeAccount, pluginEnabled('staking_api'), activeEra.index])
+  }, [network, activeAddress, pluginEnabled('staking_api'), activeEra.index])
 
   // Reset payout list state on account change
   useEffect(() => {
     setPayoutsList([])
-  }, [activeAccount])
+  }, [activeAddress])
 
   return (
     <Wrapper>

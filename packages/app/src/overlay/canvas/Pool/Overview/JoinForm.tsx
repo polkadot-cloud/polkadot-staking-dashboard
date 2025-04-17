@@ -4,6 +4,7 @@
 import { unitToPlanck } from '@w3ux/utils'
 import { JoinPool } from 'api/tx/joinPool'
 import type BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ClaimPermission } from 'contexts/Pools/types'
@@ -27,24 +28,22 @@ import { JoinFormWrapper } from '../Wrappers'
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const {
     closeCanvas,
     config: { options },
   } = useOverlay().canvas
   const { newBatchCall } = useBatchCall()
   const { setActiveAccountSetup } = useSetup()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
+  const { unit, units } = getNetworkData(network)
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
   const {
     pool: { totalPossibleBond },
-  } = getTransferOptions(activeAccount)
+  } = getTransferOptions(activeAddress)
 
   // Pool claim permission value.
   const [claimPermission, setClaimPermission] = useState<ClaimPermission>(
@@ -88,12 +87,12 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     if (!Array.isArray(tx)) {
       return tx
     }
-    return newBatchCall(tx, activeAccount)
+    return newBatchCall(tx, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       closeCanvas()
@@ -110,7 +109,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

@@ -7,9 +7,9 @@ import {
   faSquareMinus,
 } from '@fortawesome/free-solid-svg-icons'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
-import { useWcAccounts } from '@w3ux/react-connect-kit'
+import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { WCAccount } from '@w3ux/types'
+import type { HardwareAccountSource } from '@w3ux/types'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useWalletConnect } from 'contexts/WalletConnect'
@@ -22,13 +22,13 @@ import { Close, useOverlay } from 'ui-overlay'
 export const WalletConnect = () => {
   const { t } = useTranslation()
   const {
-    addWcAccount,
-    getWcAccount,
-    getWcAccounts,
-    wcAccountExists,
-    renameWcAccount,
-    removeWcAccount,
-  } = useWcAccounts()
+    addHardwareAccount,
+    getHardwareAccount,
+    getHardwareAccounts,
+    hardwareAccountExists,
+    renameHardwareAccount,
+    removeHardwareAccount,
+  } = useHardwareAccounts()
   const {
     fetchAddresses,
     wcInitialized,
@@ -42,15 +42,21 @@ export const WalletConnect = () => {
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
 
+  const source: HardwareAccountSource = 'wallet_connect'
+
   // Whether the import account button is active
   const [importActive, setImportActive] = useState<boolean>(false)
 
-  const wcAccounts = getWcAccounts(network)
+  const wcAccounts = getHardwareAccounts(source, network)
+
+  // Handle exist check for a vault address
+  const handleExists = (address: string) =>
+    hardwareAccountExists(source, network, address)
 
   // Handle renaming an address
   const handleRename = (address: string, newName: string) => {
     renameOtherAccount(address, newName)
-    renameWcAccount(network, address, newName)
+    renameHardwareAccount(source, network, address, newName)
   }
 
   // Handle importing of address
@@ -65,7 +71,12 @@ export const WalletConnect = () => {
 
     // Save accounts to local storage
     filteredAccounts.forEach((address) => {
-      const account = addWcAccount(network, address, wcAccounts.length)
+      const account = addHardwareAccount(
+        source,
+        network,
+        address,
+        wcAccounts.length
+      )
       if (account) {
         addOtherAccounts([account])
       }
@@ -77,11 +88,11 @@ export const WalletConnect = () => {
   const disconnectWc = async () => {
     if (confirm(t('areYouSure', { ns: 'app' }))) {
       wcAccounts.forEach(({ address }) => {
-        const existingOther = getWcAccount(network, address)
+        const existingOther = getHardwareAccount(source, network, address)
         if (existingOther) {
           forgetOtherAccounts([existingOther])
         }
-        removeWcAccount(network, address)
+        removeHardwareAccount(source, network, address)
       })
       // Disconnect from Wallet Connect session
       await disconnectWcSession()
@@ -163,16 +174,15 @@ export const WalletConnect = () => {
                 ns: 'modals',
               })}
             />
-            {wcAccounts.map(({ address, name }: WCAccount, i) => (
+            {wcAccounts.map(({ address, name }, i) => (
               <AccountImport.Item
                 key={`wc_imported_${network}_${i}`}
-                network={network}
                 address={address}
                 allowAction={false}
                 last={i === wcAccounts.length - 1}
                 initial={name}
                 Identicon={<Polkicon address={address} fontSize="3.3rem" />}
-                existsHandler={wcAccountExists}
+                existsHandler={handleExists}
                 renameHandler={handleRename}
                 onRemove={() => {
                   // Do nothing

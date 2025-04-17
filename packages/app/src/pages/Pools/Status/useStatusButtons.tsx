@@ -19,15 +19,15 @@ export const useStatusButtons = () => {
   const { isOwner } = useActivePool()
   const { bondedPools } = useBondedPools()
   const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const membership = getPoolMembership(activeAccount)
-  const { active } = getTransferOptions(activeAccount).pool
+  const membership = getPoolMembership(activeAddress)
+  const { active } = getTransferOptions(activeAddress).pool
 
   const getCreateDisabled = () => {
-    if (!isReady || isReadOnlyAccount(activeAccount) || !activeAccount) {
+    if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {
       return true
     }
     if (
@@ -43,8 +43,8 @@ export const useStatusButtons = () => {
 
   const getJoinDisabled = () =>
     !isReady ||
-    isReadOnlyAccount(activeAccount) ||
-    !activeAccount ||
+    isReadOnlyAccount(activeAddress) ||
+    !activeAddress ||
     !bondedPools.length
 
   if (!membership) {

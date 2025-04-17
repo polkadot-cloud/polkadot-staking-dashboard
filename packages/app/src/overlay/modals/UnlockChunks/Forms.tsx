@@ -7,6 +7,7 @@ import { PoolWithdraw } from 'api/tx/poolWithdraw'
 import { StakingRebond } from 'api/tx/stakingRebond'
 import { StakingWithdraw } from 'api/tx/stakingWithdraw'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -43,12 +44,9 @@ export const Forms = forwardRef(
   ) => {
     const { t } = useTranslation('modals')
     const { consts } = useApi()
-    const {
-      network,
-      networkData: { units, unit },
-    } = useNetwork()
+    const { network } = useNetwork()
     const { activePool } = useActivePool()
-    const { activeAccount } = useActiveAccounts()
+    const { activeAddress } = useActiveAccounts()
     const { removePoolMember } = usePoolMembers()
     const { removeFromBondedPools } = useBondedPools()
     const {
@@ -60,10 +58,11 @@ export const Forms = forwardRef(
     const { getSignerWarnings } = useSignerWarnings()
     const { removeFavorite: removeFavoritePool } = useFavoritePools()
 
-    const membership = getPoolMembership(activeAccount)
+    const { unit, units } = getNetworkData(network)
+    const membership = getPoolMembership(activeAddress)
     const { bondFor, poolClosure } = options || {}
     const { historyDepth } = consts
-    const controller = getBondedAccount(activeAccount)
+    const controller = getBondedAccount(activeAddress)
 
     const isStaking = bondFor === 'nominator'
     const isPooling = bondFor === 'pool'
@@ -87,17 +86,17 @@ export const Forms = forwardRef(
         return new StakingWithdraw(network, historyDepth.toNumber()).tx()
       }
       if (task === 'withdraw' && isPooling && activePool) {
-        if (activeAccount) {
+        if (activeAddress) {
           return new PoolWithdraw(
             network,
-            activeAccount,
+            activeAddress,
             historyDepth.toNumber()
           ).tx()
         }
       }
       return null
     }
-    const signingAccount = isStaking ? controller : activeAccount
+    const signingAccount = isStaking ? controller : activeAddress
     const submitExtrinsic = useSubmitExtrinsic({
       tx: getTx(),
       from: signingAccount,
@@ -117,7 +116,7 @@ export const Forms = forwardRef(
           const points = membership?.points ? rmCommas(membership.points) : 0
           const bonded = planckToUnitBn(new BigNumber(points), units)
           if (bonded.isZero()) {
-            removePoolMember(activeAccount)
+            removePoolMember(activeAddress)
           }
         }
       },
@@ -126,7 +125,7 @@ export const Forms = forwardRef(
     const value = unlock?.value ?? new BigNumber(0)
 
     const warnings = getSignerWarnings(
-      activeAccount,
+      activeAddress,
       isStaking,
       submitExtrinsic.proxySupported
     )

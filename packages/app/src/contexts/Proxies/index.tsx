@@ -13,20 +13,21 @@ import {
 import { ProxiesQuery } from 'api/query/proxiesQuery'
 import { AccountProxies } from 'api/subscribe/accountProxies'
 import BigNumber from 'bignumber.js'
-import type { AnyApi, NetworkId } from 'common-types'
-import { isSupportedProxy } from 'config/proxies'
+import type { AnyApi } from 'common-types'
+import { DefaultNetwork } from 'consts/networks'
+import { isSupportedProxy } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
-import { defaultNetwork } from 'contexts/Network/defaults'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
+import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NetworkId } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type {
   Delegates,
@@ -43,9 +44,10 @@ export const [ProxiesContext, useProxies] =
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
-  const { accounts } = useImportedAccounts()
+  const { syncing } = useSyncing()
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
+  const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts()
 
   // Store the proxy accounts of each imported account
@@ -54,7 +56,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   // Store the last network proxies were synced on
   const [lastSyncedNetwork, setLastSyncedNetwork] =
-    useState<NetworkId>(defaultNetwork)
+    useState<NetworkId>(DefaultNetwork)
 
   // Reformats proxies into a list of delegates
   const formatProxiesToDelegates = () => {
@@ -205,7 +207,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       const { address: eventAddress, proxies: eventProxies } = e.detail
 
       const newProxies = eventProxies[0]
-      const reserved = new BigNumber(eventProxies[1].toString())
+      const reserved = new BigNumber(eventProxies[1])
 
       if (newProxies.length) {
         setStateWithRef(
@@ -253,7 +255,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       activeAccount
     ) {
       try {
-        const { address, proxyType } = JSON.parse(localActiveProxy)
+        const { address, source, proxyType } = JSON.parse(localActiveProxy)
         // Add proxy address as external account if not imported
         if (!accounts.find((a) => a.address === address)) {
           const importResult = addExternalAccount(address, 'system')
@@ -263,25 +265,25 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         }
 
         const isActive = (
-          proxies.find(({ delegator }) => delegator === activeAccount)
+          proxies.find(({ delegator }) => delegator === activeAccount.address)
             ?.delegates || []
         ).find((d) => d.delegate === address && d.proxyType === proxyType)
         if (isActive) {
-          setActiveProxy({ address, proxyType })
+          setActiveProxy({ address, source, proxyType })
         }
       } catch (e) {
         // Corrupt local active proxy record. Remove it
         localStorage.removeItem(`${network}_active_proxy`)
       }
     }
-  }, [accounts, activeAccount, proxies, network])
+  }, [stringifiedAccountsKey, activeAccount, proxies, network])
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported
   useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts()
     }
-  }, [accounts, isReady])
+  }, [stringifiedAccountsKey, isReady, syncing])
 
   // Reset active proxy state on network change & unmount
   useEffectIgnoreInitial(() => {

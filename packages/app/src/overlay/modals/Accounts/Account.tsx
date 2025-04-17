@@ -10,6 +10,7 @@ import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -22,6 +23,7 @@ import type { AccountItemProps } from './types'
 export const AccountButton = ({
   label,
   address,
+  source,
   delegator,
   proxyType,
   noBorder = false,
@@ -31,13 +33,14 @@ export const AccountButton = ({
   const { getAccount } = useImportedAccounts()
   const {
     activeProxy,
-    activeAccount,
+    activeAddress,
     setActiveAccount,
     setActiveProxy,
     activeProxyType,
   } = useActiveAccounts()
+  const { network } = useNetwork()
   const { setModalStatus } = useOverlay().modal
-  const { units, unit } = useNetwork().networkData
+  const { unit, units } = getNetworkData(network)
 
   // Accumulate account data.
   const meta = getAccount(address || '')
@@ -58,8 +61,8 @@ export const AccountButton = ({
 
   // Determine if this account is active (active account or proxy).
   const isActive =
-    (connectTo === activeAccount &&
-      address === activeAccount &&
+    (connectTo === activeAddress &&
+      address === activeAddress &&
       !activeProxy) ||
     (connectProxy === activeProxy &&
       proxyType === activeProxyType &&
@@ -70,8 +73,15 @@ export const AccountButton = ({
     if (!imported) {
       return
     }
-    setActiveAccount(getAccount(connectTo)?.address || null)
-    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null)
+    const account = getAccount(connectTo)
+    setActiveAccount(
+      account ? { address: account.address, source: account.source } : null
+    )
+    setActiveProxy(
+      proxyType && connectProxy
+        ? { address: connectProxy, source, proxyType }
+        : null
+    )
     setModalStatus('closing')
   }
 

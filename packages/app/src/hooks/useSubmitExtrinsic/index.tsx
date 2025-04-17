@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useExtensions } from '@w3ux/react-connect-kit'
-import type { LedgerAccount } from '@w3ux/types'
+import type { HardwareAccount } from '@w3ux/types'
 import { formatAccountSs58 } from '@w3ux/utils'
 import { Proxy } from 'api/tx/proxy'
 import { TxSubmission } from 'api/txSubmission'
 import { DappName, ManualSigners } from 'consts'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
-import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useWalletConnect } from 'contexts/WalletConnect'
@@ -42,10 +42,7 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('app')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { getNonce } = useBalances()
   const { signWcTx } = useWalletConnect()
   const { activeProxy } = useActiveAccounts()
@@ -54,6 +51,7 @@ export const useSubmitExtrinsic = ({
   const { openPromptWith, closePrompt } = usePrompt()
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getAccount, requiresManualSign } = useImportedAccounts()
+  const { unit, units } = getNetworkData(network)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)
@@ -66,13 +64,13 @@ export const useSubmitExtrinsic = ({
       tx.decodedCall?.value?.type === 'proxy'
     ) {
       if (activeProxy) {
-        from = activeProxy
+        from = activeProxy.address
       }
     } else {
       if (activeProxy && isProxySupported(tx, from)) {
         // Update submit address to active proxy account
         const real = from
-        from = activeProxy
+        from = activeProxy.address
 
         // Check not a batch transactions
         if (
@@ -131,10 +129,10 @@ export const useSubmitExtrinsic = ({
       }
       switch (source) {
         case 'ledger':
-          signer = await new LedgerSigner(
-            pubKey,
-            getLedgerApp(network).txMetadataChainId
-          ).getPolkadotSigner(networkInfo, (account as LedgerAccount).index)
+          signer = await new LedgerSigner(pubKey).getPolkadotSigner(
+            networkInfo,
+            (account as HardwareAccount).index
+          )
           break
 
         case 'vault':

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base'
-import type { ChainId } from 'common-types'
 import type { ClaimPermission } from 'contexts/Pools/types'
+import type { ChainId } from 'types'
 
 export class PoolSetClaimPermission extends Base {
   #claimPermission: ClaimPermission

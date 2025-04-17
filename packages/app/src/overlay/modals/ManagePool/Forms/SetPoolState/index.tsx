@@ -31,7 +31,7 @@ export const SetPoolState = ({
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { isOwner, isBouncer, activePool } = useActivePool()
   const { updateBondedPools, getBondedPool } = useBondedPools()
@@ -104,7 +104,7 @@ export const SetPoolState = ({
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -129,7 +129,7 @@ export const SetPoolState = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

@@ -1,9 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ImportedAccount } from '@w3ux/types'
-import type { NetworkId } from 'common-types'
-import type { MaybeAddress } from 'types'
+import type { HardwareAccountSource } from '@w3ux/types'
+import type { ImportedAccount, MaybeAddress, NetworkId } from 'types'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 
 export interface OtherAccountsContextInterface {
@@ -13,8 +12,9 @@ export interface OtherAccountsContextInterface {
     type: ExternalAccountImportType
   ) => void
   renameOtherAccount: (address: MaybeAddress, newName: string) => void
-  importLocalOtherAccounts: (
-    g: (network: NetworkId) => ImportedAccount[]
+  importLocalOtherAccounts: <T extends HardwareAccountSource | string>(
+    source: T,
+    getter: (source: T, network: NetworkId) => ImportedAccount[]
   ) => void
   forgetOtherAccounts: (accounts: ImportedAccount[]) => void
   accountsInitialised: boolean

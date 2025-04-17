@@ -2,38 +2,55 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { formatAccountSs58, localStorageOrDefault } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
-import type { ActiveProxy } from 'contexts/ActiveAccounts/types'
+import type { ActiveAccount, ActiveProxy, NetworkId } from 'types'
 
-// Gets local `activeAccount` for a network
-export const getActiveAccountLocal = (network: NetworkId, ss58: number) => {
-  const address = localStorageOrDefault(`${network}_active_account`, null)
-  if (address) {
-    const formattedAddress = formatAccountSs58(address, ss58)
+// Gets an active account from local storage for a network
+export const getActiveAccountLocal = (
+  network: NetworkId,
+  ss58: number
+): ActiveAccount => {
+  try {
+    const account = localStorageOrDefault(
+      `${network}_active_account`,
+      null,
+      true
+    ) as ActiveAccount
 
-    if (formattedAddress) {
-      return formattedAddress
+    if (account) {
+      const formatted = formatAccountSs58(account.address, ss58)
+      if (formatted) {
+        account.address = formatted
+        return account
+      }
     }
+    return null
+  } catch (e) {
+    localStorage.removeItem(`${network}_active_account`)
+    return null
   }
-  return null
 }
 
-// Gets local `activeProxy` for a network
+// Gets an active proxy from local storage for a network
 export const getActiveProxyLocal = (
   network: NetworkId,
   ss58: number
-): ActiveProxy | null => {
-  const localActiveProxy = localStorageOrDefault(
-    `${network}_active_proxy`,
-    null
-  ) as ActiveProxy | null
+): ActiveProxy => {
+  try {
+    const account = localStorageOrDefault(
+      `${network}_active_proxy`,
+      null
+    ) as ActiveProxy
 
-  if (localActiveProxy && localActiveProxy?.address) {
-    const formattedAddress = formatAccountSs58(localActiveProxy.address, ss58)
-    if (formattedAddress) {
-      localActiveProxy.address = formattedAddress
-      return localActiveProxy
+    if (account && account?.address) {
+      const formatted = formatAccountSs58(account.address, ss58)
+      if (formatted) {
+        account.address = formatted
+        return account
+      }
     }
+    return null
+  } catch (e) {
+    localStorage.removeItem(`${network}_active_proxy`)
+    return null
   }
-  return null
 }

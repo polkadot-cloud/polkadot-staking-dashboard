@@ -26,13 +26,13 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { getThemeValue } = useThemeValues()
 
   const { syncing } = useSyncing(['balances'])
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getTransferOptions } = useTransferOptions()
   const { state } = activePool?.bondedPool || {}
 
   const { bondDuration } = consts
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
 
   const totalUnlockChunks =
     bondFor === 'nominator'

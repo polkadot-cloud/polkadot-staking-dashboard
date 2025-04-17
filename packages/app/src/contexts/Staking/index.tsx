@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { ExternalAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
 import { ErasStakersOverview } from 'api/query/erasStakersOverview'
 import type { AnyApi } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -19,7 +19,12 @@ import type {
 import { Syncs } from 'controllers/Syncs'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { AnyJson, MaybeAddress, NominationStatus } from 'types'
+import type {
+  AnyJson,
+  ExternalAccount,
+  MaybeAddress,
+  NominationStatus,
+} from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
@@ -33,12 +38,13 @@ export const [StakingContext, useStaking] =
   createSafeContext<StakingContextInterface>()
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
+  const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
-  const { networkData, network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
   const { getLedger, getNominations } = useBalances()
   const { isReady, activeEra, apiStatus } = useApi()
   const { accounts: connectAccounts } = useImportedAccounts()
-  const { activeAccount, getActiveAccount } = useActiveAccounts()
+  const { units } = getNetworkData(network)
 
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
@@ -67,7 +73,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       } = data
 
       // Check if account hasn't changed since worker started
-      if (getActiveAccount() === who) {
+      if (activeAddress === who) {
         // Syncing current eraStakers is now complete
         Syncs.dispatch('era-stakers', 'complete')
 
@@ -128,8 +134,8 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       era: activeEra.index.toString(),
       networkName: network,
       task: 'processExposures',
-      activeAccount,
-      units: networkData.units,
+      activeAccount: activeAddress,
+      units,
       exposures,
     })
   }
@@ -170,12 +176,12 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     if (!connectAccounts.find((acc) => acc.address === address)) {
       return false
     }
-    return address !== activeAccount && activeAccount !== null
+    return address !== activeAddress && activeAddress !== null
   }
 
   // Helper function to determine whether the controller account has been imported
   const getControllerNotImported = (address: MaybeAddress) => {
-    if (address === null || !activeAccount) {
+    if (address === null || !activeAddress) {
       return false
     }
     // Check if controller is imported
@@ -198,23 +204,23 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper function to determine whether the active account
-  const hasController = () => getBondedAccount(activeAccount) !== null
+  const hasController = () => getBondedAccount(activeAddress) !== null
 
   // Helper function to determine whether the active account is bonding, or is yet to start
   const isBonding = () =>
     hasController() &&
-    getLedger({ stash: activeAccount }).active.isGreaterThan(0)
+    getLedger({ stash: activeAddress }).active.isGreaterThan(0)
 
   // Helper function to determine whether the active account
   const isUnlocking = () =>
-    hasController() && getLedger({ stash: activeAccount }).unlocking.length
+    hasController() && getLedger({ stash: activeAddress }).unlocking.length
 
   // Helper function to determine whether the active account is nominating, or is yet to start
-  const isNominating = () => getNominations(activeAccount).length > 0
+  const isNominating = () => getNominations(activeAddress).length > 0
 
   // Helper function to determine whether the active account is nominating, or is yet to start
   const inSetup = () =>
-    !activeAccount ||
+    !activeAddress ||
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
 
   // Fetch eras stakers from storage
@@ -283,7 +289,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     if (isReady) {
       fetchActiveEraStakers()
     }
-  }, [isReady, activeEra.index, activeAccount])
+  }, [isReady, activeEra.index, activeAddress])
 
   return (
     <StakingContext.Provider

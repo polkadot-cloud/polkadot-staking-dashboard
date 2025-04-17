@@ -43,16 +43,16 @@ export const Inner = () => {
   const { network } = useNetwork()
   const { activePool } = useActivePool()
   const { getBondedAccount } = useBonded()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { updatePoolNominations } = useBondedPools()
   const { defaultNominations, nominations, setNominations, method } =
     useManageNominations()
 
   const { maxNominations } = consts
-  const controller = getBondedAccount(activeAccount)
+  const controller = getBondedAccount(activeAddress)
   const bondFor = options?.bondFor || 'nominator'
   const isPool = bondFor === 'pool'
-  const signingAccount = isPool ? activeAccount : controller
+  const signingAccount = isPool ? activeAddress : controller
 
   // Whether to display revert changes button
   const allowRevert = !!method

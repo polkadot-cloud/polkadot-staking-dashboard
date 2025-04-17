@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { setStateWithRef } from '@w3ux/utils'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
-import { useRef, useState } from 'react'
-import type { MaybeAddress } from 'types'
-import type { ActiveAccountsContextInterface, ActiveProxy } from './types'
+import { useState } from 'react'
+import type { ActiveAccount, ActiveProxy } from 'types'
+import type { ActiveAccountsContextInterface } from './types'
 
 export const [ActiveAccountsContext, useActiveAccounts] =
   createSafeContext<ActiveAccountsContextInterface>()
@@ -20,56 +19,46 @@ export const ActiveAccountsProvider = ({
   const { network } = useNetwork()
 
   // Store the currently active account
-  const [activeAccount, setActiveAccountState] = useState<MaybeAddress>(null)
-  const activeAccountRef = useRef<string | null>(activeAccount)
+  const [activeAccount, setActiveAccountState] = useState<ActiveAccount>(null)
 
   // Store the active proxy account
   const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null)
-  const activeProxyRef = useRef(activeProxy)
 
   // Setter for the active proxy account
-  const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
+  const setActiveProxy = (account: ActiveProxy, updateLocal = true) => {
     if (updateLocal) {
-      if (newActiveProxy) {
-        localStorage.setItem(
-          `${network}_active_proxy`,
-          JSON.stringify(newActiveProxy)
-        )
-      } else {
+      if (account === null) {
         localStorage.removeItem(`${network}_active_proxy`)
+      } else {
+        localStorage.setItem(`${network}_active_proxy`, JSON.stringify(account))
       }
     }
-    setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef)
+    setActiveProxyState(account)
   }
 
   // Setter for the active account
-  const setActiveAccount = (
-    newActiveAccount: MaybeAddress,
-    updateLocalStorage = true
-  ) => {
-    if (updateLocalStorage) {
-      if (newActiveAccount === null) {
+  const setActiveAccount = (account: ActiveAccount, updateLocal = true) => {
+    if (updateLocal) {
+      if (account === null) {
         localStorage.removeItem(`${network}_active_account`)
       } else {
-        localStorage.setItem(`${network}_active_account`, newActiveAccount)
+        localStorage.setItem(
+          `${network}_active_account`,
+          JSON.stringify(account)
+        )
       }
     }
-
-    setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef)
+    setActiveAccountState(account)
   }
-
-  // Getter for the active account
-  const getActiveAccount = () => activeAccountRef.current
 
   return (
     <ActiveAccountsContext.Provider
       value={{
-        activeAccount: activeAccountRef.current,
-        activeProxy: activeProxy?.address || null,
+        activeAccount,
+        activeAddress: activeAccount?.address || null,
+        activeProxy,
         activeProxyType: activeProxy?.proxyType || null,
-        activeProxyRef: activeProxyRef.current || null,
         setActiveAccount,
-        getActiveAccount,
         setActiveProxy,
       }}
     >

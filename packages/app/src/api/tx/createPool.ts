@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base'
-import type { ChainId } from 'common-types'
 import { Binary } from 'polkadot-api'
-import type { PoolRoles } from 'types'
+import type { ChainId, PoolRoles } from 'types'
 
 export class CreatePool extends Base {
   #from: string

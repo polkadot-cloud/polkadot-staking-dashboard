@@ -28,9 +28,9 @@ export const [BondedContext, useBonded] =
 export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
-  const { accounts } = useImportedAccounts()
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
+  const { accounts, stringifiedAccountsKey } = useImportedAccounts()
 
   // Bonded accounts state
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([])
@@ -111,7 +111,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     if (isReady) {
       handleSyncAccounts()
     }
-  }, [accounts, network, isReady])
+  }, [stringifiedAccountsKey, network, isReady])
 
   // Handle new bonded account events
   useEventListener(

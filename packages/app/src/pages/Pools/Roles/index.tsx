@@ -34,7 +34,7 @@ export const Roles = ({
   const { openHelp } = useHelp()
   const { network } = useNetwork()
   const { openModal } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isOwner, activePool } = useActivePool()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
@@ -70,7 +70,7 @@ export const Roles = ({
     setIsEditing(false)
     setRoleEdits(initialiseEdits)
     setFetched(false)
-  }, [activeAccount, network])
+  }, [activeAddress, network])
 
   // fetch accounts meta batch
   useEffect(() => {
@@ -158,7 +158,7 @@ export const Roles = ({
                 iconLeft={faTimesCircle}
                 iconTransform="grow-1"
                 text={t('cancel')}
-                disabled={syncing || isReadOnlyAccount(activeAccount)}
+                disabled={syncing || isReadOnlyAccount(activeAddress)}
                 onClick={() => cancelHandler()}
               />
             )}
@@ -169,7 +169,7 @@ export const Roles = ({
               text={isEditing ? t('save') : t('edit')}
               disabled={
                 syncing ||
-                isReadOnlyAccount(activeAccount) ||
+                isReadOnlyAccount(activeAddress) ||
                 !isRoleEditsValid()
               }
               onClick={() => (isEditing ? saveHandler() : editHandler())}

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { AccountBalances } from 'api/subscribe/accountBalances'
-import type { NetworkId } from 'common-types'
 import type { ActiveBalance } from 'contexts/Balances/types'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
+import type { NetworkId } from 'types'
 
 export class Balances {
   // Accounts that are being subscribed to.

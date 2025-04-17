@@ -5,6 +5,7 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -17,10 +18,10 @@ import { planckToUnitBn } from 'utils'
 export const Announcements = () => {
   const { t } = useTranslation('pages')
   const { consts } = useApi()
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
+
+  const { unit, units } = getNetworkData(network)
   const { rewardAccountBalance } = activePool || {}
   const { totalRewardsClaimed } = activePool?.rewardPool || {}
   const { existentialDeposit } = consts
@@ -28,9 +29,7 @@ export const Announcements = () => {
   // calculate the latest reward account balance
   const rewardPoolBalance = BigNumber.max(
     0,
-    new BigNumber(rewardAccountBalance?.toString() || 0).minus(
-      existentialDeposit
-    )
+    new BigNumber(rewardAccountBalance || 0).minus(existentialDeposit)
   )
   const rewardBalance = planckToUnitBn(rewardPoolBalance, units)
 

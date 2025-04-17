@@ -3,6 +3,7 @@
 
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -31,17 +32,16 @@ export const BondFeedback = ({
   displayFirstWarningOnly = true,
 }: BondFeedbackProps) => {
   const { t } = useTranslation('app')
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { isDepositor } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const {
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi()
+  const { unit, units } = getNetworkData(network)
   const { getTransferOptions } = useTransferOptions()
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const allTransferOptions = getTransferOptions(activeAddress)
 
   const defaultBondStr = defaultBond ? String(defaultBond) : ''
 
@@ -70,7 +70,7 @@ export const BondFeedback = ({
   }
 
   // current bond value BigNumber
-  const bondBn = new BigNumber(unitToPlanck(bond.bond, units).toString())
+  const bondBn = new BigNumber(unitToPlanck(bond.bond, units))
 
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState<boolean>(false)
@@ -158,7 +158,7 @@ export const BondFeedback = ({
     setBond({
       bond: defaultBondStr,
     })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // handle errors on input change
   useEffect(() => {

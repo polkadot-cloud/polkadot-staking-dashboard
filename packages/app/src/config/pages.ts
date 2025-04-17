@@ -10,7 +10,6 @@ import { Pools } from 'pages/Pools'
 import { Rewards } from 'pages/Rewards'
 import { Validators } from 'pages/Validators'
 
-const BASE_URL = import.meta.env.BASE_URL
 export const PageCategories: PageCategoryItems = [
   {
     id: 1,
@@ -30,7 +29,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 1,
     key: 'home',
-    uri: `${BASE_URL}`,
+    uri: `${import.meta.env.BASE_URL}`,
     hash: '/home',
     Entry: Home,
     lottie: 'home',
@@ -38,7 +37,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'overview',
-    uri: `${BASE_URL}overview`,
+    uri: `${import.meta.env.BASE_URL}`,
     hash: '/overview',
     Entry: Overview,
     lottie: 'globe',
@@ -46,7 +45,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'pools',
-    uri: `${BASE_URL}pools`,
+    uri: `${import.meta.env.BASE_URL}pools`,
     hash: '/pools',
     Entry: Pools,
     lottie: 'groups',
@@ -54,7 +53,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'nominate',
-    uri: `${BASE_URL}nominate`,
+    uri: `${import.meta.env.BASE_URL}nominate`,
     hash: '/nominate',
     Entry: Nominate,
     lottie: 'trending',
@@ -62,7 +61,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'rewards',
-    uri: `${BASE_URL}rewards`,
+    uri: `${import.meta.env.BASE_URL}rewards`,
     hash: '/rewards',
     Entry: Rewards,
     lottie: 'analytics',
@@ -70,7 +69,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 3,
     key: 'validators',
-    uri: `${BASE_URL}validators`,
+    uri: `${import.meta.env.BASE_URL}validators`,
     hash: '/validators',
     Entry: Validators,
     lottie: 'view',
@@ -78,7 +77,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 3,
     key: 'operators',
-    uri: `${BASE_URL}operators`,
+    uri: `${import.meta.env.BASE_URL}operators`,
     hash: '/operators',
     Entry: Operators,
     lottie: 'label',

@@ -34,9 +34,9 @@ export const Active = () => {
   const { openCanvas } = useOverlay().canvas
   const { isFastUnstaking } = useUnstaking()
   const { formatWithPrefs } = useValidators()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
-  const nominated = formatWithPrefs(getNominations(activeAccount))
+  const nominated = formatWithPrefs(getNominations(activeAddress))
   const ROW_HEIGHT = 220
 
   return (
@@ -64,7 +64,7 @@ export const Active = () => {
         <Page.Row>
           <CardWrapper>
             {nominated?.length || inSetup() || syncing ? (
-              <Nominations bondFor="nominator" nominator={activeAccount} />
+              <Nominations bondFor="nominator" nominator={activeAddress} />
             ) : (
               <>
                 <CardHeader action margin>
@@ -88,7 +88,7 @@ export const Active = () => {
                           scroll: false,
                           options: {
                             bondFor: 'nominator',
-                            nominator: activeAccount,
+                            nominator: activeAddress,
                             nominated,
                           },
                         })

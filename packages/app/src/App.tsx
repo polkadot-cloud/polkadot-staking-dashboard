@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { NetworkProvider } from 'contexts/Network'
 import { ThemesProvider } from 'contexts/Themes'
 import { ThemeValuesProvider } from 'contexts/ThemeValues'
@@ -14,9 +13,7 @@ export const App = () => (
     <ThemesProvider>
       <ThemeValuesProvider>
         <NetworkProvider>
-          <ActiveAccountsProvider>
-            <Providers />
-          </ActiveAccountsProvider>
+          <Providers />
         </NetworkProvider>
       </ThemeValuesProvider>
     </ThemesProvider>
