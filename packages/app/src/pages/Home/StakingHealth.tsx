@@ -45,7 +45,7 @@ const StatusMessage = styled.div`
 
 export const StakingHealth = () => {
   const { t } = useTranslation('pages')
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { inSetup } = useStaking()
   const { inPool } = useActivePool()
   const { getNominations, getPoolMembership } = useBalances()
@@ -56,14 +56,14 @@ export const StakingHealth = () => {
   const { getStakedBalance } = useTransferOptions()
 
   // Get nominations if user is nominating
-  const nominated = formatWithPrefs(getNominations(activeAccount))
+  const nominated = formatWithPrefs(getNominations(activeAddress))
   const fullCommissionNominees = nominated.filter(
     (nominee) => nominee.prefs.commission === 100
   )
 
   // Get nominator status for message
   const { message: nominatorStatusMessage } = getNominationStatus(
-    activeAccount,
+    activeAddress,
     'nominator'
   )
 
@@ -72,7 +72,7 @@ export const StakingHealth = () => {
   const isInPool = inPool()
 
   // Get pool information if user is in a pool
-  const membership = getPoolMembership(activeAccount)
+  const membership = getPoolMembership(activeAddress)
   const poolId = membership?.poolId ? String(membership.poolId) : null
 
   // Get pool metadata if available
@@ -109,7 +109,7 @@ export const StakingHealth = () => {
 
     let individualRate = new BigNumber(0)
     const stakedAmount = new BigNumber(
-      getStakedBalance(activeAccount).toString()
+      getStakedBalance(activeAddress).toString()
     )
 
     if (stakedAmount.isZero()) {

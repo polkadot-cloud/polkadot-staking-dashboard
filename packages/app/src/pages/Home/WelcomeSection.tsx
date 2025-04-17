@@ -3,7 +3,7 @@
 
 import { faWallet } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import HandWaveIcon from 'assets/svg/icons/hand.svg?react'
+import HandWaveIcon from 'assets/icons/hand.svg?react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
@@ -13,15 +13,15 @@ import { WelcomeWrapper } from './Wrappers'
 
 export const WelcomeSection = () => {
   const { t } = useTranslation('pages')
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getAccount } = useImportedAccounts()
 
   // Get account details if available
-  const accountData = activeAccount ? getAccount(activeAccount) : null
+  const accountData = activeAddress ? getAccount(activeAddress) : null
   const accountName = accountData?.name || null
 
   // If user has an active account, show personalized welcome
-  if (activeAccount) {
+  if (activeAddress) {
     return (
       <WelcomeWrapper>
         <CardHeader>
@@ -35,8 +35,8 @@ export const WelcomeSection = () => {
           <div className="account-info">
             <span>{accountName || t('activeAccount')}:</span>
             <div className="account-address-container">
-              <span className="account-address">{activeAccount}</span>
-              <ButtonCopy value={activeAccount} size="0.95rem" xMargin />
+              <span className="account-address">{activeAddress}</span>
+              <ButtonCopy value={activeAddress} size="0.95rem" xMargin />
             </div>
           </div>
           <p className="welcome-message">{t('welcomeMessage')}</p>

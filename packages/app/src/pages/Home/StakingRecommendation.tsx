@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -106,14 +107,13 @@ const ActionButtons = styled.div`
 
 export const StakingRecommendation = () => {
   const { t } = useTranslation('pages')
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getBalance } = useBalances()
   const navigate = useNavigate()
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
 
-  const balance = getBalance(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const balance = getBalance(activeAddress)
   const { free } = balance
   const freeBalance = planckToUnitBn(free, units)
 
@@ -128,7 +128,7 @@ export const StakingRecommendation = () => {
         <h4>{t('smartStakingRecommendation')}</h4>
       </CardHeader>
       <RecommendationWrapper>
-        {!activeAccount ? (
+        {!activeAddress ? (
           <div
             style={{
               display: 'flex',

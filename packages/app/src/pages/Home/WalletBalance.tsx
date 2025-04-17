@@ -1,7 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useCurrency } from 'contexts/Currency'
@@ -30,20 +32,16 @@ const SendButton = styled(ButtonPrimary)`
 
 export const WalletBalance = () => {
   const { t } = useTranslation('pages')
-  const {
-    networkData: {
-      units,
-      unit,
-      brand: { token: Token },
-    },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { currency } = useCurrency()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getBalance, getLocks } = useBalances()
   const { feeReserve, getTransferOptions } = useTransferOptions()
 
-  const balance = getBalance(activeAccount)
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const { units, unit } = getNetworkData(network)
+  const Token = getChainIcons(network).token
+  const balance = getBalance(activeAddress)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { edReserved } = allTransferOptions
   const poolBondOpions = allTransferOptions.pool
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
@@ -74,7 +72,7 @@ export const WalletBalance = () => {
   )
 
   // Check account non-staking locks.
-  const { locks } = getLocks(activeAccount)
+  const { locks } = getLocks(activeAddress)
   const locksStaking = locks.find(({ id }) => id === 'staking')
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
@@ -146,7 +144,7 @@ export const WalletBalance = () => {
           />
           <SendButton
             text={t('send')}
-            disabled={!activeAccount || totalBalance.isZero()}
+            disabled={!activeAddress || totalBalance.isZero()}
             onClick={() => {}}
           />
         </HeaderActions>
