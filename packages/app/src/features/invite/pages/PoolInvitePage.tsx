@@ -24,18 +24,55 @@ import type { ClaimPermission } from 'contexts/Pools/types'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults'
+import { Apis } from 'controllers/Apis'
+import { Identities } from 'controllers/Identities'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
+import { getIdentityDisplay } from 'library/List/Utils'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import styled from 'styled-components'
-import type { MaybeAddress } from 'types'
+import type { ChainId, MaybeAddress, SystemChainId } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
+import {
+  ActionSection,
+  AddressesSection,
+  AddressItem,
+  AddressLabel,
+  AddressText,
+  AddressValue,
+  BondInputWrapper,
+  BondSection,
+  CopyButton,
+  ErrorState,
+  IdentityWrapper,
+  InviteHeader,
+  LoadingState,
+  PoolCard,
+  PoolHeader,
+  PoolIcon,
+  PoolId,
+  PoolInfo,
+  PoolState,
+  PoolStats,
+  PoolWarningMessage,
+  RoleIdentity,
+  RoleItem,
+  RoleLabel,
+  RolesSection,
+  RoleText,
+  RoleValue,
+  SectionTitle,
+  StatContent,
+  StatIcon,
+  StatItem,
+  StatLabel,
+  StatValue,
+} from './Wrappers'
 
 // Define interface for pool details
 interface PoolDetails {
@@ -61,7 +98,7 @@ interface PoolDetails {
 }
 
 export const PoolInvitePage = () => {
-  const { t } = useTranslation('invite')
+  const { t, i18n } = useTranslation('invite')
   const navigate = useNavigate()
   const { poolId } = useParams<{
     network: string
@@ -69,6 +106,7 @@ export const PoolInvitePage = () => {
   }>()
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
+  const location = window.location.search
   const { activePool } = useActivePool()
   const { isReady } = useApi()
   const { bondedPools, poolsMetaData, updateBondedPools } = useBondedPools()
@@ -82,6 +120,13 @@ export const PoolInvitePage = () => {
   const [error, setError] = useState<string | null>(null)
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null)
   const [claimPermission] = useState<ClaimPermission>(defaultClaimPermission)
+  const [roleIdentities, setRoleIdentities] = useState<{
+    identities: Record<string, unknown>
+    supers: Record<string, unknown>
+  }>({
+    identities: {},
+    supers: {},
+  })
 
   const { units, unit } = getNetworkData(network)
   const TokenIcon = getChainIcons(network).icon
@@ -110,6 +155,28 @@ export const PoolInvitePage = () => {
   // Handler to set bond on input change
   const handleSetBond = (value: { bond: BigNumber }) => {
     setBond({ bond: value.bond.toString() })
+  }
+
+  // Function to fetch identities for role addresses
+  const fetchRoleIdentities = async (addresses: string[]) => {
+    if (!addresses.length) {
+      return
+    }
+
+    const peopleApiId = `people-${network}` as ChainId
+    const peopleApiClient = Apis.getClient(peopleApiId as SystemChainId)
+
+    if (peopleApiClient) {
+      try {
+        const { identities, supers } = await Identities.fetch(
+          peopleApiId,
+          addresses
+        )
+        setRoleIdentities({ identities, supers })
+      } catch (err) {
+        console.error('Failed to fetch role identities:', err)
+      }
+    }
   }
 
   // Get pool details
@@ -149,11 +216,13 @@ export const PoolInvitePage = () => {
             poolsMetaData[numericPoolId]
           )
 
-          // Format bonded amount
+          // Format bonded amount - this must match the format used in the details object
           const bondedAmount = planckToUnitBn(
-            new BigNumber(rmCommas(pool.points?.toString() || '0')),
+            new BigNumber(rmCommas(pool.points)),
             units
-          ).toFormat(3)
+          )
+            .decimalPlaces(3)
+            .toString()
 
           // Format commission if available
           const commission = pool.commission?.current
@@ -187,6 +256,14 @@ export const PoolInvitePage = () => {
           }
 
           setPoolDetails(details)
+
+          // Fetch role identities
+          if (pool.roles) {
+            fetchRoleIdentities(
+              Object.values(pool.roles).filter(Boolean) as string[]
+            )
+          }
+
           setLoading(false)
           setError(null)
         } else if (isMounted) {
@@ -269,11 +346,28 @@ export const PoolInvitePage = () => {
   // Format DOT amount for display
   const formatDOT = (amount: string) => {
     const bn = new BigNumber(amount)
-    return bn.isNaN() ? '0' : bn.toFormat(2)
+    return bn.isNaN() ? '0' : bn.toFormat(3)
   }
 
   // Whether the form is ready to submit
   const formValid = bondValid && feedbackErrors.length === 0
+
+  // Extract language from URL query parameters
+  useEffect(() => {
+    if (location) {
+      const params = new URLSearchParams(location)
+      const langParam = params.get('l')
+
+      // Change language if valid and different from current
+      if (
+        langParam &&
+        i18n.language !== langParam &&
+        i18n.languages.includes(langParam)
+      ) {
+        i18n.changeLanguage(langParam)
+      }
+    }
+  }, [location, i18n])
 
   return (
     <>
@@ -294,182 +388,222 @@ export const PoolInvitePage = () => {
         <Page.Row>
           <Page.RowSection>
             <CardWrapper>
-              <InviteContainer>
-                <InviteHeader>
-                  <h2>{t('invitedToJoinPool')}</h2>
-                  <p>{t('poolInviteDescription')}</p>
-                </InviteHeader>
+              <InviteHeader>
+                <h2>{t('invitedToJoinPool')}</h2>
+                <p>{t('poolInviteDescription')}</p>
+              </InviteHeader>
+            </CardWrapper>
+          </Page.RowSection>
 
-                <PoolCard>
-                  <PoolHeader>
-                    <PoolIcon>
-                      {poolDetails?.addresses.stash && (
-                        <Polkicon
-                          address={poolDetails.addresses.stash}
-                          fontSize="48px"
-                        />
-                      )}
-                    </PoolIcon>
-                    <PoolInfo>
-                      <h3>{poolDetails?.metadata}</h3>
-                      <PoolId>ID: {poolId}</PoolId>
-                      <PoolState $state={poolDetails?.state || ''}>
-                        {poolDetails?.state}
-                      </PoolState>
-                    </PoolInfo>
-                  </PoolHeader>
-
-                  <PoolStats>
-                    <StatItem>
-                      <StatIcon>
-                        <FontAwesomeIcon icon={faUsers} />
-                      </StatIcon>
-                      <StatContent>
-                        <StatValue>{poolDetails?.memberCount}</StatValue>
-                        <StatLabel>{t('members')}</StatLabel>
-                      </StatContent>
-                    </StatItem>
-
-                    <StatItem>
-                      <StatIcon>
-                        <FontAwesomeIcon icon={faCoins} />
-                      </StatIcon>
-                      <StatContent>
-                        <StatValue>
-                          {poolDetails?.totalBonded && (
-                            <>
-                              {formatDOT(poolDetails.totalBonded)}{' '}
-                              <TokenIcon
-                                style={{ width: '1rem', height: '1rem' }}
-                              />
-                            </>
-                          )}
-                        </StatValue>
-                        <StatLabel>{t('totalBonded')}</StatLabel>
-                      </StatContent>
-                    </StatItem>
-
-                    {poolDetails?.commission && (
-                      <StatItem>
-                        <StatIcon>
-                          <FontAwesomeIcon icon={faPercent} />
-                        </StatIcon>
-                        <StatContent>
-                          <StatValue>
-                            {poolDetails.commission.current}%
-                          </StatValue>
-                          <StatLabel>{t('commission')}</StatLabel>
-                        </StatContent>
-                      </StatItem>
+          <Page.RowSection>
+            <CardWrapper>
+              <PoolCard>
+                <PoolHeader>
+                  <PoolIcon>
+                    {poolDetails?.addresses.stash && (
+                      <Polkicon
+                        address={poolDetails.addresses.stash}
+                        fontSize="48px"
+                      />
                     )}
-                  </PoolStats>
+                  </PoolIcon>
+                  <PoolInfo>
+                    <h3>{poolDetails?.metadata}</h3>
+                    <PoolId>
+                      <span>ID:</span> {poolId}
+                    </PoolId>
+                    <PoolState $state={poolDetails?.state || ''}>
+                      {poolDetails?.state}
+                    </PoolState>
+                  </PoolInfo>
+                </PoolHeader>
 
-                  <SectionDivider />
+                <PoolStats>
+                  <StatItem>
+                    <StatIcon>
+                      <FontAwesomeIcon icon={faUsers} />
+                    </StatIcon>
+                    <StatContent>
+                      <StatValue>{poolDetails?.memberCount}</StatValue>
+                      <StatLabel>{t('members')}</StatLabel>
+                    </StatContent>
+                  </StatItem>
 
-                  <AddressesSection>
-                    <SectionTitle>{t('addresses')}</SectionTitle>
-                    <AddressItem>
-                      <AddressLabel>{t('stash')}</AddressLabel>
-                      <AddressValue>
-                        {ellipsisFn(poolDetails?.addresses.stash || '', 6)}
-                        <CopyButton
-                          onClick={() =>
-                            handleCopyAddress(
-                              poolDetails?.addresses.stash || ''
-                            )
-                          }
-                        >
-                          {copiedAddress === poolDetails?.addresses.stash ? (
-                            <FontAwesomeIcon icon={faCheck} />
-                          ) : (
-                            <FontAwesomeIcon icon={faCopy} />
-                          )}
-                        </CopyButton>
-                      </AddressValue>
-                    </AddressItem>
-                    <AddressItem>
-                      <AddressLabel>{t('reward')}</AddressLabel>
-                      <AddressValue>
-                        {ellipsisFn(poolDetails?.addresses.reward || '', 6)}
-                        <CopyButton
-                          onClick={() =>
-                            handleCopyAddress(
-                              poolDetails?.addresses.reward || ''
-                            )
-                          }
-                        >
-                          {copiedAddress === poolDetails?.addresses.reward ? (
-                            <FontAwesomeIcon icon={faCheck} />
-                          ) : (
-                            <FontAwesomeIcon icon={faCopy} />
-                          )}
-                        </CopyButton>
-                      </AddressValue>
-                    </AddressItem>
-                  </AddressesSection>
-
-                  {poolDetails?.roles && (
-                    <>
-                      <SectionDivider />
-                      <RolesSection>
-                        <SectionTitle>{t('roles')}</SectionTitle>
-                        {Object.entries(poolDetails.roles).map(
-                          ([role, address]) => (
-                            <RoleItem key={role}>
-                              <RoleLabel>{t(role)}</RoleLabel>
-                              <RoleValue>
-                                {ellipsisFn(address || '', 6)}
-                                <CopyButton
-                                  onClick={() =>
-                                    handleCopyAddress(address || '')
-                                  }
-                                >
-                                  {copiedAddress === address ? (
-                                    <FontAwesomeIcon icon={faCheck} />
-                                  ) : (
-                                    <FontAwesomeIcon icon={faCopy} />
-                                  )}
-                                </CopyButton>
-                              </RoleValue>
-                            </RoleItem>
-                          )
+                  <StatItem>
+                    <StatIcon>
+                      <FontAwesomeIcon icon={faCoins} />
+                    </StatIcon>
+                    <StatContent>
+                      <StatValue>
+                        {poolDetails?.totalBonded && (
+                          <>
+                            {formatDOT(poolDetails.totalBonded)}{' '}
+                            <TokenIcon
+                              style={{ width: '1rem', height: '1rem' }}
+                            />
+                          </>
                         )}
-                      </RolesSection>
-                    </>
+                      </StatValue>
+                      <StatLabel>{t('totalBonded')}</StatLabel>
+                    </StatContent>
+                  </StatItem>
+
+                  {poolDetails?.commission && (
+                    <StatItem>
+                      <StatIcon>
+                        <FontAwesomeIcon icon={faPercent} />
+                      </StatIcon>
+                      <StatContent>
+                        <StatValue>{poolDetails.commission.current}%</StatValue>
+                        <StatLabel>{t('commission')}</StatLabel>
+                      </StatContent>
+                    </StatItem>
                   )}
+                </PoolStats>
+              </PoolCard>
+            </CardWrapper>
+          </Page.RowSection>
 
-                  {userAlreadyInPool && (
-                    <WarningMessage>{t('alreadyInPool')}</WarningMessage>
-                  )}
+          <Page.RowSection>
+            <CardWrapper>
+              <AddressesSection>
+                <SectionTitle>{t('addresses')}</SectionTitle>
+                <AddressItem>
+                  <AddressLabel>{t('stash')}</AddressLabel>
+                  <AddressValue>
+                    <IdentityWrapper>
+                      <Polkicon
+                        address={poolDetails?.addresses.stash || ''}
+                        fontSize="24px"
+                      />
+                      <AddressText>
+                        {ellipsisFn(poolDetails?.addresses.stash || '', 6)}
+                      </AddressText>
+                    </IdentityWrapper>
+                    <CopyButton
+                      onClick={() =>
+                        handleCopyAddress(poolDetails?.addresses.stash || '')
+                      }
+                    >
+                      {copiedAddress === poolDetails?.addresses.stash ? (
+                        <FontAwesomeIcon icon={faCheck} />
+                      ) : (
+                        <FontAwesomeIcon icon={faCopy} />
+                      )}
+                    </CopyButton>
+                  </AddressValue>
+                </AddressItem>
+                <AddressItem>
+                  <AddressLabel>{t('reward')}</AddressLabel>
+                  <AddressValue>
+                    <IdentityWrapper>
+                      <Polkicon
+                        address={poolDetails?.addresses.reward || ''}
+                        fontSize="24px"
+                      />
+                      <AddressText>
+                        {ellipsisFn(poolDetails?.addresses.reward || '', 6)}
+                      </AddressText>
+                    </IdentityWrapper>
+                    <CopyButton
+                      onClick={() =>
+                        handleCopyAddress(poolDetails?.addresses.reward || '')
+                      }
+                    >
+                      {copiedAddress === poolDetails?.addresses.reward ? (
+                        <FontAwesomeIcon icon={faCheck} />
+                      ) : (
+                        <FontAwesomeIcon icon={faCopy} />
+                      )}
+                    </CopyButton>
+                  </AddressValue>
+                </AddressItem>
+              </AddressesSection>
+            </CardWrapper>
+          </Page.RowSection>
 
-                  <SectionDivider />
+          {poolDetails?.roles && (
+            <Page.RowSection>
+              <CardWrapper>
+                <RolesSection>
+                  <SectionTitle>{t('roles')}</SectionTitle>
+                  {Object.entries(poolDetails.roles).map(([role, address]) => {
+                    if (!address) {
+                      return null
+                    }
 
-                  <h4>{t('bondAmount', { unit })}</h4>
-                  <div style={{ margin: '1rem 0' }}>
-                    <BondFeedback
-                      joiningPool
-                      displayFirstWarningOnly
-                      syncing={largestTxFee.isZero()}
-                      bondFor={'pool'}
-                      listenIsValid={(valid, errors) => {
-                        setBondValid(valid)
-                        setFeedbackErrors(errors)
-                      }}
-                      defaultBond={null}
-                      setters={[handleSetBond]}
-                      txFees={BigInt(largestTxFee.toString())}
-                    />
-                  </div>
+                    // Get identity display for this address
+                    const displayIdentity = getIdentityDisplay(
+                      roleIdentities.identities[address],
+                      roleIdentities.supers[address]
+                    )?.data?.display
 
-                  <ActionSection>
-                    <ButtonPrimary
-                      text={joining ? t('joining') : t('joinPool')}
-                      disabled={userAlreadyInPool || isSubmitting || !formValid}
-                      onClick={handleJoinPool}
-                    />
-                  </ActionSection>
-                </PoolCard>
-              </InviteContainer>
+                    return (
+                      <RoleItem key={role}>
+                        <RoleLabel>{t(role)}</RoleLabel>
+                        <RoleValue>
+                          <IdentityWrapper>
+                            <Polkicon address={address} fontSize="24px" />
+                            {displayIdentity ? (
+                              <RoleIdentity>{displayIdentity}</RoleIdentity>
+                            ) : (
+                              <RoleText>{ellipsisFn(address, 6)}</RoleText>
+                            )}
+                          </IdentityWrapper>
+                          <CopyButton
+                            onClick={() => handleCopyAddress(address)}
+                          >
+                            {copiedAddress === address ? (
+                              <FontAwesomeIcon icon={faCheck} />
+                            ) : (
+                              <FontAwesomeIcon icon={faCopy} />
+                            )}
+                          </CopyButton>
+                        </RoleValue>
+                      </RoleItem>
+                    )
+                  })}
+                </RolesSection>
+              </CardWrapper>
+            </Page.RowSection>
+          )}
+
+          {userAlreadyInPool && (
+            <Page.RowSection>
+              <CardWrapper>
+                <PoolWarningMessage>{t('alreadyInPool')}</PoolWarningMessage>
+              </CardWrapper>
+            </Page.RowSection>
+          )}
+
+          <Page.RowSection>
+            <CardWrapper>
+              <BondSection>
+                <h4>{t('bondAmount', { unit })}</h4>
+                <BondInputWrapper>
+                  <BondFeedback
+                    joiningPool
+                    displayFirstWarningOnly
+                    syncing={largestTxFee.isZero()}
+                    bondFor={'pool'}
+                    listenIsValid={(valid, errors) => {
+                      setBondValid(valid)
+                      setFeedbackErrors(errors)
+                    }}
+                    defaultBond={null}
+                    setters={[handleSetBond]}
+                    txFees={BigInt(largestTxFee.toString())}
+                  />
+                </BondInputWrapper>
+
+                <ActionSection>
+                  <ButtonPrimary
+                    text={joining ? t('joining') : t('joinPool')}
+                    disabled={userAlreadyInPool || isSubmitting || !formValid}
+                    onClick={handleJoinPool}
+                  />
+                </ActionSection>
+              </BondSection>
             </CardWrapper>
           </Page.RowSection>
         </Page.Row>
@@ -477,245 +611,3 @@ export const PoolInvitePage = () => {
     </>
   )
 }
-
-const InviteContainer = styled.div`
-  width: 100%;
-  padding: 1rem;
-`
-
-const InviteHeader = styled.div`
-  text-align: center;
-  margin-bottom: 2rem;
-
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: var(--text-color-secondary);
-  }
-`
-
-const PoolCard = styled.div`
-  padding: 1.5rem;
-`
-
-const PoolHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-`
-
-const PoolIcon = styled.div`
-  margin-right: 1rem;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const PoolInfo = styled.div`
-  h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.25rem;
-  }
-`
-
-const PoolId = styled.div`
-  font-size: 0.9rem;
-  color: var(--text-color-secondary);
-  margin-bottom: 0.5rem;
-`
-
-const PoolState = styled.div<{ $state: string }>`
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  background-color: ${({ $state }) =>
-    $state === 'Open'
-      ? 'var(--status-success-color-transparent)'
-      : $state === 'Blocked'
-        ? 'var(--status-warning-color-transparent)'
-        : 'var(--status-danger-color-transparent)'};
-  color: ${({ $state }) =>
-    $state === 'Open'
-      ? 'var(--status-success-color)'
-      : $state === 'Blocked'
-        ? 'var(--status-warning-color)'
-        : 'var(--status-danger-color)'};
-`
-
-const PoolStats = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-`
-
-const StatItem = styled.div`
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 150px;
-`
-
-const StatIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--background-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 0.75rem;
-  color: var(--text-color-primary);
-`
-
-const StatContent = styled.div``
-
-const StatValue = styled.div`
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`
-
-const StatLabel = styled.div`
-  font-size: 0.9rem;
-  color: var(--text-color-secondary);
-`
-
-const SectionDivider = styled.div`
-  height: 1px;
-  background-color: var(--border-primary-color);
-  margin: 1.5rem 0;
-`
-
-const SectionTitle = styled.h4`
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  color: var(--text-color-primary);
-`
-
-const AddressesSection = styled.div`
-  margin-bottom: 1.5rem;
-`
-
-const AddressItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--background-primary);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`
-
-const AddressLabel = styled.div`
-  font-weight: 600;
-  color: var(--text-color-secondary);
-  text-transform: capitalize;
-`
-
-const AddressValue = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: monospace;
-`
-
-const CopyButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color-secondary);
-  padding: 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s;
-
-  &:hover {
-    color: var(--accent-color-primary);
-  }
-`
-
-const RolesSection = styled.div`
-  margin-bottom: 1.5rem;
-`
-
-const RoleItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--background-primary);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`
-
-const RoleLabel = styled.div`
-  font-weight: 600;
-  color: var(--text-color-secondary);
-  text-transform: capitalize;
-`
-
-const RoleValue = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: monospace;
-`
-
-const WarningMessage = styled.div`
-  background-color: var(--status-warning-color-transparent);
-  color: var(--status-warning-color);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-`
-
-const ActionSection = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const LoadingState = styled.div`
-  text-align: center;
-  padding: 3rem 0;
-  color: var(--text-color-secondary);
-  font-size: 1.2rem;
-`
-
-const ErrorState = styled.div`
-  text-align: center;
-  padding: 3rem 0;
-
-  h3 {
-    color: var(--status-danger-color);
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
-  }
-
-  p {
-    margin-bottom: 2rem;
-    color: var(--text-color-secondary);
-  }
-`

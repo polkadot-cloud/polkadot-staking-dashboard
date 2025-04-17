@@ -15,7 +15,7 @@ export const Invite = () => {
     openModal({
       key: 'InviteModal',
       options: {
-        size: 'sm',
+        size: 'md',
       },
     })
   }

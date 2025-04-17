@@ -33,7 +33,6 @@ import { SelectItem } from 'library/SelectItems/Item'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Page, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
@@ -42,169 +41,26 @@ import { AverageCommission } from './Stats/AverageCommission'
 import { SelectedValidators } from './Stats/SelectedValidators'
 import {
   ActionButtonsWrapper,
+  CommissionDisplay,
   ErrorState,
   LoadingState,
+  NominationStepsWrapper,
+  PayeeInputContainer,
+  StatusDisplay,
+  StepContainer,
+  StepContent,
+  StepDescription,
+  StepHeader,
+  StepIndicator,
+  SummaryContainer,
+  SummaryRow,
+  ValidatorActions,
+  ValidatorCardHeader,
+  ValidatorIdentity,
+  ValidatorInfo,
   ValidatorListContainer,
+  WarningsContainer,
 } from './Wrappers'
-
-const NominationSteps = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-`
-
-const StepContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-`
-
-const StepNumber = styled.div<{ $active: boolean; $complete: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
-  color: ${({ $active, $complete }) =>
-    $active
-      ? 'var(--accent-color-primary)'
-      : $complete
-        ? 'var(--text-color-secondary)'
-        : 'var(--text-color-tertiary)'};
-
-  .number {
-    font-weight: 600;
-  }
-
-  .label {
-    font-weight: 500;
-  }
-`
-
-const PayeeInputWrapper = styled.div`
-  margin-top: 1rem;
-  width: 100%;
-  max-width: 500px;
-`
-
-const WarningsWrapper = styled.div`
-  margin: 1rem 0;
-`
-
-const SummaryItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border-primary-color);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  .label {
-    font-weight: bold;
-  }
-
-  .value {
-    color: var(--text-color-secondary);
-  }
-`
-
-const ValidatorInviteWrapper = styled.div`
-  .validator-item {
-    background: var(--background-primary);
-    border-radius: 1rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 2px solid transparent;
-    transition: background-color 0.1s;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-
-    &:hover {
-      background: var(--background-primary-hover);
-    }
-
-    &.selected {
-      border-color: var(--accent-color-primary);
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .validator-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .identity {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex: 1;
-
-    .name {
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-  }
-
-  .validator-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
-  }
-
-  .commission-value {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    .label {
-      color: var(--text-color-secondary);
-    }
-
-    .value {
-      font-weight: 500;
-    }
-  }
-
-  .status-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    .status {
-      padding: 0.25rem 0.75rem;
-      border-radius: 1rem;
-      font-size: 0.9rem;
-      background: var(--background-secondary);
-      color: var(--text-color-secondary);
-
-      &.active {
-        background: var(--background-success);
-        color: var(--text-color-invert);
-        font-weight: 500;
-      }
-    }
-
-    .dot-amount {
-      font-weight: 500;
-    }
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-`
 
 export const ValidatorInvitePage = () => {
   const { t } = useTranslation('invite')
@@ -216,6 +72,7 @@ export const ValidatorInvitePage = () => {
     network: string
     validators: string
   }>()
+  const location = window.location.search
   const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
   const { getAccount, accountHasSigner } = useImportedAccounts()
@@ -236,6 +93,24 @@ export const ValidatorInvitePage = () => {
   const {
     eraStakers: { stakers },
   } = useStaking()
+  const { i18n } = useTranslation()
+
+  // Extract language from URL query parameters
+  useEffect(() => {
+    if (location) {
+      const params = new URLSearchParams(location)
+      const langParam = params.get('l')
+
+      // Change language if valid and different from current
+      if (
+        langParam &&
+        i18n.language !== langParam &&
+        i18n.languages.includes(langParam)
+      ) {
+        i18n.changeLanguage(langParam)
+      }
+    }
+  }, [location, i18n])
 
   const { units, unit } = getNetworkData(network)
 
@@ -525,23 +400,23 @@ export const ValidatorInvitePage = () => {
   // If not ready, show loading state
   if (!isReady) {
     return (
-      <ValidatorInviteWrapper>
+      <div className="validator-invite-page">
         <Page.Title title={t('validatorInvite')} />
         <LoadingState>
           <h3>{t('connecting')}</h3>
         </LoadingState>
-      </ValidatorInviteWrapper>
+      </div>
     )
   }
 
   if (loadingError) {
     return (
-      <ValidatorInviteWrapper>
+      <div className="validator-invite-page">
         <Page.Title title={t('validatorInvite')} />
         <ErrorState>
           <h3>{loadingError}</h3>
         </ErrorState>
-      </ValidatorInviteWrapper>
+      </div>
     )
   }
 
@@ -559,13 +434,20 @@ export const ValidatorInvitePage = () => {
           id: 2,
           label: t('nominate'),
           complete: payoutComplete && nominateComplete,
+          available: payoutComplete,
         },
         {
           id: 3,
           label: t('bondStep'),
           complete: payoutComplete && nominateComplete && bondComplete,
+          available: payoutComplete && nominateComplete,
         },
-        { id: 4, label: t('summary'), complete: false },
+        {
+          id: 4,
+          label: t('summary'),
+          complete: payoutComplete && nominateComplete && bondComplete,
+          available: payoutComplete && nominateComplete && bondComplete,
+        },
       ]
     : [
         { id: 1, label: t('nominate'), complete: nominateComplete },
@@ -573,8 +455,14 @@ export const ValidatorInvitePage = () => {
           id: 2,
           label: t('bondStep'),
           complete: nominateComplete && bondComplete,
+          available: nominateComplete,
         },
-        { id: 3, label: t('summary'), complete: false },
+        {
+          id: 3,
+          label: t('summary'),
+          complete: nominateComplete && bondComplete,
+          available: nominateComplete && bondComplete,
+        },
       ]
 
   // Update the step container to only be active if previous steps are complete
@@ -582,32 +470,44 @@ export const ValidatorInvitePage = () => {
     if (stepId === 1) {
       return true
     }
-    const previousStep = steps[stepId - 2]
-    return previousStep?.complete || false
+    const step = steps[stepId - 1]
+    return step?.available || false
   }
 
   return (
-    <ValidatorInviteWrapper>
+    <div className="validator-invite-page">
       <Page.Title title={t('validatorInvite')} />
       <Page.Row>
         <CardWrapper>
-          <NominationSteps>
+          <NominationStepsWrapper>
             {steps.map((step) => (
               <StepContainer key={step.id}>
-                <StepNumber
+                <StepHeader
                   $active={activeStep === step.id && isStepAvailable(step.id)}
                   $complete={step.complete}
+                  onClick={() => {
+                    if (isStepAvailable(step.id)) {
+                      setActiveStep(step.id)
+                    }
+                  }}
                 >
-                  <span className="number">{step.id}.</span>
+                  <StepIndicator
+                    $active={activeStep === step.id}
+                    $complete={step.complete}
+                  >
+                    {step.id}
+                  </StepIndicator>
                   <span className="label">{step.label}</span>
-                </StepNumber>
+                </StepHeader>
 
                 {activeStep === step.id && isStepAvailable(step.id) && (
-                  <>
+                  <StepContent>
                     {/* Payout Destination Step */}
                     {step.id === 1 && isNewNominator && (
                       <>
-                        <p>{t('payoutDestinationInfo')}</p>
+                        <StepDescription>
+                          {t('payoutDestinationInfo')}
+                        </StepDescription>
                         <SelectItems layout="three-col">
                           {getPayeeItems().map((item) => (
                             <SelectItem
@@ -627,7 +527,7 @@ export const ValidatorInvitePage = () => {
                         <Spacer />
 
                         {payee.type === 'Account' && (
-                          <PayeeInputWrapper>
+                          <PayeeInputContainer>
                             <PayeeInput
                               payee={{
                                 destination: payee.type,
@@ -637,11 +537,13 @@ export const ValidatorInvitePage = () => {
                               setAccount={setPayeeAccount}
                               handleChange={handlePayeeAccountChange}
                             />
-                          </PayeeInputWrapper>
+                          </PayeeInputContainer>
                         )}
 
                         {payee.type === 'Stash' && (
-                          <p>{t('usingStashForPayouts')}</p>
+                          <StepDescription>
+                            {t('usingStashForPayouts')}
+                          </StepDescription>
                         )}
                       </>
                     )}
@@ -650,7 +552,9 @@ export const ValidatorInvitePage = () => {
                     {((isNewNominator && step.id === 2) ||
                       (!isNewNominator && step.id === 1)) && (
                       <>
-                        <p>{t('validatorInviteDescription')}</p>
+                        <StepDescription>
+                          {t('validatorInviteDescription')}
+                        </StepDescription>
                         <Stat.Row>
                           <SelectedValidators
                             count={selectedValidators.length}
@@ -708,24 +612,24 @@ export const ValidatorInvitePage = () => {
                                   tabIndex={0}
                                   style={{ cursor: 'pointer' }}
                                 >
-                                  <div className="validator-header">
-                                    <div className="identity">
+                                  <ValidatorCardHeader>
+                                    <ValidatorIdentity>
                                       <Polkicon address={address} />
                                       <span className="name">
                                         {identityDisplay.node ||
                                           ellipsisFn(address)}
                                       </span>
-                                    </div>
-                                    <div className="validator-info">
-                                      <div className="commission-value">
+                                    </ValidatorIdentity>
+                                    <ValidatorInfo>
+                                      <CommissionDisplay>
                                         <span className="label">
                                           {t('commission')}:
                                         </span>
                                         <span className="value">
                                           {commissionPercent}%
                                         </span>
-                                      </div>
-                                      <div className="status-info">
+                                      </CommissionDisplay>
+                                      <StatusDisplay>
                                         <span
                                           className={`status ${isActive ? 'active' : ''}`}
                                         >
@@ -736,12 +640,12 @@ export const ValidatorInvitePage = () => {
                                         <span className="dot-amount">
                                           {formattedStake} {unit}
                                         </span>
-                                      </div>
-                                    </div>
-                                    <div className="actions">
+                                      </StatusDisplay>
+                                    </ValidatorInfo>
+                                    <ValidatorActions>
                                       <CopyAddress address={address} />
-                                    </div>
-                                  </div>
+                                    </ValidatorActions>
+                                  </ValidatorCardHeader>
                                 </div>
                               )
                             })}
@@ -754,7 +658,9 @@ export const ValidatorInvitePage = () => {
                     {((isNewNominator && step.id === 3) ||
                       (!isNewNominator && step.id === 2)) && (
                       <>
-                        <p>{t('bondDescription', { unit })}</p>
+                        <StepDescription>
+                          {t('bondDescription', { unit })}
+                        </StepDescription>
                         <BondFeedback
                           bondFor="nominator"
                           displayFirstWarningOnly
@@ -775,37 +681,37 @@ export const ValidatorInvitePage = () => {
                     {((isNewNominator && step.id === 4) ||
                       (!isNewNominator && step.id === 3)) && (
                       <>
-                        <div>
-                          <SummaryItem>
+                        <SummaryContainer>
+                          <SummaryRow>
                             <span className="label">
                               {t('selectedValidators')}
                             </span>
                             <span className="value">
                               {selectedValidators.length}
                             </span>
-                          </SummaryItem>
-                          <SummaryItem>
+                          </SummaryRow>
+                          <SummaryRow>
                             <span className="label">{t('bondAmount')}</span>
                             <span className="value">
                               {bond.bond} {units}
                             </span>
-                          </SummaryItem>
+                          </SummaryRow>
                           {isNewNominator && (
-                            <SummaryItem>
+                            <SummaryRow>
                               <span className="label">
                                 {t('payoutDestination')}
                               </span>
                               <span className="value">{t('stash')}</span>
-                            </SummaryItem>
+                            </SummaryRow>
                           )}
-                        </div>
+                        </SummaryContainer>
 
                         {warnings.length > 0 && (
-                          <WarningsWrapper>
+                          <WarningsContainer>
                             {warnings.map((text, i) => (
                               <Warning key={`warning${i}`} text={text} />
                             ))}
-                          </WarningsWrapper>
+                          </WarningsContainer>
                         )}
                       </>
                     )}
@@ -851,13 +757,13 @@ export const ValidatorInvitePage = () => {
                         />
                       )}
                     </ActionButtonsWrapper>
-                  </>
+                  </StepContent>
                 )}
               </StepContainer>
             ))}
-          </NominationSteps>
+          </NominationStepsWrapper>
         </CardWrapper>
       </Page.Row>
-    </ValidatorInviteWrapper>
+    </div>
   )
 }
