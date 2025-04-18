@@ -22,6 +22,11 @@ export type RpcEndpoints = Record<string, string>
 
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready'
 
+export interface ActiveEra {
+  index: number
+  start: bigint
+}
+
 export interface ChainSpec {
   genesisHash: HexString
   properties: ChainProperties

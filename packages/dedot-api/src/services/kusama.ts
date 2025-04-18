@@ -8,6 +8,7 @@ import { setConsts, setMultiChainSpecs } from 'global-bus'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
+import { ActiveEraQuery } from '../query/activeEra'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import type { DefaultServiceClass } from '../types/serviceDefault'
@@ -23,6 +24,7 @@ export class KusamaService
   }
   coreConsts: CoreConsts<KusamaApi>
   stakingConsts: StakingConsts<KusamaApi>
+  activeEra: ActiveEraQuery<KusamaApi>
 
   constructor(
     public networkConfig: NetworkConfig,
@@ -57,9 +59,12 @@ export class KusamaService
       ...this.coreConsts.get(),
       ...this.stakingConsts.get(),
     })
+
+    this.activeEra = new ActiveEraQuery(this.apiRelay)
   }
 
   unsubscribe = async () => {
+    this.activeEra.unsubscribe()
     await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
   }
 }

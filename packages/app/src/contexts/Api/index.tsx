@@ -73,15 +73,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Whether this context has initialised
   const initialisedRef = useRef<boolean>(false)
 
+  // Store active era in state
+  const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra)
+  const activeEraRef = useRef(activeEra)
+
   // Store network metrics in state
   const [networkMetrics, setNetworkMetrics] = useState<APINetworkMetrics>(
     defaultNetworkMetrics
   )
   const networkMetricsRef = useRef(networkMetrics)
-
-  // Store active era in state
-  const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra)
-  const activeEraRef = useRef(activeEra)
 
   // Store pool config in state
   const [poolsConfig, setPoolsConfig] =
@@ -336,11 +336,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const subConsts = consts$.subscribe((result) => {
       setConsts(result)
     })
+    // const subActiveEra = activeEra$.subscribe((result) => {
+    //   setActiveEra(result)
+    // })
     return () => {
       subNetwork.unsubscribe()
       subApiStatus.unsubscribe()
       subChainSpecs.unsubscribe()
       subConsts.unsubscribe()
+      // subActiveEra.unsubscribe()
     }
   }, [])
 

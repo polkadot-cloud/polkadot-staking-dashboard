@@ -13,6 +13,7 @@ import {
 } from '.'
 import type { CoreConsts } from '../consts/core'
 import type { StakingConsts } from '../consts/staking'
+import type { ActiveEraQuery } from '../query/activeEra'
 import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
 
@@ -40,6 +41,8 @@ export abstract class DefaultServiceClass<
 
   abstract coreConsts: CoreConsts<RelayApi>
   abstract stakingConsts: StakingConsts<StakingApi>
+
+  activeEra: ActiveEraQuery<StakingApi>
 }
 
 // Default interface a default service factory returns

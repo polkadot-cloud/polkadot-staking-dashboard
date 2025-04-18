@@ -3,6 +3,7 @@
 
 import {
   networkConfig$,
+  resetActiveEra,
   resetApiStatus,
   resetChainSpecs,
   resetConsts,
@@ -27,6 +28,7 @@ export const initDedotService = async () => {
         prev.providerType !== cur.providerType
       ) {
         await service.unsubscribe()
+        resetActiveEra()
         resetApiStatus()
         resetChainSpecs()
         resetConsts()
