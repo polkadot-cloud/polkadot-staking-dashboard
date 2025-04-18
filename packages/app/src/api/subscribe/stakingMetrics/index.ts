@@ -1,31 +1,25 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js'
-import type { APIActiveEra } from 'contexts/Api/types'
 import { Apis } from 'controllers/Apis'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { Subscription } from 'rxjs'
 import { combineLatest } from 'rxjs'
-import type { NetworkId } from 'types'
+import type { ActiveEra, NetworkId } from 'types'
 import { stringToBn } from 'utils'
 
 export class StakingMetrics implements Unsubscribable {
   // The associated network for this instance.
   #network: NetworkId
 
-  #activeEra: APIActiveEra
+  #activeEra: ActiveEra
 
-  #previousEra: BigNumber
+  #previousEra: number
 
   // Active subscription.
   #sub: Subscription
 
-  constructor(
-    network: NetworkId,
-    activeEra: APIActiveEra,
-    previousEra: BigNumber
-  ) {
+  constructor(network: NetworkId, activeEra: ActiveEra, previousEra: number) {
     this.#network = network
     this.#activeEra = activeEra
     this.#previousEra = previousEra
@@ -45,16 +39,16 @@ export class StakingMetrics implements Unsubscribable {
           api.query.Staking.MaxValidatorsCount.watchValue(bestOrFinalized),
           api.query.Staking.ValidatorCount.watchValue(bestOrFinalized),
           api.query.Staking.ErasValidatorReward.watchValue(
-            this.#previousEra.toNumber(),
+            this.#previousEra,
             bestOrFinalized
           ),
           api.query.Staking.ErasTotalStake.watchValue(
-            this.#previousEra.toNumber(),
+            this.#previousEra,
             bestOrFinalized
           ),
           api.query.Staking.MinNominatorBond.watchValue(bestOrFinalized),
           api.query.Staking.ErasTotalStake.watchValue(
-            this.#activeEra.index.toNumber(),
+            this.#activeEra.index,
             bestOrFinalized
           ),
           api.query.Staking.CounterForNominators.watchValue(bestOrFinalized),

@@ -1,14 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
-import { defaultActiveEra } from 'contexts/Api/defaults'
-import type { APIActiveEra } from 'contexts/Api/types'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { Subscription } from 'rxjs'
-import type { NetworkId } from 'types'
+import type { ActiveEra as IActiveEra, NetworkId } from 'types'
 import { StakingMetrics } from '../stakingMetrics'
 
 export class ActiveEra implements Unsubscribable {
@@ -19,7 +16,10 @@ export class ActiveEra implements Unsubscribable {
   #sub: Subscription
 
   // Store the active era.
-  activeEra: APIActiveEra = defaultActiveEra
+  activeEra: IActiveEra = {
+    index: 0,
+    start: 0n,
+  }
 
   constructor(network: NetworkId) {
     this.#network = network
@@ -38,8 +38,8 @@ export class ActiveEra implements Unsubscribable {
         ).subscribe((activeEra) => {
           // Store active era.
           this.activeEra = {
-            index: new BigNumber(activeEra?.index || 0),
-            start: new BigNumber(activeEra?.start || 0),
+            index: activeEra?.index || 0,
+            start: activeEra?.start || 0n,
           }
 
           // Unsubscribe to staking metrics if it exists.
@@ -59,7 +59,7 @@ export class ActiveEra implements Unsubscribable {
             new StakingMetrics(
               this.#network,
               this.activeEra,
-              BigNumber.max(0, this.activeEra.index.minus(1))
+              Math.max(0, this.activeEra.index - 1)
             )
           )
         })

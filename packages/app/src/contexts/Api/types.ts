@@ -26,11 +26,6 @@ export interface APINetworkMetrics {
   minimumActiveStake: BigNumber
 }
 
-export interface APIActiveEra {
-  index: BigNumber
-  start: BigNumber
-}
-
 export interface APIPoolsConfig {
   counterForPoolMembers: BigNumber
   counterForBondedPools: BigNumber

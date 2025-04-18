@@ -3,8 +3,7 @@
 
 import { Base } from 'api/base'
 import BigNumber from 'bignumber.js'
-import type { APIActiveEra } from 'contexts/Api/types'
-import type { ChainId } from 'types'
+import type { ActiveEra, ChainId } from 'types'
 import { perbillToPercent, stringToBn } from 'utils'
 
 export class NetworkMeta extends Base {
@@ -13,7 +12,7 @@ export class NetworkMeta extends Base {
   }
 
   // Fetch network constants.
-  async fetch(activeEra: APIActiveEra, previousEra: BigNumber) {
+  async fetch(activeEra: ActiveEra, previousEra: number) {
     const at = { at: 'best' }
     const totalIssuance =
       await this.unsafeApi.query.Balances.TotalIssuance.getValue(at)
@@ -61,18 +60,12 @@ export class NetworkMeta extends Base {
       this.unsafeApi.query.Staking.MaxValidatorsCount.getValue(at),
       this.unsafeApi.query.Staking.ValidatorCount.getValue(at),
       this.unsafeApi.query.Staking.ErasValidatorReward.getValue(
-        previousEra.toNumber(),
+        previousEra,
         at
       ),
-      this.unsafeApi.query.Staking.ErasTotalStake.getValue(
-        previousEra.toNumber(),
-        at
-      ),
+      this.unsafeApi.query.Staking.ErasTotalStake.getValue(previousEra, at),
       this.unsafeApi.query.Staking.MinNominatorBond.getValue(at),
-      this.unsafeApi.query.Staking.ErasTotalStake.getValue(
-        activeEra.index.toNumber(),
-        at
-      ),
+      this.unsafeApi.query.Staking.ErasTotalStake.getValue(activeEra.index, at),
     ])
 
     // Format globalMaxCommission from a perbill to a percent.

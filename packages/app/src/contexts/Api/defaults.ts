@@ -3,7 +3,6 @@
 
 import BigNumber from 'bignumber.js'
 import type {
-  APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
@@ -48,11 +47,6 @@ export const defaultNetworkMetrics: APINetworkMetrics = {
   earliestStoredSession: new BigNumber(0),
   fastUnstakeErasToCheckPerBlock: 0,
   minimumActiveStake: new BigNumber(0),
-}
-
-export const defaultActiveEra: APIActiveEra = {
-  index: new BigNumber(0),
-  start: new BigNumber(0),
 }
 
 export const defaultPoolsConfig: APIPoolsConfig = {
