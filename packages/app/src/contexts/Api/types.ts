@@ -4,6 +4,7 @@
 import type BigNumber from 'bignumber.js'
 import type { ReactNode, RefObject } from 'react'
 import type {
+  ActiveEra,
   ApiStatus,
   ChainConsts,
   ChainId,
@@ -62,8 +63,8 @@ export interface APIContextInterface {
   isReady: boolean
   providerType: ProviderType
   networkMetrics: APINetworkMetrics
-  activeEra: APIActiveEra
-  activeEraRef: RefObject<APIActiveEra>
+  activeEra: ActiveEra
+  activeEraRef: RefObject<ActiveEra>
   poolsConfig: APIPoolsConfig
   stakingMetrics: APIStakingMetrics
 }

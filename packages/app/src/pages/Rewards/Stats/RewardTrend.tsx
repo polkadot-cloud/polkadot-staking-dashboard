@@ -30,7 +30,7 @@ export const RewardTrend = () => {
 
   const { unit, units } = getNetworkData(network)
   const membership = getPoolMembership(activeAddress)
-  const eras = erasPerDay.multipliedBy(30).toNumber()
+  const eras = erasPerDay * 30
   // NOTE: 30 day duration in seconds
   const duration = 2592000
 
@@ -39,7 +39,7 @@ export const RewardTrend = () => {
 
   // Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
   const getRewardTrend = async () => {
-    if (activeAddress && activeEra.index.isGreaterThan(0)) {
+    if (activeAddress && activeEra.index > 0) {
       const result = membership
         ? await fetchPoolRewardTrend(network, activeAddress, duration)
         : await fetchNominatorRewardTrend(network, activeAddress, eras)

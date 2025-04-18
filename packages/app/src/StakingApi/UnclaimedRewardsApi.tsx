@@ -13,7 +13,7 @@ export const UnclaimedRewardsApi = ({ who, network }: Props) => {
   const { data, loading, error } = useUnclaimedRewards({
     network,
     who,
-    fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
+    fromEra: Math.max(activeEra.index - 1, 0),
   })
 
   // Update unclaimed rewards on total change

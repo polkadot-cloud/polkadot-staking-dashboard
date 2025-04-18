@@ -25,7 +25,7 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
   const getAverageRewardRate = (compounded: boolean): AverageRewardRate => {
     if (
       totalIssuance.isZero() ||
-      erasPerDay.isZero() ||
+      erasPerDay === 0 ||
       avgCommission === 0 ||
       averageEraValidatorReward.reward.isZero()
     ) {

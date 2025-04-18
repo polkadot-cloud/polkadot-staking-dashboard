@@ -203,7 +203,7 @@ export const ValidatorListInner = ({
     const results = await fetchValidatorEraPointsBatch(
       network,
       listItems.map(({ address }) => address),
-      Math.max(activeEra.index.toNumber() - 1, 0),
+      Math.max(activeEra.index - 1, 0),
       30
     )
     // Update performance if key still matches current page key
@@ -261,7 +261,7 @@ export const ValidatorListInner = ({
 
   // Configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !activeEra.index.isZero()) {
+    if (isReady && activeEra.index > 0) {
       setupValidatorList()
     }
   }, [isReady, activeEra.index, syncing, fetched])

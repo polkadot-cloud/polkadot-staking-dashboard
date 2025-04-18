@@ -71,7 +71,7 @@ export const Member = ({
     if (Object.values(unbondingEras).length) {
       let canWithdraw = false
       for (const k of Object.keys(unbondingEras)) {
-        if (activeEra.index.isGreaterThan(Number(k))) {
+        if (activeEra.index > Number(k)) {
           canWithdraw = true
         }
       }

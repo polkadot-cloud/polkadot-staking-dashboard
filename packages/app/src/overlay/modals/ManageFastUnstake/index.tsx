@@ -132,9 +132,8 @@ export const ManageFastUnstake = () => {
   // manage last exposed
   const lastExposedAgo =
     !exposed || !fastUnstakeStatus?.lastExposed
-      ? new BigNumber(0)
-      : activeEra.index.minus(fastUnstakeStatus.lastExposed.toString())
-
+      ? 0
+      : activeEra.index - fastUnstakeStatus.lastExposed
   const erasRemaining = BigNumber.max(
     1,
     new BigNumber(bondDuration).minus(lastExposedAgo)
@@ -157,7 +156,7 @@ export const ManageFastUnstake = () => {
           <>
             <ActionItem
               text={t('fastUnstakeExposedAgo', {
-                count: lastExposedAgo.toNumber(),
+                count: lastExposedAgo,
               })}
             />
             <Notes>

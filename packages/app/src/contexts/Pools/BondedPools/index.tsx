@@ -314,7 +314,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Re-fetch bonded pools nominations when active era changes or when `bondedPools` update
   useEffectIgnoreInitial(() => {
-    if (!activeEra.index.isZero() && bondedPools.length) {
+    if (activeEra.index > 0 && bondedPools.length) {
       fetchPoolsNominations()
     }
   }, [activeEra.index, bondedPools.length])

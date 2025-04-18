@@ -11,12 +11,12 @@ import { ActiveEra } from 'api/subscribe/activeEra'
 import { BlockNumber } from 'api/subscribe/blockNumber'
 import { NetworkMetrics } from 'api/subscribe/networkMetrics'
 import { PoolsConfig } from 'api/subscribe/poolsConfig'
-import BigNumber from 'bignumber.js'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
 import {
+  activeEra$,
   apiStatus$,
   chainSpecs$,
   consts$,
@@ -29,12 +29,12 @@ import type {
   ChainConsts,
   ChainId,
   ChainSpec,
+  ActiveEra as IActiveEra,
   ProviderType,
   RpcEndpoints,
 } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import {
-  defaultActiveEra,
   defaultChainSpecs,
   defaultConsts,
   defaultNetworkMetrics,
@@ -42,7 +42,6 @@ import {
   defaultStakingMetrics,
 } from './defaults'
 import type {
-  APIActiveEra,
   APIContextInterface,
   APINetworkMetrics,
   APIPoolsConfig,
@@ -74,7 +73,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const initialisedRef = useRef<boolean>(false)
 
   // Store active era in state
-  const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra)
+  const [activeEra, setActiveEra] = useState<IActiveEra>({
+    index: 0,
+    start: 0n,
+  })
   const activeEraRef = useRef(activeEra)
 
   // Store network metrics in state
@@ -127,8 +129,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // 2. Populate all config state:
 
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef)
-    const { index, start } = newActiveEra
-    setStateWithRef({ index, start }, setActiveEra, activeEraRef)
     setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef)
     setStateWithRef(newStakingMetrics, setStakingMetrics, stakingMetricsRef)
 
@@ -177,35 +177,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           },
           setNetworkMetrics,
           networkMetricsRef
-        )
-      }
-    }
-  }
-
-  // Handle new active era updates
-  const handleActiveEraUpdate = (e: Event): void => {
-    if (isCustomEvent(e)) {
-      let { activeEra: newActiveEra } = e.detail
-      const { index, start } = newActiveEra
-      if (index === 0 || !start) {
-        return
-      }
-      newActiveEra = {
-        index: new BigNumber(index),
-        start: new BigNumber(start),
-      }
-
-      // Only update if values have changed
-      if (
-        JSON.stringify(newActiveEra) !== JSON.stringify(activeEraRef.current)
-      ) {
-        setStateWithRef(
-          {
-            index: new BigNumber(index),
-            start: new BigNumber(start),
-          },
-          setActiveEra,
-          activeEraRef
         )
       }
     }
@@ -289,7 +260,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
     setStateWithRef(defaultNetworkMetrics, setNetworkMetrics, networkMetricsRef)
-    setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef)
     setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef)
     setStateWithRef(defaultStakingMetrics, setStakingMetrics, stakingMetricsRef)
 
@@ -313,7 +283,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     handleNetworkMetricsUpdate,
     documentRef
   )
-  useEventListener('new-active-era', handleActiveEraUpdate, documentRef)
   useEventListener('new-pools-config', handlePoolsConfigUpdate, documentRef)
   useEventListener(
     'new-staking-metrics',
@@ -336,15 +305,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const subConsts = consts$.subscribe((result) => {
       setConsts(result)
     })
-    // const subActiveEra = activeEra$.subscribe((result) => {
-    //   setActiveEra(result)
-    // })
+    const subActiveEra = activeEra$.subscribe((result) => {
+      setActiveEra(result)
+    })
     return () => {
       subNetwork.unsubscribe()
       subApiStatus.unsubscribe()
       subChainSpecs.unsubscribe()
       subConsts.unsubscribe()
-      // subActiveEra.unsubscribe()
+      subActiveEra.unsubscribe()
     }
   }, [])
 

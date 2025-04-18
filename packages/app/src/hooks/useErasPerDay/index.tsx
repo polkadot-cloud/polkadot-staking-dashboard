@@ -14,24 +14,23 @@ export const useErasPerDay = () => {
   const DAY_MS = new BigNumber(86400000)
 
   // Calculates how many eras there are in a 24 hour period.
-  const getErasPerDay = (): BigNumber => {
+  const getErasPerDay = (): number => {
     if (
       epochDuration === 0n ||
       sessionsPerEra === 0 ||
       expectedBlockTime === 0n
     ) {
-      return new BigNumber(0)
+      return 0
     }
 
     const blocksPerEra = epochDuration * BigInt(sessionsPerEra)
     const msPerEra = blocksPerEra * expectedBlockTime
 
-    return DAY_MS.dividedBy(msPerEra)
+    return Number(DAY_MS.dividedBy(msPerEra))
   }
 
   return {
     erasPerDay: getErasPerDay(),
-    maxSupportedDays:
-      historyDepth === 0 ? 0 : historyDepth / getErasPerDay().toNumber(),
+    maxSupportedDays: historyDepth === 0 ? 0 : historyDepth / getErasPerDay(),
   }
 }

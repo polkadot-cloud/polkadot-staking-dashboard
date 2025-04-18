@@ -94,7 +94,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches erasStakers exposures for an era, and saves to `localStorage`
   const fetchEraStakers = async (era: string) => {
-    if (!isReady || activeEra.index.isZero()) {
+    if (!isReady || activeEra.index === 0) {
       return []
     }
 
@@ -121,7 +121,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches the active nominator set and metadata around it
   const fetchActiveEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero()) {
+    if (!isReady || activeEra.index === 0) {
       return
     }
 

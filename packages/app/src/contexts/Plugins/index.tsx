@@ -60,7 +60,7 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
     )
     // On staking api disable, or on era change, initialise fallback subscriptions for era reward
     // points
-    if (!pluginEnabled('staking_api') && !activeEra.index.isZero() && isReady) {
+    if (!pluginEnabled('staking_api') && activeEra.index > 0 && isReady) {
       // Unsubscribe to staking metrics if it exists.
       if (currentEraRewardPointsSub) {
         currentEraRewardPointsSub.unsubscribe()
@@ -70,7 +70,7 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
       Subscriptions.set(
         network,
         'erasRewardPoints',
-        new ErasRewardPoints(network, activeEra.index.toNumber())
+        new ErasRewardPoints(network, activeEra.index)
       )
     }
     // If Staking API is enabled, unsubscribe from eras reward points

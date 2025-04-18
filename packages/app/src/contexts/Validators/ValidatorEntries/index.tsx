@@ -305,7 +305,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days
   const getAverageEraValidatorReward = async () => {
-    if (!isReady || activeEra.index.isZero()) {
+    if (!isReady || activeEra.index === 0) {
       setAverageEraValidatorReward({
         days: 0,
         reward: new BigNumber(0),
@@ -318,17 +318,17 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
     // Calculates the number of eras required to calculate required `days`, not surpassing
     // historyDepth
-    const endEra = BigNumber.max(
-      activeEra.index.minus(erasPerDay.multipliedBy(days)),
-      BigNumber.max(0, activeEra.index.minus(historyDepth))
+    const endEra = Math.max(
+      activeEra.index - erasPerDay * days,
+      Math.max(0, activeEra.index - historyDepth)
     )
 
     const eras: string[] = []
-    let thisEra = activeEra.index.minus(1)
+    let thisEra = activeEra.index - 1
     do {
       eras.push(thisEra.toString())
-      thisEra = thisEra.minus(1)
-    } while (thisEra.gte(endEra))
+      thisEra = thisEra - 1
+    } while (thisEra >= endEra)
 
     const erasMulti: [number][] = eras.map((e) => [Number(e)])
     const results = await new ErasValidatorRewardMulti(
@@ -431,14 +431,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch validators and era reward points when fetched status changes
   useEffect(() => {
-    if (isReady && activeEra.index.isGreaterThan(0)) {
+    if (isReady && activeEra.index > 0) {
       fetchValidators()
     }
   }, [validators.status, isReady, getApiStatus(`people-${network}`), activeEra])
 
   // Mark unsynced and fetch session validators and average reward when activeEra changes
   useEffectIgnoreInitial(() => {
-    if (isReady && activeEra.index.isGreaterThan(0)) {
+    if (isReady && activeEra.index > 0) {
       if (validators.status === 'synced') {
         setValidatorsFetched('unsynced')
       }

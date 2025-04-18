@@ -62,12 +62,6 @@ export class ActiveEra implements Unsubscribable {
               BigNumber.max(0, this.activeEra.index.minus(1))
             )
           )
-
-          document.dispatchEvent(
-            new CustomEvent('new-active-era', {
-              detail: { activeEra },
-            })
-          )
         })
         this.#sub = sub
       }

@@ -12,7 +12,6 @@ import type {
   TxSubmissionItem,
 } from 'api/types'
 import type {
-  APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
@@ -40,7 +39,6 @@ declare global {
     'new-network-metrics': CustomEvent<{
       networkMetrics: APINetworkMetrics
     }>
-    'new-active-era': CustomEvent<{ activeEra: APIActiveEra }>
     'new-era-reward-points': CustomEvent<EraRewardPointsEvent>
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>
     'new-staking-metrics': CustomEvent<{

@@ -34,7 +34,7 @@ export const ActiveGraph = ({
   const { data: nominatorRewardData, loading: rewardsLoading } = useRewards({
     network,
     who: activeAddress || '',
-    fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
+    fromEra: Math.max(activeEra.index - 1, 0),
   })
 
   const days = 30
