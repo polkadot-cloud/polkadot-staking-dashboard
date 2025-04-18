@@ -5,8 +5,6 @@ import { setStateWithRef } from '@w3ux/utils'
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { Era } from 'api/query/era'
-import { NetworkMeta } from 'api/query/networkMeta'
 import { ActiveEra } from 'api/subscribe/activeEra'
 import { BlockNumber } from 'api/subscribe/blockNumber'
 import { NetworkMetrics } from 'api/subscribe/networkMetrics'
@@ -112,26 +110,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Bootstrap app-wide chain state
   const bootstrapNetworkConfig = async () => {
-    // 1. Fetch network data for bootstrapping app state:
-
-    // Get active and previous era
-    const { activeEra: newActiveEra, previousEra } = await new Era(
-      network
-    ).fetch()
-
-    // Get network meta data related to staking and pools
-    const {
-      networkMetrics: newNetworkMetrics,
-      poolsConfig: newPoolsConfig,
-      stakingMetrics: newStakingMetrics,
-    } = await new NetworkMeta(network).fetch(newActiveEra, previousEra)
-
-    // 2. Populate all config state:
-
-    setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef)
-    setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef)
-    setStateWithRef(newStakingMetrics, setStakingMetrics, stakingMetricsRef)
-
     // Set `initialization` syncing to complete. NOTE: This synchonisation is only considering the
     // relay chain sync state, and not system/para chains
     Syncs.dispatch('initialization', 'complete')
