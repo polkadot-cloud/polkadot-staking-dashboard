@@ -62,6 +62,19 @@ export interface RelayMetrics {
   earliestStoredSession: number
 }
 
+export interface PoolsConfig {
+  counterForPoolMembers: number
+  counterForBondedPools: number
+  counterForRewardPools: number
+  lastPoolId: number
+  maxPoolMembers: number
+  maxPoolMembersPerPool: number
+  maxPools: number
+  minCreateBond: bigint
+  minJoinBond: bigint
+  globalMaxCommission: number
+}
+
 export interface NetworkConfig {
   network: NetworkId
   rpcEndpoints: Record<string, string>

@@ -38,7 +38,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { queryBondedPool, addToBondedPools } = useBondedPools()
   const { unit, units } = getNetworkData(network)
 
-  const poolId = lastPoolId.plus(1)
+  const poolId = lastPoolId + 1
   const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
@@ -52,7 +52,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     const tx = new CreatePool(
       network,
       activeAddress,
-      poolId.toNumber(),
+      poolId,
       unitToPlanck(bond, units),
       metadata,
       nominations.map(({ address }) => address),
@@ -74,7 +74,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       closeCanvas()
 
       // Query and add created pool to bondedPools list.
-      const pool = await queryBondedPool(poolId.toNumber())
+      const pool = await queryBondedPool(poolId)
       addToBondedPools(pool)
 
       // Reset setup progress.

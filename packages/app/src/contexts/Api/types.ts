@@ -10,6 +10,7 @@ import type {
   ChainId,
   ChainSpec,
   NetworkId,
+  PoolsConfig,
   ProviderType,
   RelayMetrics,
 } from 'types'
@@ -17,19 +18,6 @@ import type {
 export interface APIProviderProps {
   children: ReactNode
   network: NetworkId
-}
-
-export interface APIPoolsConfig {
-  counterForPoolMembers: BigNumber
-  counterForBondedPools: BigNumber
-  counterForRewardPools: BigNumber
-  lastPoolId: BigNumber
-  maxPoolMembers: BigNumber | null
-  maxPoolMembersPerPool: BigNumber | null
-  maxPools: BigNumber | null
-  minCreateBond: BigNumber
-  minJoinBond: BigNumber
-  globalMaxCommission: number
 }
 
 export interface APIStakingMetrics {
@@ -54,6 +42,6 @@ export interface APIContextInterface {
   providerType: ProviderType
   relayMetrics: RelayMetrics
   activeEra: ActiveEra
-  poolsConfig: APIPoolsConfig
+  poolsConfig: PoolsConfig
   stakingMetrics: APIStakingMetrics
 }

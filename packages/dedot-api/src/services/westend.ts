@@ -9,6 +9,7 @@ import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ActiveEraQuery } from '../query/activeEra'
+import { PoolsConfigQuery } from '../query/poolsConfig'
 import { RelayMetricsQuery } from '../query/relayMetrics'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -27,6 +28,7 @@ export class WestendService
   stakingConsts: StakingConsts<WestendApi>
   activeEra: ActiveEraQuery<WestendApi>
   relayMetrics: RelayMetricsQuery<WestendApi>
+  poolsConfig: PoolsConfigQuery<WestendApi>
 
   constructor(
     public networkConfig: NetworkConfig,
@@ -65,6 +67,7 @@ export class WestendService
 
     this.activeEra = new ActiveEraQuery(this.apiRelay)
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
+    this.poolsConfig = new PoolsConfigQuery(this.apiRelay)
   }
 
   unsubscribe = async () => {

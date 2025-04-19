@@ -86,10 +86,10 @@ export const Announcements = () => {
   }
 
   // Total locked in pools
-  if (counterForPoolMembers.isGreaterThan(0)) {
+  if (counterForPoolMembers > 0) {
     announcements.push({
       class: 'neutral',
-      title: `${counterForPoolMembers.toFormat()} ${t('poolMembersBonding')}`,
+      title: `${new BigNumber(counterForPoolMembers).toFormat()} ${t('poolMembersBonding')}`,
       subtitle: `${t('totalNumAccounts')}`,
     })
   } else {

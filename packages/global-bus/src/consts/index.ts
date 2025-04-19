@@ -25,3 +25,5 @@ export const setMultiConsts = (consts: Record<string, ChainConsts>) => {
     ...consts,
   })
 }
+
+export * from './default'

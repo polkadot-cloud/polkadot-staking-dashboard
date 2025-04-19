@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -93,8 +93,8 @@ export const BondFeedback = ({
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond
-      : minNominatorBond
-  const minBondUnit = planckToUnitBn(minBondBn, units)
+      : BigInt(minNominatorBond.toString())
+  const minBondUnit = new BigNumber(planckToUnit(minBondBn, units))
 
   // handle error updates
   const handleErrors = () => {

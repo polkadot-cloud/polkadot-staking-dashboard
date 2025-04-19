@@ -75,8 +75,8 @@ export const Unbond = () => {
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnitBn(activeBn, units)
-  const minJoinBond = planckToUnitBn(minJoinBondBn, units)
-  const minCreateBond = planckToUnitBn(minCreateBondBn, units)
+  const minJoinBond = new BigNumber(planckToUnit(minJoinBondBn, units))
+  const minCreateBond = new BigNumber(planckToUnit(minCreateBondBn, units))
   const minNominatorBond = planckToUnitBn(minNominatorBondBn, units)
 
   const [bond, setBond] = useState<{ bond: string }>({
@@ -168,7 +168,7 @@ export const Unbond = () => {
   if (poolActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: planckToUnitBn(poolToMinBn, units),
+        bond: planckToUnit(poolToMinBn, units),
         unit,
       })
     )

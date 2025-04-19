@@ -11,7 +11,6 @@ import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import type { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
 import type { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
 import type { PoolMembers } from 'api/subscribe/poolMembers'
-import type { PoolsConfig } from 'api/subscribe/poolsConfig'
 import type { StakingMetrics } from 'api/subscribe/stakingMetrics'
 
 // Define all possible subscription classes
@@ -25,7 +24,6 @@ export type Subscription =
   | ErasRewardPoints
   | FastUnstakeConfig
   | FastUnstakeQueue
-  | PoolsConfig
   | PoolMembers
   | StakingMetrics
 

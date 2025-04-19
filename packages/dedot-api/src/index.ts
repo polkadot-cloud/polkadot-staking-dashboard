@@ -7,6 +7,7 @@ import {
   resetApiStatus,
   resetChainSpecs,
   resetConsts,
+  resetPoolsConfig,
   resetRelayMetrics,
 } from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
@@ -34,6 +35,7 @@ export const initDedotService = async () => {
         resetChainSpecs()
         resetConsts()
         resetRelayMetrics()
+        resetPoolsConfig()
       }
 
       const { network, ...rest } = cur

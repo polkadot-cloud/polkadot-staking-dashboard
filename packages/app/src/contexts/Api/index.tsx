@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from 'react'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { ActiveEra } from 'api/subscribe/activeEra'
 import { BlockNumber } from 'api/subscribe/blockNumber'
-import { PoolsConfig } from 'api/subscribe/poolsConfig'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
@@ -18,9 +17,13 @@ import {
   chainSpecs$,
   consts$,
   defaultActiveEra,
+  defaultChainSpecs,
+  defaultConsts,
+  defaultPoolsConfig,
   defaultRelayMetrics,
   getRpcEndpoints,
   networkConfig$,
+  poolsConfig$,
   relayMetrics$,
 } from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
@@ -30,20 +33,15 @@ import type {
   ChainId,
   ChainSpec,
   ActiveEra as IActiveEra,
+  PoolsConfig,
   ProviderType,
   RelayMetrics,
   RpcEndpoints,
 } from 'types'
 import { useEventListener } from 'usehooks-ts'
-import {
-  defaultChainSpecs,
-  defaultConsts,
-  defaultPoolsConfig,
-  defaultStakingMetrics,
-} from './defaults'
+import { defaultStakingMetrics } from './defaults'
 import type {
   APIContextInterface,
-  APIPoolsConfig,
   APIProviderProps,
   APIStakingMetrics,
 } from './types'
@@ -80,8 +78,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Store pool config in state
   const [poolsConfig, setPoolsConfig] =
-    useState<APIPoolsConfig>(defaultPoolsConfig)
-  const poolsConfigRef = useRef(poolsConfig)
+    useState<PoolsConfig>(defaultPoolsConfig)
 
   // Store staking metrics in state
   const [stakingMetrics, setStakingMetrics] = useState<APIStakingMetrics>(
@@ -114,9 +111,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Initialise block number subscription
     Subscriptions.set(network, 'blockNumber', new BlockNumber(network))
 
-    // Initialise pool config subscription
-    Subscriptions.set(network, 'poolsConfig', new PoolsConfig(network))
-
     // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
     // on active era
     Subscriptions.set(network, 'activeEra', new ActiveEra(network))
@@ -127,27 +121,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       if (e.detail.chainType === 'relay') {
         setPapiSpecReceived(true)
         bootstrapNetworkConfig()
-      }
-    }
-  }
-
-  // Handle new pools config updates
-  const handlePoolsConfigUpdate = (e: Event): void => {
-    if (isCustomEvent(e)) {
-      const { poolsConfig: newPoolsConfig } = e.detail
-      // Only update if values have changed
-      if (
-        JSON.stringify(newPoolsConfig) !==
-        JSON.stringify(poolsConfigRef.current)
-      ) {
-        setStateWithRef(
-          {
-            ...poolsConfigRef.current,
-            ...newPoolsConfig,
-          },
-          setPoolsConfig,
-          poolsConfigRef
-        )
       }
     }
   }
@@ -208,9 +181,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
-    setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef)
     setStateWithRef(defaultStakingMetrics, setStakingMetrics, stakingMetricsRef)
-
     reInitialiseApi(providerType)
   }, [network])
 
@@ -226,7 +197,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Add event listener for api events and subscription updates
   const documentRef = useRef<Document>(document)
   useEventListener('api-ready', handlePapiReady, documentRef)
-  useEventListener('new-pools-config', handlePoolsConfigUpdate, documentRef)
   useEventListener(
     'new-staking-metrics',
     handleStakingMetricsUpdate,
@@ -254,6 +224,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const subRelayMetrics = relayMetrics$.subscribe((result) => {
       setRelayMetrics(result)
     })
+    const subPoolsConfig = poolsConfig$.subscribe((result) => {
+      setPoolsConfig(result)
+    })
     return () => {
       subNetwork.unsubscribe()
       subApiStatus.unsubscribe()
@@ -261,6 +234,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       subConsts.unsubscribe()
       subActiveEra.unsubscribe()
       subRelayMetrics.unsubscribe()
+      subPoolsConfig.unsubscribe()
     }
   }, [])
 

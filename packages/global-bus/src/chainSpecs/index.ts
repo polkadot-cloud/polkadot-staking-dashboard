@@ -25,3 +25,5 @@ export const setMultiChainSpecs = (specs: Record<string, ChainSpec>) => {
     ...specs,
   })
 }
+
+export * from './default'

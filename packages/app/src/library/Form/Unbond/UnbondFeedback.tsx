@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -11,7 +11,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { planckToUnitBn } from 'utils'
 import { Warning } from '../Warning'
 import { Spacer } from '../Wrappers'
 import type { UnbondFeedbackProps } from '../types'
@@ -72,8 +71,9 @@ export const UnbondFeedback = ({
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond
-      : minNominatorBond
-  const minBondUnit = planckToUnitBn(minBondBn, units)
+      : BigInt(minNominatorBond.toString())
+
+  const minBondUnit = planckToUnit(minBondBn, units)
 
   // unbond amount to minimum threshold
   const unbondToMin =

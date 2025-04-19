@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter } from '@w3ux/utils'
+import { capitalizeFirstLetter, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { MaxNominations } from 'consts'
 import { getNetworkData } from 'consts/util'
@@ -42,11 +42,15 @@ export const useFillVariables = () => {
           ],
           [
             '{MIN_POOL_JOIN_BOND}',
-            planckToUnitBn(minJoinBond, units).decimalPlaces(3).toFormat(),
+            new BigNumber(planckToUnit(minJoinBond, units))
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
-            planckToUnitBn(minCreateBond, units).decimalPlaces(3).toFormat(),
+            new BigNumber(planckToUnit(minCreateBond, units))
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
