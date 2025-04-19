@@ -13,13 +13,13 @@ import { planckToUnitBn } from 'utils'
 export const SupplyStaked = () => {
   const { t } = useTranslation('pages')
   const {
-    networkMetrics,
+    relayMetrics,
     stakingMetrics: { lastTotalStake },
   } = useApi()
   const { network } = useNetwork()
 
   const { unit, units } = getNetworkData(network)
-  const { totalIssuance } = networkMetrics
+  const { totalIssuance } = relayMetrics
 
   // total supply as percent.
   const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))

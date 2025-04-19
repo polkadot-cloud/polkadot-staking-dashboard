@@ -52,7 +52,7 @@ export interface APIContextInterface {
   getConsts: (chain: ChainId) => ChainConsts
   isReady: boolean
   providerType: ProviderType
-  networkMetrics: RelayMetrics
+  relayMetrics: RelayMetrics
   activeEra: ActiveEra
   poolsConfig: APIPoolsConfig
   stakingMetrics: APIStakingMetrics

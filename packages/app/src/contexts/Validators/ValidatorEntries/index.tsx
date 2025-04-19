@@ -54,7 +54,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     isReady,
     getConsts,
     getApiStatus,
-    networkMetrics: { earliestStoredSession },
+    relayMetrics: { earliestStoredSession },
   } = useApi()
   const { activeEra } = useApi()
   const { pluginEnabled } = usePlugins()

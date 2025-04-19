@@ -75,7 +75,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [activeEra, setActiveEra] = useState<IActiveEra>(defaultActiveEra)
 
   // Store network metrics in state
-  const [networkMetrics, setNetworkMetrics] =
+  const [relayMetrics, setRelayMetrics] =
     useState<RelayMetrics>(defaultRelayMetrics)
 
   // Store pool config in state
@@ -252,7 +252,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       setActiveEra(result)
     })
     const subRelayMetrics = relayMetrics$.subscribe((result) => {
-      setNetworkMetrics(result)
+      setRelayMetrics(result)
     })
     return () => {
       subNetwork.unsubscribe()
@@ -273,7 +273,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         getRpcEndpoint,
         isReady,
         getConsts,
-        networkMetrics,
+        relayMetrics,
         activeEra,
         poolsConfig,
         stakingMetrics,
