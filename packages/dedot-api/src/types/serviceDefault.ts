@@ -13,12 +13,12 @@ import {
 } from '.'
 import type { CoreConsts } from '../consts/core'
 import type { StakingConsts } from '../consts/staking'
+import type { ApiStatus } from '../spec/apiStatus'
+import type { ChainSpecs } from '../spec/chainSpecs'
 import type { ActiveEraQuery } from '../subscribe/activeEra'
 import type { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import type { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type { StakingMetricsQuery } from '../subscribe/stakingMetrics'
-import type { ApiStatus } from '../spec/apiStatus'
-import type { ChainSpecs } from '../spec/chainSpecs'
 
 // Required interface for all default services
 export abstract class DefaultServiceClass<
