@@ -28,7 +28,7 @@ export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals')
   const {
     getConsts,
-    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+    stakingMetrics: { fastUnstakeErasToCheckPerBlock },
     activeEra,
   } = useApi()
   const { network } = useNetwork()

@@ -36,7 +36,7 @@ export const ManageBond = () => {
   const { t } = useTranslation('pages')
   const {
     isReady,
-    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+    stakingMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi()
   const { network } = useNetwork()
   const { openHelp } = useHelp()

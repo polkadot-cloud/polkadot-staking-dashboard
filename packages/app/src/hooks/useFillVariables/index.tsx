@@ -15,7 +15,7 @@ export const useFillVariables = () => {
   const {
     getConsts,
     getChainSpec,
-    networkMetrics: { minimumActiveStake },
+    stakingMetrics: { minimumActiveStake },
     poolsConfig: { minJoinBond, minCreateBond },
   } = useApi()
   const { network } = useNetwork()

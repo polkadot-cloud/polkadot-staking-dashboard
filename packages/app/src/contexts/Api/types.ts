@@ -22,8 +22,6 @@ export interface APINetworkMetrics {
   totalIssuance: BigNumber
   auctionCounter: BigNumber
   earliestStoredSession: BigNumber
-  fastUnstakeErasToCheckPerBlock: number
-  minimumActiveStake: BigNumber
 }
 
 export interface APIPoolsConfig {
@@ -40,6 +38,8 @@ export interface APIPoolsConfig {
 }
 
 export interface APIStakingMetrics {
+  fastUnstakeErasToCheckPerBlock: number
+  minimumActiveStake: BigNumber
   totalValidators: BigNumber
   lastReward: BigNumber
   lastTotalStake: BigNumber

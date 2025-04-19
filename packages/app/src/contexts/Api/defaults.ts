@@ -45,8 +45,6 @@ export const defaultNetworkMetrics: APINetworkMetrics = {
   totalIssuance: new BigNumber(0),
   auctionCounter: new BigNumber(0),
   earliestStoredSession: new BigNumber(0),
-  fastUnstakeErasToCheckPerBlock: 0,
-  minimumActiveStake: new BigNumber(0),
 }
 
 export const defaultPoolsConfig: APIPoolsConfig = {
@@ -63,6 +61,8 @@ export const defaultPoolsConfig: APIPoolsConfig = {
 }
 
 export const defaultStakingMetrics: APIStakingMetrics = {
+  fastUnstakeErasToCheckPerBlock: 0,
+  minimumActiveStake: new BigNumber(0),
   totalValidators: new BigNumber(0),
   lastReward: new BigNumber(0),
   lastTotalStake: new BigNumber(0),

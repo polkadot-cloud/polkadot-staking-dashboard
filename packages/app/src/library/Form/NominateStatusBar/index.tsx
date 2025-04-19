@@ -18,8 +18,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('app')
   const { openHelp } = useHelp()
   const {
-    networkMetrics: { minimumActiveStake },
-    stakingMetrics: { minNominatorBond },
+    stakingMetrics: { minNominatorBond, minimumActiveStake },
   } = useApi()
   const { network } = useNetwork()
   const { syncing } = useSyncing(['initialization'])

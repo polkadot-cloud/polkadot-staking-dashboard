@@ -35,6 +35,8 @@ export class StakingMetrics implements Unsubscribable {
       if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best'
         const sub = combineLatest([
+          api.query.FastUnstake.ErasToCheckPerBlock.watchValue(bestOrFinalized),
+          api.query.Staking.MinimumActiveStake.watchValue(bestOrFinalized),
           api.query.Staking.CounterForValidators.watchValue(bestOrFinalized),
           api.query.Staking.MaxValidatorsCount.watchValue(bestOrFinalized),
           api.query.Staking.ValidatorCount.watchValue(bestOrFinalized),
@@ -54,6 +56,8 @@ export class StakingMetrics implements Unsubscribable {
           api.query.Staking.CounterForNominators.watchValue(bestOrFinalized),
         ]).subscribe(
           ([
+            erasToCheckPerBlock,
+            minimumActiveStake,
             counterForValidators,
             maxValidatorsCount,
             validatorCount,
@@ -64,6 +68,8 @@ export class StakingMetrics implements Unsubscribable {
             counterForNominators,
           ]) => {
             const stakingMetrics = {
+              fastUnstakeErasToCheckPerBlock: Number(erasToCheckPerBlock),
+              minimumActiveStake: new BigNumber(minimumActiveStake),
               totalValidators: stringToBn(counterForValidators.toString()),
               maxValidatorsCount: stringToBn(
                 maxValidatorsCount?.toString() || '0'
