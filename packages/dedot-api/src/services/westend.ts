@@ -13,6 +13,8 @@ import type {
 } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
+import { bondedPool } from '../query/bondedPool'
+import { bondedPoolEntries } from '../query/bondedPoolEntries'
 import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -40,6 +42,8 @@ export class WestendService
 
   interface: ServiceInterface = {
     query: {
+      bondedPool: async (poolId) => await bondedPool(this.apiRelay, poolId),
+      bondedPoolEntries: async () => await bondedPoolEntries(this.apiRelay),
       erasStakersOverviewEntries: async (era) =>
         await erasStakersOverviewEntries(this.apiRelay, era),
     },

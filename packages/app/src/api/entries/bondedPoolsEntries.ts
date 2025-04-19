@@ -22,18 +22,6 @@ export class BondedPoolsEntries extends Base {
     return this
   }
 
-  async fetchOne(id: number) {
-    const result =
-      await this.unsafeApi.query.NominationPools.BondedPools.getValue(id, {
-        at: 'best',
-      })
-
-    if (!result) {
-      return null
-    }
-    return this.formatPool(result)
-  }
-
   format(entry?: AnyApi) {
     return Object.fromEntries(
       (entry ? [entry] : this.bondedPools).map(
