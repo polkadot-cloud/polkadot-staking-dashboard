@@ -9,7 +9,7 @@ import type {
 } from '@dedot/chaintypes'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
-import type { ApiStatus } from 'types'
+import type { ApiStatus, ServiceInterface } from 'types'
 import type { KusamaService } from '../services/kusama'
 import type { PolkadotService } from '../services/polkadot'
 import type { WestendService } from '../services/westend'
@@ -48,6 +48,8 @@ export type Service = {
 
 // Generic service class that all services must implement
 export abstract class ServiceClass {
+  abstract interface: ServiceInterface
+
   abstract start(): Promise<void>
   abstract unsubscribe(): Promise<void>
 }

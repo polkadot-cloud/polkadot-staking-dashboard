@@ -3,12 +3,17 @@
   "version": "1.2.0",
   "license": "GPL-3.0-only",
   "type": "module",
-  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
     "bignumber.js": "^9.2.1",
     "dedot": "^0.9.2"
+  },
+  "devDependencies": {
+    "@dedot/chaintypes": "^0.77.0"
   }
 }

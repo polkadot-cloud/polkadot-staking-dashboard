@@ -20,11 +20,13 @@ import {
   defaultConsts,
   defaultPoolsConfig,
   defaultRelayMetrics,
+  defaultServiceInterface,
   defaultStakingMetrics,
   getRpcEndpoints,
   networkConfig$,
   poolsConfig$,
   relayMetrics$,
+  serviceInterface$,
   stakingMetrics$,
 } from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
@@ -38,6 +40,7 @@ import type {
   ProviderType,
   RelayMetrics,
   RpcEndpoints,
+  ServiceInterface,
   StakingMetrics,
 } from 'types'
 import { useEventListener } from 'usehooks-ts'
@@ -80,6 +83,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store staking metrics in state
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
     defaultStakingMetrics
+  )
+  // Store the dedot api service interface
+  const [dedotApi, setDedotApi] = useState<ServiceInterface>(
+    defaultServiceInterface
   )
 
   // Temporary state object to check if chain spec from papi is received
@@ -199,6 +206,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const subStakingMetrics = stakingMetrics$.subscribe((result) => {
       setStakingMetrics(result)
     })
+    const subServiceInterface = serviceInterface$.subscribe((result) => {
+      setDedotApi(result)
+    })
     return () => {
       subNetwork.unsubscribe()
       subApiStatus.unsubscribe()
@@ -208,6 +218,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       subRelayMetrics.unsubscribe()
       subPoolsConfig.unsubscribe()
       subStakingMetrics.unsubscribe()
+      subServiceInterface.unsubscribe()
     }
   }, [])
 
@@ -224,6 +235,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         activeEra,
         poolsConfig,
         stakingMetrics,
+        dedotApi,
       }}
     >
       {children}

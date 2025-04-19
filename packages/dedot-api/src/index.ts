@@ -9,7 +9,9 @@ import {
   resetConsts,
   resetPoolsConfig,
   resetRelayMetrics,
+  resetServiceInterface,
   resetStakingMetrics,
+  setServiceInterface,
 } from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
@@ -38,6 +40,7 @@ export const initDedotService = async () => {
         resetRelayMetrics()
         resetPoolsConfig()
         resetStakingMetrics()
+        resetServiceInterface()
       }
 
       const { network, ...rest } = cur
@@ -54,6 +57,9 @@ export const initDedotService = async () => {
         const { Service, apis, ids } = await getDefaultService(network, rest)
         service = new Service(cur, ids, ...apis)
       }
+
+      // Expose service interface
+      setServiceInterface(service.interface)
 
       // Start the service
       await service.start()

@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
-import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
+import type {
+  NetworkConfig,
+  NetworkId,
+  ServiceInterface,
+  SystemChainId,
+} from 'types'
 import {
   ServiceClass,
   type PeopleChain,
@@ -34,21 +39,20 @@ export abstract class DefaultServiceClass<
     super()
   }
   abstract ids: [NetworkId, SystemChainId]
-
   abstract apiStatus: {
     relay: ApiStatus<RelayApi>
     people: ApiStatus<PeopleApi>
   }
   abstract relayChainSpec: ChainSpecs<RelayApi>
   abstract peopleChainSpec: ChainSpecs<PeopleApi>
-
   abstract coreConsts: CoreConsts<RelayApi>
   abstract stakingConsts: StakingConsts<StakingApi>
+  abstract activeEra: ActiveEraQuery<StakingApi>
+  abstract relayMetrics: RelayMetricsQuery<RelayApi>
+  abstract poolsConfig: PoolsConfigQuery<StakingApi>
+  abstract stakingMetrics: StakingMetricsQuery<StakingApi>
 
-  activeEra: ActiveEraQuery<StakingApi>
-  relayMetrics: RelayMetricsQuery<RelayApi>
-  poolsConfig: PoolsConfigQuery<StakingApi>
-  stakingMetrics: StakingMetricsQuery<StakingApi>
+  abstract interface: ServiceInterface
 }
 
 // Default interface a default service factory returns

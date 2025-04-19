@@ -5,9 +5,15 @@ import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
 import { setConsts, setMultiChainSpecs } from 'global-bus'
-import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
+import type {
+  NetworkConfig,
+  NetworkId,
+  ServiceInterface,
+  SystemChainId,
+} from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
+import { getEraRewardPoints } from '../query/eraRewardPoints'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
@@ -31,6 +37,13 @@ export class PolkadotService
   relayMetrics: RelayMetricsQuery<PolkadotApi>
   poolsConfig: PoolsConfigQuery<PolkadotApi>
   stakingMetrics: StakingMetricsQuery<PolkadotApi>
+
+  interface: ServiceInterface = {
+    query: {
+      eraRewardPoints: async (era: number) =>
+        await getEraRewardPoints(this.apiRelay, era),
+    },
+  }
 
   constructor(
     public networkConfig: NetworkConfig,

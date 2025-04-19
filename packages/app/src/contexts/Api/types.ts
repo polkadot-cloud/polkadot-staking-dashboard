@@ -12,6 +12,7 @@ import type {
   PoolsConfig,
   ProviderType,
   RelayMetrics,
+  ServiceInterface,
   StakingMetrics,
 } from 'types'
 
@@ -31,4 +32,5 @@ export interface APIContextInterface {
   activeEra: ActiveEra
   poolsConfig: PoolsConfig
   stakingMetrics: StakingMetrics
+  dedotApi: ServiceInterface
 }

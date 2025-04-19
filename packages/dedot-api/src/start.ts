@@ -5,8 +5,11 @@ import { getNetworkData, getSystemChainData } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
 import { setMultiApiStatus } from 'global-bus'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
-import { newRelayChainSmProvider, newSystemChainSmProvider } from './providers'
 import { Services } from './services'
+import {
+  newRelayChainSmProvider,
+  newSystemChainSmProvider,
+} from './smoldotProviders'
 import type { Service } from './types'
 import type { DefaultService } from './types/serviceDefault'
 
