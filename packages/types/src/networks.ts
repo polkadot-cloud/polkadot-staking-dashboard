@@ -67,9 +67,9 @@ export interface PoolsConfig {
   counterForBondedPools: number
   counterForRewardPools: number
   lastPoolId: number
-  maxPoolMembers: number
-  maxPoolMembersPerPool: number
-  maxPools: number
+  maxPoolMembers: number | undefined
+  maxPoolMembersPerPool: number | undefined
+  maxPools: number | undefined
   minCreateBond: bigint
   minJoinBond: bigint
   globalMaxCommission: number

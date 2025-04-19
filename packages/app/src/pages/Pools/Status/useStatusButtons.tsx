@@ -30,7 +30,7 @@ export const useStatusButtons = () => {
     if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {
       return true
     }
-    if (maxPools === 0 || bondedPools.length === maxPools) {
+    if ((maxPools && maxPools === 0) || bondedPools.length === maxPools) {
       return true
     }
     return false
