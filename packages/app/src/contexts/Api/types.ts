@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { ReactNode, RefObject } from 'react'
+import type { ReactNode } from 'react'
 import type {
   ActiveEra,
   ApiStatus,
@@ -11,17 +11,12 @@ import type {
   ChainSpec,
   NetworkId,
   ProviderType,
+  RelayMetrics,
 } from 'types'
 
 export interface APIProviderProps {
   children: ReactNode
   network: NetworkId
-}
-
-export interface APINetworkMetrics {
-  totalIssuance: BigNumber
-  auctionCounter: BigNumber
-  earliestStoredSession: BigNumber
 }
 
 export interface APIPoolsConfig {
@@ -57,9 +52,8 @@ export interface APIContextInterface {
   getConsts: (chain: ChainId) => ChainConsts
   isReady: boolean
   providerType: ProviderType
-  networkMetrics: APINetworkMetrics
+  networkMetrics: RelayMetrics
   activeEra: ActiveEra
-  activeEraRef: RefObject<ActiveEra>
   poolsConfig: APIPoolsConfig
   stakingMetrics: APIStakingMetrics
 }

@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import type {
-  APINetworkMetrics,
-  APIPoolsConfig,
-  APIStakingMetrics,
-} from 'contexts/Api/types'
+import type { APIPoolsConfig, APIStakingMetrics } from 'contexts/Api/types'
 import type { ChainConsts, ChainSpec } from 'types'
 
 export const defaultChainSpecs: ChainSpec = {
@@ -39,12 +35,6 @@ export const defaultConsts: ChainConsts = {
   epochDuration: 0n,
   fastUnstakeDeposit: 0n,
   poolsPalletId: new Uint8Array([0]),
-}
-
-export const defaultNetworkMetrics: APINetworkMetrics = {
-  totalIssuance: new BigNumber(0),
-  auctionCounter: new BigNumber(0),
-  earliestStoredSession: new BigNumber(0),
 }
 
 export const defaultPoolsConfig: APIPoolsConfig = {

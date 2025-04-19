@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
@@ -24,7 +25,7 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
   // Get average reward rates.
   const getAverageRewardRate = (compounded: boolean): AverageRewardRate => {
     if (
-      totalIssuance.isZero() ||
+      totalIssuance === 0n ||
       erasPerDay === 0 ||
       avgCommission === 0 ||
       averageEraValidatorReward.reward.isZero()
@@ -33,7 +34,7 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
     }
 
     // total supply as percent.
-    const totalIssuanceUnit = planckToUnitBn(totalIssuance, units)
+    const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))
     const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units)
     const supplyStaked =
       lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
@@ -44,7 +45,7 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
     const averageRewardPerDay =
       averageEraValidatorReward.reward.multipliedBy(erasPerDay)
     const dayRewardRate = new BigNumber(averageRewardPerDay).dividedBy(
-      totalIssuance.dividedBy(100)
+      totalIssuance / 100n
     )
 
     let inflationToStakers: BigNumber = new BigNumber(0)

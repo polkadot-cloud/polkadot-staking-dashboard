@@ -210,10 +210,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   // Subscribe to active parachain validators
   const getParachainValidators = async () => {
     setSessionParaValidators(
-      await new ParaSessionAccounts(
-        network,
-        earliestStoredSession.toNumber()
-      ).fetch()
+      await new ParaSessionAccounts(network, earliestStoredSession).fetch()
     )
   }
 
@@ -449,7 +446,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch parachain session validators when `earliestStoredSession` ready
   useEffectIgnoreInitial(() => {
-    if (isReady && earliestStoredSession.isGreaterThan(0)) {
+    if (isReady && earliestStoredSession > 0) {
       getParachainValidators()
     }
   }, [isReady, earliestStoredSession.toString()])

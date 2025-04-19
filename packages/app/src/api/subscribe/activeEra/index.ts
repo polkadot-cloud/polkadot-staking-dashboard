@@ -4,6 +4,7 @@
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
+import { defaultActiveEra } from 'global-bus'
 import type { Subscription } from 'rxjs'
 import type { ActiveEra as IActiveEra, NetworkId } from 'types'
 import { StakingMetrics } from '../stakingMetrics'
@@ -16,10 +17,7 @@ export class ActiveEra implements Unsubscribable {
   #sub: Subscription
 
   // Store the active era.
-  activeEra: IActiveEra = {
-    index: 0,
-    start: 0n,
-  }
+  activeEra: IActiveEra = defaultActiveEra
 
   constructor(network: NetworkId) {
     this.#network = network

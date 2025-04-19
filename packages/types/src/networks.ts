@@ -56,6 +56,12 @@ export interface ChainConsts {
   poolsPalletId: Uint8Array
 }
 
+export interface RelayMetrics {
+  totalIssuance: bigint
+  auctionCounter: number
+  earliestStoredSession: number
+}
+
 export interface NetworkConfig {
   network: NetworkId
   rpcEndpoints: Record<string, string>

@@ -3,15 +3,13 @@
 
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
-import { setActiveEra } from 'global-bus'
+import { defaultActiveEra, setActiveEra } from 'global-bus'
 import type { ActiveEra } from 'types'
 import type { StakingChain } from '../types'
 
 export class ActiveEraQuery<T extends StakingChain> {
-  activeEra: ActiveEra = {
-    index: 0,
-    start: 0n,
-  }
+  activeEra: ActiveEra = defaultActiveEra
+
   #unsub: Unsub | undefined = undefined
 
   constructor(public api: DedotClient<T>) {

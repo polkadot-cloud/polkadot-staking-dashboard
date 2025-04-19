@@ -25,7 +25,7 @@ export const CurrentEraPoints = ({
 }: CurrentEraPointsProps) => {
   const { t } = useTranslation()
   const { network } = useNetwork()
-  const { isReady, activeEraRef } = useApi()
+  const { isReady, activeEra } = useApi()
   const { validatorsFetched } = useValidators()
   const { setTooltipTextAndOpen } = useTooltip()
 
@@ -45,7 +45,7 @@ export const CurrentEraPoints = ({
   // Normalise era point data for graph
   const normalisedPoints = normaliseEraPoints(
     {
-      [String(activeEraRef.current.index)]: eraPoints,
+      [String(activeEra.index)]: eraPoints,
     },
     new BigNumber(eraHigh)
   )

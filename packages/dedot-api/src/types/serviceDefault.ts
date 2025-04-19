@@ -14,6 +14,7 @@ import {
 import type { CoreConsts } from '../consts/core'
 import type { StakingConsts } from '../consts/staking'
 import type { ActiveEraQuery } from '../query/activeEra'
+import type { RelayMetricsQuery } from '../query/relayMetrics'
 import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
 
@@ -43,6 +44,7 @@ export abstract class DefaultServiceClass<
   abstract stakingConsts: StakingConsts<StakingApi>
 
   activeEra: ActiveEraQuery<StakingApi>
+  relayMetrics: RelayMetricsQuery<RelayApi>
 }
 
 // Default interface a default service factory returns

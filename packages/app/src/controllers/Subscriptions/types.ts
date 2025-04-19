@@ -10,7 +10,6 @@ import type { Bonded } from 'api/subscribe/bonded'
 import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import type { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
 import type { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
-import type { NetworkMetrics } from 'api/subscribe/networkMetrics'
 import type { PoolMembers } from 'api/subscribe/poolMembers'
 import type { PoolsConfig } from 'api/subscribe/poolsConfig'
 import type { StakingMetrics } from 'api/subscribe/stakingMetrics'
@@ -26,7 +25,6 @@ export type Subscription =
   | ErasRewardPoints
   | FastUnstakeConfig
   | FastUnstakeQueue
-  | NetworkMetrics
   | PoolsConfig
   | PoolMembers
   | StakingMetrics

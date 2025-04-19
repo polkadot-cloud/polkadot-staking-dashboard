@@ -11,11 +11,7 @@ import type {
   PapiReadyEvent,
   TxSubmissionItem,
 } from 'api/types'
-import type {
-  APINetworkMetrics,
-  APIPoolsConfig,
-  APIStakingMetrics,
-} from 'contexts/Api/types'
+import type { APIPoolsConfig, APIStakingMetrics } from 'contexts/Api/types'
 import type { ActiveBalance } from 'contexts/Balances/types'
 import type { BondedAccount } from 'contexts/Bonded/types'
 import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
@@ -36,9 +32,6 @@ declare global {
     'api-ready': CustomEvent<PapiReadyEvent>
     'online-status': CustomEvent<OnlineStatusEvent>
     'new-block-number': CustomEvent<BlockNumberEventDetail>
-    'new-network-metrics': CustomEvent<{
-      networkMetrics: APINetworkMetrics
-    }>
     'new-era-reward-points': CustomEvent<EraRewardPointsEvent>
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>
     'new-staking-metrics': CustomEvent<{
