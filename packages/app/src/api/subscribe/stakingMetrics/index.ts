@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import BigNumber from 'bignumber.js'
 import { Apis } from 'controllers/Apis'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import type { Subscription } from 'rxjs'
