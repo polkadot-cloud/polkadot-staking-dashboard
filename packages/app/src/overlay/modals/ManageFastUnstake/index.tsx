@@ -28,7 +28,7 @@ export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals')
   const {
     getConsts,
-    stakingMetrics: { fastUnstakeErasToCheckPerBlock },
+    stakingMetrics: { erasToCheckPerBlock },
     activeEra,
   } = useApi()
   const { network } = useNetwork()
@@ -57,7 +57,7 @@ export const ManageFastUnstake = () => {
 
   useEffect(() => {
     setValid(
-      fastUnstakeErasToCheckPerBlock > 0 &&
+      erasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
           enoughForDeposit &&
           fastUnstakeStatus?.status === 'NOT_EXPOSED' &&
@@ -66,7 +66,7 @@ export const ManageFastUnstake = () => {
     )
   }, [
     fastUnstakeStatus?.status,
-    fastUnstakeErasToCheckPerBlock,
+    erasToCheckPerBlock,
     totalUnlockChunks,
     isFastUnstaking,
     fastUnstakeDeposit,

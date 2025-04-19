@@ -11,6 +11,7 @@ import { StakingConsts } from '../consts/staking'
 import { ActiveEraQuery } from '../query/activeEra'
 import { PoolsConfigQuery } from '../query/poolsConfig'
 import { RelayMetricsQuery } from '../query/relayMetrics'
+import { StakingMetricsQuery } from '../query/stakingMetrics'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import type { DefaultServiceClass } from '../types/serviceDefault'
@@ -29,6 +30,7 @@ export class KusamaService
   activeEra: ActiveEraQuery<KusamaApi>
   relayMetrics: RelayMetricsQuery<KusamaApi>
   poolsConfig: PoolsConfigQuery<KusamaApi>
+  stakingMetrics: StakingMetricsQuery<KusamaApi>
 
   constructor(
     public networkConfig: NetworkConfig,
@@ -67,6 +69,13 @@ export class KusamaService
     this.activeEra = new ActiveEraQuery(this.apiRelay)
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)
+
+    this.activeEra.activeEra$.subscribe(async (era) => {
+      if (era.index > 0) {
+        this.stakingMetrics?.unsubscribe()
+        this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, era)
+      }
+    })
   }
 
   unsubscribe = async () => {

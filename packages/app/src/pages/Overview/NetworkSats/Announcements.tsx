@@ -3,7 +3,12 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { capitalizeFirstLetter, rmCommas, sortWithNull } from '@w3ux/utils'
+import {
+  capitalizeFirstLetter,
+  planckToUnit,
+  rmCommas,
+  sortWithNull,
+} from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
@@ -26,7 +31,7 @@ export const Announcements = () => {
   } = useApi()
 
   const { unit, units } = getNetworkData(network)
-  const lastRewardUnit = planckToUnitBn(lastReward, units)
+  const lastRewardUnit = new BigNumber(planckToUnit(lastReward || 0, units))
 
   let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {
@@ -56,11 +61,13 @@ export const Announcements = () => {
   const announcements = []
 
   // Total staked on the network
-  if (!totalStaked.isZero()) {
+  if (totalStaked > 0n) {
     announcements.push({
       class: 'neutral',
       title: t('networkCurrentlyStaked', {
-        total: planckToUnitBn(totalStaked, units).integerValue().toFormat(),
+        total: new BigNumber(planckToUnit(totalStaked, units))
+          .integerValue()
+          .toFormat(),
         unit,
         network: capitalizeFirstLetter(network),
       }),

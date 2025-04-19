@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Apis } from 'controllers/Apis'
-import { Subscriptions } from 'controllers/Subscriptions'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import { defaultActiveEra } from 'global-bus'
 import type { Subscription } from 'rxjs'
 import type { ActiveEra as IActiveEra, NetworkId } from 'types'
-import { StakingMetrics } from '../stakingMetrics'
 
 export class ActiveEra implements Unsubscribable {
   // The associated network for this instance.
@@ -39,27 +37,6 @@ export class ActiveEra implements Unsubscribable {
             index: activeEra?.index || 0,
             start: activeEra?.start || 0n,
           }
-
-          // Unsubscribe to staking metrics if it exists.
-          const subStakingMetrics = Subscriptions.get(
-            this.#network,
-            'stakingMetrics'
-          )
-          if (subStakingMetrics) {
-            subStakingMetrics.unsubscribe()
-            Subscriptions.remove(this.#network, 'stakingMetrics')
-          }
-
-          // Subscribe to staking metrics with new active era.
-          Subscriptions.set(
-            this.#network,
-            'stakingMetrics',
-            new StakingMetrics(
-              this.#network,
-              this.activeEra,
-              Math.max(0, this.activeEra.index - 1)
-            )
-          )
         })
         this.#sub = sub
       }

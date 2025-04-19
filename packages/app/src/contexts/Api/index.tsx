@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@w3ux/utils'
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
@@ -21,10 +20,12 @@ import {
   defaultConsts,
   defaultPoolsConfig,
   defaultRelayMetrics,
+  defaultStakingMetrics,
   getRpcEndpoints,
   networkConfig$,
   poolsConfig$,
   relayMetrics$,
+  stakingMetrics$,
 } from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
 import type {
@@ -37,14 +38,10 @@ import type {
   ProviderType,
   RelayMetrics,
   RpcEndpoints,
+  StakingMetrics,
 } from 'types'
 import { useEventListener } from 'usehooks-ts'
-import { defaultStakingMetrics } from './defaults'
-import type {
-  APIContextInterface,
-  APIProviderProps,
-  APIStakingMetrics,
-} from './types'
+import type { APIContextInterface, APIProviderProps } from './types'
 
 export const [APIContext, useApi] = createSafeContext<APIContextInterface>()
 
@@ -81,10 +78,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     useState<PoolsConfig>(defaultPoolsConfig)
 
   // Store staking metrics in state
-  const [stakingMetrics, setStakingMetrics] = useState<APIStakingMetrics>(
+  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
     defaultStakingMetrics
   )
-  const stakingMetricsRef = useRef(stakingMetrics)
 
   // Temporary state object to check if chain spec from papi is received
   const [papiSpecReceived, setPapiSpecReceived] = useState<boolean>(false)
@@ -125,27 +121,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   }
 
-  // Handle new staking metrics updates
-  const handleStakingMetricsUpdate = (e: Event): void => {
-    if (isCustomEvent(e)) {
-      const { stakingMetrics: newStakingMetrics } = e.detail
-      // Only update if values have changed
-      if (
-        JSON.stringify(newStakingMetrics) !==
-        JSON.stringify(stakingMetricsRef.current)
-      ) {
-        setStateWithRef(
-          {
-            ...stakingMetricsRef.current,
-            ...newStakingMetrics,
-          },
-          setStakingMetrics,
-          stakingMetricsRef
-        )
-      }
-    }
-  }
-
   // Get an RPC endpoint for a given chain
   const getRpcEndpoint = (chain: string): string => {
     const endpoints = getRpcEndpoints()
@@ -181,7 +156,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
-    setStateWithRef(defaultStakingMetrics, setStakingMetrics, stakingMetricsRef)
     reInitialiseApi(providerType)
   }, [network])
 
@@ -197,11 +171,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Add event listener for api events and subscription updates
   const documentRef = useRef<Document>(document)
   useEventListener('api-ready', handlePapiReady, documentRef)
-  useEventListener(
-    'new-staking-metrics',
-    handleStakingMetricsUpdate,
-    documentRef
-  )
 
   // Subscribe to global bus
   useEffect(() => {
@@ -227,6 +196,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const subPoolsConfig = poolsConfig$.subscribe((result) => {
       setPoolsConfig(result)
     })
+    const subStakingMetrics = stakingMetrics$.subscribe((result) => {
+      setStakingMetrics(result)
+    })
     return () => {
       subNetwork.unsubscribe()
       subApiStatus.unsubscribe()
@@ -235,6 +207,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       subActiveEra.unsubscribe()
       subRelayMetrics.unsubscribe()
       subPoolsConfig.unsubscribe()
+      subStakingMetrics.unsubscribe()
     }
   }, [])
 

@@ -9,6 +9,7 @@ import {
   resetConsts,
   resetPoolsConfig,
   resetRelayMetrics,
+  resetStakingMetrics,
 } from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
@@ -36,6 +37,7 @@ export const initDedotService = async () => {
         resetConsts()
         resetRelayMetrics()
         resetPoolsConfig()
+        resetStakingMetrics()
       }
 
       const { network, ...rest } = cur

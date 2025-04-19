@@ -36,7 +36,7 @@ export const useFillVariables = () => {
           ['{MAX_NOMINATIONS}', MaxNominations],
           [
             '{MIN_ACTIVE_STAKE}',
-            planckToUnitBn(minimumActiveStake, units)
+            new BigNumber(planckToUnit(minimumActiveStake, units))
               .decimalPlaces(3)
               .toFormat(),
           ],

@@ -7,7 +7,6 @@ import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { planckToUnitBn } from 'utils'
 import { useErasPerDay } from '../useErasPerDay'
 import { defaultAverageRewardRate } from './defaults'
 import type { AverageRewardRate, UseAverageRewardRate } from './types'
@@ -35,7 +34,9 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
 
     // total supply as percent.
     const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))
-    const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units)
+    const lastTotalStakeUnit = new BigNumber(
+      planckToUnit(lastTotalStake, units)
+    )
     const supplyStaked =
       lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
         ? new BigNumber(0)

@@ -11,7 +11,6 @@ import type {
   PapiReadyEvent,
   TxSubmissionItem,
 } from 'api/types'
-import type { APIStakingMetrics } from 'contexts/Api/types'
 import type { ActiveBalance } from 'contexts/Balances/types'
 import type { BondedAccount } from 'contexts/Bonded/types'
 import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
@@ -33,9 +32,6 @@ declare global {
     'online-status': CustomEvent<OnlineStatusEvent>
     'new-block-number': CustomEvent<BlockNumberEventDetail>
     'new-era-reward-points': CustomEvent<EraRewardPointsEvent>
-    'new-staking-metrics': CustomEvent<{
-      stakingMetrics: APIStakingMetrics
-    }>
     'new-active-pool': CustomEvent<DetailActivePool>
     'removed-active-pool': CustomEvent<{ address: string; poolId: string }>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>

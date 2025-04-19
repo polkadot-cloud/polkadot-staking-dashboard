@@ -75,6 +75,19 @@ export interface PoolsConfig {
   globalMaxCommission: number
 }
 
+export interface StakingMetrics {
+  erasToCheckPerBlock: number
+  minimumActiveStake: bigint
+  counterForValidators: number
+  maxValidatorsCount: number | undefined
+  validatorCount: number
+  lastReward: bigint | undefined
+  lastTotalStake: bigint
+  minNominatorBond: bigint
+  totalStaked: bigint
+  counterForNominators: number
+}
+
 export interface NetworkConfig {
   network: NetworkId
   rpcEndpoints: Record<string, string>

@@ -11,7 +11,6 @@ import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import type { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
 import type { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
 import type { PoolMembers } from 'api/subscribe/poolMembers'
-import type { StakingMetrics } from 'api/subscribe/stakingMetrics'
 
 // Define all possible subscription classes
 export type Subscription =
@@ -25,7 +24,6 @@ export type Subscription =
   | FastUnstakeConfig
   | FastUnstakeQueue
   | PoolMembers
-  | StakingMetrics
 
 // the record of keyed subscriptions
 export type ChainSubscriptions = Record<string, Subscription>

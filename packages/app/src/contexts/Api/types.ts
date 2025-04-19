@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js'
 import type { ReactNode } from 'react'
 import type {
   ActiveEra,
@@ -13,24 +12,12 @@ import type {
   PoolsConfig,
   ProviderType,
   RelayMetrics,
+  StakingMetrics,
 } from 'types'
 
 export interface APIProviderProps {
   children: ReactNode
   network: NetworkId
-}
-
-export interface APIStakingMetrics {
-  fastUnstakeErasToCheckPerBlock: number
-  minimumActiveStake: BigNumber
-  totalValidators: BigNumber
-  lastReward: BigNumber
-  lastTotalStake: BigNumber
-  validatorCount: BigNumber
-  maxValidatorsCount: BigNumber
-  minNominatorBond: BigNumber
-  totalStaked: BigNumber
-  counterForNominators: BigNumber
 }
 
 export interface APIContextInterface {
@@ -43,5 +30,5 @@ export interface APIContextInterface {
   relayMetrics: RelayMetrics
   activeEra: ActiveEra
   poolsConfig: PoolsConfig
-  stakingMetrics: APIStakingMetrics
+  stakingMetrics: StakingMetrics
 }

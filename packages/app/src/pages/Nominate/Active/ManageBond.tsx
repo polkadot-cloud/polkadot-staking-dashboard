@@ -36,7 +36,7 @@ export const ManageBond = () => {
   const { t } = useTranslation('pages')
   const {
     isReady,
-    stakingMetrics: { fastUnstakeErasToCheckPerBlock },
+    stakingMetrics: { erasToCheckPerBlock },
   } = useApi()
   const { network } = useNetwork()
   const { openHelp } = useHelp()
@@ -66,7 +66,7 @@ export const ManageBond = () => {
 
   // Determine whether to display fast unstake button or regular unstake button.
   const unstakeButton =
-    fastUnstakeErasToCheckPerBlock > 0 &&
+    erasToCheckPerBlock > 0 &&
     !nominationStatus.nominees.active.length &&
     fastUnstakeStatus !== null &&
     !exposed ? (

@@ -39,7 +39,7 @@ export const Unbond = () => {
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { isDepositor, activePool } = useActivePool()
-  const { minNominatorBond: minNominatorBondBn } = useApi().stakingMetrics
+  const { minNominatorBond: minNominatorBondBigInt } = useApi().stakingMetrics
   const {
     setModalStatus,
     setModalResize,
@@ -77,7 +77,9 @@ export const Unbond = () => {
   const freeToUnbond = planckToUnitBn(activeBn, units)
   const minJoinBond = new BigNumber(planckToUnit(minJoinBondBn, units))
   const minCreateBond = new BigNumber(planckToUnit(minCreateBondBn, units))
-  const minNominatorBond = planckToUnitBn(minNominatorBondBn, units)
+  const minNominatorBond = new BigNumber(
+    planckToUnit(minNominatorBondBigInt, units)
+  )
 
   const [bond, setBond] = useState<{ bond: string }>({
     bond: freeToUnbond.toString(),
@@ -141,7 +143,7 @@ export const Unbond = () => {
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
     !activeBn.isZero() &&
-    activeBn.isLessThan(minNominatorBondBn)
+    activeBn.isLessThan(minNominatorBondBigInt)
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn
   const poolActiveBelowMin =
