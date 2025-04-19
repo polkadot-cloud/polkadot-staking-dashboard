@@ -85,7 +85,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     defaultStakingMetrics
   )
   // Store the dedot api service interface
-  const [dedotApi, setDedotApi] = useState<ServiceInterface>(
+  const [serviceApi, setServiceApi] = useState<ServiceInterface>(
     defaultServiceInterface
   )
 
@@ -207,7 +207,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       setStakingMetrics(result)
     })
     const subServiceInterface = serviceInterface$.subscribe((result) => {
-      setDedotApi(result)
+      setServiceApi(result)
     })
     return () => {
       subNetwork.unsubscribe()
@@ -235,7 +235,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         activeEra,
         poolsConfig,
         stakingMetrics,
-        dedotApi,
+        serviceApi,
       }}
     >
       {children}

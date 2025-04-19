@@ -36,7 +36,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { activeAddress } = useActiveAccounts()
   const { getLedger, getNominations } = useBalances()
   const { accounts: connectAccounts } = useImportedAccounts()
-  const { isReady, activeEra, getApiStatus, dedotApi } = useApi()
+  const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
   const { units } = getNetworkData(network)
   const { ss58 } = getNetworkData(network)
 
@@ -219,7 +219,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch eras stakers from storage
   const getPagedErasStakers = async (era: string) => {
-    const overview = await dedotApi.query.erasStakersOverviewEntries(
+    const overview = await serviceApi.query.erasStakersOverviewEntries(
       activeEra.index
     )
     const validators: Record<string, { own: bigint; total: bigint }> =

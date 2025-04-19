@@ -33,7 +33,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const {
     isReady,
-    dedotApi,
+    serviceApi,
     activeEra,
     poolsConfig: { lastPoolId },
   } = useApi()
@@ -116,7 +116,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Queries a bonded pool and injects ID and addresses to a result
   const queryBondedPool = async (id: number) => {
-    const bondedPool = dedotApi.query.bondedPool(id)
+    const bondedPool = serviceApi.query.bondedPool(id)
 
     if (!bondedPool) {
       return null

@@ -32,5 +32,5 @@ export interface APIContextInterface {
   activeEra: ActiveEra
   poolsConfig: PoolsConfig
   stakingMetrics: StakingMetrics
-  dedotApi: ServiceInterface
+  serviceApi: ServiceInterface
 }
