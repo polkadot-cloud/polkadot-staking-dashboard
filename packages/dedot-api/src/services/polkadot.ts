@@ -13,7 +13,7 @@ import type {
 } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
-import { getEraRewardPoints } from '../query/eraRewardPoints'
+import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
@@ -40,8 +40,8 @@ export class PolkadotService
 
   interface: ServiceInterface = {
     query: {
-      eraRewardPoints: async (era: number) =>
-        await getEraRewardPoints(this.apiRelay, era),
+      erasStakersOverviewEntries: async (era) =>
+        await erasStakersOverviewEntries(this.apiRelay, era),
     },
   }
 

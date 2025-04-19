@@ -4,8 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
-import { ErasStakersOverview } from 'api/query/erasStakersOverview'
-import type { AnyApi } from 'common-types'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -19,12 +17,7 @@ import type {
 import { Syncs } from 'controllers/Syncs'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type {
-  AnyJson,
-  ExternalAccount,
-  MaybeAddress,
-  NominationStatus,
-} from 'types'
+import type { ExternalAccount, MaybeAddress, NominationStatus } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
@@ -42,9 +35,10 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { getLedger, getNominations } = useBalances()
-  const { isReady, activeEra, getApiStatus } = useApi()
   const { accounts: connectAccounts } = useImportedAccounts()
+  const { isReady, activeEra, getApiStatus, dedotApi } = useApi()
   const { units } = getNetworkData(network)
+  const { ss58 } = getNetworkData(network)
 
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
@@ -225,14 +219,17 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch eras stakers from storage
   const getPagedErasStakers = async (era: string) => {
-    const overview = await new ErasStakersOverview(network).fetch(Number(era))
-    const validators: Record<string, AnyJson> = overview.reduce(
-      (
-        prev: Record<string, Exposure>,
-        { keyArgs: [, validator], value: { own, total } }: AnyApi
-      ) => ({ ...prev, [validator]: { own, total } }),
-      {}
+    const overview = await dedotApi.query.erasStakersOverviewEntries(
+      activeEra.index
     )
+    const validators: Record<string, { own: bigint; total: bigint }> =
+      overview.reduce(
+        (prev, [[, validator], { own, total }]) => ({
+          ...prev,
+          [validator.address(ss58)]: { own, total },
+        }),
+        {}
+      )
     const validatorKeys = Object.keys(validators)
 
     const pagedResults = await Promise.all(

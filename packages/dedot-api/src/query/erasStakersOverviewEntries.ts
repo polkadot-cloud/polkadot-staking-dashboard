@@ -4,10 +4,7 @@
 import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
-export const getEraRewardPoints = async <T extends StakingChain>(
+export const erasStakersOverviewEntries = async <T extends StakingChain>(
   api: DedotClient<T>,
   era: number
-) => {
-  const result = await api.query.staking.erasRewardPoints(era)
-  return result
-}
+) => await api.query.staking.erasStakersOverview.entries(era)

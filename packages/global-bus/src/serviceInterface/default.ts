@@ -5,9 +5,6 @@ import type { ServiceInterface } from 'types'
 
 export const defaultServiceInterface: ServiceInterface = {
   query: {
-    eraRewardPoints: async () => ({
-      total: 0,
-      individual: [],
-    }),
+    erasStakersOverviewEntries: async () => [],
   },
 }
