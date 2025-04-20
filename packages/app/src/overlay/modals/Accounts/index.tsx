@@ -153,8 +153,8 @@ export const Accounts = () => {
     accounts,
     activeAddress,
     JSON.stringify(nominating),
-    JSON.stringify(inPool),
-    JSON.stringify(nominatingAndPool),
+    JSON.stringify(inPool.map((p) => p.address)),
+    JSON.stringify(nominatingAndPool.map((p) => p.address)),
     JSON.stringify(notStaking),
   ])
 

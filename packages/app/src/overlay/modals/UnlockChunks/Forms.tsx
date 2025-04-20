@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { rmCommas } from '@w3ux/utils'
 import { PoolWithdraw } from 'api/tx/poolWithdraw'
 import { StakingRebond } from 'api/tx/stakingRebond'
 import { StakingWithdraw } from 'api/tx/stakingWithdraw'
@@ -109,7 +108,7 @@ export const Forms = forwardRef(
 
         // if no more bonded funds from pool, remove from poolMembers list
         if (bondFor === 'pool') {
-          const points = membership?.points ? rmCommas(membership.points) : 0
+          const points = membership?.points || 0n
           const bonded = planckToUnitBn(new BigNumber(points), units)
           if (bonded.isZero()) {
             removePoolMember(activeAddress)

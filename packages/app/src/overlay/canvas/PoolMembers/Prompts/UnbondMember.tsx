@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, rmCommas } from '@w3ux/utils'
+import { ellipsisFn } from '@w3ux/utils'
 import { PoolUnbond } from 'api/tx/poolUnbond'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
@@ -42,7 +42,7 @@ export const UnbondMember = ({
 
   const { points } = member
   const { bondDuration } = getConsts(network)
-  const freeToUnbond = planckToUnitBn(new BigNumber(rmCommas(points)), units)
+  const freeToUnbond = planckToUnitBn(new BigNumber(points), units)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,

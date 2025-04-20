@@ -202,7 +202,7 @@ export class AccountBalances implements Unsubscribable {
     this.poolMembership = {
       address: this.#address,
       poolId: poolMembers.pool_id,
-      points: poolMembers.points.toString(),
+      points: poolMembers.points,
       balance,
       lastRecordedRewardCounter:
         poolMembers.last_recorded_reward_counter.toString(),

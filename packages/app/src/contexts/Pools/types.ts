@@ -13,7 +13,7 @@ export type ClaimPermission =
 export interface PoolMembership {
   address: string
   poolId: number
-  points: string
+  points: bigint
   balance: BigNumber
   lastRecordedRewardCounter: string
   unbondingEras: Record<number, string>
