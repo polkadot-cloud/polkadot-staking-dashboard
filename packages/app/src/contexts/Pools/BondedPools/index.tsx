@@ -43,6 +43,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Store bonded pools. Used implicitly in callbacks, ref is also defined
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([])
   const bondedPoolsRef = useRef(bondedPools)
+  console.log(bondedPools)
 
   // Track the sync status of `bondedPools`
   const bondedPoolsSynced = useRef<Sync>('unsynced')

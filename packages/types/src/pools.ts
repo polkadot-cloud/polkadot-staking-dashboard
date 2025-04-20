@@ -48,7 +48,7 @@ export interface ActivePool {
 }
 
 export interface ActiveBondedPool {
-  points: string
+  points: bigint
   memberCounter: string
   roles: PoolRoles
   roleIdentities: {

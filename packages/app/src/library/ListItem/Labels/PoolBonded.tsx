@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
@@ -24,7 +23,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const Token = getChainIcons(network).token
 
   // Format total bonded pool amount.
-  const bonded = planckToUnitBn(new BigNumber(rmCommas(points)), units)
+  const bonded = planckToUnitBn(new BigNumber(points), units)
 
   return (
     <Label>

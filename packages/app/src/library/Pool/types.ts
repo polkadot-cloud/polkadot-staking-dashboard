@@ -8,7 +8,7 @@ export interface PoolProps {
 }
 
 export interface Pool {
-  points: string
+  points: bigint
   memberCounter: string
   addresses: PoolAddresses
   id: number

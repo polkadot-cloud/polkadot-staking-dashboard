@@ -60,7 +60,7 @@ export class BondedPoolsEntries extends Base {
 
     const pool = {
       commission,
-      points: value.points.toString(),
+      points: value.points,
       memberCounter: value.member_counter.toString(),
       roles: value.roles,
       state: value.state.type,

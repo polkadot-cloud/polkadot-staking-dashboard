@@ -3,12 +3,7 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  capitalizeFirstLetter,
-  planckToUnit,
-  rmCommas,
-  sortWithNull,
-} from '@w3ux/utils'
+import { capitalizeFirstLetter, planckToUnit, sortWithNull } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
@@ -35,7 +30,7 @@ export const Announcements = () => {
 
   let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points))
+    totalPoolPoints = totalPoolPoints.plus(b.points)
   })
   const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
 
