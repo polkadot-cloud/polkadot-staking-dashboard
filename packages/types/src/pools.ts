@@ -7,7 +7,7 @@ import type { AnyJson } from './common'
 import type { Identity, SuperIdentity } from './identity'
 import type { Nominations } from './nominate'
 
-export type BondedPool = ActiveBondedPool & {
+export type BondedPool = Omit<ActiveBondedPool, 'roleIdentities'> & {
   addresses: PoolAddresses
   id: number
   commission?: {
