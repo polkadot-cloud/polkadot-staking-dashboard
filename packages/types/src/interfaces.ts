@@ -3,6 +3,7 @@
 
 import type {
   PalletNominationPoolsBondedPoolInner,
+  SpStakingExposurePage,
   SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
 import type { AccountId32 } from 'dedot/codecs'
@@ -18,5 +19,9 @@ export interface ServiceInterface {
     erasStakersOverviewEntries: (
       era: number
     ) => Promise<[[number, AccountId32], SpStakingPagedExposureMetadata][]>
+    erasStakersPagedEntries: (
+      era: number,
+      validator: string
+    ) => Promise<[[number, AccountId32, number], SpStakingExposurePage][]>
   }
 }

@@ -8,5 +8,6 @@ export const defaultServiceInterface: ServiceInterface = {
     bondedPool: async () => undefined,
     bondedPoolEntries: async () => [],
     erasStakersOverviewEntries: async () => [],
+    erasStakersPagedEntries: async () => [],
   },
 }

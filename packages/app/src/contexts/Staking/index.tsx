@@ -3,7 +3,6 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -234,7 +233,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
     const pagedResults = await Promise.all(
       validatorKeys.map((v) =>
-        new ErasStakersPagedEntries(network).fetch(Number(era), v)
+        serviceApi.query.erasStakersPagedEntries(Number(era), v)
       )
     )
 
@@ -249,10 +248,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         continue
       }
 
-      const {
-        keyArgs,
-        value: { others },
-      } = page
+      const [keyArgs, { others }] = page
 
       const validator = validatorKeys[i]
       const { own, total } = validators[validator]
@@ -262,12 +258,10 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         val: {
           total: total.toString(),
           own: own.toString(),
-          others: others.map(
-            ({ who, value }: { who: string; value: bigint }) => ({
-              who,
-              value: value.toString(),
-            })
-          ),
+          others: others.map(({ who, value }) => ({
+            who: who.address(ss58),
+            value: value.toString(),
+          })),
         },
       })
       i++
