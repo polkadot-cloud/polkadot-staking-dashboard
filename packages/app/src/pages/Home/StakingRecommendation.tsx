@@ -156,7 +156,7 @@ export const StakingRecommendation = () => {
                   {t('balance')}:
                 </span>{' '}
                 <span className="amount">
-                  {freeBalance.toFormat()} {unit}
+                  {freeBalance.toFormat(2)} {unit}
                 </span>
               </BalanceDisplay>
             </RecommendationHeader>
@@ -226,7 +226,7 @@ export const StakingRecommendation = () => {
                     </li>
                     <li>
                       {t('yourCurrentBalance', {
-                        balance: freeBalance.toFormat(),
+                        balance: freeBalance.toFormat(2),
                         unit,
                       })}
                     </li>
