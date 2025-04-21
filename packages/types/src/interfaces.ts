@@ -32,6 +32,7 @@ export interface ServiceInterface {
     >
   }
   runtimeApi: {
+    balanceToPoints: (poolId: number, amount: bigint) => Promise<bigint>
     pointsToBalance: (poolId: number, points: bigint) => Promise<bigint>
   }
 }

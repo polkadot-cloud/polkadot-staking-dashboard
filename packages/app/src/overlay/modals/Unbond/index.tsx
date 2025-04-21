@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
-import { PoolBalanceToPoints } from 'api/runtimeApi/poolBalanceToPoints'
 import { PoolUnbond } from 'api/tx/poolUnbond'
 import { StakingUnbond } from 'api/tx/stakingUnbond'
 import BigNumber from 'bignumber.js'
@@ -39,7 +38,10 @@ export const Unbond = () => {
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { isDepositor, activePool } = useActivePool()
-  const { minNominatorBond: minNominatorBondBigInt } = useApi().stakingMetrics
+  const {
+    serviceApi,
+    stakingMetrics: { minNominatorBond: minNominatorBondBigInt },
+  } = useApi()
   const {
     setModalStatus,
     setModalResize,
@@ -91,11 +93,10 @@ export const Unbond = () => {
   // handler to set bond as a string
   const handleSetBond = async (newBond: { bond: BigNumber }) => {
     if (isPooling && activePool) {
-      const balancePoints = await new PoolBalanceToPoints(
-        network,
+      const balancePoints = await serviceApi.runtimeApi.balanceToPoints(
         activePool.id,
         unitToPlanck(newBond.bond.toString(), units)
-      ).fetch()
+      )
       setPoints(balancePoints)
     }
     setBond({ bond: newBond.bond.toString() })

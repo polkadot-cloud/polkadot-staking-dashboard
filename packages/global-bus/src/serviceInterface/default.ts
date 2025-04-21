@@ -15,6 +15,7 @@ export const defaultServiceInterface: ServiceInterface = {
     validatorEntries: async () => [],
   },
   runtimeApi: {
+    balanceToPoints: async () => BigInt(0),
     pointsToBalance: async () => BigInt(0),
   },
 }
