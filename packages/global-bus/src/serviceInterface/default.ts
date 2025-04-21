@@ -11,6 +11,7 @@ export const defaultServiceInterface: ServiceInterface = {
     erasStakersPagedEntries: async () => [],
     paraSessionAccounts: async () => undefined,
     proxies: async () => [],
+    sessionValidators: async () => [],
     validatorEntries: async () => [],
   },
 }

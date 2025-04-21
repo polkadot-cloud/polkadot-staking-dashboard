@@ -4,7 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
-import { SessionValidators } from 'api/query/sessionValidators'
 import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti'
 import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
 import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
@@ -204,7 +203,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return
     }
-    setSessionValidators(await new SessionValidators(network).fetch())
+    const result = (await serviceApi.query.sessionValidators()).map((a) =>
+      a.address(ss58)
+    )
+    setSessionValidators(result)
   }
 
   // Subscribe to active parachain validators
