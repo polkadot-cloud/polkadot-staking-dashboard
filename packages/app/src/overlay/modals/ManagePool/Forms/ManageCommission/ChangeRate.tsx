@@ -23,9 +23,9 @@ export const ChangeRate = ({
   const { t } = useTranslation('modals')
   const { getConsts } = useApi()
   const { network } = useNetwork()
+  const { expectedBlockTime } = getConsts(network)
   const { getEnabled, getInitial, getCurrent, setChangeRate } =
     usePoolCommission()
-  const { expectedBlockTime } = getConsts(network)
 
   // Get the current change rate value.
   const changeRate = getCurrent('change_rate')

@@ -24,6 +24,7 @@ export const TipsThresholdMedium = 1200
 export const MaxNominations = 16
 export const MaxPayoutDays = 60
 export const MaxEraRewardPointsEras = 10
+export const PerbillMultiplier = 10000000
 
 // Local storage keys
 export const FiatCurrencyKey = 'currency'

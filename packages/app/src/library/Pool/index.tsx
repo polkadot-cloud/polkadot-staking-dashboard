@@ -51,7 +51,7 @@ export const Pool = ({ pool }: PoolProps) => {
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
-              <Members members={memberCounter} />
+              <Members memberCounter={memberCounter} />
               <PoolBonded pool={pool} />
             </LabelRow>
           </div>

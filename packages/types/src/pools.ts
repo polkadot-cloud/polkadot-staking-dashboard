@@ -2,23 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
+import type { PalletNominationPoolsBondedPoolInner } from 'dedot/chaintypes'
 import type { MaybeAddress } from './accounts'
-import type { AnyJson } from './common'
 import type { Identity, SuperIdentity } from './identity'
 import type { Nominations } from './nominate'
 
-export type BondedPool = Omit<ActiveBondedPool, 'roleIdentities'> & {
+export type BondedPool = PalletNominationPoolsBondedPoolInner & {
   addresses: PoolAddresses
   id: number
-  commission?: {
-    current?: AnyJson | null
-    max?: AnyJson | null
-    changeRate: {
-      maxIncrease: AnyJson
-      minDelay: AnyJson
-    } | null
-    throttleFrom?: AnyJson | null
-  }
 }
 
 export interface PoolAddresses {

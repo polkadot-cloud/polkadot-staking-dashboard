@@ -1,7 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getNetworkData } from 'consts/util'
 import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
@@ -18,27 +20,34 @@ export const Roles = ({
 }: OverviewSectionProps) => {
   const { t } = useTranslation('pages')
   const { openHelp } = useHelp()
+  const { network } = useNetwork()
+  const { ss58 } = getNetworkData(network)
   const iconSize = '3rem'
+
+  const rootAddress = bondedPool?.roles?.root?.address(ss58) || ''
+  const nominatorAddress = bondedPool?.roles?.nominator?.address(ss58) || ''
+  const bouncerAddress = bondedPool?.roles?.bouncer?.address(ss58) || ''
+  const depositorAddress = bondedPool?.roles?.depositor.address(ss58) || ''
 
   // Get formatted role identity data
   const rootIdentity = getIdentityDisplay(
-    identities[bondedPool?.roles?.root || ''],
-    supers[bondedPool?.roles?.root || '']
+    identities[rootAddress],
+    supers[rootAddress]
   )?.data?.display
 
   const nominatorIdentity = getIdentityDisplay(
-    identities[bondedPool?.roles?.nominator || ''],
-    supers[bondedPool?.roles?.nominator || '']
+    identities[nominatorAddress],
+    supers[nominatorAddress]
   )?.data?.display
 
   const bouncerIdentity = getIdentityDisplay(
-    identities[bondedPool?.roles?.bouncer || ''],
-    supers[bondedPool?.roles?.bouncer || '']
+    identities[bouncerAddress],
+    supers[bouncerAddress]
   )?.data?.display
 
   const depositorIdentity = getIdentityDisplay(
-    identities[bondedPool?.roles?.depositor || ''],
-    supers[bondedPool?.roles?.depositor || '']
+    identities[depositorAddress],
+    supers[depositorAddress]
   )?.data?.display
 
   return (
@@ -55,9 +64,9 @@ export const Roles = ({
             <section>
               <Identity
                 title={t('root')}
-                address={bondedPool.roles.root}
+                address={rootAddress}
                 identity={rootIdentity}
-                Action={<CopyAddress address={bondedPool.roles.root} />}
+                Action={<CopyAddress address={rootAddress} />}
                 iconSize={iconSize}
               />
             </section>
@@ -66,9 +75,9 @@ export const Roles = ({
             <section>
               <Identity
                 title={t('nominator')}
-                address={bondedPool.roles.nominator}
+                address={nominatorAddress}
                 identity={nominatorIdentity}
-                Action={<CopyAddress address={bondedPool.roles.nominator} />}
+                Action={<CopyAddress address={nominatorAddress} />}
                 iconSize={iconSize}
               />
             </section>
@@ -77,9 +86,9 @@ export const Roles = ({
             <section>
               <Identity
                 title={t('bouncer')}
-                address={bondedPool.roles.bouncer}
+                address={bouncerAddress}
                 identity={bouncerIdentity}
-                Action={<CopyAddress address={bondedPool.roles.bouncer} />}
+                Action={<CopyAddress address={bouncerAddress} />}
                 iconSize={iconSize}
               />
             </section>
@@ -88,9 +97,9 @@ export const Roles = ({
             <section>
               <Identity
                 title={t('depositor')}
-                address={bondedPool.roles.depositor}
+                address={depositorAddress}
                 identity={depositorIdentity}
-                Action={<CopyAddress address={bondedPool.roles.depositor} />}
+                Action={<CopyAddress address={depositorAddress} />}
                 iconSize={iconSize}
               />
             </section>

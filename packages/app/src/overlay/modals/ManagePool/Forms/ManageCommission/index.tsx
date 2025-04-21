@@ -5,12 +5,14 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { PoolSetCommission } from 'api/tx/poolSetCommission'
 import { PoolSetCommissionChangeRate } from 'api/tx/poolSetCommissionChangeRate'
 import { PoolSetCommissionMax } from 'api/tx/poolSetCommissionMax'
+import { PerbillMultiplier } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -132,7 +134,7 @@ export const ManageCommission = ({
     }
     const txs = []
     if (commissionUpdated) {
-      const commissionPerbill = commission * 10000000
+      const commissionPerbill = commission * PerbillMultiplier
       txs.push(
         new PoolSetCommission(
           network,
@@ -142,11 +144,11 @@ export const ManageCommission = ({
       )
     }
     if (isUpdated('max_commission') && getEnabled('max_commission')) {
-      const maxPerbill = maxCommission * 10000000
+      const maxPerbill = maxCommission * PerbillMultiplier
       txs.push(new PoolSetCommissionMax(network, poolId, maxPerbill).tx())
     }
     if (isUpdated('change_rate') && getEnabled('change_rate')) {
-      const maxIncreasePerbill = changeRate.maxIncrease * 10000000
+      const maxIncreasePerbill = changeRate.maxIncrease * PerbillMultiplier
       txs.push(
         new PoolSetCommissionChangeRate(
           network,
@@ -179,17 +181,17 @@ export const ManageCommission = ({
             commission: {
               ...pool.commission,
               current: currentCommissionSet
-                ? [`${commission.toFixed(2)}%`, payee]
-                : null,
+                ? [commission * PerbillMultiplier, new AccountId32(payee)]
+                : undefined,
               max: isUpdated('max_commission')
-                ? `${maxCommission.toFixed(2)}%`
-                : pool.commission?.max || null,
+                ? maxCommission * PerbillMultiplier
+                : pool.commission?.max || undefined,
               changeRate: isUpdated('change_rate')
                 ? {
-                    maxIncrease: `${changeRate.maxIncrease.toFixed(2)}%`,
-                    minDelay: String(changeRate.minDelay),
+                    maxIncrease: changeRate.maxIncrease * PerbillMultiplier,
+                    minDelay: changeRate.minDelay,
                   }
-                : pool.commission?.changeRate || null,
+                : pool.commission?.changeRate || undefined,
             },
           },
         ])

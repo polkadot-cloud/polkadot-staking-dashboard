@@ -1,6 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PerbillMultiplier } from 'consts'
+import { getNetworkData } from 'consts/util'
+import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -22,16 +25,19 @@ export const usePoolCommission = () => useContext(PoolCommissionContext)
 export const PoolCommissionProvider = ({
   children,
 }: PoolCommissionProviderProps) => {
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
   const { getBondedPool } = useBondedPools()
   const poolId = activePool?.id || 0
   const bondedPool = getBondedPool(poolId)
+  const { ss58 } = getNetworkData(network)
 
   // Get initial commission value from the bonded pool commission config.
-  const initialCommission = Number(bondedPool?.commission?.current?.[0] || '0')
+  const initialCommission = bondedPool?.commission?.current?.[0] || 0
 
   // Get initial payee value from the bonded pool commission config.
-  const initialPayee = bondedPool?.commission?.current?.[1] || null
+  const initialPayee =
+    bondedPool?.commission?.current?.[1].address(ss58) || null
 
   // Get initial maximum commission value from the bonded pool commission config.
   const initialMaxCommission = Number(
@@ -43,7 +49,7 @@ export const PoolCommissionProvider = ({
     const raw = bondedPool?.commission?.changeRate
     return raw
       ? {
-          maxIncrease: Number(raw.maxIncrease),
+          maxIncrease: Number(raw.maxIncrease / PerbillMultiplier),
           minDelay: Number(raw.minDelay),
         }
       : {
