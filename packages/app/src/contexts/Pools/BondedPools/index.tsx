@@ -4,7 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
-import { BondedPoolsEntries } from 'api/entries/bondedPoolsEntries'
 import { NominatorsMulti } from 'api/queryMulti/nominatorsMulti'
 import { PoolMetadataMulti } from 'api/queryMulti/poolMetadataMulti'
 import type { AnyApi } from 'common-types'
@@ -43,7 +42,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Store bonded pools. Used implicitly in callbacks, ref is also defined
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([])
   const bondedPoolsRef = useRef(bondedPools)
-  console.log(bondedPools)
 
   // Track the sync status of `bondedPools`
   const bondedPoolsSynced = useRef<Sync>('unsynced')
@@ -69,12 +67,10 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     // Get and format bonded pool entries
     const ids: number[] = []
     const idsMulti: [number][] = []
-    const bondedPoolsEntries = (
-      await new BondedPoolsEntries(network).fetch()
-    ).format()
+    const bondedPoolEntries = await serviceApi.query.bondedPoolEntries()
 
     const exposures = shuffle(
-      Object.entries(bondedPoolsEntries).map(([id, pool]: AnyApi) => {
+      bondedPoolEntries.map(([id, pool]: AnyApi) => {
         ids.push(id)
         idsMulti.push([id])
         return getPoolWithAddresses(id, pool)
