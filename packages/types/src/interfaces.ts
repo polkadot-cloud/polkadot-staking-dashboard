@@ -3,6 +3,7 @@
 
 import type {
   PalletNominationPoolsBondedPoolInner,
+  PalletStakingValidatorPrefs,
   SpStakingExposurePage,
   SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
@@ -23,5 +24,8 @@ export interface ServiceInterface {
       era: number,
       validator: string
     ) => Promise<[[number, AccountId32, number], SpStakingExposurePage][]>
+    validatorEntries: () => Promise<
+      [AccountId32, PalletStakingValidatorPrefs][]
+    >
   }
 }

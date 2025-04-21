@@ -17,6 +17,7 @@ import { bondedPool } from '../query/bondedPool'
 import { bondedPoolEntries } from '../query/bondedPoolEntries'
 import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from '../query/erasStakersPagedEntries'
+import { validatorEntries } from '../query/validatorEntries'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
@@ -49,6 +50,7 @@ export class PolkadotService
         await erasStakersOverviewEntries(this.apiRelay, era),
       erasStakersPagedEntries: async (era, validator) =>
         await erasStakersPagedEntries(this.apiRelay, era, validator),
+      validatorEntries: async () => await validatorEntries(this.apiRelay),
     },
   }
 

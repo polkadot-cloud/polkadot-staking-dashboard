@@ -4,7 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
-import { ValidatorsEntries } from 'api/entries/validatorsEntries'
 import { ParaSessionAccounts } from 'api/query/paraSessionAccounts'
 import { SessionValidators } from 'api/query/sessionValidators'
 import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti'
@@ -12,6 +11,7 @@ import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
 import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -53,6 +53,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const {
     isReady,
     getConsts,
+    serviceApi,
     getApiStatus,
     relayMetrics: { earliestStoredSession },
   } = useApi()
@@ -60,6 +61,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { pluginEnabled } = usePlugins()
   const { stakers } = useStaking().eraStakers
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
+
+  const { ss58 } = getNetworkData(network)
   const { historyDepth } = getConsts(network)
 
   // Store validator entries and sync status
@@ -112,30 +115,28 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return defaultValidatorsData
     }
 
-    const result = await new ValidatorsEntries(network).fetch()
+    const result = await serviceApi.query.validatorEntries()
+
     const entries: Validator[] = []
     let notFullCommissionCount = 0
     let totalNonAllCommission = new BigNumber(0)
-    result.forEach(
-      ({ keyArgs: [address], value: { commission, blocked } }: AnyApi) => {
-        const commissionAsPercent = perbillToPercent(commission)
+    result.forEach(([address, { commission, blocked }]) => {
+      const commissionAsPercent = perbillToPercent(commission)
 
-        if (!commissionAsPercent.isEqualTo(100)) {
-          totalNonAllCommission =
-            totalNonAllCommission.plus(commissionAsPercent)
-        } else {
-          notFullCommissionCount++
-        }
-
-        entries.push({
-          address,
-          prefs: {
-            commission: Number(commissionAsPercent.toFixed(2)),
-            blocked,
-          },
-        })
+      if (!commissionAsPercent.isEqualTo(100)) {
+        totalNonAllCommission = totalNonAllCommission.plus(commissionAsPercent)
+      } else {
+        notFullCommissionCount++
       }
-    )
+
+      entries.push({
+        address: address.address(ss58),
+        prefs: {
+          commission: Number(commissionAsPercent.toFixed(2)),
+          blocked,
+        },
+      })
+    })
 
     return { entries, notFullCommissionCount, totalNonAllCommission }
   }
