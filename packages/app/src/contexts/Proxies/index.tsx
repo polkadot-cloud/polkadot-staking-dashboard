@@ -10,12 +10,11 @@ import {
   removedFrom,
   setStateWithRef,
 } from '@w3ux/utils'
-import { ProxiesQuery } from 'api/query/proxiesQuery'
 import { AccountProxies } from 'api/subscribe/accountProxies'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
 import { DefaultNetwork } from 'consts/networks'
-import { isSupportedProxy } from 'consts/util'
+import { getNetworkData, isSupportedProxy } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
@@ -42,13 +41,14 @@ export const [ProxiesContext, useProxies] =
   createSafeContext<ProxiesContextInterface>()
 
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi()
   const { network } = useNetwork()
   const { syncing } = useSyncing()
+  const { isReady, serviceApi } = useApi()
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts()
+  const { ss58 } = getNetworkData(network)
 
   // Store the proxy accounts of each imported account
   const [proxies, setProxies] = useState<Proxies>([])
@@ -169,14 +169,14 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // Queries the chain to check if the given delegator & delegate pair is valid proxy. Used when a
   // proxy account is being manually declared
   const handleDeclareDelegate = async (delegator: string) => {
-    const result = await new ProxiesQuery(network, delegator).fetch()
-    const proxy = result[0] || []
+    const results = await serviceApi.query.proxies(delegator)
 
     let addDelegatorAsExternal = false
-    for (const { delegate: newDelegate } of proxy) {
+    for (const delegate of results) {
+      const delegateAddress = delegate.address(ss58)
       if (
-        accounts.find(({ address }) => address === newDelegate) &&
-        !delegates[newDelegate]
+        accounts.find(({ address }) => address === delegateAddress) &&
+        !delegates[delegateAddress]
       ) {
         subscribeToProxies(delegator)
         addDelegatorAsExternal = true

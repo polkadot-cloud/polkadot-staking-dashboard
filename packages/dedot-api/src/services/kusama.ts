@@ -18,6 +18,7 @@ import { bondedPoolEntries } from '../query/bondedPoolEntries'
 import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from '../query/erasStakersPagedEntries'
 import { paraSessionAccounts } from '../query/paraSessionAccounts'
+import { proxies } from '../query/proxies'
 import { validatorEntries } from '../query/validatorEntries'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -53,6 +54,7 @@ export class KusamaService
         await erasStakersPagedEntries(this.apiRelay, era, validator),
       paraSessionAccounts: async (session: number) =>
         await paraSessionAccounts(this.apiRelay, session),
+      proxies: async (address: string) => await proxies(this.apiRelay, address),
       validatorEntries: async () => await validatorEntries(this.apiRelay),
     },
   }

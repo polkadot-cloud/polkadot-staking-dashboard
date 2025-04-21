@@ -10,6 +10,7 @@ export const defaultServiceInterface: ServiceInterface = {
     erasStakersOverviewEntries: async () => [],
     erasStakersPagedEntries: async () => [],
     paraSessionAccounts: async () => undefined,
+    proxies: async () => [],
     validatorEntries: async () => [],
   },
 }
