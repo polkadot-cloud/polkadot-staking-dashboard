@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { CardHeader, Page } from 'ui-core/base'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
+import { useNetwork } from '../../contexts/Network'
 import { useActivePool } from '../../contexts/Pools/ActivePool'
 import { useStaking } from '../../contexts/Staking'
 import { NetworkStats } from './NetworkStats'
@@ -38,6 +39,7 @@ const QuickActions = () => {
   const { activeAddress } = useActiveAccounts()
   const { inSetup } = useStaking()
   const { inPool } = useActivePool()
+  const { network } = useNetwork()
 
   // Determine if user is staking via pool or direct nomination
   const isStakingViaPool = inPool()
@@ -102,7 +104,7 @@ const QuickActions = () => {
       onClick: () =>
         activeAddress
           ? window.open(
-              `https://polkadot.subscan.io/account/${activeAddress}`,
+              `https://${network}.subscan.io/account/${activeAddress}`,
               '_blank'
             )
           : null,

@@ -12,8 +12,21 @@ import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 
-// Define the minimum balance required for direct nomination
-const DIRECT_NOMINATION_MINIMUM = 250
+// Define network-specific minimum balances
+const NETWORK_MINIMUMS = {
+  polkadot: {
+    directNomination: 250, // 250 DOT for direct nomination on Polkadot
+    poolStaking: 1, // 1 DOT to join a pool on Polkadot
+  },
+  kusama: {
+    directNomination: 0.1, // 0.1 KSM for direct nomination on Kusama
+    poolStaking: 0.002, // 0.002 KSM to join a pool on Kusama
+  },
+  westend: {
+    directNomination: 1, // 1 WND for direct nomination on Westend
+    poolStaking: 0.1, // 0.1 WND to join a pool on Westend
+  },
+}
 
 // Styled components for the recommendation UI
 const RecommendationWrapper = styled.div`
@@ -118,8 +131,9 @@ export const StakingRecommendation = () => {
   const freeBalance = planckToUnitBn(free, units)
 
   // Determine if the user has enough balance for direct nomination
+  const networkMinimums = NETWORK_MINIMUMS[network]
   const hasEnoughForDirectNomination = freeBalance.isGreaterThanOrEqualTo(
-    DIRECT_NOMINATION_MINIMUM
+    networkMinimums.directNomination
   )
 
   return (
@@ -201,7 +215,12 @@ export const StakingRecommendation = () => {
                 <RecommendationBox>
                   <h3>{t('recommendedPoolStaking')}</h3>
                   <BulletList>
-                    <li>{t('poolStakingRecommendBenefit1')}</li>
+                    <li>
+                      {t('poolStakingRecommendBenefit1', {
+                        minPoolStake: networkMinimums.poolStaking,
+                        unit,
+                      })}
+                    </li>
                     <li>{t('poolStakingRecommendBenefit2')}</li>
                     <li>{t('poolStakingRecommendBenefit3')}</li>
                   </BulletList>
@@ -220,7 +239,7 @@ export const StakingRecommendation = () => {
                   <BulletList>
                     <li>
                       {t('directNominationRequirement', {
-                        minimum: DIRECT_NOMINATION_MINIMUM,
+                        minimum: networkMinimums.directNomination,
                         unit,
                       })}
                     </li>
