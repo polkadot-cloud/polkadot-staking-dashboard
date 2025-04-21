@@ -240,7 +240,7 @@ importers:
         version: 2.0.5(react@19.1.0)
       react-i18next:
         specifier: ^15.4.0
-        version: 15.4.1(i18next@24.2.3(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.1(i18next@25.0.1(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-router-dom:
         specifier: ^7.5.0
         version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -366,11 +366,11 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       i18next:
-        specifier: ^24.2.3
-        version: 24.2.3(typescript@5.8.3)
+        specifier: ^25.0.1
+        version: 25.0.1(typescript@5.8.3)
       react-i18next:
         specifier: ^15.4.0
-        version: 15.4.1(i18next@24.2.3(typescript@5.8.3))(react@19.1.0)
+        version: 15.4.1(i18next@25.0.1(typescript@5.8.3))(react@19.1.0)
 
   packages/plugin-staking-api:
     dependencies:
@@ -536,8 +536,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       i18next:
-        specifier: ^24.2.3
-        version: 24.2.3(typescript@5.8.3)
+        specifier: ^25.0.1
+        version: 25.0.1(typescript@5.8.3)
 
 packages:
 
@@ -3786,8 +3786,8 @@ packages:
   i18next-browser-languagedetector@8.0.4:
     resolution: {integrity: sha512-f3frU3pIxD50/Tz20zx9TD9HobKYg47fmAETb117GKGPrhwcSSPJDoCposXlVycVebQ9GQohC3Efbpq7/nnJ5w==}
 
-  i18next@24.2.3:
-    resolution: {integrity: sha512-lfbf80OzkocvX7nmZtu7nSTNbrTYR52sLWxPtlXX1zAhVw8WEnFk4puUkCR4B1dNQwbSpEHHHemcZu//7EcB7A==}
+  i18next@25.0.1:
+    resolution: {integrity: sha512-8S8PyZbrymJZn3DaN70/34JYWNhsqrU6yA4MuzcygJBv+41dgNMocEA8h+kV1P7MCc1ll03lOTOIXE7mpNCicw==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -9923,13 +9923,13 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.27.0
 
-  i18next@24.2.3(typescript@5.8.2):
+  i18next@25.0.1(typescript@5.8.2):
     dependencies:
       '@babel/runtime': 7.27.0
     optionalDependencies:
       typescript: 5.8.2
 
-  i18next@24.2.3(typescript@5.8.3):
+  i18next@25.0.1(typescript@5.8.3):
     dependencies:
       '@babel/runtime': 7.27.0
     optionalDependencies:
@@ -10829,20 +10829,20 @@ snapshots:
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
 
-  react-i18next@15.4.1(i18next@24.2.3(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-i18next@15.4.1(i18next@25.0.1(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.0
       html-parse-stringify: 3.0.1
-      i18next: 24.2.3(typescript@5.8.2)
+      i18next: 25.0.1(typescript@5.8.2)
       react: 19.1.0
     optionalDependencies:
       react-dom: 19.1.0(react@19.1.0)
 
-  react-i18next@15.4.1(i18next@24.2.3(typescript@5.8.3))(react@19.1.0):
+  react-i18next@15.4.1(i18next@25.0.1(typescript@5.8.3))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.0
       html-parse-stringify: 3.0.1
-      i18next: 24.2.3(typescript@5.8.3)
+      i18next: 25.0.1(typescript@5.8.3)
       react: 19.1.0
 
   react-is@16.13.1: {}
