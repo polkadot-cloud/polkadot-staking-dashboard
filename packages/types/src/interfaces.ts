@@ -33,6 +33,7 @@ export interface ServiceInterface {
   }
   runtimeApi: {
     balanceToPoints: (poolId: number, amount: bigint) => Promise<bigint>
+    pendingRewards: (address: string) => Promise<bigint>
     pointsToBalance: (poolId: number, points: bigint) => Promise<bigint>
   }
 }

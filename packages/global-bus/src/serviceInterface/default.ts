@@ -16,6 +16,7 @@ export const defaultServiceInterface: ServiceInterface = {
   },
   runtimeApi: {
     balanceToPoints: async () => BigInt(0),
+    pendingRewards: async () => BigInt(0),
     pointsToBalance: async () => BigInt(0),
   },
 }

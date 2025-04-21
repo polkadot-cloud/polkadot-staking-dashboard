@@ -22,6 +22,7 @@ import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
 import { validatorEntries } from '../query/validatorEntries'
 import { balanceToPoints } from '../runtimeApi/balanceToPoints'
+import { pendingRewards } from '../runtimeApi/pendingRewards'
 import { pointsToBalance } from '../runtimeApi/pointsToBalance'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -64,6 +65,8 @@ export class WestendService
     runtimeApi: {
       balanceToPoints: async (poolId, amount) =>
         await balanceToPoints(this.apiRelay, poolId, amount),
+      pendingRewards: async (address) =>
+        await pendingRewards(this.apiRelay, address),
       pointsToBalance: async (poolId, points) =>
         await pointsToBalance(this.apiRelay, poolId, points),
     },
