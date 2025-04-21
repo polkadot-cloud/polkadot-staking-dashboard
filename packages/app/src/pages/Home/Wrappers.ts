@@ -217,3 +217,55 @@ export const RightColumn = styled.div`
   flex-direction: column;
   gap: 1rem;
 `
+
+// Grid layout for Wallet Balance and Quick Actions
+export const GridLayout = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  width: 100%;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+// Container for Quick Actions buttons
+export const QuickActionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0.5rem;
+`
+
+// Styled button for Quick Actions
+export const ActionButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  height: 100%;
+  text-align: center;
+  background: var(--button-primary-background);
+  border: 1px solid var(--border-primary-color);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--button-hover-background);
+  }
+
+  .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--network-color-primary);
+  }
+
+  .label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color-primary);
+  }
+`

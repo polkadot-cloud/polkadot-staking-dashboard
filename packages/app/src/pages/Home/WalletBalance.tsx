@@ -15,7 +15,6 @@ import { LegendItem } from 'library/BarChart/LegendItem'
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { styled } from 'styled-components'
-import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 
@@ -23,11 +22,6 @@ const HeaderActions = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-`
-
-const SendButton = styled(ButtonPrimary)`
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
 `
 
 export const WalletBalance = () => {
@@ -141,11 +135,6 @@ export const WalletBalance = () => {
             Token={<Token />}
             value={totalBalance.toNumber()}
             currency={currency}
-          />
-          <SendButton
-            text={t('send')}
-            disabled={!activeAddress || totalBalance.isZero()}
-            onClick={() => {}}
           />
         </HeaderActions>
       </CardHeader>
