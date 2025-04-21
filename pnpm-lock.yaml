@@ -212,8 +212,8 @@ importers:
         specifier: workspace:*
         version: link:../plugin-staking-api
       polkadot-api:
-        specifier: ^1.9.11
-        version: 1.9.11(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^1.9.13
+        version: 1.9.13(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       qrcode-generator:
         specifier: 1.4.4
         version: 1.4.4
@@ -1257,12 +1257,12 @@ packages:
     resolution: {integrity: sha512-25L86MyPvnlQoX2MTIV2OiUcb6vJ6aRbFa9pbwByn95INKD5mFH2smgjDhq+fwJoqAgvgbdJLj6Tz7V9X5CFAQ==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@polkadot-api/cli@0.11.8':
-    resolution: {integrity: sha512-10tmpnPosW8FOdTU2iUsgJveP80ji6mB3dQi4dbw9JETYP1wiPapABx+W6eQoUG/E40kM6ojtkFvNFqG94IlOQ==}
+  '@polkadot-api/cli@0.11.10':
+    resolution: {integrity: sha512-HMPq+qAwtIstr6Nq78eNl8EqX+MO/dyWg/PA34jovbZCZv8O38FAqC0riOfY844it9HEiC7ovW/tyY8FbpJiGg==}
     hasBin: true
 
-  '@polkadot-api/codegen@0.13.2':
-    resolution: {integrity: sha512-rZE9IcFVJvkIeiSH3tjeTsqDGW9x5PM9VuggW5/q1bCPOoggiPzeXwY4zcsaIYqhd+MLQs+gentA2UL0n+ecdw==}
+  '@polkadot-api/codegen@0.13.4':
+    resolution: {integrity: sha512-CKI24KlFPorzkSsbCw+90Sd7HWJj7Y3W70WP874KOxHQWIZdB7V9qRw/60syJk2cT4PkqJqtYTLRQubXbgySuA==}
 
   '@polkadot-api/ink-contracts@0.2.6':
     resolution: {integrity: sha512-76oHO/rKRa48w1i4DEmB/9e/FmxKuhMJq7l1OhdnX6mbVO+bAif7FkRUHLfIgsWqCdhCdfLe5J474HRudKhU/A==}
@@ -3554,6 +3554,14 @@ packages:
       picomatch:
         optional: true
 
+  fdir@6.4.4:
+    resolution: {integrity: sha512-1NZP+GK4GfuAv3PqKvxQRDMjdSRZjnkq7KfhlNrCNNlZ0ygQFpebfrnfnq/W7fpUnAv9aGWmY1zKx7FYL3gwhg==}
+    peerDependencies:
+      picomatch: ^3 || ^4
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
+
   figures@6.1.0:
     resolution: {integrity: sha512-d+l3qxjSesT4V7v2fh+QnmFnUWv9lSpjarhShNTgBOfA0ttejbQUAlHLitbjkoRiDulW0OPoQPYIGhIC8ohejg==}
     engines: {node: '>=18'}
@@ -4459,8 +4467,8 @@ packages:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
 
-  polkadot-api@1.9.11:
-    resolution: {integrity: sha512-2O35oZlcmtwq/smsbJXFpOImpv2uRxNlRHm2sg1UPwcOEidmXzPDitpYoNExUJHtdL8V1xRKv17JL3MZY0jKoQ==}
+  polkadot-api@1.9.13:
+    resolution: {integrity: sha512-Q23VYUdGKlYHKnXfcd8c+GeOFELC+SLxnGH1DxxJVPdCmC3l3FYpTYci76PNIAHD6+yEru7Ukeb2jy2+VPt9aw==}
     hasBin: true
     peerDependencies:
       rxjs: '>=7.8.0'
@@ -5129,6 +5137,10 @@ packages:
 
   tinyglobby@0.2.12:
     resolution: {integrity: sha512-qkf4trmKSIiMTs/E63cxH+ojC2unam7rJ0WrauAzpT3ECNTxGRMlaXxVbfxMUC/w0LaYk6jQ4y/nGR9uBO3tww==}
+    engines: {node: '>=12.0.0'}
+
+  tinyglobby@0.2.13:
+    resolution: {integrity: sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==}
     engines: {node: '>=12.0.0'}
 
   tinypool@1.0.2:
@@ -6739,10 +6751,10 @@ snapshots:
 
   '@pkgr/core@0.2.2': {}
 
-  '@polkadot-api/cli@0.11.8(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(utf-8-validate@5.0.10)':
+  '@polkadot-api/cli@0.11.10(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@commander-js/extra-typings': 13.1.0(commander@13.1.0)
-      '@polkadot-api/codegen': 0.13.2
+      '@polkadot-api/codegen': 0.13.4
       '@polkadot-api/ink-contracts': 0.2.6
       '@polkadot-api/json-rpc-provider': 0.0.4
       '@polkadot-api/known-chains': 0.7.3
@@ -6778,7 +6790,7 @@ snapshots:
       - utf-8-validate
       - yaml
 
-  '@polkadot-api/codegen@0.13.2':
+  '@polkadot-api/codegen@0.13.4':
     dependencies:
       '@polkadot-api/ink-contracts': 0.2.6
       '@polkadot-api/metadata-builders': 0.10.2
@@ -9689,6 +9701,10 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
+  fdir@6.4.4(picomatch@4.0.2):
+    optionalDependencies:
+      picomatch: 4.0.2
+
   figures@6.1.0:
     dependencies:
       is-unicode-supported: 2.1.0
@@ -10611,9 +10627,9 @@ snapshots:
 
   pngjs@5.0.0: {}
 
-  polkadot-api@1.9.11(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(rxjs@7.8.2)(utf-8-validate@5.0.10):
+  polkadot-api@1.9.13(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(rxjs@7.8.2)(utf-8-validate@5.0.10):
     dependencies:
-      '@polkadot-api/cli': 0.11.8(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(utf-8-validate@5.0.10)
+      '@polkadot-api/cli': 0.11.10(@microsoft/api-extractor@7.52.2(@types/node@22.14.1))(@swc/core@1.11.16)(bufferutil@4.0.9)(postcss@8.5.3)(utf-8-validate@5.0.10)
       '@polkadot-api/ink-contracts': 0.2.6
       '@polkadot-api/json-rpc-provider': 0.0.4
       '@polkadot-api/known-chains': 0.7.3
@@ -11399,6 +11415,11 @@ snapshots:
       fdir: 6.4.3(picomatch@4.0.2)
       picomatch: 4.0.2
 
+  tinyglobby@0.2.13:
+    dependencies:
+      fdir: 6.4.4(picomatch@4.0.2)
+      picomatch: 4.0.2
+
   tinypool@1.0.2: {}
 
   tinyrainbow@2.0.0: {}
@@ -11466,7 +11487,7 @@ snapshots:
       source-map: 0.8.0-beta.0
       sucrase: 3.35.0
       tinyexec: 0.3.2
-      tinyglobby: 0.2.12
+      tinyglobby: 0.2.13
       tree-kill: 1.2.2
     optionalDependencies:
       '@microsoft/api-extractor': 7.52.2(@types/node@22.14.1)
