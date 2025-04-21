@@ -24,6 +24,7 @@ export interface ServiceInterface {
       era: number,
       validator: string
     ) => Promise<[[number, AccountId32, number], SpStakingExposurePage][]>
+    paraSessionAccounts: (session: number) => Promise<AccountId32[] | undefined>
     validatorEntries: () => Promise<
       [AccountId32, PalletStakingValidatorPrefs][]
     >

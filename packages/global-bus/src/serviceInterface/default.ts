@@ -9,6 +9,7 @@ export const defaultServiceInterface: ServiceInterface = {
     bondedPoolEntries: async () => [],
     erasStakersOverviewEntries: async () => [],
     erasStakersPagedEntries: async () => [],
+    paraSessionAccounts: async () => undefined,
     validatorEntries: async () => [],
   },
 }

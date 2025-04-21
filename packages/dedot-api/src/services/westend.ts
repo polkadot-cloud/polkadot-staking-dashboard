@@ -17,6 +17,7 @@ import { bondedPool } from '../query/bondedPool'
 import { bondedPoolEntries } from '../query/bondedPoolEntries'
 import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from '../query/erasStakersPagedEntries'
+import { paraSessionAccounts } from '../query/paraSessionAccounts'
 import { validatorEntries } from '../query/validatorEntries'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -50,6 +51,8 @@ export class WestendService
         await erasStakersOverviewEntries(this.apiRelay, era),
       erasStakersPagedEntries: async (era, validator) =>
         await erasStakersPagedEntries(this.apiRelay, era, validator),
+      paraSessionAccounts: async (session: number) =>
+        await paraSessionAccounts(this.apiRelay, session),
       validatorEntries: async () => await validatorEntries(this.apiRelay),
     },
   }

@@ -4,7 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
-import { ParaSessionAccounts } from 'api/query/paraSessionAccounts'
 import { SessionValidators } from 'api/query/sessionValidators'
 import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti'
 import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
@@ -210,9 +209,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Subscribe to active parachain validators
   const getParachainValidators = async () => {
-    setSessionParaValidators(
-      await new ParaSessionAccounts(network, earliestStoredSession).fetch()
-    )
+    const sessionAccounts = (
+      await serviceApi.query.paraSessionAccounts(earliestStoredSession)
+    )?.map((a) => a.address(ss58))
+
+    setSessionParaValidators(sessionAccounts || [])
   }
 
   // Fetches prefs for a list of validators
