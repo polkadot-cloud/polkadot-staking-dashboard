@@ -31,4 +31,7 @@ export interface ServiceInterface {
       [AccountId32, PalletStakingValidatorPrefs][]
     >
   }
+  runtimeApi: {
+    pointsToBalance: (poolId: number, points: bigint) => Promise<bigint>
+  }
 }

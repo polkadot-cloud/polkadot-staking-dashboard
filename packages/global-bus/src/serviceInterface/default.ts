@@ -14,4 +14,7 @@ export const defaultServiceInterface: ServiceInterface = {
     sessionValidators: async () => [],
     validatorEntries: async () => [],
   },
+  runtimeApi: {
+    pointsToBalance: async () => BigInt(0),
+  },
 }

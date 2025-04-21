@@ -21,6 +21,7 @@ import { paraSessionAccounts } from '../query/paraSessionAccounts'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
 import { validatorEntries } from '../query/validatorEntries'
+import { pointsToBalance } from '../runtimeApi/pointsToBalance'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
@@ -58,6 +59,10 @@ export class PolkadotService
       proxies: async (address: string) => await proxies(this.apiRelay, address),
       sessionValidators: async () => await sessionValidators(this.apiRelay),
       validatorEntries: async () => await validatorEntries(this.apiRelay),
+    },
+    runtimeApi: {
+      pointsToBalance: async (poolId, points) =>
+        await pointsToBalance(this.apiRelay, poolId, points),
     },
   }
 
