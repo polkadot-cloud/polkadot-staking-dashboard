@@ -1,8 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import {
   faCoins,
+  faEnvelope,
   faHandHoldingDollar,
   faHistory,
   faPaperPlane,
@@ -10,7 +12,9 @@ import {
   faUnlock,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { CardHeader, Page } from 'ui-core/base'
@@ -29,6 +33,7 @@ import {
   ActionButton,
   CardRow,
   GridLayout,
+  HelpOptionsContainer,
   QuickActionsContainer,
 } from './Wrappers'
 
@@ -40,6 +45,9 @@ const QuickActions = () => {
   const { inSetup } = useStaking()
   const { inPool } = useActivePool()
   const { network } = useNetwork()
+
+  // State to track if help options are expanded
+  const [helpExpanded, setHelpExpanded] = useState(false)
 
   // Determine if user is staking via pool or direct nomination
   const isStakingViaPool = inPool()
@@ -70,6 +78,21 @@ const QuickActions = () => {
     }
   }
 
+  // Toggle help options expanded state
+  const toggleHelpOptions = () => {
+    setHelpExpanded(!helpExpanded)
+  }
+
+  // Handle email support click
+  const handleEmailSupport = () => {
+    window.open(`mailto:${MailSupportAddress}`, '_blank')
+  }
+
+  // Handle discord support click
+  const handleDiscordSupport = () => {
+    window.open(DiscordSupportUrl, '_blank')
+  }
+
   // Define quick actions
   const actions = [
     {
@@ -92,12 +115,7 @@ const QuickActions = () => {
       label: t('unstake'),
       onClick: handleUnstakeClick,
     },
-    {
-      icon: faQuestionCircle,
-      label: t('requestHelp'),
-      onClick: () =>
-        window.open('https://discord.com/invite/QY7CSSJm3D', '_blank'),
-    },
+    // Transaction History is always shown
     {
       icon: faHistory,
       label: t('viewTransactions'),
@@ -117,12 +135,35 @@ const QuickActions = () => {
         <h4>{t('quickActions')}</h4>
       </CardHeader>
       <QuickActionsContainer>
+        {/* First 5 buttons (2 rows of 2 + 1 on the third row) */}
         {actions.map((action, index) => (
-          <ActionButton key={index} onClick={action.onClick}>
+          <ActionButton key={`action-${index}`} onClick={action.onClick}>
             <FontAwesomeIcon icon={action.icon} className="icon" />
             <span className="label">{action.label}</span>
           </ActionButton>
         ))}
+
+        {/* Help button or expanded help options */}
+        {helpExpanded ? (
+          <HelpOptionsContainer>
+            <ActionButton className="help-option" onClick={handleEmailSupport}>
+              <FontAwesomeIcon icon={faEnvelope} className="icon" />
+              <span className="label">Email</span>
+            </ActionButton>
+            <ActionButton
+              className="help-option"
+              onClick={handleDiscordSupport}
+            >
+              <FontAwesomeIcon icon={faDiscord} className="icon" />
+              <span className="label">Discord</span>
+            </ActionButton>
+          </HelpOptionsContainer>
+        ) : (
+          <ActionButton className="help-button" onClick={toggleHelpOptions}>
+            <FontAwesomeIcon icon={faQuestionCircle} className="icon" />
+            <span className="label">{t('requestHelp')}</span>
+          </ActionButton>
+        )}
       </QuickActionsContainer>
     </>
   )

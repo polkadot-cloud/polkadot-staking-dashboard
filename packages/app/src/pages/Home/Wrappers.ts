@@ -238,8 +238,17 @@ export const QuickActionsContainer = styled.div`
   padding: 0.5rem;
 `
 
+// Container for help options that appear side by side in the same space as one button
+export const HelpOptionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+`
+
 // Styled button for Quick Actions
-export const ActionButton = styled.button`
+export const ActionButton = styled.button<{ $expanded?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -251,10 +260,20 @@ export const ActionButton = styled.button`
   border: 1px solid var(--border-primary-color);
   border-radius: 0.75rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
 
   &:hover {
     background: var(--button-hover-background);
+  }
+
+  &.help-button {
+    /* Standard styling, same as other buttons */
+  }
+
+  &.help-option {
+    animation: expandOption 0.3s ease-in-out forwards;
   }
 
   .icon {
@@ -263,9 +282,41 @@ export const ActionButton = styled.button`
     color: var(--network-color-primary);
   }
 
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+
+    svg {
+      color: var(--network-color-primary);
+      fill: var(--network-color-primary);
+
+      /* Force the Discord SVG to use the correct color */
+      .primary {
+        fill: var(--network-color-primary);
+      }
+
+      path {
+        fill: var(--network-color-primary);
+      }
+    }
+  }
+
   .label {
     font-weight: 600;
     font-size: 1rem;
     color: var(--text-color-primary);
+  }
+
+  @keyframes expandOption {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 `
