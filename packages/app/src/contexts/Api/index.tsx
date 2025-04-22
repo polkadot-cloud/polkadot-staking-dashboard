@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { ActiveEra } from 'api/subscribe/activeEra'
-import { BlockNumber } from 'api/subscribe/blockNumber'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
@@ -110,9 +109,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     Syncs.dispatch('initialization', 'complete')
 
     // 3. Initialise subscriptions:
-
-    // Initialise block number subscription
-    Subscriptions.set(network, 'blockNumber', new BlockNumber(network))
 
     // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
     // on active era

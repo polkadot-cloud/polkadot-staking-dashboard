@@ -27,6 +27,7 @@ import { pointsToBalance } from '../runtimeApi/pointsToBalance'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
+import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -43,6 +44,7 @@ export class PolkadotService
   }
   coreConsts: CoreConsts<PolkadotApi>
   stakingConsts: StakingConsts<PolkadotApi>
+  blockNumber: BlockNumberQuery<PolkadotApi>
   activeEra: ActiveEraQuery<PolkadotApi>
   relayMetrics: RelayMetricsQuery<PolkadotApi>
   poolsConfig: PoolsConfigQuery<PolkadotApi>
@@ -107,6 +109,7 @@ export class PolkadotService
       ...this.stakingConsts.get(),
     })
 
+    this.blockNumber = new BlockNumberQuery(this.apiRelay)
     this.activeEra = new ActiveEraQuery(this.apiRelay)
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)

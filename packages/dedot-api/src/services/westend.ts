@@ -27,6 +27,7 @@ import { pointsToBalance } from '../runtimeApi/pointsToBalance'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
+import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -43,6 +44,7 @@ export class WestendService
   }
   coreConsts: CoreConsts<WestendApi>
   stakingConsts: StakingConsts<WestendApi>
+  blockNumber: BlockNumberQuery<WestendApi>
   activeEra: ActiveEraQuery<WestendApi>
   relayMetrics: RelayMetricsQuery<WestendApi>
   poolsConfig: PoolsConfigQuery<WestendApi>
@@ -107,6 +109,7 @@ export class WestendService
       ...this.stakingConsts.get(),
     })
 
+    this.blockNumber = new BlockNumberQuery(this.apiRelay)
     this.activeEra = new ActiveEraQuery(this.apiRelay)
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)

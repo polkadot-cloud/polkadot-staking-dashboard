@@ -3,7 +3,6 @@
 
 import type { ExtensionInjected } from '@w3ux/types'
 import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
-import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types'
 import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types'
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type {
@@ -30,7 +29,6 @@ declare global {
     notification: CustomEvent<NotificationItem>
     'api-ready': CustomEvent<PapiReadyEvent>
     'online-status': CustomEvent<OnlineStatusEvent>
-    'new-block-number': CustomEvent<BlockNumberEventDetail>
     'new-era-reward-points': CustomEvent<EraRewardPointsEvent>
     'new-active-pool': CustomEvent<DetailActivePool>
     'removed-active-pool': CustomEvent<{ address: string; poolId: string }>

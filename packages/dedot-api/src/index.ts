@@ -1,20 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  networkConfig$,
-  resetActiveEra,
-  resetApiStatus,
-  resetChainSpecs,
-  resetConsts,
-  resetPoolsConfig,
-  resetRelayMetrics,
-  resetServiceInterface,
-  resetStakingMetrics,
-  setServiceInterface,
-} from 'global-bus'
+import { networkConfig$, setServiceInterface } from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
+import { onNetworkReset } from './reset'
 import { getDefaultService } from './start'
 import type { ServiceClass } from './types'
 
@@ -33,14 +23,7 @@ export const initDedotService = async () => {
         prev.providerType !== cur.providerType
       ) {
         await service.unsubscribe()
-        resetActiveEra()
-        resetApiStatus()
-        resetChainSpecs()
-        resetConsts()
-        resetRelayMetrics()
-        resetPoolsConfig()
-        resetStakingMetrics()
-        resetServiceInterface()
+        onNetworkReset()
       }
 
       const { network, ...rest } = cur

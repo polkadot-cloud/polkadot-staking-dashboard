@@ -5,7 +5,6 @@ import type { AccountBalances } from 'api/subscribe/accountBalances'
 import type { AccountProxies } from 'api/subscribe/accountProxies'
 import type { ActiveEra } from 'api/subscribe/activeEra'
 import type { ActivePoolAccount } from 'api/subscribe/activePoolAccount'
-import type { BlockNumber } from 'api/subscribe/blockNumber'
 import type { Bonded } from 'api/subscribe/bonded'
 import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import type { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
@@ -18,7 +17,6 @@ export type Subscription =
   | AccountProxies
   | ActiveEra
   | ActivePoolAccount
-  | BlockNumber
   | Bonded
   | ErasRewardPoints
   | FastUnstakeConfig

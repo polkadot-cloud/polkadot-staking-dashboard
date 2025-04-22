@@ -3,6 +3,7 @@
 
 export * from './activeEra'
 export * from './apiStatus'
+export * from './blockNumber'
 export * from './chainSpecs'
 export * from './consts'
 export * from './externalAccounts'

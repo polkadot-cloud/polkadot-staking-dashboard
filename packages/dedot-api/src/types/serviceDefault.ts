@@ -21,6 +21,7 @@ import type { StakingConsts } from '../consts/staking'
 import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
 import type { ActiveEraQuery } from '../subscribe/activeEra'
+import type { BlockNumberQuery } from '../subscribe/blockNumber'
 import type { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import type { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -47,6 +48,7 @@ export abstract class DefaultServiceClass<
   abstract peopleChainSpec: ChainSpecs<PeopleApi>
   abstract coreConsts: CoreConsts<RelayApi>
   abstract stakingConsts: StakingConsts<StakingApi>
+  abstract blockNumber: BlockNumberQuery<RelayApi>
   abstract activeEra: ActiveEraQuery<StakingApi>
   abstract relayMetrics: RelayMetricsQuery<RelayApi>
   abstract poolsConfig: PoolsConfigQuery<StakingApi>
