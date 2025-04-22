@@ -20,12 +20,31 @@ export const getInitialLanguage = () => {
     return localLng
   }
 
-  const supportedBrowser = Object.entries(locales).find(([locale]) =>
-    navigator.language.startsWith(locale)
+  // Check for browser language and variants
+  const browserLang = navigator.language
+
+  // Direct match for language code (e.g., 'en-GB' matches 'enGB')
+  const directMatch = Object.entries(locales).find(
+    ([locale]) =>
+      browserLang.replace('-', '') === locale ||
+      browserLang.replace('-', '').toLowerCase() === locale.toLowerCase()
   )?.[0]
-  if (supportedBrowser) {
-    localStorage.setItem('lng', supportedBrowser)
-    return supportedBrowser
+
+  if (directMatch) {
+    localStorage.setItem('lng', directMatch)
+    return directMatch
+  }
+
+  // Variant match (e.g., 'en-GB' matches 'enGB', 'en-US' matches 'en')
+  const variantMatch = Object.entries(locales).find(
+    ([locale]) =>
+      browserLang.startsWith(locale) ||
+      (browserLang.includes('-') && browserLang.split('-')[0] === locale)
+  )?.[0]
+
+  if (variantMatch) {
+    localStorage.setItem('lng', variantMatch)
+    return variantMatch
   }
 
   localStorage.setItem('lng', DefaultLocale)
@@ -65,42 +84,57 @@ export const getResources = (lng: string, i18n?: i18n) => {
 }
 
 export const changeLanguage = async (lng: string, i18next: i18n) => {
-  // check whether resources exist and need to by dynamically loaded.
+  // Get resources and check if dynamic loading is needed
   const { resources, dynamicLoad } = getResources(lng, i18next)
   const r = resources?.[lng] || {}
 
   localStorage.setItem('lng', lng)
+
+  // If dynamic loading is needed, load resources
   if (dynamicLoad) {
     await doDynamicImport(lng, i18next)
   } else {
     localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }))
     i18next.changeLanguage(lng)
   }
+
   varToUrlHash('l', lng, false)
 }
 
 /* Resource Loading */
 export const loadLngAsync = async (lng: string) => {
-  const resources = await Promise.all(
-    lngNamespaces.map(
-      (namespace) => import(`../resources/${lng}/${namespace}.json`)
+  try {
+    const resources = await Promise.all(
+      lngNamespaces.map(
+        (namespace) => import(`../resources/${lng}/${namespace}.json`)
+      )
     )
-  )
 
-  const ns: LocaleJson = {}
-  resources.forEach((mod: LocaleJson, i: number) => {
-    ns[lngNamespaces[i]] = mod[lngNamespaces[i]]
-  })
-  return { l: lng, r: ns }
+    const ns: LocaleJson = {}
+    resources.forEach((mod: LocaleJson, i: number) => {
+      ns[lngNamespaces[i]] = mod[lngNamespaces[i]]
+    })
+    return { l: lng, r: ns }
+  } catch (error) {
+    console.error(`Error loading language resources for ${lng}:`, error)
+    return { l: DefaultLocale, r: {} }
+  }
 }
 
 export const doDynamicImport = async (lng: string, i18next: i18n) => {
-  const { l, r } = await loadLngAsync(lng)
-  localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }))
-  Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
-    i18next.addResourceBundle(l, ns, inner)
-  })
-  i18next.changeLanguage(l)
+  try {
+    const { l, r } = await loadLngAsync(lng)
+    localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }))
+
+    // Add the new resources
+    Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
+      i18next.addResourceBundle(l, ns, inner)
+    })
+
+    i18next.changeLanguage(l)
+  } catch (error) {
+    console.error('Error in dynamic import:', error)
+  }
 }
 
 const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
