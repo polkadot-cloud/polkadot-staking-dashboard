@@ -245,6 +245,19 @@ export const HelpOptionsContainer = styled.div`
   gap: 0.5rem;
   height: 100%;
   width: 100%;
+
+  &.rewards-options {
+    .reward-option {
+      .icon {
+        color: var(--network-color-primary);
+      }
+    }
+  }
+
+  .help-option,
+  .reward-option {
+    padding: 1rem 0.5rem;
+  }
 `
 
 // Styled button for Quick Actions
@@ -260,20 +273,15 @@ export const ActionButton = styled.button<{ $expanded?: boolean }>`
   border: 1px solid var(--border-primary-color);
   border-radius: 0.75rem;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.2s;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 
   &:hover {
-    background: var(--button-hover-background);
-  }
-
-  &.help-button {
-    /* Standard styling, same as other buttons */
-  }
-
-  &.help-option {
-    animation: expandOption 0.3s ease-in-out forwards;
+    background: ${(props) =>
+      props.disabled
+        ? 'var(--button-primary-background)'
+        : 'var(--button-hover-background)'};
   }
 
   .icon {
@@ -282,41 +290,17 @@ export const ActionButton = styled.button<{ $expanded?: boolean }>`
     color: var(--network-color-primary);
   }
 
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-
-    svg {
-      color: var(--network-color-primary);
-      fill: var(--network-color-primary);
-
-      /* Force the Discord SVG to use the correct color */
-      .primary {
-        fill: var(--network-color-primary);
-      }
-
-      path {
-        fill: var(--network-color-primary);
-      }
-    }
-  }
-
   .label {
     font-weight: 600;
     font-size: 1rem;
     color: var(--text-color-primary);
   }
 
-  @keyframes expandOption {
-    0% {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
+  /* Highlight the button when expanded */
+  ${(props) =>
+    props.$expanded &&
+    `
+    background: var(--button-hover-background);
+    border-color: var(--border-primary-color);
+  `}
 `
