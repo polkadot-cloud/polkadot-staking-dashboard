@@ -113,10 +113,10 @@ export class KusamaService
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)
 
-    this.activeEra.activeEra$.subscribe(async (era) => {
-      if (era.index > 0) {
+    this.activeEra.activeEra$.subscribe(async ({ index }) => {
+      if (index > 0) {
         this.stakingMetrics?.unsubscribe()
-        this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, era)
+        this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
       }
     })
   }

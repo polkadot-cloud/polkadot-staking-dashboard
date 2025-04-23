@@ -4,7 +4,7 @@
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import { defaultStakingMetrics, setStakingMetrics } from 'global-bus'
-import type { ActiveEra, StakingMetrics } from 'types'
+import type { StakingMetrics } from 'types'
 import type { StakingChain } from '../types'
 
 export class StakingMetricsQuery<T extends StakingChain> {
@@ -14,7 +14,7 @@ export class StakingMetricsQuery<T extends StakingChain> {
 
   constructor(
     public api: DedotClient<T>,
-    public activeEra: ActiveEra
+    public era: number
   ) {
     this.api = api
     this.subscribe()
@@ -45,11 +45,11 @@ export class StakingMetricsQuery<T extends StakingChain> {
         },
         {
           fn: this.api.query.staking.erasValidatorReward,
-          args: [this.activeEra.index - 1],
+          args: [this.era - 1],
         },
         {
           fn: this.api.query.staking.erasTotalStake,
-          args: [Math.max(this.activeEra.index - 1, 0)],
+          args: [Math.max(this.era - 1, 0)],
         },
         {
           fn: this.api.query.staking.minNominatorBond,
@@ -57,7 +57,7 @@ export class StakingMetricsQuery<T extends StakingChain> {
         },
         {
           fn: this.api.query.staking.erasTotalStake,
-          args: [this.activeEra.index],
+          args: [this.era],
         },
         {
           fn: this.api.query.staking.counterForNominators,
