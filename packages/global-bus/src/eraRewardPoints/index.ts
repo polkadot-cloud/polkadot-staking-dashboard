@@ -37,3 +37,5 @@ export const getValidatorRank = (address: string, ss58: number) => {
   const rank = ranked.find((r) => r.validator.address(ss58) === address)
   return rank?.rank || null
 }
+
+export * from './default'

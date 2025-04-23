@@ -4,14 +4,11 @@
 import type { DedotClient } from 'dedot'
 import type { PalletStakingEraRewardPoints } from 'dedot/chaintypes'
 import type { Unsub } from 'dedot/types'
-import { setEraRewardPoints } from 'global-bus'
+import { defaultEraRewardPoints, setEraRewardPoints } from 'global-bus'
 import type { StakingChain } from '../types'
 
 export class EraRewardPointsQuery<T extends StakingChain> {
-  eraRewardPoints: PalletStakingEraRewardPoints = {
-    total: 0,
-    individual: [],
-  }
+  eraRewardPoints: PalletStakingEraRewardPoints = defaultEraRewardPoints
 
   #unsub: Unsub | undefined = undefined
 
