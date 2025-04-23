@@ -13,6 +13,7 @@ export const defaultServiceInterface: ServiceInterface = {
     identityOfMulti: async () => [],
     nominatorsMulti: async () => [],
     paraSessionAccounts: async () => undefined,
+    poolMetadataMulti: async () => [],
     proxies: async () => [],
     sessionValidators: async () => [],
     validatorEntries: async () => [],

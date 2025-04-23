@@ -34,6 +34,7 @@ export interface ServiceInterface {
       addresses: string[]
     ) => Promise<(PalletStakingNominations | undefined)[]>
     paraSessionAccounts: (session: number) => Promise<AccountId32[] | undefined>
+    poolMetadataMulti: (ids: number[]) => Promise<`0x${string}`[]>
     proxies: (address: string) => Promise<AccountId32[]>
     sessionValidators: () => Promise<AccountId32[]>
     validatorEntries: () => Promise<

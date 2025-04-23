@@ -27,6 +27,7 @@ import { erasValidatorRewardMulti } from '../query/erasValidatorRewardMulti'
 import { identityOfMulti } from '../query/identityOfMulti'
 import { nominatorsMulti } from '../query/nominatorsMulti'
 import { paraSessionAccounts } from '../query/paraSessionAccounts'
+import { poolMetadataMulti } from '../query/poolMetadataMulti'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
 import { validatorEntries } from '../query/validatorEntries'
@@ -85,6 +86,8 @@ export class PolkadotService
         await nominatorsMulti(this.apiRelay, addresses),
       paraSessionAccounts: async (session) =>
         await paraSessionAccounts(this.apiRelay, session),
+      poolMetadataMulti: async (ids) =>
+        await poolMetadataMulti(this.apiRelay, ids),
       proxies: async (address) => await proxies(this.apiRelay, address),
       sessionValidators: async () => await sessionValidators(this.apiRelay),
       validatorEntries: async () => await validatorEntries(this.apiRelay),

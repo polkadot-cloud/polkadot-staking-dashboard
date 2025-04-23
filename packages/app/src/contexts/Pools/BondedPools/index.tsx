@@ -4,13 +4,13 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
-import { PoolMetadataMulti } from 'api/queryMulti/poolMetadataMulti'
 import type { AnyApi } from 'common-types'
 import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
 import type { PalletStakingNominations } from 'dedot/chaintypes'
+import { hexToString } from 'dedot/utils'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
@@ -68,13 +68,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
     // Get and format bonded pool entries
     const ids: number[] = []
-    const idsMulti: [number][] = []
+    const idsMulti: number[] = []
     const bondedPoolEntries = await serviceApi.query.bondedPoolEntries()
 
     const exposures = shuffle(
       bondedPoolEntries.map(([id, pool]: AnyApi) => {
         ids.push(id)
-        idsMulti.push([id])
+        idsMulti.push(id)
         return getPoolWithAddresses(id, pool)
       })
     )
@@ -82,9 +82,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(exposures, setBondedPools, bondedPoolsRef)
 
     // Fetch pools metadata
-    const metadataQuery = await new PoolMetadataMulti(network, idsMulti).fetch()
+    const metadataQuery = await serviceApi.query.poolMetadataMulti(idsMulti)
     setPoolsMetadata(
-      Object.fromEntries(metadataQuery.map((m, i) => [ids[i], m]))
+      Object.fromEntries(metadataQuery.map((m, i) => [ids[i], hexToString(m)]))
     )
 
     bondedPoolsSynced.current = 'synced'
