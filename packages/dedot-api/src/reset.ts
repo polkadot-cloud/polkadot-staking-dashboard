@@ -9,6 +9,7 @@ import {
   resetConsts,
   resetEraRewardPoints,
   resetFastUnstakeConfig,
+  resetFastUnstakeQueue,
   resetPoolsConfig,
   resetRelayMetrics,
   resetServiceInterface,
@@ -27,4 +28,5 @@ export const onNetworkReset = () => {
   resetEraRewardPoints()
   resetServiceInterface()
   resetFastUnstakeConfig()
+  resetFastUnstakeQueue()
 }

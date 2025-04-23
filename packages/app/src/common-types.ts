@@ -7,7 +7,6 @@ import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type { PapiReadyEvent, TxSubmissionItem } from 'api/types'
 import type { ActiveBalance } from 'contexts/Balances/types'
 import type { BondedAccount } from 'contexts/Bonded/types'
-import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
@@ -27,7 +26,6 @@ declare global {
     'new-active-pool': CustomEvent<DetailActivePool>
     'removed-active-pool': CustomEvent<{ address: string; poolId: string }>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
-    'new-fast-unstake-deposit': CustomEvent<FastUnstakeQueueResult>
     'new-account-proxies': CustomEvent<AccountProxiesEvent>
     'new-bonded-account': CustomEvent<BondedAccount>
     'new-sync-status': CustomEvent<SyncEvent>

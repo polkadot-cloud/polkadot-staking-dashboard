@@ -12,3 +12,10 @@ export interface FastUnstakeHead {
   stashes: [AccountId32, bigint][]
   checked: number[]
 }
+
+export type FastUnstakeQueue =
+  | {
+      address: string
+      queue: bigint
+    }
+  | undefined

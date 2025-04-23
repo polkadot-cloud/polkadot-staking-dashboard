@@ -5,7 +5,6 @@ import type { AccountBalances } from 'api/subscribe/accountBalances'
 import type { AccountProxies } from 'api/subscribe/accountProxies'
 import type { ActivePoolAccount } from 'api/subscribe/activePoolAccount'
 import type { Bonded } from 'api/subscribe/bonded'
-import type { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
 import type { PoolMembers } from 'api/subscribe/poolMembers'
 
 // Define all possible subscription classes
@@ -14,7 +13,6 @@ export type Subscription =
   | AccountProxies
   | ActivePoolAccount
   | Bonded
-  | FastUnstakeQueue
   | PoolMembers
 
 // the record of keyed subscriptions

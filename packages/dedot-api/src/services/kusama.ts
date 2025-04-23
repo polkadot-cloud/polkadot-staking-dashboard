@@ -31,6 +31,7 @@ import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
+import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -54,6 +55,7 @@ export class KusamaService
   stakingMetrics: StakingMetricsQuery<KusamaApi>
   eraRewardPoints: EraRewardPointsQuery<KusamaApi>
   fastUnstakeConfig: FastUnstakeConfigQuery<KusamaApi>
+  fastUnstakeQueue: FastUnstakeQueueQuery<KusamaApi>
 
   subActiveAddress: Subscription
   subActiveEra: Subscription
@@ -134,13 +136,20 @@ export class KusamaService
     )
 
     this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
-      // TODO: Add subscriptions reliant upon activeAddress
-      console.debug(activeAddress)
-      // Unsubscribe, and then resubscribe only if active address !== null
+      this.fastUnstakeQueue?.unsubscribe()
+      if (activeAddress) {
+        this.fastUnstakeQueue = new FastUnstakeQueueQuery(
+          this.apiRelay,
+          activeAddress
+        )
+      }
     })
   }
 
   unsubscribe = async () => {
+    this.subActiveEra?.unsubscribe()
+    this.subActiveAddress?.unsubscribe()
+
     this.blockNumber?.unsubscribe()
     this.relayMetrics?.unsubscribe()
     this.poolsConfig?.unsubscribe()
@@ -148,9 +157,7 @@ export class KusamaService
     this.activeEra?.unsubscribe()
     this.stakingMetrics?.unsubscribe()
     this.eraRewardPoints?.unsubscribe()
-
-    this.subActiveEra?.unsubscribe()
-    this.subActiveAddress?.unsubscribe()
+    this.fastUnstakeQueue?.unsubscribe()
 
     await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
   }
