@@ -117,7 +117,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         return [
           String(ids[i]),
           {
-            targets: targets.map(({ address }) => address(ss58)),
+            targets: targets?.map((target) => target.address(ss58)) || [],
             ...rest,
           },
         ]
@@ -206,7 +206,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       const address = pool?.addresses?.stash ?? ''
       const metadata = poolsMetaData[pool.id] || ''
 
-      if (pool.id.includes(searchTerm.toLowerCase())) {
+      if (String(pool.id).includes(searchTerm.toLowerCase())) {
         filteredList.push(pool)
       }
       if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
