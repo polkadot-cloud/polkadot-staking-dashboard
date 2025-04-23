@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
+import type { Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -57,6 +58,9 @@ export abstract class DefaultServiceClass<
   abstract stakingMetrics: StakingMetricsQuery<StakingApi>
   abstract eraRewardPoints: EraRewardPointsQuery<StakingApi>
   abstract fastUnstakeConfig: FastUnstakeConfigQuery<StakingApi>
+
+  subActiveAddress: Subscription
+  subActiveEra: Subscription
 
   abstract interface: ServiceInterface
 }

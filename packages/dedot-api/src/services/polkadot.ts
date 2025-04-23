@@ -5,6 +5,7 @@ import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
 import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
+import type { Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -53,6 +54,9 @@ export class PolkadotService
   stakingMetrics: StakingMetricsQuery<PolkadotApi>
   eraRewardPoints: EraRewardPointsQuery<PolkadotApi>
   fastUnstakeConfig: FastUnstakeConfigQuery<PolkadotApi>
+
+  subActiveAddress: Subscription
+  subActiveEra: Subscription
 
   interface: ServiceInterface = {
     query: {
@@ -119,16 +123,18 @@ export class PolkadotService
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)
     this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
 
-    this.activeEra.activeEra$.subscribe(async ({ index }) => {
-      if (index > 0) {
-        this.stakingMetrics?.unsubscribe()
-        this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
-        this.eraRewardPoints?.unsubscribe()
-        this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
+    this.subActiveEra = this.activeEra.activeEra$.subscribe(
+      async ({ index }) => {
+        if (index > 0) {
+          this.stakingMetrics?.unsubscribe()
+          this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
+          this.eraRewardPoints?.unsubscribe()
+          this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
+        }
       }
-    })
+    )
 
-    activeAddress$.subscribe((activeAddress) => {
+    this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
       // TODO: Add subscriptions reliant upon activeAddress
       console.debug(activeAddress)
       // Unsubscribe, and then resubscribe only if active address !== null
@@ -136,7 +142,17 @@ export class PolkadotService
   }
 
   unsubscribe = async () => {
-    this.activeEra.unsubscribe()
+    this.blockNumber?.unsubscribe()
+    this.relayMetrics?.unsubscribe()
+    this.poolsConfig?.unsubscribe()
+    this.fastUnstakeConfig?.unsubscribe()
+    this.activeEra?.unsubscribe()
+    this.stakingMetrics?.unsubscribe()
+    this.eraRewardPoints?.unsubscribe()
+
+    this.subActiveEra?.unsubscribe()
+    this.subActiveAddress?.unsubscribe()
+
     await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
   }
 }

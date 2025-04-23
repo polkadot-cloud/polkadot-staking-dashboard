@@ -5,6 +5,7 @@ import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { DedotClient } from 'dedot'
 import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
+import type { Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -54,6 +55,9 @@ export class KusamaService
   eraRewardPoints: EraRewardPointsQuery<KusamaApi>
   fastUnstakeConfig: FastUnstakeConfigQuery<KusamaApi>
 
+  subActiveAddress: Subscription
+  subActiveEra: Subscription
+
   interface: ServiceInterface = {
     query: {
       bondedPool: async (poolId) => await bondedPool(this.apiRelay, poolId),
@@ -98,7 +102,6 @@ export class KusamaService
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
-    this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
 
     await Promise.all([
       this.relayChainSpec.fetch(),
@@ -117,24 +120,38 @@ export class KusamaService
     this.activeEra = new ActiveEraQuery(this.apiRelay)
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)
+    this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
 
-    this.activeEra.activeEra$.subscribe(async ({ index }) => {
-      if (index > 0) {
-        this.stakingMetrics?.unsubscribe()
-        this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
-        this.eraRewardPoints?.unsubscribe()
-        this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
+    this.subActiveEra = this.activeEra.activeEra$.subscribe(
+      async ({ index }) => {
+        if (index > 0) {
+          this.stakingMetrics?.unsubscribe()
+          this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
+          this.eraRewardPoints?.unsubscribe()
+          this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
+        }
       }
-    })
+    )
 
-    activeAddress$.subscribe((activeAddress) => {
+    this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
       // TODO: Add subscriptions reliant upon activeAddress
       console.debug(activeAddress)
+      // Unsubscribe, and then resubscribe only if active address !== null
     })
   }
 
   unsubscribe = async () => {
-    this.activeEra.unsubscribe()
+    this.blockNumber?.unsubscribe()
+    this.relayMetrics?.unsubscribe()
+    this.poolsConfig?.unsubscribe()
+    this.fastUnstakeConfig?.unsubscribe()
+    this.activeEra?.unsubscribe()
+    this.stakingMetrics?.unsubscribe()
+    this.eraRewardPoints?.unsubscribe()
+
+    this.subActiveEra?.unsubscribe()
+    this.subActiveAddress?.unsubscribe()
+
     await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
   }
 }

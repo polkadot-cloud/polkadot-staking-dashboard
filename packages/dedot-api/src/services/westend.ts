@@ -5,6 +5,7 @@ import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
 import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
+import type { Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -53,6 +54,9 @@ export class WestendService
   stakingMetrics: StakingMetricsQuery<WestendApi>
   eraRewardPoints: EraRewardPointsQuery<WestendApi>
   fastUnstakeConfig: FastUnstakeConfigQuery<WestendApi>
+
+  subActiveAddress: Subscription
+  subActiveEra: Subscription
 
   interface: ServiceInterface = {
     query: {
@@ -119,23 +123,35 @@ export class WestendService
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)
     this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
 
-    this.activeEra.activeEra$.subscribe(async ({ index }) => {
-      if (index > 0) {
-        this.stakingMetrics?.unsubscribe()
-        this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
-        this.eraRewardPoints?.unsubscribe()
-        this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
+    this.subActiveEra = this.activeEra.activeEra$.subscribe(
+      async ({ index }) => {
+        if (index > 0) {
+          this.stakingMetrics?.unsubscribe()
+          this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
+          this.eraRewardPoints?.unsubscribe()
+          this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
+        }
       }
-    })
+    )
 
-    activeAddress$.subscribe((activeAddress) => {
+    this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
       // TODO: Add subscriptions reliant upon activeAddress
       console.debug(activeAddress)
     })
   }
 
   unsubscribe = async () => {
-    this.activeEra.unsubscribe()
+    this.blockNumber?.unsubscribe()
+    this.relayMetrics?.unsubscribe()
+    this.poolsConfig?.unsubscribe()
+    this.fastUnstakeConfig?.unsubscribe()
+    this.activeEra?.unsubscribe()
+    this.stakingMetrics?.unsubscribe()
+    this.eraRewardPoints?.unsubscribe()
+
+    this.subActiveEra?.unsubscribe()
+    this.subActiveAddress?.unsubscribe()
+
     await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
   }
 }
