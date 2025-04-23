@@ -4,9 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
-import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
 import BigNumber from 'bignumber.js'
-import type { AnyApi } from 'common-types'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -226,18 +224,16 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const v: string[] = []
-    const vMulti: [string][] = []
+    const vMulti: string[] = []
     for (const { address } of addresses) {
       v.push(address)
-      vMulti.push([address])
+      vMulti.push(address)
     }
 
-    const resultsMulti =
-      (await new ValidatorsMulti(network, vMulti).fetch()) || []
-
+    const resultsMulti = await serviceApi.query.validatorsMulti(vMulti)
     const formatted: Validator[] = []
     for (let i = 0; i < resultsMulti.length; i++) {
-      const prefs: AnyApi = resultsMulti[i]
+      const prefs = resultsMulti[i]
 
       if (prefs) {
         formatted.push({

@@ -31,6 +31,7 @@ import { poolMetadataMulti } from '../query/poolMetadataMulti'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
 import { validatorEntries } from '../query/validatorEntries'
+import { validatorsMulti } from '../query/validatorsMulti'
 import { balanceToPoints } from '../runtimeApi/balanceToPoints'
 import { pendingRewards } from '../runtimeApi/pendingRewards'
 import { pointsToBalance } from '../runtimeApi/pointsToBalance'
@@ -91,6 +92,8 @@ export class WestendService
       proxies: async (address: string) => await proxies(this.apiRelay, address),
       sessionValidators: async () => await sessionValidators(this.apiRelay),
       validatorEntries: async () => await validatorEntries(this.apiRelay),
+      validatorsMulti: async (addresses) =>
+        await validatorsMulti(this.apiRelay, addresses),
     },
     runtimeApi: {
       balanceToPoints: async (poolId, amount) =>

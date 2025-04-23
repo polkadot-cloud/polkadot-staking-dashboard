@@ -40,6 +40,9 @@ export interface ServiceInterface {
     validatorEntries: () => Promise<
       [AccountId32, PalletStakingValidatorPrefs][]
     >
+    validatorsMulti: (
+      addresses: string[]
+    ) => Promise<PalletStakingValidatorPrefs[]>
   }
   runtimeApi: {
     balanceToPoints: (poolId: number, amount: bigint) => Promise<bigint>
