@@ -30,6 +30,7 @@ import { paraSessionAccounts } from '../query/paraSessionAccounts'
 import { poolMetadataMulti } from '../query/poolMetadataMulti'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
+import { superOfMulti } from '../query/superOfMulti'
 import { validatorEntries } from '../query/validatorEntries'
 import { validatorsMulti } from '../query/validatorsMulti'
 import { balanceToPoints } from '../runtimeApi/balanceToPoints'
@@ -91,6 +92,8 @@ export class PolkadotService
         await poolMetadataMulti(this.apiRelay, ids),
       proxies: async (address) => await proxies(this.apiRelay, address),
       sessionValidators: async () => await sessionValidators(this.apiRelay),
+      superOfMulti: async (addresses) =>
+        await superOfMulti(this.apiPeople, addresses),
       validatorEntries: async () => await validatorEntries(this.apiRelay),
       validatorsMulti: async (addresses) =>
         await validatorsMulti(this.apiRelay, addresses),

@@ -8,7 +8,7 @@ import type {
   SpStakingExposurePage,
   SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
-import type { AccountId32 } from 'dedot/codecs'
+import type { AccountId32, Data } from 'dedot/codecs'
 import type { IdentityOf } from './identity'
 
 export interface ServiceInterface {
@@ -37,6 +37,9 @@ export interface ServiceInterface {
     poolMetadataMulti: (ids: number[]) => Promise<`0x${string}`[]>
     proxies: (address: string) => Promise<AccountId32[]>
     sessionValidators: () => Promise<AccountId32[]>
+    superOfMulti: (
+      addresses: string[]
+    ) => Promise<([AccountId32, Data] | undefined)[]>
     validatorEntries: () => Promise<
       [AccountId32, PalletStakingValidatorPrefs][]
     >
