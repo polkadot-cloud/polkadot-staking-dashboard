@@ -391,6 +391,7 @@ const ValidatorName = styled.div`
   font-size: 1.1rem;
   margin-bottom: 0.25rem;
   font-family: InterSemiBold, sans-serif;
+  color: var(--text-color-primary);
 `
 
 const ValidatorAddress = styled.div`
@@ -504,6 +505,7 @@ const PoolName = styled.div`
   display: flex;
   align-items: center;
   font-family: InterSemiBold, sans-serif;
+  color: var(--text-color-primary);
 `
 
 const PoolAddress = styled.div`
