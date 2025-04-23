@@ -3,6 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { useNetwork } from 'contexts/Network'
+import { setActiveAddress } from 'global-bus'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { ActiveAccount, ActiveProxy } from 'types'
@@ -48,6 +49,9 @@ export const ActiveAccountsProvider = ({
         )
       }
     }
+    // NOTE: Keep global bus in sync with the active account for dedot-api subscriptions
+    setActiveAddress(account?.address || null)
+    // Now update component state
     setActiveAccountState(account)
   }
 
