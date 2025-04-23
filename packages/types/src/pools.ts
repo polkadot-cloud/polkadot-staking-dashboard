@@ -19,11 +19,13 @@ export interface PoolAddresses {
 
 export type MaybePool = number | null
 
-export type PoolNominations = {
-  submittedIn: string
-  suppressed: boolean
-  targets: string[]
-} | null
+export type PoolNominations =
+  | {
+      submittedIn: number
+      suppressed: boolean
+      targets: string[]
+    }
+  | undefined
 
 export type NominationStatuses = Record<string, string>
 

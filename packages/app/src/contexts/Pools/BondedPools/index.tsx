@@ -4,12 +4,13 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
-import { NominatorsMulti } from 'api/queryMulti/nominatorsMulti'
 import { PoolMetadataMulti } from 'api/queryMulti/poolMetadataMulti'
 import type { AnyApi } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
+import type { PalletStakingNominations } from 'dedot/chaintypes'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
@@ -32,12 +33,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const {
     isReady,
-    serviceApi,
     activeEra,
+    serviceApi,
     poolsConfig: { lastPoolId },
   } = useApi()
   const createPoolAccounts = useCreatePoolAccounts()
   const { getNominationsStatusFromTargets } = useStaking()
+  const { ss58 } = getNetworkData(network)
 
   // Store bonded pools. Used implicitly in callbacks, ref is also defined
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([])
@@ -51,7 +53,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store bonded pools nominations
   const [poolsNominations, setPoolsNominations] = useState<
-    Record<number, PoolNominations>
+    Record<string, PoolNominations>
   >({})
 
   // Store pool list active tab. Defaults to `Active` tab
@@ -92,22 +94,33 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Fetches pool nominations and updates state
   const fetchPoolsNominations = async () => {
     const ids: number[] = []
-    const stashes: [string][] = bondedPools.map(({ addresses, id }) => {
+    const stashes = bondedPools.map(({ addresses, id }) => {
       ids.push(id)
-      return [addresses.stash]
+      return addresses.stash
     })
-    const nominationsMulti = await new NominatorsMulti(network, stashes).fetch()
-    setPoolsNominations(formatPoolsNominations(nominationsMulti || [], ids))
+    const nominationsMulti = await serviceApi.query.nominatorsMulti(stashes)
+    const formatted = formatPoolsNominations(nominationsMulti, ids)
+    setPoolsNominations(formatted)
   }
 
   // Format raw pool nominations data
-  const formatPoolsNominations = (raw: AnyJson, ids: number[]) =>
+  const formatPoolsNominations = (
+    raw: (PalletStakingNominations | undefined)[],
+    ids: number[]
+  ) =>
     Object.fromEntries(
-      raw.map((nominator: AnyJson, i: number) => {
+      raw.map((nominator, i: number) => {
         if (!nominator) {
-          return [ids[i], null]
+          return [ids[i], undefined]
         }
-        return [ids[i], { ...nominator }]
+        const { targets, ...rest } = nominator
+        return [
+          String(ids[i]),
+          {
+            targets: targets.map(({ address }) => address(ss58)),
+            ...rest,
+          },
+        ]
       })
     )
 
@@ -225,11 +238,11 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     const newPoolsNominations = { ...poolsNominations }
 
     let record = newPoolsNominations?.[id]
-    if (record !== null) {
+    if (record) {
       record.targets = newTargets
     } else {
       record = {
-        submittedIn: activeEra.index.toString(),
+        submittedIn: activeEra.index,
         targets: newTargets,
         suppressed: false,
       }

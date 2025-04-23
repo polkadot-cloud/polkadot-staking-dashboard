@@ -3,6 +3,7 @@
 
 import type {
   PalletNominationPoolsBondedPoolInner,
+  PalletStakingNominations,
   PalletStakingValidatorPrefs,
   SpStakingExposurePage,
   SpStakingPagedExposureMetadata,
@@ -29,6 +30,9 @@ export interface ServiceInterface {
       validator: string
     ) => Promise<[[number, AccountId32, number], SpStakingExposurePage][]>
     identityOfMulti: (addresses: string[]) => Promise<IdentityOf>
+    nominatorsMulti: (
+      addresses: string[]
+    ) => Promise<(PalletStakingNominations | undefined)[]>
     paraSessionAccounts: (session: number) => Promise<AccountId32[] | undefined>
     proxies: (address: string) => Promise<AccountId32[]>
     sessionValidators: () => Promise<AccountId32[]>

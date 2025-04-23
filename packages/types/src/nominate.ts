@@ -5,7 +5,7 @@ export type BondFor = 'pool' | 'nominator'
 
 export interface Nominations {
   targets: Targets
-  submittedIn: string | number
+  submittedIn: number
 }
 
 export type Targets = string[]

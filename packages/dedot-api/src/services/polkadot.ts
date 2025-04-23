@@ -25,6 +25,7 @@ import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from '../query/erasStakersPagedEntries'
 import { erasValidatorRewardMulti } from '../query/erasValidatorRewardMulti'
 import { identityOfMulti } from '../query/identityOfMulti'
+import { nominatorsMulti } from '../query/nominatorsMulti'
 import { paraSessionAccounts } from '../query/paraSessionAccounts'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
@@ -80,6 +81,8 @@ export class PolkadotService
         await erasStakersPagedEntries(this.apiRelay, era, validator),
       identityOfMulti: async (addresses) =>
         await identityOfMulti(this.apiPeople, addresses),
+      nominatorsMulti: async (addresses) =>
+        await nominatorsMulti(this.apiRelay, addresses),
       paraSessionAccounts: async (session) =>
         await paraSessionAccounts(this.apiRelay, session),
       proxies: async (address) => await proxies(this.apiRelay, address),
