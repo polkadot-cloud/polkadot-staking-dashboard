@@ -8,6 +8,7 @@ import type {
   SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
 import type { AccountId32 } from 'dedot/codecs'
+import type { IdentityOf } from './identity'
 
 export interface ServiceInterface {
   query: {
@@ -27,6 +28,7 @@ export interface ServiceInterface {
       era: number,
       validator: string
     ) => Promise<[[number, AccountId32, number], SpStakingExposurePage][]>
+    identityOfMulti: (addresses: string[]) => Promise<IdentityOf>
     paraSessionAccounts: (session: number) => Promise<AccountId32[] | undefined>
     proxies: (address: string) => Promise<AccountId32[]>
     sessionValidators: () => Promise<AccountId32[]>
