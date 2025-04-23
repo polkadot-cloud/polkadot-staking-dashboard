@@ -4,7 +4,7 @@
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { DedotClient } from 'dedot'
-import { setConsts, setMultiChainSpecs } from 'global-bus'
+import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
 import type {
   NetworkConfig,
   NetworkId,
@@ -125,6 +125,11 @@ export class KusamaService
         this.eraRewardPoints?.unsubscribe()
         this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
       }
+    })
+
+    activeAddress$.subscribe((activeAddress) => {
+      // TODO: Add subscriptions reliant upon activeAddress
+      console.debug(activeAddress)
     })
   }
 

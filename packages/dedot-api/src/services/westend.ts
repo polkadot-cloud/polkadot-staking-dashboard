@@ -4,7 +4,7 @@
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
-import { setConsts, setMultiChainSpecs } from 'global-bus'
+import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
 import type {
   NetworkConfig,
   NetworkId,
@@ -126,6 +126,11 @@ export class WestendService
         this.eraRewardPoints?.unsubscribe()
         this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
       }
+    })
+
+    activeAddress$.subscribe((activeAddress) => {
+      // TODO: Add subscriptions reliant upon activeAddress
+      console.debug(activeAddress)
     })
   }
 

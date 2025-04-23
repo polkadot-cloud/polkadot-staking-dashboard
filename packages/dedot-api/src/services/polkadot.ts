@@ -4,7 +4,7 @@
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
-import { setConsts, setMultiChainSpecs } from 'global-bus'
+import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
 import type {
   NetworkConfig,
   NetworkId,
@@ -126,6 +126,12 @@ export class PolkadotService
         this.eraRewardPoints?.unsubscribe()
         this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
       }
+    })
+
+    activeAddress$.subscribe((activeAddress) => {
+      // TODO: Add subscriptions reliant upon activeAddress
+      console.debug(activeAddress)
+      // Unsubscribe, and then resubscribe only if active address !== null
     })
   }
 
