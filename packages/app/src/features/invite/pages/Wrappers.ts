@@ -7,15 +7,6 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-
-  /* Ensure all child elements respect container boundaries */
-  > * {
-    max-width: 100%;
-    box-sizing: border-box;
-  }
 `
 
 export const Spacer = styled.div`
