@@ -4,7 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
-import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti'
 import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
@@ -333,15 +332,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       thisEra = thisEra - 1
     } while (thisEra >= endEra)
 
-    const erasMulti: [number][] = eras.map((e) => [Number(e)])
-    const results = await new ErasValidatorRewardMulti(
-      network,
-      erasMulti
-    ).fetch()
+    const results = await serviceApi.query.erasValidatorRewardMulti(
+      eras.map((e) => Number(e))
+    )
 
     const reward = results
       .map((v) => {
-        const value = new BigNumber(!v ? 0 : v)
+        const value = new BigNumber(v || 0)
         if (value.isNaN()) {
           return new BigNumber(0)
         }

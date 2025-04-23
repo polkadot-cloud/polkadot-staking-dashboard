@@ -11,6 +11,9 @@ import type { AccountId32 } from 'dedot/codecs'
 
 export interface ServiceInterface {
   query: {
+    erasValidatorRewardMulti: (
+      eras: number[]
+    ) => Promise<(bigint | undefined)[]>
     bondedPool: (
       poolId: number
     ) => Promise<PalletNominationPoolsBondedPoolInner | undefined>

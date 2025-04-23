@@ -5,6 +5,7 @@ import type { ServiceInterface } from 'types'
 
 export const defaultServiceInterface: ServiceInterface = {
   query: {
+    erasValidatorRewardMulti: async () => [],
     bondedPool: async () => undefined,
     bondedPoolEntries: async () => [],
     erasStakersOverviewEntries: async () => [],

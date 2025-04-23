@@ -23,6 +23,7 @@ import { bondedPool } from '../query/bondedPool'
 import { bondedPoolEntries } from '../query/bondedPoolEntries'
 import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from '../query/erasStakersPagedEntries'
+import { erasValidatorRewardMulti } from '../query/erasValidatorRewardMulti'
 import { paraSessionAccounts } from '../query/paraSessionAccounts'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
@@ -68,6 +69,8 @@ export class WestendService
 
   interface: ServiceInterface = {
     query: {
+      erasValidatorRewardMulti: async (eras) =>
+        await erasValidatorRewardMulti(this.apiRelay, eras),
       bondedPool: async (poolId) => await bondedPool(this.apiRelay, poolId),
       bondedPoolEntries: async () => await bondedPoolEntries(this.apiRelay),
       erasStakersOverviewEntries: async (era) =>
