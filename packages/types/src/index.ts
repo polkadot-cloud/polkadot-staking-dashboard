@@ -4,6 +4,7 @@
 export * from './accounts'
 export * from './common'
 export * from './components'
+export * from './fastUnstake'
 export * from './identity'
 export * from './interfaces'
 export * from './networks'

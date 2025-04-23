@@ -29,6 +29,7 @@ import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
+import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -51,6 +52,7 @@ export class PolkadotService
   poolsConfig: PoolsConfigQuery<PolkadotApi>
   stakingMetrics: StakingMetricsQuery<PolkadotApi>
   eraRewardPoints: EraRewardPointsQuery<PolkadotApi>
+  fastUnstakeConfig: FastUnstakeConfigQuery<PolkadotApi>
 
   interface: ServiceInterface = {
     query: {
@@ -115,6 +117,7 @@ export class PolkadotService
     this.activeEra = new ActiveEraQuery(this.apiRelay)
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
     this.poolsConfig = new PoolsConfigQuery(this.apiRelay)
+    this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
 
     this.activeEra.activeEra$.subscribe(async ({ index }) => {
       if (index > 0) {

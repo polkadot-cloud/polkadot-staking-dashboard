@@ -3,7 +3,6 @@
 
 import type { ExtensionInjected } from '@w3ux/types'
 import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
-import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types'
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type { PapiReadyEvent, TxSubmissionItem } from 'api/types'
 import type { ActiveBalance } from 'contexts/Balances/types'
@@ -28,7 +27,6 @@ declare global {
     'new-active-pool': CustomEvent<DetailActivePool>
     'removed-active-pool': CustomEvent<{ address: string; poolId: string }>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
-    'new-fast-unstake-config': CustomEvent<FastUnstakeConfigResult>
     'new-fast-unstake-deposit': CustomEvent<FastUnstakeQueueResult>
     'new-account-proxies': CustomEvent<AccountProxiesEvent>
     'new-bonded-account': CustomEvent<BondedAccount>

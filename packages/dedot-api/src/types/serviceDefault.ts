@@ -23,6 +23,7 @@ import type { ChainSpecs } from '../spec/chainSpecs'
 import type { ActiveEraQuery } from '../subscribe/activeEra'
 import type { BlockNumberQuery } from '../subscribe/blockNumber'
 import type { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
+import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import type { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import type { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -55,6 +56,7 @@ export abstract class DefaultServiceClass<
   abstract poolsConfig: PoolsConfigQuery<StakingApi>
   abstract stakingMetrics: StakingMetricsQuery<StakingApi>
   abstract eraRewardPoints: EraRewardPointsQuery<StakingApi>
+  abstract fastUnstakeConfig: FastUnstakeConfigQuery<StakingApi>
 
   abstract interface: ServiceInterface
 }

@@ -29,6 +29,7 @@ import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
+import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -51,6 +52,7 @@ export class KusamaService
   poolsConfig: PoolsConfigQuery<KusamaApi>
   stakingMetrics: StakingMetricsQuery<KusamaApi>
   eraRewardPoints: EraRewardPointsQuery<KusamaApi>
+  fastUnstakeConfig: FastUnstakeConfigQuery<KusamaApi>
 
   interface: ServiceInterface = {
     query: {
@@ -96,6 +98,7 @@ export class KusamaService
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
+    this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
 
     await Promise.all([
       this.relayChainSpec.fetch(),

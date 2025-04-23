@@ -2,19 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
-import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types'
 import { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
+import { fastUnstakeConfig$ } from 'global-bus'
 import type { FastUnstakeResult } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
+import type { FastUnstakeHead } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import type {
   FastUnstakeContextInterface,
@@ -25,7 +23,6 @@ export const [FastUnstakeContext, useFastUnstake] =
   createSafeContext<FastUnstakeContextInterface>()
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi()
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
 
@@ -64,34 +61,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     setCounterForQueue(undefined)
   }, [network])
 
-  // Subscribe to fast unstake queue as soon as api is ready
-  useEffect(() => {
-    if (isReady) {
-      subscribeToFastUnstakeMeta()
-    }
-  }, [isReady])
-
-  const subscribeToFastUnstakeMeta = async () => {
-    const api = Apis.getApi(network)
-    if (!api) {
-      return
-    }
-    Subscriptions.set(
-      network,
-      'fastUnstakeMeta',
-      new FastUnstakeConfig(network)
-    )
-  }
-
-  const handleNewFastUnstakeConfig = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const { head: eventHead, counterForQueue: eventCounterForQueue } =
-        e.detail
-      setHead(eventHead)
-      setCounterForQueue(eventCounterForQueue)
-    }
-  }
-
   const handleNewFastUnstakeDeposit = (e: Event) => {
     if (isCustomEvent(e)) {
       const { address, deposit } = e.detail
@@ -101,15 +70,20 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   const documentRef = useRef<Document>(document)
   useEventListener(
-    'new-fast-unstake-config',
-    handleNewFastUnstakeConfig,
-    documentRef
-  )
-  useEventListener(
     'new-fast-unstake-deposit',
     handleNewFastUnstakeDeposit,
     documentRef
   )
+
+  useEffect(() => {
+    const subFastUnstakeConfig = fastUnstakeConfig$.subscribe((result) => {
+      setHead(result.head)
+      setCounterForQueue(result.counterForQueue)
+    })
+    return () => {
+      subFastUnstakeConfig.unsubscribe()
+    }
+  }, [])
 
   return (
     <FastUnstakeContext.Provider
