@@ -4,7 +4,12 @@
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
-import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
+import {
+  activeAddress$,
+  importedAccounts$,
+  setConsts,
+  setMultiChainSpecs,
+} from 'global-bus'
 import type { Subscription } from 'rxjs'
 import type {
   NetworkConfig,
@@ -59,6 +64,7 @@ export class WestendService
 
   subActiveAddress: Subscription
   subActiveEra: Subscription
+  subImportedAccounts: Subscription
 
   interface: ServiceInterface = {
     query: {
@@ -144,6 +150,11 @@ export class WestendService
           activeAddress
         )
       }
+    })
+
+    this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
+      // TODO: Handle changes in imported accounts
+      console.debug(prev, cur)
     })
   }
 

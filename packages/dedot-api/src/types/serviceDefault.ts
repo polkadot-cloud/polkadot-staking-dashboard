@@ -62,6 +62,7 @@ export abstract class DefaultServiceClass<
   abstract fastUnstakeQueue: FastUnstakeQueueQuery<StakingApi>
 
   subActiveAddress: Subscription
+  subImportedAccounts: Subscription
   subActiveEra: Subscription
 
   abstract interface: ServiceInterface

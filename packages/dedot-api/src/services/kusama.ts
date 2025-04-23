@@ -4,7 +4,12 @@
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { DedotClient } from 'dedot'
-import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
+import {
+  activeAddress$,
+  importedAccounts$,
+  setConsts,
+  setMultiChainSpecs,
+} from 'global-bus'
 import type { Subscription } from 'rxjs'
 import type {
   NetworkConfig,
@@ -59,6 +64,7 @@ export class KusamaService
 
   subActiveAddress: Subscription
   subActiveEra: Subscription
+  subImportedAccounts: Subscription
 
   interface: ServiceInterface = {
     query: {
@@ -143,6 +149,11 @@ export class KusamaService
           activeAddress
         )
       }
+    })
+
+    this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
+      // TODO: Handle changes in imported accounts
+      console.debug(prev, cur)
     })
   }
 

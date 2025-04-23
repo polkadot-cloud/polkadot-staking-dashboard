@@ -371,6 +371,9 @@ importers:
 
   packages/global-bus:
     dependencies:
+      '@w3ux/observables-connect':
+        specifier: ^0.9.37
+        version: 0.9.37(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)

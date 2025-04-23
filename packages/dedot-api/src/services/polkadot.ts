@@ -4,8 +4,13 @@
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
-import { activeAddress$, setConsts, setMultiChainSpecs } from 'global-bus'
-import type { Subscription } from 'rxjs'
+import {
+  activeAddress$,
+  importedAccounts$,
+  setConsts,
+  setMultiChainSpecs,
+} from 'global-bus'
+import { type Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -58,6 +63,7 @@ export class PolkadotService
   fastUnstakeQueue: FastUnstakeQueueQuery<PolkadotApi>
 
   subActiveAddress: Subscription
+  subImportedAccounts: Subscription
   subActiveEra: Subscription
 
   interface: ServiceInterface = {
@@ -145,11 +151,17 @@ export class PolkadotService
         )
       }
     })
+
+    this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
+      // TODO: Handle changes in imported accounts
+      console.debug(prev, cur)
+    })
   }
 
   unsubscribe = async () => {
     this.subActiveEra?.unsubscribe()
     this.subActiveAddress?.unsubscribe()
+    this.subImportedAccounts?.unsubscribe()
 
     this.blockNumber?.unsubscribe()
     this.relayMetrics?.unsubscribe()
