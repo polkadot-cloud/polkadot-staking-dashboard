@@ -4,9 +4,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { ActiveEra } from 'api/subscribe/activeEra'
 import { Apis } from 'controllers/Apis'
-import { Subscriptions } from 'controllers/Subscriptions'
 import { Syncs } from 'controllers/Syncs'
 import { isCustomEvent } from 'controllers/utils'
 import {
@@ -107,12 +105,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Set `initialization` syncing to complete. NOTE: This synchonisation is only considering the
     // relay chain sync state, and not system/para chains
     Syncs.dispatch('initialization', 'complete')
-
-    // 3. Initialise subscriptions:
-
-    // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
-    // on active era
-    Subscriptions.set(network, 'activeEra', new ActiveEra(network))
   }
 
   const handlePapiReady = async (e: Event) => {

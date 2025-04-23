@@ -6,7 +6,6 @@ import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
 import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti'
 import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
-import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
 import { getNetworkData } from 'consts/util'
@@ -16,7 +15,10 @@ import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { Apis } from 'controllers/Apis'
 import { Identities } from 'controllers/Identities'
-import { Subscriptions } from 'controllers/Subscriptions'
+import {
+  getValidatorRank as getValidatorRankBus,
+  getValidatorRanks,
+} from 'global-bus'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
@@ -360,14 +362,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (pluginEnabled('staking_api')) {
       return activeValidatorRanks.find((r) => r.validator === validator)?.rank
     } else {
-      const sub = Subscriptions.get(
-        network,
-        'erasRewardPoints'
-      ) as ErasRewardPoints
-      if (!sub) {
-        return undefined
-      }
-      const rank = sub.getRank(validator)
+      const rank = getValidatorRankBus(validator, ss58)
       if (!rank) {
         return undefined
       }
@@ -391,19 +386,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       const segment = Math.ceil(percentile / 10) * 10
       return segment
     } else {
-      const sub = Subscriptions.get(
-        network,
-        'erasRewardPoints'
-      ) as ErasRewardPoints
-
-      if (!sub) {
-        return fallbackSegment
-      }
-      const rank = sub.getRank(validator)
+      const rank = getValidatorRankBus(validator, ss58)
       if (!rank) {
         return fallbackSegment
       }
-      const percentile = (rank / sub.ranks.length) * 100
+      const percentile = (rank / getValidatorRanks().length) * 100
       const segment = Math.ceil(percentile / 10) * 10
       return segment
     }

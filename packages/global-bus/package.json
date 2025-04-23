@@ -13,6 +13,7 @@
   "dependencies": {
     "@w3ux/utils": "^2.0.10",
     "consts": "workspace:*",
+    "dedot": "^0.9.3",
     "rxjs": "^7.8.2"
   },
   "devDependencies": {

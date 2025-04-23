@@ -5,11 +5,7 @@ import type { ExtensionInjected } from '@w3ux/types'
 import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
 import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types'
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
-import type {
-  EraRewardPointsEvent,
-  PapiReadyEvent,
-  TxSubmissionItem,
-} from 'api/types'
+import type { PapiReadyEvent, TxSubmissionItem } from 'api/types'
 import type { ActiveBalance } from 'contexts/Balances/types'
 import type { BondedAccount } from 'contexts/Bonded/types'
 import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
@@ -29,7 +25,6 @@ declare global {
     notification: CustomEvent<NotificationItem>
     'api-ready': CustomEvent<PapiReadyEvent>
     'online-status': CustomEvent<OnlineStatusEvent>
-    'new-era-reward-points': CustomEvent<EraRewardPointsEvent>
     'new-active-pool': CustomEvent<DetailActivePool>
     'removed-active-pool': CustomEvent<{ address: string; poolId: string }>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>

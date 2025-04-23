@@ -28,6 +28,7 @@ import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
+import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -49,6 +50,7 @@ export class WestendService
   relayMetrics: RelayMetricsQuery<WestendApi>
   poolsConfig: PoolsConfigQuery<WestendApi>
   stakingMetrics: StakingMetricsQuery<WestendApi>
+  eraRewardPoints: EraRewardPointsQuery<WestendApi>
 
   interface: ServiceInterface = {
     query: {
@@ -118,6 +120,8 @@ export class WestendService
       if (index > 0) {
         this.stakingMetrics?.unsubscribe()
         this.stakingMetrics = new StakingMetricsQuery(this.apiRelay, index)
+        this.eraRewardPoints?.unsubscribe()
+        this.eraRewardPoints = new EraRewardPointsQuery(this.apiRelay, index)
       }
     })
   }

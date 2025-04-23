@@ -7,6 +7,7 @@ import {
   resetBlockNumber,
   resetChainSpecs,
   resetConsts,
+  resetEraRewardPoints,
   resetPoolsConfig,
   resetRelayMetrics,
   resetServiceInterface,
@@ -14,6 +15,7 @@ import {
 } from 'global-bus'
 
 export const onNetworkReset = () => {
+  resetBlockNumber()
   resetActiveEra()
   resetApiStatus()
   resetChainSpecs()
@@ -21,6 +23,6 @@ export const onNetworkReset = () => {
   resetRelayMetrics()
   resetPoolsConfig()
   resetStakingMetrics()
-  resetBlockNumber()
+  resetEraRewardPoints()
   resetServiceInterface()
 }
