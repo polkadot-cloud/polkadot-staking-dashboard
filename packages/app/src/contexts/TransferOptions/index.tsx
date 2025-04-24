@@ -27,7 +27,7 @@ export const TransferOptionsProvider = ({
   const { network } = useNetwork()
   const { getChainSpec, activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
-  const { getLedger, getBalance, getLocks, getPoolMembership } = useBalances()
+  const { getLedger, getAccountBalance, getPoolMembership } = useBalances()
 
   const membership = getPoolMembership(activeAddress)
   const { existentialDeposit } = getChainSpec(network)
@@ -42,8 +42,11 @@ export const TransferOptionsProvider = ({
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `Balances`
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
-    const { maxLock } = getLocks(address)
-    const { free, frozen } = getBalance(address)
+    const {
+      balance: { free, frozen },
+      maxLock,
+    } = getAccountBalance(address)
+    const freeBn = new BigNumber(free)
     const { active, total, unlocking } = getLedger({ stash: address })
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
@@ -55,7 +58,7 @@ export const TransferOptionsProvider = ({
 
     // Total free balance after `edReserved` is subtracted
     const freeMinusReserve = BigNumber.max(
-      free.minus(edReserved).minus(feeReserve),
+      freeBn.minus(edReserved).minus(feeReserve),
       0
     )
     // Free balance that can be transferred
@@ -64,7 +67,10 @@ export const TransferOptionsProvider = ({
       0
     )
     // Free balance to pay for tx fees. Does not factor `feeReserve`
-    const balanceTxFees = BigNumber.max(free.minus(edReserved).minus(frozen), 0)
+    const balanceTxFees = BigNumber.max(
+      freeBn.minus(edReserved).minus(frozen),
+      0
+    )
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
       unlocking,

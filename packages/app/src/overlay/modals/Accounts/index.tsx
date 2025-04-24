@@ -4,6 +4,7 @@
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useProxies } from 'contexts/Proxies'
@@ -30,6 +31,7 @@ export const Accounts = () => {
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
   const { getDelegates } = useProxies()
+  const { getAccountBalance } = useBalances()
   const { accounts } = useImportedAccounts()
   const { activeAddress } = useActiveAccounts()
   const { getFeeReserve } = useTransferOptions()
@@ -37,10 +39,9 @@ export const Accounts = () => {
 
   const { existentialDeposit } = getChainSpec(network)
   // Listen to balance updates for entire accounts list.
-  const { getLocks, getBalance, getEdReserved, getPoolMembership } =
-    useActiveBalances({
-      accounts: accounts.map(({ address }) => address),
-    })
+  const { getEdReserved, getPoolMembership } = useActiveBalances({
+    accounts: accounts.map(({ address }) => address),
+  })
 
   // Calculate transferrable balance of an address.
   const getTransferrableBalance = (address: MaybeAddress) => {
@@ -49,10 +50,13 @@ export const Accounts = () => {
     // Get amount required for existential deposit.
     const edReserved = getEdReserved(address, new BigNumber(existentialDeposit))
     // Gets actual balance numbers.
-    const { free, frozen } = getBalance(address)
+    const {
+      balance: { free, frozen },
+    } = getAccountBalance(address)
+
     // Minus reserves and frozen balance from free to get transferrable.
     return BigNumber.max(
-      free.minus(edReserved).minus(feeReserve).minus(frozen),
+      new BigNumber(free).minus(edReserved).minus(feeReserve).minus(frozen),
       0
     )
   }
@@ -60,7 +64,7 @@ export const Accounts = () => {
   const stashes: string[] = []
   // accumulate imported stash accounts
   for (const { address } of accounts) {
-    const { locks } = getLocks(address)
+    const { locks } = getAccountBalance(address)
 
     // account is a stash if they have an active `staking` lock
     if (locks.find(({ id }) => id === 'staking')) {

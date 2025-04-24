@@ -27,15 +27,15 @@ export const BalanceChart = () => {
   const { network } = useNetwork()
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
+  const { getAccountBalance } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const { getBalance, getLocks } = useBalances()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
 
   const { unit, units } = getNetworkData(network)
   const Token = getChainIcons(network).token
-  const balance = getBalance(activeAddress)
+  const { balance, locks } = getAccountBalance(activeAddress)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { edReserved } = allTransferOptions
   const poolBondOpions = allTransferOptions.pool
@@ -45,8 +45,10 @@ export const BalanceChart = () => {
 
   // User's total balance.
   const { free, frozen } = balance
+  const freeBn = new BigNumber(free)
+  const frozenBn = new BigNumber(frozen)
   const totalBalance = planckToUnitBn(
-    free.plus(poolBondOpions.active).plus(unlockingPools),
+    freeBn.plus(poolBondOpions.active).plus(unlockingPools),
     units
   )
 
@@ -67,7 +69,6 @@ export const BalanceChart = () => {
   )
 
   // Check account non-staking locks.
-  const { locks } = getLocks(activeAddress)
   const locksStaking = locks.find(({ id }) => id === 'staking')
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
@@ -75,7 +76,7 @@ export const BalanceChart = () => {
 
   // Total funds available, including existential deposit, minus staking.
   const graphAvailable = planckToUnitBn(
-    BigNumber.max(free.minus(lockStakingAmount), 0),
+    BigNumber.max(freeBn.minus(lockStakingAmount), 0),
     units
   )
   const notStaking = graphAvailable
@@ -98,7 +99,7 @@ export const BalanceChart = () => {
     : new BigNumber(0)
 
   // Available balance data.
-  const fundsLockedPlank = BigNumber.max(frozen.minus(lockStakingAmount), 0)
+  const fundsLockedPlank = BigNumber.max(frozenBn.minus(lockStakingAmount), 0)
   const fundsLocked = planckToUnitBn(fundsLockedPlank, units)
   let fundsReserved = planckToUnitBn(edReserved.plus(feeReserve), units)
 

@@ -4,13 +4,10 @@
 import type BigNumber from 'bignumber.js'
 import type { PoolMembership } from 'contexts/Pools/types'
 import type { PayeeConfig } from 'contexts/Setup/types'
-import type { MaybeAddress, Nominations, Targets } from 'types'
+import type { AccountBalance, MaybeAddress, Nominations, Targets } from 'types'
 
 export interface BalancesContextInterface {
-  activeBalances: ActiveBalancesState
-  getNonce: (address: MaybeAddress) => number
-  getLocks: (address: MaybeAddress) => BalanceLocks
-  getBalance: (address: MaybeAddress) => Balance
+  getAccountBalance: (address: MaybeAddress) => AccountBalance
   getLedger: (source: ActiveLedgerSource) => Ledger
   getPayee: (address: MaybeAddress) => PayeeConfig
   getPoolMembership: (address: MaybeAddress) => PoolMembership | null

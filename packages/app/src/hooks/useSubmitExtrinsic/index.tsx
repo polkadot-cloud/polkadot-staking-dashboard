@@ -43,8 +43,8 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
-  const { getNonce } = useBalances()
   const { signWcTx } = useWalletConnect()
+  const { getAccountBalance } = useBalances()
   const { activeProxy } = useActiveAccounts()
   const { extensionsStatus } = useExtensions()
   const { isProxySupported } = useProxySupported()
@@ -187,7 +187,8 @@ export const useSubmitExtrinsic = ({
     }
 
     // Calculate correct nonce
-    const nonce = getNonce(from) + TxSubmission.pendingTxCount(from)
+    const nonce =
+      getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from)
 
     // Submit the transaction
     TxSubmission.addSub(uid, tx, signer, nonce, {

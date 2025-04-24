@@ -11,4 +11,5 @@ export const defaultAccountBalance: AccountBalance = {
     frozen: 0n,
   },
   locks: [],
+  maxLock: 0n,
 }

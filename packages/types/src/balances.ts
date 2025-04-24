@@ -12,4 +12,5 @@ export interface AccountBalance {
     id: string
     amount: bigint
   }[]
+  maxLock: bigint
 }

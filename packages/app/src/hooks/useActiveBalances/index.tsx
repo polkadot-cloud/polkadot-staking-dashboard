@@ -16,11 +16,7 @@ import { useNetwork } from 'contexts/Network'
 import type { PoolMembership } from 'contexts/Pools/types'
 import type { PayeeConfig } from 'contexts/Setup/types'
 import { Balances } from 'controllers/Balances'
-import {
-  defaultBalance,
-  defaultLedger,
-  defaultPayee,
-} from 'controllers/Balances/defaults'
+import { defaultLedger, defaultPayee } from 'controllers/Balances/defaults'
 import { isCustomEvent } from 'controllers/utils'
 import { useEffect, useRef, useState } from 'react'
 import type { Targets } from 'types'
@@ -39,28 +35,6 @@ export const useActiveBalances = ({
   // Store active account balances state. Requires ref for use in event listener callbacks
   const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({})
   const activeBalancesRef = useRef(activeBalances)
-
-  // Gets an active balance's balance
-  const getBalance = (address: MaybeString) => {
-    if (address) {
-      const maybeBalance = activeBalances[address]?.balances?.balance
-      if (maybeBalance) {
-        return maybeBalance
-      }
-    }
-    return defaultBalance
-  }
-
-  // Gets an active balance's nonce
-  const getNonce = (address: MaybeString) => {
-    if (address) {
-      const maybeNonce = activeBalances[address]?.balances?.nonce
-      if (maybeNonce) {
-        return maybeNonce
-      }
-    }
-    return 0
-  }
 
   // Gets the largest lock balance, dictating the total amount of unavailable funds from locks
   const getMaxLock = (locks: BalanceLock[]): BigNumber =>
@@ -205,8 +179,6 @@ export const useActiveBalances = ({
   return {
     activeBalances,
     getLocks,
-    getBalance,
-    getNonce,
     getLedger,
     getPayee,
     getPoolMembership,

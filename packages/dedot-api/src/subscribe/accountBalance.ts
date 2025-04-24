@@ -44,9 +44,13 @@ export class AccountBalanceQuery<T extends Chain> {
             frozen: data.frozen,
           },
           locks: locks.map((lock) => ({
-            id: hexToString(lock.id),
+            id: hexToString(lock.id).trim(),
             amount: lock.amount,
           })),
+          maxLock: locks.reduce(
+            (prev, cur) => (prev > cur.amount ? prev : cur.amount),
+            0n
+          ),
         }
         setAccountBalance(this.chainId, this.address, balances)
       }

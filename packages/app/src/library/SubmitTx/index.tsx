@@ -38,7 +38,7 @@ export const SubmitTx = ({
   const { getTxSubmission } = useTxMeta()
   const { network } = useNetwork()
   const { setModalResize } = useOverlay().modal
-  const { getBalance, getEdReserved } = useBalances()
+  const { getAccountBalance, getEdReserved } = useBalances()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
@@ -51,8 +51,12 @@ export const SubmitTx = ({
   const submitted = txSubmission?.submitted || false
 
   const edReserved = getEdReserved(from, new BigNumber(existentialDeposit))
-  const { free, frozen } = getBalance(from)
-  const balanceforTxFees = free.minus(edReserved).minus(frozen)
+  const {
+    balance: { free, frozen },
+  } = getAccountBalance(from)
+
+  const freeBn = new BigNumber(free)
+  const balanceforTxFees = freeBn.minus(edReserved).minus(frozen)
   const notEnoughFunds =
     balanceforTxFees.minus(fee.toString()).isLessThan(0) && fee > 0n
 

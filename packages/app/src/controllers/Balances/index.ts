@@ -4,7 +4,6 @@
 import { AccountBalances } from 'api/subscribe/accountBalances'
 import type { ActiveBalance } from 'contexts/Balances/types'
 import { Subscriptions } from 'controllers/Subscriptions'
-import { Syncs } from 'controllers/Syncs'
 import type { NetworkId } from 'types'
 
 export class Balances {
@@ -28,9 +27,6 @@ export class Balances {
     if (!accountsAdded.length) {
       return
     }
-
-    // Strart syncing if new accounts added
-    Syncs.dispatch('balances', 'syncing')
 
     // Subscribe to and add new accounts data
     accountsAdded.forEach(async (address) => {
