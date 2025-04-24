@@ -4,12 +4,9 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
 import type {
   ActiveBalancesState,
   ActiveLedgerSource,
-  BalanceLock,
-  BalanceLocks,
   Ledger,
 } from 'contexts/Balances/types'
 import { useNetwork } from 'contexts/Network'
@@ -35,29 +32,6 @@ export const useActiveBalances = ({
   // Store active account balances state. Requires ref for use in event listener callbacks
   const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({})
   const activeBalancesRef = useRef(activeBalances)
-
-  // Gets the largest lock balance, dictating the total amount of unavailable funds from locks
-  const getMaxLock = (locks: BalanceLock[]): BigNumber =>
-    locks.reduce(
-      (prev, current) =>
-        prev.amount.isGreaterThan(current.amount) ? prev : current,
-      { amount: new BigNumber(0) }
-    )?.amount || new BigNumber(0)
-
-  // Gets an active balance's locks
-  const getLocks = (address: MaybeString): BalanceLocks => {
-    if (address) {
-      const maybeLocks = activeBalances[address]?.balances?.locks
-      if (maybeLocks) {
-        return { locks: maybeLocks, maxLock: getMaxLock(maybeLocks) }
-      }
-    }
-
-    return {
-      locks: [],
-      maxLock: new BigNumber(0),
-    }
-  }
 
   // Gets a ledger for a stash address
   const getLedger = (source: ActiveLedgerSource): Ledger => {
@@ -165,7 +139,6 @@ export const useActiveBalances = ({
   )
 
   return {
-    getLocks,
     getLedger,
     getPayee,
     getPoolMembership,
