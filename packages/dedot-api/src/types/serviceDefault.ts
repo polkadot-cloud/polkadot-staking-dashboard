@@ -21,6 +21,7 @@ import type { CoreConsts } from '../consts/core'
 import type { StakingConsts } from '../consts/staking'
 import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
+import type { AccountBalanceQuery } from '../subscribe/accountBalance'
 import type { ActiveEraQuery } from '../subscribe/activeEra'
 import type { BlockNumberQuery } from '../subscribe/blockNumber'
 import type { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
@@ -64,6 +65,7 @@ export abstract class DefaultServiceClass<
   subActiveAddress: Subscription
   subImportedAccounts: Subscription
   subActiveEra: Subscription
+  subAccountBalances: AccountBalances<RelayApi, PeopleApi>
 
   abstract interface: ServiceInterface
 }
@@ -73,4 +75,13 @@ export type DefaultService<T extends keyof ServiceType> = {
   Service: ServiceType[T]
   apis: [DedotClient<Service[T][0]>, DedotClient<Service[T][1]>]
   ids: [NetworkId, SystemChainId]
+}
+
+// Account balances record
+export type AccountBalances<
+  RelayApi extends RelayChain,
+  PeopleApi extends PeopleChain,
+> = {
+  relay: Record<string, AccountBalanceQuery<RelayApi>>
+  people: Record<string, AccountBalanceQuery<PeopleApi>>
 }

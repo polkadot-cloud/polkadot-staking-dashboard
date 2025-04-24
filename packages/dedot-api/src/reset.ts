@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
+  resetAccountBalances,
   resetActiveEra,
   resetApiStatus,
   resetBlockNumber,
@@ -17,16 +18,20 @@ import {
 } from 'global-bus'
 
 export const onNetworkReset = () => {
+  resetAccountBalances()
+
   resetBlockNumber()
   resetActiveEra()
-  resetApiStatus()
-  resetChainSpecs()
-  resetConsts()
-  resetRelayMetrics()
-  resetPoolsConfig()
-  resetStakingMetrics()
-  resetEraRewardPoints()
-  resetServiceInterface()
   resetFastUnstakeConfig()
   resetFastUnstakeQueue()
+  resetEraRewardPoints()
+
+  resetApiStatus()
+  resetRelayMetrics()
+  resetStakingMetrics()
+  resetPoolsConfig()
+  resetServiceInterface()
+
+  resetChainSpecs()
+  resetConsts()
 }

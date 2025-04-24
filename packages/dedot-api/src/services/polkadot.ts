@@ -38,6 +38,7 @@ import { pendingRewards } from '../runtimeApi/pendingRewards'
 import { pointsToBalance } from '../runtimeApi/pointsToBalance'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
+import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
@@ -46,7 +47,11 @@ import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
-import type { DefaultServiceClass } from '../types/serviceDefault'
+import type {
+  AccountBalances,
+  DefaultServiceClass,
+} from '../types/serviceDefault'
+import { getAccountKey, getAddedAndRemovedAccounts, keysOf } from '../util'
 
 export class PolkadotService
   implements DefaultServiceClass<PolkadotApi, PolkadotPeopleApi, PolkadotApi>
@@ -71,6 +76,10 @@ export class PolkadotService
   subActiveAddress: Subscription
   subImportedAccounts: Subscription
   subActiveEra: Subscription
+  subAccountBalances: AccountBalances<PolkadotApi, PolkadotPeopleApi> = {
+    relay: {},
+    people: {},
+  }
 
   interface: ServiceInterface = {
     query: {
@@ -175,12 +184,33 @@ export class PolkadotService
     })
 
     this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
-      // TODO: Handle changes in imported accounts
-      console.debug(prev, cur)
+      const { added, removed } = getAddedAndRemovedAccounts(
+        prev.flat(),
+        cur.flat()
+      )
+      removed.forEach((account) => {
+        this.ids.forEach((id, i) => {
+          this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
+            getAccountKey(id, account)
+          ]?.unsubscribe()
+        })
+      })
+      added.forEach((account) => {
+        this.subAccountBalances['relay'][getAccountKey(this.ids[0], account)] =
+          new AccountBalanceQuery(this.apiRelay, this.ids[0], account.address)
+
+        this.subAccountBalances['people'][getAccountKey(this.ids[1], account)] =
+          new AccountBalanceQuery(this.apiPeople, this.ids[1], account.address)
+      })
     })
   }
 
   unsubscribe = async () => {
+    Object.values(this.subAccountBalances).forEach((subs) => {
+      Object.values(subs).forEach((sub) => {
+        sub?.unsubscribe()
+      })
+    })
     this.subActiveEra?.unsubscribe()
     this.subActiveAddress?.unsubscribe()
     this.subImportedAccounts?.unsubscribe()
