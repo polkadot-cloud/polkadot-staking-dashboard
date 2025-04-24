@@ -177,7 +177,6 @@ export const useActiveBalances = ({
   )
 
   return {
-    activeBalances,
     getLocks,
     getLedger,
     getPayee,
