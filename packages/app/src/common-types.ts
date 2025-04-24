@@ -5,7 +5,6 @@ import type { ExtensionInjected } from '@w3ux/types'
 import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type { PapiReadyEvent, TxSubmissionItem } from 'api/types'
-import type { ActiveBalance } from 'contexts/Balances/types'
 import type { BondedAccount } from 'contexts/Bonded/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
@@ -30,7 +29,6 @@ declare global {
     'new-bonded-account': CustomEvent<BondedAccount>
     'new-sync-status': CustomEvent<SyncEvent>
     'new-external-account': CustomEvent<{ address: string }>
-    'new-account-balance': CustomEvent<ActiveBalance & { address: string }>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }

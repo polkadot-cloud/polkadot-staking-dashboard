@@ -1,35 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ExtensionAccount } from '@w3ux/types'
 import type BigNumber from 'bignumber.js'
-import type { Balance } from 'contexts/Balances/types'
 import type { ClaimPermission } from 'contexts/Pools/types'
-import type { BondFor, ExternalAccount, MaybeAddress } from 'types'
-
-export interface ExtensionAccountItem extends ExtensionAccount {
-  active?: boolean
-  alert?: string
-  balance?: Balance
-}
-export interface ExternalAccountItem extends ExternalAccount {
-  active?: boolean
-  alert?: string
-  balance?: Balance
-}
-export type ImportedAccountItem = ExtensionAccountItem | ExternalAccountItem
-
-export type InputItem = ImportedAccountItem | null
-
-export interface DropdownInput {
-  key: string
-  name: string
-}
-
-export interface AccountDropdownProps {
-  current: InputItem
-  to: MaybeAddress
-}
+import type { BondFor } from 'types'
 
 export type BondSetter = ({ bond }: { bond: BigNumber }) => void
 

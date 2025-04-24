@@ -5,27 +5,15 @@ import { createSafeContext } from '@w3ux/hooks'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { ActivePools } from 'controllers/ActivePools'
-import { Apis } from 'controllers/Apis'
-import { Balances } from 'controllers/Balances'
-import { isCustomEvent } from 'controllers/utils'
 import {
   accountBalances$,
   defaultAccountBalance,
   defaultStakingLedger,
   stakingLedgers$,
 } from 'global-bus'
-import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
-import type {
-  AccountBalance,
-  ActivePoolItem,
-  MaybeAddress,
-  StakingLedger,
-  SystemChainId,
-} from 'types'
-import { useEventListener } from 'usehooks-ts'
+import { useEffect, useState } from 'react'
+import type { AccountBalance, MaybeAddress, StakingLedger } from 'types'
 import type { BalancesContextInterface } from './types'
 
 export const [BalancesContext, useBalances] =
@@ -33,8 +21,7 @@ export const [BalancesContext, useBalances] =
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const { isReady, getChainSpec } = useApi()
-  const createPoolAccounts = useCreatePoolAccounts()
+  const { getChainSpec } = useApi()
   const { existentialDeposit } = getChainSpec(network)
   const { ss58 } = getNetworkData(network)
 
@@ -77,41 +64,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     const { nominators } = getStakingLedger(address)
     return (nominators?.targets || []).map((target) => target.address(ss58))
   }
-
-  // Check all accounts have been synced. App-wide syncing state for all accounts
-  const newAccountBalancesCallback = (e: Event) => {
-    if (isCustomEvent(e) && Balances.isValidNewAccountBalanceEvent(e)) {
-      const { address, ...newBalances } = e.detail
-      const { poolMembership } = newBalances
-
-      // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
-      // details and nominations
-      if (isReady) {
-        let newPools: ActivePoolItem[] = []
-        if (poolMembership) {
-          const { poolId } = poolMembership
-          newPools = ActivePools.getformattedPoolItems(address).concat({
-            id: String(poolId),
-            addresses: { ...createPoolAccounts(Number(poolId)) },
-          })
-        }
-
-        const peopleApi = Apis.getApi(`people-${network}` as SystemChainId)
-        if (peopleApi) {
-          ActivePools.syncPools(network, address, newPools)
-        }
-      }
-    }
-  }
-
-  const documentRef = useRef<Document>(document)
-
-  // Listen for new account balance events
-  useEventListener(
-    'new-account-balance',
-    newAccountBalancesCallback,
-    documentRef
-  )
 
   // Subscribe to global bus account balance events
   useEffect(() => {
