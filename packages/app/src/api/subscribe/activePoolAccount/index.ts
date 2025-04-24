@@ -13,7 +13,6 @@ import type {
   ChainId,
   Nominations,
   PoolRoles,
-  SystemChainId,
 } from 'types'
 
 export class ActivePoolAccount implements Unsubscribable {
@@ -45,7 +44,6 @@ export class ActivePoolAccount implements Unsubscribable {
   subscribe = async (): Promise<void> => {
     try {
       const api = Apis.getApi(this.#network)
-      const peopleApiId = `people-${this.#network}` as SystemChainId
       const bestOrFinalized = 'best'
 
       const sub = combineLatest([
@@ -66,12 +64,7 @@ export class ActivePoolAccount implements Unsubscribable {
           bestOrFinalized
         ),
       ]).subscribe(async ([bondedPool, rewardPool, account, nominators]) => {
-        await this.handleActivePoolCallback(
-          peopleApiId,
-          bondedPool,
-          rewardPool,
-          account
-        )
+        await this.handleActivePoolCallback(bondedPool, rewardPool, account)
         this.handleNominatorsCallback(nominators)
 
         if (this.activePool && this.poolNominations) {
@@ -95,7 +88,6 @@ export class ActivePoolAccount implements Unsubscribable {
 
   // Handle active pool callback.
   handleActivePoolCallback = async (
-    peopleApiId: SystemChainId,
     bondedPool: AnyApi,
     rewardPool: AnyApi,
     account: AnyApi
