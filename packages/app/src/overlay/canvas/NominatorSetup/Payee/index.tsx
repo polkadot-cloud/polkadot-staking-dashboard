@@ -4,7 +4,6 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useSetup } from 'contexts/Setup'
 import type { PayeeOptions } from 'contexts/Setup/types'
-import { defaultPayee } from 'controllers/Balances/defaults'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { Spacer } from 'library/Form/Wrappers'
 import { PayeeInput } from 'library/PayeeInput'
@@ -60,7 +59,10 @@ export const Payee = ({ section }: SetupStepProps) => {
     if (!payee || (!payee.destination && !payee.account)) {
       setActiveAccountSetup('nominator', {
         ...progress,
-        payee: defaultPayee,
+        payee: {
+          destination: 'Staked',
+          account: null,
+        },
       })
     }
   }, [activeAddress])

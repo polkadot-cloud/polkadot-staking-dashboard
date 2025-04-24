@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import type { UnlockChunk } from 'contexts/Balances/types'
@@ -22,23 +23,29 @@ export const UnlockChunks = () => {
     setModalHeight,
     modalMaxHeight,
   } = useOverlay().modal
-  const { getLedger } = useBalances()
+  const { getStakingLedger } = useBalances()
   const { getPoolUnlocking } = useActivePool()
   const { activeAddress } = useActiveAccounts()
   const { integrityChecked } = useLedgerHardware()
+
   const { bondFor } = options || {}
 
   // get the unlocking per bondFor
   const getUnlocking = () => {
     let unlocking = []
-    let ledger
+    let stakingLedger
     switch (bondFor) {
       case 'pool':
         unlocking = getPoolUnlocking()
         break
       default:
-        ledger = getLedger({ stash: activeAddress })
-        unlocking = ledger.unlocking
+        stakingLedger = getStakingLedger(activeAddress)
+        unlocking = (stakingLedger.ledger?.unlocking || []).map(
+          ({ era, value }) => ({
+            era,
+            value: new BigNumber(value),
+          })
+        )
     }
     return unlocking
   }

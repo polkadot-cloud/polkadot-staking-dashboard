@@ -53,12 +53,12 @@ export const Forms = forwardRef(
       config: { options },
     } = useOverlay().modal
     const { getBondedAccount } = useBonded()
-    const { getPoolMembership } = useBalances()
+    const { getStakingLedger } = useBalances()
     const { getSignerWarnings } = useSignerWarnings()
     const { removeFavorite: removeFavoritePool } = useFavoritePools()
 
     const { unit, units } = getNetworkData(network)
-    const membership = getPoolMembership(activeAddress)
+    const { poolMembership } = getStakingLedger(activeAddress)
     const { bondFor, poolClosure } = options || {}
     const { historyDepth } = getConsts(network)
     const controller = getBondedAccount(activeAddress)
@@ -108,7 +108,7 @@ export const Forms = forwardRef(
 
         // if no more bonded funds from pool, remove from poolMembers list
         if (bondFor === 'pool') {
-          const points = membership?.points || 0n
+          const points = poolMembership?.points || 0n
           const bonded = planckToUnitBn(new BigNumber(points), units)
           if (bonded.isZero()) {
             removePoolMember(activeAddress)

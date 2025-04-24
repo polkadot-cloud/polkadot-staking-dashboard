@@ -27,9 +27,9 @@ export const TransferOptionsProvider = ({
   const { network } = useNetwork()
   const { getChainSpec, activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
-  const { getLedger, getAccountBalance, getPoolMembership } = useBalances()
+  const { getStakingLedger, getAccountBalance } = useBalances()
 
-  const membership = getPoolMembership(activeAddress)
+  const { poolMembership } = getStakingLedger(activeAddress)
   const { existentialDeposit } = getChainSpec(network)
   const { units, defaultFeeReserve } = getNetworkData(network)
 
@@ -47,7 +47,17 @@ export const TransferOptionsProvider = ({
       maxLock,
     } = getAccountBalance(address)
     const freeBn = new BigNumber(free)
-    const { active, total, unlocking } = getLedger({ stash: address })
+    const stakingLedger = getStakingLedger(address)
+    const { active, total } = stakingLedger.ledger || {
+      active: 0n,
+      total: 0n,
+    }
+    const unlocking = (stakingLedger?.ledger?.unlocking || []).map(
+      ({ era, value }) => ({
+        era,
+        value: new BigNumber(value),
+      })
+    )
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed
@@ -85,7 +95,7 @@ export const TransferOptionsProvider = ({
         0
       )
       return {
-        active,
+        active: new BigNumber(active),
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
@@ -95,14 +105,19 @@ export const TransferOptionsProvider = ({
     }
 
     const poolBalances = () => {
-      const unlockingPool = membership?.unlocking || []
+      const unlockingPool = (poolMembership?.unbondingEras || []).map(
+        ([era, value]) => ({
+          era,
+          value: new BigNumber(value),
+        })
+      )
       const {
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
       } = getUnlocking(unlockingPool, activeEra.index)
 
       return {
-        active: membership?.balance || new BigNumber(0),
+        active: new BigNumber(poolMembership?.balance || 0),
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: BigNumber.max(freeMinusReserve.minus(maxLock), 0),

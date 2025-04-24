@@ -3,6 +3,7 @@
 
 import { isValidAddress } from '@w3ux/utils'
 import { StakingSetPayee } from 'api/tx/stakingSetPayee'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useBonded } from 'contexts/Bonded'
@@ -26,15 +27,16 @@ import { useOverlay } from 'ui-overlay'
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
-  const { getPayee } = useBalances()
   const { getBondedAccount } = useBonded()
+  const { getStakingLedger } = useBalances()
   const { getPayeeItems } = usePayeeConfig()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { getSignerWarnings } = useSignerWarnings()
 
+  const { ss58 } = getNetworkData(network)
   const controller = getBondedAccount(activeAddress)
-  const payee = getPayee(activeAddress)
+  const payee = getStakingLedger(activeAddress).payee
 
   const DefaultSelected: PayeeConfig = {
     destination: null,
@@ -42,7 +44,9 @@ export const UpdatePayee = () => {
   }
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAddress>(payee.account)
+  const [account, setAccount] = useState<MaybeAddress>(
+    payee?.account?.address(ss58) || null
+  )
 
   // Store the currently selected payee option.
   const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected)
@@ -105,7 +109,7 @@ export const UpdatePayee = () => {
   // Inject default value after component mount.
   useEffect(() => {
     const initialSelected = getPayeeItems(true).find(
-      (item) => item.value === payee.destination
+      (item) => item.value === payee?.destination
     )
     setSelected(
       initialSelected

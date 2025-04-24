@@ -33,7 +33,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
-  const { getLedger, getNominations } = useBalances()
+  const { getStakingLedger, getNominations } = useBalances()
   const { accounts: connectAccounts } = useImportedAccounts()
   const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
   const { units } = getNetworkData(network)
@@ -202,11 +202,12 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   // Helper function to determine whether the active account is bonding, or is yet to start
   const isBonding = () =>
     hasController() &&
-    getLedger({ stash: activeAddress }).active.isGreaterThan(0)
+    (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
 
   // Helper function to determine whether the active account
   const isUnlocking = () =>
-    hasController() && getLedger({ stash: activeAddress }).unlocking.length
+    hasController() &&
+    (getStakingLedger(activeAddress).ledger?.unlocking || []).length
 
   // Helper function to determine whether the active account is nominating, or is yet to start
   const isNominating = () => getNominations(activeAddress).length > 0

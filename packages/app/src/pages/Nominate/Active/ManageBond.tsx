@@ -10,7 +10,7 @@ import {
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
-import type BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -42,9 +42,9 @@ export const ManageBond = () => {
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
-  const { getLedger } = useBalances()
   const { getBondedAccount } = useBonded()
   const { openModal } = useOverlay().modal
+  const { getStakingLedger } = useBalances()
   const { isFastUnstaking } = useUnstaking()
   const { activeAddress } = useActiveAccounts()
   const { getFastUnstakeText } = useUnstaking()
@@ -53,11 +53,11 @@ export const ManageBond = () => {
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
 
+  const { ledger } = getStakingLedger(activeAddress)
   const { units } = getNetworkData(network)
   const Token = getChainIcons(network).token
   const controller = getBondedAccount(activeAddress)
-  const ledger = getLedger({ stash: activeAddress })
-  const { active }: { active: BigNumber } = ledger
+  const active = new BigNumber(ledger?.active || 0n)
   const allTransferOptions = getTransferOptions(activeAddress)
 
   const { freeBalance } = allTransferOptions

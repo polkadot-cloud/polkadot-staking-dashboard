@@ -2,16 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import { ActivePools } from 'controllers/ActivePools'
 import { Apis } from 'controllers/Apis'
 import { Balances } from 'controllers/Balances'
 import { isCustomEvent } from 'controllers/utils'
-import { accountBalances$, defaultAccountBalance } from 'global-bus'
-import { useActiveBalances } from 'hooks/useActiveBalances'
+import {
+  accountBalances$,
+  defaultAccountBalance,
+  defaultStakingLedger,
+  stakingLedgers$,
+} from 'global-bus'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -19,6 +22,7 @@ import type {
   AccountBalance,
   ActivePoolItem,
   MaybeAddress,
+  StakingLedger,
   SystemChainId,
 } from 'types'
 import { useEventListener } from 'usehooks-ts'
@@ -29,16 +33,18 @@ export const [BalancesContext, useBalances] =
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const { getBondedAccount } = useBonded()
   const { isReady, getChainSpec } = useApi()
   const createPoolAccounts = useCreatePoolAccounts()
-  const { activeAddress, activeProxy } = useActiveAccounts()
   const { existentialDeposit } = getChainSpec(network)
-  const controller = getBondedAccount(activeAddress)
+  const { ss58 } = getNetworkData(network)
 
   // Store account balances state
-  type State = Record<string, Record<string, AccountBalance>>
-  const [accountBalances, setAccountBalances] = useState<State>({})
+  type StateBalances = Record<string, Record<string, AccountBalance>>
+  const [accountBalances, setAccountBalances] = useState<StateBalances>({})
+
+  // Store staking ledgers state
+  type StateLedgers = Record<string, StakingLedger>
+  const [stakingLedgers, setStakingLedgers] = useState<StateLedgers>({})
 
   // Get an account balance for the default network chain
   const getAccountBalance = (address: MaybeAddress) => {
@@ -55,11 +61,22 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     return reserved < 0 ? 0n : reserved
   }
 
-  // Listen to balance updates for the active account, active proxy and controller
-  const { getLedger, getPayee, getPoolMembership, getNominations } =
-    useActiveBalances({
-      accounts: [activeAddress, activeProxy?.address || null, controller],
-    })
+  // Get an account's staking ledger
+  const getStakingLedger = (address: MaybeAddress) => {
+    if (!address) {
+      return defaultStakingLedger
+    }
+    return stakingLedgers?.[address] || defaultStakingLedger
+  }
+
+  // Gets an account's nominations from its staking ledger
+  const getNominations = (address: MaybeAddress) => {
+    if (!address) {
+      return []
+    }
+    const { nominators } = getStakingLedger(address)
+    return (nominators?.targets || []).map((target) => target.address(ss58))
+  }
 
   // Check all accounts have been synced. App-wide syncing state for all accounts
   const newAccountBalancesCallback = (e: Event) => {
@@ -101,8 +118,12 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     const unsubBalances = accountBalances$.subscribe((result) => {
       setAccountBalances(result)
     })
+    const unsubStakingLedgers = stakingLedgers$.subscribe((result) => {
+      setStakingLedgers(result)
+    })
     return () => {
       unsubBalances.unsubscribe()
+      unsubStakingLedgers.unsubscribe()
     }
   }, [])
 
@@ -110,9 +131,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     <BalancesContext.Provider
       value={{
         getAccountBalance,
-        getLedger,
-        getPayee,
-        getPoolMembership,
+        getStakingLedger,
         getNominations,
         getEdReserved,
       }}

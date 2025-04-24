@@ -7,7 +7,6 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { useActiveBalances } from 'hooks/useActiveBalances'
 import { ActionItem } from 'library/ActionItem'
 import { Fragment, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,13 +29,8 @@ export const Accounts = () => {
   const { accounts } = useImportedAccounts()
   const { activeAddress } = useActiveAccounts()
   const { getFeeReserve } = useTransferOptions()
-  const { getAccountBalance, getEdReserved } = useBalances()
+  const { getAccountBalance, getEdReserved, getStakingLedger } = useBalances()
   const { status: modalStatus, setModalResize } = useOverlay().modal
-
-  // Listen to balance updates for entire accounts list
-  const { getPoolMembership } = useActiveBalances({
-    accounts: accounts.map(({ address }) => address),
-  })
 
   // Calculate transferrable balance of an address
   const getTransferrableBalance = (address: MaybeAddress) => {
@@ -87,7 +81,7 @@ export const Accounts = () => {
       }))
     }
 
-    const poolMember = getPoolMembership(address)
+    const { poolMembership } = getStakingLedger(address)
 
     // Check if nominating.
     if (
@@ -98,7 +92,7 @@ export const Accounts = () => {
     }
 
     // Check if in pool.
-    if (poolMember) {
+    if (poolMembership) {
       if (!inPool.find((n) => n.address === address)) {
         isInPool = true
       }
@@ -107,7 +101,7 @@ export const Accounts = () => {
     // If not doing anything, add address to `notStaking`.
     if (
       !isStash &&
-      !poolMember &&
+      !poolMembership &&
       !notStaking.find((n) => n.address === address)
     ) {
       notStaking.push({ address, source, delegates })
@@ -118,11 +112,11 @@ export const Accounts = () => {
     if (
       isNominating &&
       isInPool &&
-      poolMember &&
+      poolMembership &&
       !nominatingAndPool.find((n) => n.address === address)
     ) {
       nominatingAndPool.push({
-        ...poolMember,
+        ...poolMembership,
         address,
         source,
         stashImported: true,
@@ -138,8 +132,8 @@ export const Accounts = () => {
     }
 
     // In pool only.
-    if (!isNominating && isInPool && poolMember) {
-      inPool.push({ ...poolMember, source, delegates })
+    if (!isNominating && isInPool && poolMembership) {
+      inPool.push({ ...poolMembership, source, delegates })
     }
   }
 

@@ -34,7 +34,7 @@ interface Nominators {
   submittedIn: number
 }
 
-interface PoolMembership {
+export interface PoolMembership {
   address: string
   poolId: number
   points: bigint

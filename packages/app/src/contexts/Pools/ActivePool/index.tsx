@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -21,13 +22,15 @@ export const [ActivePoolContext, useActivePool] =
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
-  const { getPoolMembership } = useBalances()
+  const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const createPoolAccounts = useCreatePoolAccounts()
 
-  const membership = getPoolMembership(activeAddress)
+  const { poolMembership } = getStakingLedger(activeAddress)
   // Determine active pool to subscribe to based on the membership pool id
-  const accountPoolId = membership?.poolId ? String(membership.poolId) : null
+  const accountPoolId = poolMembership?.poolId
+    ? String(poolMembership.poolId)
+    : null
 
   // Only listen to the active account's active pool
   const { getActivePool, getPoolNominations } = useActivePools({
@@ -88,11 +91,11 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Returns whether the active account is a member of the active pool
   const isMember = () => {
     const p = activePool ? String(activePool.id) : '-1'
-    return String(membership?.poolId || '') === p
+    return String(poolMembership?.poolId || '') === p
   }
 
   // Returns whether the active account is in a pool.
-  const inPool = () => !!(membership?.address === activeAddress)
+  const inPool = () => !!(poolMembership?.address === activeAddress)
 
   // Returns whether the active account is the depositor of the active pool
   const isDepositor = () => {
@@ -116,14 +119,18 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const getPoolRoles = () => activePool?.bondedPool?.roles || defaultPoolRoles
 
   // Returns the unlock chunks of the active pool
-  const getPoolUnlocking = () => membership?.unlocking || []
+  const getPoolUnlocking = () =>
+    (poolMembership?.unbondingEras || []).map(([era, value]) => ({
+      era,
+      value: new BigNumber(value),
+    }))
 
   // Initialise subscriptions to the active account's active pool
   useEffectIgnoreInitial(() => {
     if (isReady) {
       syncActivePool()
     }
-  }, [network, isReady, membership])
+  }, [network, isReady, poolMembership])
 
   return (
     <ActivePoolContext.Provider

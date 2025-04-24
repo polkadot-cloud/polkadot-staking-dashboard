@@ -37,7 +37,7 @@ export const LeavePool = ({
   const { getConsts } = useApi()
   const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { getPoolMembership } = useBalances()
+  const { getStakingLedger } = useBalances()
   const { erasToSeconds } = useErasToTimeLeft()
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
@@ -49,7 +49,7 @@ export const LeavePool = ({
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = getConsts(network)
   const pendingRewards = activePool?.pendingRewards || 0n
-  const membership = getPoolMembership(activeAddress)
+  const { poolMembership } = getStakingLedger(activeAddress)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
@@ -62,15 +62,15 @@ export const LeavePool = ({
   const [paramsValid, setParamsValid] = useState<boolean>(false)
 
   useEffect(() => {
-    setParamsValid(BigInt(membership?.points || 0) > 0 && !!activePool?.id)
+    setParamsValid((poolMembership?.points || 0n) > 0 && !!activePool?.id)
   }, [freeToUnbond.toString()])
 
   const getTx = () => {
     let tx = null
-    if (!activeAddress || !membership) {
+    if (!activeAddress || !poolMembership) {
       return tx
     }
-    tx = new PoolUnbond(network, activeAddress, BigInt(membership.points)).tx()
+    tx = new PoolUnbond(network, activeAddress, poolMembership.points).tx()
     return tx
   }
 
