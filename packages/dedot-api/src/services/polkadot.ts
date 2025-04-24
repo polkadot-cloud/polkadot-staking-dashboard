@@ -46,10 +46,12 @@ import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
+import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 import type {
   AccountBalances,
   DefaultServiceClass,
+  StakingLedgers,
 } from '../types/serviceDefault'
 import { getAccountKey, getAddedAndRemovedAccounts, keysOf } from '../util'
 
@@ -80,6 +82,7 @@ export class PolkadotService
     relay: {},
     people: {},
   }
+  subStakingLedgers: StakingLedgers<PolkadotApi> = {}
 
   interface: ServiceInterface = {
     query: {
@@ -193,14 +196,19 @@ export class PolkadotService
           this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
             getAccountKey(id, account)
           ]?.unsubscribe()
+          this.subStakingLedgers?.[account.address]?.unsubscribe()
         })
       })
       added.forEach((account) => {
         this.subAccountBalances['relay'][getAccountKey(this.ids[0], account)] =
           new AccountBalanceQuery(this.apiRelay, this.ids[0], account.address)
-
         this.subAccountBalances['people'][getAccountKey(this.ids[1], account)] =
           new AccountBalanceQuery(this.apiPeople, this.ids[1], account.address)
+
+        this.subStakingLedgers[account.address] = new StakingLedgerQuery(
+          this.apiRelay,
+          account.address
+        )
       })
     })
   }
@@ -210,6 +218,9 @@ export class PolkadotService
       Object.values(subs).forEach((sub) => {
         sub?.unsubscribe()
       })
+    })
+    Object.values(this.subStakingLedgers).forEach((sub) => {
+      sub?.unsubscribe()
     })
     this.subActiveEra?.unsubscribe()
     this.subActiveAddress?.unsubscribe()

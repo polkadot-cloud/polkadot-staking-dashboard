@@ -29,6 +29,7 @@ import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import type { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import type { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import type { RelayMetricsQuery } from '../subscribe/relayMetrics'
+import type { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import type { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 
 // Required interface for all default services
@@ -66,6 +67,7 @@ export abstract class DefaultServiceClass<
   subImportedAccounts: Subscription
   subActiveEra: Subscription
   subAccountBalances: AccountBalances<RelayApi, PeopleApi>
+  subStakingLedgers: StakingLedgers<StakingApi>
 
   abstract interface: ServiceInterface
 }
@@ -85,3 +87,9 @@ export type AccountBalances<
   relay: Record<string, AccountBalanceQuery<RelayApi>>
   people: Record<string, AccountBalanceQuery<PeopleApi>>
 }
+
+// Staking ledgers record
+export type StakingLedgers<StakingApi extends StakingChain> = Record<
+  string,
+  StakingLedgerQuery<StakingApi>
+>

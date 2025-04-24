@@ -14,11 +14,13 @@ import {
   resetPoolsConfig,
   resetRelayMetrics,
   resetServiceInterface,
+  resetStakingLedgers,
   resetStakingMetrics,
 } from 'global-bus'
 
 export const onNetworkReset = () => {
   resetAccountBalances()
+  resetStakingLedgers()
 
   resetBlockNumber()
   resetActiveEra()

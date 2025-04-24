@@ -7,7 +7,7 @@
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import { hexToString } from 'dedot/utils'
-import { setAccountBalance } from 'global-bus'
+import { removeAccountBalance, setAccountBalance } from 'global-bus'
 import type { AccountBalance, ChainId } from 'types'
 import type { Chain } from '../types'
 
@@ -59,5 +59,6 @@ export class AccountBalanceQuery<T extends Chain> {
 
   unsubscribe() {
     this.#unsub?.()
+    removeAccountBalance(this.chainId, this.address)
   }
 }
