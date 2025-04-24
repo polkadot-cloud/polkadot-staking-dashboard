@@ -28,11 +28,12 @@ export const [BalancesContext, useBalances] =
   createSafeContext<BalancesContextInterface>()
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi()
   const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
+  const { isReady, getChainSpec } = useApi()
   const createPoolAccounts = useCreatePoolAccounts()
   const { activeAddress, activeProxy } = useActiveAccounts()
+  const { existentialDeposit } = getChainSpec(network)
   const controller = getBondedAccount(activeAddress)
 
   // Store account balances state
@@ -47,16 +48,18 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     return accountBalances?.[network]?.[address] || defaultAccountBalance
   }
 
+  // Get an account's ed reserved balance
+  const getEdReserved = (address: MaybeAddress) => {
+    const { maxLock } = getAccountBalance(address)
+    const reserved = existentialDeposit - maxLock
+    return reserved < 0 ? 0n : reserved
+  }
+
   // Listen to balance updates for the active account, active proxy and controller
-  const {
-    getLedger,
-    getPayee,
-    getPoolMembership,
-    getNominations,
-    getEdReserved,
-  } = useActiveBalances({
-    accounts: [activeAddress, activeProxy?.address || null, controller],
-  })
+  const { getLedger, getPayee, getPoolMembership, getNominations } =
+    useActiveBalances({
+      accounts: [activeAddress, activeProxy?.address || null, controller],
+    })
 
   // Check all accounts have been synced. App-wide syncing state for all accounts
   const newAccountBalancesCallback = (e: Event) => {

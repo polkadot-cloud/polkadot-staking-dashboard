@@ -3,10 +3,8 @@
 
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
 import { useProxies } from 'contexts/Proxies'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useActiveBalances } from 'hooks/useActiveBalances'
@@ -28,33 +26,30 @@ import type {
 
 export const Accounts = () => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { getChainSpec } = useApi()
   const { getDelegates } = useProxies()
-  const { getAccountBalance } = useBalances()
   const { accounts } = useImportedAccounts()
   const { activeAddress } = useActiveAccounts()
   const { getFeeReserve } = useTransferOptions()
+  const { getAccountBalance, getEdReserved } = useBalances()
   const { status: modalStatus, setModalResize } = useOverlay().modal
 
-  const { existentialDeposit } = getChainSpec(network)
-  // Listen to balance updates for entire accounts list.
-  const { getEdReserved, getPoolMembership } = useActiveBalances({
+  // Listen to balance updates for entire accounts list
+  const { getPoolMembership } = useActiveBalances({
     accounts: accounts.map(({ address }) => address),
   })
 
-  // Calculate transferrable balance of an address.
+  // Calculate transferrable balance of an address
   const getTransferrableBalance = (address: MaybeAddress) => {
-    // Get fee reserve from local storage.
+    // Get fee reserve from local storage
     const feeReserve = getFeeReserve(address)
-    // Get amount required for existential deposit.
-    const edReserved = getEdReserved(address, new BigNumber(existentialDeposit))
-    // Gets actual balance numbers.
+    // Get amount required for existential deposit
+    const edReserved = getEdReserved(address)
+    // Gets actual balance numbers
     const {
       balance: { free, frozen },
     } = getAccountBalance(address)
 
-    // Minus reserves and frozen balance from free to get transferrable.
+    // Minus reserves and frozen balance from free to get transferrable
     return BigNumber.max(
       new BigNumber(free).minus(edReserved).minus(feeReserve).minus(frozen),
       0

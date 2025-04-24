@@ -100,18 +100,6 @@ export const useActiveBalances = ({
     return null
   }
 
-  // Gets the amount of balance reserved for existential deposit
-  const getEdReserved = (
-    address: MaybeString,
-    existentialDeposit: BigNumber
-  ): BigNumber => {
-    const { locks, maxLock } = getLocks(address)
-    if (address && locks) {
-      return BigNumber.max(existentialDeposit.minus(maxLock), 0)
-    }
-    return new BigNumber(0)
-  }
-
   // Gets an active balance's nominations
   const getNominations = (address: MaybeString): Targets => {
     if (address) {
@@ -181,7 +169,6 @@ export const useActiveBalances = ({
     getLedger,
     getPayee,
     getPoolMembership,
-    getEdReserved,
     getNominations,
   }
 }

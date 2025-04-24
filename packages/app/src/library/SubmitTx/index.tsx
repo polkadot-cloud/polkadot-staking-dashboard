@@ -4,7 +4,6 @@
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -33,24 +32,22 @@ export const SubmitTx = ({
   transparent,
 }: SubmitTxProps) => {
   const { t } = useTranslation()
-  const { getBondedAccount } = useBonded()
-  const { getChainSpec } = useApi()
-  const { getTxSubmission } = useTxMeta()
   const { network } = useNetwork()
+  const { getTxSubmission } = useTxMeta()
+  const { getBondedAccount } = useBonded()
   const { setModalResize } = useOverlay().modal
   const { getAccountBalance, getEdReserved } = useBalances()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
   const { unit } = getNetworkData(network)
-  const { existentialDeposit } = getChainSpec(network)
   const controller = getBondedAccount(activeAddress)
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
 
-  const edReserved = getEdReserved(from, new BigNumber(existentialDeposit))
+  const edReserved = getEdReserved(from)
   const {
     balance: { free, frozen },
   } = getAccountBalance(from)
