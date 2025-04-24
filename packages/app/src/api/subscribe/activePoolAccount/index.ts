@@ -5,7 +5,6 @@ import { PoolPendingRewards } from 'api/runtimeApi/poolPendingRewards'
 import type { AnyApi } from 'common-types'
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults'
 import { Apis } from 'controllers/Apis'
-import { Identities } from 'controllers/Identities'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import { combineLatest, type Subscription } from 'rxjs'
 import type {
@@ -107,13 +106,14 @@ export class ActivePoolAccount implements Unsubscribable {
     // Only format the active pool if both bonded and reward pools are valid. Otherwise, assume
     // there is no active pool.
     if (bondedPool && rewardPool) {
-      if (Apis.getClient(peopleApiId)) {
-        // Fetch identities for roles and expand `bondedPool` state to store them.
-        bondedPool.roleIdentities = await Identities.fetch(
-          peopleApiId,
-          this.getUniqueRoleAddresses(bondedPool.roles)
-        )
-      }
+      // if (Apis.getClient(peopleApiId)) {
+      // Fetch identities for roles and expand `bondedPool` state to store them.
+      // TODO: Replace with service interface
+      // bondedPool.roleIdentities = await Identities.fetch(
+      //   peopleApiId,
+      //   this.getUniqueRoleAddresses(bondedPool.roles)
+      // )
+      // }
       const bondedPoolFormatted = {
         points: bondedPool.points.toString(),
         memberCounter: bondedPool.member_counter.toString(),

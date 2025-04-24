@@ -7,6 +7,7 @@ import { planckToUnit, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { fromUnixTime } from 'date-fns'
 import type { TFunction } from 'i18next'
+import type { IdentityOf, SuperIdentity, SuperOf } from 'types'
 
 // Return `planckToUnit` as a `BigNumber`.
 export const planckToUnitBn = (val: BigNumber, units: number): BigNumber =>
@@ -88,3 +89,29 @@ export const perbillToPercent = (
   }
   return value.dividedBy('10000000')
 }
+
+// Format identities into records with addresses as keys
+export const formatIdentities = (
+  addresses: string[],
+  identities: IdentityOf[]
+) =>
+  identities.reduce((acc: Record<string, IdentityOf | undefined>, cur, i) => {
+    acc[addresses[i]] = cur
+    return acc
+  }, {})
+
+// Format super identities into records with addresses as keys
+export const formatSuperIdentities = (supers: SuperOf[]) =>
+  supers.reduce((acc: Record<string, SuperIdentity>, cur) => {
+    if (!cur) {
+      return acc
+    }
+    acc[cur.address] = {
+      superOf: {
+        identity: cur.identity,
+        value: cur.value,
+      },
+      value: cur.value?.value || '',
+    }
+    return acc
+  }, {})

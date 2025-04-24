@@ -4,7 +4,7 @@
 import type BigNumber from 'bignumber.js'
 import type { PalletNominationPoolsBondedPoolInner } from 'dedot/chaintypes'
 import type { MaybeAddress } from './accounts'
-import type { Identity, SuperIdentity } from './identity'
+import type { IdentityOf, SuperIdentity } from './identity'
 import type { Nominations } from './nominate'
 
 export type BondedPool = PalletNominationPoolsBondedPoolInner & {
@@ -45,7 +45,7 @@ export interface ActiveBondedPool {
   memberCounter: string
   roles: PoolRoles
   roleIdentities: {
-    identities: Record<string, Identity>
+    identities: Record<string, IdentityOf>
     supers: Record<string, SuperIdentity>
   }
   state: PoolState

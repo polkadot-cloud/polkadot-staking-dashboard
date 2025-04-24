@@ -93,7 +93,11 @@ export class WestendService
       proxies: async (address: string) => await proxies(this.apiRelay, address),
       sessionValidators: async () => await sessionValidators(this.apiRelay),
       superOfMulti: async (addresses) =>
-        await superOfMulti(this.apiPeople, addresses),
+        await superOfMulti(
+          this.apiPeople,
+          addresses,
+          this.apiPeople.consts.system.ss58Prefix
+        ),
       validatorEntries: async () => await validatorEntries(this.apiRelay),
       validatorsMulti: async (addresses) =>
         await validatorsMulti(this.apiRelay, addresses),

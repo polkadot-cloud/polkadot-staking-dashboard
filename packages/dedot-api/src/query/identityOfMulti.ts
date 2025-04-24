@@ -8,7 +8,7 @@ import type { PeopleChain } from '../types'
 export const identityOfMulti = async <T extends PeopleChain>(
   api: DedotClient<T>,
   addresses: string[]
-): Promise<IdentityOf> => {
+): Promise<IdentityOf[]> => {
   const result = (await api.query.identity.identityOf.multi(addresses)).map(
     (item) => {
       // Handle case where chain state is an array of item and hex string

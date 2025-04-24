@@ -10,8 +10,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
-import { Apis } from 'controllers/Apis'
-import { Identities } from 'controllers/Identities'
 import {
   getValidatorRank as getValidatorRankBus,
   getValidatorRanks,
@@ -22,14 +20,16 @@ import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type {
-  ChainId,
-  Identity,
+  IdentityOf,
   SuperIdentity,
-  SystemChainId,
   Validator,
   ValidatorStatus,
 } from 'types'
-import { perbillToPercent } from 'utils'
+import {
+  formatIdentities,
+  formatSuperIdentities,
+  perbillToPercent,
+} from 'utils'
 import type {
   ValidatorAddresses,
   ValidatorListEntry,
@@ -76,7 +76,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store validator identity data
   const [validatorIdentities, setValidatorIdentities] = useState<
-    Record<string, Identity>
+    Record<string, IdentityOf>
   >({})
 
   // Store validator super identity data
@@ -184,17 +184,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     // NOTE: validators are shuffled before committed to state
     setValidators({ status: 'synced', validators: shuffle(validatorEntries) })
 
-    const peopleApiId: ChainId = `people-${network}`
-    const peopleApiClient = Apis.getClient(`people-${network}` as SystemChainId)
-    if (peopleApiClient) {
-      const addresses = validatorEntries.map(({ address }) => address)
-      const { identities, supers } = await Identities.fetch(
-        peopleApiId,
-        addresses
-      )
-      setValidatorIdentities(identities)
-      setValidatorSupers(supers)
-    }
+    const addresses = validatorEntries.map(({ address }) => address)
+
+    const [identities, supers] = await Promise.all([
+      serviceApi.query.identityOfMulti(addresses),
+      serviceApi.query.superOfMulti(addresses),
+    ])
+    setValidatorIdentities({ ...formatIdentities(addresses, identities) })
+    setValidatorSupers({ ...formatSuperIdentities(supers) })
   }
 
   // Subscribe to active session validators

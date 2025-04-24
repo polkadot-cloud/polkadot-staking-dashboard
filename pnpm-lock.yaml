@@ -585,6 +585,10 @@ importers:
       i18next:
         specifier: ^24.2.3
         version: 24.2.3(typescript@5.8.3)
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
 packages:
 

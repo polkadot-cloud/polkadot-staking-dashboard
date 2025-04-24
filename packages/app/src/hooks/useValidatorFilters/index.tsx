@@ -207,8 +207,9 @@ export const useValidatorFilters = () => {
 
     const filteredList: AnyFilter = []
     for (const validator of list) {
-      const identity = validatorIdentities[validator.address] ?? ''
-      const identityRaw = identity?.info?.display?.value?.asText() ?? ''
+      const identity = validatorIdentities[validator.address]
+      const identityRaw = identity ? identity?.info?.display?.value : ''
+
       const identitySearch = (identityRaw || '').toLowerCase()
 
       const superIdentity = validatorSupers[validator.address] ?? null
