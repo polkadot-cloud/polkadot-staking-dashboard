@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PoolPendingRewards } from 'api/runtimeApi/poolPendingRewards'
 import type { AnyApi } from 'common-types'
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults'
 import { Apis } from 'controllers/Apis'
@@ -122,16 +121,12 @@ export class ActivePoolAccount implements Unsubscribable {
         totalCommissionPending: rewardPool.total_commission_pending.toString(),
         totalRewardsClaimed: rewardPool.total_rewards_claimed.toString(),
       }
-      const pendingRewards =
-        (await new PoolPendingRewards(this.#network, this.address).fetch()) ||
-        0n
       const newPool = {
         id: Number(this.pool.id),
         addresses: this.pool.addresses,
         bondedPool: bondedPoolFormatted,
         rewardPool: rewardPoolFormatted,
         rewardAccountBalance,
-        pendingRewards,
       }
 
       this.activePool = newPool

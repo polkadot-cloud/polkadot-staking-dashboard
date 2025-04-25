@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -35,6 +36,7 @@ export const Unbond = () => {
   const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
+  const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { isDepositor, activePool } = useActivePool()
@@ -55,7 +57,7 @@ export const Unbond = () => {
   const { bondFor } = options
   const { bondDuration } = getConsts(network)
   const { unit, units } = getNetworkData(network)
-  const pendingRewards = activePool?.pendingRewards || 0n
+  const pendingRewards = getPendingPoolRewards(activeAddress)
   const controller = getBondedAccount(activeAddress)
 
   const bondDurationFormatted = timeleftAsString(

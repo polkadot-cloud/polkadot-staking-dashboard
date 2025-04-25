@@ -42,4 +42,5 @@ export interface PoolMembership {
   lastRecordedRewardCounter: bigint
   unbondingEras: [number, bigint][]
   claimPermission: PalletNominationPoolsClaimPermission
+  pendingRewards: bigint
 }

@@ -37,18 +37,18 @@ export const LeavePool = ({
   const { getConsts } = useApi()
   const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { getStakingLedger } = useBalances()
   const { erasToSeconds } = useErasToTimeLeft()
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
+  const { getStakingLedger, getPendingPoolRewards } = useBalances()
 
   const { unit, units } = getNetworkData(network)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = getConsts(network)
-  const pendingRewards = activePool?.pendingRewards || 0n
+  const pendingRewards = getPendingPoolRewards(activeAddress)
   const { poolMembership } = getStakingLedger(activeAddress)
   const bondDurationFormatted = timeleftAsString(
     t,

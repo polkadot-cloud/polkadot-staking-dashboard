@@ -7,8 +7,8 @@ import { StakingBondExtra } from 'api/tx/stakingBondExtra'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -30,8 +30,8 @@ export const Bond = () => {
     setModalResize,
   } = useOverlay().modal
   const { network } = useNetwork()
-  const { activePool } = useActivePool()
   const { activeAddress } = useActiveAccounts()
+  const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
   const { feeReserve, getTransferOptions } = useTransferOptions()
   const { unit, units } = getNetworkData(network)
@@ -50,9 +50,7 @@ export const Bond = () => {
   )
 
   const largestTxFee = useBondGreatestFee({ bondFor })
-
-  // Format unclaimed pool rewards.
-  const pendingRewards = activePool?.pendingRewards || 0
+  const pendingRewards = getPendingPoolRewards(activeAddress)
   const pendingRewardsUnit = planckToUnit(pendingRewards, units)
 
   // local bond value.

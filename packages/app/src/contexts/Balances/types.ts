@@ -9,6 +9,7 @@ export interface BalancesContextInterface {
   getStakingLedger: (address: MaybeAddress) => StakingLedger
   getNominations: (address: MaybeAddress) => string[]
   getEdReserved: (address: MaybeAddress) => bigint
+  getPendingPoolRewards: (address: MaybeAddress) => bigint
 }
 
 export interface UnlockChunk {

@@ -52,6 +52,19 @@ export class StakingLedgerQuery<T extends StakingChain> {
         },
       ],
       async ([ledger, payee, nominators, poolMember, claimPermission]) => {
+        let balance = 0n
+        let pendingRewards = 0n
+
+        if (poolMember) {
+          ;[balance, pendingRewards] = await Promise.all([
+            this.api.call.nominationPoolsApi.pointsToBalance(
+              poolMember.poolId,
+              poolMember.points
+            ),
+            this.api.call.nominationPoolsApi.pendingRewards(this.address),
+          ])
+        }
+
         const stakingLedger: StakingLedger = {
           ledger:
             ledger === undefined
@@ -89,15 +102,12 @@ export class StakingLedgerQuery<T extends StakingChain> {
                   address: this.address,
                   poolId: poolMember.poolId,
                   points: poolMember.points,
-                  balance:
-                    await this.api.call.nominationPoolsApi.pointsToBalance(
-                      poolMember.poolId,
-                      poolMember.points
-                    ),
+                  balance,
                   lastRecordedRewardCounter:
                     poolMember.lastRecordedRewardCounter,
                   unbondingEras: poolMember.unbondingEras,
                   claimPermission,
+                  pendingRewards,
                 },
         }
         setStakingLedger(this.address, stakingLedger)

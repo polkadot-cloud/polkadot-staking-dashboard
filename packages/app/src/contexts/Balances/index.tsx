@@ -65,6 +65,15 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     return (nominators?.targets || []).map((target) => target.address(ss58))
   }
 
+  // Get an account's pending pool rewards from its staking ledger
+  const getPendingPoolRewards = (address: MaybeAddress) => {
+    if (!address) {
+      return 0n
+    }
+    const { poolMembership } = getStakingLedger(address)
+    return poolMembership?.pendingRewards || 0n
+  }
+
   // Subscribe to global bus account balance events
   useEffect(() => {
     const unsubBalances = accountBalances$.subscribe((result) => {
@@ -86,6 +95,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getStakingLedger,
         getNominations,
         getEdReserved,
+        getPendingPoolRewards,
       }}
     >
       {children}

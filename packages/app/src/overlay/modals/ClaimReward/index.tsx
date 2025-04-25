@@ -6,6 +6,7 @@ import { PoolBondExtra } from 'api/tx/poolBondExtra'
 import { PoolClaimPayout } from 'api/tx/poolClaimPayout'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -27,11 +28,13 @@ export const ClaimReward = () => {
   } = useOverlay().modal
   const { network } = useNetwork()
   const { activePool } = useActivePool()
+  const { getPendingPoolRewards } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
-  const { unit, units } = getNetworkData(network)
+
   const { claimType } = options
-  const pendingRewards = activePool?.pendingRewards || 0n
+  const { unit, units } = getNetworkData(network)
+  const pendingRewards = getPendingPoolRewards(activeAddress)
 
   // ensure selected payout is valid
   useEffect(() => {

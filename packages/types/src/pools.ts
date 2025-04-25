@@ -37,7 +37,6 @@ export interface ActivePool {
   bondedPool: ActiveBondedPool
   rewardPool: RewardPool
   rewardAccountBalance: bigint
-  pendingRewards: bigint
 }
 
 export interface ActiveBondedPool {
