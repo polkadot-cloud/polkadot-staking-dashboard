@@ -98,48 +98,6 @@ export class WestendService
   subActivePoolIds: Subscription
   subActivePools: ActivePools<WestendApi> = {}
 
-  interface: ServiceInterface = {
-    query: {
-      erasValidatorRewardMulti: async (eras) =>
-        await erasValidatorRewardMulti(this.apiRelay, eras),
-      bondedPool: async (poolId) => await bondedPool(this.apiRelay, poolId),
-      bondedPoolEntries: async () => await bondedPoolEntries(this.apiRelay),
-      erasStakersOverviewEntries: async (era) =>
-        await erasStakersOverviewEntries(this.apiRelay, era),
-      erasStakersPagedEntries: async (era, validator) =>
-        await erasStakersPagedEntries(this.apiRelay, era, validator),
-      identityOfMulti: async (addresses) =>
-        await identityOfMulti(this.apiPeople, addresses),
-      nominatorsMulti: async (addresses) =>
-        await nominatorsMulti(this.apiRelay, addresses),
-      paraSessionAccounts: async (session: number) =>
-        await paraSessionAccounts(this.apiRelay, session),
-      poolMembersMulti: async (addresses) =>
-        await poolMembersMulti(this.apiRelay, addresses),
-      poolMetadataMulti: async (ids) =>
-        await poolMetadataMulti(this.apiRelay, ids),
-      proxies: async (address: string) => await proxies(this.apiRelay, address),
-      sessionValidators: async () => await sessionValidators(this.apiRelay),
-      superOfMulti: async (addresses) =>
-        await superOfMulti(
-          this.apiPeople,
-          addresses,
-          this.apiPeople.consts.system.ss58Prefix
-        ),
-      validatorEntries: async () => await validatorEntries(this.apiRelay),
-      validatorsMulti: async (addresses) =>
-        await validatorsMulti(this.apiRelay, addresses),
-    },
-    runtimeApi: {
-      balanceToPoints: async (poolId, amount) =>
-        await balanceToPoints(this.apiRelay, poolId, amount),
-      pendingRewards: async (address) =>
-        await pendingRewards(this.apiRelay, address),
-      pointsToBalance: async (poolId, points) =>
-        await pointsToBalance(this.apiRelay, poolId, points),
-    },
-  }
-
   constructor(
     public networkConfig: NetworkConfig,
     public ids: [NetworkId, SystemChainId],
@@ -278,5 +236,47 @@ export class WestendService
     this.fastUnstakeQueue?.unsubscribe()
 
     await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
+  }
+
+  interface: ServiceInterface = {
+    query: {
+      erasValidatorRewardMulti: async (eras) =>
+        await erasValidatorRewardMulti(this.apiRelay, eras),
+      bondedPool: async (poolId) => await bondedPool(this.apiRelay, poolId),
+      bondedPoolEntries: async () => await bondedPoolEntries(this.apiRelay),
+      erasStakersOverviewEntries: async (era) =>
+        await erasStakersOverviewEntries(this.apiRelay, era),
+      erasStakersPagedEntries: async (era, validator) =>
+        await erasStakersPagedEntries(this.apiRelay, era, validator),
+      identityOfMulti: async (addresses) =>
+        await identityOfMulti(this.apiPeople, addresses),
+      nominatorsMulti: async (addresses) =>
+        await nominatorsMulti(this.apiRelay, addresses),
+      paraSessionAccounts: async (session: number) =>
+        await paraSessionAccounts(this.apiRelay, session),
+      poolMembersMulti: async (addresses) =>
+        await poolMembersMulti(this.apiRelay, addresses),
+      poolMetadataMulti: async (ids) =>
+        await poolMetadataMulti(this.apiRelay, ids),
+      proxies: async (address: string) => await proxies(this.apiRelay, address),
+      sessionValidators: async () => await sessionValidators(this.apiRelay),
+      superOfMulti: async (addresses) =>
+        await superOfMulti(
+          this.apiPeople,
+          addresses,
+          this.apiPeople.consts.system.ss58Prefix
+        ),
+      validatorEntries: async () => await validatorEntries(this.apiRelay),
+      validatorsMulti: async (addresses) =>
+        await validatorsMulti(this.apiRelay, addresses),
+    },
+    runtimeApi: {
+      balanceToPoints: async (poolId, amount) =>
+        await balanceToPoints(this.apiRelay, poolId, amount),
+      pendingRewards: async (address) =>
+        await pendingRewards(this.apiRelay, address),
+      pointsToBalance: async (poolId, points) =>
+        await pointsToBalance(this.apiRelay, poolId, points),
+    },
   }
 }
