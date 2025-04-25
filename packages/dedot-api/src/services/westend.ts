@@ -20,24 +20,8 @@ import type {
 } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
-import { bondedPool } from '../query/bondedPool'
-import { bondedPoolEntries } from '../query/bondedPoolEntries'
-import { erasStakersOverviewEntries } from '../query/erasStakersOverviewEntries'
-import { erasStakersPagedEntries } from '../query/erasStakersPagedEntries'
-import { erasValidatorRewardMulti } from '../query/erasValidatorRewardMulti'
-import { identityOfMulti } from '../query/identityOfMulti'
-import { nominatorsMulti } from '../query/nominatorsMulti'
-import { paraSessionAccounts } from '../query/paraSessionAccounts'
-import { poolMembersMulti } from '../query/poolMembersMulti'
-import { poolMetadataMulti } from '../query/poolMetadataMulti'
-import { proxies } from '../query/proxies'
-import { sessionValidators } from '../query/sessionValidators'
-import { superOfMulti } from '../query/superOfMulti'
-import { validatorEntries } from '../query/validatorEntries'
-import { validatorsMulti } from '../query/validatorsMulti'
-import { balanceToPoints } from '../runtimeApi/balanceToPoints'
-import { pendingRewards } from '../runtimeApi/pendingRewards'
-import { pointsToBalance } from '../runtimeApi/pointsToBalance'
+import { query } from '../query'
+import { runtimeApi } from '../runtimeApi'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { AccountBalanceQuery } from '../subscribe/accountBalance'
@@ -241,42 +225,45 @@ export class WestendService
   interface: ServiceInterface = {
     query: {
       erasValidatorRewardMulti: async (eras) =>
-        await erasValidatorRewardMulti(this.apiRelay, eras),
-      bondedPool: async (poolId) => await bondedPool(this.apiRelay, poolId),
-      bondedPoolEntries: async () => await bondedPoolEntries(this.apiRelay),
+        await query.erasValidatorRewardMulti(this.apiRelay, eras),
+      bondedPool: async (poolId) =>
+        await query.bondedPool(this.apiRelay, poolId),
+      bondedPoolEntries: async () =>
+        await query.bondedPoolEntries(this.apiRelay),
       erasStakersOverviewEntries: async (era) =>
-        await erasStakersOverviewEntries(this.apiRelay, era),
+        await query.erasStakersOverviewEntries(this.apiRelay, era),
       erasStakersPagedEntries: async (era, validator) =>
-        await erasStakersPagedEntries(this.apiRelay, era, validator),
+        await query.erasStakersPagedEntries(this.apiRelay, era, validator),
       identityOfMulti: async (addresses) =>
-        await identityOfMulti(this.apiPeople, addresses),
+        await query.identityOfMulti(this.apiPeople, addresses),
       nominatorsMulti: async (addresses) =>
-        await nominatorsMulti(this.apiRelay, addresses),
-      paraSessionAccounts: async (session: number) =>
-        await paraSessionAccounts(this.apiRelay, session),
+        await query.nominatorsMulti(this.apiRelay, addresses),
+      paraSessionAccounts: async (session) =>
+        await query.paraSessionAccounts(this.apiRelay, session),
       poolMembersMulti: async (addresses) =>
-        await poolMembersMulti(this.apiRelay, addresses),
+        await query.poolMembersMulti(this.apiRelay, addresses),
       poolMetadataMulti: async (ids) =>
-        await poolMetadataMulti(this.apiRelay, ids),
-      proxies: async (address: string) => await proxies(this.apiRelay, address),
-      sessionValidators: async () => await sessionValidators(this.apiRelay),
+        await query.poolMetadataMulti(this.apiRelay, ids),
+      proxies: async (address) => await query.proxies(this.apiRelay, address),
+      sessionValidators: async () =>
+        await query.sessionValidators(this.apiRelay),
       superOfMulti: async (addresses) =>
-        await superOfMulti(
+        await query.superOfMulti(
           this.apiPeople,
           addresses,
           this.apiPeople.consts.system.ss58Prefix
         ),
-      validatorEntries: async () => await validatorEntries(this.apiRelay),
+      validatorEntries: async () => await query.validatorEntries(this.apiRelay),
       validatorsMulti: async (addresses) =>
-        await validatorsMulti(this.apiRelay, addresses),
+        await query.validatorsMulti(this.apiRelay, addresses),
     },
     runtimeApi: {
       balanceToPoints: async (poolId, amount) =>
-        await balanceToPoints(this.apiRelay, poolId, amount),
+        await runtimeApi.balanceToPoints(this.apiRelay, poolId, amount),
       pendingRewards: async (address) =>
-        await pendingRewards(this.apiRelay, address),
+        await runtimeApi.pendingRewards(this.apiRelay, address),
       pointsToBalance: async (poolId, points) =>
-        await pointsToBalance(this.apiRelay, poolId, points),
+        await runtimeApi.pointsToBalance(this.apiRelay, poolId, points),
     },
   }
 }
