@@ -33,13 +33,13 @@ export const PoolMemberBonded = ({ member }: { member: FetchedPoolMember }) => {
 
   return (
     <>
-      bonded.isGreaterThan(0) && (
-      <ValidatorStatusWrapper $status={status}>
-        <h5>
-          {t('bonded')}: {bonded.decimalPlaces(3).toFormat()} {unit}
-        </h5>
-      </ValidatorStatusWrapper>
-      )
+      {bonded.isGreaterThan(0) && (
+        <ValidatorStatusWrapper $status={status}>
+          <h5>
+            {t('bonded')}: {bonded.decimalPlaces(3).toFormat()} {unit}
+          </h5>
+        </ValidatorStatusWrapper>
+      )}
       {totalUnbonding.isGreaterThan(0) && (
         <ValidatorStatusWrapper $status="inactive">
           <h5>
