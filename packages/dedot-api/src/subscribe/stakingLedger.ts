@@ -50,8 +50,19 @@ export class StakingLedgerQuery<T extends StakingChain> {
           fn: this.api.query.nominationPools.claimPermissions,
           args: [this.address],
         },
+        {
+          fn: this.api.query.staking.bonded,
+          args: [this.address],
+        },
       ],
-      async ([ledger, payee, nominators, poolMember, claimPermission]) => {
+      async ([
+        ledger,
+        payee,
+        nominators,
+        poolMember,
+        claimPermission,
+        bonded,
+      ]) => {
         let balance = 0n
         let pendingRewards = 0n
 
@@ -109,6 +120,9 @@ export class StakingLedgerQuery<T extends StakingChain> {
                   claimPermission,
                   pendingRewards,
                 },
+          controllerUnmigrated:
+            bonded !== undefined &&
+            bonded.address(this.api.consts.system.ss58Prefix) !== this.address,
         }
         setStakingLedger(this.address, stakingLedger)
 

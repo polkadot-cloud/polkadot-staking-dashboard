@@ -4,8 +4,7 @@
 import type { ExtensionInjected } from '@w3ux/types'
 import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
-import type { PapiReadyEvent, TxSubmissionItem } from 'api/types'
-import type { BondedAccount } from 'contexts/Bonded/types'
+import type { TxSubmissionItem } from 'api/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
@@ -21,11 +20,10 @@ declare global {
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>
-    'api-ready': CustomEvent<PapiReadyEvent>
+    'api-ready': CustomEvent<{ chainType: string }>
     'online-status': CustomEvent<OnlineStatusEvent>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
     'new-account-proxies': CustomEvent<AccountProxiesEvent>
-    'new-bonded-account': CustomEvent<BondedAccount>
     'new-sync-status': CustomEvent<SyncEvent>
     'new-external-account': CustomEvent<{ address: string }>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>

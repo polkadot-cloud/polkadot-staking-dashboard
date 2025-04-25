@@ -5,7 +5,6 @@ import { PoolChill } from 'api/tx/poolChill'
 import { StakingChill } from 'api/tx/stakingChill'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -20,7 +19,6 @@ import { Close, useOverlay } from 'ui-overlay'
 export const StopNominations = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
-  const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
@@ -34,8 +32,6 @@ export const StopNominations = () => {
   const { bondFor } = options
   const isPool = bondFor === 'pool'
   const isStaking = bondFor === 'nominator'
-  const controller = getBondedAccount(activeAddress)
-  const signingAccount = isPool ? activeAddress : controller
 
   const nominations =
     isPool === true
@@ -71,7 +67,7 @@ export const StopNominations = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: signingAccount,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -106,7 +102,11 @@ export const StopNominations = () => {
         ) : null}
         <p>{t('changeNomination')}</p>
       </Padding>
-      <SubmitTx fromController={isStaking} valid={valid} {...submitExtrinsic} />
+      <SubmitTx
+        requiresMigratedController={isStaking}
+        valid={valid}
+        {...submitExtrinsic}
+      />
     </>
   )
 }

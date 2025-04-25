@@ -9,7 +9,6 @@ import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
@@ -33,7 +32,6 @@ export const Unbond = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
-  const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getPendingPoolRewards } = useBalances()
@@ -58,7 +56,6 @@ export const Unbond = () => {
   const { bondDuration } = getConsts(network)
   const { unit, units } = getNetworkData(network)
   const pendingRewards = getPendingPoolRewards(activeAddress)
-  const controller = getBondedAccount(activeAddress)
 
   const bondDurationFormatted = timeleftAsString(
     t,
@@ -130,11 +127,9 @@ export const Unbond = () => {
     return tx
   }
 
-  const signingAccount = isPooling ? activeAddress : controller
-
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: signingAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -244,7 +239,7 @@ export const Unbond = () => {
       </Padding>
       <SubmitTx
         noMargin
-        fromController={isStaking}
+        requiresMigratedController={isStaking}
         valid={bondValid}
         {...submitExtrinsic}
       />

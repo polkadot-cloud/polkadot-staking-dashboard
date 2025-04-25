@@ -8,4 +8,5 @@ export const defaultStakingLedger: StakingLedger = {
   payee: undefined,
   nominators: undefined,
   poolMembership: undefined,
+  controllerUnmigrated: false,
 }

@@ -15,7 +15,6 @@ import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useHelp } from 'contexts/Help'
@@ -42,7 +41,6 @@ export const ManageBond = () => {
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
-  const { getBondedAccount } = useBonded()
   const { openModal } = useOverlay().modal
   const { getStakingLedger } = useBalances()
   const { isFastUnstaking } = useUnstaking()
@@ -56,7 +54,6 @@ export const ManageBond = () => {
   const { ledger } = getStakingLedger(activeAddress)
   const { units } = getNetworkData(network)
   const Token = getChainIcons(network).token
-  const controller = getBondedAccount(activeAddress)
   const active = new BigNumber(ledger?.active || 0n)
   const allTransferOptions = getTransferOptions(activeAddress)
 
@@ -72,7 +69,7 @@ export const ManageBond = () => {
     !exposed ? (
       <ButtonPrimary
         size="md"
-        disabled={isReadOnlyAccount(controller)}
+        disabled={isReadOnlyAccount(activeAddress)}
         text={getFastUnstakeText()}
         iconLeft={faBolt}
         onClick={() => {
@@ -84,7 +81,9 @@ export const ManageBond = () => {
         size="md"
         text={t('unstake')}
         iconLeft={faSignOutAlt}
-        disabled={!isReady || isReadOnlyAccount(controller) || !activeAddress}
+        disabled={
+          !isReady || isReadOnlyAccount(activeAddress) || !activeAddress
+        }
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
       />
     )

@@ -5,7 +5,6 @@ import { PoolNominate } from 'api/tx/poolNominate'
 import { StakingNominate } from 'api/tx/stakingNominate'
 import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBonded } from 'contexts/Bonded'
 import { useHelp } from 'contexts/Help'
 import {
   ManageNominationsProvider,
@@ -41,16 +40,13 @@ export const Inner = () => {
   const { openHelp } = useHelp()
   const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { updatePoolNominations } = useBondedPools()
   const { defaultNominations, nominations, setNominations, method } =
     useManageNominations()
 
-  const controller = getBondedAccount(activeAddress)
   const bondFor = options?.bondFor || 'nominator'
   const isPool = bondFor === 'pool'
-  const signingAccount = isPool ? activeAddress : controller
 
   // Whether to display revert changes button
   const allowRevert = !!method
@@ -100,7 +96,7 @@ export const Inner = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: signingAccount,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
       setCanvasStatus('closing')
@@ -174,7 +170,7 @@ export const Inner = () => {
           <SubmitTx
             noMargin
             transparent
-            fromController={!isPool}
+            requiresMigratedController={!isPool}
             valid={valid}
             displayFor="modal"
             {...submitExtrinsic}

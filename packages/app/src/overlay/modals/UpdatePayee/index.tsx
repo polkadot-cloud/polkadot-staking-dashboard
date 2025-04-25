@@ -6,7 +6,6 @@ import { StakingSetPayee } from 'api/tx/stakingSetPayee'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
@@ -27,7 +26,6 @@ import { useOverlay } from 'ui-overlay'
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
-  const { getBondedAccount } = useBonded()
   const { getStakingLedger } = useBalances()
   const { getPayeeItems } = usePayeeConfig()
   const { activeAddress } = useActiveAccounts()
@@ -35,7 +33,6 @@ export const UpdatePayee = () => {
   const { getSignerWarnings } = useSignerWarnings()
 
   const { ss58 } = getNetworkData(network)
-  const controller = getBondedAccount(activeAddress)
   const payee = getStakingLedger(activeAddress).payee
 
   const DefaultSelected: PayeeConfig = {
@@ -94,7 +91,7 @@ export const UpdatePayee = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: controller,
+    from: activeAddress,
     shouldSubmit: isComplete(),
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -162,7 +159,11 @@ export const UpdatePayee = () => {
           ))}
         </SelectItems>
       </Padding>
-      <SubmitTx fromController valid={isComplete()} {...submitExtrinsic} />
+      <SubmitTx
+        requiresMigratedController
+        valid={isComplete()}
+        {...submitExtrinsic}
+      />
     </>
   )
 }

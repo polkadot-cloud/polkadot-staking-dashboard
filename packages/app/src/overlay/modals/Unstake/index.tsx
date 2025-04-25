@@ -8,7 +8,6 @@ import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
@@ -31,7 +30,6 @@ export const Unstake = () => {
   const { network } = useNetwork()
   const { getConsts } = useApi()
   const { newBatchCall } = useBatchCall()
-  const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
@@ -41,7 +39,6 @@ export const Unstake = () => {
 
   const { bondDuration } = getConsts(network)
   const { unit, units } = getNetworkData(network)
-  const controller = getBondedAccount(activeAddress)
   const nominations = getNominations(activeAddress)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active } = allTransferOptions.nominate
@@ -89,12 +86,12 @@ export const Unstake = () => {
       new StakingChill(network).tx(),
       new StakingUnbond(network, bondToSubmit).tx(),
     ]
-    return newBatchCall(txs, controller)
+    return newBatchCall(txs, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: controller,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -139,7 +136,11 @@ export const Unstake = () => {
           deps={[bondDuration]}
         />
       </Padding>
-      <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
+      <SubmitTx
+        requiresMigratedController
+        valid={bondValid}
+        {...submitExtrinsic}
+      />
     </>
   )
 }

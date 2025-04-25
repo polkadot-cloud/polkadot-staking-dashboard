@@ -59,7 +59,7 @@
     "connectLedgerToContinue": "Conecta tu dispositivo Ledger para continuar.",
     "connected": "Conectado",
     "continue": "Continuar",
-    "controllerImported": "Debes tener tu cuenta controladora importada para firmar esta transacción.",
+    "controllerNotMigrated": "La cuenta Ccontroller no se ha migrado.",
     "currencies": {
       "ARS": { "name": "Peso argentino" },
       "AUD": { "name": "Dólar australiano" },

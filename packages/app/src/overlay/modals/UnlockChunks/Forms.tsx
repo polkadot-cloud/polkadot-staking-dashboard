@@ -10,7 +10,6 @@ import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -52,7 +51,6 @@ export const Forms = forwardRef(
       setModalStatus,
       config: { options },
     } = useOverlay().modal
-    const { getBondedAccount } = useBonded()
     const { getStakingLedger } = useBalances()
     const { getSignerWarnings } = useSignerWarnings()
     const { removeFavorite: removeFavoritePool } = useFavoritePools()
@@ -61,7 +59,6 @@ export const Forms = forwardRef(
     const { poolMembership } = getStakingLedger(activeAddress)
     const { bondFor, poolClosure } = options || {}
     const { historyDepth } = getConsts(network)
-    const controller = getBondedAccount(activeAddress)
 
     const isStaking = bondFor === 'nominator'
     const isPooling = bondFor === 'pool'
@@ -91,10 +88,10 @@ export const Forms = forwardRef(
       }
       return null
     }
-    const signingAccount = isStaking ? controller : activeAddress
+
     const submitExtrinsic = useSubmitExtrinsic({
       tx: getTx(),
-      from: signingAccount,
+      from: activeAddress,
       shouldSubmit: valid,
       callbackSubmit: () => {
         setModalStatus('closing')
@@ -172,7 +169,7 @@ export const Forms = forwardRef(
             </div>
           </Padding>
           <SubmitTx
-            fromController={isStaking}
+            requiresMigratedController={isStaking}
             valid={valid}
             buttons={[
               <ButtonSubmitInvert

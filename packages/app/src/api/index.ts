@@ -7,14 +7,13 @@ import type { PolkadotClient } from 'polkadot-api'
 import { createClient } from 'polkadot-api'
 import { getWsProvider } from 'polkadot-api/ws-provider/web'
 import type { ChainId } from 'types'
-import type { ApiChainType, PapiReadyEvent } from './types'
 
 export class Api {
   // The network name associated with this Api instance
   network: ChainId
 
   // The type of chain being connected to
-  #chainType: ApiChainType
+  #chainType: 'relay' | 'system'
 
   // API client.
   #apiClient: PolkadotClient
@@ -30,7 +29,7 @@ export class Api {
     return this.#apiClient.getUnsafeApi()
   }
 
-  constructor(network: ChainId, chainType: ApiChainType) {
+  constructor(network: ChainId, chainType: 'relay' | 'system') {
     this.network = network
     this.#chainType = chainType
   }
@@ -45,7 +44,7 @@ export class Api {
   async connect() {
     try {
       this.initWsProvider()
-      const detail: PapiReadyEvent = {
+      const detail: { chainType: string } = {
         chainType: this.#chainType,
       }
       document.dispatchEvent(new CustomEvent('api-ready', { detail }))

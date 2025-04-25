@@ -56,7 +56,7 @@
     "connectLedgerToContinue": "连接您的Ledger 设备继续",
     "connected": "己连接",
     "continue": "继续",
-    "controllerImported": "您必须导入您的Controller帐户才能签署此交易",
+    "controllerNotMigrated": "Ccontroller 帐户尚未迁移.",
     "currencies": {
       "ARS": { "name": "阿根廷比索" },
       "AUD": { "name": "澳大利亚元" },

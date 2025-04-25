@@ -8,7 +8,6 @@ import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBonded } from 'contexts/Bonded'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
@@ -33,7 +32,6 @@ export const ManageFastUnstake = () => {
   } = useApi()
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
-  const { getBondedAccount } = useBonded()
   const { isFastUnstaking } = useUnstaking()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
@@ -43,7 +41,6 @@ export const ManageFastUnstake = () => {
     useFastUnstake()
 
   const { unit, units } = getNetworkData(network)
-  const controller = getBondedAccount(activeAddress)
   const { bondDuration, fastUnstakeDeposit } = getConsts(network)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { nominate, transferrableBalance } = allTransferOptions
@@ -94,7 +91,7 @@ export const ManageFastUnstake = () => {
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: controller,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackInBlock: () => {
       setModalStatus('closing')
@@ -198,7 +195,7 @@ export const ManageFastUnstake = () => {
       </Padding>
       {!exposed ? (
         <SubmitTx
-          fromController
+          requiresMigratedController
           valid={valid}
           submitText={
             submitted

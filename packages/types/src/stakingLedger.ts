@@ -12,6 +12,7 @@ export interface StakingLedger {
   payee: Payee | undefined
   nominators: Nominators | undefined
   poolMembership: PoolMembership | undefined
+  controllerUnmigrated: boolean
 }
 
 interface Ledger {

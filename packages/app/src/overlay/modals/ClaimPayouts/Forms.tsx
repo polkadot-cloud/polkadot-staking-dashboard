@@ -155,7 +155,6 @@ export const Forms = forwardRef(
           </Padding>
           <SubmitTx
             onResize={onResize}
-            fromController={false}
             valid={valid}
             buttons={[
               <ButtonSubmitInvert

@@ -6,7 +6,6 @@ import { setStateWithRef } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import type {
   EraStakers,
@@ -16,11 +15,10 @@ import type {
 import { Syncs } from 'controllers/Syncs'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { ExternalAccount, MaybeAddress, NominationStatus } from 'types'
+import type { MaybeAddress, NominationStatus } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
-import { useBonded } from '../Bonded'
 import { defaultEraStakers } from './defaults'
 import { getLocalEraExposures, setLocalEraExposures } from './Utils'
 
@@ -31,10 +29,8 @@ export const [StakingContext, useStaking] =
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { getStakingLedger, getNominations } = useBalances()
-  const { accounts: connectAccounts } = useImportedAccounts()
   const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
   const { units } = getNetworkData(network)
   const { ss58 } = getNetworkData(network)
@@ -163,50 +159,12 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     return statuses
   }
 
-  // Helper function to determine whether the controller account is the same as the stash account
-  const addressDifferentToStash = (address: MaybeAddress) => {
-    // Check if controller is imported
-    if (!connectAccounts.find((acc) => acc.address === address)) {
-      return false
-    }
-    return address !== activeAddress && activeAddress !== null
-  }
-
-  // Helper function to determine whether the controller account has been imported
-  const getControllerNotImported = (address: MaybeAddress) => {
-    if (address === null || !activeAddress) {
-      return false
-    }
-    // Check if controller is imported
-    const exists = connectAccounts.find((a) => a.address === address)
-    if (exists === undefined) {
-      return true
-    }
-    // Controller account exists. If it is a read-only account, then controller is imported
-    if (Object.prototype.hasOwnProperty.call(exists, 'addedBy')) {
-      if ((exists as ExternalAccount).addedBy === 'user') {
-        return false
-      }
-    }
-    // if the controller is a Ledger account, then it can act as a signer
-    if (exists.source === 'ledger') {
-      return false
-    }
-    // if a `signer` does not exist on the account, then controller is not imported
-    return !Object.prototype.hasOwnProperty.call(exists, 'signer')
-  }
-
-  // Helper function to determine whether the active account
-  const hasController = () => getBondedAccount(activeAddress) !== null
-
   // Helper function to determine whether the active account is bonding, or is yet to start
   const isBonding = () =>
-    hasController() &&
     (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
 
   // Helper function to determine whether the active account
   const isUnlocking = () =>
-    hasController() &&
     (getStakingLedger(activeAddress).ledger?.unlocking || []).length
 
   // Helper function to determine whether the active account is nominating, or is yet to start
@@ -214,8 +172,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Helper function to determine whether the active account is nominating, or is yet to start
   const inSetup = () =>
-    !activeAddress ||
-    (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
+    !activeAddress || (!isBonding() && !isNominating() && !isUnlocking())
 
   // Fetch eras stakers from storage
   const getPagedErasStakers = async (era: string) => {
@@ -288,8 +245,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       value={{
         fetchEraStakers,
         getNominationsStatusFromTargets,
-        getControllerNotImported,
-        addressDifferentToStash,
         isBonding,
         isNominating,
         inSetup,

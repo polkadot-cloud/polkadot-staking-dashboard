@@ -4,20 +4,22 @@
 import { UnsupportedIfUniqueController } from 'consts/proxies'
 import { isSupportedProxyCall } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBonded } from 'contexts/Bonded'
+import { useBalances } from 'contexts/Balances'
 import { useProxies } from 'contexts/Proxies'
 import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types'
 import type { AnyJson, MaybeAddress } from 'types'
 
 export const useProxySupported = () => {
-  const { getBondedAccount } = useBonded()
   const { getProxyDelegate } = useProxies()
   const { activeProxy } = useActiveAccounts()
+  const { getStakingLedger } = useBalances()
 
   // If call is from controller, & controller is different from stash, then proxy is not
   // supported.
-  const controllerNotSupported = (c: string, f: MaybeAddress) =>
-    UnsupportedIfUniqueController.includes(c) && getBondedAccount(f) !== f
+  const unmigratedController = (c: string, f: MaybeAddress) => {
+    const { controllerUnmigrated } = getStakingLedger(f)
+    return UnsupportedIfUniqueController.includes(c) && controllerUnmigrated
+  }
 
   // Determine whether the provided tx is proxy supported.
   const isProxySupported = (tx: UnsafeTx, delegator: MaybeAddress) => {
@@ -52,14 +54,14 @@ export const useProxySupported = () => {
           (c: AnyJson) =>
             (isSupportedProxyCall(proxyType, c.pallet, c.method) ||
               (c.pallet === 'Proxy' && c.method === 'proxy')) &&
-            !controllerNotSupported(`${pallet}.${method}`, delegator)
+            !unmigratedController(`${pallet}.${method}`, delegator)
         )
     }
 
     // Check if the current call is a supported proxy call.
     return (
       isSupportedProxyCall(proxyType, pallet, method) &&
-      !controllerNotSupported(call, delegator)
+      !unmigratedController(call, delegator)
     )
   }
 
