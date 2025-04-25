@@ -68,6 +68,7 @@ export abstract class DefaultServiceClass<
   subActiveEra: Subscription
   subAccountBalances: AccountBalances<RelayApi, PeopleApi>
   subStakingLedgers: StakingLedgers<StakingApi>
+  subActivePoolIds: Subscription
 
   abstract interface: ServiceInterface
 }

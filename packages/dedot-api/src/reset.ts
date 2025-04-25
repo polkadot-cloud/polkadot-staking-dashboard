@@ -4,6 +4,7 @@
 import {
   resetAccountBalances,
   resetActiveEra,
+  resetActivePoolIds,
   resetApiStatus,
   resetBlockNumber,
   resetChainSpecs,
@@ -19,6 +20,8 @@ import {
 } from 'global-bus'
 
 export const onNetworkReset = () => {
+  resetActivePoolIds()
+
   resetAccountBalances()
   resetStakingLedgers()
 

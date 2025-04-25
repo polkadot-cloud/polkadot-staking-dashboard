@@ -6,12 +6,18 @@
 
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
-import { removeStakingLedger, setStakingLedger } from 'global-bus'
+import {
+  addActivePoolId,
+  removeActivePoolId,
+  removeStakingLedger,
+  setStakingLedger,
+} from 'global-bus'
 import type { StakingLedger } from 'types'
 import type { StakingChain } from '../types'
 
 export class StakingLedgerQuery<T extends StakingChain> {
   #unsub: Unsub | undefined = undefined
+  #poolId: number | undefined = undefined
 
   constructor(
     public api: DedotClient<T>,
@@ -95,12 +101,35 @@ export class StakingLedgerQuery<T extends StakingChain> {
                 },
         }
         setStakingLedger(this.address, stakingLedger)
+
+        switch (this.getPoolIdUpdate(stakingLedger)) {
+          case 'remove':
+            if (this.#poolId) {
+              removeActivePoolId(this.#poolId)
+              this.#poolId = undefined
+            }
+            break
+          case 'set':
+            if (stakingLedger.poolMembership) {
+              this.#poolId = stakingLedger.poolMembership.poolId
+              addActivePoolId(this.#poolId)
+            }
+        }
       }
     )
+  }
+
+  getPoolIdUpdate = ({ poolMembership }: StakingLedger) => {
+    const cur = poolMembership?.poolId
+    return !cur && this.#poolId ? 'remove' : cur ? 'set' : undefined
   }
 
   unsubscribe() {
     this.#unsub?.()
     removeStakingLedger(this.address)
+
+    if (this.#poolId) {
+      removeActivePoolId(this.#poolId)
+    }
   }
 }

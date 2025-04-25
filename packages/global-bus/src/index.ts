@@ -4,6 +4,7 @@
 export * from './accountBalances'
 export * from './activeAddress'
 export * from './activeEra'
+export * from './activePoolIds'
 export * from './apiStatus'
 export * from './blockNumber'
 export * from './chainSpecs'

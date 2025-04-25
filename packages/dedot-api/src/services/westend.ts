@@ -6,6 +6,7 @@ import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
 import {
   activeAddress$,
+  activePoolIds$,
   importedAccounts$,
   setConsts,
   setMultiChainSpecs,
@@ -83,6 +84,7 @@ export class WestendService
     people: {},
   }
   subStakingLedgers: StakingLedgers<WestendApi> = {}
+  subActivePoolIds: Subscription
 
   interface: ServiceInterface = {
     query: {
@@ -211,17 +213,22 @@ export class WestendService
         )
       })
     })
+
+    this.subActivePoolIds = activePoolIds$.subscribe((poolIds) => {
+      console.debug('active pool ids', poolIds)
+    })
   }
 
   unsubscribe = async () => {
-    Object.values(this.subAccountBalances).forEach((subs) => {
-      Object.values(subs).forEach((sub) => {
+    this.subActivePoolIds?.unsubscribe()
+    for (const subs of Object.values(this.subAccountBalances)) {
+      for (const sub of Object.values(subs)) {
         sub?.unsubscribe()
-      })
-    })
-    Object.values(this.subStakingLedgers).forEach((sub) => {
+      }
+    }
+    for (const sub of Object.values(this.subStakingLedgers)) {
       sub?.unsubscribe()
-    })
+    }
     this.subActiveEra?.unsubscribe()
     this.subActiveAddress?.unsubscribe()
     this.subImportedAccounts?.unsubscribe()
