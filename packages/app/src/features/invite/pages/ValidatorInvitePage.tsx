@@ -500,6 +500,8 @@ export const ValidatorInvitePage = () => {
                           bondAmount={bond.bond}
                           isNewNominator={inSetup()}
                           warnings={warnings}
+                          payee={payee}
+                          payeeAccount={payeeAccount}
                         />
                       )}
 
