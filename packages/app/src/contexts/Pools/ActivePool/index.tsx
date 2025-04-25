@@ -41,7 +41,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     const pool = getActivePool(Number(poolId))
     return pool?.nominators
       ? {
-          targets: pool.nominators.targets.map(({ address }) => address(ss58)),
+          targets: pool.nominators.targets.map((target) =>
+            target.address(ss58)
+          ),
           submittedIn: pool.nominators.submittedIn,
         }
       : defaultPoolNominations
