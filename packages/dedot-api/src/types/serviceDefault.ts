@@ -23,6 +23,7 @@ import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
 import type { AccountBalanceQuery } from '../subscribe/accountBalance'
 import type { ActiveEraQuery } from '../subscribe/activeEra'
+import type { ActivePoolQuery } from '../subscribe/activePool'
 import type { BlockNumberQuery } from '../subscribe/blockNumber'
 import type { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
@@ -69,6 +70,7 @@ export abstract class DefaultServiceClass<
   subAccountBalances: AccountBalances<RelayApi, PeopleApi>
   subStakingLedgers: StakingLedgers<StakingApi>
   subActivePoolIds: Subscription
+  subActivePools: ActivePools<StakingApi>
 
   abstract interface: ServiceInterface
 }
@@ -93,4 +95,10 @@ export type AccountBalances<
 export type StakingLedgers<StakingApi extends StakingChain> = Record<
   string,
   StakingLedgerQuery<StakingApi>
+>
+
+// Active pools record
+export type ActivePools<StakingApi extends StakingChain> = Record<
+  number,
+  ActivePoolQuery<StakingApi>
 >

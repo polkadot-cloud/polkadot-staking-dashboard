@@ -41,6 +41,7 @@ import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActiveEraQuery } from '../subscribe/activeEra'
+import { ActivePoolQuery } from '../subscribe/activePool'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
@@ -51,6 +52,7 @@ import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 import type {
   AccountBalances,
+  ActivePools,
   DefaultServiceClass,
   StakingLedgers,
 } from '../types/serviceDefault'
@@ -90,6 +92,7 @@ export class KusamaService
   }
   subStakingLedgers: StakingLedgers<KusamaApi> = {}
   subActivePoolIds: Subscription
+  subActivePools: ActivePools<KusamaApi>
 
   interface: ServiceInterface = {
     query: {
@@ -219,11 +222,24 @@ export class KusamaService
       .pipe(startWith([]), pairwise())
       .subscribe(([prev, cur]) => {
         const { added, removed } = diffPoolIds(prev, cur)
-        console.debug(added, removed)
+        removed.forEach((poolId) => {
+          this.subActivePools[poolId]?.unsubscribe()
+        })
+        added.forEach((poolId) => {
+          this.subActivePools[poolId] = new ActivePoolQuery(
+            this.apiRelay,
+            poolId,
+            this.stakingConsts.poolsPalletId,
+            this.interface
+          )
+        })
       })
   }
 
   unsubscribe = async () => {
+    for (const sub of Object.values(this.subActivePools)) {
+      sub?.unsubscribe()
+    }
     this.subActivePoolIds?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {
       for (const sub of Object.values(subs)) {
