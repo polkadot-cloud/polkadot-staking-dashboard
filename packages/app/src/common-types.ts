@@ -10,11 +10,12 @@ import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
 import type { FC } from 'react'
-import type { AnyJson, DetailActivePool } from 'types'
 
 declare global {
   interface Window {
-    walletExtension?: AnyJson
+    walletExtension?: {
+      isNovaWallet?: boolean
+    }
     injectedWeb3?: Record<string, ExtensionInjected>
     opera?: boolean
   }
@@ -22,8 +23,6 @@ declare global {
     notification: CustomEvent<NotificationItem>
     'api-ready': CustomEvent<PapiReadyEvent>
     'online-status': CustomEvent<OnlineStatusEvent>
-    'new-active-pool': CustomEvent<DetailActivePool>
-    'removed-active-pool': CustomEvent<{ address: string; poolId: string }>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
     'new-account-proxies': CustomEvent<AccountProxiesEvent>
     'new-bonded-account': CustomEvent<BondedAccount>
@@ -45,7 +44,7 @@ export interface PageItem {
   uri: string
   hash: string
   Entry: FC<PageProps>
-  lottie: AnyJson
+  lottie: unknown
   bullet?: BulletType
 }
 

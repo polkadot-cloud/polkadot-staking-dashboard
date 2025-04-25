@@ -2,16 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AccountProxies } from 'api/subscribe/accountProxies'
-import type { ActivePoolAccount } from 'api/subscribe/activePoolAccount'
 import type { Bonded } from 'api/subscribe/bonded'
 import type { PoolMembers } from 'api/subscribe/poolMembers'
 
 // Define all possible subscription classes
-export type Subscription =
-  | AccountProxies
-  | ActivePoolAccount
-  | Bonded
-  | PoolMembers
+export type Subscription = AccountProxies | Bonded | PoolMembers
 
 // the record of keyed subscriptions
 export type ChainSubscriptions = Record<string, Subscription>

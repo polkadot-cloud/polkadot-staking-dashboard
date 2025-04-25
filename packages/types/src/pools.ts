@@ -6,7 +6,6 @@ import type { PalletNominationPoolsBondedPoolInner } from 'dedot/chaintypes'
 import type { AccountId32 } from 'dedot/codecs'
 import type { MaybeAddress } from './accounts'
 import type { IdentityOf, SuperIdentity } from './identity'
-import type { Nominations } from './nominate'
 
 export type BondedPool = PalletNominationPoolsBondedPoolInner & {
   addresses: PoolAddresses
@@ -63,33 +62,6 @@ export type NominationStatuses = Record<string, string>
 
 export type PoolTab = 'All' | 'Active' | 'Locked' | 'Destroying'
 
-export interface PrevActivePool {
-  id: number
-  addresses: PoolAddresses
-  bondedPool: ActiveBondedPool
-  rewardPool: RewardPool
-  rewardAccountBalance: bigint
-}
-
-export interface ActiveBondedPool {
-  points: bigint
-  memberCounter: string
-  roles: PoolRoles
-  roleIdentities: {
-    identities: Record<string, IdentityOf>
-    supers: Record<string, SuperIdentity>
-  }
-  state: PoolState
-}
-
-export interface RewardPool {
-  lastRecordedRewardCounter: string
-  lastRecordedTotalPayouts: string
-  totalCommissionClaimed: string
-  totalCommissionPending: string
-  totalRewardsClaimed: string
-}
-
 export type PoolState = 'Open' | 'Blocked' | 'Destroying'
 
 export interface PoolUnlocking {
@@ -111,18 +83,6 @@ export interface PoolMember {
   who: string
 }
 
-export interface DetailActivePool {
-  address: string
-  pool: ActivePoolItem
-  activePool: PrevActivePool
-  nominations: Nominations
-}
-
-export interface DetailRemovedPool {
-  address: string
-  poolId: number
-}
-
 export interface ActivePoolItem {
   id: string
   addresses: {
@@ -130,10 +90,6 @@ export interface ActivePoolItem {
     reward: string
   }
 }
-
-export type AccountActivePools = Record<string, PrevActivePool | null>
-
-export type AccountPoolNominations = Record<string, Nominations>
 
 /*
  * Batch Key -> Pool Address -> Era -> Points.
