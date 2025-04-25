@@ -31,7 +31,7 @@ export type NominationStatuses = Record<string, string>
 
 export type PoolTab = 'All' | 'Active' | 'Locked' | 'Destroying'
 
-export interface ActivePool {
+export interface PrevActivePool {
   id: number
   addresses: PoolAddresses
   bondedPool: ActiveBondedPool
@@ -82,7 +82,7 @@ export interface PoolMember {
 export interface DetailActivePool {
   address: string
   pool: ActivePoolItem
-  activePool: ActivePool
+  activePool: PrevActivePool
   nominations: Nominations
 }
 
@@ -99,7 +99,7 @@ export interface ActivePoolItem {
   }
 }
 
-export type AccountActivePools = Record<string, ActivePool | null>
+export type AccountActivePools = Record<string, PrevActivePool | null>
 
 export type AccountPoolNominations = Record<string, Nominations>
 

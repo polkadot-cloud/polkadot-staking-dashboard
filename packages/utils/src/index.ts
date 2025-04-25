@@ -1,15 +1,17 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { bnToU8a } from '@polkadot/util'
 import { getDurationFromNow } from '@w3ux/hooks/util'
 import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types'
 import { planckToUnit, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { fromUnixTime } from 'date-fns'
+import { concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
 import type { TFunction } from 'i18next'
 import type { IdentityOf, SuperIdentity, SuperOf } from 'types'
 
-// Return `planckToUnit` as a `BigNumber`.
+// Return `planckToUnit` as a BigNumber
 export const planckToUnitBn = (val: BigNumber, units: number): BigNumber =>
   new BigNumber(planckToUnit(val.toFormat({ groupSeparator: '' }), units))
 
@@ -18,7 +20,7 @@ export const stringToBn = (value: string): BigNumber =>
   new BigNumber(rmCommas(value))
 
 // Formats a given time breakdown (days, hours, minutes, seconds) into a readable structure using a
-// translation function. Falls back to displaying seconds if both days and hours are absent.
+// translation function. Falls back to displaying seconds if both days and hours are absent
 export const formatTimeleft = (
   t: TFunction,
   { days, hours, minutes, seconds }: TimeLeftRaw
@@ -80,7 +82,7 @@ export const timeleftAsString = (
   return str
 }
 
-// Convert a perbill BigNumber value into a percentage.
+// Convert a perbill BigNumber value into a percentage
 export const perbillToPercent = (
   value: BigNumber | bigint | number
 ): BigNumber => {
@@ -115,3 +117,26 @@ export const formatSuperIdentities = (supers: SuperOf[]) =>
     }
     return acc
   }, {})
+
+// Generates pool stash and reward accounts. Assumes `poolsPalletId` is synced
+export const createPoolAccounts = (
+  poolId: number,
+  poolsPalletId: Uint8Array,
+  ss58Format: number = 0
+) => {
+  const createAccount = (index: number): string => {
+    const key = concatU8a(
+      stringToU8a('modl'),
+      poolsPalletId,
+      new Uint8Array([index]),
+      bnToU8a(BigInt(poolId.toString())),
+      new Uint8Array(32)
+    )
+    return encodeAddress(key.slice(0, 32), ss58Format)
+  }
+
+  return {
+    stash: createAccount(0),
+    reward: createAccount(1),
+  }
+}

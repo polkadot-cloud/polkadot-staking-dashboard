@@ -118,9 +118,6 @@ importers:
       '@polkadot-api/substrate-bindings':
         specifier: ^0.11.1
         version: 0.11.1
-      '@polkadot/util':
-        specifier: ^13.4.4
-        version: 13.4.4
       '@polkawatch/ddp-client':
         specifier: ^2.0.20
         version: 2.0.20
@@ -361,6 +358,9 @@ importers:
       smoldot:
         specifier: ^2.0.34
         version: 2.0.34(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      utils:
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@w3ux/types':
         specifier: ^2.1.12
@@ -570,6 +570,9 @@ importers:
 
   packages/utils:
     dependencies:
+      '@polkadot/util':
+        specifier: ^13.4.4
+        version: 13.4.4
       '@w3ux/hooks':
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
@@ -582,6 +585,9 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      dedot:
+        specifier: ^0.9.3
+        version: 0.9.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       i18next:
         specifier: ^24.2.3
         version: 24.2.3(typescript@5.8.3)

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type {
-  ActivePool,
   DetailActivePool,
   MaybeAddress,
   Nominations,
+  PrevActivePool,
 } from 'types'
 
 export interface ActivePoolsProps {
@@ -13,6 +13,6 @@ export interface ActivePoolsProps {
   onCallback?: (detail: DetailActivePool) => Promise<void>
 }
 
-export type ActivePoolsState = Record<string, ActivePool | null>
+export type ActivePoolsState = Record<string, PrevActivePool | null>
 
 export type ActiveNominationsState = Record<string, Nominations>

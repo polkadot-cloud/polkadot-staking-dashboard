@@ -7,11 +7,11 @@ import { Apis } from 'controllers/Apis'
 import type { Unsubscribable } from 'controllers/Subscriptions/types'
 import { combineLatest, type Subscription } from 'rxjs'
 import type {
-  ActivePool,
   ActivePoolItem,
   ChainId,
   Nominations,
   PoolRoles,
+  PrevActivePool,
 } from 'types'
 
 export class ActivePoolAccount implements Unsubscribable {
@@ -28,7 +28,7 @@ export class ActivePoolAccount implements Unsubscribable {
   address: string
 
   // Active pool of the address.
-  activePool: ActivePool | null
+  activePool: PrevActivePool | null
 
   // Active pool nominations.
   poolNominations: Nominations

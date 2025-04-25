@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ListFormat } from 'contexts/List/types'
-import type { ActivePool } from 'types'
+import type { PrevActivePool } from 'types'
 
 export interface PoolAccountProps {
   address: string | null
-  pool: ActivePool | null
+  pool: PrevActivePool | null
 }
 
 export interface PoolsTabsContextInterface {
