@@ -29,6 +29,7 @@ import type { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import type { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import type { PoolsConfigQuery } from '../subscribe/poolsConfig'
+import type { ProxiesQuery } from '../subscribe/proxies'
 import type { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import type { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -71,6 +72,7 @@ export abstract class DefaultServiceClass<
   subStakingLedgers: StakingLedgers<StakingApi>
   subActivePoolIds: Subscription
   subActivePools: ActivePools<StakingApi>
+  subProxies: Proxies<StakingApi>
 
   abstract interface: ServiceInterface
 }
@@ -101,4 +103,10 @@ export type StakingLedgers<StakingApi extends StakingChain> = Record<
 export type ActivePools<StakingApi extends StakingChain> = Record<
   number,
   ActivePoolQuery<StakingApi>
+>
+
+// Proxies record
+export type Proxies<StakingApi extends StakingChain> = Record<
+  string,
+  ProxiesQuery<StakingApi>
 >

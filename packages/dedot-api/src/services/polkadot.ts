@@ -47,6 +47,7 @@ import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
+import { ProxiesQuery } from '../subscribe/proxies'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -54,6 +55,7 @@ import type {
   AccountBalances,
   ActivePools,
   DefaultServiceClass,
+  Proxies,
   StakingLedgers,
 } from '../types/serviceDefault'
 import {
@@ -91,6 +93,7 @@ export class PolkadotService
     people: {},
   }
   subStakingLedgers: StakingLedgers<PolkadotApi> = {}
+  subProxies: Proxies<PolkadotApi> = {}
   subActivePoolIds: Subscription
   subActivePools: ActivePools<PolkadotApi> = {}
 
@@ -204,6 +207,7 @@ export class PolkadotService
             getAccountKey(id, account)
           ]?.unsubscribe()
           this.subStakingLedgers?.[account.address]?.unsubscribe()
+          this.subProxies?.[account.address]?.unsubscribe()
         })
       })
       added.forEach((account) => {
@@ -213,6 +217,10 @@ export class PolkadotService
           new AccountBalanceQuery(this.apiPeople, this.ids[1], account.address)
 
         this.subStakingLedgers[account.address] = new StakingLedgerQuery(
+          this.apiRelay,
+          account.address
+        )
+        this.subProxies[account.address] = new ProxiesQuery(
           this.apiRelay,
           account.address
         )
@@ -248,6 +256,9 @@ export class PolkadotService
       }
     }
     for (const sub of Object.values(this.subStakingLedgers)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subProxies)) {
       sub?.unsubscribe()
     }
     this.subActiveEra?.unsubscribe()

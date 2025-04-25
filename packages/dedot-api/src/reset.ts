@@ -14,6 +14,7 @@ import {
   resetFastUnstakeConfig,
   resetFastUnstakeQueue,
   resetPoolsConfig,
+  resetProxies,
   resetRelayMetrics,
   resetServiceInterface,
   resetStakingLedgers,
@@ -26,6 +27,7 @@ export const onNetworkReset = () => {
 
   resetAccountBalances()
   resetStakingLedgers()
+  resetProxies()
 
   resetBlockNumber()
   resetActiveEra()
