@@ -9,12 +9,10 @@ import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
-import { usePoolMembers } from 'contexts/Pools/PoolMembers'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { ActionItem } from 'library/ActionItem'
@@ -45,18 +43,15 @@ export const Forms = forwardRef(
     const { network } = useNetwork()
     const { activePool } = useActivePool()
     const { activeAddress } = useActiveAccounts()
-    const { removePoolMember } = usePoolMembers()
     const { removeFromBondedPools } = useBondedPools()
     const {
       setModalStatus,
       config: { options },
     } = useOverlay().modal
-    const { getStakingLedger } = useBalances()
     const { getSignerWarnings } = useSignerWarnings()
     const { removeFavorite: removeFavoritePool } = useFavoritePools()
 
     const { unit, units } = getNetworkData(network)
-    const { poolMembership } = getStakingLedger(activeAddress)
     const { bondFor, poolClosure } = options || {}
     const { historyDepth } = getConsts(network)
 
@@ -101,15 +96,6 @@ export const Forms = forwardRef(
         if (poolClosure) {
           removeFavoritePool(activePool?.addresses?.stash ?? '')
           removeFromBondedPools(activePool?.id ?? 0)
-        }
-
-        // if no more bonded funds from pool, remove from poolMembers list
-        if (bondFor === 'pool') {
-          const points = poolMembership?.points || 0n
-          const bonded = planckToUnitBn(new BigNumber(points), units)
-          if (bonded.isZero()) {
-            removePoolMember(activeAddress)
-          }
         }
       },
     })

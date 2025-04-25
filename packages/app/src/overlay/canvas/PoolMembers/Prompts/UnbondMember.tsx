@@ -9,7 +9,7 @@ import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import type { PoolMembership } from 'contexts/Pools/types'
+import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
 import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
@@ -29,7 +29,7 @@ export const UnbondMember = ({
   member,
 }: {
   who: string
-  member: PoolMembership
+  member: FetchedPoolMember
 }) => {
   const { t } = useTranslation('modals')
   const { getConsts } = useApi()

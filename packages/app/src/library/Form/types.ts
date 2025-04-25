@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { ClaimPermission } from 'contexts/Pools/types'
-import type { BondFor } from 'types'
+import type { BondFor, ClaimPermission } from 'types'
 
 export type BondSetter = ({ bond }: { bond: BigNumber }) => void
 

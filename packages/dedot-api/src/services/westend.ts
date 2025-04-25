@@ -28,6 +28,7 @@ import { erasValidatorRewardMulti } from '../query/erasValidatorRewardMulti'
 import { identityOfMulti } from '../query/identityOfMulti'
 import { nominatorsMulti } from '../query/nominatorsMulti'
 import { paraSessionAccounts } from '../query/paraSessionAccounts'
+import { poolMembersMulti } from '../query/poolMembersMulti'
 import { poolMetadataMulti } from '../query/poolMetadataMulti'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
@@ -113,6 +114,8 @@ export class WestendService
         await nominatorsMulti(this.apiRelay, addresses),
       paraSessionAccounts: async (session: number) =>
         await paraSessionAccounts(this.apiRelay, session),
+      poolMembersMulti: async (addresses) =>
+        await poolMembersMulti(this.apiRelay, addresses),
       poolMetadataMulti: async (ids) =>
         await poolMetadataMulti(this.apiRelay, ids),
       proxies: async (address: string) => await proxies(this.apiRelay, address),

@@ -28,6 +28,7 @@ import { erasValidatorRewardMulti } from '../query/erasValidatorRewardMulti'
 import { identityOfMulti } from '../query/identityOfMulti'
 import { nominatorsMulti } from '../query/nominatorsMulti'
 import { paraSessionAccounts } from '../query/paraSessionAccounts'
+import { poolMembersMulti } from '../query/poolMembersMulti'
 import { poolMetadataMulti } from '../query/poolMetadataMulti'
 import { proxies } from '../query/proxies'
 import { sessionValidators } from '../query/sessionValidators'
@@ -113,6 +114,8 @@ export class KusamaService
         await nominatorsMulti(this.apiRelay, addresses),
       paraSessionAccounts: async (session) =>
         await paraSessionAccounts(this.apiRelay, session),
+      poolMembersMulti: async (addresses) =>
+        await poolMembersMulti(this.apiRelay, addresses),
       poolMetadataMulti: async (ids) =>
         await poolMetadataMulti(this.apiRelay, ids),
       proxies: async (address) => await proxies(this.apiRelay, address),

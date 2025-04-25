@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/types'
-import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type { TxSubmissionItem } from 'api/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
@@ -21,9 +20,7 @@ declare global {
     notification: CustomEvent<NotificationItem>
     'api-ready': CustomEvent<{ chainType: string }>
     'online-status': CustomEvent<OnlineStatusEvent>
-    'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
     'new-sync-status': CustomEvent<SyncEvent>
-    'new-external-account': CustomEvent<{ address: string }>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }
@@ -56,8 +53,5 @@ interface PageProp {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyApi = any
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyMetaBatch = any
 
 export type BulletType = 'success' | 'accent' | 'warning' | 'danger'

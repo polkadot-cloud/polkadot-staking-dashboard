@@ -7,6 +7,12 @@ import type { AccountId32 } from 'dedot/codecs'
 import type { MaybeAddress } from './accounts'
 import type { IdentityOf, SuperIdentity } from './identity'
 
+export type ClaimPermission =
+  | 'Permissioned'
+  | 'PermissionlessCompound'
+  | 'PermissionlessWithdraw'
+  | 'PermissionlessAll'
+
 export type BondedPool = PalletNominationPoolsBondedPoolInner & {
   addresses: PoolAddresses
   id: number

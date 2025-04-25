@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { NetworkList, SystemChainList } from 'consts/networks'
-import { Subscriptions } from 'controllers/Subscriptions'
 import type { PolkadotClient } from 'polkadot-api'
 import { createClient } from 'polkadot-api'
 import { getWsProvider } from 'polkadot-api/ws-provider/web'
@@ -64,13 +63,7 @@ export class Api {
 
   // Unsubscribe from all active subscriptions and remove them from subscriptions controller
   unsubscribe = () => {
-    const subs = Subscriptions.getAll(this.network)
-    if (subs) {
-      Object.entries(subs).forEach(([subscriptionId, subscription]) => {
-        subscription.unsubscribe()
-        Subscriptions.remove(this.network, subscriptionId)
-      })
-    }
+    /* NOTE: deprecated */
   }
 
   // Disconnect gracefully from API and provider

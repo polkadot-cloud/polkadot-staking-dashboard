@@ -4,6 +4,5 @@
 export interface MembersListProps {
   pagination: boolean
   itemsPerPage: number
-  batchKey: string
   memberCount: number
 }

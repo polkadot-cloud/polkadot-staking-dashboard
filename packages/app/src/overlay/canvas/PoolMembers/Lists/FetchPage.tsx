@@ -19,7 +19,6 @@ import type { MembersListProps } from './types'
 
 export const MembersListInner = ({
   pagination,
-  batchKey,
   memberCount,
   itemsPerPage,
 }: MembersListProps) => {
@@ -29,11 +28,10 @@ export const MembersListInner = ({
   const { activeAddress } = useActiveAccounts()
   const { activePool } = useActivePool()
   const {
-    poolMembersApi,
-    setPoolMembersApi,
+    meta,
+    fetchPoolMemberData,
     fetchedPoolMembersApi,
     setFetchedPoolMembersApi,
-    fetchPoolMembersMetaBatch,
   } = usePoolMembers()
 
   // current page.
@@ -60,27 +58,25 @@ export const MembersListInner = ({
       )) as PoolMember[]
 
       fetchingMemberList.current = false
-      setPoolMembersApi([...newMembers])
-      fetchPoolMembersMetaBatch(batchKey, newMembers, true)
+      fetchPoolMemberData(newMembers.map(({ who }) => who))
       setFetchedPoolMembersApi('synced')
     }
   }
 
   // get throttled subset or entire list
-  const listMembers = poolMembersApi.slice(pageStart).slice(0, itemsPerPage)
+  const members = meta.poolMembers.filter((m) => m !== undefined)
+  const listMembers = members.slice(pageStart).slice(0, itemsPerPage)
 
   // Refetch list when page changes.
   useEffect(() => {
     if (pluginEnabled('subscan')) {
       setFetchedPoolMembersApi('unsynced')
-      setPoolMembersApi([])
     }
   }, [page, activeAddress, pluginEnabled('subscan')])
 
   // Refetch list when network changes.
   useEffect(() => {
     setFetchedPoolMembersApi('unsynced')
-    setPoolMembersApi([])
     setPage(1)
   }, [network])
 
@@ -108,13 +104,8 @@ export const MembersListInner = ({
           </ListStatusHeader>
         ) : (
           <MotionContainer>
-            {listMembers.map((member: PoolMember, index: number) => (
-              <Member
-                key={`nomination_${index}`}
-                who={member.who}
-                batchKey={batchKey}
-                batchIndex={poolMembersApi.indexOf(member)}
-              />
+            {listMembers.map((member, index) => (
+              <Member key={`nomination_${index}`} member={member} />
             ))}
           </MotionContainer>
         )}

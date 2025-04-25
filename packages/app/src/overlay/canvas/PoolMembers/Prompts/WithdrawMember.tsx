@@ -2,15 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, rmCommas } from '@w3ux/utils'
+import { ellipsisFn } from '@w3ux/utils'
 import { PoolWithdraw } from 'api/tx/poolWithdraw'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { usePoolMembers } from 'contexts/Pools/PoolMembers'
-import type { PoolMembership } from 'contexts/Pools/types'
+import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -29,7 +28,7 @@ export const WithdrawMember = ({
   memberRef,
 }: {
   who: string
-  member: PoolMembership
+  member: FetchedPoolMember
   memberRef: RefObject<HTMLDivElement | null>
 }) => {
   const { t } = useTranslation('modals')
@@ -37,7 +36,6 @@ export const WithdrawMember = ({
   const { closePrompt } = usePrompt()
   const { getConsts, activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
-  const { removePoolMember } = usePoolMembers()
   const { getSignerWarnings } = useSignerWarnings()
   const { unit, units } = getNetworkData(network)
   const { historyDepth } = getConsts(network)
@@ -46,12 +44,9 @@ export const WithdrawMember = ({
   // calculate total for withdraw
   let totalWithdrawUnit = new BigNumber(0)
 
-  Object.entries(unbondingEras).forEach((entry) => {
-    const [era, amount] = entry
+  unbondingEras.forEach(([era, amount]) => {
     if (activeEra.index > Number(era)) {
-      totalWithdrawUnit = totalWithdrawUnit.plus(
-        new BigNumber(rmCommas(amount as string))
-      )
+      totalWithdrawUnit = totalWithdrawUnit.plus(new BigNumber(amount))
     }
   })
 
@@ -72,15 +67,9 @@ export const WithdrawMember = ({
     from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      // remove the pool member from member list.
+      // Remove the pool member from member list
       memberRef.current?.remove()
       closePrompt()
-    },
-    callbackInBlock: () => {
-      // remove the pool member from context if no more funds bonded.
-      if (bonded.isZero()) {
-        removePoolMember(who)
-      }
     },
   })
 
