@@ -46,9 +46,9 @@ export const keysOf = <T extends Record<string, unknown>>(obj: T) =>
   Object.keys(obj) as (keyof typeof obj)[]
 
 // Casts a transaction to a SubmittableExtrinsic type
-export const asTx = (tx: unknown) => tx as SubmittableExtrinsic
+export const asTx = <T>(tx: T) => tx as SubmittableExtrinsic
 
 // Casts a transaction array to a SubmittableExtrinsic[] type
-export const asTxs = (txs: unknown[]) =>
+export const asTxs = <T>(txs: T[]) =>
   // for each array element, cast to SubmittableExtrinsic
   txs.map((t) => t as SubmittableExtrinsic)
