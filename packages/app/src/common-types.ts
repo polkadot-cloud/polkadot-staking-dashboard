@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/types'
-import type { TxSubmissionItem } from 'api/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
+import type { TxSubmissionItem } from 'controllers/TxSubmission/types'
 import type { FC } from 'react'
 
 declare global {
