@@ -126,8 +126,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         activePools?.find((pool) => pool.id === poolMembership.poolId)
       ) {
         Syncs.dispatch('active-pools', 'complete')
-      } else {
-        Syncs.dispatch('active-pools', 'syncing')
       }
     }
   }, [network, isReady, poolMembership])
