@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/types'
-import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
 import type { TxSubmissionItem } from 'api/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
@@ -23,7 +22,6 @@ declare global {
     'api-ready': CustomEvent<{ chainType: string }>
     'online-status': CustomEvent<OnlineStatusEvent>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
-    'new-account-proxies': CustomEvent<AccountProxiesEvent>
     'new-sync-status': CustomEvent<SyncEvent>
     'new-external-account': CustomEvent<{ address: string }>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
