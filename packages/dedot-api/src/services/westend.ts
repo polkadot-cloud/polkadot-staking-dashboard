@@ -92,7 +92,7 @@ export class WestendService
   }
   subStakingLedgers: StakingLedgers<WestendApi> = {}
   subActivePoolIds: Subscription
-  subActivePools: ActivePools<WestendApi>
+  subActivePools: ActivePools<WestendApi> = {}
 
   interface: ServiceInterface = {
     query: {

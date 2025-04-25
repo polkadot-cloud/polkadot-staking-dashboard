@@ -92,7 +92,7 @@ export class KusamaService
   }
   subStakingLedgers: StakingLedgers<KusamaApi> = {}
   subActivePoolIds: Subscription
-  subActivePools: ActivePools<KusamaApi>
+  subActivePools: ActivePools<KusamaApi> = {}
 
   interface: ServiceInterface = {
     query: {

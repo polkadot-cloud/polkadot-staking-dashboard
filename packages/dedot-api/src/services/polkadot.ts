@@ -92,7 +92,7 @@ export class PolkadotService
   }
   subStakingLedgers: StakingLedgers<PolkadotApi> = {}
   subActivePoolIds: Subscription
-  subActivePools: ActivePools<PolkadotApi>
+  subActivePools: ActivePools<PolkadotApi> = {}
 
   interface: ServiceInterface = {
     query: {
