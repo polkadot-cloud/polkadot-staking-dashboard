@@ -34,3 +34,13 @@ export type Proxies = {
   }[]
   deposit: bigint
 }
+
+export type PayeeSubmit =
+  | {
+      type: 'Account'
+      value: string
+    }
+  | {
+      type: 'Staked' | 'Stash' | 'Controller' | 'None'
+      value?: undefined
+    }

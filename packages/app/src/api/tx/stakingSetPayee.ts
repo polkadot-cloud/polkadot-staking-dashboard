@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base'
-import type { PayeeSubmit } from 'contexts/Setup/types'
-import type { ChainId } from 'types'
+import type { ChainId, PayeeSubmit } from 'types'
 
 export class StakingSetPayee extends Base {
   #payee: PayeeSubmit

@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { SubmittableExtrinsic } from 'dedot'
 import type { ChainId, ImportedAccount } from 'types'
 
 // Gets added and removed accounts by comparing two lists of accounts
@@ -43,3 +44,11 @@ export const getAccountKey = (chain: ChainId, account: ImportedAccount) =>
 // Gets type-safe keys from an object
 export const keysOf = <T extends Record<string, unknown>>(obj: T) =>
   Object.keys(obj) as (keyof typeof obj)[]
+
+// Casts a transaction to a SubmittableExtrinsic type
+export const asTx = (tx: unknown) => tx as SubmittableExtrinsic
+
+// Casts a transaction array to a SubmittableExtrinsic[] type
+export const asTxs = (txs: unknown[]) =>
+  // for each array element, cast to SubmittableExtrinsic
+  txs.map((t) => t as SubmittableExtrinsic)

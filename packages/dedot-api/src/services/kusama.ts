@@ -36,6 +36,8 @@ import { ProxiesQuery } from '../subscribe/proxies'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
+import { createPool } from '../tx/createPool'
+import { fastUnstakeDeregister } from '../tx/fastUnstakeDeregister'
 import type {
   AccountBalances,
   ActivePools,
@@ -263,6 +265,19 @@ export class KusamaService
         await runtimeApi.pendingRewards(this.apiRelay, address),
       pointsToBalance: async (poolId, points) =>
         await runtimeApi.pointsToBalance(this.apiRelay, poolId, points),
+    },
+    tx: {
+      createPool: (from, poolId, bond, metadata, nominees, roles) =>
+        createPool(
+          this.apiRelay,
+          from,
+          poolId,
+          bond,
+          metadata,
+          nominees,
+          roles
+        ),
+      fastUnstakeDeregister: () => fastUnstakeDeregister(this.apiRelay),
     },
   }
 }

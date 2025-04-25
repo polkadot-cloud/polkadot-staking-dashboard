@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { SubmittableExtrinsic } from 'dedot'
 import type {
   PalletNominationPoolsBondedPoolInner,
   PalletNominationPoolsPoolMember,
@@ -11,6 +12,7 @@ import type {
 } from 'dedot/chaintypes'
 import type { AccountId32 } from 'dedot/codecs'
 import type { IdentityOf, SuperOf } from './identity'
+import type { PoolRoles } from './pools'
 
 export interface ServiceInterface {
   query: {
@@ -53,5 +55,16 @@ export interface ServiceInterface {
     balanceToPoints: (poolId: number, amount: bigint) => Promise<bigint>
     pendingRewards: (address: string) => Promise<bigint>
     pointsToBalance: (poolId: number, points: bigint) => Promise<bigint>
+  }
+  tx: {
+    createPool: (
+      from: string,
+      poolId: number,
+      bond: bigint,
+      metadata: string,
+      nominees: string[],
+      roles: PoolRoles | null
+    ) => SubmittableExtrinsic[]
+    fastUnstakeDeregister: () => SubmittableExtrinsic | undefined
   }
 }

@@ -26,4 +26,8 @@ export const defaultServiceInterface: ServiceInterface = {
     pendingRewards: async () => BigInt(0),
     pointsToBalance: async () => BigInt(0),
   },
+  tx: {
+    createPool: () => [],
+    fastUnstakeDeregister: () => undefined,
+  },
 }
