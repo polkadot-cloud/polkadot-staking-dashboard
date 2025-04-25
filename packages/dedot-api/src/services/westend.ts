@@ -11,7 +11,7 @@ import {
   setConsts,
   setMultiChainSpecs,
 } from 'global-bus'
-import type { Subscription } from 'rxjs'
+import { pairwise, startWith, type Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -54,7 +54,12 @@ import type {
   DefaultServiceClass,
   StakingLedgers,
 } from '../types/serviceDefault'
-import { getAccountKey, getAddedAndRemovedAccounts, keysOf } from '../util'
+import {
+  diffImportedAccounts,
+  diffPoolIds,
+  getAccountKey,
+  keysOf,
+} from '../util'
 
 export class WestendService
   implements DefaultServiceClass<WestendApi, WestendPeopleApi, WestendApi>
@@ -189,10 +194,7 @@ export class WestendService
     })
 
     this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
-      const { added, removed } = getAddedAndRemovedAccounts(
-        prev.flat(),
-        cur.flat()
-      )
+      const { added, removed } = diffImportedAccounts(prev.flat(), cur.flat())
       removed.forEach((account) => {
         this.ids.forEach((id, i) => {
           this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
@@ -214,9 +216,12 @@ export class WestendService
       })
     })
 
-    this.subActivePoolIds = activePoolIds$.subscribe((poolIds) => {
-      console.debug('active pool ids', poolIds)
-    })
+    this.subActivePoolIds = activePoolIds$
+      .pipe(startWith([]), pairwise())
+      .subscribe(([prev, cur]) => {
+        const { added, removed } = diffPoolIds(prev, cur)
+        console.debug(added, removed)
+      })
   }
 
   unsubscribe = async () => {

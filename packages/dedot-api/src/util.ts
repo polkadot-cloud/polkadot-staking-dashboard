@@ -4,7 +4,7 @@
 import type { ChainId, ImportedAccount } from 'types'
 
 // Gets added and removed accounts by comparing two lists of accounts
-export const getAddedAndRemovedAccounts = (
+export const diffImportedAccounts = (
   prev: ImportedAccount[],
   cur: ImportedAccount[]
 ) => {
@@ -21,6 +21,17 @@ export const getAddedAndRemovedAccounts = (
   const removed = [...prevMap.keys()]
     .filter((k) => !curMap.has(k))
     .map((k) => prevMap.get(k)!)
+
+  return { added, removed }
+}
+
+// Gets added and removed pool ids by comparing two lists of pool ids
+export const diffPoolIds = (prev: number[], cur: number[]) => {
+  const prevSet = new Set(prev)
+  const curSet = new Set(cur)
+
+  const added = cur.filter((id) => !prevSet.has(id))
+  const removed = prev.filter((id) => !curSet.has(id))
 
   return { added, removed }
 }
