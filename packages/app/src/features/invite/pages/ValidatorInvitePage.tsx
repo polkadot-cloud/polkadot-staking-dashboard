@@ -4,7 +4,7 @@
 import { unitToPlanck } from '@w3ux/utils'
 import { NewNominator } from 'api/tx/newNominator'
 import { StakingNominate } from 'api/tx/stakingNominate'
-import BigNumber from 'bignumber.js'
+import type BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -13,7 +13,6 @@ import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
@@ -28,7 +27,6 @@ import type { MaybeAddress } from 'types'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 import { BondAmountStep } from '../components/BondAmountStep'
 import type { ValidatorWithPrefs } from '../components/NominateValidatorsStep'
 import { NominateValidatorsStep } from '../components/NominateValidatorsStep'
@@ -70,7 +68,6 @@ export const ValidatorInvitePage = () => {
     getValidatorTotalStake,
   } = useValidators()
   const { network } = useNetwork()
-  const { getTransferOptions } = useTransferOptions()
   const largestTxFee = useBondGreatestFee({ bondFor: 'nominator' })
   const { getPayeeItems } = usePayeeConfig()
   const { newBatchCall } = useBatchCall()
@@ -124,20 +121,12 @@ export const ValidatorInvitePage = () => {
   const [payee, setPayee] = useState({ type: 'Stash' })
   const [payeeAccount, setPayeeAccount] = useState<MaybeAddress>(null)
 
-  // Get transfer options for the active account
-  const transferOptions = activeAddress
-    ? getTransferOptions(activeAddress)
-    : null
-
-  // Check if this is a new nominator setup
-  const isNewNominator = inSetup()
-
   // Get controller account for signing transactions
   const controller = activeAddress ? getBondedAccount(activeAddress) : null
 
   // For staking operations, we need to use the controller account to sign
   // This is crucial - for nominator operations, we must use the controller account
-  const signingAccount = isNewNominator ? activeAddress : controller
+  const signingAccount = inSetup() ? activeAddress : controller
 
   // Get existing nominations for validation
   const existingNominations = getNominations(activeAddress)
@@ -178,21 +167,6 @@ export const ValidatorInvitePage = () => {
     }
   }, [validators, network, urlNetwork, fetchValidatorPrefs, t])
 
-  // Set initial bond value when account or transfer options change
-  useEffect(() => {
-    if (activeAddress && transferOptions && bond.bond === '') {
-      // Use transferrableBalance directly
-      const initialBond = planckToUnitBn(
-        transferOptions.transferrableBalance,
-        units
-      ).toString()
-
-      if (initialBond !== '0') {
-        setBond({ bond: initialBond })
-      }
-    }
-  }, [activeAddress, transferOptions, units, bond.bond])
-
   // Update payout completion status when payee is valid
   useEffect(() => {
     setPayoutComplete(
@@ -209,32 +183,10 @@ export const ValidatorInvitePage = () => {
 
   // Update bond completion status when bond is valid and meets minimum requirement
   useEffect(() => {
-    const bondValue = new BigNumber(bond.bond || '0')
-    const minimumBond = new BigNumber('260') // 260 DOT minimum
-    const newErrors = [...feedbackErrors]
-    const minimumBondError = t('minimumBondRequired', {
-      minimum: '260',
-      unit: units,
-    })
-
-    // Remove any existing minimum bond error
-    const filteredErrors = newErrors.filter(
-      (error) => error !== minimumBondError
-    )
-
-    // Add minimum bond error if needed
-    if (bondValue.isLessThan(minimumBond)) {
-      filteredErrors.push(minimumBondError)
-      setBondValid(false)
-    }
-
-    // Only update if errors have changed
-    if (JSON.stringify(filteredErrors) !== JSON.stringify(feedbackErrors)) {
-      setFeedbackErrors(filteredErrors)
-    }
-
-    setBondComplete(bondValid && filteredErrors.length === 0)
-  }, [bond.bond, units, t])
+    // BondFeedback component now handles validation and will set bondValid to false
+    // if the bond amount is less than the minimum required
+    setBondComplete(bondValid && feedbackErrors.length === 0)
+  }, [bondValid, feedbackErrors])
 
   // Handler to set bond on input change
   const handleSetBond = (value: { bond: BigNumber }) => {
@@ -281,7 +233,7 @@ export const ValidatorInvitePage = () => {
         }
       }
 
-      if (isNewNominator) {
+      if (inSetup()) {
         // For new nominators, we need to bond and nominate
         const tx = new NewNominator(
           network,
@@ -312,7 +264,7 @@ export const ValidatorInvitePage = () => {
   const canSign =
     accountHasSigner(activeAddress) ||
     (activeProxy && accountHasSigner(activeProxy.address)) ||
-    (!isNewNominator && controllerImported && accountHasSigner(controller))
+    (!inSetup() && controllerImported && accountHasSigner(controller))
 
   // Set up the transaction submission
   const submitExtrinsic = useSubmitExtrinsic({
@@ -334,7 +286,7 @@ export const ValidatorInvitePage = () => {
   // Get signer warnings
   const warnings = getSignerWarnings(
     activeAddress,
-    !isNewNominator,
+    !inSetup(),
     submitExtrinsic.proxySupported
   )
 
@@ -344,7 +296,7 @@ export const ValidatorInvitePage = () => {
   }
 
   // Add warning if controller not imported
-  if (!isNewNominator && !controllerImported) {
+  if (!inSetup() && !controllerImported) {
     warnings.push(t('controllerAccountNotImported', { ns: 'modals' }))
   }
 
@@ -354,7 +306,7 @@ export const ValidatorInvitePage = () => {
   }
 
   // Add warning if already nominating these validators
-  if (existingNominations.length > 0 && !isNewNominator) {
+  if (existingNominations.length > 0 && !inSetup()) {
     const allExistingNominated = existingNominations.every((nom) =>
       selectedValidators.includes(nom)
     )
@@ -372,7 +324,7 @@ export const ValidatorInvitePage = () => {
   // Navigate to next step
   const goToNextStep = () => {
     if (isStepAvailable(activeStep + 1)) {
-      setActiveStep((prev) => Math.min(prev + 1, isNewNominator ? 4 : 3))
+      setActiveStep((prev) => Math.min(prev + 1, inSetup() ? 4 : 3))
     }
   }
 
@@ -432,7 +384,7 @@ export const ValidatorInvitePage = () => {
   const allStepsComplete = payoutComplete && nominateComplete && bondComplete
 
   // Determine which steps to show based on whether user is a new nominator
-  const steps = isNewNominator
+  const steps = inSetup()
     ? [
         { id: 1, label: t('payoutDestination'), complete: payoutComplete },
         {
@@ -500,7 +452,7 @@ export const ValidatorInvitePage = () => {
                   {activeStep === step.id && isStepAvailable(step.id) && (
                     <StepContent>
                       {/* Payout Destination Step */}
-                      {step.id === 1 && isNewNominator && (
+                      {step.id === 1 && inSetup() && (
                         <PayoutDestinationStep
                           payee={payee}
                           payeeAccount={payeeAccount}
@@ -511,8 +463,8 @@ export const ValidatorInvitePage = () => {
                       )}
 
                       {/* Nominate Step */}
-                      {((isNewNominator && step.id === 2) ||
-                        (!isNewNominator && step.id === 1)) && (
+                      {((inSetup() && step.id === 2) ||
+                        (!inSetup() && step.id === 1)) && (
                         <NominateValidatorsStep
                           selectedValidators={selectedValidators}
                           setSelectedValidators={setSelectedValidators}
@@ -527,10 +479,11 @@ export const ValidatorInvitePage = () => {
                       )}
 
                       {/* Bond Step */}
-                      {((isNewNominator && step.id === 3) ||
-                        (!isNewNominator && step.id === 2)) && (
+                      {((inSetup() && step.id === 3) ||
+                        (!inSetup() && step.id === 2)) && (
                         <BondAmountStep
                           unit={unit}
+                          units={units}
                           bondAmount={bond.bond}
                           handleSetBond={handleSetBond}
                           setBondValid={setBondValid}
@@ -540,13 +493,12 @@ export const ValidatorInvitePage = () => {
                       )}
 
                       {/* Summary Step */}
-                      {((isNewNominator && step.id === 4) ||
-                        (!isNewNominator && step.id === 3)) && (
+                      {((inSetup() && step.id === 4) ||
+                        (!inSetup() && step.id === 3)) && (
                         <SummaryStep
                           selectedValidatorsCount={selectedValidators.length}
                           bondAmount={bond.bond}
-                          units={units}
-                          isNewNominator={isNewNominator}
+                          isNewNominator={inSetup()}
                           warnings={warnings}
                         />
                       )}
@@ -570,7 +522,7 @@ export const ValidatorInvitePage = () => {
                             text={
                               nominating
                                 ? t('nominating')
-                                : isNewNominator
+                                : inSetup()
                                   ? t('bondAndNominate', { ns: 'modals' })
                                   : t('nominateValidators')
                             }

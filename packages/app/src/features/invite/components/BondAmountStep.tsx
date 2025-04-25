@@ -1,8 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
+import { NominateStatusBar } from 'library/Form/NominateStatusBar'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StepDescription } from '../pages/Wrappers'
@@ -14,6 +15,7 @@ interface BondAmountStepProps {
   setBondValid: (valid: boolean) => void
   setFeedbackErrors: (errors: string[]) => void
   largestTxFee: BigNumber
+  units: string | number
 }
 
 export const BondAmountStep: React.FC<BondAmountStepProps> = ({
@@ -42,6 +44,7 @@ export const BondAmountStep: React.FC<BondAmountStepProps> = ({
         txFees={BigInt(largestTxFee.toString())}
         maxWidth
       />
+      <NominateStatusBar value={new BigNumber(bondAmount || '0')} />
     </>
   )
 }

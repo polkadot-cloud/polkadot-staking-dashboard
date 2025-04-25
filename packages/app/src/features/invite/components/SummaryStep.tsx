@@ -1,6 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
+import { useNetwork } from 'contexts/Network'
 import { Warning } from 'library/Form/Warning'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +16,6 @@ import {
 interface SummaryStepProps {
   selectedValidatorsCount: number
   bondAmount: string
-  units: string | number
   isNewNominator: boolean
   warnings: string[]
 }
@@ -21,11 +23,12 @@ interface SummaryStepProps {
 export const SummaryStep: React.FC<SummaryStepProps> = ({
   selectedValidatorsCount,
   bondAmount,
-  units,
   isNewNominator,
   warnings,
 }) => {
   const { t } = useTranslation('invite')
+  const { network } = useNetwork()
+  const { unit } = getNetworkData(network)
 
   return (
     <>
@@ -37,7 +40,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
         <SummaryRow>
           <span className="label">{t('bondAmount')}</span>
           <span className="value">
-            {bondAmount} {units}
+            {new BigNumber(bondAmount || 0).toFormat()} {unit}
           </span>
         </SummaryRow>
         {isNewNominator && (
