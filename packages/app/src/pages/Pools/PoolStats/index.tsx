@@ -72,7 +72,7 @@ export const PoolStats = () => {
             onClick: () => {
               openCanvas({ key: 'PoolMembers', size: 'xl' })
             },
-            disabled: memberCounter === '0',
+            disabled: [0, undefined].includes(memberCounter),
           }
         : undefined,
     },

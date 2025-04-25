@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAddress, PrevActivePool } from 'types'
+import type { ActivePool, MaybeAddress } from 'types'
 
 export interface AccountProps {
   value: MaybeAddress
@@ -11,7 +11,7 @@ export interface AccountProps {
 }
 
 export interface PoolAccountProps {
-  pool: PrevActivePool
+  pool: ActivePool
   label: string
   syncing: boolean
 }

@@ -29,7 +29,7 @@ export const ClosurePrompts = () => {
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !syncing && isDepositor() && state === 'Destroying' && memberCounter === '1'
+    !syncing && isDepositor() && state === 'Destroying' && memberCounter === 1
 
   // depositor needs to unbond funds
   const depositorCanUnbond = active.toNumber() > 0 && !targets.length

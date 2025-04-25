@@ -3,7 +3,6 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
@@ -35,9 +34,7 @@ export const Announcements = () => {
 
   // calculate total rewards claimed
   const rewardsClaimed = planckToUnitBn(
-    totalRewardsClaimed
-      ? new BigNumber(rmCommas(totalRewardsClaimed))
-      : new BigNumber(0),
+    totalRewardsClaimed ? new BigNumber(totalRewardsClaimed) : new BigNumber(0),
     units
   )
 

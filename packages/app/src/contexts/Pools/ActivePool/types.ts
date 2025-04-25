@@ -1,12 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type {
-  Nominations,
-  PoolRoles,
-  PoolUnlocking,
-  PrevActivePool,
-} from 'types'
+import type { ActivePool, Nominations, PoolRoles, PoolUnlocking } from 'types'
 
 export interface ActivePoolContextState {
   inPool: () => boolean
@@ -18,6 +13,6 @@ export interface ActivePoolContextState {
   isBouncer: () => boolean
   getPoolUnlocking: () => PoolUnlocking[]
   getPoolRoles: () => PoolRoles
-  activePool: PrevActivePool | null
+  activePool: ActivePool | undefined
   activePoolNominations: Nominations | null
 }

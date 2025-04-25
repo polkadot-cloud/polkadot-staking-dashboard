@@ -3,7 +3,7 @@
 
 import { Base } from 'api/base'
 import type { ClaimPermission } from 'contexts/Pools/types'
-import { defaultClaimPermission } from 'controllers/ActivePools/defaults'
+import { defaultClaimPermission } from 'global-bus'
 import type { ChainId } from 'types'
 
 export class JoinPool extends Base {

@@ -35,13 +35,14 @@ export const Member = ({
   const { meta } = usePoolMembers()
   const { openMenu, open } = useMenu()
   const { openPromptWith } = usePrompt()
-  const { activePool, isOwner, isBouncer } = useActivePool()
+  const { activePool, isOwner, isBouncer, getPoolRoles } = useActivePool()
 
   // Ref for the member container.
   const memberRef = useRef<HTMLDivElement | null>(null)
 
-  const { state, roles } = activePool?.bondedPool || {}
-  const { bouncer, root, depositor } = roles || {}
+  const roles = getPoolRoles()
+  const state = activePool?.bondedPool.state
+  const { bouncer, root, depositor } = roles
 
   const canUnbondBlocked =
     state === 'Blocked' &&
