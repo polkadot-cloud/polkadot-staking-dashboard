@@ -3,14 +3,13 @@
 
 import type { DedotClient, SubmittableExtrinsic } from 'dedot'
 import type { StakingChain } from '../types'
+import { asTx } from '../util'
 
-export const proxy = <T extends StakingChain>(
+export const batch = <T extends StakingChain>(
   api: DedotClient<T>,
-  real: string,
-  call: SubmittableExtrinsic
+  calls: SubmittableExtrinsic[]
 ): SubmittableExtrinsic => {
-  // TODO: Test call format is correct
-  // @ts-expect-error Proxy type too complex to determine
-  const tx = asTx(api.tx.proxy.proxy(real, undefined, call.call))
+  // @ts-expect-error Batch calls are too complex for type inference
+  const tx = asTx(api.tx.utility.batch(calls.map((call) => call.call)))
   return tx
 }
