@@ -16,6 +16,7 @@ import { usePrompt } from 'contexts/Prompt'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { Notifications } from 'controllers/Notifications'
 import { TxSubmission } from 'controllers/TxSubmission'
+import type { InjectedSigner } from 'dedot/types'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { LedgerSigner } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -25,7 +26,7 @@ import type {
 } from 'library/Signers/VaultSigner/types'
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
 import type { PolkadotSigner } from 'polkadot-api'
-import { AccountId, InvalidTxError } from 'polkadot-api'
+import { AccountId } from 'polkadot-api'
 import {
   connectInjectedExtension,
   getPolkadotSignerFromPjs,
@@ -60,11 +61,7 @@ export const useSubmitExtrinsic = ({
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
   // already wrapped, update `from` address and return
   if (tx) {
-    if (
-      // TODO: Check and correct call structure
-      tx.call?.type === 'Proxy' &&
-      tx.call?.value?.type === 'proxy'
-    ) {
+    if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
       if (activeProxy) {
         from = activeProxy.address
       }
@@ -77,7 +74,7 @@ export const useSubmitExtrinsic = ({
         // Check not a batch transactions
         if (
           real &&
-          !(tx.call?.type === 'Utility' && tx.call?.value.type === 'batch')
+          !(tx.call.pallet === 'Utility' && tx.call.palletCall.name === 'Batch')
         ) {
           // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
           // each tx within the batch via `useBatchCall`
@@ -90,9 +87,9 @@ export const useSubmitExtrinsic = ({
     }
   }
 
-  // Extrinsic submission handler.
+  // Extrinsic submission handler
   const onSubmit = async () => {
-    if (TxSubmission.getUid(uid)?.submitted) {
+    if (!tx || TxSubmission.getUid(uid)?.submitted) {
       return
     }
     if (from === null) {
@@ -106,7 +103,7 @@ export const useSubmitExtrinsic = ({
     const { source } = account
     const isManualSigner = ManualSigners.includes(source)
 
-    // if `activeAccount` is imported from an extension, ensure it is enabled
+    // If `activeAccount` is imported from an extension, ensure it is enabled
     if (!isManualSigner) {
       const isInstalled = Object.entries(extensionsStatus).find(
         ([id, status]) => id === source && status === 'connected'
@@ -114,16 +111,18 @@ export const useSubmitExtrinsic = ({
       if (!isInstalled || !window?.injectedWeb3?.[source]) {
         throw new Error(`${t('walletNotFound')}`)
       }
-      // summons extension popup if not already connected
+      // NOTE: Summons extension popup if not already connected
+      // TODO: Expose this in a w3ux utility
       window.injectedWeb3[source].enable(DappName)
     }
 
-    // Pre-submission state updates
+    // Pre-submission state update
     TxSubmission.setUidSubmitted(uid, true)
 
     // Handle signed transaction
     let signer: PolkadotSigner | undefined
     if (requiresManualSign(from)) {
+      // TODO: Replace wiith dedot utility
       const pubKey = AccountId().enc(from)
       const networkInfo = {
         decimals: units,
@@ -163,6 +162,7 @@ export const useSubmitExtrinsic = ({
           break
 
         case 'wallet_connect':
+          // TODO: Replace with dedot utility
           signer = getPolkadotSignerFromPjs(
             from,
             signWcTx,
@@ -177,6 +177,7 @@ export const useSubmitExtrinsic = ({
       }
     } else {
       // Get the polkadot signer for this account
+      // TODO: Replace with w3ux utility
       const signerAccount = (await connectInjectedExtension(source))
         .getAccounts()
         .find((a) => from && a.address === formatAccountSs58(from, 42))
@@ -193,7 +194,8 @@ export const useSubmitExtrinsic = ({
       getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from)
 
     // Submit the transaction
-    TxSubmission.addSub(uid, tx, signer, nonce, {
+    // TODO: Fix signers to be `InjectedSigner`
+    TxSubmission.addSub(uid, from, tx, signer as InjectedSigner, nonce, {
       onReady,
       onInBlock,
       onFinalized,
@@ -238,13 +240,11 @@ export const useSubmitExtrinsic = ({
     })
   }
 
-  const onFailed = (err: Error) => {
-    if (err instanceof InvalidTxError) {
-      Notifications.emit({
-        title: t('failed'),
-        subtitle: t('errorWithTransaction'),
-      })
-    }
+  const onFailed = () => {
+    Notifications.emit({
+      title: t('failed'),
+      subtitle: t('errorWithTransaction'),
+    })
   }
 
   const onError = (type?: string) => {
@@ -260,7 +260,7 @@ export const useSubmitExtrinsic = ({
   // Re-fetch tx fee if tx changes
   const fetchTxFee = async () => {
     if (tx && from) {
-      const partialFee = (await tx?.paymentInfo(from))?.partialFee || 0n
+      const { partialFee } = await tx.paymentInfo(from)
       TxSubmission.updateFee(uid, partialFee)
     }
   }
@@ -268,12 +268,7 @@ export const useSubmitExtrinsic = ({
     if (uid > 0) {
       fetchTxFee()
     }
-  }, [
-    uid,
-    JSON.stringify(tx?.call, (_, value) =>
-      typeof value === 'bigint' ? value.toString() : value
-    ),
-  ])
+  }, [uid, JSON.stringify(tx?.toHex())])
 
   return {
     uid,

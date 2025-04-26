@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PolkadotSigner } from 'polkadot-api'
-import type { Subscription } from 'rxjs'
+import type { SubmittableExtrinsic } from 'dedot'
+import type { InjectedSigner, Unsub } from 'dedot/types'
 import type { MaybeAddress } from 'types'
 import type { TxSubmissionItem } from './types'
 
@@ -11,7 +11,7 @@ export class TxSubmission {
   static uids: TxSubmissionItem[] = []
 
   // Transaction subscriptions
-  static subs: Record<number, Subscription> = {}
+  static subs: Record<number, Unsub> = {}
 
   static getUid(id: number) {
     return this.uids.find((item) => item.uid === id)
@@ -64,9 +64,9 @@ export class TxSubmission {
 
   static async addSub(
     uid: number,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    tx: any,
-    signer: PolkadotSigner,
+    from: string,
+    tx: SubmittableExtrinsic,
+    signer: InjectedSigner,
     nonce: number,
     {
       onReady,
@@ -83,39 +83,40 @@ export class TxSubmission {
     }
   ) {
     try {
-      this.subs[uid] = tx.signSubmitAndWatch(signer, { nonce }).subscribe({
-        next: (result: { type: string }) => {
-          const eventType = result?.type
+      this.subs[uid] = await tx.signAndSend(
+        from,
+        { signer, nonce },
+        async (result) => {
+          const { status } = result
 
-          if (eventType === 'broadcasted') {
+          if (status.type === 'Broadcasting') {
             this.setUidPending(uid, true)
             onReady()
           }
-          if (eventType === 'txBestBlocksState') {
+          if (status.type === 'BestChainBlockIncluded') {
             onInBlock()
             this.setUidSubmitted(uid, false)
             this.setUidPending(uid, false)
           }
-          if (eventType === 'finalized') {
+          if (status.type === 'Finalized') {
             onFinalized()
             this.deleteTx(uid)
           }
-        },
-        error: (err: Error) => {
-          onFailed(err)
+          if (status.type === 'Invalid') {
+            onFailed(Error('Invalid'))
+          }
           this.deleteTx(uid)
-        },
-      })
+        }
+      )
     } catch (e) {
       onError('default')
       this.deleteTx(uid)
     }
   }
-
   static removeSub(uid: number) {
     const sub = this.subs[uid]
     if (sub) {
-      sub.unsubscribe()
+      sub()
       this.subs = Object.fromEntries(
         Object.entries(this.subs).filter(([key]) => Number(key) !== uid)
       )
