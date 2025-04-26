@@ -3,7 +3,7 @@
 
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
-import type { DedotClient } from 'dedot'
+import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
@@ -329,6 +329,10 @@ export class WestendService
         tx.stakingWithdraw(this.apiRelay, numSlashingSpans),
       transferKeepAlive: (to, value) =>
         tx.transferKeepAlive(this.apiRelay, to, value),
+    },
+    signer: {
+      extraSignedExtension: (signerAddress) =>
+        new ExtraSignedExtension(this.apiRelay, { signerAddress }),
     },
   }
 }

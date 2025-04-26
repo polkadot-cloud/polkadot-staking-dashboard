@@ -3,7 +3,7 @@
 
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
-import type { DedotClient } from 'dedot'
+import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
@@ -329,6 +329,10 @@ export class PolkadotService
         tx.stakingWithdraw(this.apiRelay, numSlashingSpans),
       transferKeepAlive: (to, value) =>
         tx.transferKeepAlive(this.apiRelay, to, value),
+    },
+    signer: {
+      extraSignedExtension: (signerAddress) =>
+        new ExtraSignedExtension(this.apiRelay, { signerAddress }),
     },
   }
 }

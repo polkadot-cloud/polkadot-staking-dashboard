@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { SubmittableExtrinsic } from 'dedot'
+import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
 import type {
   PalletNominationPoolsBondedPoolInner,
   PalletNominationPoolsPoolMember,
@@ -151,5 +151,10 @@ export interface ServiceInterface {
       to: string,
       value: bigint
     ) => SubmittableExtrinsic | undefined
+  }
+  signer: {
+    extraSignedExtension: (
+      signerAddress: string
+    ) => ExtraSignedExtension | undefined
   }
 }

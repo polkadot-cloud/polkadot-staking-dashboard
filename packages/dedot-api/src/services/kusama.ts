@@ -3,7 +3,7 @@
 
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
-import type { DedotClient } from 'dedot'
+import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
@@ -328,6 +328,10 @@ export class KusamaService
         tx.stakingWithdraw(this.apiRelay, numSlashingSpans),
       transferKeepAlive: (to, value) =>
         tx.transferKeepAlive(this.apiRelay, to, value),
+    },
+    signer: {
+      extraSignedExtension: (signerAddress) =>
+        new ExtraSignedExtension(this.apiRelay, { signerAddress }),
     },
   }
 }

@@ -58,4 +58,7 @@ export const defaultServiceInterface: ServiceInterface = {
     stakingWithdraw: () => undefined,
     transferKeepAlive: () => undefined,
   },
+  signer: {
+    extraSignedExtension: () => undefined,
+  },
 }
