@@ -3,7 +3,7 @@
 
 import { Ledger } from 'contexts/LedgerHardware/static/ledger'
 import type { HexString } from 'dedot/utils'
-import { u8aToHex } from 'dedot/utils'
+import { hexToU8a, u8aToHex } from 'dedot/utils'
 import { init, RuntimeMetadata } from 'merkleized-metadata'
 
 export class LedgerSignerNew {
@@ -39,13 +39,14 @@ export class LedgerSignerNew {
 
     const proof = mm.generateProofForExtrinsic(
       this.txHex.slice(2),
-      digest.hash(),
+      undefined,
       runtimeMetadata
     )
-    console.log('Proof:', proof) // Uncaught (in promise) Failed to decode extra (CheckGenesis): Not enough data to fill buffer
+
+    const txMetadata = `0x${proof.encode()}`
 
     const signature = (
-      await Ledger.signPayload(app, index, this.payload, Uint8Array.from([0]))
+      await Ledger.signPayload(app, index, this.payload, hexToU8a(txMetadata))
     ).signature
 
     console.log('ledger signature', signature)
