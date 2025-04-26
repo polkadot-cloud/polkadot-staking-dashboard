@@ -13,6 +13,7 @@ import type {
   SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
 import type { AccountId32, BytesLike } from 'dedot/codecs'
+import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
 import type { IdentityOf, SuperOf } from './identity'
 import type { ClaimPermission, PoolRoles } from './pools'
@@ -155,7 +156,8 @@ export interface ServiceInterface {
   }
   signer: {
     extraSignedExtension: (
-      signerAddress: string
+      signerAddress: string,
+      payloadOptions?: PayloadOptions
     ) => ExtraSignedExtension | undefined
     metadata: () => Promise<HexString | undefined>
   }

@@ -2,14 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Ledger } from 'contexts/LedgerHardware/static/ledger'
+import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
+import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
-import { hexToU8a, u8aToHex } from 'dedot/utils'
+import { hexAddPrefix, hexStripPrefix, hexToU8a, u8aToHex } from 'dedot/utils'
 import { init, RuntimeMetadata } from 'merkleized-metadata'
 
 export class LedgerSignerNew {
   constructor(
-    public txHex: HexString,
-    public payload: Uint8Array,
+    public from: string,
+    public extraSignedExtension: (
+      signerAddress: string,
+      payloadOptions?: PayloadOptions
+    ) => ExtraSignedExtension | undefined,
+    public tx: SubmittableExtrinsic,
     public metadata: HexString
   ) {}
 
@@ -26,8 +32,9 @@ export class LedgerSignerNew {
     const { app } = await Ledger.initialise()
 
     const mm = await init()
-    const runtimeMetadata = RuntimeMetadata.fromHex(this.metadata.slice(2))
-
+    const runtimeMetadata = RuntimeMetadata.fromHex(
+      hexStripPrefix(this.metadata)
+    )
     const digest = mm.generateMetadataDigest(runtimeMetadata, {
       base58Prefix: info.ss58,
       decimals: info.decimals,
@@ -35,18 +42,36 @@ export class LedgerSignerNew {
       specVersion: info.specVersion,
       tokenSymbol: info.tokenSymbol,
     })
-    console.log('Metadata Hash:', digest.hash())
+
+    const extra = this.extraSignedExtension(this.from, {
+      metadataHash: hexAddPrefix(`${digest.hash()}`),
+    })
+
+    if (!extra) {
+      return
+    }
+    await extra.init()
+
+    const additionalSigned = extra.$AdditionalSigned.tryEncode(
+      extra.additionalSigned
+    )
+    const toSign = extra.toRawPayload(this.tx.callHex).data
 
     const proof = mm.generateProofForExtrinsic(
-      this.txHex.slice(2),
-      undefined,
+      hexStripPrefix(this.tx.toHex()),
+      hexStripPrefix(u8aToHex(additionalSigned)),
       runtimeMetadata
     )
 
-    const txMetadata = `0x${proof.encode()}`
+    console.log(`0x${proof.encode()}`)
 
     const signature = (
-      await Ledger.signPayload(app, index, this.payload, hexToU8a(txMetadata))
+      await Ledger.signPayload(
+        app,
+        index,
+        hexToU8a(toSign),
+        hexToU8a(`0x${proof.encode()}`)
+      )
     ).signature
 
     console.log('ledger signature', signature)

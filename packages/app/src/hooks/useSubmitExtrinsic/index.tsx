@@ -156,8 +156,9 @@ export const useSubmitExtrinsic = ({
       switch (source) {
         case 'ledger':
           signature = await new LedgerSignerNew(
-            tx.toHex(),
-            hexToU8a(rawPayload.data),
+            from,
+            serviceApi.signer.extraSignedExtension,
+            tx,
             metadata || '0x'
           ).sign(networkInfo, (account as HardwareAccount).index)
           break

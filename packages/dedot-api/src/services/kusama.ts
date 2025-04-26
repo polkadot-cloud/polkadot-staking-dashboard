@@ -330,8 +330,11 @@ export class KusamaService
         tx.transferKeepAlive(this.apiRelay, to, value),
     },
     signer: {
-      extraSignedExtension: (signerAddress) =>
-        new ExtraSignedExtension(this.apiRelay, { signerAddress }),
+      extraSignedExtension: (signerAddress, payloadOptions = undefined) =>
+        new ExtraSignedExtension(this.apiRelay, {
+          signerAddress,
+          payloadOptions,
+        }),
       metadata: async () =>
         await this.apiRelay.call.metadata.metadataAtVersion(15),
     },
