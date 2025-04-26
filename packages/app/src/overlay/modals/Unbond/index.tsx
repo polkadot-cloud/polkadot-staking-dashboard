@@ -11,7 +11,6 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
-import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
@@ -111,9 +110,8 @@ export const Unbond = () => {
     : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0)
 
   const getTx = () => {
-    const api = Apis.getApi(network)
     let tx: SubmittableExtrinsic | undefined
-    if (!api || !activeAddress) {
+    if (!activeAddress) {
       return
     }
     const bondToSubmit = unitToPlanck(!bondValid ? 0 : bond.bond, units)

@@ -7,7 +7,6 @@ import UniversalProvider from '@walletconnect/universal-provider'
 import { getSdkError } from '@walletconnect/utils'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -28,9 +27,6 @@ export const WalletConnectProvider = ({
   const { network } = useNetwork()
   const { isReady, getChainSpec } = useApi()
   const { genesisHash } = getChainSpec(network)
-
-  // Check if the API is present
-  const apiPresent = !!Apis.get(network)
 
   // The WalletConnect provider
   const wcProvider = useRef<UniversalProvider | null>(null)
@@ -305,10 +301,10 @@ export const WalletConnectProvider = ({
   // Initially, all active chains (in all tabs) must be connected and ready for the initial provider
   // connection
   useEffect(() => {
-    if (!pairingInitiated.current && wcInitialized && apiPresent && isReady) {
+    if (!pairingInitiated.current && wcInitialized && isReady) {
       connectProvider()
     }
-  }, [wcInitialized, network, apiPresent, isReady])
+  }, [wcInitialized, network, isReady])
 
   // Reconnect provider to a new session if a new connected chain is added, or when the provider is
   // set. This can only happen once pairing has been initiated. Doing this will require approval
@@ -322,7 +318,7 @@ export const WalletConnectProvider = ({
     ) {
       connectProvider()
     }
-  }, [network, apiPresent, isReady])
+  }, [network, isReady])
 
   return (
     <WalletConnectContext.Provider

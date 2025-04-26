@@ -7,7 +7,6 @@ import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { Apis } from 'controllers/Apis'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Stat, Subheading } from 'ui-core/canvas'
@@ -35,11 +34,6 @@ export const Stats = ({
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
-    const api = Apis.getApi(network)
-    if (!api) {
-      return
-    }
-
     const apiResult = await serviceApi.runtimeApi.pointsToBalance(
       bondedPool.id,
       BigInt(bondedPool.points)

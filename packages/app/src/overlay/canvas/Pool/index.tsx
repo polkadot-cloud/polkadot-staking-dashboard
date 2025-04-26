@@ -6,10 +6,9 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { Apis } from 'controllers/Apis'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
-import type { BondedPool, SystemChainId } from 'types'
+import type { BondedPool } from 'types'
 import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 import { formatIdentities, formatSuperIdentities } from 'utils'
@@ -107,17 +106,14 @@ export const Pool = () => {
 
   // Fetch pool role identities when bonded pool changes
   const handleRoleIdentities = async (addresses: string[]) => {
-    const peopleApiClient = Apis.getClient(`people-${network}` as SystemChainId)
-    if (peopleApiClient) {
-      const identities = formatIdentities(
-        addresses,
-        await serviceApi.query.identityOfMulti(addresses)
-      )
-      const supers = formatSuperIdentities(
-        await serviceApi.query.superOfMulti(addresses)
-      )
-      setRoleIdentities({ identities, supers })
-    }
+    const identities = formatIdentities(
+      addresses,
+      await serviceApi.query.identityOfMulti(addresses)
+    )
+    const supers = formatSuperIdentities(
+      await serviceApi.query.superOfMulti(addresses)
+    )
+    setRoleIdentities({ identities, supers })
   }
 
   useEffect(() => {

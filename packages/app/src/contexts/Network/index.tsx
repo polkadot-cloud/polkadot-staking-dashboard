@@ -3,7 +3,6 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { varToUrlHash } from '@w3ux/utils'
-import { Apis } from 'controllers/Apis'
 import {
   getNetwork,
   getProviderType,
@@ -25,11 +24,6 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
 
   // handle network switching
   const switchNetwork = async (name: NetworkId): Promise<void> => {
-    // Disconnect from current APIs before switching network
-    await Promise.all([
-      await Apis.destroy(network),
-      await Apis.destroy(`people-${network}`),
-    ])
     setNetworkConfig(name, getInitialRpcEndpoints(name), getProviderType())
     varToUrlHash('n', name, false)
   }
