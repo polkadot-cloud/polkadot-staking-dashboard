@@ -109,7 +109,6 @@ export const useSubmitExtrinsic = ({
         throw new Error(`${t('walletNotFound')}`)
       }
       // NOTE: Summons extension popup if not already connected
-      // TODO: Expose this in a w3ux utility
       window.injectedWeb3[source].enable(DappName)
     }
 
