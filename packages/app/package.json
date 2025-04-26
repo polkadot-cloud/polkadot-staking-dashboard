@@ -53,7 +53,6 @@
     "html5-qrcode": "^2.3.8",
     "i18next-browser-languagedetector": "^8.0.4",
     "locales": "workspace:*",
-    "merkleized-metadata": "^0.1.0",
     "plugin-staking-api": "workspace:*",
     "polkadot-api": "^1.9.11",
     "qrcode-generator": "1.4.4",

@@ -20,7 +20,7 @@ import type { InjectedSigner } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
 import { concatU8a, hexToU8a } from 'dedot/utils'
 import { useProxySupported } from 'hooks/useProxySupported'
-import { LedgerSignerNew } from 'library/Signers/LedgerSignerNew'
+import { LedgerSigner } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
 import type {
   VaultSignatureResult,
@@ -123,6 +123,7 @@ export const useSubmitExtrinsic = ({
 
     // Handle signed transaction
     let signer: PolkadotSigner | undefined
+    let encodedSig
     const handlers = {
       onReady,
       onInBlock,
@@ -155,12 +156,20 @@ export const useSubmitExtrinsic = ({
       let signature: HexString | undefined
       switch (source) {
         case 'ledger':
-          signature = await new LedgerSignerNew(
+          // eslint-disable-next-line no-case-declarations
+          const result = await new LedgerSigner(
             from,
             serviceApi.signer.extraSignedExtension,
             tx,
             metadata || '0x'
           ).sign(networkInfo, (account as HardwareAccount).index)
+          if (result) {
+            encodedSig = {
+              address: from,
+              signature: $Signature().tryDecode(result.signature),
+              extra: result.data,
+            }
+          }
           break
 
         case 'vault':
@@ -186,22 +195,28 @@ export const useSubmitExtrinsic = ({
             setSubmitting: (val: boolean) =>
               TxSubmission.setUidSubmitted(uid, val),
           }).sign(prefixedPayload)
+          encodedSig = {
+            address: from,
+            signature: $Signature().tryDecode(signature),
+            extra: extra.data,
+          }
           break
 
         case 'wallet_connect':
           signature = (await signWcTx(payload)).signature
+          encodedSig = {
+            address: from,
+            signature: $Signature().tryDecode(signature),
+            extra: extra.data,
+          }
           break
       }
 
-      if (!signature) {
+      if (!encodedSig) {
         onError('default')
         return
       }
-      const encodedSig = {
-        address: from,
-        signature: $Signature().tryDecode(signature),
-        extra: extra.data,
-      }
+
       // Custom signer
       //
       // Submit the transaction with the raw signature
