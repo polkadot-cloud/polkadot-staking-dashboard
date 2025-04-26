@@ -268,6 +268,7 @@ export class WestendService
         await runtimeApi.pointsToBalance(this.apiRelay, poolId, points),
     },
     tx: {
+      batch: (calls) => tx.batch(this.apiRelay, calls),
       createPool: (from, poolId, bond, metadata, nominees, roles) =>
         createPool(
           this.apiRelay,

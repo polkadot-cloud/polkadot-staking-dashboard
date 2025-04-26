@@ -59,6 +59,7 @@ export interface ServiceInterface {
     pointsToBalance: (poolId: number, points: bigint) => Promise<bigint>
   }
   tx: {
+    batch: (calls: SubmittableExtrinsic[]) => SubmittableExtrinsic | undefined
     createPool: (
       from: string,
       poolId: number,

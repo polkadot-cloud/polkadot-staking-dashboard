@@ -27,6 +27,7 @@ export const defaultServiceInterface: ServiceInterface = {
     pointsToBalance: async () => BigInt(0),
   },
   tx: {
+    batch: () => undefined,
     createPool: () => [],
     fastUnstakeDeregister: () => undefined,
     fastUnstakeRegister: () => undefined,
