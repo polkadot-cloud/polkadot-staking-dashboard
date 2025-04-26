@@ -118,6 +118,14 @@ export const useSubmitExtrinsic = ({
 
     // Handle signed transaction
     let signer: PolkadotSigner | undefined
+    const handlers = {
+      onReady,
+      onInBlock,
+      onFinalized,
+      onFailed,
+      onError,
+    }
+
     if (requiresManualSign(from)) {
       // TODO: Replace wiith dedot utility
       const pubKey = AccountId().enc(from)
@@ -173,29 +181,35 @@ export const useSubmitExtrinsic = ({
           )
           break
       }
+
+      // Submit the transaction
+      // TODO: Use `addSend` for instead
+      TxSubmission.addSignAndSend(
+        uid,
+        from,
+        tx,
+        signer as InjectedSigner,
+        getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from),
+        handlers
+      )
     } else {
-      // Get the signer for this account
-      signer = getExtensionAccount(from)?.signer as PolkadotSigner
+      // Extension signer
+      //
+      // Get the signer for this account and submit the transaction
+      signer = getExtensionAccount(from)?.signer as PolkadotSigner | undefined
+      if (!signer) {
+        onError('default')
+        return
+      }
+      TxSubmission.addSignAndSend(
+        uid,
+        from,
+        tx,
+        signer as InjectedSigner,
+        getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from),
+        handlers
+      )
     }
-
-    if (!signer) {
-      onError('default')
-      return
-    }
-
-    // Calculate correct nonce
-    const nonce =
-      getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from)
-
-    // Submit the transaction
-    // TODO: Fix signers to be `InjectedSigner`
-    TxSubmission.addSub(uid, from, tx, signer as InjectedSigner, nonce, {
-      onReady,
-      onInBlock,
-      onFinalized,
-      onFailed,
-      onError,
-    })
   }
 
   // Initialise tx submission

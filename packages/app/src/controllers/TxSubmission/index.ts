@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { SubmittableExtrinsic } from 'dedot'
-import type { InjectedSigner, Unsub } from 'dedot/types'
+import type { ExtrinsicSignatureV4 } from 'dedot/codecs'
+import type { InjectedSigner, TxStatus, Unsub } from 'dedot/types'
 import type { MaybeAddress } from 'types'
-import type { TxSubmissionItem } from './types'
+import type { TxStatusHandlers, TxSubmissionItem } from './types'
 
 export class TxSubmission {
   // Transaction items
@@ -62,50 +63,20 @@ export class TxSubmission {
     this.dispatchEvent()
   }
 
-  static async addSub(
+  static async addSignAndSend(
     uid: number,
     from: string,
     tx: SubmittableExtrinsic,
     signer: InjectedSigner,
     nonce: number,
-    {
-      onReady,
-      onInBlock,
-      onFinalized,
-      onFailed,
-      onError,
-    }: {
-      onReady: () => void
-      onInBlock: () => void
-      onFinalized: () => void
-      onFailed: (err: Error) => void
-      onError: (type?: string) => void
-    }
+    { onError, ...onRest }: TxStatusHandlers
   ) {
     try {
       this.subs[uid] = await tx.signAndSend(
         from,
         { signer, nonce },
-        async (result) => {
-          const { status } = result
-
-          if (status.type === 'Broadcasting') {
-            this.setUidPending(uid, true)
-            onReady()
-          }
-          if (status.type === 'BestChainBlockIncluded') {
-            onInBlock()
-            this.setUidSubmitted(uid, false)
-            this.setUidPending(uid, false)
-          }
-          if (status.type === 'Finalized') {
-            onFinalized()
-            this.deleteTx(uid)
-          }
-          if (status.type === 'Invalid') {
-            onFailed(Error('Invalid'))
-          }
-          this.deleteTx(uid)
+        async ({ status }) => {
+          this.handleResult(uid, status, onRest)
         }
       )
     } catch (e) {
@@ -113,6 +84,59 @@ export class TxSubmission {
       this.deleteTx(uid)
     }
   }
+
+  static async addSend(
+    uid: number,
+    tx: SubmittableExtrinsic,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signature: ExtrinsicSignatureV4<any, any, any>,
+    { onError, ...onRest }: TxStatusHandlers
+  ) {
+    tx.attachSignature(signature)
+    try {
+      this.subs[uid] = await tx.send(async ({ status }) => {
+        this.handleResult(uid, status, onRest)
+      })
+    } catch (e) {
+      onError('default')
+      this.deleteTx(uid)
+    }
+  }
+
+  static handleResult(
+    uid: number,
+    status: TxStatus,
+    {
+      onReady,
+      onInBlock,
+      onFinalized,
+      onFailed,
+    }: {
+      onReady: () => void
+      onInBlock: () => void
+      onFinalized: () => void
+      onFailed: (err: Error) => void
+    }
+  ) {
+    if (status.type === 'Broadcasting') {
+      this.setUidPending(uid, true)
+      onReady()
+    }
+    if (status.type === 'BestChainBlockIncluded') {
+      onInBlock()
+      this.setUidSubmitted(uid, false)
+      this.setUidPending(uid, false)
+    }
+    if (status.type === 'Finalized') {
+      onFinalized()
+      this.deleteTx(uid)
+    }
+    if (status.type === 'Invalid') {
+      onFailed(Error('Invalid'))
+      this.deleteTx(uid)
+    }
+  }
+
   static removeSub(uid: number) {
     const sub = this.subs[uid]
     if (sub) {

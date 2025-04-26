@@ -11,3 +11,11 @@ export type TxSubmissionItem = {
   submitted: boolean
   pending: boolean
 }
+
+export interface TxStatusHandlers {
+  onReady: () => void
+  onInBlock: () => void
+  onFinalized: () => void
+  onFailed: (err: Error) => void
+  onError: (type?: string) => void
+}
