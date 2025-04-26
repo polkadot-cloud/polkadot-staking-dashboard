@@ -13,7 +13,7 @@
     "@w3ux/utils": "2.0.10",
     "bignumber.js": "^9.2.1",
     "date-fns": "^4.1.0",
-    "dedot": "^0.9.3",
+    "dedot": "^0.9.4",
     "i18next": "^24.2.3"
   },
   "devDependencies": {
