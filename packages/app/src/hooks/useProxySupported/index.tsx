@@ -54,7 +54,7 @@ export const useProxySupported = () => {
           (c: AnyJson) =>
             (isSupportedProxyCall(proxyType, c.pallet, c.palletCall.name) ||
               (c.pallet === 'Proxy' && c.palletCall.name === 'Proxy')) &&
-            !unmigratedController(`${pallet}.${method}`, delegator)
+            !unmigratedController(`${c.pallet}.${c.palletCall.name}`, delegator)
         )
     }
 
