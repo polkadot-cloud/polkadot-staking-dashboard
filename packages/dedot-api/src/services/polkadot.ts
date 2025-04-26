@@ -36,8 +36,8 @@ import { ProxiesQuery } from '../subscribe/proxies'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
+import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
-import { fastUnstakeDeregister } from '../tx/fastUnstakeDeregister'
 import type {
   AccountBalances,
   ActivePools,
@@ -278,7 +278,56 @@ export class PolkadotService
           nominees,
           roles
         ),
-      fastUnstakeDeregister: () => fastUnstakeDeregister(this.apiRelay),
+      fastUnstakeDeregister: () => tx.fastUnstakeDeregister(this.apiRelay),
+      fastUnstakeRegister: () => tx.fastUnstakeRegister(this.apiRelay),
+      joinPool: (poolId, bond, claimPermission) =>
+        tx.joinPool(this.apiRelay, poolId, bond, claimPermission),
+      newNominator: (bond, payee, nominees) =>
+        tx.newNominator(this.apiRelay, bond, payee, nominees),
+      payoutStakersByPage: (validator, era, page) =>
+        tx.payoutStakersByPage(this.apiRelay, validator, era, page),
+      poolBondExtra: (type, bond) =>
+        tx.poolBondExtra(this.apiRelay, type, bond),
+      poolChill: (poolId) => tx.poolChill(this.apiRelay, poolId),
+      poolClaimCommission: (poolId) =>
+        tx.poolClaimCommission(this.apiRelay, poolId),
+      poolClaimPayout: () => tx.poolClaimPayout(this.apiRelay),
+      poolNominate: (poolId, nominees) =>
+        tx.poolNominate(this.apiRelay, poolId, nominees),
+      poolSetClaimPermission: (claimPermission) =>
+        tx.poolSetClaimPermission(this.apiRelay, claimPermission),
+      poolSetCommission: (poolId, commission) =>
+        tx.poolSetCommission(this.apiRelay, poolId, commission),
+      poolSetCommissionChangeRate: (poolId, maxIncrease, minDelay) =>
+        tx.poolSetCommissionChangeRate(
+          this.apiRelay,
+          poolId,
+          maxIncrease,
+          minDelay
+        ),
+      poolSetCommissionMax: (poolId, max) =>
+        tx.poolSetCommissionMax(this.apiRelay, poolId, max),
+      poolSetMetadata: (poolId, metadata) =>
+        tx.poolSetMetadata(this.apiRelay, poolId, metadata),
+      poolSetState: (poolId, state) =>
+        tx.poolSetState(this.apiRelay, poolId, state),
+      poolUnbond: (who, points) => tx.poolUnbond(this.apiRelay, who, points),
+      poolUpdateRoles: (poolId, roles) =>
+        tx.poolUpdateRoles(this.apiRelay, poolId, roles),
+      poolWithdraw: (who, numSlashingSpans) =>
+        tx.poolWithdraw(this.apiRelay, who, numSlashingSpans),
+      proxy: (real, call) => tx.proxy(this.apiRelay, real, call),
+      stakingBondExtra: (bond) => tx.stakingBondExtra(this.apiRelay, bond),
+      stakingChill: () => tx.stakingChill(this.apiRelay),
+      stakingNominate: (nominees) =>
+        tx.stakingNominate(this.apiRelay, nominees),
+      stakingRebond: (bond) => tx.stakingRebond(this.apiRelay, bond),
+      stakingSetPayee: (payee) => tx.stakingSetPayee(this.apiRelay, payee),
+      stakingUnbond: (bond) => tx.stakingUnbond(this.apiRelay, bond),
+      stakingWithdraw: (numSlashingSpans) =>
+        tx.stakingWithdraw(this.apiRelay, numSlashingSpans),
+      transferKeepAlive: (to, value) =>
+        tx.transferKeepAlive(this.apiRelay, to, value),
     },
   }
 }
