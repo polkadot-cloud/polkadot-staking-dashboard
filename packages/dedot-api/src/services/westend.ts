@@ -331,6 +331,7 @@ export class WestendService
         tx.transferKeepAlive(this.apiRelay, to, value),
     },
     signer: {
+      metadata: () => this.apiRelay.registry.metadata,
       extraSignedExtension: (signerAddress) =>
         new ExtraSignedExtension(this.apiRelay, { signerAddress }),
     },

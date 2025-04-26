@@ -154,6 +154,8 @@ export interface ServiceInterface {
     ) => SubmittableExtrinsic | undefined
   }
   signer: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    metadata: () => any
     extraSignedExtension: (
       signerAddress: string
     ) => ExtraSignedExtension | undefined

@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { HexString } from 'dedot/utils'
 import type { AnyFunction, AnyJson } from 'types'
 
 export interface WalletConnectContextInterface {
@@ -21,4 +22,4 @@ export interface WalletConnectConnectedMeta {
 
 export type WalletConnectSignTx = (
   payload: AnyJson
-) => Promise<{ signature: string }>
+) => Promise<{ signature: HexString }>

@@ -28,7 +28,6 @@ import type {
 } from 'library/Signers/VaultSigner/types'
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
 import type { PolkadotSigner } from 'polkadot-api'
-import { getPolkadotSignerFromPjs } from 'polkadot-api/pjs-signer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
@@ -142,6 +141,7 @@ export const useSubmitExtrinsic = ({
       }
       await extra.init()
       const prefix = compactU32.encode(tx.callLength)
+      const payload = extra.toPayload(tx.callHex)
       const rawPayload = extra.toRawPayload(tx.callHex)
       const prefixedPayload = concatU8a(prefix, hexToU8a(rawPayload.data))
       let signature: HexString | undefined
@@ -180,22 +180,11 @@ export const useSubmitExtrinsic = ({
           break
 
         case 'wallet_connect':
-          // TODO: Replace with dedot utility
-          // Pass `extra` payload into signWcTx (as signPayload) to generate signature
-          signer = getPolkadotSignerFromPjs(
-            from,
-            signWcTx,
-            // Signing bytes not currently being used
-            // FIXME: Can implement, albeit won't be used
-            async () => ({
-              id: 0,
-              signature: '0x',
-            })
-          )
+          signature = (await signWcTx(payload)).signature
           break
       }
 
-      if (signature === '0x') {
+      if (!signature) {
         onError('default')
         return
       }

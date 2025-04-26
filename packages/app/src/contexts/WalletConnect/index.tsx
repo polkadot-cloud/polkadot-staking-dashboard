@@ -8,6 +8,7 @@ import { getSdkError } from '@walletconnect/utils'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
+import type { HexString } from 'dedot/utils'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { AnyFunction, AnyJson } from 'types'
@@ -243,7 +244,9 @@ export const WalletConnectProvider = ({
   }
 
   // Attempt to sign a transaction and receive a signature
-  const signWcTx = async (payload: AnyJson): Promise<{ signature: string }> => {
+  const signWcTx = async (
+    payload: AnyJson
+  ): Promise<{ signature: HexString }> => {
     if (!wcProvider.current || !wcProvider.current.session?.topic) {
       return { signature: '0x' }
     }
