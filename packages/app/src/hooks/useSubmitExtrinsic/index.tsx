@@ -18,9 +18,9 @@ import { TxSubmission } from 'controllers/TxSubmission'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
-import { concatU8a, decodeAddress, hexToU8a } from 'dedot/utils'
+import { concatU8a, hexToU8a } from 'dedot/utils'
 import { useProxySupported } from 'hooks/useProxySupported'
-import { LedgerSigner } from 'library/Signers/LedgerSigner'
+import { LedgerSignerNew } from 'library/Signers/LedgerSignerNew'
 import { VaultSigner } from 'library/Signers/VaultSigner'
 import type {
   VaultSignatureResult,
@@ -42,17 +42,21 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
-  const { serviceApi } = useApi()
   const { signWcTx } = useWalletConnect()
   const { getAccountBalance } = useBalances()
   const { activeProxy } = useActiveAccounts()
   const { extensionsStatus } = useExtensions()
+  const { serviceApi, getChainSpec } = useApi()
   const { isProxySupported } = useProxySupported()
   const { openPromptWith, closePrompt } = usePrompt()
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
+  const {
+    version: { specName, specVersion },
+  } = getChainSpec(network)
   const { unit, units } = getNetworkData(network)
+  const { ss58 } = getNetworkData(network)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)
@@ -128,10 +132,12 @@ export const useSubmitExtrinsic = ({
     }
 
     if (requiresManualSign(from)) {
-      const pubKey = decodeAddress(from)
       const networkInfo = {
         decimals: units,
         tokenSymbol: unit,
+        specName,
+        specVersion,
+        ss58,
       }
       const extra = serviceApi.signer.extraSignedExtension(from)
       const { $Signature } = serviceApi.unsafe
@@ -144,14 +150,16 @@ export const useSubmitExtrinsic = ({
       const payload = extra.toPayload(tx.callHex)
       const rawPayload = extra.toRawPayload(tx.callHex)
       const prefixedPayload = concatU8a(prefix, hexToU8a(rawPayload.data))
-      let signature: HexString | undefined
+      const metadata = await serviceApi.signer.metadata()
 
+      let signature: HexString | undefined
       switch (source) {
         case 'ledger':
-          signer = await new LedgerSigner(pubKey).getPolkadotSigner(
-            networkInfo,
-            (account as HardwareAccount).index
-          )
+          signature = await new LedgerSignerNew(
+            tx.toHex(),
+            hexToU8a(rawPayload.data),
+            metadata || '0x'
+          ).sign(networkInfo, (account as HardwareAccount).index)
           break
 
         case 'vault':

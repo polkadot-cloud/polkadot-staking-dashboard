@@ -157,10 +157,9 @@ export interface ServiceInterface {
     extraSignedExtension: (
       signerAddress: string
     ) => ExtraSignedExtension | undefined
+    metadata: () => Promise<HexString | undefined>
   }
   unsafe: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    metadata: () => any
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $Signature: () => any
   }

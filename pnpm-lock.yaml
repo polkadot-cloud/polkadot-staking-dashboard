@@ -110,8 +110,8 @@ importers:
         specifier: ^0.13.3
         version: 0.13.3(react@19.1.0)
       '@polkadot-api/merkleize-metadata':
-        specifier: ^1.1.14
-        version: 1.1.14
+        specifier: ^1.1.15
+        version: 1.1.15
       '@polkadot-api/signers-common':
         specifier: ^0.1.6
         version: 0.1.6
@@ -208,6 +208,9 @@ importers:
       locales:
         specifier: workspace:*
         version: link:../locales
+      merkleized-metadata:
+        specifier: ^0.1.0
+        version: 0.1.0
       plugin-staking-api:
         specifier: workspace:*
         version: link:../plugin-staking-api
@@ -1341,11 +1344,14 @@ packages:
   '@polkadot-api/logs-provider@0.0.6':
     resolution: {integrity: sha512-4WgHlvy+xee1ADaaVf6+MlK/+jGMtsMgAzvbQOJZnP4PfQuagoTqaeayk8HYKxXGphogLlPbD06tANxcb+nvAg==}
 
-  '@polkadot-api/merkleize-metadata@1.1.14':
-    resolution: {integrity: sha512-5XUJCW3LMlQGxrDndIaTiJv9vkBdSBk3kOB87teWQHrtkD/2Oytajc8Qlh8L9IWMhU+LIAQVJLYf5OEkzG9CFQ==}
+  '@polkadot-api/merkleize-metadata@1.1.15':
+    resolution: {integrity: sha512-wl/c+qjIqrAPBqs23BkNiBiIeLaTenk8Bz7eTTkmTbx8m9tB8pwJ2kUy7LkZjeLk239a8DEbcc/3/vTxvcXEbQ==}
 
   '@polkadot-api/metadata-builders@0.10.2':
     resolution: {integrity: sha512-rtdihBFd25oT9/71Q+EOR9q6E6mCl1pPe/2He/LtlY0TyHiYqO2KpMZNXkoGcw1RHvrV+CAtDFMvK1j3n8aW8w==}
+
+  '@polkadot-api/metadata-builders@0.11.0':
+    resolution: {integrity: sha512-OoKF/mViUJMEk4DUOauHBuGLGa0tKi5sIiPfWTsXdVczjmb6+JumqWBhS0JU/KGJkK2VuKTCsqeZMJxZtuSgMQ==}
 
   '@polkadot-api/metadata-compatibility@0.2.0':
     resolution: {integrity: sha512-ZvHj4KDQy/JFqV51UN6Gk5xnG0qt/BUS4kjYosLWT9y6p5bHg/4ge7QF5lMloInQqV3Rul9NQo4cKUz3SlSQMQ==}
@@ -1381,6 +1387,9 @@ packages:
 
   '@polkadot-api/substrate-bindings@0.11.1':
     resolution: {integrity: sha512-+oqAZB7y18KrP/DqKmU2P3nNmRzjCY7edtW7tyA1g1jPouF7HhRr/Q13lJseDX9sdE2FZGrKZtivzsw8XeXBng==}
+
+  '@polkadot-api/substrate-bindings@0.12.0':
+    resolution: {integrity: sha512-cIjDeJRHW6g3z+/55UzpoG4LG1N0HbT4x3NvZsQkYg4eoio9Sw7Pw2aZZX86pWemxc7vQbNw7WSz2Gz+ckdX6Q==}
 
   '@polkadot-api/substrate-client@0.3.0':
     resolution: {integrity: sha512-0hEvQLKH2zhaFzE8DPkWehvJilec8u2O2wbIEUStm0OJ8jIFtJ40MFjXQfB01dXBWUz1KaVBqS6xd3sZA90Dpw==}
@@ -4237,6 +4246,12 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
+  merkleized-metadata-sys@0.1.0:
+    resolution: {integrity: sha512-hgm/tyayePap4/BxbHNG477LswfIZEn8/8bTMS+d2t5ER47soCQPJ11AMqDHWDZHKI8lttOvuosGtOupF3W2hQ==}
+
+  merkleized-metadata@0.1.0:
+    resolution: {integrity: sha512-pZAMhe8u0Ob9NxijPKbPp5JurPXROpnIDqCcOdNPuGQ6he6I7dDn2qV61/IcKKkc8rI76wo5uxcX3S8waHpRsw==}
+
   micro-ftch@0.3.1:
     resolution: {integrity: sha512-/0LLxhzP0tfiR5hcQebtudP56gUurs2CLkGarnCiB/OqEyUFQ6U3paQi/tgLv0hBJYt2rnr9MNpxz4fiiugstg==}
 
@@ -6886,15 +6901,20 @@ snapshots:
     dependencies:
       '@polkadot-api/json-rpc-provider': 0.0.4
 
-  '@polkadot-api/merkleize-metadata@1.1.14':
+  '@polkadot-api/merkleize-metadata@1.1.15':
     dependencies:
-      '@polkadot-api/metadata-builders': 0.10.2
-      '@polkadot-api/substrate-bindings': 0.11.1
+      '@polkadot-api/metadata-builders': 0.11.0
+      '@polkadot-api/substrate-bindings': 0.12.0
       '@polkadot-api/utils': 0.1.2
 
   '@polkadot-api/metadata-builders@0.10.2':
     dependencies:
       '@polkadot-api/substrate-bindings': 0.11.1
+      '@polkadot-api/utils': 0.1.2
+
+  '@polkadot-api/metadata-builders@0.11.0':
+    dependencies:
+      '@polkadot-api/substrate-bindings': 0.12.0
       '@polkadot-api/utils': 0.1.2
 
   '@polkadot-api/metadata-compatibility@0.2.0':
@@ -6958,6 +6978,13 @@ snapshots:
       '@noble/hashes': 1.7.1
       '@polkadot-api/utils': 0.1.2
       '@scure/base': 1.2.4
+      scale-ts: 1.6.1
+
+  '@polkadot-api/substrate-bindings@0.12.0':
+    dependencies:
+      '@noble/hashes': 1.8.0
+      '@polkadot-api/utils': 0.1.2
+      '@scure/base': 1.2.5
       scale-ts: 1.6.1
 
   '@polkadot-api/substrate-client@0.3.0':
@@ -10392,6 +10419,12 @@ snapshots:
   math-intrinsics@1.1.0: {}
 
   merge2@1.4.1: {}
+
+  merkleized-metadata-sys@0.1.0: {}
+
+  merkleized-metadata@0.1.0:
+    dependencies:
+      merkleized-metadata-sys: 0.1.0
 
   micro-ftch@0.3.1: {}
 

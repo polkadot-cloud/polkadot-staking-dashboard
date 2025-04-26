@@ -60,9 +60,9 @@ export const defaultServiceInterface: ServiceInterface = {
   },
   signer: {
     extraSignedExtension: () => undefined,
+    metadata: async () => undefined,
   },
   unsafe: {
-    metadata: () => undefined,
     $Signature: () => undefined,
   },
 }

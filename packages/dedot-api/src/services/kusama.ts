@@ -332,9 +332,10 @@ export class KusamaService
     signer: {
       extraSignedExtension: (signerAddress) =>
         new ExtraSignedExtension(this.apiRelay, { signerAddress }),
+      metadata: async () =>
+        await this.apiRelay.call.metadata.metadataAtVersion(15),
     },
     unsafe: {
-      metadata: () => this.apiRelay.registry.metadata,
       $Signature: () => {
         const { signatureTypeId } = this.apiRelay.registry.metadata!.extrinsic
         return this.apiRelay.registry.findCodec(signatureTypeId)
