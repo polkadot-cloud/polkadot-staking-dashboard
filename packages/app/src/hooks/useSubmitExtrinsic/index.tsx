@@ -160,6 +160,7 @@ export const useSubmitExtrinsic = ({
 
         case 'wallet_connect':
           // TODO: Replace with dedot utility
+          // Pass `extra` payload into signWcTx (as signPayload) to generate signature
           signer = getPolkadotSignerFromPjs(
             from,
             signWcTx,

@@ -136,8 +136,8 @@ export class KusamaService
     )
 
     this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
-      this.fastUnstakeQueue?.unsubscribe()
       if (activeAddress) {
+        this.fastUnstakeQueue?.unsubscribe()
         this.fastUnstakeQueue = new FastUnstakeQueueQuery(
           this.apiRelay,
           activeAddress
