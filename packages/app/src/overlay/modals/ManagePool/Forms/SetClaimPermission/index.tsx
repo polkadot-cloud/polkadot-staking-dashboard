@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolSetClaimPermission } from 'api/tx/poolSetClaimPermission'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { defaultClaimPermission } from 'global-bus'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -31,7 +30,7 @@ export const SetClaimPermission = ({
   onResize: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
@@ -62,9 +61,9 @@ export const SetClaimPermission = ({
 
   const getTx = () => {
     if (!valid || !claimPermission) {
-      return null
+      return
     }
-    return new PoolSetClaimPermission(network, claimPermission).tx()
+    return serviceApi.tx.poolSetClaimPermission(claimPermission)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

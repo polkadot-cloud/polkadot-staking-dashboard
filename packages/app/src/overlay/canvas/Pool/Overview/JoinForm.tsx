@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils'
-import { JoinPool } from 'api/tx/joinPool'
 import type BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useSetup } from 'contexts/Setup'
 import { defaultPoolProgress } from 'contexts/Setup/defaults'
@@ -28,6 +28,7 @@ import { JoinFormWrapper } from '../Wrappers'
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation()
+  const { serviceApi } = useApi()
   const { network } = useNetwork()
   const {
     closeCanvas,
@@ -71,18 +72,15 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   const getTx = () => {
     if (!claimPermission || !formValid) {
-      return null
+      return
     }
-
-    const tx = new JoinPool(
-      network,
+    const tx = serviceApi.tx.joinPool(
       bondedPool.id,
       unitToPlanck(!bondValid ? 0 : bond.bond, units),
       claimPermission
-    ).tx()
-
+    )
     if (!tx) {
-      return null
+      return
     }
     if (!Array.isArray(tx)) {
       return tx

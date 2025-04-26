@@ -3,7 +3,6 @@
 
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
-import { PoolUnbond } from 'api/tx/poolUnbond'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -32,9 +31,9 @@ export const UnbondMember = ({
   member: FetchedPoolMember
 }) => {
   const { t } = useTranslation('modals')
-  const { getConsts } = useApi()
   const { network } = useNetwork()
   const { closePrompt } = usePrompt()
+  const { getConsts, serviceApi } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
@@ -57,12 +56,10 @@ export const UnbondMember = ({
   }, [freeToUnbond.toString()])
 
   const getTx = () => {
-    let tx = null
     if (!activeAddress) {
-      return tx
+      return
     }
-    tx = new PoolUnbond(network, who, BigInt(points)).tx()
-    return tx
+    return serviceApi.tx.poolUnbond(who, points)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

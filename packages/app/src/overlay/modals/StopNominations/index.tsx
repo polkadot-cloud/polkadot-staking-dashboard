@@ -1,12 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PoolChill } from 'api/tx/poolChill'
-import { StakingChill } from 'api/tx/stakingChill'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { Warning } from 'library/Form/Warning'
@@ -18,7 +17,7 @@ import { Close, useOverlay } from 'ui-overlay'
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { getNominations } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
@@ -53,14 +52,14 @@ export const StopNominations = () => {
   }
 
   const getTx = () => {
-    let tx = null
+    let tx: SubmittableExtrinsic | undefined
     if (!valid) {
-      return tx
+      return
     }
     if (isPool) {
-      tx = new PoolChill(network, activePool?.id || 0).tx()
+      tx = serviceApi.tx.poolChill(activePool?.id || 0)
     } else if (isStaking) {
-      tx = new StakingChill(network).tx()
+      tx = serviceApi.tx.stakingChill()
     }
     return tx
   }

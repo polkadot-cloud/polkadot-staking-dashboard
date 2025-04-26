@@ -2,9 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolWithdraw } from 'api/tx/poolWithdraw'
-import { StakingRebond } from 'api/tx/stakingRebond'
-import { StakingWithdraw } from 'api/tx/stakingWithdraw'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -39,15 +36,15 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals')
-    const { getConsts } = useApi()
-    const { network } = useNetwork()
-    const { activePool } = useActivePool()
-    const { activeAddress } = useActiveAccounts()
-    const { removeFromBondedPools } = useBondedPools()
     const {
       setModalStatus,
       config: { options },
     } = useOverlay().modal
+    const { network } = useNetwork()
+    const { activePool } = useActivePool()
+    const { getConsts, serviceApi } = useApi()
+    const { activeAddress } = useActiveAccounts()
+    const { removeFromBondedPools } = useBondedPools()
     const { getSignerWarnings } = useSignerWarnings()
     const { removeFavorite: removeFavoritePool } = useFavoritePools()
 
@@ -65,23 +62,20 @@ export const Forms = forwardRef(
 
     const getTx = () => {
       if (!valid || !unlock) {
-        return null
+        return
       }
       if (task === 'rebond' && isStaking) {
-        return new StakingRebond(
-          network,
-          BigInt(unlock.value.toNumber() || 0)
-        ).tx()
+        return serviceApi.tx.stakingRebond(BigInt(unlock.value.toNumber() || 0))
       }
       if (task === 'withdraw' && isStaking) {
-        return new StakingWithdraw(network, historyDepth).tx()
+        return serviceApi.tx.stakingWithdraw(historyDepth)
       }
       if (task === 'withdraw' && isPooling && activePool) {
         if (activeAddress) {
-          return new PoolWithdraw(network, activeAddress, historyDepth).tx()
+          return serviceApi.tx.poolWithdraw(activeAddress, historyDepth)
         }
       }
-      return null
+      return
     }
 
     const submitExtrinsic = useSubmitExtrinsic({

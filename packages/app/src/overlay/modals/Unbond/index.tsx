@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
-import { PoolUnbond } from 'api/tx/poolUnbond'
-import { StakingUnbond } from 'api/tx/stakingUnbond'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -15,6 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
 import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -113,16 +112,15 @@ export const Unbond = () => {
 
   const getTx = () => {
     const api = Apis.getApi(network)
-    let tx = null
+    let tx: SubmittableExtrinsic | undefined
     if (!api || !activeAddress) {
-      return tx
+      return
     }
-
     const bondToSubmit = unitToPlanck(!bondValid ? 0 : bond.bond, units)
     if (isPooling) {
-      tx = new PoolUnbond(network, activeAddress, points).tx()
+      tx = serviceApi.tx.poolUnbond(activeAddress, points)
     } else if (isStaking) {
-      tx = new StakingUnbond(network, bondToSubmit).tx()
+      tx = serviceApi.tx.stakingUnbond(bondToSubmit)
     }
     return tx
   }

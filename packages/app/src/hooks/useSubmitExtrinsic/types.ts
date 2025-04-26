@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyApi } from 'common-types'
+import type { SubmittableExtrinsic } from 'dedot'
 import type { MaybeAddress } from 'types'
 
 export interface UseSubmitExtrinsicProps {
-  tx: AnyApi
+  tx: SubmittableExtrinsic | undefined
   tag?: string
   from: MaybeAddress
   shouldSubmit: boolean

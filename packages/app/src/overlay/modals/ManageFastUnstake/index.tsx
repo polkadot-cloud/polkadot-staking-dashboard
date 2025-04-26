@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import { FastUnstakeDeregister } from 'api/tx/fastUnstakeDeregister'
-import { FastUnstakeRegister } from 'api/tx/fastUnstakeRegister'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -12,6 +10,7 @@ import { useFastUnstake } from 'contexts/FastUnstake'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { useUnstaking } from 'hooks/useUnstaking'
@@ -27,8 +26,9 @@ export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals')
   const {
     getConsts,
-    stakingMetrics: { erasToCheckPerBlock },
     activeEra,
+    serviceApi,
+    stakingMetrics: { erasToCheckPerBlock },
   } = useApi()
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
@@ -77,14 +77,14 @@ export const ManageFastUnstake = () => {
   )
 
   const getTx = () => {
-    let tx = null
+    let tx: SubmittableExtrinsic | undefined
     if (!valid) {
-      return tx
+      return
     }
     if (!isFastUnstaking) {
-      tx = new FastUnstakeRegister(network).tx()
+      tx = serviceApi.tx.fastUnstakeRegister()
     } else {
-      tx = new FastUnstakeDeregister(network).tx()
+      tx = serviceApi.tx.fastUnstakeDeregister()
     }
     return tx
   }

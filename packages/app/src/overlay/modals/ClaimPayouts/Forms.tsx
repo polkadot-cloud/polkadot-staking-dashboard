@@ -3,11 +3,11 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
-import { PayoutStakersByPage } from 'api/tx/payoutStakersByPage'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
 import { useBatchCall } from 'hooks/useBatchCall'
@@ -32,6 +32,7 @@ export const Forms = forwardRef(
   ) => {
     const { t } = useTranslation('modals')
     const { network } = useNetwork()
+    const { serviceApi } = useApi()
     const { newBatchCall } = useBatchCall()
     const { setModalStatus } = useOverlay().modal
     const { activeAddress } = useActiveAccounts()
@@ -65,12 +66,7 @@ export const Forms = forwardRef(
             return acc
           }
           paginatedValidators.forEach(([page, v]) => {
-            const tx = new PayoutStakersByPage(
-              network,
-              v,
-              Number(era),
-              page
-            ).tx()
+            const tx = serviceApi.tx.payoutStakersByPage(v, Number(era), page)
             if (tx) {
               acc.push(tx)
             }
@@ -81,10 +77,9 @@ export const Forms = forwardRef(
     }
 
     const getTx = () => {
-      const tx = null
       const calls = getCalls()
       if (!valid || !calls.length) {
-        return tx
+        return
       }
       return calls.length === 1
         ? calls.pop()

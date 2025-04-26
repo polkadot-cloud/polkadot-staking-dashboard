@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
-import { PoolBondExtra } from 'api/tx/poolBondExtra'
-import { StakingBondExtra } from 'api/tx/stakingBondExtra'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -29,6 +29,7 @@ export const Bond = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal
+  const { serviceApi } = useApi()
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
   const { getPendingPoolRewards } = useBalances()
@@ -88,17 +89,17 @@ export const Bond = () => {
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
-    let tx = null
-    const bondAsString = !bondValid
-      ? '0'
+    let tx: SubmittableExtrinsic | undefined
+    const bondBigInt = !bondValid
+      ? 0n
       : bondToSubmit.isNaN()
-        ? '0'
-        : bondToSubmit.toString()
+        ? 0n
+        : BigInt(bondToSubmit.toString())
 
     if (isPooling) {
-      tx = new PoolBondExtra(network, 'FreeBalance', BigInt(bondAsString)).tx()
+      tx = serviceApi.tx.poolBondExtra('FreeBalance', bondBigInt)
     } else if (isStaking) {
-      tx = new StakingBondExtra(network, BigInt(bondAsString)).tx()
+      tx = serviceApi.tx.stakingBondExtra(bondBigInt)
     }
     return tx
   }
@@ -106,7 +107,7 @@ export const Bond = () => {
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
     if (!activeAddress) {
-      return null
+      return
     }
     return determineTx(bondToSubmit)
   }

@@ -3,7 +3,6 @@
 
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
-import { PoolWithdraw } from 'api/tx/poolWithdraw'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -33,6 +32,7 @@ export const WithdrawMember = ({
 }) => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { closePrompt } = usePrompt()
   const { getConsts, activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
@@ -58,9 +58,9 @@ export const WithdrawMember = ({
 
   const getTx = () => {
     if (!valid) {
-      return null
+      return
     }
-    return new PoolWithdraw(network, who, historyDepth).tx()
+    return serviceApi.tx.poolWithdraw(who, historyDepth)
   }
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),

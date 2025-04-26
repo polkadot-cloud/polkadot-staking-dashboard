@@ -4,7 +4,6 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { unitToPlanck } from '@w3ux/utils'
-import { CreatePool } from 'api/tx/createPool'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -27,6 +26,7 @@ import { SummaryWrapper } from './Wrapper'
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const {
+    serviceApi,
     poolsConfig: { lastPoolId },
   } = useApi()
   const { network } = useNetwork()
@@ -46,24 +46,22 @@ export const Summary = ({ section }: SetupStepProps) => {
 
   const getTx = () => {
     if (!activeAddress) {
-      return null
+      return
     }
-
-    const tx = new CreatePool(
-      network,
+    const tx = serviceApi.tx.createPool(
       activeAddress,
       poolId,
       unitToPlanck(bond, units),
       metadata,
       nominations.map(({ address }) => address),
       roles
-    ).tx()
-
+    )
     if (!tx) {
-      return null
+      return
     }
     return newBatchCall(tx, activeAddress)
   }
+
   const submitExtrinsic = useSubmitExtrinsic({
     tag: 'createPool',
     tx: getTx(),

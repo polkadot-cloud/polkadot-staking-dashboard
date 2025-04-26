@@ -3,7 +3,6 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
-import { PoolUnbond } from 'api/tx/poolUnbond'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -34,9 +33,9 @@ export const LeavePool = ({
   onClick?: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const { getConsts } = useApi()
   const { network } = useNetwork()
   const { activePool } = useActivePool()
+  const { getConsts, serviceApi } = useApi()
   const { erasToSeconds } = useErasToTimeLeft()
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
@@ -66,12 +65,10 @@ export const LeavePool = ({
   }, [freeToUnbond.toString()])
 
   const getTx = () => {
-    let tx = null
     if (!activeAddress || !poolMembership) {
-      return tx
+      return
     }
-    tx = new PoolUnbond(network, activeAddress, poolMembership.points).tx()
-    return tx
+    return serviceApi.tx.poolUnbond(activeAddress, poolMembership.points)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

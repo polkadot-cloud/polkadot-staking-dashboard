@@ -1,34 +1,31 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Proxy } from 'api/tx/proxy'
-import type { AnyApi } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
-import { Apis } from 'controllers/Apis'
+import { useApi } from 'contexts/Api'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useProxySupported } from 'hooks/useProxySupported'
-import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types'
 import type { MaybeAddress } from 'types'
 
 export const useBatchCall = () => {
-  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { activeProxy } = useActiveAccounts()
   const { isProxySupported } = useProxySupported()
 
-  const newBatchCall = (txs: UnsafeTx[], from: MaybeAddress): AnyApi => {
-    const api = Apis.getApi(network)
-
+  const newBatchCall = (
+    txs: SubmittableExtrinsic[],
+    from: MaybeAddress
+  ): SubmittableExtrinsic | undefined => {
     from = from || ''
-    const batchTx = api.tx.Utility.batch({
-      calls: txs.map((tx) => tx.decodedCall),
-    })
+    const batchTx = serviceApi.tx.batch(txs.map((tx) => tx.call))
 
-    if (activeProxy && isProxySupported(batchTx, from)) {
-      return api.tx.Utility.batch({
-        calls: txs
-          .map((tx) => new Proxy(network, from, tx).tx()?.decodedCall)
-          .filter((tx) => tx !== null),
-      })
+    // If the active proxy supports this call, wrap each batch call in a proxy call
+    if (activeProxy && batchTx && isProxySupported(batchTx, from)) {
+      return serviceApi.tx.batch(
+        txs
+          .map((tx) => serviceApi.tx.proxy(from, tx.call)?.call)
+          .filter((tx) => tx !== undefined)
+      )
     }
     return batchTx
   }

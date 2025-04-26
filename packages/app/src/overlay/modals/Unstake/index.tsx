@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils'
-import { StakingChill } from 'api/tx/stakingChill'
-import { StakingUnbond } from 'api/tx/stakingUnbond'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -28,9 +26,9 @@ import { planckToUnitBn, timeleftAsString } from 'utils'
 export const Unstake = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
-  const { getConsts } = useApi()
   const { newBatchCall } = useBatchCall()
   const { getNominations } = useBalances()
+  const { getConsts, serviceApi } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
@@ -74,18 +72,18 @@ export const Unstake = () => {
   useEffect(() => setModalResize(), [bond])
 
   const getTx = () => {
-    const tx = null
     if (!activeAddress) {
-      return tx
+      return
     }
     const bondToSubmit = unitToPlanck(String(!bondValid ? 0 : bond.bond), units)
     if (bondToSubmit == 0n) {
-      return new StakingChill(network).tx()
+      return serviceApi.tx.stakingChill()
     }
     const txs = [
-      new StakingChill(network).tx(),
-      new StakingUnbond(network, bondToSubmit).tx(),
-    ]
+      serviceApi.tx.stakingChill(),
+      serviceApi.tx.stakingUnbond(bondToSubmit),
+    ].filter((tx) => tx !== undefined)
+
     return newBatchCall(txs, activeAddress)
   }
 

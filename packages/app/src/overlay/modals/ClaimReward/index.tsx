@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import { PoolBondExtra } from 'api/tx/poolBondExtra'
-import { PoolClaimPayout } from 'api/tx/poolClaimPayout'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { ActionItem } from 'library/ActionItem'
@@ -26,6 +26,7 @@ export const ClaimReward = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal
+  const { serviceApi } = useApi()
   const { network } = useNetwork()
   const { activePool } = useActivePool()
   const { getPendingPoolRewards } = useBalances()
@@ -49,12 +50,11 @@ export const ClaimReward = () => {
   const [valid, setValid] = useState<boolean>(false)
 
   const getTx = () => {
-    let tx = null
-
+    let tx: SubmittableExtrinsic | undefined
     if (claimType === 'bond') {
-      tx = new PoolBondExtra(network, 'Rewards').tx()
+      tx = serviceApi.tx.poolBondExtra('Rewards')
     } else {
-      tx = new PoolClaimPayout(network).tx()
+      tx = serviceApi.tx.poolClaimPayout()
     }
     return tx
   }

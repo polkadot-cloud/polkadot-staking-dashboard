@@ -4,10 +4,10 @@
 import { useExtensions } from '@w3ux/react-connect-kit'
 import type { HardwareAccount } from '@w3ux/types'
 import { formatAccountSs58 } from '@w3ux/utils'
-import { Proxy } from 'api/tx/proxy'
 import { DappName, ManualSigners } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
@@ -43,6 +43,7 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { signWcTx } = useWalletConnect()
   const { getAccountBalance } = useBalances()
   const { activeProxy } = useActiveAccounts()
@@ -60,8 +61,9 @@ export const useSubmitExtrinsic = ({
   // already wrapped, update `from` address and return
   if (tx) {
     if (
-      tx.decodedCall?.type === 'Proxy' &&
-      tx.decodedCall?.value?.type === 'proxy'
+      // TODO: Check and correct call structure
+      tx.call?.type === 'Proxy' &&
+      tx.call?.value?.type === 'proxy'
     ) {
       if (activeProxy) {
         from = activeProxy.address
@@ -75,14 +77,14 @@ export const useSubmitExtrinsic = ({
         // Check not a batch transactions
         if (
           real &&
-          !(
-            tx.decodedCall?.type === 'Utility' &&
-            tx.decodedCall?.value.type === 'batch'
-          )
+          !(tx.call?.type === 'Utility' && tx.call?.value.type === 'batch')
         ) {
           // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
           // each tx within the batch via `useBatchCall`
-          tx = new Proxy(network, real, tx).tx()
+          const proxiedTx = serviceApi.tx.proxy(real, tx.call)
+          if (proxiedTx) {
+            tx = proxiedTx
+          }
         }
       }
     }
@@ -257,8 +259,8 @@ export const useSubmitExtrinsic = ({
 
   // Re-fetch tx fee if tx changes
   const fetchTxFee = async () => {
-    if (tx) {
-      const partial_fee = (await tx?.getPaymentInfo(from))?.partial_fee || 0n
+    if (tx && from) {
+      const partial_fee = (await tx?.paymentInfo(from))?.partialFee || 0n
       TxSubmission.updateFee(uid, partial_fee)
     }
   }
@@ -268,7 +270,7 @@ export const useSubmitExtrinsic = ({
     }
   }, [
     uid,
-    JSON.stringify(tx?.decodedCall, (_, value) =>
+    JSON.stringify(tx?.call, (_, value) =>
       typeof value === 'bigint' ? value.toString() : value
     ),
   ])

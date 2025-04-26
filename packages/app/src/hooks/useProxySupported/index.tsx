@@ -6,7 +6,7 @@ import { isSupportedProxyCall } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useProxies } from 'contexts/Proxies'
-import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types'
+import type { SubmittableExtrinsic } from 'dedot'
 import type { AnyJson, MaybeAddress } from 'types'
 
 export const useProxySupported = () => {
@@ -22,15 +22,16 @@ export const useProxySupported = () => {
   }
 
   // Determine whether the provided tx is proxy supported.
-  const isProxySupported = (tx: UnsafeTx, delegator: MaybeAddress) => {
+  const isProxySupported = (
+    tx: SubmittableExtrinsic | undefined,
+    delegator: MaybeAddress
+  ) => {
     if (!tx) {
       return false
     }
     // if already wrapped, return.
-    if (
-      tx?.decodedCall?.type === 'Proxy' &&
-      tx?.decodedCall?.value?.type === 'proxy'
-    ) {
+    // TODO: Check call structure
+    if (tx?.call?.type === 'Proxy' && tx?.call?.value?.type === 'proxy') {
       return true
     }
 
@@ -39,13 +40,14 @@ export const useProxySupported = () => {
       activeProxy?.address || null
     )
     const proxyType = proxyDelegate?.proxyType || ''
-    const pallet: string = tx?.decodedCall?.type || ''
-    const method: string = tx?.decodedCall?.value?.type || ''
+    const pallet: string = tx?.call?.type || ''
+    const method: string = tx?.call?.value?.type || ''
     const call = `${pallet}.${method}`
 
     // If a batch call, test if every inner call is a supported proxy call.
+    // TODO: Correct upper casing and check call structure
     if (call === 'Utility.batch') {
-      return (tx?.decodedCall?.value?.value?.calls || [])
+      return (tx?.call?.value?.value?.calls || [])
         .map((c: AnyJson) => ({
           pallet: c.type,
           method: c.value.type,

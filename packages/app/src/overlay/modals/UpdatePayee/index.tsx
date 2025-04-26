@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isValidAddress } from '@w3ux/utils'
-import { StakingSetPayee } from 'api/tx/stakingSetPayee'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types'
+import { AccountId32 } from 'dedot/codecs'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -26,6 +27,7 @@ import { useOverlay } from 'ui-overlay'
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { getStakingLedger } = useBalances()
   const { getPayeeItems } = usePayeeConfig()
   const { activeAddress } = useActiveAccounts()
@@ -71,22 +73,21 @@ export const UpdatePayee = () => {
 
   const getTx = () => {
     if (!selected.destination) {
-      return null
+      return
     }
     if (selected.destination === 'Account' && !selected.account) {
-      return null
+      return
     }
-    return new StakingSetPayee(
-      network,
+    return serviceApi.tx.stakingSetPayee(
       !isComplete()
-        ? { type: 'Staked', value: undefined }
+        ? { type: 'Staked' }
         : selected.destination === 'Account'
           ? {
               type: 'Account',
-              value: selected.account as string,
+              value: new AccountId32(selected.account as string),
             }
-          : { type: selected.destination, value: undefined }
-    ).tx()
+          : { type: selected.destination }
+    )
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
