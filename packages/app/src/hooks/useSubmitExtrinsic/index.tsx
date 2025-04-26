@@ -27,7 +27,6 @@ import type {
   VaultSignStatus,
 } from 'library/Signers/VaultSigner/types'
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
-import type { PolkadotSigner } from 'polkadot-api'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
@@ -122,7 +121,7 @@ export const useSubmitExtrinsic = ({
     TxSubmission.setUidSubmitted(uid, true)
 
     // Handle signed transaction
-    let signer: PolkadotSigner | undefined
+    let signer: InjectedSigner | undefined
     let encodedSig
     const handlers = {
       onReady,
@@ -225,7 +224,7 @@ export const useSubmitExtrinsic = ({
       // Extension signer
       //
       // Get the signer for this account and submit the transaction
-      signer = getExtensionAccount(from)?.signer as PolkadotSigner | undefined
+      signer = getExtensionAccount(from)?.signer as InjectedSigner | undefined
       if (!signer) {
         onError('default')
         return

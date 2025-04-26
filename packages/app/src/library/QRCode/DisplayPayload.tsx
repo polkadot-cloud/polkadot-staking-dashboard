@@ -1,8 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { decodeAddress } from 'dedot/utils'
-import { mergeUint8 } from 'polkadot-api/utils'
+import { concatU8a, decodeAddress } from 'dedot/utils'
 import type { ReactElement } from 'react'
 import { memo, useMemo } from 'react'
 import { QrDisplay } from './Display.js'
@@ -14,7 +13,7 @@ const createSignPayload = (
   payload: Uint8Array,
   genesisHash: Uint8Array
 ): Uint8Array =>
-  mergeUint8(
+  concatU8a(
     new Uint8Array([0x53]), // SUBSTRATE_ID
     new Uint8Array([0x01]), // CRYPTO_SR25519
     new Uint8Array([cmd]),
