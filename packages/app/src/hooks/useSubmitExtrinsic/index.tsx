@@ -260,8 +260,8 @@ export const useSubmitExtrinsic = ({
   // Re-fetch tx fee if tx changes
   const fetchTxFee = async () => {
     if (tx && from) {
-      const partial_fee = (await tx?.paymentInfo(from))?.partialFee || 0n
-      TxSubmission.updateFee(uid, partial_fee)
+      const partialFee = (await tx?.paymentInfo(from))?.partialFee || 0n
+      TxSubmission.updateFee(uid, partialFee)
     }
   }
   useEffect(() => {
