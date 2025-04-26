@@ -4,9 +4,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { Apis } from 'controllers/Apis'
 import { Syncs } from 'controllers/Syncs'
-import { isCustomEvent } from 'controllers/utils'
 import {
   activeEra$,
   apiStatus$,
@@ -40,7 +38,6 @@ import type {
   ServiceInterface,
   StakingMetrics,
 } from 'types'
-import { useEventListener } from 'usehooks-ts'
 import type { APIContextInterface, APIProviderProps } from './types'
 
 export const [APIContext, useApi] = createSafeContext<APIContextInterface>()
@@ -86,9 +83,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     defaultServiceInterface
   )
 
-  // Temporary state object to check if chain spec from papi is received
-  const [papiSpecReceived, setPapiSpecReceived] = useState<boolean>(false)
-
   const getApiStatus = (id: ChainId) => apiStatus[id] || 'disconnected'
 
   const getChainSpec = (chain: ChainId): ChainSpec =>
@@ -97,37 +91,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const getConsts = (chain: ChainId): ChainConsts =>
     consts[chain] || defaultConsts
 
-  // Whether the api is ready for querying
-  const isReady = getApiStatus(network) === 'ready' && papiSpecReceived === true
-
-  // Bootstrap app-wide chain state
-  const bootstrapNetworkConfig = async () => {
-    // Set `initialization` syncing to complete. NOTE: This synchonisation is only considering the
-    // relay chain sync state, and not system/para chains
-    Syncs.dispatch('initialization', 'complete')
-  }
-
-  const handlePapiReady = async (e: Event) => {
-    if (isCustomEvent(e)) {
-      if (e.detail.chainType === 'relay') {
-        setPapiSpecReceived(true)
-        bootstrapNetworkConfig()
-      }
-    }
-  }
-
   // Get an RPC endpoint for a given chain
   const getRpcEndpoint = (chain: string): string => {
     const endpoints = getRpcEndpoints()
     return endpoints[chain]
   }
 
-  const reInitialiseApi = async (type: ProviderType) => {
+  const reInitialiseApi = async () => {
     // Dispatch all default syncIds as syncing
     Syncs.dispatchAllDefault()
-
-    // Instantiate new Relay chain API instance
-    await Apis.instantiate(network, type, getRpcEndpoint(network))
   }
 
   // Handle initial api connection
@@ -135,37 +107,19 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Uses initialisation ref to check whether this is the first context render, and initializes an Api instance for the current network if that is the case
     if (!initialisedRef.current) {
       initialisedRef.current = true
-      reInitialiseApi(providerType)
+      reInitialiseApi()
     }
   })
 
   // If RPC endpoint changes, and not on light client, re-initialise API
   useEffectIgnoreInitial(async () => {
-    reInitialiseApi('ws')
+    reInitialiseApi()
   }, [rpcEndpoints[network]])
-
-  // If connection type changes, re-initialise API
-  useEffectIgnoreInitial(async () => {
-    reInitialiseApi(providerType)
-  }, [providerType])
 
   // Re-initialise API and set defaults on network change
   useEffectIgnoreInitial(() => {
-    reInitialiseApi(providerType)
+    reInitialiseApi()
   }, [network])
-
-  // Call `unsubscribe` on active instance on unmount
-  useEffect(
-    () => () => {
-      const instance = Apis.get(network)
-      instance?.unsubscribe()
-    },
-    []
-  )
-
-  // Add event listener for api events and subscription updates
-  const documentRef = useRef<Document>(document)
-  useEventListener('api-ready', handlePapiReady, documentRef)
 
   // Subscribe to global bus
   useEffect(() => {
@@ -217,7 +171,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         getChainSpec,
         providerType,
         getRpcEndpoint,
-        isReady,
+        isReady: getApiStatus(network) === 'ready',
         getConsts,
         relayMetrics,
         activeEra,

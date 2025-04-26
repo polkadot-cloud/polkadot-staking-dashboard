@@ -18,7 +18,6 @@ declare global {
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>
-    'api-ready': CustomEvent<{ chainType: string }>
     'online-status': CustomEvent<OnlineStatusEvent>
     'new-sync-status': CustomEvent<SyncEvent>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
