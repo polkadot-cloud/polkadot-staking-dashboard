@@ -1,9 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useExtensions } from '@w3ux/react-connect-kit'
+import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import type { HardwareAccount } from '@w3ux/types'
-import { formatAccountSs58 } from '@w3ux/utils'
 import { DappName, ManualSigners } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -27,10 +26,7 @@ import type {
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
 import type { PolkadotSigner } from 'polkadot-api'
 import { AccountId } from 'polkadot-api'
-import {
-  connectInjectedExtension,
-  getPolkadotSignerFromPjs,
-} from 'polkadot-api/pjs-signer'
+import { getPolkadotSignerFromPjs } from 'polkadot-api/pjs-signer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
@@ -52,6 +48,7 @@ export const useSubmitExtrinsic = ({
   const { isProxySupported } = useProxySupported()
   const { openPromptWith, closePrompt } = usePrompt()
   const { handleResetLedgerTask } = useLedgerHardware()
+  const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
   const { unit, units } = getNetworkData(network)
 
@@ -176,12 +173,8 @@ export const useSubmitExtrinsic = ({
           break
       }
     } else {
-      // Get the polkadot signer for this account
-      // TODO: Replace with w3ux utility
-      const signerAccount = (await connectInjectedExtension(source))
-        .getAccounts()
-        .find((a) => from && a.address === formatAccountSs58(from, 42))
-      signer = signerAccount?.polkadotSigner
+      // Get the signer for this account
+      signer = getExtensionAccount(from)?.signer as PolkadotSigner
     }
 
     if (!signer) {
