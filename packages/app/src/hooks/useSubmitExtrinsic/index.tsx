@@ -15,8 +15,10 @@ import { usePrompt } from 'contexts/Prompt'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { Notifications } from 'controllers/Notifications'
 import { TxSubmission } from 'controllers/TxSubmission'
+import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
-import { decodeAddress } from 'dedot/utils'
+import type { HexString } from 'dedot/utils'
+import { concatU8a, decodeAddress, hexToU8a } from 'dedot/utils'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { LedgerSigner } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -30,6 +32,7 @@ import { getPolkadotSignerFromPjs } from 'polkadot-api/pjs-signer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
+
 export const useSubmitExtrinsic = ({
   tx,
   tag,
@@ -131,6 +134,18 @@ export const useSubmitExtrinsic = ({
         decimals: units,
         tokenSymbol: unit,
       }
+      const extra = serviceApi.signer.extraSignedExtension(from)
+      const { $Signature } = serviceApi.codec
+      if (!extra || !$Signature()) {
+        onError('default')
+        return
+      }
+      await extra.init()
+      const prefix = compactU32.encode(tx.callLength)
+      const rawPayload = extra.toRawPayload(tx.callHex)
+      const prefixedPayload = concatU8a(prefix, hexToU8a(rawPayload.data))
+      let signature: HexString | undefined
+
       switch (source) {
         case 'ledger':
           signer = await new LedgerSigner(pubKey).getPolkadotSigner(
@@ -140,7 +155,7 @@ export const useSubmitExtrinsic = ({
           break
 
         case 'vault':
-          signer = await new VaultSigner(pubKey, {
+          signature = await new VaultSigner({
             openPrompt: (
               onComplete: (
                 status: VaultSignStatus,
@@ -161,7 +176,7 @@ export const useSubmitExtrinsic = ({
             closePrompt: () => closePrompt(),
             setSubmitting: (val: boolean) =>
               TxSubmission.setUidSubmitted(uid, val),
-          }).getPolkadotSigner()
+          }).sign(prefixedPayload)
           break
 
         case 'wallet_connect':
@@ -180,16 +195,19 @@ export const useSubmitExtrinsic = ({
           break
       }
 
-      // Submit the transaction
-      // TODO: Use `addSend` for instead
-      TxSubmission.addSignAndSend(
-        uid,
-        from,
-        tx,
-        signer as InjectedSigner,
-        getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from),
-        handlers
-      )
+      if (signature === '0x') {
+        onError('default')
+        return
+      }
+      const encodedSig = {
+        address: from,
+        signature: $Signature().tryDecode(signature),
+        extra: extra.data,
+      }
+      // Custom signer
+      //
+      // Submit the transaction with the raw signature
+      TxSubmission.addSend(uid, tx, encodedSig, handlers)
     } else {
       // Extension signer
       //

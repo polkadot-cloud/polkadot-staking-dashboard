@@ -61,4 +61,7 @@ export const defaultServiceInterface: ServiceInterface = {
   signer: {
     extraSignedExtension: () => undefined,
   },
+  codec: {
+    $Signature: () => undefined,
+  },
 }

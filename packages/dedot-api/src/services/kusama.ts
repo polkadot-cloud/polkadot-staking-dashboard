@@ -333,5 +333,11 @@ export class KusamaService
       extraSignedExtension: (signerAddress) =>
         new ExtraSignedExtension(this.apiRelay, { signerAddress }),
     },
+    codec: {
+      $Signature: () => {
+        const { signatureTypeId } = this.apiRelay.registry.metadata!.extrinsic
+        return this.apiRelay.registry.findCodec(signatureTypeId)
+      },
+    },
   }
 }

@@ -40,7 +40,7 @@ export interface ChainSpecVersion {
   authoringVersion: number
   specVersion: number
   implVersion: number
-  apis: (readonly [`0x${string}`, number])[]
+  apis: (readonly [HexString, number])[]
   transactionVersion: number
   stateVersion: number
 }

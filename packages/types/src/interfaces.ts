@@ -13,6 +13,7 @@ import type {
   SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
 import type { AccountId32, BytesLike } from 'dedot/codecs'
+import type { HexString } from 'dedot/utils'
 import type { IdentityOf, SuperOf } from './identity'
 import type { ClaimPermission, PoolRoles } from './pools'
 
@@ -42,7 +43,7 @@ export interface ServiceInterface {
     poolMembersMulti: (
       addresses: string[]
     ) => Promise<(PalletNominationPoolsPoolMember | undefined)[]>
-    poolMetadataMulti: (ids: number[]) => Promise<`0x${string}`[]>
+    poolMetadataMulti: (ids: number[]) => Promise<HexString[]>
     proxies: (address: string) => Promise<AccountId32[]>
     sessionValidators: () => Promise<AccountId32[]>
     superOfMulti: (addresses: string[]) => Promise<SuperOf[]>
@@ -156,5 +157,9 @@ export interface ServiceInterface {
     extraSignedExtension: (
       signerAddress: string
     ) => ExtraSignedExtension | undefined
+  }
+  codec: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    $Signature: () => any
   }
 }
