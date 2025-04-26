@@ -16,6 +16,7 @@ import { useWalletConnect } from 'contexts/WalletConnect'
 import { Notifications } from 'controllers/Notifications'
 import { TxSubmission } from 'controllers/TxSubmission'
 import type { InjectedSigner } from 'dedot/types'
+import { decodeAddress } from 'dedot/utils'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { LedgerSigner } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -25,7 +26,6 @@ import type {
 } from 'library/Signers/VaultSigner/types'
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
 import type { PolkadotSigner } from 'polkadot-api'
-import { AccountId } from 'polkadot-api'
 import { getPolkadotSignerFromPjs } from 'polkadot-api/pjs-signer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -127,8 +127,7 @@ export const useSubmitExtrinsic = ({
     }
 
     if (requiresManualSign(from)) {
-      // TODO: Replace wiith dedot utility
-      const pubKey = AccountId().enc(from)
+      const pubKey = decodeAddress(from)
       const networkInfo = {
         decimals: units,
         tokenSymbol: unit,

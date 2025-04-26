@@ -53,7 +53,8 @@ updates:
         patterns:
           - '@polkadot/*'
           - '@zondax/ledger-substrate'
-          - 'polkadot-api'
+          - 'dedot'
+          - '@dedot'
       ui:
         patterns:
           - '@w3ux/*'
