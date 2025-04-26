@@ -154,13 +154,13 @@ export interface ServiceInterface {
     ) => SubmittableExtrinsic | undefined
   }
   signer: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    metadata: () => any
     extraSignedExtension: (
       signerAddress: string
     ) => ExtraSignedExtension | undefined
   }
-  codec: {
+  unsafe: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    metadata: () => any
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $Signature: () => any
   }

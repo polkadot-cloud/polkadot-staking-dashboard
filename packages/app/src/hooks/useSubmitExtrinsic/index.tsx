@@ -134,7 +134,7 @@ export const useSubmitExtrinsic = ({
         tokenSymbol: unit,
       }
       const extra = serviceApi.signer.extraSignedExtension(from)
-      const { $Signature } = serviceApi.codec
+      const { $Signature } = serviceApi.unsafe
       if (!extra || !$Signature()) {
         onError('default')
         return

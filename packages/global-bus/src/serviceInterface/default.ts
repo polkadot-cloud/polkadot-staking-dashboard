@@ -59,10 +59,10 @@ export const defaultServiceInterface: ServiceInterface = {
     transferKeepAlive: () => undefined,
   },
   signer: {
-    metadata: () => undefined,
     extraSignedExtension: () => undefined,
   },
-  codec: {
+  unsafe: {
+    metadata: () => undefined,
     $Signature: () => undefined,
   },
 }

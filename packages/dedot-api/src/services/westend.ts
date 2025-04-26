@@ -331,11 +331,11 @@ export class WestendService
         tx.transferKeepAlive(this.apiRelay, to, value),
     },
     signer: {
-      metadata: () => this.apiRelay.registry.metadata,
       extraSignedExtension: (signerAddress) =>
         new ExtraSignedExtension(this.apiRelay, { signerAddress }),
     },
-    codec: {
+    unsafe: {
+      metadata: () => this.apiRelay.registry.metadata,
       $Signature: () => {
         const { signatureTypeId } = this.apiRelay.registry.metadata!.extrinsic
         return this.apiRelay.registry.findCodec(signatureTypeId)
