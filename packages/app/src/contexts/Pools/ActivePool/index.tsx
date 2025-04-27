@@ -3,7 +3,6 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -23,7 +22,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const { ss58 } = getNetworkData(network)
   const { poolMembership } = getStakingLedger(activeAddress)
 
   // Store active pools state
@@ -41,9 +39,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     const pool = getActivePool(Number(poolId))
     return pool?.nominators
       ? {
-          targets: pool.nominators.targets.map((target) =>
-            target.address(ss58)
-          ),
+          targets: pool.nominators.targets,
           submittedIn: pool.nominators.submittedIn,
         }
       : defaultPoolNominations
@@ -63,7 +59,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     if (!activeAddress || !roles) {
       return false
     }
-    return activeAddress === roles?.nominator?.address(ss58)
+    return activeAddress === roles?.nominator
   }
 
   // Returns whether the active account is the owner of the active pool
@@ -72,7 +68,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     if (!activeAddress || !roles) {
       return false
     }
-    return activeAddress === roles?.root?.address(ss58)
+    return activeAddress === roles?.root
   }
 
   // Returns whether the active account is a member of the active pool
@@ -90,7 +86,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     if (!activeAddress || !roles) {
       return false
     }
-    return activeAddress === roles?.depositor.address(ss58)
+    return activeAddress === roles?.depositor
   }
 
   // Returns whether the active account is the depositor of the active pool
@@ -99,15 +95,15 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     if (!activeAddress || !roles) {
       return false
     }
-    return activeAddress === roles?.bouncer?.address(ss58)
+    return activeAddress === roles?.bouncer
   }
 
   // Returns the active pool's roles or the default roles object
   const getPoolRoles = () => ({
-    depositor: activePool?.bondedPool?.roles?.depositor?.address(ss58) || '',
-    nominator: activePool?.bondedPool?.roles?.nominator?.address(ss58) || '',
-    root: activePool?.bondedPool?.roles?.root?.address(ss58) || '',
-    bouncer: activePool?.bondedPool?.roles?.bouncer?.address(ss58) || '',
+    depositor: activePool?.bondedPool?.roles?.depositor || '',
+    nominator: activePool?.bondedPool?.roles?.nominator || '',
+    root: activePool?.bondedPool?.roles?.root || '',
+    bouncer: activePool?.bondedPool?.roles?.bouncer || '',
   })
 
   // Returns the unlock chunks of the active pool

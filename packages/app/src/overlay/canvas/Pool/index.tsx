@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -26,7 +25,6 @@ export const Pool = () => {
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { poolsMetaData, bondedPools } = useBondedPools()
-  const { ss58 } = getNetworkData(network)
 
   // Store latest pool candidates
   const [poolCandidates, setPoolCandidates] = useState<number[]>([])
@@ -118,9 +116,7 @@ export const Pool = () => {
 
   useEffect(() => {
     if (bondedPool) {
-      const roles = Object.values(bondedPool.roles).map((role) =>
-        role.address(ss58)
-      )
+      const roles = Object.values(bondedPool.roles)
       handleRoleIdentities([...new Set(roles)])
     }
   }, [bondedPool])

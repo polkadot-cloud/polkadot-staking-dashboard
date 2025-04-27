@@ -8,10 +8,7 @@ import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
-import type {
-  PalletNominationPoolsBondedPoolInner,
-  PalletStakingNominations,
-} from 'dedot/chaintypes'
+import type { PalletStakingNominations } from 'dedot/chaintypes'
 import { hexToString } from 'dedot/utils'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
@@ -19,6 +16,7 @@ import { useRef, useState } from 'react'
 import type {
   AnyJson,
   BondedPool,
+  BondedPoolQuery,
   MaybeAddress,
   MaybePool,
   NominationStatus,
@@ -187,10 +185,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper: to add addresses to pool record
-  const getPoolWithAddresses = (
-    id: number,
-    pool: PalletNominationPoolsBondedPoolInner
-  ) => ({
+  const getPoolWithAddresses = (id: number, pool: BondedPoolQuery) => ({
     ...pool,
     id,
     addresses: createPoolAccounts(id),

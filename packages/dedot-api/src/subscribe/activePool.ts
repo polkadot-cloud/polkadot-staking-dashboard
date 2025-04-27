@@ -72,10 +72,18 @@ export class ActivePoolQuery<T extends StakingChain> {
               points: bondedPool.points,
               memberCounter: bondedPool.memberCounter,
               roles: {
-                depositor: bondedPool.roles.depositor,
-                nominator: bondedPool.roles.nominator,
-                root: bondedPool.roles.root,
-                bouncer: bondedPool.roles.bouncer,
+                depositor: bondedPool.roles.depositor.address(
+                  this.api.consts.system.ss58Prefix
+                ),
+                nominator: bondedPool.roles.nominator?.address(
+                  this.api.consts.system.ss58Prefix
+                ),
+                root: bondedPool.roles.root?.address(
+                  this.api.consts.system.ss58Prefix
+                ),
+                bouncer: bondedPool.roles.bouncer?.address(
+                  this.api.consts.system.ss58Prefix
+                ),
               },
               roleIdentities: {
                 identities: formatIdentities(roleAddresses, identities),
@@ -92,7 +100,9 @@ export class ActivePoolQuery<T extends StakingChain> {
             },
             rewardAccountBalance: rewardAccount.data.free,
             nominators: {
-              targets: nominators.targets,
+              targets: nominators.targets.map((target) =>
+                target.address(this.api.consts.system.ss58Prefix)
+              ),
               submittedIn: nominators.submittedIn,
             },
           }

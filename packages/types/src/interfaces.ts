@@ -3,7 +3,6 @@
 
 import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
 import type {
-  PalletNominationPoolsBondedPoolInner,
   PalletNominationPoolsPoolMember,
   PalletNominationPoolsPoolState,
   PalletStakingNominations,
@@ -17,19 +16,15 @@ import type { Shape } from 'dedot/shape'
 import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
 import type { IdentityOf, SuperOf } from './identity'
-import type { ClaimPermission, PoolRoles } from './pools'
+import type { BondedPoolQuery, ClaimPermission, PoolRoles } from './pools'
 
 export interface ServiceInterface {
   query: {
     erasValidatorRewardMulti: (
       eras: number[]
     ) => Promise<(bigint | undefined)[]>
-    bondedPool: (
-      poolId: number
-    ) => Promise<PalletNominationPoolsBondedPoolInner | undefined>
-    bondedPoolEntries: () => Promise<
-      [number, PalletNominationPoolsBondedPoolInner][]
-    >
+    bondedPool: (poolId: number) => Promise<BondedPoolQuery | undefined>
+    bondedPoolEntries: () => Promise<[number, BondedPoolQuery][]>
     erasStakersOverviewEntries: (
       era: number
     ) => Promise<[[number, AccountId32], SpStakingPagedExposureMetadata][]>

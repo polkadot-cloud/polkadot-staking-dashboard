@@ -3,7 +3,6 @@
 
 import type BigNumber from 'bignumber.js'
 import type { PalletNominationPoolsBondedPoolInner } from 'dedot/chaintypes'
-import type { AccountId32 } from 'dedot/codecs'
 import type { MaybeAddress } from './accounts'
 import type { IdentityOf, SuperIdentity } from './identity'
 
@@ -13,7 +12,14 @@ export type ClaimPermission =
   | 'PermissionlessWithdraw'
   | 'PermissionlessAll'
 
-export type BondedPool = PalletNominationPoolsBondedPoolInner & {
+export type BondedPoolQuery = Omit<
+  PalletNominationPoolsBondedPoolInner,
+  'roles'
+> & {
+  roles: PoolRoles
+}
+
+export type BondedPool = BondedPoolQuery & {
   addresses: PoolAddresses
   id: number
 }
@@ -25,10 +31,10 @@ export interface ActivePool {
     points: bigint
     memberCounter: number
     roles: {
-      depositor: AccountId32
-      nominator: AccountId32 | undefined
-      root: AccountId32 | undefined
-      bouncer: AccountId32 | undefined
+      depositor: string
+      nominator: string | undefined
+      root: string | undefined
+      bouncer: string | undefined
     }
     roleIdentities: {
       identities: Record<string, IdentityOf>
@@ -45,7 +51,7 @@ export interface ActivePool {
   }
   rewardAccountBalance: bigint
   nominators: {
-    targets: AccountId32[]
+    targets: string[]
     submittedIn: number
   }
 }
