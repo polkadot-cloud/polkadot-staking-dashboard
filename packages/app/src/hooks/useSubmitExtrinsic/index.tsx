@@ -52,7 +52,6 @@ export const useSubmitExtrinsic = ({
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
   const { unit, units } = getNetworkData(network)
-  const { ss58 } = getNetworkData(network)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)
@@ -100,6 +99,7 @@ export const useSubmitExtrinsic = ({
     }
 
     const { specName, specVersion } = tx.client.runtimeVersion
+    const ss58 = serviceApi.spec.ss58(specName)
     const { source } = account
     const isManualSigner = ManualSigners.includes(source)
 

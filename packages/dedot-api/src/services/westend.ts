@@ -351,6 +351,9 @@ export class WestendService
       metadata: async (specName) =>
         await this.getApi(specName).call.metadata.metadataAtVersion(15),
     },
+    spec: {
+      ss58: (specName) => this.getApi(specName).consts.system.ss58Prefix,
+    },
     codec: {
       $Signature: (specName) =>
         this.getApi(specName).registry.findCodec(

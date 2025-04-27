@@ -62,6 +62,9 @@ export const defaultServiceInterface: ServiceInterface = {
     extraSignedExtension: () => undefined,
     metadata: async () => undefined,
   },
+  spec: {
+    ss58: () => 0,
+  },
   codec: {
     $Signature: () => undefined,
   },

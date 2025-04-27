@@ -163,6 +163,9 @@ export interface ServiceInterface {
     ) => ExtraSignedExtension | undefined
     metadata: (specName: string) => Promise<HexString | undefined>
   }
+  spec: {
+    ss58: (specName: string) => number
+  }
   codec: {
     $Signature: (specName: string) => Shape<unknown, unknown> | undefined
   }
