@@ -5,7 +5,12 @@ import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList } from 'consts/networks'
 import { getDefaultRpcEndpoints } from 'consts/util'
-import type { NetworkConfig, NetworkId, RpcEndpoints } from 'types'
+import type {
+  NetworkConfig,
+  NetworkId,
+  ProviderType,
+  RpcEndpoints,
+} from 'types'
 
 export const getInitialNetwork = () => {
   // Attempt to get network from URL
@@ -58,11 +63,12 @@ export const getInitialRpcEndpoints = (network: NetworkId): RpcEndpoints => {
   return fallback
 }
 
-export const getInitialProviderType = () => {
-  const result = localStorage.getItem(ProviderTypeKey) ? 'ws' : 'sc'
+export const getInitialProviderType = (): ProviderType => {
+  const result = localStorage.getItem(ProviderTypeKey) || 'sc'
   if (['ws', 'sc'].includes(result)) {
-    return result
+    return result as ProviderType
   }
+
   return 'sc'
 }
 

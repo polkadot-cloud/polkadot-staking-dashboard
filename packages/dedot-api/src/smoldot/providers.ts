@@ -2,12 +2,21 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SmoldotProvider } from 'dedot'
-import * as smoldot from 'smoldot'
 import type { Network, SystemChain } from 'types'
+import { startFromWorker } from './start'
+
+// Instantiate smoldot from worker
+const initSmWorker = () => {
+  const smWorker = new Worker(new URL('./worker.js', import.meta.url), {
+    type: 'module',
+  })
+  const client = startFromWorker(smWorker)
+  return client
+}
 
 // Instantiate a new relay chain smoldot provider
 export const newRelayChainSmProvider = async (networkData: Network) => {
-  const client = smoldot.start()
+  const client = initSmWorker()
   const { chainSpec } = await networkData.endpoints.lightClient()
   const chain = await client.addChain({ chainSpec })
   return new SmoldotProvider(chain)
@@ -18,7 +27,7 @@ export const newSystemChainSmProvider = async (
   networkData: Network,
   systemChainData: SystemChain
 ) => {
-  const client = smoldot.start()
+  const client = initSmWorker()
   const { chainSpec } = await networkData.endpoints.lightClient()
   const { chainSpec: paraChainSpec } =
     await systemChainData.endpoints.lightClient()

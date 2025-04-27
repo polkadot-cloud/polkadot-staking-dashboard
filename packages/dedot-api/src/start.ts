@@ -9,7 +9,7 @@ import { Services } from './services'
 import {
   newRelayChainSmProvider,
   newSystemChainSmProvider,
-} from './smoldotProviders'
+} from './smoldot/providers'
 import type { Service } from './types'
 import type { DefaultService } from './types/serviceDefault'
 
