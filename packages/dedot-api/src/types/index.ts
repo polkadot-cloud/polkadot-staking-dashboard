@@ -9,7 +9,7 @@ import type {
 } from '@dedot/chaintypes'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
-import type { ApiStatus, ServiceInterface } from 'types'
+import type { ServiceInterface } from 'types'
 import type { KusamaService } from '../services/kusama'
 import type { PolkadotService } from '../services/polkadot'
 import type { WestendService } from '../services/westend'
@@ -53,9 +53,3 @@ export abstract class ServiceClass {
   abstract start(): Promise<void>
   abstract unsubscribe(): Promise<void>
 }
-
-// NOTE: Events not currently in use
-export interface DisaptchEvent {
-  apiStatus: ApiStatus
-}
-export type EventKey = keyof DisaptchEvent

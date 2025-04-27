@@ -74,18 +74,15 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     if (!claimPermission || !formValid) {
       return
     }
-    const tx = serviceApi.tx.joinPool(
+    const txs = serviceApi.tx.joinPool(
       bondedPool.id,
       unitToPlanck(!bondValid ? 0 : bond.bond, units),
       claimPermission
     )
-    if (!tx) {
+    if (!txs || (txs && !txs.length)) {
       return
     }
-    if (!Array.isArray(tx)) {
-      return tx
-    }
-    return newBatchCall(tx, activeAddress)
+    return txs.length === 1 ? txs[0] : newBatchCall(txs, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

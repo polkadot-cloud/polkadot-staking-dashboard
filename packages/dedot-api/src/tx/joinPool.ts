@@ -15,7 +15,7 @@ export const joinPool = <T extends StakingChain>(
 ) => {
   const txs = [asTx(api.tx.nominationPools.join(bond, poolId))]
   if (claimPermission === defaultClaimPermission) {
-    return txs[0]
+    return [txs[0]]
   }
   txs.push(asTx(api.tx.nominationPools.setClaimPermission(claimPermission)))
   return txs

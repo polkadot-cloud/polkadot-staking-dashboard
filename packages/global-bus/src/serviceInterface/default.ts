@@ -28,7 +28,7 @@ export const defaultServiceInterface: ServiceInterface = {
   },
   tx: {
     batch: () => undefined,
-    createPool: () => [],
+    createPool: () => undefined,
     fastUnstakeDeregister: () => undefined,
     fastUnstakeRegister: () => undefined,
     joinPool: () => undefined,

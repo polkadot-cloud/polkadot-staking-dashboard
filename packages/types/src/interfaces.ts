@@ -77,7 +77,7 @@ export interface ServiceInterface {
       poolId: number,
       bond: bigint,
       claimPermission: ClaimPermission
-    ) => SubmittableExtrinsic | SubmittableExtrinsic[] | undefined
+    ) => SubmittableExtrinsic[] | undefined
     newNominator: (
       bond: bigint,
       payee: PalletStakingRewardDestination,
