@@ -25,7 +25,7 @@ export class ProxiesQuery<T extends StakingChain> {
         const [proxies, deposit] = result
         const next: Proxies = {
           proxies: proxies.map(({ delegate, proxyType, delay }) => ({
-            delegate,
+            delegate: delegate.address(this.api.consts.system.ss58Prefix),
             proxyType,
             delay,
           })),

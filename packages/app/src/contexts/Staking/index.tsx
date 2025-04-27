@@ -181,7 +181,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       overview.reduce(
         (prev, [[, validator], { own, total }]) => ({
           ...prev,
-          [validator.address(ss58)]: { own, total },
+          [validator]: { own, total },
         }),
         {}
       )

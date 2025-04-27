@@ -5,7 +5,6 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -52,8 +51,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { stakers } = useStaking().eraStakers
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
   const { isReady, getConsts, serviceApi, getApiStatus } = useApi()
-
-  const { ss58 } = getNetworkData(network)
   const { historyDepth } = getConsts(network)
 
   // Store validator entries and sync status
@@ -116,7 +113,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       }
 
       entries.push({
-        address: address.address(ss58),
+        address,
         prefs: {
           commission: Number(commissionAsPercent.toFixed(2)),
           blocked,
@@ -188,9 +185,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return
     }
-    const result = (await serviceApi.query.sessionValidators()).map((a) =>
-      a.address(ss58)
-    )
+    const result = await serviceApi.query.sessionValidators()
     setSessionValidators(result)
   }
 

@@ -4,7 +4,6 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
@@ -32,7 +31,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { addOrReplaceOtherAccount } = useOtherAccounts()
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts()
-  const { ss58 } = getNetworkData(network)
 
   // Store the proxy accounts of each imported account
   const [proxies, setProxies] = useState<Record<string, Proxies>>({})
@@ -48,15 +46,14 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
           delegator,
           proxyType,
         }
-        const delegateAddress = delegate.address(ss58)
 
         // check if this delegate exists in `newDelegates`
-        if (Object.keys(newDelegates).includes(delegateAddress)) {
+        if (Object.keys(newDelegates).includes(delegate)) {
           // append delegator to the existing delegate record if it exists
-          newDelegates[delegateAddress].push(item)
+          newDelegates[delegate].push(item)
         } else {
           // create a new delegate record if it does not yet exist in `newDelegates`
-          newDelegates[delegateAddress] = [item]
+          newDelegates[delegate] = [item]
         }
       }
     }
@@ -80,7 +77,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       delegator: address,
       delegates: Object.values(config.proxies).map(
         ({ delegate, proxyType }) => ({
-          delegate: delegate.address(ss58),
+          delegate,
           proxyType,
         })
       ),
@@ -96,10 +93,9 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
     let addDelegatorAsExternal = false
     for (const delegate of results) {
-      const delegateAddress = delegate.address(ss58)
       if (
-        accounts.find(({ address }) => address === delegateAddress) &&
-        !delegates[delegateAddress]
+        accounts.find(({ address }) => address === delegate) &&
+        !delegates[delegate]
       ) {
         addDelegatorAsExternal = true
       }
@@ -124,13 +120,13 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     }
     const config = results[1]
     const maybeDelegate = Object.values(config.proxies).find(
-      (d) => d.delegate.address(ss58) === delegate
+      (d) => d.delegate === delegate
     )
     if (!maybeDelegate) {
       return null
     }
     return {
-      delegate: maybeDelegate.delegate.address(ss58),
+      delegate: maybeDelegate.delegate,
       proxyType: maybeDelegate.proxyType,
     }
   }

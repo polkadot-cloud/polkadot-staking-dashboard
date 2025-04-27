@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Account, AccountCommon } from '@w3ux/types'
-import type { AccountId32 } from 'dedot/codecs'
 
 export type MaybeAddress = string | null
 
@@ -28,7 +27,7 @@ export type AccountAddedBy = 'system' | 'user'
 
 export type Proxies = {
   proxies: {
-    delegate: AccountId32
+    delegate: string
     proxyType: string
     delay: number
   }[]

@@ -8,15 +8,17 @@ import type {
   PalletStakingNominations,
   PalletStakingRewardDestination,
   PalletStakingValidatorPrefs,
-  SpStakingExposurePage,
-  SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
-import type { AccountId32, BytesLike } from 'dedot/codecs'
+import type { BytesLike } from 'dedot/codecs'
 import type { Shape } from 'dedot/shape'
 import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
 import type { IdentityOf, SuperOf } from './identity'
 import type { BondedPoolQuery, ClaimPermission, PoolRoles } from './pools'
+import type {
+  ErasStakersOverviewEntries,
+  ErasStakersPagedEntries,
+} from './staking'
 
 export interface ServiceInterface {
   query: {
@@ -27,11 +29,11 @@ export interface ServiceInterface {
     bondedPoolEntries: () => Promise<[number, BondedPoolQuery][]>
     erasStakersOverviewEntries: (
       era: number
-    ) => Promise<[[number, AccountId32], SpStakingPagedExposureMetadata][]>
+    ) => Promise<ErasStakersOverviewEntries>
     erasStakersPagedEntries: (
       era: number,
       validator: string
-    ) => Promise<[[number, AccountId32, number], SpStakingExposurePage][]>
+    ) => Promise<ErasStakersPagedEntries>
     identityOfMulti: (addresses: string[]) => Promise<IdentityOf[]>
     nominatorsMulti: (
       addresses: string[]
@@ -40,12 +42,10 @@ export interface ServiceInterface {
       addresses: string[]
     ) => Promise<(PalletNominationPoolsPoolMember | undefined)[]>
     poolMetadataMulti: (ids: number[]) => Promise<HexString[]>
-    proxies: (address: string) => Promise<AccountId32[]>
-    sessionValidators: () => Promise<AccountId32[]>
+    proxies: (address: string) => Promise<string[]>
+    sessionValidators: () => Promise<string[]>
     superOfMulti: (addresses: string[]) => Promise<SuperOf[]>
-    validatorEntries: () => Promise<
-      [AccountId32, PalletStakingValidatorPrefs][]
-    >
+    validatorEntries: () => Promise<[string, PalletStakingValidatorPrefs][]>
     validatorsMulti: (
       addresses: string[]
     ) => Promise<PalletStakingValidatorPrefs[]>

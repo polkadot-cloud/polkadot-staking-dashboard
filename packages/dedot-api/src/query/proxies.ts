@@ -11,5 +11,5 @@ export const proxies = async <T extends StakingChain>(
   const [result] = await api.query.proxy.proxies(address)
 
   // NOTE: Only returning the delegate accounts of any returned proxies
-  return result.map((r) => r.delegate)
+  return result.map((r) => r.delegate.address(api.consts.system.ss58Prefix))
 }
