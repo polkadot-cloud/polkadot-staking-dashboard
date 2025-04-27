@@ -8,14 +8,9 @@ import {
   startWithBytecode,
 } from 'smoldot/no-auto-bytecode'
 
-export type SmoldotOptions = Omit<
-  ClientOptionsWithBytecode,
-  'bytecode' | 'portToWorker'
->
-
 export const startFromWorker = (
   worker: Worker,
-  options: SmoldotOptions = {}
+  options: Omit<ClientOptionsWithBytecode, 'bytecode' | 'portToWorker'> = {}
 ): Client => {
   const bytecode = new Promise<SmoldotBytecode>((resolve) => {
     worker.onmessage = (event) => resolve(event.data)
