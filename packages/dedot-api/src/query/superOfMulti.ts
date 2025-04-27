@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { MultiQueryBatchSize } from 'consts'
 import type { DedotClient } from 'dedot'
 import type { SuperOf } from 'types'
 import type { PeopleChain } from '../types'
@@ -11,7 +12,16 @@ export const superOfMulti = async <T extends PeopleChain>(
   addresses: string[],
   ss58: number
 ): Promise<SuperOf[]> => {
-  const result = (await api.query.identity.superOf.multi(addresses))
+  const batches = []
+
+  for (let i = 0; i < addresses.length; i += MultiQueryBatchSize) {
+    batches.push(addresses.slice(i, i + MultiQueryBatchSize))
+  }
+  const batchResults = await Promise.all(
+    batches.map((batch) => api.query.identity.superOf.multi(batch))
+  )
+  const flatResults = batchResults.flat()
+  const result = flatResults
     .map((item, i) => {
       if (!item) {
         return undefined
@@ -25,7 +35,7 @@ export const superOfMulti = async <T extends PeopleChain>(
         },
       }
     })
-    .filter((item) => item !== undefined)
+    .filter((item): item is NonNullable<typeof item> => item !== undefined)
 
   // Fetch the identity of the super accounts and inject them into result
   const superAddresses = result.map(({ account }) => account.address(ss58))
