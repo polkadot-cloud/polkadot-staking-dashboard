@@ -9,7 +9,7 @@ import type {
   MaybeAddress,
   NominationStatus,
   NominationStatuses,
-  PoolNominations,
+  Nominator,
   PoolTab,
 } from 'types'
 
@@ -28,7 +28,7 @@ export interface BondedPoolsContextState {
   poolSearchFilter: (filteredPools: AnyFilter, searchTerm: string) => AnyJson[]
   bondedPools: BondedPool[]
   poolsMetaData: Record<number, string>
-  poolsNominations: Record<number, PoolNominations>
+  poolsNominations: Record<number, Nominator | undefined>
   updatePoolNominations: (id: number, nominations: string[]) => void
   poolListActiveTab: PoolTab
   setPoolListActiveTab: Dispatch<SetStateAction<PoolTab>>

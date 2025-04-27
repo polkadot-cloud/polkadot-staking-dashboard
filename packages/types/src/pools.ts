@@ -27,7 +27,10 @@ export type BondedPoolQuery = Omit<
 }
 
 export type BondedPool = BondedPoolQuery & {
-  addresses: PoolAddresses
+  addresses: {
+    stash: string
+    reward: string
+  }
   id: number
 }
 
@@ -62,20 +65,6 @@ export interface ActivePool {
     submittedIn: number
   }
 }
-export interface PoolAddresses {
-  stash: string
-  reward: string
-}
-
-export type MaybePool = number | null
-
-export type PoolNominations =
-  | {
-      submittedIn: number
-      suppressed: boolean
-      targets: string[]
-    }
-  | undefined
 
 export type NominationStatuses = Record<string, string>
 
@@ -109,16 +98,3 @@ export interface ActivePoolItem {
     reward: string
   }
 }
-
-/*
- * Batch Key -> Pool Address -> Era -> Points.
- */
-// Supported reward points batch keys.
-export type PoolRewardPointsKey = string
-// Pool reward batches, keyed by batch key.
-export type PoolRewardPointsMap = Record<PoolRewardPointsKey, PoolRewardPoints>
-export type PoolRewardPoints = Record<PoolAddress, PointsByEra>
-export type PointsByEra = Record<EraKey, EraPoints>
-export type PoolAddress = string
-export type EraKey = number
-export type EraPoints = string

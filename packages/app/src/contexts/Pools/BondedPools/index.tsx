@@ -16,11 +16,9 @@ import type {
   BondedPool,
   BondedPoolQuery,
   MaybeAddress,
-  MaybePool,
   NominationStatus,
   NominationStatuses,
   Nominator,
-  PoolNominations,
   PoolTab,
 } from 'types'
 import { useApi } from '../../Api'
@@ -52,7 +50,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store bonded pools nominations
   const [poolsNominations, setPoolsNominations] = useState<
-    Record<string, PoolNominations>
+    Record<string, Nominator | undefined>
   >({})
 
   // Store pool list active tab. Defaults to `Active` tab
@@ -189,7 +187,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     addresses: createPoolAccounts(id),
   })
 
-  const getBondedPool = (poolId: MaybePool) =>
+  const getBondedPool = (poolId: number) =>
     bondedPools.find((p) => String(p.id) === String(poolId)) ?? null
 
   // poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to filter those list items that match the search term. Returns the updated filtered list

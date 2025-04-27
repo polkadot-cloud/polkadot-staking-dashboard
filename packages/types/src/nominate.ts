@@ -4,17 +4,13 @@
 export type BondFor = 'pool' | 'nominator'
 
 export interface Nominations {
-  targets: Targets
+  targets: string[]
   submittedIn: number
 }
 
-export type Targets = string[]
-
 export type NominationStatus = 'active' | 'inactive' | 'waiting'
 
-export interface Nominator {
-  targets: Targets
-  submittedIn: number
+export type Nominator = Nominations & {
   suppressed: boolean
 }
 
