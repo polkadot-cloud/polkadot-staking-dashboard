@@ -33,7 +33,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getStakingLedger, getNominations } = useBalances()
   const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
   const { units } = getNetworkData(network)
-  const { ss58 } = getNetworkData(network)
 
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
@@ -215,7 +214,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
           total: total.toString(),
           own: own.toString(),
           others: others.map(({ who, value }) => ({
-            who: who.address(ss58),
+            who,
             value: value.toString(),
           })),
         },

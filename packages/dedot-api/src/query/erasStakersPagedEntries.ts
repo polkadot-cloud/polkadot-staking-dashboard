@@ -18,6 +18,12 @@ export const erasStakersPagedEntries = async <T extends StakingChain>(
 
   return result.map(([key, value]) => [
     [key[0], key[1].address(api.consts.system.ss58Prefix), key[2]],
-    value,
+    {
+      pageTotal: value.pageTotal,
+      others: value.others.map((other) => ({
+        ...other,
+        who: other.who.address(api.consts.system.ss58Prefix),
+      })),
+    },
   ])
 }

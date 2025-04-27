@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { PalletNominationPoolsBondedPoolInner } from 'dedot/chaintypes'
+import type {
+  PalletNominationPoolsBondedPoolInner,
+  PalletNominationPoolsCommission,
+} from 'dedot/chaintypes'
+import type { Perbill } from 'dedot/codecs'
 import type { MaybeAddress } from './accounts'
 import type { IdentityOf, SuperIdentity } from './identity'
 
@@ -14,9 +18,12 @@ export type ClaimPermission =
 
 export type BondedPoolQuery = Omit<
   PalletNominationPoolsBondedPoolInner,
-  'roles'
+  'roles' | 'commission'
 > & {
   roles: PoolRoles
+  commission: Omit<PalletNominationPoolsCommission, 'current'> & {
+    current?: [Perbill, string] | undefined
+  }
 }
 
 export type BondedPool = BondedPoolQuery & {

@@ -1,10 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type {
-  SpStakingExposurePage,
-  SpStakingPagedExposureMetadata,
-} from 'dedot/chaintypes'
+import type { SpStakingPagedExposureMetadata } from 'dedot/chaintypes'
 
 export interface EraRewardPoints {
   total: number
@@ -17,7 +14,13 @@ export type ErasStakersOverviewEntries = [
 
 export type ErasStakersPagedEntries = [
   [number, string, number],
-  SpStakingExposurePage,
+  {
+    pageTotal: bigint
+    others: {
+      who: string
+      value: bigint
+    }[]
+  },
 ][]
 
 export type RewardDestinaton =

@@ -9,7 +9,6 @@ import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import type { SubmittableExtrinsic } from 'dedot'
-import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -179,7 +178,7 @@ export const ManageCommission = ({
             commission: {
               ...pool.commission,
               current: currentCommissionSet
-                ? [commission * PerbillMultiplier, new AccountId32(payee)]
+                ? [commission * PerbillMultiplier, payee]
                 : undefined,
               max: isUpdated('max_commission')
                 ? maxCommission * PerbillMultiplier
