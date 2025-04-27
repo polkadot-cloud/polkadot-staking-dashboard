@@ -4,11 +4,9 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
-import type { PalletStakingNominations } from 'dedot/chaintypes'
 import { hexToString } from 'dedot/utils'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
@@ -21,6 +19,7 @@ import type {
   MaybePool,
   NominationStatus,
   NominationStatuses,
+  Nominator,
   PoolNominations,
   PoolTab,
 } from 'types'
@@ -40,7 +39,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   } = useApi()
   const createPoolAccounts = useCreatePoolAccounts()
   const { getNominationsStatusFromTargets } = useStaking()
-  const { ss58 } = getNetworkData(network)
 
   // Store bonded pools. Used implicitly in callbacks, ref is also defined
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([])
@@ -106,7 +104,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Format raw pool nominations data
   const formatPoolsNominations = (
-    raw: (PalletStakingNominations | undefined)[],
+    raw: (Nominator | undefined)[],
     ids: number[]
   ) =>
     Object.fromEntries(
@@ -118,7 +116,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         return [
           String(ids[i]),
           {
-            targets: targets?.map((target) => target.address(ss58)) || [],
+            targets,
             ...rest,
           },
         ]

@@ -5,7 +5,6 @@ import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
 import type {
   PalletNominationPoolsPoolMember,
   PalletNominationPoolsPoolState,
-  PalletStakingNominations,
   PalletStakingRewardDestination,
   PalletStakingValidatorPrefs,
 } from 'dedot/chaintypes'
@@ -14,6 +13,7 @@ import type { Shape } from 'dedot/shape'
 import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
 import type { IdentityOf, SuperOf } from './identity'
+import type { NominatorsMultiQuery } from './nominate'
 import type { BondedPoolQuery, ClaimPermission, PoolRoles } from './pools'
 import type {
   ErasStakersOverviewEntries,
@@ -35,9 +35,7 @@ export interface ServiceInterface {
       validator: string
     ) => Promise<ErasStakersPagedEntries>
     identityOfMulti: (addresses: string[]) => Promise<IdentityOf[]>
-    nominatorsMulti: (
-      addresses: string[]
-    ) => Promise<(PalletStakingNominations | undefined)[]>
+    nominatorsMulti: (addresses: string[]) => Promise<NominatorsMultiQuery>
     poolMembersMulti: (
       addresses: string[]
     ) => Promise<(PalletNominationPoolsPoolMember | undefined)[]>

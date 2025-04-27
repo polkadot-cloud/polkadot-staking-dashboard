@@ -11,3 +11,11 @@ export interface Nominations {
 export type Targets = string[]
 
 export type NominationStatus = 'active' | 'inactive' | 'waiting'
+
+export interface Nominator {
+  targets: Targets
+  submittedIn: number
+  suppressed: boolean
+}
+
+export type NominatorsMultiQuery = (Nominator | undefined)[]
