@@ -38,8 +38,8 @@ importers:
         specifier: ^3.7.0
         version: 3.8.1(vite@6.2.6(@types/node@22.14.1)(sass@1.77.6))
       '@w3ux/types':
-        specifier: ^2.1.13
-        version: 2.1.13
+        specifier: ^2.2.1
+        version: 2.2.1
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
@@ -354,8 +354,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.1.12
-        version: 2.1.13
+        specifier: ^2.2.1
+        version: 2.2.1
       types:
         specifier: workspace:*
         version: link:../types
@@ -379,8 +379,8 @@ importers:
         version: 7.8.2
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.1.13
-        version: 2.1.13
+        specifier: ^2.2.1
+        version: 2.2.1
       types:
         specifier: workspace:*
         version: link:../types
@@ -445,8 +445,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/types':
-        specifier: ^2.1.13
-        version: 2.1.13
+        specifier: ^2.2.1
+        version: 2.2.1
       '@w3ux/utils':
         specifier: 2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -2565,8 +2565,8 @@ packages:
   '@w3ux/react-polkicon@3.1.2':
     resolution: {integrity: sha512-7N7qI7DEt9yL9/n60YZTumQfwHFpnAxXolR9wglFhgNuL30iw7NAxAkqy8jd+gyOr32NVpcJE+m0A+1O/+yyLg==}
 
-  '@w3ux/types@2.1.13':
-    resolution: {integrity: sha512-+b1wjIGRUn44tQ892er0W1NTmgu9DYjJoEbGJQ8WriZz+cQo+oT2q69P2qvofUhYdtPTroZiJcwEmoITHiL8Dg==}
+  '@w3ux/types@2.2.1':
+    resolution: {integrity: sha512-4SmN8QAZSAKN5N9OVNyc4zMOrewvaXTLiw3HZg7X1EAD3xz0AftWr/iZwCAlC1PhprF4gQexIOly24qwIg+Kaw==}
 
   '@w3ux/utils@2.0.10':
     resolution: {integrity: sha512-utJhLwZyCTxQDxtlZIskPsM7FgckNllBT1Z/XGgAITt0UxqHhMW4mJr7TViV9s4GHCaFhBYwhUrb5PpoDgnZNw==}
@@ -7638,7 +7638,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/types@2.1.13': {}
+  '@w3ux/types@2.2.1': {}
 
   '@w3ux/utils@2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:

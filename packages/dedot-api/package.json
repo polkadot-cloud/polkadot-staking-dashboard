@@ -20,7 +20,7 @@
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "@w3ux/types": "^2.1.12",
+    "@w3ux/types": "^2.2.1",
     "types": "workspace:*"
   }
 }
