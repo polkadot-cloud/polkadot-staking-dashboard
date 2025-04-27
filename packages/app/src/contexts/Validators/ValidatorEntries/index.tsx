@@ -332,7 +332,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (pluginEnabled('staking_api')) {
       return activeValidatorRanks.find((r) => r.validator === validator)?.rank
     } else {
-      const rank = getValidatorRankBus(validator, ss58)
+      const rank = getValidatorRankBus(validator)
       if (!rank) {
         return undefined
       }
@@ -356,7 +356,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       const segment = Math.ceil(percentile / 10) * 10
       return segment
     } else {
-      const rank = getValidatorRankBus(validator, ss58)
+      const rank = getValidatorRankBus(validator)
       if (!rank) {
         return fallbackSegment
       }

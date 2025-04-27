@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PalletStakingEraRewardPoints } from 'dedot/chaintypes'
+import type { EraRewardPoints } from 'types'
 import { defaultEraRewardPoints } from './default'
 import { _eraRewardPoints } from './private'
 
@@ -13,13 +13,13 @@ export const resetEraRewardPoints = () => {
 
 export const getEraRewardPoints = () => _eraRewardPoints.getValue()
 
-export const setEraRewardPoints = (value: PalletStakingEraRewardPoints) => {
+export const setEraRewardPoints = (value: EraRewardPoints) => {
   _eraRewardPoints.next(value)
 }
 
-export const getValidatorEraPoints = (address: string, ss58: number) => {
+export const getValidatorEraPoints = (address: string) => {
   const addressEntry = getEraRewardPoints().individual.find(
-    (item) => item[0].address(ss58) === address
+    (item) => item[0] === address
   )
   return addressEntry?.[1] || 0
 }
@@ -32,9 +32,9 @@ export const getValidatorRanks = () => {
   }))
 }
 
-export const getValidatorRank = (address: string, ss58: number) => {
+export const getValidatorRank = (address: string) => {
   const ranked = getValidatorRanks()
-  const rank = ranked.find((r) => r.validator.address(ss58) === address)
+  const rank = ranked.find((r) => r.validator === address)
   return rank?.rank || null
 }
 

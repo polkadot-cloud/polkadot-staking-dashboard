@@ -2,12 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import type { AccountId32 } from 'dedot/codecs'
 import {
   eraRewardPoints$,
   getEraRewardPoints,
@@ -26,19 +23,17 @@ export const CurrentEraPoints = ({
   displayFor,
 }: CurrentEraPointsProps) => {
   const { t } = useTranslation()
-  const { network } = useNetwork()
   const { isReady, activeEra } = useApi()
   const { validatorsFetched } = useValidators()
   const { setTooltipTextAndOpen } = useTooltip()
-  const { ss58 } = getNetworkData(network)
 
   // Get an era high value from era individuals data
-  const getEraHigh = (individual: [AccountId32, number][]) =>
+  const getEraHigh = (individual: [string, number][]) =>
     Object.values(individual).sort((a, b) => b[1] - a[1])[0][1] || 0
 
   // Store era reward points for the current address
   const [eraPoints, setEraPoints] = useState<BigNumber>(
-    new BigNumber(getValidatorEraPoints(address, ss58) || 0)
+    new BigNumber(getValidatorEraPoints(address) || 0)
   )
 
   // Store highest performing validator points for era
@@ -63,9 +58,7 @@ export const CurrentEraPoints = ({
   useEffect(() => {
     const subEraRewardPoints = eraRewardPoints$.subscribe((result) => {
       const { individual } = result
-      const addressEntry = individual.find(
-        (item) => item[0].address(ss58) === address
-      )
+      const addressEntry = individual.find((item) => item[0] === address)
       const addressEraPoints = new BigNumber(addressEntry?.[1] || 0)
       setEraPoints(addressEraPoints)
       setEraHigh(getEraHigh(individual))

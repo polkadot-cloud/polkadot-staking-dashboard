@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
-import type { PalletStakingEraRewardPoints } from 'dedot/chaintypes'
 import type { Unsub } from 'dedot/types'
 import { defaultEraRewardPoints, setEraRewardPoints } from 'global-bus'
+import type { EraRewardPoints } from 'types'
 import type { StakingChain } from '../types'
 
 export class EraRewardPointsQuery<T extends StakingChain> {
-  eraRewardPoints: PalletStakingEraRewardPoints = defaultEraRewardPoints
+  eraRewardPoints: EraRewardPoints = defaultEraRewardPoints
 
   #unsub: Unsub | undefined = undefined
 
@@ -25,7 +25,13 @@ export class EraRewardPointsQuery<T extends StakingChain> {
       this.era,
       (result) => {
         if (result) {
-          this.eraRewardPoints = result
+          this.eraRewardPoints = {
+            total: result.total,
+            individual: result.individual.map(([account, num]) => [
+              account.address(this.api.consts.system.ss58Prefix),
+              num,
+            ]),
+          }
           setEraRewardPoints(this.eraRewardPoints)
         }
       }
