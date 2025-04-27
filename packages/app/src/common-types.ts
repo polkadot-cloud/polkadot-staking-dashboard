@@ -50,7 +50,4 @@ interface PageProp {
   key: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyApi = any
-
 export type BulletType = 'success' | 'accent' | 'warning' | 'danger'
