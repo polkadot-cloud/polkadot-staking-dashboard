@@ -13,6 +13,7 @@ import type {
   SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
 import type { AccountId32, BytesLike } from 'dedot/codecs'
+import type { Shape } from 'dedot/shape'
 import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
 import type { IdentityOf, SuperOf } from './identity'
@@ -161,8 +162,7 @@ export interface ServiceInterface {
     ) => ExtraSignedExtension | undefined
     metadata: () => Promise<HexString | undefined>
   }
-  unsafe: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    $Signature: () => any
+  codec: {
+    $Signature: () => Shape<unknown, unknown> | undefined
   }
 }

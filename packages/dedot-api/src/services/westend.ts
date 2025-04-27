@@ -339,11 +339,11 @@ export class WestendService
       metadata: async () =>
         await this.apiRelay.call.metadata.metadataAtVersion(15),
     },
-    unsafe: {
-      $Signature: () => {
-        const { signatureTypeId } = this.apiRelay.registry.metadata!.extrinsic
-        return this.apiRelay.registry.findCodec(signatureTypeId)
-      },
+    codec: {
+      $Signature: () =>
+        this.apiRelay.registry.findCodec(
+          this.apiRelay.registry.metadata.extrinsic.signatureTypeId
+        ),
     },
   }
 }

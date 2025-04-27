@@ -140,8 +140,8 @@ export const useSubmitExtrinsic = ({
         ss58,
       }
       const extra = serviceApi.signer.extraSignedExtension(from)
-      const { $Signature } = serviceApi.unsafe
-      if (!extra || !$Signature()) {
+      const $Signature = serviceApi.codec.$Signature()
+      if (!extra || !$Signature) {
         onError('default')
         return
       }
@@ -165,7 +165,7 @@ export const useSubmitExtrinsic = ({
           if (result) {
             encodedSig = {
               address: from,
-              signature: $Signature().tryDecode(result.signature),
+              signature: $Signature.tryDecode(result.signature),
               extra: result.data,
             }
           }
@@ -196,7 +196,7 @@ export const useSubmitExtrinsic = ({
           }).sign(prefixedPayload)
           encodedSig = {
             address: from,
-            signature: $Signature().tryDecode(signature),
+            signature: $Signature.tryDecode(signature),
             extra: extra.data,
           }
           break
@@ -205,7 +205,7 @@ export const useSubmitExtrinsic = ({
           signature = (await signWcTx(payload)).signature
           encodedSig = {
             address: from,
-            signature: $Signature().tryDecode(signature),
+            signature: $Signature.tryDecode(signature),
             extra: extra.data,
           }
           break
