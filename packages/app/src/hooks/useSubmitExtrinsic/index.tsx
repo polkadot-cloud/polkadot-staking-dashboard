@@ -17,10 +17,9 @@ import { Notifications } from 'controllers/Notifications'
 import { TxSubmission } from 'controllers/TxSubmission'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
-import type { HexString } from 'dedot/utils'
 import { concatU8a, hexToU8a } from 'dedot/utils'
 import { useProxySupported } from 'hooks/useProxySupported'
-import { LedgerSigner } from 'library/Signers/LedgerSigner'
+import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
 import type {
   VaultSignatureResult,
@@ -137,87 +136,98 @@ export const useSubmitExtrinsic = ({
         specVersion,
         ss58,
       }
-      const extra = serviceApi.signer.extraSignedExtension(specName, from)
+
       const $Signature = serviceApi.codec.$Signature(specName)
-      if (!extra || !$Signature) {
+      if (!$Signature) {
         onError('default')
         return
       }
-      await extra.init()
-      const prefix = compactU32.encode(tx.callLength)
-      const payload = extra.toPayload(tx.callHex)
-      const rawPayload = extra.toRawPayload(tx.callHex)
-      const prefixedPayload = concatU8a(prefix, hexToU8a(rawPayload.data))
-      const metadata = await serviceApi.signer.metadata(specName)
 
-      let signature: HexString | undefined
-      switch (source) {
-        case 'ledger':
-          // eslint-disable-next-line no-case-declarations
-          const result = await new LedgerSigner(
-            specName,
-            from,
-            serviceApi.signer.extraSignedExtension,
-            tx,
-            metadata || '0x'
-          ).sign(networkInfo, (account as HardwareAccount).index)
-          if (result) {
-            encodedSig = {
-              address: from,
-              signature: $Signature.tryDecode(result.signature),
-              extra: result.data,
-            }
-          }
-          break
-
-        case 'vault':
-          signature = await new VaultSigner({
-            openPrompt: (
-              onComplete: (
-                status: VaultSignStatus,
-                result: VaultSignatureResult
-              ) => void,
-              toSign: Uint8Array
-            ) => {
-              openPromptWith(
-                <SignPrompt
-                  submitAddress={from}
-                  onComplete={onComplete}
-                  toSign={toSign}
-                />,
-                'sm',
-                false
-              )
-            },
-            closePrompt: () => closePrompt(),
-            setSubmitting: (val: boolean) =>
-              TxSubmission.setUidSubmitted(uid, val),
-          }).sign(prefixedPayload)
+      if (source === 'ledger') {
+        const metadata = await serviceApi.signer.metadata(specName)
+        const result = await signLedgerPayload(
+          specName,
+          from,
+          serviceApi.signer.extraSignedExtension,
+          tx,
+          metadata || '0x',
+          networkInfo,
+          (account as HardwareAccount).index
+        )
+        if (result) {
           encodedSig = {
             address: from,
-            signature: $Signature.tryDecode(signature),
-            extra: extra.data,
+            signature: $Signature.tryDecode(result.signature),
+            extra: result.data,
           }
-          break
-
-        case 'wallet_connect':
-          signature = (await signWcTx(payload)).signature
-          encodedSig = {
-            address: from,
-            signature: $Signature.tryDecode(signature),
-            extra: extra.data,
-          }
-          break
+        }
       }
 
+      if (source === 'vault') {
+        const extra = serviceApi.signer.extraSignedExtension(specName, from)
+        if (!extra) {
+          onError('default')
+          return
+        }
+        await extra.init()
+        const rawPayload = extra.toRawPayload(tx.callHex)
+        const prefixedPayload = concatU8a(
+          compactU32.encode(tx.callLength),
+          hexToU8a(rawPayload.data)
+        )
+        const result = await new VaultSigner({
+          openPrompt: (
+            onComplete: (
+              status: VaultSignStatus,
+              result: VaultSignatureResult
+            ) => void,
+            toSign: Uint8Array
+          ) => {
+            openPromptWith(
+              <SignPrompt
+                submitAddress={from}
+                onComplete={onComplete}
+                toSign={toSign}
+              />,
+              'sm',
+              false
+            )
+          },
+          closePrompt: () => closePrompt(),
+          setSubmitting: (val: boolean) =>
+            TxSubmission.setUidSubmitted(uid, val),
+        }).sign(prefixedPayload)
+
+        encodedSig = {
+          address: from,
+          signature: $Signature.tryDecode(result),
+          extra: extra.data,
+        }
+      }
+
+      if (source === 'wallet_connect') {
+        const extra = serviceApi.signer.extraSignedExtension(specName, from)
+        if (!extra) {
+          onError('default')
+          return
+        }
+        await extra.init()
+        const payload = extra.toPayload(tx.callHex)
+        const result = (await signWcTx(payload)).signature
+
+        encodedSig = {
+          address: from,
+          signature: $Signature.tryDecode(result),
+          extra: extra.data,
+        }
+      }
+      // Custom signer
+      //
+      // Submit the transaction with the raw signature
       if (!encodedSig) {
         onError('default')
         return
       }
-
-      // Custom signer
-      //
-      // Submit the transaction with the raw signature
       TxSubmission.addSend(uid, tx, encodedSig, handlers)
     } else {
       // Extension signer
