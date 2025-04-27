@@ -40,20 +40,17 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('app')
+  const { serviceApi } = useApi()
   const { network } = useNetwork()
   const { signWcTx } = useWalletConnect()
   const { getAccountBalance } = useBalances()
   const { activeProxy } = useActiveAccounts()
   const { extensionsStatus } = useExtensions()
-  const { serviceApi, getChainSpec } = useApi()
   const { isProxySupported } = useProxySupported()
   const { openPromptWith, closePrompt } = usePrompt()
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
-  const {
-    version: { specName, specVersion },
-  } = getChainSpec(network)
   const { unit, units } = getNetworkData(network)
   const { ss58 } = getNetworkData(network)
 
@@ -102,6 +99,7 @@ export const useSubmitExtrinsic = ({
       return
     }
 
+    const { specName, specVersion } = tx.client.runtimeVersion
     const { source } = account
     const isManualSigner = ManualSigners.includes(source)
 
@@ -139,8 +137,8 @@ export const useSubmitExtrinsic = ({
         specVersion,
         ss58,
       }
-      const extra = serviceApi.signer.extraSignedExtension(from)
-      const $Signature = serviceApi.codec.$Signature()
+      const extra = serviceApi.signer.extraSignedExtension(specName, from)
+      const $Signature = serviceApi.codec.$Signature(specName)
       if (!extra || !$Signature) {
         onError('default')
         return
@@ -150,13 +148,14 @@ export const useSubmitExtrinsic = ({
       const payload = extra.toPayload(tx.callHex)
       const rawPayload = extra.toRawPayload(tx.callHex)
       const prefixedPayload = concatU8a(prefix, hexToU8a(rawPayload.data))
-      const metadata = await serviceApi.signer.metadata()
+      const metadata = await serviceApi.signer.metadata(specName)
 
       let signature: HexString | undefined
       switch (source) {
         case 'ledger':
           // eslint-disable-next-line no-case-declarations
           const result = await new LedgerSigner(
+            specName,
             from,
             serviceApi.signer.extraSignedExtension,
             tx,

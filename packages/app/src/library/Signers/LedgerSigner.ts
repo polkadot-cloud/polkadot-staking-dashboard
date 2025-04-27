@@ -10,8 +10,10 @@ import { hexToU8a, u8aToHex } from 'dedot/utils'
 
 export class LedgerSigner {
   constructor(
+    public specName: string,
     public from: string,
     public extraSignedExtension: (
+      specName: string,
       signerAddress: string,
       payloadOptions?: PayloadOptions
     ) => ExtraSignedExtension | undefined,
@@ -35,7 +37,7 @@ export class LedgerSigner {
       decimals: info.decimals,
       tokenSymbol: info.tokenSymbol,
     })
-    const extra = this.extraSignedExtension(this.from, {
+    const extra = this.extraSignedExtension(this.specName, this.from, {
       metadataHash: u8aToHex(merkleizer.digest()),
     })
 

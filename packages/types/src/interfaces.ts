@@ -157,12 +157,13 @@ export interface ServiceInterface {
   }
   signer: {
     extraSignedExtension: (
+      specName: string,
       signerAddress: string,
       payloadOptions?: PayloadOptions
     ) => ExtraSignedExtension | undefined
-    metadata: () => Promise<HexString | undefined>
+    metadata: (specName: string) => Promise<HexString | undefined>
   }
   codec: {
-    $Signature: () => Shape<unknown, unknown> | undefined
+    $Signature: (specName: string) => Shape<unknown, unknown> | undefined
   }
 }

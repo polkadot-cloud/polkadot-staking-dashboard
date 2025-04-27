@@ -52,6 +52,10 @@ export abstract class DefaultServiceClass<
     relay: ApiStatus<RelayApi>
     people: ApiStatus<PeopleApi>
   }
+  abstract getApi: (
+    id: string
+  ) => DedotClient<RelayApi> | DedotClient<PeopleApi>
+
   abstract relayChainSpec: ChainSpecs<RelayApi>
   abstract peopleChainSpec: ChainSpecs<PeopleApi>
   abstract coreConsts: CoreConsts<RelayApi>

@@ -99,6 +99,14 @@ export class KusamaService
     }
   }
 
+  getApi = (id: string) => {
+    if (id === this.ids[0]) {
+      return this.apiRelay
+    } else {
+      return this.apiPeople
+    }
+  }
+
   start = async () => {
     this.relayChainSpec = new ChainSpecs(this.apiRelay)
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
@@ -330,18 +338,22 @@ export class KusamaService
         tx.transferKeepAlive(this.apiRelay, to, value),
     },
     signer: {
-      extraSignedExtension: (signerAddress, payloadOptions = undefined) =>
-        new ExtraSignedExtension(this.apiRelay, {
+      extraSignedExtension: (
+        specName,
+        signerAddress,
+        payloadOptions = undefined
+      ) =>
+        new ExtraSignedExtension(this.getApi(specName), {
           signerAddress,
           payloadOptions,
         }),
-      metadata: async () =>
-        await this.apiRelay.call.metadata.metadataAtVersion(15),
+      metadata: async (specName) =>
+        await this.getApi(specName).call.metadata.metadataAtVersion(15),
     },
     codec: {
-      $Signature: () =>
-        this.apiRelay.registry.findCodec(
-          this.apiRelay.registry.metadata.extrinsic.signatureTypeId
+      $Signature: (specName) =>
+        this.getApi(specName).registry.findCodec(
+          this.getApi(specName).registry.metadata.extrinsic.signatureTypeId
         ),
     },
   }
