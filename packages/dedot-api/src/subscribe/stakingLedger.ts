@@ -81,7 +81,9 @@ export class StakingLedgerQuery<T extends StakingChain> {
             ledger === undefined
               ? undefined
               : {
-                  stash: ledger.stash,
+                  stash: ledger.stash.address(
+                    this.api.consts.system.ss58Prefix
+                  ),
                   total: ledger.total,
                   active: ledger.active,
                   unlocking: ledger.unlocking.map(({ value, era }) => ({
@@ -94,7 +96,10 @@ export class StakingLedgerQuery<T extends StakingChain> {
               ? undefined
               : {
                   destination: payee.type,
-                  account: 'value' in payee ? payee.value : undefined,
+                  account:
+                    'value' in payee
+                      ? payee.value.address(this.api.consts.system.ss58Prefix)
+                      : undefined,
                 },
           nominators:
             nominators === undefined
@@ -103,7 +108,9 @@ export class StakingLedgerQuery<T extends StakingChain> {
                   submittedIn: 0,
                 }
               : {
-                  targets: nominators.targets,
+                  targets: nominators.targets.map((target) =>
+                    target.address(this.api.consts.system.ss58Prefix)
+                  ),
                   submittedIn: nominators.submittedIn,
                 },
           poolMembership:

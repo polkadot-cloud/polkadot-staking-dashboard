@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import {
@@ -23,7 +22,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
   const { existentialDeposit } = getChainSpec(network)
-  const { ss58 } = getNetworkData(network)
 
   // Store account balances state
   type StateBalances = Record<string, Record<string, AccountBalance>>
@@ -62,7 +60,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
       return []
     }
     const { nominators } = getStakingLedger(address)
-    return (nominators?.targets || []).map((target) => target.address(ss58))
+    return nominators?.targets || []
   }
 
   // Get an account's pending pool rewards from its staking ledger

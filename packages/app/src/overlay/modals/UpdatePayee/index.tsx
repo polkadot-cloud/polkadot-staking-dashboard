@@ -2,11 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isValidAddress } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types'
 import { AccountId32 } from 'dedot/codecs'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
@@ -26,7 +24,6 @@ import { useOverlay } from 'ui-overlay'
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
   const { serviceApi } = useApi()
   const { getStakingLedger } = useBalances()
   const { getPayeeItems } = usePayeeConfig()
@@ -34,7 +31,6 @@ export const UpdatePayee = () => {
   const { setModalStatus } = useOverlay().modal
   const { getSignerWarnings } = useSignerWarnings()
 
-  const { ss58 } = getNetworkData(network)
   const payee = getStakingLedger(activeAddress).payee
 
   const DefaultSelected: PayeeConfig = {
@@ -43,9 +39,7 @@ export const UpdatePayee = () => {
   }
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAddress>(
-    payee?.account?.address(ss58) || null
-  )
+  const [account, setAccount] = useState<MaybeAddress>(payee?.account || null)
 
   // Store the currently selected payee option.
   const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected)

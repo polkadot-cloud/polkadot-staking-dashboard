@@ -5,3 +5,10 @@ export interface EraRewardPoints {
   total: number
   individual: Array<[string, number]>
 }
+
+export type RewardDestinaton =
+  | 'Staked'
+  | 'Stash'
+  | 'Controller'
+  | 'Account'
+  | 'None'

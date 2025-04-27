@@ -1,11 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type {
-  PalletNominationPoolsClaimPermission,
-  PalletStakingRewardDestination,
-} from 'dedot/chaintypes'
-import type { AccountId32 } from 'dedot/codecs'
+import type { PalletNominationPoolsClaimPermission } from 'dedot/chaintypes'
+import type { RewardDestinaton } from './staking'
 
 export interface StakingLedger {
   ledger: Ledger | undefined
@@ -16,7 +13,7 @@ export interface StakingLedger {
 }
 
 interface Ledger {
-  stash: AccountId32
+  stash: string
   total: bigint
   active: bigint
   unlocking: {
@@ -26,12 +23,12 @@ interface Ledger {
 }
 
 interface Payee {
-  destination: PalletStakingRewardDestination['type']
-  account: AccountId32 | undefined
+  destination: RewardDestinaton
+  account: string | undefined
 }
 
 interface Nominators {
-  targets: AccountId32[]
+  targets: string[]
   submittedIn: number
 }
 
