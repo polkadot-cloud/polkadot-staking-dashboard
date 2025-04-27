@@ -13,7 +13,6 @@ export interface ValidatorsContextInterface {
   validatorSupers: Record<string, AnyJson>
   avgCommission: number
   sessionValidators: string[]
-  sessionParaValidators: string[]
   validatorsFetched: Sync
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]

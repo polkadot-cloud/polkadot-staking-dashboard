@@ -41,7 +41,6 @@ export interface ServiceInterface {
     nominatorsMulti: (
       addresses: string[]
     ) => Promise<(PalletStakingNominations | undefined)[]>
-    paraSessionAccounts: (session: number) => Promise<AccountId32[] | undefined>
     poolMembersMulti: (
       addresses: string[]
     ) => Promise<(PalletNominationPoolsPoolMember | undefined)[]>

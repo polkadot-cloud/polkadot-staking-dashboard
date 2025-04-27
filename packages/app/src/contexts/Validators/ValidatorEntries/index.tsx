@@ -47,17 +47,11 @@ export const [ValidatorsContext, useValidators] =
 
 export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const {
-    isReady,
-    getConsts,
-    serviceApi,
-    getApiStatus,
-    relayMetrics: { earliestStoredSession },
-  } = useApi()
   const { activeEra } = useApi()
   const { pluginEnabled } = usePlugins()
   const { stakers } = useStaking().eraStakers
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
+  const { isReady, getConsts, serviceApi, getApiStatus } = useApi()
 
   const { ss58 } = getNetworkData(network)
   const { historyDepth } = getConsts(network)
@@ -86,11 +80,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Stores the currently active validator set
   const [sessionValidators, setSessionValidators] = useState<string[]>([])
-
-  // Stores the currently active parachain validator set
-  const [sessionParaValidators, setSessionParaValidators] = useState<string[]>(
-    []
-  )
 
   // Stores the average network commission rate
   const [avgCommission, setAvgCommission] = useState<number>(0)
@@ -203,15 +192,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       a.address(ss58)
     )
     setSessionValidators(result)
-  }
-
-  // Subscribe to active parachain validators
-  const getParachainValidators = async () => {
-    const sessionAccounts = (
-      await serviceApi.query.paraSessionAccounts(earliestStoredSession)
-    )?.map((a) => a.address(ss58))
-
-    setSessionParaValidators(sessionAccounts || [])
   }
 
   // Fetches prefs for a list of validators
@@ -393,7 +373,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       validators: [],
     })
     setSessionValidators([])
-    setSessionParaValidators([])
     setAvgCommission(0)
     setValidatorIdentities({})
     setValidatorSupers({})
@@ -425,13 +404,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [isReady, activeEra])
 
-  // Fetch parachain session validators when `earliestStoredSession` ready
-  useEffectIgnoreInitial(() => {
-    if (isReady && earliestStoredSession > 0) {
-      getParachainValidators()
-    }
-  }, [isReady, earliestStoredSession.toString()])
-
   return (
     <ValidatorsContext.Provider
       value={{
@@ -442,7 +414,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         validatorSupers,
         avgCommission,
         sessionValidators,
-        sessionParaValidators,
         validatorsFetched: validators.status,
         averageEraValidatorReward,
         formatWithPrefs,

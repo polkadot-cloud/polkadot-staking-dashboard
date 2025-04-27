@@ -8,7 +8,6 @@ import { erasStakersPagedEntries } from './erasStakersPagedEntries'
 import { erasValidatorRewardMulti } from './erasValidatorRewardMulti'
 import { identityOfMulti } from './identityOfMulti'
 import { nominatorsMulti } from './nominatorsMulti'
-import { paraSessionAccounts } from './paraSessionAccounts'
 import { poolMembersMulti } from './poolMembersMulti'
 import { poolMetadataMulti } from './poolMetadataMulti'
 import { proxies } from './proxies'
@@ -25,7 +24,6 @@ export const query = {
   erasValidatorRewardMulti,
   identityOfMulti,
   nominatorsMulti,
-  paraSessionAccounts,
   poolMembersMulti,
   poolMetadataMulti,
   proxies,

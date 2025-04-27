@@ -12,7 +12,6 @@ export const defaultServiceInterface: ServiceInterface = {
     erasStakersPagedEntries: async () => [],
     identityOfMulti: async () => [],
     nominatorsMulti: async () => [],
-    paraSessionAccounts: async () => undefined,
     poolMembersMulti: async () => [],
     poolMetadataMulti: async () => [],
     proxies: async () => [],

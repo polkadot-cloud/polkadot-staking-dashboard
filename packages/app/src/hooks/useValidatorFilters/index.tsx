@@ -13,7 +13,6 @@ export const useValidatorFilters = () => {
     getValidatorRank,
     sessionValidators,
     validatorIdentities,
-    sessionParaValidators,
   } = useValidators()
   /*
    * filterMissingIdentity: Iterates through the supplied list and filters those with missing
@@ -69,20 +68,6 @@ export const useValidatorFilters = () => {
   }
 
   /*
-   * filterNonParachainValidator: Filters the supplied list and removes items that are inactive.
-   * Returns the updated filtered list.
-   */
-  const filterNonParachainValidator = (list: AnyFilter) => {
-    // if list has not yet been populated, return original list
-    if ((sessionParaValidators?.length ?? 0) === 0) {
-      return list
-    }
-    return list.filter((validator: AnyFilter) =>
-      sessionParaValidators.includes(validator.address)
-    )
-  }
-
-  /*
    * filterInSession: Filters the supplied list and removes items that are in the current session.
    * Returns the updated filtered list.
    */
@@ -111,7 +96,6 @@ export const useValidatorFilters = () => {
     missing_identity: filterMissingIdentity,
     all_commission: filterAllCommission,
     blocked_nominations: filterBlockedNominations,
-    not_parachain_validator: filterNonParachainValidator,
     in_session: filterInSession,
   }
 

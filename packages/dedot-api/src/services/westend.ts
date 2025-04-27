@@ -248,8 +248,6 @@ export class WestendService
         await query.identityOfMulti(this.apiPeople, addresses),
       nominatorsMulti: async (addresses) =>
         await query.nominatorsMulti(this.apiRelay, addresses),
-      paraSessionAccounts: async (session) =>
-        await query.paraSessionAccounts(this.apiRelay, session),
       poolMembersMulti: async (addresses) =>
         await query.poolMembersMulti(this.apiRelay, addresses),
       poolMetadataMulti: async (ids) =>
