@@ -4,12 +4,14 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
-import type { AnyApi } from 'common-types'
 import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
-import type { PalletStakingNominations } from 'dedot/chaintypes'
+import type {
+  PalletNominationPoolsBondedPoolInner,
+  PalletStakingNominations,
+} from 'dedot/chaintypes'
 import { hexToString } from 'dedot/utils'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
@@ -19,6 +21,7 @@ import type {
   BondedPool,
   MaybeAddress,
   MaybePool,
+  NominationStatus,
   NominationStatuses,
   PoolNominations,
   PoolTab,
@@ -72,7 +75,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     const bondedPoolEntries = await serviceApi.query.bondedPoolEntries()
 
     const exposures = shuffle(
-      bondedPoolEntries.map(([id, pool]: AnyApi) => {
+      bondedPoolEntries.map(([id, pool]) => {
         ids.push(id)
         idsMulti.push(id)
         return getPoolWithAddresses(id, pool)
@@ -125,16 +128,17 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     )
 
   // Queries a bonded pool and injects ID and addresses to a result
-  const queryBondedPool = async (id: number) => {
-    const bondedPool = serviceApi.query.bondedPool(id)
-
+  const queryBondedPool = async (
+    id: number
+  ): Promise<BondedPool | undefined> => {
+    const bondedPool = await serviceApi.query.bondedPool(id)
     if (!bondedPool) {
-      return null
+      return
     }
     return {
+      ...bondedPool,
       id,
       addresses: createPoolAccounts(id),
-      ...bondedPool,
     }
   }
 
@@ -142,7 +146,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const getPoolNominationStatus = (
     nominator: MaybeAddress,
     nomination: MaybeAddress
-  ) => {
+  ): NominationStatus => {
     const pool = bondedPools.find((p) => p.addresses.stash === nominator)
 
     if (!pool) {
@@ -166,7 +170,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Determine bonded pool's current nomination statuse
   const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
-    let status = 'waiting'
+    let status: NominationStatus = 'waiting'
 
     if (statuses) {
       for (const childStatus of Object.values(statuses)) {
@@ -183,7 +187,10 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper: to add addresses to pool record
-  const getPoolWithAddresses = (id: number, pool: BondedPool) => ({
+  const getPoolWithAddresses = (
+    id: number,
+    pool: PalletNominationPoolsBondedPoolInner
+  ) => ({
     ...pool,
     id,
     addresses: createPoolAccounts(id),

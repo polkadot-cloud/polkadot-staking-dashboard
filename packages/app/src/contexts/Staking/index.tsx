@@ -113,9 +113,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady || activeEra.index === 0) {
       return
     }
-
     Syncs.dispatch('era-stakers', 'syncing')
-
     const exposures = await fetchEraStakers(activeEra.index.toString())
 
     // Worker to calculate stats

@@ -73,7 +73,9 @@ export const Summary = ({ section }: SetupStepProps) => {
 
       // Query and add created pool to bondedPools list.
       const pool = await queryBondedPool(poolId)
-      addToBondedPools(pool)
+      if (pool) {
+        addToBondedPools(pool)
+      }
 
       // Reset setup progress.
       removeSetupProgress('pool', activeAddress)

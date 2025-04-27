@@ -48,14 +48,15 @@ export const NominationList = ({
   // Store the current nomination status of validator records relative to the supplied nominator
   const nominationStatus = useRef<Record<string, NominationStatus>>({})
 
-  // Get nomination status relative to supplied nominator, if `format` is `nomination`
+  // Get nomination status relative to supplied nominator
   const processNominationStatus = () => {
     if (bondFor === 'pool') {
-      nominationStatus.current = Object.fromEntries(
-        initialValidators.map(({ address }) => [
-          address,
-          getPoolNominationStatus(nominator, address),
-        ])
+      nominationStatus.current = initialValidators.reduce(
+        (acc: Record<string, NominationStatus>, { address }) => {
+          acc[address] = getPoolNominationStatus(nominator, address)
+          return acc
+        },
+        {}
       )
     } else {
       // get all active account's nominations

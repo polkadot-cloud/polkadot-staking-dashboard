@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi } from 'common-types'
 import type { SubmittableExtrinsic } from 'dedot'
 import type { MaybeAddress } from 'types'
 
@@ -20,5 +19,3 @@ export interface UseSubmitExtrinsic {
   proxySupported: boolean
   submitAddress: MaybeAddress
 }
-
-export type UnsafeTx = AnyApi

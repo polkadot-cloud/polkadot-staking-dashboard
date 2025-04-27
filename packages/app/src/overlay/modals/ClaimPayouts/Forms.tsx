@@ -4,12 +4,12 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type { AnyApi } from 'common-types'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -61,18 +61,21 @@ export const Forms = forwardRef(
 
     const getCalls = () => {
       const calls =
-        payouts?.reduce((acc: AnyApi[], { era, paginatedValidators }) => {
-          if (!paginatedValidators.length) {
-            return acc
-          }
-          paginatedValidators.forEach(([page, v]) => {
-            const tx = serviceApi.tx.payoutStakersByPage(v, Number(era), page)
-            if (tx) {
-              acc.push(tx)
+        payouts?.reduce(
+          (acc: SubmittableExtrinsic[], { era, paginatedValidators }) => {
+            if (!paginatedValidators.length) {
+              return acc
             }
-          })
-          return acc
-        }, []) || []
+            paginatedValidators.forEach(([page, v]) => {
+              const tx = serviceApi.tx.payoutStakersByPage(v, Number(era), page)
+              if (tx) {
+                acc.push(tx)
+              }
+            })
+            return acc
+          },
+          []
+        ) || []
       return calls
     }
 
