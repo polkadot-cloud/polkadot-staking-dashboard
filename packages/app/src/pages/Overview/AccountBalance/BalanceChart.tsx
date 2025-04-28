@@ -53,7 +53,6 @@ export const BalanceChart = () => {
   const freeBn = new BigNumber(free)
   const frozenBn = new BigNumber(frozen)
   const reservedBn = new BigNumber(reserved)
-  const maxLockedBn = BigNumber.max(frozenBn, reservedBn).minus(active)
 
   const totalBalance = planckToUnitBn(
     freeBn.plus(poolBondOpions.active).plus(unlockingPools),
@@ -64,17 +63,21 @@ export const BalanceChart = () => {
   const nominating = planckToUnitBn(new BigNumber(total), units)
 
   // Total funds in pool
-  const inPool = planckToUnitBn(
-    new BigNumber(allTransferOptions.pool.active)
-      .plus(allTransferOptions.pool.totalUnlocking)
-      .plus(allTransferOptions.pool.totalUnlocked),
-    units
-  )
+  const inPoolPlanck = new BigNumber(allTransferOptions.pool.active)
+    .plus(allTransferOptions.pool.totalUnlocking)
+    .plus(allTransferOptions.pool.totalUnlocked)
+
+  // Total locked funds (minus actively staking)
+  const maxLockedBn = BigNumber.max(frozenBn, reservedBn)
+    .minus(active)
+    .minus(inPoolPlanck)
 
   const freeBalancePlanck = new BigNumber(allTransferOptions.freeBalance)
+
+  // Graph percentages
+  const inPool = planckToUnitBn(inPoolPlanck, units)
   const freeBalanceBn = planckToUnitBn(freeBalancePlanck, units)
 
-  // Graph percentages.
   const graphTotal = nominating.plus(inPool).plus(freeBalanceBn)
   const graphNominating = nominating.isGreaterThan(0)
     ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
