@@ -1,12 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
 import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
@@ -34,7 +33,7 @@ export const SubmitTx = ({
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { setModalResize } = useOverlay().modal
-  const { getAccountBalance, getEdReserved } = useBalances()
+  const { getTransferOptions } = useTransferOptions()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
@@ -43,16 +42,10 @@ export const SubmitTx = ({
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
+  const { transferrableBalance } = getTransferOptions(from)
 
-  const edReserved = getEdReserved(from)
-  const {
-    balance: { free, frozen },
-  } = getAccountBalance(from)
-
-  const freeBn = new BigNumber(free)
-  const balanceforTxFees = freeBn.minus(edReserved).minus(frozen)
   const notEnoughFunds =
-    balanceforTxFees.minus(fee.toString()).isLessThan(0) && fee > 0n
+    transferrableBalance.minus(fee.toString()).isLessThan(0) && fee > 0n
 
   // Default to active account
   let signingOpts = {

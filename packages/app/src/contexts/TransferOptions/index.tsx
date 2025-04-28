@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import { maxBigInt } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -25,12 +26,11 @@ export const TransferOptionsProvider = ({
   children: ReactNode
 }) => {
   const { network } = useNetwork()
-  const { getChainSpec, activeEra } = useApi()
+  const { activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
-  const { getStakingLedger, getAccountBalance } = useBalances()
+  const { getStakingLedger, getAccountBalance, getEdReserved } = useBalances()
 
   const { poolMembership } = getStakingLedger(activeAddress)
-  const { existentialDeposit } = getChainSpec(network)
   const { units, defaultFeeReserve } = getNetworkData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
@@ -43,10 +43,10 @@ export const TransferOptionsProvider = ({
   // `Balances`
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
     const {
-      balance: { free, frozen },
-      maxLock,
+      balance: { free, frozen, reserved },
     } = getAccountBalance(address)
     const freeBn = new BigNumber(free)
+
     const stakingLedger = getStakingLedger(address)
     const { active, total } = stakingLedger.ledger || {
       active: 0n,
@@ -58,48 +58,41 @@ export const TransferOptionsProvider = ({
         value: new BigNumber(value),
       })
     )
+    const activeBn = new BigNumber(active)
+    const totalBn = new BigNumber(total)
+    const maxReserve = maxBigInt(frozen, reserved)
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed
-    const edReserved = BigNumber.max(
-      new BigNumber(existentialDeposit).minus(maxLock),
-      0
+    const edReserved = planckToUnitBn(
+      new BigNumber(getEdReserved(address)),
+      units
     )
+    const freeBalance = BigNumber.max(freeBn.minus(edReserved), 0)
 
     // Total free balance after `edReserved` is subtracted
-    const freeMinusReserve = BigNumber.max(
-      freeBn.minus(edReserved).minus(feeReserve),
-      0
-    )
-    // Free balance that can be transferred
-    const transferrableBalance = BigNumber.max(
-      freeMinusReserve.minus(frozen),
-      0
-    )
+    const transferrableBalance = BigNumber.max(freeBalance.minus(feeReserve), 0)
+
     // Free balance to pay for tx fees. Does not factor `feeReserve`
-    const balanceTxFees = BigNumber.max(
-      freeBn.minus(edReserved).minus(frozen),
-      0
-    )
+    const balanceTxFees = BigNumber.max(freeBn.minus(edReserved), 0)
+
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
       unlocking,
       activeEra.index
     )
-    // Free balance to stake after `total` (total staked) ledger amount
-    const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0)
 
     const nominatorBalances = () => {
       const totalPossibleBond = BigNumber.max(
-        freeMinusReserve.minus(totalUnlocking).minus(totalUnlocked),
+        totalBn.plus(transferrableBalance),
         0
       )
       return {
-        active: new BigNumber(active),
+        active: activeBn,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
-        totalAdditionalBond: BigNumber.max(totalPossibleBond.minus(active), 0),
+        totalAdditionalBond: BigNumber.max(totalPossibleBond.minus(total), 0),
         totalUnlockChunks: unlocking.length,
       }
     }
@@ -120,7 +113,10 @@ export const TransferOptionsProvider = ({
         active: new BigNumber(poolMembership?.balance || 0),
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
-        totalPossibleBond: BigNumber.max(freeMinusReserve.minus(maxLock), 0),
+        totalPossibleBond: BigNumber.max(
+          transferrableBalance.minus(maxReserve),
+          0
+        ),
         totalUnlockChunks: unlockingPool.length,
       }
     }

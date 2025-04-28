@@ -4,9 +4,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { maxBigInt } from '@w3ux/utils'
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
-import { hexToString } from 'dedot/utils'
 import { removeAccountBalance, setAccountBalance } from 'global-bus'
 import type { AccountBalance, ChainId } from 'types'
 import type { Chain } from '../types'
@@ -24,33 +24,23 @@ export class AccountBalanceQuery<T extends Chain> {
   }
 
   async subscribe() {
-    this.#unsub = await this.api.queryMulti(
-      [
-        {
-          fn: this.api.query.system.account,
-          args: [this.address],
-        },
-        {
-          fn: this.api.query.balances.locks,
-          args: [this.address],
-        },
-      ],
-      ([{ nonce, data }, locks]) => {
+    this.#unsub = await this.api.query.system.account(
+      this.address,
+      ({ nonce, data }) => {
+        // MIGRATION: Westend now factors staking amount into the free balance. Temporarily deduct
+        // the max(frozen, reserved) from the free balance for other networks
+        const isWestend = this.api.runtimeVersion.specName === 'westend'
+        const free = isWestend
+          ? data.free
+          : maxBigInt(data.free - maxBigInt(data.reserved, data.frozen), 0n)
+
         const balances: AccountBalance = {
           nonce,
           balance: {
-            free: data.free,
+            free,
             reserved: data.reserved,
             frozen: data.frozen,
           },
-          locks: locks.map((lock) => ({
-            id: hexToString(lock.id).trim(),
-            amount: lock.amount,
-          })),
-          maxLock: locks.reduce(
-            (prev, cur) => (prev > cur.amount ? prev : cur.amount),
-            0n
-          ),
         }
         setAccountBalance(this.chainId, this.address, balances)
       }

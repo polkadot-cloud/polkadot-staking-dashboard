@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
+import { maxBigInt } from '@w3ux/utils'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import {
@@ -41,9 +42,10 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   // Get an account's ed reserved balance
   const getEdReserved = (address: MaybeAddress) => {
-    const { maxLock } = getAccountBalance(address)
-    const reserved = existentialDeposit - maxLock
-    return reserved < 0 ? 0n : reserved
+    const {
+      balance: { reserved, frozen },
+    } = getAccountBalance(address)
+    return maxBigInt(existentialDeposit - maxBigInt(reserved, frozen), 0n)
   }
 
   // Get an account's staking ledger

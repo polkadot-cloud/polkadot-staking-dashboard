@@ -8,9 +8,4 @@ export interface AccountBalance {
     reserved: bigint
     frozen: bigint
   }
-  locks: {
-    id: string
-    amount: bigint
-  }[]
-  maxLock: bigint
 }

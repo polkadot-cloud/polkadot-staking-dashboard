@@ -3,6 +3,7 @@
 
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
+import { formatAccountSs58 } from '@w3ux/utils'
 import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
@@ -48,6 +49,7 @@ import type {
 import {
   diffImportedAccounts,
   diffPoolIds,
+  formatAccountAddresses,
   getAccountKey,
   keysOf,
 } from '../util'
@@ -155,15 +157,26 @@ export class PolkadotService
     })
 
     this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
-      const { added, removed } = diffImportedAccounts(prev.flat(), cur.flat())
+      const ss58 = this.apiRelay.consts.system.ss58Prefix
+      const { added, removed } = diffImportedAccounts(
+        prev.flat(),
+        formatAccountAddresses(cur.flat(), ss58)
+      )
+
       removed.forEach((account) => {
-        this.ids.forEach((id, i) => {
-          this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
-            getAccountKey(id, account)
-          ]?.unsubscribe()
-          this.subStakingLedgers?.[account.address]?.unsubscribe()
-          this.subProxies?.[account.address]?.unsubscribe()
-        })
+        const address = formatAccountSs58(
+          account.address,
+          this.apiRelay.consts.system.ss58Prefix
+        )
+        if (address) {
+          this.ids.forEach((id, i) => {
+            this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
+              getAccountKey(id, account)
+            ]?.unsubscribe()
+            this.subStakingLedgers?.[address]?.unsubscribe()
+            this.subProxies?.[address]?.unsubscribe()
+          })
+        }
       })
       added.forEach((account) => {
         this.subAccountBalances['relay'][getAccountKey(this.ids[0], account)] =

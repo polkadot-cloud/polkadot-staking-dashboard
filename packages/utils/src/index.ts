@@ -13,7 +13,9 @@ import type { IdentityOf, SuperIdentity, SuperOf } from 'types'
 
 // Return `planckToUnit` as a BigNumber
 export const planckToUnitBn = (val: BigNumber, units: number): BigNumber =>
-  new BigNumber(planckToUnit(val.toFormat({ groupSeparator: '' }), units))
+  new BigNumber(
+    planckToUnit(val.decimalPlaces(0).toFormat({ groupSeparator: '' }), units)
+  )
 
 // Converts a string to a BigNumber.
 export const stringToBn = (value: string): BigNumber =>

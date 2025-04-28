@@ -48,6 +48,7 @@ import type {
 import {
   diffImportedAccounts,
   diffPoolIds,
+  formatAccountAddresses,
   getAccountKey,
   keysOf,
 } from '../util'
@@ -155,7 +156,11 @@ export class WestendService
     })
 
     this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
-      const { added, removed } = diffImportedAccounts(prev.flat(), cur.flat())
+      const ss58 = this.apiRelay.consts.system.ss58Prefix
+      const { added, removed } = diffImportedAccounts(
+        prev.flat(),
+        formatAccountAddresses(cur.flat(), ss58)
+      )
       removed.forEach((account) => {
         this.ids.forEach((id, i) => {
           this.subAccountBalances[keysOf(this.subAccountBalances)[i]][

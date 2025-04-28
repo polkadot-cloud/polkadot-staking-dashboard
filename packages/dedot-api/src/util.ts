@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { formatAccountSs58 } from '@w3ux/utils'
 import type { SubmittableExtrinsic } from 'dedot'
 import type { ChainId, ImportedAccount } from 'types'
 
@@ -52,3 +53,21 @@ export const asTx = <T>(tx: T) => tx as SubmittableExtrinsic
 export const asTxs = <T>(txs: T[]) =>
   // for each array element, cast to SubmittableExtrinsic
   txs.map((t) => t as SubmittableExtrinsic)
+
+// Format account adddresses to an ss58 format
+export const formatAccountAddresses = (
+  accounts: ImportedAccount[],
+  ss58: number
+): ImportedAccount[] =>
+  accounts
+    .map((account) => {
+      const address = formatAccountSs58(account.address, ss58)
+      if (!address) {
+        return undefined
+      }
+      return {
+        ...account,
+        address,
+      }
+    })
+    .filter((account) => account !== undefined)

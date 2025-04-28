@@ -189,7 +189,6 @@ export const useValidatorFilters = () => {
       return list
     }
 
-    console.log('applying search', searchTerm, 'for', list.length, 'validators')
     const filteredList: AnyFilter = []
     for (const validator of list) {
       const identity = validatorIdentities[validator.address]

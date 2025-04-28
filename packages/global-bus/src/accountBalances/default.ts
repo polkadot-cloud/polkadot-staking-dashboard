@@ -10,6 +10,4 @@ export const defaultAccountBalance: AccountBalance = {
     reserved: 0n,
     frozen: 0n,
   },
-  locks: [],
-  maxLock: 0n,
 }
