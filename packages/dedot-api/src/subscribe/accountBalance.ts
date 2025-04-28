@@ -28,9 +28,10 @@ export class AccountBalanceQuery<T extends Chain> {
       this.address,
       ({ nonce, data }) => {
         // MIGRATION: Westend now factors staking amount into the free balance. Temporarily deduct
-        // the max(frozen, reserved) from the free balance for other networks
-        const isWestend = this.api.runtimeVersion.specName === 'westend'
-        const free = isWestend
+        // the max(frozen, reserved) from the free balance for other relay chains
+        const free = !['polkadot', 'kusama'].includes(
+          this.api.runtimeVersion.specName
+        )
           ? data.free
           : maxBigInt(data.free - maxBigInt(data.reserved, data.frozen), 0n)
 
