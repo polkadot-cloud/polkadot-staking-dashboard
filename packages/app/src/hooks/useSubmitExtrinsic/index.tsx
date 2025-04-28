@@ -57,13 +57,16 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
   // already wrapped, update `from` address and return
+
+  let proxySupported = false
   if (tx) {
+    proxySupported = isProxySupported(tx, from)
     if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
       if (activeProxy) {
         from = activeProxy.address
       }
     } else {
-      if (activeProxy && isProxySupported(tx, from)) {
+      if (activeProxy && proxySupported) {
         // Update submit address to active proxy account
         const real = from
         from = activeProxy.address
@@ -319,6 +322,6 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitAddress: from,
-    proxySupported: isProxySupported(tx, from),
+    proxySupported,
   }
 }
