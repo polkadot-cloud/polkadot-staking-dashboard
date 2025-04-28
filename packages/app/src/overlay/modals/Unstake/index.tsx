@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
