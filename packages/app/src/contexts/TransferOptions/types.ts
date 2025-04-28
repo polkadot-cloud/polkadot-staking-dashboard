@@ -19,16 +19,16 @@ export interface TransferOptions {
   edReserved: bigint
   nominate: {
     active: bigint
-    totalUnlocking: BigNumber
-    totalUnlocked: BigNumber
+    totalUnlocking: bigint
+    totalUnlocked: bigint
     totalPossibleBond: bigint
     totalAdditionalBond: bigint
     totalUnlockChunks: number
   }
   pool: {
     active: bigint
-    totalUnlocking: BigNumber
-    totalUnlocked: BigNumber
+    totalUnlocking: bigint
+    totalUnlocked: bigint
     totalPossibleBond: bigint
     totalUnlockChunks: number
   }

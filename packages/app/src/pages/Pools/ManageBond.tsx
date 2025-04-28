@@ -19,7 +19,6 @@ import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages')
@@ -110,8 +109,8 @@ export const ManageBond = () => {
       </CardHeader>
       <BondedChart
         active={new BigNumber(planckToUnit(active, units))}
-        unlocking={planckToUnitBn(totalUnlocking, units)}
-        unlocked={planckToUnitBn(totalUnlocked, units)}
+        unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
+        unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
         free={new BigNumber(planckToUnit(transferrableBalance, units))}
         inactive={active === 0n}
       />

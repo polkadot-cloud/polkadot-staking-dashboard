@@ -45,9 +45,8 @@ export const BalanceChart = () => {
   const allTransferOptions = getTransferOptions(activeAddress)
 
   const poolBondOpions = allTransferOptions.pool
-  const unlockingPools = poolBondOpions.totalUnlocking.plus(
-    poolBondOpions.totalUnlocked
-  )
+  const unlockingPools =
+    poolBondOpions.totalUnlocking + poolBondOpions.totalUnlocked
 
   // User's total balance
   const { free, frozen, reserved } = balance

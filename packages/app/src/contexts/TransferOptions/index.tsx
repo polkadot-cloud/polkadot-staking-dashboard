@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { maxBigInt } from '@w3ux/utils'
+import { maxBigInt, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -13,7 +13,6 @@ import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { MaybeAddress } from 'types'
-import { planckToUnitBn } from 'utils'
 import type { TransferOptions, TransferOptionsContextInterface } from './types'
 import { getLocalFeeReserve, setLocalFeeReserve } from './Utils'
 
@@ -127,30 +126,32 @@ export const TransferOptionsProvider = ({
   }
 
   // Gets staked balance, whether nominating or in pool, for an account
-  const getStakedBalance = (address: MaybeAddress): BigNumber => {
+  const getStakedBalance = (address: MaybeAddress) => {
     const allTransferOptions = getTransferOptions(address)
 
     // Total funds nominating
-    const nominating = planckToUnitBn(
-      new BigNumber(allTransferOptions.nominate.active)
-        .plus(allTransferOptions.nominate.totalUnlocking)
-        .plus(allTransferOptions.nominate.totalUnlocked),
+    const nominating = planckToUnit(
+      allTransferOptions.nominate.active +
+        allTransferOptions.nominate.totalUnlocking +
+        allTransferOptions.nominate.totalUnlocked,
       units
     )
 
     // Total funds in pool
-    const inPool = planckToUnitBn(
-      new BigNumber(allTransferOptions.pool.active)
-        .plus(allTransferOptions.pool.totalUnlocking)
-        .plus(allTransferOptions.pool.totalUnlocked),
+    const inPool = planckToUnit(
+      allTransferOptions.pool.active +
+        allTransferOptions.pool.totalUnlocking +
+        allTransferOptions.pool.totalUnlocked,
       units
     )
 
     // Determine the actual staked balance
-    return !nominating.isZero()
-      ? nominating
-      : !inPool.isZero()
-        ? inPool
+    const nominatingBn = new BigNumber(nominating)
+    const inPoolBn = new BigNumber(inPool)
+    return !nominatingBn.isZero()
+      ? nominatingBn
+      : !inPoolBn.isZero()
+        ? inPoolBn
         : new BigNumber(0)
   }
 

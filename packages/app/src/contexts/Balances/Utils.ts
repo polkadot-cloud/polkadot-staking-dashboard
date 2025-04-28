@@ -1,19 +1,18 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
 import type { UnlockChunk } from './types'
 
 // Gets the total unlocking and unlocked amount.
 export const getUnlocking = (chunks: UnlockChunk[], thisEra: number) => {
-  let totalUnlocking = new BigNumber(0)
-  let totalUnlocked = new BigNumber(0)
+  let totalUnlocking = 0n
+  let totalUnlocked = 0n
 
   for (const { value, era } of chunks) {
     if (thisEra > era) {
-      totalUnlocked = totalUnlocked.plus(value)
+      totalUnlocked = totalUnlocked + value
     } else {
-      totalUnlocking = totalUnlocking.plus(value)
+      totalUnlocking = totalUnlocking + value
     }
   }
   return { totalUnlocking, totalUnlocked }

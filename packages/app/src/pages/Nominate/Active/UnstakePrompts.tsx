@@ -33,10 +33,7 @@ export const UnstakePrompts = () => {
 
   // unstaking can withdraw
   const canWithdrawUnlocks =
-    isUnstaking &&
-    active === 0n &&
-    totalUnlocking.isZero() &&
-    !totalUnlocked.isZero()
+    isUnstaking && active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
   return (
     !inSetup() &&

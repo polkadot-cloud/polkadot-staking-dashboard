@@ -29,7 +29,6 @@ import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages')
@@ -54,7 +53,7 @@ export const ManageBond = () => {
   const { ledger } = getStakingLedger(activeAddress)
   const { units } = getNetworkData(network)
   const Token = getChainIcons(network).token
-  const active = new BigNumber(ledger?.active || 0n)
+  const active = ledger?.active || 0n
   const allTransferOptions = getTransferOptions(activeAddress)
 
   const { freeBalance } = allTransferOptions
@@ -104,7 +103,7 @@ export const ManageBond = () => {
           <Token />
           <Odometer
             value={minDecimalPlaces(
-              planckToUnitBn(active, units).toFormat(),
+              new BigNumber(planckToUnit(active, units)).toFormat(),
               2
             )}
             zeroDecimals={2}
@@ -146,11 +145,11 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeader>
       <BondedChart
-        active={planckToUnitBn(active, units)}
-        unlocking={planckToUnitBn(totalUnlocking, units)}
-        unlocked={planckToUnitBn(totalUnlocked, units)}
+        active={new BigNumber(planckToUnit(active, units))}
+        unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
+        unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
         free={new BigNumber(planckToUnit(freeBalance, units))}
-        inactive={active.isZero()}
+        inactive={active === 0n}
       />
     </>
   )
