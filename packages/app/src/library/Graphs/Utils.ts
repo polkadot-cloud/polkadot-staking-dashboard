@@ -54,8 +54,6 @@ export const calculateDailyPayouts = (
   // Post-fill any missing days. [current day -> last payout]
   dailyPayouts = postFillMissingDays(payouts, fromDate, maxDays)
 
-  console.log(dailyPayouts)
-
   // Start iterating payouts, most recent first
   //
   // Payouts passed
