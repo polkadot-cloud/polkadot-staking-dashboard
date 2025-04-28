@@ -10,10 +10,10 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
-    "bignumber.js": "^9.2.1",
     "dedot": "^0.9.5"
   },
   "devDependencies": {
+    "bignumber.js": "^9.2.1",
     "@dedot/chaintypes": "^0.77.0"
   }
 }

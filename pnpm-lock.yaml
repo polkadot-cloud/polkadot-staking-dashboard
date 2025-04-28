@@ -414,9 +414,6 @@ importers:
 
   packages/types:
     dependencies:
-      bignumber.js:
-        specifier: ^9.2.1
-        version: 9.2.1
       dedot:
         specifier: ^0.9.5
         version: 0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -424,6 +421,9 @@ importers:
       '@dedot/chaintypes':
         specifier: ^0.77.0
         version: 0.77.0(dedot@0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      bignumber.js:
+        specifier: ^9.2.1
+        version: 9.2.1
 
   packages/ui-buttons:
     dependencies:
