@@ -128,8 +128,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.4.5
-        version: 3.4.5(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.4.6
+        version: 3.4.6(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: ^2.0.1
         version: 2.0.1
@@ -2554,8 +2554,8 @@ packages:
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.4.5':
-    resolution: {integrity: sha512-GuTj8uXBRSlB16SAuCjzMmRohovTuRt9+11xDk5kK60dYtCtTKnD9xCR+HPYPPpS+c44U4XvGJ2mC/4q0O+Rbg==}
+  '@w3ux/react-connect-kit@3.4.6':
+    resolution: {integrity: sha512-PlDUlhZsQmf+8y5JcXVyEsZWosnaj1vzLwANrPnaHOi5vAmWCXxYtRUQjC0eBgBBkzvRgRQUIcwbacVPkxVvMg==}
     peerDependencies:
       rxjs: ^7.8.2
 
@@ -7615,7 +7615,7 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.4.5(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.4.6(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/extension-assets': 2.2.0(react@19.1.0)
       '@w3ux/hooks': 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
