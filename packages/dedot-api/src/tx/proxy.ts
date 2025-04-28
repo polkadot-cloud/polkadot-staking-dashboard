@@ -10,7 +10,6 @@ export const proxy = <T extends StakingChain>(
   real: string,
   call: SubmittableExtrinsic
 ): SubmittableExtrinsic => {
-  // TODO: Test call format is correct
   // @ts-expect-error Proxy type too complex to determine
   const tx = asTx(api.tx.proxy.proxy(real, undefined, call.call))
   return tx
