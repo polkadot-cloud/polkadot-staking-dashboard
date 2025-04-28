@@ -34,7 +34,7 @@ export const TransferOptionsProvider = ({
   const { units, defaultFeeReserve } = getNetworkData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
-  const [feeReserve, setFeeReserve] = useState<BigNumber>(
+  const [feeReserve, setFeeReserve] = useState<bigint>(
     getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
   )
 
@@ -45,7 +45,6 @@ export const TransferOptionsProvider = ({
     const {
       balance: { free, frozen, reserved },
     } = getAccountBalance(address)
-    const freeBn = new BigNumber(free)
 
     const stakingLedger = getStakingLedger(address)
     const { active, total } = stakingLedger.ledger || {
@@ -58,8 +57,6 @@ export const TransferOptionsProvider = ({
         value: new BigNumber(value),
       })
     )
-    const activeBn = new BigNumber(active)
-    const totalBn = new BigNumber(total)
     const maxReserve = maxBigInt(frozen, reserved)
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
@@ -68,13 +65,16 @@ export const TransferOptionsProvider = ({
       new BigNumber(getEdReserved(address)),
       units
     )
-    const freeBalance = BigNumber.max(freeBn.minus(edReserved), 0)
+    const freeBalance = BigNumber.max(new BigNumber(free).minus(edReserved), 0)
 
     // Total free balance after `edReserved` is subtracted
     const transferrableBalance = BigNumber.max(freeBalance.minus(feeReserve), 0)
 
-    // Free balance to pay for tx fees. Does not factor `feeReserve`
-    const balanceTxFees = BigNumber.max(freeBn.minus(edReserved), 0)
+    // Free balance to pay for tx fees
+    const balanceTxFees = BigNumber.max(
+      new BigNumber(free).minus(edReserved),
+      0
+    )
 
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
@@ -84,11 +84,11 @@ export const TransferOptionsProvider = ({
 
     const nominatorBalances = () => {
       const totalPossibleBond = BigNumber.max(
-        totalBn.plus(transferrableBalance),
+        new BigNumber(total).plus(transferrableBalance),
         0
       )
       return {
-        active: activeBn,
+        active: new BigNumber(active),
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
@@ -132,7 +132,7 @@ export const TransferOptionsProvider = ({
   }
 
   // Updates account's reserve amount in state and in local storage
-  const setFeeReserveBalance = (amount: BigNumber) => {
+  const setFeeReserveBalance = (amount: bigint) => {
     if (!activeAddress) {
       return
     }
@@ -168,8 +168,8 @@ export const TransferOptionsProvider = ({
         : new BigNumber(0)
   }
 
-  // Gets a feeReserve from local storage for an account, or the default value otherwise
-  const getFeeReserve = (address: MaybeAddress): BigNumber =>
+  // Gets a fee reserve value from local storage for an account, or the default value otherwise
+  const getFeeReserve = (address: MaybeAddress): bigint =>
     getLocalFeeReserve(address, defaultFeeReserve, { network, units })
 
   // Update an account's reserve amount on account or network change

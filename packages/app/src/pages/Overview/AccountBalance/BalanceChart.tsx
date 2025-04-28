@@ -229,10 +229,10 @@ export const BalanceChart = () => {
                     iconRight={
                       syncing
                         ? undefined
-                        : !feeReserve.isZero() &&
+                        : feeReserve > 0n &&
                             !allTransferOptions.edReserved.isZero()
                           ? faCheckDouble
-                          : feeReserve.isZero() &&
+                          : feeReserve === 0n &&
                               allTransferOptions.edReserved.isZero()
                             ? undefined
                             : faCheck

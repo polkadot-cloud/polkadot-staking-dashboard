@@ -5,11 +5,11 @@ import type BigNumber from 'bignumber.js'
 import type { MaybeAddress } from 'types'
 
 export interface TransferOptionsContextInterface {
-  getTransferOptions: (a: MaybeAddress) => TransferOptions
-  getStakedBalance: (a: MaybeAddress) => BigNumber
-  setFeeReserveBalance: (r: BigNumber) => void
-  feeReserve: BigNumber
-  getFeeReserve: (address: MaybeAddress) => BigNumber
+  getTransferOptions: (address: MaybeAddress) => TransferOptions
+  getStakedBalance: (address: MaybeAddress) => BigNumber
+  setFeeReserveBalance: (reserve: bigint) => void
+  feeReserve: bigint
+  getFeeReserve: (address: MaybeAddress) => bigint
 }
 
 export interface TransferOptions {

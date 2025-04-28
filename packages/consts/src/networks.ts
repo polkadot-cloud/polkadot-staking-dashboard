@@ -27,7 +27,7 @@ export const NetworkList: Networks = {
     unit: 'DOT',
     units: 10,
     ss58: 0,
-    defaultFeeReserve: 0.1,
+    defaultFeeReserve: 1000000000n,
   },
   kusama: {
     name: 'kusama',
@@ -50,7 +50,7 @@ export const NetworkList: Networks = {
     unit: 'KSM',
     units: 12,
     ss58: 2,
-    defaultFeeReserve: 0.05,
+    defaultFeeReserve: 50000000000n,
   },
   westend: {
     name: 'westend',
@@ -72,7 +72,7 @@ export const NetworkList: Networks = {
     unit: 'WND',
     units: 12,
     ss58: 42,
-    defaultFeeReserve: 0.1,
+    defaultFeeReserve: 100000000000n,
   },
 }
 

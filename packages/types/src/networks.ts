@@ -106,7 +106,7 @@ export interface Network {
   unit: string
   units: number
   ss58: number
-  defaultFeeReserve: number
+  defaultFeeReserve: bigint
 }
 
 export interface SystemChain {
