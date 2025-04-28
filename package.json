@@ -49,8 +49,6 @@
     "overrides": {
       "@typescript-eslint/utils>typescript": "5.8.2",
       "@typescript-eslint/typescript-estree>typescript": "5.8.2",
-      "@polkadot/util-crypto>@polkadot/util": "13.4.3",
-      "@polkadot/x-randomvalues>@polkadot/util": "13.4.3",
       "react-helmet-async>react": "19.1.0",
       "use-sync-external-store>react": "19.1.0"
     }

@@ -1,13 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { bnToU8a } from '@polkadot/util'
 import { getDurationFromNow } from '@w3ux/hooks/util'
 import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types'
 import { planckToUnit, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { fromUnixTime } from 'date-fns'
-import { concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
+import { bnToU8a, concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
 import type { TFunction } from 'i18next'
 import type { IdentityOf, SuperIdentity, SuperOf } from 'types'
 
@@ -131,7 +130,7 @@ export const createPoolAccounts = (
       stringToU8a('modl'),
       poolsPalletId,
       new Uint8Array([index]),
-      bnToU8a(BigInt(poolId.toString())),
+      bnToU8a(BigInt(poolId.toString())).reverse(), // NOTE: Reversing for little endian
       new Uint8Array(32)
     )
     return encodeAddress(key.slice(0, 32), ss58Format)

@@ -7,8 +7,6 @@ settings:
 overrides:
   '@typescript-eslint/utils>typescript': 5.8.2
   '@typescript-eslint/typescript-estree>typescript': 5.8.2
-  '@polkadot/util-crypto>@polkadot/util': 13.4.3
-  '@polkadot/x-randomvalues>@polkadot/util': 13.4.3
   react-helmet-async>react: 19.1.0
   use-sync-external-store>react: 19.1.0
 
@@ -561,9 +559,6 @@ importers:
 
   packages/utils:
     dependencies:
-      '@polkadot/util':
-        specifier: ^13.4.4
-        version: 13.4.4
       '@w3ux/hooks':
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
