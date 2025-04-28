@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import type { UnlockChunk } from 'contexts/Balances/types'
@@ -40,19 +39,12 @@ export const UnlockChunks = () => {
         break
       default:
         stakingLedger = getStakingLedger(activeAddress)
-        unlocking = (stakingLedger.ledger?.unlocking || []).map(
-          ({ era, value }) => ({
-            era,
-            value: new BigNumber(value),
-          })
-        )
+        unlocking = stakingLedger.ledger?.unlocking || []
     }
     return unlocking
   }
 
   const unlocking = getUnlocking()
-
-  // active modal section
   const [section, setSectionState] = useState<number>(0)
   const sectionRef = useRef(section)
 

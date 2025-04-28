@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import BigNumber from 'bignumber.js'
+import { planckToUnit } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
 import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 import type { FormsProps } from './types'
 import { ContentWrapper } from './Wrappers'
 
@@ -57,7 +56,7 @@ export const Forms = forwardRef(
 
     // valid to submit transaction
     const [valid, setValid] = useState<boolean>(
-      (unlock?.value?.toNumber() || 0) > 0 || false
+      (unlock?.value || 0n) > 0 || false
     )
 
     const getTx = () => {
@@ -65,7 +64,7 @@ export const Forms = forwardRef(
         return
       }
       if (task === 'rebond' && isStaking) {
-        return serviceApi.tx.stakingRebond(BigInt(unlock.value.toNumber() || 0))
+        return serviceApi.tx.stakingRebond(unlock.value || 0n)
       }
       if (task === 'withdraw' && isStaking) {
         return serviceApi.tx.stakingWithdraw(historyDepth)
@@ -94,8 +93,7 @@ export const Forms = forwardRef(
       },
     })
 
-    const value = unlock?.value ?? new BigNumber(0)
-
+    const value = unlock?.value || 0n
     const warnings = getSignerWarnings(
       activeAddress,
       isStaking,
@@ -104,7 +102,7 @@ export const Forms = forwardRef(
 
     // Ensure unlock value is valid.
     useEffect(() => {
-      setValid((unlock?.value?.toNumber() || 0) > 0 || false)
+      setValid((unlock?.value || 0n) > 0 || false)
     }, [unlock])
 
     // Trigger modal resize when commission options are enabled / disabled.
@@ -127,10 +125,9 @@ export const Forms = forwardRef(
               {task === 'rebond' && (
                 <>
                   <ActionItem
-                    text={`${t('rebond')} ${planckToUnitBn(
-                      value,
-                      units
-                    )} ${unit}`}
+                    text={`${t('rebond')} ${new BigNumber(
+                      planckToUnit(value, units)
+                    ).toFormat()} ${unit}`}
                   />
                   <p>{t('rebondSubtitle')}</p>
                 </>
@@ -138,10 +135,9 @@ export const Forms = forwardRef(
               {task === 'withdraw' && (
                 <>
                   <ActionItem
-                    text={`${t('withdraw')} ${planckToUnitBn(
-                      value,
-                      units
-                    )} ${unit}`}
+                    text={`${t('withdraw')} ${new BigNumber(
+                      planckToUnit(value, units)
+                    ).toFormat()} ${unit}`}
                   />
                   <p>{t('withdrawSubtitle')}</p>
                 </>

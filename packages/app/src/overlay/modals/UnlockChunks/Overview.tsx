@@ -3,6 +3,7 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
@@ -19,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
 import { ButtonSubmit } from 'ui-buttons'
 import { Notes, Padding } from 'ui-core/modal'
-import { planckToUnitBn, timeleftAsString } from 'utils'
+import { timeleftAsString } from 'utils'
 import { Chunk } from './Chunk'
 import { ContentWrapper } from './Wrappers'
 
@@ -53,15 +54,15 @@ export const Overview = forwardRef(
 
     const isStaking = bondFor === 'nominator'
 
-    let withdrawAvailable = new BigNumber(0)
-    let totalUnbonding = new BigNumber(0)
+    let withdrawAvailable = 0n
+    let totalUnbonding = 0n
     for (const c of unlocking) {
       const { era, value } = c
-      const left = new BigNumber(era).minus(activeEra.index)
+      const left = era - activeEra.index
 
-      totalUnbonding = totalUnbonding.plus(value)
-      if (left.isLessThanOrEqualTo(0)) {
-        withdrawAvailable = withdrawAvailable.plus(value)
+      totalUnbonding = totalUnbonding + value
+      if (left <= 0n) {
+        withdrawAvailable = withdrawAvailable + value
       }
     }
 
@@ -82,7 +83,7 @@ export const Overview = forwardRef(
                   {t('unlocked')}
                 </h4>
                 <h2>
-                  {planckToUnitBn(withdrawAvailable, units)
+                  {new BigNumber(planckToUnit(withdrawAvailable, units))
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}
@@ -96,9 +97,8 @@ export const Overview = forwardRef(
                   {t('unbonding')}
                 </h4>
                 <h2>
-                  {planckToUnitBn(
-                    totalUnbonding.minus(withdrawAvailable),
-                    units
+                  {new BigNumber(
+                    planckToUnit(totalUnbonding - withdrawAvailable, units)
                   )
                     .decimalPlaces(3)
                     .toFormat()}{' '}
@@ -110,7 +110,7 @@ export const Overview = forwardRef(
               <div className="inner">
                 <h4>{t('total')}</h4>
                 <h2>
-                  {planckToUnitBn(totalUnbonding, units)
+                  {new BigNumber(planckToUnit(totalUnbonding, units))
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}
@@ -119,7 +119,7 @@ export const Overview = forwardRef(
             </StatWrapper>
           </StatsWrapper>
 
-          {withdrawAvailable.toNumber() > 0 && (
+          {withdrawAvailable > 0 && (
             <div style={{ margin: '1rem 0 0.5rem 0' }}>
               <ButtonSubmit
                 disabled={isFastUnstaking}

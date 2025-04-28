@@ -25,8 +25,8 @@ export const TransferOptionsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const { network } = useNetwork()
   const { activeEra } = useApi()
+  const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
   const { getStakingLedger, getAccountBalance, getEdReserved } = useBalances()
 
@@ -51,12 +51,7 @@ export const TransferOptionsProvider = ({
       active: 0n,
       total: 0n,
     }
-    const unlocking = (stakingLedger?.ledger?.unlocking || []).map(
-      ({ era, value }) => ({
-        era,
-        value: new BigNumber(value),
-      })
-    )
+    const unlocking = stakingLedger?.ledger?.unlocking || []
     const maxReserve = maxBigInt(frozen, reserved)
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
@@ -101,7 +96,7 @@ export const TransferOptionsProvider = ({
       const unlockingPool = (poolMembership?.unbondingEras || []).map(
         ([era, value]) => ({
           era,
-          value: new BigNumber(value),
+          value,
         })
       )
       const {

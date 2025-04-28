@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -110,7 +109,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const getPoolUnlocking = () =>
     (poolMembership?.unbondingEras || []).map(([era, value]) => ({
       era,
-      value: new BigNumber(value),
+      value,
     }))
 
   // Initialise subscriptions to the active account's active pool
