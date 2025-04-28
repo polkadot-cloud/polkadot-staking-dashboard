@@ -25,7 +25,6 @@ export const MaxNominations = 16
 export const MaxPayoutDays = 60
 export const MaxEraRewardPointsEras = 10
 export const PerbillMultiplier = 10000000
-export const MultiQueryBatchSize = 100
 
 // Local storage keys
 export const FiatCurrencyKey = 'currency'
