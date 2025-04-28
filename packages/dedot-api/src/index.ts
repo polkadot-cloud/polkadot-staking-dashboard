@@ -22,7 +22,7 @@ export const initDedotService = async () => {
         prev.network !== cur.network ||
         prev.providerType !== cur.providerType
       ) {
-        await service.unsubscribe()
+        await service?.unsubscribe()
         onNetworkReset()
       }
 
