@@ -3,6 +3,7 @@
 
 import type { DedotClient, SubmittableExtrinsic } from 'dedot'
 import type { StakingChain } from '../types'
+import { asTx } from '../util'
 
 export const proxy = <T extends StakingChain>(
   api: DedotClient<T>,

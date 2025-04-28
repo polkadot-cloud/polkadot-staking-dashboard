@@ -64,9 +64,9 @@ export const AccountButton = ({
     (connectTo === activeAddress &&
       address === activeAddress &&
       !activeProxy) ||
-    (connectProxy === activeProxy &&
+    (connectProxy === activeProxy?.address &&
       proxyType === activeProxyType &&
-      activeProxy)
+      activeProxy.address)
 
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
