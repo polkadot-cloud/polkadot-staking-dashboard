@@ -66,7 +66,7 @@ export const BalanceChart = () => {
 
   // Total funds in pool
   const inPool = planckToUnitBn(
-    allTransferOptions.pool.active
+    new BigNumber(allTransferOptions.pool.active)
       .plus(allTransferOptions.pool.totalUnlocking)
       .plus(allTransferOptions.pool.totalUnlocked),
     units
@@ -118,7 +118,7 @@ export const BalanceChart = () => {
   }
 
   const isNominating = nominating.isGreaterThan(0)
-  const isInPool = poolBondOpions.active
+  const isInPool = new BigNumber(poolBondOpions.active)
     .plus(poolBondOpions.totalUnlocked)
     .plus(poolBondOpions.totalUnlocking)
     .isGreaterThan(0)

@@ -45,7 +45,7 @@ export const useUnstaking = () => {
 
   return {
     getFastUnstakeText,
-    isUnstaking: !inSetup() && !nominees.active.length && active.isZero(),
+    isUnstaking: !inSetup() && !nominees.active.length && active === 0n,
     isFastUnstaking: !!registered,
   }
 }

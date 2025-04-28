@@ -65,10 +65,7 @@ export const TransferOptionsProvider = ({
       0n
     )
     // Free balance to pay for tx fees
-    const balanceTxFees = BigNumber.max(
-      new BigNumber(free).minus(edReserved),
-      0
-    )
+    const balanceTxFees = maxBigInt(free - edReserved, 0n)
 
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
@@ -80,7 +77,7 @@ export const TransferOptionsProvider = ({
       const totalPossibleBond = total + transferrableBalance
 
       return {
-        active: new BigNumber(active),
+        active,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
@@ -102,7 +99,7 @@ export const TransferOptionsProvider = ({
       } = getUnlocking(unlockingPool, activeEra.index)
 
       return {
-        active: new BigNumber(poolMembership?.balance || 0),
+        active: poolMembership?.balance || 0n,
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: maxBigInt(transferrableBalance - maxReserve, 0n),
@@ -135,7 +132,7 @@ export const TransferOptionsProvider = ({
 
     // Total funds nominating
     const nominating = planckToUnitBn(
-      allTransferOptions.nominate.active
+      new BigNumber(allTransferOptions.nominate.active)
         .plus(allTransferOptions.nominate.totalUnlocking)
         .plus(allTransferOptions.nominate.totalUnlocked),
       units
@@ -143,7 +140,7 @@ export const TransferOptionsProvider = ({
 
     // Total funds in pool
     const inPool = planckToUnitBn(
-      allTransferOptions.pool.active
+      new BigNumber(allTransferOptions.pool.active)
         .plus(allTransferOptions.pool.totalUnlocking)
         .plus(allTransferOptions.pool.totalUnlocked),
       units

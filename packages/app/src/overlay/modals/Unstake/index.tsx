@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { planckToUnitBn, timeleftAsString } from 'utils'
+import { timeleftAsString } from 'utils'
 
 export const Unstake = () => {
   const { t } = useTranslation('modals')
@@ -49,7 +49,7 @@ export const Unstake = () => {
   )
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnitBn(active, units)
+  const freeToUnbond = new BigNumber(planckToUnit(active, units))
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({

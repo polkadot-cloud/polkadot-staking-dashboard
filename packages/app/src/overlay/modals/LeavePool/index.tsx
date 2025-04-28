@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
 import { Padding, Title, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn, timeleftAsString } from 'utils'
+import { timeleftAsString } from 'utils'
 
 export const LeavePool = ({
   onResize,
@@ -55,14 +55,14 @@ export const LeavePool = ({
     erasToSeconds(bondDuration),
     true
   )
-  const freeToUnbond = planckToUnitBn(activeBn, units)
+  const freeToUnbond = planckToUnit(activeBn, units)
   const pendingRewardsUnit = planckToUnit(pendingRewards, units)
 
   const [paramsValid, setParamsValid] = useState<boolean>(false)
 
   useEffect(() => {
     setParamsValid((poolMembership?.points || 0n) > 0 && !!activePool?.id)
-  }, [freeToUnbond.toString()])
+  }, [freeToUnbond])
 
   const getTx = () => {
     if (!activeAddress || !poolMembership) {

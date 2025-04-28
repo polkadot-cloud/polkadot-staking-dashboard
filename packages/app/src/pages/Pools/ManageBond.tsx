@@ -5,6 +5,7 @@ import { faMinus, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
+import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -47,7 +48,7 @@ export const ManageBond = () => {
     !isMember() ||
     isReadOnlyAccount(activeAddress) ||
     state === 'Destroying'
-  const canLeavePool = isMember() && !isDepositor() && active?.isGreaterThan(0)
+  const canLeavePool = isMember() && !isDepositor() && active > 0n
 
   return (
     <>
@@ -60,7 +61,7 @@ export const ManageBond = () => {
           <Token />
           <Odometer
             value={minDecimalPlaces(
-              planckToUnitBn(active, units).toFormat(),
+              new BigNumber(planckToUnit(active, units)).toFormat(),
               2
             )}
             zeroDecimals={2}
@@ -108,11 +109,11 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeader>
       <BondedChart
-        active={planckToUnitBn(active, units)}
+        active={new BigNumber(planckToUnit(active, units))}
         unlocking={planckToUnitBn(totalUnlocking, units)}
         unlocked={planckToUnitBn(totalUnlocked, units)}
         free={new BigNumber(planckToUnit(transferrableBalance, units))}
-        inactive={active.isZero()}
+        inactive={active === 0n}
       />
     </>
   )

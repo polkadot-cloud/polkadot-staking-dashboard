@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { planckToUnitBn, timeleftAsString } from 'utils'
+import { timeleftAsString } from 'utils'
 
 export const Unbond = () => {
   const { t } = useTranslation('modals')
@@ -68,12 +68,12 @@ export const Unbond = () => {
   const isPooling = bondFor === 'pool'
 
   const allTransferOptions = getTransferOptions(activeAddress)
-  const { active: activeBn } = isPooling
+  const { active } = isPooling
     ? allTransferOptions.pool
     : allTransferOptions.nominate
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnitBn(activeBn, units)
+  const freeToUnbond = new BigNumber(planckToUnit(active, units))
   const minJoinBond = new BigNumber(planckToUnit(minJoinBondBn, units))
   const minCreateBond = new BigNumber(planckToUnit(minCreateBondBn, units))
   const minNominatorBond = new BigNumber(
@@ -135,13 +135,10 @@ export const Unbond = () => {
   const fee = getTxSubmission(submitExtrinsic.uid)?.fee || 0n
 
   const nominatorActiveBelowMin =
-    bondFor === 'nominator' &&
-    !activeBn.isZero() &&
-    activeBn.isLessThan(minNominatorBondBigInt)
+    bondFor === 'nominator' && active > 0n && active < minNominatorBondBigInt
 
-  const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn
-  const poolActiveBelowMin =
-    bondFor === 'pool' && activeBn.isLessThan(poolToMinBn)
+  const poolToMin = isDepositor() ? minCreateBondBn : minJoinBondBn
+  const poolActiveBelowMin = bondFor === 'pool' && active < poolToMin
 
   // accumulate warnings.
   const warnings = getSignerWarnings(
@@ -156,7 +153,7 @@ export const Unbond = () => {
   if (nominatorActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: minNominatorBond,
+        bond: minNominatorBond.toFormat(),
         unit,
       })
     )
@@ -164,12 +161,12 @@ export const Unbond = () => {
   if (poolActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: planckToUnit(poolToMinBn, units),
+        bond: planckToUnit(poolToMin, units),
         unit,
       })
     )
   }
-  if (activeBn.isZero()) {
+  if (active === 0n) {
     warnings.push(t('unbondErrorNoFunds', { unit }))
   }
 

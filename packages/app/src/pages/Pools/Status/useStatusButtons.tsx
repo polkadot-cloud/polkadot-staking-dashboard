@@ -48,7 +48,7 @@ export const useStatusButtons = () => {
     label = t('poolMembership')
   } else if (isOwner()) {
     label = `${t('ownerOfPool')} ${poolMembership.poolId}`
-  } else if (active?.isGreaterThan(0)) {
+  } else if (active > 0n) {
     label = `${t('memberOfPool')} ${poolMembership.poolId}`
   } else {
     label = `${t('leavingPool')} ${poolMembership.poolId}`
