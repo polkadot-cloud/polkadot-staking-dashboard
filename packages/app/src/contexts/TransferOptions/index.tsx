@@ -48,7 +48,7 @@ export const TransferOptionsProvider = ({
     } = getAccountBalance(address)
     const freeBn = new BigNumber(free)
     const stakingLedger = getStakingLedger(address)
-    const { active } = stakingLedger.ledger || {
+    const { active, total } = stakingLedger.ledger || {
       active: 0n,
       total: 0n,
     }
@@ -87,7 +87,7 @@ export const TransferOptionsProvider = ({
       activeEra.index
     )
     // Free balance to stake after `total` (total staked) ledger amount
-    const freeBalance = BigNumber.max(freeMinusReserve.minus(frozen), 0)
+    const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0)
 
     const nominatorBalances = () => {
       const totalPossibleBond = BigNumber.max(
