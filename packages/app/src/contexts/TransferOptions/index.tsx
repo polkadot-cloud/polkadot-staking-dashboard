@@ -125,6 +125,10 @@ export const TransferOptionsProvider = ({
       }
     }
 
+    if (address === activeAddress) {
+      console.log('free', freeBalance.toString())
+    }
+
     return {
       freeBalance,
       transferrableBalance,
