@@ -75,7 +75,7 @@ export const useSubmitExtrinsic = ({
         ) {
           // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
           // each tx within the batch via `useBatchCall`
-          const proxiedTx = serviceApi.tx.proxy(real, tx.call)
+          const proxiedTx = serviceApi.tx.proxy(real, tx)
           if (proxiedTx) {
             tx = proxiedTx
           }
