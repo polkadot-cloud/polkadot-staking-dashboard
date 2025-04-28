@@ -44,7 +44,7 @@
     "compare-versions": "^6.1.1",
     "consts": "workspace:*",
     "date-fns": "^4.1.0",
-    "dedot": "^0.9.4",
+    "dedot": "^0.9.5",
     "dedot-api": "workspace:*",
     "framer-motion": "^12.6.2",
     "global-bus": "workspace:*",

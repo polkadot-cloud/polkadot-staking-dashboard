@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bignumber.js": "^9.2.1",
-    "dedot": "^0.9.4"
+    "dedot": "^0.9.5"
   },
   "devDependencies": {
     "@dedot/chaintypes": "^0.77.0"
