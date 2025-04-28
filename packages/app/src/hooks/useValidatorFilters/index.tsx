@@ -189,6 +189,7 @@ export const useValidatorFilters = () => {
       return list
     }
 
+    console.log('applying search', searchTerm, 'for', list.length, 'validators')
     const filteredList: AnyFilter = []
     for (const validator of list) {
       const identity = validatorIdentities[validator.address]
@@ -198,7 +199,8 @@ export const useValidatorFilters = () => {
 
       const superIdentity = validatorSupers[validator.address] ?? null
       const superIdentityRaw =
-        superIdentity?.identity?.info?.display?.value?.asText() ?? ''
+        superIdentity?.superOf?.identity?.info?.display?.value ?? ''
+
       const superIdentitySearch = (superIdentityRaw || '').toLowerCase()
 
       if (validator.address.toLowerCase().includes(searchTerm.toLowerCase())) {
