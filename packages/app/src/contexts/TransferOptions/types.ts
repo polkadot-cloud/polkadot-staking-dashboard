@@ -13,7 +13,7 @@ export interface TransferOptionsContextInterface {
 }
 
 export interface TransferOptions {
-  freeBalance: BigNumber
+  freeBalance: bigint
   transferrableBalance: BigNumber
   balanceTxFees: BigNumber
   edReserved: bigint

@@ -57,10 +57,13 @@ export const TransferOptionsProvider = ({
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed
     const edReserved = getEdReserved(address)
-    const freeBalance = BigNumber.max(new BigNumber(free).minus(edReserved), 0)
+    const freeBalance = maxBigInt(free - edReserved, 0n)
 
     // Total free balance after reserved amount of ed is subtracted
-    const transferrableBalance = BigNumber.max(freeBalance.minus(feeReserve), 0)
+    const transferrableBalance = BigNumber.max(
+      new BigNumber(freeBalance).minus(feeReserve),
+      0
+    )
 
     // Free balance to pay for tx fees
     const balanceTxFees = BigNumber.max(

@@ -8,7 +8,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
+import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
@@ -149,7 +149,7 @@ export const ManageBond = () => {
         active={planckToUnitBn(active, units)}
         unlocking={planckToUnitBn(totalUnlocking, units)}
         unlocked={planckToUnitBn(totalUnlocked, units)}
-        free={planckToUnitBn(freeBalance, units)}
+        free={new BigNumber(planckToUnit(freeBalance, units))}
         inactive={active.isZero()}
       />
     </>

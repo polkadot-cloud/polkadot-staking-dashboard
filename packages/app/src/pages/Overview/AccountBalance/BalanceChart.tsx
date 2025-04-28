@@ -72,7 +72,8 @@ export const BalanceChart = () => {
     units
   )
 
-  const freeBalanceBn = planckToUnitBn(allTransferOptions.freeBalance, units)
+  const freeBalancePlanck = new BigNumber(allTransferOptions.freeBalance)
+  const freeBalanceBn = planckToUnitBn(freeBalancePlanck, units)
 
   // Graph percentages.
   const graphTotal = nominating.plus(inPool).plus(freeBalanceBn)
@@ -94,7 +95,7 @@ export const BalanceChart = () => {
   // Available balance data.
   const fundsLocked = planckToUnitBn(maxLockedBn, units)
 
-  const fundsFree = planckToUnitBn(allTransferOptions.freeBalance, units)
+  const fundsFree = planckToUnitBn(freeBalancePlanck, units)
   const fundsTransferrable = planckToUnitBn(
     allTransferOptions.transferrableBalance,
     units

@@ -11,7 +11,7 @@ export const getLocalFeeReserve = (
   { network }: { network: NetworkId; units: number }
 ): bigint => {
   const reserves = JSON.parse(localStorage.getItem('reserve_balances') ?? '{}')
-  return reserves?.[network]?.[address || ''] || defaultReserve
+  return BigInt(reserves?.[network]?.[address || ''] || defaultReserve)
 }
 
 // Sets the local storage record fro an account reserve balance
