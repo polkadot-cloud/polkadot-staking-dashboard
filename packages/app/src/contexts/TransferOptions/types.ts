@@ -16,7 +16,7 @@ export interface TransferOptions {
   freeBalance: BigNumber
   transferrableBalance: BigNumber
   balanceTxFees: BigNumber
-  edReserved: BigNumber
+  edReserved: bigint
   nominate: {
     active: BigNumber
     totalUnlocking: BigNumber

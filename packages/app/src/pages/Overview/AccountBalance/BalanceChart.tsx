@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
+import { planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
@@ -109,9 +110,8 @@ export const BalanceChart = () => {
     : new BigNumber(0)
 
   // Total amount reserved for fees and existential deposit
-  let fundsReserved = planckToUnitBn(
-    allTransferOptions.edReserved.plus(feeReserve),
-    units
+  let fundsReserved = new BigNumber(
+    planckToUnit(allTransferOptions.edReserved + feeReserve, units)
   )
   if (freeBalanceBn.isLessThan(fundsReserved)) {
     fundsReserved = freeBalanceBn
@@ -230,10 +230,10 @@ export const BalanceChart = () => {
                       syncing
                         ? undefined
                         : feeReserve > 0n &&
-                            !allTransferOptions.edReserved.isZero()
+                            allTransferOptions.edReserved !== 0n
                           ? faCheckDouble
                           : feeReserve === 0n &&
-                              allTransferOptions.edReserved.isZero()
+                              allTransferOptions.edReserved === 0n
                             ? undefined
                             : faCheck
                     }

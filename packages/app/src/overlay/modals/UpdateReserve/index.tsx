@@ -3,7 +3,7 @@
 
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -35,7 +35,7 @@ export const UpdateReserve = () => {
 
   const { unit, units } = getNetworkData(network)
   const { edReserved } = getTransferOptions(activeAddress)
-  const minReserve = planckToUnitBn(edReserved, units)
+  const minReserve = new BigNumber(planckToUnit(edReserved, units))
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
   )
