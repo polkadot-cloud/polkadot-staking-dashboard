@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { maxBigInt } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -35,15 +36,13 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const bondBigInt = BigInt(
-      BigNumber.max(transferrableBalance.minus(feeReserve), 0).toString()
-    )
+    const bond = maxBigInt(transferrableBalance - feeReserve, 0n)
 
     let tx: SubmittableExtrinsic | undefined
     if (bondFor === 'pool') {
-      tx = serviceApi.tx.poolBondExtra('FreeBalance', bondBigInt)
+      tx = serviceApi.tx.poolBondExtra('FreeBalance', bond)
     } else if (bondFor === 'nominator') {
-      tx = serviceApi.tx.stakingBondExtra(bondBigInt)
+      tx = serviceApi.tx.stakingBondExtra(bond)
     }
 
     if (tx && activeAddress) {

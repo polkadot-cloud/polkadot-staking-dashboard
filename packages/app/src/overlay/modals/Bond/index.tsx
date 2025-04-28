@@ -42,12 +42,13 @@ export const Bond = () => {
   const isPooling = bondFor === 'pool'
   const { nominate, transferrableBalance } = getTransferOptions(activeAddress)
 
-  const freeToBond = planckToUnitBn(
-    (bondFor === 'nominator'
-      ? nominate.totalAdditionalBond
-      : transferrableBalance
-    ).minus(feeReserve),
-    units
+  const freeToBond = new BigNumber(
+    planckToUnit(
+      (bondFor === 'nominator'
+        ? nominate.totalAdditionalBond
+        : transferrableBalance) - feeReserve,
+      units
+    )
   )
 
   const largestTxFee = useBondGreatestFee({ bondFor })

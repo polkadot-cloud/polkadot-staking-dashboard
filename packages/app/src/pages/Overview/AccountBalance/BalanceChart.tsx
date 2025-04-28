@@ -96,9 +96,8 @@ export const BalanceChart = () => {
   const fundsLocked = planckToUnitBn(maxLockedBn, units)
 
   const fundsFree = planckToUnitBn(freeBalancePlanck, units)
-  const fundsTransferrable = planckToUnitBn(
-    allTransferOptions.transferrableBalance,
-    units
+  const fundsTransferrable = new BigNumber(
+    planckToUnit(allTransferOptions.transferrableBalance, units)
   )
 
   // Available balance percentages.

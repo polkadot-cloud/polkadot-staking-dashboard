@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -22,7 +22,6 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ClaimPermission } from 'types'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 import type { OverviewSectionProps } from '../types'
 import { JoinFormWrapper } from '../Wrappers'
 
@@ -53,7 +52,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Bond amount to join pool with.
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: planckToUnitBn(totalPossibleBond, units).toString(),
+    bond: planckToUnit(totalPossibleBond, units),
   })
 
   // Whether the bond amount is valid.

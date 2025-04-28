@@ -43,9 +43,7 @@ export const SubmitTx = ({
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
   const { transferrableBalance } = getTransferOptions(from)
-
-  const notEnoughFunds =
-    transferrableBalance.minus(fee.toString()).isLessThan(0) && fee > 0n
+  const notEnoughFunds = transferrableBalance - fee < 0n && fee > 0n
 
   // Default to active account
   let signingOpts = {

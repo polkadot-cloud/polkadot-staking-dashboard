@@ -8,15 +8,13 @@ import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 import { AccountWrapper } from './Wrappers'
 import type { AccountItemProps } from './types'
 
@@ -140,9 +138,8 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnitBn(
-              transferrableBalance || new BigNumber(0),
-              units
+            {`${t('free')}: ${new BigNumber(
+              planckToUnit(transferrableBalance || 0n, units)
             )
               .decimalPlaces(3)
               .toFormat()} ${unit}`}

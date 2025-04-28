@@ -60,11 +60,10 @@ export const TransferOptionsProvider = ({
     const freeBalance = maxBigInt(free - edReserved, 0n)
 
     // Total free balance after reserved amount of ed is subtracted
-    const transferrableBalance = BigNumber.max(
-      new BigNumber(freeBalance).minus(feeReserve),
-      0
+    const transferrableBalance = maxBigInt(
+      freeBalance - edReserved - feeReserve,
+      0n
     )
-
     // Free balance to pay for tx fees
     const balanceTxFees = BigNumber.max(
       new BigNumber(free).minus(edReserved),
@@ -78,16 +77,14 @@ export const TransferOptionsProvider = ({
     )
 
     const nominatorBalances = () => {
-      const totalPossibleBond = BigNumber.max(
-        new BigNumber(total).plus(transferrableBalance),
-        0
-      )
+      const totalPossibleBond = total + transferrableBalance
+
       return {
         active: new BigNumber(active),
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
-        totalAdditionalBond: BigNumber.max(totalPossibleBond.minus(total), 0),
+        totalAdditionalBond: maxBigInt(totalPossibleBond - total, 0n),
         totalUnlockChunks: unlocking.length,
       }
     }
@@ -108,10 +105,7 @@ export const TransferOptionsProvider = ({
         active: new BigNumber(poolMembership?.balance || 0),
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
-        totalPossibleBond: BigNumber.max(
-          transferrableBalance.minus(maxReserve),
-          0
-        ),
+        totalPossibleBond: maxBigInt(transferrableBalance - maxReserve, 0n),
         totalUnlockChunks: unlockingPool.length,
       }
     }

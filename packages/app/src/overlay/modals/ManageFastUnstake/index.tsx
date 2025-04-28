@@ -45,9 +45,7 @@ export const ManageFastUnstake = () => {
   const allTransferOptions = getTransferOptions(activeAddress)
   const { nominate, transferrableBalance } = allTransferOptions
   const { totalUnlockChunks } = nominate
-
-  const enoughForDeposit =
-    transferrableBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit)
+  const enoughForDeposit = transferrableBalance >= fastUnstakeDeposit
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)

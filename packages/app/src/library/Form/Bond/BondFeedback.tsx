@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, unitToPlanck } from '@w3ux/utils'
+import { maxBigInt, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -11,7 +11,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { planckToUnitBn } from 'utils'
 import { Warning } from '../Warning'
 import { Spacer } from '../Wrappers'
 import type { BondFeedbackProps } from '../types'
@@ -53,7 +52,7 @@ export const BondFeedback = ({
 
   // the default bond balance. If we are bonding, subtract tx fees from bond amount.
   const freeToBond = !disableTxFeeUpdate
-    ? BigNumber.max(availableBalance.minus(txFees.toString()), 0)
+    ? maxBigInt(availableBalance - txFees, 0n)
     : availableBalance
 
   // store errors
@@ -69,32 +68,31 @@ export const BondFeedback = ({
     setBond({ bond: newBond.bond.toString() })
   }
 
-  // current bond value BigNumber
-  const bondBn = new BigNumber(unitToPlanck(bond.bond, units))
+  // current bond planck value
+  const bondBigInt = unitToPlanck(bond.bond, units)
 
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState<boolean>(false)
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees = freeToBond
-    .minus(bondBn)
-    .isGreaterThan(txFees.toString())
+  const enoughToCoverTxFees = freeToBond - bondBigInt > txFees
 
   const bondAfterTxFees = enoughToCoverTxFees
-    ? bondBn
-    : BigNumber.max(bondBn.minus(txFees.toString()), 0)
+    ? bondBigInt
+    : maxBigInt(bondBigInt - txFees, 0n)
 
   // add this component's setBond to setters
   setters.push(handleSetBond)
 
   // bond amount to minimum threshold.
-  const minBondBn =
+  const minBond =
     bondFor === 'pool'
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond
-      : BigInt(minNominatorBond.toString())
-  const minBondUnit = new BigNumber(planckToUnit(minBondBn, units))
+      : minNominatorBond
+
+  const minBondUnit = new BigNumber(planckToUnit(minBond, units))
 
   // handle error updates
   const handleErrors = () => {
@@ -103,34 +101,34 @@ export const BondFeedback = ({
     const decimals = bond.bond.toString().split('.')[1]?.length ?? 0
 
     // bond errors
-    if (freeToBond.isZero()) {
+    if (freeToBond === 0n) {
       disabled = true
       newErrors.push(`${t('noFree', { unit })}`)
     }
 
     if (inSetup || joiningPool) {
-      if (freeToBond.isLessThan(minBondBn)) {
+      if (freeToBond < minBond) {
         disabled = true
         newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`)
       }
       // bond amount must be more than minimum required bond
-      if (bond.bond !== '' && bondBn.isLessThan(minBondBn)) {
+      if (bond.bond !== '' && bondBigInt < minBond) {
         newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`)
       }
     }
 
     // bond amount must not surpass freeBalalance
-    if (bondBn.isGreaterThan(freeToBond)) {
+    if (bondBigInt > freeToBond) {
       newErrors.push(t('moreThanBalance'))
     }
 
     // bond amount must not be smaller than 1 planck
-    if (bond.bond !== '' && bondBn.isLessThan(1)) {
+    if (bond.bond !== '' && bondBigInt < 1) {
       newErrors.push(t('tooSmall'))
     }
 
     // check bond after transaction fees is still valid
-    if (bond.bond !== '' && bondAfterTxFees.isLessThan(0)) {
+    if (bond.bond !== '' && bondAfterTxFees < 0n) {
       newErrors.push(`${t('notEnoughAfter', { unit })}`)
     }
 
@@ -168,8 +166,8 @@ export const BondFeedback = ({
   // update max bond after txFee sync
   useEffect(() => {
     if (!disableTxFeeUpdate) {
-      if (bondBn.isGreaterThan(freeToBond)) {
-        setBond({ bond: String(planckToUnitBn(freeToBond, units)) })
+      if (bondBigInt > freeToBond) {
+        setBond({ bond: planckToUnit(freeToBond, units) })
       }
     }
   }, [txFees])
@@ -192,7 +190,7 @@ export const BondFeedback = ({
           syncing={syncing}
           disabled={bondDisabled}
           setters={setters}
-          freeToBond={planckToUnitBn(freeToBond, units)}
+          freeToBond={new BigNumber(planckToUnit(freeToBond, units))}
           disableTxFeeUpdate={disableTxFeeUpdate}
         />
       </div>

@@ -14,22 +14,22 @@ export interface TransferOptionsContextInterface {
 
 export interface TransferOptions {
   freeBalance: bigint
-  transferrableBalance: BigNumber
+  transferrableBalance: bigint
   balanceTxFees: BigNumber
   edReserved: bigint
   nominate: {
     active: BigNumber
     totalUnlocking: BigNumber
     totalUnlocked: BigNumber
-    totalPossibleBond: BigNumber
-    totalAdditionalBond: BigNumber
+    totalPossibleBond: bigint
+    totalAdditionalBond: bigint
     totalUnlockChunks: number
   }
   pool: {
     active: BigNumber
     totalUnlocking: BigNumber
     totalUnlocked: BigNumber
-    totalPossibleBond: BigNumber
+    totalPossibleBond: bigint
     totalUnlockChunks: number
   }
 }

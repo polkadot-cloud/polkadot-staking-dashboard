@@ -33,7 +33,7 @@ export interface ProxiedAccount {
 }
 
 export interface ProxyDelegateWithBalance {
-  transferrableBalance: BigNumber
+  transferrableBalance: bigint
   delegate: string
   proxyType: string
 }
