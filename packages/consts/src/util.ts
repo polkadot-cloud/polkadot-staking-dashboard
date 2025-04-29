@@ -39,14 +39,14 @@ export const getDefaultRpcEndpoints = (network: NetworkId) => {
 
   // Take a random rpc endpoint for the relay chain
   const relayRpc =
-    Object.values(relayRpcs)[
-      Math.floor(Math.random() * Object.values(relayRpcs).length)
+    Object.keys(relayRpcs)[
+      Math.floor(Math.random() * Object.keys(relayRpcs).length)
     ]
 
   const systemChainRpc = systemChains.reduce(
     (acc: Record<string, string>, [id, c]) => {
-      const rpc = Object.values(c.endpoints.rpc)[
-        Math.floor(Math.random() * Object.values(c.endpoints.rpc).length)
+      const rpc = Object.keys(c.endpoints.rpc)[
+        Math.floor(Math.random() * Object.keys(c.endpoints.rpc).length)
       ]
       acc[id] = rpc
       return acc
