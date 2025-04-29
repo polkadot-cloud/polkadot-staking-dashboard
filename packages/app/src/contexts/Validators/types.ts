@@ -3,17 +3,16 @@
 
 import type { Sync } from '@w3ux/types'
 import type BigNumber from 'bignumber.js'
-import type { AnyJson, Identity, Validator, ValidatorStatus } from 'types'
+import type { AnyJson, IdentityOf, Validator, ValidatorStatus } from 'types'
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>
   injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[]
   getValidators: () => Validator[]
-  validatorIdentities: Record<string, Identity>
+  validatorIdentities: Record<string, IdentityOf>
   validatorSupers: Record<string, AnyJson>
   avgCommission: number
   sessionValidators: string[]
-  sessionParaValidators: string[]
   validatorsFetched: Sync
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]

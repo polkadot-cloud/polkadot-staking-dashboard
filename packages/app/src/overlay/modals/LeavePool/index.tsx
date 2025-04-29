@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
-import { PoolUnbond } from 'api/tx/poolUnbond'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
 import { Padding, Title, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn, timeleftAsString } from 'utils'
+import { timeleftAsString } from 'utils'
 
 export const LeavePool = ({
   onResize,
@@ -33,51 +33,47 @@ export const LeavePool = ({
   onClick?: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { getPoolMembership } = useBalances()
+  const { getConsts, serviceApi } = useApi()
   const { erasToSeconds } = useErasToTimeLeft()
   const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
+  const { getStakingLedger, getPendingPoolRewards } = useBalances()
 
-  const allTransferOptions = getTransferOptions(activeAccount)
+  const { unit, units } = getNetworkData(network)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const { active: activeBn } = allTransferOptions.pool
-  const { bondDuration } = consts
-  const pendingRewards = activePool?.pendingRewards || 0n
-  const membership = getPoolMembership(activeAccount)
+  const { bondDuration } = getConsts(network)
+  const pendingRewards = getPendingPoolRewards(activeAddress)
+  const { poolMembership } = getStakingLedger(activeAddress)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
     erasToSeconds(bondDuration),
     true
   )
-  const freeToUnbond = planckToUnitBn(activeBn, units)
+  const freeToUnbond = planckToUnit(activeBn, units)
   const pendingRewardsUnit = planckToUnit(pendingRewards, units)
 
   const [paramsValid, setParamsValid] = useState<boolean>(false)
 
   useEffect(() => {
-    setParamsValid(BigInt(membership?.points || 0) > 0 && !!activePool?.id)
-  }, [freeToUnbond.toString()])
+    setParamsValid((poolMembership?.points || 0n) > 0 && !!activePool?.id)
+  }, [freeToUnbond])
 
   const getTx = () => {
-    let tx = null
-    if (!activeAccount || !membership) {
-      return tx
+    if (!activeAddress || !poolMembership) {
+      return
     }
-    tx = new PoolUnbond(network, activeAccount, BigInt(membership.points)).tx()
-    return tx
+    return serviceApi.tx.poolUnbond(activeAddress, poolMembership.points)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: paramsValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -85,7 +81,7 @@ export const LeavePool = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

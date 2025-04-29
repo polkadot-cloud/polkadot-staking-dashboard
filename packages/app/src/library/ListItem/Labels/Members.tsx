@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 
-export const Members = ({ members }: { members: string }) => {
+export const Members = ({ memberCounter }: { memberCounter: number }) => {
   const { t } = useTranslation('app')
   const { setTooltipTextAndOpen } = useTooltip()
 
@@ -21,7 +21,7 @@ export const Members = ({ members }: { members: string }) => {
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       <FontAwesomeIcon icon={faUsers} />
-      &nbsp;{members}
+      &nbsp;{memberCounter}
     </Label>
   )
 }

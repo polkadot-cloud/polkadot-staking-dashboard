@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import { PoolBondExtra } from 'api/tx/poolBondExtra'
-import { PoolClaimPayout } from 'api/tx/poolClaimPayout'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { ActionItem } from 'library/ActionItem'
@@ -20,20 +22,20 @@ import { Close, useOverlay } from 'ui-overlay'
 export const ClaimReward = () => {
   const { t } = useTranslation('modals')
   const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
-  const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal
+  const { serviceApi } = useApi()
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { getPendingPoolRewards } = useBalances()
+  const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
 
   const { claimType } = options
-  const pendingRewards = activePool?.pendingRewards || 0n
+  const { unit, units } = getNetworkData(network)
+  const pendingRewards = getPendingPoolRewards(activeAddress)
 
   // ensure selected payout is valid
   useEffect(() => {
@@ -48,19 +50,18 @@ export const ClaimReward = () => {
   const [valid, setValid] = useState<boolean>(false)
 
   const getTx = () => {
-    let tx = null
-
+    let tx: SubmittableExtrinsic | undefined
     if (claimType === 'bond') {
-      tx = new PoolBondExtra(network, 'Rewards').tx()
+      tx = serviceApi.tx.poolBondExtra('Rewards')
     } else {
-      tx = new PoolClaimPayout(network).tx()
+      tx = serviceApi.tx.poolClaimPayout()
     }
     return tx
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -68,7 +69,7 @@ export const ClaimReward = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

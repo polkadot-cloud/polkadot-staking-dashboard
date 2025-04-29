@@ -13,6 +13,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { Line } from 'react-chartjs-2'
@@ -45,7 +46,8 @@ export const AveragePayoutLine = ({
 }: AveragePayoutLineProps) => {
   const { t } = useTranslation('app')
   const { getThemeValue } = useThemeValues()
-  const { unit, units } = useNetwork().networkData
+  const { network } = useNetwork()
+  const { unit, units } = getNetworkData(network)
 
   const staking = nominating || inPool
   const inPoolOnly = !nominating && inPool
@@ -64,7 +66,13 @@ export const AveragePayoutLine = ({
   const { p: graphPoolClaims, a: graphPrePoolClaims } = allPoolClaims
 
   // Combine payouts and pool claims into one dataset and calculate averages
-  const combined = combineRewards(graphPayouts, graphPoolClaims)
+  const combined = combineRewards(
+    graphPayouts.map(({ reward, timestamp }) => ({
+      reward,
+      timestamp,
+    })),
+    graphPoolClaims
+  )
   const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims)
 
   const combinedPayouts = calculatePayoutAverages(

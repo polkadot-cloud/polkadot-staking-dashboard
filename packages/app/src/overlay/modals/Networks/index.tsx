@@ -4,15 +4,17 @@
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { capitalizeFirstLetter } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
-import { NetworkList } from 'config/networks'
+import { getChainIcons } from 'assets'
+import { NetworkList } from 'consts/networks'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
+import { setProviderType } from 'global-bus'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { NetworkId } from 'types'
 import { ButtonTertiary } from 'ui-buttons'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
@@ -29,11 +31,11 @@ export const Networks = () => {
   const { isBraveBrowser } = useUi()
   const { openPromptWith } = usePrompt()
   const { network, switchNetwork } = useNetwork()
+  const { providerType, getRpcEndpoint } = useApi()
   const { setModalStatus, setModalResize } = useOverlay().modal
-  const { connectionType, setConnectionType, rpcEndpoint } = useApi()
   const networkKey = network
 
-  const isLightClient = connectionType === 'sc'
+  const isLightClient = providerType === 'sc'
 
   // Likely never going to happen; here just to be safe.
   useEffect(() => setModalResize(), [isBraveBrowser])
@@ -46,7 +48,8 @@ export const Networks = () => {
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
             {Object.entries(NetworkList).map(([key, item], index: number) => {
-              const Svg = item.brand.inline.svg
+              const inline = getChainIcons(key as NetworkId).inline
+              const Svg = inline.svg
               const rpcDisabled = networkKey === key
 
               return (
@@ -63,10 +66,7 @@ export const Networks = () => {
                   }}
                 >
                   <div style={{ width: '1.75rem' }}>
-                    <Svg
-                      width={item.brand.inline.size}
-                      height={item.brand.inline.size}
-                    />
+                    <Svg width={inline.size} height={inline.size} />
                   </div>
                   <h3>{capitalizeFirstLetter(item.name)}</h3>
                   {networkKey === key && (
@@ -82,7 +82,7 @@ export const Networks = () => {
               )
             })}
           </div>
-          <h4>{t('connectionType')}</h4>
+          <h4>{t('providerType')}</h4>
           <ConnectionsWrapper>
             <div>
               <ConnectionButton
@@ -90,7 +90,7 @@ export const Networks = () => {
                 className="off"
                 type="button"
                 onClick={() => {
-                  setConnectionType('sc')
+                  setProviderType('sc')
                   switchNetwork(networkKey as NetworkId)
                   setModalStatus('closing')
                 }}
@@ -105,7 +105,7 @@ export const Networks = () => {
                 disabled={!isLightClient}
                 type="button"
                 onClick={() => {
-                  setConnectionType('ws')
+                  setProviderType('ws')
                   switchNetwork(networkKey as NetworkId)
                   setModalStatus('closing')
                 }}
@@ -118,7 +118,7 @@ export const Networks = () => {
               <div className="provider">
                 <p>{t('provider')}:</p>
                 <ButtonTertiary
-                  text={rpcEndpoint}
+                  text={getRpcEndpoint(network)}
                   onClick={() => openPromptWith(<ProvidersPrompt />)}
                   marginLeft
                 />

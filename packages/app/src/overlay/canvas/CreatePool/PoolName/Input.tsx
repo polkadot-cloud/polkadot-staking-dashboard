@@ -14,7 +14,7 @@ export const Input = ({
   value = '',
 }: AnyJson) => {
   const { t } = useTranslation('pages')
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // the current local bond value
   const [metadata, setMetadata] = useState<string>(value)
@@ -37,7 +37,7 @@ export const Input = ({
   // reset value to default when changing account
   useEffect(() => {
     setMetadata(defaultValue ?? '')
-  }, [activeAccount])
+  }, [activeAddress])
 
   return (
     <>

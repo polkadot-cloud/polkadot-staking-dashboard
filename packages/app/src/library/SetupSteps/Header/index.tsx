@@ -18,14 +18,14 @@ export const Header = ({
 }: HeaderProps) => {
   const { t } = useTranslation('app')
   const { openHelp } = useHelp()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getPoolSetup, getNominatorSetup, setActiveAccountSetupSection } =
     useSetup()
 
   const setup =
     bondFor === 'nominator'
-      ? getNominatorSetup(activeAccount)
-      : getPoolSetup(activeAccount)
+      ? getNominatorSetup(activeAddress)
+      : getPoolSetup(activeAddress)
 
   return (
     <Wrapper>

@@ -1,17 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getNetworkData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
 
 export const TokenPrice = () => {
-  const {
-    networkData: { unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { currency } = useCurrency()
   const { price, change } = useTokenPrices()
-
+  const { unit } = getNetworkData(network)
   return (
     <>
       <div className="stat">

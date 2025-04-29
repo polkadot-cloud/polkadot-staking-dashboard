@@ -7,13 +7,13 @@ import { useUnclaimedRewards } from 'plugin-staking-api'
 import { useEffect } from 'react'
 import type { Props } from './types'
 
-export const UnclaimedRewardsApi = ({ activeAccount, network }: Props) => {
+export const UnclaimedRewardsApi = ({ who, network }: Props) => {
   const { activeEra } = useApi()
   const { setUnclaimedRewards } = usePayouts()
   const { data, loading, error } = useUnclaimedRewards({
     network,
-    who: activeAccount,
-    fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
+    who,
+    fromEra: Math.max(activeEra.index - 1, 0),
   })
 
   // Update unclaimed rewards on total change

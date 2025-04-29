@@ -7,10 +7,13 @@
     "clear": "rm -rf build dist"
   },
   "exports": {
-    "./svg/*": "./src/svg/*",
-    "./tsx/*": "./src/tsx/*"
+    ".": "./src/index.ts",
+    "./*": "./src/*"
   },
   "dependencies": {
     "react": "^19.1.0"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
   }
 }

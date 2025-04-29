@@ -4,6 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -25,12 +26,10 @@ export const [SetupContext, useSetup] =
   createSafeContext<SetupContextInterface>()
 
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
-  const { accounts } = useImportedAccounts()
-  const { activeAccount } = useActiveAccounts()
+  const { network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
+  const { accounts, stringifiedAccountsKey } = useImportedAccounts()
+  const { units } = getNetworkData(network)
 
   // Store all imported accounts nominator setups
   const [nominatorSetups, setNominatorSetups] = useState<NominatorSetups>({})
@@ -113,29 +112,29 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     type: BondFor,
     progress: NominatorProgress | PoolProgress
   ) => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return
     }
 
     const updatedSetups = updateSetups(
       assignSetups(type),
       progress,
-      activeAccount
+      activeAddress
     )
     setSetups(type, updatedSetups)
   }
 
   // Sets active setup section for an address
   const setActiveAccountSetupSection = (type: BondFor, section: number) => {
-    if (!activeAccount) {
+    if (!activeAddress) {
       return
     }
 
     const setups = assignSetups(type)
     const updatedSetups = updateSetups(
       setups,
-      setups[activeAccount]?.progress ?? defaultProgress(type),
-      activeAccount,
+      setups[activeAddress]?.progress ?? defaultProgress(type),
+      activeAddress,
       section
     )
     setSetups(type, updatedSetups)
@@ -170,9 +169,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('nominator', address) as NominatorSetup
     const { progress } = setup
-    const bond = new BigNumber(
-      unitToPlanck(progress?.bond || '0', units).toString()
-    )
+    const bond = new BigNumber(unitToPlanck(progress?.bond || '0', units))
 
     const p = 33
     let percentage = 0
@@ -195,9 +192,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('pool', address) as PoolSetup
     const { progress } = setup
-    const bond = new BigNumber(
-      unitToPlanck(progress?.bond || '0', units).toString()
-    )
+    const bond = new BigNumber(unitToPlanck(progress?.bond || '0', units))
 
     const p = 25
     let percentage = 0
@@ -254,12 +249,12 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Update setup state when activeAccount changes
+  // Update setup state when activeAddress changes
   useEffectIgnoreInitial(() => {
     if (accounts.length) {
       refreshSetups()
     }
-  }, [activeAccount, network, accounts])
+  }, [activeAddress, network, stringifiedAccountsKey])
 
   return (
     <SetupContext.Provider

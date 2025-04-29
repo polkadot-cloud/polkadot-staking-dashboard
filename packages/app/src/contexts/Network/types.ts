@@ -1,15 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Network, NetworkId } from 'common-types'
-
-export interface NetworkState {
-  name: NetworkId
-  meta: Network
-}
+import type { NetworkId } from 'types'
 
 export interface NetworkContextInterface {
   network: NetworkId
-  networkData: Network
   switchNetwork: (network: NetworkId) => Promise<void>
 }

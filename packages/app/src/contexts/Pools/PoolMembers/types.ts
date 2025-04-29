@@ -2,15 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Sync } from '@w3ux/types'
-import type { AnyMetaBatch } from 'common-types'
-import type { MaybeAddress, PoolMember } from 'types'
+import type { PalletNominationPoolsPoolMember } from 'dedot/chaintypes'
 
 export interface PoolMemberContext {
-  fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void
-  removePoolMember: (w: MaybeAddress) => void
-  meta: AnyMetaBatch
-  poolMembersApi: PoolMember[]
-  setPoolMembersApi: (p: PoolMember[]) => void
+  fetchPoolMemberData: (addresses: string[]) => void
+  meta: FetchedPoolMembers
   fetchedPoolMembersApi: Sync
   setFetchedPoolMembersApi: (s: Sync) => void
+}
+
+export interface FetchedPoolMembers {
+  poolMembers: (FetchedPoolMember | undefined)[]
+  addresses: string[]
+}
+
+export type FetchedPoolMember = PalletNominationPoolsPoolMember & {
+  address: string
 }

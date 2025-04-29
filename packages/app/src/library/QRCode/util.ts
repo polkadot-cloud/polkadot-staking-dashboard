@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aConcat } from '@polkadot/util'
+import { concatU8a } from 'dedot/utils'
 
 const MULTIPART = new Uint8Array([0])
 
@@ -15,7 +15,6 @@ export const encodeString = (value: string): Uint8Array => {
   for (let i = 0; i < count; i++) {
     u8a[i] = value.charCodeAt(i)
   }
-
   return u8a
 }
 
@@ -31,7 +30,7 @@ export const createFrames = (input: Uint8Array): Uint8Array[] => {
 
   return frames.map(
     (frame, index: number): Uint8Array =>
-      u8aConcat(
+      concatU8a(
         MULTIPART,
         encodeNumber(frames.length),
         encodeNumber(index),

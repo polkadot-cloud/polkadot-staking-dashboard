@@ -29,12 +29,12 @@ export const ActiveGraph = ({
 }: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   const { data: nominatorRewardData, loading: rewardsLoading } = useRewards({
     network,
-    who: activeAccount || '',
-    fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
+    who: activeAddress || '',
+    fromEra: Math.max(activeEra.index - 1, 0),
   })
 
   const days = 30
@@ -45,7 +45,7 @@ export const ActiveGraph = ({
   const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
     {
       network,
-      who: activeAccount || '',
+      who: activeAddress || '',
       from: getUnixTime(fromDate),
     }
   )

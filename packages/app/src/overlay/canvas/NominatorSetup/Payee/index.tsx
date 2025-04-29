@@ -4,7 +4,6 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useSetup } from 'contexts/Setup'
 import type { PayeeOptions } from 'contexts/Setup/types'
-import { defaultPayee } from 'controllers/Balances/defaults'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { Spacer } from 'library/Form/Wrappers'
 import { PayeeInput } from 'library/PayeeInput'
@@ -22,10 +21,10 @@ import type { MaybeAddress } from 'types'
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { getPayeeItems } = usePayeeConfig()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getNominatorSetup, setActiveAccountSetup } = useSetup()
 
-  const setup = getNominatorSetup(activeAccount)
+  const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
   const { payee } = progress
 
@@ -60,10 +59,13 @@ export const Payee = ({ section }: SetupStepProps) => {
     if (!payee || (!payee.destination && !payee.account)) {
       setActiveAccountSetup('nominator', {
         ...progress,
-        payee: defaultPayee,
+        payee: {
+          destination: 'Staked',
+          account: null,
+        },
       })
     }
-  }, [activeAccount])
+  }, [activeAddress])
 
   return (
     <>

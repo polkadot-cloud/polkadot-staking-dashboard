@@ -9,7 +9,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -40,27 +42,25 @@ import { RecentPayouts } from './RecentPayouts'
 
 export const Overview = (props: PayoutHistoryProps) => {
   const { t } = useTranslation('pages')
-  const {
-    networkData: {
-      unit,
-      brand: { token: Token },
-    },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
   const { avgCommission } = useValidators()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { price: tokenPrice } = useTokenPrices()
   const { getStakedBalance } = useTransferOptions()
   const { getAverageRewardRate } = useAverageRewardRate()
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
+
+  const { unit } = getNetworkData(network)
   const rewardRate = avgRateBeforeCommission.toNumber()
+  const Token = getChainIcons(network).token
 
   // Whether to show base or commission-adjusted rewards
   const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
 
-  const currentStake = getStakedBalance(activeAccount).toNumber()
+  const currentStake = getStakedBalance(activeAddress).toNumber()
   const annualRewardBase = currentStake * (rewardRate / 100) || 0
 
   const annualRewardAfterCommission =

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,9 +15,8 @@ export const RoleEditInput = ({
   roleEdit,
 }: RoleEditInputProps) => {
   const { t } = useTranslation('pages')
-  const {
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
+  const { ss58 } = getNetworkData(network)
 
   const processRoleEdit = (newAddress: string) => {
     let edit = {

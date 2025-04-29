@@ -14,9 +14,9 @@ export class Ledger {
   static isPaired = false
 
   // Initialise ledger transport, initialise app, and return with device info
-  static initialise = async (txMetadataChainId: string) => {
+  static initialise = async () => {
     this.transport = await TransportWebHID.create()
-    const app = new PolkadotGenericApp(Ledger.transport, txMetadataChainId)
+    const app = new PolkadotGenericApp(Ledger.transport)
     const { productName } = this.transport.device
     return { app, productName }
   }

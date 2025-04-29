@@ -26,12 +26,12 @@ export const MembershipStatus = ({
   const { label } = useStatusButtons()
   const { openModal } = useOverlay().modal
   const { poolsMetaData } = useBondedPools()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { activePool, isOwner, isBouncer, isMember } = useActivePool()
 
-  const { active } = getTransferOptions(activeAccount).pool
+  const { active } = getTransferOptions(activeAddress).pool
   const poolState = activePool?.bondedPool?.state ?? null
 
   const membershipButtons = []
@@ -48,10 +48,10 @@ export const MembershipStatus = ({
     // Or display manage button if active account is a pool member.
     if (
       (poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
-      (isMember() && active?.isGreaterThan(0))
+      (isMember() && active > 0n)
     ) {
       // Display manage button if active account is not a read-only account.
-      if (!isReadOnlyAccount(activeAccount)) {
+      if (!isReadOnlyAccount(activeAddress)) {
         membershipButtons.push({
           title: t('manage'),
           icon: faCog,

@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi } from 'common-types'
 import type {
   NominatorReward,
   PoolReward,
@@ -29,8 +28,7 @@ export interface PayoutListProps {
   pagination?: boolean
   title?: string | null
   itemsPerPage: number
-  payoutsList?: AnyApi
-  payouts?: AnyApi
+  payouts: RewardResults
 }
 
 export interface CalculatorMetrics {

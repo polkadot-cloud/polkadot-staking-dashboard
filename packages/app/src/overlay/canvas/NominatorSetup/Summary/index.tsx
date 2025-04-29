@@ -4,12 +4,15 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
-import { NewNominator } from 'api/tx/newNominator'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useSetup } from 'contexts/Setup'
+import type { PalletStakingRewardDestination } from 'dedot/chaintypes'
+import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -24,66 +27,64 @@ import { SummaryWrapper } from './Wrapper'
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { newBatchCall } = useBatchCall()
   const { getPayeeItems } = usePayeeConfig()
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { getNominatorSetup, removeSetupProgress } = useSetup()
+  const { unit, units } = getNetworkData(network)
 
-  const setup = getNominatorSetup(activeAccount)
+  const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
   const { bond, nominations, payee } = progress
 
   const getTxs = () => {
-    if (!activeAccount) {
-      return null
+    if (!activeAddress) {
+      return
     }
     if (payee.destination === 'Account' && !payee.account) {
-      return null
+      return
     }
     if (payee.destination !== 'Account' && !payee.destination) {
-      return null
+      return
     }
-
-    const tx = new NewNominator(
-      network,
-      unitToPlanck(bond || '0', units),
+    const destinationParam: PalletStakingRewardDestination =
       payee.destination === 'Account'
         ? {
             type: 'Account' as const,
-            value: payee.account as string,
+            value: new AccountId32(payee.account as string),
           }
         : {
             type: payee.destination,
-          },
-      nominations.map(({ address }: { address: string }) => ({
-        type: 'Id',
-        value: address,
-      }))
-    ).tx()
-
+          }
+    const nominationsParam = nominations.map(
+      ({ address }: { address: string }) => address
+    )
+    const tx = serviceApi.tx.newNominator(
+      unitToPlanck(bond || '0', units),
+      destinationParam,
+      nominationsParam
+    )
     if (!tx) {
-      return null
+      return
     }
-    return newBatchCall(tx, activeAccount)
+    return newBatchCall(tx, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tag: 'nominatorSetup',
     tx: getTxs(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackInBlock: () => {
       // Close the canvas after the extrinsic is included in a block.
       closeCanvas()
 
       // Reset setup progress.
-      removeSetupProgress('nominator', activeAccount)
+      removeSetupProgress('nominator', activeAddress)
     },
   })
 
@@ -101,7 +102,8 @@ export const Summary = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
-          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+          accountHasSigner(activeAddress) ||
+          accountHasSigner(activeProxy?.address || null)
         ) && <Warning text={t('readOnly')} />}
         <SummaryWrapper>
           <section>

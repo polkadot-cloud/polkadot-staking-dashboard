@@ -11,7 +11,6 @@ import type { ItemProps } from '../types'
 import classes from './index.module.scss'
 
 export const Item = ({
-  network,
   address,
   initial,
   disableEditIfImported = false,
@@ -53,7 +52,7 @@ export const Item = ({
   }
 
   // Check whether this address is imported
-  const isImported = existsHandler(network, address)
+  const isImported = existsHandler(address)
 
   const containerClasses = classNames(classes.item, {
     [classes.last]: last,

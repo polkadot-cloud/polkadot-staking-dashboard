@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils'
-import { TransferKeepAlive } from 'api/tx/transferKeepAlive'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -12,39 +13,35 @@ import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const BalanceTest = () => {
-  const {
-    network,
-    networkData: { units },
-  } = useNetwork()
+  const { serviceApi } = useApi()
+  const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
+  const { units } = getNetworkData(network)
 
   const getTx = () => {
-    const tx = null
-    if (!activeAccount) {
-      return tx
+    if (!activeAddress) {
+      return
     }
-
     const txs = [
-      new TransferKeepAlive(
-        network,
+      serviceApi.tx.transferKeepAlive(
         '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
         unitToPlanck('0.1', units)
-      ).tx(),
-      new TransferKeepAlive(
-        network,
+      ),
+      serviceApi.tx.transferKeepAlive(
         '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
         unitToPlanck('0.1', units)
-      ).tx(),
-    ]
-    const batch = newBatchCall(txs, activeAccount)
+      ),
+    ].filter((tx) => tx !== undefined)
+
+    const batch = newBatchCall(txs, activeAddress)
     return batch
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')

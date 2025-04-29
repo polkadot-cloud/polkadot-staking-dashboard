@@ -3,12 +3,13 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
-import { PayoutStakersByPage } from 'api/tx/payoutStakersByPage'
 import BigNumber from 'bignumber.js'
-import type { AnyApi } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -30,15 +31,14 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals')
-    const {
-      network,
-      networkData: { units, unit },
-    } = useNetwork()
+    const { network } = useNetwork()
+    const { serviceApi } = useApi()
     const { newBatchCall } = useBatchCall()
     const { setModalStatus } = useOverlay().modal
-    const { activeAccount } = useActiveAccounts()
+    const { activeAddress } = useActiveAccounts()
     const { getSignerWarnings } = useSignerWarnings()
     const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
+    const { unit, units } = getNetworkData(network)
 
     // Get the total payout amount
     const totalPayout =
@@ -61,46 +61,43 @@ export const Forms = forwardRef(
 
     const getCalls = () => {
       const calls =
-        payouts?.reduce((acc: AnyApi[], { era, paginatedValidators }) => {
-          if (!paginatedValidators.length) {
-            return acc
-          }
-          paginatedValidators.forEach(([page, v]) => {
-            const tx = new PayoutStakersByPage(
-              network,
-              v,
-              Number(era),
-              page
-            ).tx()
-            if (tx) {
-              acc.push(tx)
+        payouts?.reduce(
+          (acc: SubmittableExtrinsic[], { era, paginatedValidators }) => {
+            if (!paginatedValidators.length) {
+              return acc
             }
-          })
-          return acc
-        }, []) || []
+            paginatedValidators.forEach(([page, v]) => {
+              const tx = serviceApi.tx.payoutStakersByPage(v, Number(era), page)
+              if (tx) {
+                acc.push(tx)
+              }
+            })
+            return acc
+          },
+          []
+        ) || []
       return calls
     }
 
     const getTx = () => {
-      const tx = null
       const calls = getCalls()
       if (!valid || !calls.length) {
-        return tx
+        return
       }
       return calls.length === 1
         ? calls.pop()
-        : newBatchCall(calls, activeAccount)
+        : newBatchCall(calls, activeAddress)
     }
 
     const submitExtrinsic = useSubmitExtrinsic({
       tx: getTx(),
-      from: activeAccount,
+      from: activeAddress,
       shouldSubmit: valid,
       callbackSubmit: () => {
         setModalStatus('closing')
       },
       callbackInBlock: () => {
-        if (payouts && activeAccount) {
+        if (payouts && activeAddress) {
           // Deduct unclaimed payout value from state value
           const eraPayouts: string[] = []
           payouts.forEach(({ era }) => {
@@ -122,7 +119,7 @@ export const Forms = forwardRef(
     })
 
     const warnings = getSignerWarnings(
-      activeAccount,
+      activeAddress,
       false,
       submitExtrinsic.proxySupported
     )
@@ -156,7 +153,6 @@ export const Forms = forwardRef(
           </Padding>
           <SubmitTx
             onResize={onResize}
-            fromController={false}
             valid={valid}
             buttons={[
               <ButtonSubmitInvert

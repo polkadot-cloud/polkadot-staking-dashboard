@@ -51,6 +51,12 @@ export const PoolList = ({
   const excludes = getFilters('exclude', 'pools')
   const searchTerm = getSearchTerm('pools')
 
+  // The current page of pool list.
+  const [page, setPage] = useState<number>(1)
+
+  // Default pool list items before filtering.
+  const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || [])
+
   // Carry out filter of pool list.
   const filterPoolList = () => {
     let filteredPools = Object.assign(poolsDefault)
@@ -60,12 +66,6 @@ export const PoolList = ({
     }
     return filteredPools
   }
-
-  // The current page of pool list.
-  const [page, setPage] = useState<number>(1)
-
-  // Default pool list items before filtering.
-  const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || [])
 
   // Manipulated pool list items after filtering.
   const [listPools, setListPools] = useState<BondedPool[]>(filterPoolList())
@@ -115,10 +115,12 @@ export const PoolList = ({
 
   // Refetch list when pool list changes.
   useEffect(() => {
-    if (JSON.stringify(pools) !== JSON.stringify(poolsDefault) && synced) {
+    const poolIds = pools?.map((pool) => pool.id)
+    const poolIdsDefault = poolsDefault?.map((pool) => pool.id)
+    if (JSON.stringify(poolIds) !== JSON.stringify(poolIdsDefault) && synced) {
       resetPoolList()
     }
-  }, [JSON.stringify(pools)])
+  }, [JSON.stringify(pools?.map((pool) => pool.id))])
 
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {

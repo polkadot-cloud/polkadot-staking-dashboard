@@ -8,20 +8,21 @@ import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn } from '@w3ux/utils'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 import { AccountWrapper } from './Wrappers'
 import type { AccountItemProps } from './types'
 
 export const AccountButton = ({
   label,
   address,
+  source,
   delegator,
   proxyType,
   noBorder = false,
@@ -31,13 +32,14 @@ export const AccountButton = ({
   const { getAccount } = useImportedAccounts()
   const {
     activeProxy,
-    activeAccount,
+    activeAddress,
     setActiveAccount,
     setActiveProxy,
     activeProxyType,
   } = useActiveAccounts()
+  const { network } = useNetwork()
   const { setModalStatus } = useOverlay().modal
-  const { units, unit } = useNetwork().networkData
+  const { unit, units } = getNetworkData(network)
 
   // Accumulate account data.
   const meta = getAccount(address || '')
@@ -58,20 +60,27 @@ export const AccountButton = ({
 
   // Determine if this account is active (active account or proxy).
   const isActive =
-    (connectTo === activeAccount &&
-      address === activeAccount &&
+    (connectTo === activeAddress &&
+      address === activeAddress &&
       !activeProxy) ||
-    (connectProxy === activeProxy &&
+    (connectProxy === activeProxy?.address &&
       proxyType === activeProxyType &&
-      activeProxy)
+      activeProxy.address)
 
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
     if (!imported) {
       return
     }
-    setActiveAccount(getAccount(connectTo)?.address || null)
-    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null)
+    const account = getAccount(connectTo)
+    setActiveAccount(
+      account ? { address: account.address, source: account.source } : null
+    )
+    setActiveProxy(
+      proxyType && connectProxy
+        ? { address: connectProxy, source, proxyType }
+        : null
+    )
     setModalStatus('closing')
   }
 
@@ -130,9 +139,8 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnitBn(
-              transferrableBalance || new BigNumber(0),
-              units
+            {`${t('free')}: ${new BigNumber(
+              planckToUnit(transferrableBalance || 0n, units)
             )
               .decimalPlaces(3)
               .toFormat()} ${unit}`}

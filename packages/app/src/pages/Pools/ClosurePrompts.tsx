@@ -17,26 +17,26 @@ export const ClosurePrompts = () => {
   const { t } = useTranslation('pages')
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { getTransferOptions } = useTransferOptions()
   const { isBonding, activePool, isDepositor, activePoolNominations } =
     useActivePool()
 
   const { state, memberCounter } = activePool?.bondedPool || {}
-  const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool
+  const { active, totalUnlockChunks } = getTransferOptions(activeAddress).pool
   const targets = activePoolNominations?.targets ?? []
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !syncing && isDepositor() && state === 'Destroying' && memberCounter === '1'
+    !syncing && isDepositor() && state === 'Destroying' && memberCounter === 1
 
   // depositor needs to unbond funds
-  const depositorCanUnbond = active.toNumber() > 0 && !targets.length
+  const depositorCanUnbond = active > 0n && !targets.length
 
   // depositor can withdraw & close pool
   const depositorCanWithdraw =
-    active.toNumber() === 0 && totalUnlockChunks === 0 && !targets.length
+    active === 0n && totalUnlockChunks === 0 && !targets.length
 
   return (
     state === 'Destroying' &&

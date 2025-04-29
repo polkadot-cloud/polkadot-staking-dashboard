@@ -2,22 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
-import { getLocalLedgerAccounts } from '@w3ux/react-connect-kit/LedgerAccountsProvider/utils'
-import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProvider/utils'
-import { getLocalWcAccounts } from '@w3ux/react-connect-kit/WCAccountsProvider/utils'
-import type { ImportedAccount } from '@w3ux/types'
+import {
+  useExtensionAccounts,
+  useExtensions,
+  useHardwareAccounts,
+} from '@w3ux/react-connect-kit'
+import type { HardwareAccountSource } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
-import { isCustomEvent } from 'controllers/utils'
+import { getInitialExternalAccounts } from 'global-bus/util'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import type { MaybeAddress } from 'types'
-import { useEventListener } from 'usehooks-ts'
-import { useExternalAccounts } from '../ExternalAccounts'
-import { getLocalExternalAccounts } from '../ExternalAccounts/Utils'
+import type { ImportedAccount, MaybeAddress, NetworkId } from 'types'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 import { getActiveAccountLocal } from '../Utils'
 import type { OtherAccountsContextInterface } from './types'
@@ -30,16 +28,13 @@ export const OtherAccountsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
-  const { extensionAccountsSynced, getExtensionAccounts } =
-    useExtensionAccounts()
-  const { checkingInjectedWeb3 } = useExtensions()
-  const { addExternalAccount } = useExternalAccounts()
-  const { activeAccount, setActiveAccount } = useActiveAccounts()
+  const { network } = useNetwork()
+  const { gettingExtensions } = useExtensions()
+  const { getHardwareAccounts } = useHardwareAccounts()
+  const { activeAddress, setActiveAccount } = useActiveAccounts()
+  const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
+  const { ss58 } = getNetworkData(network)
   const extensionAccounts = getExtensionAccounts(ss58)
 
   // Store whether other (non-extension) accounts have been initialised
@@ -69,8 +64,8 @@ export const OtherAccountsProvider = ({
       // If the currently active account is being forgotten, and it is not present in extension
       // accounts, disconnect
       if (
-        forget.find(({ address }) => address === activeAccount) !== undefined &&
-        extensionAccounts.find(({ address }) => address === activeAccount) ===
+        forget.find(({ address }) => address === activeAddress) !== undefined &&
+        extensionAccounts.find(({ address }) => address === activeAddress) ===
           undefined
       ) {
         setActiveAccount(null)
@@ -81,17 +76,19 @@ export const OtherAccountsProvider = ({
   // Checks `localStorage` for previously added accounts from the provided source, and adds them to
   // `accounts` state. if local active account is present, it will also be assigned as active.
   // Accounts are ignored if they are already imported through an extension
-  const importLocalOtherAccounts = (
-    getter: (n: NetworkId) => ImportedAccount[]
+  const importLocalOtherAccounts = <T extends HardwareAccountSource | string>(
+    source: T,
+    getter: (s: T, n: NetworkId) => ImportedAccount[]
   ) => {
     // Get accounts from provided `getter` function. The resulting array of accounts must contain an
     // `address` field
-    let localAccounts = getter(network)
+    let localAccounts = getter(source, network)
 
     if (localAccounts.length) {
       const activeAccountInSet =
         localAccounts.find(
-          ({ address }) => address === getActiveAccountLocal(network, ss58)
+          ({ address }) =>
+            address === getActiveAccountLocal(network, ss58)?.address
         ) ?? null
 
       // remove accounts that are already imported via web extension
@@ -121,7 +118,10 @@ export const OtherAccountsProvider = ({
 
       // set active account for networkData
       if (activeAccountInSet) {
-        setActiveAccount(activeAccountInSet.address)
+        setActiveAccount({
+          address: activeAccountInSet.address,
+          source: activeAccountInSet.source,
+        })
       }
 
       // add accounts to imported
@@ -177,53 +177,35 @@ export const OtherAccountsProvider = ({
     }
   }
 
-  // Handle new external account custom events
-  const newExternalAccountCallback = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const result = addExternalAccount(e.detail.address, 'system')
-      if (result) {
-        addOrReplaceOtherAccount(result.account, result.type)
-      }
-    }
-  }
-
-  // Listen for new external account events
-  const documentRef = useRef<Document>(document)
-  useEventListener(
-    'new-external-account',
-    newExternalAccountCallback,
-    documentRef
-  )
-
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected
   useEffect(() => {
-    if (!checkingInjectedWeb3) {
+    if (!gettingExtensions) {
       setStateWithRef([], setOtherAccounts, otherAccountsRef)
     }
-  }, [network, checkingInjectedWeb3])
+  }, [network, gettingExtensions])
 
   // Once extensions are fully initialised, fetch accounts from other sources
   useEffectIgnoreInitial(() => {
-    if (extensionAccountsSynced) {
+    if (extensionsSynced) {
       // Fetch accounts from supported hardware wallets
-      importLocalOtherAccounts(getLocalVaultAccounts)
-      importLocalOtherAccounts(getLocalLedgerAccounts)
-      importLocalOtherAccounts(getLocalWcAccounts)
+      importLocalOtherAccounts('vault', getHardwareAccounts)
+      importLocalOtherAccounts('ledger', getHardwareAccounts)
+      importLocalOtherAccounts('wallet_connect', getHardwareAccounts)
 
       // Mark hardware wallets as initialised
       setOtherAccountsSynced(true)
 
       // Finally, fetch any read-only accounts that have been added by `system` or `user`
-      importLocalOtherAccounts(getLocalExternalAccounts)
+      importLocalOtherAccounts('external', getInitialExternalAccounts)
     }
-  }, [network, extensionAccountsSynced])
+  }, [network, extensionsSynced])
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts
   useEffectIgnoreInitial(() => {
-    if (extensionAccountsSynced && otherAccountsSynced === true) {
+    if (extensionsSynced && otherAccountsSynced === true) {
       setAccountsInitialised(true)
     }
-  }, [extensionAccountsSynced, otherAccountsSynced])
+  }, [extensionsSynced, otherAccountsSynced])
 
   return (
     <OtherAccountsContext.Provider

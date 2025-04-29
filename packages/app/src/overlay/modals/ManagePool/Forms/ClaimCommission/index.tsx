@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { rmCommas } from '@w3ux/utils'
-import { PoolClaimCommission } from 'api/tx/poolClaimCommission'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -29,18 +29,17 @@ export const ClaimCommission = ({
   onResize: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isOwner, activePool } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
 
+  const { unit, units } = getNetworkData(network)
   const poolId = activePool?.id
   const pendingCommission = new BigNumber(
-    rmCommas(activePool?.rewardPool?.totalCommissionPending || '0')
+    activePool?.rewardPool?.totalCommissionPending || 0
   )
 
   // valid to submit transaction
@@ -52,14 +51,14 @@ export const ClaimCommission = ({
 
   const getTx = () => {
     if (!valid || poolId === undefined) {
-      return null
+      return
     }
-    return new PoolClaimCommission(network, poolId).tx()
+    return serviceApi.tx.poolClaimCommission(poolId)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -67,7 +66,7 @@ export const ClaimCommission = ({
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

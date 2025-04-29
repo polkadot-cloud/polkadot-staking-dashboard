@@ -40,11 +40,11 @@ export const Nominations = ({
     modal: { openModal },
     canvas: { openCanvas },
   } = useOverlay()
-  const { syncing } = useSyncing(['balances', 'era-stakers'])
+  const { syncing } = useSyncing(['era-stakers'])
   const { getNominations } = useBalances()
   const { isFastUnstaking } = useUnstaking()
   const { formatWithPrefs } = useValidators()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
   // Determine if pool or nominator.
@@ -53,7 +53,7 @@ export const Nominations = ({
   // Derive nominations from `bondFor` type.
   const nominated =
     bondFor === 'nominator'
-      ? formatWithPrefs(getNominations(activeAccount))
+      ? formatWithPrefs(getNominations(activeAddress))
       : activePoolNominations
         ? formatWithPrefs(activePoolNominations.targets)
         : []
@@ -77,7 +77,7 @@ export const Nominations = ({
   const btnsDisabled =
     (!isPool && inSetup()) ||
     (!isPool && syncing) ||
-    isReadOnlyAccount(activeAccount) ||
+    isReadOnlyAccount(activeAddress) ||
     poolDestroying ||
     isFastUnstaking
 

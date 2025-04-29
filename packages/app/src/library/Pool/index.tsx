@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import BigNumber from 'bignumber.js'
+import { PerbillMultiplier } from 'consts'
 import { usePoolCommission } from 'hooks/usePoolCommission'
 import { useSyncing } from 'hooks/useSyncing'
 import { FavoritePool } from 'library/ListItem/Buttons/FavoritePool'
@@ -48,10 +50,12 @@ export const Pool = ({ pool }: PoolProps) => {
           <div>
             <LabelRow>
               {currentCommission > 0 && (
-                <PoolCommission commission={`${currentCommission}%`} />
+                <PoolCommission
+                  commission={`${new BigNumber(currentCommission / PerbillMultiplier).decimalPlaces(3).toFormat()}%`}
+                />
               )}
               <PoolId id={id} />
-              <Members members={memberCounter} />
+              <Members memberCounter={memberCounter} />
               <PoolBonded pool={pool} />
             </LabelRow>
           </div>

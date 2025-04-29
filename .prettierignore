@@ -4,6 +4,7 @@
 **/package-lock.json
 **/.eslintrc.js
 **/dist
+**/pnpm-lock.yaml
 
 .licenserc.json
 CHANGELOG.md

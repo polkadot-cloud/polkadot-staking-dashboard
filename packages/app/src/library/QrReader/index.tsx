@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useVaultAccounts } from '@w3ux/react-connect-kit'
+import { useHardwareAccounts } from '@w3ux/react-connect-kit'
+import type { HardwareAccountSource } from '@w3ux/types'
 import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import { useEffect, useState } from 'react'
@@ -12,8 +13,12 @@ import { Wrapper } from './Wrapper'
 
 export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
   const { t } = useTranslation('modals')
-  const { addVaultAccount, vaultAccountExists, vaultAccounts } =
-    useVaultAccounts()
+  const { addHardwareAccount, hardwareAccountExists, getHardwareAccounts } =
+    useHardwareAccounts()
+
+  const source: HardwareAccountSource = 'vault'
+
+  const vaultAccounts = getHardwareAccounts(source, network)
 
   // Store data from QR Code scanner.
   const [qrData, setQrData] = useState<AnyJson>(undefined)
@@ -25,13 +30,18 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
 
   const valid =
     isValidAddress(qrData) &&
-    !vaultAccountExists(network, qrData) &&
+    !hardwareAccountExists(source, network, qrData) &&
     formatAccountSs58(qrData, ss58) !== null
 
   useEffect(() => {
     // Add account and close overlay if valid.
     if (valid) {
-      const account = addVaultAccount(network, qrData, vaultAccounts.length)
+      const account = addHardwareAccount(
+        source,
+        network,
+        qrData,
+        vaultAccounts.length
+      )
       if (account) {
         onSuccess(account)
       }
@@ -45,7 +55,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
       : isValidAddress(qrData)
         ? formatAccountSs58(qrData, ss58) !== qrData
           ? `${t('differentNetworkAddress')}`
-          : vaultAccountExists(network, qrData)
+          : hardwareAccountExists(source, network, qrData)
             ? `${t('accountAlreadyImported')}`
             : `${t('addressReceived')}`
         : `${t('invalidAddress')}`

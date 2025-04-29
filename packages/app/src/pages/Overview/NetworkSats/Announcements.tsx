@@ -3,8 +3,9 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { capitalizeFirstLetter, rmCommas, sortWithNull } from '@w3ux/utils'
+import { capitalizeFirstLetter, planckToUnit, sortWithNull } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -17,21 +18,19 @@ import { planckToUnitBn } from 'utils'
 
 export const Announcements = () => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { bondedPools } = useBondedPools()
   const {
     poolsConfig: { counterForPoolMembers },
     stakingMetrics: { totalStaked, lastReward },
   } = useApi()
 
-  const lastRewardUnit = planckToUnitBn(lastReward, units)
+  const { unit, units } = getNetworkData(network)
+  const lastRewardUnit = new BigNumber(planckToUnit(lastReward || 0, units))
 
   let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points))
+    totalPoolPoints = totalPoolPoints.plus(b.points)
   })
   const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
 
@@ -57,11 +56,13 @@ export const Announcements = () => {
   const announcements = []
 
   // Total staked on the network
-  if (!totalStaked.isZero()) {
+  if (totalStaked > 0n) {
     announcements.push({
       class: 'neutral',
       title: t('networkCurrentlyStaked', {
-        total: planckToUnitBn(totalStaked, units).integerValue().toFormat(),
+        total: new BigNumber(planckToUnit(totalStaked, units))
+          .integerValue()
+          .toFormat(),
         unit,
         network: capitalizeFirstLetter(network),
       }),
@@ -87,10 +88,10 @@ export const Announcements = () => {
   }
 
   // Total locked in pools
-  if (counterForPoolMembers.isGreaterThan(0)) {
+  if (counterForPoolMembers > 0) {
     announcements.push({
       class: 'neutral',
-      title: `${counterForPoolMembers.toFormat()} ${t('poolMembersBonding')}`,
+      title: `${new BigNumber(counterForPoolMembers).toFormat()} ${t('poolMembersBonding')}`,
       subtitle: `${t('totalNumAccounts')}`,
     })
   } else {

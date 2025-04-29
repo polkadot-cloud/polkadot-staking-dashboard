@@ -3,15 +3,13 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
-import type { Plugin } from 'config/plugins'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Subscan } from 'controllers/Subscan'
-import { Subscriptions } from 'controllers/Subscriptions'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
+import type { Plugin } from 'types'
 import type { PluginsContextInterface } from './types'
 import { getAvailablePlugins } from './Utils'
 
@@ -21,7 +19,7 @@ export const [PluginsContext, usePlugins] =
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { isReady, activeEra } = useApi()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   // Store the currently active plugins
   const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins())
@@ -50,37 +48,7 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
     if (plugins.includes('subscan')) {
       Subscan.network = network
     }
-  }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra])
-
-  // Handle api subscriptions when Staking API is toggled
-  useEffectIgnoreInitial(() => {
-    const currentEraRewardPointsSub = Subscriptions.get(
-      network,
-      'erasRewardPoints'
-    )
-    // On staking api disable, or on era change, initialise fallback subscriptions for era reward
-    // points
-    if (!pluginEnabled('staking_api') && !activeEra.index.isZero() && isReady) {
-      // Unsubscribe to staking metrics if it exists.
-      if (currentEraRewardPointsSub) {
-        currentEraRewardPointsSub.unsubscribe()
-        Subscriptions.remove(network, 'erasRewardPoints')
-      }
-      // Subscribe to eras reward points for current era
-      Subscriptions.set(
-        network,
-        'erasRewardPoints',
-        new ErasRewardPoints(network, activeEra.index.toNumber())
-      )
-    }
-    // If Staking API is enabled, unsubscribe from eras reward points
-    if (pluginEnabled('staking_api')) {
-      if (currentEraRewardPointsSub) {
-        currentEraRewardPointsSub.unsubscribe()
-        Subscriptions.remove(network, 'erasRewardPoints')
-      }
-    }
-  }, [isReady, activeEra, pluginEnabled('staking_api')])
+  }, [plugins.includes('subscan'), isReady, network, activeAddress, activeEra])
 
   return (
     <PluginsContext.Provider

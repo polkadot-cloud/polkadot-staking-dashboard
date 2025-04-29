@@ -17,7 +17,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
   const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { isNominating } = useStaking()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   if (!data?.nodeDistributionDetail) {
     return null
@@ -63,7 +63,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
           lg
           onClick={() =>
             window.open(
-              `https://${network}.polkawatch.app/nomination/${activeAccount}`,
+              `https://${network}.polkawatch.app/nomination/${activeAddress}`,
               '_blank'
             )
           }
@@ -72,7 +72,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
           text="Polkawatch"
           disabled={
             !(
-              activeAccount &&
+              activeAddress &&
               ['polkadot', 'kusama'].includes(network) &&
               isNominating()
             )

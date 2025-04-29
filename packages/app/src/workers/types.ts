@@ -1,13 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId } from 'common-types'
 import type {
   ActiveAccountStaker,
   Exposure,
   Staker,
 } from 'contexts/Staking/types'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, NetworkId } from 'types'
 
 export interface ProcessExposuresArgs {
   task: string

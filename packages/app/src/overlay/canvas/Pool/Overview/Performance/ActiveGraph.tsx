@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import type { NetworkId } from 'common-types'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { useRewards } from 'plugin-staking-api'
+import type { NetworkId } from 'types'
 
 interface Props {
   network: NetworkId

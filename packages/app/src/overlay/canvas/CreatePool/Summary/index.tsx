@@ -4,8 +4,8 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { unitToPlanck } from '@w3ux/utils'
-import { CreatePool } from 'api/tx/createPool'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -26,60 +26,59 @@ import { SummaryWrapper } from './Wrapper'
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const {
+    serviceApi,
     poolsConfig: { lastPoolId },
   } = useApi()
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
   const { getPoolSetup, removeSetupProgress } = useSetup()
-  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { activeAddress, activeProxy } = useActiveAccounts()
   const { queryBondedPool, addToBondedPools } = useBondedPools()
+  const { unit, units } = getNetworkData(network)
 
-  const poolId = lastPoolId.plus(1)
-  const setup = getPoolSetup(activeAccount)
+  const poolId = lastPoolId + 1
+  const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
   const { metadata, bond, roles, nominations } = progress
 
   const getTx = () => {
-    if (!activeAccount) {
-      return null
+    if (!activeAddress) {
+      return
     }
-
-    const tx = new CreatePool(
-      network,
-      activeAccount,
-      poolId.toNumber(),
+    const tx = serviceApi.tx.createPool(
+      activeAddress,
+      poolId,
       unitToPlanck(bond, units),
       metadata,
       nominations.map(({ address }) => address),
       roles
-    ).tx()
-
+    )
     if (!tx) {
-      return null
+      return
     }
-    return newBatchCall(tx, activeAccount)
+    return newBatchCall(tx, activeAddress)
   }
+
   const submitExtrinsic = useSubmitExtrinsic({
     tag: 'createPool',
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackInBlock: async () => {
       // Close canvas.
       closeCanvas()
 
       // Query and add created pool to bondedPools list.
-      const pool = await queryBondedPool(poolId.toNumber())
-      addToBondedPools(pool)
+      const pool = await queryBondedPool(poolId)
+      if (pool) {
+        addToBondedPools(pool)
+      }
 
       // Reset setup progress.
-      removeSetupProgress('pool', activeAccount)
+      removeSetupProgress('pool', activeAddress)
     },
   })
 
@@ -93,7 +92,8 @@ export const Summary = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
-          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+          accountHasSigner(activeAddress) ||
+          accountHasSigner(activeProxy?.address || null)
         ) && <Warning text={t('readOnly')} />}
         <SummaryWrapper>
           <section>

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { BarSegment } from 'library/BarChart/BarSegment'
 import { LegendItem } from 'library/BarChart/LegendItem'
@@ -17,10 +18,9 @@ export const BondedChart = ({
   inactive,
 }: BondedChartProps) => {
   const { t } = useTranslation('app')
-  const {
-    networkData: { unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const totalUnlocking = unlocking.plus(unlocked)
+  const { unit } = getNetworkData(network)
 
   const MinimumLowerBound = 0.5
   const MinimumNoNZeroPercent = 13

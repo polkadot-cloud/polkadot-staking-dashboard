@@ -28,17 +28,14 @@ export const HistoricalEraPoints = ({
 
   const normalisedPoints = normaliseEraPoints(
     Object.fromEntries(
-      eraPoints.map(({ era, points }) => [
-        era,
-        new BigNumber(points.toString()),
-      ])
+      eraPoints.map(({ era, points }) => [era, new BigNumber(points)])
     ),
-    new BigNumber(high?.toString() || 1)
+    new BigNumber(high || 1)
   )
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
   const syncing = !isReady || !eraPoints.length || !validatorsFetched
   const tooltipText = t('validatorPerformance', {
-    count: Math.ceil(30 / erasPerDay.toNumber()),
+    count: Math.ceil(30 / erasPerDay),
   })
 
   return (

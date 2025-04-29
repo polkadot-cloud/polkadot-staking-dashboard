@@ -10,10 +10,10 @@ import { useActivePool } from '../../../../contexts/Pools/ActivePool'
 export const NominationStatus = () => {
   const { t } = useTranslation('pages')
   const { inPool } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getNominationStatus } = useNominationStatus()
 
-  const nominationStatus = getNominationStatus(activeAccount, 'nominator')
+  const nominationStatus = getNominationStatus(activeAddress, 'nominator')
   // Determine whether to display fast unstake button or regular unstake button.
 
   return (

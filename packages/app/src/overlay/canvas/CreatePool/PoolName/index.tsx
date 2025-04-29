@@ -14,9 +14,9 @@ import { Input } from './Input'
 
 export const PoolName = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getPoolSetup, setActiveAccountSetup } = useSetup()
-  const setup = getPoolSetup(activeAccount)
+  const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
   const initialValue = progress.metadata
@@ -39,7 +39,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
     setMetadata({
       metadata: initialValue,
     })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // apply initial metadata to setup progress
   useEffect(() => {

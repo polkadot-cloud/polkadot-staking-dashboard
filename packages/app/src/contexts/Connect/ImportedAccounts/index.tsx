@@ -3,15 +3,13 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts } from '@w3ux/react-connect-kit'
-import type { ExternalAccount, ImportedAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Balances } from 'controllers/Balances'
 import type { ReactNode } from 'react'
 import { useCallback } from 'react'
-import type { MaybeAddress } from 'types'
+import type { ExternalAccount, ImportedAccount, MaybeAddress } from 'types'
 import { useOtherAccounts } from '../OtherAccounts'
 import { getActiveAccountLocal, getActiveProxyLocal } from '../Utils'
 import type { ImportedAccountsContextInterface } from './types'
@@ -24,17 +22,14 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const { isReady } = useApi()
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { otherAccounts } = useOtherAccounts()
   const { getExtensionAccounts } = useExtensionAccounts()
   const { setActiveAccount, setActiveProxy } = useActiveAccounts()
+
+  const { ss58 } = getNetworkData(network)
   // Get the imported extension accounts formatted with the current network's ss58 prefix
   const extensionAccounts = getExtensionAccounts(ss58)
-
   const allAccounts = extensionAccounts.concat(otherAccounts)
 
   // Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`
@@ -49,11 +44,11 @@ export const ImportedAccountsProvider = ({
       return 0
     })
     return JSON.stringify(
-      sorted.map((account) => [account.address, account.name])
+      sorted.map((account) => [account.address, account.source, account.name])
     )
   }
 
-  const allAccountsStringified = shallowAccountStringify(allAccounts)
+  const stringifiedAccountsKey = shallowAccountStringify(allAccounts)
 
   // Gets an account from `allAccounts`
   //
@@ -61,7 +56,7 @@ export const ImportedAccountsProvider = ({
   const getAccount = useCallback(
     (who: MaybeAddress) =>
       allAccounts.find(({ address }) => address === who) || null,
-    [allAccountsStringified]
+    [stringifiedAccountsKey]
   )
 
   // Checks if an address is a read-only account
@@ -76,7 +71,7 @@ export const ImportedAccountsProvider = ({
       }
       return false
     },
-    [allAccountsStringified]
+    [stringifiedAccountsKey]
   )
 
   // Checks whether an account can sign transactions
@@ -88,7 +83,7 @@ export const ImportedAccountsProvider = ({
         (account) =>
           account.address === address && account.source !== 'external'
       ) !== undefined,
-    [allAccountsStringified]
+    [stringifiedAccountsKey]
   )
 
   // Checks whether an account needs manual signing
@@ -102,25 +97,14 @@ export const ImportedAccountsProvider = ({
       allAccounts.find(
         (a) => a.address === address && ManualSigners.includes(a.source)
       ) !== undefined,
-    [allAccountsStringified]
+    [stringifiedAccountsKey]
   )
-
-  // Keep accounts in sync with `Balances`
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      Balances.syncAccounts(
-        network,
-        allAccounts.map((a) => a.address)
-      )
-    }
-  }, [isReady, allAccountsStringified])
 
   // Re-sync the active account and active proxy on network change
   useEffectIgnoreInitial(() => {
     const localActiveAccount = getActiveAccountLocal(network, ss58)
-
-    if (getAccount(localActiveAccount) !== null) {
-      setActiveAccount(getActiveAccountLocal(network, ss58), false)
+    if (getAccount(localActiveAccount?.address || null) !== null) {
+      setActiveAccount(localActiveAccount, false)
     } else {
       setActiveAccount(null, false)
     }
@@ -128,10 +112,8 @@ export const ImportedAccountsProvider = ({
     const localActiveProxy = getActiveProxyLocal(network, ss58)
     if (getAccount(localActiveProxy?.address || null)) {
       setActiveProxy(getActiveProxyLocal(network, ss58), false)
-    } else {
-      setActiveProxy(null, false)
     }
-  }, [network])
+  }, [network, stringifiedAccountsKey])
 
   return (
     <ImportedAccountsContext.Provider
@@ -141,6 +123,7 @@ export const ImportedAccountsProvider = ({
         isReadOnlyAccount,
         accountHasSigner,
         requiresManualSign,
+        stringifiedAccountsKey,
       }}
     >
       {children}

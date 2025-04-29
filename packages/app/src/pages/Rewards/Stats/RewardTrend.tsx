@@ -3,6 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -20,18 +21,16 @@ import { useTranslation } from 'react-i18next'
 
 export const RewardTrend = () => {
   const { t } = useTranslation('pages')
-  const {
-    network,
-    networkData: { unit, units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { activeEra } = useApi()
   const { inSetup } = useStaking()
   const { erasPerDay } = useErasPerDay()
-  const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { getStakingLedger } = useBalances()
+  const { activeAddress } = useActiveAccounts()
 
-  const membership = getPoolMembership(activeAccount)
-  const eras = erasPerDay.multipliedBy(30).toNumber()
+  const { unit, units } = getNetworkData(network)
+  const { poolMembership } = getStakingLedger(activeAddress)
+  const eras = erasPerDay * 30
   // NOTE: 30 day duration in seconds
   const duration = 2592000
 
@@ -40,24 +39,24 @@ export const RewardTrend = () => {
 
   // Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
   const getRewardTrend = async () => {
-    if (activeAccount && activeEra.index.isGreaterThan(0)) {
-      const result = membership
-        ? await fetchPoolRewardTrend(network, activeAccount, duration)
-        : await fetchNominatorRewardTrend(network, activeAccount, eras)
+    if (activeAddress && activeEra.index > 0) {
+      const result = poolMembership
+        ? await fetchPoolRewardTrend(network, activeAddress, duration)
+        : await fetchNominatorRewardTrend(network, activeAddress, eras)
       setRewardTrend(result)
     }
   }
 
   useEffect(() => {
     setRewardTrend(null)
-    if (!inSetup() || membership) {
+    if (!inSetup() || poolMembership) {
       getRewardTrend()
     }
   }, [
-    activeAccount,
+    activeAddress,
     network,
     activeEra.index.toString(),
-    membership,
+    poolMembership,
     inSetup(),
   ])
 

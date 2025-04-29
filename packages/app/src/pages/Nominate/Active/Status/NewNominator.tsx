@@ -18,13 +18,14 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation()
   const { isReady } = useApi()
   const navigate = useNavigate()
+
   const { inPool } = useActivePool()
   const { openCanvas } = useOverlay().canvas
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
   const nominateButtonDisabled =
-    !isReady || !activeAccount || isReadOnlyAccount(activeAccount) || inPool()
+    !isReady || !activeAddress || isReadOnlyAccount(activeAddress) || inPool()
 
   return (
     <CallToActionWrapper>
@@ -39,13 +40,13 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                   className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ` pulse`}`}
                 >
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       openCanvas({
                         key: 'NominatorSetup',
                         options: {},
                         size: 'xl',
                       })
-                    }
+                    }}
                     disabled={nominateButtonDisabled}
                   >
                     {t('startNominating', { ns: 'pages' })}

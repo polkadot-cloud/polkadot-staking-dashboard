@@ -31,21 +31,20 @@ export const Title = ({ title, children }: Omit<PageTitleProps, 'tabs'>) => {
     }
   }, [sticky])
 
-  const buttonClasses = classNames(classes.pageTitle, {
-    [classes.pageTitleDefault]: !sticky,
-    [classes.pageTitleSticky]: sticky,
+  const headerClasses = classNames(classes.pageTitle, {
+    [classes.default]: !sticky,
+    [classes.sticky]: sticky,
   })
-
-  const h1Classes = classNames(classes.pageTitleH1, {
-    [classes.pageTitleH1Default]: !sticky,
-    [classes.pageTitleH1Sticky]: sticky,
+  const h1Classes = classNames(classes.text, {
+    [classes.default]: !sticky,
+    [classes.sticky]: sticky,
   })
 
   return (
     <>
-      <div className={classes.pageTitleScrollWrapper} />
-      <header className={buttonClasses} ref={ref}>
-        <section className={classes.pageTitleTitle}>
+      <div className={classes.scroll} />
+      <header className={headerClasses} ref={ref}>
+        <section className={classes.title}>
           <div>
             <h1 className={h1Classes}>{title}</h1>
           </div>

@@ -3,6 +3,7 @@
 
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -15,18 +16,16 @@ import { useOverlay } from 'ui-overlay'
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation()
-  const {
-    networkData: { units },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { isReady } = useApi()
   const { openModal } = useOverlay().modal
   const {
     unclaimedRewards: { total },
   } = usePayouts()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
-
+  const { units } = getNetworkData(network)
   return (
     <Stat
       label={t('pendingPayouts', { ns: 'pages' })}
@@ -45,7 +44,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
               {
                 title: t('claim', { ns: 'modals' }),
                 icon: faCircleDown,
-                disabled: !isReady || isReadOnlyAccount(activeAccount),
+                disabled: !isReady || isReadOnlyAccount(activeAddress),
                 small: true,
                 onClick: () =>
                   openModal({

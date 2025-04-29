@@ -1,9 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PoolUpdateRoles } from 'api/tx/poolUpdateRoles'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
+import { useApi } from 'contexts/Api'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { SubmitTx } from 'library/SubmitTx'
@@ -15,9 +14,9 @@ import { Wrapper } from './Wrapper'
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { replacePoolRoles } = useBondedPools()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const {
     setModalStatus,
     config: { options },
@@ -25,15 +24,15 @@ export const ChangePoolRoles = () => {
   const { id: poolId, roleEdits } = options
 
   const getTx = () =>
-    new PoolUpdateRoles(network, poolId, {
+    serviceApi.tx.poolUpdateRoles(poolId, {
       root: roleEdits?.root?.newAddress || undefined,
       nominator: roleEdits?.nominator?.newAddress || undefined,
       bouncer: roleEdits?.bouncer?.newAddress || undefined,
-    }).tx()
+    })
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: true,
     callbackSubmit: () => {
       setModalStatus('closing')

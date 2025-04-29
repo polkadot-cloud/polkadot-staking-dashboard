@@ -1,71 +1,47 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import BigNumber from 'bignumber.js'
-import type { AnyJson } from 'types'
+import type { IdentityOf, SuperIdentity } from 'types'
 import type { IdentityDisplay } from './types'
 
 export const getIdentityDisplay = (
-  _identity: AnyJson,
-  _superIdentity: AnyJson
+  _identity?: IdentityOf,
+  _superIdentity?: SuperIdentity
 ): IdentityDisplay => {
-  let displayFinal = ''
-  let foundSuper = false
-  // Check super identity exists, get display.Raw if it does
-  const superIdentity = _superIdentity?.identity ?? null
-  const superRaw = _superIdentity?.superOf?.[1]?.Raw ?? null
-  const superDisplay = superIdentity?.info?.display?.value?.asText() ?? null
+  let display = ''
 
-  // Check if super raw has been encoded
-  const superRawAsBytes = u8aToString(u8aUnwrapBytes(superRaw))
-  // Check if super identity has been byte encoded
-  const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(superDisplay))
+  // Add base-identity to display
+  const baseValue = _identity?.info?.display?.value
+  if (baseValue) {
+    display = baseValue
+  }
+  // Overwrite with super identity value if it exists
+  const superIdentityValue =
+    _superIdentity?.superOf?.identity?.info?.display?.value
+  if (superIdentityValue) {
+    display = superIdentityValue
+  }
+  // Add super value as secondary identity value
+  const superValue = _superIdentity?.value || ''
 
-  // Determine final display value if super was found
-  if (superIdentityAsBytes !== '') {
-    displayFinal = superIdentityAsBytes
-    foundSuper = true
-  } else if (superDisplay !== null) {
-    displayFinal = superDisplay
-    foundSuper = true
-  }
-
-  // Determine final display value if super was not found
-  if (!foundSuper) {
-    // Check sub-identity exists, get display.Raw if it does
-    const identity = _identity?.info?.display?.value?.asText() ?? null
-    // Check if identity has been byte encoded
-    const subIdentityAsBytes = u8aToString(u8aUnwrapBytes(identity))
-    // Add sub-identity to final display value if it exists
-    if (subIdentityAsBytes !== '') {
-      displayFinal = subIdentityAsBytes
-    } else if (identity !== null) {
-      displayFinal = identity
-    }
-  }
-  if (displayFinal === '') {
-    return { node: null, data: null }
-  }
-
-  const data = {
-    display: displayFinal,
-    super:
-      superIdentityAsBytes !== ''
-        ? superRawAsBytes
-        : superRaw !== null
-          ? superRaw
-          : null,
-  }
-  return {
-    node: (
-      <>
-        {data.display}
-        {data.super ? <span>/ {data.super}</span> : null}
-      </>
-    ),
-    data,
-  }
+  return display === ''
+    ? {
+        node: null,
+        data: null,
+      }
+    : {
+        node: (
+          <>
+            {display}
+            {superValue !== '' ? <span>/ {superValue}</span> : null}
+          </>
+        ),
+        data: {
+          display,
+          super: superValue || '',
+        },
+      }
 }
 
 // Normalise era points between 0 and 1 relative to the highest recorded value.

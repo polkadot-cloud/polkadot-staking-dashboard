@@ -2,14 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import type { ExternalAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
-import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries'
-import { ErasStakersOverview } from 'api/query/erasStakersOverview'
-import type { AnyApi } from 'common-types'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import type {
   EraStakers,
@@ -19,11 +15,10 @@ import type {
 import { Syncs } from 'controllers/Syncs'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { AnyJson, MaybeAddress, NominationStatus } from 'types'
+import type { MaybeAddress, NominationStatus } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
-import { useBonded } from '../Bonded'
 import { defaultEraStakers } from './defaults'
 import { getLocalEraExposures, setLocalEraExposures } from './Utils'
 
@@ -33,12 +28,11 @@ export const [StakingContext, useStaking] =
   createSafeContext<StakingContextInterface>()
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
-  const { getBondedAccount } = useBonded()
-  const { networkData, network } = useNetwork()
-  const { getLedger, getNominations } = useBalances()
-  const { isReady, activeEra, apiStatus } = useApi()
-  const { accounts: connectAccounts } = useImportedAccounts()
-  const { activeAccount, getActiveAccount } = useActiveAccounts()
+  const { network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
+  const { getStakingLedger, getNominations } = useBalances()
+  const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
+  const { units } = getNetworkData(network)
 
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
@@ -67,7 +61,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       } = data
 
       // Check if account hasn't changed since worker started
-      if (getActiveAccount() === who) {
+      if (activeAddress === who) {
         // Syncing current eraStakers is now complete
         Syncs.dispatch('era-stakers', 'complete')
 
@@ -88,7 +82,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches erasStakers exposures for an era, and saves to `localStorage`
   const fetchEraStakers = async (era: string) => {
-    if (!isReady || activeEra.index.isZero()) {
+    if (!isReady || activeEra.index === 0) {
       return []
     }
 
@@ -115,12 +109,10 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches the active nominator set and metadata around it
   const fetchActiveEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero()) {
+    if (!isReady || activeEra.index === 0) {
       return
     }
-
     Syncs.dispatch('era-stakers', 'syncing')
-
     const exposures = await fetchEraStakers(activeEra.index.toString())
 
     // Worker to calculate stats
@@ -128,8 +120,8 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       era: activeEra.index.toString(),
       networkName: network,
       task: 'processExposures',
-      activeAccount,
-      units: networkData.units,
+      activeAccount: activeAddress,
+      units,
       exposures,
     })
   }
@@ -164,74 +156,39 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     return statuses
   }
 
-  // Helper function to determine whether the controller account is the same as the stash account
-  const addressDifferentToStash = (address: MaybeAddress) => {
-    // Check if controller is imported
-    if (!connectAccounts.find((acc) => acc.address === address)) {
-      return false
-    }
-    return address !== activeAccount && activeAccount !== null
-  }
-
-  // Helper function to determine whether the controller account has been imported
-  const getControllerNotImported = (address: MaybeAddress) => {
-    if (address === null || !activeAccount) {
-      return false
-    }
-    // Check if controller is imported
-    const exists = connectAccounts.find((a) => a.address === address)
-    if (exists === undefined) {
-      return true
-    }
-    // Controller account exists. If it is a read-only account, then controller is imported
-    if (Object.prototype.hasOwnProperty.call(exists, 'addedBy')) {
-      if ((exists as ExternalAccount).addedBy === 'user') {
-        return false
-      }
-    }
-    // if the controller is a Ledger account, then it can act as a signer
-    if (exists.source === 'ledger') {
-      return false
-    }
-    // if a `signer` does not exist on the account, then controller is not imported
-    return !Object.prototype.hasOwnProperty.call(exists, 'signer')
-  }
-
-  // Helper function to determine whether the active account
-  const hasController = () => getBondedAccount(activeAccount) !== null
-
   // Helper function to determine whether the active account is bonding, or is yet to start
   const isBonding = () =>
-    hasController() &&
-    getLedger({ stash: activeAccount }).active.isGreaterThan(0)
+    (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
 
   // Helper function to determine whether the active account
   const isUnlocking = () =>
-    hasController() && getLedger({ stash: activeAccount }).unlocking.length
+    (getStakingLedger(activeAddress).ledger?.unlocking || []).length
 
   // Helper function to determine whether the active account is nominating, or is yet to start
-  const isNominating = () => getNominations(activeAccount).length > 0
+  const isNominating = () => getNominations(activeAddress).length > 0
 
   // Helper function to determine whether the active account is nominating, or is yet to start
   const inSetup = () =>
-    !activeAccount ||
-    (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
+    !activeAddress || (!isBonding() && !isNominating() && !isUnlocking())
 
   // Fetch eras stakers from storage
   const getPagedErasStakers = async (era: string) => {
-    const overview = await new ErasStakersOverview(network).fetch(Number(era))
-    const validators: Record<string, AnyJson> = overview.reduce(
-      (
-        prev: Record<string, Exposure>,
-        { keyArgs: [, validator], value: { own, total } }: AnyApi
-      ) => ({ ...prev, [validator]: { own, total } }),
-      {}
+    const overview = await serviceApi.query.erasStakersOverviewEntries(
+      activeEra.index
     )
+    const validators: Record<string, { own: bigint; total: bigint }> =
+      overview.reduce(
+        (prev, [[, validator], { own, total }]) => ({
+          ...prev,
+          [validator]: { own, total },
+        }),
+        {}
+      )
     const validatorKeys = Object.keys(validators)
 
     const pagedResults = await Promise.all(
       validatorKeys.map((v) =>
-        new ErasStakersPagedEntries(network).fetch(Number(era), v)
+        serviceApi.query.erasStakersPagedEntries(Number(era), v)
       )
     )
 
@@ -246,10 +203,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         continue
       }
 
-      const {
-        keyArgs,
-        value: { others },
-      } = page
+      const [keyArgs, { others }] = page
 
       const validator = validatorKeys[i]
       const { own, total } = validators[validator]
@@ -259,12 +213,10 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         val: {
           total: total.toString(),
           own: own.toString(),
-          others: others.map(
-            ({ who, value }: { who: string; value: bigint }) => ({
-              who,
-              value: value.toString(),
-            })
-          ),
+          others: others.map(({ who, value }) => ({
+            who,
+            value: value.toString(),
+          })),
         },
       })
       i++
@@ -273,25 +225,23 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffectIgnoreInitial(() => {
-    if (apiStatus === 'connecting') {
+    if (getApiStatus(network) === 'connecting') {
       setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef)
     }
-  }, [apiStatus])
+  }, [getApiStatus(network)])
 
   // Handle syncing with eraStakers
   useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchActiveEraStakers()
     }
-  }, [isReady, activeEra.index, activeAccount])
+  }, [isReady, activeEra.index, activeAddress])
 
   return (
     <StakingContext.Provider
       value={{
         fetchEraStakers,
         getNominationsStatusFromTargets,
-        getControllerNotImported,
-        addressDifferentToStash,
         isBonding,
         isNominating,
         inSetup,

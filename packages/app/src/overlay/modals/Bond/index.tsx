@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
-import { PoolBondExtra } from 'api/tx/poolBondExtra'
-import { StakingBondExtra } from 'api/tx/stakingBondExtra'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -24,36 +25,34 @@ import { planckToUnitBn } from 'utils'
 export const Bond = () => {
   const { t } = useTranslation('modals')
   const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork()
-  const { activeAccount } = useActiveAccounts()
-  const { activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
-  const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal
+  const { serviceApi } = useApi()
+  const { network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
+  const { getPendingPoolRewards } = useBalances()
+  const { getSignerWarnings } = useSignerWarnings()
+  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { unit, units } = getNetworkData(network)
 
   const { bondFor } = options
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
-  const { nominate, transferrableBalance } = getTransferOptions(activeAccount)
+  const { nominate, transferrableBalance } = getTransferOptions(activeAddress)
 
-  const freeToBond = planckToUnitBn(
-    (bondFor === 'nominator'
-      ? nominate.totalAdditionalBond
-      : transferrableBalance
-    ).minus(feeReserve),
-    units
+  const freeToBond = new BigNumber(
+    planckToUnit(
+      (bondFor === 'nominator'
+        ? nominate.totalAdditionalBond
+        : transferrableBalance) - feeReserve,
+      units
+    )
   )
 
   const largestTxFee = useBondGreatestFee({ bondFor })
-
-  // Format unclaimed pool rewards.
-  const pendingRewards = activePool?.pendingRewards || 0
+  const pendingRewards = getPendingPoolRewards(activeAddress)
   const pendingRewardsUnit = planckToUnit(pendingRewards, units)
 
   // local bond value.
@@ -81,44 +80,42 @@ export const Bond = () => {
   let bondAfterTxFees: BigNumber
 
   if (enoughToCoverTxFees) {
-    bondAfterTxFees = new BigNumber(unitToPlanck(bond.bond, units).toString())
+    bondAfterTxFees = new BigNumber(unitToPlanck(bond.bond, units))
   } else {
     bondAfterTxFees = BigNumber.max(
-      new BigNumber(unitToPlanck(String(bond.bond), units).toString()).minus(
-        largestTxFee
-      ),
+      new BigNumber(unitToPlanck(String(bond.bond), units)).minus(largestTxFee),
       0
     )
   }
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
-    let tx = null
-    const bondAsString = !bondValid
-      ? '0'
+    let tx: SubmittableExtrinsic | undefined
+    const bondBigInt = !bondValid
+      ? 0n
       : bondToSubmit.isNaN()
-        ? '0'
-        : bondToSubmit.toString()
+        ? 0n
+        : BigInt(bondToSubmit.toString())
 
     if (isPooling) {
-      tx = new PoolBondExtra(network, 'FreeBalance', BigInt(bondAsString)).tx()
+      tx = serviceApi.tx.poolBondExtra('FreeBalance', bondBigInt)
     } else if (isStaking) {
-      tx = new StakingBondExtra(network, BigInt(bondAsString)).tx()
+      tx = serviceApi.tx.stakingBondExtra(bondBigInt)
     }
     return tx
   }
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!activeAccount) {
-      return null
+    if (!activeAddress) {
+      return
     }
     return determineTx(bondToSubmit)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(bondAfterTxFees),
-    from: activeAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -126,7 +123,7 @@ export const Bond = () => {
   })
 
   const warnings = getSignerWarnings(
-    activeAccount,
+    activeAddress,
     false,
     submitExtrinsic.proxySupported
   )

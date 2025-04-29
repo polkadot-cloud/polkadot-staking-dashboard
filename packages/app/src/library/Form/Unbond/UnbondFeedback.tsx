@@ -1,8 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
+import { maxBigInt, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -10,7 +11,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { planckToUnitBn } from 'utils'
 import { Warning } from '../Warning'
 import { Spacer } from '../Wrappers'
 import type { UnbondFeedbackProps } from '../types'
@@ -28,17 +28,17 @@ export const UnbondFeedback = ({
   displayFirstWarningOnly = true,
 }: UnbondFeedbackProps) => {
   const { t } = useTranslation('app')
-  const {
-    networkData: { units, unit },
-  } = useNetwork()
+  const { network } = useNetwork()
   const { isDepositor } = useActivePool()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const {
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi()
-  const allTransferOptions = getTransferOptions(activeAccount)
+
+  const { unit, units } = getNetworkData(network)
+  const allTransferOptions = getTransferOptions(activeAddress)
   const defaultValue = defaultBond ? String(defaultBond) : ''
 
   // get bond options for either nominating or pooling.
@@ -60,9 +60,7 @@ export const UnbondFeedback = ({
   }
 
   // current bond value BigNumber
-  const bondBn = new BigNumber(
-    unitToPlanck(String(bond.bond), units).toString()
-  )
+  const bondBn = new BigNumber(unitToPlanck(String(bond.bond), units))
 
   // add this component's setBond to setters
   setters.push(handleSetBond)
@@ -73,25 +71,23 @@ export const UnbondFeedback = ({
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond
-      : minNominatorBond
-  const minBondUnit = planckToUnitBn(minBondBn, units)
+      : BigInt(minNominatorBond.toString())
+
+  const minBondUnit = planckToUnit(minBondBn, units)
 
   // unbond amount to minimum threshold
   const unbondToMin =
     bondFor === 'pool'
       ? inSetup || isDepositor()
-        ? BigNumber.max(active.minus(minCreateBond), 0)
-        : BigNumber.max(active.minus(minJoinBond), 0)
-      : BigNumber.max(active.minus(minNominatorBond), 0)
+        ? maxBigInt(active - minCreateBond, 0n)
+        : maxBigInt(active - minJoinBond, 0n)
+      : maxBigInt(active - minNominatorBond, 0n)
 
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
-    bondFor === 'nominator' &&
-    !active.isZero() &&
-    active.isLessThan(minNominatorBond)
-  const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond
-  const poolActiveBelowMin =
-    bondFor === 'pool' && active.isLessThan(poolToMinBn)
+    bondFor === 'nominator' && active > 0n && active < minNominatorBond
+  const poolToMin = isDepositor() ? minCreateBond : minJoinBond
+  const poolActiveBelowMin = bondFor === 'pool' && active < poolToMin
 
   // handle error updates
   const handleErrors = () => {
@@ -140,7 +136,7 @@ export const UnbondFeedback = ({
   // update bond on account change
   useEffect(() => {
     setBond({ bond: defaultValue })
-  }, [activeAccount])
+  }, [activeAddress])
 
   // handle errors on input change
   useEffect(() => {
@@ -161,12 +157,12 @@ export const UnbondFeedback = ({
       ))}
       <Spacer />
       <UnbondInput
-        active={active}
+        active={new BigNumber(active)}
         defaultValue={defaultValue}
         disabled={
-          active.isZero() || nominatorActiveBelowMin || poolActiveBelowMin
+          active === 0n || nominatorActiveBelowMin || poolActiveBelowMin
         }
-        unbondToMin={unbondToMin}
+        unbondToMin={new BigNumber(unbondToMin)}
         setters={setters}
         value={bond.bond}
       />

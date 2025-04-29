@@ -19,7 +19,7 @@ export const AccountPopover = ({
   const { t } = useTranslation()
   const { openModal } = useOverlay().modal
   const {
-    activeAccount,
+    activeAddress,
     activeProxy,
     activeProxyType,
     setActiveAccount,
@@ -34,20 +34,20 @@ export const AccountPopover = ({
     setOpen(false)
   }, ['header-account'])
 
-  const account = getAccount(activeAccount)
+  const account = getAccount(activeAddress)
   const name = account?.name || ''
 
   const accountLabel =
-    activeAccount && activeAccount !== ''
-      ? name || ellipsisFn(activeAccount)
+    activeAddress && activeAddress !== ''
+      ? name || ellipsisFn(activeAddress)
       : ''
 
   return (
     <div ref={popoverRef} style={{ paddingTop: '1.5rem' }}>
-      <Account address={activeAccount || ''} label={accountLabel} />
+      <Account address={activeAddress || ''} label={accountLabel} />
       {activeProxy && activeProxyType && (
         <Account
-          address={activeProxy}
+          address={activeProxy.address}
           label={`Signer (${activeProxyType} Proxy):`}
         />
       )}

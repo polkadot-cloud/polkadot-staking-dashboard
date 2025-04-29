@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +13,6 @@ export const useValidatorFilters = () => {
     getValidatorRank,
     sessionValidators,
     validatorIdentities,
-    sessionParaValidators,
   } = useValidators()
   /*
    * filterMissingIdentity: Iterates through the supplied list and filters those with missing
@@ -70,20 +68,6 @@ export const useValidatorFilters = () => {
   }
 
   /*
-   * filterNonParachainValidator: Filters the supplied list and removes items that are inactive.
-   * Returns the updated filtered list.
-   */
-  const filterNonParachainValidator = (list: AnyFilter) => {
-    // if list has not yet been populated, return original list
-    if ((sessionParaValidators?.length ?? 0) === 0) {
-      return list
-    }
-    return list.filter((validator: AnyFilter) =>
-      sessionParaValidators.includes(validator.address)
-    )
-  }
-
-  /*
    * filterInSession: Filters the supplied list and removes items that are in the current session.
    * Returns the updated filtered list.
    */
@@ -112,7 +96,6 @@ export const useValidatorFilters = () => {
     missing_identity: filterMissingIdentity,
     all_commission: filterAllCommission,
     blocked_nominations: filterBlockedNominations,
-    not_parachain_validator: filterNonParachainValidator,
     in_session: filterInSession,
   }
 
@@ -208,20 +191,16 @@ export const useValidatorFilters = () => {
 
     const filteredList: AnyFilter = []
     for (const validator of list) {
-      const identity = validatorIdentities[validator.address] ?? ''
-      const identityRaw = identity?.info?.display?.value?.asText() ?? ''
-      const identityAsBytes = u8aToString(u8aUnwrapBytes(identityRaw))
-      const identitySearch = (
-        identityAsBytes === '' ? identityRaw : identityAsBytes
-      ).toLowerCase()
+      const identity = validatorIdentities[validator.address]
+      const identityRaw = identity ? identity?.info?.display?.value : ''
+
+      const identitySearch = (identityRaw || '').toLowerCase()
 
       const superIdentity = validatorSupers[validator.address] ?? null
       const superIdentityRaw =
-        superIdentity?.identity?.info?.display?.value?.asText() ?? ''
-      const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(superIdentityRaw))
-      const superIdentitySearch = (
-        superIdentityAsBytes === '' ? superIdentityRaw : superIdentityAsBytes
-      ).toLowerCase()
+        superIdentity?.superOf?.identity?.info?.display?.value ?? ''
+
+      const superIdentitySearch = (superIdentityRaw || '').toLowerCase()
 
       if (validator.address.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(validator)

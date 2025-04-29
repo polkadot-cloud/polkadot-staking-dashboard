@@ -33,7 +33,7 @@ export const NominationGeo = () => {
   const { network } = useNetwork()
   const { isNominating } = useStaking()
   const { pluginEnabled } = usePlugins()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
 
   const enabled = pluginEnabled('polkawatch')
 
@@ -84,7 +84,7 @@ export const NominationGeo = () => {
       setNetworkMeta({} as ChainMetadata)
       setAnalyticsAvailable(false)
     }
-  }, [activeAccount, network, enabled, isNominating()])
+  }, [activeAddress, network, enabled, isNominating()])
 
   // NOTE: The list of dependencies assume that changing network
   // triggers a change of account also (i.e. different network prefix).
@@ -94,7 +94,7 @@ export const NominationGeo = () => {
       polkaWatchApi
         .ddpIpfsNominatorDetail({
           lastDays: 30,
-          nominator: activeAccount,
+          nominator: activeAddress,
         })
         .then((response) => {
           setAnalyticsAvailable(true)
@@ -108,7 +108,7 @@ export const NominationGeo = () => {
       setNominationDetail({} as NominatorDetail)
       setAnalyticsAvailable(false)
     }
-  }, [activeAccount, network, enabled, isNominating()])
+  }, [activeAddress, network, enabled, isNominating()])
 
   return (
     <>

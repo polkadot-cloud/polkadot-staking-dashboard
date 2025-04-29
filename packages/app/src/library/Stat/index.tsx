@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useLayoutEffect, useRef } from 'react'
@@ -23,11 +24,10 @@ export const Stat = ({
   type = 'string',
   buttonType = 'primary',
 }: StatProps) => {
-  const {
-    brand: { token: Token },
-  } = useNetwork().networkData
+  const { network } = useNetwork()
   const { openHelp } = useHelp()
 
+  const Token = getChainIcons(network).token
   const containerRef = useRef<HTMLDivElement | null>(null)
   const subjectRef = useRef<HTMLDivElement | null>(null)
 

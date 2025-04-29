@@ -68,10 +68,10 @@ export const ValidatorListInner = ({
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { getThemeValue } = useThemeValues()
-  const { activeAccount } = useActiveAccounts()
+  const { activeAddress } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
   const { injectValidatorListData } = useValidators()
-  const { isReady, activeEra, peopleApiStatus } = useApi()
+  const { isReady, activeEra, getApiStatus } = useApi()
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters()
   const {
     selected,
@@ -87,8 +87,8 @@ export const ValidatorListInner = ({
   // Track whether filter bootstrapping has been applied.
   const [bootstrapped, setBootstrapped] = useState<boolean>(false)
 
-  // Determine the nominator of the validator list. Fallback to activeAccount if not provided
-  const nominator = initialNominator || activeAccount
+  // Determine the nominator of the validator list. Fallback to activeAddress if not provided
+  const nominator = initialNominator || activeAddress
 
   // Store the current nomination status of validator records relative to the supplied nominator
   const nominationStatus = useRef<Record<string, NominationStatus>>({})
@@ -203,7 +203,7 @@ export const ValidatorListInner = ({
     const results = await fetchValidatorEraPointsBatch(
       network,
       listItems.map(({ address }) => address),
-      Math.max(activeEra.index.toNumber() - 1, 0),
+      Math.max(activeEra.index - 1, 0),
       30
     )
     // Update performance if key still matches current page key
@@ -261,7 +261,7 @@ export const ValidatorListInner = ({
 
   // Configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !activeEra.index.isZero()) {
+    if (isReady && activeEra.index > 0) {
       setupValidatorList()
     }
   }, [isReady, activeEra.index, syncing, fetched])
@@ -278,7 +278,7 @@ export const ValidatorListInner = ({
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate()
     }
-  }, [order, includes, excludes, peopleApiStatus])
+  }, [order, includes, excludes, getApiStatus(`people-${network}`)])
 
   // Handle modal resize on list format change
   useEffect(() => {

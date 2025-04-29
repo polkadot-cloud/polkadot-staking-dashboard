@@ -3,37 +3,34 @@
 
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 
 export const useErasPerDay = () => {
-  const { consts } = useApi()
+  const { getConsts } = useApi()
+  const { network } = useNetwork()
   const { epochDuration, expectedBlockTime, sessionsPerEra, historyDepth } =
-    consts
+    getConsts(network)
 
   const DAY_MS = new BigNumber(86400000)
 
   // Calculates how many eras there are in a 24 hour period.
-  const getErasPerDay = (): BigNumber => {
+  const getErasPerDay = (): number => {
     if (
-      epochDuration.isZero() ||
-      sessionsPerEra.isZero() ||
-      expectedBlockTime.isZero()
+      epochDuration === 0n ||
+      sessionsPerEra === 0 ||
+      expectedBlockTime === 0n
     ) {
-      return new BigNumber(0)
+      return 0
     }
 
-    const blocksPerEra = epochDuration.multipliedBy(sessionsPerEra)
-    const msPerEra = blocksPerEra.multipliedBy(expectedBlockTime)
+    const blocksPerEra = epochDuration * BigInt(sessionsPerEra)
+    const msPerEra = blocksPerEra * expectedBlockTime
 
-    return DAY_MS.dividedBy(msPerEra)
+    return Number(DAY_MS.dividedBy(msPerEra))
   }
 
   return {
     erasPerDay: getErasPerDay(),
-    maxSupportedDays: historyDepth.isZero()
-      ? 0
-      : historyDepth
-          .dividedBy(getErasPerDay())
-          .integerValue(BigNumber.ROUND_HALF_DOWN)
-          .toNumber(),
+    maxSupportedDays: historyDepth === 0 ? 0 : historyDepth / getErasPerDay(),
   }
 }

@@ -4,8 +4,6 @@
 import type { ComponentBase } from 'types'
 
 export type SideProps = ComponentBase & {
-  // Whether the side menu should be open on smaller screens.
   open: boolean
-  // Whether side menu is in minimised state.
   minimised: boolean
 }
