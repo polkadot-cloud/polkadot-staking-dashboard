@@ -405,10 +405,10 @@ importers:
     dependencies:
       '@apollo/client':
         specifier: ^3.13.7
-        version: 3.13.7(@types/react@19.1.1)(graphql@16.10.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 3.13.7(@types/react@19.1.1)(graphql@16.11.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       graphql:
-        specifier: ^16.10.0
-        version: 16.10.0
+        specifier: ^16.11.0
+        version: 16.11.0
 
   packages/styles: {}
 
@@ -3570,8 +3570,8 @@ packages:
     peerDependencies:
       graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  graphql@16.10.0:
-    resolution: {integrity: sha512-AjqGKbDGUFRKIRCP9tCKiIGHyriz2oHEbPIbEtcSLSs4YjReZOIPQQWek4+6hjw62H9QShXHyaGivGiYVLeYFQ==}
+  graphql@16.11.0:
+    resolution: {integrity: sha512-mS1lbMsxgQj6hge1XZ6p7GPhbrtFwUFYi3wRzXAC/FmYnyXMTvvI3td3rjmQ2u8ewXueaSvRPWaEcgVVOT9Jnw==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   h3@1.15.1:
@@ -5396,14 +5396,14 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@apollo/client@3.13.7(@types/react@19.1.1)(graphql@16.10.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@apollo/client@3.13.7(@types/react@19.1.1)(graphql@16.11.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@16.10.0)
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
       '@wry/caches': 1.0.1
       '@wry/equality': 0.5.7
       '@wry/trie': 0.5.0
-      graphql: 16.10.0
-      graphql-tag: 2.12.6(graphql@16.10.0)
+      graphql: 16.11.0
+      graphql-tag: 2.12.6(graphql@16.11.0)
       hoist-non-react-statics: 3.3.2
       optimism: 0.18.1
       prop-types: 15.8.1
@@ -5937,9 +5937,9 @@ snapshots:
       prop-types: 15.8.1
       react: 19.1.0
 
-  '@graphql-typed-document-node/core@3.2.0(graphql@16.10.0)':
+  '@graphql-typed-document-node/core@3.2.0(graphql@16.11.0)':
     dependencies:
-      graphql: 16.10.0
+      graphql: 16.11.0
 
   '@humanfs/core@0.19.1': {}
 
@@ -9118,12 +9118,12 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphql-tag@2.12.6(graphql@16.10.0):
+  graphql-tag@2.12.6(graphql@16.11.0):
     dependencies:
-      graphql: 16.10.0
+      graphql: 16.11.0
       tslib: 2.8.1
 
-  graphql@16.10.0: {}
+  graphql@16.11.0: {}
 
   h3@1.15.1:
     dependencies:
