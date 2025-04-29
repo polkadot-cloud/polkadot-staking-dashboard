@@ -9,7 +9,7 @@ import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import { removeAccountBalance, setAccountBalance } from 'global-bus'
 import type { AccountBalance, ChainId } from 'types'
-import type { Chain } from '../types'
+import type { Chain, StakingChain } from '../types'
 
 export class AccountBalanceQuery<T extends Chain> {
   #unsub: Unsub | undefined = undefined
@@ -26,14 +26,16 @@ export class AccountBalanceQuery<T extends Chain> {
   async subscribe() {
     this.#unsub = await this.api.query.system.account(
       this.address,
-      ({ nonce, data }) => {
+      async ({ nonce, data }) => {
         // MIGRATION: Westend now factors staking amount into the free balance. Temporarily deduct
         // the max(frozen, reserved) from the free balance for other relay chains
-        const free = !['polkadot', 'kusama'].includes(
-          this.api.runtimeVersion.specName
-        )
-          ? data.free
-          : maxBigInt(data.free - maxBigInt(data.reserved, data.frozen), 0n)
+        let free: bigint = data.free
+        if (['polkadot', 'kusama'].includes(this.api.runtimeVersion.specName)) {
+          const api = this.api as unknown as DedotClient<StakingChain>
+          const ledger = await api.query.staking.ledger(this.address)
+          const active = ledger?.active || 0n
+          free = maxBigInt(data.free - active, 0n)
+        }
 
         const balances: AccountBalance = {
           nonce,
