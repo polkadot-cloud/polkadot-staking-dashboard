@@ -400,6 +400,9 @@ importers:
       react-i18next:
         specifier: ^15.4.0
         version: 15.4.1(i18next@24.2.3(typescript@5.8.3))(react@19.1.0)
+      utils:
+        specifier: workspace:*
+        version: link:../utils
 
   packages/plugin-staking-api:
     dependencies:
