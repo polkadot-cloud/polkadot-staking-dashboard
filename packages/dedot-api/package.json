@@ -10,7 +10,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@dedot/chaintypes": "^0.91.0",
+    "@dedot/chaintypes": "^0.77.0",
     "@w3ux/utils": "^2.0.10",
     "consts": "workspace:*",
     "dedot": "^0.9.5",
