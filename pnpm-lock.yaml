@@ -111,8 +111,8 @@ importers:
         specifier: ^1.1.15
         version: 1.1.15
       '@polkawatch/ddp-client':
-        specifier: ^2.0.20
-        version: 2.0.20
+        specifier: ^2.0.23
+        version: 2.0.23
       '@tanstack/react-query':
         specifier: ^5.74.7
         version: 5.74.7(react@19.1.0)
@@ -1341,8 +1341,8 @@ packages:
     resolution: {integrity: sha512-qfbFb0Tdjsx5QawICduPTc3326SP+lEdggfyT4HmfrM50nvmCR/82TRAtEWKK7EPhXjoE/cBL/i5VO4d68DBQQ==}
     engines: {node: '>=18'}
 
-  '@polkawatch/ddp-client@2.0.20':
-    resolution: {integrity: sha512-vjstDhOePNdQ0LfSXH3Yz0uu9UvtKhGiFZZK+HlOb/fSfF3wes0VupE+uxA8KAs7HhjAPEyEUa6yxVyZqGAIGQ==}
+  '@polkawatch/ddp-client@2.0.23':
+    resolution: {integrity: sha512-Ffhp6/x5HUpFFRLgupIObbWp84gkYqy0X5M5JtBD+z56mHionT5GLKSzO+qOtvynre7S0R7bPsUeW/cnDOeArw==}
 
   '@radix-ui/number@1.1.1':
     resolution: {integrity: sha512-MkKCwxlXTgz6CFoJx3pCwn07GKp36+aZyu/u2Ln2VrA5DcdyCZkASEDBTd8x5whTQQL5CiYf4prXKLcgQdv29g==}
@@ -6391,7 +6391,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@polkawatch/ddp-client@2.0.20':
+  '@polkawatch/ddp-client@2.0.23':
     dependencies:
       axios: 0.21.4
     transitivePeerDependencies:
