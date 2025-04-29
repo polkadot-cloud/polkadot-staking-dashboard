@@ -11,6 +11,7 @@ import type {
   ProviderType,
   RpcEndpoints,
 } from 'types'
+import { setLocalRpcEndpoints } from './local'
 
 export const getInitialNetwork = () => {
   // Attempt to get network from URL
@@ -60,6 +61,7 @@ export const getInitialRpcEndpoints = (network: NetworkId): RpcEndpoints => {
       return local
     }
   }
+  setLocalRpcEndpoints(network, fallback)
   return fallback
 }
 
