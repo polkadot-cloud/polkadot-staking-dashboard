@@ -55,7 +55,7 @@ export const BalanceChart = () => {
   const reservedBn = new BigNumber(reserved)
 
   const totalBalance = planckToUnitBn(
-    freeBn.plus(poolBondOpions.active).plus(unlockingPools),
+    freeBn.plus(total).plus(poolBondOpions.active).plus(unlockingPools),
     units
   )
 
