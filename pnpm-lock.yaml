@@ -162,8 +162,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       chart.js:
-        specifier: ^4.4.8
-        version: 4.4.8
+        specifier: ^4.4.9
+        version: 4.4.9
       chroma-js:
         specifier: ^3.1.1
         version: 3.1.2
@@ -217,7 +217,7 @@ importers:
         version: 19.1.0
       react-chartjs-2:
         specifier: ^5.2.0
-        version: 5.3.0(chart.js@4.4.8)(react@19.1.0)
+        version: 5.3.0(chart.js@4.4.9)(react@19.1.0)
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
@@ -2902,8 +2902,8 @@ packages:
     resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
-  chart.js@4.4.8:
-    resolution: {integrity: sha512-IkGZlVpXP+83QpMm4uxEiGqSI7jFizwVtF3+n5Pc3k7sMO+tkd0qxh2OzLhenM0K80xtmAONWGBn082EiBQSDA==}
+  chart.js@4.4.9:
+    resolution: {integrity: sha512-EyZ9wWKgpAU0fLJ43YAEIF8sr5F2W3LqbS40ZJyHIner2lY14ufqv2VMp69MAiZ2rpwxEUxEhIH/0U3xyRynxg==}
     engines: {pnpm: '>=8'}
 
   check-error@2.1.1:
@@ -8316,7 +8316,7 @@ snapshots:
 
   chalk@5.4.1: {}
 
-  chart.js@4.4.8:
+  chart.js@4.4.9:
     dependencies:
       '@kurkle/color': 0.3.4
 
@@ -9946,9 +9946,9 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       react-is: 18.3.1
 
-  react-chartjs-2@5.3.0(chart.js@4.4.8)(react@19.1.0):
+  react-chartjs-2@5.3.0(chart.js@4.4.9)(react@19.1.0):
     dependencies:
-      chart.js: 4.4.8
+      chart.js: 4.4.9
       react: 19.1.0
 
   react-dom@19.1.0(react@19.1.0):
