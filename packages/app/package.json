@@ -33,7 +33,7 @@
     "@w3ux/validator-assets": "^1.0.0",
     "@walletconnect/modal": "^2.7.0",
     "@walletconnect/universal-provider": "^2.19.2",
-    "@walletconnect/utils": "^2.19.2",
+    "@walletconnect/utils": "^2.20.0",
     "@zondax/ledger-substrate": "^1.0.1",
     "assets": "workspace:*",
     "bignumber.js": "^9.2.1",
