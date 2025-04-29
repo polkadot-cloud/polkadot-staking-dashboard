@@ -66,7 +66,13 @@ export const AveragePayoutLine = ({
   const { p: graphPoolClaims, a: graphPrePoolClaims } = allPoolClaims
 
   // Combine payouts and pool claims into one dataset and calculate averages
-  const combined = combineRewards(graphPayouts, graphPoolClaims)
+  const combined = combineRewards(
+    graphPayouts.map(({ reward, timestamp }) => ({
+      reward,
+      timestamp,
+    })),
+    graphPoolClaims
+  )
   const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims)
 
   const combinedPayouts = calculatePayoutAverages(

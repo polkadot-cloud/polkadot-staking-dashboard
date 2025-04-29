@@ -5,11 +5,11 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
 import { PoolStatusWrapper } from 'library/ListItem/Wrappers'
-import type { Pool } from 'library/Pool/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { BondedPool } from 'types'
 
-export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
+export const PoolNominateStatus = ({ pool }: { pool: BondedPool }) => {
   const { t } = useTranslation('app')
   const { getPoolNominationStatusCode, poolsNominations } = useBondedPools()
   const { eraStakers, getNominationsStatusFromTargets } = useStaking()

@@ -32,7 +32,7 @@ import { LogoWrapper, Separator, Wrapper } from './Wrapper'
 export const SideMenu = () => {
   const { t } = useTranslation('app')
   const { openHelp } = useHelp()
-  const { apiStatus } = useApi()
+  const { getApiStatus } = useApi()
   const {
     setSideMenu,
     sideMenuOpen,
@@ -58,9 +58,9 @@ export const SideMenu = () => {
   })
 
   const apiStatusClass =
-    apiStatus === 'connecting'
+    getApiStatus(network) === 'connecting'
       ? 'warning'
-      : ['connected', 'ready'].includes(apiStatus)
+      : ['connected', 'ready'].includes(getApiStatus(network))
         ? 'success'
         : 'danger'
 

@@ -36,11 +36,11 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const isStaking = bondFor === 'nominator'
   const { era, value } = chunk
   const left = new BigNumber(era).minus(activeEra.index)
-  const start = activeEra.start.multipliedBy(0.001)
-  const erasDuration = erasToSeconds(left)
+  const start = Number(activeEra.start / 1000n)
+  const erasDuration = erasToSeconds(left.toNumber())
 
-  const dateFrom = fromUnixTime(start.toNumber())
-  const dateTo = fromUnixTime(start.plus(erasDuration).toNumber())
+  const dateFrom = fromUnixTime(start)
+  const dateTo = fromUnixTime(start + erasDuration)
   const formatted = formatTimeleft(t, timeleft.raw)
 
   // reset timer on account or network change.

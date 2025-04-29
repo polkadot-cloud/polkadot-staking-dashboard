@@ -3,11 +3,9 @@
 
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
 import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
@@ -27,34 +25,25 @@ export const SubmitTx = ({
   noMargin = false,
   proxySupported,
   displayFor = 'default',
-  fromController = false,
+  requiresMigratedController = false,
   onResize,
   transparent,
 }: SubmitTxProps) => {
   const { t } = useTranslation()
-  const { getBondedAccount } = useBonded()
-  const {
-    consts: { existentialDeposit },
-  } = useApi()
-  const { getTxSubmission } = useTxMeta()
   const { network } = useNetwork()
+  const { getTxSubmission } = useTxMeta()
   const { setModalResize } = useOverlay().modal
-  const { getBalance, getEdReserved } = useBalances()
+  const { getTransferOptions } = useTransferOptions()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
   const { unit } = getNetworkData(network)
-  const controller = getBondedAccount(activeAddress)
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
-
-  const edReserved = getEdReserved(from, existentialDeposit)
-  const { free, frozen } = getBalance(from)
-  const balanceforTxFees = free.minus(edReserved).minus(frozen)
-  const notEnoughFunds =
-    balanceforTxFees.minus(fee.toString()).isLessThan(0) && fee > 0n
+  const { transferrableBalance } = getTransferOptions(from)
+  const notEnoughFunds = transferrableBalance - fee < 0n && fee > 0n
 
   // Default to active account
   let signingOpts = {
@@ -67,10 +56,10 @@ export const SubmitTx = ({
       label: t('signedByProxy', { ns: 'app' }),
       who: getAccount(activeProxy.address),
     }
-  } else if (!(activeProxy && proxySupported) && fromController) {
+  } else if (!(activeProxy && proxySupported) && requiresMigratedController) {
     signingOpts = {
       label: t('signedByController', { ns: 'app' }),
-      who: getAccount(controller),
+      who: getAccount(activeAddress),
     }
   }
 
@@ -88,7 +77,7 @@ export const SubmitTx = ({
     if (onResize) {
       onResize()
     }
-  }, [notEnoughFunds, fromController])
+  }, [notEnoughFunds, requiresMigratedController])
 
   return (
     <Tx

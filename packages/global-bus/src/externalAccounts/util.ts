@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault } from '@w3ux/utils'
+import { ExternalAccountsKey } from 'consts'
 import type { ExternalAccount, NetworkId } from 'types'
 
 // Gets existing external accounts from local storage. Ensures that no system-added accounts are
 // returned
 export const getInitialExternalAccounts = (_?: string, network?: NetworkId) => {
   let localAccounts = localStorageOrDefault(
-    'external_accounts',
+    ExternalAccountsKey,
     [],
     true
   ) as ExternalAccount[]

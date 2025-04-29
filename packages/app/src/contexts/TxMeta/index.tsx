@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import type { TxSubmissionItem } from 'api/types'
+import type { TxSubmissionItem } from 'controllers/TxSubmission/types'
 import { isCustomEvent } from 'controllers/utils'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'

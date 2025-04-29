@@ -4,23 +4,21 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
-import { BondedPoolsEntries } from 'api/entries/bondedPoolsEntries'
-import { NominatorsMulti } from 'api/queryMulti/nominatorsMulti'
-import { PoolMetadataMulti } from 'api/queryMulti/poolMetadataMulti'
-import type { AnyApi } from 'common-types'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { Syncs } from 'controllers/Syncs'
+import { hexToString } from 'dedot/utils'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type {
   AnyJson,
   BondedPool,
+  BondedPoolQuery,
   MaybeAddress,
-  MaybePool,
+  NominationStatus,
   NominationStatuses,
-  PoolNominations,
+  Nominator,
   PoolTab,
 } from 'types'
 import { useApi } from '../../Api'
@@ -34,6 +32,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const {
     isReady,
     activeEra,
+    serviceApi,
     poolsConfig: { lastPoolId },
   } = useApi()
   const createPoolAccounts = useCreatePoolAccounts()
@@ -51,7 +50,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store bonded pools nominations
   const [poolsNominations, setPoolsNominations] = useState<
-    Record<number, PoolNominations>
+    Record<string, Nominator | undefined>
   >({})
 
   // Store pool list active tab. Defaults to `Active` tab
@@ -66,15 +65,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
     // Get and format bonded pool entries
     const ids: number[] = []
-    const idsMulti: [number][] = []
-    const bondedPoolsEntries = (
-      await new BondedPoolsEntries(network).fetch()
-    ).format()
+    const idsMulti: number[] = []
+    const bondedPoolEntries = await serviceApi.query.bondedPoolEntries()
 
     const exposures = shuffle(
-      Object.entries(bondedPoolsEntries).map(([id, pool]: AnyApi) => {
+      bondedPoolEntries.map(([id, pool]) => {
         ids.push(id)
-        idsMulti.push([id])
+        idsMulti.push(id)
         return getPoolWithAddresses(id, pool)
       })
     )
@@ -82,9 +79,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(exposures, setBondedPools, bondedPoolsRef)
 
     // Fetch pools metadata
-    const metadataQuery = await new PoolMetadataMulti(network, idsMulti).fetch()
+    const metadataQuery = await serviceApi.query.poolMetadataMulti(idsMulti)
     setPoolsMetadata(
-      Object.fromEntries(metadataQuery.map((m, i) => [ids[i], m]))
+      Object.fromEntries(metadataQuery.map((m, i) => [ids[i], hexToString(m)]))
     )
 
     bondedPoolsSynced.current = 'synced'
@@ -94,36 +91,48 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Fetches pool nominations and updates state
   const fetchPoolsNominations = async () => {
     const ids: number[] = []
-    const stashes: [string][] = bondedPools.map(({ addresses, id }) => {
+    const stashes = bondedPools.map(({ addresses, id }) => {
       ids.push(id)
-      return [addresses.stash]
+      return addresses.stash
     })
-    const nominationsMulti = await new NominatorsMulti(network, stashes).fetch()
-    setPoolsNominations(formatPoolsNominations(nominationsMulti || [], ids))
+    const nominationsMulti = await serviceApi.query.nominatorsMulti(stashes)
+    const formatted = formatPoolsNominations(nominationsMulti, ids)
+    setPoolsNominations(formatted)
   }
 
   // Format raw pool nominations data
-  const formatPoolsNominations = (raw: AnyJson, ids: number[]) =>
+  const formatPoolsNominations = (
+    raw: (Nominator | undefined)[],
+    ids: number[]
+  ) =>
     Object.fromEntries(
-      raw.map((nominator: AnyJson, i: number) => {
+      raw.map((nominator, i: number) => {
         if (!nominator) {
-          return [ids[i], null]
+          return [ids[i], undefined]
         }
-        return [ids[i], { ...nominator }]
+        const { targets, ...rest } = nominator
+        return [
+          String(ids[i]),
+          {
+            targets,
+            ...rest,
+          },
+        ]
       })
     )
 
   // Queries a bonded pool and injects ID and addresses to a result
-  const queryBondedPool = async (id: number) => {
-    const bondedPool = new BondedPoolsEntries(network).fetchOne(id)
-
+  const queryBondedPool = async (
+    id: number
+  ): Promise<BondedPool | undefined> => {
+    const bondedPool = await serviceApi.query.bondedPool(id)
     if (!bondedPool) {
-      return null
+      return
     }
     return {
+      ...bondedPool,
       id,
       addresses: createPoolAccounts(id),
-      ...bondedPool,
     }
   }
 
@@ -131,7 +140,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const getPoolNominationStatus = (
     nominator: MaybeAddress,
     nomination: MaybeAddress
-  ) => {
+  ): NominationStatus => {
     const pool = bondedPools.find((p) => p.addresses.stash === nominator)
 
     if (!pool) {
@@ -155,7 +164,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Determine bonded pool's current nomination statuse
   const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
-    let status = 'waiting'
+    let status: NominationStatus = 'waiting'
 
     if (statuses) {
       for (const childStatus of Object.values(statuses)) {
@@ -172,13 +181,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper: to add addresses to pool record
-  const getPoolWithAddresses = (id: number, pool: BondedPool) => ({
+  const getPoolWithAddresses = (id: number, pool: BondedPoolQuery) => ({
     ...pool,
     id,
     addresses: createPoolAccounts(id),
   })
 
-  const getBondedPool = (poolId: MaybePool) =>
+  const getBondedPool = (poolId: number) =>
     bondedPools.find((p) => String(p.id) === String(poolId)) ?? null
 
   // poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to filter those list items that match the search term. Returns the updated filtered list
@@ -195,7 +204,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       const address = pool?.addresses?.stash ?? ''
       const metadata = poolsMetaData[pool.id] || ''
 
-      if (pool.id.includes(searchTerm.toLowerCase())) {
+      if (String(pool.id).includes(searchTerm.toLowerCase())) {
         filteredList.push(pool)
       }
       if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -227,11 +236,11 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     const newPoolsNominations = { ...poolsNominations }
 
     let record = newPoolsNominations?.[id]
-    if (record !== null) {
+    if (record) {
       record.targets = newTargets
     } else {
       record = {
-        submittedIn: activeEra.index.toString(),
+        submittedIn: activeEra.index,
         targets: newTargets,
         suppressed: false,
       }
@@ -314,7 +323,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Re-fetch bonded pools nominations when active era changes or when `bondedPools` update
   useEffectIgnoreInitial(() => {
-    if (!activeEra.index.isZero() && bondedPools.length) {
+    if (activeEra.index > 0 && bondedPools.length) {
       fetchPoolsNominations()
     }
   }, [activeEra.index, bondedPools.length])

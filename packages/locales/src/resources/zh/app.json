@@ -269,7 +269,6 @@
     "update": "更改",
     "valid": "可用地址",
     "validAddress": "有效地址",
-    "validatingParachainBlocks": "验证平行链区块",
     "validatorCommission": "验证人佣金",
     "validatorPerformance": "{{count}}天内验证人表现",
     "validators": "验证人",

@@ -2,39 +2,26 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { FastUnstakeConfig } from 'api/subscribe/fastUnstakeConfig'
-import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types'
-import { FastUnstakeQueue } from 'api/subscribe/fastUnstakeQueue'
-import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Apis } from 'controllers/Apis'
-import { Subscriptions } from 'controllers/Subscriptions'
-import { isCustomEvent } from 'controllers/utils'
+import { fastUnstakeConfig$, fastUnstakeQueue$ } from 'global-bus'
 import type { FastUnstakeResult } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
-import { useEventListener } from 'usehooks-ts'
-import type {
-  FastUnstakeContextInterface,
-  FastUnstakeQueueDeposit,
-} from './types'
+import { useEffect, useState } from 'react'
+import type { FastUnstakeHead, FastUnstakeQueue } from 'types'
+import type { FastUnstakeContextInterface } from './types'
 
 export const [FastUnstakeContext, useFastUnstake] =
   createSafeContext<FastUnstakeContextInterface>()
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi()
   const { network } = useNetwork()
-  const { activeAddress } = useActiveAccounts()
 
   // Store fast unstake status
   const [fastUnstakeStatus, setFastUnstakeStatus] =
     useState<FastUnstakeResult | null>(null)
 
   // Store fastUnstake queue deposit for user
-  const [queueDeposit, setQueueDeposit] = useState<FastUnstakeQueueDeposit>()
+  const [queueDeposit, setQueueDeposit] = useState<FastUnstakeQueue>()
 
   // Store fastUnstake head
   const [head, setHead] = useState<FastUnstakeHead | undefined>()
@@ -42,74 +29,26 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   // Store fastUnstake counter for queue
   const [counterForQueue, setCounterForQueue] = useState<number | undefined>()
 
-  // Reset state on active account change
-  useEffect(() => {
-    // Reset fast unstake managment state
-    setQueueDeposit(undefined)
-    // Re-subscribe to fast unstake queue
-    Subscriptions.remove(network, 'fastUnstakeQueue')
-
-    if (activeAddress) {
-      Subscriptions.set(
-        network,
-        'fastUnstakeQueue',
-        new FastUnstakeQueue(network, activeAddress)
-      )
-    }
-  }, [activeAddress])
-
   // Reset state on network change
   useEffect(() => {
     setHead(undefined)
     setCounterForQueue(undefined)
   }, [network])
 
-  // Subscribe to fast unstake queue as soon as api is ready
   useEffect(() => {
-    if (isReady) {
-      subscribeToFastUnstakeMeta()
-    }
-  }, [isReady])
+    const subFastUnstakeConfig = fastUnstakeConfig$.subscribe((result) => {
+      setHead(result.head)
+      setCounterForQueue(result.counterForQueue)
+    })
+    const subFastUnstakeQueue = fastUnstakeQueue$.subscribe((result) => {
+      setQueueDeposit(result)
+    })
 
-  const subscribeToFastUnstakeMeta = async () => {
-    const api = Apis.getApi(network)
-    if (!api) {
-      return
+    return () => {
+      subFastUnstakeConfig.unsubscribe()
+      subFastUnstakeQueue.unsubscribe()
     }
-    Subscriptions.set(
-      network,
-      'fastUnstakeMeta',
-      new FastUnstakeConfig(network)
-    )
-  }
-
-  const handleNewFastUnstakeConfig = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const { head: eventHead, counterForQueue: eventCounterForQueue } =
-        e.detail
-      setHead(eventHead)
-      setCounterForQueue(eventCounterForQueue)
-    }
-  }
-
-  const handleNewFastUnstakeDeposit = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const { address, deposit } = e.detail
-      setQueueDeposit({ address, deposit: new BigNumber(deposit) })
-    }
-  }
-
-  const documentRef = useRef<Document>(document)
-  useEventListener(
-    'new-fast-unstake-config',
-    handleNewFastUnstakeConfig,
-    documentRef
-  )
-  useEventListener(
-    'new-fast-unstake-deposit',
-    handleNewFastUnstakeDeposit,
-    documentRef
-  )
+  }, [])
 
   return (
     <FastUnstakeContext.Provider

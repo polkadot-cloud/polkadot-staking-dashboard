@@ -11,7 +11,6 @@ import { getNetworkData } from 'consts/util'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
-import { BondedProvider } from 'contexts/Bonded'
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
@@ -75,7 +74,6 @@ export const Providers = () => {
       PluginsProvider,
       CurrencyProvider,
       TokenPricesProvider,
-      BondedProvider,
       BalancesProvider,
       StakingProvider,
       FavoritePoolsProvider,

@@ -1,14 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PoolPointsToBalance } from 'api/runtimeApi/poolPointsToBalance'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { Apis } from 'controllers/Apis'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Stat, Subheading } from 'ui-core/canvas'
@@ -22,8 +20,9 @@ export const Stats = ({
 }) => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
-  const { isReady } = useApi()
   const { eraStakers } = useStaking()
+  const { isReady, serviceApi } = useApi()
+
   const { unit, units } = getNetworkData(network)
   const Token = getChainIcons(network).token
   const isActive = eraStakers.stakers.find((staker) =>
@@ -35,16 +34,10 @@ export const Stats = ({
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
-    const api = Apis.getApi(network)
-    if (!api) {
-      return
-    }
-
-    const apiResult = await new PoolPointsToBalance(
-      network,
+    const apiResult = await serviceApi.runtimeApi.pointsToBalance(
       bondedPool.id,
       BigInt(bondedPool.points)
-    ).fetch()
+    )
     const balance = new BigNumber(apiResult || 0)
 
     if (balance) {

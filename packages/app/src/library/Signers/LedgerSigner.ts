@@ -2,61 +2,51 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { merkleizeMetadata } from '@polkadot-api/merkleize-metadata'
-import { createV4Tx, getSignBytes } from '@polkadot-api/signers-common'
-import type { V15 } from '@polkadot-api/substrate-bindings'
-import { decAnyMetadata } from '@polkadot-api/substrate-bindings'
-import type { PolkadotSigner } from 'polkadot-api'
-import { mergeUint8 } from 'polkadot-api/utils'
-import { Ledger } from '../../contexts/LedgerHardware/static/ledger'
-import { getExtraSignedExtensions } from './util'
+import { Ledger } from 'contexts/LedgerHardware/static/ledger'
+import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
+import type { PayloadOptions } from 'dedot/types'
+import type { HexString } from 'dedot/utils'
+import { hexToU8a, u8aToHex } from 'dedot/utils'
 
-export class LedgerSigner {
-  #publicKey: Uint8Array
+export const signLedgerPayload = async (
+  specName: string,
+  from: string,
+  extraSignedExtension: (
+    specName: string,
+    signerAddress: string,
+    payloadOptions?: PayloadOptions
+  ) => ExtraSignedExtension | undefined,
+  tx: SubmittableExtrinsic,
+  metadata: HexString,
+  info: {
+    decimals: number
+    tokenSymbol: string
+    specName: string
+    specVersion: number
+    ss58: number
+  },
+  index: number
+) => {
+  const { app } = await Ledger.initialise()
 
-  constructor(pubKey: Uint8Array) {
-    this.#publicKey = pubKey
+  const merkleizer = merkleizeMetadata(metadata, {
+    decimals: info.decimals,
+    tokenSymbol: info.tokenSymbol,
+  })
+  const extra = extraSignedExtension(specName, from, {
+    metadataHash: u8aToHex(merkleizer.digest()),
+  })
+
+  if (!extra) {
+    return
   }
+  await extra.init()
 
-  async getPolkadotSigner(
-    networkInfo: { decimals: number; tokenSymbol: string },
-    index: number
-  ): Promise<PolkadotSigner> {
-    const { app } = await Ledger.initialise()
+  const toSign = extra.toRawPayload(tx.callHex).data
+  const proof = u8aToHex(merkleizer.getProofForExtrinsicPayload(toSign))
 
-    const signTx: PolkadotSigner['signTx'] = async (
-      callData,
-      signedExtensions,
-      metadata
-    ) => {
-      const merkleizer = merkleizeMetadata(metadata, networkInfo)
-      const digest = merkleizer.digest()
-      const v15 = decAnyMetadata(metadata).metadata.value as unknown as V15
-      const { extra, additionalSigned } = getExtraSignedExtensions(
-        v15,
-        digest,
-        signedExtensions,
-        true
-      )
-
-      const toSign = mergeUint8(callData, ...extra, ...additionalSigned)
-      const { signature } = await Ledger.signPayload(
-        app,
-        index,
-        toSign,
-        merkleizer.getProofForExtrinsicPayload(toSign)
-      )
-      return createV4Tx(v15, this.#publicKey, signature, extra, callData)
-    }
-
-    return {
-      publicKey: this.#publicKey,
-      signTx,
-      signBytes: getSignBytes(async (x) => {
-        const { signature } = await Ledger.signPayload(app, index, x)
-        // NOTE: the signature includes a "0x00" at the beginning, indicating a ed25519 signature.
-        // this is not needed for non-extrinsic signatures.
-        return signature.subarray(1)
-      }),
-    }
-  }
+  const signature = (
+    await Ledger.signPayload(app, index, hexToU8a(toSign), hexToU8a(proof))
+  ).signature
+  return { signature: u8aToHex(signature), data: extra.data }
 }

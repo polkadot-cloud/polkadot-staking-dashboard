@@ -2,127 +2,100 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { maxBigInt } from '@w3ux/utils'
 import { useApi } from 'contexts/Api'
-import { useBonded } from 'contexts/Bonded'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { ActivePools } from 'controllers/ActivePools'
-import { Apis } from 'controllers/Apis'
-import { Balances } from 'controllers/Balances'
-import { Syncs } from 'controllers/Syncs'
-import { isCustomEvent } from 'controllers/utils'
-import { useActiveBalances } from 'hooks/useActiveBalances'
-import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
+import {
+  accountBalances$,
+  defaultAccountBalance,
+  defaultStakingLedger,
+  stakingLedgers$,
+} from 'global-bus'
 import type { ReactNode } from 'react'
-import { useEffect, useRef } from 'react'
-import type { ActivePoolItem, MaybeAddress, SystemChainId } from 'types'
-import { useEventListener } from 'usehooks-ts'
+import { useEffect, useState } from 'react'
+import type { AccountBalance, MaybeAddress, StakingLedger } from 'types'
 import type { BalancesContextInterface } from './types'
 
 export const [BalancesContext, useBalances] =
   createSafeContext<BalancesContextInterface>()
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi()
   const { network } = useNetwork()
-  const { getBondedAccount } = useBonded()
-  const { accounts } = useImportedAccounts()
-  const createPoolAccounts = useCreatePoolAccounts()
-  const { activeAddress, activeProxy } = useActiveAccounts()
-  const controller = getBondedAccount(activeAddress)
+  const { getChainSpec } = useApi()
+  const { existentialDeposit } = getChainSpec(network)
 
-  // Listen to balance updates for the active account, active proxy and controller
-  const {
-    activeBalances,
-    getLocks,
-    getBalance,
-    getLedger,
-    getPayee,
-    getPoolMembership,
-    getNominations,
-    getEdReserved,
-  } = useActiveBalances({
-    accounts: [activeAddress, activeProxy?.address || null, controller],
-  })
+  // Store account balances state
+  type StateBalances = Record<string, Record<string, AccountBalance>>
+  const [accountBalances, setAccountBalances] = useState<StateBalances>({})
 
-  // Check all accounts have been synced. App-wide syncing state for all accounts
-  const newAccountBalancesCallback = (e: Event) => {
-    if (isCustomEvent(e) && Balances.isValidNewAccountBalanceEvent(e)) {
-      // Update whether all account balances have been synced
-      checkBalancesSynced()
+  // Store staking ledgers state
+  type StateLedgers = Record<string, StakingLedger>
+  const [stakingLedgers, setStakingLedgers] = useState<StateLedgers>({})
 
-      const { address, ...newBalances } = e.detail
-      const { poolMembership } = newBalances
-
-      // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
-      // details and nominations
-      if (isReady) {
-        let newPools: ActivePoolItem[] = []
-        if (poolMembership) {
-          const { poolId } = poolMembership
-          newPools = ActivePools.getformattedPoolItems(address).concat({
-            id: String(poolId),
-            addresses: { ...createPoolAccounts(Number(poolId)) },
-          })
-        }
-
-        const peopleApi = Apis.getApi(`people-${network}` as SystemChainId)
-        if (peopleApi) {
-          ActivePools.syncPools(network, address, newPools)
-        }
-      }
+  // Get an account balance for the default network chain
+  const getAccountBalance = (address: MaybeAddress) => {
+    if (!address) {
+      return defaultAccountBalance
     }
+    return accountBalances?.[network]?.[address] || defaultAccountBalance
   }
 
-  // Check whether all accounts have been synced and update state accordingly
-  const checkBalancesSynced = () => {
-    if (Object.keys(Balances.accounts).length === accounts.length) {
-      Syncs.dispatch('balances', 'complete')
-    }
+  // Get an account's ed reserved balance
+  const getEdReserved = (address: MaybeAddress) => {
+    const {
+      balance: { reserved, frozen },
+    } = getAccountBalance(address)
+    return maxBigInt(existentialDeposit - maxBigInt(reserved, frozen), 0n)
   }
 
-  // Gets an account's nonce directly from `BalanceController`. Used at the time of building a
-  // payload
-  const getNonce = (address: MaybeAddress) => {
-    if (address) {
-      const accountBalances = Balances.getAccountBalances(network, address)
-      const maybeNonce = accountBalances?.balances?.nonce
-      if (maybeNonce) {
-        return maybeNonce
-      }
+  // Get an account's staking ledger
+  const getStakingLedger = (address: MaybeAddress) => {
+    if (!address) {
+      return defaultStakingLedger
     }
-    return 0
+    return stakingLedgers?.[address] || defaultStakingLedger
   }
 
-  const documentRef = useRef<Document>(document)
+  // Gets an account's nominations from its staking ledger
+  const getNominations = (address: MaybeAddress) => {
+    if (!address) {
+      return []
+    }
+    const { nominators } = getStakingLedger(address)
+    return nominators?.targets || []
+  }
 
-  // Listen for new account balance events
-  useEventListener(
-    'new-account-balance',
-    newAccountBalancesCallback,
-    documentRef
-  )
+  // Get an account's pending pool rewards from its staking ledger
+  const getPendingPoolRewards = (address: MaybeAddress) => {
+    if (!address) {
+      return 0n
+    }
+    const { poolMembership } = getStakingLedger(address)
+    return poolMembership?.pendingRewards || 0n
+  }
 
-  // If no accounts are imported, set balances synced to true
+  // Subscribe to global bus account balance events
   useEffect(() => {
-    if (!accounts.length) {
-      Syncs.dispatch('balances', 'complete')
+    const unsubBalances = accountBalances$.subscribe((result) => {
+      setAccountBalances(result)
+    })
+    const unsubStakingLedgers = stakingLedgers$.subscribe((result) => {
+      setStakingLedgers(result)
+    })
+    return () => {
+      unsubBalances.unsubscribe()
+      unsubStakingLedgers.unsubscribe()
     }
-  }, [accounts.length])
+  }, [])
 
   return (
     <BalancesContext.Provider
       value={{
-        activeBalances,
-        getNonce,
-        getLocks,
-        getBalance,
-        getLedger,
-        getPayee,
-        getPoolMembership,
+        getAccountBalance,
+        getStakingLedger,
         getNominations,
         getEdReserved,
+        getPendingPoolRewards,
       }}
     >
       {children}

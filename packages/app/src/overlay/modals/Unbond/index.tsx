@@ -2,20 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
-import { PoolBalanceToPoints } from 'api/runtimeApi/poolBalanceToPoints'
-import { PoolUnbond } from 'api/tx/poolUnbond'
-import { StakingUnbond } from 'api/tx/stakingUnbond'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBonded } from 'contexts/Bonded'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
-import { Apis } from 'controllers/Apis'
 import { getUnixTime } from 'date-fns'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -27,34 +24,36 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { planckToUnitBn, timeleftAsString } from 'utils'
+import { timeleftAsString } from 'utils'
 
 export const Unbond = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
-  const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
+  const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { isDepositor, activePool } = useActivePool()
-  const { minNominatorBond: minNominatorBondBn } = useApi().stakingMetrics
+  const {
+    serviceApi,
+    stakingMetrics: { minNominatorBond: minNominatorBondBigInt },
+  } = useApi()
   const {
     setModalStatus,
     setModalResize,
     config: { options },
   } = useOverlay().modal
   const {
-    consts,
+    getConsts,
     poolsConfig: { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn },
   } = useApi()
 
-  const { unit, units } = getNetworkData(network)
   const { bondFor } = options
-  const pendingRewards = activePool?.pendingRewards || 0n
-  const controller = getBondedAccount(activeAddress)
-  const { bondDuration } = consts
+  const { bondDuration } = getConsts(network)
+  const { unit, units } = getNetworkData(network)
+  const pendingRewards = getPendingPoolRewards(activeAddress)
 
   const bondDurationFormatted = timeleftAsString(
     t,
@@ -69,15 +68,17 @@ export const Unbond = () => {
   const isPooling = bondFor === 'pool'
 
   const allTransferOptions = getTransferOptions(activeAddress)
-  const { active: activeBn } = isPooling
+  const { active } = isPooling
     ? allTransferOptions.pool
     : allTransferOptions.nominate
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnitBn(activeBn, units)
-  const minJoinBond = planckToUnitBn(minJoinBondBn, units)
-  const minCreateBond = planckToUnitBn(minCreateBondBn, units)
-  const minNominatorBond = planckToUnitBn(minNominatorBondBn, units)
+  const freeToUnbond = new BigNumber(planckToUnit(active, units))
+  const minJoinBond = new BigNumber(planckToUnit(minJoinBondBn, units))
+  const minCreateBond = new BigNumber(planckToUnit(minCreateBondBn, units))
+  const minNominatorBond = new BigNumber(
+    planckToUnit(minNominatorBondBigInt, units)
+  )
 
   const [bond, setBond] = useState<{ bond: string }>({
     bond: freeToUnbond.toString(),
@@ -89,11 +90,10 @@ export const Unbond = () => {
   // handler to set bond as a string
   const handleSetBond = async (newBond: { bond: BigNumber }) => {
     if (isPooling && activePool) {
-      const balancePoints = await new PoolBalanceToPoints(
-        network,
+      const balancePoints = await serviceApi.runtimeApi.balanceToPoints(
         activePool.id,
         unitToPlanck(newBond.bond.toString(), units)
-      ).fetch()
+      )
       setPoints(balancePoints)
     }
     setBond({ bond: newBond.bond.toString() })
@@ -110,26 +110,22 @@ export const Unbond = () => {
     : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0)
 
   const getTx = () => {
-    const api = Apis.getApi(network)
-    let tx = null
-    if (!api || !activeAddress) {
-      return tx
+    let tx: SubmittableExtrinsic | undefined
+    if (!activeAddress) {
+      return
     }
-
     const bondToSubmit = unitToPlanck(!bondValid ? 0 : bond.bond, units)
     if (isPooling) {
-      tx = new PoolUnbond(network, activeAddress, points).tx()
+      tx = serviceApi.tx.poolUnbond(activeAddress, points)
     } else if (isStaking) {
-      tx = new StakingUnbond(network, bondToSubmit).tx()
+      tx = serviceApi.tx.stakingUnbond(bondToSubmit)
     }
     return tx
   }
 
-  const signingAccount = isPooling ? activeAddress : controller
-
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: signingAccount,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -139,13 +135,10 @@ export const Unbond = () => {
   const fee = getTxSubmission(submitExtrinsic.uid)?.fee || 0n
 
   const nominatorActiveBelowMin =
-    bondFor === 'nominator' &&
-    !activeBn.isZero() &&
-    activeBn.isLessThan(minNominatorBondBn)
+    bondFor === 'nominator' && active > 0n && active < minNominatorBondBigInt
 
-  const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn
-  const poolActiveBelowMin =
-    bondFor === 'pool' && activeBn.isLessThan(poolToMinBn)
+  const poolToMin = isDepositor() ? minCreateBondBn : minJoinBondBn
+  const poolActiveBelowMin = bondFor === 'pool' && active < poolToMin
 
   // accumulate warnings.
   const warnings = getSignerWarnings(
@@ -160,7 +153,7 @@ export const Unbond = () => {
   if (nominatorActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: minNominatorBond,
+        bond: minNominatorBond.toFormat(),
         unit,
       })
     )
@@ -168,12 +161,12 @@ export const Unbond = () => {
   if (poolActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: planckToUnitBn(poolToMinBn, units),
+        bond: planckToUnit(poolToMin, units),
         unit,
       })
     )
   }
-  if (activeBn.isZero()) {
+  if (active === 0n) {
     warnings.push(t('unbondErrorNoFunds', { unit }))
   }
 
@@ -239,7 +232,7 @@ export const Unbond = () => {
       </Padding>
       <SubmitTx
         noMargin
-        fromController={isStaking}
+        requiresMigratedController={isStaking}
         valid={bondValid}
         {...submitExtrinsic}
       />

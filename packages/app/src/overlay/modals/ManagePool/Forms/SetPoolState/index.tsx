@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolSetState } from 'api/tx/poolSetState'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
+import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { ActionItem } from 'library/ActionItem'
@@ -29,7 +29,7 @@ export const SetPoolState = ({
   onResize: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
@@ -82,22 +82,20 @@ export const SetPoolState = ({
 
   const getTx = () => {
     if (!valid || poolId === undefined) {
-      return null
+      return
     }
-    let tx
+    let tx: SubmittableExtrinsic | undefined
     switch (task) {
       case 'destroy_pool':
-        tx = new PoolSetState(network, poolId, 'Destroying').tx()
+        tx = serviceApi.tx.poolSetState(poolId, 'Destroying')
         break
       case 'unlock_pool':
-        tx = new PoolSetState(network, poolId, 'Open').tx()
+        tx = serviceApi.tx.poolSetState(poolId, 'Open')
 
         break
       case 'lock_pool':
-        tx = new PoolSetState(network, poolId, 'Blocked').tx()
+        tx = serviceApi.tx.poolSetState(poolId, 'Blocked')
         break
-      default:
-        tx = null
     }
     return tx
   }

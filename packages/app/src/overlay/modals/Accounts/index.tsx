@@ -1,17 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { useActiveBalances } from 'hooks/useActiveBalances'
 import { ActionItem } from 'library/ActionItem'
 import { Fragment, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { MaybeAddress } from 'types'
 import { CustomHeader, Padding } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { AccountButton } from './Account'
@@ -26,46 +23,12 @@ import type {
 
 export const Accounts = () => {
   const { t } = useTranslation('modals')
-  const {
-    consts: { existentialDeposit },
-  } = useApi()
   const { getDelegates } = useProxies()
   const { accounts } = useImportedAccounts()
-  const { activeAddress } = useActiveAccounts()
-  const { getFeeReserve } = useTransferOptions()
+  const { getStakingLedger } = useBalances()
+  const { activeAddress, activeProxy } = useActiveAccounts()
+  const { getTransferOptions } = useTransferOptions()
   const { status: modalStatus, setModalResize } = useOverlay().modal
-
-  // Listen to balance updates for entire accounts list.
-  const { getLocks, getBalance, getEdReserved, getPoolMembership } =
-    useActiveBalances({
-      accounts: accounts.map(({ address }) => address),
-    })
-
-  // Calculate transferrable balance of an address.
-  const getTransferrableBalance = (address: MaybeAddress) => {
-    // Get fee reserve from local storage.
-    const feeReserve = getFeeReserve(address)
-    // Get amount required for existential deposit.
-    const edReserved = getEdReserved(address, existentialDeposit)
-    // Gets actual balance numbers.
-    const { free, frozen } = getBalance(address)
-    // Minus reserves and frozen balance from free to get transferrable.
-    return BigNumber.max(
-      free.minus(edReserved).minus(feeReserve).minus(frozen),
-      0
-    )
-  }
-
-  const stashes: string[] = []
-  // accumulate imported stash accounts
-  for (const { address } of accounts) {
-    const { locks } = getLocks(address)
-
-    // account is a stash if they have an active `staking` lock
-    if (locks.find(({ id }) => id === 'staking')) {
-      stashes.push(address)
-    }
-  }
 
   // construct account groupings
   const nominating: AccountNominating[] = []
@@ -74,40 +37,40 @@ export const Accounts = () => {
   const notStaking: AccountNotStaking[] = []
 
   for (const { address, source } of accounts) {
+    const { poolMembership, ledger } = getStakingLedger(address)
+
     let isNominating = false
     let isInPool = false
-    const isStash = stashes[stashes.indexOf(address)] ?? null
     const delegates = getDelegates(address)
 
     // Inject transferrable balance into delegates list.
     if (delegates?.delegates) {
       delegates.delegates = delegates?.delegates.map((d) => ({
         ...d,
-        transferrableBalance: getTransferrableBalance(d.delegate),
+        transferrableBalance: getTransferOptions(d.delegate)
+          .transferrableBalance,
       }))
     }
 
-    const poolMember = getPoolMembership(address)
-
-    // Check if nominating.
+    // Check if nominating
     if (
-      isStash &&
+      !!ledger &&
       nominating.find((a) => a.address === address) === undefined
     ) {
       isNominating = true
     }
 
-    // Check if in pool.
-    if (poolMember) {
+    // Check if in pool
+    if (poolMembership) {
       if (!inPool.find((n) => n.address === address)) {
         isInPool = true
       }
     }
 
-    // If not doing anything, add address to `notStaking`.
+    // If not doing anything, add address to `notStaking`
     if (
-      !isStash &&
-      !poolMember &&
+      !isNominating &&
+      !poolMembership &&
       !notStaking.find((n) => n.address === address)
     ) {
       notStaking.push({ address, source, delegates })
@@ -118,11 +81,11 @@ export const Accounts = () => {
     if (
       isNominating &&
       isInPool &&
-      poolMember &&
+      poolMembership &&
       !nominatingAndPool.find((n) => n.address === address)
     ) {
       nominatingAndPool.push({
-        ...poolMember,
+        ...poolMembership,
         address,
         source,
         stashImported: true,
@@ -131,15 +94,14 @@ export const Accounts = () => {
       continue
     }
 
-    // Nominating only.
+    // Nominating only
     if (isNominating && !isInPool) {
       nominating.push({ address, source, stashImported: true, delegates })
       continue
     }
-
-    // In pool only.
-    if (!isNominating && isInPool && poolMember) {
-      inPool.push({ ...poolMember, source, delegates })
+    // In pool only
+    if (!isNominating && isInPool && poolMembership) {
+      inPool.push({ ...poolMembership, source, delegates })
     }
   }
 
@@ -151,10 +113,11 @@ export const Accounts = () => {
   }, [
     accounts,
     activeAddress,
-    JSON.stringify(nominating),
-    JSON.stringify(inPool),
-    JSON.stringify(nominatingAndPool),
-    JSON.stringify(notStaking),
+    activeProxy,
+    JSON.stringify(nominating.map((n) => n.address?.toString())),
+    JSON.stringify(inPool.map((p) => p.address)),
+    JSON.stringify(nominatingAndPool.map((p) => p.address)),
+    JSON.stringify(notStaking.map((p) => p.address)),
   ])
 
   return (
@@ -186,7 +149,9 @@ export const Accounts = () => {
             {nominatingAndPool.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_nominating_and_pool_${i}`}>
                 <AccountButton
-                  transferrableBalance={getTransferrableBalance(address)}
+                  transferrableBalance={
+                    getTransferOptions(address).transferrableBalance
+                  }
                   address={address}
                   source={source}
                 />
@@ -209,7 +174,9 @@ export const Accounts = () => {
             {nominating.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_nominating_${i}`}>
                 <AccountButton
-                  transferrableBalance={getTransferrableBalance(address)}
+                  transferrableBalance={
+                    getTransferOptions(address).transferrableBalance
+                  }
                   address={address}
                   source={source}
                 />
@@ -232,7 +199,9 @@ export const Accounts = () => {
             {inPool.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_in_pool_${i}`}>
                 <AccountButton
-                  transferrableBalance={getTransferrableBalance(address)}
+                  transferrableBalance={
+                    getTransferOptions(address).transferrableBalance
+                  }
                   address={address}
                   source={source}
                 />
@@ -255,7 +224,9 @@ export const Accounts = () => {
             {notStaking.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_not_staking_${i}`}>
                 <AccountButton
-                  transferrableBalance={getTransferrableBalance(address)}
+                  transferrableBalance={
+                    getTransferOptions(address).transferrableBalance
+                  }
                   address={address}
                   source={source}
                 />
