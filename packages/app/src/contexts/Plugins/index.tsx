@@ -3,12 +3,10 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Subscan } from 'controllers/Subscan'
-import { Subscriptions } from 'controllers/Subscriptions'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type { Plugin } from 'types'
@@ -51,36 +49,6 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
       Subscan.network = network
     }
   }, [plugins.includes('subscan'), isReady, network, activeAddress, activeEra])
-
-  // Handle api subscriptions when Staking API is toggled
-  useEffectIgnoreInitial(() => {
-    const currentEraRewardPointsSub = Subscriptions.get(
-      network,
-      'erasRewardPoints'
-    )
-    // On staking api disable, or on era change, initialise fallback subscriptions for era reward
-    // points
-    if (!pluginEnabled('staking_api') && !activeEra.index.isZero() && isReady) {
-      // Unsubscribe to staking metrics if it exists.
-      if (currentEraRewardPointsSub) {
-        currentEraRewardPointsSub.unsubscribe()
-        Subscriptions.remove(network, 'erasRewardPoints')
-      }
-      // Subscribe to eras reward points for current era
-      Subscriptions.set(
-        network,
-        'erasRewardPoints',
-        new ErasRewardPoints(network, activeEra.index.toNumber())
-      )
-    }
-    // If Staking API is enabled, unsubscribe from eras reward points
-    if (pluginEnabled('staking_api')) {
-      if (currentEraRewardPointsSub) {
-        currentEraRewardPointsSub.unsubscribe()
-        Subscriptions.remove(network, 'erasRewardPoints')
-      }
-    }
-  }, [isReady, activeEra, pluginEnabled('staking_api')])
 
   return (
     <PluginsContext.Provider

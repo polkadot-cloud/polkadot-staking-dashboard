@@ -1,14 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
-import { StakingChill } from 'api/tx/stakingChill'
-import { StakingUnbond } from 'api/tx/stakingUnbond'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
@@ -24,25 +22,23 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { planckToUnitBn, timeleftAsString } from 'utils'
+import { timeleftAsString } from 'utils'
 
 export const Unstake = () => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
-  const { consts } = useApi()
   const { newBatchCall } = useBatchCall()
-  const { getBondedAccount } = useBonded()
   const { getNominations } = useBalances()
+  const { getConsts, serviceApi } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { setModalStatus, setModalResize } = useOverlay().modal
 
+  const { bondDuration } = getConsts(network)
   const { unit, units } = getNetworkData(network)
-  const controller = getBondedAccount(activeAddress)
   const nominations = getNominations(activeAddress)
-  const { bondDuration } = consts
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active } = allTransferOptions.nominate
 
@@ -54,7 +50,7 @@ export const Unstake = () => {
   )
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnitBn(active, units)
+  const freeToUnbond = new BigNumber(planckToUnit(active, units))
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -77,24 +73,24 @@ export const Unstake = () => {
   useEffect(() => setModalResize(), [bond])
 
   const getTx = () => {
-    const tx = null
     if (!activeAddress) {
-      return tx
+      return
     }
     const bondToSubmit = unitToPlanck(String(!bondValid ? 0 : bond.bond), units)
     if (bondToSubmit == 0n) {
-      return new StakingChill(network).tx()
+      return serviceApi.tx.stakingChill()
     }
     const txs = [
-      new StakingChill(network).tx(),
-      new StakingUnbond(network, bondToSubmit).tx(),
-    ]
-    return newBatchCall(txs, controller)
+      serviceApi.tx.stakingChill(),
+      serviceApi.tx.stakingUnbond(bondToSubmit),
+    ].filter((tx) => tx !== undefined)
+
+    return newBatchCall(txs, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: controller,
+    from: activeAddress,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -139,7 +135,11 @@ export const Unstake = () => {
           deps={[bondDuration]}
         />
       </Padding>
-      <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
+      <SubmitTx
+        requiresMigratedController
+        valid={bondValid}
+        {...submitExtrinsic}
+      />
     </>
   )
 }

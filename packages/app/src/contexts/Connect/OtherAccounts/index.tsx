@@ -12,13 +12,10 @@ import { setStateWithRef } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
-import { isCustomEvent } from 'controllers/utils'
 import { getInitialExternalAccounts } from 'global-bus/util'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { ImportedAccount, MaybeAddress, NetworkId } from 'types'
-import { useEventListener } from 'usehooks-ts'
-import { useExternalAccounts } from '../ExternalAccounts'
 import type { ExternalAccountImportType } from '../ExternalAccounts/types'
 import { getActiveAccountLocal } from '../Utils'
 import type { OtherAccountsContextInterface } from './types'
@@ -34,7 +31,6 @@ export const OtherAccountsProvider = ({
   const { network } = useNetwork()
   const { gettingExtensions } = useExtensions()
   const { getHardwareAccounts } = useHardwareAccounts()
-  const { addExternalAccount } = useExternalAccounts()
   const { activeAddress, setActiveAccount } = useActiveAccounts()
   const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
@@ -180,24 +176,6 @@ export const OtherAccountsProvider = ({
       replaceOtherAccount(account)
     }
   }
-
-  // Handle new external account custom events
-  const newExternalAccountCallback = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const result = addExternalAccount(e.detail.address, 'system')
-      if (result) {
-        addOrReplaceOtherAccount(result.account, result.type)
-      }
-    }
-  }
-
-  // Listen for new external account events
-  const documentRef = useRef<Document>(document)
-  useEventListener(
-    'new-external-account',
-    newExternalAccountCallback,
-    documentRef
-  )
 
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected
   useEffect(() => {

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import { maxBigInt, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -12,7 +13,6 @@ import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { MaybeAddress } from 'types'
-import { planckToUnitBn } from 'utils'
 import type { TransferOptions, TransferOptionsContextInterface } from './types'
 import { getLocalFeeReserve, setLocalFeeReserve } from './Utils'
 
@@ -24,17 +24,16 @@ export const TransferOptionsProvider = ({
 }: {
   children: ReactNode
 }) => {
+  const { activeEra } = useApi()
   const { network } = useNetwork()
-  const { consts, activeEra } = useApi()
   const { activeAddress } = useActiveAccounts()
-  const { getLedger, getBalance, getLocks, getPoolMembership } = useBalances()
+  const { getStakingLedger, getAccountBalance, getEdReserved } = useBalances()
 
-  const { existentialDeposit } = consts
-  const membership = getPoolMembership(activeAddress)
+  const { poolMembership } = getStakingLedger(activeAddress)
   const { units, defaultFeeReserve } = getNetworkData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
-  const [feeReserve, setFeeReserve] = useState<BigNumber>(
+  const [feeReserve, setFeeReserve] = useState<bigint>(
     getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
   )
 
@@ -42,61 +41,67 @@ export const TransferOptionsProvider = ({
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `Balances`
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
-    const { maxLock } = getLocks(address)
-    const { free, frozen } = getBalance(address)
-    const { active, total, unlocking } = getLedger({ stash: address })
+    const {
+      balance: { free, frozen, reserved },
+    } = getAccountBalance(address)
+
+    const stakingLedger = getStakingLedger(address)
+    const { active, total } = stakingLedger.ledger || {
+      active: 0n,
+      total: 0n,
+    }
+    const unlocking = stakingLedger?.ledger?.unlocking || []
+    const maxReserve = maxBigInt(frozen, reserved)
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed
-    const edReserved = BigNumber.max(existentialDeposit.minus(maxLock), 0)
+    const edReserved = getEdReserved(address)
+    const freeBalance = maxBigInt(free - edReserved, 0n)
 
-    // Total free balance after `edReserved` is subtracted
-    const freeMinusReserve = BigNumber.max(
-      free.minus(edReserved).minus(feeReserve),
-      0
+    // Total free balance after reserved amount of ed is subtracted
+    const transferrableBalance = maxBigInt(
+      freeBalance - edReserved - feeReserve,
+      0n
     )
-    // Free balance that can be transferred
-    const transferrableBalance = BigNumber.max(
-      freeMinusReserve.minus(frozen),
-      0
-    )
-    // Free balance to pay for tx fees. Does not factor `feeReserve`
-    const balanceTxFees = BigNumber.max(free.minus(edReserved).minus(frozen), 0)
+    // Free balance to pay for tx fees
+    const balanceTxFees = maxBigInt(free - edReserved, 0n)
+
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
       unlocking,
       activeEra.index
     )
-    // Free balance to stake after `total` (total staked) ledger amount
-    const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0)
 
     const nominatorBalances = () => {
-      const totalPossibleBond = BigNumber.max(
-        freeMinusReserve.minus(totalUnlocking).minus(totalUnlocked),
-        0
-      )
+      const totalPossibleBond = total + transferrableBalance
+
       return {
         active,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
-        totalAdditionalBond: BigNumber.max(totalPossibleBond.minus(active), 0),
+        totalAdditionalBond: maxBigInt(totalPossibleBond - total, 0n),
         totalUnlockChunks: unlocking.length,
       }
     }
 
     const poolBalances = () => {
-      const unlockingPool = membership?.unlocking || []
+      const unlockingPool = (poolMembership?.unbondingEras || []).map(
+        ([era, value]) => ({
+          era,
+          value,
+        })
+      )
       const {
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
       } = getUnlocking(unlockingPool, activeEra.index)
 
       return {
-        active: membership?.balance || new BigNumber(0),
+        active: poolMembership?.balance || 0n,
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
-        totalPossibleBond: BigNumber.max(freeMinusReserve.minus(maxLock), 0),
+        totalPossibleBond: maxBigInt(transferrableBalance - maxReserve, 0n),
         totalUnlockChunks: unlockingPool.length,
       }
     }
@@ -112,7 +117,7 @@ export const TransferOptionsProvider = ({
   }
 
   // Updates account's reserve amount in state and in local storage
-  const setFeeReserveBalance = (amount: BigNumber) => {
+  const setFeeReserveBalance = (amount: bigint) => {
     if (!activeAddress) {
       return
     }
@@ -121,35 +126,37 @@ export const TransferOptionsProvider = ({
   }
 
   // Gets staked balance, whether nominating or in pool, for an account
-  const getStakedBalance = (address: MaybeAddress): BigNumber => {
+  const getStakedBalance = (address: MaybeAddress) => {
     const allTransferOptions = getTransferOptions(address)
 
     // Total funds nominating
-    const nominating = planckToUnitBn(
-      allTransferOptions.nominate.active
-        .plus(allTransferOptions.nominate.totalUnlocking)
-        .plus(allTransferOptions.nominate.totalUnlocked),
+    const nominating = planckToUnit(
+      allTransferOptions.nominate.active +
+        allTransferOptions.nominate.totalUnlocking +
+        allTransferOptions.nominate.totalUnlocked,
       units
     )
 
     // Total funds in pool
-    const inPool = planckToUnitBn(
-      allTransferOptions.pool.active
-        .plus(allTransferOptions.pool.totalUnlocking)
-        .plus(allTransferOptions.pool.totalUnlocked),
+    const inPool = planckToUnit(
+      allTransferOptions.pool.active +
+        allTransferOptions.pool.totalUnlocking +
+        allTransferOptions.pool.totalUnlocked,
       units
     )
 
     // Determine the actual staked balance
-    return !nominating.isZero()
-      ? nominating
-      : !inPool.isZero()
-        ? inPool
+    const nominatingBn = new BigNumber(nominating)
+    const inPoolBn = new BigNumber(inPool)
+    return !nominatingBn.isZero()
+      ? nominatingBn
+      : !inPoolBn.isZero()
+        ? inPoolBn
         : new BigNumber(0)
   }
 
-  // Gets a feeReserve from local storage for an account, or the default value otherwise
-  const getFeeReserve = (address: MaybeAddress): BigNumber =>
+  // Gets a fee reserve value from local storage for an account, or the default value otherwise
+  const getFeeReserve = (address: MaybeAddress): bigint =>
     getLocalFeeReserve(address, defaultFeeReserve, { network, units })
 
   // Update an account's reserve amount on account or network change

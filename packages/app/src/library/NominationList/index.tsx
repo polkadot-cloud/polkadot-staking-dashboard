@@ -48,14 +48,15 @@ export const NominationList = ({
   // Store the current nomination status of validator records relative to the supplied nominator
   const nominationStatus = useRef<Record<string, NominationStatus>>({})
 
-  // Get nomination status relative to supplied nominator, if `format` is `nomination`
+  // Get nomination status relative to supplied nominator
   const processNominationStatus = () => {
     if (bondFor === 'pool') {
-      nominationStatus.current = Object.fromEntries(
-        initialValidators.map(({ address }) => [
-          address,
-          getPoolNominationStatus(nominator, address),
-        ])
+      nominationStatus.current = initialValidators.reduce(
+        (acc: Record<string, NominationStatus>, { address }) => {
+          acc[address] = getPoolNominationStatus(nominator, address)
+          return acc
+        },
+        {}
       )
     } else {
       // get all active account's nominations
@@ -125,7 +126,7 @@ export const NominationList = ({
     const results = await fetchValidatorEraPointsBatch(
       network,
       validators.map(({ address }) => address),
-      Math.max(activeEra.index.toNumber() - 1, 0),
+      Math.max(activeEra.index - 1, 0),
       30
     )
     // Update performance if key still matches current page key
@@ -146,7 +147,7 @@ export const NominationList = ({
 
   // Configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !activeEra.index.isZero()) {
+    if (isReady && activeEra.index > 0) {
       setupValidatorList()
     }
   }, [isReady, activeEra.index, syncing, fetched])

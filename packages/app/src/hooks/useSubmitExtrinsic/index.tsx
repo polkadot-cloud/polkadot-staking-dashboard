@@ -1,14 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useExtensions } from '@w3ux/react-connect-kit'
+import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import type { HardwareAccount } from '@w3ux/types'
-import { formatAccountSs58 } from '@w3ux/utils'
-import { Proxy } from 'api/tx/proxy'
-import { TxSubmission } from 'api/txSubmission'
 import { DappName, ManualSigners } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
@@ -16,23 +14,22 @@ import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { Notifications } from 'controllers/Notifications'
+import { TxSubmission } from 'controllers/TxSubmission'
+import { compactU32 } from 'dedot/shape'
+import type { InjectedSigner } from 'dedot/types'
+import { concatU8a, hexToU8a } from 'dedot/utils'
 import { useProxySupported } from 'hooks/useProxySupported'
-import { LedgerSigner } from 'library/Signers/LedgerSigner'
+import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
 import type {
   VaultSignatureResult,
   VaultSignStatus,
 } from 'library/Signers/VaultSigner/types'
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
-import type { PolkadotSigner } from 'polkadot-api'
-import { AccountId, InvalidTxError } from 'polkadot-api'
-import {
-  connectInjectedExtension,
-  getPolkadotSignerFromPjs,
-} from 'polkadot-api/pjs-signer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
+
 export const useSubmitExtrinsic = ({
   tx,
   tag,
@@ -42,14 +39,16 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('app')
+  const { serviceApi } = useApi()
   const { network } = useNetwork()
-  const { getNonce } = useBalances()
   const { signWcTx } = useWalletConnect()
+  const { getAccountBalance } = useBalances()
   const { activeProxy } = useActiveAccounts()
   const { extensionsStatus } = useExtensions()
   const { isProxySupported } = useProxySupported()
   const { openPromptWith, closePrompt } = usePrompt()
   const { handleResetLedgerTask } = useLedgerHardware()
+  const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
   const { unit, units } = getNetworkData(network)
 
@@ -58,16 +57,16 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
   // already wrapped, update `from` address and return
+
+  let proxySupported = false
   if (tx) {
-    if (
-      tx.decodedCall?.type === 'Proxy' &&
-      tx.decodedCall?.value?.type === 'proxy'
-    ) {
+    proxySupported = isProxySupported(tx, from)
+    if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
       if (activeProxy) {
         from = activeProxy.address
       }
     } else {
-      if (activeProxy && isProxySupported(tx, from)) {
+      if (activeProxy && proxySupported) {
         // Update submit address to active proxy account
         const real = from
         from = activeProxy.address
@@ -75,22 +74,22 @@ export const useSubmitExtrinsic = ({
         // Check not a batch transactions
         if (
           real &&
-          !(
-            tx.decodedCall?.type === 'Utility' &&
-            tx.decodedCall?.value.type === 'batch'
-          )
+          !(tx.call.pallet === 'Utility' && tx.call.palletCall.name === 'Batch')
         ) {
           // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
           // each tx within the batch via `useBatchCall`
-          tx = new Proxy(network, real, tx).tx()
+          const proxiedTx = serviceApi.tx.proxy(real, tx)
+          if (proxiedTx) {
+            tx = proxiedTx
+          }
         }
       }
     }
   }
 
-  // Extrinsic submission handler.
+  // Extrinsic submission handler
   const onSubmit = async () => {
-    if (TxSubmission.getUid(uid)?.submitted) {
+    if (!tx || TxSubmission.getUid(uid)?.submitted) {
       return
     }
     if (from === null) {
@@ -101,10 +100,12 @@ export const useSubmitExtrinsic = ({
       return
     }
 
+    const { specName, specVersion } = tx.client.runtimeVersion
+    const ss58 = serviceApi.spec.ss58(specName)
     const { source } = account
     const isManualSigner = ManualSigners.includes(source)
 
-    // if `activeAccount` is imported from an extension, ensure it is enabled
+    // If `activeAccount` is imported from an extension, ensure it is enabled
     if (!isManualSigner) {
       const isInstalled = Object.entries(extensionsStatus).find(
         ([id, status]) => id === source && status === 'connected'
@@ -112,91 +113,143 @@ export const useSubmitExtrinsic = ({
       if (!isInstalled || !window?.injectedWeb3?.[source]) {
         throw new Error(`${t('walletNotFound')}`)
       }
-      // summons extension popup if not already connected
+      // NOTE: Summons extension popup if not already connected
       window.injectedWeb3[source].enable(DappName)
     }
 
-    // Pre-submission state updates
+    // Pre-submission state update
     TxSubmission.setUidSubmitted(uid, true)
 
     // Handle signed transaction
-    let signer: PolkadotSigner | undefined
-    if (requiresManualSign(from)) {
-      const pubKey = AccountId().enc(from)
-      const networkInfo = {
-        decimals: units,
-        tokenSymbol: unit,
-      }
-      switch (source) {
-        case 'ledger':
-          signer = await new LedgerSigner(pubKey).getPolkadotSigner(
-            networkInfo,
-            (account as HardwareAccount).index
-          )
-          break
-
-        case 'vault':
-          signer = await new VaultSigner(pubKey, {
-            openPrompt: (
-              onComplete: (
-                status: VaultSignStatus,
-                result: VaultSignatureResult
-              ) => void,
-              toSign: Uint8Array
-            ) => {
-              openPromptWith(
-                <SignPrompt
-                  submitAddress={from}
-                  onComplete={onComplete}
-                  toSign={toSign}
-                />,
-                'sm',
-                false
-              )
-            },
-            closePrompt: () => closePrompt(),
-            setSubmitting: (val: boolean) =>
-              TxSubmission.setUidSubmitted(uid, val),
-          }).getPolkadotSigner()
-          break
-
-        case 'wallet_connect':
-          signer = getPolkadotSignerFromPjs(
-            from,
-            signWcTx,
-            // Signing bytes not currently being used
-            // FIXME: Can implement, albeit won't be used
-            async () => ({
-              id: 0,
-              signature: '0x',
-            })
-          )
-          break
-      }
-    } else {
-      // Get the polkadot signer for this account
-      const signerAccount = (await connectInjectedExtension(source))
-        .getAccounts()
-        .find((a) => from && a.address === formatAccountSs58(from, 42))
-      signer = signerAccount?.polkadotSigner
-    }
-
-    if (!signer) {
-      onError('default')
-      return
-    }
-
-    // Calculate correct nonce
-    const nonce = getNonce(from) + TxSubmission.pendingTxCount(from)
-
-    // Submit the transaction
-    TxSubmission.addSub(uid, tx, signer, nonce, {
+    let signer: InjectedSigner | undefined
+    let encodedSig
+    const handlers = {
       onReady,
       onInBlock,
       onFinalized,
       onFailed,
       onError,
-    })
+    }
+
+    if (requiresManualSign(from)) {
+      const networkInfo = {
+        decimals: units,
+        tokenSymbol: unit,
+        specName,
+        specVersion,
+        ss58,
+      }
+
+      const $Signature = serviceApi.codec.$Signature(specName)
+      if (!$Signature) {
+        onError('default')
+        return
+      }
+
+      if (source === 'ledger') {
+        const metadata = await serviceApi.signer.metadata(specName)
+        const result = await signLedgerPayload(
+          specName,
+          from,
+          serviceApi.signer.extraSignedExtension,
+          tx,
+          metadata || '0x',
+          networkInfo,
+          (account as HardwareAccount).index
+        )
+        if (result) {
+          encodedSig = {
+            address: from,
+            signature: $Signature.tryDecode(result.signature),
+            extra: result.data,
+          }
+        }
+      }
+
+      if (source === 'vault') {
+        const extra = serviceApi.signer.extraSignedExtension(specName, from)
+        if (!extra) {
+          onError('default')
+          return
+        }
+        await extra.init()
+        const rawPayload = extra.toRawPayload(tx.callHex)
+        const prefixedPayload = concatU8a(
+          compactU32.encode(tx.callLength),
+          hexToU8a(rawPayload.data)
+        )
+        const result = await new VaultSigner({
+          openPrompt: (
+            onComplete: (
+              status: VaultSignStatus,
+              result: VaultSignatureResult
+            ) => void,
+            toSign: Uint8Array
+          ) => {
+            openPromptWith(
+              <SignPrompt
+                submitAddress={from}
+                onComplete={onComplete}
+                toSign={toSign}
+              />,
+              'sm',
+              false
+            )
+          },
+          closePrompt: () => closePrompt(),
+          setSubmitting: (val: boolean) =>
+            TxSubmission.setUidSubmitted(uid, val),
+        }).sign(prefixedPayload)
+
+        encodedSig = {
+          address: from,
+          signature: $Signature.tryDecode(result),
+          extra: extra.data,
+        }
+      }
+
+      if (source === 'wallet_connect') {
+        const extra = serviceApi.signer.extraSignedExtension(specName, from)
+        if (!extra) {
+          onError('default')
+          return
+        }
+        await extra.init()
+        const payload = extra.toPayload(tx.callHex)
+        const result = (await signWcTx(payload)).signature
+
+        encodedSig = {
+          address: from,
+          signature: $Signature.tryDecode(result),
+          extra: extra.data,
+        }
+      }
+      // Custom signer
+      //
+      // Submit the transaction with the raw signature
+      if (!encodedSig) {
+        onError('default')
+        return
+      }
+      TxSubmission.addSend(uid, tx, encodedSig, handlers)
+    } else {
+      // Extension signer
+      //
+      // Get the signer for this account and submit the transaction
+      signer = getExtensionAccount(from)?.signer as InjectedSigner | undefined
+      if (!signer) {
+        onError('default')
+        return
+      }
+      TxSubmission.addSignAndSend(
+        uid,
+        from,
+        tx,
+        signer as InjectedSigner,
+        getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from),
+        handlers
+      )
+    }
   }
 
   // Initialise tx submission
@@ -235,13 +288,11 @@ export const useSubmitExtrinsic = ({
     })
   }
 
-  const onFailed = (err: Error) => {
-    if (err instanceof InvalidTxError) {
-      Notifications.emit({
-        title: t('failed'),
-        subtitle: t('errorWithTransaction'),
-      })
-    }
+  const onFailed = () => {
+    Notifications.emit({
+      title: t('failed'),
+      subtitle: t('errorWithTransaction'),
+    })
   }
 
   const onError = (type?: string) => {
@@ -256,26 +307,21 @@ export const useSubmitExtrinsic = ({
 
   // Re-fetch tx fee if tx changes
   const fetchTxFee = async () => {
-    if (tx) {
-      const partial_fee = (await tx?.getPaymentInfo(from))?.partial_fee || 0n
-      TxSubmission.updateFee(uid, partial_fee)
+    if (tx && from) {
+      const { partialFee } = await tx.paymentInfo(from)
+      TxSubmission.updateFee(uid, partialFee)
     }
   }
   useEffect(() => {
     if (uid > 0) {
       fetchTxFee()
     }
-  }, [
-    uid,
-    JSON.stringify(tx?.decodedCall, (_, value) =>
-      typeof value === 'bigint' ? value.toString() : value
-    ),
-  ])
+  }, [uid, JSON.stringify(tx?.toHex())])
 
   return {
     uid,
     onSubmit,
     submitAddress: from,
-    proxySupported: isProxySupported(tx, from),
+    proxySupported,
   }
 }

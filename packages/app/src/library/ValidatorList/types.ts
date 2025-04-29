@@ -51,5 +51,4 @@ export interface ItemProps {
     selected: Validator[]
     resetSelection?: () => void
   }) => void
-  showParaValidator?: boolean
 }

@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import { intervalToDuration } from 'date-fns'
 import { MinDelayInput } from 'library/Form/MinDelayInput'
 import { StyledSlider } from 'library/StyledSlider'
@@ -20,22 +21,19 @@ export const ChangeRate = ({
   invalidMinDelay: boolean
 }) => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
+  const { getConsts } = useApi()
+  const { network } = useNetwork()
+  const { expectedBlockTime } = getConsts(network)
   const { getEnabled, getInitial, getCurrent, setChangeRate } =
     usePoolCommission()
-
-  const { expectedBlockTime } = consts
 
   // Get the current change rate value.
   const changeRate = getCurrent('change_rate')
 
   // Convert a block number into an estimated change rate duration.
   const minDelayToInput = (delay: number) => {
-    const milliseconds = expectedBlockTime.multipliedBy(delay)
-    const end = milliseconds.isZero()
-      ? 0
-      : milliseconds.integerValue().toNumber()
-
+    const milliseconds = expectedBlockTime * BigInt(delay)
+    const end = milliseconds === 0n ? 0 : Number(milliseconds)
     const { years, months, days, hours, minutes } = intervalToDuration({
       start: 0,
       end,
@@ -66,7 +64,7 @@ export const ChangeRate = ({
       .plus(daysSeconds)
       .plus(hoursSeconds)
       .plus(minutesSeconds)
-      .dividedBy(expectedBlockTime.dividedBy(1000))
+      .dividedBy(expectedBlockTime / 1000n)
       .integerValue()
       .toNumber()
   }

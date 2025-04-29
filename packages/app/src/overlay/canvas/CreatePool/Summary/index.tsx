@@ -4,7 +4,6 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { unitToPlanck } from '@w3ux/utils'
-import { CreatePool } from 'api/tx/createPool'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -27,6 +26,7 @@ import { SummaryWrapper } from './Wrapper'
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const {
+    serviceApi,
     poolsConfig: { lastPoolId },
   } = useApi()
   const { network } = useNetwork()
@@ -38,7 +38,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { queryBondedPool, addToBondedPools } = useBondedPools()
   const { unit, units } = getNetworkData(network)
 
-  const poolId = lastPoolId.plus(1)
+  const poolId = lastPoolId + 1
   const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
@@ -46,24 +46,22 @@ export const Summary = ({ section }: SetupStepProps) => {
 
   const getTx = () => {
     if (!activeAddress) {
-      return null
+      return
     }
-
-    const tx = new CreatePool(
-      network,
+    const tx = serviceApi.tx.createPool(
       activeAddress,
-      poolId.toNumber(),
+      poolId,
       unitToPlanck(bond, units),
       metadata,
       nominations.map(({ address }) => address),
       roles
-    ).tx()
-
+    )
     if (!tx) {
-      return null
+      return
     }
     return newBatchCall(tx, activeAddress)
   }
+
   const submitExtrinsic = useSubmitExtrinsic({
     tag: 'createPool',
     tx: getTx(),
@@ -74,8 +72,10 @@ export const Summary = ({ section }: SetupStepProps) => {
       closeCanvas()
 
       // Query and add created pool to bondedPools list.
-      const pool = await queryBondedPool(poolId.toNumber())
-      addToBondedPools(pool)
+      const pool = await queryBondedPool(poolId)
+      if (pool) {
+        addToBondedPools(pool)
+      }
 
       // Reset setup progress.
       removeSetupProgress('pool', activeAddress)

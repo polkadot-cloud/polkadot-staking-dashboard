@@ -55,9 +55,8 @@
     "connect": "连接",
     "connectLedgerToContinue": "连接您的Ledger 设备继续",
     "connected": "己连接",
-    "connectionType": "连接类型",
     "continue": "继续",
-    "controllerImported": "您必须导入您的Controller帐户才能签署此交易",
+    "controllerNotMigrated": "Ccontroller 帐户尚未迁移.",
     "currencies": {
       "ARS": { "name": "阿根廷比索" },
       "AUD": { "name": "澳大利亚元" },
@@ -211,6 +210,7 @@
     "poolName": "提名池名称",
     "poolNominations": "池的提名",
     "provider": "服务端",
+    "providerType": "连接类型",
     "proxies": "代理",
     "proxy": "代理账户",
     "proxyAccounts": "代理帐户",

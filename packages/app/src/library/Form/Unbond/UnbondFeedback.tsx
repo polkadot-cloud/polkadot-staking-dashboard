@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
+import { maxBigInt, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -11,7 +11,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { planckToUnitBn } from 'utils'
 import { Warning } from '../Warning'
 import { Spacer } from '../Wrappers'
 import type { UnbondFeedbackProps } from '../types'
@@ -72,25 +71,23 @@ export const UnbondFeedback = ({
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond
-      : minNominatorBond
-  const minBondUnit = planckToUnitBn(minBondBn, units)
+      : BigInt(minNominatorBond.toString())
+
+  const minBondUnit = planckToUnit(minBondBn, units)
 
   // unbond amount to minimum threshold
   const unbondToMin =
     bondFor === 'pool'
       ? inSetup || isDepositor()
-        ? BigNumber.max(active.minus(minCreateBond), 0)
-        : BigNumber.max(active.minus(minJoinBond), 0)
-      : BigNumber.max(active.minus(minNominatorBond), 0)
+        ? maxBigInt(active - minCreateBond, 0n)
+        : maxBigInt(active - minJoinBond, 0n)
+      : maxBigInt(active - minNominatorBond, 0n)
 
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
-    bondFor === 'nominator' &&
-    !active.isZero() &&
-    active.isLessThan(minNominatorBond)
-  const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond
-  const poolActiveBelowMin =
-    bondFor === 'pool' && active.isLessThan(poolToMinBn)
+    bondFor === 'nominator' && active > 0n && active < minNominatorBond
+  const poolToMin = isDepositor() ? minCreateBond : minJoinBond
+  const poolActiveBelowMin = bondFor === 'pool' && active < poolToMin
 
   // handle error updates
   const handleErrors = () => {
@@ -160,12 +157,12 @@ export const UnbondFeedback = ({
       ))}
       <Spacer />
       <UnbondInput
-        active={active}
+        active={new BigNumber(active)}
         defaultValue={defaultValue}
         disabled={
-          active.isZero() || nominatorActiveBelowMin || poolActiveBelowMin
+          active === 0n || nominatorActiveBelowMin || poolActiveBelowMin
         }
-        unbondToMin={unbondToMin}
+        unbondToMin={new BigNumber(unbondToMin)}
         setters={setters}
         value={bond.bond}
       />

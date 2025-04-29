@@ -14,10 +14,8 @@ export const useInjectBlockTimestamp = () => {
   // NOTE: Not currently being used
   const injectBlockTimestamp = (entries: NominatorReward[]) => {
     entries.forEach((p) => {
-      p.timestamp = activeEra.start
-        .multipliedBy(0.001)
-        .minus(erasToSeconds(activeEra.index.minus(p.era).minus(1)))
-        .toNumber()
+      const erasToSecs = erasToSeconds(activeEra.index - p.era - 1)
+      p.timestamp = Number(activeEra.start / 1000n) - erasToSecs
     })
     return entries
   }

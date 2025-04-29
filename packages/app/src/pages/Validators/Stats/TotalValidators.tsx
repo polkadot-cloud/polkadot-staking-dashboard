@@ -10,28 +10,25 @@ import { percentageOf } from 'ui-graphs'
 export const TotalValidators = () => {
   const { t } = useTranslation('pages')
   const {
-    stakingMetrics: { totalValidators, maxValidatorsCount },
+    stakingMetrics: { counterForValidators, maxValidatorsCount },
   } = useApi()
 
   // total validators as percent
   let totalValidatorsAsPercent = 0
-  if (maxValidatorsCount.isGreaterThan(0)) {
-    totalValidatorsAsPercent = totalValidators
-      .div(maxValidatorsCount.dividedBy(100))
-      .toNumber()
+  if (maxValidatorsCount && maxValidatorsCount > 0) {
+    totalValidatorsAsPercent = counterForValidators / (maxValidatorsCount / 100)
   }
 
   const params = {
     label: t('totalValidators'),
     stat: {
-      value: totalValidators.toNumber(),
-      total: maxValidatorsCount.toNumber(),
+      value: counterForValidators,
+      total: maxValidatorsCount,
       unit: '',
     },
-    pieValue: percentageOf(
-      totalValidators.toNumber(),
-      maxValidatorsCount.toNumber()
-    ),
+    pieValue: maxValidatorsCount
+      ? percentageOf(counterForValidators, maxValidatorsCount)
+      : 0,
     tooltip: `${new BigNumber(totalValidatorsAsPercent)
       .decimalPlaces(2)
       .toFormat()}%`,

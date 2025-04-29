@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, rmCommas } from '@w3ux/utils'
-import { PoolUnbond } from 'api/tx/poolUnbond'
+import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import type { PoolMembership } from 'contexts/Pools/types'
+import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
 import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
@@ -29,20 +28,20 @@ export const UnbondMember = ({
   member,
 }: {
   who: string
-  member: PoolMembership
+  member: FetchedPoolMember
 }) => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
   const { network } = useNetwork()
   const { closePrompt } = usePrompt()
+  const { getConsts, serviceApi } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
   const { unit, units } = getNetworkData(network)
 
   const { points } = member
-  const { bondDuration } = consts
-  const freeToUnbond = planckToUnitBn(new BigNumber(rmCommas(points)), units)
+  const { bondDuration } = getConsts(network)
+  const freeToUnbond = planckToUnitBn(new BigNumber(points), units)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
@@ -57,12 +56,10 @@ export const UnbondMember = ({
   }, [freeToUnbond.toString()])
 
   const getTx = () => {
-    let tx = null
     if (!activeAddress) {
-      return tx
+      return
     }
-    tx = new PoolUnbond(network, who, BigInt(points)).tx()
-    return tx
+    return serviceApi.tx.poolUnbond(who, points)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

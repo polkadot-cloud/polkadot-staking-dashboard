@@ -26,7 +26,7 @@ export const useUnstaking = () => {
   // determine if user is fast unstaking.
   const inHead =
     head?.stashes.find((s: AnyJson) => s[0] === activeAddress) ?? undefined
-  const inQueue = queueDeposit?.deposit?.isGreaterThan(0) ?? false
+  const inQueue = queueDeposit?.queue !== undefined && queueDeposit.queue > 0n
 
   const registered = inHead || inQueue
 
@@ -45,7 +45,7 @@ export const useUnstaking = () => {
 
   return {
     getFastUnstakeText,
-    isUnstaking: !inSetup() && !nominees.active.length && active.isZero(),
+    isUnstaking: !inSetup() && !nominees.active.length && active === 0n,
     isFastUnstaking: !!registered,
   }
 }

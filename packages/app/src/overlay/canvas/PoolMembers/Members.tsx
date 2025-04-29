@@ -19,7 +19,7 @@ export const Members = () => {
   const showBlockedPrompt =
     activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer())
 
-  const memberCount = activePool?.bondedPool?.memberCounter ?? '0'
+  const memberCount = activePool?.bondedPool?.memberCounter || 0
 
   const membersListProps = {
     batchKey: 'active_pool_members',
