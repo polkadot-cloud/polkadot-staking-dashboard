@@ -16,7 +16,7 @@
     "@types/react-dom": "^19.1.2",
     "@types/react-helmet": "^6.1.11",
     "@typescript-eslint/parser": "^8.31.1",
-    "@vitejs/plugin-react-swc": "^3.7.0",
+    "@vitejs/plugin-react-swc": "^3.9.0",
     "@w3ux/types": "^2.2.1",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
