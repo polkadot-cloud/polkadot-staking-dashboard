@@ -64,12 +64,11 @@ export const getInitialRpcEndpoints = (network: NetworkId): RpcEndpoints => {
 }
 
 export const getInitialProviderType = (): ProviderType => {
-  const result = localStorage.getItem(ProviderTypeKey) || 'sc'
+  const result = localStorage.getItem(ProviderTypeKey) || 'ws'
   if (['ws', 'sc'].includes(result)) {
     return result as ProviderType
   }
-
-  return 'sc'
+  return 'ws'
 }
 
 export const getInitialNetworkConfig = (): NetworkConfig => {

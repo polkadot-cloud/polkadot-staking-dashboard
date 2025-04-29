@@ -30,12 +30,32 @@ export const getNetworkData = (network: NetworkId) => NetworkList[network]
 export const getSystemChainData = (chain: SystemChainId) =>
   SystemChainList[chain]
 
-// Get default rpc endpoints for a relay chain, and accompanying system chains, for a given network
-export const getDefaultRpcEndpoints = (network: NetworkId) => ({
-  [network]: NetworkList[network].endpoints.defaultRpc,
-  ...Object.fromEntries(
-    Object.entries(SystemChainList)
-      .filter(([, c]) => c.relayChain === network)
-      .map(([id, c]) => [id, c.endpoints.defaultRpc])
-  ),
-})
+// Get default rpc endpoints for a relay chain and accompanying system chains for a given network
+export const getDefaultRpcEndpoints = (network: NetworkId) => {
+  const relayRpcs = NetworkList[network].endpoints.rpc
+  const systemChains = Object.entries(SystemChainList).filter(
+    ([, c]) => c.relayChain === network
+  )
+
+  // Take a random rpc endpoint for the relay chain
+  const relayRpc =
+    Object.values(relayRpcs)[
+      Math.floor(Math.random() * Object.values(relayRpcs).length)
+    ]
+
+  const systemChainRpc = systemChains.reduce(
+    (acc: Record<string, string>, [id, c]) => {
+      const rpc = Object.values(c.endpoints.rpc)[
+        Math.floor(Math.random() * Object.values(c.endpoints.rpc).length)
+      ]
+      acc[id] = rpc
+      return acc
+    },
+    {}
+  )
+
+  return {
+    [network]: relayRpc,
+    ...systemChainRpc,
+  }
+}
