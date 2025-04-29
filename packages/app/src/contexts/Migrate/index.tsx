@@ -43,6 +43,16 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version
       if (localAppVersion !== version) {
+        // Added in 1.9.1
+        localStorage.removeItem('useWebsocket')
+        localStorage.removeItem('connection_type')
+        localStorage.removeItem('polkadot_rpc_endpoint')
+        localStorage.removeItem('polkadot_rpc_endpoints')
+        localStorage.removeItem('kusama_rpc_endpoint')
+        localStorage.removeItem('kusama_rpc_endpoints')
+        localStorage.removeItem('westend_rpc_endpoint')
+        localStorage.removeItem('westend_rpc_endpoints')
+
         // Added in 1.9.0
         //
         // Remove local historical era point data
