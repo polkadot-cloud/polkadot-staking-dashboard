@@ -55,9 +55,13 @@ const StatItem = styled.div`
 export const NetworkStats = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
+  const {
+    relayMetrics: { totalIssuance },
+    stakingMetrics: { totalStaked },
+  } = useApi()
   const { getAverageRewardRate } = useAverageRewardRate()
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
-  const { stakingMetrics, networkMetrics } = useApi()
+  const { stakingMetrics } = useApi()
 
   // Get token icon
   const Token = getChainIcons(network).token
@@ -74,12 +78,7 @@ export const NetworkStats = () => {
 
   // Calculate percentage of supply staked
   const supplyStaked =
-    stakingMetrics?.totalStaked && networkMetrics?.totalIssuance
-      ? stakingMetrics.totalStaked
-          .multipliedBy(100)
-          .dividedBy(networkMetrics.totalIssuance)
-          .toNumber()
-      : 0
+    totalStaked && totalIssuance ? (totalStaked * 100n) / totalIssuance : 0n
 
   return (
     <>
@@ -117,7 +116,9 @@ export const NetworkStats = () => {
               <i className="fa fa-chart-pie"></i>
             </div>
             <div className="stat-content">
-              <div className="stat-value">{formatPercent(supplyStaked)}</div>
+              <div className="stat-value">
+                {formatPercent(Number(supplyStaked))}
+              </div>
               <div className="stat-label">{t('supplyStaked')}</div>
             </div>
           </StatItem>

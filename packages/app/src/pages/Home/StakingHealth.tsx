@@ -48,7 +48,7 @@ export const StakingHealth = () => {
   const { activeAddress } = useActiveAccounts()
   const { inSetup } = useStaking()
   const { inPool } = useActivePool()
-  const { getNominations, getPoolMembership } = useBalances()
+  const { getNominations, getStakingLedger } = useBalances()
   const { formatWithPrefs, avgCommission } = useValidators()
   const { getNominationStatus } = useNominationStatus()
   const navigate = useNavigate()
@@ -72,8 +72,8 @@ export const StakingHealth = () => {
   const isInPool = inPool()
 
   // Get pool information if user is in a pool
-  const membership = getPoolMembership(activeAddress)
-  const poolId = membership?.poolId ? String(membership.poolId) : null
+  const { poolMembership } = getStakingLedger(activeAddress)
+  const poolId = poolMembership?.poolId ? String(poolMembership.poolId) : null
 
   // Get pool metadata if available
   const poolMetadata =

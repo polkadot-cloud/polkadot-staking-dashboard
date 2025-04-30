@@ -52,7 +52,7 @@ const QuickActions = () => {
   const { inSetup } = useStaking()
   const { inPool, activePool } = useActivePool()
   const { isNominating } = useStaking()
-  const { getBalance } = useBalances()
+  const { getAccountBalance, getPendingPoolRewards } = useBalances()
 
   // State to track if help options are expanded
   const [helpExpanded, setHelpExpanded] = useState(false)
@@ -135,10 +135,11 @@ const QuickActions = () => {
   }
 
   // Check if user has a wallet with funds
-  const hasWallet = activeAddress && getBalance(activeAddress)?.free.gt(0)
+  const hasWallet =
+    activeAddress && getAccountBalance(activeAddress).balance.free > 0n
 
   // Get pending rewards for pool member
-  const pendingRewards = activePool?.pendingRewards || 0n
+  const pendingRewards = getPendingPoolRewards(activeAddress)
   const minUnclaimedDisplay = 1000000n
   const hasRewards = pendingRewards > minUnclaimedDisplay
 

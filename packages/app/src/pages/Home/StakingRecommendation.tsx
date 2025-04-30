@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { planckToUnit } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -10,7 +12,6 @@ import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
-import { planckToUnitBn } from 'utils'
 
 // Define network-specific minimum balances
 const NETWORK_MINIMUMS = {
@@ -121,14 +122,14 @@ const ActionButtons = styled.div`
 export const StakingRecommendation = () => {
   const { t } = useTranslation('pages')
   const { activeAddress } = useActiveAccounts()
-  const { getBalance } = useBalances()
+  const { getAccountBalance } = useBalances()
   const navigate = useNavigate()
   const { network } = useNetwork()
+  const { balance } = getAccountBalance(activeAddress)
 
   const { unit, units } = getNetworkData(network)
-  const balance = getBalance(activeAddress)
   const { free } = balance
-  const freeBalance = planckToUnitBn(free, units)
+  const freeBalance = new BigNumber(planckToUnit(free, units))
 
   // Determine if the user has enough balance for direct nomination
   const networkMinimums = NETWORK_MINIMUMS[network]
