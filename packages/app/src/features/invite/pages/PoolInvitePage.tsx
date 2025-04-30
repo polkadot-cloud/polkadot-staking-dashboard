@@ -10,8 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, rmCommas, unitToPlanck } from '@w3ux/utils'
-import { JoinPool } from 'api/tx/joinPool'
+import { ellipsisFn, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
@@ -20,24 +19,23 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import type { ClaimPermission } from 'contexts/Pools/types'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { defaultClaimPermission } from 'controllers/ActivePools/defaults'
-import { Apis } from 'controllers/Apis'
-import { Identities } from 'controllers/Identities'
+import { defaultClaimPermission } from 'global-bus'
+import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { getIdentityDisplay } from 'library/List/Utils'
+import type { RoleIdentities } from 'overlay/canvas/Pool/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import type { ChainId, MaybeAddress, SystemChainId } from 'types'
+import type { ClaimPermission, MaybeAddress } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
-import { planckToUnitBn } from 'utils'
+import { formatIdentities, formatSuperIdentities, planckToUnitBn } from 'utils'
 import {
   ActionSection,
   AddressesSection,
@@ -109,10 +107,11 @@ export const PoolInvitePage = () => {
   const { activeAddress } = useActiveAccounts()
   const location = window.location.search
   const { activePool } = useActivePool()
-  const { isReady } = useApi()
+  const { isReady, serviceApi } = useApi()
   const { bondedPools, poolsMetaData, updateBondedPools } = useBondedPools()
   const { getTransferOptions } = useTransferOptions()
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
+  const { newBatchCall } = useBatchCall()
 
   const [poolDetails, setPoolDetails] = useState<PoolDetails | null>(null)
   const [loading, setLoading] = useState(true)
@@ -121,10 +120,7 @@ export const PoolInvitePage = () => {
   const [error, setError] = useState<string | null>(null)
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null)
   const [claimPermission] = useState<ClaimPermission>(defaultClaimPermission)
-  const [roleIdentities, setRoleIdentities] = useState<{
-    identities: Record<string, unknown>
-    supers: Record<string, unknown>
-  }>({
+  const [roleIdentities, setRoleIdentities] = useState<RoleIdentities>({
     identities: {},
     supers: {},
   })
@@ -145,10 +141,10 @@ export const PoolInvitePage = () => {
   // Set initial bond value only once when component mounts
   useEffect(() => {
     if (transferOptions && bond.bond === '') {
-      const initialBond = planckToUnitBn(
+      const initialBond = planckToUnit(
         transferOptions.transferrableBalance,
         units
-      ).toString()
+      )
       setBond({ bond: initialBond })
     }
   }, [activeAddress, units])
@@ -163,20 +159,17 @@ export const PoolInvitePage = () => {
     if (!addresses.length) {
       return
     }
-
-    const peopleApiId = `people-${network}` as ChainId
-    const peopleApiClient = Apis.getClient(peopleApiId as SystemChainId)
-
-    if (peopleApiClient) {
-      try {
-        const { identities, supers } = await Identities.fetch(
-          peopleApiId,
-          addresses
-        )
-        setRoleIdentities({ identities, supers })
-      } catch (err) {
-        console.error('Failed to fetch role identities:', err)
-      }
+    try {
+      const [identities, supers] = await Promise.all([
+        serviceApi.query.identityOfMulti(addresses),
+        serviceApi.query.superOfMulti(addresses),
+      ])
+      setRoleIdentities({
+        identities: formatIdentities(addresses, identities),
+        supers: formatSuperIdentities(supers),
+      })
+    } catch (err) {
+      console.error('Failed to fetch role identities:', err)
     }
   }
 
@@ -218,17 +211,14 @@ export const PoolInvitePage = () => {
           )
 
           // Format bonded amount - this must match the format used in the details object
-          const bondedAmount = planckToUnitBn(
-            new BigNumber(rmCommas(pool.points)),
-            units
-          )
+          const bondedAmount = planckToUnitBn(new BigNumber(pool.points), units)
             .decimalPlaces(3)
             .toString()
 
           // Format commission if available
           const commission = pool.commission?.current
             ? {
-                current: parseFloat(pool.commission.current[0]),
+                current: pool.commission.current[0],
                 max: pool.commission.max
                   ? parseFloat(pool.commission.max.toString())
                   : 100,
@@ -293,18 +283,19 @@ export const PoolInvitePage = () => {
   // Get the transaction
   const getTx = () => {
     if (!activeAddress || !poolId || !bondValid) {
-      return null
+      return
     }
-
     // Create a transaction to join the pool with the specified bond amount
     const bondAmount = unitToPlanck(bond.bond, units)
-
-    return new JoinPool(
-      network,
+    const txs = serviceApi.tx.joinPool(
       Number(poolId),
       bondAmount,
       claimPermission
-    ).tx()
+    )
+    if (!txs || !txs.length) {
+      return
+    }
+    return newBatchCall(txs, activeAddress)
   }
 
   // Set up the transaction submission

@@ -8,7 +8,7 @@ import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson, Identity, Validator, ValidatorPrefs } from 'types'
+import type { AnyJson, IdentityOf, Validator, ValidatorPrefs } from 'types'
 import { Stat } from 'ui-core/base'
 import { planckToUnitBn } from 'utils'
 import { AverageCommission } from '../pages/Stats/AverageCommission'
@@ -38,7 +38,7 @@ interface NominateValidatorsStepProps {
   selectedValidators: string[]
   setSelectedValidators: (validators: string[]) => void
   validValidators: ValidatorWithPrefs[]
-  validatorIdentities: Record<string, Identity>
+  validatorIdentities: Record<string, IdentityOf>
   validatorSupers: Record<string, AnyJson>
   getValidatorTotalStake: GetValidatorTotalStake
   stakers: Array<{ address: string }>
@@ -94,8 +94,8 @@ export const NominateValidatorsStep: React.FC<NominateValidatorsStepProps> = ({
         <div className="validator-grid">
           {validValidators.map(({ address, prefs }) => {
             const identityDisplay = getIdentityDisplay(
-              validatorIdentities[address] || null,
-              validatorSupers[address] || null
+              validatorIdentities[address],
+              validatorSupers[address]
             )
 
             // Format stake and commission values

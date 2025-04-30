@@ -2,18 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils'
-import { NewNominator } from 'api/tx/newNominator'
-import { StakingNominate } from 'api/tx/stakingNominate'
 import type BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
@@ -45,21 +43,7 @@ import {
 } from './Wrappers'
 
 export const ValidatorInvitePage = () => {
-  const { t } = useTranslation('invite')
-  const { activeAddress, activeProxy } = useActiveAccounts()
-  const { isReady } = useApi()
-  const { modal } = useOverlay()
-  const navigate = useNavigate()
-  const { network: urlNetwork, validators } = useParams<{
-    network: string
-    validators: string
-  }>()
-  const location = window.location.search
-  const { getBondedAccount } = useBonded()
-  const { getNominations } = useBalances()
-  const { getAccount, accountHasSigner } = useImportedAccounts()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { inSetup } = useStaking()
+  const { t, i18n } = useTranslation('invite')
   const {
     formatWithPrefs,
     validatorIdentities,
@@ -67,14 +51,28 @@ export const ValidatorInvitePage = () => {
     fetchValidatorPrefs,
     getValidatorTotalStake,
   } = useValidators()
+  const { modal } = useOverlay()
+  const navigate = useNavigate()
+  const { inSetup } = useStaking()
   const { network } = useNetwork()
+  const { isReady, serviceApi } = useApi()
+  const { getSignerWarnings } = useSignerWarnings()
+  const { accountHasSigner } = useImportedAccounts()
+  const { getNominations, getStakingLedger } = useBalances()
+  const { activeAddress, activeProxy } = useActiveAccounts()
+  const { network: urlNetwork, validators } = useParams<{
+    network: string
+    validators: string
+  }>()
+
+  const { controllerUnmigrated } = getStakingLedger(activeAddress)
+  const location = window.location.search
   const largestTxFee = useBondGreatestFee({ bondFor: 'nominator' })
   const { getPayeeItems } = usePayeeConfig()
   const { newBatchCall } = useBatchCall()
   const {
     eraStakers: { stakers },
   } = useStaking()
-  const { i18n } = useTranslation()
 
   // Extract language from URL query parameters
   useEffect(() => {
@@ -121,12 +119,7 @@ export const ValidatorInvitePage = () => {
   const [payee, setPayee] = useState({ type: 'Stash' })
   const [payeeAccount, setPayeeAccount] = useState<MaybeAddress>(null)
 
-  // Get controller account for signing transactions
-  const controller = activeAddress ? getBondedAccount(activeAddress) : null
-
-  // For staking operations, we need to use the controller account to sign
-  // This is crucial - for nominator operations, we must use the controller account
-  const signingAccount = inSetup() ? activeAddress : controller
+  const signingAccount = activeAddress
 
   // Get existing nominations for validation
   const existingNominations = getNominations(activeAddress)
@@ -213,20 +206,17 @@ export const ValidatorInvitePage = () => {
   // Get the transaction to submit
   const getTx = () => {
     if (!activeAddress || !bondValid || selectedValidators.length === 0) {
-      return null
+      return
     }
 
     try {
-      // Format nominees properly with the expected structure
-      const formattedNominees = selectedValidators.map((validator) => ({
-        type: 'Id',
-        value: validator,
-      }))
-
       // Create the payee object in the correct format based on type
       let payeeConfig
       if (payee.type === 'Account') {
-        payeeConfig = { type: 'Account' as const, value: payeeAccount || '' }
+        payeeConfig = {
+          type: 'Account' as const,
+          value: new AccountId32(payeeAccount || ''),
+        }
       } else {
         payeeConfig = {
           type: payee.type as 'Stash' | 'Staked' | 'None' | 'Controller',
@@ -235,36 +225,31 @@ export const ValidatorInvitePage = () => {
 
       if (inSetup()) {
         // For new nominators, we need to bond and nominate
-        const tx = new NewNominator(
-          network,
+        const tx = serviceApi.tx.newNominator(
           unitToPlanck(bond.bond, units),
           payeeConfig,
-          formattedNominees
-        ).tx()
-
+          selectedValidators
+        )
         if (!tx) {
-          return null
+          return
         }
-
         // Batch the bond and nominate transactions together
         return newBatchCall(tx, activeAddress)
       } else {
         // For existing nominators, just nominate
-        return new StakingNominate(network, formattedNominees).tx()
+        return serviceApi.tx.stakingNominate(selectedValidators)
       }
     } catch (error) {
       console.error('Error creating transaction:', error)
-      return null
+      return
     }
   }
 
   // Check if the controller account is imported and has a signer
-  const controllerAccount = getAccount(controller)
-  const controllerImported = !!controllerAccount
   const canSign =
     accountHasSigner(activeAddress) ||
     (activeProxy && accountHasSigner(activeProxy.address)) ||
-    (!inSetup() && controllerImported && accountHasSigner(controller))
+    (!inSetup() && !controllerUnmigrated)
 
   // Set up the transaction submission
   const submitExtrinsic = useSubmitExtrinsic({
@@ -295,9 +280,9 @@ export const ValidatorInvitePage = () => {
     warnings.push(t('readOnly', { ns: 'modals' }))
   }
 
-  // Add warning if controller not imported
-  if (!inSetup() && !controllerImported) {
-    warnings.push(t('controllerAccountNotImported', { ns: 'modals' }))
+  // Add warning if controller not migrated
+  if (!inSetup() && controllerUnmigrated) {
+    warnings.push(t('controllerNotMigrated', { ns: 'modals' }))
   }
 
   // Add warning if no nominations

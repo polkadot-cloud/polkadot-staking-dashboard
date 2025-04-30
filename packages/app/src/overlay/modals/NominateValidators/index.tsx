@@ -1,14 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { NewNominator } from 'api/tx/newNominator'
-import { StakingNominate } from 'api/tx/stakingNominate'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
+import { useBatchCall } from 'hooks/useBatchCall'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { Warning } from 'library/Form/Warning'
@@ -20,28 +18,24 @@ import { Close, useOverlay } from 'ui-overlay'
 
 export const NominateValidators = () => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { getBondedAccount } = useBonded()
-  const { getNominations } = useBalances()
-  const { activeAddress, activeProxy } = useActiveAccounts()
-  const { getAccount, accountHasSigner } = useImportedAccounts()
-  const { getSignerWarnings } = useSignerWarnings()
   const { inSetup } = useStaking()
+  const { serviceApi } = useApi()
+  const { newBatchCall } = useBatchCall()
+  const { getSignerWarnings } = useSignerWarnings()
+  const { getNominations, getStakingLedger } = useBalances()
+  const { activeAddress, activeProxy } = useActiveAccounts()
+  const { accountHasSigner } = useImportedAccounts()
   const {
     setModalStatus,
     config: { options },
   } = useOverlay().modal
+  const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
   // Extract options from modal
   const { nominations, bondFor, bondAmount, nominees } = options || {}
   const isNominator = bondFor === 'nominator'
 
-  // Get controller account
-  const controller = getBondedAccount(activeAddress)
-
-  // For staking operations, we need to use the controller account to sign
-  // This is crucial - for nominator operations, we must use the controller account
-  const signingAccount = isNominator ? controller : activeAddress
+  const signingAccount = activeAddress
 
   // Check if this is a new nominator or existing one
   const isNewNominator = inSetup()
@@ -64,7 +58,7 @@ export const NominateValidators = () => {
   // Get the transaction to submit
   const getTx = () => {
     if (!valid || !activeAddress) {
-      return null
+      return
     }
 
     try {
@@ -75,30 +69,31 @@ export const NominateValidators = () => {
       }))
 
       if (isNewNominator) {
-        // For new nominators, we need to bond and nominate
-        return new NewNominator(
-          network,
+        const txs = serviceApi.tx.newNominator(
           BigInt(bondAmount.toString()),
           { type: 'Stash' }, // Default payee
           formattedNominees
-        ).tx()
+        )
+        if (!txs || !txs.length) {
+          return
+        }
+        // For new nominators, we need to bond and nominate
+        return newBatchCall(txs, signingAccount)
       } else {
         // For existing nominators, just nominate
-        return new StakingNominate(network, formattedNominees).tx()
+        return serviceApi.tx.stakingNominate(nominees || [])
       }
     } catch (error) {
       console.error('Error creating transaction:', error)
-      return null
+      return
     }
   }
 
   // Check if the controller account is imported and has a signer
-  const controllerAccount = getAccount(controller)
-  const controllerImported = !!controllerAccount
   const canSign =
     accountHasSigner(activeAddress) ||
     (activeProxy && accountHasSigner(activeProxy.address)) ||
-    (isNominator && controllerImported && accountHasSigner(controller))
+    (isNominator && !controllerUnmigrated)
 
   // Submit extrinsic
   const submitExtrinsic = useSubmitExtrinsic({
@@ -123,8 +118,8 @@ export const NominateValidators = () => {
   }
 
   // Add warning if controller not imported
-  if (isNominator && !controllerImported) {
-    warnings.push(t('controllerAccountNotImported', { ns: 'modals' }))
+  if (isNominator && controllerUnmigrated) {
+    warnings.push(t('controllerNotMigrated', { ns: 'modals' }))
   }
 
   // Add warning if no nominations
@@ -174,7 +169,6 @@ export const NominateValidators = () => {
       <SubmitTx
         valid={valid && warnings.length === 0}
         submitText={buttonText}
-        fromController={isNominator}
         {...submitExtrinsic}
       />
     </>
