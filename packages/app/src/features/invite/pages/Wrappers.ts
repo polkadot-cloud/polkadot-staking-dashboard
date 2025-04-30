@@ -24,6 +24,8 @@ export const Subheading = styled.div`
     margin-left: 0;
     display: flex;
     align-items: center;
+    font-family: InterSemiBold, sans-serif;
+    font-size: 1.1rem;
 
     > button {
       margin-left: 0.75rem;
@@ -60,14 +62,15 @@ export const ShareSection = styled.div`
   max-width: 100%;
 
   h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    font-family: InterSemiBold, sans-serif;
   }
 
   p {
     color: var(--text-color-secondary);
     margin-bottom: 1rem;
+    font-size: 1rem;
   }
 
   @media (max-width: ${SectionFullWidthThreshold}px) {
@@ -185,7 +188,6 @@ export const ValidatorListContainer = styled.div`
 
         .name {
           font-size: 0.95rem;
-          font-weight: 500;
           font-family: InterSemiBold, sans-serif;
           white-space: nowrap;
           overflow: hidden;
@@ -203,7 +205,6 @@ export const ValidatorListContainer = styled.div`
 
         .commission-value {
           font-size: 0.9rem;
-          font-weight: 500;
           font-family: InterSemiBold, sans-serif;
           color: var(--text-color-primary);
         }
@@ -438,8 +439,7 @@ export const StatIcon = styled.div`
 export const StatContent = styled.div``
 
 export const StatValue = styled.div`
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.1rem;
   font-family: InterSemiBold, sans-serif;
   margin-bottom: 0.25rem;
   display: flex;
@@ -453,12 +453,11 @@ export const StatLabel = styled.div`
   color: var(--text-color-secondary);
 `
 
-export const SectionTitle = styled.h4`
+export const SectionTitle = styled.h3`
   font-size: 1.1rem;
-  margin-bottom: 1rem;
-  color: var(--text-color-primary);
+  margin: 0 0 0.75rem 0;
   font-family: InterSemiBold, sans-serif;
-  padding: 0 0.25rem;
+  color: var(--text-color-primary);
 `
 
 export const AddressesSection = styled.div`
@@ -488,7 +487,6 @@ export const AddressItem = styled.div`
 `
 
 export const AddressLabel = styled.div`
-  font-weight: 600;
   font-family: InterSemiBold, sans-serif;
   color: var(--text-color-secondary);
   text-transform: capitalize;
@@ -565,11 +563,9 @@ export const RoleItem = styled.div`
 `
 
 export const RoleLabel = styled.div`
-  font-weight: 600;
   font-family: InterSemiBold, sans-serif;
   color: var(--text-color-secondary);
   text-transform: capitalize;
-  min-width: 80px;
 `
 
 export const RoleValue = styled.div`
@@ -590,7 +586,7 @@ export const RoleText = styled.div`
 `
 
 export const RoleIdentity = styled.div`
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -660,7 +656,6 @@ export const StepHeader = styled.div<{ $active: boolean; $complete: boolean }>`
   cursor: pointer;
 
   .label {
-    font-weight: 600;
     font-family: InterSemiBold, sans-serif;
   }
 `
@@ -675,7 +670,7 @@ export const StepContent = styled.div`
 export const StepDescription = styled.p`
   color: var(--text-color-secondary);
   margin-bottom: 1.25rem;
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.5;
 `
 
@@ -722,17 +717,15 @@ export const SummaryRow = styled.div`
   }
 
   .label {
-    font-weight: 500;
     font-family: InterSemiBold, sans-serif;
     color: var(--text-color-secondary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .value {
-    font-weight: 600;
     font-family: InterSemiBold, sans-serif;
     color: var(--text-color-primary);
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 `
 
@@ -754,8 +747,7 @@ export const ValidatorIdentity = styled.div`
   max-width: 70%;
 
   .name {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.1rem;
     font-family: InterSemiBold, sans-serif;
     white-space: nowrap;
     overflow: hidden;
@@ -780,11 +772,10 @@ export const CommissionDisplay = styled.div`
 
   .label {
     color: var(--text-color-secondary);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
   .value {
-    font-weight: 600;
     font-family: InterSemiBold, sans-serif;
     color: var(--text-color-primary);
   }
@@ -799,23 +790,20 @@ export const StatusDisplay = styled.div`
   .status {
     padding: 0.2rem 0.6rem;
     border-radius: 0.25rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     background: var(--button-secondary-background);
     color: var(--text-color-secondary);
-    font-weight: 500;
     font-family: InterSemiBold, sans-serif;
 
     &.active {
       background: var(--status-success-color-transparent);
       color: var(--status-success-color);
-      font-weight: 600;
     }
   }
 
   .dot-amount {
-    font-weight: 500;
     font-family: InterSemiBold, sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--text-color-secondary);
   }
 `
@@ -858,8 +846,7 @@ export const StepIndicator = styled.div<{
       : $complete
         ? 'var(--accent-color-primary)'
         : 'var(--text-color-secondary)'};
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.9rem;
   font-family: InterSemiBold, sans-serif;
   margin-right: 0.75rem;
   transition: all var(--transition-duration);
