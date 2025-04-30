@@ -124,10 +124,14 @@ export const ValidatorInvitePage = () => {
   // Get existing nominations for validation
   const existingNominations = getNominations(activeAddress)
 
-  // Extract validators from URL params
+  // Effect to fetch validator data when API is ready
   useEffect(() => {
-    if (validators) {
+    const fetchValidators = async () => {
       try {
+        if (!isReady || !serviceApi || !validators || !urlNetwork) {
+          return
+        }
+
         // Validate network matches
         if (network !== urlNetwork) {
           setLoadingError(
@@ -136,29 +140,46 @@ export const ValidatorInvitePage = () => {
           return
         }
 
-        // Split the list by delimiter and filter out empty values
-        const extractedValidators = validators.split('|').filter(Boolean)
+        console.log('Fetching validators from URL:', validators)
+        // Split the validator string by the delimiter
+        const validatorList = validators.split('|').filter(Boolean)
+        setUrlValidators(validatorList)
 
-        if (extractedValidators.length > 0) {
-          setUrlValidators(extractedValidators)
-          setSelectedValidators(extractedValidators)
-
-          // Mark nominate step as complete if validators are selected
-          setNominateComplete(extractedValidators.length > 0)
-
-          // Fetch validator preferences
-          const validatorAddresses = extractedValidators.map((address) => ({
-            address,
-          }))
-          fetchValidatorPrefs(validatorAddresses)
-        } else {
-          setLoadingError(t('noValidatorsInUrl'))
+        if (validatorList.length === 0) {
+          setLoadingError(t('noValidatorsFound'))
+          return
         }
+
+        // Convert to validator addresses format
+        const validatorAddresses = validatorList.map((address) => ({
+          address,
+        }))
+
+        // Fetch validator preferences
+        await fetchValidatorPrefs(validatorAddresses)
+
+        // Set selected validators and mark nominate step as complete
+        setSelectedValidators(validatorList)
+        setNominateComplete(validatorList.length > 0)
       } catch (error) {
-        setLoadingError(t('invalidValidatorsInUrl'))
+        console.error('Error fetching validators:', error)
+        setLoadingError(t('errorLoadingValidators'))
       }
     }
-  }, [validators, network, urlNetwork, fetchValidatorPrefs, t])
+
+    // Only attempt to fetch validators when API is ready
+    if (isReady) {
+      fetchValidators()
+    }
+  }, [
+    isReady,
+    serviceApi,
+    validators,
+    urlNetwork,
+    network,
+    fetchValidatorPrefs,
+    t,
+  ])
 
   // Update payout completion status when payee is valid
   useEffect(() => {

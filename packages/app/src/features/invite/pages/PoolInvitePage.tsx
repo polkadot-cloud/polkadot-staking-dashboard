@@ -19,7 +19,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { defaultClaimPermission } from 'global-bus'
 import { useBatchCall } from 'hooks/useBatchCall'
@@ -35,7 +34,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import type { ClaimPermission, MaybeAddress } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
-import { formatIdentities, formatSuperIdentities, planckToUnitBn } from 'utils'
+import { formatIdentities, formatSuperIdentities } from 'utils'
 import {
   ActionSection,
   AddressesSection,
@@ -108,7 +107,7 @@ export const PoolInvitePage = () => {
   const location = window.location.search
   const { activePool } = useActivePool()
   const { isReady, serviceApi } = useApi()
-  const { bondedPools, poolsMetaData, updateBondedPools } = useBondedPools()
+  const { bondedPools, updateBondedPools } = useBondedPools()
   const { getTransferOptions } = useTransferOptions()
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
   const { newBatchCall } = useBatchCall()
@@ -173,109 +172,108 @@ export const PoolInvitePage = () => {
     }
   }
 
-  // Get pool details
+  // Effect to fetch pool details when API is ready
   useEffect(() => {
-    let isMounted = true
-
-    const getPoolDetails = async () => {
-      if (!poolId || !isReady) {
+    const fetchPoolDetails = async () => {
+      if (!isReady || !serviceApi || !poolId) {
         return
       }
 
+      setLoading(true)
+      setError(null)
+
       try {
-        if (isMounted) {
-          setLoading(true)
-        }
-
-        // Find the pool in bondedPools by converting poolId to number
-        const numericPoolId = parseInt(poolId, 10)
-
-        // If bondedPools is empty, wait for data to load
-        if (bondedPools.length === 0) {
-          return
-        }
-
-        // Try to find the pool by ID
-        let pool = bondedPools.find((p) => p.id === numericPoolId)
-
-        // If pool not found by direct ID comparison, try string conversion as fallback
-        if (!pool) {
-          pool = bondedPools.find((p) => p.id.toString() === poolId)
-        }
-
-        if (pool && isMounted) {
-          // Get pool display name from metadata
-          const poolName = determinePoolDisplay(
-            pool.addresses?.stash,
-            poolsMetaData[numericPoolId]
-          )
-
-          // Format bonded amount - this must match the format used in the details object
-          const bondedAmount = planckToUnitBn(new BigNumber(pool.points), units)
-            .decimalPlaces(3)
-            .toString()
-
-          // Format commission if available
-          const commission = pool.commission?.current
-            ? {
-                current: pool.commission.current[0],
-                max: pool.commission.max
-                  ? parseFloat(pool.commission.max.toString())
-                  : 100,
-              }
-            : undefined
-
-          const details: PoolDetails = {
-            id: poolId,
-            metadata: poolName,
-            state: pool.state?.toString() || 'Open',
-            memberCount: parseInt(pool.memberCounter?.toString() || '0', 10),
-            commission,
-            totalBonded: bondedAmount,
-            addresses: {
-              stash: pool.addresses?.stash || '',
-              reward: pool.addresses?.reward || '',
-            },
-            roles: pool.roles
-              ? {
-                  root: pool.roles.root || null,
-                  nominator: pool.roles.nominator || null,
-                  bouncer: pool.roles.bouncer || null,
-                  depositor: pool.roles.depositor || null,
-                }
-              : undefined,
-          }
-
+        const details = await getPoolDetails()
+        if (details) {
           setPoolDetails(details)
 
-          // Fetch role identities
-          if (pool.roles) {
-            fetchRoleIdentities(
-              Object.values(pool.roles).filter(Boolean) as string[]
+          // Fetch role identities if roles are present
+          if (details.roles) {
+            const addresses = Object.values(details.roles).filter(
+              (address): address is string => !!address
             )
+            if (addresses.length > 0) {
+              fetchRoleIdentities(addresses)
+            }
           }
-
-          setLoading(false)
-          setError(null)
-        } else if (isMounted) {
-          setError(t('poolNotFound'))
-          setLoading(false)
         }
-      } catch (err) {
-        console.error('Error fetching pool details:', err)
-        if (isMounted) {
-          setError(t('errorFetchingPool'))
-          setLoading(false)
-        }
+      } catch (poolError) {
+        console.error('Error fetching pool details:', poolError)
+        setError(t('errorLoadingPool'))
+      } finally {
+        setLoading(false)
       }
     }
 
-    getPoolDetails()
-
-    return () => {
-      isMounted = false
+    // Only attempt to fetch pool details when API is ready
+    if (isReady) {
+      fetchPoolDetails()
     }
-  }, [poolId, isReady, bondedPools, poolsMetaData, t, units])
+  }, [isReady, serviceApi, poolId])
+
+  // Function to fetch pool details
+  const getPoolDetails = async (): Promise<PoolDetails | null> => {
+    try {
+      if (!serviceApi || !poolId) {
+        return null
+      }
+
+      const poolIdNum = Number(poolId)
+
+      // Fetch bonded pool data
+      const bondedPool = await serviceApi.query.bondedPool(poolIdNum)
+      if (!bondedPool) {
+        setError(t('poolNotFound'))
+        return null
+      }
+
+      // Get pool metadata
+      const metadataHex = (
+        await serviceApi.query.poolMetadataMulti([poolIdNum])
+      )[0]
+      const metadata = metadataHex
+        ? new TextDecoder().decode(Buffer.from(metadataHex.substring(2), 'hex'))
+        : ''
+
+      // Create addresses object for the pool
+      const poolAddresses = {
+        stash: '', // We'll need to get this from somewhere else if needed
+        reward: '', // We'll need to get this from somewhere else if needed
+      }
+
+      // Format pool details
+      const details: PoolDetails = {
+        id: poolId,
+        metadata: metadata || `${t('pool')} #${poolId}`,
+        state: bondedPool.state || 'Open',
+        memberCount: Number(bondedPool.memberCounter || 0),
+        commission: bondedPool.commission
+          ? {
+              current: bondedPool.commission.current?.[0]
+                ? Number(bondedPool.commission.current[0]) / 10000000
+                : 0,
+              max: bondedPool.commission.max
+                ? Number(bondedPool.commission.max) / 10000000
+                : 0,
+            }
+          : undefined,
+        totalBonded: planckToUnit(bondedPool.points?.toString() || '0', units),
+        addresses: poolAddresses,
+        roles: {
+          root: bondedPool.roles?.root || null,
+          nominator: bondedPool.roles?.nominator || null,
+          bouncer: bondedPool.roles?.bouncer || null,
+          depositor: bondedPool.roles?.depositor || null,
+        },
+      }
+
+      return details
+    } catch (poolError) {
+      console.error('Error getting pool details:', poolError)
+      setError(t('errorLoadingPool'))
+      return null
+    }
+  }
 
   // Check if user is already in a pool
   const userAlreadyInPool = activePool !== null
