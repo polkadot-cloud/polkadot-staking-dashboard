@@ -15,6 +15,9 @@ import 'styles/fonts/font.scss'
 import 'styles/theme/index.scss'
 import 'styles/theme/theme.scss'
 
+// Global services
+import { initDedotService } from 'dedot-api'
+
 const rootElement = document.getElementById('root')
 if (!rootElement) {
   throw new Error('Failed to find the root element')
@@ -28,6 +31,9 @@ if (
 ) {
   localStorage.removeItem('lng_resources')
 }
+
+// Initialise global api service
+initDedotService()
 
 const root = createRoot(rootElement)
 

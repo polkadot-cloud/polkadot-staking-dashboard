@@ -8,14 +8,13 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
+import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
-import type BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useHelp } from 'contexts/Help'
@@ -30,21 +29,19 @@ import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages')
   const {
     isReady,
-    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+    stakingMetrics: { erasToCheckPerBlock },
   } = useApi()
   const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
-  const { getLedger } = useBalances()
-  const { getBondedAccount } = useBonded()
   const { openModal } = useOverlay().modal
+  const { getStakingLedger } = useBalances()
   const { isFastUnstaking } = useUnstaking()
   const { activeAddress } = useActiveAccounts()
   const { getFastUnstakeText } = useUnstaking()
@@ -53,11 +50,10 @@ export const ManageBond = () => {
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
 
+  const { ledger } = getStakingLedger(activeAddress)
   const { units } = getNetworkData(network)
   const Token = getChainIcons(network).token
-  const controller = getBondedAccount(activeAddress)
-  const ledger = getLedger({ stash: activeAddress })
-  const { active }: { active: BigNumber } = ledger
+  const active = ledger?.active || 0n
   const allTransferOptions = getTransferOptions(activeAddress)
 
   const { freeBalance } = allTransferOptions
@@ -66,13 +62,13 @@ export const ManageBond = () => {
 
   // Determine whether to display fast unstake button or regular unstake button.
   const unstakeButton =
-    fastUnstakeErasToCheckPerBlock > 0 &&
+    erasToCheckPerBlock > 0 &&
     !nominationStatus.nominees.active.length &&
     fastUnstakeStatus !== null &&
     !exposed ? (
       <ButtonPrimary
         size="md"
-        disabled={isReadOnlyAccount(controller)}
+        disabled={isReadOnlyAccount(activeAddress)}
         text={getFastUnstakeText()}
         iconLeft={faBolt}
         onClick={() => {
@@ -84,7 +80,9 @@ export const ManageBond = () => {
         size="md"
         text={t('unstake')}
         iconLeft={faSignOutAlt}
-        disabled={!isReady || isReadOnlyAccount(controller) || !activeAddress}
+        disabled={
+          !isReady || isReadOnlyAccount(activeAddress) || !activeAddress
+        }
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
       />
     )
@@ -105,7 +103,7 @@ export const ManageBond = () => {
           <Token />
           <Odometer
             value={minDecimalPlaces(
-              planckToUnitBn(active, units).toFormat(),
+              new BigNumber(planckToUnit(active, units)).toFormat(),
               2
             )}
             zeroDecimals={2}
@@ -147,11 +145,11 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeader>
       <BondedChart
-        active={planckToUnitBn(active, units)}
-        unlocking={planckToUnitBn(totalUnlocking, units)}
-        unlocked={planckToUnitBn(totalUnlocked, units)}
-        free={planckToUnitBn(freeBalance, units)}
-        inactive={active.isZero()}
+        active={new BigNumber(planckToUnit(active, units))}
+        unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
+        unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
+        free={new BigNumber(planckToUnit(freeBalance, units))}
+        inactive={active === 0n}
       />
     </>
   )

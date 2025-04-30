@@ -17,22 +17,21 @@ export const ActiveNominators = () => {
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0
-  if (counterForNominators.isGreaterThan(0)) {
-    totalNominatorsAsPercent =
-      totalActiveNominators / counterForNominators.dividedBy(100).toNumber()
+  if (counterForNominators > 0) {
+    totalNominatorsAsPercent = percentageOf(
+      totalActiveNominators,
+      counterForNominators
+    )
   }
 
   const params = {
     label: t('activeNominators'),
     stat: {
       value: totalActiveNominators,
-      total: counterForNominators.toNumber(),
+      total: counterForNominators,
       unit: '',
     },
-    pieValue: percentageOf(
-      totalActiveNominators,
-      counterForNominators.toNumber()
-    ),
+    pieValue: totalNominatorsAsPercent,
     tooltip: `${new BigNumber(totalNominatorsAsPercent)
       .decimalPlaces(2)
       .toFormat()}%`,

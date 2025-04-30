@@ -2,62 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/types'
-import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types'
-import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types'
-import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types'
-import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types'
-import type {
-  APIEventDetail,
-  EraRewardPointsEvent,
-  PapiReadyEvent,
-  TxSubmissionItem,
-} from 'api/types'
-import type {
-  APIActiveEra,
-  APINetworkMetrics,
-  APIPoolsConfig,
-  APIStakingMetrics,
-} from 'contexts/Api/types'
-import type { ActiveBalance } from 'contexts/Balances/types'
-import type { BondedAccount } from 'contexts/Bonded/types'
-import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
+import type { TxSubmissionItem } from 'controllers/TxSubmission/types'
 import type { FC } from 'react'
-import type { AnyJson, DetailActivePool } from 'types'
 
 declare global {
   interface Window {
-    walletExtension?: AnyJson
+    walletExtension?: {
+      isNovaWallet?: boolean
+    }
     injectedWeb3?: Record<string, ExtensionInjected>
     opera?: boolean
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>
-    'api-status': CustomEvent<APIEventDetail>
-    'api-ready': CustomEvent<PapiReadyEvent>
     'online-status': CustomEvent<OnlineStatusEvent>
-    'new-block-number': CustomEvent<BlockNumberEventDetail>
-    'new-network-metrics': CustomEvent<{
-      networkMetrics: APINetworkMetrics
-    }>
-    'new-active-era': CustomEvent<{ activeEra: APIActiveEra }>
-    'new-era-reward-points': CustomEvent<EraRewardPointsEvent>
-    'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>
-    'new-staking-metrics': CustomEvent<{
-      stakingMetrics: APIStakingMetrics
-    }>
-    'new-active-pool': CustomEvent<DetailActivePool>
-    'removed-active-pool': CustomEvent<{ address: string; poolId: string }>
-    'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
-    'new-fast-unstake-config': CustomEvent<FastUnstakeConfigResult>
-    'new-fast-unstake-deposit': CustomEvent<FastUnstakeQueueResult>
-    'new-account-proxies': CustomEvent<AccountProxiesEvent>
-    'new-bonded-account': CustomEvent<BondedAccount>
     'new-sync-status': CustomEvent<SyncEvent>
-    'new-external-account': CustomEvent<{ address: string }>
-    'new-account-balance': CustomEvent<ActiveBalance & { address: string }>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }
@@ -74,7 +36,7 @@ export interface PageItem {
   uri: string
   hash: string
   Entry: FC<PageProps>
-  lottie: AnyJson
+  lottie: unknown
   bullet?: BulletType
 }
 
@@ -87,11 +49,5 @@ export interface PageProps {
 interface PageProp {
   key: string
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyApi = any
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyMetaBatch = any
 
 export type BulletType = 'success' | 'accent' | 'warning' | 'danger'

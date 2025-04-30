@@ -6,7 +6,7 @@ import type { ActivePool } from 'types'
 
 export interface PoolAccountProps {
   address: string | null
-  pool: ActivePool | null
+  pool: ActivePool | undefined
 }
 
 export interface PoolsTabsContextInterface {

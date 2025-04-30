@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isValidAddress } from '@w3ux/utils'
-import { StakingSetPayee } from 'api/tx/stakingSetPayee'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
-import { useNetwork } from 'contexts/Network'
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types'
+import { AccountId32 } from 'dedot/codecs'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -25,16 +24,14 @@ import { useOverlay } from 'ui-overlay'
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { getPayee } = useBalances()
-  const { getBondedAccount } = useBonded()
+  const { serviceApi } = useApi()
+  const { getStakingLedger } = useBalances()
   const { getPayeeItems } = usePayeeConfig()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { getSignerWarnings } = useSignerWarnings()
 
-  const controller = getBondedAccount(activeAddress)
-  const payee = getPayee(activeAddress)
+  const payee = getStakingLedger(activeAddress).payee
 
   const DefaultSelected: PayeeConfig = {
     destination: null,
@@ -42,7 +39,7 @@ export const UpdatePayee = () => {
   }
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAddress>(payee.account)
+  const [account, setAccount] = useState<MaybeAddress>(payee?.account || null)
 
   // Store the currently selected payee option.
   const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected)
@@ -70,27 +67,26 @@ export const UpdatePayee = () => {
 
   const getTx = () => {
     if (!selected.destination) {
-      return null
+      return
     }
     if (selected.destination === 'Account' && !selected.account) {
-      return null
+      return
     }
-    return new StakingSetPayee(
-      network,
+    return serviceApi.tx.stakingSetPayee(
       !isComplete()
-        ? { type: 'Staked', value: undefined }
+        ? { type: 'Staked' }
         : selected.destination === 'Account'
           ? {
               type: 'Account',
-              value: selected.account as string,
+              value: new AccountId32(selected.account as string),
             }
-          : { type: selected.destination, value: undefined }
-    ).tx()
+          : { type: selected.destination }
+    )
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: controller,
+    from: activeAddress,
     shouldSubmit: isComplete(),
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -105,7 +101,7 @@ export const UpdatePayee = () => {
   // Inject default value after component mount.
   useEffect(() => {
     const initialSelected = getPayeeItems(true).find(
-      (item) => item.value === payee.destination
+      (item) => item.value === payee?.destination
     )
     setSelected(
       initialSelected
@@ -158,7 +154,11 @@ export const UpdatePayee = () => {
           ))}
         </SelectItems>
       </Padding>
-      <SubmitTx fromController valid={isComplete()} {...submitExtrinsic} />
+      <SubmitTx
+        requiresMigratedController
+        valid={isComplete()}
+        {...submitExtrinsic}
+      />
     </>
   )
 }

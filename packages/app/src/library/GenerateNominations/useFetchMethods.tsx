@@ -138,12 +138,7 @@ export const useFetchMehods = () => {
     const parachainActive =
       applyFilter(
         ['active'],
-        [
-          'all_commission',
-          'blocked_nominations',
-          'missing_identity',
-          'not_parachain_validator',
-        ],
+        ['all_commission', 'blocked_nominations', 'missing_identity'],
         all
       ).filter(
         (n: Validator) => !nominations.find((o) => o.address === n.address)

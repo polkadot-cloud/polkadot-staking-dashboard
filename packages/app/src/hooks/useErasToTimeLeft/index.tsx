@@ -1,28 +1,26 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 
 export const useErasToTimeLeft = () => {
-  const { consts } = useApi()
-  const { epochDuration, expectedBlockTime, sessionsPerEra } = consts
+  const { getConsts } = useApi()
+  const { network } = useNetwork()
+  const { epochDuration, expectedBlockTime, sessionsPerEra } =
+    getConsts(network)
 
-  // converts a number of eras to timeleft in seconds.
-  const erasToSeconds = (eras: BigNumber) => {
-    if (!eras.isGreaterThan(0)) {
+  // Converts a number of eras to timeleft in seconds
+  const erasToSeconds = (eras: bigint | number): number => {
+    if (eras <= 0) {
       return 0
     }
-    // store the duration of an era in number of blocks.
-    const eraDurationBlocks = epochDuration.multipliedBy(sessionsPerEra)
+    // Store the duration of an era in number of blocks
+    const eraDurationBlocks = epochDuration * BigInt(sessionsPerEra)
     // estimate the duration of the era in seconds.
-    const eraDuration = eraDurationBlocks
-      .multipliedBy(expectedBlockTime)
-      .multipliedBy(0.001)
-      .integerValue()
-
-    // multiply by number of eras.
-    return eras.multipliedBy(eraDuration).toNumber()
+    const eraDuration = (eraDurationBlocks * expectedBlockTime) / 1000n
+    // Multiply by number of eras
+    return Number(eras) * Number(eraDuration)
   }
 
   return {

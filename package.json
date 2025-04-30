@@ -10,17 +10,17 @@
     "lint:fix": "eslint './**' --fix && prettier --write ."
   },
   "devDependencies": {
-    "@eslint/js": "^9.24.0",
+    "@eslint/js": "^9.25.1",
     "@types/chroma-js": "^3.1.1",
-    "@types/react": "^19.1.1",
+    "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/react-helmet": "^6.1.11",
-    "@typescript-eslint/parser": "^8.30.1",
-    "@vitejs/plugin-react-swc": "^3.7.0",
-    "@w3ux/types": "^2.1.13",
-    "eslint": "^9.24.0",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vitejs/plugin-react-swc": "^3.9.0",
+    "@w3ux/types": "^2.2.1",
+    "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
-    "eslint-import-resolver-typescript": "^4.3.2",
+    "eslint-import-resolver-typescript": "^4.3.4",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prefer-arrow-functions": "^3.6.2",
     "eslint-plugin-prettier": "^5.2.6",
@@ -32,7 +32,7 @@
     "prettier-plugin-organize-imports": "^4.1.0",
     "sass": "1.77.6",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.30.1"
+    "typescript-eslint": "^8.31.1"
   },
   "prettier": {
     "arrowParens": "always",
@@ -49,11 +49,12 @@
     "overrides": {
       "@typescript-eslint/utils>typescript": "5.8.2",
       "@typescript-eslint/typescript-estree>typescript": "5.8.2",
-      "@polkadot/util-crypto>@polkadot/util": "13.4.3",
-      "@polkadot/x-randomvalues>@polkadot/util": "13.4.3",
       "react-helmet-async>react": "19.1.0",
       "use-sync-external-store>react": "19.1.0"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "unrs-resolver"
+    ]
   },
   "packageManager": "pnpm@10.7.1"
 }

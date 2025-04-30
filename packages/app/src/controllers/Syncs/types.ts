@@ -3,7 +3,6 @@
 
 export type SyncID =
   | 'initialization'
-  | 'balances'
   | 'era-stakers'
   | 'bonded-pools'
   | 'active-pools'

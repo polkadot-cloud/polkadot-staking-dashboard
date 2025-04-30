@@ -70,7 +70,7 @@ export const PayoutListInner = ({
 
   // Configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !activeEra.index.isZero() && !fetched) {
+    if (isReady && activeEra.index > 0 && !fetched) {
       setPayouts(initialPayouts)
       setFetched(true)
     }

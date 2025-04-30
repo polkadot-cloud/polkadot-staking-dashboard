@@ -16,19 +16,19 @@ export const NetworkStats = () => {
   const { t } = useTranslation('pages')
   const { bondedPools } = useBondedPools()
   const { getAverageRewardRate } = useAverageRewardRate()
-  const { counterForNominators, totalValidators } = useApi().stakingMetrics
+  const { counterForNominators, counterForValidators } = useApi().stakingMetrics
 
   const { inflationToStakers } = getAverageRewardRate(false)
 
   const items = [
     {
       label: t('totalValidators'),
-      value: totalValidators.toFormat(0),
+      value: new BigNumber(counterForValidators).toFormat(0),
       helpKey: 'Validator',
     },
     {
       label: t('totalNominators'),
-      value: counterForNominators.toFormat(0),
+      value: new BigNumber(counterForNominators).toFormat(0),
       helpKey: 'Total Nominators',
     },
     {

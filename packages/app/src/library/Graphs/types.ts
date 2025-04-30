@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { AnyApi } from 'common-types'
 import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
 
 export interface BondedProps {
@@ -53,7 +52,10 @@ export interface PayoutDayCursor {
 
 export interface GeoDonutProps {
   title: string
-  series: AnyApi
+  series: {
+    labels: string[]
+    data: number[]
+  }
   width?: string | number
   maxHeight?: string | number
   legendHeight?: number

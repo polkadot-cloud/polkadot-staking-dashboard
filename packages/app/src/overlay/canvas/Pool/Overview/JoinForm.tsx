@@ -1,17 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
-import { JoinPool } from 'api/tx/joinPool'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import type { ClaimPermission } from 'contexts/Pools/types'
 import { useSetup } from 'contexts/Setup'
 import { defaultPoolProgress } from 'contexts/Setup/defaults'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { defaultClaimPermission } from 'controllers/ActivePools/defaults'
+import { defaultClaimPermission } from 'global-bus'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -21,13 +20,14 @@ import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput'
 import { SubmitTx } from 'library/SubmitTx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ClaimPermission } from 'types'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 import type { OverviewSectionProps } from '../types'
 import { JoinFormWrapper } from '../Wrappers'
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation()
+  const { serviceApi } = useApi()
   const { network } = useNetwork()
   const {
     closeCanvas,
@@ -52,7 +52,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Bond amount to join pool with.
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: planckToUnitBn(totalPossibleBond, units).toString(),
+    bond: planckToUnit(totalPossibleBond, units),
   })
 
   // Whether the bond amount is valid.
@@ -71,23 +71,17 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   const getTx = () => {
     if (!claimPermission || !formValid) {
-      return null
+      return
     }
-
-    const tx = new JoinPool(
-      network,
+    const txs = serviceApi.tx.joinPool(
       bondedPool.id,
       unitToPlanck(!bondValid ? 0 : bond.bond, units),
       claimPermission
-    ).tx()
-
-    if (!tx) {
-      return null
+    )
+    if (!txs || (txs && !txs.length)) {
+      return
     }
-    if (!Array.isArray(tx)) {
-      return tx
-    }
-    return newBatchCall(tx, activeAddress)
+    return txs.length === 1 ? txs[0] : newBatchCall(txs, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

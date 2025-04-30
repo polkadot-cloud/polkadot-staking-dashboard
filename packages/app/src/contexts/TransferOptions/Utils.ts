@@ -2,27 +2,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeString } from '@w3ux/types'
-import { unitToPlanck } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
 import type { NetworkId } from 'types'
 
 // Get the local storage record for an account reserve balance
 export const getLocalFeeReserve = (
   address: MaybeString,
-  defaultReserve: number,
-  { network, units }: { network: NetworkId; units: number }
-): BigNumber => {
+  defaultReserve: bigint,
+  { network }: { network: NetworkId; units: number }
+): bigint => {
   const reserves = JSON.parse(localStorage.getItem('reserve_balances') ?? '{}')
-  return new BigNumber(
-    reserves?.[network]?.[address || ''] ??
-      unitToPlanck(String(defaultReserve), units)
-  )
+  return BigInt(reserves?.[network]?.[address || ''] || defaultReserve)
 }
 
 // Sets the local storage record fro an account reserve balance
 export const setLocalFeeReserve = (
   address: MaybeString,
-  amount: BigNumber,
+  amount: bigint,
   network: NetworkId
 ): void => {
   if (!address) {

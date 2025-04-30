@@ -48,7 +48,7 @@ export const MembershipStatus = ({
     // Or display manage button if active account is a pool member.
     if (
       (poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
-      (isMember() && active?.isGreaterThan(0))
+      (isMember() && active > 0n)
     ) {
       // Display manage button if active account is not a read-only account.
       if (!isReadOnlyAccount(activeAddress)) {

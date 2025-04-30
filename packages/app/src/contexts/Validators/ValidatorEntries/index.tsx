@@ -4,35 +4,31 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
-import { ValidatorsEntries } from 'api/entries/validatorsEntries'
-import { ParaSessionAccounts } from 'api/query/paraSessionAccounts'
-import { SessionValidators } from 'api/query/sessionValidators'
-import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti'
-import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti'
-import type { ErasRewardPoints } from 'api/subscribe/erasRewardPoints'
 import BigNumber from 'bignumber.js'
-import type { AnyApi } from 'common-types'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
-import { Apis } from 'controllers/Apis'
-import { Identities } from 'controllers/Identities'
-import { Subscriptions } from 'controllers/Subscriptions'
+import {
+  getValidatorRank as getValidatorRankBus,
+  getValidatorRanks,
+} from 'global-bus'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { fetchActiveValidatorRanks } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type {
-  ChainId,
-  Identity,
+  IdentityOf,
   SuperIdentity,
-  SystemChainId,
   Validator,
   ValidatorStatus,
 } from 'types'
-import { perbillToPercent } from 'utils'
+import {
+  formatIdentities,
+  formatSuperIdentities,
+  perbillToPercent,
+} from 'utils'
 import type {
   ValidatorAddresses,
   ValidatorListEntry,
@@ -50,16 +46,12 @@ export const [ValidatorsContext, useValidators] =
 
 export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const {
-    isReady,
-    peopleApiStatus,
-    consts: { historyDepth },
-    networkMetrics: { earliestStoredSession },
-  } = useApi()
   const { activeEra } = useApi()
   const { pluginEnabled } = usePlugins()
   const { stakers } = useStaking().eraStakers
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
+  const { isReady, getConsts, serviceApi, getApiStatus } = useApi()
+  const { historyDepth } = getConsts(network)
 
   // Store validator entries and sync status
   const [validators, setValidators] = useState<Validators>({
@@ -75,7 +67,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store validator identity data
   const [validatorIdentities, setValidatorIdentities] = useState<
-    Record<string, Identity>
+    Record<string, IdentityOf>
   >({})
 
   // Store validator super identity data
@@ -85,11 +77,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Stores the currently active validator set
   const [sessionValidators, setSessionValidators] = useState<string[]>([])
-
-  // Stores the currently active parachain validator set
-  const [sessionParaValidators, setSessionParaValidators] = useState<string[]>(
-    []
-  )
 
   // Stores the average network commission rate
   const [avgCommission, setAvgCommission] = useState<number>(0)
@@ -111,30 +98,28 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return defaultValidatorsData
     }
 
-    const result = await new ValidatorsEntries(network).fetch()
+    const result = await serviceApi.query.validatorEntries()
+
     const entries: Validator[] = []
     let notFullCommissionCount = 0
     let totalNonAllCommission = new BigNumber(0)
-    result.forEach(
-      ({ keyArgs: [address], value: { commission, blocked } }: AnyApi) => {
-        const commissionAsPercent = perbillToPercent(commission)
+    result.forEach(([address, { commission, blocked }]) => {
+      const commissionAsPercent = perbillToPercent(commission)
 
-        if (!commissionAsPercent.isEqualTo(100)) {
-          totalNonAllCommission =
-            totalNonAllCommission.plus(commissionAsPercent)
-        } else {
-          notFullCommissionCount++
-        }
-
-        entries.push({
-          address,
-          prefs: {
-            commission: Number(commissionAsPercent.toFixed(2)),
-            blocked,
-          },
-        })
+      if (!commissionAsPercent.isEqualTo(100)) {
+        totalNonAllCommission = totalNonAllCommission.plus(commissionAsPercent)
+      } else {
+        notFullCommissionCount++
       }
-    )
+
+      entries.push({
+        address,
+        prefs: {
+          commission: Number(commissionAsPercent.toFixed(2)),
+          blocked,
+        },
+      })
+    })
 
     return { entries, notFullCommissionCount, totalNonAllCommission }
   }
@@ -185,17 +170,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     // NOTE: validators are shuffled before committed to state
     setValidators({ status: 'synced', validators: shuffle(validatorEntries) })
 
-    const peopleApiId: ChainId = `people-${network}`
-    const peopleApiClient = Apis.getClient(`people-${network}` as SystemChainId)
-    if (peopleApiClient) {
-      const addresses = validatorEntries.map(({ address }) => address)
-      const { identities, supers } = await Identities.fetch(
-        peopleApiId,
-        addresses
-      )
-      setValidatorIdentities(identities)
-      setValidatorSupers(supers)
-    }
+    const addresses = validatorEntries.map(({ address }) => address)
+
+    const [identities, supers] = await Promise.all([
+      serviceApi.query.identityOfMulti(addresses),
+      serviceApi.query.superOfMulti(addresses),
+    ])
+    setValidatorIdentities({ ...formatIdentities(addresses, identities) })
+    setValidatorSupers({ ...formatSuperIdentities(supers) })
   }
 
   // Subscribe to active session validators
@@ -203,17 +185,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return
     }
-    setSessionValidators(await new SessionValidators(network).fetch())
-  }
-
-  // Subscribe to active parachain validators
-  const getParachainValidators = async () => {
-    setSessionParaValidators(
-      await new ParaSessionAccounts(
-        network,
-        earliestStoredSession.toNumber()
-      ).fetch()
-    )
+    const result = await serviceApi.query.sessionValidators()
+    setSessionValidators(result)
   }
 
   // Fetches prefs for a list of validators
@@ -223,18 +196,16 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const v: string[] = []
-    const vMulti: [string][] = []
+    const vMulti: string[] = []
     for (const { address } of addresses) {
       v.push(address)
-      vMulti.push([address])
+      vMulti.push(address)
     }
 
-    const resultsMulti =
-      (await new ValidatorsMulti(network, vMulti).fetch()) || []
-
+    const resultsMulti = await serviceApi.query.validatorsMulti(vMulti)
     const formatted: Validator[] = []
     for (let i = 0; i < resultsMulti.length; i++) {
-      const prefs: AnyApi = resultsMulti[i]
+      const prefs = resultsMulti[i]
 
       if (prefs) {
         formatted.push({
@@ -304,7 +275,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days
   const getAverageEraValidatorReward = async () => {
-    if (!isReady || activeEra.index.isZero()) {
+    if (!isReady || activeEra.index === 0) {
       setAverageEraValidatorReward({
         days: 0,
         reward: new BigNumber(0),
@@ -317,27 +288,25 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
     // Calculates the number of eras required to calculate required `days`, not surpassing
     // historyDepth
-    const endEra = BigNumber.max(
-      activeEra.index.minus(erasPerDay.multipliedBy(days)),
-      BigNumber.max(0, activeEra.index.minus(historyDepth))
+    const endEra = Math.max(
+      activeEra.index - erasPerDay * days,
+      Math.max(0, activeEra.index - historyDepth)
     )
 
     const eras: string[] = []
-    let thisEra = activeEra.index.minus(1)
+    let thisEra = activeEra.index - 1
     do {
       eras.push(thisEra.toString())
-      thisEra = thisEra.minus(1)
-    } while (thisEra.gte(endEra))
+      thisEra = thisEra - 1
+    } while (thisEra >= endEra)
 
-    const erasMulti: [number][] = eras.map((e) => [Number(e)])
-    const results = await new ErasValidatorRewardMulti(
-      network,
-      erasMulti
-    ).fetch()
+    const results = await serviceApi.query.erasValidatorRewardMulti(
+      eras.map((e) => Number(e))
+    )
 
     const reward = results
       .map((v) => {
-        const value = new BigNumber(!v ? 0 : v)
+        const value = new BigNumber(v || 0)
         if (value.isNaN()) {
           return new BigNumber(0)
         }
@@ -358,14 +327,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (pluginEnabled('staking_api')) {
       return activeValidatorRanks.find((r) => r.validator === validator)?.rank
     } else {
-      const sub = Subscriptions.get(
-        network,
-        'erasRewardPoints'
-      ) as ErasRewardPoints
-      if (!sub) {
-        return undefined
-      }
-      const rank = sub.getRank(validator)
+      const rank = getValidatorRankBus(validator)
       if (!rank) {
         return undefined
       }
@@ -389,19 +351,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       const segment = Math.ceil(percentile / 10) * 10
       return segment
     } else {
-      const sub = Subscriptions.get(
-        network,
-        'erasRewardPoints'
-      ) as ErasRewardPoints
-
-      if (!sub) {
-        return fallbackSegment
-      }
-      const rank = sub.getRank(validator)
+      const rank = getValidatorRankBus(validator)
       if (!rank) {
         return fallbackSegment
       }
-      const percentile = (rank / sub.ranks.length) * 100
+      const percentile = (rank / getValidatorRanks().length) * 100
       const segment = Math.ceil(percentile / 10) * 10
       return segment
     }
@@ -414,7 +368,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       validators: [],
     })
     setSessionValidators([])
-    setSessionParaValidators([])
     setAvgCommission(0)
     setValidatorIdentities({})
     setValidatorSupers({})
@@ -430,14 +383,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch validators and era reward points when fetched status changes
   useEffect(() => {
-    if (isReady && activeEra.index.isGreaterThan(0)) {
+    if (isReady && activeEra.index > 0) {
       fetchValidators()
     }
-  }, [validators.status, isReady, peopleApiStatus, activeEra])
+  }, [validators.status, isReady, getApiStatus(`people-${network}`), activeEra])
 
   // Mark unsynced and fetch session validators and average reward when activeEra changes
   useEffectIgnoreInitial(() => {
-    if (isReady && activeEra.index.isGreaterThan(0)) {
+    if (isReady && activeEra.index > 0) {
       if (validators.status === 'synced') {
         setValidatorsFetched('unsynced')
       }
@@ -445,13 +398,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       getAverageEraValidatorReward()
     }
   }, [isReady, activeEra])
-
-  // Fetch parachain session validators when `earliestStoredSession` ready
-  useEffectIgnoreInitial(() => {
-    if (isReady && earliestStoredSession.isGreaterThan(0)) {
-      getParachainValidators()
-    }
-  }, [isReady, earliestStoredSession.toString()])
 
   return (
     <ValidatorsContext.Provider
@@ -463,7 +409,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         validatorSupers,
         avgCommission,
         sessionValidators,
-        sessionParaValidators,
         validatorsFetched: validators.status,
         averageEraValidatorReward,
         formatWithPrefs,

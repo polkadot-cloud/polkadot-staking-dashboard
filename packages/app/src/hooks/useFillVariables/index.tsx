@@ -1,7 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter } from '@w3ux/utils'
+import { capitalizeFirstLetter, planckToUnit } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { MaxNominations } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -11,13 +13,15 @@ import { useErasPerDay } from '../useErasPerDay'
 
 export const useFillVariables = () => {
   const {
-    consts,
-    networkMetrics: { minimumActiveStake },
+    getConsts,
+    getChainSpec,
+    stakingMetrics: { minimumActiveStake },
     poolsConfig: { minJoinBond, minCreateBond },
   } = useApi()
   const { network } = useNetwork()
-  const { maxNominations, maxExposurePageSize, existentialDeposit } = consts
   const { maxSupportedDays } = useErasPerDay()
+  const { maxExposurePageSize } = getConsts(network)
+  const { existentialDeposit } = getChainSpec(network)
   const { unit, units, name } = getNetworkData(network)
 
   const fillVariables = (d: AnyJson, keys: string[]) => {
@@ -29,24 +33,28 @@ export const useFillVariables = () => {
           ['{NETWORK_UNIT}', unit],
           ['{NETWORK_NAME}', capitalizeFirstLetter(name)],
           ['{MAX_EXPOSURE_PAGE_SIZE}', maxExposurePageSize.toString()],
-          ['{MAX_NOMINATIONS}', maxNominations.toString()],
+          ['{MAX_NOMINATIONS}', MaxNominations],
           [
             '{MIN_ACTIVE_STAKE}',
-            planckToUnitBn(minimumActiveStake, units)
+            new BigNumber(planckToUnit(minimumActiveStake, units))
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{MIN_POOL_JOIN_BOND}',
-            planckToUnitBn(minJoinBond, units).decimalPlaces(3).toFormat(),
+            new BigNumber(planckToUnit(minJoinBond, units))
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
-            planckToUnitBn(minCreateBond, units).decimalPlaces(3).toFormat(),
+            new BigNumber(planckToUnit(minCreateBond, units))
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
-            planckToUnitBn(existentialDeposit, units).toFormat(),
+            planckToUnitBn(new BigNumber(existentialDeposit), units).toFormat(),
           ],
         ]
 

@@ -5,7 +5,6 @@ import type { PageCategory, PageItem, PagesConfigItems } from 'common-types'
 import { PageCategories, PagesConfig } from 'config/pages'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
@@ -23,15 +22,12 @@ export const Main = () => {
   const { syncing } = useSyncing()
   const { pathname } = useLocation()
   const { inPool } = useActivePool()
-  const { getNominations } = useBalances()
-  const { getBondedAccount } = useBonded()
   const { formatWithPrefs } = useValidators()
   const { activeAddress } = useActiveAccounts()
+  const { inSetup: inNominatorSetup } = useStaking()
   const { sideMenuMinimised }: UIContextInterface = useUi()
-  const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking()
-
-  const controller = getBondedAccount(activeAddress)
-  const controllerDifferentToStash = addressDifferentToStash(controller)
+  const { getNominations, getStakingLedger } = useBalances()
+  const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
   const nominated = formatWithPrefs(getNominations(activeAddress))
   const fullCommissionNominees = nominated.filter(
@@ -45,7 +41,7 @@ export const Main = () => {
   for (const { uri } of pages) {
     const handleBullets = (): boolean => {
       if (uri === `${import.meta.env.BASE_URL}`) {
-        const warning = !syncing && controllerDifferentToStash
+        const warning = !syncing && controllerUnmigrated
         if (warning) {
           pages[i].bullet = 'warning'
           return true
@@ -57,7 +53,7 @@ export const Main = () => {
           return true
         }
         if (
-          (!syncing && controllerDifferentToStash) ||
+          (!syncing && controllerUnmigrated) ||
           (!inNominatorSetup() && fullCommissionNominees.length > 0)
         ) {
           pages[i].bullet = 'warning'

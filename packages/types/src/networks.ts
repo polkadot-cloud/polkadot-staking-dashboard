@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ChainProperties } from 'dedot/types/json-rpc'
+import type { HexString } from 'dedot/utils'
 import type { FunctionComponent, SVGProps } from 'react'
 
 export type ChainId = NetworkId | SystemChainId
@@ -12,7 +14,85 @@ export type SystemChainId =
   | 'people-kusama'
   | 'people-westend'
 
+export type ProviderType = 'ws' | 'sc'
+
 export type Networks = Record<string, Network>
+
+export type RpcEndpoints = Record<string, string>
+
+export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready'
+
+export interface ActiveEra {
+  index: number
+  start: bigint
+}
+
+export interface ChainSpec {
+  genesisHash: HexString
+  properties: ChainProperties
+  existentialDeposit: bigint
+  version: ChainSpecVersion
+}
+
+export interface ChainSpecVersion {
+  specName: string
+  implName: string
+  authoringVersion: number
+  specVersion: number
+  implVersion: number
+  apis: (readonly [HexString, number])[]
+  transactionVersion: number
+  stateVersion: number
+}
+
+export interface ChainConsts {
+  bondDuration: number
+  sessionsPerEra: number
+  maxExposurePageSize: number
+  historyDepth: number
+  epochDuration: bigint
+  expectedBlockTime: bigint
+  fastUnstakeDeposit: bigint
+  poolsPalletId: Uint8Array
+}
+
+export interface RelayMetrics {
+  totalIssuance: bigint
+  auctionCounter: number
+  earliestStoredSession: number
+}
+
+export interface PoolsConfig {
+  counterForPoolMembers: number
+  counterForBondedPools: number
+  counterForRewardPools: number
+  lastPoolId: number
+  maxPoolMembers: number | undefined
+  maxPoolMembersPerPool: number | undefined
+  maxPools: number | undefined
+  minCreateBond: bigint
+  minJoinBond: bigint
+  globalMaxCommission: number
+}
+
+export interface StakingMetrics {
+  erasToCheckPerBlock: number
+  minimumActiveStake: bigint
+  counterForValidators: number
+  maxValidatorsCount: number | undefined
+  validatorCount: number
+  lastReward: bigint | undefined
+  lastTotalStake: bigint
+  minNominatorBond: bigint
+  totalStaked: bigint
+  counterForNominators: number
+}
+
+export interface NetworkConfig {
+  network: NetworkId
+  rpcEndpoints: Record<string, string>
+  providerType: ProviderType
+}
 
 export interface Network {
   name: NetworkId
@@ -20,13 +100,13 @@ export interface Network {
     lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
-    defaultRpcEndpoint: string
-    rpcEndpoints: Record<string, string>
+    defaultRpc: string
+    rpc: Record<string, string>
   }
   unit: string
   units: number
   ss58: number
-  defaultFeeReserve: number
+  defaultFeeReserve: bigint
 }
 
 export interface SystemChain {
@@ -38,7 +118,8 @@ export interface SystemChain {
     lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
-    rpcEndpoints: Record<string, string>
+    defaultRpc: string
+    rpc: Record<string, string>
   }
   relayChain: NetworkId
 }

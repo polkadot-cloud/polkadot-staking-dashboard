@@ -1,20 +1,20 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi } from 'common-types'
 import type { AnyFilter } from 'library/Filter/types'
 import type { Dispatch, SetStateAction } from 'react'
 import type {
   AnyJson,
   BondedPool,
   MaybeAddress,
+  NominationStatus,
   NominationStatuses,
-  PoolNominations,
+  Nominator,
   PoolTab,
 } from 'types'
 
 export interface BondedPoolsContextState {
-  queryBondedPool: (poolId: number) => AnyApi
+  queryBondedPool: (poolId: number) => Promise<BondedPool | undefined>
   getBondedPool: (poolId: number) => BondedPool | null
   updateBondedPools: (bondedPools: BondedPool[]) => void
   addToBondedPools: (bondedPool: BondedPool) => void
@@ -22,13 +22,13 @@ export interface BondedPoolsContextState {
   getPoolNominationStatus: (
     nominator: MaybeAddress,
     address: MaybeAddress
-  ) => AnyApi
+  ) => NominationStatus
   getPoolNominationStatusCode: (statuses: NominationStatuses | null) => string
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void
   poolSearchFilter: (filteredPools: AnyFilter, searchTerm: string) => AnyJson[]
   bondedPools: BondedPool[]
   poolsMetaData: Record<number, string>
-  poolsNominations: Record<number, PoolNominations>
+  poolsNominations: Record<number, Nominator | undefined>
   updatePoolNominations: (id: number, nominations: string[]) => void
   poolListActiveTab: PoolTab
   setPoolListActiveTab: Dispatch<SetStateAction<PoolTab>>

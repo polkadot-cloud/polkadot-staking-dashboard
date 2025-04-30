@@ -37,7 +37,7 @@ export const Tips = () => {
   const { syncing } = useSyncing(['initialization'])
   const { feeReserve, getTransferOptions } = useTransferOptions()
 
-  const transferOptions = getTransferOptions(activeAddress)
+  const { freeBalance } = getTransferOptions(activeAddress)
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false
@@ -100,11 +100,7 @@ export const Tips = () => {
   if (!activeAddress) {
     segments.push(1)
   } else if (!isNominating() && !inPool()) {
-    if (
-      transferOptions.freeBalance
-        .minus(feeReserve)
-        .isGreaterThan(minNominatorBond)
-    ) {
+    if (freeBalance - feeReserve > minNominatorBond) {
       segments.push(2)
     } else {
       segments.push(3)

@@ -15,16 +15,16 @@ import { useOverlay } from 'ui-overlay'
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages')
-  const { getPayee } = useBalances()
   const { syncing } = useSyncing()
   const { inSetup } = useStaking()
   const { openModal } = useOverlay().modal
+  const { getStakingLedger } = useBalances()
   const { isFastUnstaking } = useUnstaking()
   const { getPayeeItems } = usePayeeConfig()
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const payee = getPayee(activeAddress)
+  const payee = getStakingLedger(activeAddress).payee
 
   // Get payee status text to display.
   const getPayeeStatus = () => {
@@ -32,7 +32,7 @@ export const PayoutDestinationStatus = () => {
       return t('notAssigned')
     }
     const status = getPayeeItems(true).find(
-      ({ value }) => value === payee.destination
+      ({ value }) => value === payee?.destination
     )?.activeTitle
 
     if (status) {
@@ -44,7 +44,7 @@ export const PayoutDestinationStatus = () => {
   // Get the payee destination icon to display, falling back to wallet icon.
   const payeeIcon = inSetup()
     ? undefined
-    : getPayeeItems(true).find(({ value }) => value === payee.destination)
+    : getPayeeItems(true).find(({ value }) => value === payee?.destination)
         ?.icon || faWallet
 
   return (

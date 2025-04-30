@@ -4,13 +4,15 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
-import { NewNominator } from 'api/tx/newNominator'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useSetup } from 'contexts/Setup'
+import type { PalletStakingRewardDestination } from 'dedot/chaintypes'
+import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -26,6 +28,7 @@ import { SummaryWrapper } from './Wrapper'
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { newBatchCall } = useBatchCall()
   const { getPayeeItems } = usePayeeConfig()
   const { closeCanvas } = useOverlay().canvas
@@ -40,34 +43,33 @@ export const Summary = ({ section }: SetupStepProps) => {
 
   const getTxs = () => {
     if (!activeAddress) {
-      return null
+      return
     }
     if (payee.destination === 'Account' && !payee.account) {
-      return null
+      return
     }
     if (payee.destination !== 'Account' && !payee.destination) {
-      return null
+      return
     }
-
-    const tx = new NewNominator(
-      network,
-      unitToPlanck(bond || '0', units),
+    const destinationParam: PalletStakingRewardDestination =
       payee.destination === 'Account'
         ? {
             type: 'Account' as const,
-            value: payee.account as string,
+            value: new AccountId32(payee.account as string),
           }
         : {
             type: payee.destination,
-          },
-      nominations.map(({ address }: { address: string }) => ({
-        type: 'Id',
-        value: address,
-      }))
-    ).tx()
-
+          }
+    const nominationsParam = nominations.map(
+      ({ address }: { address: string }) => address
+    )
+    const tx = serviceApi.tx.newNominator(
+      unitToPlanck(bond || '0', units),
+      destinationParam,
+      nominationsParam
+    )
     if (!tx) {
-      return null
+      return
     }
     return newBatchCall(tx, activeAddress)
   }
