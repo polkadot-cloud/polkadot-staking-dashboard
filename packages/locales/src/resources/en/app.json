@@ -278,7 +278,6 @@
     "update": "Update",
     "valid": "Valid Address",
     "validAddress": "Valid address",
-    "validatingParachainBlocks": "Validating Parachain Blocks",
     "validatorCommission": "Validator Commission",
     "validatorPerformance": "{{count}} Day Validator Performance",
     "validators": "Validators",

@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PerbillMultiplier } from 'consts'
 import { AccountInput } from 'library/AccountInput'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'overlay/modals/ManagePool/Wrappers'
@@ -31,6 +32,7 @@ export const CommissionCurrent = ({
   const commission = getCurrent('commission')
   const payee = getCurrent('payee')
   const maxCommission = getCurrent('max_commission')
+  const commissionUnit = commission / PerbillMultiplier
 
   // Determine the commission feedback to display.
   const commissionFeedback = (() => {
@@ -65,20 +67,27 @@ export const CommissionCurrent = ({
     <>
       <SliderWrapper>
         <div>
-          <h2>{commission}% </h2>
+          <h2>{commissionUnit}% </h2>
           <h5 className={commissionFeedback?.label || 'neutral'}>
             {!!commissionFeedback && commissionFeedback.text}
           </h5>
         </div>
 
         <StyledSlider
-          value={commission}
+          value={commissionUnit}
           step={0.1}
           onChange={(val) => {
             if (typeof val === 'number') {
-              setCommission(val)
+              val = Number(val.toFixed(2))
+
+              setCommission(val * PerbillMultiplier)
               if (val > maxCommission && getEnabled('max_commission')) {
-                setMaxCommission(Math.min(getInitial('max_commission'), val))
+                setMaxCommission(
+                  Math.min(
+                    getInitial('max_commission') * PerbillMultiplier,
+                    val
+                  )
+                )
               }
             }
           }}
@@ -97,7 +106,7 @@ export const CommissionCurrent = ({
         }}
         disallowAlreadyImported={false}
         initialValue={payee}
-        inactive={commission === 0}
+        inactive={commissionUnit === 0}
         border={payee === null}
       />
     </>

@@ -13,6 +13,6 @@ export interface ActivePoolContextState {
   isBouncer: () => boolean
   getPoolUnlocking: () => PoolUnlocking[]
   getPoolRoles: () => PoolRoles
-  activePool: ActivePool | null
+  activePool: ActivePool | undefined
   activePoolNominations: Nominations | null
 }

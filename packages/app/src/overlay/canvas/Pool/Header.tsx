@@ -3,6 +3,7 @@
 
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { Polkicon } from '@w3ux/react-polkicon'
+import { PerbillMultiplier } from 'consts'
 import { PageTabs } from 'library/PageTabs'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
@@ -85,7 +86,8 @@ export const Header = ({
               {poolCommission && (
                 <h3>
                   <span>
-                    {poolCommission}% {t('commission', { ns: 'modals' })}
+                    {poolCommission / PerbillMultiplier}%{' '}
+                    {t('commission', { ns: 'modals' })}
                   </span>
                 </h3>
               )}

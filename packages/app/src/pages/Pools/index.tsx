@@ -83,7 +83,7 @@ export const PoolsInner = () => {
               <Status height={ROW_HEIGHT} />
             </Page.RowSection>
           </Page.Row>
-          {activePool !== null && (
+          {activePool !== undefined && (
             <>
               <ManagePool />
               <Page.Row>

@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PerbillMultiplier } from 'consts'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'overlay/modals/ManagePool/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -21,6 +22,8 @@ export const MaxCommission = ({
   const commission = getCurrent('commission')
   const maxCommission = getCurrent('max_commission')
   const maxCommissionUpdated = isUpdated('max_commission')
+
+  const commissionUnit = commission / PerbillMultiplier
 
   // Determine the max commission feedback to display.
   const maxCommissionFeedback = (() => {
@@ -61,7 +64,7 @@ export const MaxCommission = ({
           onChange={(val) => {
             if (typeof val === 'number') {
               setMaxCommission(val)
-              if (val < commission) {
+              if (val < commissionUnit) {
                 setCommission(val)
               }
             }

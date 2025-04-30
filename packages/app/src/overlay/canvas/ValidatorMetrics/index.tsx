@@ -157,7 +157,7 @@ export const ValidatorMetrics = () => {
             <ActiveGraphEraPoints
               network={network}
               validator={validator}
-              fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              fromEra={Math.max(activeEra.index - 1, 0)}
               width={graphSizeEraPoints.width}
               height={graphSizeEraPoints.height}
             />
@@ -195,7 +195,7 @@ export const ValidatorMetrics = () => {
             <ActiveGraphRewards
               network={network}
               validator={validator}
-              fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              fromEra={Math.max(activeEra.index - 1, 0)}
               width={graphSizeRewards.width}
               height={graphSizeRewards.height}
             />

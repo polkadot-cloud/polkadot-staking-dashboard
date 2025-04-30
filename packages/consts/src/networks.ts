@@ -12,22 +12,21 @@ export const NetworkList: Networks = {
       lightClientKey: 'polkadot',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot'),
-      defaultRpcEndpoint: 'IBP-GeoDNS1',
-      rpcEndpoints: {
+      defaultRpc: 'IBP-GeoDNS1',
+      rpc: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://polkadot-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/polkadot',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/polkadot',
         LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
-        RadiumBlock: 'wss://polkadot.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://dot-rpc.stakeworld.io',
       },
     },
     unit: 'DOT',
     units: 10,
     ss58: 0,
-    defaultFeeReserve: 0.1,
+    defaultFeeReserve: 1000000000n,
   },
   kusama: {
     name: 'kusama',
@@ -35,22 +34,21 @@ export const NetworkList: Networks = {
       lightClientKey: 'ksmcc3',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3'),
-      defaultRpcEndpoint: 'IBP-GeoDNS1',
-      rpcEndpoints: {
+      defaultRpc: 'IBP-GeoDNS1',
+      rpc: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://kusama-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/kusama',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/kusama',
         LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
-        RadiumBlock: 'wss://kusama.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://ksm-rpc.stakeworld.io',
       },
     },
     unit: 'KSM',
     units: 12,
     ss58: 2,
-    defaultFeeReserve: 0.05,
+    defaultFeeReserve: 50000000000n,
   },
   westend: {
     name: 'westend',
@@ -58,21 +56,20 @@ export const NetworkList: Networks = {
       lightClientKey: 'westend2',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend2'),
-      defaultRpcEndpoint: 'IBP-GeoDNS1',
-      rpcEndpoints: {
+      defaultRpc: 'IBP-GeoDNS1',
+      rpc: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/westend',
         LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
-        RadiumBlock: 'wss://westend.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://wnd-rpc.stakeworld.io',
       },
     },
     unit: 'WND',
     units: 12,
     ss58: 42,
-    defaultFeeReserve: 0.1,
+    defaultFeeReserve: 100000000000n,
   },
 }
 
@@ -86,7 +83,8 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClientKey: 'polkadot_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
-      rpcEndpoints: {
+      defaultRpc: 'IBP1',
+      rpc: {
         IBP1: 'wss://sys.ibp.network/people-polkadot',
         IBP2: 'wss://people-polkadot.dotters.network',
       },
@@ -102,7 +100,8 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClientKey: 'ksmcc3_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_people'),
-      rpcEndpoints: {
+      defaultRpc: 'IBP1',
+      rpc: {
         IBP1: 'wss://sys.ibp.network/people-kusama',
         IBP2: 'wss://people-kusama.dotters.network',
       },
@@ -118,7 +117,8 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClientKey: 'westend2_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend_people'),
-      rpcEndpoints: {
+      defaultRpc: 'IBP1',
+      rpc: {
         IBP1: 'wss://sys.ibp.network/people-westend',
         IBP2: 'wss://people-westend.dotters.network',
       },

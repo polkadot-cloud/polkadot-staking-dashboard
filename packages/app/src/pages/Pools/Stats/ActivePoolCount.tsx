@@ -11,7 +11,7 @@ export const ActivePoolCount = () => {
 
   const params = {
     label: t('activePools'),
-    value: counterForBondedPools.toNumber(),
+    value: counterForBondedPools,
     unit: '',
     helpKey: 'Active Pools',
   }

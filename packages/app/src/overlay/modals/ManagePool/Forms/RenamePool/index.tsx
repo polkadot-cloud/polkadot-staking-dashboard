@@ -2,16 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolSetMetadata } from 'api/tx/poolSetMetadata'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
+import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { stringToU8a } from 'dedot/utils'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
-import { Binary } from 'polkadot-api'
 import type { Dispatch, FormEvent, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,7 +28,7 @@ export const RenamePool = ({
   onResize: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { isOwner, activePool } = useActivePool()
@@ -60,9 +59,9 @@ export const RenamePool = ({
 
   const getTx = () => {
     if (!valid || !poolId) {
-      return null
+      return
     }
-    return new PoolSetMetadata(network, poolId, Binary.fromText(metadata)).tx()
+    return serviceApi.tx.poolSetMetadata(poolId, stringToU8a(metadata))
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

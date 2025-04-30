@@ -2,15 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolSetCommission } from 'api/tx/poolSetCommission'
-import { PoolSetCommissionChangeRate } from 'api/tx/poolSetCommissionChangeRate'
-import { PoolSetCommissionMax } from 'api/tx/poolSetCommissionMax'
+import { PerbillMultiplier } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -40,6 +38,7 @@ export const ManageCommission = ({
   const { t } = useTranslation('modals')
   const { openHelp } = useHelp()
   const {
+    serviceApi,
     poolsConfig: { globalMaxCommission },
   } = useApi()
   const {
@@ -51,7 +50,6 @@ export const ManageCommission = ({
     resetAll,
     isUpdated,
   } = usePoolCommission()
-  const { network } = useNetwork()
   const { newBatchCall } = useBatchCall()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
@@ -128,39 +126,40 @@ export const ManageCommission = ({
 
   const getTx = () => {
     if (!valid) {
-      return null
+      return
     }
-    const txs = []
+    const txs: (SubmittableExtrinsic | undefined)[] = []
     if (commissionUpdated) {
-      const commissionPerbill = commission * 10000000
+      const commissionPerbill = commission * PerbillMultiplier
       txs.push(
-        new PoolSetCommission(
-          network,
+        serviceApi.tx.poolSetCommission(
           poolId,
           currentCommissionSet ? [commissionPerbill, payee] : undefined
-        ).tx()
+        )
       )
     }
     if (isUpdated('max_commission') && getEnabled('max_commission')) {
-      const maxPerbill = maxCommission * 10000000
-      txs.push(new PoolSetCommissionMax(network, poolId, maxPerbill).tx())
+      const maxPerbill = maxCommission * PerbillMultiplier
+      txs.push(serviceApi.tx.poolSetCommissionMax(poolId, maxPerbill))
     }
     if (isUpdated('change_rate') && getEnabled('change_rate')) {
-      const maxIncreasePerbill = changeRate.maxIncrease * 10000000
+      const maxIncreasePerbill = changeRate.maxIncrease * PerbillMultiplier
       txs.push(
-        new PoolSetCommissionChangeRate(
-          network,
+        serviceApi.tx.poolSetCommissionChangeRate(
           poolId,
           maxIncreasePerbill,
           changeRate.minDelay
-        ).tx()
+        )
       )
     }
+    const filteredTxs = txs.filter(
+      (tx) => tx !== undefined
+    ) as SubmittableExtrinsic[]
 
-    if (txs.length === 1) {
-      return txs[0]
+    if (filteredTxs.length === 1) {
+      return filteredTxs[0]
     }
-    return newBatchCall(txs, activeAddress)
+    return newBatchCall(filteredTxs, activeAddress)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -179,17 +178,17 @@ export const ManageCommission = ({
             commission: {
               ...pool.commission,
               current: currentCommissionSet
-                ? [`${commission.toFixed(2)}%`, payee]
-                : null,
+                ? [commission * PerbillMultiplier, payee]
+                : undefined,
               max: isUpdated('max_commission')
-                ? `${maxCommission.toFixed(2)}%`
-                : pool.commission?.max || null,
+                ? maxCommission * PerbillMultiplier
+                : pool.commission?.max || undefined,
               changeRate: isUpdated('change_rate')
                 ? {
-                    maxIncrease: `${changeRate.maxIncrease.toFixed(2)}%`,
-                    minDelay: String(changeRate.minDelay),
+                    maxIncrease: changeRate.maxIncrease * PerbillMultiplier,
+                    minDelay: changeRate.minDelay,
                   }
-                : pool.commission?.changeRate || null,
+                : pool.commission?.changeRate || undefined,
             },
           },
         ])

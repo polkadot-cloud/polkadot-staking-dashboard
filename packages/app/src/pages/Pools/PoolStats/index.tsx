@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { PerbillMultiplier } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -32,10 +32,7 @@ export const PoolStats = () => {
   const { state, points, memberCounter } = activePool?.bondedPool || {}
   const currentCommission = getCurrentCommission(poolId)
 
-  const bonded = planckToUnitBn(
-    new BigNumber(points ? rmCommas(points) : 0),
-    units
-  )
+  const bonded = planckToUnitBn(new BigNumber(points || 0), units)
     .decimalPlaces(3)
     .toFormat()
 
@@ -62,7 +59,7 @@ export const PoolStats = () => {
   if (currentCommission) {
     items.push({
       label: t('poolCommission'),
-      value: `${currentCommission}%`,
+      value: `${currentCommission / PerbillMultiplier}%`,
     })
   }
 
@@ -76,7 +73,7 @@ export const PoolStats = () => {
             onClick: () => {
               openCanvas({ key: 'PoolMembers', size: 'xl' })
             },
-            disabled: memberCounter === '0',
+            disabled: [0, undefined].includes(memberCounter),
           }
         : undefined,
     },

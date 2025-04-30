@@ -24,3 +24,12 @@ export type ExternalAccount = AccountCommon & {
 }
 
 export type AccountAddedBy = 'system' | 'user'
+
+export type Proxies = {
+  proxies: {
+    delegate: string
+    proxyType: string
+    delay: number
+  }[]
+  deposit: bigint
+}

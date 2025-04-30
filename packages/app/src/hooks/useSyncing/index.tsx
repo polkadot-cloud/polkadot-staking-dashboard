@@ -44,7 +44,6 @@ export const useSyncing = (config: SyncIDConfig = '*') => {
   const poolMembersipSyncing = (): boolean => {
     const POOL_SYNC_IDS: SyncID[] = [
       'initialization',
-      'balances',
       'bonded-pools',
       'active-pools',
     ]

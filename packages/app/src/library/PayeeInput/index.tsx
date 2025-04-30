@@ -7,7 +7,6 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { formatAccountSs58, isValidAddress, remToUnit } from '@w3ux/utils'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
@@ -23,13 +22,11 @@ export const PayeeInput = ({
   handleChange,
 }: PayeeInputProps) => {
   const { t } = useTranslation('app')
-  const { getBondedAccount } = useBonded()
-  const { accounts } = useImportedAccounts()
   const { network } = useNetwork()
+  const { accounts } = useImportedAccounts()
   const { activeAddress } = useActiveAccounts()
 
   const { ss58 } = getNetworkData(network)
-  const controller = getBondedAccount(activeAddress)
   const accountMeta = accounts.find((a) => a.address === activeAddress)
 
   // store whether account value is valid.
@@ -89,9 +86,7 @@ export const PayeeInput = ({
       ? account
       : payee.destination === 'None'
         ? ''
-        : payee.destination === 'Controller'
-          ? controller
-          : activeAddress
+        : activeAddress
 
   const placeholderDisplay =
     payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress')

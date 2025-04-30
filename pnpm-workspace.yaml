@@ -7,3 +7,4 @@ onlyBuiltDependencies:
   - keccak
   - sharp
   - utf-8-validate
+  - unrs-resolver

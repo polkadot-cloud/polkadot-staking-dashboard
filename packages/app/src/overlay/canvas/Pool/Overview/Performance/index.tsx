@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
-import BigNumber from 'bignumber.js'
 import {
   BarElement,
   CategoryScale,
@@ -74,7 +73,7 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
           <ActiveGraph
             network={network}
             stash={bondedPool.addresses.stash}
-            fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+            fromEra={Math.max(activeEra.index - 1, 0)}
             width={width}
             height={height}
             units={units}

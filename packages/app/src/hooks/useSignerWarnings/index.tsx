@@ -3,7 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useControllerSignerAvailable } from 'hooks/useControllerSignerAvailable'
+import { useSignerAvailable } from 'hooks/useSignerAvailable'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
 
@@ -11,7 +11,7 @@ export const useSignerWarnings = () => {
   const { t } = useTranslation('modals')
   const { activeProxy } = useActiveAccounts()
   const { accountHasSigner } = useImportedAccounts()
-  const { controllerSignerAvailable } = useControllerSignerAvailable()
+  const { signerAvailable } = useSignerAvailable()
 
   const getSignerWarnings = (
     account: MaybeAddress,
@@ -21,9 +21,9 @@ export const useSignerWarnings = () => {
     const warnings = []
 
     if (controller) {
-      switch (controllerSignerAvailable(account, proxySupported)) {
-        case 'controller_not_imported':
-          warnings.push(`${t('controllerImported')}`)
+      switch (signerAvailable(account, proxySupported)) {
+        case 'controller_not_migrated':
+          warnings.push(`${t('controllerNotMigrated')}`)
           break
         case 'read_only':
           warnings.push(`${t('readOnlyCannotSign')}`)

@@ -115,10 +115,12 @@ export const PoolList = ({
 
   // Refetch list when pool list changes.
   useEffect(() => {
-    if (JSON.stringify(pools) !== JSON.stringify(poolsDefault) && synced) {
+    const poolIds = pools?.map((pool) => pool.id)
+    const poolIdsDefault = poolsDefault?.map((pool) => pool.id)
+    if (JSON.stringify(poolIds) !== JSON.stringify(poolIdsDefault) && synced) {
       resetPoolList()
     }
-  }, [JSON.stringify(pools)])
+  }, [JSON.stringify(pools?.map((pool) => pool.id))])
 
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {

@@ -11,12 +11,14 @@
     "./util": "./src/util.ts"
   },
   "dependencies": {
-    "consts": "workspace:*",
+    "@w3ux/observables-connect": "^0.9.40",
     "@w3ux/utils": "^2.0.10",
+    "consts": "workspace:*",
+    "dedot": "^0.9.5",
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
-    "types": "workspace:*",
-    "@w3ux/types": "^2.1.13"
+    "@w3ux/types": "^2.2.1",
+    "types": "workspace:*"
   }
 }

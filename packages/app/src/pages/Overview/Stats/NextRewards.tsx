@@ -25,7 +25,7 @@ export const NextRewards = () => {
   const timeleftResult = getEraTimeleft()
   const dateFrom = fromUnixTime(Date.now() / 1000)
   const formatted = formatTimeleft(t, timeleft.raw)
-  const dateTo = secondsFromNow(timeleftResult.timeleft.toNumber())
+  const dateTo = secondsFromNow(timeleftResult.timeleft)
 
   // Reset timer on era change (also covers network change)
   useEffect(() => {
@@ -36,12 +36,8 @@ export const NextRewards = () => {
     label: t('nextRewardDistribution'),
     timeleft: formatted,
     graph: {
-      value1: activeEra.index.isZero()
-        ? 0
-        : timeleftResult.percentSurpassed.toNumber(),
-      value2: activeEra.index.isZero()
-        ? 100
-        : timeleftResult.percentRemaining.toNumber(),
+      value1: activeEra.index === 0 ? 0 : timeleftResult.percentSurpassed,
+      value2: activeEra.index === 0 ? 100 : timeleftResult.percentRemaining,
     },
     tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
   }

@@ -5,31 +5,31 @@ import type BigNumber from 'bignumber.js'
 import type { MaybeAddress } from 'types'
 
 export interface TransferOptionsContextInterface {
-  getTransferOptions: (a: MaybeAddress) => TransferOptions
-  getStakedBalance: (a: MaybeAddress) => BigNumber
-  setFeeReserveBalance: (r: BigNumber) => void
-  feeReserve: BigNumber
-  getFeeReserve: (address: MaybeAddress) => BigNumber
+  getTransferOptions: (address: MaybeAddress) => TransferOptions
+  getStakedBalance: (address: MaybeAddress) => BigNumber
+  setFeeReserveBalance: (reserve: bigint) => void
+  feeReserve: bigint
+  getFeeReserve: (address: MaybeAddress) => bigint
 }
 
 export interface TransferOptions {
-  freeBalance: BigNumber
-  transferrableBalance: BigNumber
-  balanceTxFees: BigNumber
-  edReserved: BigNumber
+  freeBalance: bigint
+  transferrableBalance: bigint
+  balanceTxFees: bigint
+  edReserved: bigint
   nominate: {
-    active: BigNumber
-    totalUnlocking: BigNumber
-    totalUnlocked: BigNumber
-    totalPossibleBond: BigNumber
-    totalAdditionalBond: BigNumber
+    active: bigint
+    totalUnlocking: bigint
+    totalUnlocked: bigint
+    totalPossibleBond: bigint
+    totalAdditionalBond: bigint
     totalUnlockChunks: number
   }
   pool: {
-    active: BigNumber
-    totalUnlocking: BigNumber
-    totalUnlocked: BigNumber
-    totalPossibleBond: BigNumber
+    active: bigint
+    totalUnlocking: bigint
+    totalUnlocked: bigint
+    totalPossibleBond: bigint
     totalUnlockChunks: number
   }
 }

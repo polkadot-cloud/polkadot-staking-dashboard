@@ -6,18 +6,22 @@ import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types'
 import { planckToUnit, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { fromUnixTime } from 'date-fns'
+import { bnToU8a, concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
 import type { TFunction } from 'i18next'
+import type { IdentityOf, SuperIdentity, SuperOf } from 'types'
 
-// Return `planckToUnit` as a `BigNumber`.
+// Return `planckToUnit` as a BigNumber
 export const planckToUnitBn = (val: BigNumber, units: number): BigNumber =>
-  new BigNumber(planckToUnit(val.toFormat({ groupSeparator: '' }), units))
+  new BigNumber(
+    planckToUnit(val.decimalPlaces(0).toFormat({ groupSeparator: '' }), units)
+  )
 
 // Converts a string to a BigNumber.
 export const stringToBn = (value: string): BigNumber =>
   new BigNumber(rmCommas(value))
 
 // Formats a given time breakdown (days, hours, minutes, seconds) into a readable structure using a
-// translation function. Falls back to displaying seconds if both days and hours are absent.
+// translation function. Falls back to displaying seconds if both days and hours are absent
 export const formatTimeleft = (
   t: TFunction,
   { days, hours, minutes, seconds }: TimeLeftRaw
@@ -79,7 +83,7 @@ export const timeleftAsString = (
   return str
 }
 
-// Convert a perbill BigNumber value into a percentage.
+// Convert a perbill BigNumber value into a percentage
 export const perbillToPercent = (
   value: BigNumber | bigint | number
 ): BigNumber => {
@@ -87,4 +91,53 @@ export const perbillToPercent = (
     value = new BigNumber(value)
   }
   return value.dividedBy('10000000')
+}
+
+// Format identities into records with addresses as keys
+export const formatIdentities = (
+  addresses: string[],
+  identities: IdentityOf[]
+) =>
+  identities.reduce((acc: Record<string, IdentityOf | undefined>, cur, i) => {
+    acc[addresses[i]] = cur
+    return acc
+  }, {})
+
+// Format super identities into records with addresses as keys
+export const formatSuperIdentities = (supers: SuperOf[]) =>
+  supers.reduce((acc: Record<string, SuperIdentity>, cur) => {
+    if (!cur) {
+      return acc
+    }
+    acc[cur.address] = {
+      superOf: {
+        identity: cur.identity,
+        value: cur.value,
+      },
+      value: cur.value?.value || '',
+    }
+    return acc
+  }, {})
+
+// Generates pool stash and reward accounts. Assumes `poolsPalletId` is synced
+export const createPoolAccounts = (
+  poolId: number,
+  poolsPalletId: Uint8Array,
+  ss58Format: number = 0
+) => {
+  const createAccount = (index: number): string => {
+    const key = concatU8a(
+      stringToU8a('modl'),
+      poolsPalletId,
+      new Uint8Array([index]),
+      bnToU8a(BigInt(poolId.toString())).reverse(), // NOTE: Reversing for little endian
+      new Uint8Array(32)
+    )
+    return encodeAddress(key.slice(0, 32), ss58Format)
+  }
+
+  return {
+    stash: createAccount(0),
+    reward: createAccount(1),
+  }
 }

@@ -5,14 +5,12 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { ActivePools } from 'controllers/ActivePools'
 import { Syncs } from 'controllers/Syncs'
-import { useActivePools } from 'hooks/useActivePools'
-import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
-import type { ReactNode } from 'react'
-import type { ActivePoolItem } from 'types'
+import { activePools$ } from 'global-bus'
+import { useEffect, useState, type ReactNode } from 'react'
+import type { ActivePool } from 'types'
 import { useApi } from '../../Api'
-import { defaultPoolRoles } from './defaults'
+import { defaultPoolNominations } from './defaults'
 import type { ActivePoolContextState } from './types'
 
 export const [ActivePoolContext, useActivePool] =
@@ -21,48 +19,35 @@ export const [ActivePoolContext, useActivePool] =
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi()
   const { network } = useNetwork()
-  const { getPoolMembership } = useBalances()
+  const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const createPoolAccounts = useCreatePoolAccounts()
+  const { poolMembership } = getStakingLedger(activeAddress)
 
-  const membership = getPoolMembership(activeAddress)
-  // Determine active pool to subscribe to based on the membership pool id
-  const accountPoolId = membership?.poolId ? String(membership.poolId) : null
+  // Store active pools state
+  const [activePools, setActivePools] = useState<ActivePool[]>()
 
-  // Only listen to the active account's active pool
-  const { getActivePool, getPoolNominations } = useActivePools({
-    who: activeAddress,
-    onCallback: async () => {
-      if (ActivePools.getPool(network, activeAddress)) {
-        Syncs.dispatch('active-pools', 'complete')
-      }
-    },
-  })
+  // Determine active pool to subscribe to based on active account membership
+  const accountPoolId = poolMembership?.poolId
 
-  const activePool = accountPoolId ? getActivePool(accountPoolId) : null
+  // Gets an active pool from state
+  const getActivePool = (poolId: number) =>
+    activePools?.find((pool) => pool.id === poolId)
+
+  // Gets an active pool's nominations
+  const getPoolNominations = (poolId: number) => {
+    const pool = getActivePool(Number(poolId))
+    return pool?.nominators
+      ? {
+          targets: pool.nominators.targets,
+          submittedIn: pool.nominators.submittedIn,
+        }
+      : defaultPoolNominations
+  }
+  const activePool = accountPoolId ? getActivePool(accountPoolId) : undefined
+
   const activePoolNominations = accountPoolId
     ? getPoolNominations(accountPoolId)
     : null
-
-  // Sync active pool subscription
-  const syncActivePool = async () => {
-    if (isReady) {
-      let newActivePool: ActivePoolItem[] = []
-      if (accountPoolId) {
-        newActivePool = [
-          {
-            id: accountPoolId,
-            addresses: { ...createPoolAccounts(Number(accountPoolId)) },
-          },
-        ]
-        Syncs.dispatch('active-pools', 'syncing')
-      } else {
-        // No active pools to sync. Mark as complete.
-        Syncs.dispatch('active-pools', 'complete')
-      }
-      ActivePools.syncPools(network, activeAddress, newActivePool)
-    }
-  }
 
   // Returns whether the active pool is being bonded to
   const isBonding = () => !!activePool
@@ -88,11 +73,11 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Returns whether the active account is a member of the active pool
   const isMember = () => {
     const p = activePool ? String(activePool.id) : '-1'
-    return String(membership?.poolId || '') === p
+    return String(poolMembership?.poolId || '') === p
   }
 
   // Returns whether the active account is in a pool.
-  const inPool = () => !!(membership?.address === activeAddress)
+  const inPool = () => !!(poolMembership?.address === activeAddress)
 
   // Returns whether the active account is the depositor of the active pool
   const isDepositor = () => {
@@ -113,17 +98,42 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Returns the active pool's roles or the default roles object
-  const getPoolRoles = () => activePool?.bondedPool?.roles || defaultPoolRoles
+  const getPoolRoles = () => ({
+    depositor: activePool?.bondedPool?.roles?.depositor || '',
+    nominator: activePool?.bondedPool?.roles?.nominator || '',
+    root: activePool?.bondedPool?.roles?.root || '',
+    bouncer: activePool?.bondedPool?.roles?.bouncer || '',
+  })
 
   // Returns the unlock chunks of the active pool
-  const getPoolUnlocking = () => membership?.unlocking || []
+  const getPoolUnlocking = () =>
+    (poolMembership?.unbondingEras || []).map(([era, value]) => ({
+      era,
+      value,
+    }))
 
   // Initialise subscriptions to the active account's active pool
   useEffectIgnoreInitial(() => {
     if (isReady) {
-      syncActivePool()
+      if (!poolMembership) {
+        Syncs.dispatch('active-pools', 'complete')
+      } else if (
+        activePools?.find((pool) => pool.id === poolMembership.poolId)
+      ) {
+        Syncs.dispatch('active-pools', 'complete')
+      }
     }
-  }, [network, isReady, membership])
+  }, [network, isReady, poolMembership])
+
+  // Subscribe to global bus active pools
+  useEffect(() => {
+    const subActivePools = activePools$.subscribe((result) => {
+      setActivePools(result)
+    })
+    return () => {
+      subActivePools.unsubscribe()
+    }
+  }, [])
 
   return (
     <ActivePoolContext.Provider

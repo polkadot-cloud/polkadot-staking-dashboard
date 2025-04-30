@@ -6,9 +6,7 @@ import { useExtensionAccounts } from '@w3ux/react-connect-kit'
 import { ManualSigners } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Balances } from 'controllers/Balances'
 import type { ReactNode } from 'react'
 import { useCallback } from 'react'
 import type { ExternalAccount, ImportedAccount, MaybeAddress } from 'types'
@@ -24,7 +22,6 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const { isReady } = useApi()
   const { network } = useNetwork()
   const { otherAccounts } = useOtherAccounts()
   const { getExtensionAccounts } = useExtensionAccounts()
@@ -102,16 +99,6 @@ export const ImportedAccountsProvider = ({
       ) !== undefined,
     [stringifiedAccountsKey]
   )
-
-  // Keep accounts in sync with `Balances`
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      Balances.syncAccounts(
-        network,
-        allAccounts.map((a) => a.address)
-      )
-    }
-  }, [isReady, stringifiedAccountsKey])
 
   // Re-sync the active account and active proxy on network change
   useEffectIgnoreInitial(() => {

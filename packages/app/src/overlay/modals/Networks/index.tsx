@@ -10,6 +10,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
+import { setProviderType } from 'global-bus'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,11 +31,11 @@ export const Networks = () => {
   const { isBraveBrowser } = useUi()
   const { openPromptWith } = usePrompt()
   const { network, switchNetwork } = useNetwork()
+  const { providerType, getRpcEndpoint } = useApi()
   const { setModalStatus, setModalResize } = useOverlay().modal
-  const { connectionType, setConnectionType, rpcEndpoint } = useApi()
   const networkKey = network
 
-  const isLightClient = connectionType === 'sc'
+  const isLightClient = providerType === 'sc'
 
   // Likely never going to happen; here just to be safe.
   useEffect(() => setModalResize(), [isBraveBrowser])
@@ -81,7 +82,7 @@ export const Networks = () => {
               )
             })}
           </div>
-          <h4>{t('connectionType')}</h4>
+          <h4>{t('providerType')}</h4>
           <ConnectionsWrapper>
             <div>
               <ConnectionButton
@@ -89,7 +90,7 @@ export const Networks = () => {
                 className="off"
                 type="button"
                 onClick={() => {
-                  setConnectionType('sc')
+                  setProviderType('sc')
                   switchNetwork(networkKey as NetworkId)
                   setModalStatus('closing')
                 }}
@@ -104,7 +105,7 @@ export const Networks = () => {
                 disabled={!isLightClient}
                 type="button"
                 onClick={() => {
-                  setConnectionType('ws')
+                  setProviderType('ws')
                   switchNetwork(networkKey as NetworkId)
                   setModalStatus('closing')
                 }}
@@ -117,7 +118,7 @@ export const Networks = () => {
               <div className="provider">
                 <p>{t('provider')}:</p>
                 <ButtonTertiary
-                  text={rpcEndpoint}
+                  text={getRpcEndpoint(network)}
                   onClick={() => openPromptWith(<ProvidersPrompt />)}
                   marginLeft
                 />

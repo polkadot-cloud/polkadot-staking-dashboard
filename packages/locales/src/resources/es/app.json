@@ -278,7 +278,6 @@
     "update": "Actualizar",
     "valid": "Válida",
     "validAddress": "Dirección Válida",
-    "validatingParachainBlocks": "Validando Bloques de Parachain",
     "validatorCommission": "Comisión del validador",
     "validatorPerformance": "{{count}} Días de Rendimiento del Validador",
     "validators": "Validadores",

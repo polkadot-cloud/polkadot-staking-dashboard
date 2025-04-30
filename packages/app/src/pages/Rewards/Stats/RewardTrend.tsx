@@ -25,12 +25,12 @@ export const RewardTrend = () => {
   const { activeEra } = useApi()
   const { inSetup } = useStaking()
   const { erasPerDay } = useErasPerDay()
-  const { getPoolMembership } = useBalances()
+  const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
 
   const { unit, units } = getNetworkData(network)
-  const membership = getPoolMembership(activeAddress)
-  const eras = erasPerDay.multipliedBy(30).toNumber()
+  const { poolMembership } = getStakingLedger(activeAddress)
+  const eras = erasPerDay * 30
   // NOTE: 30 day duration in seconds
   const duration = 2592000
 
@@ -39,8 +39,8 @@ export const RewardTrend = () => {
 
   // Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
   const getRewardTrend = async () => {
-    if (activeAddress && activeEra.index.isGreaterThan(0)) {
-      const result = membership
+    if (activeAddress && activeEra.index > 0) {
+      const result = poolMembership
         ? await fetchPoolRewardTrend(network, activeAddress, duration)
         : await fetchNominatorRewardTrend(network, activeAddress, eras)
       setRewardTrend(result)
@@ -49,14 +49,14 @@ export const RewardTrend = () => {
 
   useEffect(() => {
     setRewardTrend(null)
-    if (!inSetup() || membership) {
+    if (!inSetup() || poolMembership) {
       getRewardTrend()
     }
   }, [
     activeAddress,
     network,
     activeEra.index.toString(),
-    membership,
+    poolMembership,
     inSetup(),
   ])
 

@@ -1,0 +1,26 @@
+{
+  "name": "dedot-api",
+  "version": "0.9.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@dedot/chaintypes": "^0.77.0",
+    "@w3ux/utils": "^2.0.10",
+    "consts": "workspace:*",
+    "dedot": "^0.9.5",
+    "global-bus": "workspace:*",
+    "rxjs": "^7.8.2",
+    "smoldot": "^2.0.34",
+    "utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@w3ux/types": "^2.2.1",
+    "types": "workspace:*"
+  }
+}
