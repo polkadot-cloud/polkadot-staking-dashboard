@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { PerbillMultiplier } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -58,7 +59,7 @@ export const PoolStats = () => {
   if (currentCommission) {
     items.push({
       label: t('poolCommission'),
-      value: `${currentCommission}%`,
+      value: `${currentCommission / PerbillMultiplier}%`,
     })
   }
 
