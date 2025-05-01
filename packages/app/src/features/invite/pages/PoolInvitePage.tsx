@@ -106,7 +106,7 @@ export const PoolInvitePage = () => {
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
   const location = window.location.search
-  const { activePool } = useActivePool()
+  const { inPool } = useActivePool()
   const { isReady, serviceApi } = useApi()
   const { bondedPools, updateBondedPools } = useBondedPools()
   const { getTransferOptions } = useTransferOptions()
@@ -280,8 +280,8 @@ export const PoolInvitePage = () => {
     }
   }
 
-  // Check if user is already in a pool
-  const userAlreadyInPool = activePool !== null
+  // Check if user is already in a pool using the inPool function from useActivePool
+  const userAlreadyInPool = inPool()
 
   // Get the transaction
   const getTx = () => {
@@ -345,7 +345,7 @@ export const PoolInvitePage = () => {
   }
 
   // Whether the form is ready to submit
-  const formValid = bondValid && feedbackErrors.length === 0
+  const formValid = bondValid && !feedbackErrors.length && !isSubmitting
 
   // Extract language from URL query parameters
   useEffect(() => {
