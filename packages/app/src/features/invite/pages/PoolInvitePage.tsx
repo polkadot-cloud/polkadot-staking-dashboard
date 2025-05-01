@@ -289,10 +289,9 @@ export const PoolInvitePage = () => {
       return
     }
     // Create a transaction to join the pool with the specified bond amount
-    const bondAmount = unitToPlanck(bond.bond, units)
     const txs = serviceApi.tx.joinPool(
       Number(poolId),
-      bondAmount,
+      unitToPlanck(!bondValid ? 0 : bond.bond, units),
       claimPermission
     )
     if (!txs || !txs.length) {
