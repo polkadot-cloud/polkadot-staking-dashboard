@@ -23,6 +23,7 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { defaultClaimPermission } from 'global-bus'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
+import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
@@ -111,6 +112,7 @@ export const PoolInvitePage = () => {
   const { getTransferOptions } = useTransferOptions()
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
   const { newBatchCall } = useBatchCall()
+  const createPoolAccounts = useCreatePoolAccounts()
 
   const [poolDetails, setPoolDetails] = useState<PoolDetails | null>(null)
   const [loading, setLoading] = useState(true)
@@ -235,10 +237,13 @@ export const PoolInvitePage = () => {
         ? new TextDecoder().decode(Buffer.from(metadataHex.substring(2), 'hex'))
         : ''
 
+      // Get pool stash and reward addresses
+      const poolAddresses = createPoolAccounts(poolIdNum)
+
       // Create addresses object for the pool
-      const poolAddresses = {
-        stash: '', // We'll need to get this from somewhere else if needed
-        reward: '', // We'll need to get this from somewhere else if needed
+      const addresses = {
+        stash: poolAddresses.stash,
+        reward: poolAddresses.reward,
       }
 
       // Format pool details
@@ -258,7 +263,7 @@ export const PoolInvitePage = () => {
             }
           : undefined,
         totalBonded: planckToUnit(bondedPool.points?.toString() || '0', units),
-        addresses: poolAddresses,
+        addresses,
         roles: {
           root: bondedPool.roles?.root || null,
           nominator: bondedPool.roles?.nominator || null,
@@ -395,10 +400,10 @@ export const PoolInvitePage = () => {
                 <PoolCard>
                   <PoolHeader>
                     <PoolIcon>
-                      {poolDetails?.addresses.stash && (
+                      {poolDetails?.addresses?.stash && (
                         <Polkicon
                           address={poolDetails.addresses.stash}
-                          fontSize="48px"
+                          fontSize="40px"
                         />
                       )}
                     </PoolIcon>
