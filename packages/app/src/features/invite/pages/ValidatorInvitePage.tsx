@@ -282,9 +282,9 @@ export const ValidatorInvitePage = () => {
       setIsSubmitting(true)
     },
     callbackInBlock: () => {
-      // Navigate to staking page after successful transaction
+      // Navigate to nominate page after successful transaction
       setTimeout(() => {
-        navigate('/stake')
+        navigate('/nominate')
       }, 2000)
     },
   })
