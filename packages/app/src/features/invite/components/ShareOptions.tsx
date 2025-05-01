@@ -3,10 +3,11 @@
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { ButtonPrimary } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 
 export const ShareOptions = ({
   inviteUrl,
@@ -19,6 +20,7 @@ export const ShareOptions = ({
 }) => {
   const { t } = useTranslation('invite')
   const [showFullUrl, setShowFullUrl] = useState(false)
+  const { setModalResize } = useOverlay().modal
 
   // Create shortened URL for display
   const shortenUrl = (url: string) => {
@@ -28,15 +30,29 @@ export const ShareOptions = ({
     return `${url.substring(0, 30)}...${url.substring(url.length - 30)}`
   }
 
+  // Toggle URL display and resize modal when expanded
+  const toggleUrlDisplay = () => {
+    setShowFullUrl(!showFullUrl)
+  }
+
+  // Resize modal when URL display changes
+  useEffect(() => {
+    if (showFullUrl) {
+      setModalResize()
+    }
+  }, [showFullUrl, setModalResize])
+
   const displayUrl = showFullUrl ? inviteUrl : shortenUrl(inviteUrl)
 
   return (
     <Container>
-      <InviteUrlContainer>
+      <InviteUrlContainer $expanded={showFullUrl}>
         <InviteUrlWrapper>
-          <InviteUrl title={inviteUrl}>{displayUrl}</InviteUrl>
+          <InviteUrl title={inviteUrl} $expanded={showFullUrl}>
+            {displayUrl}
+          </InviteUrl>
           <ViewToggle
-            onClick={() => setShowFullUrl(!showFullUrl)}
+            onClick={toggleUrlDisplay}
             title={showFullUrl ? t('showLess') : t('showMore')}
           >
             <FontAwesomeIcon icon={showFullUrl ? faCompressAlt : faExpandAlt} />
@@ -58,10 +74,10 @@ const Container = styled.div`
   width: 100%;
 `
 
-const InviteUrlContainer = styled.div`
+const InviteUrlContainer = styled.div<{ $expanded: boolean }>`
   display: flex;
   gap: 1rem;
-  align-items: center;
+  align-items: ${({ $expanded }) => ($expanded ? 'flex-start' : 'center')};
   padding: 0.75rem 1rem;
   background: var(--button-secondary-background);
   border-radius: 0.75rem;
@@ -69,6 +85,7 @@ const InviteUrlContainer = styled.div`
   transition: all var(--transition-duration);
   width: 100%;
   box-sizing: border-box;
+  max-height: ${({ $expanded }) => ($expanded ? '300px' : 'auto')};
 
   @media (max-width: 826px) {
     flex-direction: column;
@@ -79,12 +96,12 @@ const InviteUrlContainer = styled.div`
 const InviteUrlWrapper = styled.div`
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   position: relative;
 `
 
-const InviteUrl = styled.div`
+const InviteUrl = styled.div<{ $expanded: boolean }>`
   flex: 1;
   font-family: monospace;
   word-break: break-all;
@@ -92,11 +109,12 @@ const InviteUrl = styled.div`
   color: var(--text-color-secondary);
   overflow-wrap: break-word;
   min-width: 0;
-  max-height: 100px;
+  max-height: ${({ $expanded }) => ($expanded ? '250px' : '100px')};
   overflow-y: auto;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   background: var(--button-secondary-background);
+  white-space: ${({ $expanded }) => ($expanded ? 'normal' : 'nowrap')};
 
   &::-webkit-scrollbar {
     width: 0.25rem;

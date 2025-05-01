@@ -68,7 +68,9 @@ export const InviteModal = () => {
   // Initialize selected validators when nominatedValidators are loaded
   useEffect(() => {
     if (nominatedValidators.length > 0 && selectedValidators.length === 0) {
-      setSelectedValidators(nominatedValidators.map((v) => v.address))
+      // Only set initial selection, don't auto-generate URL yet
+      const initialSelection = nominatedValidators.map((v) => v.address)
+      setSelectedValidators(initialSelection)
     }
   }, [nominatedValidators])
 
@@ -90,6 +92,26 @@ export const InviteModal = () => {
     activePool,
   ])
 
+  // Toggle validator selection
+  const toggleValidator = useCallback(
+    (address: string) => {
+      setSelectedValidators((prev) => {
+        const newSelection = prev.includes(address)
+          ? prev.filter((a) => a !== address)
+          : [...prev, address]
+
+        // Update the URL if it's already been generated
+        if (inviteGenerated && inviteType === 'validator') {
+          validatorInviteGenerator.setSelectedValidators(newSelection)
+          validatorInviteGenerator.generateInviteUrl()
+        }
+
+        return newSelection
+      })
+    },
+    [inviteGenerated, inviteType, validatorInviteGenerator]
+  )
+
   // Handle pool selection only - moved inside useEffect to prevent infinite loop
   useEffect(() => {
     if (inviteType === 'pool' && activePool?.id) {
@@ -98,16 +120,6 @@ export const InviteModal = () => {
       setInviteGenerated(true)
     }
   }, [inviteType, activePool?.id, poolInviteGenerator])
-
-  // Toggle validator selection
-  const toggleValidator = useCallback((address: string) => {
-    setSelectedValidators((prev) => {
-      const newSelection = prev.includes(address)
-        ? prev.filter((a) => a !== address)
-        : [...prev, address]
-      return newSelection
-    })
-  }, [])
 
   // Resize modal when content changes
   useEffect(() => {

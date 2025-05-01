@@ -247,7 +247,7 @@ export const ValidatorInvitePage = () => {
       if (inSetup()) {
         // For new nominators, we need to bond and nominate
         const tx = serviceApi.tx.newNominator(
-          unitToPlanck(bond.bond, units),
+          unitToPlanck(bond.bond || '0', units),
           payeeConfig,
           selectedValidators
         )

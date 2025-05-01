@@ -131,29 +131,44 @@ export const ValidatorListContainer = styled.div`
   .validator-item {
     background: var(--button-secondary-background);
     border-radius: 0.75rem;
-    border: 1.5px solid var(--border-primary-color);
-    overflow: hidden;
     position: relative;
     cursor: pointer;
-    transition: all var(--transition-duration);
     padding: 1.25rem 1rem 2.5rem 1rem; /* Increased bottom padding for actions */
     margin-bottom: 0;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     box-shadow: var(--card-shadow-secondary);
 
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--card-shadow-secondary);
+    /* Use a different approach with an inset border */
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 0.75rem;
+      border: 1.5px solid var(--border-primary-color);
+      pointer-events: none;
+      transition: border-color var(--transition-duration);
+      z-index: 1;
+    }
+
+    &:hover:not(.selected) {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      &::after {
+        border-color: var(--accent-color-primary);
+      }
     }
 
     &.selected {
-      border-color: var(--accent-color-primary);
-      background-color: var(--button-secondary-background);
-      box-shadow: var(--card-shadow-secondary);
-      position: relative;
-
       &::after {
+        border-color: var(--accent-color-primary);
+      }
+
+      /* Restore the checkmark indicator */
+      &::before {
         content: '';
         position: absolute;
         top: 1.25rem;
@@ -167,6 +182,7 @@ export const ValidatorListContainer = styled.div`
         background-position: center;
         background-size: 12px;
         box-shadow: var(--card-shadow-secondary);
+        z-index: 1;
       }
     }
 
