@@ -545,12 +545,21 @@ export const PoolInvitePage = () => {
                           <RoleItem key={role}>
                             <RoleLabel>{t(role)}</RoleLabel>
                             <RoleValue>
-                              <IdentityWrapper>
+                              <IdentityWrapper
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
                                 <Polkicon address={address} fontSize="24px" />
                                 {displayIdentity ? (
-                                  <RoleIdentity>{displayIdentity}</RoleIdentity>
+                                  <RoleIdentity style={{ marginLeft: '8px' }}>
+                                    {displayIdentity}
+                                  </RoleIdentity>
                                 ) : (
-                                  <RoleText>{ellipsisFn(address, 6)}</RoleText>
+                                  <RoleText style={{ marginLeft: '8px' }}>
+                                    {ellipsisFn(address, 6)}
+                                  </RoleText>
                                 )}
                               </IdentityWrapper>
                               <CopyButton

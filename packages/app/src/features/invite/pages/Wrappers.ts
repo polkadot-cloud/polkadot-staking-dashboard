@@ -566,6 +566,7 @@ export const RoleLabel = styled.div`
   font-family: InterSemiBold, sans-serif;
   color: var(--text-color-secondary);
   text-transform: capitalize;
+  min-width: 80px;
 `
 
 export const RoleValue = styled.div`
