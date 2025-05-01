@@ -99,11 +99,11 @@ interface PoolDetails {
 export const PoolInvitePage = () => {
   const { t, i18n } = useTranslation('invite')
   const navigate = useNavigate()
-  const { poolId } = useParams<{
+  const { poolId, network: urlNetwork } = useParams<{
     network: string
     poolId: string
   }>()
-  const { network } = useNetwork()
+  const { network, switchNetwork } = useNetwork()
   const { activeAddress } = useActiveAccounts()
   const location = window.location.search
   const { inPool } = useActivePool()
@@ -346,8 +346,9 @@ export const PoolInvitePage = () => {
   // Whether the form is ready to submit
   const formValid = bondValid && !feedbackErrors.length && !isSubmitting
 
-  // Extract language from URL query parameters
+  // Extract language from URL query parameters and handle network switching
   useEffect(() => {
+    // Handle language from URL
     if (location) {
       const params = new URLSearchParams(location)
       const langParam = params.get('l')
@@ -361,7 +362,16 @@ export const PoolInvitePage = () => {
         i18n.changeLanguage(langParam)
       }
     }
-  }, [location, i18n])
+
+    // Handle network switching if URL network doesn't match current network
+    if (urlNetwork && urlNetwork !== network) {
+      // Only switch if the network from URL is valid
+      if (['polkadot', 'kusama', 'westend'].includes(urlNetwork)) {
+        // Switch to the network specified in the URL
+        switchNetwork(urlNetwork as 'polkadot' | 'kusama' | 'westend')
+      }
+    }
+  }, [location, i18n, urlNetwork, network, switchNetwork])
 
   return (
     <Page.Container>

@@ -54,7 +54,7 @@ export const ValidatorInvitePage = () => {
   const { modal } = useOverlay()
   const navigate = useNavigate()
   const { inSetup } = useStaking()
-  const { network } = useNetwork()
+  const { network, switchNetwork } = useNetwork()
   const { isReady, serviceApi } = useApi()
   const { getSignerWarnings } = useSignerWarnings()
   const { accountHasSigner } = useImportedAccounts()
@@ -74,8 +74,9 @@ export const ValidatorInvitePage = () => {
     eraStakers: { stakers },
   } = useStaking()
 
-  // Extract language from URL query parameters
+  // Extract language from URL query parameters and handle network switching
   useEffect(() => {
+    // Handle language from URL
     if (location) {
       const params = new URLSearchParams(location)
       const langParam = params.get('l')
@@ -89,7 +90,16 @@ export const ValidatorInvitePage = () => {
         i18n.changeLanguage(langParam)
       }
     }
-  }, [location, i18n])
+
+    // Handle network switching if URL network doesn't match current network
+    if (urlNetwork && urlNetwork !== network) {
+      // Only switch if the network from URL is valid
+      if (['polkadot', 'kusama', 'westend'].includes(urlNetwork)) {
+        // Switch to the network specified in the URL
+        switchNetwork(urlNetwork as 'polkadot' | 'kusama' | 'westend')
+      }
+    }
+  }, [location, i18n, urlNetwork, network, switchNetwork])
 
   const { units, unit } = getNetworkData(network)
 
