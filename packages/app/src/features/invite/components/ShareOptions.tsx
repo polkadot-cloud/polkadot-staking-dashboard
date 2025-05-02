@@ -54,6 +54,9 @@ export const ShareOptions = ({
           <ViewToggle
             onClick={toggleUrlDisplay}
             title={showFullUrl ? t('showLess') : t('showMore')}
+            aria-label={
+              showFullUrl ? t('collapseUrlAriaLabel') : t('expandUrlAriaLabel')
+            }
           >
             <FontAwesomeIcon icon={showFullUrl ? faCompressAlt : faExpandAlt} />
           </ViewToggle>

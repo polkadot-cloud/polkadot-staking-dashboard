@@ -134,7 +134,7 @@ export const InviteModal = () => {
   if (!activeAccount) {
     return (
       <>
-        <Close />
+        <Close aria-label={t('closeModalAriaLabel')} />
         <Padding>
           <Title>{t('inviteToStake')}</Title>
           <EmptyState>{t('connectWallet')}</EmptyState>
@@ -146,7 +146,7 @@ export const InviteModal = () => {
   if (!inviteType) {
     return (
       <>
-        <Close />
+        <Close aria-label={t('closeModalAriaLabel')} />
         <Padding>
           <Title>{t('inviteToStake')}</Title>
           <EmptyState>{t('noCurrentNominations')}</EmptyState>
@@ -158,7 +158,7 @@ export const InviteModal = () => {
   if (!activePool && inviteType === 'pool') {
     return (
       <>
-        <Close />
+        <Close aria-label={t('closeModalAriaLabel')} />
         <Padding>
           <Title>{t('inviteToStake')}</Title>
           <EmptyState>{t('noPoolsFound')}</EmptyState>
@@ -169,7 +169,7 @@ export const InviteModal = () => {
 
   return (
     <>
-      <Close />
+      <Close aria-label={t('closeModalAriaLabel')} />
       <Padding>
         <Title>{t('inviteToStake')}</Title>
 
