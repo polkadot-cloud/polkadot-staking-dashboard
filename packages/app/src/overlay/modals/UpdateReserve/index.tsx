@@ -3,7 +3,7 @@
 
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -35,13 +35,13 @@ export const UpdateReserve = () => {
 
   const { unit, units } = getNetworkData(network)
   const { edReserved } = getTransferOptions(activeAddress)
-  const minReserve = planckToUnitBn(edReserved, units)
+  const minReserve = new BigNumber(planckToUnit(edReserved, units))
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
   )
 
   const [sliderReserve, setSliderReserve] = useState<number>(
-    planckToUnitBn(feeReserve, units)
+    planckToUnitBn(new BigNumber(feeReserve), units)
       .plus(minReserve)
       .decimalPlaces(3)
       .toNumber()
@@ -53,7 +53,7 @@ export const UpdateReserve = () => {
     const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber()
     const actualReservePlanck = unitToPlanck(actualReserve.toString(), units)
     setSliderReserve(val.decimalPlaces(3).toNumber())
-    setFeeReserveBalance(new BigNumber(actualReservePlanck))
+    setFeeReserveBalance(actualReservePlanck)
   }
 
   return (

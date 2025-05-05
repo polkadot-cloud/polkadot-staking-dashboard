@@ -6,6 +6,7 @@ import { NetworkList } from 'consts/networks'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
+import { getRpcEndpoints, setRpcEndpoints } from 'global-bus'
 import { Title } from 'library/Prompt/Title'
 import { PromptSelectItem } from 'library/Prompt/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -14,9 +15,9 @@ export const ProvidersPrompt = () => {
   const { t } = useTranslation()
   const { network } = useNetwork()
   const { closePrompt } = usePrompt()
-  const { rpcEndpoint, setRpcEndpoint } = useApi()
+  const { getRpcEndpoint } = useApi()
 
-  const rpcProviders = NetworkList[network].endpoints.rpcEndpoints
+  const rpcProviders = NetworkList[network].endpoints.rpc
   return (
     <>
       <Title title={t('rpcProviders', { ns: 'modals' })} />
@@ -28,7 +29,7 @@ export const ProvidersPrompt = () => {
           })}
         </h4>
         {Object.entries(rpcProviders)?.map(([key, url], i) => {
-          const isDisabled = rpcEndpoint === key
+          const isDisabled = getRpcEndpoint(network) === key
 
           return (
             <PromptSelectItem
@@ -36,7 +37,11 @@ export const ProvidersPrompt = () => {
               className={isDisabled ? 'inactive' : undefined}
               onClick={() => {
                 closePrompt()
-                setRpcEndpoint(key)
+                // NOTE: Currently, we can only update the relay chain RPC endpoint
+                setRpcEndpoints(network, {
+                  ...getRpcEndpoints(),
+                  [network]: key,
+                })
               }}
             >
               <h3>

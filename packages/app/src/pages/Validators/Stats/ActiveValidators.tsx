@@ -17,9 +17,9 @@ export const ActiveValidators = () => {
 
   // active validators as percent. Avoiding dividing by zero.
   let activeValidatorsAsPercent = new BigNumber(0)
-  if (validatorCount.isGreaterThan(0)) {
+  if (validatorCount > 0) {
     activeValidatorsAsPercent = new BigNumber(activeValidators).dividedBy(
-      validatorCount.multipliedBy(0.01)
+      validatorCount * 0.01
     )
   }
 
@@ -27,10 +27,10 @@ export const ActiveValidators = () => {
     label: t('activeValidators'),
     stat: {
       value: activeValidators,
-      total: validatorCount.toNumber(),
+      total: validatorCount,
       unit: '',
     },
-    pieValue: percentageOf(activeValidators, validatorCount.toNumber()),
+    pieValue: percentageOf(activeValidators, validatorCount),
     tooltip: `${activeValidatorsAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Active Validator',
   }

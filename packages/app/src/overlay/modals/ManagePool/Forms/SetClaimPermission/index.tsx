@@ -2,13 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { PoolSetClaimPermission } from 'api/tx/poolSetClaimPermission'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import type { ClaimPermission } from 'contexts/Pools/types'
-import { defaultClaimPermission } from 'controllers/ActivePools/defaults'
+import { defaultClaimPermission } from 'global-bus'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput'
@@ -17,6 +15,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ClaimPermission } from 'types'
 import { ButtonSubmitInvert } from 'ui-buttons'
 import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
@@ -31,14 +30,14 @@ export const SetClaimPermission = ({
   onResize: () => void
 }) => {
   const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { getPoolMembership } = useBalances()
+  const { serviceApi } = useApi()
+  const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { isOwner, isMember } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
 
-  const membership = getPoolMembership(activeAddress)
+  const { poolMembership } = getStakingLedger(activeAddress)
 
   // Valid to submit transaction.
   const [valid, setValid] = useState<boolean>(false)
@@ -46,15 +45,15 @@ export const SetClaimPermission = ({
   // Updated claim permission value.
   const [claimPermission, setClaimPermission] = useState<
     ClaimPermission | undefined
-  >(membership?.claimPermission)
+  >(poolMembership?.claimPermission)
 
   // Determine current pool metadata and set in state.
   useEffect(() => {
-    const current = membership?.claimPermission
+    const current = poolMembership?.claimPermission
     if (current) {
-      setClaimPermission(membership?.claimPermission)
+      setClaimPermission(poolMembership?.claimPermission)
     }
-  }, [section, membership])
+  }, [section, poolMembership])
 
   useEffect(() => {
     setValid(isOwner() || (isMember() && claimPermission !== undefined))
@@ -62,9 +61,9 @@ export const SetClaimPermission = ({
 
   const getTx = () => {
     if (!valid || !claimPermission) {
-      return null
+      return
     }
-    return new PoolSetClaimPermission(network, claimPermission).tx()
+    return serviceApi.tx.poolSetClaimPermission(claimPermission)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -94,14 +93,14 @@ export const SetClaimPermission = ({
         ) : null}
 
         <ClaimPermissionInput
-          current={membership?.claimPermission || defaultClaimPermission}
+          current={poolMembership?.claimPermission || defaultClaimPermission}
           onChange={(val: ClaimPermission | undefined) => {
             setClaimPermission(val)
           }}
         />
       </Padding>
       <SubmitTx
-        valid={valid && claimPermission !== membership?.claimPermission}
+        valid={valid && claimPermission !== poolMembership?.claimPermission}
         buttons={[
           <ButtonSubmitInvert
             key="button_back"

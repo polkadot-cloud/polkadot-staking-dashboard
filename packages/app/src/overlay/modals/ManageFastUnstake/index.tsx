@@ -1,17 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FastUnstakeDeregister } from 'api/tx/fastUnstakeDeregister'
-import { FastUnstakeRegister } from 'api/tx/fastUnstakeRegister'
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBonded } from 'contexts/Bonded'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useNetwork } from 'contexts/Network'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
+import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { useUnstaking } from 'hooks/useUnstaking'
@@ -22,18 +21,17 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals')
   const {
-    consts: { bondDuration, fastUnstakeDeposit },
-    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+    getConsts,
     activeEra,
+    serviceApi,
+    stakingMetrics: { erasToCheckPerBlock },
   } = useApi()
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
-  const { getBondedAccount } = useBonded()
   const { isFastUnstaking } = useUnstaking()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
@@ -43,20 +41,18 @@ export const ManageFastUnstake = () => {
     useFastUnstake()
 
   const { unit, units } = getNetworkData(network)
-  const controller = getBondedAccount(activeAddress)
+  const { bondDuration, fastUnstakeDeposit } = getConsts(network)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { nominate, transferrableBalance } = allTransferOptions
   const { totalUnlockChunks } = nominate
-
-  const enoughForDeposit =
-    transferrableBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit)
+  const enoughForDeposit = transferrableBalance >= fastUnstakeDeposit
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)
 
   useEffect(() => {
     setValid(
-      fastUnstakeErasToCheckPerBlock > 0 &&
+      erasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
           enoughForDeposit &&
           fastUnstakeStatus?.status === 'NOT_EXPOSED' &&
@@ -65,7 +61,7 @@ export const ManageFastUnstake = () => {
     )
   }, [
     fastUnstakeStatus?.status,
-    fastUnstakeErasToCheckPerBlock,
+    erasToCheckPerBlock,
     totalUnlockChunks,
     isFastUnstaking,
     fastUnstakeDeposit,
@@ -79,21 +75,21 @@ export const ManageFastUnstake = () => {
   )
 
   const getTx = () => {
-    let tx = null
+    let tx: SubmittableExtrinsic | undefined
     if (!valid) {
-      return tx
+      return
     }
     if (!isFastUnstaking) {
-      tx = new FastUnstakeRegister(network).tx()
+      tx = serviceApi.tx.fastUnstakeRegister()
     } else {
-      tx = new FastUnstakeDeregister(network).tx()
+      tx = serviceApi.tx.fastUnstakeDeregister()
     }
     return tx
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: controller,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackInBlock: () => {
       setModalStatus('closing')
@@ -112,7 +108,7 @@ export const ManageFastUnstake = () => {
   if (!isFastUnstaking) {
     if (!enoughForDeposit) {
       warnings.push(
-        `${t('noEnough')} ${planckToUnitBn(
+        `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,
           units
         ).toString()} ${unit}`
@@ -131,10 +127,12 @@ export const ManageFastUnstake = () => {
   // manage last exposed
   const lastExposedAgo =
     !exposed || !fastUnstakeStatus?.lastExposed
-      ? new BigNumber(0)
-      : activeEra.index.minus(fastUnstakeStatus.lastExposed.toString())
-
-  const erasRemaining = BigNumber.max(1, bondDuration.minus(lastExposedAgo))
+      ? 0
+      : activeEra.index - fastUnstakeStatus.lastExposed
+  const erasRemaining = BigNumber.max(
+    1,
+    new BigNumber(bondDuration).minus(lastExposedAgo)
+  )
 
   return (
     <>
@@ -153,7 +151,7 @@ export const ManageFastUnstake = () => {
           <>
             <ActionItem
               text={t('fastUnstakeExposedAgo', {
-                count: lastExposedAgo.toNumber(),
+                count: lastExposedAgo,
               })}
             />
             <Notes>
@@ -173,7 +171,7 @@ export const ManageFastUnstake = () => {
             <Notes>
               <p>
                 {t('registerFastUnstake')}{' '}
-                {planckToUnitBn(fastUnstakeDeposit, units).toString()} {unit}.{' '}
+                {planckToUnit(fastUnstakeDeposit, units).toString()} {unit}.{' '}
                 {t('fastUnstakeOnceRegistered')}
               </p>
               <p>
@@ -195,7 +193,7 @@ export const ManageFastUnstake = () => {
       </Padding>
       {!exposed ? (
         <SubmitTx
-          fromController
+          requiresMigratedController
           valid={valid}
           submitText={
             submitted

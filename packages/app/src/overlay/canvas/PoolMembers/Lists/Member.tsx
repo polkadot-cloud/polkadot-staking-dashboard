@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useApi } from 'contexts/Api'
 import { useMenu } from 'contexts/Menu'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { usePoolMembers } from 'contexts/Pools/PoolMembers'
+import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
 import { motion } from 'framer-motion'
 import { Identity } from 'library/ListItem/Labels/Identity'
@@ -21,49 +21,40 @@ import { HeaderButtonRow, Separator } from 'ui-core/list'
 import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
 
-export const Member = ({
-  who,
-  batchKey,
-  batchIndex,
-}: {
-  who: string
-  batchKey: string
-  batchIndex: number
-}) => {
+export const Member = ({ member }: { member: FetchedPoolMember }) => {
   const { t } = useTranslation()
   const { activeEra } = useApi()
-  const { meta } = usePoolMembers()
   const { openMenu, open } = useMenu()
   const { openPromptWith } = usePrompt()
-  const { activePool, isOwner, isBouncer } = useActivePool()
+  const { activePool, isOwner, isBouncer, getPoolRoles } = useActivePool()
 
   // Ref for the member container.
   const memberRef = useRef<HTMLDivElement | null>(null)
 
-  const { state, roles } = activePool?.bondedPool || {}
-  const { bouncer, root, depositor } = roles || {}
+  const roles = getPoolRoles()
+  const state = activePool?.bondedPool.state
+  const { bouncer, root, depositor } = roles
 
   const canUnbondBlocked =
     state === 'Blocked' &&
     (isOwner() || isBouncer()) &&
-    ![root, bouncer].includes(who)
+    ![root, bouncer].includes(member.address)
 
-  const canUnbondDestroying = state === 'Destroying' && who !== depositor
-  const poolMembers = meta[batchKey]?.poolMembers ?? []
-  const member = poolMembers[batchIndex] ?? null
+  const canUnbondDestroying =
+    state === 'Destroying' && member.address !== depositor
 
   const menuItems: AnyJson[] = []
 
-  if (member && (canUnbondBlocked || canUnbondDestroying)) {
+  if (canUnbondBlocked || canUnbondDestroying) {
     const { points, unbondingEras } = member
 
-    if (points !== '0') {
+    if (points !== 0n) {
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
         wrap: null,
         title: `${t('unbondFunds', { ns: 'pages' })}`,
         cb: () => {
-          openPromptWith(<UnbondMember who={who} member={member} />)
+          openPromptWith(<UnbondMember who={member.address} member={member} />)
         },
       })
     }
@@ -71,7 +62,7 @@ export const Member = ({
     if (Object.values(unbondingEras).length) {
       let canWithdraw = false
       for (const k of Object.keys(unbondingEras)) {
-        if (activeEra.index.isGreaterThan(Number(k))) {
+        if (activeEra.index > Number(k)) {
           canWithdraw = true
         }
       }
@@ -83,7 +74,11 @@ export const Member = ({
           title: `${t('withdrawFunds', { ns: 'pages' })}`,
           cb: () => {
             openPromptWith(
-              <WithdrawMember who={who} member={member} memberRef={memberRef} />
+              <WithdrawMember
+                who={member.address}
+                member={member}
+                memberRef={memberRef}
+              />
             )
           },
         })
@@ -116,7 +111,7 @@ export const Member = ({
       <Wrapper className="member">
         <div className="inner canvas">
           <div className="row top">
-            <Identity address={who} />
+            <Identity address={member.address} />
             <div>
               <HeaderButtonRow>
                 {menuItems.length > 0 && (
@@ -134,11 +129,7 @@ export const Member = ({
           </div>
           <Separator />
           <div className="row bottom">
-            <PoolMemberBonded
-              meta={meta}
-              batchKey={batchKey}
-              batchIndex={batchIndex}
-            />
+            <PoolMemberBonded member={member} />
           </div>
         </div>
       </Wrapper>

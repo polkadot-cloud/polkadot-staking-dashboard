@@ -5,7 +5,6 @@ import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
-import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
@@ -27,7 +26,6 @@ export const Item = ({
   displayFor,
   nominationStatus,
   eraPoints,
-  showParaValidator = false,
 }: ItemProps) => {
   const { pluginEnabled } = usePlugins()
   const { validatorIdentities, validatorSupers } = useValidators()
@@ -81,7 +79,6 @@ export const Item = ({
               <Quartile address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
-              {showParaValidator && <ParaValidator address={address} />}
             </LabelRow>
             <NominationStatus
               address={address}

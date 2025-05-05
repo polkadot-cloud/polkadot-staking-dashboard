@@ -58,7 +58,7 @@ export const Rewards = () => {
       fetchRewards(
         network,
         activeAddress || '',
-        Math.max(activeEra.index.minus(1).toNumber(), 0)
+        Math.max(activeEra.index - 1, 0)
       ),
       fetchPoolRewards(network, activeAddress || '', getUnixTime(fromDate)),
     ])
@@ -91,7 +91,7 @@ export const Rewards = () => {
         unclaimedPayouts: [],
         poolClaims: [],
       })
-    } else if (activeAddress && activeEra.index.isGreaterThan(0)) {
+    } else if (activeAddress && activeEra.index > 0) {
       setLoading(true)
       getPayoutData()
     }

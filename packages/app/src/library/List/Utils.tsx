@@ -2,52 +2,46 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import type { AnyJson } from 'types'
+import type { IdentityOf, SuperIdentity } from 'types'
 import type { IdentityDisplay } from './types'
 
 export const getIdentityDisplay = (
-  _identity: AnyJson,
-  _superIdentity: AnyJson
+  _identity?: IdentityOf,
+  _superIdentity?: SuperIdentity
 ): IdentityDisplay => {
-  let displayFinal = ''
-  let foundSuper = false
-  // Check super identity exists, get display.Raw if it does
-  const superIdentity = _superIdentity?.identity ?? null
-  const superDisplay = superIdentity?.info?.display?.value?.asText() ?? null
+  let display = ''
 
-  // Determine final display value if super was found
-  if (!['', null].includes(superDisplay)) {
-    displayFinal = superDisplay
-    foundSuper = true
+  // Add base-identity to display
+  const baseValue = _identity?.info?.display?.value
+  if (baseValue) {
+    display = baseValue
   }
+  // Overwrite with super identity value if it exists
+  const superIdentityValue =
+    _superIdentity?.superOf?.identity?.info?.display?.value
+  if (superIdentityValue) {
+    display = superIdentityValue
+  }
+  // Add super value as secondary identity value
+  const superValue = _superIdentity?.value || ''
 
-  // Determine final display value if super was not found
-  if (!foundSuper) {
-    // Check sub-identity exists, get display.Raw if it does
-    const identity = _identity?.info?.display?.value?.asText() ?? null
-
-    // Add sub-identity to final display value if it exists
-    if (!['', null].includes(identity)) {
-      displayFinal = identity
-    }
-  }
-  if (displayFinal === '') {
-    return { node: null, data: null }
-  }
-
-  const data = {
-    display: displayFinal,
-    super: !['', displayFinal].includes(superDisplay) ? superDisplay : null,
-  }
-  return {
-    node: (
-      <>
-        {data.display}
-        {data.super ? <span>/ {data.super}</span> : null}
-      </>
-    ),
-    data,
-  }
+  return display === ''
+    ? {
+        node: null,
+        data: null,
+      }
+    : {
+        node: (
+          <>
+            {display}
+            {superValue !== '' ? <span>/ {superValue}</span> : null}
+          </>
+        ),
+        data: {
+          display,
+          super: superValue || '',
+        },
+      }
 }
 
 // Normalise era points between 0 and 1 relative to the highest recorded value.

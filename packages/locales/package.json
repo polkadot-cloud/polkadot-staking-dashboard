@@ -16,7 +16,8 @@
     "@w3ux/utils": "2.0.10",
     "consts": "workspace:*",
     "date-fns": "^4.1.0",
-    "i18next": "^24.2.3",
-    "react-i18next": "^15.4.0"
+    "i18next": "^25.0.2",
+    "react-i18next": "^15.5.1",
+    "utils": "workspace:*"
   }
 }

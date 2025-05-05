@@ -22,30 +22,29 @@ export const UnlockChunks = () => {
     setModalHeight,
     modalMaxHeight,
   } = useOverlay().modal
-  const { getLedger } = useBalances()
+  const { getStakingLedger } = useBalances()
   const { getPoolUnlocking } = useActivePool()
   const { activeAddress } = useActiveAccounts()
   const { integrityChecked } = useLedgerHardware()
+
   const { bondFor } = options || {}
 
   // get the unlocking per bondFor
   const getUnlocking = () => {
     let unlocking = []
-    let ledger
+    let stakingLedger
     switch (bondFor) {
       case 'pool':
         unlocking = getPoolUnlocking()
         break
       default:
-        ledger = getLedger({ stash: activeAddress })
-        unlocking = ledger.unlocking
+        stakingLedger = getStakingLedger(activeAddress)
+        unlocking = stakingLedger.ledger?.unlocking || []
     }
     return unlocking
   }
 
   const unlocking = getUnlocking()
-
-  // active modal section
   const [section, setSectionState] = useState<number>(0)
   const sectionRef = useRef(section)
 

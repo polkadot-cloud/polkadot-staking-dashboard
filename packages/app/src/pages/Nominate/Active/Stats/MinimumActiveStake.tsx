@@ -12,8 +12,7 @@ import { planckToUnitBn } from 'utils'
 export const MinimumActiveStake = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
-  const { minimumActiveStake } = useApi().networkMetrics
-  const { minNominatorBond } = useApi().stakingMetrics
+  const { minNominatorBond, minimumActiveStake } = useApi().stakingMetrics
   const { unit, units } = getNetworkData(network)
   const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
 

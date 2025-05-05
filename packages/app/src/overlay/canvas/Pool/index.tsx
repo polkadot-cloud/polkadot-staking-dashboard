@@ -1,16 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { Apis } from 'controllers/Apis'
-import { Identities } from 'controllers/Identities'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
-import type { BondedPool, ChainId, SystemChainId } from 'types'
+import type { BondedPool } from 'types'
 import { Main } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
+import { formatIdentities, formatSuperIdentities } from 'utils'
 import { Header } from './Header'
 import { Nominations } from './Nominations'
 import { Overview } from './Overview'
@@ -21,6 +21,7 @@ export const Pool = () => {
   const {
     config: { options },
   } = useOverlay().canvas
+  const { serviceApi } = useApi()
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { poolsMetaData, bondedPools } = useBondedPools()
@@ -103,19 +104,20 @@ export const Pool = () => {
 
   // Fetch pool role identities when bonded pool changes
   const handleRoleIdentities = async (addresses: string[]) => {
-    const peopleApiId: ChainId = `people-${network}`
-    const peopleApiClient = Apis.getClient(`people-${network}` as SystemChainId)
-    if (peopleApiClient) {
-      const { identities, supers } = await Identities.fetch(peopleApiId, [
-        ...addresses,
-      ])
-      setRoleIdentities({ identities, supers })
-    }
+    const identities = formatIdentities(
+      addresses,
+      await serviceApi.query.identityOfMulti(addresses)
+    )
+    const supers = formatSuperIdentities(
+      await serviceApi.query.superOfMulti(addresses)
+    )
+    setRoleIdentities({ identities, supers })
   }
 
   useEffect(() => {
     if (bondedPool) {
-      handleRoleIdentities([...new Set(Object.values(bondedPool.roles))])
+      const roles = Object.values(bondedPool.roles)
+      handleRoleIdentities([...new Set(roles)])
     }
   }, [bondedPool])
 

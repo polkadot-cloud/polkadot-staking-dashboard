@@ -4,62 +4,64 @@
 import { UnsupportedIfUniqueController } from 'consts/proxies'
 import { isSupportedProxyCall } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBonded } from 'contexts/Bonded'
+import { useBalances } from 'contexts/Balances'
 import { useProxies } from 'contexts/Proxies'
-import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types'
+import type { SubmittableExtrinsic } from 'dedot'
 import type { AnyJson, MaybeAddress } from 'types'
 
 export const useProxySupported = () => {
-  const { getBondedAccount } = useBonded()
   const { getProxyDelegate } = useProxies()
   const { activeProxy } = useActiveAccounts()
+  const { getStakingLedger } = useBalances()
 
-  // If call is from controller, & controller is different from stash, then proxy is not
-  // supported.
-  const controllerNotSupported = (c: string, f: MaybeAddress) =>
-    UnsupportedIfUniqueController.includes(c) && getBondedAccount(f) !== f
+  // Check if the controller account of sender is unmigrated
+  const unmigratedController = (c: string, f: MaybeAddress) => {
+    const { controllerUnmigrated } = getStakingLedger(f)
+    return UnsupportedIfUniqueController.includes(c) && controllerUnmigrated
+  }
 
-  // Determine whether the provided tx is proxy supported.
-  const isProxySupported = (tx: UnsafeTx, delegator: MaybeAddress) => {
-    if (!tx) {
-      return false
-    }
-    // if already wrapped, return.
-    if (
-      tx?.decodedCall?.type === 'Proxy' &&
-      tx?.decodedCall?.value?.type === 'proxy'
-    ) {
-      return true
-    }
-
+  // Determine whether the provided tx is proxy supported
+  const isProxySupported = (
+    tx: SubmittableExtrinsic | undefined,
+    delegator: MaybeAddress
+  ) => {
     const proxyDelegate = getProxyDelegate(
       delegator,
       activeProxy?.address || null
     )
-    const proxyType = proxyDelegate?.proxyType || ''
-    const pallet: string = tx?.decodedCall?.type || ''
-    const method: string = tx?.decodedCall?.value?.type || ''
+    if (!tx || !proxyDelegate) {
+      return false
+    }
+
+    // if already wrapped in a proxy call, return early
+    if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
+      return true
+    }
+
+    const proxyType = proxyDelegate.proxyType
+    const pallet: string = tx.call.pallet
+    const method: string = tx.call.palletCall.name
     const call = `${pallet}.${method}`
 
-    // If a batch call, test if every inner call is a supported proxy call.
-    if (call === 'Utility.batch') {
-      return (tx?.decodedCall?.value?.value?.calls || [])
+    // If a batch call, test if every inner call is a supported proxy call
+    if (call === 'Utility.Batch') {
+      return (tx.call.palletCall.params.calls || [])
         .map((c: AnyJson) => ({
-          pallet: c.type,
-          method: c.value.type,
+          pallet: c.pallet,
+          method: c.palletCall.name,
         }))
         .every(
           (c: AnyJson) =>
-            (isSupportedProxyCall(proxyType, c.pallet, c.method) ||
-              (c.pallet === 'Proxy' && c.method === 'proxy')) &&
-            !controllerNotSupported(`${pallet}.${method}`, delegator)
+            (isSupportedProxyCall(proxyType, c.pallet, c.palletCall.name) ||
+              (c.pallet === 'Proxy' && c.palletCall.name === 'Proxy')) &&
+            !unmigratedController(`${c.pallet}.${c.palletCall.name}`, delegator)
         )
     }
 
-    // Check if the current call is a supported proxy call.
+    // Check if the non-batch call is a supported proxy call
     return (
       isSupportedProxyCall(proxyType, pallet, method) &&
-      !controllerNotSupported(call, delegator)
+      !unmigratedController(call, delegator)
     )
   }
 

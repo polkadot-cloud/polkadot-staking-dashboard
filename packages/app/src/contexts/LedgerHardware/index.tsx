@@ -6,6 +6,7 @@ import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { compare } from 'compare-versions'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,8 +31,9 @@ export const LedgerHardwareProvider = ({
   children: ReactNode
 }) => {
   const { t } = useTranslation('modals')
-  const { chainSpecs } = useApi()
-  const { transactionVersion } = chainSpecs
+  const { network } = useNetwork()
+  const { getChainSpec } = useApi()
+  const { transactionVersion } = getChainSpec(network).version
 
   // Store whether a Ledger device task is in progress
   const [isExecuting, setIsExecutingState] = useState<boolean>(false)

@@ -4,12 +4,12 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
-import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
@@ -20,18 +20,18 @@ import { timeleftAsString } from 'utils'
 
 export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
+  const { getConsts } = useApi()
+  const { network } = useNetwork()
   const { activePool } = useActivePool()
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
 
-  const { syncing } = useSyncing(['balances'])
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getTransferOptions } = useTransferOptions()
   const { state } = activePool?.bondedPool || {}
 
-  const { bondDuration } = consts
+  const { bondDuration } = getConsts(network)
   const allTransferOptions = getTransferOptions(activeAddress)
 
   const totalUnlockChunks =
@@ -67,7 +67,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
               <ButtonPrimary
                 iconLeft={faLockOpen}
                 text={t('manageUnlocks')}
-                disabled={syncing}
+                disabled={false}
                 onClick={() =>
                   openModal({
                     key: 'UnlockChunks',

@@ -1,10 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js'
-import type { PoolMembership } from 'contexts/Pools/types'
 import type { Proxy } from 'contexts/Proxies/types'
-import type { MaybeAddress } from 'types'
+import type { MaybeAddress, PoolMembership } from 'types'
 
 export interface AccountItemProps {
   address: MaybeAddress
@@ -14,7 +12,7 @@ export interface AccountItemProps {
   delegator?: string
   noBorder?: boolean
   proxyType?: string
-  transferrableBalance?: BigNumber
+  transferrableBalance?: bigint
 }
 
 export interface DelegatesProps {

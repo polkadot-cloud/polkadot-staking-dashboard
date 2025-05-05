@@ -1,11 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { HexString } from 'dedot/utils'
+
 export interface VaultPromptHandlers {
   openPrompt: (
     onComplete: (
       status: 'complete' | 'cancelled',
-      result: `0x${string}` | null
+      result: HexString | null
     ) => void,
     toSign: Uint8Array
   ) => void
@@ -15,4 +17,4 @@ export interface VaultPromptHandlers {
 
 export type VaultSignStatus = 'complete' | 'cancelled'
 
-export type VaultSignatureResult = `0x${string}` | null
+export type VaultSignatureResult = HexString | null

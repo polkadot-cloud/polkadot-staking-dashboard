@@ -6,8 +6,9 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Bytes } from '@polkadot-api/substrate-bindings'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { hexToU8a } from 'dedot/utils'
 import { QrDisplayPayload } from 'library/QRCode/DisplayPayload'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import type { SignerPromptProps } from 'library/SubmitTx/types'
@@ -21,10 +22,10 @@ export const SignPrompt = ({
   toSign,
   onComplete,
 }: SignerPromptProps) => {
-  const {
-    chainSpecs: { genesisHash },
-  } = useApi()
+  const { network } = useNetwork()
+  const { getChainSpec } = useApi()
   const { t } = useTranslation('app')
+  const { genesisHash } = getChainSpec(network)
 
   // Whether user is on sign or submit stage.
   const [stage, setStage] = useState<number>(1)
@@ -48,7 +49,7 @@ export const SignPrompt = ({
           <QrDisplayPayload
             address={submitAddress || ''}
             cmd={2}
-            genesisHash={Bytes(32).dec(genesisHash)}
+            genesisHash={hexToU8a(genesisHash)}
             payload={toSign}
             style={{ width: '100%', maxWidth: 250 }}
           />

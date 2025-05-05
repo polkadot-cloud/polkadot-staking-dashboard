@@ -3,7 +3,6 @@
 
 import { faHive } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { Odometer } from '@w3ux/react-odometer'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import CloudIconSVG from 'assets/icons/cloud.svg?react'
@@ -11,11 +10,10 @@ import BigNumber from 'bignumber.js'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { IGNORE_NETWORKS } from 'contexts/TokenPrice'
-import { isCustomEvent } from 'controllers/utils'
-import { useRef, useState } from 'react'
+import { blockNumber$ } from 'global-bus'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
-import { useEventListener } from 'usehooks-ts'
 import { Status } from './Status'
 import { TokenPrice } from './TokenPrice'
 import { Summary, Wrapper } from './Wrappers'
@@ -29,22 +27,16 @@ export const MainFooter = () => {
   const ORGANISATION = import.meta.env.VITE_ORGANISATION
   const LEGAL_DISCLOSURES_URL = import.meta.env.VITE_LEGAL_DISCLOSURES_URL
 
-  // Store incoming block number.
-  const [blockNumber, setBlockNumber] = useState<string>()
+  const [blockNumber, setBlockNumber] = useState<number>()
 
-  const newBlockCallback = (e: Event) => {
-    if (isCustomEvent(e)) {
-      setBlockNumber(e.detail.blockNumber)
+  useEffect(() => {
+    const blockNumberSub = blockNumber$.subscribe((result) => {
+      setBlockNumber(result)
+    })
+    return () => {
+      blockNumberSub.unsubscribe()
     }
-  }
-
-  const ref = useRef<Document>(document)
-  useEventListener('new-block-number', newBlockCallback, ref)
-
-  // Reset block number on network change.
-  useEffectIgnoreInitial(() => {
-    setBlockNumber('0')
-  }, [network])
+  }, [])
 
   return (
     <Page.Footer>

@@ -18,22 +18,19 @@ export const useStatusButtons = () => {
   } = useApi()
   const { isOwner } = useActivePool()
   const { bondedPools } = useBondedPools()
-  const { getPoolMembership } = useBalances()
+  const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const membership = getPoolMembership(activeAddress)
+  const { poolMembership } = getStakingLedger(activeAddress)
   const { active } = getTransferOptions(activeAddress).pool
 
   const getCreateDisabled = () => {
     if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {
       return true
     }
-    if (
-      maxPools &&
-      (maxPools.isZero() || bondedPools.length === maxPools?.toNumber())
-    ) {
+    if ((maxPools && maxPools === 0) || bondedPools.length === maxPools) {
       return true
     }
     return false
@@ -47,14 +44,14 @@ export const useStatusButtons = () => {
     !activeAddress ||
     !bondedPools.length
 
-  if (!membership) {
+  if (!poolMembership) {
     label = t('poolMembership')
   } else if (isOwner()) {
-    label = `${t('ownerOfPool')} ${membership.poolId}`
-  } else if (active?.isGreaterThan(0)) {
-    label = `${t('memberOfPool')} ${membership.poolId}`
+    label = `${t('ownerOfPool')} ${poolMembership.poolId}`
+  } else if (active > 0n) {
+    label = `${t('memberOfPool')} ${poolMembership.poolId}`
   } else {
-    label = `${t('leavingPool')} ${membership.poolId}`
+    label = `${t('leavingPool')} ${poolMembership.poolId}`
   }
   return { label, getJoinDisabled, getCreateDisabled }
 }
