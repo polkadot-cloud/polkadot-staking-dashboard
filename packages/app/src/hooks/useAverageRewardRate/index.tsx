@@ -45,9 +45,10 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
     // Calculate average daily reward as a percentage of total issuance.
     const averageRewardPerDay =
       averageEraValidatorReward.reward.multipliedBy(erasPerDay)
-    const dayRewardRate = new BigNumber(averageRewardPerDay).dividedBy(
-      totalIssuance / 100n
-    )
+    const dayRewardRate =
+      totalIssuance === 0n
+        ? new BigNumber(0)
+        : new BigNumber(averageRewardPerDay).dividedBy(totalIssuance / 100n)
 
     let inflationToStakers: BigNumber = new BigNumber(0)
 
@@ -72,7 +73,9 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
         .minus(100)
     }
 
-    const averageRewardRate = inflationToStakers.dividedBy(supplyStaked)
+    const averageRewardRate = supplyStaked.isZero()
+      ? new BigNumber(0)
+      : inflationToStakers.dividedBy(supplyStaked)
 
     return {
       inflationToStakers,
