@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { Notifications } from 'controllers/Notifications'
+import { useWithSuffix } from 'locales/util'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { HeaderButton } from 'ui-core/list'
@@ -14,6 +15,7 @@ import type { FavoriteProps } from '../types'
 
 export const FavoriteValidator = ({ address, outline }: FavoriteProps) => {
   const { t } = useTranslation('app')
+  const withSuffix = useWithSuffix()
   const { setTooltipTextAndOpen } = useTooltip()
   const { favorites, addFavorite, removeFavorite } = useFavoriteValidators()
 
@@ -21,15 +23,15 @@ export const FavoriteValidator = ({ address, outline }: FavoriteProps) => {
 
   const notificationFavorite = !isFavorite
     ? {
-        title: t('favoriteValidatorAdded'),
+        title: withSuffix('favoriteValidatorAdded'),
         subtitle: address,
       }
     : {
-        title: t('favoriteValidatorRemoved'),
+        title: withSuffix('favoriteValidatorRemoved'),
         subtitle: address,
       }
 
-  const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${t(
+  const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${withSuffix(
     'favorite'
   )}`
 
