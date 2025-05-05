@@ -18,7 +18,15 @@ export const DefaultLocale = 'en'
 // Available locales as key value pairs.
 export const locales: Record<string, LocaleEntry> = {
   en: { dateFormat: enUS, label: 'English (US)', variant: 'en' },
-  enGB: { dateFormat: enGB, label: 'English (UK)', variant: 'en' },
+  // We're removing enGB and handling it via suffix instead
+  zh: { dateFormat: zhCN, label: '中文', variant: 'zh' },
+  es: { dateFormat: es, label: 'Español', variant: 'es' },
+}
+
+// For UI display of language selection, including suffix-based variants
+export const displayLocales: Record<string, LocaleEntry> = {
+  en: { dateFormat: enUS, label: 'English (US)', variant: 'en' },
+  'en-GB': { dateFormat: enGB, label: 'English (UK)', variant: 'en' }, // British English as a variant
   zh: { dateFormat: zhCN, label: '中文', variant: 'zh' },
   es: { dateFormat: es, label: 'Español', variant: 'es' },
 }
@@ -56,15 +64,16 @@ i18next
   // .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: import.meta.env.VITE_DEBUG_I18N === '1',
+    debug: false,
     fallbackLng: DefaultLocale,
     lng: defaultLng,
     resources,
   })
 
-// Dynamically load default language resources if needed.
-if (dynamicLoad) {
+// If dynamic loading is needed and default language is not the same as lng,
+// import lng resources and change language.
+if (dynamicLoad && defaultLng !== lng) {
   doDynamicImport(lng, i18next)
 }
 
-export { i18next }
+export default i18next

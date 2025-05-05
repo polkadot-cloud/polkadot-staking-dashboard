@@ -6,6 +6,7 @@ import type { i18n } from 'i18next'
 
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '..'
 import type { LocaleJson, LocaleJsonValue } from '../types'
+import { suffixes } from './suffix'
 
 /* Language Management */
 export const getInitialLanguage = () => {
@@ -35,6 +36,17 @@ export const getInitialLanguage = () => {
     return directMatch
   }
 
+  // Variant match using suffixes (e.g., 'en-GB' uses 'en' with 'gb' suffix)
+  const localeMatch = Object.entries(suffixes).find(([locale]) =>
+    Object.keys(suffixes[locale]).includes(browserLang)
+  )?.[0]
+
+  if (localeMatch) {
+    localStorage.setItem('lng', localeMatch)
+    localStorage.setItem('browserLang', browserLang) // Store the browser language for suffix handling
+    return localeMatch
+  }
+
   // Variant match (e.g., 'en-GB' matches 'enGB', 'en-US' matches 'en')
   const variantMatch = Object.entries(locales).find(
     ([locale]) =>
@@ -49,6 +61,14 @@ export const getInitialLanguage = () => {
 
   localStorage.setItem('lng', DefaultLocale)
   return DefaultLocale
+}
+
+// Adds resources to i18n instance
+export const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
+  // Add the resources to i18n
+  Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
+    i18n.addResourceBundle(lng, ns, inner)
+  })
 }
 
 export const getResources = (lng: string, i18n?: i18n) => {
@@ -90,6 +110,10 @@ export const changeLanguage = async (lng: string, i18next: i18n) => {
 
   localStorage.setItem('lng', lng)
 
+  // Store browser language when language is changed, for suffix handling
+  const browserLang = navigator.language
+  localStorage.setItem('browserLang', browserLang)
+
   // If dynamic loading is needed, load resources
   if (dynamicLoad) {
     await doDynamicImport(lng, i18next)
@@ -127,18 +151,9 @@ export const doDynamicImport = async (lng: string, i18next: i18n) => {
     localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }))
 
     // Add the new resources
-    Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
-      i18next.addResourceBundle(l, ns, inner)
-    })
-
+    addI18nresources(i18next, l, r)
     i18next.changeLanguage(l)
   } catch (error) {
     console.error('Error in dynamic import:', error)
   }
-}
-
-const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
-  Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
-    i18n.addResourceBundle(lng, ns, inner)
-  })
 }

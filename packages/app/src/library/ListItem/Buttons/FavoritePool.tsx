@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { useTooltip } from 'contexts/Tooltip'
 import { Notifications } from 'controllers/Notifications'
+import { useWithSuffix } from 'locales/util'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { HeaderButton } from 'ui-core/list'
@@ -14,6 +15,7 @@ import type { FavoriteProps } from '../types'
 
 export const FavoritePool = ({ address, outline }: FavoriteProps) => {
   const { t } = useTranslation('app')
+  const withSuffix = useWithSuffix()
   const { setTooltipTextAndOpen } = useTooltip()
   const { favorites, addFavorite, removeFavorite } = useFavoritePools()
 
@@ -21,15 +23,15 @@ export const FavoritePool = ({ address, outline }: FavoriteProps) => {
 
   const notificationFavorite = !isFavorite
     ? {
-        title: t('favoritePoolAdded'),
+        title: withSuffix('favoritePoolAdded'),
         subtitle: address,
       }
     : {
-        title: t('favoritePoolRemoved'),
+        title: withSuffix('favoritePoolRemoved'),
         subtitle: address,
       }
 
-  const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${t(
+  const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${withSuffix(
     'favorite'
   )}`
 
