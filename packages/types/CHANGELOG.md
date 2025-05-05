@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.2.0...types-v1.3.0) (2025-04-02)
+
+
+### Features
+
+* **refactor:** `[@w3ux](https://github.com/w3ux) bumps`, types updates ([#2619](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2619)) ([08a0027](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/08a0027f941cf2505311c381855e7994aef582ff))
+* **refactor:** Migrate from yarn to pnpm ([#2628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2628)) ([7efe25e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7efe25e7e98895ad89a69c3e55a2688e088f82a5))
+* **ux:** Add canvas max width support ([#2609](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2609)) ([077ba6b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/077ba6b790acbc2a4becdae5f9a6867b3a3c7877))
+* **ux:** Manage Nominations Full Screen UI, Remove confirm dialogue ([#2613](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2613)) ([7afb86f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7afb86fc9ebeed9ddd580a01179ebb1ef6f90320))
+* **ux:** Simplified header UI, new Account, Settings popovers ([#2573](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2573)) ([d384b83](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d384b83409e6941187da2fd910a96b803644fcdc))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.1.0...types-v1.2.0) (2025-02-24)
 
 

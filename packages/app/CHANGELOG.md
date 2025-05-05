@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.10.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.9.0...app-v1.10.0) (2025-04-02)
+
+
+### Features
+
+* **ci:** Add `build:verify` and `lint:check` scripts, cache Vite build ([#2559](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2559)) ([b966b69](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b966b690f871c2cd5b6c6d93842e0d718014ecb1))
+* **locales:** Add multi-currency support for staking rewards & balances ([#2563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2563)) ([c25e64f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c25e64f0b35beb555641a1a6f018b63bb3cf32db))
+* **refactor:** `[@w3ux](https://github.com/w3ux) bumps`, types updates ([#2619](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2619)) ([08a0027](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/08a0027f941cf2505311c381855e7994aef582ff))
+* **refactor:** Migrate from yarn to pnpm ([#2628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2628)) ([7efe25e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7efe25e7e98895ad89a69c3e55a2688e088f82a5))
+* **refactor:** Upgrade to React 19  ([#2618](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2618)) ([28cea52](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/28cea52e963ab6203bab533761dc5b0da6ee7588))
+* **refactor:** Use `createSafeContext`, `useSafeContext` hook, remove context defaults ([#2615](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2615)) ([a890a9d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a890a9d6aee49a11d89537edbd6efc2810570a05))
+* **ux:** Add canvas max width support ([#2609](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2609)) ([077ba6b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/077ba6b790acbc2a4becdae5f9a6867b3a3c7877))
+* **ux:** Expanded balance UI on `Overview` ([#2576](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2576)) ([e179dca](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e179dcadcc372724acc348b6f8a2fb0ad8c93732))
+* **ux:** Improved nomination management selection UI ([#2603](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2603)) ([f75ff6f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f75ff6ff07409b8b90c73f9b7f0b0b10c1d592ea))
+* **ux:** Manage Nominations Full Screen UI, Remove confirm dialogue ([#2613](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2613)) ([7afb86f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7afb86fc9ebeed9ddd580a01179ebb1ef6f90320))
+* **ux:** nomination management UI improvements, confirm dialogues ([#2604](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2604)) ([ee1dfef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ee1dfefb6d1337c1d1d5b913bfd505d0d10cdc04))
+* **ux:** Revised wallet & hardware account management flow ([#2595](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2595)) ([2f7faea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2f7faea0080322e67f62f1f02ac70ead7865caf9))
+* **ux:** Simplified header UI, new Account, Settings popovers ([#2573](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2573)) ([d384b83](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d384b83409e6941187da2fd910a96b803644fcdc))
+
+
+### Bug Fixes
+
+* Currency in modal order ([#2577](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2577)) ([2843f76](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2843f76cc425f764be657e8d63319ec1c2baae54))
+* Minimum to earn rewards to be at least min nominator bond ([#2627](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2627)) ([ecdbc5f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ecdbc5f533557fc636e533c41e7a2270805d6f34))
+
 ## [1.9.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.8.0...app-v1.9.0) (2025-02-24)
 
 
