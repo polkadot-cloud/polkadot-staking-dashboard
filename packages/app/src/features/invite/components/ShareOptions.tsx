@@ -3,11 +3,10 @@
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { ButtonPrimary } from 'ui-buttons'
-import { useOverlay } from 'ui-overlay'
+import { useInviteUrl } from '../hooks/useInviteUrl'
 
 export const ShareOptions = ({
   inviteUrl,
@@ -19,30 +18,7 @@ export const ShareOptions = ({
   copyInviteUrl: () => void
 }) => {
   const { t } = useTranslation('invite')
-  const [showFullUrl, setShowFullUrl] = useState(false)
-  const { setModalResize } = useOverlay().modal
-
-  // Create shortened URL for display
-  const shortenUrl = (url: string) => {
-    if (url.length <= 60) {
-      return url
-    }
-    return `${url.substring(0, 30)}...${url.substring(url.length - 30)}`
-  }
-
-  // Toggle URL display and resize modal when expanded
-  const toggleUrlDisplay = () => {
-    setShowFullUrl(!showFullUrl)
-  }
-
-  // Resize modal when URL display changes
-  useEffect(() => {
-    if (showFullUrl) {
-      setModalResize()
-    }
-  }, [showFullUrl, setModalResize])
-
-  const displayUrl = showFullUrl ? inviteUrl : shortenUrl(inviteUrl)
+  const { showFullUrl, displayUrl, toggleUrlDisplay } = useInviteUrl(inviteUrl)
 
   return (
     <Container>
