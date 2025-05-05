@@ -16,7 +16,7 @@ import type { Identity, Validator } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { useInviteGenerator } from '../hooks/useInviteGenerator'
+import { useInviteManagement } from '../hooks/useInviteManagement'
 import { ShareOptions } from './ShareOptions'
 
 // Extend Validator interface to include identity
@@ -47,22 +47,27 @@ export const InviteModal = () => {
     return null
   }, [inPool, inSetup])
 
-  const poolInviteGenerator = useInviteGenerator({ type: 'pool' })
-  const validatorInviteGenerator = useInviteGenerator({ type: 'validator' })
+  // Initialize hook with appropriate type
+  const poolInviteManager = useInviteManagement({ type: 'pool' })
+  const validatorInviteManager = useInviteManagement({ type: 'validator' })
 
-  // Get the active generator based on the invite type
-  const activeGenerator = useMemo(
-    () =>
-      inviteType === 'pool' ? poolInviteGenerator : validatorInviteGenerator,
-    [inviteType, poolInviteGenerator, validatorInviteGenerator]
+  // Get the active manager based on the invite type
+  const activeManager = useMemo(
+    () => (inviteType === 'pool' ? poolInviteManager : validatorInviteManager),
+    [inviteType, poolInviteManager, validatorInviteManager]
   )
+
+  // Extract necessary parts from the managers
+  const poolGenerator = poolInviteManager.generation
+  const validatorGenerator = validatorInviteManager.generation
+  const activeGenerator = activeManager.generation
+  const activeDisplay = activeManager.display
 
   // Get nominated validators for the active account
   const nominatedValidators = useMemo(
     () =>
-      (validatorInviteGenerator.nominatedValidators ||
-        []) as ValidatorWithIdentity[],
-    [validatorInviteGenerator.nominatedValidators]
+      (validatorGenerator.nominatedValidators || []) as ValidatorWithIdentity[],
+    [validatorGenerator.nominatedValidators]
   )
 
   // Initialize selected validators when nominatedValidators are loaded
@@ -77,18 +82,18 @@ export const InviteModal = () => {
   // Handle generate invite button click
   const handleGenerateInvite = useCallback(() => {
     if (inviteType === 'validator' && selectedValidators.length > 0) {
-      validatorInviteGenerator.setSelectedValidators(selectedValidators)
-      validatorInviteGenerator.generateInviteUrl()
+      validatorGenerator.setSelectedValidators(selectedValidators)
+      validatorGenerator.generateInviteUrl()
     } else if (inviteType === 'pool' && activePool?.id) {
-      poolInviteGenerator.setSelectedPool(activePool.id.toString())
-      poolInviteGenerator.generateInviteUrl()
+      poolGenerator.setSelectedPool(activePool.id.toString())
+      poolGenerator.generateInviteUrl()
     }
     setInviteGenerated(true)
   }, [
     inviteType,
     selectedValidators,
-    validatorInviteGenerator,
-    poolInviteGenerator,
+    validatorGenerator,
+    poolGenerator,
     activePool,
   ])
 
@@ -102,24 +107,24 @@ export const InviteModal = () => {
 
         // Update the URL if it's already been generated
         if (inviteGenerated && inviteType === 'validator') {
-          validatorInviteGenerator.setSelectedValidators(newSelection)
-          validatorInviteGenerator.generateInviteUrl()
+          validatorGenerator.setSelectedValidators(newSelection)
+          validatorGenerator.generateInviteUrl()
         }
 
         return newSelection
       })
     },
-    [inviteGenerated, inviteType, validatorInviteGenerator]
+    [inviteGenerated, inviteType, validatorGenerator]
   )
 
   // Handle pool selection only - moved inside useEffect to prevent infinite loop
   useEffect(() => {
     if (inviteType === 'pool' && activePool?.id) {
-      poolInviteGenerator.setSelectedPool(activePool.id.toString())
-      poolInviteGenerator.generateInviteUrl()
+      poolGenerator.setSelectedPool(activePool.id.toString())
+      poolGenerator.generateInviteUrl()
       setInviteGenerated(true)
     }
-  }, [inviteType, activePool?.id, poolInviteGenerator])
+  }, [inviteType, activePool?.id, poolGenerator])
 
   // Resize modal when content changes
   useEffect(() => {
@@ -203,9 +208,12 @@ export const InviteModal = () => {
               )}
             </ContentSection>
             <ShareOptions
-              inviteUrl={poolInviteGenerator.inviteUrl}
-              copiedToClipboard={poolInviteGenerator.copiedToClipboard}
-              copyInviteUrl={poolInviteGenerator.copyInviteUrl}
+              inviteUrl={poolGenerator.inviteUrl}
+              copiedToClipboard={poolGenerator.copiedToClipboard}
+              copyInviteUrl={poolGenerator.copyInviteUrl}
+              displayUrl={poolInviteManager.display.displayUrl}
+              showFullUrl={poolInviteManager.display.showFullUrl}
+              toggleUrlDisplay={poolInviteManager.display.toggleUrlDisplay}
             />
           </>
         ) : !inviteGenerated ? (
@@ -321,6 +329,9 @@ export const InviteModal = () => {
               inviteUrl={activeGenerator.inviteUrl}
               copiedToClipboard={activeGenerator.copiedToClipboard}
               copyInviteUrl={activeGenerator.copyInviteUrl}
+              displayUrl={activeDisplay.displayUrl}
+              showFullUrl={activeDisplay.showFullUrl}
+              toggleUrlDisplay={activeDisplay.toggleUrlDisplay}
             />
           </>
         )}

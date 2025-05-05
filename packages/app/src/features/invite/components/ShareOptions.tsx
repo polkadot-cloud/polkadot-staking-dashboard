@@ -6,19 +6,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { ButtonPrimary } from 'ui-buttons'
-import { useInviteUrl } from '../hooks/useInviteUrl'
 
 export const ShareOptions = ({
   inviteUrl,
   copiedToClipboard,
   copyInviteUrl,
+  displayUrl,
+  showFullUrl,
+  toggleUrlDisplay,
 }: {
   inviteUrl: string
   copiedToClipboard: boolean
   copyInviteUrl: () => void
+  displayUrl: string
+  showFullUrl: boolean
+  toggleUrlDisplay: () => void
 }) => {
   const { t } = useTranslation('invite')
-  const { showFullUrl, displayUrl, toggleUrlDisplay } = useInviteUrl(inviteUrl)
 
   return (
     <Container>
