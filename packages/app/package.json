@@ -32,7 +32,7 @@
     "@w3ux/utils": "^2.0.10",
     "@w3ux/validator-assets": "^1.0.0",
     "@walletconnect/modal": "^2.7.0",
-    "@walletconnect/universal-provider": "^2.20.0",
+    "@walletconnect/universal-provider": "^2.20.2",
     "@walletconnect/utils": "^2.20.0",
     "@zondax/ledger-substrate": "^1.0.1",
     "assets": "workspace:*",
@@ -79,12 +79,12 @@
   "devDependencies": {
     "types": "workspace:*",
     "typescript": "^5.8.2",
-    "vite": "^6.3.3",
+    "vite": "^6.3.5",
     "vite-bundle-visualizer": "^1.2.1",
-    "vite-plugin-checker": "^0.9.1",
+    "vite-plugin-checker": "^0.9.2",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.1.2"
+    "vitest": "^3.1.3"
   }
 }
