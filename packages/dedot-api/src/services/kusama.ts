@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { KusamaAssetHubApi } from '@dedot/chaintypes'
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import { ExtraSignedExtension, type DedotClient } from 'dedot'
@@ -54,13 +55,22 @@ import {
 } from '../util'
 
 export class KusamaService
-  implements DefaultServiceClass<KusamaApi, KusamaPeopleApi, KusamaApi>
+  implements
+    DefaultServiceClass<
+      KusamaApi,
+      KusamaPeopleApi,
+      KusamaAssetHubApi,
+      KusamaApi
+    >
 {
   relayChainSpec: ChainSpecs<KusamaApi>
   peopleChainSpec: ChainSpecs<KusamaPeopleApi>
+  hubChainSpec: ChainSpecs<KusamaAssetHubApi>
+
   apiStatus: {
     relay: ApiStatus<KusamaApi>
     people: ApiStatus<KusamaPeopleApi>
+    hub: ApiStatus<KusamaAssetHubApi>
   }
   coreConsts: CoreConsts<KusamaApi>
   stakingConsts: StakingConsts<KusamaApi>
@@ -76,9 +86,14 @@ export class KusamaService
   subActiveAddress: Subscription
   subActiveEra: Subscription
   subImportedAccounts: Subscription
-  subAccountBalances: AccountBalances<KusamaApi, KusamaPeopleApi> = {
+  subAccountBalances: AccountBalances<
+    KusamaApi,
+    KusamaPeopleApi,
+    KusamaAssetHubApi
+  > = {
     relay: {},
     people: {},
+    hub: {},
   }
   subStakingLedgers: StakingLedgers<KusamaApi> = {}
   subProxies: Proxies<KusamaApi> = {}
@@ -87,40 +102,45 @@ export class KusamaService
 
   constructor(
     public networkConfig: NetworkConfig,
-    public ids: [NetworkId, SystemChainId],
+    public ids: [NetworkId, SystemChainId, SystemChainId],
     public apiRelay: DedotClient<KusamaApi>,
-    public apiPeople: DedotClient<KusamaPeopleApi>
+    public apiPeople: DedotClient<KusamaPeopleApi>,
+    public apiHub: DedotClient<KusamaAssetHubApi>
   ) {
-    this.ids = ids
-    this.apiRelay = apiRelay
-    this.apiPeople = apiPeople
     this.apiStatus = {
       relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
       people: new ApiStatus(this.apiPeople, ids[1], networkConfig),
+      hub: new ApiStatus(this.apiHub, ids[2], networkConfig),
     }
   }
 
   getApi = (id: string) => {
     if (id === this.ids[0]) {
       return this.apiRelay
-    } else {
+    } else if (id === this.ids[1]) {
       return this.apiPeople
+    } else {
+      return this.apiHub
     }
   }
 
   start = async () => {
     this.relayChainSpec = new ChainSpecs(this.apiRelay)
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
+    this.hubChainSpec = new ChainSpecs(this.apiHub)
+
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
 
     await Promise.all([
       this.relayChainSpec.fetch(),
       this.peopleChainSpec.fetch(),
+      this.hubChainSpec.fetch(),
     ])
     setMultiChainSpecs({
       [this.ids[0]]: this.relayChainSpec.get(),
       [this.ids[1]]: this.peopleChainSpec.get(),
+      [this.ids[2]]: this.hubChainSpec.get(),
     })
     setConsts(this.ids[0], {
       ...this.coreConsts.get(),
@@ -174,6 +194,8 @@ export class KusamaService
           new AccountBalanceQuery(this.apiRelay, this.ids[0], account.address)
         this.subAccountBalances['people'][getAccountKey(this.ids[1], account)] =
           new AccountBalanceQuery(this.apiPeople, this.ids[1], account.address)
+        this.subAccountBalances['hub'][getAccountKey(this.ids[2], account)] =
+          new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
         this.subStakingLedgers[account.address] = new StakingLedgerQuery(
           this.apiRelay,
@@ -233,7 +255,11 @@ export class KusamaService
     this.eraRewardPoints?.unsubscribe()
     this.fastUnstakeQueue?.unsubscribe()
 
-    await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
+    await Promise.all([
+      this.apiRelay.disconnect(),
+      this.apiPeople.disconnect(),
+      this.apiHub.disconnect(),
+    ])
   }
 
   interface: ServiceInterface = {

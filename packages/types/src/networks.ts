@@ -13,6 +13,9 @@ export type SystemChainId =
   | 'people-polkadot'
   | 'people-kusama'
   | 'people-westend'
+  | 'statemint'
+  | 'statemine'
+  | 'westmint'
 
 export type ProviderType = 'ws' | 'sc'
 
@@ -97,7 +100,6 @@ export interface NetworkConfig {
 export interface Network {
   name: NetworkId
   endpoints: {
-    lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
     defaultRpc: string
@@ -115,7 +117,6 @@ export interface SystemChain {
   units: number
   unit: string
   endpoints: {
-    lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
     defaultRpc: string
