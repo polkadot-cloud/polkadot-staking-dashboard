@@ -141,7 +141,7 @@ export class PolkadotService
     setMultiChainSpecs({
       [this.ids[0]]: this.relayChainSpec.get(),
       [this.ids[1]]: this.peopleChainSpec.get(),
-      [this.ids[1]]: this.hubChainSpec.get(),
+      [this.ids[2]]: this.hubChainSpec.get(),
     })
     setConsts(this.ids[0], {
       ...this.coreConsts.get(),
