@@ -9,7 +9,6 @@ export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
-      lightClientKey: 'polkadot',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot'),
       defaultRpc: 'IBP-GeoDNS1',
@@ -31,7 +30,6 @@ export const NetworkList: Networks = {
   kusama: {
     name: 'kusama',
     endpoints: {
-      lightClientKey: 'ksmcc3',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3'),
       defaultRpc: 'IBP-GeoDNS1',
@@ -53,7 +51,6 @@ export const NetworkList: Networks = {
   westend: {
     name: 'westend',
     endpoints: {
-      lightClientKey: 'westend2',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend2'),
       defaultRpc: 'IBP-GeoDNS1',
@@ -80,7 +77,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 10,
     unit: 'DOT',
     endpoints: {
-      lightClientKey: 'polkadot_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
       defaultRpc: 'IBP1',
@@ -97,7 +93,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'KSM',
     endpoints: {
-      lightClientKey: 'ksmcc3_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_people'),
       defaultRpc: 'IBP1',
@@ -114,13 +109,73 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'WND',
     endpoints: {
-      lightClientKey: 'westend2_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend_people'),
       defaultRpc: 'IBP1',
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-westend',
         IBP2: 'wss://people-westend.dotters.network',
+      },
+    },
+    relayChain: 'westend',
+  },
+  statemint: {
+    name: 'statemint',
+    ss58: 0,
+    units: 10,
+    unit: 'DOT',
+    endpoints: {
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/polkadot_asset_hub'),
+      defaultRpc: 'IBP1',
+      rpc: {
+        'Dwellir Tunisia': 'wss://statemint-rpc-tn.dwellir.com',
+        'Lucky Friday': 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
+        Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
+        StakeWorld: 'wss://dot-rpc.stakeworld.io/assethub',
+        Dwellir: 'wss://asset-hub-polkadot-rpc.dwellir.com',
+        IBP1: 'wss://sys.ibp.network/asset-hub-polkadot',
+        IBP2: 'wss://asset-hub-polkadot.dotters.network',
+      },
+    },
+    relayChain: 'polkadot',
+  },
+  statemine: {
+    name: 'statemine',
+    ss58: 2,
+    units: 12,
+    unit: 'KSM',
+    endpoints: {
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/ksmcc3_asset_hub'),
+      defaultRpc: 'IBP1',
+      rpc: {
+        Dwellir: 'wss://statemine-rpc.dwellir.com',
+        'Dwellir Tunisia': 'wss://statemine-rpc-tn.dwellir.com',
+        'Lucky Friday': 'wss://rpc-asset-hub-kusama.luckyfriday.io',
+        Parity: 'wss://kusama-asset-hub-rpc.polkadot.io',
+        IBP1: 'wss://sys.ibp.network/asset-hub-kusama',
+        IBP2: 'wss://asset-hub-kusama.dotters.network',
+      },
+    },
+    relayChain: 'kusama',
+  },
+  westend_assethub: {
+    name: 'westend_assethub',
+    ss58: 42,
+    units: 12,
+    unit: 'WND',
+    endpoints: {
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/westend2_asset_hub'),
+      defaultRpc: 'IBP1',
+      rpc: {
+        Parity: 'wss://westend-asset-hub-rpc.polkadot.io',
+        Dwellir: 'wss://asset-hub-westend-rpc.dwellir.com',
+        'Dwellir Tunisia': 'wss://westmint-rpc-tn.dwellir.com',
+        IBP1: 'wss://sys.ibp.network/asset-hub-westend',
+        IBP2: 'wss://asset-hub-westend.dotters.network',
+        'Permanence DAO EU': 'wss://asset-hub-westend.rpc.permanence.io',
       },
     },
     relayChain: 'westend',
