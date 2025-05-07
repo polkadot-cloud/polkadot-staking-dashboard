@@ -1,8 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { extractUrlValue } from '@w3ux/utils'
+import { useNetwork } from 'contexts/Network'
+import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { useOverlay } from 'ui-overlay'
 
 export type InviteType = 'pool' | 'validator' | null
 
@@ -27,6 +31,10 @@ export const InviteNotificationProvider = ({
 }: {
   children: ReactNode
 }) => {
+  const { network } = useNetwork()
+  const { openCanvas } = useOverlay().canvas
+  const { syncing } = useSyncing(['active-pools'])
+
   // State for tracking invite status
   const [inviteActive, setInviteActive] = useState<boolean>(false)
   const [inviteType, setInviteType] = useState<InviteType>(null)
@@ -37,39 +45,17 @@ export const InviteNotificationProvider = ({
     const hash = window.location.hash.substring(1) // Remove the # symbol
 
     // Check if this is an invite URL
-    if (hash.includes('/invite/pool/')) {
-      const parts = hash.split('/invite/pool/')
-      if (parts.length > 1) {
-        const poolParams = parts[1].split('/')
-        if (poolParams.length >= 2) {
-          const network = poolParams[0]
-          const poolId = poolParams[1]
-
-          // Set the invite data
-          setInviteType('pool')
-          setInviteData({ network, poolId })
-          setInviteActive(true)
-
-          // Store in session storage to persist across navigation
-          sessionStorage.setItem('inviteActive', 'true')
-          sessionStorage.setItem('inviteType', 'pool')
-          sessionStorage.setItem(
-            'inviteData',
-            JSON.stringify({ network, poolId })
-          )
-        }
-      }
-    } else if (hash.includes('/invite/validator/')) {
+    if (hash.includes('/invite/validator/')) {
       const parts = hash.split('/invite/validator/')
       if (parts.length > 1) {
         const validatorParams = parts[1].split('/')
         if (validatorParams.length >= 2) {
-          const network = validatorParams[0]
+          const networkParam = validatorParams[0]
           const validators = validatorParams[1]
 
           // Set the invite data
           setInviteType('validator')
-          setInviteData({ network, validators })
+          setInviteData({ network: networkParam, validators })
           setInviteActive(true)
 
           // Store in session storage to persist across navigation
@@ -77,7 +63,7 @@ export const InviteNotificationProvider = ({
           sessionStorage.setItem('inviteType', 'validator')
           sessionStorage.setItem(
             'inviteData',
-            JSON.stringify({ network, validators })
+            JSON.stringify({ network: networkParam, validators })
           )
         }
       }
@@ -140,19 +126,29 @@ export const InviteNotificationProvider = ({
     if (!inviteActive || !inviteType) {
       return
     }
-
-    let url = ''
-    if (inviteType === 'pool') {
-      url = `/invite/pool/${inviteData.network}/${inviteData.poolId}`
-    } else if (inviteType === 'validator') {
-      url = `/invite/validator/${inviteData.network}/${inviteData.validators}`
-    }
-
-    // Use window.location to navigate
-    if (url) {
-      window.location.hash = url
+    if (inviteType === 'validator') {
+      window.location.hash = `/invite/validator/${inviteData.network}/${inviteData.validators}`
     }
   }
+
+  // Track syncing of active pools, activate pool invite when ready
+  useEffect(() => {
+    const idFromUrl = extractUrlValue('id')
+
+    if (!syncing) {
+      if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
+        setInviteActive(true)
+        setInviteType('pool')
+        setInviteData({ network, poolId: idFromUrl })
+
+        openCanvas({
+          key: 'PoolInvite',
+          options: { poolId: Number(idFromUrl) },
+          size: 'xl',
+        })
+      }
+    }
+  }, [syncing])
 
   return (
     <InviteNotificationContext.Provider

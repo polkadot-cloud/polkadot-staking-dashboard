@@ -40,6 +40,7 @@ export const InactiveButtonHeader = ({
   marginLeft,
   style,
   icon,
+  active,
   iconTransform,
   className,
 }: InactiveButtonHeaderProps) => {
@@ -53,6 +54,7 @@ export const InactiveButtonHeader = ({
       style={style}
     >
       <FontAwesomeIcon icon={icon} transform={iconTransform} />
+      {active && <span className={classes.active} />}
     </div>
   )
 }

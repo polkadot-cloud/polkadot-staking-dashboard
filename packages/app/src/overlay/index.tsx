@@ -9,6 +9,7 @@ import { CreatePool } from './canvas/CreatePool'
 import { ManageNominations } from './canvas/ManageNominations'
 import { NominatorSetup } from './canvas/NominatorSetup'
 import { Pool } from './canvas/Pool'
+import { PoolInvite } from './canvas/PoolInvite'
 import { PoolMembers } from './canvas/PoolMembers'
 import { ValidatorMetrics } from './canvas/ValidatorMetrics'
 import { Accounts } from './modals/Accounts'
@@ -73,6 +74,7 @@ export const Overlays = () => {
       }}
       canvas={{
         ManageNominations,
+        PoolInvite,
         PoolMembers,
         Pool,
         CreatePool,

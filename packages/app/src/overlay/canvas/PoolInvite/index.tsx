@@ -36,6 +36,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import type { ClaimPermission, MaybeAddress } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
+import { Head, Main, Title } from 'ui-core/canvas'
+import { CloseCanvas } from 'ui-overlay'
 import { formatIdentities, formatSuperIdentities } from 'utils'
 import {
   ActionSection,
@@ -72,7 +74,7 @@ import {
   StatLabel,
   StatValue,
   Wrapper,
-} from './Wrappers'
+} from '../../../features/invite/pages/Wrappers'
 
 // Define interface for pool details
 interface PoolDetails {
@@ -97,13 +99,13 @@ interface PoolDetails {
   }
 }
 
-export const PoolInvitePage = () => {
+export const PoolInvite = () => {
   const { t, i18n } = useTranslation('invite')
   const navigate = useNavigate()
-  const { poolId, network: urlNetwork } = useParams<{
+  const { network: urlNetwork } = useParams<{
     network: string
-    poolId: string
   }>()
+  const { inviteData } = useInviteNotification()
   const { network, switchNetwork } = useNetwork()
   const { activeAddress } = useActiveAccounts()
   const location = window.location.search
@@ -127,6 +129,9 @@ export const PoolInvitePage = () => {
     identities: {},
     supers: {},
   })
+
+  // NOTE: We assume a valid pool invite is active
+  const poolId = Number(inviteData.poolId)
 
   const { units, unit } = getNetworkData(network)
   const TokenIcon = getChainIcons(network).icon
@@ -250,7 +255,7 @@ export const PoolInvitePage = () => {
 
       // Format pool details
       const details: PoolDetails = {
-        id: poolId,
+        id: String(poolId),
         metadata: metadata || `${t('pool')} #${poolId}`,
         state: bondedPool.state || 'Open',
         memberCount: Number(bondedPool.memberCounter || 0),
@@ -385,10 +390,14 @@ export const PoolInvitePage = () => {
   }, [location, i18n, urlNetwork, network, switchNetwork])
 
   return (
-    <Page.Container>
+    <Main>
+      <Head>
+        <CloseCanvas />
+      </Head>
+      <Title>
+        <h1>{t('poolInvite')}</h1>
+      </Title>
       <Wrapper>
-        <Page.Title title={t('poolInvite')} />
-
         {loading ? (
           <Page.Row>
             <LoadingState>{t('loadingPoolDetails')}</LoadingState>
@@ -642,6 +651,6 @@ export const PoolInvitePage = () => {
           </Page.Row>
         )}
       </Wrapper>
-    </Page.Container>
+    </Main>
   )
 }

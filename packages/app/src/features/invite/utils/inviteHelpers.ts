@@ -14,14 +14,12 @@ export const generatePoolInviteUrl = (
   language?: string
 ): string => {
   const baseUrl = window.location.origin + window.location.pathname
-  const url = `${baseUrl}#/invite/pool/${network}/${poolId}`
-
+  const url = `${baseUrl}#?n=${network}&i=pool&id=${poolId}`
   // Add URL variables if provided
   const params = new URLSearchParams()
   if (language) {
     params.append('l', language)
   }
-
   return params.toString() ? `${url}?${params.toString()}` : url
 }
 
