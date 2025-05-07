@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { PolkadotAssetHubApi } from '@dedot/chaintypes'
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import { formatAccountSs58 } from '@w3ux/utils'
@@ -55,13 +56,22 @@ import {
 } from '../util'
 
 export class PolkadotService
-  implements DefaultServiceClass<PolkadotApi, PolkadotPeopleApi, PolkadotApi>
+  implements
+    DefaultServiceClass<
+      PolkadotApi,
+      PolkadotPeopleApi,
+      PolkadotAssetHubApi,
+      PolkadotApi
+    >
 {
   relayChainSpec: ChainSpecs<PolkadotApi>
   peopleChainSpec: ChainSpecs<PolkadotPeopleApi>
+  hubChainSpec: ChainSpecs<PolkadotAssetHubApi>
+
   apiStatus: {
     relay: ApiStatus<PolkadotApi>
     people: ApiStatus<PolkadotPeopleApi>
+    hub: ApiStatus<PolkadotAssetHubApi>
   }
   coreConsts: CoreConsts<PolkadotApi>
   stakingConsts: StakingConsts<PolkadotApi>
@@ -77,9 +87,14 @@ export class PolkadotService
   subActiveAddress: Subscription
   subImportedAccounts: Subscription
   subActiveEra: Subscription
-  subAccountBalances: AccountBalances<PolkadotApi, PolkadotPeopleApi> = {
+  subAccountBalances: AccountBalances<
+    PolkadotApi,
+    PolkadotPeopleApi,
+    PolkadotAssetHubApi
+  > = {
     relay: {},
     people: {},
+    hub: {},
   }
   subStakingLedgers: StakingLedgers<PolkadotApi> = {}
   subProxies: Proxies<PolkadotApi> = {}
@@ -88,41 +103,45 @@ export class PolkadotService
 
   constructor(
     public networkConfig: NetworkConfig,
-    public ids: [NetworkId, SystemChainId],
+    public ids: [NetworkId, SystemChainId, SystemChainId],
     public apiRelay: DedotClient<PolkadotApi>,
-    public apiPeople: DedotClient<PolkadotPeopleApi>
+    public apiPeople: DedotClient<PolkadotPeopleApi>,
+    public apiHub: DedotClient<PolkadotAssetHubApi>
   ) {
-    this.ids = ids
-    this.apiRelay = apiRelay
-    this.apiPeople = apiPeople
-    this.networkConfig = networkConfig
     this.apiStatus = {
       relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
       people: new ApiStatus(this.apiPeople, ids[1], networkConfig),
+      hub: new ApiStatus(this.apiHub, ids[2], networkConfig),
     }
   }
 
   getApi = (id: string) => {
     if (id === this.ids[0]) {
       return this.apiRelay
-    } else {
+    } else if (id === this.ids[1]) {
       return this.apiPeople
+    } else {
+      return this.apiHub
     }
   }
 
   start = async () => {
     this.relayChainSpec = new ChainSpecs(this.apiRelay)
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
+    this.hubChainSpec = new ChainSpecs(this.apiHub)
+
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
 
     await Promise.all([
       this.relayChainSpec.fetch(),
       this.peopleChainSpec.fetch(),
+      this.hubChainSpec.fetch(),
     ])
     setMultiChainSpecs({
       [this.ids[0]]: this.relayChainSpec.get(),
       [this.ids[1]]: this.peopleChainSpec.get(),
+      [this.ids[2]]: this.hubChainSpec.get(),
     })
     setConsts(this.ids[0], {
       ...this.coreConsts.get(),
@@ -183,6 +202,8 @@ export class PolkadotService
           new AccountBalanceQuery(this.apiRelay, this.ids[0], account.address)
         this.subAccountBalances['people'][getAccountKey(this.ids[1], account)] =
           new AccountBalanceQuery(this.apiPeople, this.ids[1], account.address)
+        this.subAccountBalances['hub'][getAccountKey(this.ids[2], account)] =
+          new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
         this.subStakingLedgers[account.address] = new StakingLedgerQuery(
           this.apiRelay,
@@ -242,7 +263,11 @@ export class PolkadotService
     this.eraRewardPoints?.unsubscribe()
     this.fastUnstakeQueue?.unsubscribe()
 
-    await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
+    await Promise.all([
+      this.apiRelay.disconnect(),
+      this.apiPeople.disconnect(),
+      this.apiHub.disconnect(),
+    ])
   }
 
   interface: ServiceInterface = {

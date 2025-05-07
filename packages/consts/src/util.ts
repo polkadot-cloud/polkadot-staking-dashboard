@@ -59,3 +59,14 @@ export const getDefaultRpcEndpoints = (network: NetworkId) => {
     ...systemChainRpc,
   }
 }
+
+// Get asset hub chain id from network id
+export const getHubChainId = (network: NetworkId) => {
+  if (network === 'westend') {
+    return 'westmint'
+  }
+  if (network === 'kusama') {
+    return 'statemine'
+  }
+  return 'statemint'
+}
