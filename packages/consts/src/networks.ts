@@ -3,8 +3,13 @@
 
 import type { NetworkId, Networks, SystemChain } from 'types'
 
+// The default network to use when no network is specified
 export const DefaultNetwork: NetworkId = 'polkadot'
 
+// Networks that are disabled in production
+export const ProductionDisabledNetworks: NetworkId[] = ['westend']
+
+// All supported networks
 export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
@@ -67,6 +72,7 @@ export const NetworkList: Networks = {
   },
 }
 
+// All supported system chains
 export const SystemChainList: Record<string, SystemChain> = {
   'people-polkadot': {
     name: 'people-polkadot',
