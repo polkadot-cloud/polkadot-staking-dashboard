@@ -7,19 +7,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useOverlay } from 'ui-overlay'
-
-export type InviteType = 'pool' | 'validator' | null
-
-export interface InviteNotificationContextInterface {
-  inviteActive: boolean
-  inviteType: InviteType
-  inviteData: Record<string, string>
-  setInviteActive: (active: boolean) => void
-  setInviteType: (type: InviteType) => void
-  setInviteData: (data: Record<string, string>) => void
-  dismissInvite: () => void
-  navigateToInvite: () => void
-}
+import type { InviteNotificationContextInterface, InviteType } from './types'
 
 export const InviteNotificationContext =
   createContext<InviteNotificationContextInterface>(
@@ -37,7 +25,7 @@ export const InviteNotificationProvider = ({
 
   // State for tracking invite status
   const [inviteActive, setInviteActive] = useState<boolean>(false)
-  const [inviteType, setInviteType] = useState<InviteType>(null)
+  const [inviteType, setInviteType] = useState<InviteType>()
   const [inviteData, setInviteData] = useState<Record<string, string>>({})
 
   // Function to check hash for invite URL patterns
@@ -53,7 +41,6 @@ export const InviteNotificationProvider = ({
           const networkParam = validatorParams[0]
           const validators = validatorParams[1]
 
-          // Set the invite data
           setInviteType('validator')
           setInviteData({ network: networkParam, validators })
           setInviteActive(true)
@@ -112,7 +99,7 @@ export const InviteNotificationProvider = ({
   // Function to dismiss the invite notification
   const dismissInvite = () => {
     setInviteActive(false)
-    setInviteType(null)
+    setInviteType(undefined)
     setInviteData({})
 
     // Clear from session storage
