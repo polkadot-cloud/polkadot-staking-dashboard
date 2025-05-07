@@ -55,7 +55,8 @@ export class ActivePoolQuery<T extends StakingChain> {
         },
       ],
       async ([bondedPool, rewardPool, rewardAccount, nominators]) => {
-        if (bondedPool && rewardPool && nominators) {
+        if (bondedPool && rewardPool) {
+          const nominatorsData = nominators || { targets: [], submittedIn: 0 }
           const roleAddresses = Object.values(bondedPool.roles).map((role) =>
             role.address(this.api.consts.system.ss58Prefix)
           )
@@ -100,10 +101,10 @@ export class ActivePoolQuery<T extends StakingChain> {
             },
             rewardAccountBalance: rewardAccount.data.free,
             nominators: {
-              targets: nominators.targets.map((target) =>
+              targets: nominatorsData.targets.map((target) =>
                 target.address(this.api.consts.system.ss58Prefix)
               ),
-              submittedIn: nominators.submittedIn,
+              submittedIn: nominatorsData.submittedIn,
             },
           }
           addActivePool(activePool)
