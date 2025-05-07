@@ -15,7 +15,6 @@ export const NetworkList: Networks = {
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://polkadot-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/polkadot',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/polkadot',
         LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
@@ -36,7 +35,6 @@ export const NetworkList: Networks = {
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://kusama-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/kusama',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/kusama',
         LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
@@ -56,7 +54,6 @@ export const NetworkList: Networks = {
       defaultRpc: 'IBP-GeoDNS1',
       rpc: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/westend',
         LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
@@ -129,7 +126,6 @@ export const SystemChainList: Record<string, SystemChain> = {
         await import('@substrate/connect-known-chains/polkadot_asset_hub'),
       defaultRpc: 'IBP1',
       rpc: {
-        'Dwellir Tunisia': 'wss://statemint-rpc-tn.dwellir.com',
         'Lucky Friday': 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
         Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
         StakeWorld: 'wss://dot-rpc.stakeworld.io/assethub',
@@ -150,8 +146,6 @@ export const SystemChainList: Record<string, SystemChain> = {
         await import('@substrate/connect-known-chains/ksmcc3_asset_hub'),
       defaultRpc: 'IBP1',
       rpc: {
-        Dwellir: 'wss://statemine-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://statemine-rpc-tn.dwellir.com',
         'Lucky Friday': 'wss://rpc-asset-hub-kusama.luckyfriday.io',
         Parity: 'wss://kusama-asset-hub-rpc.polkadot.io',
         IBP1: 'wss://sys.ibp.network/asset-hub-kusama',
@@ -160,8 +154,8 @@ export const SystemChainList: Record<string, SystemChain> = {
     },
     relayChain: 'kusama',
   },
-  westend_assethub: {
-    name: 'westend_assethub',
+  westmint: {
+    name: 'westmint',
     ss58: 42,
     units: 12,
     unit: 'WND',
@@ -172,7 +166,6 @@ export const SystemChainList: Record<string, SystemChain> = {
       rpc: {
         Parity: 'wss://westend-asset-hub-rpc.polkadot.io',
         Dwellir: 'wss://asset-hub-westend-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://westmint-rpc-tn.dwellir.com',
         IBP1: 'wss://sys.ibp.network/asset-hub-westend',
         IBP2: 'wss://asset-hub-westend.dotters.network',
         'Permanence DAO EU': 'wss://asset-hub-westend.rpc.permanence.io',

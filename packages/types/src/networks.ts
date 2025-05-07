@@ -13,6 +13,9 @@ export type SystemChainId =
   | 'people-polkadot'
   | 'people-kusama'
   | 'people-westend'
+  | 'statemint'
+  | 'statemine'
+  | 'westmint'
 
 export type ProviderType = 'ws' | 'sc'
 
