@@ -5,7 +5,7 @@ import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
-import { NetworkList } from 'consts/networks'
+import { getEnabledNetworks } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
@@ -47,40 +47,42 @@ export const Networks = () => {
         <ContentWrapper>
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
-            {Object.entries(NetworkList).map(([key, item], index: number) => {
-              const inline = getChainIcons(key as NetworkId).inline
-              const Svg = inline.svg
-              const rpcDisabled = networkKey === key
+            {Object.entries(getEnabledNetworks()).map(
+              ([key, item], index: number) => {
+                const inline = getChainIcons(key as NetworkId).inline
+                const Svg = inline.svg
+                const rpcDisabled = networkKey === key
 
-              return (
-                <NetworkButton
-                  $connected={networkKey === key}
-                  disabled={rpcDisabled}
-                  key={`network_switch_${index}`}
-                  type="button"
-                  onClick={() => {
-                    if (networkKey !== key) {
-                      switchNetwork(key as NetworkId)
-                      setModalStatus('closing')
-                    }
-                  }}
-                >
-                  <div style={{ width: '1.75rem' }}>
-                    <Svg width={inline.size} height={inline.size} />
-                  </div>
-                  <h3>{capitalizeFirstLetter(item.name)}</h3>
-                  {networkKey === key && (
-                    <h4 className="selected">{t('selected')}</h4>
-                  )}
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                    />
-                  </div>
-                </NetworkButton>
-              )
-            })}
+                return (
+                  <NetworkButton
+                    $connected={networkKey === key}
+                    disabled={rpcDisabled}
+                    key={`network_switch_${index}`}
+                    type="button"
+                    onClick={() => {
+                      if (networkKey !== key) {
+                        switchNetwork(key as NetworkId)
+                        setModalStatus('closing')
+                      }
+                    }}
+                  >
+                    <div style={{ width: '1.75rem' }}>
+                      <Svg width={inline.size} height={inline.size} />
+                    </div>
+                    <h3>{capitalizeFirstLetter(item.name)}</h3>
+                    {networkKey === key && (
+                      <h4 className="selected">{t('selected')}</h4>
+                    )}
+                    <div>
+                      <FontAwesomeIcon
+                        transform="shrink-2"
+                        icon={faChevronRight}
+                      />
+                    </div>
+                  </NetworkButton>
+                )
+              }
+            )}
           </div>
           <h4>{t('providerType')}</h4>
           <ConnectionsWrapper>

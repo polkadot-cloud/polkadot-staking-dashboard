@@ -15,6 +15,7 @@
     "assets": "workspace:*"
   },
   "devDependencies": {
-    "types": "workspace:*"
+    "types": "workspace:*",
+    "vite": "^6.3.5"
   }
 }

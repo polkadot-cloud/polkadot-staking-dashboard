@@ -3,6 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { varToUrlHash } from '@w3ux/utils'
+import { isNetworkEnabled } from 'consts/util'
 import {
   getNetwork,
   getProviderType,
@@ -24,8 +25,10 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
 
   // handle network switching
   const switchNetwork = async (name: NetworkId): Promise<void> => {
-    setNetworkConfig(name, getInitialRpcEndpoints(name), getProviderType())
-    varToUrlHash('n', name, false)
+    if (isNetworkEnabled(name)) {
+      setNetworkConfig(name, getInitialRpcEndpoints(name), getProviderType())
+      varToUrlHash('n', name, false)
+    }
   }
 
   // Subscribe to global bus network changes

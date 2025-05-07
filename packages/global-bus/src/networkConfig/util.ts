@@ -4,7 +4,7 @@
 import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList, SystemChainList } from 'consts/networks'
-import { getDefaultRpcEndpoints } from 'consts/util'
+import { getDefaultRpcEndpoints, getEnabledNetworks } from 'consts/util'
 import type {
   NetworkConfig,
   NetworkId,
@@ -16,7 +16,7 @@ import { setLocalRpcEndpoints } from './local'
 export const getInitialNetwork = () => {
   // Attempt to get network from URL
   const urlNetwork = extractUrlValue('n')
-  const urlNetworkValid = !!Object.values(NetworkList).find(
+  const urlNetworkValid = !!Object.values(getEnabledNetworks()).find(
     (n) => n.name === urlNetwork
   )
 
@@ -28,7 +28,7 @@ export const getInitialNetwork = () => {
 
   // Fallback 1: Use network from local storage if valid
   const localNetwork: NetworkId = localStorage.getItem(NetworkKey) as NetworkId
-  const localNetworkValid = !!Object.values(NetworkList).find(
+  const localNetworkValid = !!Object.values(getEnabledNetworks()).find(
     (n) => n.name === localNetwork
   )
   if (localNetworkValid) {
