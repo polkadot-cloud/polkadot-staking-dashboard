@@ -150,8 +150,8 @@ importers:
         specifier: ^2.20.0
         version: 2.20.0(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.4)
       '@zondax/ledger-substrate':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.1.1
+        version: 1.1.1
       assets:
         specifier: workspace:*
         version: link:../assets
@@ -327,8 +327,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.77.0
-        version: 0.77.0(dedot@0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+        specifier: ^0.94.0
+        version: 0.94.0(dedot@0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@w3ux/utils':
         specifier: ^2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -422,8 +422,8 @@ importers:
         version: 0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.77.0
-        version: 0.77.0(dedot@0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+        specifier: ^0.94.0
+        version: 0.94.0(dedot@0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       bignumber.js:
         specifier: ^9.3.0
         version: 9.3.0
@@ -697,8 +697,8 @@ packages:
     resolution: {integrity: sha512-hFTBrrzZlcGFsEbBXVSkP+4uNVtOnvNqrV7ZAvMxUAmfo+sYS3hmGCtICbHI77Xcbg3EQZK6B+ZZwO2CAYI6/Q==}
     engines: {node: '>=18'}
 
-  '@dedot/chaintypes@0.77.0':
-    resolution: {integrity: sha512-BJW1pO85NsMWT9N4ZU3D85rA9spO6DVaIOaJ35WjqZh+pgICGJMEgv93R9dhW7dbMTIJfFxNV7UAAxcQ4y1E/w==}
+  '@dedot/chaintypes@0.94.0':
+    resolution: {integrity: sha512-X/L0o3cCh8yoDz5wr111fPBwqatc8wqXn4ExLnmqmuR+cVX81j9c+iAlIw/TDvyR4Zu8LUoPjaP2tkDFRH7VHA==}
     peerDependencies:
       dedot: '>=0.7.1'
 
@@ -1107,12 +1107,6 @@ packages:
 
   '@ledgerhq/hw-transport-webhid@6.30.0':
     resolution: {integrity: sha512-HoTzjmYwO7+TVwK+GNbglRepUoDywBL6vjhKnhGqJSUPqAqJJyEXcnKnFDBMN7Phqm55O+YHDYfpcHGBNg5XlQ==}
-
-  '@ledgerhq/hw-transport@6.30.6':
-    resolution: {integrity: sha512-fT0Z4IywiuJuZrZE/+W0blkV5UCotDPFTYKLkKCLzYzuE6javva7D/ajRaIeR+hZ4kTmKF4EqnsmDCXwElez+w==}
-
-  '@ledgerhq/hw-transport@6.31.2':
-    resolution: {integrity: sha512-B27UIzMzm2IXPGYnEB95R7eHxpXBkTBHh6MUJJQZVknt8LilEz1tfpTYUdzAKDGQ+Z5MZyYb01Eh3Zqm3kn3uw==}
 
   '@ledgerhq/hw-transport@6.31.4':
     resolution: {integrity: sha512-6c1ir/cXWJm5dCWdq55NPgCJ3UuKuuxRvf//Xs36Bq9BwkV2YaRQhZITAkads83l07NAdR16hkTWqqpwFMaI6A==}
@@ -2765,11 +2759,11 @@ packages:
     resolution: {integrity: sha512-FNoYzHawTMk/6KMQoEG5O4PuioX19UbwdQKF44yw0nLfOypfQdjtfZzo/UIJWAJ23sNIFbD1Ug9lbaDGMwbqQA==}
     engines: {node: '>=8'}
 
-  '@zondax/ledger-js@0.11.0':
-    resolution: {integrity: sha512-Y+hbuIVIT+QcIrZgJZN8BjpvmLJ9v2+yQtbpYVTtosAw/NNOg/NI6QKMxP4fwomW/6SEK6jaIqsLhTvTZP7qDA==}
+  '@zondax/ledger-js@1.2.0':
+    resolution: {integrity: sha512-HGvDU0s4zg0scu8ebGenFHFB6g5SLDqmrctncZUY9ie5pGibOU8C0VdjZSHbttSOCyh+IloLi/a4jyMPOEQGuQ==}
 
-  '@zondax/ledger-substrate@1.0.1':
-    resolution: {integrity: sha512-ZeHqvBPFn8DoNwgkASR7XWKI+blemy5nwTMWfFadBDdypSnOStedPIeDYrgr3q0vjHqyvnWoH0D7BEy6vCYu8g==}
+  '@zondax/ledger-substrate@1.1.1':
+    resolution: {integrity: sha512-qgsLNJb6ijKZ+gSOsUfsm7DSlyZhFQCsHI1om1LB/PVhQd4SWuD8f9KMgOh9ayfCdXoVaMBJp6+o9p3P+J1szA==}
 
   abitype@1.0.8:
     resolution: {integrity: sha512-ZeiI6h3GnW06uYDLx0etQtX/p8E24UaHHBj57RSjK7YBFe7iuVn07EDpOeP451D06sF27VOz9JJPlIKJmXgkEg==}
@@ -2879,8 +2873,8 @@ packages:
   axios@0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
 
-  axios@1.8.4:
-    resolution: {integrity: sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==}
+  axios@1.9.0:
+    resolution: {integrity: sha512-re4CqKTJaURpzbLHtIi6XpDv20/CnpXOtjRY5/CU32L8gU8ek9UIivcfvSWvmKEngmVbrUtPpdDwWDWL7DNHvg==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -4447,6 +4441,9 @@ packages:
   preact@10.26.5:
     resolution: {integrity: sha512-fmpDkgfGU6JYux9teDWLhj9mKN55tyepwYbxHgQuIxbWQzgFg5vk7Mrrtfx7xRxq798ynkY4DDDxZr235Kk+4w==}
 
+  preact@10.26.6:
+    resolution: {integrity: sha512-5SRRBinwpwkaD+OqlBDeITlRgvd8I8QlxHJw9AxSdMNV6O+LodN9nUyYGpSF7sadHjs6RzeFShMexC6DbtWr9g==}
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -5806,7 +5803,7 @@ snapshots:
       eth-json-rpc-filters: 6.0.1
       eventemitter3: 5.0.1
       keccak: 3.0.4
-      preact: 10.26.5
+      preact: 10.26.6
       sha.js: 2.4.11
     transitivePeerDependencies:
       - supports-color
@@ -5844,7 +5841,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/chaintypes@0.77.0(dedot@0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@dedot/chaintypes@0.94.0(dedot@0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       dedot: 0.9.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
@@ -6261,20 +6258,6 @@ snapshots:
       '@ledgerhq/errors': 6.19.1
       '@ledgerhq/hw-transport': 6.31.4
       '@ledgerhq/logs': 6.12.0
-
-  '@ledgerhq/hw-transport@6.30.6':
-    dependencies:
-      '@ledgerhq/devices': 8.4.4
-      '@ledgerhq/errors': 6.19.1
-      '@ledgerhq/logs': 6.12.0
-      events: 3.3.0
-
-  '@ledgerhq/hw-transport@6.31.2':
-    dependencies:
-      '@ledgerhq/devices': 8.4.4
-      '@ledgerhq/errors': 6.19.1
-      '@ledgerhq/logs': 6.12.0
-      events: 3.3.0
 
   '@ledgerhq/hw-transport@6.31.4':
     dependencies:
@@ -8672,15 +8655,15 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@zondax/ledger-js@0.11.0':
+  '@zondax/ledger-js@1.2.0':
     dependencies:
-      '@ledgerhq/hw-transport': 6.30.6
+      '@ledgerhq/hw-transport': 6.31.4
 
-  '@zondax/ledger-substrate@1.0.1':
+  '@zondax/ledger-substrate@1.1.1':
     dependencies:
-      '@ledgerhq/hw-transport': 6.31.2
-      '@zondax/ledger-js': 0.11.0
-      axios: 1.8.4
+      '@ledgerhq/hw-transport': 6.31.4
+      '@zondax/ledger-js': 1.2.0
+      axios: 1.9.0
     transitivePeerDependencies:
       - debug
 
@@ -8813,7 +8796,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.8.4:
+  axios@1.9.0:
     dependencies:
       follow-redirects: 1.15.9
       form-data: 4.0.2
@@ -10552,6 +10535,8 @@ snapshots:
       source-map-js: 1.2.1
 
   preact@10.26.5: {}
+
+  preact@10.26.6: {}
 
   prelude-ls@1.2.1: {}
 
