@@ -16,6 +16,7 @@ import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useInviteNotification } from 'contexts/InviteNotification'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -113,6 +114,7 @@ export const PoolInvitePage = () => {
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
   const { newBatchCall } = useBatchCall()
   const createPoolAccounts = useCreatePoolAccounts()
+  const { dismissInvite } = useInviteNotification()
 
   const [poolDetails, setPoolDetails] = useState<PoolDetails | null>(null)
   const [loading, setLoading] = useState(true)
@@ -327,14 +329,23 @@ export const PoolInvitePage = () => {
     setTimeout(() => setCopiedAddress(null), 3000)
   }
 
-  // Handle joining the pool
-  const handleJoinPool = () => {
+  // Dismiss notification when navigating away
+  const handleNavigateAway = () => {
+    dismissInvite()
+    navigate('/pools')
+  }
+
+  // Join the pool
+  const handleJoinPool = async () => {
     if (!activeAddress || !poolId) {
       return
     }
 
     // Submit the transaction
     submitExtrinsic.onSubmit()
+
+    // After successful join, dismiss the notification
+    dismissInvite()
   }
 
   // Format DOT amount for display
@@ -389,7 +400,7 @@ export const PoolInvitePage = () => {
               <p>{error}</p>
               <ButtonPrimary
                 text={t('browsePools')}
-                onClick={() => navigate('/pools')}
+                onClick={handleNavigateAway}
               />
             </ErrorState>
           </Page.Row>

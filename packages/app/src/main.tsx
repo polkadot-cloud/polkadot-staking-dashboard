@@ -32,6 +32,9 @@ if (
   localStorage.removeItem('lng_resources')
 }
 
+// Force clear language resources for testing
+localStorage.removeItem('lng_resources')
+
 // Initialise global api service
 initDedotService()
 

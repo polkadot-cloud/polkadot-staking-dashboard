@@ -8,6 +8,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useInviteNotification } from 'contexts/InviteNotification'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -64,6 +65,7 @@ export const ValidatorInvitePage = () => {
     network: string
     validators: string
   }>()
+  const { dismissInvite } = useInviteNotification()
 
   const { controllerUnmigrated } = getStakingLedger(activeAddress)
   const location = window.location.search
@@ -292,6 +294,9 @@ export const ValidatorInvitePage = () => {
       setIsSubmitting(true)
     },
     callbackInBlock: () => {
+      // Dismiss the notification when the transaction is successful
+      dismissInvite()
+
       // Navigate to nominate page after successful transaction
       setTimeout(() => {
         navigate('/nominate')
@@ -358,6 +363,12 @@ export const ValidatorInvitePage = () => {
     return step?.available || false
   }
 
+  // Dismiss notification when navigating away
+  const handleNavigateAway = () => {
+    dismissInvite()
+    navigate('/nominate')
+  }
+
   // If not ready, show loading state
   if (!isReady) {
     return (
@@ -385,6 +396,10 @@ export const ValidatorInvitePage = () => {
             <CardWrapper>
               <ErrorState>
                 <h3>{loadingError}</h3>
+                <ButtonPrimary
+                  text={t('browseValidators')}
+                  onClick={handleNavigateAway}
+                />
               </ErrorState>
             </CardWrapper>
           </Page.Row>
