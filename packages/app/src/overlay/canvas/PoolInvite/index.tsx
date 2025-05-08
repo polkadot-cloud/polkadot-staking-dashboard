@@ -99,13 +99,12 @@ interface PoolDetails {
   }
 }
 
-export const PoolInvite = () => {
+export const PoolInvite = ({ poolId }: { poolId: number }) => {
   const { t, i18n } = useTranslation('invite')
   const navigate = useNavigate()
   const { network: urlNetwork } = useParams<{
     network: string
   }>()
-  const { inviteData } = useInviteNotification()
   const { network, switchNetwork } = useNetwork()
   const { activeAddress } = useActiveAccounts()
   const location = window.location.search
@@ -129,9 +128,6 @@ export const PoolInvite = () => {
     identities: {},
     supers: {},
   })
-
-  // NOTE: We assume a valid pool invite is active
-  const poolId = Number(inviteData.poolId)
 
   const { units, unit } = getNetworkData(network)
   const TokenIcon = getChainIcons(network).icon

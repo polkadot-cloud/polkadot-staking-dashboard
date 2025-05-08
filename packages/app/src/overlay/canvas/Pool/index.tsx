@@ -29,8 +29,8 @@ export const Pool = () => {
   const { serviceApi } = useApi()
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
+  const { inviteConfig } = useInviteNotification()
   const { poolsMetaData, bondedPools } = useBondedPools()
-  const { inviteActive, inviteType } = useInviteNotification()
 
   // Store latest pool candidates
   const [poolCandidates, setPoolCandidates] = useState<number[]>([])
@@ -136,7 +136,7 @@ export const Pool = () => {
           <Head>
             <CloseCanvas />
           </Head>
-          {inviteActive && inviteType === 'pool' && (
+          {inviteConfig && inviteConfig.type === 'pool' && (
             <CardWrapper className="canvas">
               <InviteHeader>
                 <h2>{t('invitedToJoinPool')}</h2>

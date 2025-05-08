@@ -7,7 +7,12 @@ import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useOverlay } from 'ui-overlay'
-import type { InviteNotificationContextInterface, InviteType } from './types'
+import type {
+  InviteConfig,
+  InviteNotificationContextInterface,
+  InviteType,
+  NominatorInvite,
+} from './types'
 
 export const InviteNotificationContext =
   createContext<InviteNotificationContextInterface>(
@@ -24,9 +29,11 @@ export const InviteNotificationProvider = ({
   const { openCanvas } = useOverlay().canvas
 
   // State for tracking invite status
-  const [inviteActive, setInviteActive] = useState<boolean>(false)
-  const [inviteType, setInviteType] = useState<InviteType>()
-  const [inviteData, setInviteData] = useState<Record<string, string>>({})
+  const [inviteConfig, setInviteConfig] = useState<InviteConfig | undefined>(
+    undefined
+  )
+
+  // Whether the invite has been acknowledged
   const [acknowledged, setAcknowledged] = useState<boolean>(false)
 
   // Function to check hash for invite URL patterns
@@ -39,12 +46,17 @@ export const InviteNotificationProvider = ({
       if (parts.length > 1) {
         const validatorParams = parts[1].split('/')
         if (validatorParams.length >= 2) {
+          const type: InviteType = 'validator'
           const networkParam = validatorParams[0]
           const validators = validatorParams[1]
-
-          setInviteType('validator')
-          setInviteData({ network: networkParam, validators })
-          setInviteActive(true)
+          const invite = {
+            type,
+            network: networkParam,
+            invite: {
+              validators,
+            },
+          }
+          setInviteConfig(invite)
 
           // Store in session storage to persist across navigation
           sessionStorage.setItem('inviteActive', 'true')
@@ -62,15 +74,11 @@ export const InviteNotificationProvider = ({
   useEffect(() => {
     // Check on mount
     checkHashForInvite()
-
     // Set up event listener for hash changes
     const handleHashChange = () => {
       checkHashForInvite()
     }
-
     window.addEventListener('hashchange', handleHashChange)
-
-    // Clean up event listener
     return () => {
       window.removeEventListener('hashchange', handleHashChange)
     }
@@ -82,26 +90,22 @@ export const InviteNotificationProvider = ({
     const storedInviteType = sessionStorage.getItem('inviteType') as InviteType
     const storedInviteData = sessionStorage.getItem('inviteData')
 
-    if (storedInviteActive === 'true' && storedInviteType) {
-      setInviteActive(true)
-      setInviteType(storedInviteType)
+    if (storedInviteActive && storedInviteData && storedInviteType) {
+      // TODO: Use local storage getter
+      const parsedData = JSON.parse(storedInviteData)
 
-      if (storedInviteData) {
-        try {
-          const parsedData = JSON.parse(storedInviteData)
-          setInviteData(parsedData)
-        } catch (e) {
-          // Failed to parse invite data from session storage
-        }
+      const invite = {
+        type: storedInviteType,
+        network: parsedData.network,
+        invite: parsedData,
       }
+      setInviteConfig(invite)
     }
   }, [])
 
   // Function to dismiss the invite notification
   const dismissInvite = () => {
-    setInviteActive(false)
-    setInviteType(undefined)
-    setInviteData({})
+    setInviteConfig(undefined)
 
     // Clear from session storage
     sessionStorage.removeItem('inviteActive')
@@ -111,11 +115,12 @@ export const InviteNotificationProvider = ({
 
   // Function to navigate to the invite page
   const navigateToInvite = () => {
-    if (!inviteActive || !inviteType) {
+    if (!inviteConfig) {
       return
     }
-    if (inviteType === 'validator') {
-      window.location.hash = `/invite/validator/${inviteData.network}/${inviteData.validators}`
+    if (inviteConfig.type === 'validator') {
+      const invite = inviteConfig.invite as NominatorInvite
+      window.location.hash = `/invite/validator/${inviteConfig.network}/${invite.validators}`
     }
   }
 
@@ -137,25 +142,26 @@ export const InviteNotificationProvider = ({
   useEffect(() => {
     const idFromUrl = extractUrlValue('id')
     if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
-      setInviteType('pool')
-      setInviteData({ network, poolId: idFromUrl })
-      setInviteActive(true)
+      const type: InviteType = 'pool'
+      const invite = {
+        type,
+        network,
+        invite: {
+          poolId: Number(idFromUrl),
+        },
+      }
+      setInviteConfig(invite)
     }
   }, [])
 
   return (
     <InviteNotificationContext.Provider
       value={{
-        inviteActive,
-        inviteType,
-        inviteData,
-        setInviteActive,
-        setInviteType,
-        setInviteData,
         dismissInvite,
         navigateToInvite,
         acknowledged,
         setAcknowledged,
+        inviteConfig,
       }}
     >
       {children}

@@ -11,13 +11,13 @@ import { InvitePopover } from './Popovers/InvitePopover'
 
 export const Invite = () => {
   const { themeElementRef } = useTheme()
-  const { inviteActive, acknowledged, setAcknowledged } =
+  const { inviteConfig, acknowledged, setAcknowledged } =
     useInviteNotification()
 
   const [open, setOpen] = useState<boolean>(false)
 
   // Don't render if no active invite
-  if (!inviteActive) {
+  if (!inviteConfig) {
     return null
   }
 
