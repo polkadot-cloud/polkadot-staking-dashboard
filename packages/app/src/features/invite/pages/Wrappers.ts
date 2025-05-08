@@ -357,9 +357,8 @@ export const InviteHeader = styled.div`
     color: var(--text-color-primary);
   }
 
-  p {
+  h4 {
     color: var(--text-color-secondary);
-    font-size: 1rem;
     max-width: 40rem;
     margin: 0 auto;
   }

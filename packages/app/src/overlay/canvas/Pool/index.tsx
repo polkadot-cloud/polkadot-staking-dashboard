@@ -2,14 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
+import { useInviteNotification } from 'contexts/InviteNotification'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { InviteHeader } from 'features/invite/pages/Wrappers'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
-import { Main } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { Head, Main } from 'ui-core/canvas'
+import { CloseCanvas, useOverlay } from 'ui-overlay'
 import { formatIdentities, formatSuperIdentities } from 'utils'
 import { Header } from './Header'
 import { Nominations } from './Nominations'
@@ -18,6 +22,7 @@ import { Preloader } from './Preloader'
 import type { RoleIdentities } from './types'
 
 export const Pool = () => {
+  const { t } = useTranslation('invite')
   const {
     config: { options },
   } = useOverlay().canvas
@@ -25,6 +30,7 @@ export const Pool = () => {
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { poolsMetaData, bondedPools } = useBondedPools()
+  const { inviteActive, inviteType } = useInviteNotification()
 
   // Store latest pool candidates
   const [poolCandidates, setPoolCandidates] = useState<number[]>([])
@@ -127,6 +133,17 @@ export const Pool = () => {
         <Preloader />
       ) : (
         <>
+          <Head>
+            <CloseCanvas />
+          </Head>
+          {inviteActive && inviteType === 'pool' && (
+            <CardWrapper className="canvas">
+              <InviteHeader>
+                <h2>{t('invitedToJoinPool')}</h2>
+                <h4>{t('poolInviteDescription')}</h4>
+              </InviteHeader>
+            </CardWrapper>
+          )}
           <Header
             activeTab={activeTab}
             setActiveTab={setActiveTab}

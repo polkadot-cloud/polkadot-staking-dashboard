@@ -20,8 +20,8 @@ export const InviteNotificationProvider = ({
   children: ReactNode
 }) => {
   const { network } = useNetwork()
+  const { syncing } = useSyncing()
   const { openCanvas } = useOverlay().canvas
-  const { syncing } = useSyncing(['active-pools'])
 
   // State for tracking invite status
   const [inviteActive, setInviteActive] = useState<boolean>(false)
@@ -119,24 +119,29 @@ export const InviteNotificationProvider = ({
     }
   }
 
-  // Track syncing of active pools, activate pool invite when ready
+  // Open pool invite when ready
   useEffect(() => {
     const idFromUrl = extractUrlValue('id')
-
     if (!syncing) {
       if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
-        setInviteActive(true)
-        setInviteType('pool')
-        setInviteData({ network, poolId: idFromUrl })
-
         openCanvas({
-          key: 'PoolInvite',
-          options: { poolId: Number(idFromUrl) },
+          key: 'Pool',
+          options: { providedPool: { id: Number(idFromUrl) } },
           size: 'xl',
         })
       }
     }
   }, [syncing])
+
+  // Set invite data from URL when the page loads
+  useEffect(() => {
+    const idFromUrl = extractUrlValue('id')
+    if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
+      setInviteType('pool')
+      setInviteData({ network, poolId: idFromUrl })
+      setInviteActive(true)
+    }
+  }, [])
 
   return (
     <InviteNotificationContext.Provider

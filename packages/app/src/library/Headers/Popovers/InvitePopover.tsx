@@ -45,8 +45,12 @@ export const InvitePopover = ({
           onClick={() => {
             setOpen(false)
             openCanvas({
-              key: 'PoolInvite',
-              options: { poolId },
+              key: 'Pool',
+              options: {
+                providedPool: {
+                  id: poolId,
+                },
+              },
               size: 'xl',
             })
           }}
