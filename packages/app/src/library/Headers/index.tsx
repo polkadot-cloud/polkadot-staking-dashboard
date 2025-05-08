@@ -6,6 +6,7 @@ import { Account } from './Account'
 import { Settings } from './Settings'
 import { SideMenuToggle } from './SideMenuToggle'
 import { Sync } from './Sync'
+import { ToggleMode } from './ToggleMode'
 import { Wrapper } from './Wrappers'
 
 export const Headers = () => {
@@ -16,6 +17,7 @@ export const Headers = () => {
       <SideMenuToggle />
       <Sync />
       <Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
+      <ToggleMode />
       <Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
     </Wrapper>
   )
