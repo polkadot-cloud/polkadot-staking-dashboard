@@ -56,7 +56,10 @@ export class ActivePoolQuery<T extends StakingChain> {
       ],
       async ([bondedPool, rewardPool, rewardAccount, nominators]) => {
         if (bondedPool && rewardPool) {
-          const { targets, submittedIn } = nominators || { targets: [], submittedIn: 0 }
+          const { targets, submittedIn } = nominators || {
+            targets: [],
+            submittedIn: 0,
+          }
           const roleAddresses = Object.values(bondedPool.roles).map((role) =>
             role.address(this.api.consts.system.ss58Prefix)
           )
