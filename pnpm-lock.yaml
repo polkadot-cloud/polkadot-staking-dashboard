@@ -323,6 +323,9 @@ importers:
       types:
         specifier: workspace:*
         version: link:../types
+      vite:
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@22.14.1)(sass@1.77.6)
 
   packages/dedot-api:
     dependencies:
@@ -403,6 +406,10 @@ importers:
       utils:
         specifier: workspace:*
         version: link:../utils
+    devDependencies:
+      vite:
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@22.14.1)(sass@1.77.6)
 
   packages/plugin-staking-api:
     dependencies:
