@@ -29,7 +29,7 @@ SPDX-License-Identifier: GPL-3.0-only */
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    
+
     &.pulse {
       border: 2px solid var(--background-primary);
       animation: pulse 2s infinite;

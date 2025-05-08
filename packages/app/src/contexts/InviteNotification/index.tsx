@@ -100,6 +100,8 @@ export const InviteNotificationProvider = ({
   }
 
   // Open pool invite when ready
+  //
+  // TODO: Fix opens on subsequent sync toggles
   useEffect(() => {
     const idFromUrl = extractUrlValue('id')
     if (!syncing) {
