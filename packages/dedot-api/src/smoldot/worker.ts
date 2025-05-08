@@ -4,7 +4,7 @@
 import { compileBytecode } from 'smoldot/bytecode'
 import * as smoldot from 'smoldot/worker'
 
-compileBytecode().then((x) => {
-  postMessage(x)
+compileBytecode().then((d) => {
+  postMessage(d)
 })
-onmessage = (msg) => smoldot.run(msg.data)
+onmessage = ({ data }) => smoldot.run(data)
