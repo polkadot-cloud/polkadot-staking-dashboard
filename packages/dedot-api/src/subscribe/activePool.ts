@@ -104,7 +104,7 @@ export class ActivePoolQuery<T extends StakingChain> {
               targets: nominatorsData.targets.map((target) =>
                 target.address(this.api.consts.system.ss58Prefix)
               ),
-              submittedIn: nominatorsData.submittedIn,
+              submittedIn,
             },
           }
           addActivePool(activePool)
