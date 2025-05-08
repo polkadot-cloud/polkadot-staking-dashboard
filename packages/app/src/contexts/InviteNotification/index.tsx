@@ -7,6 +7,11 @@ import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useOverlay } from 'ui-overlay'
+import {
+  getLocalInviteConfig,
+  removeLocalInviteConfig,
+  setLocalInviteConfig,
+} from './local'
 import type {
   InviteConfig,
   InviteNotificationContextInterface,
@@ -30,7 +35,7 @@ export const InviteNotificationProvider = ({
 
   // State for tracking invite status
   const [inviteConfig, setInviteConfig] = useState<InviteConfig | undefined>(
-    undefined
+    getLocalInviteConfig()
   )
 
   // Whether the invite has been acknowledged
@@ -57,14 +62,7 @@ export const InviteNotificationProvider = ({
             },
           }
           setInviteConfig(invite)
-
-          // Store in session storage to persist across navigation
-          sessionStorage.setItem('inviteActive', 'true')
-          sessionStorage.setItem('inviteType', 'validator')
-          sessionStorage.setItem(
-            'inviteData',
-            JSON.stringify({ network: networkParam, validators })
-          )
+          setLocalInviteConfig(invite)
         }
       }
     }
@@ -84,33 +82,10 @@ export const InviteNotificationProvider = ({
     }
   }, [])
 
-  // Check session storage on initial load to restore state
-  useEffect(() => {
-    const storedInviteActive = sessionStorage.getItem('inviteActive')
-    const storedInviteType = sessionStorage.getItem('inviteType') as InviteType
-    const storedInviteData = sessionStorage.getItem('inviteData')
-
-    if (storedInviteActive && storedInviteData && storedInviteType) {
-      // TODO: Use local storage getter
-      const parsedData = JSON.parse(storedInviteData)
-
-      const invite = {
-        type: storedInviteType,
-        network: parsedData.network,
-        invite: parsedData,
-      }
-      setInviteConfig(invite)
-    }
-  }, [])
-
   // Function to dismiss the invite notification
   const dismissInvite = () => {
     setInviteConfig(undefined)
-
-    // Clear from session storage
-    sessionStorage.removeItem('inviteActive')
-    sessionStorage.removeItem('inviteType')
-    sessionStorage.removeItem('inviteData')
+    removeLocalInviteConfig()
   }
 
   // Function to navigate to the invite page
@@ -138,10 +113,18 @@ export const InviteNotificationProvider = ({
     }
   }, [syncing])
 
-  // Set invite data from URL when the page loads
+  // Set invite data when the page loads
   useEffect(() => {
     const idFromUrl = extractUrlValue('id')
     if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
+      setLocalInviteConfig({
+        type: 'pool',
+        network,
+        invite: {
+          poolId: Number(idFromUrl),
+        },
+      })
+
       const type: InviteType = 'pool'
       const invite = {
         type,
