@@ -2,16 +2,31 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SmoldotProvider } from 'dedot'
+import type { Client, SmoldotBytecode } from 'smoldot'
+import { startWithBytecode } from 'smoldot/no-auto-bytecode'
 import type { Network, SystemChain } from 'types'
-import { startFromWorker } from './start'
+import type { WorkerOpts } from './types'
 
 // Instantiate smoldot from worker
 const initSmWorker = () => {
   const smWorker = new Worker(new URL('./worker.js', import.meta.url), {
     type: 'module',
   })
-  const client = startFromWorker(smWorker)
+  const client = doInitSmWorker(smWorker)
   return client
+}
+
+// Instantiate smoldot client
+export const doInitSmWorker = (
+  worker: Worker,
+  opts: WorkerOpts = {}
+): Client => {
+  const bytecode = new Promise<SmoldotBytecode>(
+    (resolve) => (worker.onmessage = ({ data }) => resolve(data))
+  )
+  const { port1, port2: portToWorker } = new MessageChannel()
+  worker.postMessage(port1, [port1])
+  return startWithBytecode({ bytecode, portToWorker, ...opts })
 }
 
 // Instantiate a new relay chain smoldot provider
