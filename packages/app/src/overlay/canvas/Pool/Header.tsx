@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
 import { ButtonPrimaryInvert } from 'ui-buttons'
 import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
-import { CloseCanvas } from 'ui-overlay'
 import type { HeaderProps } from './types'
 export const Header = ({
   activeTab,
@@ -59,7 +58,6 @@ export const Header = ({
             lg
           />
         )}
-        <CloseCanvas />
       </Head>
       <AccountTitle>
         <div>
