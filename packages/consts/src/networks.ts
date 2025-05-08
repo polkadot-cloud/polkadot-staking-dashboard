@@ -3,20 +3,23 @@
 
 import type { NetworkId, Networks, SystemChain } from 'types'
 
+// The default network to use when no network is specified
 export const DefaultNetwork: NetworkId = 'polkadot'
 
+// Networks that are disabled in production
+export const ProductionDisabledNetworks: NetworkId[] = ['westend']
+
+// All supported networks
 export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
-      lightClientKey: 'polkadot',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot'),
       defaultRpc: 'IBP-GeoDNS1',
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://polkadot-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/polkadot',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/polkadot',
         LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
@@ -31,14 +34,12 @@ export const NetworkList: Networks = {
   kusama: {
     name: 'kusama',
     endpoints: {
-      lightClientKey: 'ksmcc3',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3'),
       defaultRpc: 'IBP-GeoDNS1',
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://kusama-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/kusama',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/kusama',
         LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
@@ -53,13 +54,11 @@ export const NetworkList: Networks = {
   westend: {
     name: 'westend',
     endpoints: {
-      lightClientKey: 'westend2',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend2'),
       defaultRpc: 'IBP-GeoDNS1',
       rpc: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
-        'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/westend',
         LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
@@ -73,6 +72,7 @@ export const NetworkList: Networks = {
   },
 }
 
+// All supported system chains
 export const SystemChainList: Record<string, SystemChain> = {
   'people-polkadot': {
     name: 'people-polkadot',
@@ -80,7 +80,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 10,
     unit: 'DOT',
     endpoints: {
-      lightClientKey: 'polkadot_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
       defaultRpc: 'IBP1',
@@ -97,7 +96,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'KSM',
     endpoints: {
-      lightClientKey: 'ksmcc3_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_people'),
       defaultRpc: 'IBP1',
@@ -114,13 +112,69 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'WND',
     endpoints: {
-      lightClientKey: 'westend2_people',
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend_people'),
       defaultRpc: 'IBP1',
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-westend',
         IBP2: 'wss://people-westend.dotters.network',
+      },
+    },
+    relayChain: 'westend',
+  },
+  statemint: {
+    name: 'statemint',
+    ss58: 0,
+    units: 10,
+    unit: 'DOT',
+    endpoints: {
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/polkadot_asset_hub'),
+      defaultRpc: 'IBP1',
+      rpc: {
+        'Lucky Friday': 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
+        Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
+        StakeWorld: 'wss://dot-rpc.stakeworld.io/assethub',
+        Dwellir: 'wss://asset-hub-polkadot-rpc.dwellir.com',
+        IBP1: 'wss://sys.ibp.network/asset-hub-polkadot',
+        IBP2: 'wss://asset-hub-polkadot.dotters.network',
+      },
+    },
+    relayChain: 'polkadot',
+  },
+  statemine: {
+    name: 'statemine',
+    ss58: 2,
+    units: 12,
+    unit: 'KSM',
+    endpoints: {
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/ksmcc3_asset_hub'),
+      defaultRpc: 'IBP1',
+      rpc: {
+        'Lucky Friday': 'wss://rpc-asset-hub-kusama.luckyfriday.io',
+        Parity: 'wss://kusama-asset-hub-rpc.polkadot.io',
+        IBP1: 'wss://sys.ibp.network/asset-hub-kusama',
+        IBP2: 'wss://asset-hub-kusama.dotters.network',
+      },
+    },
+    relayChain: 'kusama',
+  },
+  westmint: {
+    name: 'westmint',
+    ss58: 42,
+    units: 12,
+    unit: 'WND',
+    endpoints: {
+      lightClient: async () =>
+        await import('@substrate/connect-known-chains/westend2_asset_hub'),
+      defaultRpc: 'IBP1',
+      rpc: {
+        Parity: 'wss://westend-asset-hub-rpc.polkadot.io',
+        Dwellir: 'wss://asset-hub-westend-rpc.dwellir.com',
+        IBP1: 'wss://sys.ibp.network/asset-hub-westend',
+        IBP2: 'wss://asset-hub-westend.dotters.network',
+        'Permanence DAO EU': 'wss://asset-hub-westend.rpc.permanence.io',
       },
     },
     relayChain: 'westend',

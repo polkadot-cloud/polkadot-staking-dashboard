@@ -3,8 +3,8 @@
 
 import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
-import { DefaultNetwork, NetworkList } from 'consts/networks'
-import { getDefaultRpcEndpoints } from 'consts/util'
+import { DefaultNetwork, NetworkList, SystemChainList } from 'consts/networks'
+import { getDefaultRpcEndpoints, getEnabledNetworks } from 'consts/util'
 import type {
   NetworkConfig,
   NetworkId,
@@ -16,7 +16,7 @@ import { setLocalRpcEndpoints } from './local'
 export const getInitialNetwork = () => {
   // Attempt to get network from URL
   const urlNetwork = extractUrlValue('n')
-  const urlNetworkValid = !!Object.values(NetworkList).find(
+  const urlNetworkValid = !!Object.values(getEnabledNetworks()).find(
     (n) => n.name === urlNetwork
   )
 
@@ -28,7 +28,7 @@ export const getInitialNetwork = () => {
 
   // Fallback 1: Use network from local storage if valid
   const localNetwork: NetworkId = localStorage.getItem(NetworkKey) as NetworkId
-  const localNetworkValid = !!Object.values(NetworkList).find(
+  const localNetworkValid = !!Object.values(getEnabledNetworks()).find(
     (n) => n.name === localNetwork
   )
   if (localNetworkValid) {
@@ -43,11 +43,20 @@ export const getInitialNetwork = () => {
 
 export const getInitialRpcEndpoints = (network: NetworkId): RpcEndpoints => {
   // Validates local RPC endpoints by checking against the default values
-  const validateRpcEndpoints = (a: object, b: object) =>
-    JSON.stringify(Object.keys(a).sort()) ===
-      JSON.stringify(Object.keys(b).sort()) &&
-    Object.values(a).every((v) => typeof v === 'string') &&
-    Object.values(b).every((v) => typeof v === 'string')
+  const validateRpcEndpoints = (a: object, b: object) => {
+    const typeCheck =
+      JSON.stringify(Object.keys(a).sort()) ===
+        JSON.stringify(Object.keys(b).sort()) &&
+      Object.values(a).every((v) => typeof v === 'string') &&
+      Object.values(b).every((v) => typeof v === 'string')
+    // Check if values are valid RPC keys
+    const valueCheck = Object.entries(a).every(([k, v]) =>
+      Object.keys(
+        { ...NetworkList, ...SystemChainList }[k]?.endpoints?.rpc || []
+      ).includes(v)
+    )
+    return typeCheck && valueCheck
+  }
 
   const local = localStorageOrDefault<RpcEndpoints>(
     rpcEndpointKey(network),

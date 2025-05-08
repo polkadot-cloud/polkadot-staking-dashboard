@@ -1,8 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId, SystemChainId } from 'types'
-import { NetworkList, SystemChainList } from './networks'
+import type { NetworkId, Networks, SystemChainId } from 'types'
+import {
+  NetworkList,
+  ProductionDisabledNetworks,
+  SystemChainList,
+} from './networks'
 import { SupportedProxies } from './proxies'
 
 // Check if proxy type is supported in the dashboard
@@ -59,3 +63,32 @@ export const getDefaultRpcEndpoints = (network: NetworkId) => {
     ...systemChainRpc,
   }
 }
+
+// Get asset hub chain id from network id
+export const getHubChainId = (network: NetworkId) => {
+  if (network === 'westend') {
+    return 'westmint'
+  }
+  if (network === 'kusama') {
+    return 'statemine'
+  }
+  return 'statemint'
+}
+
+// Gets enabled networks depending on environment
+export const getEnabledNetworks = (): Networks =>
+  Object.entries(NetworkList).reduce((acc: Networks, [key, item]) => {
+    if (
+      !(
+        import.meta.env.PROD &&
+        ProductionDisabledNetworks.includes(key as NetworkId)
+      )
+    ) {
+      acc[key] = item
+    }
+    return acc
+  }, {})
+
+// Checks if a network is enabled
+export const isNetworkEnabled = (network: NetworkId) =>
+  Object.keys(getEnabledNetworks()).includes(network)

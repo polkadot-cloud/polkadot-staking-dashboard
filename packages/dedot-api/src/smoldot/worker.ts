@@ -4,7 +4,9 @@
 import { compileBytecode } from 'smoldot/bytecode'
 import * as smoldot from 'smoldot/worker'
 
-compileBytecode().then((x) => {
-  postMessage(x)
+// Based on the example of smoldot from worker documentation at:
+// <https://github.com/smol-dot/smoldot/tree/main/wasm-node/javascript#usage-with-a-worker>
+compileBytecode().then((d) => {
+  postMessage(d)
 })
-onmessage = (msg) => smoldot.run(msg.data)
+onmessage = ({ data }) => smoldot.run(data)
