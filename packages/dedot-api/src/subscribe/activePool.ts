@@ -101,7 +101,7 @@ export class ActivePoolQuery<T extends StakingChain> {
             },
             rewardAccountBalance: rewardAccount.data.free,
             nominators: {
-              targets: nominatorsData.targets.map((target) =>
+              targets: targets.map((target) =>
                 target.address(this.api.consts.system.ss58Prefix)
               ),
               submittedIn,
