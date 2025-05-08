@@ -17,6 +17,9 @@ const initSmWorker = () => {
 }
 
 // Instantiate smoldot client
+//
+// Based on the example from smoldot from worker documentation at:
+// <https://github.com/smol-dot/smoldot/tree/main/wasm-node/javascript#usage-with-a-worker>
 export const doInitSmWorker = (
   worker: Worker,
   opts: WorkerOpts = {}
