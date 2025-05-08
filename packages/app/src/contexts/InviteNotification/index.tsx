@@ -27,6 +27,7 @@ export const InviteNotificationProvider = ({
   const [inviteActive, setInviteActive] = useState<boolean>(false)
   const [inviteType, setInviteType] = useState<InviteType>()
   const [inviteData, setInviteData] = useState<Record<string, string>>({})
+  const [acknowledged, setAcknowledged] = useState<boolean>(false)
 
   // Function to check hash for invite URL patterns
   const checkHashForInvite = () => {
@@ -148,6 +149,8 @@ export const InviteNotificationProvider = ({
         setInviteData,
         dismissInvite,
         navigateToInvite,
+        acknowledged,
+        setAcknowledged,
       }}
     >
       {children}

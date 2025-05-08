@@ -22,28 +22,35 @@ SPDX-License-Identifier: GPL-3.0-only */
 
   > .active {
     background-color: var(--accent-color-primary);
-    border: 2px solid var(--background-primary);
     box-shadow: 0 0 0 1px var(--accent-color-primary);
     position: absolute;
-    top: -3px;
-    right: -3px;
-    width: 12px;
-    height: 12px;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    animation: pulse 2s infinite;
+    
+    &.pulse {
+      border: 2px solid var(--background-primary);
+      animation: pulse 2s infinite;
+      top: -3px;
+      right: -3px;
+      width: 12px;
+      height: 12px;
 
-    @keyframes pulse {
-      0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(255, 82, 181, 0.7);
-      }
-      70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 5px rgba(255, 82, 181, 0);
-      }
-      100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(255, 82, 181, 0);
+      @keyframes pulse {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(255, 82, 181, 0.7);
+        }
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 5px rgba(255, 82, 181, 0);
+        }
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(255, 82, 181, 0);
+        }
       }
     }
   }

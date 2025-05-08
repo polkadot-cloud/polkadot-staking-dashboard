@@ -10,6 +10,8 @@ export interface InviteNotificationContextInterface {
   setInviteData: (data: Record<string, string>) => void
   dismissInvite: () => void
   navigateToInvite: () => void
+  acknowledged: boolean
+  setAcknowledged: (acknowledged: boolean) => void
 }
 
 export type InviteType = 'pool' | 'validator'

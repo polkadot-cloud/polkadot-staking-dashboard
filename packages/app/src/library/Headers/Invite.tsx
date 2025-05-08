@@ -11,7 +11,9 @@ import { InvitePopover } from './Popovers/InvitePopover'
 
 export const Invite = () => {
   const { themeElementRef } = useTheme()
-  const { inviteActive } = useInviteNotification()
+  const { inviteActive, acknowledged, setAcknowledged } =
+    useInviteNotification()
+
   const [open, setOpen] = useState<boolean>(false)
 
   // Don't render if no active invite
@@ -25,6 +27,7 @@ export const Invite = () => {
       portalContainer={themeElementRef.current || undefined}
       content={<InvitePopover setOpen={setOpen} />}
       onTriggerClick={() => {
+        setAcknowledged(true)
         setOpen(!open)
       }}
       width="350px"
@@ -34,6 +37,7 @@ export const Invite = () => {
         icon={faBell}
         marginLeft
         active
+        acknowledged={acknowledged}
       />
     </Popover>
   )
