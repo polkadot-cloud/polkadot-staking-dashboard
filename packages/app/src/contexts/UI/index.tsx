@@ -39,7 +39,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(v, setUserSideMenuMinimisedState, userSideMenuMinimisedRef)
   }
 
-  // Get advanced mode state from local storage, default to false
+  // Get advanced mode state from local storage, default to false (Easy mode ON)
   const [advancedMode, setAdvancedModeState] = useState<boolean>(
     localStorageOrDefault('advanced_mode', false, true) as boolean
   )

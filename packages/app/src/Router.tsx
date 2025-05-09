@@ -36,7 +36,7 @@ import { Page } from 'ui-core/base'
 const RouterInner = () => {
   const { network } = useNetwork()
   const { pathname } = useLocation()
-  const { setContainerRefs } = useUi()
+  const { setContainerRefs, advancedMode } = useUi()
   const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
 
@@ -77,13 +77,26 @@ const RouterInner = () => {
               <Headers />
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
                 <Routes>
-                  {PagesConfig.map((page, i) => (
-                    <Route
-                      key={`main_interface_page_${i}`}
-                      path={page.hash}
-                      element={<PageWithTitle page={page} />}
-                    />
-                  ))}
+                  {PagesConfig.map((page, i) => {
+                    // Only allow home page when in Easy mode (advancedMode is false)
+                    // Allow all pages when in Advanced mode (advancedMode is true)
+                    if (!advancedMode && page.key !== 'home') {
+                      return (
+                        <Route
+                          key={`main_interface_page_${i}`}
+                          path={page.hash}
+                          element={<Navigate to="/home" />}
+                        />
+                      )
+                    }
+                    return (
+                      <Route
+                        key={`main_interface_page_${i}`}
+                        path={page.hash}
+                        element={<PageWithTitle page={page} />}
+                      />
+                    )
+                  })}
                   <Route
                     key="main_interface_navigate"
                     path="*"

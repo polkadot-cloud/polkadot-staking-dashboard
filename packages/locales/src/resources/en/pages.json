@@ -73,6 +73,7 @@
     "createAPool": "Create a Pool",
     "createPool": "Create Pool",
     "daily": "Daily",
+    "dashboardIntro": "Your comprehensive platform for managing and optimizing your Polkadot staking experience. This dashboard provides powerful tools and insights to help you maximize your staking rewards.",
     "decentralizationPerNomination": "Geolocation Per Nomination",
     "deductAvgCommissionOf": "Deduct average commission of {{commission}}%",
     "deductedFromBond": "Deducted from bond",
