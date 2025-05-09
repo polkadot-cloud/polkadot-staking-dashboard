@@ -45,9 +45,7 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
     if (!connected) {
       if (canConnect) {
         await connectExtension(id)
-        registerSaEvent(`${network.toLowerCase()}_extension_connected`, {
-          id,
-        })
+        registerSaEvent(`${network.toLowerCase()}_${id}_extension_connected`)
         setOpen(false)
         openModal({ key: 'Accounts' })
       } else {
