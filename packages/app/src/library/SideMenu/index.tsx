@@ -24,6 +24,7 @@ import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { AdvancedModeToggle } from './AdvancedModeToggle'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
@@ -146,6 +147,10 @@ export const SideMenu = () => {
               }}
             />
           </div>
+          <Separator />
+          <Heading title={t('mode')} minimised={sideMenuMinimised} />
+          <AdvancedModeToggle minimised={sideMenuMinimised} />
+          <Separator />
         </section>
       </Wrapper>
     </Page.Side>

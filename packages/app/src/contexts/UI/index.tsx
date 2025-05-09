@@ -39,6 +39,16 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(v, setUserSideMenuMinimisedState, userSideMenuMinimisedRef)
   }
 
+  // Get advanced mode state from local storage, default to false
+  const [advancedMode, setAdvancedModeState] = useState<boolean>(
+    localStorageOrDefault('advanced_mode', false, true) as boolean
+  )
+  const advancedModeRef = useRef(advancedMode)
+  const setAdvancedMode = (v: boolean) => {
+    localStorage.setItem('advanced_mode', String(v))
+    setStateWithRef(v, setAdvancedModeState, advancedModeRef)
+  }
+
   // Automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState<boolean>(
     window.innerWidth <= PageWidthMediumThreshold
@@ -79,9 +89,11 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
       value={{
         setSideMenu,
         setUserSideMenuMinimised,
+        setAdvancedMode,
         setContainerRefs,
         sideMenuOpen,
         sideMenuMinimised,
+        advancedMode,
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,
