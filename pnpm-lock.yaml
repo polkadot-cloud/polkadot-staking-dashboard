@@ -150,8 +150,8 @@ importers:
         specifier: ^2.20.2
         version: 2.20.2(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.4)
       '@zondax/ledger-substrate':
-        specifier: 1.0.1
-        version: 1.0.1
+        specifier: ^1.1.1
+        version: 1.1.1
       assets:
         specifier: workspace:*
         version: link:../assets
@@ -1114,12 +1114,6 @@ packages:
 
   '@ledgerhq/hw-transport-webhid@6.30.0':
     resolution: {integrity: sha512-HoTzjmYwO7+TVwK+GNbglRepUoDywBL6vjhKnhGqJSUPqAqJJyEXcnKnFDBMN7Phqm55O+YHDYfpcHGBNg5XlQ==}
-
-  '@ledgerhq/hw-transport@6.30.6':
-    resolution: {integrity: sha512-fT0Z4IywiuJuZrZE/+W0blkV5UCotDPFTYKLkKCLzYzuE6javva7D/ajRaIeR+hZ4kTmKF4EqnsmDCXwElez+w==}
-
-  '@ledgerhq/hw-transport@6.31.2':
-    resolution: {integrity: sha512-B27UIzMzm2IXPGYnEB95R7eHxpXBkTBHh6MUJJQZVknt8LilEz1tfpTYUdzAKDGQ+Z5MZyYb01Eh3Zqm3kn3uw==}
 
   '@ledgerhq/hw-transport@6.31.4':
     resolution: {integrity: sha512-6c1ir/cXWJm5dCWdq55NPgCJ3UuKuuxRvf//Xs36Bq9BwkV2YaRQhZITAkads83l07NAdR16hkTWqqpwFMaI6A==}
@@ -2824,11 +2818,11 @@ packages:
     resolution: {integrity: sha512-FNoYzHawTMk/6KMQoEG5O4PuioX19UbwdQKF44yw0nLfOypfQdjtfZzo/UIJWAJ23sNIFbD1Ug9lbaDGMwbqQA==}
     engines: {node: '>=8'}
 
-  '@zondax/ledger-js@0.11.0':
-    resolution: {integrity: sha512-Y+hbuIVIT+QcIrZgJZN8BjpvmLJ9v2+yQtbpYVTtosAw/NNOg/NI6QKMxP4fwomW/6SEK6jaIqsLhTvTZP7qDA==}
+  '@zondax/ledger-js@1.2.0':
+    resolution: {integrity: sha512-HGvDU0s4zg0scu8ebGenFHFB6g5SLDqmrctncZUY9ie5pGibOU8C0VdjZSHbttSOCyh+IloLi/a4jyMPOEQGuQ==}
 
-  '@zondax/ledger-substrate@1.0.1':
-    resolution: {integrity: sha512-ZeHqvBPFn8DoNwgkASR7XWKI+blemy5nwTMWfFadBDdypSnOStedPIeDYrgr3q0vjHqyvnWoH0D7BEy6vCYu8g==}
+  '@zondax/ledger-substrate@1.1.1':
+    resolution: {integrity: sha512-qgsLNJb6ijKZ+gSOsUfsm7DSlyZhFQCsHI1om1LB/PVhQd4SWuD8f9KMgOh9ayfCdXoVaMBJp6+o9p3P+J1szA==}
 
   abitype@1.0.8:
     resolution: {integrity: sha512-ZeiI6h3GnW06uYDLx0etQtX/p8E24UaHHBj57RSjK7YBFe7iuVn07EDpOeP451D06sF27VOz9JJPlIKJmXgkEg==}
@@ -6371,20 +6365,6 @@ snapshots:
       '@ledgerhq/hw-transport': 6.31.4
       '@ledgerhq/logs': 6.12.0
 
-  '@ledgerhq/hw-transport@6.30.6':
-    dependencies:
-      '@ledgerhq/devices': 8.4.4
-      '@ledgerhq/errors': 6.19.1
-      '@ledgerhq/logs': 6.12.0
-      events: 3.3.0
-
-  '@ledgerhq/hw-transport@6.31.2':
-    dependencies:
-      '@ledgerhq/devices': 8.4.4
-      '@ledgerhq/errors': 6.19.1
-      '@ledgerhq/logs': 6.12.0
-      events: 3.3.0
-
   '@ledgerhq/hw-transport@6.31.4':
     dependencies:
       '@ledgerhq/devices': 8.4.4
@@ -9137,14 +9117,14 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@zondax/ledger-js@0.11.0':
+  '@zondax/ledger-js@1.2.0':
     dependencies:
-      '@ledgerhq/hw-transport': 6.30.6
+      '@ledgerhq/hw-transport': 6.31.4
 
-  '@zondax/ledger-substrate@1.0.1':
+  '@zondax/ledger-substrate@1.1.1':
     dependencies:
-      '@ledgerhq/hw-transport': 6.31.2
-      '@zondax/ledger-js': 0.11.0
+      '@ledgerhq/hw-transport': 6.31.4
+      '@zondax/ledger-js': 1.2.0
       axios: 1.8.4
     transitivePeerDependencies:
       - debug
