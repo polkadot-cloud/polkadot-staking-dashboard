@@ -7,10 +7,12 @@ import type { UIContextInterface } from './types'
 export const defaultUIContext: UIContextInterface = {
   setSideMenu: (v) => {},
   setUserSideMenuMinimised: (v) => {},
+  setAdvancedMode: (v) => {},
   setContainerRefs: (v) => {},
   sideMenuOpen: false,
   userSideMenuMinimised: false,
   sideMenuMinimised: false,
+  advancedMode: false,
   containerRefs: {},
   isBraveBrowser: false,
 }

@@ -25,7 +25,7 @@ export const Main = () => {
   const { formatWithPrefs } = useValidators()
   const { activeAddress } = useActiveAccounts()
   const { inSetup: inNominatorSetup } = useStaking()
-  const { sideMenuMinimised }: UIContextInterface = useUi()
+  const { sideMenuMinimised, advancedMode }: UIContextInterface = useUi()
   const { getNominations, getStakingLedger } = useBalances()
   const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
@@ -85,29 +85,43 @@ export const Main = () => {
   return (
     <>
       {pageConfig.categories.map(
-        ({ id: categoryId, key: categoryKey }: PageCategory) => (
-          <div className="inner" key={`sidemenu_category_${categoryId}`}>
-            {categoryKey !== 'default' && (
-              <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
-            )}
-            {pagesToDisplay.map(
-              ({ category, hash, key, lottie, bullet }: PageItem) => (
-                <Fragment key={`sidemenu_page_${categoryId}_${key}`}>
-                  {category === categoryId && (
-                    <Primary
-                      name={t(key)}
-                      to={hash}
-                      active={hash === pathname}
-                      lottie={lottie}
-                      bullet={bullet}
-                      minimised={sideMenuMinimised}
-                    />
-                  )}
-                </Fragment>
-              )
-            )}
-          </div>
-        )
+        ({ id: categoryId, key: categoryKey }: PageCategory) => {
+          // In Easy mode (advancedMode is false), only show the default category (which contains Home)
+          if (!advancedMode && categoryKey !== 'default') {
+            return null
+          }
+
+          return (
+            <div className="inner" key={`sidemenu_category_${categoryId}`}>
+              {categoryKey !== 'default' && (
+                <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
+              )}
+              {pagesToDisplay.map(
+                ({ category, hash, key, lottie, bullet }: PageItem) => {
+                  // In Easy mode, only show the Home page
+                  if (!advancedMode && key !== 'home') {
+                    return null
+                  }
+
+                  return (
+                    <Fragment key={`sidemenu_page_${categoryId}_${key}`}>
+                      {category === categoryId && (
+                        <Primary
+                          name={t(key)}
+                          to={hash}
+                          active={hash === pathname}
+                          lottie={lottie}
+                          bullet={bullet}
+                          minimised={sideMenuMinimised}
+                        />
+                      )}
+                    </Fragment>
+                  )
+                }
+              )}
+            </div>
+          )
+        }
       )}
     </>
   )

@@ -305,9 +305,9 @@
         ]
       ],
       "poolRewardHistory": [
-        "Pool Reward History",
+        "Historial de Recompensas del Pool",
         [
-          "La recompensa total generada por el grupo por era. Estas recompensas se distribuyen entre los miembros del grupo según la participación de cada miembro en el grupo."
+          "La recompensa total generada por el pool por era. Estas recompensas se distribuyen entre los miembros del pool según la participación de cada miembro en el pool."
         ]
       ],
       "poolRewards": [
