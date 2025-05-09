@@ -19,6 +19,30 @@ const ToggleContainer = styled.div`
   width: 100%;
 `
 
+const MinimizedToggle = styled.div<{ $active: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0.75rem;
+  background: ${({ $active }) =>
+    $active ? 'var(--button-secondary-background)' : 'transparent'};
+
+  &:hover {
+    background: var(--button-secondary-background);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`
+
 const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -30,6 +54,7 @@ const ToggleWrapper = styled.div`
   margin: 0.5rem 0;
   width: 100%;
   box-sizing: border-box;
+  gap: 1.5rem;
 
   &:active {
     transform: scale(0.98);
@@ -63,9 +88,29 @@ export const AdvancedModeToggle = ({ minimised }: { minimised: boolean }) => {
     setAdvancedMode(!advancedMode)
   }
 
-  // If the sidebar is minimized, don't show the toggle
+  // If the sidebar is minimized, show a compact version
   if (minimised) {
-    return null
+    return (
+      <ToggleContainer>
+        <MinimizedToggle
+          onClick={toggleAdvancedMode}
+          role="switch"
+          aria-checked={advancedMode}
+          aria-label={t('advanced')}
+          $active={advancedMode}
+        >
+          <FontAwesomeIcon
+            icon={faChartLine}
+            color={
+              advancedMode
+                ? 'var(--accent-color-primary)'
+                : 'var(--text-color-tertiary)'
+            }
+            transform="grow-2"
+          />
+        </MinimizedToggle>
+      </ToggleContainer>
+    )
   }
 
   return (

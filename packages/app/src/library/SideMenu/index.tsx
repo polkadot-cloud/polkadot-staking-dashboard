@@ -148,8 +148,10 @@ export const SideMenu = () => {
             />
           </div>
           <Separator />
-          <Heading title={t('mode')} minimised={sideMenuMinimised} />
-          <AdvancedModeToggle minimised={sideMenuMinimised} />
+          <div className="inner">
+            <Heading title={t('mode')} minimised={sideMenuMinimised} />
+            <AdvancedModeToggle minimised={sideMenuMinimised} />
+          </div>
           <Separator />
         </section>
       </Wrapper>
