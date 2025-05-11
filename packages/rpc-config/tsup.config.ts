@@ -5,7 +5,7 @@ import { defineConfig } from 'tsup'
 
 export default defineConfig({
   entry: ['src/check-rpc.ts'],
-  outDir: 'dist/scripts',
+  outDir: 'dist',
   format: ['esm'],
   platform: 'node',
   bundle: true,

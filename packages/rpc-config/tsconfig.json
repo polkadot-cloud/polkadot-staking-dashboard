@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "noEmit": true,
-    "types": ["node"],
+    "types": ["node"]
   },
   "include": ["src", "../../env.d.ts"]
 }
