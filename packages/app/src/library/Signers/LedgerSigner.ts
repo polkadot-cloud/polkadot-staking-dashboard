@@ -45,8 +45,11 @@ export const signLedgerPayload = async (
   const toSign = extra.toRawPayload(tx.callHex).data
   const proof = u8aToHex(merkleizer.getProofForExtrinsicPayload(toSign))
 
-  const signature = (
-    await Ledger.signPayload(app, index, hexToU8a(toSign), hexToU8a(proof))
-  ).signature
-  return { signature: u8aToHex(signature), data: extra.data }
+  const result = await Ledger.signPayload(
+    app,
+    index,
+    hexToU8a(toSign),
+    hexToU8a(proof)
+  )
+  return { signature: u8aToHex(result.signature), data: extra.data }
 }
