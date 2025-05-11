@@ -32,10 +32,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Compile
-        working-directory: packages/rpc-config
-        run: pnpm compile
-
       - name: Configure git
         run: |
           git config user.name  "rossbulat"
@@ -52,14 +48,13 @@ jobs:
             git checkout -b update/rpc-config
           fi
 
+      - name: Compile
+        working-directory: packages/rpc-config
+        run: pnpm compile
+
       - name: Run RPC check
         working-directory: packages/rpc-config
         run: node dist/check-rpc.js
-
-      - name: Bail if no changes
-        run: |
-          git diff --quiet packages/rpc-config/src/_generated/index.json \
-            && echo "No changes, exiting." && exit 0
 
       - name: Commit & push updates
         run: |
@@ -71,6 +66,11 @@ jobs:
           # push to update/rpc-config (creating/updating the branch)
           git push origin HEAD:update/rpc-config --force
 
+      - name: Bail if no changes
+        run: |
+          git diff --quiet packages/rpc-config/src/_generated/index.json \
+            && echo "No changes, exiting." && exit 0
+            
       - name: Create PR
         id: create_pr
         env:
