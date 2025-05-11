@@ -61,19 +61,15 @@ jobs:
           git diff --quiet packages/rpc-config/src/_generated/index.json \
             && echo "No changes detected, skipping." && exit 0
 
-      - name: Commit generated results
+      - name: Create PR
+        id: create_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git add packages/rpc-config/src/_generated/index.json
           git diff --cached --quiet \
             || git commit -m "chore(rpc-config): update RPC status"
           git push origin update/rpc-config --force
-        shell: bash
-
-      - name: Create or update PR
-        id: create_pr
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
           branch=update/rpc-config
           title='chore(rpc-config): Update RPC status'
           body='This PR was generated automatically by a scheduled workflow.'
@@ -98,6 +94,7 @@ jobs:
               --add-label "$label"
           fi
           echo "pr_number=$pr" >> $GITHUB_OUTPUT
+        shell: bash         
 
       - name: Merge Pull Request
         run: gh pr merge "${{ steps.create_pr.outputs.pr_number }}" --squash --delete-branch
