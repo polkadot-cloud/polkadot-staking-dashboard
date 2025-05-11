@@ -54,7 +54,7 @@ jobs:
 
       - name: Run RPC check
         working-directory: packages/rpc-config
-        run: node dist/scripts/check-rpc.js
+        run: node dist/check-rpc.js
 
       - name: Bail if no changes
         run: |
