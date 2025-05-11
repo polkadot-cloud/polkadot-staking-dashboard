@@ -58,14 +58,14 @@ jobs:
 
       - name: Bail if no changes
         run: |
-          git diff --quiet packages/rpc-config/_generated/index.json \
+          git diff --quiet packages/rpc-config/src/_generated/index.json \
             && echo "No changes, exiting." && exit 0
 
       - name: Commit & push updates
         run: |
           git config user.name  "rossbulat"
           git config user.email "ross@jkrb.io"
-          git add packages/rpc-config/_generated/index.json
+          git add packages/rpc-config/src/_generated/index.json
           # commit only if there are staged changes
           git diff --cached --quiet || git commit -m "chore(rpc-config): update RPC status"
           # push to update/rpc-config (creating/updating the branch)
