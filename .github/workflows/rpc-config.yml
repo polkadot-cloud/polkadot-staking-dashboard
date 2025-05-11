@@ -19,9 +19,7 @@ jobs:
 
     steps:
       - name: Checkout main
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js & pnpm cache
         uses: actions/setup-node@v4
