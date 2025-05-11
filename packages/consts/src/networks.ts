@@ -16,7 +16,6 @@ export const NetworkList: Networks = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot'),
-      defaultRpc: 'IBP-GeoDNS1',
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
@@ -36,7 +35,6 @@ export const NetworkList: Networks = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3'),
-      defaultRpc: 'IBP-GeoDNS1',
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
@@ -56,7 +54,6 @@ export const NetworkList: Networks = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend2'),
-      defaultRpc: 'IBP-GeoDNS1',
       rpc: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
@@ -82,7 +79,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
-      defaultRpc: 'IBP1',
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-polkadot',
         IBP2: 'wss://people-polkadot.dotters.network',
@@ -98,7 +94,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_people'),
-      defaultRpc: 'IBP1',
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-kusama',
         IBP2: 'wss://people-kusama.dotters.network',
@@ -114,7 +109,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend_people'),
-      defaultRpc: 'IBP1',
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-westend',
         IBP2: 'wss://people-westend.dotters.network',
@@ -130,7 +124,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_asset_hub'),
-      defaultRpc: 'IBP1',
       rpc: {
         'Lucky Friday': 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
         Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
@@ -150,7 +143,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_asset_hub'),
-      defaultRpc: 'IBP1',
       rpc: {
         'Lucky Friday': 'wss://rpc-asset-hub-kusama.luckyfriday.io',
         Parity: 'wss://kusama-asset-hub-rpc.polkadot.io',
@@ -168,7 +160,6 @@ export const SystemChainList: Record<string, SystemChain> = {
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend2_asset_hub'),
-      defaultRpc: 'IBP1',
       rpc: {
         Parity: 'wss://westend-asset-hub-rpc.polkadot.io',
         Dwellir: 'wss://asset-hub-westend-rpc.dwellir.com',
