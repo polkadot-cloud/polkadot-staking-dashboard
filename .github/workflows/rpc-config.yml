@@ -63,6 +63,14 @@ jobs:
             This PR was generated automatically by a scheduled workflow.
           labels: automated
 
+      - name: Auto-approve the PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr=${{ steps.create_pr.outputs.pull-request-number }}
+          echo "Approving PR #$pr"
+          gh pr review "$pr" --approve --body "Automated approval"
+
       - name: Enable Pull Request Automerge
         run: gh pr merge --squash --auto "${{ steps.create_pr.outputs.pull-request-number }}"
         env:
