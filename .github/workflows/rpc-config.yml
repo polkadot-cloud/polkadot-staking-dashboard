@@ -3,7 +3,7 @@ name: 'Update RPC Config'
 
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
 
 concurrency:
   group: update-rpc-config
