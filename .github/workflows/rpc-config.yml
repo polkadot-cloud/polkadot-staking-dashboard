@@ -57,7 +57,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore(rpc-config): Update RPC status'
           branch: update/rpc-config
-          title: 'chore: update rpc-config results'
+          title: 'chore(rpc-config): Update RPC status'
           body: |
             This PR was generated automatically by a scheduled workflow.
           labels: automated
+
+      - name: Enable auto-merge on the PR
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
