@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+// JSON to commit to file
 const resultJson: Record<string, Record<string, string>> = {}
 
 // Just mark all RPC endpoints as `ok` for now while checking CI
