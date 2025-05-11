@@ -33,17 +33,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Compile check-rpc script
+      - name: Compile
         working-directory: packages/rpc-config
         run: pnpm compile
-
-      - name: Run RPC check
-        working-directory: packages/rpc-config
-        run: node dist/check-rpc.js
-
-      - name: Exit if no changes
-        run: |
-          git diff --exit-code packages/rpc-config/src/_generated/index.json || exit 0
 
       - name: Configure git
         run: |
@@ -62,7 +54,16 @@ jobs:
           fi
           # Push it (sets upstream on first push)
           git push origin $branch --force
-      
+          
+      - name: Run
+        working-directory: packages/rpc-config
+        run: node dist/check-rpc.js
+
+      - name: Exit if no changes
+        run: |
+          git add .
+          git diff --exit-code packages/rpc-config/src/_generated/index.json || exit 0
+
       - name: Create or update PR
         id: create_pr
         env:
