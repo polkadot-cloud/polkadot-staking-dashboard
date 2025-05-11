@@ -52,24 +52,30 @@ jobs:
             git checkout -b update/rpc-config
           fi
 
-      - name: Run
+      - name: Run RPC check
         working-directory: packages/rpc-config
-        run: node dist/check-rpc.js
+        run: node dist/scripts/check-rpc.js
 
-      - name: Exit if no changes
+      - name: Bail if no changes
         run: |
-          git diff --quiet packages/rpc-config/src/_generated/index.json \
-            && echo "No changes detected, skipping." && exit 0
+          git diff --quiet packages/rpc-config/_generated/index.json \
+            && echo "No changes, exiting." && exit 0
+
+      - name: Commit & push updates
+        run: |
+          git config user.name  "rossbulat"
+          git config user.email "ross@jkrb.io"
+          git add packages/rpc-config/_generated/index.json
+          # commit only if there are staged changes
+          git diff --cached --quiet || git commit -m "chore(rpc-config): update RPC status"
+          # push to update/rpc-config (creating/updating the branch)
+          git push origin HEAD:update/rpc-config --force
 
       - name: Create PR
         id: create_pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git add packages/rpc-config/src/_generated/index.json
-          git diff --cached --quiet \
-            || git commit -m "chore(rpc-config): update RPC status"
-          git push origin update/rpc-config --force
           branch=update/rpc-config
           title='chore(rpc-config): Update RPC status'
           body='This PR was generated automatically by a scheduled workflow.'
