@@ -102,7 +102,6 @@ export interface Network {
   endpoints: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
-    defaultRpc: string
     rpc: Record<string, string>
   }
   unit: string
@@ -119,7 +118,6 @@ export interface SystemChain {
   endpoints: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
-    defaultRpc: string
     rpc: Record<string, string>
   }
   relayChain: NetworkId

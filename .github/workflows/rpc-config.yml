@@ -1,0 +1,61 @@
+# .github/workflows/update-rpc-config.yml
+name: 'Update RPC Config'
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+concurrency:
+  group: update-rpc-config
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js & pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Compile check-rpc script
+        working-directory: packages/rpc-config
+        run: pnpm compile
+
+      - name: Run RPC check
+        working-directory: packages/rpc-config
+        run: node dist/check-rpc.js
+
+      - name: Exit if no changes
+        run: |
+          git diff --exit-code packages/rpc-config/_generated/index.json || exit 0
+
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create or update Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(rpc-config): Update RPC status'
+          branch: update/rpc-config
+          title: 'chore: update rpc-config results'
+          body: |
+            This PR was generated automatically by a scheduled workflow.
+          labels: automated
