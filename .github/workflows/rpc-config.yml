@@ -44,7 +44,7 @@ jobs:
 
       - name: Exit if no changes
         run: |
-          git diff --exit-code packages/rpc-config/_generated/index.json || exit 0
+          git diff --exit-code packages/rpc-config/src/_generated/index.json || exit 0
 
       - name: Configure git
         run: |
