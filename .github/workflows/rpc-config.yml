@@ -51,6 +51,19 @@ jobs:
           git config user.name  "rossbulat"
           git config user.email "ross@jkrb.io"
 
+       - name: Push branch (create if missing)
+        run: |
+          branch=update/rpc-config
+
+          # Create or switch to the branch locally
+          if git rev-parse --verify $branch >/dev/null 2>&1; then
+            git checkout $branch
+          else
+            git checkout -b $branch
+          fi
+          # Push it (sets upstream on first push)
+          git push origin $branch --force
+      
       - name: Create or update PR
         id: create_pr
         env:
