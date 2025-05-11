@@ -64,6 +64,6 @@ jobs:
           labels: automated
 
       - name: Merge Pull Request
-        run: gh pr merge ""${{ steps.create_pr.outputs.pull-request-number }}"" --squash --delete-branch
+        run: gh pr merge ""${{ steps.create_pr.outputs.pull-request-number }}"" --squash --delete-branch --admin
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
