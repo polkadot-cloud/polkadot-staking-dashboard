@@ -275,6 +275,7 @@
     "soloNominatingBenefits": "单独提名优势",
     "soloNominatingDescription": "适用于拥有250+DOT的高级质押者的直接提名",
     "stake": "质押",
+    "stakedBalance": "质押余额",
     "stakingApiDisabled": "Staking API己断开",
     "stakingChecklist": "质押检查清单",
     "stakingHealth": "质押健康度",

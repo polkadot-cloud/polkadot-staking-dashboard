@@ -86,20 +86,28 @@ export const Main = () => {
     <>
       {pageConfig.categories.map(
         ({ id: categoryId, key: categoryKey }: PageCategory) => {
-          // In Easy mode (advancedMode is false), only show the default category (which contains Home)
-          if (!advancedMode && categoryKey !== 'default') {
+          // In Easy mode (advancedMode is false), show default category (Home) and stake category for Rewards
+          if (
+            !advancedMode &&
+            categoryKey !== 'default' &&
+            categoryKey !== 'stake'
+          ) {
             return null
           }
 
           return (
             <div className="inner" key={`sidemenu_category_${categoryId}`}>
-              {categoryKey !== 'default' && (
-                <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
-              )}
+              {categoryKey !== 'default' &&
+                (advancedMode || categoryKey !== 'stake') && (
+                  <Heading
+                    title={t(categoryKey)}
+                    minimised={sideMenuMinimised}
+                  />
+                )}
               {pagesToDisplay.map(
                 ({ category, hash, key, lottie, bullet }: PageItem) => {
-                  // In Easy mode, only show the Home page
-                  if (!advancedMode && key !== 'home') {
+                  // In Easy mode, only show the Home page and Rewards page
+                  if (!advancedMode && key !== 'home' && key !== 'rewards') {
                     return null
                   }
 

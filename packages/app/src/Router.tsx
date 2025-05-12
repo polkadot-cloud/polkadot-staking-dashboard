@@ -78,9 +78,13 @@ const RouterInner = () => {
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
                 <Routes>
                   {PagesConfig.map((page, i) => {
-                    // Only allow home page when in Easy mode (advancedMode is false)
+                    // Only allow home page and rewards page when in Easy mode (advancedMode is false)
                     // Allow all pages when in Advanced mode (advancedMode is true)
-                    if (!advancedMode && page.key !== 'home') {
+                    if (
+                      !advancedMode &&
+                      page.key !== 'home' &&
+                      page.key !== 'rewards'
+                    ) {
                       return (
                         <Route
                           key={`main_interface_page_${i}`}
