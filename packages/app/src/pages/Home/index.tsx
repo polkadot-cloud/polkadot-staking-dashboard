@@ -53,7 +53,7 @@ const QuickActions = () => {
   const { inSetup } = useStaking()
   const { inPool, activePool } = useActivePool()
   const { isNominating } = useStaking()
-  const { getAccountBalance, getPendingPoolRewards } = useBalances()
+  const { getPendingPoolRewards } = useBalances()
   const { getStakedBalance } = useTransferOptions()
 
   // State to track if help options are expanded
@@ -140,10 +140,6 @@ const QuickActions = () => {
     })
   }
 
-  // Check if user has a wallet with funds
-  const hasWallet =
-    activeAddress && getAccountBalance(activeAddress).balance.free > 0n
-
   // Get pending rewards for pool member
   const pendingRewards = getPendingPoolRewards(activeAddress)
   const minUnclaimedDisplay = 1000000n
@@ -186,12 +182,15 @@ const QuickActions = () => {
       }
     }
 
-    if (hasWallet) {
+    // This is the "Stake to Earn Rewards" button case
+    if (activeAddress) {
       return {
         icon: faHandHoldingDollar,
         label: t('notStakingRewards'),
         onClick: () => navigate('/stake'),
-        disabled: !hasWallet,
+        // Grey out the button even when wallet has funds but isn't staking yet
+        // The user should not be able to view rewards until they are staking
+        disabled: true,
       }
     }
 

@@ -18,14 +18,17 @@ const NETWORK_MINIMUMS = {
   polkadot: {
     directNomination: 250, // 250 DOT for direct nomination on Polkadot
     poolStaking: 1, // 1 DOT to join a pool on Polkadot
+    minBalanceWithFees: 1.2, // Minimum balance needed including transaction fees
   },
   kusama: {
     directNomination: 0.1, // 0.1 KSM for direct nomination on Kusama
     poolStaking: 0.002, // 0.002 KSM to join a pool on Kusama
+    minBalanceWithFees: 0.02, // Minimum balance needed including transaction fees
   },
   westend: {
     directNomination: 1, // 1 WND for direct nomination on Westend
     poolStaking: 0.1, // 0.1 WND to join a pool on Westend
+    minBalanceWithFees: 0.15, // Minimum balance needed including transaction fees
   },
 }
 
@@ -119,6 +122,28 @@ const ActionButtons = styled.div`
   flex-wrap: wrap;
 `
 
+const InsufficientBalanceMessage = styled.div`
+  background: var(--background-warning);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: var(--text-color-primary);
+
+  h3 {
+    color: var(--text-warning);
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+`
+
 export const StakingRecommendation = () => {
   const { t } = useTranslation('pages')
   const { activeAddress } = useActiveAccounts()
@@ -131,10 +156,17 @@ export const StakingRecommendation = () => {
   const { free } = balance
   const freeBalance = new BigNumber(planckToUnit(free, units))
 
-  // Determine if the user has enough balance for direct nomination
+  // Get network-specific minimums
   const networkMinimums = NETWORK_MINIMUMS[network]
+
+  // Determine if the user has enough balance for direct nomination
   const hasEnoughForDirectNomination = freeBalance.isGreaterThanOrEqualTo(
     networkMinimums.directNomination
+  )
+
+  // Determine if the user has enough balance to start staking (including fees)
+  const hasEnoughToStake = freeBalance.isGreaterThanOrEqualTo(
+    networkMinimums.minBalanceWithFees
   )
 
   return (
@@ -176,7 +208,19 @@ export const StakingRecommendation = () => {
               </BalanceDisplay>
             </RecommendationHeader>
 
-            {hasEnoughForDirectNomination ? (
+            {!hasEnoughToStake ? (
+              // Insufficient balance message when balance < minimum required with fees
+              <InsufficientBalanceMessage>
+                <h3>{t('insufficientBalanceForStaking')}</h3>
+                <p>
+                  {t('insufficientBalanceMessage', {
+                    minimum: networkMinimums.minBalanceWithFees,
+                    unit,
+                  })}
+                </p>
+                <p>{t('insufficientBalanceAddFunds')}</p>
+              </InsufficientBalanceMessage>
+            ) : hasEnoughForDirectNomination ? (
               // Recommendation for balance >= 250 DOT
               <>
                 <RecommendationBox>
@@ -211,7 +255,7 @@ export const StakingRecommendation = () => {
                 </AlternativeBox>
               </>
             ) : (
-              // Recommendation for balance < 250 DOT
+              // Recommendation for balance < 250 DOT but >= minimum required
               <>
                 <RecommendationBox>
                   <h3>{t('recommendedPoolStaking')}</h3>
