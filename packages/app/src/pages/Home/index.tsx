@@ -31,6 +31,7 @@ import { useNetwork } from '../../contexts/Network'
 import { useActivePool } from '../../contexts/Pools/ActivePool'
 import { useStaking } from '../../contexts/Staking'
 import { useTransferOptions } from '../../contexts/TransferOptions'
+import { CompactStakeInfo } from './CompactStakeInfo'
 import { NetworkStats } from './NetworkStats'
 import { PriceWidget } from './PriceWidget'
 import { StakingHealth } from './StakingHealth'
@@ -40,8 +41,9 @@ import { WalletBalance } from './WalletBalance'
 import { WelcomeSection } from './WelcomeSection'
 import {
   ActionButton,
+  BalanceCardsLayout,
   CardRow,
-  GridLayout,
+  HeaderGridLayout,
   HelpOptionsContainer,
   QuickActionsContainer,
 } from './Wrappers'
@@ -464,32 +466,42 @@ export const Home = () => {
     <>
       <Page.Title title={t('home')} />
 
-      {/* Welcome Section - full width */}
-      <Page.Row>
-        <Page.RowSection>
-          <CardWrapper>
-            <WelcomeSection />
-          </CardWrapper>
-        </Page.RowSection>
-      </Page.Row>
-
       {/* Only show additional cards if user has an active account */}
       {activeAccount && (
         <>
-          {/* First Row: Wallet Balance (wider) and Quick Actions side by side */}
+          {/* Header Row: Welcome Section and Quick Actions side by side */}
           <Page.Row>
             <Page.RowSection>
-              <GridLayout>
-                {/* Wallet Balance - Left (wider) */}
+              <HeaderGridLayout>
+                {/* Welcome Section */}
+                <CardWrapper className="welcome-section">
+                  <WelcomeSection />
+                </CardWrapper>
+
+                {/* Quick Actions - Right */}
+                <CardWrapper className="quick-actions-card">
+                  <QuickActions />
+                </CardWrapper>
+              </HeaderGridLayout>
+            </Page.RowSection>
+          </Page.Row>
+
+          {/* First Row: Wallet Balance and Staking Info side by side */}
+          <Page.Row>
+            <Page.RowSection>
+              <BalanceCardsLayout>
+                {/* Wallet Balance - Left */}
                 <CardWrapper>
                   <WalletBalance />
                 </CardWrapper>
 
-                {/* Quick Actions - Right */}
-                <CardWrapper>
-                  <QuickActions />
-                </CardWrapper>
-              </GridLayout>
+                {/* Staking Info - Right (only if user is staking) */}
+                {isStakingUser && (
+                  <CardWrapper>
+                    <CompactStakeInfo />
+                  </CardWrapper>
+                )}
+              </BalanceCardsLayout>
             </Page.RowSection>
           </Page.Row>
 

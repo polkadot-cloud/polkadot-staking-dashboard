@@ -88,11 +88,15 @@ export const Wrapper = styled.div`
 export const WelcomeWrapper = styled.div`
   background: transparent;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .welcome-header {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
+    padding: 0 0.5rem;
 
     .wave-icon {
       width: 1.75rem;
@@ -120,6 +124,8 @@ export const WelcomeWrapper = styled.div`
   .welcome-content {
     color: var(--text-color-secondary);
     line-height: 1.5;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    flex: 1;
 
     .account-info {
       display: flex;
@@ -235,7 +241,8 @@ export const QuickActionsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  padding: 0.5rem;
+  padding: 0.75rem 1rem;
+  height: 100%;
 `
 
 // Container for help options that appear side by side in the same space as one button
@@ -266,7 +273,8 @@ export const ActionButton = styled.button<{ $expanded?: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.25rem 1rem;
+  min-height: 5.5rem;
   height: 100%;
   text-align: center;
   background: var(--button-primary-background);
@@ -303,4 +311,109 @@ export const ActionButton = styled.button<{ $expanded?: boolean }>`
     background: var(--button-hover-background);
     border-color: var(--border-primary-color);
   `}
+`
+
+// Grid layout for Welcome Section and Quick Actions
+export const HeaderGridLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  .welcome-section {
+    height: 100%;
+  }
+
+  .quick-actions-card {
+    height: 100%;
+  }
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+
+    .welcome-section,
+    .quick-actions-card {
+      height: auto;
+    }
+  }
+`
+
+// Balance Cards Layout
+export const BalanceCardsLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+// Compact Stake Info component styling
+export const CompactStakeInfoWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  /* Make card header more compact */
+  .ui-card-header {
+    padding-bottom: 0.25rem;
+  }
+
+  .stake-info-content {
+    padding: 0.5rem 1rem 0.75rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+  }
+
+  .stake-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border-primary-color);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .stake-info-label {
+      color: var(--text-color-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+  }
+`
+
+// Value display in the compact stake info component
+export const StakeInfoValueWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: right;
+  justify-content: flex-end;
+  max-width: 70%;
+
+  .value {
+    font-family: InterSemiBold, sans-serif;
+    font-size: 1.05rem;
+    color: var(--text-color-primary);
+    margin-right: 0.25rem;
+    font-weight: 500;
+  }
+
+  .unit {
+    color: var(--text-color-secondary);
+    font-size: 0.9rem;
+  }
+
+  .status {
+    color: var(--text-color-primary);
+    font-size: 0.95rem;
+    text-align: right;
+  }
 `
