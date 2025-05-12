@@ -330,7 +330,7 @@ const QuickActions = () => {
     {
       icon: faPaperPlane,
       label: t('send'),
-      onClick: () => navigate('/transfer'),
+      onClick: () => openModal({ key: 'Send', size: 'sm' }),
     },
     {
       icon: stakeButtonProps.icon,
