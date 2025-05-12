@@ -98,7 +98,7 @@ export const Main = () => {
           return (
             <div className="inner" key={`sidemenu_category_${categoryId}`}>
               {categoryKey !== 'default' &&
-                (advancedMode || categoryKey !== 'stake') && (
+                advancedMode && (
                   <Heading
                     title={t(categoryKey)}
                     minimised={sideMenuMinimised}

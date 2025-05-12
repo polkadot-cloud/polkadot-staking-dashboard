@@ -8,10 +8,10 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 
 // Define network-specific minimum balances
 const NETWORK_MINIMUMS = {
@@ -148,8 +148,8 @@ export const StakingRecommendation = () => {
   const { t } = useTranslation('pages')
   const { activeAddress } = useActiveAccounts()
   const { getAccountBalance } = useBalances()
-  const navigate = useNavigate()
   const { network } = useNetwork()
+  const { openCanvas } = useOverlay().canvas
   const { balance } = getAccountBalance(activeAddress)
 
   const { unit, units } = getNetworkData(network)
@@ -234,7 +234,13 @@ export const StakingRecommendation = () => {
                   <ActionButtons>
                     <ButtonPrimary
                       text={t('startDirectNomination')}
-                      onClick={() => navigate('/nominate')}
+                      onClick={() =>
+                        openCanvas({
+                          key: 'NominatorSetup',
+                          options: {},
+                          size: 'lg',
+                        })
+                      }
                     />
                   </ActionButtons>
                 </RecommendationBox>
@@ -250,7 +256,13 @@ export const StakingRecommendation = () => {
 
                   <ButtonSecondary
                     text={t('explorePoolStaking')}
-                    onClick={() => navigate('/pools')}
+                    onClick={() =>
+                      openCanvas({
+                        key: 'Pool',
+                        options: {},
+                        size: 'xl',
+                      })
+                    }
                   />
                 </AlternativeBox>
               </>
@@ -273,7 +285,13 @@ export const StakingRecommendation = () => {
                   <ActionButtons>
                     <ButtonPrimary
                       text={t('joinStakingPool')}
-                      onClick={() => navigate('/pools')}
+                      onClick={() =>
+                        openCanvas({
+                          key: 'Pool',
+                          options: {},
+                          size: 'xl',
+                        })
+                      }
                     />
                   </ActionButtons>
                 </RecommendationBox>

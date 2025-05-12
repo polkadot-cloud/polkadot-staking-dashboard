@@ -15,7 +15,10 @@ import {
   faUnlock,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { planckToUnit } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
+import { getNetworkData } from 'consts/util'
 import { CardWrapper } from 'library/Card/Wrappers'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -49,11 +52,12 @@ const QuickActions = () => {
   const navigate = useNavigate()
   const { network } = useNetwork()
   const { openModal } = useOverlay().modal
+  const { openCanvas } = useOverlay().canvas
   const { activeAddress } = useActiveAccounts()
   const { inSetup } = useStaking()
   const { inPool, activePool } = useActivePool()
   const { isNominating } = useStaking()
-  const { getPendingPoolRewards } = useBalances()
+  const { getPendingPoolRewards, getAccountBalance } = useBalances()
   const { getStakedBalance } = useTransferOptions()
 
   // State to track if help options are expanded
@@ -70,15 +74,122 @@ const QuickActions = () => {
   const stakedBalance = getStakedBalance(activeAddress)
   const hasStakedTokens = stakedBalance.gt(0)
 
-  // Handle stake button click - direct to appropriate page based on staking method
+  // Get user's free balance
+  const { balance } = getAccountBalance(activeAddress)
+  const { units } = getNetworkData(network)
+  const freeBalance = new BigNumber(planckToUnit(balance.free, units))
+
+  // Get network-specific minimums from StakingRecommendation
+  const networkMinimums = {
+    polkadot: {
+      directNomination: 250, // 250 DOT for direct nomination on Polkadot
+      poolStaking: 1, // 1 DOT to join a pool on Polkadot
+      minBalanceWithFees: 1.2, // Minimum balance needed including transaction fees
+    },
+    kusama: {
+      directNomination: 0.1, // 0.1 KSM for direct nomination on Kusama
+      poolStaking: 0.002, // 0.002 KSM to join a pool on Kusama
+      minBalanceWithFees: 0.02, // Minimum balance needed including transaction fees
+    },
+    westend: {
+      directNomination: 1, // 1 WND for direct nomination on Westend
+      poolStaking: 0.1, // 0.1 WND to join a pool on Westend
+      minBalanceWithFees: 0.15, // Minimum balance needed including transaction fees
+    },
+  }[network]
+
+  // Determine if user has enough balance for staking
+  const hasEnoughToStake = freeBalance.isGreaterThanOrEqualTo(
+    networkMinimums.minBalanceWithFees
+  )
+
+  // Determine if user has enough for direct nomination
+  const hasEnoughForDirectNomination = freeBalance.isGreaterThanOrEqualTo(
+    networkMinimums.directNomination
+  )
+
+  // Handle stake button click - open modal directly instead of navigating
   const handleStakeClick = () => {
     if (isStakingViaPool) {
-      navigate('/pools')
+      // For pool stakers: open pool bond modal directly
+      openModal({
+        key: 'Bond',
+        options: { bondFor: 'pool' },
+        size: 'sm',
+      })
     } else if (isDirectNomination) {
-      navigate('/nominate')
+      // For direct nominators: open nominator bond modal directly
+      openModal({
+        key: 'Bond',
+        options: { bondFor: 'nominator' },
+        size: 'sm',
+      })
+    } else if (hasEnoughToStake) {
+      // Not staking yet, but has enough balance - open canvas based on recommendation
+      if (hasEnoughForDirectNomination) {
+        // For users with enough for direct nomination, open ManageNominations canvas
+        openCanvas({
+          key: 'NominatorSetup',
+          options: {},
+          size: 'lg',
+        })
+      } else {
+        // For users with enough for pool staking but not direct nomination, open Pool canvas
+        openCanvas({
+          key: 'Pool',
+          options: {},
+          size: 'xl',
+        })
+      }
     } else {
-      // Not staking yet, go to staking recommendation page
+      // Not enough balance, show recommendation page
       navigate('/stake')
+    }
+  }
+
+  // Determine stake button text and disabled state
+  const getStakeButtonProps = () => {
+    // Default stake button properties
+    const defaultProps = {
+      icon: faCoins,
+      label: t('stake'),
+      onClick: handleStakeClick,
+      disabled: !activeAddress,
+    }
+
+    if (!activeAddress) {
+      // No wallet connected
+      return defaultProps
+    }
+
+    if (isStakingViaPool) {
+      // Already staking via pool - use specific label
+      return {
+        ...defaultProps,
+        label: t('stake'),
+      }
+    }
+
+    if (isDirectNomination) {
+      // Already doing direct nomination - use specific label
+      return {
+        ...defaultProps,
+        label: t('stake'),
+      }
+    }
+
+    if (!hasEnoughToStake) {
+      // Not enough balance to stake
+      return {
+        ...defaultProps,
+        disabled: true,
+      }
+    }
+
+    // Not staking yet, but has enough balance - change button text based on recommendation
+    return {
+      ...defaultProps,
+      label: t('stakeBasedOnRecommendation'),
     }
   }
 
@@ -203,6 +314,7 @@ const QuickActions = () => {
   }
 
   const claimRewardsAction = getClaimRewardsAction()
+  const stakeButtonProps = getStakeButtonProps()
 
   // Define quick actions
   const actions = [
@@ -212,11 +324,10 @@ const QuickActions = () => {
       onClick: () => navigate('/transfer'),
     },
     {
-      icon: faCoins,
-      label: t('stake'),
-      onClick: handleStakeClick,
-      // Enable stake button only if wallet is connected (no need to disable for staking)
-      disabled: !activeAddress,
+      icon: stakeButtonProps.icon,
+      label: stakeButtonProps.label,
+      onClick: stakeButtonProps.onClick,
+      disabled: stakeButtonProps.disabled,
     },
     {
       component:
