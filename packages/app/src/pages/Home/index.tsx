@@ -196,9 +196,18 @@ const QuickActions = () => {
   // Handle unstake button click - direct to appropriate page and open unstake modal
   const handleUnstakeClick = () => {
     if (isStakingViaPool) {
-      navigate('/pools?action=unstake')
+      // For pool stakers: open pool unbond modal directly
+      openModal({
+        key: 'Unbond',
+        options: { bondFor: 'pool' },
+        size: 'sm',
+      })
     } else if (isDirectNomination) {
-      navigate('/nominate?action=unstake')
+      // For direct nominators: open unstake modal directly
+      openModal({
+        key: 'Unstake',
+        size: 'sm',
+      })
     } else {
       // Not staking yet, go to staking page
       navigate('/stake')

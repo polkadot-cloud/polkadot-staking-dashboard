@@ -97,13 +97,9 @@ export const Main = () => {
 
           return (
             <div className="inner" key={`sidemenu_category_${categoryId}`}>
-              {categoryKey !== 'default' &&
-                advancedMode && (
-                  <Heading
-                    title={t(categoryKey)}
-                    minimised={sideMenuMinimised}
-                  />
-                )}
+              {categoryKey !== 'default' && advancedMode && (
+                <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
+              )}
               {pagesToDisplay.map(
                 ({ category, hash, key, lottie, bullet }: PageItem) => {
                   // In Easy mode, only show the Home page and Rewards page
