@@ -27,6 +27,7 @@ import { useBalances } from '../../contexts/Balances'
 import { useNetwork } from '../../contexts/Network'
 import { useActivePool } from '../../contexts/Pools/ActivePool'
 import { useStaking } from '../../contexts/Staking'
+import { useTransferOptions } from '../../contexts/TransferOptions'
 import { NetworkStats } from './NetworkStats'
 import { PriceWidget } from './PriceWidget'
 import { StakingHealth } from './StakingHealth'
@@ -53,6 +54,7 @@ const QuickActions = () => {
   const { inPool, activePool } = useActivePool()
   const { isNominating } = useStaking()
   const { getAccountBalance, getPendingPoolRewards } = useBalances()
+  const { getStakedBalance } = useTransferOptions()
 
   // State to track if help options are expanded
   const [helpExpanded, setHelpExpanded] = useState(false)
@@ -63,6 +65,10 @@ const QuickActions = () => {
   const isStakingViaPool = inPool()
   // Used to determine appropriate navigation paths
   const isDirectNomination = !inSetup() && !isStakingViaPool
+
+  // Check if the user has any staked tokens
+  const stakedBalance = getStakedBalance(activeAddress)
+  const hasStakedTokens = stakedBalance.gt(0)
 
   // Handle stake button click - direct to appropriate page based on staking method
   const handleStakeClick = () => {
@@ -176,6 +182,7 @@ const QuickActions = () => {
         icon: faChartLine,
         label: t('viewRewards'),
         onClick: () => navigate('/rewards'),
+        disabled: !hasStakedTokens,
       }
     }
 
@@ -184,6 +191,7 @@ const QuickActions = () => {
         icon: faHandHoldingDollar,
         label: t('notStakingRewards'),
         onClick: () => navigate('/stake'),
+        disabled: !hasWallet,
       }
     }
 
@@ -208,6 +216,8 @@ const QuickActions = () => {
       icon: faCoins,
       label: t('stake'),
       onClick: handleStakeClick,
+      // Enable stake button only if wallet is connected (no need to disable for staking)
+      disabled: !activeAddress,
     },
     {
       component:
@@ -216,6 +226,7 @@ const QuickActions = () => {
             <ActionButton
               className="reward-option"
               onClick={handleWithdrawRewards}
+              disabled={!hasStakedTokens}
             >
               <FontAwesomeIcon icon={faCircleDown} className="icon" />
               <span className="label">{t('withdraw')}</span>
@@ -223,7 +234,10 @@ const QuickActions = () => {
             <ActionButton
               className="reward-option"
               onClick={handleCompoundRewards}
-              disabled={activePool?.bondedPool?.state === 'Destroying'}
+              disabled={
+                !hasStakedTokens ||
+                activePool?.bondedPool?.state === 'Destroying'
+              }
             >
               <FontAwesomeIcon icon={faPlus} className="icon" />
               <span className="label">{t('compound')}</span>
@@ -244,6 +258,8 @@ const QuickActions = () => {
       icon: faUnlock,
       label: t('unstake'),
       onClick: handleUnstakeClick,
+      // Disable unstake if there's nothing staked
+      disabled: !hasStakedTokens,
     },
     // Transaction History is always shown
     {
@@ -256,6 +272,7 @@ const QuickActions = () => {
               '_blank'
             )
           : null,
+      disabled: !activeAddress,
     },
   ]
 
@@ -275,7 +292,11 @@ const QuickActions = () => {
             )
           }
           return (
-            <ActionButton key={`action-${index}`} onClick={action.onClick}>
+            <ActionButton
+              key={`action-${index}`}
+              onClick={action.onClick}
+              disabled={action.disabled}
+            >
               <FontAwesomeIcon icon={action.icon} className="icon" />
               <span className="label">{action.label}</span>
             </ActionButton>
