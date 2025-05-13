@@ -6,7 +6,7 @@
 
 # Polkadot Cloud Staking
 
-![Polkadot Cloud Staking](https://github.com/user-attachments/assets/7544324c-279a-4b29-8a80-155c19b15302)
+![Polkadot Cloud Staking](https://github.com/user-attachments/assets/fddf659d-1547-453d-8175-d3c0cd4f4d14)
 
 ## Contributing Community Assets
 
