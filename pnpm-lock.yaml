@@ -107,9 +107,6 @@ importers:
       '@lottiefiles/dotlottie-react':
         specifier: ^0.13.5
         version: 0.13.5(react@19.1.0)
-      '@polkadot-api/merkleize-metadata':
-        specifier: ^1.1.15
-        version: 1.1.15
       '@polkawatch/ddp-client':
         specifier: ^2.0.23
         version: 2.0.23
@@ -180,8 +177,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       dedot:
-        specifier: ^0.9.6
-        version: 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^0.10.0
+        version: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       dedot-api:
         specifier: workspace:*
         version: link:../dedot-api
@@ -334,7 +331,7 @@ importers:
     dependencies:
       '@dedot/chaintypes':
         specifier: ^0.96.0
-        version: 0.96.0(dedot@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+        version: 0.96.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@w3ux/utils':
         specifier: ^2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -342,8 +339,8 @@ importers:
         specifier: workspace:*
         version: link:../consts
       dedot:
-        specifier: ^0.9.6
-        version: 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^0.10.0
+        version: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       global-bus:
         specifier: workspace:*
         version: link:../global-bus
@@ -376,8 +373,8 @@ importers:
         specifier: workspace:*
         version: link:../consts
       dedot:
-        specifier: ^0.9.6
-        version: 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^0.10.0
+        version: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
@@ -450,12 +447,12 @@ importers:
   packages/types:
     dependencies:
       dedot:
-        specifier: ^0.9.6
-        version: 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^0.10.0
+        version: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     devDependencies:
       '@dedot/chaintypes':
         specifier: ^0.96.0
-        version: 0.96.0(dedot@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+        version: 0.96.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       bignumber.js:
         specifier: ^9.3.0
         version: 9.3.0
@@ -607,8 +604,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       dedot:
-        specifier: ^0.9.6
-        version: 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^0.10.0
+        version: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       i18next:
         specifier: ^25.1.2
         version: 25.1.2(typescript@5.8.3)
@@ -721,12 +718,12 @@ packages:
   '@coinbase/wallet-sdk@4.3.0':
     resolution: {integrity: sha512-T3+SNmiCw4HzDm4we9wCHCxlP0pqCiwKe4sOwPH3YAK2KSKjxPRydKu6UQJrdONFVLG7ujXvbd/6ZqmvJb8rkw==}
 
-  '@dedot/api@0.8.1':
-    resolution: {integrity: sha512-2Vms0ikA4hCJZLzBJ2HSpnmSwDaJBWE1JALgQ12zSs4YqM9vxqL8CpQPsOxsuXZzryaGFEP0mLFednc88DynSA==}
+  '@dedot/api@0.10.0':
+    resolution: {integrity: sha512-0MkIIoSMIzAa8I7fIldFbCAHIZdLTZraEx29FwHD4aQaWL9idu6IxaISxDEYyOKS7TKinWzKt1TmE35XdhoGsA==}
     engines: {node: '>=18'}
 
-  '@dedot/api@0.9.6':
-    resolution: {integrity: sha512-xA1hwf6nRb/tBzO0JNCvilIViUk3NGXxPPRDmuTS0AEgVF7Iy5wRnWB3Ww+a1iXAHXlJTIW0VZgzdQHnPzmj0g==}
+  '@dedot/api@0.8.1':
+    resolution: {integrity: sha512-2Vms0ikA4hCJZLzBJ2HSpnmSwDaJBWE1JALgQ12zSs4YqM9vxqL8CpQPsOxsuXZzryaGFEP0mLFednc88DynSA==}
     engines: {node: '>=18'}
 
   '@dedot/chaintypes@0.96.0':
@@ -734,86 +731,90 @@ packages:
     peerDependencies:
       dedot: '>=0.7.1'
 
+  '@dedot/cli@0.10.0':
+    resolution: {integrity: sha512-yd9/UyongiMIb/Yndw1YuqEoN6edrpilfpJoOVat3qYUXbBbU4Okq6ClxovRWp+ZICa1VBQgYHEBzsgQLcl91Q==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   '@dedot/cli@0.8.1':
     resolution: {integrity: sha512-bS7K6JvBNJrhqcOSLBpAFfezFKsagehngraL1c2VAsPC+NC6P6tz/zSahi4g0IUNGf5UCh73v+88WAR1EAd0eg==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@dedot/cli@0.9.6':
-    resolution: {integrity: sha512-F2hBULRF/jUPihHVmE3srgCT6r3tLO2L/UXFoMKSDhxAaF6mxYCbIMWy4Uk6CGbVfbwTNNmNOgxCzIspF0stfw==}
+  '@dedot/codecs@0.10.0':
+    resolution: {integrity: sha512-WWjjyKjRXHpzEe/J9nBf5LbWJ5Vsqc995UfynJrBcCjmtPPrYo88OO8kT6Obo2vLZXeDyYIAYXEkqIIFC8z7eA==}
     engines: {node: '>=18'}
-    hasBin: true
 
   '@dedot/codecs@0.8.1':
     resolution: {integrity: sha512-2PuSFYbFPpBmMlMeDqHzHeTJ1KP/1jV2pKoNg9THpYjX2vZUHCp/XQmn0ELWicDKDr+KGfR32tBj1V+DAfwbGg==}
     engines: {node: '>=18'}
 
-  '@dedot/codecs@0.9.6':
-    resolution: {integrity: sha512-KAQ/wOgfrvd4T68XM1j8A/fCQDM8QhOHLVBtMJMjQg3Amee/5IRvTmSg9p41sh7rUoVEwGG7d7kotA7BT8PXzA==}
+  '@dedot/codegen@0.10.0':
+    resolution: {integrity: sha512-cpAwJicwYoEBEwNkL/fpNByM680ITR4D/QpJ9+rX8tzB/2xM25ocQpzyNiA/uQFTMspYiHK+wcBKI29vWszNew==}
     engines: {node: '>=18'}
 
   '@dedot/codegen@0.8.1':
     resolution: {integrity: sha512-yhLIfi19zLionA5RD+TfGZ7Ssdm4ml0v/dgcM5BVdQTiXhDv7AWtTftsMZsaxkFMmjVOcPrS9NtGzPD/haKGng==}
     engines: {node: '>=18'}
 
-  '@dedot/codegen@0.9.6':
-    resolution: {integrity: sha512-szoRkgdNDuPGO2QaVBke2Jndho4LX3rsZPsmo8g+p2fyFHvjojqXHIHfb8+kZxQSZHKj4ysXJStwifPpKsYjjQ==}
+  '@dedot/contracts@0.10.0':
+    resolution: {integrity: sha512-fToyEO7zpKnCVnISDGbmsfiqVZp7tH9/cXGLcIQhU+3L/FCjNj4TCLUTcOibq6pGOS7lejbP0RKCFcRliU0CuA==}
     engines: {node: '>=18'}
 
   '@dedot/contracts@0.8.1':
     resolution: {integrity: sha512-9mFZIKLvUrue2Tyunvsawuh7rVVoeUoO1R+WZzfUpRYFiHN2ix/KwZckpQTgksJrrW82El22A8tYTD72GTrB7g==}
     engines: {node: '>=18'}
 
-  '@dedot/contracts@0.9.6':
-    resolution: {integrity: sha512-QLwkCh47imGXgwE8upnD5+t3/N4/OJHOtmR5tIrBpMTq3ecH6dfrnPUjL5E35LCZ6J2YA5nKSfCDelqVe78a+Q==}
+  '@dedot/merkleized-metadata@0.10.0':
+    resolution: {integrity: sha512-f5kkuuiUztkRqL+xbWbSnulIMnCK8IRjFcYU9IavCuai1OqVcYNA/VqWw0Nb7xKDelXQAl0VzDTKULcMoFwd7g==}
+    engines: {node: '>=18'}
+
+  '@dedot/providers@0.10.0':
+    resolution: {integrity: sha512-1ukYHrmYQ7T5kCCe0pYZtBFkJ2f4fCdVLb90vo658NwqX5HEraePgTAKAg1jAkA2jmEl/4XUZlKbFGSsTB+2sQ==}
     engines: {node: '>=18'}
 
   '@dedot/providers@0.8.1':
     resolution: {integrity: sha512-NXN33se+O1ChiC9heTVHdWTrZg2Le1Tqo6rj6LwZ9pGcgKkGs2lov8Aq9zKLgOVMKSUA93UpXx3EY6iC+cUhcg==}
     engines: {node: '>=18'}
 
-  '@dedot/providers@0.9.6':
-    resolution: {integrity: sha512-wiUZVS8XA92+Y9W6cj2MbvqY01drFvVrIb2kin2s8s8rBVKGUh3adzhxJHQiKZ51+qdKAem6PgLOuAjypxmuZw==}
+  '@dedot/runtime-specs@0.10.0':
+    resolution: {integrity: sha512-ol0ghSiRB5VeqVuInQWKkXGZFmZe9nYXbL6F1PG64Cb/3+D+hP8Xzk/JXNQXXwVY+Tm4/8pqGMpWvxi+8Tx4Tg==}
     engines: {node: '>=18'}
 
   '@dedot/runtime-specs@0.8.1':
     resolution: {integrity: sha512-jwGce7JCO+QXZpgunv49ie/ETm45iiR7UB4F/54A8Uo1wvkvqqWJ4V75poBhSt8Zj8Ny0CUr1E2A8NvuJp+Ffw==}
     engines: {node: '>=18'}
 
-  '@dedot/runtime-specs@0.9.6':
-    resolution: {integrity: sha512-ufRIGVO1pcnd3xm5wOzj337o2/lbMRdXJjVquXsYHDYn1xAxuh/SOyr5Ae/cntlSratOhB8hIAL2llO7WHp36w==}
+  '@dedot/shape@0.10.0':
+    resolution: {integrity: sha512-bzRNOFoeTwZkQ2KZO6JQF9D1OdnamkWY7hWyP7TP4x25XoAvkjjRDOqcViRVMr/kR2So/qOl0zzRGuzqOMvwSQ==}
     engines: {node: '>=18'}
 
   '@dedot/shape@0.8.1':
     resolution: {integrity: sha512-Jsi/hdqA457Z4ihwJ0KxCNA6iOCNxtpF7nix9pj+kJt+ZbDkwni1R+DRuSOX2OXm0hpudluuNNAF6QJqLBZCdQ==}
     engines: {node: '>=18'}
 
-  '@dedot/shape@0.9.6':
-    resolution: {integrity: sha512-EXvhPy3tNqIL/Cp9BE4JndcWPuDpQZd8vH9Wok9s/Fn/0Esikg0HwXaTt8H39brYv4WwAtqA0BdcUBVWgeHMgg==}
+  '@dedot/storage@0.10.0':
+    resolution: {integrity: sha512-KmsA15peHmzsLt24qPn8YluxBtxjj/JJlSGy1My69RhwF76Mtgy93wB8tlq+iJob2neA6BeIq1JV2+5uGkWqQg==}
     engines: {node: '>=18'}
 
   '@dedot/storage@0.8.1':
     resolution: {integrity: sha512-k9jVFME2nE1laaUfK5jArBa8rEolhPeo3hdP0Ow1KQLCfeqSONvqmTWR8VjHtFGeqk+mEYRMpY7EoESzLR2+ww==}
     engines: {node: '>=18'}
 
-  '@dedot/storage@0.9.6':
-    resolution: {integrity: sha512-kvteERzhcJ0O8l3xrqUUpYlyuu6DDTztVihhcz9ZmYTX6JPYm7P86DIcLlwcgR9k1LMW9xZCTk3j7mBALNUSmw==}
+  '@dedot/types@0.10.0':
+    resolution: {integrity: sha512-6zY1rHmbaYVYEayvCciR1etSIE0+n0ua6gNf6V+O6VR0XTjsRdcRifG7vNksUh1iZdZTtA/KA17A/Ira72XSng==}
     engines: {node: '>=18'}
 
   '@dedot/types@0.8.1':
     resolution: {integrity: sha512-f2xIInBeXhPxiC7YC3GkE3IObdKknXdNw2Ys3Md48PCjjlfpTF9g0vCbRuNJpwfoI5aJlYclkzGsWYaOOOHV/w==}
     engines: {node: '>=18'}
 
-  '@dedot/types@0.9.6':
-    resolution: {integrity: sha512-Ab3OKJFtjNVcQ8D1kR6fn++/Nm5RRMydPXS8/0xKXkZgaU9va6nsMJedXQHu6pys0KHzfQi0nxGmjKRPchTWQw==}
+  '@dedot/utils@0.10.0':
+    resolution: {integrity: sha512-m9DH0BV/L9CmMSiC94G3Pn50CUxxjjlT9ffCpVNbthnnTfpAlK+EDYqvriq2HXdsOPLM7eLF+dn8+8IkK9Wd1g==}
     engines: {node: '>=18'}
 
   '@dedot/utils@0.8.1':
     resolution: {integrity: sha512-DuTL4UpjjrUUiw0sruBfHRJG/pgJMBGIwE4hGSr7tP+yZ1LtKHkiOInd7w0WLpU+amylpPZBF9HixGaeDaAQqg==}
-    engines: {node: '>=18'}
-
-  '@dedot/utils@0.9.6':
-    resolution: {integrity: sha512-VzpD3o6n6MwlnnvXCiD9JQ7tT0oFmmVWMkpT80US91mjwaxnMda5trWrRAdZ3bpdCA53Isqvz+Bawy+F0lEytw==}
     engines: {node: '>=18'}
 
   '@ecies/ciphers@0.2.3':
@@ -1338,18 +1339,6 @@ packages:
   '@pkgr/core@0.2.4':
     resolution: {integrity: sha512-ROFF39F6ZrnzSUEmQQZUar0Jt4xVoP9WnDRdWwF4NNcXs3xBTLgBUDoOwW141y1jP+S8nahIbdxbFC7IShw9Iw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
-
-  '@polkadot-api/merkleize-metadata@1.1.15':
-    resolution: {integrity: sha512-wl/c+qjIqrAPBqs23BkNiBiIeLaTenk8Bz7eTTkmTbx8m9tB8pwJ2kUy7LkZjeLk239a8DEbcc/3/vTxvcXEbQ==}
-
-  '@polkadot-api/metadata-builders@0.11.0':
-    resolution: {integrity: sha512-OoKF/mViUJMEk4DUOauHBuGLGa0tKi5sIiPfWTsXdVczjmb6+JumqWBhS0JU/KGJkK2VuKTCsqeZMJxZtuSgMQ==}
-
-  '@polkadot-api/substrate-bindings@0.12.0':
-    resolution: {integrity: sha512-cIjDeJRHW6g3z+/55UzpoG4LG1N0HbT4x3NvZsQkYg4eoio9Sw7Pw2aZZX86pWemxc7vQbNw7WSz2Gz+ckdX6Q==}
-
-  '@polkadot-api/utils@0.1.2':
-    resolution: {integrity: sha512-yhs5k2a8N1SBJcz7EthZoazzLQUkZxbf+0271Xzu42C5AEM9K9uFLbsB+ojzHEM72O5X8lPtSwGKNmS7WQyDyg==}
 
   '@polkadot-api/wasm-executor@0.1.2':
     resolution: {integrity: sha512-a5wGenltB3EFPdf72u8ewi6HsUg2qubUAf3ekJprZf24lTK3+w8a/GUF/y6r08LJF35MALZ32SAtLqtVTIOGnQ==}
@@ -3281,13 +3270,13 @@ packages:
     resolution: {integrity: sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==}
     engines: {node: '>=0.10'}
 
-  dedot@0.8.1:
-    resolution: {integrity: sha512-r/jSlrPjzbEhxEbhSEfnEnQ1cMBUL0oaKk7v5qUYLGrnxsDYpi4P8wtype6dz9Y9kXjngf2FPZsox3kwilDWIQ==}
+  dedot@0.10.0:
+    resolution: {integrity: sha512-HBYFHwg1RClaJB3/UqDXRyb6t3mVdkHCSMD++d0lwP0wi1b8hgBZLHvYnSHNrcY6tpfmxSySk+4AgKzjFV+xRw==}
     engines: {node: '>=18'}
     hasBin: true
 
-  dedot@0.9.6:
-    resolution: {integrity: sha512-GVrGbOt1Ktt/3hZPHCnZM5df7flGR7zIi5Gc/HBHH8w870F8pC22nc0hdTgZ/NnCfHzOQo0iUO4YjNP0sra5DQ==}
+  dedot@0.8.1:
+    resolution: {integrity: sha512-r/jSlrPjzbEhxEbhSEfnEnQ1cMBUL0oaKk7v5qUYLGrnxsDYpi4P8wtype6dz9Y9kXjngf2FPZsox3kwilDWIQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -5013,9 +5002,6 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  scale-ts@1.6.1:
-    resolution: {integrity: sha512-PBMc2AWc6wSEqJYBDPcyCLUj9/tMKnLX70jLOSndMtcUoLQucP/DM0vnQo1wJAYjTrQiq8iG9rD0q6wFzgjH7g==}
-
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
 
@@ -6139,6 +6125,19 @@ snapshots:
       eventemitter3: 5.0.1
       preact: 10.26.6
 
+  '@dedot/api@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/codecs': 0.10.0
+      '@dedot/providers': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 0.10.0
+      '@dedot/shape': 0.10.0
+      '@dedot/storage': 0.10.0
+      '@dedot/types': 0.10.0
+      '@dedot/utils': 0.10.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@dedot/api@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/codecs': 0.8.1
@@ -6152,22 +6151,22 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/api@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@dedot/chaintypes@0.96.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@dedot/codecs': 0.9.6
-      '@dedot/providers': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/runtime-specs': 0.9.6
-      '@dedot/shape': 0.9.6
-      '@dedot/storage': 0.9.6
-      '@dedot/types': 0.9.6
-      '@dedot/utils': 0.9.6
+      dedot: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+
+  '@dedot/cli@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/api': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.10.0
+      '@dedot/codegen': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@polkadot-api/wasm-executor': 0.1.2
+      '@polkadot/types-support': 15.9.3
+      ora: 8.2.0
+      yargs: 17.7.2
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-
-  '@dedot/chaintypes@0.96.0(dedot@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
-    dependencies:
-      dedot: 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
   '@dedot/cli@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
@@ -6182,28 +6181,31 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/cli@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@dedot/codecs@0.10.0':
     dependencies:
-      '@dedot/api': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.9.6
-      '@dedot/codegen': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@polkadot-api/wasm-executor': 0.1.2
-      '@polkadot/types-support': 15.9.3
-      ora: 8.2.0
-      yargs: 17.7.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
+      '@dedot/shape': 0.10.0
+      '@dedot/utils': 0.10.0
 
   '@dedot/codecs@0.8.1':
     dependencies:
       '@dedot/shape': 0.8.1
       '@dedot/utils': 0.8.1
 
-  '@dedot/codecs@0.9.6':
+  '@dedot/codegen@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@dedot/shape': 0.9.6
-      '@dedot/utils': 0.9.6
+      '@dedot/api': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.10.0
+      '@dedot/contracts': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/providers': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 0.10.0
+      '@dedot/shape': 0.10.0
+      '@dedot/types': 0.10.0
+      '@dedot/utils': 0.10.0
+      handlebars: 4.7.8
+      prettier: 3.5.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   '@dedot/codegen@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
@@ -6221,18 +6223,12 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/codegen@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@dedot/contracts@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@dedot/api': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.9.6
-      '@dedot/contracts': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/providers': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/runtime-specs': 0.9.6
-      '@dedot/shape': 0.9.6
-      '@dedot/types': 0.9.6
-      '@dedot/utils': 0.9.6
-      handlebars: 4.7.8
-      prettier: 3.5.3
+      '@dedot/api': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.10.0
+      '@dedot/types': 0.10.0
+      '@dedot/utils': 0.10.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6247,12 +6243,16 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/contracts@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@dedot/merkleized-metadata@0.10.0':
     dependencies:
-      '@dedot/api': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.9.6
-      '@dedot/types': 0.9.6
-      '@dedot/utils': 0.9.6
+      '@dedot/codecs': 0.10.0
+      '@dedot/shape': 0.10.0
+      '@dedot/utils': 0.10.0
+
+  '@dedot/providers@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@dedot/utils': 0.10.0
+      '@polkadot/x-ws': 13.4.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6265,13 +6265,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/providers@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@dedot/runtime-specs@0.10.0':
     dependencies:
-      '@dedot/utils': 0.9.6
-      '@polkadot/x-ws': 13.4.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
+      '@dedot/codecs': 0.10.0
+      '@dedot/shape': 0.10.0
+      '@dedot/types': 0.10.0
 
   '@dedot/runtime-specs@0.8.1':
     dependencies:
@@ -6279,25 +6277,25 @@ snapshots:
       '@dedot/shape': 0.8.1
       '@dedot/types': 0.8.1
 
-  '@dedot/runtime-specs@0.9.6':
+  '@dedot/shape@0.10.0':
     dependencies:
-      '@dedot/codecs': 0.9.6
-      '@dedot/shape': 0.9.6
-      '@dedot/types': 0.9.6
+      '@dedot/utils': 0.10.0
+      deshape: 0.1.0
 
   '@dedot/shape@0.8.1':
     dependencies:
       '@dedot/utils': 0.8.1
       deshape: 0.0.1
 
-  '@dedot/shape@0.9.6':
-    dependencies:
-      '@dedot/utils': 0.9.6
-      deshape: 0.1.0
+  '@dedot/storage@0.10.0': {}
 
   '@dedot/storage@0.8.1': {}
 
-  '@dedot/storage@0.9.6': {}
+  '@dedot/types@0.10.0':
+    dependencies:
+      '@dedot/codecs': 0.10.0
+      '@dedot/shape': 0.10.0
+      '@dedot/utils': 0.10.0
 
   '@dedot/types@0.8.1':
     dependencies:
@@ -6305,19 +6303,13 @@ snapshots:
       '@dedot/shape': 0.8.1
       '@dedot/utils': 0.8.1
 
-  '@dedot/types@0.9.6':
-    dependencies:
-      '@dedot/codecs': 0.9.6
-      '@dedot/shape': 0.9.6
-      '@dedot/utils': 0.9.6
-
-  '@dedot/utils@0.8.1':
+  '@dedot/utils@0.10.0':
     dependencies:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.5
       eventemitter3: 5.0.1
 
-  '@dedot/utils@0.9.6':
+  '@dedot/utils@0.8.1':
     dependencies:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.5
@@ -6893,26 +6885,6 @@ snapshots:
     optional: true
 
   '@pkgr/core@0.2.4': {}
-
-  '@polkadot-api/merkleize-metadata@1.1.15':
-    dependencies:
-      '@polkadot-api/metadata-builders': 0.11.0
-      '@polkadot-api/substrate-bindings': 0.12.0
-      '@polkadot-api/utils': 0.1.2
-
-  '@polkadot-api/metadata-builders@0.11.0':
-    dependencies:
-      '@polkadot-api/substrate-bindings': 0.12.0
-      '@polkadot-api/utils': 0.1.2
-
-  '@polkadot-api/substrate-bindings@0.12.0':
-    dependencies:
-      '@noble/hashes': 1.8.0
-      '@polkadot-api/utils': 0.1.2
-      '@scure/base': 1.2.5
-      scale-ts: 1.6.1
-
-  '@polkadot-api/utils@0.1.2': {}
 
   '@polkadot-api/wasm-executor@0.1.2': {}
 
@@ -9792,6 +9764,22 @@ snapshots:
 
   decode-uri-component@0.2.2: {}
 
+  dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    dependencies:
+      '@dedot/api': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/cli': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 0.10.0
+      '@dedot/contracts': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/merkleized-metadata': 0.10.0
+      '@dedot/providers': 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 0.10.0
+      '@dedot/shape': 0.10.0
+      '@dedot/types': 0.10.0
+      '@dedot/utils': 0.10.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   dedot@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -9803,21 +9791,6 @@ snapshots:
       '@dedot/shape': 0.8.1
       '@dedot/types': 0.8.1
       '@dedot/utils': 0.8.1
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
-  dedot@0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10):
-    dependencies:
-      '@dedot/api': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/cli': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.9.6
-      '@dedot/contracts': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/providers': 0.9.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/runtime-specs': 0.9.6
-      '@dedot/shape': 0.9.6
-      '@dedot/types': 0.9.6
-      '@dedot/utils': 0.9.6
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -11768,8 +11741,6 @@ snapshots:
       chokidar: 3.6.0
       immutable: 4.3.7
       source-map-js: 1.2.1
-
-  scale-ts@1.6.1: {}
 
   scheduler@0.26.0: {}
 
