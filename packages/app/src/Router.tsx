@@ -6,6 +6,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
+import { ValidatorInvitePage } from 'features/invite/pages/ValidatorInvitePage'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
@@ -84,6 +85,10 @@ const RouterInner = () => {
                       element={<PageWithTitle page={page} />}
                     />
                   ))}
+                  <Route
+                    path="/invite/validator/:network/:validators"
+                    element={<ValidatorInvitePage />}
+                  />
                   <Route
                     key="main_interface_navigate"
                     path="*"
