@@ -1,55 +1,56 @@
-# Welcome to Polkadot Cloud Staking!
+# ¡Bienvenido a Polkadot Cloud Staking!
 
-This section aims to familiarise developers to the Polkadot Staking Dashboard. Reach out to __staking@polkadot.cloud__ for clarification of any content in this document.
+Esta sección tiene como objetivo familiarizar a los desarrolladores con el Polkadot Staking Dashboard. Ponte en contacto con  __staking@polkadot.cloud__ para aclarar cualquier contenido de este documento.
 
-## Submitting Pull Requests
+## Envío de Pull Requests
 
-This project follows the Conventional Commits specification. Pull requests are merged and squashed, with the pull request title being used as the commit message. Commit messages should adhere to the following structure:
+Este proyecto sigue la especificación de Conventional Commits. Los pull requests se fusionan y comprimen, utilizando el título del pull request como mensaje de commit. Los mensajes de commit deben adherirse a la siguiente estructura:
 
 ```
-<type>(<scope>): <summary>
+<tipo>(<ámbito>): <resumen>
 ```
 
-Example PR titles:
+Ejemplos de títulos de PR:
 
-- feat: implement help overlay
-- feat(auth): implement login API
-- fix: resolve issue with button alignment
-- fix(docs): fix installation section to README
+- feat: implementar superposición de ayuda
+- feat(auth): implementar API de inicio de sesión
+- fix: resolver problema con la alineación de botones
+- fix(docs): corregir sección de instalación en el README
 
-The **chore** type will not be added to release change logs, and should be used for silent updates.
+El tipo **chore** no se añadirá a los registros de cambios de versiones y debe utilizarse para actualizaciones silenciosas.
 
-If you would like to know more about the Conventional Commits specification, please visit the [Conventional Commits website](https://www.conventionalcommits.org/).
+Si deseas saber más sobre la especificación de Conventional Commits, visita el [sitio web de Conventional Commits](https://www.conventionalcommits.org/).
 
-## Releases
+## Lanzamientos
 
-[Release Please](https://github.com/googleapis/release-please) is used for automating staking each package's changelog and release generation.
+[Release Please](https://github.com/googleapis/release-please) se utiliza para automatizar la generación de registros de cambios y lanzamientos de cada paquete.
 
-Release Please is a GitHub action maintained by Google that automates CHANGELOG generation, the creation of GitHub releases, and version bumps. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
+Release Please es una acción de GitHub mantenida por Google que automatiza la generación de CHANGELOG, la creación de lanzamientos de GitHub y los cambios de versión.[[Documentación de GitHub](https://github.com/googleapis/release-please), [Acción](https://github.com/marketplace/actions/release-please-action)]
 
-## URL Variables
+## Variables de URL
 
-URL variables can be used to direct users to specific configurations of the app. URL variables take precedence over saved values in local storage, and will overwrite current configurations.
+Las variables de URL se pueden utilizar para dirigir a los usuarios a configuraciones específicas de la aplicación. Las variables de URL tienen prioridad sobre los valores guardados en el almacenamiento local y sobrescribirán las configuraciones actuales.
 
-The currently supported URL variables are as follows:
+Las variables de URL actualmente compatibles son las siguientes:
 
-- **n**: Default network to connect to upon visiting the app
-- **l**: Language to use upon visiting the app
-- **a**: The ccount to connect to upon visiting the app (ignored if the account is not present in the user's imported accounts)
+- **n**: Red predeterminada a la que conectarse al visitar la aplicación
+- **l**: Idioma a utilizar al visitar la aplicación
+- **a**: Cuenta a la que conectarse al visitar la aplicación (se ignora si la cuenta no está presente en las cuentas importadas del usuario)
 
-As an example, the following URL will load Kusama and use Chinese localisation:
+Como ejemplo, la siguiente URL cargará Kusama y utilizará la localización en chino:
 
 **staking.polkadot.cloud/#/overview?n=kusama&l=zh**
 
-## Adding Validator Operators
+## Añadir Operadores de Validadores
 
-To add a validator operator, submit a PR to [**@w3ux/w3ux-library**](https://github.com/w3ux/w3ux-library/tree/main). The operator will then be available in the **@w3ux/validator-assets** NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
+Para añadir un operador de validador, envía un PR a [@w3ux/w3ux-library](https://github.com/w3ux/w3ux-library/tree/main). El operador estará entonces disponible en el paquete NPM **@w3ux/validator-assets**.
+[Instrucciones completas](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
 
-## Presentations
+## Presentaciones
 
 - 29/06/2023: [[Video] Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
 - 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
 
-## Repository Transfer History
+## Historial de Transferencia del Repositorio
 
-**17/06/2024:** Moved from **paritytech/polkadot-staking-dashboard**
+**17/06/2024:** Trasladado desde **paritytech/polkadot-staking-dashboard**
