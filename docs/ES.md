@@ -1,6 +1,6 @@
 # ¡Bienvenido a Polkadot Cloud Staking!
 
-Esta sección tiene como objetivo familiarizar a los desarrolladores con el Polkadot Staking Dashboard. Ponte en contacto con  __staking@polkadot.cloud__ para aclarar cualquier contenido de este documento.
+Esta sección tiene como objetivo familiarizar a los desarrolladores con el Polkadot Staking Dashboard. Ponte en contacto con __staking@polkadot.cloud__ para aclarar cualquier contenido de este documento.
 
 ## Envío de Pull Requests
 
