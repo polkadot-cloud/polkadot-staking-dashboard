@@ -41,6 +41,17 @@ export const MenuPopover = ({
     setOpen(false)
   }, ['header-settings'])
 
+  // Format the language code display
+  const formatLanguageDisplay = (langCode: string) => {
+    if (langCode === 'enGB') {
+      return 'EN(UK)'
+    }
+    if (langCode === 'en') {
+      return 'EN(US)'
+    }
+    return langCode.toUpperCase()
+  }
+
   return (
     <div ref={popoverRef}>
       <MenuItemButton onClick={() => toggleTheme()}>
@@ -89,7 +100,7 @@ export const MenuPopover = ({
         </div>
         <div>
           <div>
-            <h4>{i18n.language.toUpperCase()}</h4>
+            <h4>{formatLanguageDisplay(i18n.language)}</h4>
           </div>
         </div>
       </MenuItemButton>
