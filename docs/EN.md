@@ -17,7 +17,7 @@ Example PR titles:
 - fix: resolve issue with button alignment
 - fix(docs): fix installation section to README
 
-The __chore__ type will not be added to release change logs, and should be used for silent updates.
+The **chore** type will not be added to release change logs, and should be used for silent updates.
 
 If you would like to know more about the Conventional Commits specification, please visit the [Conventional Commits website](https://www.conventionalcommits.org/).
 
@@ -30,17 +30,16 @@ Release Please is a GitHub action maintained by Google that automates CHANGELOG 
 ## URL Variables
 
 URL variables can be used to direct users to specific configurations of the app. URL variables take precedence over saved values in local storage, and will overwrite current configurations.
- 
+
 The currently supported URL variables are as follows:
 
 - **n**: Default network to connect to upon visiting the app
 - **l**: Language to use upon visiting the app
 - **a**: The ccount to connect to upon visiting the app (ignored if the account is not present in the user's imported accounts)
 
-
 As an example, the following URL will load Kusama and use Chinese localisation:
 
-__staking.polkadot.cloud/#/overview?n=kusama&l=zh__
+**staking.polkadot.cloud/#/overview?n=kusama&l=zh**
 
 ## Adding Validator Operators
 
@@ -53,4 +52,4 @@ To add a validator operator, submit a PR to [**@w3ux/w3ux-library**](https://git
 
 ## Repository Transfer History
 
-**17/06/2024:** Moved from __paritytech/polkadot-staking-dashboard__
+**17/06/2024:** Moved from **paritytech/polkadot-staking-dashboard**
