@@ -1,6 +1,6 @@
 # Welcome to Polkadot Cloud Staking!
 
-This section aims to familiarise developers to the Polkadot Staking Dashboard. Reach out to __staking@polkadot.cloud__ for clarification of any content in this document.
+This section aims to familiarise developers with the Polkadot Staking Dashboard. Reach out to __staking@polkadot.cloud__ for clarification of any content in this document.
 
 ## Submitting Pull Requests
 
@@ -23,9 +23,9 @@ If you would like to know more about the Conventional Commits specification, ple
 
 ## Releases
 
-[Release Please](https://github.com/googleapis/release-please) is used for automating staking each package's changelog and release generation.
+[Release Please](https://github.com/googleapis/release-please) is used for automating tracking each package's changelog and release generation.
 
-Release Please is a GitHub action maintained by Google that automates CHANGELOG generation, the creation of GitHub releases, and version bumps. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
+Release Please is a GitHub action maintained by Google that automates CHANGELOG generation, the creation of GitHub releases, and version bumps. [[GitHub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
 
 ## URL Variables
 
@@ -35,7 +35,7 @@ The currently supported URL variables are as follows:
 
 - **n**: Default network to connect to upon visiting the app
 - **l**: Language to use upon visiting the app
-- **a**: The ccount to connect to upon visiting the app (ignored if the account is not present in the user's imported accounts)
+- **a**: The account to connect to upon visiting the app (ignored if the account is not present in the user's imported accounts)
 
 As an example, the following URL will load Kusama and use Chinese localisation:
 
