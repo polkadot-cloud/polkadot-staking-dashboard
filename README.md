@@ -4,10 +4,9 @@
 
 <!-- markdown-link-check-enable -->
 
-![Polkadot Cloud Staking](https://github.com/user-attachments/assets/7544324c-279a-4b29-8a80-155c19b15302)
-
-
 # Polkadot Cloud Staking
+
+![Polkadot Cloud Staking](https://github.com/user-attachments/assets/7544324c-279a-4b29-8a80-155c19b15302)
 
 - [__English:__ Welcome to Polkadot Cloud Staking!](docs/EN.md)
 - [__Spanish:__ Welcome to Polkadot Cloud Staking!](docs/ES.md)
