@@ -468,41 +468,70 @@ export const Home = () => {
       {/* Only show additional cards if user has an active account */}
       {activeAccount && (
         <>
-          {/* Welcome Section - Full width on top */}
-          <Page.Row>
-            <Page.RowSection>
-              <CardWrapper className="welcome-section">
-                <WelcomeSection />
-              </CardWrapper>
-            </Page.RowSection>
-          </Page.Row>
+          {isStakingUser ? (
+            <>
+              {/* For actively staking users: Welcome and Quick Actions on the same row */}
+              <Page.Row>
+                <Page.RowSection>
+                  <BalanceCardsLayout>
+                    {/* Welcome Section */}
+                    <CardWrapper className="welcome-section">
+                      <WelcomeSection />
+                    </CardWrapper>
 
-          {/* First Row: Wallet Balance and Quick Actions side by side */}
-          <Page.Row>
-            <Page.RowSection>
-              <BalanceCardsLayout>
-                {/* Wallet Balance - Left */}
-                <CardWrapper>
-                  <WalletBalance />
-                </CardWrapper>
+                    {/* Quick Actions */}
+                    <CardWrapper className="quick-actions-card">
+                      <QuickActions />
+                    </CardWrapper>
+                  </BalanceCardsLayout>
+                </Page.RowSection>
+              </Page.Row>
 
-                {/* Quick Actions - Right */}
-                <CardWrapper className="quick-actions-card">
-                  <QuickActions />
-                </CardWrapper>
-              </BalanceCardsLayout>
-            </Page.RowSection>
-          </Page.Row>
+              {/* For actively staking users: Wallet Balance and Staking Info on the same row */}
+              <Page.Row>
+                <Page.RowSection>
+                  <BalanceCardsLayout>
+                    {/* Wallet Balance */}
+                    <CardWrapper>
+                      <WalletBalance />
+                    </CardWrapper>
 
-          {/* Staking Info - Only if user is staking */}
-          {isStakingUser && (
-            <Page.Row>
-              <Page.RowSection>
-                <CardWrapper>
-                  <CompactStakeInfo />
-                </CardWrapper>
-              </Page.RowSection>
-            </Page.Row>
+                    {/* Staking Info */}
+                    <CardWrapper>
+                      <CompactStakeInfo />
+                    </CardWrapper>
+                  </BalanceCardsLayout>
+                </Page.RowSection>
+              </Page.Row>
+            </>
+          ) : (
+            <>
+              {/* For non-staking users: Welcome Section at the top */}
+              <Page.Row>
+                <Page.RowSection>
+                  <CardWrapper className="welcome-section">
+                    <WelcomeSection />
+                  </CardWrapper>
+                </Page.RowSection>
+              </Page.Row>
+
+              {/* For non-staking users: Wallet Balance and Quick Actions side by side */}
+              <Page.Row>
+                <Page.RowSection>
+                  <BalanceCardsLayout>
+                    {/* Wallet Balance - Left */}
+                    <CardWrapper>
+                      <WalletBalance />
+                    </CardWrapper>
+
+                    {/* Quick Actions - Right */}
+                    <CardWrapper className="quick-actions-card">
+                      <QuickActions />
+                    </CardWrapper>
+                  </BalanceCardsLayout>
+                </Page.RowSection>
+              </Page.Row>
+            </>
           )}
 
           {/* Second Row: StakingProgress and StakingHealth - side by side */}
