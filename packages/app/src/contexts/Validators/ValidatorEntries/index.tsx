@@ -262,15 +262,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!inEra) {
       return 0n
     }
-    let totalStake = 0n
-    const { others, own } = inEra
-    if (own) {
-      totalStake = totalStake + BigInt(own)
-    }
-    others.forEach(({ value }) => {
-      totalStake = totalStake + BigInt(value)
-    })
-    return totalStake
+
+    // Use the total directly from the validator data, which comes from the chain
+    // This ensures we get the correct total even if we're missing some nominator data
+    return BigInt(inEra.total)
   }
 
   // Gets average validator reward for provided number of days
