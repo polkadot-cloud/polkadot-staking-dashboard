@@ -361,6 +361,9 @@ export const CompactStakeInfoWrapper = styled.div`
   /* Make card header more compact */
   .ui-card-header {
     padding-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .stake-info-content {
@@ -387,6 +390,12 @@ export const CompactStakeInfoWrapper = styled.div`
       font-size: 0.95rem;
       font-weight: 500;
     }
+  }
+
+  .stake-info-manage {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
   }
 `
 

@@ -16,6 +16,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
 import { useTransferOptions } from 'contexts/TransferOptions'
+import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { useNominationStatus } from 'hooks/useNominationStatus'
@@ -51,6 +52,7 @@ export const StakingHealth = () => {
   const { getNominations, getStakingLedger } = useBalances()
   const { formatWithPrefs, avgCommission } = useValidators()
   const { getNominationStatus } = useNominationStatus()
+  const { advancedMode } = useUi()
   const navigate = useNavigate()
   const { poolsMetaData } = useBondedPools()
   const { getStakedBalance } = useTransferOptions()
@@ -276,13 +278,16 @@ export const StakingHealth = () => {
       }
     })
 
-    // Add general management action
-    actions.push({
-      title: t('actionManageStaking'),
-      description: t('actionManageStakingDesc'),
-      onClick: () => navigate('/nominate'),
-      icon: faCog,
-    })
+    // Add general management action only in Advanced mode
+    // In Easy mode, the Nominate page is not accessible
+    if (advancedMode) {
+      actions.push({
+        title: t('actionManageStaking'),
+        description: t('actionManageStakingDesc'),
+        onClick: () => navigate('/nominate'),
+        icon: faCog,
+      })
+    }
 
     return actions
   }
@@ -371,8 +376,7 @@ export const StakingHealth = () => {
         </>
       )}
 
-      {/* Quick Actions */}
-      <SectionTitle>{t('quickActions')}</SectionTitle>
+      {/* Quick Actions - removing the header but keeping the actions */}
       <QuickActionsContainer>
         {getQuickActions().map((action, index) => (
           <QuickActionButton key={index} onClick={action.onClick}>
