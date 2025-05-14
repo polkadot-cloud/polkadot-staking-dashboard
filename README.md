@@ -9,5 +9,5 @@
 ![Polkadot Cloud Staking](https://github.com/user-attachments/assets/fddf659d-1547-453d-8175-d3c0cd4f4d14)
 
 - [**English:** Welcome to Polkadot Cloud Staking!](docs/EN.md)
-- [**Española:** ¡Bienvenido a Polkadot Cloud Staking!](docs/ES.md)
+- [**Español:** ¡Bienvenido a Polkadot Cloud Staking!](docs/ES.md)
 - [**中文:** 欢迎使用Polkadot Cloud质押平台](docs/ZH.md)
