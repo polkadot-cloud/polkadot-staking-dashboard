@@ -263,13 +263,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return 0n
     }
     let totalStake = 0n
-    const { others, own } = inEra
+    const { own, total } = inEra
     if (own) {
-      totalStake = totalStake + BigInt(own)
+      totalStake = BigInt(own)
+      totalStake += BigInt(total)
     }
-    others.forEach(({ value }) => {
-      totalStake = totalStake + BigInt(value)
-    })
     return totalStake
   }
 

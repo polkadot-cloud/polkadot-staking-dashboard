@@ -60,12 +60,11 @@ export const ValidatorMetrics = () => {
   const validatorInEra = stakers.find((s) => s.address === validator) || null
 
   let validatorOwnStake = new BigNumber(0)
-  let otherStake = new BigNumber(0)
+  let nominatorStake = new BigNumber(0)
   if (validatorInEra) {
-    const { others, own } = validatorInEra
-    others.forEach(({ value }) => {
-      otherStake = otherStake.plus(value)
-    })
+    const { own, total } = validatorInEra
+    nominatorStake = new BigNumber(total).minus(own)
+
     if (own) {
       validatorOwnStake = new BigNumber(own)
     }
@@ -131,7 +130,9 @@ export const ValidatorMetrics = () => {
             <Stat withIcon>
               <Token />
               {t('nominatorStake', { ns: 'modals' })}:{' '}
-              {planckToUnitBn(otherStake, units).decimalPlaces(0).toFormat()}{' '}
+              {planckToUnitBn(nominatorStake, units)
+                .decimalPlaces(0)
+                .toFormat()}{' '}
               {unit}
             </Stat>
           </h4>
