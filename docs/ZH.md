@@ -2,7 +2,6 @@
 
 本文档旨在帮助开发者熟悉Polkadot Staking Dashboard. 若对文档内容有任何疑问，请联系 __staking@polkadot.cloud__.
 
-
 ## 提交Pull请求
 
 本项目遵循 Conventional Commits规范. Pull请求将以squashed合并方式处理，并使用PR标题作为提交信息。提交信息需符合以下结构:
@@ -24,7 +23,7 @@ PR标题示例:
 
 ## 版本发布
 
-我们使用[Release Please](https://github.com/googleapis/release-please)自动化生成各软件包的更新日志和版本发布. 
+我们使用[Release Please](https://github.com/googleapis/release-please)自动化生成各软件包的更新日志和版本发布.
 
 该工具是由Google维护的GitHub Action，可自动生成CHANGELOG、创建GitHub版本发布及版本号更新. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
 
