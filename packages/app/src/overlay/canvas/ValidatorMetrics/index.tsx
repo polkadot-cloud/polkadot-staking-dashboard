@@ -73,7 +73,7 @@ export const ValidatorMetrics = () => {
     // This ensures we get the correct total even if we're missing some nominator data
     if (total) {
       const totalStake = new BigNumber(total)
-      otherStake = totalStake.minus(validatorOwnStake)
+      otherStake = BigNumber.max(0, totalStake.minus(validatorOwnStake))
     }
   }
 
