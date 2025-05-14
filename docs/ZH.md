@@ -1,55 +1,56 @@
-# Welcome to Polkadot Cloud Staking!
+# 欢迎使用Polkadot Cloud质押平台！
 
-This section aims to familiarise developers to the Polkadot Staking Dashboard. Reach out to __staking@polkadot.cloud__ for clarification of any content in this document.
+本文档旨在帮助开发者熟悉Polkadot Staking Dashboard. 若对文档内容有任何疑问，请联系 __staking@polkadot.cloud__.
 
-## Submitting Pull Requests
 
-This project follows the Conventional Commits specification. Pull requests are merged and squashed, with the pull request title being used as the commit message. Commit messages should adhere to the following structure:
+## 提交Pull请求
+
+本项目遵循 Conventional Commits规范. Pull请求将以squashed合并方式处理，并使用PR标题作为提交信息。提交信息需符合以下结构:
 
 ```
-<type>(<scope>): <summary>
+<类型>(<范围>): <摘要>
 ```
 
-Example PR titles:
+PR标题示例:
 
 - feat: implement help overlay
 - feat(auth): implement login API
 - fix: resolve issue with button alignment
 - fix(docs): fix installation section to README
 
-The **chore** type will not be added to release change logs, and should be used for silent updates.
+**chore**类型的提交不会出现在版本更新日志中，适用于默认更新.
 
-If you would like to know more about the Conventional Commits specification, please visit the [Conventional Commits website](https://www.conventionalcommits.org/).
+如需了解更多Conventional Commits规范，请访问[Conventional Commits website](https://www.conventionalcommits.org/).
 
-## Releases
+## 版本发布
 
-[Release Please](https://github.com/googleapis/release-please) is used for automating staking each package's changelog and release generation.
+我们使用[Release Please](https://github.com/googleapis/release-please)自动化生成各软件包的更新日志和版本发布. 
 
-Release Please is a GitHub action maintained by Google that automates CHANGELOG generation, the creation of GitHub releases, and version bumps. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
+该工具是由Google维护的GitHub Action，可自动生成CHANGELOG、创建GitHub版本发布及版本号更新. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
 
-## URL Variables
+## URL参数
 
-URL variables can be used to direct users to specific configurations of the app. URL variables take precedence over saved values in local storage, and will overwrite current configurations.
+通过URL参数可引导用户进入特定应用配置。URL参数优先级高于本地存储值，将覆盖当前配置.
 
-The currently supported URL variables are as follows:
+当前支持的URL参数包括:
 
-- **n**: Default network to connect to upon visiting the app
-- **l**: Language to use upon visiting the app
-- **a**: The ccount to connect to upon visiting the app (ignored if the account is not present in the user's imported accounts)
+- **n**: 访问时默认连接的网络
+- **l**: 访问时使用的语言
+- **a**: 访问时连接的账户（若用户未导入该账户则忽略）
 
-As an example, the following URL will load Kusama and use Chinese localisation:
+示例：以下URL将加载Kusama网络并使用中文界面:
 
 **staking.polkadot.cloud/#/overview?n=kusama&l=zh**
 
-## Adding Validator Operators
+## 添加验证人运行商
 
-To add a validator operator, submit a PR to [**@w3ux/w3ux-library**](https://github.com/w3ux/w3ux-library/tree/main). The operator will then be available in the **@w3ux/validator-assets** NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
+提交PR至[**@w3ux/w3ux-library**](https://github.com/w3ux/w3ux-library/tree/main)即可添加验证人运行商. 添加后该运行商将出现在**@w3ux/validator-assets** NPM包中. [完整指南](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
 
-## Presentations
+## 演示
 
-- 29/06/2023: [[Video] Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
-- 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
+- 29/06/2023: [[视频] Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
+- 30/06/2022: [[视频] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
 
-## Repository Transfer History
+## 仓库迁移记录
 
 **17/06/2024:** Moved from **paritytech/polkadot-staking-dashboard**
