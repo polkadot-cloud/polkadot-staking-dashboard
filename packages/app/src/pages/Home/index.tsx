@@ -43,7 +43,6 @@ import {
   ActionButton,
   BalanceCardsLayout,
   CardRow,
-  HeaderGridLayout,
   HelpOptionsContainer,
   QuickActionsContainer,
 } from './Wrappers'
@@ -469,24 +468,16 @@ export const Home = () => {
       {/* Only show additional cards if user has an active account */}
       {activeAccount && (
         <>
-          {/* Header Row: Welcome Section and Quick Actions side by side */}
+          {/* Welcome Section - Full width on top */}
           <Page.Row>
             <Page.RowSection>
-              <HeaderGridLayout>
-                {/* Welcome Section */}
-                <CardWrapper className="welcome-section">
-                  <WelcomeSection />
-                </CardWrapper>
-
-                {/* Quick Actions - Right */}
-                <CardWrapper className="quick-actions-card">
-                  <QuickActions />
-                </CardWrapper>
-              </HeaderGridLayout>
+              <CardWrapper className="welcome-section">
+                <WelcomeSection />
+              </CardWrapper>
             </Page.RowSection>
           </Page.Row>
 
-          {/* First Row: Wallet Balance and Staking Info side by side */}
+          {/* First Row: Wallet Balance and Quick Actions side by side */}
           <Page.Row>
             <Page.RowSection>
               <BalanceCardsLayout>
@@ -495,15 +486,24 @@ export const Home = () => {
                   <WalletBalance />
                 </CardWrapper>
 
-                {/* Staking Info - Right (only if user is staking) */}
-                {isStakingUser && (
-                  <CardWrapper>
-                    <CompactStakeInfo />
-                  </CardWrapper>
-                )}
+                {/* Quick Actions - Right */}
+                <CardWrapper className="quick-actions-card">
+                  <QuickActions />
+                </CardWrapper>
               </BalanceCardsLayout>
             </Page.RowSection>
           </Page.Row>
+
+          {/* Staking Info - Only if user is staking */}
+          {isStakingUser && (
+            <Page.Row>
+              <Page.RowSection>
+                <CardWrapper>
+                  <CompactStakeInfo />
+                </CardWrapper>
+              </Page.RowSection>
+            </Page.Row>
+          )}
 
           {/* Second Row: StakingProgress and StakingHealth - side by side */}
           <Page.Row>
@@ -559,15 +559,27 @@ export const Home = () => {
         </>
       )}
 
-      {/* Show Price Widget for users without an active account */}
+      {/* Show Welcome and Price Widget for users without an active account */}
       {!activeAccount && (
-        <Page.Row>
-          <Page.RowSection>
-            <CardWrapper>
-              <PriceWidget />
-            </CardWrapper>
-          </Page.RowSection>
-        </Page.Row>
+        <>
+          {/* Welcome Section for non-connected users */}
+          <Page.Row>
+            <Page.RowSection>
+              <CardWrapper>
+                <WelcomeSection />
+              </CardWrapper>
+            </Page.RowSection>
+          </Page.Row>
+
+          {/* Price Widget for non-connected users */}
+          <Page.Row>
+            <Page.RowSection>
+              <CardWrapper>
+                <PriceWidget />
+              </CardWrapper>
+            </Page.RowSection>
+          </Page.Row>
+        </>
       )}
     </>
   )

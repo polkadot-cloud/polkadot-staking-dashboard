@@ -91,6 +91,7 @@ export const WelcomeWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0.5rem;
 
   .welcome-header {
     display: flex;
@@ -130,7 +131,7 @@ export const WelcomeWrapper = styled.div`
     .account-info {
       display: flex;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
       font-size: 1.1rem;
 
       .account-address-container {
@@ -152,6 +153,7 @@ export const WelcomeWrapper = styled.div`
 
     .welcome-message {
       margin-bottom: 1.5rem;
+      font-size: 1.05rem;
     }
 
     .features-list {
