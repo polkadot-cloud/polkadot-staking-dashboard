@@ -10,4 +10,4 @@
 
 - [**English:** Welcome to Polkadot Cloud Staking!](docs/EN.md)
 - [**Española:** ¡Bienvenido a Polkadot Cloud Staking!](docs/ES.md)
-- [**Chinese:** Welcome to Polkadot Cloud Staking!](docs/ZH.md)
+- [**中文:** 欢迎使用Polkadot Cloud质押平台！](docs/ZH.md)
