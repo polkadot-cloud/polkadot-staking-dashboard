@@ -62,12 +62,18 @@ export const ValidatorMetrics = () => {
   let validatorOwnStake = new BigNumber(0)
   let otherStake = new BigNumber(0)
   if (validatorInEra) {
-    const { others, own } = validatorInEra
-    others.forEach(({ value }) => {
-      otherStake = otherStake.plus(value)
-    })
+    const { own, total } = validatorInEra
+
+    // Set validator own stake
     if (own) {
       validatorOwnStake = new BigNumber(own)
+    }
+
+    // Calculate nominator stake as total minus own stake
+    // This ensures we get the correct total even if we're missing some nominator data
+    if (total) {
+      const totalStake = new BigNumber(total)
+      otherStake = totalStake.minus(validatorOwnStake)
     }
   }
 
