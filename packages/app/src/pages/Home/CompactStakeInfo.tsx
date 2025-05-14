@@ -1,13 +1,18 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronRight,
+  faCog,
+  faStopCircle,
+} from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
@@ -15,13 +20,16 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
 import { useTransferOptions } from 'contexts/TransferOptions'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useNominationStatus } from 'hooks/useNominationStatus'
+import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSyncing } from 'hooks/useSyncing'
+import { useUnstaking } from 'hooks/useUnstaking'
 import { Balance } from 'library/Balance'
 import { useTranslation } from 'react-i18next'
 import { styled } from 'styled-components'
-import { ButtonSecondary } from 'ui-buttons'
-import { CardHeader } from 'ui-core/base'
+import { ButtonTertiary } from 'ui-buttons'
+import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CompactStakeInfoWrapper, StakeInfoValueWrapper } from './Wrappers'
 
@@ -31,22 +39,55 @@ const HeaderActions = styled.div`
   gap: 1rem;
 `
 
+// For labels to match StakingHealth components
+const StakeInfoLabel = styled.div`
+  color: var(--text-color-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+`
+
+// Styled DOT value display
+const DOTValueWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .value {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .unit {
+    margin-left: 0.5rem;
+    color: var(--text-color-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+`
+
 // Compact Staking Information Component for Easy Mode
 export const CompactStakeInfo = () => {
   const { t } = useTranslation('pages')
+  const { t: tApp } = useTranslation('app')
   const { network } = useNetwork()
   const { unit, units } = getNetworkData(network)
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
+  const { openCanvas } = useOverlay().canvas
   const { getStakedBalance } = useTransferOptions()
-  const { getPendingPoolRewards } = useBalances()
+  const { getPendingPoolRewards, getStakingLedger, getNominations } =
+    useBalances()
   const { unclaimedRewards } = usePayouts()
   const { activeAddress } = useActiveAccounts()
   const { inSetup } = useStaking()
+  const { isFastUnstaking } = useUnstaking()
   const { inPool, activePool, activePoolNominations } = useActivePool()
   const { poolsMetaData } = useBondedPools()
   const { getNominationStatus } = useNominationStatus()
   const { syncing } = useSyncing(['active-pools'])
+  const { getPayeeItems } = usePayeeConfig()
+  const { isReadOnlyAccount } = useImportedAccounts()
+  const { formatWithPrefs } = useValidators()
   const Token = getChainIcons(network).token
 
   // Determine if user is staking via pool or direct nomination
@@ -124,29 +165,63 @@ export const CompactStakeInfo = () => {
           }`
         : t('waitingForActiveNominations')
 
+  // Get payout destination for direct nominators
+  const payee = getStakingLedger(activeAddress).payee
+
+  // Get payee status text to display for direct nominators
+  const getPayeeStatus = () => {
+    if (inSetup()) {
+      return t('notAssigned')
+    }
+    const status = getPayeeItems(true).find(
+      ({ value }) => value === payee?.destination
+    )?.activeTitle
+
+    if (status) {
+      return status
+    }
+    return t('notAssigned')
+  }
+
+  // Get nominations for direct nominators
+  const nominated = isDirectNomination
+    ? formatWithPrefs(getNominations(activeAddress))
+    : []
+
+  // Check if the user has active nominations
+  const hasNominations = nominated.length > 0
+
+  // Determine whether buttons are disabled.
+  const btnsDisabled =
+    (isDirectNomination && syncing) ||
+    (isDirectNomination && inSetup()) ||
+    isReadOnlyAccount(activeAddress) ||
+    isFastUnstaking
+
   return (
     <CompactStakeInfoWrapper>
       <CardHeader>
         <h4>{isStakingViaPool ? t('poolStaking') : t('directStaking')}</h4>
-        {isStakingViaPool && (
-          <HeaderActions>
-            <Balance.WithFiat
-              Token={<Token />}
-              value={stakedBalance.toNumber()}
-              currency={currency}
-            />
-          </HeaderActions>
-        )}
+        {/* Show balance in header similar to pools for direct nominations also */}
+        <HeaderActions>
+          <Balance.WithFiat
+            Token={<Token />}
+            value={stakedBalance.toNumber()}
+            currency={currency}
+          />
+        </HeaderActions>
       </CardHeader>
 
       <div className="stake-info-content">
         {/* Pool ID and Name (only for pool staking) */}
         {isStakingViaPool && poolId !== undefined && (
           <div className="stake-info-row">
-            <div className="stake-info-label">{t('pool')}</div>
+            <StakeInfoLabel>{t('pool')}</StakeInfoLabel>
             <StakeInfoValueWrapper>
-              <span className="value">#{poolId}</span>
-              <span className="unit">{poolName}</span>
+              <div className="pool-text">
+                <span className="value">#{poolId}</span>
+                <span className="unit">{poolName}</span>
+              </div>
             </StakeInfoValueWrapper>
           </div>
         )}
@@ -154,9 +229,11 @@ export const CompactStakeInfo = () => {
         {/* Pool Status (only for pool staking) */}
         {isStakingViaPool && (
           <div className="stake-info-row">
-            <div className="stake-info-label">{t('status')}</div>
+            <StakeInfoLabel>{t('status')}</StakeInfoLabel>
             <StakeInfoValueWrapper>
-              <span className="status">{`${poolStatusLeft}${poolStatusRight}`}</span>
+              <div className="pool-status-text">
+                <span className="status">{`${poolStatusLeft}${poolStatusRight}`}</span>
+              </div>
             </StakeInfoValueWrapper>
           </div>
         )}
@@ -164,47 +241,125 @@ export const CompactStakeInfo = () => {
         {/* Nominator Status (only for direct nomination) */}
         {isDirectNomination && nominationStatus && (
           <div className="stake-info-row">
-            <div className="stake-info-label">{t('status')}</div>
+            <StakeInfoLabel>{t('status')}</StakeInfoLabel>
             <StakeInfoValueWrapper>
               <span className="status">{nominationStatus.message}</span>
             </StakeInfoValueWrapper>
           </div>
         )}
 
-        {/* Only show this row for direct nomination since pool staking shows balance in header */}
+        {/* Nominators Count (only for direct nomination) */}
         {isDirectNomination && (
           <div className="stake-info-row">
-            <div className="stake-info-label">{t('bondedFunds')}</div>
+            <StakeInfoLabel>{tApp('validators')}</StakeInfoLabel>
             <StakeInfoValueWrapper>
-              <span className="value">{stakedBalance.toFormat()}</span>
-              <span className="unit">{unit}</span>
+              <div className="validator-text">
+                <span className="status">
+                  {hasNominations
+                    ? t('validatorCount', { count: nominated.length })
+                    : t('noNominationsSet')}
+                </span>
+              </div>
+              {hasNominations && (
+                <div className="validator-buttons">
+                  <ButtonRow>
+                    <ButtonTertiary
+                      text={t('manage')}
+                      iconRight={faCog}
+                      disabled={btnsDisabled}
+                      onClick={() =>
+                        openCanvas({
+                          key: 'ManageNominations',
+                          scroll: false,
+                          options: {
+                            bondFor: 'nominator',
+                            nominator: activeAddress,
+                            nominated,
+                          },
+                        })
+                      }
+                    />
+                    <ButtonTertiary
+                      text={t('stop')}
+                      iconRight={faStopCircle}
+                      disabled={btnsDisabled}
+                      onClick={() =>
+                        openModal({
+                          key: 'StopNominations',
+                          options: {
+                            nominations: [],
+                            bondFor: 'nominator',
+                          },
+                          size: 'sm',
+                        })
+                      }
+                    />
+                  </ButtonRow>
+                </div>
+              )}
             </StakeInfoValueWrapper>
           </div>
         )}
 
+        {/* Payout Destination (only for direct nomination) */}
+        {isDirectNomination && (
+          <div className="stake-info-row">
+            <StakeInfoLabel>{t('payoutDestination')}</StakeInfoLabel>
+            <StakeInfoValueWrapper>
+              <div className="payee-text">
+                <span className="status">{getPayeeStatus()}</span>
+              </div>
+              <div className="payee-buttons">
+                <ButtonRow>
+                  <ButtonTertiary
+                    text={t('update')}
+                    iconRight={faCog}
+                    disabled={btnsDisabled}
+                    onClick={() =>
+                      openModal({ key: 'UpdatePayee', size: 'sm' })
+                    }
+                  />
+                </ButtonRow>
+              </div>
+            </StakeInfoValueWrapper>
+          </div>
+        )}
+
+        {/* Unclaimed Rewards */}
         <div className="stake-info-row">
-          <div className="stake-info-label">{t('unclaimedRewards')}</div>
-          <StakeInfoValueWrapper>
+          <StakeInfoLabel>
+            {isDirectNomination ? t('pendingPayouts') : t('unclaimedRewards')}
+          </StakeInfoLabel>
+          <DOTValueWrapper>
             <span className="value">{formattedPendingRewards}</span>
             <span className="unit">{unit}</span>
-          </StakeInfoValueWrapper>
+          </DOTValueWrapper>
         </div>
 
         {/* Manage Pool button */}
         {isStakingViaPool && poolId !== undefined && (
-          <div className="stake-info-manage">
-            <ButtonSecondary
-              text={t('manage')}
-              onClick={() =>
-                openModal({
-                  key: 'ManagePool',
-                  options: { disableWindowResize: true, disableScroll: true },
-                  size: 'sm',
-                })
-              }
-              iconRight={faChevronRight}
-              style={{ marginTop: '0.75rem' }}
-            />
+          <div className="stake-info-row">
+            <StakeInfoLabel>{t('manage')}</StakeInfoLabel>
+            <StakeInfoValueWrapper>
+              <div className="pool-buttons">
+                <ButtonRow>
+                  <ButtonTertiary
+                    text={t('manage')}
+                    iconRight={faChevronRight}
+                    onClick={() =>
+                      openModal({
+                        key: 'ManagePool',
+                        options: {
+                          disableWindowResize: true,
+                          disableScroll: true,
+                        },
+                        size: 'sm',
+                      })
+                    }
+                  />
+                </ButtonRow>
+              </div>
+            </StakeInfoValueWrapper>
           </div>
         )}
       </div>

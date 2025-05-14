@@ -360,7 +360,7 @@ export const CompactStakeInfoWrapper = styled.div`
 
   /* Make card header more compact */
   .ui-card-header {
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -384,45 +384,86 @@ export const CompactStakeInfoWrapper = styled.div`
     &:last-child {
       border-bottom: none;
     }
-
-    .stake-info-label {
-      color: var(--text-color-secondary);
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-  }
-
-  .stake-info-manage {
-    margin-top: 0.5rem;
-    display: flex;
-    justify-content: flex-end;
   }
 `
 
 // Value display in the compact stake info component
 export const StakeInfoValueWrapper = styled.div`
   display: flex;
-  align-items: center;
-  text-align: right;
-  justify-content: flex-end;
-  max-width: 70%;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .pool-text,
+  .validator-text,
+  .payee-text,
+  .payouts-text,
+  .pool-status-text {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .pool-buttons,
+  .validator-buttons,
+  .payee-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
 
   .value {
     font-family: InterSemiBold, sans-serif;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     color: var(--text-color-primary);
-    margin-right: 0.25rem;
-    font-weight: 500;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+
+  .status {
+    font-family: InterRegular, sans-serif;
+    color: var(--text-color-primary);
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
   }
 
   .unit {
     color: var(--text-color-secondary);
-    font-size: 0.9rem;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    font-weight: 500;
   }
 
-  .status {
-    color: var(--text-color-primary);
-    font-size: 0.95rem;
-    text-align: right;
+  /* Special style for DOT value display */
+  .payouts-text {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .value {
+      margin-right: 0.25rem;
+      font-weight: 600;
+    }
+  }
+
+  /* Adjust button row for inline buttons */
+  .ui-button-row {
+    button {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.75rem;
+      height: auto;
+      min-height: 1.8rem;
+
+      &:not(:first-child) {
+        margin-left: 0.35rem;
+      }
+
+      /* Style for FontAwesome icons */
+      svg {
+        font-size: 0.8rem;
+      }
+    }
   }
 `
