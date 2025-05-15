@@ -162,28 +162,40 @@ export const StakingHealth = () => {
       }
     }
 
-    // Calculate performance ratio (individual rate / network average)
-    const performanceRatio = individualRate.dividedBy(avgRateBeforeCommission)
+    // Calculate percentage point difference (individual rate - network average)
+    const percentageDiff = individualRate.minus(avgRateBeforeCommission)
 
-    // Thresholds
-    // Very Healthy: > 1-2% above average
-    // Healthy: within 1-2% of average (either side)
-    // Unhealthy: > 1-2% below average
+    // Updated thresholds based on user requirements:
+    // Very Healthy: > +0.5 percentage points above average
+    // Healthy: Between -0.75 and +0.5 percentage points from average
+    // Room for Improvement: Between -2 and -0.75 percentage points
+    // Unhealthy: < -2 percentage points below average
 
-    if (performanceRatio.isGreaterThan(1.02)) {
+    if (percentageDiff.isGreaterThan(0.5)) {
       return {
         class: 'very-healthy',
         message: t('stakingHealthVeryHealthy'),
       }
-    } else if (performanceRatio.isGreaterThanOrEqualTo(0.98)) {
+    } else if (percentageDiff.isGreaterThanOrEqualTo(-0.75)) {
       return {
         class: 'healthy',
         message: t('stakingHealthHealthy'),
       }
+    } else if (percentageDiff.isGreaterThanOrEqualTo(-2)) {
+      return {
+        class: 'room-for-improvement',
+        message: t(
+          'stakingHealthRoomForImprovement',
+          'Healthy - but room for improvement - Please review our recommendations'
+        ),
+      }
     } else {
       return {
         class: 'unhealthy',
-        message: t('stakingHealthUnhealthy'),
+        message: t(
+          'stakingHealthUnhealthy',
+          'Unhealthy - Your position is underperforming, please review immediately'
+        ),
       }
     }
   }
@@ -193,13 +205,16 @@ export const StakingHealth = () => {
   // Enhanced performance calculation
   const calculatePerformanceMetrics = () => {
     const individualRate = calculateIndividualRewardRate()
+    // Calculate both the percentage point difference and the ratio
+    const percentageDiff = individualRate.minus(avgRateBeforeCommission)
     const performanceRatio = individualRate.dividedBy(avgRateBeforeCommission)
 
     return {
       individualRate,
-      performanceRatio,
-      percentageDiff: individualRate.minus(avgRateBeforeCommission),
-      isAboveAverage: performanceRatio.isGreaterThan(1),
+      percentageDiff,
+      // isAboveAverage now uses the percentage diff directly
+      isAboveAverage: percentageDiff.isGreaterThanOrEqualTo(0),
+      performanceRatio, // keep for backwards compatibility
     }
   }
 
@@ -209,7 +224,8 @@ export const StakingHealth = () => {
     const recommendations = []
 
     // Performance-based recommendations
-    if (percentageDiff.isLessThan(-2)) {
+    // Now recommend optimizing if below -0.75 percentage points from network average
+    if (percentageDiff.isLessThan(-0.75)) {
       recommendations.push({
         type: 'performance',
         message: t('recommendationLowPerformance'),
@@ -230,11 +246,20 @@ export const StakingHealth = () => {
 
     // Pool-specific recommendations
     if (isInPool) {
-      const poolPerformance = calculatePoolPerformance()
-      if (poolPerformance.isLessThan(0.95)) {
+      // Use percentage point difference approach for pool performance too
+      const poolRate = calculatePoolPerformance()
+      const poolDiff = poolRate.minus(avgRateBeforeCommission)
+
+      // Update thresholds to align with the health status thresholds
+      if (poolDiff.isLessThan(-0.75)) {
         recommendations.push({
           type: 'pool',
-          message: t('recommendationPoolPerformance'),
+          message: poolDiff.isLessThan(-2)
+            ? t(
+                'recommendationPoolPerformanceCritical',
+                'Your pool is significantly underperforming. Consider changing pools immediately.'
+              )
+            : t('recommendationPoolPerformance'),
           action: t('actionReviewPool'),
         })
       }

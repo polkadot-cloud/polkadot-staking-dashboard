@@ -23,6 +23,11 @@ export const HealthStatus = styled.div`
     color: var(--text-color-primary);
   }
 
+  &.room-for-improvement {
+    background-color: var(--status-warning-color-transparent);
+    color: var(--text-color-primary);
+  }
+
   &.unhealthy {
     background-color: var(--status-danger-color-transparent);
     color: var(--text-color-primary);
@@ -43,6 +48,10 @@ export const HealthStatus = styled.div`
 
   &.healthy:before {
     background-color: var(--status-success-color);
+  }
+
+  &.room-for-improvement:before {
+    background-color: var(--status-warning-color);
   }
 
   &.unhealthy:before {
