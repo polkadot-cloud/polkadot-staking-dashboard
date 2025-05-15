@@ -58,6 +58,7 @@ export const StakingHealth = () => {
   const { poolsMetaData } = useBondedPools()
   const { getStakedBalance } = useTransferOptions()
   const { openModal } = useOverlay().modal
+  const { openCanvas } = useOverlay().canvas
 
   // Get nominations if user is nominating
   const nominated = formatWithPrefs(getNominations(activeAddress))
@@ -284,7 +285,16 @@ export const StakingHealth = () => {
             actions.push({
               title: t('actionOptimizeReturns'),
               description: t('actionOptimizeReturnsDesc'),
-              onClick: () => navigate('/validators'),
+              onClick: () =>
+                openCanvas({
+                  key: 'ManageNominations',
+                  scroll: false,
+                  options: {
+                    bondFor: 'nominator',
+                    nominator: activeAddress,
+                    nominated,
+                  },
+                }),
               icon: faChartLine,
             })
           }
@@ -295,7 +305,16 @@ export const StakingHealth = () => {
             actions.push({
               title: t('actionChangeValidators'),
               description: t('actionChangeValidatorsDesc'),
-              onClick: () => navigate('/validators'),
+              onClick: () =>
+                openCanvas({
+                  key: 'ManageNominations',
+                  scroll: false,
+                  options: {
+                    bondFor: 'nominator',
+                    nominator: activeAddress,
+                    nominated,
+                  },
+                }),
               icon: faExchangeAlt,
             })
           }
