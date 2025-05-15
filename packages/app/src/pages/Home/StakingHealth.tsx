@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { CardHeader } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 import {
   AlertBox,
   AnalyticsContainer,
@@ -56,6 +57,7 @@ export const StakingHealth = () => {
   const navigate = useNavigate()
   const { poolsMetaData } = useBondedPools()
   const { getStakedBalance } = useTransferOptions()
+  const { openModal } = useOverlay().modal
 
   // Get nominations if user is nominating
   const nominated = formatWithPrefs(getNominations(activeAddress))
@@ -277,26 +279,41 @@ export const StakingHealth = () => {
     recommendations.forEach((rec) => {
       switch (rec.type) {
         case 'performance':
-          actions.push({
-            title: t('actionOptimizeReturns'),
-            description: t('actionOptimizeReturnsDesc'),
-            onClick: () => navigate('/validators'),
-            icon: faChartLine,
-          })
+          // Only show optimize returns for direct nominators, not pool stakers
+          if (!isInPool) {
+            actions.push({
+              title: t('actionOptimizeReturns'),
+              description: t('actionOptimizeReturnsDesc'),
+              onClick: () => navigate('/validators'),
+              icon: faChartLine,
+            })
+          }
           break
         case 'commission':
-          actions.push({
-            title: t('actionChangeValidators'),
-            description: t('actionChangeValidatorsDesc'),
-            onClick: () => navigate('/validators'),
-            icon: faExchangeAlt,
-          })
+          // Only show change validators for direct nominators, not pool stakers
+          if (!isInPool) {
+            actions.push({
+              title: t('actionChangeValidators'),
+              description: t('actionChangeValidatorsDesc'),
+              onClick: () => navigate('/validators'),
+              icon: faExchangeAlt,
+            })
+          }
           break
         case 'pool':
           actions.push({
             title: t('actionReviewPool'),
             description: t('actionReviewPoolDesc'),
-            onClick: () => navigate('/pools'),
+            // Open the ManagePool modal instead of navigating to pools page
+            onClick: () =>
+              openModal({
+                key: 'ManagePool',
+                options: {
+                  disableWindowResize: true,
+                  disableScroll: true,
+                },
+                size: 'sm',
+              }),
             icon: faUsers,
           })
           break
