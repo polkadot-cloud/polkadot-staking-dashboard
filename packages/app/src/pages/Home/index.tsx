@@ -332,6 +332,8 @@ const QuickActions = () => {
       icon: faPaperPlane,
       label: t('send'),
       onClick: () => openModal({ key: 'Send', size: 'sm' }),
+      // Disable send button if there's no balance to send
+      disabled: !activeAddress || freeBalance.isLessThanOrEqualTo(0),
     },
     {
       icon: stakeButtonProps.icon,
