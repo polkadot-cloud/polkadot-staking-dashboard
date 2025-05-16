@@ -120,6 +120,7 @@
     "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
     "inPool": "In a Pool",
     "inPools": "is currently bonded in pools.",
+    "inTheLast30Days": "In the last 30 days you have earned",
     "inactiveNominations": "Inactive Nominations",
     "inactivePoolNotNominating": "Inactive: Pool Not Nominating",
     "insufficientBalanceAddFunds": "Please add more funds to your wallet to enable staking options.",

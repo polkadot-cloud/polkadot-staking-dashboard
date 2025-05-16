@@ -151,9 +151,30 @@ export const WelcomeWrapper = styled.div`
       }
     }
 
+    .welcome-content-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
     .welcome-message {
-      margin-bottom: 1.5rem;
+      margin-bottom: 0;
       font-size: 1.05rem;
+    }
+
+    .reward-info {
+      font-size: 1.1rem;
+      background: var(--background-primary);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border-left: 3px solid var(--network-color-secondary);
+      margin: 0;
+      line-height: 1.5;
+
+      strong {
+        color: var(--network-color-primary);
+        font-weight: 600;
+      }
     }
 
     .features-list {

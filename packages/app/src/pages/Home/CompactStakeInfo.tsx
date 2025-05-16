@@ -127,8 +127,19 @@ export const CompactStakeInfo = () => {
     }
   } else if (isDirectNomination) {
     // For direct nominators - use the unclaimed rewards from the Payouts context
-    pendingRewards = new BigNumber(unclaimedRewards.total)
-    formattedPendingRewards = pendingRewards.toFormat()
+    // First convert from planck to unit
+    const pendingRewardsInUnit = planckToUnit(unclaimedRewards.total, units)
+    pendingRewards = new BigNumber(pendingRewardsInUnit)
+
+    // Format based on value size
+    if (pendingRewards.isZero()) {
+      formattedPendingRewards = '0'
+    } else if (pendingRewards.lt(1)) {
+      // For values less than 1, display with proper decimal places
+      formattedPendingRewards = pendingRewards.toFormat()
+    } else {
+      formattedPendingRewards = pendingRewards.toFormat()
+    }
   }
 
   // Get nomination status for direct nominators

@@ -3,10 +3,24 @@
 
 import { faWallet } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { planckToUnit } from '@w3ux/utils'
 import HandWaveIcon from 'assets/icons/hand.svg?react'
+import BigNumber from 'bignumber.js'
+import { getNetworkData } from 'consts/util'
+import {
+  fetchNominatorRewardTrend,
+  fetchPoolRewardTrend,
+} from 'plugin-staking-api'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
+import { useApi } from '../../contexts/Api'
+import { useBalances } from '../../contexts/Balances'
 import { useImportedAccounts } from '../../contexts/Connect/ImportedAccounts'
+import { useNetwork } from '../../contexts/Network'
+import { useActivePool } from '../../contexts/Pools/ActivePool'
+import { useStaking } from '../../contexts/Staking'
+import { useErasPerDay } from '../../hooks/useErasPerDay'
 import { ButtonCopy } from '../../library/ButtonCopy'
 import { WelcomeWrapper } from './Wrappers'
 
@@ -14,10 +28,63 @@ export const WelcomeSection = () => {
   const { t } = useTranslation('pages')
   const { activeAddress } = useActiveAccounts()
   const { getAccount } = useImportedAccounts()
+  const { network } = useNetwork()
+  const { activeEra } = useApi()
+  const { inSetup, isNominating } = useStaking()
+  const { inPool } = useActivePool()
+  const { getStakingLedger } = useBalances()
+  const { erasPerDay } = useErasPerDay()
+
+  // State to store 30-day reward amount
+  const [rewardAmount, setRewardAmount] = useState<string>('0')
+  const [isLoading, setIsLoading] = useState(false)
+
+  // Get network data for unit conversion
+  const { unit, units } = getNetworkData(network)
 
   // Get account details if available
   const accountData = activeAddress ? getAccount(activeAddress) : null
   const accountName = accountData?.name || null
+
+  // Check if user is actively staking (nominating or in pool)
+  const isActivelyStaking = (!inSetup() && isNominating()) || inPool()
+
+  // Fetch 30-day rewards if user is actively staking
+  useEffect(() => {
+    const fetchRewardData = async () => {
+      if (activeAddress && activeEra.index > 0 && isActivelyStaking) {
+        setIsLoading(true)
+
+        try {
+          const { poolMembership } = getStakingLedger(activeAddress)
+          const eras = erasPerDay * 30
+          // 30 day duration in seconds
+          const duration = 2592000
+
+          const result = poolMembership
+            ? await fetchPoolRewardTrend(network, activeAddress, duration)
+            : await fetchNominatorRewardTrend(network, activeAddress, eras)
+
+          if (result) {
+            // Convert planck to readable units
+            const formattedValue = new BigNumber(
+              planckToUnit(result.reward, units)
+            )
+              .decimalPlaces(3)
+              .toFormat()
+
+            setRewardAmount(formattedValue)
+          }
+        } catch (error) {
+          console.error('Error fetching reward data:', error)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    fetchRewardData()
+  }, [activeAddress, network, activeEra.index, isActivelyStaking])
 
   // If user has an active account, show personalized welcome
   if (activeAddress) {
@@ -35,7 +102,21 @@ export const WelcomeSection = () => {
               <ButtonCopy value={activeAddress} size="0.95rem" xMargin />
             </div>
           </div>
-          <p className="welcome-message">{t('welcomeMessage')}</p>
+          <div className="welcome-content-text">
+            <p className="welcome-message">{t('welcomeMessage')}</p>
+
+            {/* Show 30-day reward if user is actively staking */}
+            {isActivelyStaking && !isLoading && (
+              <p className="reward-info">
+                {t('inTheLast30Days', {
+                  defaultValue: 'In the last 30 days you have earned',
+                })}{' '}
+                <strong>
+                  {rewardAmount} {unit}
+                </strong>
+              </p>
+            )}
+          </div>
         </div>
       </WelcomeWrapper>
     )
