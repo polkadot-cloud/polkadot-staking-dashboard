@@ -155,25 +155,52 @@ export const WelcomeWrapper = styled.div`
       display: flex;
       flex-direction: column;
       gap: 1rem;
-    }
+      align-items: flex-start;
+      width: 100%;
 
-    .welcome-message {
-      margin-bottom: 0;
-      font-size: 1.05rem;
-    }
+      .welcome-text-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        position: relative;
+        padding: 0;
+        margin: 0;
+      }
 
-    .reward-info {
-      font-size: 1.1rem;
-      background: var(--background-primary);
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border-left: 3px solid var(--network-color-secondary);
-      margin: 0;
-      line-height: 1.5;
+      .welcome-message {
+        margin-bottom: 0;
+        font-size: 1.05rem;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
 
-      strong {
-        color: var(--network-color-primary);
-        font-weight: 600;
+      .reward-info {
+        font-size: 1.1rem;
+        background: transparent;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        line-height: 1.5;
+        width: 100%;
+        box-sizing: border-box;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: -15px;
+          top: 0;
+          bottom: 0;
+          width: 3px;
+          background: var(--network-color-secondary);
+        }
+
+        strong {
+          color: var(--network-color-primary);
+          font-weight: 600;
+        }
       }
     }
 
