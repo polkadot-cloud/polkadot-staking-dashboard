@@ -102,3 +102,80 @@ export const BannerWrapper = styled.div`
     }
   }
 `
+
+// Container for Quick Actions buttons
+export const QuickActionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  height: 100%;
+`
+
+// Container for help options that appear side by side in the same space as one button
+export const HelpOptionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+
+  &.rewards-options {
+    .reward-option {
+      .icon {
+        color: var(--network-color-primary);
+      }
+    }
+  }
+
+  .help-option,
+  .reward-option {
+    padding: 1rem 0.5rem;
+  }
+`
+
+// Styled button for Quick Actions
+export const ActionButton = styled.button<{ $expanded?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+  min-height: 5.5rem;
+  height: 100%;
+  text-align: center;
+  background: var(--button-primary-background);
+  border: 1px solid var(--border-primary-color);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+
+  &:hover {
+    background: ${(props) =>
+      props.disabled
+        ? 'var(--button-primary-background)'
+        : 'var(--button-hover-background)'};
+  }
+
+  .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--network-color-primary);
+  }
+
+  .label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color-primary);
+  }
+
+  /* Highlight the button when expanded */
+  ${(props) =>
+    props.$expanded &&
+    `
+    background: var(--button-hover-background);
+    border-color: var(--border-primary-color);
+  `}
+`

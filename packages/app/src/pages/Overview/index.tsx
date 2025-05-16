@@ -10,6 +10,7 @@ import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
+import { QuickActions } from './QuickActions'
 import { StakeStatus } from './StakeStatus'
 import { AverageRewardRate } from './Stats/AveragelRewardRate'
 import { NextRewards } from './Stats/NextRewards'
@@ -34,6 +35,13 @@ export const Overview = () => {
       </Stat.Row>
       <Page.Row>
         <StakeStatus />
+      </Page.Row>
+      <Page.Row>
+        <Page.RowSection>
+          <CardWrapper>
+            <QuickActions />
+          </CardWrapper>
+        </Page.RowSection>
       </Page.Row>
       <Page.Row>
         <Page.RowSection secondary>
