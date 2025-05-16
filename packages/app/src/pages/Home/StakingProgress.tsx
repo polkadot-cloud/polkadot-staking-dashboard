@@ -93,7 +93,16 @@ const ChecklistItem = styled.div`
   }
 
   &.completed {
-    opacity: 0.7;
+    background: var(--accent-color-transparent);
+    .icon {
+      color: var(--accent-color-primary);
+    }
+    .item-title,
+    .item-description,
+    .item-supplementary {
+      color: var(--accent-color-primary);
+    }
+    opacity: 1;
   }
 `
 

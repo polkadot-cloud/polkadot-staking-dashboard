@@ -31,3 +31,8 @@
     }
   }
 }
+
+/* Fix: dark mode override for h1 color in TokenFiat */
+.theme-dark .tokenFiat > div:last-child > h1 {
+  color: var(--text-color-secondary);
+}

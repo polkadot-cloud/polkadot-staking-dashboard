@@ -438,7 +438,7 @@ export const StakeInfoValueWrapper = styled.div`
   .value {
     font-family: InterSemiBold, sans-serif;
     font-size: 1.15rem;
-    color: var(--text-color-primary);
+    color: var(--text-color-secondary);
     font-weight: 600;
     display: flex;
     align-items: center;

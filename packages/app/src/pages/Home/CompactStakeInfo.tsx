@@ -46,25 +46,6 @@ const StakeInfoLabel = styled.div`
   font-weight: 500;
 `
 
-// Styled DOT value display
-const DOTValueWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  .value {
-    font-size: 1.15rem;
-    font-weight: 600;
-  }
-
-  .unit {
-    margin-left: 0.5rem;
-    color: var(--text-color-secondary);
-    font-size: 1rem;
-    font-weight: 500;
-  }
-`
-
 // Compact Staking Information Component for Easy Mode
 export const CompactStakeInfo = () => {
   const { t } = useTranslation('pages')
@@ -341,10 +322,12 @@ export const CompactStakeInfo = () => {
           <StakeInfoLabel>
             {isDirectNomination ? t('pendingPayouts') : t('unclaimedRewards')}
           </StakeInfoLabel>
-          <DOTValueWrapper>
-            <span className="value">{formattedPendingRewards}</span>
-            <span className="unit">{unit}</span>
-          </DOTValueWrapper>
+          <StakeInfoValueWrapper>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="value">{formattedPendingRewards}</span>
+              <span className="unit">{unit}</span>
+            </div>
+          </StakeInfoValueWrapper>
         </div>
 
         {/* Manage Pool button */}
