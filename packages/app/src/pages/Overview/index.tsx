@@ -10,6 +10,7 @@ import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
+import { QuickActions } from './QuickActions'
 import { StakeStatus } from './StakeStatus'
 import { AverageRewardRate } from './Stats/AveragelRewardRate'
 import { NextRewards } from './Stats/NextRewards'
@@ -22,6 +23,8 @@ export const Overview = () => {
 
   // Fiat values result in a slightly larger height for Balance & Payouts
   const showFiat = pluginEnabled('staking_api') && network !== 'westend'
+
+  const STATUS_HEIGHT = 110
   const PAYOUTS_HEIGHT = showFiat ? 385 : 380
 
   return (
@@ -33,7 +36,12 @@ export const Overview = () => {
         <NextRewards />
       </Stat.Row>
       <Page.Row>
-        <StakeStatus />
+        <Page.RowSection>
+          <StakeStatus height={STATUS_HEIGHT} />
+        </Page.RowSection>
+        <Page.RowSection secondary hLast vLast>
+          <QuickActions height={STATUS_HEIGHT} />
+        </Page.RowSection>
       </Page.Row>
       <Page.Row>
         <Page.RowSection secondary>

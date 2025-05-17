@@ -112,7 +112,7 @@ export const PageToggleWrapper = styled.div`
   flex-flow: row wrap;
   align-items: center;
   margin-left: 0.5rem;
-  height: 100%;
+  height: 3.5rem;
 
   > span {
     border-left: 1px solid var(--border-primary-color);

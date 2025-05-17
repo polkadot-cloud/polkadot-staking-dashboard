@@ -26,7 +26,7 @@
     }
   }
   &.last {
-    @media (min-width: $page-width-medium-threshold) {
+    @media (min-width: $row-section-thirds-threshold) {
       padding-right: 0.75rem;
     }
   }
