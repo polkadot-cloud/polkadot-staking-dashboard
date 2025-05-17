@@ -225,7 +225,7 @@
     "validator_one": "{{count}} Validador",
     "validator_other": "{{count}} Validadores",
     "validators": "Validadores",
-    "viewRewards": "Ver Recompensas",
+    "rewards": "Recompensas",
     "viewTransactions": "Ver Transacciones",
     "waitingForActiveNominations": "Esperando nominaciones activas",
     "website": "Sitio Web",

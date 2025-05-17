@@ -8,7 +8,6 @@ import {
   faCoins,
   faEnvelope,
   faHandHoldingDollar,
-  faHistory,
   faPaperPlane,
   faPlus,
   faQuestionCircle,
@@ -19,6 +18,7 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { getNetworkData } from 'consts/util'
+import { CardWrapper } from 'library/Card/Wrappers'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -36,7 +36,7 @@ import {
   QuickActionsContainer,
 } from './Wrappers'
 
-export const QuickActions = () => {
+export const QuickActions = ({ height }: { height: number }) => {
   const { t } = useTranslation('pages')
   const navigate = useNavigate()
   const { network } = useNetwork()
@@ -285,7 +285,7 @@ export const QuickActions = () => {
     if (isNominating()) {
       return {
         icon: faChartLine,
-        label: t('viewRewards'),
+        label: t('rewards'),
         onClick: () => navigate('/rewards'),
         disabled: !hasStakedTokens,
       }
@@ -371,24 +371,11 @@ export const QuickActions = () => {
       // Disable unstake if there's nothing staked
       disabled: !hasStakedTokens,
     },
-    // Transaction History is always shown
-    {
-      icon: faHistory,
-      label: t('viewTransactions'),
-      onClick: () =>
-        activeAddress
-          ? window.open(
-              `https://${network}.subscan.io/account/${activeAddress}`,
-              '_blank'
-            )
-          : null,
-      disabled: !activeAddress,
-    },
   ]
 
   return (
-    <>
-      <CardHeader>
+    <CardWrapper style={{ padding: 0 }} height={height}>
+      <CardHeader style={{ padding: '1.25rem 1rem 0.5rem 1.25rem' }}>
         <h4>{t('quickActions')}</h4>
       </CardHeader>
       <QuickActionsContainer>
@@ -435,6 +422,6 @@ export const QuickActions = () => {
           </ActionButton>
         )}
       </QuickActionsContainer>
-    </>
+    </CardWrapper>
   )
 }
