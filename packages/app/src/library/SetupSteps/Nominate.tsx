@@ -7,6 +7,8 @@ import {
   ManageNominationsProvider,
   useManageNominations,
 } from 'contexts/ManageNominations'
+import { usePoolSetups } from 'contexts/PoolSetups'
+import type { PoolProgress } from 'contexts/PoolSetups/types'
 import { useSetup } from 'contexts/Setup'
 import type { NominatorProgress } from 'contexts/Setup/types'
 import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
@@ -23,7 +25,8 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('app')
   const { activeAddress } = useActiveAccounts()
   const { setNominations } = useManageNominations()
-  const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()
+  const { getPoolSetup, setPoolSetup } = usePoolSetups()
+  const { getNominatorSetup, setActiveAccountSetup } = useSetup()
 
   const setup =
     bondFor === 'nominator'
@@ -33,9 +36,13 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { progress } = setup
 
   // Handler for updating setup.
-  const handleSetupUpdate = (value: NominatorProgress) => {
+  const handleSetupUpdate = (value: NominatorProgress | PoolProgress) => {
     setNominations(value.nominations)
-    setActiveAccountSetup(bondFor, value)
+    if (bondFor === 'nominator') {
+      setActiveAccountSetup(bondFor, value)
+    } else {
+      setPoolSetup(value as PoolProgress)
+    }
   }
 
   // Generation component props
@@ -80,8 +87,9 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
 }
 
 export const Nominate = (props: NominationsProps) => {
+  const { getPoolSetup } = usePoolSetups()
+  const { getNominatorSetup } = useSetup()
   const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup, getPoolSetup } = useSetup()
   const setup =
     props.bondFor === 'nominator'
       ? getNominatorSetup(activeAddress)

@@ -11,7 +11,7 @@ import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useSetup } from 'contexts/Setup'
+import { usePoolSetups } from 'contexts/PoolSetups'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { Warning } from 'library/Form/Warning'
@@ -33,7 +33,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { newBatchCall } = useBatchCall()
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
-  const { getPoolSetup, removeSetupProgress } = useSetup()
+  const { getPoolSetup, removePoolSetup } = usePoolSetups()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { queryBondedPool, addToBondedPools } = useBondedPools()
   const { unit, units } = getNetworkData(network)
@@ -77,8 +77,8 @@ export const Summary = ({ section }: SetupStepProps) => {
         addToBondedPools(pool)
       }
 
-      // Reset setup progress.
-      removeSetupProgress('pool', activeAddress)
+      // Reset setup progress
+      removePoolSetup(activeAddress)
     },
   })
 

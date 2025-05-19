@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useSetup } from 'contexts/Setup'
-import type { PoolProgress } from 'contexts/Setup/types'
+import { usePoolSetups } from 'contexts/PoolSetups'
+import type { PoolProgress } from 'contexts/PoolSetups/types'
 import { Footer } from 'library/SetupSteps/Footer'
 import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
@@ -16,7 +16,7 @@ import type { PoolRoles as PoolRolesInterface } from 'types'
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { activeAddress } = useActiveAccounts()
-  const { getPoolSetup, setActiveAccountSetup } = useSetup()
+  const { getPoolSetup, setPoolSetup } = usePoolSetups()
   const setup = getPoolSetup(activeAddress)
   const { progress } = setup
 
@@ -39,7 +39,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
 
   // handler for updating pool roles
   const handleSetupUpdate = (value: PoolProgress) => {
-    setActiveAccountSetup('pool', value)
+    setPoolSetup(value)
   }
 
   // update pool roles on account change
@@ -53,7 +53,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
   useEffect(() => {
     // only update if this section is currently active
     if (setup.section === section) {
-      setActiveAccountSetup('pool', {
+      setPoolSetup({
         ...progress,
         roles: initialValue,
       })
