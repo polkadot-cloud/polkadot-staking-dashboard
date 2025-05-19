@@ -23,6 +23,7 @@ export type NominatorSetups = Record<string, NominatorSetup>
 
 export interface NominatorSetup {
   section: number
+  simple: boolean
   progress: NominatorProgress
 }
 

@@ -41,7 +41,7 @@ export const NominatorSetupsProvider = ({
   // Update nominator setups state
   const setNominatorSetups = (setups: NominatorSetups) => {
     setLocalNominatorSetups(setups)
-    setNominatorSetupsState(setups as NominatorSetups)
+    setNominatorSetupsState(setups)
   }
 
   // Gets the setup progress for a connected account. Falls back to default setup if progress does
@@ -54,16 +54,22 @@ export const NominatorSetupsProvider = ({
       setup[address || ''] || {
         progress: defaultNominatorProgress,
         section: 1,
+        simple: false,
       }
     )
   }
 
-  const setNominatorSetup = (progress: NominatorProgress) => {
+  const setNominatorSetup = (
+    progress: NominatorProgress,
+    simple: boolean = false
+  ) => {
     if (activeAddress) {
       const updatedSetups = updateSetups(
         { ...nominatorSetups },
         progress,
-        activeAddress
+        activeAddress,
+        undefined,
+        simple
       )
       setNominatorSetups(updatedSetups)
     }
@@ -96,15 +102,18 @@ export const NominatorSetupsProvider = ({
     all: NominatorSetups,
     progress: NominatorProgress,
     account: string,
-    maybeSection?: number
+    maybeSection: number | undefined,
+    maybeSimple?: boolean
   ) => {
     const current = Object.assign(all[account] || {})
     const section = maybeSection ?? current.section ?? 1
+    const simple = maybeSimple ?? current.simple ?? false
 
     all[account] = {
       ...current,
       progress,
       section,
+      simple,
     }
     return all
   }
