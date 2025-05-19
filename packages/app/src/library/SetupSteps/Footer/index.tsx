@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { usePoolSetups } from 'contexts/PoolSetups'
-import { useSetup } from 'contexts/Setup'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import type { FooterProps } from '../types'
@@ -13,7 +13,7 @@ export const Footer = ({ complete, bondFor }: FooterProps) => {
   const { t } = useTranslation('app')
   const { activeAddress } = useActiveAccounts()
   const { getPoolSetup, setPoolSetupSection } = usePoolSetups()
-  const { getNominatorSetup, setActiveAccountSetupSection } = useSetup()
+  const { getNominatorSetup, setNominatorSetupSection } = useNominatorSetups()
 
   const setup =
     bondFor === 'nominator'
@@ -30,7 +30,7 @@ export const Footer = ({ complete, bondFor }: FooterProps) => {
             onClick={() => {
               const newSection = setup.section + 1
               if (bondFor === 'nominator') {
-                setActiveAccountSetupSection(bondFor, newSection)
+                setNominatorSetupSection(newSection)
               } else {
                 setPoolSetupSection(newSection)
               }

@@ -2,8 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeString } from '@w3ux/types'
-import type { PoolProgress } from 'contexts/PoolSetups/types'
-import type { AnyJson, BondFor, MaybeAddress } from 'types'
+import type { MaybeAddress, Validator } from 'types'
+
+export interface NominatorSetupsContextInterface {
+  getNominatorSetup: (address: MaybeAddress) => NominatorSetup
+  setNominatorSetup: (progresss: NominatorProgress) => void
+  removeNominatorSetup: (address: MaybeAddress) => void
+  getNominatorSetupPercent: (address: MaybeAddress) => number
+  setNominatorSetupSection: (section: number) => void
+}
 
 export type PayeeOptions =
   | 'Staked'
@@ -21,22 +28,11 @@ export interface NominatorSetup {
 
 export interface NominatorProgress {
   payee: PayeeConfig
-  nominations: AnyJson[]
+  nominations: Validator[]
   bond: MaybeString
 }
 
 export interface PayeeConfig {
   destination: PayeeOptions | null
   account: MaybeAddress
-}
-
-export interface SetupContextInterface {
-  removeSetupProgress: (t: BondFor, a: MaybeAddress) => void
-  getNominatorSetupPercent: (a: MaybeAddress) => number
-  setActiveAccountSetup: (
-    t: BondFor,
-    p: NominatorProgress | PoolProgress
-  ) => void
-  setActiveAccountSetupSection: (t: BondFor, s: number) => void
-  getNominatorSetup: (address: MaybeAddress) => NominatorSetup
 }

@@ -7,10 +7,10 @@ import {
   ManageNominationsProvider,
   useManageNominations,
 } from 'contexts/ManageNominations'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
+import type { NominatorProgress } from 'contexts/NominatorSetups/types'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import type { PoolProgress } from 'contexts/PoolSetups/types'
-import { useSetup } from 'contexts/Setup'
-import type { NominatorProgress } from 'contexts/Setup/types'
 import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
 import { Footer } from 'library/SetupSteps/Footer'
 import { Header } from 'library/SetupSteps/Header'
@@ -26,7 +26,7 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { activeAddress } = useActiveAccounts()
   const { setNominations } = useManageNominations()
   const { getPoolSetup, setPoolSetup } = usePoolSetups()
-  const { getNominatorSetup, setActiveAccountSetup } = useSetup()
+  const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 
   const setup =
     bondFor === 'nominator'
@@ -39,7 +39,7 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
   const handleSetupUpdate = (value: NominatorProgress | PoolProgress) => {
     setNominations(value.nominations)
     if (bondFor === 'nominator') {
-      setActiveAccountSetup(bondFor, value)
+      setNominatorSetup(value as NominatorProgress)
     } else {
       setPoolSetup(value as PoolProgress)
     }
@@ -88,8 +88,8 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
 
 export const Nominate = (props: NominationsProps) => {
   const { getPoolSetup } = usePoolSetups()
-  const { getNominatorSetup } = useSetup()
   const { activeAddress } = useActiveAccounts()
+  const { getNominatorSetup } = useNominatorSetups()
   const setup =
     props.bondFor === 'nominator'
       ? getNominatorSetup(activeAddress)

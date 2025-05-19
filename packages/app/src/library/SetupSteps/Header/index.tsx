@@ -3,8 +3,8 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useHelp } from 'contexts/Help'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { usePoolSetups } from 'contexts/PoolSetups'
-import { useSetup } from 'contexts/Setup'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonSecondary } from 'ui-buttons'
 import type { HeaderProps } from '../types'
@@ -21,7 +21,7 @@ export const Header = ({
   const { openHelp } = useHelp()
   const { activeAddress } = useActiveAccounts()
   const { getPoolSetup, setPoolSetupSection } = usePoolSetups()
-  const { getNominatorSetup, setActiveAccountSetupSection } = useSetup()
+  const { getNominatorSetup, setNominatorSetupSection } = useNominatorSetups()
 
   const setup =
     bondFor === 'nominator'
@@ -47,7 +47,7 @@ export const Header = ({
                   text={t('update')}
                   onClick={() => {
                     if (bondFor === 'nominator') {
-                      setActiveAccountSetupSection(bondFor, thisSection)
+                      setNominatorSetupSection(thisSection)
                     } else {
                       setPoolSetupSection(thisSection)
                     }

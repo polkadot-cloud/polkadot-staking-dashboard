@@ -66,7 +66,7 @@ export const PoolSetupsProvider = ({ children }: { children: ReactNode }) => {
     setPoolSetups(updatedSetups)
   }
 
-  // Update the progress item of either a nominator setup or pool setup
+  // Update the progress item of a pool setup
   const updateSetups = (
     all: PoolSetups,
     progress: PoolProgress,

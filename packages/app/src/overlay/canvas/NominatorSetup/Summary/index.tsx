@@ -10,7 +10,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useSetup } from 'contexts/Setup'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
 import type { PalletStakingRewardDestination } from 'dedot/chaintypes'
 import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
@@ -34,7 +34,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
   const { activeAddress, activeProxy } = useActiveAccounts()
-  const { getNominatorSetup, removeSetupProgress } = useSetup()
+  const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
   const { unit, units } = getNetworkData(network)
 
   const setup = getNominatorSetup(activeAddress)
@@ -80,11 +80,10 @@ export const Summary = ({ section }: SetupStepProps) => {
     from: activeAddress,
     shouldSubmit: true,
     callbackInBlock: () => {
-      // Close the canvas after the extrinsic is included in a block.
+      // Close the canvas after the extrinsic is included in a block
       closeCanvas()
-
-      // Reset setup progress.
-      removeSetupProgress('nominator', activeAddress)
+      // Reset setup progress
+      removeNominatorSetup(activeAddress)
     },
   })
 

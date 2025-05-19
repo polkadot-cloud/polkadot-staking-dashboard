@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useSetup } from 'contexts/Setup'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useTxMeta } from 'contexts/TxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { NominateStatusBar } from 'library/Form/NominateStatusBar'
@@ -18,7 +18,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { getTxSubmissionByTag } = useTxMeta()
   const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup, setActiveAccountSetup } = useSetup()
+  const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
   const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
 
@@ -43,7 +43,7 @@ export const Bond = ({ section }: SetupStepProps) => {
       bond: value.bond.toString() || '0',
     })
     // set nominator progress bond value.
-    setActiveAccountSetup('nominator', {
+    setNominatorSetup({
       ...progress,
       bond: value.bond.toString(),
     })
@@ -60,7 +60,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === section) {
-      setActiveAccountSetup('nominator', {
+      setNominatorSetup({
         ...progress,
         bond: initialBondValue,
       })
