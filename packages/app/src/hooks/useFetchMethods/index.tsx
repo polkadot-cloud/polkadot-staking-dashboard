@@ -6,7 +6,7 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useValidatorFilters } from 'hooks/useValidatorFilters'
 import type { Validator } from 'types'
-import type { AddNominationsType } from './types'
+import type { AddNominationsType } from '../../library/GenerateNominations/types'
 
 export const useFetchMehods = () => {
   const { favoritesList } = useFavoriteValidators()

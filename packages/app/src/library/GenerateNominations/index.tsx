@@ -16,6 +16,7 @@ import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyFunction, AnyJson, Validator } from 'types'
+import { useFetchMehods } from '../../hooks/useFetchMethods'
 import { Confirm } from '../Prompt/Confirm'
 import { ListControls } from './Controls/ListControls'
 import { Methods } from './Methods'
@@ -25,7 +26,6 @@ import type {
   GenerateNominationsProps,
   SelectHandler,
 } from './types'
-import { useFetchMehods } from './useFetchMethods'
 import { Wrapper } from './Wrapper'
 
 export const GenerateNominations = ({
