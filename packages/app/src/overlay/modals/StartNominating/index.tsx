@@ -6,22 +6,49 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
+import { useOverlay } from 'ui-overlay'
 import { ItemsWrapper, ItemWrapper } from './Wrappers'
 
 export const StartNominating = () => {
   const { t } = useTranslation()
+  const { openCanvas } = useOverlay().canvas
+  const { setModalStatus } = useOverlay().modal
 
   return (
     <>
       <Title title={t('startNominating', { ns: 'pages' })} />
       <Padding horizontalOnly style={{ marginTop: '1rem' }}>
         <ItemsWrapper>
-          <ItemWrapper>
+          <ItemWrapper
+            type="button"
+            onClick={() => {
+              setModalStatus('closing')
+              openCanvas({
+                key: 'NominatorSetup',
+                options: {
+                  simple: true,
+                },
+                size: 'xl',
+              })
+            }}
+          >
             <FontAwesomeIcon icon={faBolt} size="2x" />
             <h2>One-Click Setup</h2>
             <h3>Stake immediately with an optimised setup</h3>
           </ItemWrapper>
-          <ItemWrapper>
+          <ItemWrapper
+            type="button"
+            onClick={() => {
+              setModalStatus('closing')
+              openCanvas({
+                key: 'NominatorSetup',
+                options: {
+                  simple: false,
+                },
+                size: 'xl',
+              })
+            }}
+          >
             <FontAwesomeIcon icon={faCog} size="2x" />
             <h2>Custom Setup</h2>
             <h3>Customise your staking position</h3>
