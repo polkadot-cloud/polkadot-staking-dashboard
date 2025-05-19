@@ -22,10 +22,17 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer'
 import type { SetupStepProps } from 'library/SetupSteps/types'
 import { SubmitTx } from 'library/SubmitTx'
 import { useTranslation } from 'react-i18next'
+import { Separator } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { Bond } from '../Bond'
 import { SummaryWrapper } from './Wrapper'
 
-export const Summary = ({ section }: SetupStepProps) => {
+export const Summary = ({
+  section,
+  simple,
+}: SetupStepProps & {
+  simple: boolean
+}) => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { serviceApi } = useApi()
@@ -123,15 +130,23 @@ export const Summary = ({ section }: SetupStepProps) => {
             </div>
             <div>{t('validatorCount', { count: nominations.length })}</div>
           </section>
-          <section>
-            <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('bondAmount')}:
-            </div>
-            <div>
-              {new BigNumber(bond || 0).toFormat()} {unit}
-            </div>
-          </section>
+          {!simple ? (
+            <section>
+              <div>
+                <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" />{' '}
+                &nbsp; {t('bondAmount')}:
+              </div>
+
+              <div>
+                {new BigNumber(bond || 0).toFormat()} {unit}
+              </div>
+            </section>
+          ) : (
+            <>
+              <Separator transparent lg />
+              <Bond section={4} inline={true} />
+            </>
+          )}
         </SummaryWrapper>
         <div
           style={{

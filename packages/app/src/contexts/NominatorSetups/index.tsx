@@ -61,14 +61,15 @@ export const NominatorSetupsProvider = ({
 
   const setNominatorSetup = (
     progress: NominatorProgress,
-    simple: boolean = false
+    simple?: boolean,
+    section?: number
   ) => {
     if (activeAddress) {
       const updatedSetups = updateSetups(
         { ...nominatorSetups },
         progress,
         activeAddress,
-        undefined,
+        section,
         simple
       )
       setNominatorSetups(updatedSetups)

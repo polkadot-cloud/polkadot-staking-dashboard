@@ -14,7 +14,12 @@ import type { SetupStepProps } from 'library/SetupSteps/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export const Bond = ({ section }: SetupStepProps) => {
+export const Bond = ({
+  section,
+  inline,
+}: SetupStepProps & {
+  inline?: boolean
+}) => {
   const { t } = useTranslation('pages')
   const { getTxSubmissionByTag } = useTxMeta()
   const { activeAddress } = useActiveAccounts()
@@ -71,7 +76,9 @@ export const Bond = ({ section }: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={progress.bond !== '0' && progress.bond !== ''}
+        complete={
+          inline ? false : progress.bond !== '0' && progress.bond !== ''
+        }
         title={t('bond')}
         helpKey="Bonding"
         bondFor="nominator"
@@ -88,7 +95,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           maxWidth
         />
         <NominateStatusBar value={new BigNumber(bond.bond)} />
-        <Footer complete={bondValid} bondFor="nominator" />
+        {!inline && <Footer complete={bondValid} bondFor="nominator" />}
       </MotionContainer>
     </>
   )
