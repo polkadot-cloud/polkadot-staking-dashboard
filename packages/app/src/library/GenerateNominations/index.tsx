@@ -11,6 +11,7 @@ import { usePrompt } from 'contexts/Prompt'
 import { useStaking } from 'contexts/Staking'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useFetchMethods } from 'hooks/useFetchMethods'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect } from 'react'
@@ -25,7 +26,6 @@ import type {
   GenerateNominationsProps,
   SelectHandler,
 } from './types'
-import { useFetchMehods } from './useFetchMethods'
 import { Wrapper } from './Wrapper'
 
 export const GenerateNominations = ({
@@ -37,7 +37,7 @@ export const GenerateNominations = ({
     fetch: fetchFromMethod,
     add: addNomination,
     available: availableToNominate,
-  } = useFetchMehods()
+  } = useFetchMethods()
   const { isReady } = useApi()
   const { stakers } = useStaking().eraStakers
   const { activeAddress } = useActiveAccounts()

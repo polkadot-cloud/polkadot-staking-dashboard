@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useUi } from 'contexts/UI'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
@@ -18,11 +20,13 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation()
   const { isReady } = useApi()
   const navigate = useNavigate()
-
+  const { advancedMode } = useUi()
   const { inPool } = useActivePool()
+  const { openModal } = useOverlay().modal
   const { openCanvas } = useOverlay().canvas
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
+  const { generateOptimalSetup, setNominatorSetup } = useNominatorSetups()
 
   const nominateButtonDisabled =
     !isReady || !activeAddress || isReadOnlyAccount(activeAddress) || inPool()
@@ -41,11 +45,23 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                 >
                   <button
                     onClick={() => {
-                      openCanvas({
-                        key: 'NominatorSetup',
-                        options: {},
-                        size: 'xl',
-                      })
+                      if (advancedMode) {
+                        openModal({
+                          key: 'StartNominating',
+                          options: {},
+                          size: 'lg',
+                        })
+                      } else {
+                        // Set optimal nominator setup here, ready for canvas to display summary
+                        setNominatorSetup(generateOptimalSetup(), true, 4)
+                        openCanvas({
+                          key: 'NominatorSetup',
+                          options: {
+                            simple: true,
+                          },
+                          size: 'xl',
+                        })
+                      }
                     }}
                     disabled={nominateButtonDisabled}
                   >

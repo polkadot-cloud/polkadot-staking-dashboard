@@ -24,6 +24,7 @@ import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { AdvancedToggle } from './Advanced'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
@@ -145,6 +146,11 @@ export const SideMenu = () => {
                 size: sideMenuMinimised ? '1.05em' : '0.9em',
               }}
             />
+          </div>
+        </section>
+        <section>
+          <div className="inner">
+            <AdvancedToggle minimised={sideMenuMinimised} />
           </div>
         </section>
       </Wrapper>

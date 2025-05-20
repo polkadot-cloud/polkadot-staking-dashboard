@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useSetup } from 'contexts/Setup'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useTxMeta } from 'contexts/TxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { NominateStatusBar } from 'library/Form/NominateStatusBar'
@@ -14,11 +14,18 @@ import type { SetupStepProps } from 'library/SetupSteps/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export const Bond = ({ section }: SetupStepProps) => {
+export const Bond = ({
+  section,
+  inline,
+  handleBondValid,
+}: SetupStepProps & {
+  inline?: boolean
+  handleBondValid?: (valid: boolean) => void
+}) => {
   const { t } = useTranslation('pages')
   const { getTxSubmissionByTag } = useTxMeta()
   const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup, setActiveAccountSetup } = useSetup()
+  const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
   const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
 
@@ -34,7 +41,15 @@ export const Bond = ({ section }: SetupStepProps) => {
   })
 
   // bond valid
-  const [bondValid, setBondValid] = useState<boolean>(false)
+  const [bondValid, setBondValidState] = useState<boolean>(false)
+
+  // handler for bond valid
+  const setBondValid = (valid: boolean) => {
+    setBondValidState(valid)
+    if (handleBondValid) {
+      handleBondValid(valid)
+    }
+  }
 
   // handler for updating bond
   const handleSetBond = (value: { bond: BigNumber }) => {
@@ -43,7 +58,7 @@ export const Bond = ({ section }: SetupStepProps) => {
       bond: value.bond.toString() || '0',
     })
     // set nominator progress bond value.
-    setActiveAccountSetup('nominator', {
+    setNominatorSetup({
       ...progress,
       bond: value.bond.toString(),
     })
@@ -60,7 +75,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === section) {
-      setActiveAccountSetup('nominator', {
+      setNominatorSetup({
         ...progress,
         bond: initialBondValue,
       })
@@ -71,7 +86,9 @@ export const Bond = ({ section }: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={progress.bond !== '0' && progress.bond !== ''}
+        complete={
+          inline ? false : progress.bond !== '0' && progress.bond !== ''
+        }
         title={t('bond')}
         helpKey="Bonding"
         bondFor="nominator"
@@ -88,7 +105,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           maxWidth
         />
         <NominateStatusBar value={new BigNumber(bond.bond)} />
-        <Footer complete={bondValid} bondFor="nominator" />
+        {!inline && <Footer complete={bondValid} bondFor="nominator" />}
       </MotionContainer>
     </>
   )

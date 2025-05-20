@@ -13,4 +13,6 @@ export const defaultUIContext: UIContextInterface = {
   sideMenuMinimised: false,
   containerRefs: {},
   isBraveBrowser: false,
+  advancedMode: false,
+  setAdvancedMode: (value) => {},
 }

@@ -22,6 +22,7 @@ import { LedgerHardwareProvider } from 'contexts/LedgerHardware'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { useNetwork } from 'contexts/Network'
+import { NominatorSetupsProvider } from 'contexts/NominatorSetups'
 import { OperatorsProvider } from 'contexts/Operators'
 import { PayoutsProvider } from 'contexts/Payouts'
 import { PluginsProvider } from 'contexts/Plugins'
@@ -29,9 +30,9 @@ import { ActivePoolProvider } from 'contexts/Pools/ActivePool'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
+import { PoolSetupsProvider } from 'contexts/PoolSetups'
 import { PromptProvider } from 'contexts/Prompt'
 import { ProxiesProvider } from 'contexts/Proxies'
-import { SetupProvider } from 'contexts/Setup'
 import { StakingProvider } from 'contexts/Staking'
 import { TokenPricesProvider } from 'contexts/TokenPrice'
 import { TooltipProvider } from 'contexts/Tooltip'
@@ -85,7 +86,8 @@ export const Providers = () => {
       FavoriteValidatorsProvider,
       FastUnstakeProvider,
       PayoutsProvider,
-      SetupProvider,
+      PoolSetupsProvider,
+      NominatorSetupsProvider,
       MenuProvider,
       TooltipProvider,
       TxMetaProvider,
