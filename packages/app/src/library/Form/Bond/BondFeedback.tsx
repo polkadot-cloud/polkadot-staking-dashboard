@@ -12,7 +12,6 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Warning } from '../Warning'
-import { Spacer } from '../Wrappers'
 import type { BondFeedbackProps } from '../types'
 import { BondInput } from './BondInput'
 
@@ -177,7 +176,6 @@ export const BondFeedback = ({
       {filteredErrors.map((err, i) => (
         <Warning key={`setup_error_${i}`} text={err} />
       ))}
-      <Spacer />
       <div
         style={{
           width: '100%',

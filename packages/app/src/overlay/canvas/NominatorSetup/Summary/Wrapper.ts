@@ -14,29 +14,37 @@ export const SummaryWrapper = styled.div`
     flex-basis: 100%;
     display: flex;
     flex-flow: row wrap;
-    margin-top: 1rem;
-    padding: 0.5rem 0 0.75rem 0;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0 1rem 0;
 
-    > div:first-child {
-      color: var(--text-color-secondary);
-      width: 200px;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-
-      svg {
-        color: var(--accent-color-primary);
-      }
+    &:first-child {
+      margin-top: 0;
     }
 
-    > div:last-child {
-      color: var(--text-color-secondary);
-      flex-grow: 1;
+    > div {
       display: flex;
-      flex-flow: column nowrap;
+      flex-flow: row wrap;
 
-      p {
-        margin: 0.25rem 0;
+      &:first-child {
+        width: 3.5rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        > svg {
+          color: var(--accent-color-primary);
+        }
+      }
+
+      &:last-child {
+        flex-grow: 1;
+        flex-direction: column;
+        padding-left: 0.25rem;
+
+        > h4 {
+          color: var(--text-color-secondary);
+          margin-bottom: 0.3rem;
+        }
       }
     }
   }

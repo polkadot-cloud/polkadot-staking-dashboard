@@ -43,6 +43,10 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version
       if (localAppVersion !== version) {
+        // Added in 1.9.2
+        localStorage.removeItem('pool_setups')
+        localStorage.removeItem('nominator_setups')
+
         // Added in 1.9.1
         localStorage.removeItem('useWebsocket')
         localStorage.removeItem('connection_type')
