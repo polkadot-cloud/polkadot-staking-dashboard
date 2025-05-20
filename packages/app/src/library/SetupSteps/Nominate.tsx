@@ -7,8 +7,10 @@ import {
   ManageNominationsProvider,
   useManageNominations,
 } from 'contexts/ManageNominations'
-import { useSetup } from 'contexts/Setup'
-import type { NominatorProgress } from 'contexts/Setup/types'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
+import type { NominatorProgress } from 'contexts/NominatorSetups/types'
+import { usePoolSetups } from 'contexts/PoolSetups'
+import type { PoolProgress } from 'contexts/PoolSetups/types'
 import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
 import { Footer } from 'library/SetupSteps/Footer'
 import { Header } from 'library/SetupSteps/Header'
@@ -23,7 +25,8 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('app')
   const { activeAddress } = useActiveAccounts()
   const { setNominations } = useManageNominations()
-  const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()
+  const { getPoolSetup, setPoolSetup } = usePoolSetups()
+  const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 
   const setup =
     bondFor === 'nominator'
@@ -33,9 +36,13 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { progress } = setup
 
   // Handler for updating setup.
-  const handleSetupUpdate = (value: NominatorProgress) => {
+  const handleSetupUpdate = (value: NominatorProgress | PoolProgress) => {
     setNominations(value.nominations)
-    setActiveAccountSetup(bondFor, value)
+    if (bondFor === 'nominator') {
+      setNominatorSetup(value as NominatorProgress)
+    } else {
+      setPoolSetup(value as PoolProgress)
+    }
   }
 
   // Generation component props
@@ -80,8 +87,9 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
 }
 
 export const Nominate = (props: NominationsProps) => {
+  const { getPoolSetup } = usePoolSetups()
   const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup, getPoolSetup } = useSetup()
+  const { getNominatorSetup } = useNominatorSetups()
   const setup =
     props.bondFor === 'nominator'
       ? getNominatorSetup(activeAddress)

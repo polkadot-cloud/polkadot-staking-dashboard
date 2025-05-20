@@ -5,7 +5,7 @@ import { isValidAddress } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types'
+import type { PayeeConfig, PayeeOption } from 'contexts/NominatorSetups/types'
 import { AccountId32 } from 'dedot/codecs'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -45,7 +45,7 @@ export const UpdatePayee = () => {
   const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected)
 
   // update setup progress with payee config.
-  const handleChangeDestination = (destination: PayeeOptions) => {
+  const handleChangeDestination = (destination: PayeeOption) => {
     setSelected({
       destination,
       account: isValidAddress(account || '') ? account : null,
