@@ -148,11 +148,11 @@ export const SideMenu = () => {
             />
           </div>
           <Separator />
+        </section>
+        <section>
           <div className="inner">
-            <Heading title={t('mode')} minimised={sideMenuMinimised} />
             <AdvancedModeToggle minimised={sideMenuMinimised} />
           </div>
-          <Separator />
         </section>
       </Wrapper>
     </Page.Side>

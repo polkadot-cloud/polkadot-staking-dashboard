@@ -3,6 +3,7 @@
 
 import {
   faChartLine,
+  faSlidersH,
   faToggleOff,
   faToggleOn,
 } from '@fortawesome/free-solid-svg-icons'
@@ -123,7 +124,7 @@ export const AdvancedModeToggle = ({ minimised }: { minimised: boolean }) => {
       >
         <ToggleLabel>
           <span className="icon" style={{ color: 'var(--text-color-primary)' }}>
-            <FontAwesomeIcon icon={faChartLine} />
+            <FontAwesomeIcon icon={faSlidersH} />
           </span>
           {t('advanced')}
         </ToggleLabel>
