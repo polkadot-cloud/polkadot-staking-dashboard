@@ -12,7 +12,7 @@ import type {
   Exposure,
   StakingContextInterface,
 } from 'contexts/Staking/types'
-import { Syncs } from 'controllers/Syncs'
+import { removeSyncing, setSyncing } from 'global-bus'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type { MaybeAddress, NominationStatus } from 'types'
@@ -63,7 +63,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       // Check if account hasn't changed since worker started
       if (activeAddress === who) {
         // Syncing current eraStakers is now complete
-        Syncs.dispatch('era-stakers', 'complete')
+        removeSyncing('era-stakers')
 
         setStateWithRef(
           {
@@ -112,7 +112,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady || activeEra.index === 0) {
       return
     }
-    Syncs.dispatch('era-stakers', 'syncing')
+    setSyncing('era-stakers')
     const exposures = await fetchEraStakers(activeEra.index.toString())
 
     // Worker to calculate stats

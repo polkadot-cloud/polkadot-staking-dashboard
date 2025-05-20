@@ -3,8 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { Syncs } from 'controllers/Syncs'
+import { createSafeContext } from '@w3ux/hooks'
 import {
   activeEra$,
   apiStatus$,
@@ -48,7 +47,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     getInitialProviderType()
   )
   // RPC endpoints for active chains
-  const [rpcEndpoints, setRpcEndpoints] = useState<RpcEndpoints>(
+  const [, setRpcEndpoints] = useState<RpcEndpoints>(
     getInitialRpcEndpoints(network)
   )
   // Store Api connection status for active chains
@@ -97,29 +96,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     return endpoints[chain]
   }
 
-  const reInitialiseApi = async () => {
-    // Dispatch all default syncIds as syncing
-    Syncs.dispatchAllDefault()
-  }
-
   // Handle initial api connection
   useEffect(() => {
     // Uses initialisation ref to check whether this is the first context render, and initializes an Api instance for the current network if that is the case
     if (!initialisedRef.current) {
       initialisedRef.current = true
-      reInitialiseApi()
     }
   })
-
-  // If RPC endpoint changes, and not on light client, re-initialise API
-  useEffectIgnoreInitial(async () => {
-    reInitialiseApi()
-  }, [rpcEndpoints[network]])
-
-  // Re-initialise API and set defaults on network change
-  useEffectIgnoreInitial(() => {
-    reInitialiseApi()
-  }, [network])
 
   // Subscribe to global bus
   useEffect(() => {

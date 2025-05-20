@@ -5,8 +5,7 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { Syncs } from 'controllers/Syncs'
-import { activePools$ } from 'global-bus'
+import { activePools$, removeSyncing } from 'global-bus'
 import { useEffect, useState, type ReactNode } from 'react'
 import type { ActivePool } from 'types'
 import { useApi } from '../../Api'
@@ -116,11 +115,11 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (isReady) {
       if (!poolMembership) {
-        Syncs.dispatch('active-pools', 'complete')
+        removeSyncing('active-pools')
       } else if (
         activePools?.find((pool) => pool.id === poolMembership.poolId)
       ) {
-        Syncs.dispatch('active-pools', 'complete')
+        removeSyncing('active-pools')
       }
     }
   }, [network, isReady, poolMembership])
