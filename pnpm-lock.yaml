@@ -330,8 +330,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.99.0
-        version: 0.99.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+        specifier: ^0.100.0
+        version: 0.100.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@w3ux/utils':
         specifier: ^2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -451,8 +451,8 @@ importers:
         version: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.99.0
-        version: 0.99.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+        specifier: ^0.100.0
+        version: 0.100.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       bignumber.js:
         specifier: ^9.3.0
         version: 9.3.0
@@ -726,8 +726,8 @@ packages:
     resolution: {integrity: sha512-2Vms0ikA4hCJZLzBJ2HSpnmSwDaJBWE1JALgQ12zSs4YqM9vxqL8CpQPsOxsuXZzryaGFEP0mLFednc88DynSA==}
     engines: {node: '>=18'}
 
-  '@dedot/chaintypes@0.99.0':
-    resolution: {integrity: sha512-W5H9WHDdPZjm1XjmnqTtBBLB/sXjJi4YeYY2uPxzPvsgxJlvPT+yqBrtWJAFQD1YQMfIVh6jOPQjS8DMrG1aog==}
+  '@dedot/chaintypes@0.100.0':
+    resolution: {integrity: sha512-YRo6HPXF3AtSk6wJoPVk8PGKY8iS+8e+lrKPL007W9CSApUPiohs1evjNNBzmJHx79O3lWPxct9VJkecAjVOiQ==}
     peerDependencies:
       dedot: '>=0.7.1'
 
@@ -6432,7 +6432,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/chaintypes@0.99.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@dedot/chaintypes@0.100.0(dedot@0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       dedot: 0.10.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
