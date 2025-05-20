@@ -3,7 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
-import type { PayeeOptions } from 'contexts/NominatorSetups/types'
+import type { PayeeOption } from 'contexts/NominatorSetups/types'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { Spacer } from 'library/Form/Wrappers'
 import { PayeeInput } from 'library/PayeeInput'
@@ -37,7 +37,7 @@ export const Payee = ({ section }: SetupStepProps) => {
     !(payee.destination === 'Account' && payee.account === null)
 
   // update setup progress with payee config.
-  const handleChangeDestination = (destination: PayeeOptions) => {
+  const handleChangeDestination = (destination: PayeeOption) => {
     // set local value to update input element set setup payee
     setNominatorSetup({
       ...progress,
