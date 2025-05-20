@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { SyncID } from './types'
+import type { SyncId } from 'types'
 
-export const defaultSyncIds: SyncID[] = [
+export const defaultSyncStatus: SyncId[] = [
   'era-stakers',
   'bonded-pools',
   'active-pools',

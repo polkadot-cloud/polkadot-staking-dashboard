@@ -4,7 +4,6 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { Syncs } from 'controllers/Syncs'
 import {
   activeEra$,
   apiStatus$,
@@ -17,11 +16,13 @@ import {
   defaultRelayMetrics,
   defaultServiceInterface,
   defaultStakingMetrics,
+  defaultSyncStatus,
   getRpcEndpoints,
   networkConfig$,
   poolsConfig$,
   relayMetrics$,
   serviceInterface$,
+  setSyncingMulti,
   stakingMetrics$,
 } from 'global-bus'
 import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
@@ -99,7 +100,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const reInitialiseApi = async () => {
     // Dispatch all default syncIds as syncing
-    Syncs.dispatchAllDefault()
+    setSyncingMulti(defaultSyncStatus)
   }
 
   // Handle initial api connection

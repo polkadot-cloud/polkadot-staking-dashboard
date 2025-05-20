@@ -3,3 +3,4 @@
 
 export * from './externalAccounts/util'
 export * from './networkConfig/util'
+export * from './syncStatus/util'

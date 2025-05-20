@@ -6,8 +6,8 @@ import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { Syncs } from 'controllers/Syncs'
 import { hexToString } from 'dedot/utils'
+import { removeSyncing, setSyncing } from 'global-bus'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
@@ -85,7 +85,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     )
 
     bondedPoolsSynced.current = 'synced'
-    Syncs.dispatch('bonded-pools', 'complete')
+    removeSyncing('bonded-pools')
   }
 
   // Fetches pool nominations and updates state
@@ -308,7 +308,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Clear existing state for network refresh
   useEffectIgnoreInitial(() => {
     bondedPoolsSynced.current = 'unsynced'
-    Syncs.dispatch('bonded-pools', 'syncing')
+    setSyncing('bonded-pools')
     setStateWithRef([], setBondedPools, bondedPoolsRef)
     setPoolsMetadata({})
     setPoolsNominations({})
