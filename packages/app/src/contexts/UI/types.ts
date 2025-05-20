@@ -16,4 +16,6 @@ export interface UIContextInterface {
   advancedMode: boolean
   containerRefs: Record<string, RefObject<HTMLDivElement | null>>
   isBraveBrowser: boolean
+  advancedMode: boolean
+  setAdvancedMode: (value: boolean) => void
 }

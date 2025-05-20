@@ -14,14 +14,17 @@ export const PageCategories: PageCategoryItems = [
   {
     id: 1,
     key: 'default',
+    advanced: false,
   },
   {
     id: 2,
     key: 'stake',
+    advanced: false,
   },
   {
     id: 3,
     key: 'validators',
+    advanced: true,
   },
 ]
 
@@ -41,6 +44,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/overview',
     Entry: Overview,
     lottie: 'globe',
+    advanced: false,
   },
   {
     category: 2,
@@ -49,6 +53,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/pools',
     Entry: Pools,
     lottie: 'groups',
+    advanced: false,
   },
   {
     category: 2,
@@ -57,6 +62,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/nominate',
     Entry: Nominate,
     lottie: 'trending',
+    advanced: false,
   },
   {
     category: 2,
@@ -65,6 +71,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/rewards',
     Entry: Rewards,
     lottie: 'analytics',
+    advanced: false,
   },
   {
     category: 3,
@@ -73,6 +80,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/validators',
     Entry: Validators,
     lottie: 'view',
+    advanced: false,
   },
   {
     category: 3,
@@ -81,5 +89,6 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/operators',
     Entry: Operators,
     lottie: 'label',
+    advanced: false,
   },
 ]

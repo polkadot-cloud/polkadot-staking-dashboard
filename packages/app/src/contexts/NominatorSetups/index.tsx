@@ -8,6 +8,8 @@ import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { useFetchMethods } from 'hooks/useFetchMethods'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { MaybeAddress } from 'types'
@@ -18,6 +20,7 @@ import type {
   NominatorSetup,
   NominatorSetups,
   NominatorSetupsContextInterface,
+  PayeeOption,
 } from './types'
 
 export const [NominatorSetupContext, useNominatorSetups] =
@@ -29,7 +32,9 @@ export const NominatorSetupsProvider = ({
   children: ReactNode
 }) => {
   const { network } = useNetwork()
+  const { fetch } = useFetchMethods()
   const { activeAddress } = useActiveAccounts()
+  const { getTransferOptions } = useTransferOptions()
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { units } = getNetworkData(network)
 
@@ -148,6 +153,22 @@ export const NominatorSetupsProvider = ({
     }
   }, [activeAddress, network, stringifiedAccountsKey])
 
+  const generateOptimalSetup = (): NominatorProgress => {
+    const {
+      nominate: { totalPossibleBond },
+    } = getTransferOptions(activeAddress)
+
+    const setup = {
+      payee: {
+        destination: 'Staked' as PayeeOption,
+        account: null,
+      },
+      nominations: fetch('Optimal Selection'),
+      bond: totalPossibleBond.toString(),
+    }
+    return setup
+  }
+
   return (
     <NominatorSetupContext.Provider
       value={{
@@ -156,6 +177,7 @@ export const NominatorSetupsProvider = ({
         removeNominatorSetup,
         getNominatorSetupPercent,
         setNominatorSetupSection,
+        generateOptimalSetup,
       }}
     >
       {children}

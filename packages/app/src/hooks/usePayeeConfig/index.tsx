@@ -8,12 +8,12 @@ import {
   faRedoAlt,
   faStop,
 } from '@fortawesome/free-solid-svg-icons'
-import type { PayeeOptions } from 'contexts/NominatorSetups/types'
+import type { PayeeOption } from 'contexts/NominatorSetups/types'
 import { useTranslation } from 'react-i18next'
 
 export interface PayeeItem {
   icon: IconProp
-  value: PayeeOptions
+  value: PayeeOption
   title: string
   activeTitle: string
   subtitle: string

@@ -15,4 +15,6 @@ export const defaultUIContext: UIContextInterface = {
   advancedMode: false,
   containerRefs: {},
   isBraveBrowser: false,
+  advancedMode: false,
+  setAdvancedMode: (value) => {},
 }
