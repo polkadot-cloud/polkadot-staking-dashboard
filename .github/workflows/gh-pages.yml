@@ -13,7 +13,7 @@ jobs:
           ref: gh-deploy
       - uses: pnpm/action-setup@v4
         with:
-          version: 10.7.1
+          version: 10.10.0
 
       - uses: actions/setup-node@v4
         with:
@@ -37,7 +37,7 @@ jobs:
           ref: gh-deploy
       - uses: pnpm/action-setup@v4
         with:
-          version: 10.7.1
+          version: 10.10.0
 
       - uses: actions/setup-node@v4
         with:
