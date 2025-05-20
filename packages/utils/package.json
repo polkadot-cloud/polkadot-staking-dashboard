@@ -12,8 +12,8 @@
     "@w3ux/utils": "2.0.10",
     "bignumber.js": "^9.3.0",
     "date-fns": "^4.1.0",
-    "dedot": "^0.9.5",
-    "i18next": "^25.0.2"
+    "dedot": "^0.10.0",
+    "i18next": "^25.1.2"
   },
   "devDependencies": {
     "types": "workspace:*"

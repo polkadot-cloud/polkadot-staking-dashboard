@@ -20,7 +20,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const navigate = useNavigate()
 
   const { inPool } = useActivePool()
-  const { openCanvas } = useOverlay().canvas
+  const { openModal } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
@@ -41,10 +41,10 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                 >
                   <button
                     onClick={() => {
-                      openCanvas({
-                        key: 'NominatorSetup',
+                      openModal({
+                        key: 'StartNominating',
                         options: {},
-                        size: 'xl',
+                        size: 'lg',
                       })
                     }}
                     disabled={nominateButtonDisabled}

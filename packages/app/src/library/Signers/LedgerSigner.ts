@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { merkleizeMetadata } from '@polkadot-api/merkleize-metadata'
 import { Ledger } from 'contexts/LedgerHardware/static/ledger'
 import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
+import { MerkleizedMetadata } from 'dedot/merkleized-metadata'
 import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
 import { hexToU8a, u8aToHex } from 'dedot/utils'
@@ -29,27 +29,21 @@ export const signLedgerPayload = async (
 ) => {
   const { app } = await Ledger.initialise()
 
-  const merkleizer = merkleizeMetadata(metadata, {
+  const merkleizer = new MerkleizedMetadata(metadata, {
     decimals: info.decimals,
     tokenSymbol: info.tokenSymbol,
   })
   const extra = extraSignedExtension(specName, from, {
     metadataHash: u8aToHex(merkleizer.digest()),
   })
-
   if (!extra) {
     return
   }
   await extra.init()
 
   const toSign = extra.toRawPayload(tx.callHex).data
-  const proof = u8aToHex(merkleizer.getProofForExtrinsicPayload(toSign))
+  const proof = merkleizer.proofForExtrinsicPayload(toSign as HexString)
 
-  const result = await Ledger.signPayload(
-    app,
-    index,
-    hexToU8a(toSign),
-    hexToU8a(proof)
-  )
+  const result = await Ledger.signPayload(app, index, hexToU8a(toSign), proof)
   return { signature: u8aToHex(result.signature), data: extra.data }
 }

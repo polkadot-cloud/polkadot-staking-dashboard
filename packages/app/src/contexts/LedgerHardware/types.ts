@@ -9,11 +9,11 @@ export interface LedgerHardwareContextInterface {
   setIntegrityChecked: (checked: boolean) => void
   checkRuntimeVersion: () => Promise<void>
   transportResponse: AnyJson
-  setStatusCode: (ack: string, statusCode: LedgerStatusCode) => void
+  setStatusCode: (val: { ack: string; statusCode: LedgerStatusCode }) => void
   setIsExecuting: (v: boolean) => void
-  getStatusCode: () => LedgerResponse | null
+  statusCode: LedgerResponse | null
   resetStatusCode: () => void
-  getIsExecuting: () => boolean
+  isExecuting: boolean
   getFeedback: () => FeedbackMessage
   setFeedback: (s: MaybeString, helpKey?: MaybeString) => void
   resetFeedback: () => void
