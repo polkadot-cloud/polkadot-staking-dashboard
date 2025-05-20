@@ -18,6 +18,16 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   // Store whether in Brave browser. Used for light client warning
   const [isBraveBrowser, setIsBraveBrowser] = useState<boolean>(false)
 
+  // Get advanced mode state from local storage, default to false
+  const [advancedMode, setAdvancedModeState] = useState<boolean>(
+    localStorageOrDefault('advanced_mode', false, true) as boolean
+  )
+
+  const setAdvancedMode = (value: boolean) => {
+    localStorage.setItem('advancedMode', String(value))
+    setAdvancedModeState(value)
+  }
+
   // Store references for main app containers
   const [containerRefs, setContainerRefsState] = useState<
     Record<string, RefObject<HTMLDivElement | null>>
@@ -85,6 +95,8 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,
+        advancedMode,
+        setAdvancedMode,
       }}
     >
       {children}
