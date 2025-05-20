@@ -11,6 +11,7 @@ import {
   activePoolIds$,
   defaultSyncStatus,
   importedAccounts$,
+  removeSyncing,
   setConsts,
   setMultiChainSpecs,
   setSyncingMulti,
@@ -236,6 +237,7 @@ export class PolkadotService
           )
         })
       })
+    removeSyncing('initialization')
   }
 
   unsubscribe = async () => {

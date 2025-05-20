@@ -10,6 +10,7 @@ import {
   activePoolIds$,
   defaultSyncStatus,
   importedAccounts$,
+  removeSyncing,
   setConsts,
   setMultiChainSpecs,
   setSyncingMulti,
@@ -227,6 +228,7 @@ export class WestendService
           )
         })
       })
+    removeSyncing('initialization')
   }
 
   unsubscribe = async () => {

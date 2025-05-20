@@ -10,6 +10,7 @@ import {
   activePoolIds$,
   defaultSyncStatus,
   importedAccounts$,
+  removeSyncing,
   setConsts,
   setMultiChainSpecs,
   setSyncingMulti,
@@ -228,6 +229,7 @@ export class KusamaService
           )
         })
       })
+    removeSyncing('initialization')
   }
 
   unsubscribe = async () => {
