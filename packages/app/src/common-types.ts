@@ -24,6 +24,7 @@ declare global {
 export interface PageCategory {
   id: number
   key: string
+  advanced: boolean
 }
 
 export type PageCategoryItems = PageCategory[]
@@ -35,6 +36,7 @@ export interface PageItem {
   hash: string
   Entry: FC<PageProps>
   lottie: unknown
+  advanced: boolean
   bullet?: BulletType
 }
 
