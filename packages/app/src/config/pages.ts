@@ -36,6 +36,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/home',
     Entry: Home,
     lottie: 'home',
+    advanced: false,
   },
   {
     category: 2,
