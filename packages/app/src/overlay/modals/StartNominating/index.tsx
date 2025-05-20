@@ -57,8 +57,8 @@ export const StartNominating = () => {
             }}
           >
             <FontAwesomeIcon icon={faBolt} size="2x" />
-            <h2>One-Click Setup</h2>
-            <h3>Stake immediately with an optimised setup</h3>
+            <h2>{t('nominateQuickTitle', { ns: 'modals' })}</h2>
+            <h3>{t('nominateQuickSubtitle', { ns: 'modals' })}</h3>
           </ItemWrapper>
           <ItemWrapper
             type="button"
@@ -75,8 +75,8 @@ export const StartNominating = () => {
             }}
           >
             <FontAwesomeIcon icon={faCog} size="2x" />
-            <h2>Custom Setup</h2>
-            <h3>Customise your staking position</h3>
+            <h2>{t('nominateCustomTitle', { ns: 'modals' })}</h2>
+            <h3>{t('nominateCustomSubtitle', { ns: 'modals' })}</h3>
           </ItemWrapper>
         </ItemsWrapper>
       </Padding>
