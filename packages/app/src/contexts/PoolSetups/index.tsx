@@ -3,6 +3,7 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { unitToPlanck } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'

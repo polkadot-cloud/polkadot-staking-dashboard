@@ -8,7 +8,7 @@ import { useValidatorFilters } from 'hooks/useValidatorFilters'
 import type { AddNominationsType } from 'library/GenerateNominations/types'
 import type { Validator } from 'types'
 
-export const useFetchMehods = () => {
+export const useFetchMethods = () => {
   const { favoritesList } = useFavoriteValidators()
   const { applyFilter, applyOrder } = useValidatorFilters()
   const { getValidators, getValidatorRankSegment } = useValidators()

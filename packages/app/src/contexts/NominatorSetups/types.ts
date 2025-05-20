@@ -7,7 +7,7 @@ import type { MaybeAddress, Validator } from 'types'
 export interface NominatorSetupsContextInterface {
   getNominatorSetup: (address: MaybeAddress) => NominatorSetup
   setNominatorSetup: (
-    progresss: NominatorProgress,
+    progress: NominatorProgress,
     simple?: boolean,
     section?: number
   ) => void

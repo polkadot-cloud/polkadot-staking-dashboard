@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useTransferOptions } from 'contexts/TransferOptions'
-import { useFetchMehods } from 'hooks/useFetchMethods'
+import { useFetchMethods } from 'hooks/useFetchMethods'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
@@ -15,7 +15,7 @@ import { ItemsWrapper, ItemWrapper } from './Wrappers'
 
 export const StartNominating = () => {
   const { t } = useTranslation()
-  const { fetch } = useFetchMehods()
+  const { fetch } = useFetchMethods()
   const { openCanvas } = useOverlay().canvas
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
