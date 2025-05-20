@@ -8,3 +8,10 @@ export const defaultSyncStatus: SyncId[] = [
   'bonded-pools',
   'active-pools',
 ]
+
+export const allSyncIds: SyncId[] = [
+  'initialization',
+  'era-stakers',
+  'bonded-pools',
+  'active-pools',
+]
