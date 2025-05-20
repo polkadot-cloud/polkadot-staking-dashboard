@@ -306,7 +306,7 @@ export const Send = () => {
                 </div>
                 <ButtonSubmitInvert
                   className="max-button"
-                  text="Max"
+                  text={t('max')}
                   disabled={freeToSend.isZero()}
                   onClick={handleMaxClick}
                 />

@@ -19,7 +19,7 @@ import BigNumber from 'bignumber.js'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { getNetworkData } from 'consts/util'
 import { CardWrapper } from 'library/Card/Wrappers'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { CardHeader } from 'ui-core/base'
@@ -53,6 +53,27 @@ export const QuickActions = ({ height }: { height: number }) => {
   const [helpExpanded, setHelpExpanded] = useState(false)
   // State to track if rewards options are expanded
   const [rewardsExpanded, setRewardsExpanded] = useState(false)
+
+  // Ref for the quick actions container
+  const quickActionsRef = useRef<HTMLDivElement>(null)
+
+  // Collapse expanded quick actions on outside click
+  useEffect(() => {
+    if (!(helpExpanded || rewardsExpanded)) {
+      return
+    }
+    const handleClick = (e: MouseEvent) => {
+      if (
+        quickActionsRef.current &&
+        !quickActionsRef.current.contains(e.target as Node)
+      ) {
+        setHelpExpanded(false)
+        setRewardsExpanded(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [helpExpanded, rewardsExpanded])
 
   // Determine if user is staking via pool or direct nomination
   const isStakingViaPool = inPool()
@@ -378,7 +399,7 @@ export const QuickActions = ({ height }: { height: number }) => {
       <CardHeader style={{ padding: '1.25rem 1rem 0.5rem 1.25rem' }}>
         <h4>{t('quickActions')}</h4>
       </CardHeader>
-      <QuickActionsContainer>
+      <QuickActionsContainer ref={quickActionsRef}>
         {/* First 5 buttons (2 rows of 2 + 1 on the third row) */}
         {actions.map((action, index) => {
           if (action.component) {

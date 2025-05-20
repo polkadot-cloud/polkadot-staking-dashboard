@@ -119,7 +119,7 @@ export const QuickActionsContainer = styled.div`
 export const HelpOptionsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: 0;
   height: 100%;
   width: 100%;
 
