@@ -21,6 +21,7 @@ import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
 import type { SetupStepProps } from 'library/SetupSteps/types'
 import { SubmitTx } from 'library/SubmitTx'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Separator } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
@@ -43,6 +44,9 @@ export const Summary = ({
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
   const { unit, units } = getNetworkData(network)
+
+  // Track whether bond is valid
+  const [bondValid, setBondValid] = useState<boolean>(false)
 
   const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
@@ -100,52 +104,59 @@ export const Summary = ({
 
   return (
     <>
-      <Header
-        thisSection={section}
-        complete={null}
-        title={t('summary')}
-        bondFor="nominator"
-      />
+      {!simple && (
+        <Header
+          thisSection={section}
+          complete={null}
+          title={t('summary')}
+          bondFor="nominator"
+        />
+      )}
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
           accountHasSigner(activeAddress) ||
           accountHasSigner(activeProxy?.address || null)
         ) && <Warning text={t('readOnly')} />}
-        <SummaryWrapper>
+        <SummaryWrapper style={{ marginTop: simple ? '0' : '1rem' }}>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('payoutDestination')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-12" />
             </div>
             <div>
-              {payee.destination === 'Account'
-                ? `${payeeDisplay}: ${ellipsisFn(payee.account || '')}`
-                : payeeDisplay}
+              <h4>{t('payoutDestination')}</h4>
+              <h2>
+                {payee.destination === 'Account'
+                  ? `${payeeDisplay}: ${ellipsisFn(payee.account || '')}`
+                  : payeeDisplay}
+              </h2>
             </div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominating')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-12" />
             </div>
-            <div>{t('validatorCount', { count: nominations.length })}</div>
+            <div>
+              <h4>{t('nominating')}</h4>
+              <h2>{t('validatorCount', { count: nominations.length })}</h2>
+            </div>
           </section>
           {!simple ? (
             <section>
               <div>
-                <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" />{' '}
-                &nbsp; {t('bondAmount')}:
+                <FontAwesomeIcon icon={faCheckCircle} transform="grow-12" />
               </div>
-
               <div>
-                {new BigNumber(bond || 0).toFormat()} {unit}
+                <h4>{t('bondAmount')}:</h4>
+                <h2>
+                  {new BigNumber(bond || 0).toFormat()} {unit}
+                </h2>
               </div>
             </section>
           ) : (
-            <>
-              <Separator transparent lg />
-              <Bond section={4} inline={true} />
-            </>
+            <div style={{ padding: '1rem 0.5rem', width: '100%' }}>
+              <Separator transparent />
+              <Bond section={4} inline={true} handleBondValid={setBondValid} />
+            </div>
           )}
         </SummaryWrapper>
         <div
@@ -158,9 +169,9 @@ export const Summary = ({
         >
           <SubmitTx
             submitText={t('startNominating')}
-            valid
+            valid={bondValid}
             {...submitExtrinsic}
-            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
+            displayFor="canvas"
           />
         </div>
       </MotionContainer>

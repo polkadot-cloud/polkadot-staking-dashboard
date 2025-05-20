@@ -17,8 +17,10 @@ import { useTranslation } from 'react-i18next'
 export const Bond = ({
   section,
   inline,
+  handleBondValid,
 }: SetupStepProps & {
   inline?: boolean
+  handleBondValid?: (valid: boolean) => void
 }) => {
   const { t } = useTranslation('pages')
   const { getTxSubmissionByTag } = useTxMeta()
@@ -39,7 +41,15 @@ export const Bond = ({
   })
 
   // bond valid
-  const [bondValid, setBondValid] = useState<boolean>(false)
+  const [bondValid, setBondValidState] = useState<boolean>(false)
+
+  // handler for bond valid
+  const setBondValid = (valid: boolean) => {
+    setBondValidState(valid)
+    if (handleBondValid) {
+      handleBondValid(valid)
+    }
+  }
 
   // handler for updating bond
   const handleSetBond = (value: { bond: BigNumber }) => {
