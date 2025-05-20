@@ -13,7 +13,7 @@
     "bignumber.js": "^9.3.0",
     "date-fns": "^4.1.0",
     "dedot": "^0.10.0",
-    "i18next": "^25.1.2"
+    "i18next": "^25.2.0"
   },
   "devDependencies": {
     "types": "workspace:*"
