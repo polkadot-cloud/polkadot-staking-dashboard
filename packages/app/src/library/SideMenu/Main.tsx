@@ -8,7 +8,6 @@ import { useBalances } from 'contexts/Balances'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
-import type { UIContextInterface } from 'contexts/UI/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { Fragment } from 'react'
@@ -25,7 +24,7 @@ export const Main = () => {
   const { formatWithPrefs } = useValidators()
   const { activeAddress } = useActiveAccounts()
   const { inSetup: inNominatorSetup } = useStaking()
-  const { sideMenuMinimised }: UIContextInterface = useUi()
+  const { sideMenuMinimised, advancedMode } = useUi()
   const { getNominations, getStakingLedger } = useBalances()
   const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
@@ -75,12 +74,20 @@ export const Main = () => {
     }
     i++
   }
+
+  const categories = advancedMode
+    ? PageCategories
+    : PageCategories.filter(({ advanced }) => !advanced)
+
   const pageConfig = {
-    categories: PageCategories,
+    categories,
     pages,
   }
 
-  const pagesToDisplay: PagesConfigItems = Object.values(pageConfig.pages)
+  let pagesToDisplay: PagesConfigItems = Object.values(pageConfig.pages)
+  if (!advancedMode) {
+    pagesToDisplay = pagesToDisplay.filter(({ advanced }) => !advanced)
+  }
 
   return (
     <>

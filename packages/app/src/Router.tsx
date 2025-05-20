@@ -30,16 +30,18 @@ import {
   Route,
   Routes,
   useLocation,
+  useNavigate,
 } from 'react-router-dom'
 import { StakingApi } from 'StakingApi'
 import { Page } from 'ui-core/base'
 
 const RouterInner = () => {
+  const navigate = useNavigate()
   const { network } = useNetwork()
   const { pathname } = useLocation()
-  const { setContainerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
+  const { setContainerRefs, advancedMode } = useUi()
 
   // References to outer container
   const mainInterfaceRef = useRef<HTMLDivElement>(null)
@@ -58,6 +60,11 @@ const RouterInner = () => {
 
   // Support active account from url
   useAccountFromUrl()
+
+  // Jump back to overview page on advanced mode change
+  useEffect(() => {
+    navigate(`/overview`)
+  }, [advancedMode])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>

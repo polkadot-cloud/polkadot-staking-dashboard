@@ -35,9 +35,9 @@ export const Ledger = () => {
   } = useHardwareAccounts()
   const {
     getFeedback,
+    isExecuting,
     setStatusCode,
     handleUnmount,
-    getIsExecuting,
     resetStatusCode,
     handleGetAddress,
     transportResponse,
@@ -54,9 +54,6 @@ export const Ledger = () => {
     getHardwareAccounts(source, network)
   )
   const addressesRef = useRef(addresses)
-
-  // Get whether the ledger device is currently executing a task
-  const isExecuting = getIsExecuting()
 
   // Handle exist check for a ledger address
   const handleExists = (address: string) =>
@@ -107,7 +104,7 @@ export const Ledger = () => {
       return
     }
     const { ack, statusCode, body, options } = response
-    setStatusCode(ack, statusCode)
+    setStatusCode({ ack, statusCode })
 
     if (statusCode === 'ReceivedAddress') {
       const newAddress = body.map(({ pubKey, address }: LedgerAddress) => ({

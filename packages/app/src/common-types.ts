@@ -4,7 +4,6 @@
 import type { ExtensionInjected } from '@w3ux/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
-import type { SyncEvent } from 'controllers/Syncs/types'
 import type { TxSubmissionItem } from 'controllers/TxSubmission/types'
 import type { FC } from 'react'
 
@@ -19,13 +18,13 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>
     'online-status': CustomEvent<OnlineStatusEvent>
-    'new-sync-status': CustomEvent<SyncEvent>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }
 export interface PageCategory {
   id: number
   key: string
+  advanced: boolean
 }
 
 export type PageCategoryItems = PageCategory[]
@@ -37,6 +36,7 @@ export interface PageItem {
   hash: string
   Entry: FC<PageProps>
   lottie: unknown
+  advanced: boolean
   bullet?: BulletType
 }
 

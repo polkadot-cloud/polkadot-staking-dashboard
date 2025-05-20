@@ -3,7 +3,7 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
-import { PageWidthMediumThreshold } from 'consts'
+import { AdvancedModeKey, PageWidthMediumThreshold } from 'consts'
 import type { ReactNode, RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { AnyJson } from 'types'
@@ -17,6 +17,16 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   // Store whether in Brave browser. Used for light client warning
   const [isBraveBrowser, setIsBraveBrowser] = useState<boolean>(false)
+
+  // Get advanced mode state from local storage, default to false
+  const [advancedMode, setAdvancedModeState] = useState<boolean>(
+    localStorageOrDefault(AdvancedModeKey, false, true) as boolean
+  )
+
+  const setAdvancedMode = (value: boolean) => {
+    localStorage.setItem(AdvancedModeKey, String(value))
+    setAdvancedModeState(value)
+  }
 
   // Store references for main app containers
   const [containerRefs, setContainerRefsState] = useState<
@@ -85,6 +95,8 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,
+        advancedMode,
+        setAdvancedMode,
       }}
     >
       {children}
