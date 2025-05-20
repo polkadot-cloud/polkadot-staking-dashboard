@@ -45,7 +45,7 @@
     "date-fns": "^4.1.0",
     "dedot": "^0.10.0",
     "dedot-api": "workspace:*",
-    "framer-motion": "^12.11.0",
+    "framer-motion": "^12.12.1",
     "global-bus": "workspace:*",
     "html5-qrcode": "^2.3.8",
     "i18next-browser-languagedetector": "^8.1.0",
