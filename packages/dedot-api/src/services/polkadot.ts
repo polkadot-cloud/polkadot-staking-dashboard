@@ -9,9 +9,11 @@ import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
+  defaultSyncStatus,
   importedAccounts$,
   setConsts,
   setMultiChainSpecs,
+  setSyncingMulti,
 } from 'global-bus'
 import { pairwise, startWith, type Subscription } from 'rxjs'
 import type {
@@ -132,6 +134,8 @@ export class PolkadotService
 
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
+
+    setSyncingMulti(defaultSyncStatus)
 
     await Promise.all([
       this.relayChainSpec.fetch(),

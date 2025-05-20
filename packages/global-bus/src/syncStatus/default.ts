@@ -3,14 +3,14 @@
 
 import type { SyncId } from 'types'
 
-export const defaultSyncStatus: SyncId[] = [
+export const allSyncIds: SyncId[] = [
+  'initialization',
   'era-stakers',
   'bonded-pools',
   'active-pools',
 ]
 
-export const allSyncIds: SyncId[] = [
-  'initialization',
+export const defaultSyncStatus: SyncId[] = [
   'era-stakers',
   'bonded-pools',
   'active-pools',
