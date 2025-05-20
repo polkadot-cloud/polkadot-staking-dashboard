@@ -3,7 +3,7 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
-import { PageWidthMediumThreshold } from 'consts'
+import { AdvancedModeKey, PageWidthMediumThreshold } from 'consts'
 import type { ReactNode, RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { AnyJson } from 'types'
@@ -20,11 +20,11 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   // Get advanced mode state from local storage, default to false
   const [advancedMode, setAdvancedModeState] = useState<boolean>(
-    localStorageOrDefault('advanced_mode', false, true) as boolean
+    localStorageOrDefault(AdvancedModeKey, false, true) as boolean
   )
 
   const setAdvancedMode = (value: boolean) => {
-    localStorage.setItem('advancedMode', String(value))
+    localStorage.setItem(AdvancedModeKey, String(value))
     setAdvancedModeState(value)
   }
 
