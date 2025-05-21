@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   flex-flow: row nowrap;
+  flex-grow: 1;
 
   @media (max-width: 950px) {
     flex-wrap: wrap;
