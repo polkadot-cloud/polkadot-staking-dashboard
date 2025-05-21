@@ -7,9 +7,12 @@ import {
   faCircleDown,
   faCircleXmark,
   faCoins,
-  faUnlock,
+  faMinus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
+import { usePayouts } from 'contexts/Payouts'
 import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
 import { QuickAction } from 'ui-buttons'
@@ -19,6 +22,11 @@ import { useOverlay } from 'ui-overlay'
 export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
   const { t } = useTranslation('pages')
   const { openModal } = useOverlay().modal
+  const { unclaimedRewards } = usePayouts()
+  const { activeAddress } = useActiveAccounts()
+  const { getPendingPoolRewards } = useBalances()
+
+  const pendingRewards = getPendingPoolRewards(activeAddress)
 
   const actions: ButtonQuickActionProps[] = []
 
@@ -33,7 +41,7 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
               size: 'sm',
             })
           },
-          disabled: false,
+          disabled: pendingRewards === 0n,
           Icon: () => (
             <FontAwesomeIcon transform="grow-2" icon={faCircleDown} />
           ),
@@ -47,7 +55,7 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
               size: 'sm',
             })
           },
-          disabled: false,
+          disabled: pendingRewards === 0n,
           Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCoins} />,
           label: t('compound'),
         },
@@ -61,7 +69,7 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
           size: 'sm',
         })
       },
-      disabled: false,
+      disabled: BigInt(unclaimedRewards.total) === 0n,
       Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCircleDown} />,
       label: t('claim', { ns: 'modals' }),
     })
@@ -79,7 +87,7 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
         },
         disabled: false,
         Icon: () => <FontAwesomeIcon transform="grow-2" icon={faAdd} />,
-        label: t('unstake', { ns: 'pages' }),
+        label: t('bond', { ns: 'pages' }),
       },
       {
         onClick: () => {
@@ -90,8 +98,8 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
           })
         },
         disabled: false,
-        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faUnlock} />,
-        label: t('unstake', { ns: 'pages' }),
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faMinus} />,
+        label: t('unbond', { ns: 'pages' }),
       },
     ]
   )

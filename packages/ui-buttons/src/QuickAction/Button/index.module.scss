@@ -18,8 +18,10 @@
   flex: 1;
 
   &.disabled {
-    opacity: 0.5;
     cursor: default;
+    > * {
+      opacity: 0.4;
+    }
   }
 
   @media (max-width: 1150px) {
@@ -29,7 +31,7 @@
   &:hover {
     background: var(--button-hover-background);
     &.disabled {
-      background: var(--button-primary-background);
+      background: var(--button-popover-tab-background);
     }
   }
 
