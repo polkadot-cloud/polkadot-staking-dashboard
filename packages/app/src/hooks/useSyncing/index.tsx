@@ -15,12 +15,8 @@ export const useSyncing = (config: SyncConfig = '*') => {
 
   // Handle new syncing status events
   const newSyncStatusCallback = async (result: SyncId[]) => {
-    const activeSyncIds = result.filter((syncId) => ids.includes(syncId))
-
-    // Update if active sync ids are present for this hook config
-    if (!(ids !== '*' && activeSyncIds.length === 0)) {
-      setSyncIds(activeSyncIds)
-    }
+    const activeSyncIds = result.filter((syncId) => syncIds.includes(syncId))
+    setSyncIds(activeSyncIds)
   }
 
   // Helper to determine if pool membership is syncing
