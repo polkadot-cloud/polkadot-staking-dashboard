@@ -8,6 +8,7 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useTranslation } from 'react-i18next'
 import { QuickAction } from 'ui-buttons'
@@ -49,15 +50,15 @@ export const NotStaking = () => {
     },
     {
       onClick: () => {
-        alert('click')
+        window.open(`mailto:${MailSupportAddress}`, '_blank')
       },
       disabled: false,
       Icon: () => <FontAwesomeIcon transform="grow-2" icon={faEnvelope} />,
-      label: t('email'),
+      label: t('email', { ns: 'app' }),
     },
     {
       onClick: () => {
-        alert('click')
+        window.open(DiscordSupportUrl, '_blank')
       },
       disabled: false,
       Icon: () => <FontAwesomeIcon transform="grow-2" icon={faDiscord} />,

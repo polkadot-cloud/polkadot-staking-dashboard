@@ -65,7 +65,7 @@ export const Disconnected = () => {
       },
       disabled: false,
       Icon: () => <FontAwesomeIcon transform="grow-2" icon={faEnvelope} />,
-      label: t('email', { ns: 'pages' }),
+      label: t('email', { ns: 'app' }),
     },
     {
       onClick: () => {
