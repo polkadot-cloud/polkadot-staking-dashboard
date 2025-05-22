@@ -14,12 +14,12 @@ import { RewardsStatus } from './RewardsStatus'
 import type { StatusProps } from './types'
 
 export const Status = ({ height }: StatusProps) => {
-  const { poolMembersipSyncing } = useSyncing()
+  const { poolMembersipSynced } = useSyncing()
   const { activeAddress } = useActiveAccounts()
   const { activePool, inPool } = useActivePool()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const syncing = poolMembersipSyncing()
+  const syncing = !poolMembersipSynced()
 
   return (
     <CardWrapper

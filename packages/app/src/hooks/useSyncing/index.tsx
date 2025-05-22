@@ -1,12 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useBalances } from 'contexts/Balances'
 import { getSyncIds, syncStatus$ } from 'global-bus'
 import { getIdsFromSyncConfig } from 'global-bus/util'
 import { useEffect, useState } from 'react'
-import type { SyncConfig, SyncId } from 'types'
+import type { MaybeAddress, SyncConfig, SyncId } from 'types'
 
 export const useSyncing = (config: SyncConfig = '*') => {
+  const { getAccountBalance, getStakingLedger } = useBalances()
+
   // Retrieve the ids from the config provided
   const ids = getIdsFromSyncConfig(config)
 
@@ -19,14 +22,33 @@ export const useSyncing = (config: SyncConfig = '*') => {
     setSyncIds(activeSyncIds)
   }
 
-  // Helper to determine if pool membership is syncing
-  const poolMembersipSyncing = (): boolean => {
+  // Helper to determine if pool membership has synced
+  const poolMembersipSynced = (): boolean => {
     const POOL_SYNC_IDS: SyncId[] = [
       'initialization',
       'bonded-pools',
       'active-pools',
     ]
-    return syncIds.some(() => POOL_SYNC_IDS.find((id) => syncIds.includes(id)))
+    const activeSyncIds = syncIds.filter((syncId) =>
+      POOL_SYNC_IDS.includes(syncId)
+    )
+    return activeSyncIds.length > 0
+  }
+
+  // Helper to determine if account data has been synced. Also requires initialization to be
+  // completed
+  const accountSynced = (address: MaybeAddress): boolean => {
+    if (!address) {
+      return !syncIds.includes('initialization')
+    }
+    const { synced: stakingLedgerSynced } = getStakingLedger(address)
+    const { synced: accountBalanceSynced } = getAccountBalance(address)
+
+    return (
+      stakingLedgerSynced &&
+      accountBalanceSynced &&
+      !syncIds.includes('initialization')
+    )
   }
 
   // Subscribe to global bus
@@ -39,5 +61,5 @@ export const useSyncing = (config: SyncConfig = '*') => {
     }
   }, [])
 
-  return { syncing: syncIds.length > 0, poolMembersipSyncing }
+  return { syncing: syncIds.length > 0, poolMembersipSynced, accountSynced }
 }

@@ -5,7 +5,7 @@ import type {
   IconDefinition,
   IconProp,
 } from '@fortawesome/fontawesome-svg-core'
-import type { MouseEvent } from 'react'
+import type { FunctionComponent, MouseEvent, SVGProps } from 'react'
 import type {
   ComponentBase,
   ComponentBaseWithClassName,
@@ -60,6 +60,15 @@ export interface ButtonCopyProps {
     copy: string
     copied: string
   }
+}
+
+export interface ButtonQuickActionProps {
+  onClick?: (e?: MouseEvent<HTMLButtonElement>) => void
+  label: string
+  disabled?: boolean
+  Icon: FunctionComponent<
+    SVGProps<SVGSVGElement> & { title?: string | undefined }
+  >
 }
 
 export type ButtonHelpProps = ComponentBaseWithClassName &
