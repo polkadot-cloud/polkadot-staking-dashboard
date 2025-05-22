@@ -32,7 +32,7 @@ export const useSyncing = (config: SyncConfig = '*') => {
     const activeSyncIds = syncIds.filter((syncId) =>
       POOL_SYNC_IDS.includes(syncId)
     )
-    return activeSyncIds.length > 0
+    return activeSyncIds.length === 0
   }
 
   // Helper to determine if account data has been synced. Also requires initialization to be
