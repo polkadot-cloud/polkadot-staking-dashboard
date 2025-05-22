@@ -32,7 +32,7 @@ import { CloseCanvas, useOverlay } from 'ui-overlay'
 export const Inner = () => {
   const { t } = useTranslation('app')
   const {
-    setCanvasStatus,
+    closeCanvas,
     config: { options },
   } = useOverlay().canvas
   const { openHelp } = useHelp()
@@ -90,7 +90,7 @@ export const Inner = () => {
     from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setCanvasStatus('closing')
+      closeCanvas()
     },
     callbackInBlock: () => {
       if (isPool && activePool) {

@@ -17,7 +17,7 @@ export const StatusWrapper = styled.div`
       margin-top: 0;
     }
 
-    &:last-child {
+    &:nth-child(2) {
       @media (max-width: 1400px) {
         margin-top: 1rem;
       }

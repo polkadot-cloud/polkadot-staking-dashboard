@@ -4,7 +4,4 @@
 import type { AnimationProps } from 'framer-motion'
 import type { ComponentBase } from 'types'
 
-export type ScrollProps = ComponentBase &
-  AnimationProps & {
-    size?: 'lg' | 'xl'
-  }
+export type ScrollProps = ComponentBase & AnimationProps

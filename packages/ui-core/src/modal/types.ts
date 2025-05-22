@@ -28,6 +28,7 @@ export type PaddingProps = ComponentBase & {
 
 export type ScrollProps = ComponentBase & {
   size: string
+  overflow: string
 }
 
 export type SectionProps = ComponentBase & {
