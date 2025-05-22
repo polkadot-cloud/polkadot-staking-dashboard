@@ -9,7 +9,7 @@ export const Content = ({
   children,
   style,
   size,
-}: ComponentBase & { size?: string }) => {
+}: ComponentBase & { size?: 'lg' | 'xl' }) => {
   const allClasses = classNames(classes.content, {
     [classes.lg]: size === 'lg',
     [classes.xl]: size === 'xl',
