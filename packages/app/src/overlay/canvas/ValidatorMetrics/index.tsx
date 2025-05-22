@@ -7,7 +7,6 @@ import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getNetworkData } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
@@ -18,7 +17,6 @@ import { StatusLabel } from 'library/StatusLabel'
 import { ValidatorGeo } from 'overlay/canvas/ValidatorMetrics/ValidatorGeo'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import {
   AccountTitle,
   GraphContainer,
@@ -44,9 +42,8 @@ export const ValidatorMetrics = () => {
   const {
     config: { options },
   } = useOverlay().canvas
-  const { network } = useNetwork()
   const { activeEra } = useApi()
-  const { openHelp } = useHelp()
+  const { network } = useNetwork()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
   const { getValidators } = useValidators()
@@ -145,14 +142,7 @@ export const ValidatorMetrics = () => {
       </GraphContainer>
       <div style={{ margin: '1.5rem 0 3rem 0' }}>
         <Subheading>
-          <h3>
-            {t('recentPerformance', { ns: 'app' })}
-            <ButtonHelp
-              outline
-              marginLeft
-              onClick={() => openHelp('Era Points')}
-            />
-          </h3>
+          <h3>{t('recentPerformance', { ns: 'app' })}</h3>
         </Subheading>
         <GraphInner
           ref={graphEraPointsRef}
@@ -183,14 +173,7 @@ export const ValidatorMetrics = () => {
           )}
         </GraphInner>
         <Subheading>
-          <h3>
-            {t('rewardHistory', { ns: 'app' })}
-            <ButtonHelp
-              outline
-              marginLeft
-              onClick={() => openHelp('Validator Reward History')}
-            />
-          </h3>
+          <h3>{t('rewardHistory', { ns: 'app' })}</h3>
         </Subheading>
         <GraphInner
           ref={graphRewardsRef}
