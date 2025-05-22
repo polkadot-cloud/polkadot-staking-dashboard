@@ -26,5 +26,9 @@ export const Button = ({
 
 export const PreloadingButton = () => {
   const buttonClasses = classNames(classes.btnQuickAction, classes.preloading)
-  return <div className={buttonClasses}></div>
+  return (
+    <div className={buttonClasses}>
+      <div className={classes.inner}></div>
+    </div>
+  )
 }
