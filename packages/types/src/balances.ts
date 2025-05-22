@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface AccountBalance {
+  synced: boolean
   nonce: number
   balance: {
     free: bigint

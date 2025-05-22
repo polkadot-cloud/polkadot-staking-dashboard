@@ -178,6 +178,7 @@
         "subtitle": "Send payouts to another account as free balance.",
         "title": "To Another Account"
       },
+      "label": "Payee",
       "none": {
         "subtitle": "Have no payout destination set.",
         "title_active": "Not Assigned",
