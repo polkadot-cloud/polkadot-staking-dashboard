@@ -153,9 +153,10 @@ export const Modal = ({
       <Scroll
         ref={heightRef}
         size={size}
+        overflow={overflow}
         style={{
           height: modalHeight,
-          overflow,
+          overflow: 'hidden',
         }}
       >
         <Card ref={modalRef} dimmed={dimmed}>
