@@ -40,7 +40,6 @@ export const DefinitionWrapper = styled(motion.div)`
   border-radius: 1.5rem;
   display: flex;
   flex-flow: row wrap;
-  flex: 1;
   overflow: hidden;
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.5rem 0 1.5rem;
