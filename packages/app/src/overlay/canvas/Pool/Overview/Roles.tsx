@@ -1,12 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHelp } from 'contexts/Help'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import { Subheading } from 'ui-core/canvas'
 import { Identity } from 'ui-identity'
 import type { OverviewSectionProps } from '../types'
@@ -17,7 +15,6 @@ export const Roles = ({
   roleIdentities: { identities, supers },
 }: OverviewSectionProps) => {
   const { t } = useTranslation('pages')
-  const { openHelp } = useHelp()
   const iconSize = '3rem'
 
   const rootAddress = bondedPool?.roles?.root || ''
@@ -50,10 +47,7 @@ export const Roles = ({
     <div>
       <CardWrapper className="canvas secondary">
         <Subheading>
-          <h3>
-            {t('roles')}
-            <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
-          </h3>
+          <h3>{t('roles')}</h3>
         </Subheading>
         <AddressesWrapper>
           {bondedPool.roles.root && (
