@@ -166,6 +166,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 
   // Open the canvas
   const openCanvas = ({ key, size, scroll = true, options }: CanvasConfig) => {
+    document.body.classList.add('disable-body-scroll')
     setCanvasStatus('open')
     setOpenOverlayInstances('inc', 'canvas')
     setCanvasConfig({
@@ -178,6 +179,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 
   // Close the canvas
   const closeCanvas = () => {
+    document.body.classList.remove('disable-body-scroll')
     setCanvasStatus('closing')
   }
 
