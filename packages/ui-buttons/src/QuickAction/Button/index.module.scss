@@ -55,10 +55,11 @@
     animation-iteration-count: infinite;
     animation-name: shimmer-loader;
     animation-timing-function: linear;
+    cursor: default;
     opacity: 0.2;
     display: inline-block;
     position: relative;
-      @keyframes shimmer-loader {
+    @keyframes shimmer-loader {
       0% {
         background-position: 0px 0;
       }
