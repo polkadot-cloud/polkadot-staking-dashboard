@@ -37,7 +37,7 @@ export const useSyncing = (config: SyncConfig = '*') => {
 
   // Helper to determine if account data has been synced. Also requires initialization to be
   // completed
-  const accountSynced = (address: MaybeAddress) => {
+  const accountSynced = (address: MaybeAddress): boolean => {
     if (!address) {
       return !syncIds.includes('initialization')
     }
