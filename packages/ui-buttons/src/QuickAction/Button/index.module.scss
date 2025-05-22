@@ -3,7 +3,6 @@
 
 .btnQuickAction {
   background: var(--button-popover-tab-background);
-  border-top: 1px solid var(--border-primary-color);
   border-right: 1px solid var(--border-primary-color);
   display: flex;
   flex-direction: column;
@@ -28,10 +27,9 @@
     min-width: 12rem;
   }
 
-  &:hover {
-    background: var(--button-hover-background);
-    &.disabled {
-      background: var(--button-popover-tab-background);
+  &.active {
+    &:hover {
+      background: var(--button-hover-background);
     }
   }
 
@@ -39,5 +37,34 @@
     font-family: Inter, sans-serif;
     color: var(--text-color-secondary);
     margin-top: 0.5rem;
+  }
+
+  &.preloading {
+    background: var(--shimmer-foreground);
+    background-image: linear-gradient(
+      to right,
+      var(--shimmer-foreground) 0%,
+      var(--shimmer-background) 20%,
+      var(--shimmer-foreground) 40%,
+      var(--shimmer-foreground) 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 60% 100%;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer-loader;
+    animation-timing-function: linear;
+    opacity: 0.2;
+    display: inline-block;
+    position: relative;
+      @keyframes shimmer-loader {
+      0% {
+        background-position: 0px 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
   }
 }

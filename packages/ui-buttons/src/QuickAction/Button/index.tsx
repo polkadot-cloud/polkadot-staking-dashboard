@@ -13,6 +13,7 @@ export const Button = ({
 }: ButtonQuickActionProps) => {
   const buttonClasses = classNames(classes.btnQuickAction, {
     [classes.disabled]: disabled,
+    [classes.active]: !disabled,
   })
 
   return (
@@ -21,4 +22,9 @@ export const Button = ({
       <h4>{label}</h4>
     </button>
   )
+}
+
+export const PreloadingButton = () => {
+  const buttonClasses = classNames(classes.btnQuickAction, classes.preloading)
+  return <div className={buttonClasses}></div>
 }

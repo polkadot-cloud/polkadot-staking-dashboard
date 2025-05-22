@@ -77,6 +77,7 @@ export class StakingLedgerQuery<T extends StakingChain> {
         }
 
         const stakingLedger: StakingLedger = {
+          synced: true,
           ledger:
             ledger === undefined
               ? undefined
