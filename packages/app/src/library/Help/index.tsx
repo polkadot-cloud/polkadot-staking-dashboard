@@ -15,8 +15,8 @@ import { DefaultLocale } from 'locales'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
-import { Container, Scroll } from 'ui-core/canvas'
-import { Content } from 'ui-core/modal'
+import { Container, Content, Scroll } from 'ui-core/canvas'
+import { Content as ModalContent } from 'ui-core/modal'
 import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'
@@ -157,62 +157,65 @@ export const Help = () => {
         zIndex: 20,
       }}
     >
-      <Scroll size="lg">
-        <Content>
-          <div
-            style={{
-              padding: '0 0.1rem',
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <ButtonPrimaryInvert
-              lg
-              text={t('modal.close')}
-              onClick={() => closeHelp()}
-            />
-          </div>
-          <HelpTitle>
-            {activeDefinition
-              ? `${activeDefinition.title}`
-              : `${t('modal.helpResources')}`}
-          </HelpTitle>
+      <Scroll>
+        <ModalContent>
+          <Content size="lg" style={{ alignItems: 'flex-start' }}>
+            <div
+              style={{
+                padding: '0 0.1rem',
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <ButtonPrimaryInvert
+                lg
+                text={t('modal.close')}
+                onClick={() => closeHelp()}
+              />
+            </div>
+            <HelpTitle>
+              {activeDefinition
+                ? `${activeDefinition.title}`
+                : `${t('modal.helpResources')}`}
+            </HelpTitle>
 
-          {activeDefinition !== null && (
-            <ActiveDefinition description={activeDefinition?.description} />
-          )}
+            {activeDefinition !== null && (
+              <ActiveDefinition description={activeDefinition?.description} />
+            )}
 
-          {definitions.length > 0 && (
-            <>
-              <HelpSubtitle>
-                {activeDefinition ? `${t('modal.related')} ` : ''}
-                {t('modal.definitions')}
-              </HelpSubtitle>
-              {activeDefinitions.map((item, index: number) => (
-                <Definition
-                  key={`def_${index}`}
-                  title={item.title}
-                  description={item.description}
-                />
-              ))}
-            </>
-          )}
+            {definitions.length > 0 && (
+              <>
+                <HelpSubtitle>
+                  {activeDefinition ? `${t('modal.related')} ` : ''}
+                  {t('modal.definitions')}
+                </HelpSubtitle>
+                {activeDefinitions.map((item, index: number) => (
+                  <Definition
+                    key={`def_${index}`}
+                    title={item.title}
+                    description={item.description}
+                  />
+                ))}
+              </>
+            )}
 
-          {activeExternals.length > 0 && (
-            <>
-              <HelpSubtitle>{t('modal.articles')}</HelpSubtitle>
-              {activeExternals.map((item, index: number) => (
-                <External
-                  key={`ext_${index}`}
-                  width="100%"
-                  title={t(item.title)}
-                  url={item.url}
-                  website={item.website}
-                />
-              ))}
-            </>
-          )}
-        </Content>
+            {activeExternals.length > 0 && (
+              <>
+                <HelpSubtitle>{t('modal.articles')}</HelpSubtitle>
+                {activeExternals.map((item, index: number) => (
+                  <External
+                    key={`ext_${index}`}
+                    width="100%"
+                    title={t(item.title)}
+                    url={item.url}
+                    website={item.website}
+                  />
+                ))}
+              </>
+            )}
+          </Content>
+        </ModalContent>
       </Scroll>
       <button type="button" className="close" onClick={() => closeHelp()}>
         &nbsp;
