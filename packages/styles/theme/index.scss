@@ -147,3 +147,7 @@ label {
     max-width: $max-page-width-lg;
   }
 }
+
+.disable-body-scroll {
+  overflow: hidden;
+}
