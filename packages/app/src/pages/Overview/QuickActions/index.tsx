@@ -1,14 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { QuickAction } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
-import { useActiveAccounts } from '../../../contexts/ActiveAccounts'
-import { useActivePool } from '../../../contexts/Pools/ActivePool'
-import { useStaking } from '../../../contexts/Staking'
 import { Disconnected } from './Disconnected'
 import { NotStaking } from './NotStaking'
 import { Staking } from './Staking'
