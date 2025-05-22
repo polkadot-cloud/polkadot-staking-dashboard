@@ -22,10 +22,12 @@
     "allNominations": "Todas las Nominaciones",
     "allPoolRoles": "Todos los roles del Pool",
     "allowToJoin": "Permitir que nuevos miembros se unan al Pool.",
+    "amount": "Cantidad",
     "amountToBond": "Cantidad a vincular:",
     "amountWillBeUnbonded": "{{bond}} {{unit}} serán desvinculados.",
     "amountWillBeWithdrawn": "{{bond}} {{unit}} serán retirados.",
     "approveTransactionLedger": "Aprobar transacción en Ledger",
+    "available": "Disponible",
     "back": "Atrás",
     "beingDestroyed": "Este Pool está siendo Destruido.",
     "belowExisting": "Por debajo del Existente",
@@ -104,6 +106,7 @@
     "disconnectFromExtension": "¿Estás seguro de que deseas desconectarte de esta extensión? Esto recargará el Cloud Staking.",
     "done": "Hecho",
     "ensureLedgerIsConnected": "Consejo: Asegúrate de que tu dispositivo Ledger esté conectado antes de continuar.",
+    "enterRecipientAddress": "Introduce la dirección del destinatario",
     "exitYourStakingPosition": "Salir de tu posición de staking.",
     "extensions": "Extensiones",
     "fastUnstakeCurrentQueue": "Número de cuentas actualmente en la fila de desvinculación rápida",
@@ -239,6 +242,7 @@
     "rebondSubtitle": "Los fondos revinculados respaldarán las nominaciones activas desde el inicio de la siguiente era.",
     "rebondUnlock": "Puedes revincular las desvinculaciones en cualquier momento durante este período, o retirarlas a tu saldo disponible después.",
     "recentEraPoints": "Puntos de Era Recientes",
+    "recipient": "Destinatario",
     "refreshAccounts": "Actualizar Cuentas",
     "registerFastUnstake": "Registrarse para la desvinculación rápida requiere un depósito de",
     "remove": "Eliminar",
@@ -267,6 +271,8 @@
     "selectRpcProvider": "Selecciona un proveedor RPC para cambiar el nodo {{network}} al que se conecta el Cloud Staking.",
     "selected": "Seleccionado",
     "selfStake": "Auto-stake",
+    "send": "Enviar",
+    "sendFundsInfo": "Una vez enviada la transacción, los tokens se transferirán inmediatamente al destinatario.",
     "sentToCommissionPayee": "Esta cantidad será enviada a la cuenta de beneficiario de comisiones configurada para este Pool.",
     "setToDestroying": "Establecer como destruyendo",
     "setToDestroyingSubtitle": "Establecer un Pool como destruyendo no se puede revertir. Solo establece este estado si tienes la intención de cerrar el Pool.",
@@ -288,6 +294,7 @@
     "thisMinimumDelay_one": "Este retraso mínimo es el equivalente aproximado a {{count}} bloque.",
     "thisMinimumDelay_other": "Este retraso mínimo es el equivalente aproximado a {{count}} bloques.",
     "titleExtensionConnected": "La extensión {{title}} ha sido conectada.",
+    "to": "Para",
     "togglePlugins": "Alternar Plugins",
     "total": "Total",
     "transactionRejectedPending": "La transacción fue rechazada y aún está pendiente.",
@@ -338,6 +345,6 @@
     "withdrawSubtitle": "Los fondos estarán disponibles inmediatamente como saldo libre después de retirar.",
     "withdrawUnlocked": "Retirar Descomprometidos",
     "years": "Años",
-    "youHaveActiveUnlocks": "Tienes desvinculaciones activas. Las desvinculaciones se pueden retirar una vez que el período de desvinculación de {{bondDurationFormatted}} haya pasado"
+    "youHaveActiveUnlocks": "Tienes desbloqueos activos. Los desbloqueos pueden ser retirados una vez que el período de desbloqueo de {{bondDurationFormatted}} haya pasado."
   }
 }

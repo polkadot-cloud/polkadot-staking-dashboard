@@ -45,7 +45,7 @@
     "date-fns": "^4.1.0",
     "dedot": "^0.10.0",
     "dedot-api": "workspace:*",
-    "framer-motion": "^12.11.0",
+    "framer-motion": "^12.12.1",
     "global-bus": "workspace:*",
     "html5-qrcode": "^2.3.8",
     "i18next-browser-languagedetector": "^8.1.0",
@@ -72,8 +72,8 @@
     "ui-overlay": "workspace:*",
     "usehooks-ts": "^3.0.2",
     "utils": "workspace:*",
-    "viem": "^2.29.2",
-    "wagmi": "^2.15.2",
+    "viem": "^2.29.4",
+    "wagmi": "^2.15.4",
     "xxhash-wasm": "^1.0.2"
   },
   "devDependencies": {
