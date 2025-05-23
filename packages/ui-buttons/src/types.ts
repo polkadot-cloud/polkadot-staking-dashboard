@@ -195,6 +195,8 @@ export type InactiveButtonHeaderProps = ComponentBaseWithClassName & {
   marginLeft?: boolean
   marginRight?: boolean
   marginX?: boolean
+  active?: boolean
+  acknowledged?: boolean
   icon: IconProp | IconDefinition
   iconTransform?: string
 }

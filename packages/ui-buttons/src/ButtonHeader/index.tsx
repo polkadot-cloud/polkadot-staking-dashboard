@@ -40,11 +40,17 @@ export const InactiveButtonHeader = ({
   marginLeft,
   style,
   icon,
+  active,
+  acknowledged,
   iconTransform,
   className,
 }: InactiveButtonHeaderProps) => {
   const allClasses = classNames(classes.btnHeader, {
     [classes.marginLeft]: marginLeft,
+  })
+
+  const activeClasses = classNames(classes.active, {
+    [classes.pulse]: !acknowledged,
   })
 
   return (
@@ -53,6 +59,7 @@ export const InactiveButtonHeader = ({
       style={style}
     >
       <FontAwesomeIcon icon={icon} transform={iconTransform} />
+      {active && <span className={activeClasses} />}
     </div>
   )
 }

@@ -14,6 +14,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   const { serviceApi } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { isReady } = useApi()
   const transferOptions = useMemo(
     () => getTransferOptions(activeAddress),
     [activeAddress]
@@ -25,8 +26,10 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // update max tx fee on free balance change
   useEffect(() => {
-    handleFetch()
-  }, [transferOptions])
+    if (isReady) {
+      handleFetch()
+    }
+  }, [transferOptions, isReady])
 
   // handle fee fetching
   const handleFetch = async () => {

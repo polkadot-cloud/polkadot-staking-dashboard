@@ -6,6 +6,7 @@ import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import appEn from './resources/en/app.json'
 import helpEn from './resources/en/help.json'
+import inviteEn from './resources/en/invite.json'
 import modalsEn from './resources/en/modals.json'
 import pagesEn from './resources/en/pages.json'
 import tipsEn from './resources/en/tips.json'
@@ -26,6 +27,7 @@ export const locales: Record<string, LocaleEntry> = {
 export const lngNamespaces: string[] = [
   'app',
   'help',
+  'invite',
   'modals',
   'pages',
   'tips',
@@ -35,6 +37,7 @@ export const lngNamespaces: string[] = [
 export const fallbackResources = {
   ...appEn,
   ...helpEn,
+  ...inviteEn,
   ...modalsEn,
   ...pagesEn,
   ...tipsEn,
