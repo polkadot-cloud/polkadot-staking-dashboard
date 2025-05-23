@@ -3,16 +3,19 @@
 
 import { camelize } from '@w3ux/utils'
 import { HelpConfig } from 'config/help'
+import { getNetworkData } from 'consts/util'
 import { useHelp } from 'contexts/Help'
 import type {
   DefinitionWithKeys,
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types'
+import { useNetwork } from 'contexts/Network'
+import { useUi } from 'contexts/UI'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { DefaultLocale } from 'locales'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
 import { Container, Content, Scroll } from 'ui-core/canvas'
@@ -21,12 +24,26 @@ import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'
 import { HelpSubtitle, HelpTitle } from './Wrappers'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import helpResourcesEn from './helpresources.json'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import helpResourcesEs from '../../../../locales/src/resources/es/helpresources.json'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import helpResourcesZh from '../../../../locales/src/resources/zh/helpresources.json'
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help')
   const controls = useAnimation()
   const { fillVariables } = useFillVariables()
   const { setStatus, status, definition, closeHelp } = useHelp()
+  const { advancedMode, setAdvancedMode } = useUi()
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const { network } = useNetwork()
+  const { unit, name } = getNetworkData(network)
+  const capitalizedNetwork = name.charAt(0).toUpperCase() + name.slice(1)
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible')
@@ -46,6 +63,15 @@ export const Help = () => {
       onFadeOut()
     }
   }, [status])
+
+  useEffect(() => {
+    // When switching between easy/advanced, scroll to top and trigger reflow
+    if (status === 'open' && scrollRef.current) {
+      scrollRef.current.scrollTop = 0
+      // Trigger a window resize event to force modal recalculation
+      window.dispatchEvent(new Event('resize'))
+    }
+  }, [advancedMode, status])
 
   // render early if help not open
   if (status === 'closed') {
@@ -133,6 +159,85 @@ export const Help = () => {
     }
   })
 
+  // Select helpresources file based on language
+  let helpResources: typeof helpResourcesEn = helpResourcesEn
+  if (i18n.resolvedLanguage === 'es') {
+    helpResources = helpResourcesEs
+  } else if (i18n.resolvedLanguage === 'zh') {
+    helpResources = helpResourcesZh
+  }
+
+  if (!definition) {
+    const path = advancedMode ? 'advanced' : 'essential'
+    const learningPath = helpResources.learningPaths[path]
+    const navigation = helpResources.navigation
+    return (
+      <Container
+        initial={{ opacity: 0, scale: 1.05 }}
+        animate={controls}
+        transition={{ duration: 0.2 }}
+        variants={{
+          hidden: { opacity: 0, scale: 1.05 },
+          visible: { opacity: 1, scale: 1 },
+        }}
+        style={{ zIndex: 20 }}
+      >
+        <Scroll ref={scrollRef}>
+          <ModalContent>
+            <Content size="lg" style={{ alignItems: 'flex-start' }}>
+              <div
+                style={{
+                  padding: '0 0.1rem',
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'flex-end',
+                }}
+              >
+                <ButtonPrimaryInvert
+                  lg
+                  text={t('modal.close')}
+                  onClick={() => closeHelp()}
+                />
+              </div>
+              <HelpTitle>{learningPath.title}</HelpTitle>
+              <h3 style={{ margin: '0 0 1.5rem 0' }}>
+                {learningPath.description}
+              </h3>
+              {learningPath.resources.map(
+                (item: { question: string; answer: string }, i: number) => (
+                  <Definition
+                    key={`lp_def_${i}`}
+                    title={item.question
+                      .replace(/\{network\}/g, capitalizedNetwork)
+                      .replace(/\{token\}/g, unit)}
+                    description={[
+                      item.answer
+                        .replace(/\{network\}/g, capitalizedNetwork)
+                        .replace(/\{token\}/g, unit),
+                    ]}
+                  />
+                )
+              )}
+              <div style={{ marginTop: '2rem', width: '100%' }}>
+                <ButtonPrimaryInvert
+                  text={
+                    advancedMode
+                      ? navigation.advancedToBasic
+                      : navigation.basicToAdvanced
+                  }
+                  onClick={() => setAdvancedMode(!advancedMode)}
+                />
+              </div>
+            </Content>
+          </ModalContent>
+        </Scroll>
+        <button type="button" className="close" onClick={() => closeHelp()}>
+          &nbsp;
+        </button>
+      </Container>
+    )
+  }
+
   return (
     <Container
       initial={{
@@ -157,7 +262,7 @@ export const Help = () => {
         zIndex: 20,
       }}
     >
-      <Scroll>
+      <Scroll ref={scrollRef}>
         <ModalContent>
           <Content size="lg" style={{ alignItems: 'flex-start' }}>
             <div
