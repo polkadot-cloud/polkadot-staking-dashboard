@@ -21,7 +21,6 @@ export const Announcements = () => {
   const { network } = useNetwork()
   const { bondedPools } = useBondedPools()
   const {
-    poolsConfig: { counterForPoolMembers },
     stakingMetrics: { totalStaked, lastReward },
   } = useApi()
 
@@ -82,17 +81,6 @@ export const Announcements = () => {
         'inPools'
       )}`,
       subtitle: `${t('bondedInPools', { networkUnit: unit })}`,
-    })
-  } else {
-    announcements.push(null)
-  }
-
-  // Total locked in pools
-  if (counterForPoolMembers > 0) {
-    announcements.push({
-      class: 'neutral',
-      title: `${new BigNumber(counterForPoolMembers).toFormat()} ${t('poolMembersBonding')}`,
-      subtitle: `${t('totalNumAccounts')}`,
     })
   } else {
     announcements.push(null)
