@@ -1,53 +1,6 @@
 {
   "learningPaths": {
-    "essential": {
-      "title": "Conceptos Básicos de Staking",
-      "description": "Una guía sencilla sobre staking para todos. Explicaciones claras, sin jerga.",
-      "resources": [
-        {
-          "id": "what-is-staking",
-          "question": "¿Qué es el staking?",
-          "answer": "El staking significa bloquear tu {network} ({token}) para ayudar a operar y asegurar la red de {network}. A cambio, puedes ganar recompensas. Es una forma de participar y apoyar el funcionamiento de la red."
-        },
-        {
-          "id": "why-important",
-          "question": "¿Por qué es importante el staking?",
-          "answer": "El staking ayuda a mantener la red de {network} segura y funcionando correctamente. Cuantas más personas apuesten su {token}, más segura y confiable será la red."
-        },
-        {
-          "id": "types-of-staking",
-          "question": "¿Cuáles son los diferentes tipos de staking?",
-          "answer": "Puedes hacer staking por tu cuenta (staking individual) o unirte a un grupo (staking en pool). El staking en pool es más fácil para la mayoría y te permite empezar con una cantidad menor de {token}."
-        },
-        {
-          "id": "staking-risks",
-          "question": "¿Cuáles son los riesgos del staking?",
-          "answer": "El staking es generalmente seguro, pero existen riesgos. Por ejemplo, si rompes las reglas, podrías perder parte de tu {token} apostado (esto se llama slashing). Además, tu {token} estará bloqueado por un tiempo y no podrás usarlo inmediatamente."
-        },
-        {
-          "id": "how-to-start",
-          "question": "¿Cómo empiezo a hacer staking?",
-          "answer": "Para empezar, elige la red {network}, selecciona un método de staking (individual o pool) y sigue los pasos en tu billetera o panel. El staking en pool es recomendado para principiantes."
-        },
-        {
-          "id": "staking-rewards",
-          "question": "¿Qué son las recompensas de staking?",
-          "answer": "Las recompensas de staking son {token} extra que ganas por ayudar a la red de {network}. La cantidad depende de cuánto apuestes y de las reglas de la red."
-        },
-        {
-          "id": "can-lose-funds",
-          "question": "¿Puedo perder mis fondos?",
-          "answer": "Si sigues las reglas, hacer staking con tu {token} es seguro. Pero si actúas en contra de la red (por ejemplo, intentando hacer trampa), podrías perder parte de tu {token} apostado."
-        },
-        {
-          "id": "how-to-stop",
-          "question": "¿Cómo dejo de hacer staking?",
-          "answer": "Puedes dejar de hacer staking en cualquier momento, pero tu {token} puede quedar bloqueado por un corto periodo (llamado periodo de desbloqueo) antes de poder usarlo nuevamente."
-        }
-      ]
-    },
     "advanced": {
-      "title": "Staking Avanzado",
       "description": "Explicaciones detalladas, técnicas y estrategias para usuarios experimentados.",
       "resources": [
         {
@@ -120,11 +73,58 @@
           "question": "¿Qué es el periodo de desbloqueo?",
           "answer": "El periodo de desbloqueo es el tiempo que debes esperar tras dejar de hacer staking antes de que tu {token} esté disponible para transferir. Este periodo ayuda a proteger la red {network} de cambios bruscos en el stake."
         }
-      ]
+      ],
+      "title": "Staking Avanzado"
+    },
+    "essential": {
+      "description": "Una guía sencilla sobre staking para todos. Explicaciones claras, sin jerga.",
+      "resources": [
+        {
+          "id": "what-is-staking",
+          "question": "¿Qué es el staking?",
+          "answer": "El staking significa bloquear tu {network} ({token}) para ayudar a operar y asegurar la red de {network}. A cambio, puedes ganar recompensas. Es una forma de participar y apoyar el funcionamiento de la red."
+        },
+        {
+          "id": "why-important",
+          "question": "¿Por qué es importante el staking?",
+          "answer": "El staking ayuda a mantener la red de {network} segura y funcionando correctamente. Cuantas más personas apuesten su {token}, más segura y confiable será la red."
+        },
+        {
+          "id": "types-of-staking",
+          "question": "¿Cuáles son los diferentes tipos de staking?",
+          "answer": "Puedes hacer staking por tu cuenta (staking individual) o unirte a un grupo (staking en pool). El staking en pool es más fácil para la mayoría y te permite empezar con una cantidad menor de {token}."
+        },
+        {
+          "id": "staking-risks",
+          "question": "¿Cuáles son los riesgos del staking?",
+          "answer": "El staking es generalmente seguro, pero existen riesgos. Por ejemplo, si rompes las reglas, podrías perder parte de tu {token} apostado (esto se llama slashing). Además, tu {token} estará bloqueado por un tiempo y no podrás usarlo inmediatamente."
+        },
+        {
+          "id": "how-to-start",
+          "question": "¿Cómo empiezo a hacer staking?",
+          "answer": "Para empezar, elige la red {network}, selecciona un método de staking (individual o pool) y sigue los pasos en tu billetera o panel. El staking en pool es recomendado para principiantes."
+        },
+        {
+          "id": "staking-rewards",
+          "question": "¿Qué son las recompensas de staking?",
+          "answer": "Las recompensas de staking son {token} extra que ganas por ayudar a la red de {network}. La cantidad depende de cuánto apuestes y de las reglas de la red."
+        },
+        {
+          "id": "can-lose-funds",
+          "question": "¿Puedo perder mis fondos?",
+          "answer": "Si sigues las reglas, hacer staking con tu {token} es seguro. Pero si actúas en contra de la red (por ejemplo, intentando hacer trampa), podrías perder parte de tu {token} apostado."
+        },
+        {
+          "id": "how-to-stop",
+          "question": "¿Cómo dejo de hacer staking?",
+          "answer": "Puedes dejar de hacer staking en cualquier momento, pero tu {token} puede quedar bloqueado por un corto periodo (llamado periodo de desbloqueo) antes de poder usarlo nuevamente."
+        }
+      ],
+      "title": "Conceptos Básicos de Staking"
     }
   },
   "navigation": {
-    "basicToAdvanced": "¿Quieres aprender más? Cambia a Modo Avanzado para información más profunda.",
-    "advancedToBasic": "¿Prefieres explicaciones simples? Cambia a Conceptos Básicos para guías sencillas."
+    "advancedToBasic": "¿Prefieres explicaciones simples? Cambia a Conceptos Básicos para guías sencillas.",
+    "basicToAdvanced": "¿Quieres aprender más? Cambia a Modo Avanzado para información más profunda."
   }
 }

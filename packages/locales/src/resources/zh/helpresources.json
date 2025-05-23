@@ -1,53 +1,6 @@
 {
   "learningPaths": {
-    "essential": {
-      "title": "质押基础",
-      "description": "面向所有人的简单质押指南。内容清晰，无专业术语。",
-      "resources": [
-        {
-          "id": "what-is-staking",
-          "question": "什么是质押？",
-          "answer": "质押是指锁定你的{network}（{token}），以帮助运行和保护{network}网络。作为回报，你可以获得奖励。这是参与并支持网络运作的一种方式。"
-        },
-        {
-          "id": "why-important",
-          "question": "为什么质押很重要？",
-          "answer": "质押有助于保持{network}网络的安全和稳定。更多人质押{token}，网络就越安全、可靠。"
-        },
-        {
-          "id": "types-of-staking",
-          "question": "质押有哪些类型？",
-          "answer": "你可以自己质押（单独质押），也可以加入他人组成的质押池（Pool）。质押池适合大多数人，可以用更少的{token}开始。"
-        },
-        {
-          "id": "staking-risks",
-          "question": "质押有哪些风险？",
-          "answer": "质押通常是安全的，但也有风险。例如，如果你违反规则，可能会损失部分质押的{token}（称为惩罚/削减）。此外，你的{token}会被锁定一段时间，不能立即使用。"
-        },
-        {
-          "id": "how-to-start",
-          "question": "如何开始质押？",
-          "answer": "要开始质押，选择{network}网络，选定质押方式（单独或池），并按照钱包或面板的步骤操作。新手建议选择质押池。"
-        },
-        {
-          "id": "staking-rewards",
-          "question": "什么是质押奖励？",
-          "answer": "质押奖励是你为{network}网络做贡献而获得的额外{token}。奖励多少取决于你的质押量和网络规则。"
-        },
-        {
-          "id": "can-lose-funds",
-          "question": "质押会损失资金吗？",
-          "answer": "只要遵守规则，质押{token}是安全的。但如果你违反网络规则（如作弊），可能会损失部分质押的{token}。"
-        },
-        {
-          "id": "how-to-stop",
-          "question": "如何停止质押？",
-          "answer": "你可以随时停止质押，但你的{token}可能会被锁定一段时间（称为解锁期）后才能再次使用。"
-        }
-      ]
-    },
     "advanced": {
-      "title": "高级质押",
       "description": "为有经验用户提供深入解释、技术细节和策略。",
       "resources": [
         {
@@ -120,11 +73,58 @@
           "question": "什么是解锁期？",
           "answer": "解锁期是你停止质押后，{token}重新可用前需要等待的时间。这个机制有助于保护{network}网络免受质押量剧变的影响。"
         }
-      ]
+      ],
+      "title": "高级质押"
+    },
+    "essential": {
+      "description": "面向所有人的简单质押指南。内容清晰，无专业术语。",
+      "resources": [
+        {
+          "id": "what-is-staking",
+          "question": "什么是质押？",
+          "answer": "质押是指锁定你的{network}（{token}），以帮助运行和保护{network}网络。作为回报，你可以获得奖励。这是参与并支持网络运作的一种方式。"
+        },
+        {
+          "id": "why-important",
+          "question": "为什么质押很重要？",
+          "answer": "质押有助于保持{network}网络的安全和稳定。更多人质押{token}，网络就越安全、可靠。"
+        },
+        {
+          "id": "types-of-staking",
+          "question": "质押有哪些类型？",
+          "answer": "你可以自己质押（单独质押），也可以加入他人组成的质押池（Pool）。质押池适合大多数人，可以用更少的{token}开始。"
+        },
+        {
+          "id": "staking-risks",
+          "question": "质押有哪些风险？",
+          "answer": "质押通常是安全的，但也有风险。例如，如果你违反规则，可能会损失部分质押的{token}（称为惩罚/削减）。此外，你的{token}会被锁定一段时间，不能立即使用。"
+        },
+        {
+          "id": "how-to-start",
+          "question": "如何开始质押？",
+          "answer": "要开始质押，选择{network}网络，选定质押方式（单独或池），并按照钱包或面板的步骤操作。新手建议选择质押池。"
+        },
+        {
+          "id": "staking-rewards",
+          "question": "什么是质押奖励？",
+          "answer": "质押奖励是你为{network}网络做贡献而获得的额外{token}。奖励多少取决于你的质押量和网络规则。"
+        },
+        {
+          "id": "can-lose-funds",
+          "question": "质押会损失资金吗？",
+          "answer": "只要遵守规则，质押{token}是安全的。但如果你违反网络规则（如作弊），可能会损失部分质押的{token}。"
+        },
+        {
+          "id": "how-to-stop",
+          "question": "如何停止质押？",
+          "answer": "你可以随时停止质押，但你的{token}可能会被锁定一段时间（称为解锁期）后才能再次使用。"
+        }
+      ],
+      "title": "质押基础"
     }
   },
   "navigation": {
-    "basicToAdvanced": "想了解更多？切换到高级模式获取更深入内容。",
-    "advancedToBasic": "想要简单说明？切换到基础模式获取易懂指南。"
+    "advancedToBasic": "想要简单说明？切换到基础模式获取易懂指南。",
+    "basicToAdvanced": "想了解更多？切换到高级模式获取更深入内容。"
   }
 }
