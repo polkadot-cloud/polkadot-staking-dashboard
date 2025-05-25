@@ -120,6 +120,7 @@ export interface SystemChain {
   ss58: number
   units: number
   unit: string
+  defaultFeeReserve: bigint
   endpoints: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>
