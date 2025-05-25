@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBell } from '@fortawesome/free-solid-svg-icons'
-import { useInviteNotification } from 'contexts/InviteNotification'
+import { useInviteNotification } from 'contexts/Invites'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { InactiveButtonHeader } from 'ui-buttons'

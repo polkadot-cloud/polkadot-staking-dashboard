@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
-import { useInviteNotification } from 'contexts/InviteNotification'
+import { useInvites } from 'contexts/Invites'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -28,8 +28,8 @@ export const Pool = () => {
   } = useOverlay().canvas
   const { serviceApi } = useApi()
   const { network } = useNetwork()
+  const { inviteConfig } = useInvites()
   const { pluginEnabled } = usePlugins()
-  const { inviteConfig } = useInviteNotification()
   const { poolsMetaData, bondedPools } = useBondedPools()
 
   // Store latest pool candidates

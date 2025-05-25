@@ -14,24 +14,19 @@ import {
 } from './local'
 import type {
   InviteConfig,
-  InviteNotificationContextInterface,
+  InvitesContextInterface,
   InviteType,
   NominatorInvite,
 } from './types'
 
-export const InviteNotificationContext =
-  createContext<InviteNotificationContextInterface>(
-    {} as InviteNotificationContextInterface
-  )
+export const InvitesContext = createContext<InvitesContextInterface>(
+  {} as InvitesContextInterface
+)
 
-export const InviteNotificationProvider = ({
-  children,
-}: {
-  children: ReactNode
-}) => {
+export const InvitesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const { syncing } = useSyncing()
   const { openCanvas } = useOverlay().canvas
+  const { syncing } = useSyncing(['initialization'])
 
   // State for tracking invite status
   const [inviteConfig, setInviteConfig] = useState<InviteConfig | undefined>(
@@ -140,7 +135,7 @@ export const InviteNotificationProvider = ({
   }, [])
 
   return (
-    <InviteNotificationContext.Provider
+    <InvitesContext.Provider
       value={{
         dismissInvite,
         navigateToInvite,
@@ -150,8 +145,8 @@ export const InviteNotificationProvider = ({
       }}
     >
       {children}
-    </InviteNotificationContext.Provider>
+    </InvitesContext.Provider>
   )
 }
 
-export const useInviteNotification = () => useContext(InviteNotificationContext)
+export const useInvites = () => useContext(InvitesContext)
