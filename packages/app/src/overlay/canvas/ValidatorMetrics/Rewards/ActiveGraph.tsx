@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { useValidatorRewards } from 'plugin-staking-api'
 import type { NetworkId } from 'types'
@@ -26,7 +26,7 @@ export const ActiveGraph = ({
     validator,
     fromEra,
   })
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
 
   const list =
     loading || error || data?.validatorRewards === undefined

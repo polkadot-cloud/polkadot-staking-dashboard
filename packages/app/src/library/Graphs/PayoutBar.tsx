@@ -14,7 +14,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
@@ -47,7 +47,7 @@ export const PayoutBar = ({
   const { i18n, t } = useTranslation('app')
   const { getThemeValue } = useThemeValues()
   const { network } = useNetwork()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const staking = nominating || inPool
 
   // Get formatted rewards data

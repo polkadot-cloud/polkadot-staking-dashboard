@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Number } from 'library/StatCards/Number'
@@ -12,7 +12,7 @@ export const MinimumNominatorBond = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { minNominatorBond } = useApi().stakingMetrics
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const params = {
     label: t('minimumToNominate'),

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
@@ -25,7 +25,7 @@ export const UnbondInput = ({
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   // get the actively bonded amount
   const activeUnit = planckToUnitBn(active, units)
 

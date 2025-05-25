@@ -21,10 +21,6 @@ export class RelayMetricsQuery<T extends RelayChain> {
     this.#unsub = await this.api.queryMulti(
       [
         {
-          fn: this.api.query.balances.totalIssuance,
-          args: [],
-        },
-        {
           fn: this.api.query.auctions.auctionCounter,
           args: [],
         },
@@ -33,9 +29,8 @@ export class RelayMetricsQuery<T extends RelayChain> {
           args: [],
         },
       ],
-      ([totalIssuance, auctionCounter, earliestStoredSession]) => {
+      ([auctionCounter, earliestStoredSession]) => {
         this.relayMetrics = {
-          totalIssuance,
           auctionCounter,
           earliestStoredSession,
         }

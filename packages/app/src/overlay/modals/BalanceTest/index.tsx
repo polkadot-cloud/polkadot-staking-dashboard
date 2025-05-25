@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -18,7 +18,7 @@ export const BalanceTest = () => {
   const { newBatchCall } = useBatchCall()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
 
   const getTx = () => {
     if (!activeAddress) {

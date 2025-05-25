@@ -13,7 +13,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { Line } from 'react-chartjs-2'
@@ -45,9 +45,9 @@ export const AveragePayoutLine = ({
   inPool,
 }: AveragePayoutLineProps) => {
   const { t } = useTranslation('app')
-  const { getThemeValue } = useThemeValues()
   const { network } = useNetwork()
-  const { unit, units } = getNetworkData(network)
+  const { getThemeValue } = useThemeValues()
+  const { unit, units } = getStakingChainData(network)
 
   const staking = nominating || inPool
   const inPoolOnly = !nominating && inPool

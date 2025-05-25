@@ -4,7 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensionAccounts } from '@w3ux/react-connect-kit'
 import { ManualSigners } from 'consts'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
@@ -27,7 +27,7 @@ export const ImportedAccountsProvider = ({
   const { getExtensionAccounts } = useExtensionAccounts()
   const { setActiveAccount, setActiveProxy } = useActiveAccounts()
 
-  const { ss58 } = getNetworkData(network)
+  const { ss58 } = getStakingChainData(network)
   // Get the imported extension accounts formatted with the current network's ss58 prefix
   const extensionAccounts = getExtensionAccounts(ss58)
   const allAccounts = extensionAccounts.concat(otherAccounts)

@@ -5,7 +5,7 @@ import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -34,7 +34,7 @@ export const BalanceChart = () => {
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
   const { feeReserve, getTransferOptions } = useTransferOptions()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
 
   const stakingLedger = getStakingLedger(activeAddress)

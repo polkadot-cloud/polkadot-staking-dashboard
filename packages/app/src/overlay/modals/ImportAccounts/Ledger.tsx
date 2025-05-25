@@ -8,7 +8,7 @@ import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import type {
@@ -46,7 +46,7 @@ export const Ledger = () => {
   const { setModalResize } = useOverlay().modal
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
-  const { ss58 } = getNetworkData(network)
+  const { ss58 } = getStakingChainData(network)
   const source: HardwareAccountSource = 'ledger'
 
   // Store addresses retreived from Ledger device. Defaults to local addresses

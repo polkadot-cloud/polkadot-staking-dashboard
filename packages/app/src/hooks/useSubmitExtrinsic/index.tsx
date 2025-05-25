@@ -4,7 +4,7 @@
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import type { HardwareAccount } from '@w3ux/types'
 import { DappName, ManualSigners } from 'consts'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -50,7 +50,7 @@ export const useSubmitExtrinsic = ({
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)

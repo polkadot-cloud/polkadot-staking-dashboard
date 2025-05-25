@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -43,7 +43,7 @@ export const LeavePool = ({
   const { getTransferOptions } = useTransferOptions()
   const { getStakingLedger, getPendingPoolRewards } = useBalances()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = getConsts(network)
