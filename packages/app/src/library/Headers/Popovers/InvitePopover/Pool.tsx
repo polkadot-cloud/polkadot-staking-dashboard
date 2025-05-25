@@ -13,11 +13,11 @@ export const Pool = ({
   poolId: number
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('app')
   const { openCanvas } = useOverlay().canvas
   return (
     <PopoverTab.Button
-      text={t('viewInvite', { ns: 'app' })}
+      text={t('viewInvite')}
       onClick={() => {
         setOpen(false)
         openCanvas({
