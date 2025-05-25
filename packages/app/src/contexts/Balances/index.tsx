@@ -23,8 +23,8 @@ export const [BalancesContext, useBalances] =
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
-  const balanceChain = getStakingChain(network)
-  const { existentialDeposit } = getChainSpec(balanceChain)
+  const stakingChain = getStakingChain(network)
+  const { existentialDeposit } = getChainSpec(stakingChain)
 
   // Store account balances state
   type StateBalances = Record<string, Record<string, AccountBalance>>
@@ -39,7 +39,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     if (!address) {
       return defaultAccountBalance
     }
-    return accountBalances?.[balanceChain]?.[address] || defaultAccountBalance
+    return accountBalances?.[stakingChain]?.[address] || defaultAccountBalance
   }
 
   // Get an account's ed reserved balance
