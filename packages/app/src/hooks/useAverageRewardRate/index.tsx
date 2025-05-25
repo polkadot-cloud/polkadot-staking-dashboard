@@ -15,7 +15,7 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
   const { erasPerDay } = useErasPerDay()
   const { lastTotalStake } = useApi().stakingMetrics
   const {
-    relayMetrics: { totalIssuance },
+    stakingMetrics: { totalIssuance },
   } = useApi()
   const { network } = useNetwork()
   const { avgCommission, averageEraValidatorReward } = useValidators()

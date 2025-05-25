@@ -12,13 +12,10 @@ import { useTranslation } from 'react-i18next'
 export const SupplyStaked = () => {
   const { t } = useTranslation('pages')
   const {
-    relayMetrics,
-    stakingMetrics: { lastTotalStake },
+    stakingMetrics: { lastTotalStake, totalIssuance },
   } = useApi()
   const { network } = useNetwork()
-
   const { unit, units } = getStakingChainData(network)
-  const { totalIssuance } = relayMetrics
 
   // total supply as percent.
   const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))
