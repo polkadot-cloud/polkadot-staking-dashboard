@@ -5,6 +5,7 @@ import { createSafeContext } from '@w3ux/hooks'
 import { WalletConnectModal } from '@walletconnect/modal'
 import UniversalProvider from '@walletconnect/universal-provider'
 import { getSdkError } from '@walletconnect/utils'
+import { getDefaultTxChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
@@ -27,7 +28,7 @@ export const WalletConnectProvider = ({
 }) => {
   const { network } = useNetwork()
   const { isReady, getChainSpec } = useApi()
-  const { genesisHash } = getChainSpec(network)
+  const { genesisHash } = getChainSpec(getDefaultTxChain(network))
 
   // The WalletConnect provider
   const wcProvider = useRef<UniversalProvider | null>(null)

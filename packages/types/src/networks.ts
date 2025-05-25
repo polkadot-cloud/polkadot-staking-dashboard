@@ -108,6 +108,10 @@ export interface Network {
   units: number
   ss58: number
   defaultFeeReserve: bigint
+  meta: {
+    defaultBalances: ChainId
+    defaultTx: ChainId
+  }
 }
 
 export interface SystemChain {

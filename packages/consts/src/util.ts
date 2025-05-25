@@ -92,3 +92,11 @@ export const getEnabledNetworks = (): Networks =>
 // Checks if a network is enabled
 export const isNetworkEnabled = (network: NetworkId) =>
   Object.keys(getEnabledNetworks()).includes(network)
+
+// Get default chain for balances by network
+export const getDefaultBalancesChain = (network: NetworkId) =>
+  NetworkList[network].meta.defaultBalances
+
+// Get default chain for submitting transactions, by network
+export const getDefaultTxChain = (network: NetworkId) =>
+  NetworkList[network].meta.defaultTx

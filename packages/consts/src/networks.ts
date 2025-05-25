@@ -29,6 +29,10 @@ export const NetworkList: Networks = {
     units: 10,
     ss58: 0,
     defaultFeeReserve: 1000000000n,
+    meta: {
+      defaultBalances: 'polkadot',
+      defaultTx: 'polkadot',
+    },
   },
   kusama: {
     name: 'kusama',
@@ -48,6 +52,10 @@ export const NetworkList: Networks = {
     units: 12,
     ss58: 2,
     defaultFeeReserve: 50000000000n,
+    meta: {
+      defaultBalances: 'kusama',
+      defaultTx: 'kusama',
+    },
   },
   westend: {
     name: 'westend',
@@ -66,6 +74,10 @@ export const NetworkList: Networks = {
     units: 12,
     ss58: 42,
     defaultFeeReserve: 100000000000n,
+    meta: {
+      defaultBalances: 'westmint',
+      defaultTx: 'westmint',
+    },
   },
 }
 

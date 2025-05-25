@@ -6,6 +6,7 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getDefaultBalancesChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { hexToU8a } from 'dedot/utils'
@@ -25,7 +26,7 @@ export const SignPrompt = ({
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
   const { t } = useTranslation('app')
-  const { genesisHash } = getChainSpec(network)
+  const { genesisHash } = getChainSpec(getDefaultBalancesChain(network))
 
   // Whether user is on sign or submit stage.
   const [stage, setStage] = useState<number>(1)

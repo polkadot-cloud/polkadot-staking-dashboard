@@ -3,6 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { maxBigInt } from '@w3ux/utils'
+import { getDefaultBalancesChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import {
@@ -22,7 +23,8 @@ export const [BalancesContext, useBalances] =
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
-  const { existentialDeposit } = getChainSpec(network)
+  const balanceChain = getDefaultBalancesChain(network)
+  const { existentialDeposit } = getChainSpec(balanceChain)
 
   // Store account balances state
   type StateBalances = Record<string, Record<string, AccountBalance>>
@@ -37,7 +39,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     if (!address) {
       return defaultAccountBalance
     }
-    return accountBalances?.[network]?.[address] || defaultAccountBalance
+    return accountBalances?.[balanceChain]?.[address] || defaultAccountBalance
   }
 
   // Get an account's ed reserved balance
