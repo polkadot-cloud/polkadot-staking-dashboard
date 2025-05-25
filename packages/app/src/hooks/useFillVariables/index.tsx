@@ -5,7 +5,7 @@ import { capitalizeFirstLetter, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { MaxNominations } from 'consts'
 import {
-  getDefaultBalancesChain,
+  getStakingChain,
   getRelayChainData,
   getStakingChainData,
 } from 'consts/util'
@@ -25,7 +25,7 @@ export const useFillVariables = () => {
   const { network } = useNetwork()
   const { maxSupportedDays } = useErasPerDay()
   const { maxExposurePageSize } = getConsts(network)
-  const { existentialDeposit } = getChainSpec(getDefaultBalancesChain(network))
+  const { existentialDeposit } = getChainSpec(getStakingChain(network))
   const { name } = getRelayChainData(network)
   const { unit, units } = getStakingChainData(network)
 

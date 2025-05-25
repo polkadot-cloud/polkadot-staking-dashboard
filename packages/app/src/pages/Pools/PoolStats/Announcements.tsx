@@ -4,7 +4,7 @@
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BigNumber from 'bignumber.js'
-import { getDefaultBalancesChain, getStakingChainData } from 'consts/util'
+import { getStakingChain, getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -23,7 +23,7 @@ export const Announcements = () => {
   const { unit, units } = getStakingChainData(network)
   const { rewardAccountBalance } = activePool || {}
   const { totalRewardsClaimed } = activePool?.rewardPool || {}
-  const { existentialDeposit } = getChainSpec(getDefaultBalancesChain(network))
+  const { existentialDeposit } = getChainSpec(getStakingChain(network))
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BigNumber.max(

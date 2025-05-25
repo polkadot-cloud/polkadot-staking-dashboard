@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getDefaultBalancesChain } from 'consts/util'
+import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { createPoolAccounts as createUtil } from 'utils'
@@ -11,7 +11,7 @@ export const useCreatePoolAccounts = () => {
   const { getChainSpec, getConsts } = useApi()
   const { poolsPalletId } = getConsts(network)
   const { ss58Format } = getChainSpec(
-    getDefaultBalancesChain(network)
+    getStakingChain(network)
   ).properties
 
   const createPoolAccounts = (poolId: number) =>

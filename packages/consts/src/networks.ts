@@ -30,8 +30,7 @@ export const NetworkList: Networks = {
     ss58: 0,
     defaultFeeReserve: 1000000000n,
     meta: {
-      defaultBalances: 'polkadot',
-      defaultTx: 'polkadot',
+      stakingChain: 'polkadot',
       subscanBalanceChainId: 'polkadot',
     },
   },
@@ -54,8 +53,7 @@ export const NetworkList: Networks = {
     ss58: 2,
     defaultFeeReserve: 50000000000n,
     meta: {
-      defaultBalances: 'kusama',
-      defaultTx: 'kusama',
+      stakingChain: 'kusama',
       subscanBalanceChainId: 'kusama',
     },
   },
@@ -77,8 +75,7 @@ export const NetworkList: Networks = {
     ss58: 42,
     defaultFeeReserve: 100000000000n,
     meta: {
-      defaultBalances: 'westmint',
-      defaultTx: 'westmint',
+      stakingChain: 'westmint',
       subscanBalanceChainId: 'assethub-westend',
     },
   },

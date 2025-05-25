@@ -3,7 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { maxBigInt } from '@w3ux/utils'
-import { getDefaultBalancesChain } from 'consts/util'
+import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import {
@@ -23,7 +23,7 @@ export const [BalancesContext, useBalances] =
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
-  const balanceChain = getDefaultBalancesChain(network)
+  const balanceChain = getStakingChain(network)
   const { existentialDeposit } = getChainSpec(balanceChain)
 
   // Store account balances state

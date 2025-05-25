@@ -109,8 +109,7 @@ export interface Network {
   ss58: number
   defaultFeeReserve: bigint
   meta: {
-    defaultBalances: ChainId
-    defaultTx: ChainId
+    stakingChain: ChainId
     subscanBalanceChainId: string
   }
 }

@@ -5,7 +5,7 @@ import { createSafeContext } from '@w3ux/hooks'
 import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { compare } from 'compare-versions'
-import { getDefaultTxChain } from 'consts/util'
+import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
@@ -33,9 +33,7 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
-  const { transactionVersion } = getChainSpec(
-    getDefaultTxChain(network)
-  ).version
+  const { transactionVersion } = getChainSpec(getStakingChain(network)).version
 
   // Store whether a Ledger device task is in progress
   const [isExecuting, setIsExecutingState] = useState<boolean>(false)

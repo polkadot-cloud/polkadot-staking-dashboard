@@ -34,11 +34,18 @@ export const getSystemChainData = (chain: SystemChainId) =>
   SystemChainList[chain]
 
 // Get staking chain data from either network list or system chain list
-export const getStakingChainData = (chain: SystemChainId | NetworkId) => {
-  if (Object.keys(SystemChainList).includes(chain)) {
-    return SystemChainList[chain as SystemChainId]
+export const getStakingChainData = (network: NetworkId) => {
+  const relayChainData = NetworkList[network]
+  const stakingChain = relayChainData.meta.stakingChain
+
+  if (stakingChain === network) {
+    return relayChainData
   }
-  return NetworkList[chain as NetworkId]
+  if (Object.keys(SystemChainList).includes(stakingChain)) {
+    return SystemChainList[stakingChain]
+  }
+  // NOTE: fallback - should not happen
+  return relayChainData
 }
 
 // Get default rpc endpoints for a relay chain and accompanying system chains for a given network
@@ -100,13 +107,9 @@ export const getEnabledNetworks = (): Networks =>
 export const isNetworkEnabled = (network: NetworkId) =>
   Object.keys(getEnabledNetworks()).includes(network)
 
-// Get default chain for balances by network
-export const getDefaultBalancesChain = (network: NetworkId) =>
-  NetworkList[network].meta.defaultBalances
-
-// Get default chain for submitting transactions, by network
-export const getDefaultTxChain = (network: NetworkId) =>
-  NetworkList[network].meta.defaultTx
+// Get default staking chain for a network
+export const getStakingChain = (network: NetworkId) =>
+  NetworkList[network].meta.stakingChain
 
 // Get subscan balance chain id by network
 export const getSubscanBalanceChainId = (network: NetworkId) =>
