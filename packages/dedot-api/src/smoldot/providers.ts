@@ -7,10 +7,11 @@ import type { Network, SystemChain } from 'types'
 
 // Instantiate smoldot from worker
 const initSmWorker = () => {
-  const smWorker = new Worker(new URL('./worker.js', import.meta.url), {
-    type: 'module',
-  })
-  const client = startWithWorker(smWorker)
+  const client = startWithWorker(
+    new Worker(new URL('dedot/smoldot/worker', import.meta.url), {
+      type: 'module',
+    })
+  )
   return client
 }
 
