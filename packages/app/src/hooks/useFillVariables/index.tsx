@@ -5,8 +5,8 @@ import { capitalizeFirstLetter, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { MaxNominations } from 'consts'
 import {
-  getStakingChain,
   getRelayChainData,
+  getStakingChain,
   getStakingChainData,
 } from 'consts/util'
 import { useApi } from 'contexts/Api'
