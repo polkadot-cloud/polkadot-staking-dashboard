@@ -3,7 +3,7 @@
 
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { Warning } from 'library/Form/Warning'
@@ -35,8 +35,8 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
 }) => {
   const { t } = useTranslation('invite')
   const { network } = useNetwork()
-  const { unit } = getNetworkData(network)
   const { getPayeeItems } = usePayeeConfig()
+  const { unit } = getStakingChainData(network)
 
   // Get the display name for the selected payout destination
   const getPayoutDisplay = () => {

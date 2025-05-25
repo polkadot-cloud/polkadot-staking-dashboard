@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBell } from '@fortawesome/free-solid-svg-icons'
-import { useInviteNotification } from 'contexts/Invites'
+import { useInvites } from 'contexts/Invites'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { InactiveButtonHeader } from 'ui-buttons'
@@ -11,8 +11,7 @@ import { InvitePopover } from './Popovers/InvitePopover'
 
 export const Invite = () => {
   const { themeElementRef } = useTheme()
-  const { inviteConfig, acknowledged, setAcknowledged } =
-    useInviteNotification()
+  const { inviteConfig, acknowledged, setAcknowledged } = useInvites()
 
   const [open, setOpen] = useState<boolean>(false)
 

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useOutsideAlerter } from '@w3ux/hooks'
-import { useInviteNotification } from 'contexts/Invites'
+import { useInvites } from 'contexts/Invites'
 import type { PoolInvite } from 'contexts/Invites/types'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,8 @@ export const InvitePopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
-  const { inviteConfig, dismissInvite } = useInviteNotification()
+  const { inviteConfig, dismissInvite } = useInvites()
+
   // NOTE: We assume a valid pool invite is active
   const popoverRef = useRef<HTMLDivElement>(null)
 

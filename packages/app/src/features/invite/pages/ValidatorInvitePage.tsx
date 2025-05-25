@@ -3,12 +3,12 @@
 
 import { unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useInviteNotification } from 'contexts/Invites'
+import { useInvites } from 'contexts/Invites'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -65,7 +65,7 @@ export const ValidatorInvitePage = () => {
     network: string
     validators: string
   }>()
-  const { dismissInvite } = useInviteNotification()
+  const { dismissInvite } = useInvites()
 
   const { controllerUnmigrated } = getStakingLedger(activeAddress)
   const location = window.location.search
@@ -103,7 +103,7 @@ export const ValidatorInvitePage = () => {
     }
   }, [location, i18n, urlNetwork, network, switchNetwork])
 
-  const { units, unit } = getNetworkData(network)
+  const { units, unit } = getStakingChainData(network)
 
   // State for validators from URL
   const [urlValidators, setUrlValidators] = useState<string[]>([])
