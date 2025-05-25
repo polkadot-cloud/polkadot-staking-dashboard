@@ -6,7 +6,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -32,7 +32,7 @@ export const ManageBond = () => {
   const { getTransferOptions } = useTransferOptions()
   const { isBonding, isMember, activePool, isDepositor } = useActivePool()
 
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const allTransferOptions = getTransferOptions(activeAddress)
   const {

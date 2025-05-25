@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -34,7 +34,7 @@ export const ClaimReward = () => {
   const { getSignerWarnings } = useSignerWarnings()
 
   const { claimType } = options
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const pendingRewards = getPendingPoolRewards(activeAddress)
 
   // ensure selected payout is valid

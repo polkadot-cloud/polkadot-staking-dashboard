@@ -3,7 +3,7 @@
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -37,7 +37,7 @@ export const Unstake = () => {
   const { setModalStatus, setModalResize } = useOverlay().modal
 
   const { bondDuration } = getConsts(network)
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const nominations = getNominations(activeAddress)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active } = allTransferOptions.nominate

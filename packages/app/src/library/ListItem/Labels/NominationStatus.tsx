@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
@@ -24,7 +24,7 @@ export const NominationStatus = ({
     eraStakers: { activeAccountOwnStake, stakers },
   } = useStaking()
   const { syncing } = useSyncing(['era-stakers'])
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   let stakedAmount = new BigNumber(0)
   if (bondFor === 'nominator') {

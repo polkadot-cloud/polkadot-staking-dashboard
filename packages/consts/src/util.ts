@@ -28,11 +28,18 @@ export const isSupportedProxyCall = (
 }
 
 // Get network data from network list
-export const getNetworkData = (network: NetworkId) => NetworkList[network]
+export const getRelayChainData = (network: NetworkId) => NetworkList[network]
 
-// Get system chain data from network list
 export const getSystemChainData = (chain: SystemChainId) =>
   SystemChainList[chain]
+
+// Get staking chain data from either network list or system chain list
+export const getStakingChainData = (chain: SystemChainId | NetworkId) => {
+  if (Object.keys(SystemChainList).includes(chain)) {
+    return SystemChainList[chain as SystemChainId]
+  }
+  return NetworkList[chain as NetworkId]
+}
 
 // Get default rpc endpoints for a relay chain and accompanying system chains for a given network
 export const getDefaultRpcEndpoints = (network: NetworkId) => {

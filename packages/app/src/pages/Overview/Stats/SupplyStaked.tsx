@@ -3,7 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Pie } from 'library/StatCards/Pie'
@@ -17,7 +17,7 @@ export const SupplyStaked = () => {
   } = useApi()
   const { network } = useNetwork()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const { totalIssuance } = relayMetrics
 
   // total supply as percent.

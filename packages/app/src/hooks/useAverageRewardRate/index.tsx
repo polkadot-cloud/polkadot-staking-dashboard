@@ -3,7 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -19,7 +19,7 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
   } = useApi()
   const { network } = useNetwork()
   const { avgCommission, averageEraValidatorReward } = useValidators()
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
 
   // Get average reward rates.
   const getAverageRewardRate = (compounded: boolean): AverageRewardRate => {

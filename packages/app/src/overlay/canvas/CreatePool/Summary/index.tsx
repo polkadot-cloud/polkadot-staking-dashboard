@@ -5,7 +5,7 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -36,7 +36,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { getPoolSetup, removePoolSetup } = usePoolSetups()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { queryBondedPool, addToBondedPools } = useBondedPools()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const poolId = lastPoolId + 1
   const setup = getPoolSetup(activeAddress)

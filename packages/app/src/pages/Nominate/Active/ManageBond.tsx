@@ -11,7 +11,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -51,7 +51,7 @@ export const ManageBond = () => {
   const { exposed, fastUnstakeStatus } = useFastUnstake()
 
   const { ledger } = getStakingLedger(activeAddress)
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const active = ledger?.active || 0n
   const allTransferOptions = getTransferOptions(activeAddress)
