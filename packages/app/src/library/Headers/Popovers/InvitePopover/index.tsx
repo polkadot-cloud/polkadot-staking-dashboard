@@ -35,7 +35,7 @@ export const InvitePopover = ({
   return (
     <div ref={popoverRef} style={{ paddingTop: '1.5rem' }}>
       <Padding>
-        <h4>1 {t('notification')}</h4>
+        <h4>1 {t('notification', { count: 1 })}</h4>
         <h3 style={{ margin: '0.75rem 0 1.5rem 0' }}>
           {inviteConfig && inviteConfig.type === 'pool'
             ? t('invitePool')
