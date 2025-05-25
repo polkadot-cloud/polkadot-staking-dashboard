@@ -20,7 +20,7 @@ SPDX-License-Identifier: GPL-3.0-only */
     background: var(--border-secondary-color);
   }
 
-   > .active {
+  > .active {
     background-color: var(--accent-color-primary);
     box-shadow: 0 0 0 1px var(--accent-color-primary);
     position: absolute;
