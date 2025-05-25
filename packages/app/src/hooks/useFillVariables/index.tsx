@@ -4,7 +4,11 @@
 import { capitalizeFirstLetter, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { MaxNominations } from 'consts'
-import { getNetworkData } from 'consts/util'
+import {
+  getRelayChainData,
+  getStakingChain,
+  getStakingChainData,
+} from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { AnyJson } from 'types'
@@ -21,8 +25,9 @@ export const useFillVariables = () => {
   const { network } = useNetwork()
   const { maxSupportedDays } = useErasPerDay()
   const { maxExposurePageSize } = getConsts(network)
-  const { existentialDeposit } = getChainSpec(network)
-  const { unit, units, name } = getNetworkData(network)
+  const { existentialDeposit } = getChainSpec(getStakingChain(network))
+  const { name } = getRelayChainData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const fillVariables = (d: AnyJson, keys: string[]) => {
     const fields: AnyJson = Object.entries(d).filter(([k]) => keys.includes(k))

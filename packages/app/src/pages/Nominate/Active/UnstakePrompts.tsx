@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
@@ -26,7 +26,7 @@ export const UnstakePrompts = () => {
   const { activeAddress } = useActiveAccounts()
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
 
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
   const { getTransferOptions } = useTransferOptions()
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAddress).nominate

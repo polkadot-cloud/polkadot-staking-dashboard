@@ -3,7 +3,7 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -32,7 +32,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { activeAddress } = useActiveAccounts()
   const { getStakingLedger, getNominations } = useBalances()
   const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
 
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)

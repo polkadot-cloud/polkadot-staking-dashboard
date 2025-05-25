@@ -5,7 +5,7 @@ import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import type { UnlockChunk } from 'contexts/Balances/types'
 import { useNetwork } from 'contexts/Network'
@@ -44,7 +44,7 @@ export const Overview = forwardRef(
     const { isFastUnstaking } = useUnstaking()
     const { erasToSeconds } = useErasToTimeLeft()
 
-    const { unit, units } = getNetworkData(network)
+    const { unit, units } = getStakingChainData(network)
     const bondDurationFormatted = timeleftAsString(
       t,
       getUnixTime(new Date()) + 1,

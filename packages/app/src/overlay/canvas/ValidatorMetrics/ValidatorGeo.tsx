@@ -3,7 +3,6 @@
 
 import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client'
 import { useSize } from '@w3ux/hooks'
-import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
@@ -15,12 +14,10 @@ import { ValidatorGeoWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 
 export const ValidatorGeo = ({ address }: { address: string }) => {
   const { t } = useTranslation('modals')
-  const { openHelp } = useHelp()
   const { network } = useNetwork()
   const { containerRefs } = useUi()
 
@@ -65,14 +62,7 @@ export const ValidatorGeo = ({ address }: { address: string }) => {
         }}
       >
         <CardHeader margin>
-          <h4>
-            {t('rewardsByCountryAndNetwork')}{' '}
-            <ButtonHelp
-              marginLeft
-              onClick={() => openHelp('Rewards By Country And Network')}
-              outline
-            />
-          </h4>
+          <h4>{t('rewardsByCountryAndNetwork')} </h4>
         </CardHeader>
         <div
           ref={ref}

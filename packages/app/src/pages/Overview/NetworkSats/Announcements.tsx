@@ -5,7 +5,7 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { capitalizeFirstLetter, planckToUnit, sortWithNull } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -21,11 +21,10 @@ export const Announcements = () => {
   const { network } = useNetwork()
   const { bondedPools } = useBondedPools()
   const {
-    poolsConfig: { counterForPoolMembers },
     stakingMetrics: { totalStaked, lastReward },
   } = useApi()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const lastRewardUnit = new BigNumber(planckToUnit(lastReward || 0, units))
 
   let totalPoolPoints = new BigNumber(0)
@@ -82,17 +81,6 @@ export const Announcements = () => {
         'inPools'
       )}`,
       subtitle: `${t('bondedInPools', { networkUnit: unit })}`,
-    })
-  } else {
-    announcements.push(null)
-  }
-
-  // Total locked in pools
-  if (counterForPoolMembers > 0) {
-    announcements.push({
-      class: 'neutral',
-      title: `${new BigNumber(counterForPoolMembers).toFormat()} ${t('poolMembersBonding')}`,
-      subtitle: `${t('totalNumAccounts')}`,
     })
   } else {
     announcements.push(null)

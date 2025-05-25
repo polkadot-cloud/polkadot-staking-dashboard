@@ -4,7 +4,7 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -38,7 +38,7 @@ export const Forms = forwardRef(
     const { activeAddress } = useActiveAccounts()
     const { getSignerWarnings } = useSignerWarnings()
     const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
-    const { unit, units } = getNetworkData(network)
+    const { unit, units } = getStakingChainData(network)
 
     // Get the total payout amount
     const totalPayout =

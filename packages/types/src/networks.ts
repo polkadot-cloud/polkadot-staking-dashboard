@@ -60,7 +60,6 @@ export interface ChainConsts {
 }
 
 export interface RelayMetrics {
-  totalIssuance: bigint
   auctionCounter: number
   earliestStoredSession: number
 }
@@ -79,6 +78,7 @@ export interface PoolsConfig {
 }
 
 export interface StakingMetrics {
+  totalIssuance: bigint
   erasToCheckPerBlock: number
   minimumActiveStake: bigint
   counterForValidators: number
@@ -108,6 +108,10 @@ export interface Network {
   units: number
   ss58: number
   defaultFeeReserve: bigint
+  meta: {
+    stakingChain: ChainId
+    subscanBalanceChainId: string
+  }
 }
 
 export interface SystemChain {
@@ -115,6 +119,7 @@ export interface SystemChain {
   ss58: number
   units: number
   unit: string
+  defaultFeeReserve: bigint
   endpoints: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lightClient: () => Promise<any>

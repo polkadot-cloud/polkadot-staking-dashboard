@@ -4,7 +4,7 @@
 import { useSize } from '@w3ux/hooks'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -36,7 +36,7 @@ export const Payouts = () => {
   const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
 
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking

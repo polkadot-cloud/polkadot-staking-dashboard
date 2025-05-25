@@ -5,7 +5,7 @@ import { useNetwork } from 'contexts/Network'
 import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import type { AnalyzedPayoutsProps } from '../types'
 
 // We simply report the size of payouts that have been analyzed for decentralization purpose
@@ -13,7 +13,7 @@ import type { AnalyzedPayoutsProps } from '../types'
 export const AnalyzedPayouts = ({ data }: AnalyzedPayoutsProps) => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
 
   const params = {
     label: t('totalPayoutsAnalysed'),
