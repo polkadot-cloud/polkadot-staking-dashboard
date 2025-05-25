@@ -100,3 +100,7 @@ export const getDefaultBalancesChain = (network: NetworkId) =>
 // Get default chain for submitting transactions, by network
 export const getDefaultTxChain = (network: NetworkId) =>
   NetworkList[network].meta.defaultTx
+
+// Get subscan balance chain id by network
+export const getSubscanBalanceChainId = (network: NetworkId) =>
+  NetworkList[network].meta.subscanBalanceChainId

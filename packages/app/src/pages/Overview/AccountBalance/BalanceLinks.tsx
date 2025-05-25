@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { getSubscanBalanceChainId } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
@@ -25,7 +26,7 @@ export const BalanceLinks = () => {
           lg
           onClick={() =>
             window.open(
-              `https://${network}.subscan.io/account/${activeAddress}`,
+              `https://${getSubscanBalanceChainId(network)}.subscan.io/account/${activeAddress}`,
               '_blank'
             )
           }

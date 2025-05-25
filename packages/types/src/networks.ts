@@ -111,6 +111,7 @@ export interface Network {
   meta: {
     defaultBalances: ChainId
     defaultTx: ChainId
+    subscanBalanceChainId: string
   }
 }
 

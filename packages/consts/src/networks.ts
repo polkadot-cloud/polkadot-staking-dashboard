@@ -32,6 +32,7 @@ export const NetworkList: Networks = {
     meta: {
       defaultBalances: 'polkadot',
       defaultTx: 'polkadot',
+      subscanBalanceChainId: 'polkadot',
     },
   },
   kusama: {
@@ -55,6 +56,7 @@ export const NetworkList: Networks = {
     meta: {
       defaultBalances: 'kusama',
       defaultTx: 'kusama',
+      subscanBalanceChainId: 'kusama',
     },
   },
   westend: {
@@ -77,6 +79,7 @@ export const NetworkList: Networks = {
     meta: {
       defaultBalances: 'westmint',
       defaultTx: 'westmint',
+      subscanBalanceChainId: 'assethub-westend',
     },
   },
 }
