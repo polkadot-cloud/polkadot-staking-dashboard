@@ -86,7 +86,7 @@ export const MenuPopover = ({
           <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
         </div>
         <div>
-          <h3>{t('inviteToStake', { ns: 'invite' })}</h3>
+          <h3>{t('invite', { ns: 'app' })}</h3>
         </div>
       </MenuItemButton>
       <MenuItemButton

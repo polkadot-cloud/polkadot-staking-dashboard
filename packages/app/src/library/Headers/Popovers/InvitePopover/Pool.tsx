@@ -17,7 +17,7 @@ export const Pool = ({
   const { openCanvas } = useOverlay().canvas
   return (
     <PopoverTab.Button
-      text={t('viewInvite', { ns: 'invite' })}
+      text={t('viewInvite', { ns: 'app' })}
       onClick={() => {
         setOpen(false)
         openCanvas({

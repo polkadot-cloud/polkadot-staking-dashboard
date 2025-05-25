@@ -15,7 +15,7 @@ export const InvitePopover = ({
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('app')
   const { inviteConfig, dismissInvite } = useInvites()
 
   // NOTE: We assume a valid pool invite is active
@@ -35,11 +35,11 @@ export const InvitePopover = ({
   return (
     <div ref={popoverRef} style={{ paddingTop: '1.5rem' }}>
       <Padding>
-        <h4>1 Notification</h4>
+        <h4>1 {t('notification')}</h4>
         <h3 style={{ margin: '0.75rem 0 1.5rem 0' }}>
           {inviteConfig && inviteConfig.type === 'pool'
-            ? t('youHaveBeenInvitedToJoinPool', { ns: 'invite' })
-            : t('youHaveBeenInvitedToNominate', { ns: 'invite' })}
+            ? t('invitePool')
+            : t('inviteNominate')}
           !
         </h3>
       </Padding>
@@ -47,7 +47,7 @@ export const InvitePopover = ({
         {poolId && <Pool poolId={poolId} setOpen={setOpen} />}
         <PopoverTab.Button
           status="danger"
-          text={t('dismiss', { ns: 'invite' })}
+          text={t('dismiss')}
           onClick={() => {
             dismissInvite()
             setOpen(false)

@@ -22,7 +22,7 @@ import type { RoleIdentities } from './types'
 import { InviteHeader } from './Wrappers'
 
 export const Pool = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('app')
   const {
     config: { options },
   } = useOverlay().canvas
@@ -139,8 +139,8 @@ export const Pool = () => {
           {inviteConfig && inviteConfig.type === 'pool' && (
             <CardWrapper className="canvas">
               <InviteHeader>
-                <h2>{t('invitedToJoinPool')}</h2>
-                <h4>{t('poolInviteDescription')}</h4>
+                <h2>{t('poolInviteTitle')}</h2>
+                <h4>{t('poolInviteSubtitle')}</h4>
               </InviteHeader>
             </CardWrapper>
           )}
