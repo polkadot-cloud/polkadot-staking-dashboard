@@ -3,7 +3,7 @@
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -35,7 +35,7 @@ export const Bond = () => {
   const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
   const { feeReserve, getTransferOptions } = useTransferOptions()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const { bondFor } = options
   const isStaking = bondFor === 'nominator'

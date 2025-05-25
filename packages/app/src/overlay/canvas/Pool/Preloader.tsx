@@ -3,7 +3,7 @@
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -20,7 +20,7 @@ export const Preloader = () => {
   const {
     poolsConfig: { counterForPoolMembers },
   } = useApi()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {

@@ -7,7 +7,7 @@ import {
   HardwareAccountsProvider,
 } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
@@ -48,7 +48,7 @@ import { OverlayProvider } from 'ui-overlay'
 
 export const Providers = () => {
   const { network } = useNetwork()
-  const { ss58 } = getNetworkData(network)
+  const { ss58 } = getStakingChainData(network)
 
   return withProviders(
     // !! Provider order matters.

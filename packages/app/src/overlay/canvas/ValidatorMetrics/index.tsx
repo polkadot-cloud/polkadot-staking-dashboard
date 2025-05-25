@@ -5,7 +5,7 @@ import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -47,7 +47,7 @@ export const ValidatorMetrics = () => {
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
   const { getValidators } = useValidators()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const Token = getChainIcons(network).token
   const validator = options!.validator

@@ -11,7 +11,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -53,7 +53,7 @@ export const Overview = (props: PayoutHistoryProps) => {
   const { getAverageRewardRate } = useAverageRewardRate()
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
 
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
   const rewardRate = avgRateBeforeCommission.toNumber()
   const Token = getChainIcons(network).token
 

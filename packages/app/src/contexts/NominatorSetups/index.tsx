@@ -4,7 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -36,7 +36,7 @@ export const NominatorSetupsProvider = ({
   const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
 
   // Store all imported accounts nominator setups
   const [nominatorSetups, setNominatorSetupsState] = useState<NominatorSetups>(

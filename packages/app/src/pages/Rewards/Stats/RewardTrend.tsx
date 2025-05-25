@@ -3,7 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -28,7 +28,7 @@ export const RewardTrend = () => {
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const { poolMembership } = getStakingLedger(activeAddress)
   const eras = erasPerDay * 30
   // NOTE: 30 day duration in seconds

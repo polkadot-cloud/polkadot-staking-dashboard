@@ -3,7 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import {
@@ -29,7 +29,7 @@ export const ExternalAccountsProvider = ({
 }) => {
   const { network } = useNetwork()
   const { activeAddress, setActiveAccount } = useActiveAccounts()
-  const { ss58 } = getNetworkData(network)
+  const { ss58 } = getStakingChainData(network)
 
   // Adds an external account to imported accounts
   const addExternalAccount = (

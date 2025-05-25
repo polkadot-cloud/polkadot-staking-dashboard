@@ -14,7 +14,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
@@ -50,7 +50,7 @@ export const PayoutLine = ({
   const { i18n, t } = useTranslation()
   const { network } = useNetwork()
   const { getThemeValue } = useThemeValues()
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
 
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
