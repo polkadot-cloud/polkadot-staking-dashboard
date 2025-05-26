@@ -15,7 +15,7 @@ import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus'
 
 export const Status = ({ height }: { height: number }) => {
   const { syncing } = useSyncing()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
@@ -23,16 +23,16 @@ export const Status = ({ height }: { height: number }) => {
   return (
     <CardWrapper
       height={height}
-      className={!syncing && inSetup() ? 'prompt' : undefined}
+      className={!syncing && !isNominator ? 'prompt' : undefined}
     >
       <NominationStatus />
       <Separator />
       <UnclaimedPayoutsStatus
-        dimmed={inSetup() || !pluginEnabled('staking_api')}
+        dimmed={!isNominator || !pluginEnabled('staking_api')}
       />
 
       {!syncing ? (
-        !inSetup() ? (
+        isNominator ? (
           <>
             <Separator />
             <PayoutDestinationStatus />

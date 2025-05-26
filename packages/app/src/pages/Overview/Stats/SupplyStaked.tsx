@@ -3,7 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { Pie } from 'library/StatCards/Pie'
@@ -12,13 +12,10 @@ import { useTranslation } from 'react-i18next'
 export const SupplyStaked = () => {
   const { t } = useTranslation('pages')
   const {
-    relayMetrics,
-    stakingMetrics: { lastTotalStake },
+    stakingMetrics: { lastTotalStake, totalIssuance },
   } = useApi()
   const { network } = useNetwork()
-
-  const { unit, units } = getNetworkData(network)
-  const { totalIssuance } = relayMetrics
+  const { unit, units } = getStakingChainData(network)
 
   // total supply as percent.
   const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))

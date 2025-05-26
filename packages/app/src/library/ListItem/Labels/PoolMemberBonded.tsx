@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers'
@@ -12,7 +12,7 @@ import { planckToUnitBn } from 'utils'
 export const PoolMemberBonded = ({ member }: { member: FetchedPoolMember }) => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   let bonded = new BigNumber(0)
   let totalUnbonding = new BigNumber(0)

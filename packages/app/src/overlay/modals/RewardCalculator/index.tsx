@@ -4,7 +4,7 @@
 import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getChainIcons } from 'assets'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
@@ -28,7 +28,7 @@ export const RewardCalculator = () => {
   const { avgCommission } = useValidators()
   const { getAverageRewardRate } = useAverageRewardRate()
 
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const { currency } = config.options
   const { avgRateBeforeCommission } = getAverageRewardRate(false)

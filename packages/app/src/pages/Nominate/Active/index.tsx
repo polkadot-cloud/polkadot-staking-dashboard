@@ -30,11 +30,11 @@ export const Active = () => {
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
   const { getNominations } = useBalances()
-  const { inSetup, isBonding } = useStaking()
   const { openCanvas } = useOverlay().canvas
   const { isFastUnstaking } = useUnstaking()
   const { formatWithPrefs } = useValidators()
   const { activeAddress } = useActiveAccounts()
+  const { isNominator, isBonding } = useStaking()
 
   const nominated = formatWithPrefs(getNominations(activeAddress))
   const ROW_HEIGHT = 220
@@ -60,10 +60,10 @@ export const Active = () => {
           <Status height={ROW_HEIGHT} />
         </Page.RowSection>
       </Page.Row>
-      {isBonding() && (
+      {isBonding && (
         <Page.Row>
           <CardWrapper>
-            {nominated?.length || inSetup() || syncing ? (
+            {nominated?.length || !isNominator || syncing ? (
               <Nominations bondFor="nominator" nominator={activeAddress} />
             ) : (
               <>
@@ -81,7 +81,7 @@ export const Active = () => {
                       iconLeft={faChevronCircleRight}
                       iconTransform="grow-1"
                       text={`${t('nominate', { ns: 'pages' })}`}
-                      disabled={inSetup() || syncing || isFastUnstaking}
+                      disabled={!isNominator || syncing || isFastUnstaking}
                       onClick={() =>
                         openCanvas({
                           key: 'ManageNominations',

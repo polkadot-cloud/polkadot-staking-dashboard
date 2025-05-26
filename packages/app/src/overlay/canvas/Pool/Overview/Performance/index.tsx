@@ -13,7 +13,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -44,7 +44,7 @@ export const Performance = ({ bondedPool }: OverviewSectionProps) => {
   const { network } = useNetwork()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement | null>(null)
 

@@ -1,7 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getHubChainId, getNetworkData, getSystemChainData } from 'consts/util'
+import {
+  getHubChainId,
+  getRelayChainData,
+  getSystemChainData,
+} from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
 import { setMultiApiStatus } from 'global-bus'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
@@ -21,7 +25,7 @@ export const getDefaultService = async <T extends NetworkId>(
   const peopleChainId: SystemChainId = `people-${network}`
   const hubChainId: SystemChainId = getHubChainId(network)
 
-  const relayData = getNetworkData(network)
+  const relayData = getRelayChainData(network)
   const peopleData = getSystemChainData(`people-${network}`)
   const hubData = getSystemChainData(hubChainId)
 

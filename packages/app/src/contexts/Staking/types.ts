@@ -47,9 +47,9 @@ export interface StakingContextInterface {
     w: MaybeAddress,
     t: string[]
   ) => Record<string, NominationStatus>
-  isBonding: () => boolean
-  isNominating: () => boolean
-  inSetup: () => boolean
+  isBonding: boolean
+  isNominating: boolean
+  isNominator: boolean
   eraStakers: EraStakers
   getPagedErasStakers: (e: string) => Promise<Exposure[]>
 }

@@ -3,7 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -23,12 +23,12 @@ export const RewardTrend = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { activeEra } = useApi()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { erasPerDay } = useErasPerDay()
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const { poolMembership } = getStakingLedger(activeAddress)
   const eras = erasPerDay * 30
   // NOTE: 30 day duration in seconds
@@ -49,7 +49,7 @@ export const RewardTrend = () => {
 
   useEffect(() => {
     setRewardTrend(null)
-    if (!inSetup() || poolMembership) {
+    if (isNominator || poolMembership) {
       getRewardTrend()
     }
   }, [
@@ -57,7 +57,7 @@ export const RewardTrend = () => {
     network,
     activeEra.index.toString(),
     poolMembership,
-    inSetup(),
+    isNominator,
   ])
 
   // Format the reward trend data

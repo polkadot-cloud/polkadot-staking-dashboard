@@ -91,7 +91,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         setUserSideMenuMinimised,
         setContainerRefs,
         sideMenuOpen,
-        sideMenuMinimised,
+        sideMenuMinimised: sideMenuMinimised && advancedMode,
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,
