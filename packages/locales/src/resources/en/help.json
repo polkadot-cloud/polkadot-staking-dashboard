@@ -440,7 +440,11 @@
       "definitionsTab": "Definitions",
       "noArticles": "No articles available.",
       "resources": "Resources",
-      "resourcesTab": "Resources"
+      "resourcesTab": "Resources",
+      "support": "Support",
+      "supportIntro": "If you need further assistance, you can reach out to our team:",
+      "supportOutro": "We're here to help with any questions about staking, pools, or using the dashboard.",
+      "supportTab": "Support"
     }
   }
 }

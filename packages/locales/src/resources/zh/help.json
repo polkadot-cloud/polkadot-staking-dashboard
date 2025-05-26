@@ -451,7 +451,11 @@
       "definitionsTab": "定义",
       "noArticles": "暂无相关文章。",
       "resources": "资源",
-      "resourcesTab": "资源"
+      "resourcesTab": "资源",
+      "support": "支持",
+      "supportIntro": "如果您需要进一步的帮助，可以联系我们的团队：",
+      "supportOutro": "如有关于质押、质押池或使用仪表板的任何问题，我们都乐意为您解答。",
+      "supportTab": "支持"
     }
   }
 }

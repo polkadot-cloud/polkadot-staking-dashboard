@@ -30,8 +30,10 @@ import helpResourcesEn from './helpresources.json'
 import helpResourcesEs from '../../../../locales/src/resources/es/helpresources.json'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { NetworkList } from 'consts/networks'
 import { useNetwork } from 'contexts/Network'
+import { CardWrapper as Card } from 'library/Card/Wrappers'
 import styled from 'styled-components'
 import helpResourcesZh from '../../../../locales/src/resources/zh/helpresources.json'
 
@@ -74,7 +76,7 @@ export const Help = () => {
     : ''
   const networkUnit = NetworkList[network]?.unit
   const [tab, setTab] = React.useState<
-    'resources' | 'definitions' | 'articles'
+    'resources' | 'definitions' | 'articles' | 'support'
   >('resources')
 
   const onFadeIn = useCallback(async () => {
@@ -255,6 +257,13 @@ export const Help = () => {
                 >
                   {t('modal.articlesTab', 'Articles')}
                 </TabButton>
+                <TabButton
+                  selected={tab === 'support'}
+                  onClick={() => setTab('support')}
+                  type="button"
+                >
+                  {t('modal.supportTab', 'Support')}
+                </TabButton>
               </TabBar>
               {/* Tab Content */}
               {tab === 'resources' ? (
@@ -304,8 +313,7 @@ export const Help = () => {
                     </>
                   )}
                 </>
-              ) : (
-                // Articles tab
+              ) : tab === 'articles' ? (
                 <>
                   <HelpTitle>{t('modal.articles', 'Articles')}</HelpTitle>
                   {activeExternals.length > 0 ? (
@@ -324,6 +332,92 @@ export const Help = () => {
                     <p>{t('modal.noArticles', 'No articles available.')}</p>
                   )}
                 </>
+              ) : (
+                // Support tab
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '2rem',
+                  }}
+                >
+                  <Card
+                    style={{
+                      maxWidth: 420,
+                      width: '100%',
+                      padding: '2rem 2rem 1.5rem 2rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+                    }}
+                  >
+                    <HelpTitle
+                      style={{ margin: '0 0 1.25rem 0', textAlign: 'center' }}
+                    >
+                      {t('modal.support', 'Support')}
+                    </HelpTitle>
+                    <p
+                      style={{
+                        margin: '0 0 1.5rem 0',
+                        color: 'var(--text-color-primary)',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {t('modal.supportIntro')}
+                    </p>
+                    <a
+                      href={DiscordSupportUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        width: '100%',
+                        marginBottom: '1rem',
+                        textAlign: 'center',
+                        display: 'inline-block',
+                        background: 'var(--accent-color-primary)',
+                        color: '#fff',
+                        fontWeight: 600,
+                        borderRadius: '6px',
+                        padding: '0.75rem 1.25rem',
+                        textDecoration: 'none',
+                        fontSize: '1.1rem',
+                        transition: 'background 0.2s',
+                      }}
+                    >
+                      {t('modals:goToDiscord')}
+                    </a>
+                    <a
+                      href={`mailto:${MailSupportAddress}`}
+                      style={{
+                        width: '100%',
+                        marginBottom: '1rem',
+                        textAlign: 'center',
+                        display: 'inline-block',
+                        background: 'var(--accent-color-primary)',
+                        color: '#fff',
+                        fontWeight: 600,
+                        borderRadius: '6px',
+                        padding: '0.75rem 1.25rem',
+                        textDecoration: 'none',
+                        fontSize: '1.1rem',
+                        transition: 'background 0.2s',
+                      }}
+                    >
+                      {t('pages:email')}
+                    </a>
+                    <p
+                      style={{
+                        color: 'var(--text-color-secondary)',
+                        textAlign: 'center',
+                        margin: 0,
+                      }}
+                    >
+                      {t('modal.supportOutro')}
+                    </p>
+                  </Card>
+                </div>
               )}
             </Content>
           </ModalContent>
