@@ -65,10 +65,8 @@ export const InvitePopover = ({
         ) : poolId && !poolMembership ? (
           <Pool poolId={poolId} setOpen={setOpen} />
         ) : (
-          <>
-            {/* TODO: Handle nominate invite */}
-            {/* TODO: Handle nominate invite */}
-          </>
+          // eslint-disable-next-line react/jsx-no-useless-fragment
+          <>{/* TODO: Handle nominate invite */}</>
         )}
         <PopoverTab.Button
           status="danger"
