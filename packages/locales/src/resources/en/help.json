@@ -434,10 +434,13 @@
     },
     "modal": {
       "articles": "Articles",
+      "articlesTab": "Articles",
       "close": "Close",
       "definitions": "Definitions",
-      "helpResources": "Help Resources",
-      "related": "Related"
+      "definitionsTab": "Definitions",
+      "noArticles": "No articles available.",
+      "resources": "Resources",
+      "resourcesTab": "Resources"
     }
   }
 }

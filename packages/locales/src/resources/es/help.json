@@ -436,10 +436,13 @@
     },
     "modal": {
       "articles": "Artículos",
+      "articlesTab": "Artículos",
       "close": "Cerrar",
       "definitions": "Definiciones",
-      "helpResources": "Recursos de Ayudas",
-      "related": "Relacionado"
+      "definitionsTab": "Definiciones",
+      "noArticles": "No hay artículos disponibles.",
+      "resources": "Recursos",
+      "resourcesTab": "Recursos"
     }
   }
 }

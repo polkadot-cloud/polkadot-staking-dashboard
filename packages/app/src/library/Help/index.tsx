@@ -15,7 +15,7 @@ import { useUi } from 'contexts/UI'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { DefaultLocale } from 'locales'
-import { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
 import { Container, Content, Scroll } from 'ui-core/canvas'
@@ -32,7 +32,33 @@ import helpResourcesEn from './helpresources.json'
 import helpResourcesEs from '../../../../locales/src/resources/es/helpresources.json'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import styled from 'styled-components'
 import helpResourcesZh from '../../../../locales/src/resources/zh/helpresources.json'
+
+// Tab bar styles
+const TabBar = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-primary);
+`
+const TabButton = styled.button<{ selected: boolean }>`
+  background: none;
+  border: none;
+  outline: none;
+  font-family: InterSemiBold, sans-serif;
+  font-size: 1.1rem;
+  color: ${(p) =>
+    p.selected ? 'var(--accent-color-primary)' : 'var(--text-color-secondary)'};
+  border-bottom: 2px solid
+    ${(p) => (p.selected ? 'var(--accent-color-primary)' : 'transparent')};
+  margin-right: 2rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-bottom 0.2s;
+`
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help')
@@ -44,6 +70,9 @@ export const Help = () => {
   const { network } = useNetwork()
   const { unit, name } = getNetworkData(network)
   const capitalizedNetwork = name.charAt(0).toUpperCase() + name.slice(1)
+  const [tab, setTab] = React.useState<
+    'resources' | 'definitions' | 'articles'
+  >('resources')
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible')
@@ -167,6 +196,7 @@ export const Help = () => {
     helpResources = helpResourcesZh
   }
 
+  // Tabbed UI: show tab bar and switch content
   if (!definition) {
     const path = advancedMode ? 'advanced' : 'essential'
     const learningPath = helpResources.learningPaths[path]
@@ -199,35 +229,99 @@ export const Help = () => {
                   onClick={() => closeHelp()}
                 />
               </div>
-              <HelpTitle>{learningPath.title}</HelpTitle>
-              <h3 style={{ margin: '0 0 1.5rem 0' }}>
-                {learningPath.description}
-              </h3>
-              {learningPath.resources.map(
-                (item: { question: string; answer: string }, i: number) => (
-                  <Definition
-                    key={`lp_def_${i}`}
-                    title={item.question
-                      .replace(/\{network\}/g, capitalizedNetwork)
-                      .replace(/\{token\}/g, unit)}
-                    description={[
-                      item.answer
-                        .replace(/\{network\}/g, capitalizedNetwork)
-                        .replace(/\{token\}/g, unit),
-                    ]}
-                  />
-                )
+              {/* Tab Bar */}
+              <TabBar>
+                <TabButton
+                  selected={tab === 'resources'}
+                  onClick={() => setTab('resources')}
+                  type="button"
+                >
+                  {t('modal.resourcesTab', 'Resources')}
+                </TabButton>
+                <TabButton
+                  selected={tab === 'definitions'}
+                  onClick={() => setTab('definitions')}
+                  type="button"
+                >
+                  {t('modal.definitionsTab', 'Definitions')}
+                </TabButton>
+                <TabButton
+                  selected={tab === 'articles'}
+                  onClick={() => setTab('articles')}
+                  type="button"
+                >
+                  {t('modal.articlesTab', 'Articles')}
+                </TabButton>
+              </TabBar>
+              {/* Tab Content */}
+              {tab === 'resources' ? (
+                <>
+                  <HelpTitle>{learningPath.title}</HelpTitle>
+                  <h3 style={{ margin: '0 0 1.5rem 0' }}>
+                    {learningPath.description}
+                  </h3>
+                  {learningPath.resources.map(
+                    (item: { question: string; answer: string }, i: number) => (
+                      <Definition
+                        key={`lp_def_${i}`}
+                        title={item.question
+                          .replace(/\{network\}/g, capitalizedNetwork)
+                          .replace(/\{token\}/g, unit)}
+                        description={[
+                          item.answer
+                            .replace(/\{network\}/g, capitalizedNetwork)
+                            .replace(/\{token\}/g, unit),
+                        ]}
+                      />
+                    )
+                  )}
+                  <div style={{ marginTop: '2rem', width: '100%' }}>
+                    <ButtonPrimaryInvert
+                      text={
+                        advancedMode
+                          ? navigation.advancedToBasic
+                          : navigation.basicToAdvanced
+                      }
+                      onClick={() => setAdvancedMode(!advancedMode)}
+                    />
+                  </div>
+                </>
+              ) : tab === 'definitions' ? (
+                <>
+                  <HelpTitle>{t('modal.definitions', 'Definitions')}</HelpTitle>
+                  {activeDefinitions.length > 0 && (
+                    <>
+                      {activeDefinitions.map((item, index: number) => (
+                        <Definition
+                          key={`def_${index}`}
+                          title={item.title}
+                          description={item.description}
+                        />
+                      ))}
+                    </>
+                  )}
+                </>
+              ) : (
+                // Articles tab
+                <>
+                  <HelpTitle>{t('modal.articles', 'Articles')}</HelpTitle>
+                  {activeExternals.length > 0 ? (
+                    <>
+                      {activeExternals.map((item, index: number) => (
+                        <External
+                          key={`ext_${index}`}
+                          width="100%"
+                          title={t(item.title)}
+                          url={item.url}
+                          website={item.website}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    <p>{t('modal.noArticles', 'No articles available.')}</p>
+                  )}
+                </>
               )}
-              <div style={{ marginTop: '2rem', width: '100%' }}>
-                <ButtonPrimaryInvert
-                  text={
-                    advancedMode
-                      ? navigation.advancedToBasic
-                      : navigation.basicToAdvanced
-                  }
-                  onClick={() => setAdvancedMode(!advancedMode)}
-                />
-              </div>
             </Content>
           </ModalContent>
         </Scroll>
