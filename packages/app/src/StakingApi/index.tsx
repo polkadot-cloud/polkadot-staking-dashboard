@@ -13,15 +13,15 @@ export const StakingApi = (props: Props) => {
   const { setFastUnstakeStatus } = useFastUnstake()
 
   useEffect(() => {
-    if (!isBonding()) {
+    if (!isBonding) {
       setFastUnstakeStatus(null)
     }
-  }, [isBonding()])
+  }, [isBonding])
 
   return (
     <>
       <UnclaimedRewardsApi {...props} />
-      {isBonding() && <FastUnstakeApi {...props} />}
+      {isBonding && <FastUnstakeApi {...props} />}
     </>
   )
 }

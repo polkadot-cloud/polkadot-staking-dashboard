@@ -20,7 +20,7 @@ import { useOverlay } from 'ui-overlay'
 
 export const CommissionPrompt = () => {
   const { t } = useTranslation('pages')
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { getNominations } = useBalances()
   const { openCanvas } = useOverlay().canvas
   const { getThemeValue } = useThemeValues()
@@ -33,7 +33,7 @@ export const CommissionPrompt = () => {
     (nominee) => nominee.prefs.commission === 100
   )
 
-  if (!fullCommissionNominees.length || inSetup() || syncing) {
+  if (!fullCommissionNominees.length || !isNominator || syncing) {
     return null
   }
 

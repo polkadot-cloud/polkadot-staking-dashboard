@@ -43,7 +43,7 @@ export const ManageBond = () => {
 
   const bondDisabled =
     syncing ||
-    !isBonding() ||
+    !isBonding ||
     !isMember() ||
     isReadOnlyAccount(activeAddress) ||
     state === 'Destroying'

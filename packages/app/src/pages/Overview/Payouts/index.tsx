@@ -29,16 +29,16 @@ import { InactiveGraph } from './InactiveGraph'
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages')
   const { network } = useNetwork()
-  const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
   const { currency } = useCurrency()
+  const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
 
   const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
-  const staking = !inSetup() || inPool
+  const staking = isNominator || inPool
   const notStaking = !syncing && !staking
 
   const [lastReward, setLastReward] = useState<RewardResult>()
@@ -109,8 +109,8 @@ export const Payouts = () => {
         >
           {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
-              nominating={!inSetup()}
-              inPool={inPool()}
+              nominating={isNominator}
+              inPool={inPool}
               lineMarginTop="3rem"
               setLastReward={setLastReward}
             />

@@ -32,7 +32,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { generateOptimalSetup, setNominatorSetup } = useNominatorSetups()
 
   const nominateButtonDisabled =
-    !isReady || !activeAddress || isReadOnlyAccount(activeAddress) || inPool()
+    !isReady || !activeAddress || isReadOnlyAccount(activeAddress) || inPool
 
   return (
     <CallToActionWrapper>
