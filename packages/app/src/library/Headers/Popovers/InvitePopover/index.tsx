@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useOutsideAlerter } from '@w3ux/hooks'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useInvites } from 'contexts/Invites'
 import type { PoolInvite } from 'contexts/Invites/types'
+import { useStaking } from 'contexts/Staking'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
@@ -16,7 +19,14 @@ export const InvitePopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation('app')
+  const { inSetup } = useStaking()
+  const { getStakingLedger } = useBalances()
+  const { activeAddress } = useActiveAccounts()
   const { inviteConfig, dismissInvite } = useInvites()
+
+  const nominating = !inSetup()
+  const { poolMembership } = getStakingLedger(activeAddress)
+  const alreadyStaking = poolMembership || nominating
 
   // NOTE: We assume a valid pool invite is active
   const popoverRef = useRef<HTMLDivElement>(null)
@@ -44,7 +54,22 @@ export const InvitePopover = ({
         </h3>
       </Padding>
       <PopoverTab.Container position="bottom" yMargin>
-        {poolId && <Pool poolId={poolId} setOpen={setOpen} />}
+        {alreadyStaking ? (
+          <PopoverTab.Button
+            text={t('alreadyStaking', { ns: 'app' })}
+            onClick={() => {
+              // Do nothing.
+            }}
+            disabled={true}
+          />
+        ) : poolId && !poolMembership ? (
+          <Pool poolId={poolId} setOpen={setOpen} />
+        ) : (
+          <>
+            {/* TODO: Handle nominate invite */}
+            {/* TODO: Handle nominate invite */}
+          </>
+        )}
         <PopoverTab.Button
           status="danger"
           text={t('dismiss')}

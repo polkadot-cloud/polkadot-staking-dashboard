@@ -21,7 +21,11 @@ export const InvitesContext = createContext<InvitesContextInterface>(
 export const InvitesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { openCanvas } = useOverlay().canvas
-  const { syncing } = useSyncing(['initialization'])
+  const { syncing } = useSyncing([
+    'initialization',
+    'bonded-pools',
+    'active-pools',
+  ])
 
   // State for tracking invite status
   const [inviteConfig, setInviteConfig] = useState<InviteConfig | undefined>(
@@ -71,6 +75,7 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
         },
       }
       setInviteConfig(invite)
+      setAcknowledged(true)
     }
   }, [])
 

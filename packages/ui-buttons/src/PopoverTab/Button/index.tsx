@@ -24,6 +24,7 @@ export const Button = ({
       [classes.warning]: status === 'warning',
       [classes.danger]: status === 'danger',
       [classes.grow]: !!grow,
+      [classes.disabled]: disabled,
     },
     className
   )
