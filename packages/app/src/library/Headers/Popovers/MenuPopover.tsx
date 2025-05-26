@@ -17,6 +17,7 @@ import MoonOutlineSVG from 'assets/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
 import { useCurrency } from 'contexts/Currency'
 import { usePlugins } from 'contexts/Plugins'
+import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -31,10 +32,12 @@ export const MenuPopover = ({
   const { t } = useTranslation()
   const { currency } = useCurrency()
   const { i18n } = useTranslation()
+  const { inSetup } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
 
+  const nominating = !inSetup()
   const popoverRef = useRef<HTMLDivElement>(null)
 
   // Close the menu if clicked outside of its container
@@ -76,19 +79,22 @@ export const MenuPopover = ({
           <h3>{t('plugins', { ns: 'modals' })}</h3>
         </div>
       </MenuItemButton>
-      <MenuItemButton
-        onClick={() => {
-          setOpen(false)
-          openModal({ key: 'Invite', size: 'sm' })
-        }}
-      >
-        <div>
-          <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
-        </div>
-        <div>
-          <h3>{t('invite', { ns: 'app' })}</h3>
-        </div>
-      </MenuItemButton>
+      {/* NOTE: Temporary disabling nominator invites until supported */}
+      {!nominating && (
+        <MenuItemButton
+          onClick={() => {
+            setOpen(false)
+            openModal({ key: 'Invite', size: 'sm' })
+          }}
+        >
+          <div>
+            <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
+          </div>
+          <div>
+            <h3>{t('invite', { ns: 'app' })}</h3>
+          </div>
+        </MenuItemButton>
+      )}
       <MenuItemButton
         onClick={() => {
           setOpen(false)

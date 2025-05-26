@@ -17,10 +17,12 @@ export const Wrapper = styled.div`
     margin-bottom: 3rem;
   }
 
-  button {
+  > button {
     text-align: center;
     &:hover {
-      color: var(--accent-color-primary);
+      > h2 {
+        color: var(--text-color-secondary);
+      }
     }
   }
 `
