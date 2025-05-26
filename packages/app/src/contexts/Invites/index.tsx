@@ -3,10 +3,8 @@
 
 import { extractUrlValue } from '@w3ux/utils'
 import { useNetwork } from 'contexts/Network'
-import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { useOverlay } from 'ui-overlay'
 import {
   getLocalInviteConfig,
   removeLocalInviteConfig,
@@ -20,12 +18,6 @@ export const InvitesContext = createContext<InvitesContextInterface>(
 
 export const InvitesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
-  const { openCanvas } = useOverlay().canvas
-  const { syncing } = useSyncing([
-    'initialization',
-    'bonded-pools',
-    'active-pools',
-  ])
 
   // State for tracking invite status
   const [inviteConfig, setInviteConfig] = useState<InviteConfig | undefined>(
@@ -41,19 +33,26 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
     removeLocalInviteConfig()
   }
 
+  // NOTE: Auto opening of invites is currently disabled.
+  // const { openCanvas } = useOverlay().canvas
+  // const { syncing } = useSyncing([
+  //   'initialization',
+  //   'bonded-pools',
+  //   'active-pools',
+  // ])
   // Open pool invite when ready
-  useEffect(() => {
-    const idFromUrl = extractUrlValue('id')
-    if (!syncing) {
-      if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
-        openCanvas({
-          key: 'Pool',
-          options: { providedPool: { id: Number(idFromUrl) } },
-          size: 'xl',
-        })
-      }
-    }
-  }, [syncing])
+  // useEffect(() => {
+  //   const idFromUrl = extractUrlValue('id')
+  //   if (!syncing) {
+  //     if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
+  //       openCanvas({
+  //         key: 'Pool',
+  //         options: { providedPool: { id: Number(idFromUrl) } },
+  //         size: 'xl',
+  //       })
+  //     }
+  //   }
+  // }, [syncing])
 
   // Set invite data when the page loads
   useEffect(() => {
