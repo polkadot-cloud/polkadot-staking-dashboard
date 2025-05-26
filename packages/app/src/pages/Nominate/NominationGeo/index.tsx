@@ -61,11 +61,11 @@ export const NominationGeo = () => {
 
   // Status label config.
   const showDisabledLabel = !enabled
-  const showNotNominatingLabel = enabled && !isNominating()
-  const showNotAvailableLabel = enabled && !analyticsAvailable && isNominating()
+  const showNotNominatingLabel = enabled && !isNominating
+  const showNotAvailableLabel = enabled && !analyticsAvailable && isNominating
 
   // Whether to interact with Polkawatch API.
-  const callPolkawatchApi = networkSupported && enabled && isNominating()
+  const callPolkawatchApi = networkSupported && enabled && isNominating
 
   useEffect(() => {
     if (callPolkawatchApi) {
@@ -84,7 +84,7 @@ export const NominationGeo = () => {
       setNetworkMeta({} as ChainMetadata)
       setAnalyticsAvailable(false)
     }
-  }, [activeAddress, network, enabled, isNominating()])
+  }, [activeAddress, network, enabled, isNominating])
 
   // NOTE: The list of dependencies assume that changing network
   // triggers a change of account also (i.e. different network prefix).
@@ -108,7 +108,7 @@ export const NominationGeo = () => {
       setNominationDetail({} as NominatorDetail)
       setAnalyticsAvailable(false)
     }
-  }, [activeAddress, network, enabled, isNominating()])
+  }, [activeAddress, network, enabled, isNominating])
 
   return (
     <>

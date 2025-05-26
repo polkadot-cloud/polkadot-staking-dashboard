@@ -15,7 +15,8 @@ export const useNominationStatus = () => {
   const { getNominations } = useBalances()
   const { syncing } = useSyncing(['era-stakers'])
   const { activePoolNominations } = useActivePool()
-  const { inSetup, eraStakers, getNominationsStatusFromTargets } = useStaking()
+  const { isNominator, eraStakers, getNominationsStatusFromTargets } =
+    useStaking()
 
   // Utility to get an account's nominees alongside their status.
   const getNominationSetStatus = (who: MaybeAddress, type: BondFor) => {
@@ -67,7 +68,7 @@ export const useNominationStatus = () => {
 
     // Determine the localised message to display based on the nomination status.
     let str
-    if (inSetup() || syncing) {
+    if (!isNominator || syncing) {
       str = t('notNominating', { ns: 'pages' })
     } else if (!nominees.length) {
       str = t('noNominationsSet', { ns: 'pages' })

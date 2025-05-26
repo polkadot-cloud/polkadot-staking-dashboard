@@ -19,8 +19,8 @@ import { useOverlay } from 'ui-overlay'
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages')
   const { syncing } = useSyncing()
-  const { inSetup } = useStaking()
   const { network } = useNetwork()
+  const { isNominator } = useStaking()
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
   const { activeAddress } = useActiveAccounts()
@@ -36,7 +36,7 @@ export const UnstakePrompts = () => {
     isUnstaking && active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
   return (
-    !inSetup() &&
+    isNominator &&
     (isUnstaking || isFastUnstaking) &&
     !syncing && (
       <Page.Row>

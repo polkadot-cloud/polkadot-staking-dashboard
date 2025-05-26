@@ -16,12 +16,12 @@ import type { QuickActionGroup } from './types'
 
 export const QuickActions = ({ height }: { height: number }) => {
   const { t } = useTranslation('pages')
-  const { inSetup } = useStaking()
   const { inPool } = useActivePool()
+  const { isNominator } = useStaking()
   const { accountSynced } = useSyncing()
   const { activeAddress } = useActiveAccounts()
 
-  const isStaking = inPool() || !inSetup()
+  const isStaking = inPool || isNominator
   const syncing = !accountSynced(activeAddress)
 
   let actionGroup: QuickActionGroup = 'staking'
@@ -45,7 +45,7 @@ export const QuickActions = ({ height }: { height: number }) => {
           {actionGroup === 'disconnected' && <Disconnected />}
           {actionGroup === 'notStaking' && <NotStaking />}
           {actionGroup === 'staking' && (
-            <Staking bondFor={inPool() ? 'pool' : 'nominator'} />
+            <Staking bondFor={inPool ? 'pool' : 'nominator'} />
           )}
         </>
       )}
