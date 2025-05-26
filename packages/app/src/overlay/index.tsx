@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
+import { InviteModal } from 'features/invite/components/InviteModal'
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
 import { Overlay } from 'ui-overlay'
 import { CreatePool } from './canvas/CreatePool'
@@ -24,6 +25,7 @@ import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
 import { ManagePool } from './modals/ManagePool'
 import { Networks } from './modals/Networks'
+import { NominateValidators } from './modals/NominateValidators'
 import { Plugins } from './modals/Plugins'
 import { RewardCalculator } from './modals/RewardCalculator'
 import { SelectCurrency } from './modals/SelectCurrency'
@@ -59,6 +61,7 @@ export const Overlays = () => {
         ManagePool,
         ManageFastUnstake,
         Networks,
+        NominateValidators,
         RewardCalculator,
         SelectCurrency,
         StartNominating,
@@ -68,6 +71,7 @@ export const Overlays = () => {
         Unbond,
         UpdatePayee,
         UpdateReserve,
+        InviteModal,
       }}
       canvas={{
         ManageNominations,

@@ -3,6 +3,7 @@
 
 import { useState } from 'react'
 import { Account } from './Account'
+import { Invite } from './Invite'
 import { Settings } from './Settings'
 import { SideMenuToggle } from './SideMenuToggle'
 import { Sync } from './Sync'
@@ -16,6 +17,7 @@ export const Headers = () => {
       <SideMenuToggle />
       <Sync />
       <Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
+      <Invite />
       <Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
     </Wrapper>
   )
