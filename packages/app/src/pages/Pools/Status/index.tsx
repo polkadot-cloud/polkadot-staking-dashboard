@@ -24,19 +24,19 @@ export const Status = ({ height }: StatusProps) => {
   return (
     <CardWrapper
       height={height}
-      className={!syncing && !activePool && !inPool() ? 'prompt' : undefined}
+      className={!syncing && !activePool && !inPool ? 'prompt' : undefined}
     >
       <MembershipStatus />
       <Separator />
-      <RewardsStatus dimmed={inPool() === null} />
+      <RewardsStatus dimmed={inPool === null} />
       {!syncing ? (
-        activePool && inPool() ? (
+        activePool && inPool ? (
           <>
             <Separator />
             <PoolStatus />
           </>
         ) : (
-          !inPool() &&
+          !inPool &&
           !isReadOnlyAccount(activeAddress) && <NewMember syncing={syncing} />
         )
       ) : (

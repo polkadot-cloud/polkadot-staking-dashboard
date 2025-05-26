@@ -12,11 +12,11 @@ import { StatusWrapper } from './Wrappers'
 
 export const StakeStatus = ({ height }: { height: number }) => {
   const { inPool } = useActivePool()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
 
-  const notStaking = !inPool() && inSetup()
-  const showNominate = notStaking || !inSetup()
-  const showMembership = notStaking || inPool()
+  const notStaking = !inPool && !isNominator
+  const showNominate = notStaking || isNominator
+  const showMembership = notStaking || inPool
 
   return (
     <CardWrapper style={{ padding: 0 }} height={height}>

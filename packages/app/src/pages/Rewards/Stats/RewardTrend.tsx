@@ -23,7 +23,7 @@ export const RewardTrend = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { activeEra } = useApi()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { erasPerDay } = useErasPerDay()
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
@@ -49,7 +49,7 @@ export const RewardTrend = () => {
 
   useEffect(() => {
     setRewardTrend(null)
-    if (!inSetup() || poolMembership) {
+    if (isNominator || poolMembership) {
       getRewardTrend()
     }
   }, [
@@ -57,7 +57,7 @@ export const RewardTrend = () => {
     network,
     activeEra.index.toString(),
     poolMembership,
-    inSetup(),
+    isNominator,
   ])
 
   // Format the reward trend data

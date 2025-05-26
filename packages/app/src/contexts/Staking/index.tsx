@@ -157,19 +157,13 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper function to determine whether the active account is bonding, or is yet to start
-  const isBonding = () =>
-    (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
-
-  // Helper function to determine whether the active account
-  const isUnlocking = () =>
-    (getStakingLedger(activeAddress).ledger?.unlocking || []).length
+  const isBonding = (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
 
   // Helper function to determine whether the active account is nominating, or is yet to start
-  const isNominating = () => getNominations(activeAddress).length > 0
+  const isNominating = getNominations(activeAddress).length > 0
 
-  // Helper function to determine whether the active account is nominating, or is yet to start
-  const inSetup = () =>
-    !activeAddress || (!isBonding() && !isNominating() && !isUnlocking())
+  // Helper function to determine whether the active account is a nominator
+  const isNominator = activeAddress !== null && isBonding && isNominating
 
   // Fetch eras stakers from storage
   const getPagedErasStakers = async (era: string) => {
@@ -244,7 +238,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         getNominationsStatusFromTargets,
         isBonding,
         isNominating,
-        inSetup,
+        isNominator,
         eraStakers,
         getPagedErasStakers,
       }}

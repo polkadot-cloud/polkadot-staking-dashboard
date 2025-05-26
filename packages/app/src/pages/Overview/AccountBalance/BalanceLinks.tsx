@@ -51,7 +51,7 @@ export const BalanceLinks = () => {
             !(
               activeAddress &&
               ['polkadot', 'kusama'].includes(network) &&
-              isNominating()
+              isNominating
             )
           }
         />

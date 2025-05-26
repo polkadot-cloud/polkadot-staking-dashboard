@@ -39,7 +39,7 @@ export const ManageBond = () => {
   const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { openModal } = useOverlay().modal
   const { getStakingLedger } = useBalances()
   const { isFastUnstaking } = useUnstaking()
@@ -88,7 +88,7 @@ export const ManageBond = () => {
     )
 
   const unstakeDisabled =
-    inSetup() || syncing || isReadOnlyAccount(activeAddress)
+    !isNominator || syncing || isReadOnlyAccount(activeAddress)
 
   const bondDisabled = unstakeDisabled || isFastUnstaking
 
