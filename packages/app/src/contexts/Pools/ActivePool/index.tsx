@@ -49,7 +49,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     : null
 
   // Returns whether the active pool is being bonded to
-  const isBonding = () => !!activePool
+  const isBonding = !!activePool
 
   // Returns whether the active account is the nominator in the active pool
   const isNominator = () => {
@@ -76,7 +76,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Returns whether the active account is in a pool.
-  const inPool = () => !!(poolMembership?.address === activeAddress)
+  const inPool = !!(poolMembership?.address === activeAddress)
 
   // Returns whether the active account is the depositor of the active pool
   const isDepositor = () => {
