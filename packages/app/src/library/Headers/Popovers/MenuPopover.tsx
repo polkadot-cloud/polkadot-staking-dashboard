@@ -32,12 +32,11 @@ export const MenuPopover = ({
   const { t } = useTranslation()
   const { currency } = useCurrency()
   const { i18n } = useTranslation()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
 
-  const nominating = !inSetup()
   const popoverRef = useRef<HTMLDivElement>(null)
 
   // Close the menu if clicked outside of its container
@@ -80,7 +79,7 @@ export const MenuPopover = ({
         </div>
       </MenuItemButton>
       {/* NOTE: Temporary disabling nominator invites until supported */}
-      {!nominating && (
+      {!isNominator && (
         <MenuItemButton
           onClick={() => {
             setOpen(false)

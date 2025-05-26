@@ -19,14 +19,13 @@ export const InvitePopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation('app')
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { inviteConfig, dismissInvite } = useInvites()
 
-  const nominating = !inSetup()
   const { poolMembership } = getStakingLedger(activeAddress)
-  const alreadyStaking = poolMembership || nominating
+  const alreadyStaking = poolMembership || isNominator
 
   // NOTE: We assume a valid pool invite is active
   const popoverRef = useRef<HTMLDivElement>(null)
