@@ -3,14 +3,12 @@
 
 import { camelize } from '@w3ux/utils'
 import { HelpConfig } from 'config/help'
-import { getNetworkData } from 'consts/util'
 import { useHelp } from 'contexts/Help'
 import type {
   DefinitionWithKeys,
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types'
-import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
@@ -32,6 +30,8 @@ import helpResourcesEn from './helpresources.json'
 import helpResourcesEs from '../../../../locales/src/resources/es/helpresources.json'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import { NetworkList } from 'consts/networks'
+import { useNetwork } from 'contexts/Network'
 import styled from 'styled-components'
 import helpResourcesZh from '../../../../locales/src/resources/zh/helpresources.json'
 
@@ -68,8 +68,11 @@ export const Help = () => {
   const { advancedMode, setAdvancedMode } = useUi()
   const scrollRef = useRef<HTMLDivElement>(null)
   const { network } = useNetwork()
-  const { unit, name } = getNetworkData(network)
-  const capitalizedNetwork = name.charAt(0).toUpperCase() + name.slice(1)
+  const capitalizedNetwork = NetworkList[network]?.name
+    ? NetworkList[network].name.charAt(0).toUpperCase() +
+      NetworkList[network].name.slice(1)
+    : ''
+  const networkUnit = NetworkList[network]?.unit
   const [tab, setTab] = React.useState<
     'resources' | 'definitions' | 'articles'
   >('resources')
@@ -266,11 +269,11 @@ export const Help = () => {
                         key={`lp_def_${i}`}
                         title={item.question
                           .replace(/\{network\}/g, capitalizedNetwork)
-                          .replace(/\{token\}/g, unit)}
+                          .replace(/\{token\}/g, networkUnit)}
                         description={[
                           item.answer
                             .replace(/\{network\}/g, capitalizedNetwork)
-                            .replace(/\{token\}/g, unit),
+                            .replace(/\{token\}/g, networkUnit),
                         ]}
                       />
                     )
