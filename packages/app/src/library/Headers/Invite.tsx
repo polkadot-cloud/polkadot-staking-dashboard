@@ -4,6 +4,7 @@
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 import { useInvites } from 'contexts/Invites'
 import { useTheme } from 'contexts/Themes'
+import { useSyncing } from 'hooks/useSyncing'
 import { useState } from 'react'
 import { InactiveButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
@@ -11,12 +12,13 @@ import { InvitePopover } from './Popovers/InvitePopover'
 
 export const Invite = () => {
   const { themeElementRef } = useTheme()
+  const { syncing } = useSyncing(['initialization', 'bonded-pools'])
   const { inviteConfig, acknowledged, setAcknowledged } = useInvites()
 
   const [open, setOpen] = useState<boolean>(false)
 
   // Don't render if no active invite
-  if (!inviteConfig) {
+  if (!inviteConfig || syncing) {
     return null
   }
 
