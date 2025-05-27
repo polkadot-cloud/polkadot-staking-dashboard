@@ -6,6 +6,8 @@ const { join } = require('path')
 const {
   getDeepKeys,
   getDirectories,
+  isVariantSuffixKey,
+  keyExistsInDefault,
   localeDir,
   orderJsonByKeys,
 } = require('./utils.cjs')
@@ -34,8 +36,19 @@ const validateMissingKeys = () => {
         const a = getDeepKeys(defaultJson)
         const b = getDeepKeys(otherJson)
 
-        if (a.sort().length !== b.sort().length) {
-          const missing = a.filter((item) => b.indexOf(item) < 0)
+        // Filter out suffixed keys that have a valid base key
+        const filteredB = b.filter(key => {
+          // If not a variant suffix key, include in check
+          if (!isVariantSuffixKey(key)) {
+            return true
+          }
+          
+          // For variant suffix keys, verify the base exists in default
+          return keyExistsInDefault(defaultJson, key)
+        })
+
+        if (a.sort().length !== filteredB.sort().length) {
+          const missing = a.filter((item) => filteredB.indexOf(item) < 0)
           if (missing.join('').trim().length > 0) {
             throw new Error(
               `Missing the following keys from locale "${lng}", file: "${file}":\n"${missing}".`
@@ -76,7 +89,14 @@ const validateKeyOrder = () => {
   }
 }
 
-// validate missing keys
-validateMissingKeys()
-// validate key order
-validateKeyOrder()
+// Start validation.
+console.log(`\n📝 Validating locale files...`);
+try {
+  validateMissingKeys();
+  validateKeyOrder();
+  console.log('✅ All locale files are valid.');
+} catch (error) {
+  console.error('\n❌ Validation failed:');
+  console.error(error.message);
+  process.exit(1);
+}
