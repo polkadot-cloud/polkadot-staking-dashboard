@@ -50,7 +50,7 @@ export interface ButtonIconProps {
   iconTransform?: string
 }
 
-export interface ButtonCopyProps {
+export type ButtonCopyProps = ComponentBase & {
   onClick?: (e?: MouseEvent<HTMLButtonElement>) => void
   value: string
   size?: string | number

@@ -1,11 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCopy, faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
+import { ButtonCopy } from 'library/ButtonCopy'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
 import { Padding } from 'ui-core/modal'
@@ -32,22 +33,19 @@ export const Invite = () => {
       <Title />
       <Padding verticalOnly>
         <Wrapper>
-          <FontAwesomeIcon icon={faEnvelopeOpenText} />
+          <FontAwesomeIcon icon={faEnvelopeOpenText} className="icon" />
           {inviteLink ? (
             <>
-              <button
-                onClick={() => {
-                  if (inviteLink) {
-                    navigator.clipboard.writeText(inviteLink)
-                  }
-                }}
-              >
-                <h2>
-                  {title}
-                  &nbsp;
-                  <FontAwesomeIcon icon={faCopy} transform="shrink-4" />
-                </h2>
-              </button>
+              <ButtonCopy
+                value={inviteLink}
+                size="1rem"
+                children={
+                  <h2>
+                    {title}
+                    &nbsp;
+                  </h2>
+                }
+              />
               <p>{inviteLink}</p>
             </>
           ) : (

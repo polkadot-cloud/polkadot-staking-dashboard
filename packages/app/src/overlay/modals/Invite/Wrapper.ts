@@ -10,19 +10,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
 
-  > svg {
+  > .icon {
     width: 100%;
     height: auto;
     max-width: 7rem;
     margin-bottom: 3rem;
-  }
-
-  > button {
-    text-align: center;
-    &:hover {
-      > h2 {
-        color: var(--text-color-secondary);
-      }
-    }
   }
 `
