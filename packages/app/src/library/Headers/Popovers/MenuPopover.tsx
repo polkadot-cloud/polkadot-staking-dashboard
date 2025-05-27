@@ -30,8 +30,8 @@ export const MenuPopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
-  const { currency } = useCurrency()
   const { i18n } = useTranslation()
+  const { currency } = useCurrency()
   const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
