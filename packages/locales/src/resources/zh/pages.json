@@ -58,7 +58,6 @@
     "chooseStakingMethodDesc": "选择直接提名或池质押",
     "chooseStakingMethodSupplementary": "使用我们的智能质押推荐来确定哪种质押选项最适合您",
     "claimRewards": "领取奖励",
-    "claimRewards": "领取奖励",
     "closePool": "您现在可以提取并关闭池。",
     "completedSteps": "已完成 {{completed}} / {{total}} 步",
     "compound": "复投",
@@ -248,7 +247,6 @@
     "projectedRewards": "预计奖励",
     "proxy": "代理账户",
     "quickActions": "快速操作",
-
     "readOnly": "只读帐户无法签署交易",
     "recentPayouts": "最近收益",
     "recommendationHighCommission": "您已提名 {{count}} 个收取100%佣金的验证人。请考虑更改这些提名。",
@@ -274,7 +272,6 @@
     "selectValidators": "选择验证人",
     "selectValidatorsDesc": "选择要提名的验证人进行质押",
     "send": "发送",
-    "send": "发送",
     "setNewController": "设置新Controller帐户",
     "setupStaking": "设置质押",
     "setupStakingDesc": "完成您所选质押方式的设置过程",
@@ -285,8 +282,6 @@
     "signer": "签名者",
     "signing": "签名中",
     "slashed": "除名",
-    "stake": "质押",
-    "stakeBasedOnRecommendation": "立即质押",
     "smartStakingRecommendation": "智能质押推荐",
     "soloKeyPoint1": "更高的潜在奖励",
     "soloKeyPoint2": "完全控制验证人选择",
@@ -360,7 +355,6 @@
     "validatorsSelected": "已选择 {{count}} 个验证人",
     "validatorsSelected_plural": "已选择 {{count}} 个验证人",
     "viewRewards": "查看奖励",
-    "viewTransactions": "交易历史",
     "viewTransactions": "查看交易",
     "waitingForActiveNominations": "等待有效提名",
     "walletBalance": "钱包余额",
@@ -374,6 +368,16 @@
     "whatsNext": "接下来做什么",
     "withdraw": "提取",
     "withdrawFunds": "提取资金",
-    "withdrawUnlock": "提取您的解锁块以继续关闭矿池"
+    "withdrawUnlock": "提取您的解锁块以继续关闭矿池",
+    "youAreCurrently": "您当前",
+    "youAreCurrentlyInPool": "您当前在提名池中",
+    "youAreCurrentlyNominating": "您当前正在提名 {{count}} 个验证人",
+    "youAreCurrentlyNominating_plural": "您当前正在提名 {{count}} 个验证人",
+    "youAreCurrentlyStakingInAPool": "您当前正在提名池中质押",
+    "youAreCurrentlyStakingInAPoolWithId": "您当前正在 Pool {{poolId}} ({{poolName}}) 中质押",
+    "yourCurrentBalance": "您当前余额：{{balance}} {{unit}}",
+    "yourRewardRate": "您的奖励率",
+    "yourStakingPosition": "您的质押状态为",
+    "yourStakingStatus": "您的质押状态"
   }
 }
