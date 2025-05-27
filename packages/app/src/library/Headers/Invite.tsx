@@ -8,7 +8,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { useState } from 'react'
 import { InactiveButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
-import { InvitePopover } from './Popovers/InvitePopover'
+import { NotificationsPopover } from './Popovers/NotificationsPopover'
 
 export const Invite = () => {
   const { themeElementRef } = useTheme()
@@ -26,7 +26,7 @@ export const Invite = () => {
     <Popover
       open={open}
       portalContainer={themeElementRef.current || undefined}
-      content={<InvitePopover setOpen={setOpen} />}
+      content={<NotificationsPopover setOpen={setOpen} />}
       onTriggerClick={() => {
         setAcknowledged(true)
         setOpen(!open)

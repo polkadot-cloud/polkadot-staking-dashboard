@@ -13,7 +13,7 @@ import { PopoverTab } from 'ui-buttons'
 import { Padding } from 'ui-core/popover'
 import { Pool } from './Pool'
 
-export const InvitePopover = ({
+export const NotificationsPopover = ({
   setOpen,
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>
