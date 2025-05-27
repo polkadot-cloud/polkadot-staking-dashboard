@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { planckToUnit } from '@w3ux/utils'
 import HandWaveIcon from 'assets/icons/hand.svg?react'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import {
   fetchNominatorRewardTrend,
   fetchPoolRewardTrend,
@@ -30,7 +30,7 @@ export const WelcomeSection = () => {
   const { getAccount } = useImportedAccounts()
   const { network } = useNetwork()
   const { activeEra } = useApi()
-  const { inSetup, isNominating } = useStaking()
+  const { isNominator } = useStaking()
   const { inPool } = useActivePool()
   const { getStakingLedger } = useBalances()
   const { erasPerDay } = useErasPerDay()
@@ -40,14 +40,14 @@ export const WelcomeSection = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   // Get network data for unit conversion
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   // Get account details if available
   const accountData = activeAddress ? getAccount(activeAddress) : null
   const accountName = accountData?.name || null
 
   // Check if user is actively staking (nominating or in pool)
-  const isActivelyStaking = (!inSetup() && isNominating()) || inPool()
+  const isActivelyStaking = isNominator || inPool
 
   // Fetch 30-day rewards if user is actively staking
   useEffect(() => {

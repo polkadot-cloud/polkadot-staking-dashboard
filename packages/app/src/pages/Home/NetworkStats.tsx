@@ -56,7 +56,7 @@ export const NetworkStats = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const {
-    relayMetrics: { totalIssuance },
+    relayMetrics,
     stakingMetrics: { totalStaked },
   } = useApi()
   const { getAverageRewardRate } = useAverageRewardRate()
@@ -76,9 +76,24 @@ export const NetworkStats = () => {
   // Get active validators count
   const activeValidators = stakingMetrics?.validatorCount?.toString() || '0'
 
+  // Type guard for totalIssuance
+  const hasTotalIssuance = (obj: unknown): obj is { totalIssuance: bigint } =>
+    typeof obj === 'object' &&
+    obj !== null &&
+    'totalIssuance' in obj &&
+    typeof (obj as { totalIssuance: unknown }).totalIssuance === 'bigint'
+
   // Calculate percentage of supply staked
+  const totalIssuance = hasTotalIssuance(relayMetrics)
+    ? relayMetrics.totalIssuance
+    : 0n
   const supplyStaked =
-    totalStaked && totalIssuance ? (totalStaked * 100n) / totalIssuance : 0n
+    typeof totalStaked === 'bigint' &&
+    typeof totalIssuance === 'bigint' &&
+    totalStaked &&
+    totalIssuance
+      ? (totalStaked * 100n) / totalIssuance
+      : 0n
 
   return (
     <>

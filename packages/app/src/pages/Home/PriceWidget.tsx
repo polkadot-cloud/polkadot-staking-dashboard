@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getChainIcons } from 'assets'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -79,7 +79,7 @@ export const PriceWidget = () => {
   const { currency } = useCurrency()
   const { price, change } = useTokenPrices()
   const { pluginEnabled } = usePlugins()
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
 
   // Get token icon
   const Token = getChainIcons(network).token

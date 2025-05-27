@@ -48,7 +48,7 @@ const StatusMessage = styled.div`
 export const StakingHealth = () => {
   const { t } = useTranslation('pages')
   const { activeAddress } = useActiveAccounts()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { inPool } = useActivePool()
   const { getNominations, getStakingLedger } = useBalances()
   const { formatWithPrefs, avgCommission } = useValidators()
@@ -73,8 +73,8 @@ export const StakingHealth = () => {
   )
 
   // Determine staking type
-  const isNominating = !inSetup()
-  const isInPool = inPool()
+  const isNominating = isNominator
+  const isInPool = inPool
 
   // Get pool information if user is in a pool
   const { poolMembership } = getStakingLedger(activeAddress)

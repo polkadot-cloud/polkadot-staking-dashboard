@@ -9,7 +9,7 @@ import {
 import { planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -51,7 +51,7 @@ export const CompactStakeInfo = () => {
   const { t } = useTranslation('pages')
   const { t: tApp } = useTranslation('app')
   const { network } = useNetwork()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
   const { openCanvas } = useOverlay().canvas
@@ -60,7 +60,7 @@ export const CompactStakeInfo = () => {
     useBalances()
   const { unclaimedRewards } = usePayouts()
   const { activeAddress } = useActiveAccounts()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { isFastUnstaking } = useUnstaking()
   const { inPool, activePool, activePoolNominations } = useActivePool()
   const { poolsMetaData } = useBondedPools()
@@ -72,8 +72,8 @@ export const CompactStakeInfo = () => {
   const Token = getChainIcons(network).token
 
   // Determine if user is staking via pool or direct nomination
-  const isStakingViaPool = inPool()
-  const isDirectNomination = !inSetup() && !isStakingViaPool
+  const isStakingViaPool = inPool
+  const isDirectNomination = isNominator && !isStakingViaPool
   const isStaking = isStakingViaPool || isDirectNomination
 
   if (!isStaking) {
@@ -162,7 +162,7 @@ export const CompactStakeInfo = () => {
 
   // Get payee status text to display for direct nominators
   const getPayeeStatus = () => {
-    if (inSetup()) {
+    if (isNominator) {
       return t('notAssigned')
     }
     const status = getPayeeItems(true).find(
@@ -186,7 +186,7 @@ export const CompactStakeInfo = () => {
   // Determine whether buttons are disabled.
   const btnsDisabled =
     (isDirectNomination && syncing) ||
-    (isDirectNomination && inSetup()) ||
+    (isDirectNomination && isNominator) ||
     isReadOnlyAccount(activeAddress) ||
     isFastUnstaking
 

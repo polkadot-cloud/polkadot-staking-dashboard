@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { CardWrapper } from 'library/Card/Wrappers'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -55,9 +55,8 @@ const QuickActions = () => {
   const { openModal } = useOverlay().modal
   const { openCanvas } = useOverlay().canvas
   const { activeAddress } = useActiveAccounts()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { inPool, activePool } = useActivePool()
-  const { isNominating } = useStaking()
   const { getPendingPoolRewards, getAccountBalance } = useBalances()
   const { getStakedBalance } = useTransferOptions()
 
@@ -67,9 +66,9 @@ const QuickActions = () => {
   const [rewardsExpanded, setRewardsExpanded] = useState(false)
 
   // Determine if user is staking via pool or direct nomination
-  const isStakingViaPool = inPool()
+  const isStakingViaPool = inPool
   // Used to determine appropriate navigation paths
-  const isDirectNomination = !inSetup() && !isStakingViaPool
+  const isDirectNomination = isNominator && !isStakingViaPool
 
   // Check if the user has any staked tokens
   const stakedBalance = getStakedBalance(activeAddress)
@@ -77,7 +76,7 @@ const QuickActions = () => {
 
   // Get user's free balance
   const { balance } = getAccountBalance(activeAddress)
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   const freeBalance = new BigNumber(planckToUnit(balance.free, units))
 
   // Get network-specific minimums from StakingRecommendation
@@ -277,7 +276,7 @@ const QuickActions = () => {
       }
     }
 
-    if (inPool()) {
+    if (inPool) {
       if (hasRewards) {
         return {
           icon: faHandHoldingDollar,
@@ -294,7 +293,7 @@ const QuickActions = () => {
       }
     }
 
-    if (isNominating()) {
+    if (isNominator) {
       return {
         icon: faChartLine,
         label: t('viewRewards'),
@@ -343,7 +342,7 @@ const QuickActions = () => {
     },
     {
       component:
-        rewardsExpanded && inPool() && hasRewards ? (
+        rewardsExpanded && inPool && hasRewards ? (
           <HelpOptionsContainer className="rewards-options">
             <ActionButton
               className="reward-option"
@@ -453,12 +452,12 @@ const QuickActions = () => {
 
 export const Home = () => {
   const { t } = useTranslation('pages')
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { inPool } = useActivePool()
   const { activeAccount } = useActiveAccounts()
 
   // Check if user is staking
-  const isStakingUser = !inSetup() || inPool()
+  const isStakingUser = isNominator || inPool
 
   // Define height for staking health card
   const STAKING_HEALTH_HEIGHT = 450

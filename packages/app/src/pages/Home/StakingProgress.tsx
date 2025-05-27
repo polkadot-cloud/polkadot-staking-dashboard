@@ -162,7 +162,7 @@ export const StakingProgress = () => {
 
   // Get context data
   const { activeAccount } = useActiveAccounts()
-  const { isNominating, isBonding, inSetup } = useStaking()
+  const { isNominating, isBonding, isNominator } = useStaking()
   const { inPool, activePoolNominations } = useActivePool()
   const { openHelp } = useHelp()
 
@@ -177,17 +177,19 @@ export const StakingProgress = () => {
     }
 
     // Step 2: Staking method chosen
-    if (isBonding() || inPool()) {
+    if (isBonding || inPool) {
       completedSteps++
     }
 
     // Step 3: Validators selected or pool joined
-    if (isNominating() || inPool()) {
+    if (isNominating || inPool) {
       completedSteps++
     }
 
     // Step 4: Optimized staking or pool monitoring
-    if ((isNominating() && !inSetup()) || inPool()) {
+    const step4Completed = (isNominating && isNominator) || inPool
+
+    if (step4Completed) {
       completedSteps++
     }
 
@@ -203,7 +205,7 @@ export const StakingProgress = () => {
     const milestones: MilestoneItem[] = []
 
     // First stake milestone - show if user is staking
-    if (isNominating() || inPool()) {
+    if (isNominating || inPool) {
       milestones.push({
         title: t('milestoneFirstStake'),
         description: t('milestoneFirstStakeDesc'),
@@ -227,11 +229,11 @@ export const StakingProgress = () => {
     })
 
     // Step 2: Choose staking method
-    const stakingMethodChosen = isBonding() || inPool()
+    const stakingMethodChosen = isBonding || inPool
     steps.push({
       title: t('chooseStakingMethod'),
       description: stakingMethodChosen
-        ? inPool()
+        ? inPool
           ? t('poolStakingSelected')
           : t('directNominationSelected')
         : t('chooseStakingMethodDesc'),
@@ -242,18 +244,16 @@ export const StakingProgress = () => {
     })
 
     // Step 3: Setup staking (previously Select validators or join pool)
-    const step3Completed = isNominating() || inPool()
+    const step3Completed = isNominating || inPool
 
     steps.push({
       title: t('setupStaking'),
       description: step3Completed
-        ? inPool()
+        ? inPool
           ? t('poolJoined')
           : t('validatorsSelected', {
               count:
-                inPool() &&
-                activePoolNominations &&
-                activePoolNominations.targets
+                inPool && activePoolNominations && activePoolNominations.targets
                   ? activePoolNominations.targets.length
                   : 16, // Default to 16 validators for direct nomination
             })
@@ -262,12 +262,12 @@ export const StakingProgress = () => {
     })
 
     // Step 4: Optimize staking or monitor pool
-    const step4Completed = (isNominating() && !inSetup()) || inPool()
+    const step4Completed = (isNominating && isNominator) || inPool
 
     steps.push({
       title: t('optimizeStaking'),
       description: step4Completed
-        ? inPool()
+        ? inPool
           ? t('poolPerformanceMonitored')
           : t('stakingOptimized')
         : t('optimizeStakingDesc'),
@@ -296,7 +296,7 @@ export const StakingProgress = () => {
         onClick: () => navigate('/rewards'),
         icon: faChartLine,
       })
-    } else if (!isBonding() && !inPool()) {
+    } else if (!isBonding && !inPool) {
       // If wallet connected but not staking, show track rewards
       actions.push({
         title: t('trackRewards'),
@@ -323,7 +323,7 @@ export const StakingProgress = () => {
         onClick: openResourcesModal,
         icon: faBookOpen,
       })
-    } else if (!isBonding() && !inPool()) {
+    } else if (!isBonding && !inPool) {
       // If wallet connected but not staking, show learn more about staking
       actions.push({
         title: t('learnMoreAboutStaking'),
