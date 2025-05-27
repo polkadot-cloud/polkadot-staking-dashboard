@@ -18,6 +18,7 @@ import { CurrencyProvider } from 'contexts/Currency'
 import { FastUnstakeProvider } from 'contexts/FastUnstake'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
+import { InvitesProvider } from 'contexts/Invites'
 import { LedgerHardwareProvider } from 'contexts/LedgerHardware'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
@@ -96,6 +97,7 @@ export const Providers = () => {
       MigrateProvider,
       FiltersProvider,
       OperatorsProvider,
+      InvitesProvider,
       Tooltip.Provider,
     ],
     ThemedRouter

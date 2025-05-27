@@ -97,3 +97,21 @@ export const NominationsWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `
+
+export const InviteHeader = styled.div`
+  text-align: center;
+  padding: 2rem 1rem;
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    font-family: InterBold, sans-serif;
+    color: var(--text-color-primary);
+  }
+
+  h4 {
+    color: var(--text-color-secondary);
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+`
