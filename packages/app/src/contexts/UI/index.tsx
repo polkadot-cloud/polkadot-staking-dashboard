@@ -20,7 +20,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   // Get advanced mode state from local storage, default to false
   const [advancedMode, setAdvancedModeState] = useState<boolean>(
-    localStorageOrDefault(AdvancedModeKey, false, true) as boolean
+    localStorageOrDefault(AdvancedModeKey, true, true) as boolean
   )
 
   const setAdvancedMode = (value: boolean) => {
