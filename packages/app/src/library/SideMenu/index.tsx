@@ -37,6 +37,7 @@ export const SideMenu = () => {
   const {
     setSideMenu,
     sideMenuOpen,
+    advancedMode,
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
@@ -90,7 +91,7 @@ export const SideMenu = () => {
                 </span>
               </>
             )}
-            {!sideMenuOpen && (
+            {!sideMenuOpen && advancedMode && (
               <span className="toggle">
                 <span className="label">
                   <FontAwesomeIcon

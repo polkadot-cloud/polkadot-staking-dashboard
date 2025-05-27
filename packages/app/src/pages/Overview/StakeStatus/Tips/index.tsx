@@ -99,7 +99,7 @@ export const Tips = () => {
   const segments: AnyJson = []
   if (!activeAddress) {
     segments.push(1)
-  } else if (!isNominating() && !inPool()) {
+  } else if (!isNominating && !inPool) {
     if (freeBalance - feeReserve > minNominatorBond) {
       segments.push(2)
     } else {
@@ -107,10 +107,10 @@ export const Tips = () => {
     }
     segments.push(4)
   } else {
-    if (isNominating()) {
+    if (isNominating) {
       segments.push(5)
     }
-    if (inPool()) {
+    if (inPool) {
       if (!isOwner()) {
         segments.push(6)
       } else {

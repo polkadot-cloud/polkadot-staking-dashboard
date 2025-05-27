@@ -3,7 +3,7 @@
 
 import { useTimeLeft } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -32,7 +32,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
     depsFormat: [i18n.resolvedLanguage],
   })
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const isStaking = bondFor === 'nominator'
   const { era, value } = chunk
   const left = new BigNumber(era).minus(activeEra.index)

@@ -39,6 +39,7 @@ export class AccountBalanceQuery<T extends Chain> {
         // End of migration
 
         const balances: AccountBalance = {
+          synced: true,
           nonce,
           balance: {
             free,

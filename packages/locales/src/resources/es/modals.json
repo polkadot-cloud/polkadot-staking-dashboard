@@ -25,11 +25,13 @@
     "allowToJoin": "Permitir que nuevos miembros se unan al pool.",
     "alternative": "Alternativo",
     "amount": "Cantidad",
+    "amount": "Cantidad",
     "amountToBond": "Cantidad a depositar:",
     "amountWillBeUnbonded": "{{bond}} {{unit}} será desvinculado.",
     "amountWillBeWithdrawn": "{{bond}} {{unit}} serán retirados.",
     "approveTransactionLedger": "Aprobar transacción en Ledger",
     "areYouSure": "¿Estás seguro?",
+    "available": "Disponible",
     "back": "Atrás",
     "beingDestroyed": "Este Pool está siendo Destruido.",
     "belowExisting": "Por debajo del Existente",
@@ -249,6 +251,7 @@
     "rebondUnlock": "Puedes revincular las desvinculaciones en cualquier momento durante este período, o retirarlas a tu saldo disponible después.",
     "recentEraPoints": "Puntos de Era Recientes",
     "recipient": "Destinatario",
+    "recipient": "Destinatario",
     "refreshAccounts": "Actualizar Cuentas",
     "registerFastUnstake": "Registrarse para la desvinculación rápida requiere un depósito de",
     "remove": "Eliminar",
@@ -285,6 +288,8 @@
     "selfStake": "Auto-stake",
     "send": "Enviar",
     "sendFundsInfo": "Enviar fondos directamente a otra cuenta.",
+    "send": "Enviar",
+    "sendFundsInfo": "Una vez enviada la transacción, los tokens se transferirán inmediatamente al destinatario.",
     "sentToCommissionPayee": "Esta cantidad será enviada a la cuenta de beneficiario de comisiones configurada para este Pool.",
     "setCommissionMaxAdvanced": "Configuración avanzada de comisión",
     "setMaxCommission": "Establecer comisión máxima",
@@ -313,6 +318,7 @@
     "thisMinimumDelay_one": "Este retraso mínimo es el equivalente aproximado a {{count}} bloque.",
     "thisMinimumDelay_other": "Este retraso mínimo es el equivalente aproximado a {{count}} bloques.",
     "titleExtensionConnected": "La extensión {{title}} ha sido conectada.",
+    "to": "Para",
     "togglePlugins": "Alternar Plugins",
     "total": "Total",
     "transactionRejectedPending": "La transacción fue rechazada y aún está pendiente.",
@@ -364,6 +370,6 @@
     "withdrawSubtitle": "Los fondos estarán disponibles inmediatamente como saldo libre después de retirar.",
     "withdrawUnlocked": "Retirar Descomprometidos",
     "years": "Años",
-    "youHaveActiveUnlocks": "Tienes desvinculaciones activas. Las desvinculaciones se pueden retirar una vez que el período de desvinculación de {{bondDurationFormatted}} haya pasado"
+    "youHaveActiveUnlocks": "Tienes desbloqueos activos. Los desbloqueos pueden ser retirados una vez que el período de desbloqueo de {{bondDurationFormatted}} haya pasado."
   }
 }

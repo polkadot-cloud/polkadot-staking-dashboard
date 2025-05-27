@@ -29,6 +29,10 @@ export const NetworkList: Networks = {
     units: 10,
     ss58: 0,
     defaultFeeReserve: 1000000000n,
+    meta: {
+      stakingChain: 'polkadot',
+      subscanBalanceChainId: 'polkadot',
+    },
   },
   kusama: {
     name: 'kusama',
@@ -48,6 +52,10 @@ export const NetworkList: Networks = {
     units: 12,
     ss58: 2,
     defaultFeeReserve: 50000000000n,
+    meta: {
+      stakingChain: 'kusama',
+      subscanBalanceChainId: 'kusama',
+    },
   },
   westend: {
     name: 'westend',
@@ -66,6 +74,10 @@ export const NetworkList: Networks = {
     units: 12,
     ss58: 42,
     defaultFeeReserve: 100000000000n,
+    meta: {
+      stakingChain: 'westmint',
+      subscanBalanceChainId: 'assethub-westend',
+    },
   },
 }
 
@@ -76,6 +88,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 0,
     units: 10,
     unit: 'DOT',
+    defaultFeeReserve: 1000000000n,
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
@@ -91,6 +104,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 2,
     units: 12,
     unit: 'KSM',
+    defaultFeeReserve: 50000000000n,
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_people'),
@@ -106,6 +120,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 42,
     units: 12,
     unit: 'WND',
+    defaultFeeReserve: 100000000000n,
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend_people'),
@@ -121,6 +136,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 0,
     units: 10,
     unit: 'DOT',
+    defaultFeeReserve: 1000000000n,
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_asset_hub'),
@@ -140,6 +156,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 2,
     units: 12,
     unit: 'KSM',
+    defaultFeeReserve: 50000000000n,
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_asset_hub'),
@@ -157,6 +174,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 42,
     units: 12,
     unit: 'WND',
+    defaultFeeReserve: 100000000000n,
     endpoints: {
       lightClient: async () =>
         await import('@substrate/connect-known-chains/westend2_asset_hub'),

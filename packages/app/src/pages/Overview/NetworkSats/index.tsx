@@ -4,7 +4,6 @@
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Header } from 'library/Announcements/Header'
 import { Wrapper } from 'library/Announcements/Wrappers'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -13,44 +12,40 @@ import { CardHeader } from 'ui-core/base'
 import { Announcements } from './Announcements'
 
 export const NetworkStats = () => {
-  const { t } = useTranslation('pages')
+  const { t } = useTranslation()
   const { bondedPools } = useBondedPools()
-  const { getAverageRewardRate } = useAverageRewardRate()
+  const {
+    poolsConfig: { counterForPoolMembers },
+  } = useApi()
   const { counterForNominators, counterForValidators } = useApi().stakingMetrics
-
-  const { inflationToStakers } = getAverageRewardRate(false)
 
   const items = [
     {
-      label: t('totalValidators'),
+      label: t('totalValidators', { ns: 'pages' }),
       value: new BigNumber(counterForValidators).toFormat(0),
       helpKey: 'Validator',
     },
     {
-      label: t('totalNominators'),
+      label: t('totalNominators', { ns: 'pages' }),
       value: new BigNumber(counterForNominators).toFormat(0),
       helpKey: 'Total Nominators',
     },
     {
-      label: t('activePools'),
+      label: t('activePools', { ns: 'pages' }),
       value: new BigNumber(bondedPools.length).toFormat(),
       helpKey: 'Active Pools',
     },
     {
-      label: t('latestInflationRate'),
-      value: `${
-        inflationToStakers.toString() === '0'
-          ? '0'
-          : inflationToStakers.decimalPlaces(2).toFormat()
-      }%`,
-      helpKey: 'Inflation',
+      label: t('poolMembers', { ns: 'modals' }),
+      value: `${new BigNumber(counterForPoolMembers).toFormat()}`,
+      helpKey: 'Nomination Pools',
     },
   ]
 
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
       <CardHeader margin>
-        <h3>{t('networkStats')}</h3>
+        <h3>{t('networkStats', { ns: 'pages' })}</h3>
       </CardHeader>
       <Wrapper>
         <Header items={items} />

@@ -3,7 +3,7 @@
 
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
@@ -23,7 +23,7 @@ export const Stats = ({
   const { eraStakers } = useStaking()
   const { isReady, serviceApi } = useApi()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const isActive = eraStakers.stakers.find((staker) =>
     staker.others.find((other) => other.who === bondedPool.addresses.stash)

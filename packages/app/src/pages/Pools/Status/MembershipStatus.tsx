@@ -22,7 +22,7 @@ export const MembershipStatus = ({
 }: MembershipStatusProps) => {
   const { t } = useTranslation('pages')
   const { isReady } = useApi()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { label } = useStatusButtons()
   const { openModal } = useOverlay().modal
   const { poolsMetaData } = useBondedPools()
@@ -83,7 +83,7 @@ export const MembershipStatus = ({
     <Stat
       label={t('poolMembership')}
       helpKey="Pool Membership"
-      stat={!inSetup() ? t('alreadyNominating') : t('notInPool')}
+      stat={isNominator ? t('alreadyNominating') : t('notInPool')}
       buttonType={buttonType}
     />
   )

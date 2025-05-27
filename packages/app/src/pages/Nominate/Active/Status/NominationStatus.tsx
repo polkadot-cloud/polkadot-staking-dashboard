@@ -20,7 +20,7 @@ export const NominationStatus = () => {
     <Stat
       label={t('status')}
       helpKey="Nomination Status"
-      stat={inPool() ? t('alreadyInPool') : nominationStatus.message}
+      stat={inPool ? t('alreadyInPool') : nominationStatus.message}
     />
   )
 }

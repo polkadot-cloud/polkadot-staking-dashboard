@@ -6,7 +6,6 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Container, Content, Scroll } from 'ui-core/canvas'
-import { Content as ModalContent } from 'ui-core/modal'
 import { useOverlay } from './Provider'
 import type { CanvasProps } from './Provider/types'
 
@@ -88,14 +87,12 @@ export const Canvas = ({
         },
       }}
     >
-      <Scroll size={size}>
-        <ModalContent canvas>
-          <Content>
-            <ErrorBoundary FallbackComponent={Fallback}>
-              {ActiveCanvas && <ActiveCanvas />}
-            </ErrorBoundary>
-          </Content>
-        </ModalContent>
+      <Scroll>
+        <Content size={size}>
+          <ErrorBoundary FallbackComponent={Fallback}>
+            {ActiveCanvas && <ActiveCanvas />}
+          </ErrorBoundary>
+        </Content>
       </Scroll>
     </Container>
   )

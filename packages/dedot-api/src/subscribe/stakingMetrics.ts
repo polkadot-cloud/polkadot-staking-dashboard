@@ -24,6 +24,10 @@ export class StakingMetricsQuery<T extends StakingChain> {
     this.#unsub = await this.api.queryMulti(
       [
         {
+          fn: this.api.query.balances.totalIssuance,
+          args: [],
+        },
+        {
           fn: this.api.query.fastUnstake.erasToCheckPerBlock,
           args: [],
         },
@@ -65,6 +69,7 @@ export class StakingMetricsQuery<T extends StakingChain> {
         },
       ],
       ([
+        totalIssuance,
         erasToCheckPerBlock,
         minimumActiveStake,
         counterForValidators,
@@ -77,6 +82,7 @@ export class StakingMetricsQuery<T extends StakingChain> {
         counterForNominators,
       ]) => {
         this.stakingMetrics = {
+          totalIssuance,
           erasToCheckPerBlock,
           minimumActiveStake,
           counterForValidators,

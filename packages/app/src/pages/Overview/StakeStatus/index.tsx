@@ -10,16 +10,16 @@ import { Page } from 'ui-core/base'
 import { Tips } from './Tips'
 import { StatusWrapper } from './Wrappers'
 
-export const StakeStatus = () => {
+export const StakeStatus = ({ height }: { height: number }) => {
   const { inPool } = useActivePool()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
 
-  const notStaking = !inPool() && inSetup()
-  const showNominate = notStaking || !inSetup()
-  const showMembership = notStaking || inPool()
+  const notStaking = !inPool && !isNominator
+  const showNominate = notStaking || isNominator
+  const showMembership = notStaking || inPool
 
   return (
-    <CardWrapper style={{ padding: 0 }}>
+    <CardWrapper style={{ padding: 0 }} height={height}>
       <StatusWrapper>
         {showNominate && (
           <Page.RowSection
@@ -35,7 +35,7 @@ export const StakeStatus = () => {
           <Page.RowSection
             hLast={showNominate}
             vLast={showNominate}
-            standalone={!showNominate}
+            standalone={true}
           >
             <section>
               <MembershipStatus showButtons={false} />

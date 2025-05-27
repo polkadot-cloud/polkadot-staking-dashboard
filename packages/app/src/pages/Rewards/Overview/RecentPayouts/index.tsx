@@ -29,10 +29,10 @@ export const RecentPayouts = ({
   loading,
 }: PayoutHistoryProps) => {
   const { i18n, t } = useTranslation('pages')
-  const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
+  const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
 
   const payoutsFromDate = getPayoutsFromDate(
@@ -43,8 +43,7 @@ export const RecentPayouts = ({
     payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
-  const nominating = !inSetup()
-  const staking = nominating || inPool
+  const staking = isNominator || inPool
   const notStaking = !syncing && !staking
 
   const ref = useRef<HTMLDivElement>(null)
@@ -104,8 +103,8 @@ export const RecentPayouts = ({
         >
           {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
-              nominating={nominating}
-              inPool={inPool()}
+              nominating={isNominator}
+              inPool={inPool}
               payoutGraphData={payoutGraphData}
               loading={loading}
             />

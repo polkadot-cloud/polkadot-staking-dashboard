@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { PerbillMultiplier } from 'consts'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -26,7 +26,7 @@ export const PoolStats = () => {
   const { activePool } = useActivePool()
   const { getCurrentCommission } = usePoolCommission()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const poolId = activePool?.id || 0
 
   const { state, points, memberCounter } = activePool?.bondedPool || {}

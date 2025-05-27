@@ -3,7 +3,7 @@
 
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -25,7 +25,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   return (
     <Stat
       label={t('pendingPayouts', { ns: 'pages' })}
