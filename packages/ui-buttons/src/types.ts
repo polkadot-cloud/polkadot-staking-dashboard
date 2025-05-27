@@ -50,7 +50,7 @@ export interface ButtonIconProps {
   iconTransform?: string
 }
 
-export interface ButtonCopyProps {
+export type ButtonCopyProps = ComponentBase & {
   onClick?: (e?: MouseEvent<HTMLButtonElement>) => void
   value: string
   size?: string | number
@@ -197,6 +197,8 @@ export type InactiveButtonHeaderProps = ComponentBaseWithClassName & {
   marginX?: boolean
   icon: IconProp | IconDefinition
   iconTransform?: string
+  active?: boolean
+  acknowledged?: boolean
 }
 
 export type ButtonAccountLabelProps = ComponentBaseWithClassName & {

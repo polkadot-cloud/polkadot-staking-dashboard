@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { extractUrlValue } from '@w3ux/utils'
 import { PagesConfig } from 'config/pages'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -81,7 +82,7 @@ const RouterInner = () => {
   useAccountFromUrl()
 
   // Jump back to overview page on advanced mode change
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     navigate(`/overview`)
   }, [advancedMode])
 
