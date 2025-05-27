@@ -33,27 +33,6 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
     removeLocalInviteConfig()
   }
 
-  // NOTE: Auto opening of invites is currently disabled.
-  // const { openCanvas } = useOverlay().canvas
-  // const { syncing } = useSyncing([
-  //   'initialization',
-  //   'bonded-pools',
-  //   'active-pools',
-  // ])
-  // Open pool invite when ready
-  // useEffect(() => {
-  //   const idFromUrl = extractUrlValue('id')
-  //   if (!syncing) {
-  //     if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
-  //       openCanvas({
-  //         key: 'Pool',
-  //         options: { providedPool: { id: Number(idFromUrl) } },
-  //         size: 'xl',
-  //       })
-  //     }
-  //   }
-  // }, [syncing])
-
   // Set invite data when the page loads
   useEffect(() => {
     const idFromUrl = extractUrlValue('id')
