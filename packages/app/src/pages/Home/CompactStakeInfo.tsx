@@ -186,7 +186,7 @@ export const CompactStakeInfo = () => {
   // Determine whether buttons are disabled.
   const btnsDisabled =
     (isDirectNomination && syncing) ||
-    (isDirectNomination && isNominator) ||
+    (isDirectNomination && !isNominator) ||
     isReadOnlyAccount(activeAddress) ||
     isFastUnstaking
 
