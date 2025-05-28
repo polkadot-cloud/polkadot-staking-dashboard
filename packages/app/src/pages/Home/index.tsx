@@ -3,34 +3,37 @@
 
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import {
+  faAdd,
+  faArrowDown,
   faChartLine,
   faCircleDown,
+  faCircleXmark,
   faCoins,
   faEnvelope,
-  faHandHoldingDollar,
-  faHistory,
+  faMinus,
   faPaperPlane,
-  faPlus,
   faQuestionCircle,
-  faUnlock,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { planckToUnit } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
+import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
+import PolkadotVaultSVG from 'assets/brands/vault.svg?react'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
-import { getStakingChainData } from 'consts/util'
 import { CardWrapper } from 'library/Card/Wrappers'
-import React, { useState } from 'react'
+import { memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import type { BondFor } from 'types'
+import { QuickAction } from 'ui-buttons'
+import type { ButtonQuickActionProps } from 'ui-buttons/types'
 import { CardHeader, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { useActiveAccounts } from '../../contexts/ActiveAccounts'
 import { useBalances } from '../../contexts/Balances'
-import { useNetwork } from '../../contexts/Network'
+import { useNominatorSetups } from '../../contexts/NominatorSetups'
+import { usePayouts } from '../../contexts/Payouts'
 import { useActivePool } from '../../contexts/Pools/ActivePool'
 import { useStaking } from '../../contexts/Staking'
-import { useTransferOptions } from '../../contexts/TransferOptions'
+import { useSyncing } from '../../hooks/useSyncing'
 import { CompactStakeInfo } from './CompactStakeInfo'
 import { NetworkStats } from './NetworkStats'
 import { PriceWidget } from './PriceWidget'
@@ -39,416 +42,342 @@ import { StakingProgress } from './StakingProgress'
 import { StakingRecommendation } from './StakingRecommendation'
 import { WalletBalance } from './WalletBalance'
 import { WelcomeSection } from './WelcomeSection'
-import {
-  ActionButton,
-  BalanceCardsLayout,
-  CardRow,
-  HelpOptionsContainer,
-  QuickActionsContainer,
-} from './Wrappers'
+import { BalanceCardsLayout, CardRow } from './Wrappers'
 
-// Quick Actions component
-const QuickActions = () => {
-  const { t } = useTranslation('pages')
-  const navigate = useNavigate()
-  const { network } = useNetwork()
+// Disconnected user actions
+const DisconnectedActions = memo(() => {
+  const { t } = useTranslation()
   const { openModal } = useOverlay().modal
-  const { openCanvas } = useOverlay().canvas
-  const { activeAddress } = useActiveAccounts()
-  const { isNominator } = useStaking()
-  const { inPool, activePool } = useActivePool()
-  const { getPendingPoolRewards, getAccountBalance } = useBalances()
-  const { getStakedBalance } = useTransferOptions()
 
-  // State to track if help options are expanded
-  const [helpExpanded, setHelpExpanded] = useState(false)
-  // State to track if rewards options are expanded
-  const [rewardsExpanded, setRewardsExpanded] = useState(false)
-
-  // Determine if user is staking via pool or direct nomination
-  const isStakingViaPool = inPool
-  // Used to determine appropriate navigation paths
-  const isDirectNomination = isNominator && !isStakingViaPool
-
-  // Check if the user has any staked tokens
-  const stakedBalance = getStakedBalance(activeAddress)
-  const hasStakedTokens = stakedBalance.gt(0)
-
-  // Get user's free balance
-  const { balance } = getAccountBalance(activeAddress)
-  const { units } = getStakingChainData(network)
-  const freeBalance = new BigNumber(planckToUnit(balance.free, units))
-
-  // Get network-specific minimums from StakingRecommendation
-  const networkMinimums = {
-    polkadot: {
-      directNomination: 250, // 250 DOT for direct nomination on Polkadot
-      poolStaking: 1, // 1 DOT to join a pool on Polkadot
-      minBalanceWithFees: 1.2, // Minimum balance needed including transaction fees
-    },
-    kusama: {
-      directNomination: 0.1, // 0.1 KSM for direct nomination on Kusama
-      poolStaking: 0.002, // 0.002 KSM to join a pool on Kusama
-      minBalanceWithFees: 0.02, // Minimum balance needed including transaction fees
-    },
-    westend: {
-      directNomination: 1, // 1 WND for direct nomination on Westend
-      poolStaking: 0.1, // 0.1 WND to join a pool on Westend
-      minBalanceWithFees: 0.15, // Minimum balance needed including transaction fees
-    },
-  }[network]
-
-  // Determine if user has enough balance for staking
-  const hasEnoughToStake = freeBalance.isGreaterThanOrEqualTo(
-    networkMinimums.minBalanceWithFees
-  )
-
-  // Determine if user has enough for direct nomination
-  const hasEnoughForDirectNomination = freeBalance.isGreaterThanOrEqualTo(
-    networkMinimums.directNomination
-  )
-
-  // Handle stake button click - open modal directly instead of navigating
-  const handleStakeClick = () => {
-    if (isStakingViaPool) {
-      // For pool stakers: open pool bond modal directly
-      openModal({
-        key: 'Bond',
-        options: { bondFor: 'pool' },
-        size: 'sm',
-      })
-    } else if (isDirectNomination) {
-      // For direct nominators: open nominator bond modal directly
-      openModal({
-        key: 'Bond',
-        options: { bondFor: 'nominator' },
-        size: 'sm',
-      })
-    } else if (hasEnoughToStake) {
-      // Not staking yet, but has enough balance - open canvas based on recommendation
-      if (hasEnoughForDirectNomination) {
-        // For users with enough for direct nomination, open ManageNominations canvas
-        openCanvas({
-          key: 'NominatorSetup',
-          options: {},
-          size: 'lg',
-        })
-      } else {
-        // For users with enough for pool staking but not direct nomination, open Pool canvas
-        openCanvas({
-          key: 'Pool',
-          options: {},
-          size: 'xl',
-        })
-      }
-    } else {
-      // Not enough balance, show recommendation page
-      navigate('/stake')
-    }
-  }
-
-  // Determine stake button text and disabled state
-  const getStakeButtonProps = () => {
-    // Default stake button properties
-    const defaultProps = {
-      icon: faCoins,
-      label: t('stake'),
-      onClick: handleStakeClick,
-      disabled: !activeAddress,
-    }
-
-    if (!activeAddress) {
-      // No wallet connected
-      return defaultProps
-    }
-
-    if (isStakingViaPool) {
-      // Already staking via pool - use specific label
-      return {
-        ...defaultProps,
-        label: t('stake'),
-      }
-    }
-
-    if (isDirectNomination) {
-      // Already doing direct nomination - use specific label
-      return {
-        ...defaultProps,
-        label: t('stake'),
-      }
-    }
-
-    if (!hasEnoughToStake) {
-      // Not enough balance to stake
-      return {
-        ...defaultProps,
-        disabled: true,
-      }
-    }
-
-    // Not staking yet, but has enough balance - change button text based on recommendation
-    return {
-      ...defaultProps,
-      label: t('stakeBasedOnRecommendation'),
-    }
-  }
-
-  // Handle unstake button click - direct to appropriate page and open unstake modal
-  const handleUnstakeClick = () => {
-    if (isStakingViaPool) {
-      // For pool stakers: open pool unbond modal directly
-      openModal({
-        key: 'Unbond',
-        options: { bondFor: 'pool' },
-        size: 'sm',
-      })
-    } else if (isDirectNomination) {
-      // For direct nominators: open unstake modal directly
-      openModal({
-        key: 'Unstake',
-        size: 'sm',
-      })
-    } else {
-      // Not staking yet, go to staking page
-      navigate('/stake')
-    }
-  }
-
-  // Toggle help options expanded state
-  const toggleHelpOptions = () => {
-    setHelpExpanded(!helpExpanded)
-    // Close rewards options if open
-    if (rewardsExpanded) {
-      setRewardsExpanded(false)
-    }
-  }
-
-  // Toggle rewards options expanded state
-  const toggleRewardsOptions = () => {
-    setRewardsExpanded(!rewardsExpanded)
-    // Close help options if open
-    if (helpExpanded) {
-      setHelpExpanded(false)
-    }
-  }
-
-  // Handle email support click
-  const handleEmailSupport = () => {
-    window.open(`mailto:${MailSupportAddress}`, '_blank')
-  }
-
-  // Handle discord support click
-  const handleDiscordSupport = () => {
-    window.open(DiscordSupportUrl, '_blank')
-  }
-
-  // Handle withdraw rewards click
-  const handleWithdrawRewards = () => {
-    openModal({
-      key: 'ClaimReward',
-      options: { claimType: 'withdraw' },
-      size: 'sm',
-    })
-  }
-
-  // Handle compound rewards click
-  const handleCompoundRewards = () => {
-    openModal({
-      key: 'ClaimReward',
-      options: { claimType: 'bond' },
-      size: 'sm',
-    })
-  }
-
-  // Get pending rewards for pool member
-  const pendingRewards = getPendingPoolRewards(activeAddress)
-  const minUnclaimedDisplay = 1000000n
-  const hasRewards = pendingRewards > minUnclaimedDisplay
-
-  // Determine the claim rewards action based on user status
-  const getClaimRewardsAction = () => {
-    if (!activeAddress) {
-      return {
-        icon: faHandHoldingDollar,
-        label: t('claimRewards'),
-        onClick: () => {},
-        disabled: true,
-      }
-    }
-
-    if (inPool) {
-      if (hasRewards) {
-        return {
-          icon: faHandHoldingDollar,
-          label: t('claimRewards'),
-          onClick: toggleRewardsOptions,
-          expanded: rewardsExpanded,
-        }
-      }
-      return {
-        icon: faHandHoldingDollar,
-        label: t('noRewardsToClaimShort'),
-        onClick: () => {},
-        disabled: true,
-      }
-    }
-
-    if (isNominator) {
-      return {
-        icon: faChartLine,
-        label: t('viewRewards'),
-        onClick: () => navigate('/rewards'),
-        disabled: !hasStakedTokens,
-      }
-    }
-
-    // This is the "Stake to Earn Rewards" button case
-    if (activeAddress) {
-      return {
-        icon: faHandHoldingDollar,
-        label: t('notStakingRewards'),
-        onClick: () => navigate('/stake'),
-        // Grey out the button even when wallet has funds but isn't staking yet
-        // The user should not be able to view rewards until they are staking
-        disabled: true,
-      }
-    }
-
-    return {
-      icon: faHandHoldingDollar,
-      label: t('claimRewards'),
-      onClick: () => {},
-      disabled: true,
-    }
-  }
-
-  const claimRewardsAction = getClaimRewardsAction()
-  const stakeButtonProps = getStakeButtonProps()
-
-  // Define quick actions
-  const actions = [
-    {
-      icon: faPaperPlane,
-      label: t('send'),
-      onClick: () => openModal({ key: 'Send', size: 'sm' }),
-      // Disable send button if there's no balance to send
-      disabled: !activeAddress || freeBalance.isLessThanOrEqualTo(0),
-    },
-    {
-      icon: stakeButtonProps.icon,
-      label: stakeButtonProps.label,
-      onClick: stakeButtonProps.onClick,
-      disabled: stakeButtonProps.disabled,
-    },
-    {
-      component:
-        rewardsExpanded && inPool && hasRewards ? (
-          <HelpOptionsContainer className="rewards-options">
-            <ActionButton
-              className="reward-option"
-              onClick={handleWithdrawRewards}
-              disabled={!hasStakedTokens}
-            >
-              <FontAwesomeIcon icon={faCircleDown} className="icon" />
-              <span className="label">{t('withdraw')}</span>
-            </ActionButton>
-            <ActionButton
-              className="reward-option"
-              onClick={handleCompoundRewards}
-              disabled={
-                !hasStakedTokens ||
-                activePool?.bondedPool?.state === 'Destroying'
-              }
-            >
-              <FontAwesomeIcon icon={faPlus} className="icon" />
-              <span className="label">{t('compound')}</span>
-            </ActionButton>
-          </HelpOptionsContainer>
-        ) : (
-          <ActionButton
-            onClick={claimRewardsAction.onClick}
-            disabled={claimRewardsAction.disabled}
-            $expanded={claimRewardsAction.expanded}
-          >
-            <FontAwesomeIcon icon={claimRewardsAction.icon} className="icon" />
-            <span className="label">{claimRewardsAction.label}</span>
-          </ActionButton>
+  const actions: ButtonQuickActionProps[] = useMemo(
+    () => [
+      {
+        onClick: () => {
+          openModal({ key: 'Accounts' })
+        },
+        disabled: false,
+        Icon: () => (
+          <FontAwesomeIcon transform="grow-2" icon={faQuestionCircle} />
         ),
-    },
-    {
-      icon: faUnlock,
-      label: t('unstake'),
-      onClick: handleUnstakeClick,
-      // Disable unstake if there's nothing staked
-      disabled: !hasStakedTokens,
-    },
-    // Transaction History is always shown
-    {
-      icon: faHistory,
-      label: t('viewTransactions'),
-      onClick: () =>
-        activeAddress
-          ? window.open(
-              `https://${network}.subscan.io/account/${activeAddress}`,
-              '_blank'
-            )
-          : null,
-      disabled: !activeAddress,
-    },
-  ]
+        label: t('accounts', { ns: 'app' }),
+      },
+      {
+        onClick: () => {
+          openModal({
+            key: 'ImportAccounts',
+            size: 'sm',
+            options: { source: 'ledger' },
+          })
+        },
+        disabled: false,
+        Icon: () => (
+          <LedgerSquareSVG style={{ width: '1.5rem', height: '1.5rem' }} />
+        ),
+        label: 'Ledger',
+      },
+      {
+        onClick: () => {
+          openModal({
+            key: 'ImportAccounts',
+            size: 'sm',
+            options: { source: 'polkadot_vault' },
+          })
+        },
+        disabled: false,
+        Icon: () => (
+          <PolkadotVaultSVG
+            style={{
+              width: '1.5rem',
+              height: '1.5rem',
+              fill: 'var(--text-color-primary)',
+            }}
+          />
+        ),
+        label: 'Vault',
+      },
+      {
+        onClick: () => {
+          window.open(`mailto:${MailSupportAddress}`, '_blank')
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faEnvelope} />,
+        label: t('email', { ns: 'app' }),
+      },
+      {
+        onClick: () => {
+          window.open(DiscordSupportUrl, '_blank')
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faDiscord} />,
+        label: 'Discord',
+      },
+    ],
+    [t, openModal]
+  )
 
   return (
-    <>
-      <CardHeader>
+    <QuickAction.Container>
+      {actions.map((action, i) => (
+        <QuickAction.Button key={`action-${i}`} {...action} />
+      ))}
+    </QuickAction.Container>
+  )
+})
+
+DisconnectedActions.displayName = 'DisconnectedActions'
+
+// Not staking user actions
+const NotStakingActions = memo(() => {
+  const { t } = useTranslation('pages')
+  const { openCanvas } = useOverlay().canvas
+  const { openModal } = useOverlay().modal
+  const { setNominatorSetup, generateOptimalSetup } = useNominatorSetups()
+
+  const actions: ButtonQuickActionProps[] = useMemo(
+    () => [
+      {
+        onClick: () => {
+          openCanvas({
+            key: 'Pool',
+            size: 'xl',
+          })
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-1" icon={faUsers} />,
+        label: t('joinPool'),
+      },
+      {
+        onClick: () => {
+          // Set optimal nominator setup here, ready for canvas to display summary
+          setNominatorSetup(generateOptimalSetup(), true, 4)
+          openCanvas({
+            key: 'NominatorSetup',
+            options: {
+              simple: true,
+            },
+            size: 'xl',
+          })
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-1" icon={faChartLine} />,
+        label: t('startNominating'),
+      },
+      {
+        onClick: () => {
+          openModal({ key: 'Send', size: 'sm' })
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faPaperPlane} />,
+        label: t('send'),
+      },
+      {
+        onClick: () => {
+          window.open(`mailto:${MailSupportAddress}`, '_blank')
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faEnvelope} />,
+        label: t('email', { ns: 'app' }),
+      },
+      {
+        onClick: () => {
+          window.open(DiscordSupportUrl, '_blank')
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faDiscord} />,
+        label: 'Discord',
+      },
+    ],
+    [t, openCanvas, openModal, setNominatorSetup, generateOptimalSetup]
+  )
+
+  return (
+    <QuickAction.Container>
+      {actions.map((action, i) => (
+        <QuickAction.Button key={`action-${i}`} {...action} />
+      ))}
+    </QuickAction.Container>
+  )
+})
+
+NotStakingActions.displayName = 'NotStakingActions'
+
+// Staking user actions
+const StakingActions = memo(({ bondFor }: { bondFor: BondFor }) => {
+  const { t } = useTranslation('pages')
+  const { openModal } = useOverlay().modal
+  const { unclaimedRewards } = usePayouts()
+  const { activeAddress } = useActiveAccounts()
+  const { getPendingPoolRewards } = useBalances()
+
+  const pendingRewards = getPendingPoolRewards(activeAddress)
+
+  const actions: ButtonQuickActionProps[] = useMemo(() => {
+    const actionList: ButtonQuickActionProps[] = []
+
+    if (bondFor === 'pool') {
+      actionList.push(
+        {
+          onClick: () => {
+            openModal({
+              key: 'ClaimReward',
+              options: { claimType: 'withdraw' },
+              size: 'sm',
+            })
+          },
+          disabled: pendingRewards === 0n,
+          Icon: () => (
+            <FontAwesomeIcon transform="grow-2" icon={faCircleDown} />
+          ),
+          label: t('withdraw'),
+        },
+        {
+          onClick: () => {
+            openModal({
+              key: 'ClaimReward',
+              options: { claimType: 'bond' },
+              size: 'sm',
+            })
+          },
+          disabled: pendingRewards === 0n,
+          Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCoins} />,
+          label: t('compound'),
+        }
+      )
+    } else {
+      actionList.push({
+        onClick: () => {
+          openModal({
+            key: 'ClaimPayouts',
+            size: 'sm',
+          })
+        },
+        disabled: BigInt(unclaimedRewards.total) === 0n,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCircleDown} />,
+        label: t('claim', { ns: 'modals' }),
+      })
+    }
+
+    actionList.push(
+      {
+        onClick: () => {
+          openModal({
+            key: 'Bond',
+            options: { bondFor },
+            size: 'sm',
+          })
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faAdd} />,
+        label: t('bond', { ns: 'pages' }),
+      },
+      {
+        onClick: () => {
+          openModal({
+            key: 'Unbond',
+            options: { bondFor },
+            size: 'sm',
+          })
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faMinus} />,
+        label: t('unbond', { ns: 'pages' }),
+      }
+    )
+
+    if (bondFor === 'nominator') {
+      actionList.push(
+        {
+          onClick: () => {
+            openModal({ key: 'UpdatePayee', size: 'sm' })
+          },
+          disabled: false,
+          Icon: () => <FontAwesomeIcon transform="grow-2" icon={faArrowDown} />,
+          label: t('payee.label', { ns: 'app' }),
+        },
+        {
+          onClick: () => {
+            openModal({
+              key: 'Unstake',
+              size: 'sm',
+            })
+          },
+          disabled: false,
+          Icon: () => (
+            <FontAwesomeIcon transform="grow-2" icon={faCircleXmark} />
+          ),
+          label: t('stop', { ns: 'pages' }),
+        }
+      )
+    } else {
+      actionList.push({
+        onClick: () => {
+          openModal({
+            key: 'LeavePool',
+            size: 'sm',
+          })
+        },
+        disabled: false,
+        Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCircleXmark} />,
+        label: t('stop', { ns: 'pages' }),
+      })
+    }
+
+    return actionList
+  }, [bondFor, pendingRewards, unclaimedRewards.total, t, openModal])
+
+  return (
+    <QuickAction.Container>
+      {actions.map((action, i) => (
+        <QuickAction.Button key={`action-${i}`} {...action} />
+      ))}
+    </QuickAction.Container>
+  )
+})
+
+StakingActions.displayName = 'StakingActions'
+
+// Main QuickActions component
+const QuickActionsInner = ({ height }: { height?: number }) => {
+  const { t } = useTranslation('pages')
+  const { inPool } = useActivePool()
+  const { isNominator } = useStaking()
+  const { accountSynced } = useSyncing()
+  const { activeAddress } = useActiveAccounts()
+
+  const isStaking = inPool || isNominator
+  const syncing = !accountSynced(activeAddress)
+
+  let actionGroup: 'disconnected' | 'notStaking' | 'staking' = 'staking'
+  if (!activeAddress) {
+    actionGroup = 'disconnected'
+  } else if (!isStaking) {
+    actionGroup = 'notStaking'
+  }
+
+  return (
+    <CardWrapper style={{ padding: 0 }} height={height}>
+      <CardHeader style={{ padding: '1.25rem 1rem 0.5rem 1.25rem' }}>
         <h4>{t('quickActions')}</h4>
       </CardHeader>
-      <QuickActionsContainer>
-        {/* First 5 buttons (2 rows of 2 + 1 on the third row) */}
-        {actions.map((action, index) => {
-          if (action.component) {
-            return (
-              <React.Fragment key={`action-component-${index}`}>
-                {action.component}
-              </React.Fragment>
-            )
-          }
-          return (
-            <ActionButton
-              key={`action-${index}`}
-              onClick={action.onClick}
-              disabled={action.disabled}
-            >
-              <FontAwesomeIcon icon={action.icon} className="icon" />
-              <span className="label">{action.label}</span>
-            </ActionButton>
-          )
-        })}
-
-        {/* Help button or expanded help options */}
-        {helpExpanded ? (
-          <HelpOptionsContainer>
-            <ActionButton className="help-option" onClick={handleEmailSupport}>
-              <FontAwesomeIcon icon={faEnvelope} className="icon" />
-              <span className="label">Email</span>
-            </ActionButton>
-            <ActionButton
-              className="help-option"
-              onClick={handleDiscordSupport}
-            >
-              <FontAwesomeIcon icon={faDiscord} className="icon" />
-              <span className="label">Discord</span>
-            </ActionButton>
-          </HelpOptionsContainer>
-        ) : (
-          <ActionButton className="help-button" onClick={toggleHelpOptions}>
-            <FontAwesomeIcon icon={faQuestionCircle} className="icon" />
-            <span className="label">{t('requestHelp')}</span>
-          </ActionButton>
-        )}
-      </QuickActionsContainer>
-    </>
+      {syncing ? (
+        <QuickAction.Container>
+          <QuickAction.PreloadingButton />
+        </QuickAction.Container>
+      ) : (
+        <>
+          {actionGroup === 'disconnected' && <DisconnectedActions />}
+          {actionGroup === 'notStaking' && <NotStakingActions />}
+          {actionGroup === 'staking' && (
+            <StakingActions bondFor={inPool ? 'pool' : 'nominator'} />
+          )}
+        </>
+      )}
+    </CardWrapper>
   )
 }
+
+const QuickActions = memo(QuickActionsInner)
+QuickActions.displayName = 'QuickActions'
 
 export const Home = () => {
   const { t } = useTranslation('pages')
@@ -481,9 +410,7 @@ export const Home = () => {
                     </CardWrapper>
 
                     {/* Quick Actions */}
-                    <CardWrapper className="quick-actions-card">
-                      <QuickActions />
-                    </CardWrapper>
+                    <QuickActions />
                   </BalanceCardsLayout>
                 </Page.RowSection>
               </Page.Row>
@@ -526,9 +453,7 @@ export const Home = () => {
                     </CardWrapper>
 
                     {/* Quick Actions - Right */}
-                    <CardWrapper className="quick-actions-card">
-                      <QuickActions />
-                    </CardWrapper>
+                    <QuickActions />
                   </BalanceCardsLayout>
                 </Page.RowSection>
               </Page.Row>

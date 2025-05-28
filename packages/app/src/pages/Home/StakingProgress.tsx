@@ -9,6 +9,7 @@ import {
   faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -156,7 +157,7 @@ interface QuickAction {
   icon: IconDefinition
 }
 
-export const StakingProgress = () => {
+const StakingProgressInner = () => {
   const { t } = useTranslation('pages')
   const navigate = useNavigate()
 
@@ -166,8 +167,8 @@ export const StakingProgress = () => {
   const { inPool, activePoolNominations } = useActivePool()
   const { openHelp } = useHelp()
 
-  // Calculate staking progress based on actual user state
-  const calculateProgress = () => {
+  // Memoize progress calculation
+  const progress = useMemo(() => {
     let completedSteps = 0
     const totalSteps = 4
 
@@ -196,27 +197,25 @@ export const StakingProgress = () => {
     const percentage = Math.round((completedSteps / totalSteps) * 100)
 
     return { percentage, completedSteps, totalSteps }
-  }
+  }, [activeAccount, isBonding, inPool, isNominating, isNominator])
 
-  const progress = calculateProgress()
-
-  // Determine milestones based on actual user achievements
-  const getMilestones = () => {
-    const milestones: MilestoneItem[] = []
+  // Memoize milestones calculation
+  const milestones = useMemo(() => {
+    const milestonesArray: MilestoneItem[] = []
 
     // First stake milestone - show if user is staking
     if (isNominating || inPool) {
-      milestones.push({
+      milestonesArray.push({
         title: t('milestoneFirstStake'),
         description: t('milestoneFirstStakeDesc'),
       })
     }
 
-    return milestones
-  }
+    return milestonesArray
+  }, [isNominating, inPool, t])
 
-  // Get next steps based on current progress
-  const getNextSteps = () => {
+  // Memoize next steps calculation
+  const nextSteps = useMemo(() => {
     const steps: StepItem[] = []
 
     // Step 1: Connect wallet
@@ -275,16 +274,31 @@ export const StakingProgress = () => {
     })
 
     return steps
-  }
+  }, [
+    t,
+    activeAccount,
+    isBonding,
+    inPool,
+    isNominating,
+    isNominator,
+    activePoolNominations,
+  ])
 
-  // Open the Resources modal
-  const openResourcesModal = () => {
-    // Open the Resources help section
+  // Memoize callback functions
+  const openResourcesModal = useCallback(() => {
     openHelp('resources')
-  }
+  }, [openHelp])
 
-  // Get quick actions for the What's Next section
-  const getQuickActions = () => {
+  const navigateToRewards = useCallback(() => {
+    navigate('/rewards')
+  }, [navigate])
+
+  const navigateToValidators = useCallback(() => {
+    navigate('/validators')
+  }, [navigate])
+
+  // Memoize quick actions calculation
+  const quickActions = useMemo(() => {
     const actions: QuickAction[] = []
 
     // First action based on user status
@@ -293,7 +307,7 @@ export const StakingProgress = () => {
       actions.push({
         title: t('trackRewards'),
         description: t('trackRewardsDesc'),
-        onClick: () => navigate('/rewards'),
+        onClick: navigateToRewards,
         icon: faChartLine,
       })
     } else if (!isBonding && !inPool) {
@@ -301,7 +315,7 @@ export const StakingProgress = () => {
       actions.push({
         title: t('trackRewards'),
         description: t('trackRewardsDesc'),
-        onClick: () => navigate('/rewards'),
+        onClick: navigateToRewards,
         icon: faChartLine,
       })
     } else {
@@ -309,7 +323,7 @@ export const StakingProgress = () => {
       actions.push({
         title: t('trackRewards'),
         description: t('trackRewardsDesc'),
-        onClick: () => navigate('/rewards'),
+        onClick: navigateToRewards,
         icon: faChartLine,
       })
     }
@@ -336,7 +350,7 @@ export const StakingProgress = () => {
       actions.push({
         title: t('optimizeReturns'),
         description: t('optimizeReturnsDesc'),
-        onClick: () => navigate('/validators'),
+        onClick: navigateToValidators,
         icon: faChartLine,
       })
     } else {
@@ -350,11 +364,16 @@ export const StakingProgress = () => {
     }
 
     return actions
-  }
-
-  const nextSteps = getNextSteps()
-  const milestones = getMilestones()
-  const quickActions = getQuickActions()
+  }, [
+    activeAccount,
+    isBonding,
+    inPool,
+    progress.percentage,
+    t,
+    navigateToRewards,
+    openResourcesModal,
+    navigateToValidators,
+  ])
 
   return (
     <Wrapper>
@@ -445,3 +464,5 @@ export const StakingProgress = () => {
     </Wrapper>
   )
 }
+
+export const StakingProgress = memo(StakingProgressInner)

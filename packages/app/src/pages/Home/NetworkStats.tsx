@@ -1,10 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
+import BigNumber from 'bignumber.js'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { styled } from 'styled-components'
 import { CardHeader } from 'ui-core/base'
@@ -52,48 +56,62 @@ const StatItem = styled.div`
   }
 `
 
-export const NetworkStats = () => {
+const NetworkStatsInner = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const {
-    relayMetrics,
-    stakingMetrics: { totalStaked },
+    stakingMetrics: { lastTotalStake, totalIssuance, validatorCount },
   } = useApi()
   const { getAverageRewardRate } = useAverageRewardRate()
   const { avgRateBeforeCommission } = getAverageRewardRate(false)
-  const { stakingMetrics } = useApi()
 
-  // Get token icon
-  const Token = getChainIcons(network).token
+  // Get network-specific data with useMemo
+  const { Token, units } = useMemo(() => {
+    const chainData = getStakingChainData(network)
+    const chainIcons = getChainIcons(network)
+    return {
+      Token: chainIcons.token,
+      units: chainData.units,
+    }
+  }, [network])
 
-  // Format percentage
-  const formatPercent = (value: number) => `${value.toFixed(2)}%`
+  // Memoize expensive calculations
+  const { formattedSupplyStaked, formattedActiveValidators, formattedAvgRate } =
+    useMemo(() => {
+      // Format percentage
+      const formatPercent = (value: number) => `${value.toFixed(2)}%`
 
-  // Format large numbers with commas
-  const formatNumber = (num: number) =>
-    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      // Format large numbers with commas
+      const formatNumber = (num: number) =>
+        num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
-  // Get active validators count
-  const activeValidators = stakingMetrics?.validatorCount?.toString() || '0'
+      // Calculate percentage of supply staked using correct fields and calculation
+      const totalIssuanceUnit = new BigNumber(
+        planckToUnit(totalIssuance, units)
+      )
+      const lastTotalStakeUnit = new BigNumber(
+        planckToUnit(lastTotalStake, units)
+      )
 
-  // Type guard for totalIssuance
-  const hasTotalIssuance = (obj: unknown): obj is { totalIssuance: bigint } =>
-    typeof obj === 'object' &&
-    obj !== null &&
-    'totalIssuance' in obj &&
-    typeof (obj as { totalIssuance: unknown }).totalIssuance === 'bigint'
+      const supplyStakedPercent =
+        lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
+          ? new BigNumber(0)
+          : lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01))
 
-  // Calculate percentage of supply staked
-  const totalIssuance = hasTotalIssuance(relayMetrics)
-    ? relayMetrics.totalIssuance
-    : 0n
-  const supplyStaked =
-    typeof totalStaked === 'bigint' &&
-    typeof totalIssuance === 'bigint' &&
-    totalStaked &&
-    totalIssuance
-      ? (totalStaked * 100n) / totalIssuance
-      : 0n
+      return {
+        formattedSupplyStaked: formatPercent(supplyStakedPercent.toNumber()),
+        formattedActiveValidators: formatNumber(
+          Number(validatorCount?.toString() || '0')
+        ),
+        formattedAvgRate: formatPercent(avgRateBeforeCommission.toNumber()),
+      }
+    }, [
+      lastTotalStake,
+      totalIssuance,
+      validatorCount,
+      avgRateBeforeCommission,
+      units,
+    ])
 
   return (
     <>
@@ -107,9 +125,7 @@ export const NetworkStats = () => {
               <Token />
             </div>
             <div className="stat-content">
-              <div className="stat-value">
-                {formatPercent(avgRateBeforeCommission.toNumber())}
-              </div>
+              <div className="stat-value">{formattedAvgRate}</div>
               <div className="stat-label">{t('averageApy')}</div>
             </div>
           </StatItem>
@@ -119,9 +135,7 @@ export const NetworkStats = () => {
               <i className="fa fa-users"></i>
             </div>
             <div className="stat-content">
-              <div className="stat-value">
-                {formatNumber(Number(activeValidators))}
-              </div>
+              <div className="stat-value">{formattedActiveValidators}</div>
               <div className="stat-label">{t('activeValidators')}</div>
             </div>
           </StatItem>
@@ -131,9 +145,7 @@ export const NetworkStats = () => {
               <i className="fa fa-chart-pie"></i>
             </div>
             <div className="stat-content">
-              <div className="stat-value">
-                {formatPercent(Number(supplyStaked))}
-              </div>
+              <div className="stat-value">{formattedSupplyStaked}</div>
               <div className="stat-label">{t('supplyStaked')}</div>
             </div>
           </StatItem>
@@ -142,3 +154,5 @@ export const NetworkStats = () => {
     </>
   )
 }
+
+export const NetworkStats = memo(NetworkStatsInner)
