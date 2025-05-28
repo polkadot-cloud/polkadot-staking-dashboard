@@ -73,6 +73,9 @@ export const Help = () => {
 
   let definitions = meta?.definitions ?? []
 
+  // TODO: Integrate easy/advanced mode content from other PR
+  // When ready, use useUi() to get advancedMode and filter definitions accordingly
+
   const activeDefinitions = definitions
     .filter((d) => d !== definition)
     .map((d) => {

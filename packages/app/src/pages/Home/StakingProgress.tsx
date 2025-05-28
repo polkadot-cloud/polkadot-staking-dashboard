@@ -286,6 +286,8 @@ const StakingProgressInner = () => {
 
   // Memoize callback functions
   const openResourcesModal = useCallback(() => {
+    // TODO: Integrate easy/advanced mode content from other PR
+    // For now, opens standard resources modal like the menu button does
     openHelp('resources')
   }, [openHelp])
 
