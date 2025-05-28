@@ -7,11 +7,12 @@ export const HealthStatus = styled.div`
   margin: 1rem 0;
   padding: 1rem;
   border-radius: 0.75rem;
+  font-family: InterSemiBold, sans-serif;
   font-weight: 600;
   display: flex;
   align-items: center;
   width: 100%;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
 
   &.very-healthy {
     background-color: var(--status-success-color-transparent);
@@ -61,10 +62,11 @@ export const HealthStatus = styled.div`
 
 export const SectionTitle = styled.h3`
   color: var(--text-color-primary);
+  font-family: InterSemiBold, sans-serif;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 500;
 `
 
 export const TipsList = styled.ul`
@@ -74,8 +76,8 @@ export const TipsList = styled.ul`
   li {
     margin-bottom: 0.75rem;
     color: var(--text-color-secondary);
-    line-height: 1.4;
-    font-size: 1.05rem;
+    line-height: 1.5rem;
+    font-size: 1.04rem;
   }
 `
 
@@ -103,12 +105,14 @@ export const AnalyticsRow = styled.div`
 
 export const AnalyticsLabel = styled.div`
   color: var(--text-color-secondary);
-  font-size: 1rem;
+  font-family: Inter, sans-serif;
+  font-size: 1.04rem;
 `
 
 export const AnalyticsValue = styled.div`
+  font-family: InterSemiBold, sans-serif;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   color: var(--text-color-primary);
 
   &.positive {
@@ -148,8 +152,27 @@ export const QuickActionButton = styled.button`
   gap: 0.5rem;
   cursor: pointer;
   transition: all 0.2s;
+  font-family: Inter, sans-serif;
 
   &:hover {
     background: var(--background-hover);
+  }
+
+  svg {
+    font-size: 1.25rem;
+    color: var(--network-color-primary);
+  }
+
+  strong {
+    font-family: InterSemiBold, sans-serif;
+    font-size: 1.04rem;
+    color: var(--text-color-primary);
+  }
+
+  span {
+    font-size: 0.92rem;
+    color: var(--text-color-secondary);
+    text-align: center;
+    line-height: 1.4;
   }
 `

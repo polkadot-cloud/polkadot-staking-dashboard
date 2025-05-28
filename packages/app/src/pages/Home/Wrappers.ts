@@ -116,9 +116,11 @@ export const WelcomeWrapper = styled.div`
     }
 
     h2 {
-      font-size: 1.5rem;
+      font-family: InterSemiBold, sans-serif;
+      font-size: 1.4rem;
       color: var(--text-color-primary);
       margin: 0;
+      font-weight: 600;
     }
   }
 
@@ -132,7 +134,7 @@ export const WelcomeWrapper = styled.div`
       display: flex;
       align-items: center;
       margin-bottom: 1.25rem;
-      font-size: 1.1rem;
+      font-size: 1.04rem;
 
       .account-address-container {
         display: flex;
@@ -146,7 +148,7 @@ export const WelcomeWrapper = styled.div`
           word-break: break-all;
           margin-right: 0.5rem;
           color: var(--text-color-primary);
-          font-size: 0.9rem;
+          font-size: 0.92rem;
         }
       }
     }
@@ -169,7 +171,9 @@ export const WelcomeWrapper = styled.div`
 
       .welcome-message {
         margin-bottom: 0;
-        font-size: 1.05rem;
+        font-size: 1.04rem;
+        line-height: 1.5rem;
+        color: var(--text-color-secondary);
         margin: 0;
         padding: 0;
         width: 100%;
@@ -177,13 +181,13 @@ export const WelcomeWrapper = styled.div`
       }
 
       .reward-info {
-        font-size: 1.1rem;
+        font-size: 1.04rem;
+        line-height: 1.5rem;
         background: transparent;
         position: relative;
         padding: 0;
         margin: 0;
         text-align: left;
-        line-height: 1.5;
         width: 100%;
         box-sizing: border-box;
 
@@ -208,9 +212,11 @@ export const WelcomeWrapper = styled.div`
       margin-bottom: 1.5rem;
 
       h3 {
-        font-size: 1.2rem;
+        font-family: InterSemiBold, sans-serif;
+        font-size: 1.25rem;
         color: var(--text-color-primary);
         margin-bottom: 0.75rem;
+        font-weight: 500;
       }
 
       ul {
@@ -219,6 +225,9 @@ export const WelcomeWrapper = styled.div`
 
         li {
           margin-bottom: 0.5rem;
+          color: var(--text-color-secondary);
+          font-size: 1.04rem;
+          line-height: 1.5rem;
         }
       }
     }
@@ -240,6 +249,8 @@ export const WelcomeWrapper = styled.div`
       p {
         margin: 0;
         font-weight: 500;
+        font-size: 1.04rem;
+        color: var(--text-color-secondary);
       }
     }
   }
@@ -349,8 +360,9 @@ export const ActionButton = styled.button<{ $expanded?: boolean }>`
   }
 
   .label {
+    font-family: InterSemiBold, sans-serif;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.04rem;
     color: var(--text-color-primary);
   }
 
@@ -401,27 +413,34 @@ export const BalanceCardsLayout = styled.div`
   }
 `
 
-// Compact Stake Info component styling
 export const CompactStakeInfoWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 
-  /* Make card header more compact */
+  /* Use standard card header spacing */
   .ui-card-header {
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    h4 {
+      font-family: InterSemiBold, sans-serif;
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: var(--text-color-secondary);
+      margin: 0;
+    }
   }
 
   .stake-info-content {
-    padding: 0.5rem 1rem 0.75rem;
+    padding: 0.5rem 1rem 1rem;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0rem;
+    gap: 0;
   }
 
   .stake-info-row {
@@ -464,24 +483,25 @@ export const StakeInfoValueWrapper = styled.div`
 
   .value {
     font-family: InterSemiBold, sans-serif;
-    font-size: 1.15rem;
-    color: var(--text-color-secondary);
+    font-size: 1.08rem;
+    color: var(--text-color-primary);
     font-weight: 600;
     display: flex;
     align-items: center;
   }
 
   .status {
-    font-family: InterRegular, sans-serif;
+    font-family: Inter, sans-serif;
     color: var(--text-color-primary);
-    font-size: 1.05rem;
+    font-size: 1.04rem;
     display: flex;
     align-items: center;
   }
 
   .unit {
     color: var(--text-color-secondary);
-    font-size: 1rem;
+    font-family: Inter, sans-serif;
+    font-size: 0.92rem;
     margin-left: 0.5rem;
     font-weight: 500;
   }
@@ -501,19 +521,26 @@ export const StakeInfoValueWrapper = styled.div`
   /* Adjust button row for inline buttons */
   .ui-button-row {
     button {
-      font-size: 0.85rem;
-      padding: 0.25rem 0.75rem;
+      font-size: 0.92rem;
+      padding: 0.3rem 0.75rem;
       height: auto;
-      min-height: 1.8rem;
+      min-height: 2rem;
 
       &:not(:first-child) {
-        margin-left: 0.35rem;
+        margin-left: 0.5rem;
       }
 
       /* Style for FontAwesome icons */
       svg {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
       }
     }
   }
+`
+
+export const StakeInfoLabel = styled.div`
+  color: var(--text-color-secondary);
+  font-family: InterSemiBold, sans-serif;
+  font-size: 1.04rem;
+  font-weight: 500;
 `

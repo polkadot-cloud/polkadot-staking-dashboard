@@ -28,6 +28,11 @@ import { Wrapper } from './Wrappers'
 // Styled components specific to StakingProgress
 const ProgressContainer = styled.div`
   margin: 1rem 0;
+
+  span {
+    font-family: Inter, sans-serif;
+    font-size: 1.04rem;
+  }
 `
 
 const ProgressBar = styled.div`
@@ -70,26 +75,34 @@ const ChecklistItem = styled.div`
     width: 1.5rem;
     text-align: center;
     color: var(--network-color-primary);
+    font-family: InterSemiBold, sans-serif;
+    font-size: 1.04rem;
   }
 
   .item-content {
     flex: 1;
 
     .item-title {
+      font-family: InterSemiBold, sans-serif;
       font-weight: 600;
+      font-size: 1.04rem;
       color: var(--text-color-primary);
       margin-bottom: 0.25rem;
     }
 
     .item-description {
-      font-size: 0.9rem;
+      font-family: Inter, sans-serif;
+      font-size: 0.92rem;
       color: var(--text-color-secondary);
+      line-height: 1.4;
     }
 
     .item-supplementary {
-      font-size: 0.8rem;
+      font-family: Inter, sans-serif;
+      font-size: 0.85rem;
       color: var(--text-color-secondary);
       margin-top: 0.25rem;
+      line-height: 1.3;
     }
   }
 
@@ -125,14 +138,18 @@ const MilestoneContainer = styled.div`
     flex: 1;
 
     .milestone-title {
+      font-family: InterSemiBold, sans-serif;
       font-weight: 600;
+      font-size: 1.04rem;
       color: var(--text-color-primary);
       margin-bottom: 0.25rem;
     }
 
     .milestone-description {
+      font-family: Inter, sans-serif;
       color: var(--text-color-secondary);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
+      line-height: 1.4;
     }
   }
 `

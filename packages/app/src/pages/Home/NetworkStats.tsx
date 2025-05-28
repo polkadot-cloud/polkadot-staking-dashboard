@@ -23,8 +23,8 @@ const NetworkStatsWrapper = styled.div`
 const StatsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem 1.5rem;
-  gap: 1rem;
+  padding: 1rem 1.25rem;
+  gap: 1.25rem;
 `
 
 const StatItem = styled.div`
@@ -43,15 +43,19 @@ const StatItem = styled.div`
     flex: 1;
 
     .stat-value {
+      font-family: InterSemiBold, sans-serif;
       font-size: 1.25rem;
       font-weight: 600;
       color: var(--text-color-primary);
-      margin-bottom: 0.1rem;
+      margin-bottom: 0.2rem;
+      line-height: 1.4;
     }
 
     .stat-label {
-      font-size: 0.9rem;
+      font-family: Inter, sans-serif;
+      font-size: 0.92rem;
       color: var(--text-color-secondary);
+      line-height: 1.5rem;
     }
   }
 `

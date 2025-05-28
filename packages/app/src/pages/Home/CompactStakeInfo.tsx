@@ -31,19 +31,16 @@ import { styled } from 'styled-components'
 import { ButtonTertiary } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { CompactStakeInfoWrapper, StakeInfoValueWrapper } from './Wrappers'
+import {
+  CompactStakeInfoWrapper,
+  StakeInfoLabel,
+  StakeInfoValueWrapper,
+} from './Wrappers'
 
 const HeaderActions = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-`
-
-// For labels to match StakingHealth components
-const StakeInfoLabel = styled.div`
-  color: var(--text-color-secondary);
-  font-size: 1rem;
-  font-weight: 500;
 `
 
 // Compact Staking Information Component for Easy Mode
