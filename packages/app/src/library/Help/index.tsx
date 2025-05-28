@@ -21,7 +21,13 @@ import { Content as ModalContent } from 'ui-core/modal'
 import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'
-import { HelpSubtitle, HelpTitle } from './Wrappers'
+import {
+  HelpSubtitle,
+  HelpTitle,
+  StyledSupportButton,
+  TabBar,
+  TabButton,
+} from './Wrappers'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import helpResourcesEn from './helpresources.json'
@@ -30,37 +36,16 @@ import helpResourcesEn from './helpresources.json'
 import helpResourcesEs from '../../../../locales/src/resources/es/helpresources.json'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import DiscordSVG from 'assets/brands/discord.svg?react'
+import BookSVG from 'assets/icons/book.svg?react'
+import EnvelopeSVG from 'assets/icons/envelope.svg?react'
+import ForumSVG from 'assets/icons/forum.svg?react'
+import GlassesSVG from 'assets/icons/glasses.svg?react'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { NetworkList } from 'consts/networks'
 import { useNetwork } from 'contexts/Network'
 import { CardWrapper as Card } from 'library/Card/Wrappers'
-import styled from 'styled-components'
 import helpResourcesZh from '../../../../locales/src/resources/zh/helpresources.json'
-
-// Tab bar styles
-const TabBar = styled.div`
-  display: flex;
-  width: 100%;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-primary);
-`
-const TabButton = styled.button<{ selected: boolean }>`
-  background: none;
-  border: none;
-  outline: none;
-  font-family: InterSemiBold, sans-serif;
-  font-size: 1.1rem;
-  color: ${(p) =>
-    p.selected ? 'var(--accent-color-primary)' : 'var(--text-color-secondary)'};
-  border-bottom: 2px solid
-    ${(p) => (p.selected ? 'var(--accent-color-primary)' : 'transparent')};
-  margin-right: 2rem;
-  padding: 0.5rem 0;
-  cursor: pointer;
-  transition:
-    color 0.2s,
-    border-bottom 0.2s;
-`
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help')
@@ -241,6 +226,14 @@ export const Help = () => {
                   onClick={() => setTab('resources')}
                   type="button"
                 >
+                  <BookSVG
+                    style={{
+                      width: '1.1em',
+                      height: '1.1em',
+                      marginRight: '0.5em',
+                      verticalAlign: 'middle',
+                    }}
+                  />
                   {t('modal.resourcesTab', 'Resources')}
                 </TabButton>
                 <TabButton
@@ -248,6 +241,14 @@ export const Help = () => {
                   onClick={() => setTab('definitions')}
                   type="button"
                 >
+                  <GlassesSVG
+                    style={{
+                      width: '1.1em',
+                      height: '1.1em',
+                      marginRight: '0.5em',
+                      verticalAlign: 'middle',
+                    }}
+                  />
                   {t('modal.definitionsTab', 'Definitions')}
                 </TabButton>
                 <TabButton
@@ -255,6 +256,14 @@ export const Help = () => {
                   onClick={() => setTab('articles')}
                   type="button"
                 >
+                  <ForumSVG
+                    style={{
+                      width: '1.1em',
+                      height: '1.1em',
+                      marginRight: '0.5em',
+                      verticalAlign: 'middle',
+                    }}
+                  />
                   {t('modal.articlesTab', 'Articles')}
                 </TabButton>
                 <TabButton
@@ -262,6 +271,14 @@ export const Help = () => {
                   onClick={() => setTab('support')}
                   type="button"
                 >
+                  <EnvelopeSVG
+                    style={{
+                      width: '1.1em',
+                      height: '1.1em',
+                      marginRight: '0.5em',
+                      verticalAlign: 'middle',
+                    }}
+                  />
                   {t('modal.supportTab', 'Support')}
                 </TabButton>
               </TabBar>
@@ -367,46 +384,30 @@ export const Help = () => {
                     >
                       {t('modal.supportIntro')}
                     </p>
-                    <a
+                    <StyledSupportButton
                       href={DiscordSupportUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        width: '100%',
-                        marginBottom: '1rem',
-                        textAlign: 'center',
-                        display: 'inline-block',
-                        background: 'var(--accent-color-primary)',
-                        color: '#fff',
-                        fontWeight: 600,
-                        borderRadius: '6px',
-                        padding: '0.75rem 1.25rem',
-                        textDecoration: 'none',
-                        fontSize: '1.1rem',
-                        transition: 'background 0.2s',
-                      }}
                     >
+                      <DiscordSVG
+                        style={{
+                          width: '1.2em',
+                          height: '1.2em',
+                          verticalAlign: 'middle',
+                        }}
+                      />
                       {t('modals:goToDiscord')}
-                    </a>
-                    <a
-                      href={`mailto:${MailSupportAddress}`}
-                      style={{
-                        width: '100%',
-                        marginBottom: '1rem',
-                        textAlign: 'center',
-                        display: 'inline-block',
-                        background: 'var(--accent-color-primary)',
-                        color: '#fff',
-                        fontWeight: 600,
-                        borderRadius: '6px',
-                        padding: '0.75rem 1.25rem',
-                        textDecoration: 'none',
-                        fontSize: '1.1rem',
-                        transition: 'background 0.2s',
-                      }}
-                    >
+                    </StyledSupportButton>
+                    <StyledSupportButton href={`mailto:${MailSupportAddress}`}>
+                      <EnvelopeSVG
+                        style={{
+                          width: '1.2em',
+                          height: '1.2em',
+                          verticalAlign: 'middle',
+                        }}
+                      />
                       {t('pages:email')}
-                    </a>
+                    </StyledSupportButton>
                     <p
                       style={{
                         color: 'var(--text-color-secondary)',

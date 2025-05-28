@@ -155,6 +155,73 @@ export const SupportLinks = styled.div`
   padding-top: 1.5rem;
 `
 
+// Tab bar styles
+export const TabBar = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-primary);
+`
+
+export const TabButton = styled.button<{ selected: boolean }>`
+  background: none;
+  border: none;
+  outline: none;
+  font-family: InterSemiBold, sans-serif;
+  font-size: 1.1rem;
+  color: ${(p) =>
+    p.selected ? 'var(--accent-color-primary)' : 'var(--text-color-secondary)'};
+  border-bottom: 2px solid
+    ${(p) => (p.selected ? 'var(--accent-color-primary)' : 'transparent')};
+  margin-right: 2rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-bottom 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+
+  svg {
+    path {
+      fill: ${(p) =>
+        p.selected
+          ? 'var(--accent-color-primary)'
+          : 'var(--text-color-secondary)'};
+    }
+  }
+`
+
+// Enhanced support button with equal width and proper icon styling
+export const StyledSupportButton = styled.a`
+  display: inline-block;
+  background: var(--accent-color-primary);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: background 0.2s;
+  width: 200px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+
+  &:hover {
+    background: var(--accent-color-primary-hover, #7b2ff2);
+  }
+
+  svg {
+    path {
+      fill: #fff;
+    }
+  }
+`
+
 export const SupportButton = styled.a`
   display: inline-block;
   background: var(--accent-color-primary);
