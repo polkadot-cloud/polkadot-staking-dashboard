@@ -19,6 +19,26 @@
           "answer": "El staking puede hacerse como validador individual, como nominador (delegando tu {token} a validadores) o uniéndote a un pool de nominación. Cada método tiene diferentes requisitos, riesgos y estructuras de recompensa. Los usuarios avanzados también pueden explorar el staking líquido y derivados de staking."
         },
         {
+          "id": "optimal-staking-strategy",
+          "question": "¿Cuál es la estrategia óptima de staking?",
+          "answer": "Diversifica entre múltiples validadores de alto rendimiento con comisiones bajas. Monitorea el rendimiento de los validadores, evita validadores sobresuscritos y considera el staking en pool para holdings menores. Capitaliza regularmente las recompensas y ajusta las nominaciones según el rendimiento."
+        },
+        {
+          "id": "validator-evaluation",
+          "question": "¿Cómo evalúo validadores para nominación?",
+          "answer": "Analiza las comisiones, cantidades de stake propio, tamaño del pool de nominación, rendimiento histórico, historial de slashing y transparencia operacional. Busca validadores con tiempo de actividad consistente, comisiones razonables (1-5%) y participación activa en la comunidad."
+        },
+        {
+          "id": "governance-participation",
+          "question": "¿Cómo puedo participar en la gobernanza de {network}?",
+          "answer": "Mantén {token} para votar en referendos, propuestas y actualizaciones de la red. Puedes votar directamente o delegar tu poder de voto a miembros de confianza de la comunidad. La participación en gobernanza es crucial para la evolución y descentralización de la red."
+        },
+        {
+          "id": "fast-unstake",
+          "question": "¿Qué es el fast unstake y cuándo puedo usarlo?",
+          "answer": "El fast unstake permite el retiro inmediato de {token} apostado si no has recibido recompensas recientemente y no estás nominando activamente. Está disponible cuando tu stake no ha sido usado para respaldar validadores en eras recientes."
+        },
+        {
           "id": "staking-risks",
           "question": "¿Cuáles son los riesgos del staking?",
           "answer": "Los riesgos incluyen slashing (pérdida de {token} por mal comportamiento del validador), periodos de bloqueo (falta de liquidez) y posibles cambios en las reglas de la red. Los participantes en pools también dependen del rendimiento y la seguridad del pool."
@@ -93,6 +113,16 @@
           "id": "types-of-staking",
           "question": "¿Cuáles son los diferentes tipos de staking?",
           "answer": "Puedes hacer staking por tu cuenta (staking individual) o unirte a un grupo (staking en pool). El staking en pool es más fácil para la mayoría y te permite empezar con una cantidad menor de {token}."
+        },
+        {
+          "id": "how-much-can-earn",
+          "question": "¿Cuánto puedo ganar con el staking?",
+          "answer": "Las recompensas de staking varían, pero típicamente puedes ganar alrededor del 10-15% anual en {network}. La cantidad exacta depende de cuántas personas estén haciendo staking y las condiciones de la red. Recuerda que las recompensas no están garantizadas y pueden cambiar."
+        },
+        {
+          "id": "wallet-safety",
+          "question": "¿Cómo mantengo mi billetera segura al hacer staking?",
+          "answer": "Nunca compartas tu frase semilla o claves privadas. Usa billeteras oficiales y verifica siempre las URLs de los sitios web. Considera usar una billetera de hardware para mayor seguridad, especialmente para cantidades grandes."
         },
         {
           "id": "staking-risks",

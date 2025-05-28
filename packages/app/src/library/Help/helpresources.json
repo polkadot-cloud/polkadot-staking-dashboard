@@ -20,6 +20,16 @@
           "answer": "You can stake on your own (solo staking) or join with others in a group (pool staking). Pool staking is easier for most people and lets you start with a smaller amount of {token}."
         },
         {
+          "id": "how-much-can-earn",
+          "question": "How much can I earn from staking?",
+          "answer": "Staking rewards vary, but you can typically earn around 10-15% per year on {network}. The exact amount depends on how many people are staking and network conditions. Remember, rewards aren't guaranteed and can change."
+        },
+        {
+          "id": "wallet-safety",
+          "question": "How do I keep my wallet safe when staking?",
+          "answer": "Never share your seed phrase or private keys. Use official wallets and double-check all website URLs. Consider using a hardware wallet for extra security, especially for large amounts."
+        },
+        {
           "id": "staking-risks",
           "question": "What are the risks of staking?",
           "answer": "Staking is generally safe, but there are risks. For example, if you break the rules, you could lose some of your staked {token} (this is called slashing). Also, your {token} is locked for a period and can't be used right away."
@@ -64,6 +74,26 @@
           "id": "types-of-staking",
           "question": "What are the different types of staking?",
           "answer": "Staking can be done as a solo validator, as a nominator (delegating your {token} to validators), or by joining a nomination pool. Each method has different requirements, risks, and reward structures. Advanced users may also explore liquid staking and staking derivatives."
+        },
+        {
+          "id": "optimal-staking-strategy",
+          "question": "What's the optimal staking strategy?",
+          "answer": "Diversify across multiple high-performing validators with low commission rates. Monitor validator performance, avoid oversubscribed validators, and consider pool staking for smaller holdings. Regularly compound rewards and adjust nominations based on performance."
+        },
+        {
+          "id": "validator-evaluation",
+          "question": "How do I evaluate validators for nomination?",
+          "answer": "Analyze commission rates, self-stake amounts, nomination pool size, historical performance, slash history, and operational transparency. Look for validators with consistent uptime, reasonable fees (1-5%), and active community engagement."
+        },
+        {
+          "id": "governance-participation",
+          "question": "How can I participate in {network} governance?",
+          "answer": "Hold {token} to vote on referenda, proposals, and network upgrades. You can vote directly or delegate your voting power to trusted community members. Governance participation is crucial for network evolution and decentralization."
+        },
+        {
+          "id": "fast-unstake",
+          "question": "What is fast unstake and when can I use it?",
+          "answer": "Fast unstake allows immediate withdrawal of staked {token} if you haven't received rewards recently and aren't actively nominating. It's available when your stake hasn't been used to back validators in recent eras."
         },
         {
           "id": "staking-risks",
