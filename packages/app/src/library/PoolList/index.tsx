@@ -11,6 +11,7 @@ import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { motion } from 'framer-motion'
+import { useDebouncedSearch } from 'hooks/useDebounce'
 import { usePoolFilters } from 'hooks/usePoolFilters'
 import { useSyncing } from 'hooks/useSyncing'
 import { Tabs } from 'library/Filter/Tabs'
@@ -57,18 +58,8 @@ export const PoolList = ({
   // Default pool list items before filtering.
   const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || [])
 
-  // Carry out filter of pool list.
-  const filterPoolList = () => {
-    let filteredPools = Object.assign(poolsDefault)
-    filteredPools = applyFilter(includes, excludes, filteredPools)
-    if (searchTerm) {
-      filteredPools = poolSearchFilter(filteredPools, searchTerm)
-    }
-    return filteredPools
-  }
-
   // Manipulated pool list items after filtering.
-  const [listPools, setListPools] = useState<BondedPool[]>(filterPoolList())
+  const [listPools, setListPools] = useState<BondedPool[]>(poolsDefault)
 
   // Whether this the initial render.
   const [synced, setSynced] = useState<boolean>(false)
@@ -91,26 +82,37 @@ export const PoolList = ({
 
   // Handle filter / order update
   const handlePoolsFilterUpdate = () => {
-    const filteredPools = filterPoolList()
+    const filteredPools = poolsDefault
     setListPools(filteredPools)
     setPage(1)
   }
 
-  const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
+  // Create debounced search handler
+  const handleDebouncedPoolSearch = useDebouncedSearch(
+    (searchValue: string) => {
+      let filteredPools: BondedPool[] = Object.assign(poolsDefault)
+      filteredPools = applyFilter(includes, excludes, filteredPools)
+      filteredPools = poolSearchFilter(filteredPools, searchValue)
+
+      // ensure no duplicates
+      filteredPools = filteredPools.filter(
+        (value, index: number, self) =>
+          index === self.findIndex((i) => i.id === value.id)
+      )
+      setPage(1)
+      setListPools(filteredPools)
+      setSearchTerm('pools', searchValue)
+    },
+    300
+  )
+
+  // Handle immediate input changes for UI responsiveness
+  const handlePoolSearchInputChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value
-
-    let filteredPools: BondedPool[] = Object.assign(poolsDefault)
-    filteredPools = applyFilter(includes, excludes, filteredPools)
-    filteredPools = poolSearchFilter(filteredPools, newValue)
-
-    // ensure no duplicates
-    filteredPools = filteredPools.filter(
-      (value, index: number, self) =>
-        index === self.findIndex((i) => i.id === value.id)
-    )
-    setPage(1)
-    setListPools(filteredPools)
+    // Update search term immediately for UI feedback
     setSearchTerm('pools', newValue)
+    // Debounce the actual filtering
+    handleDebouncedPoolSearch(e)
   }
 
   // Refetch list when pool list changes.
@@ -146,7 +148,7 @@ export const PoolList = ({
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
             value={searchTerm ?? ''}
-            handleChange={handleSearchChange}
+            handleChange={handlePoolSearchInputChange}
             placeholder={t('search')}
           />
         )}

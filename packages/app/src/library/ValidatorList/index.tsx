@@ -20,11 +20,11 @@ import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
-import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NominationStatus, Validator } from 'types'
 import { useOverlay } from 'ui-overlay'
+import { useDebouncedSearch } from '../../hooks/useDebounce'
 import { useValidatorFilters } from '../../hooks/useValidatorFilters'
 import { FilterBadges } from './Filters/FilterBadges'
 import { FilterHeaders } from './Filters/FilterHeaders'
@@ -168,15 +168,14 @@ export const ValidatorListInner = ({
     }
   }
 
-  const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value
-
+  // Create debounced search handler
+  const handleDebouncedSearch = useDebouncedSearch((searchValue: string) => {
     let filteredValidators = Object.assign(validatorsDefault)
     if (order !== 'default') {
       filteredValidators = applyOrder(order, filteredValidators)
     }
     filteredValidators = applyFilter(includes, excludes, filteredValidators)
-    filteredValidators = applySearch(filteredValidators, newValue)
+    filteredValidators = applySearch(filteredValidators, searchValue)
     // Ensure no duplicates
     filteredValidators = filteredValidators.filter(
       (value: Validator, index: number, self: Validator[]) =>
@@ -184,9 +183,9 @@ export const ValidatorListInner = ({
     )
     setPage(1)
     setValidators(filteredValidators)
-    setIsSearching(e.currentTarget.value !== '')
-    setSearchTerm('validators', newValue)
-  }
+    setIsSearching(searchValue !== '')
+    setSearchTerm('validators', searchValue)
+  }, 300)
 
   // Handle validator list bootstrapping.
   const setupValidatorList = () => {
@@ -299,7 +298,7 @@ export const ValidatorListInner = ({
         {allowSearch && (
           <SearchInput
             value={searchTerm ?? ''}
-            handleChange={handleSearchChange}
+            handleChange={handleDebouncedSearch}
             placeholder={t('searchAddress', { ns: 'app' })}
           />
         )}

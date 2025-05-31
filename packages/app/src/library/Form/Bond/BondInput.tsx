@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useDebouncedNumericInput } from 'hooks/useDebounce'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,16 +41,6 @@ export const BondInput = ({
     }
   }, [value])
 
-  // handle change for bonding.
-  const handleChangeBond = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
-    if (val !== '' && new BigNumber(val).isNaN()) {
-      return
-    }
-    setLocalBond(val)
-    updateParentState(val)
-  }
-
   // apply bond to parent setters.
   const updateParentState = (val: string) => {
     val = val || '0'
@@ -61,6 +52,26 @@ export const BondInput = ({
         bond: new BigNumber(val),
       })
     }
+  }
+
+  // Create debounced handler for expensive parent state updates
+  const handleDebouncedBondChange = useDebouncedNumericInput((val: string) => {
+    if (val !== '' && new BigNumber(val).isNaN()) {
+      return
+    }
+    updateParentState(val)
+  }, 500) // 500ms delay for bond amount calculations
+
+  // Handle immediate input changes for UI responsiveness
+  const handleBondInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value
+    if (val !== '' && new BigNumber(val).isNaN()) {
+      return
+    }
+    // Update local state immediately for responsive UI
+    setLocalBond(val)
+    // Debounce the expensive parent state updates
+    handleDebouncedBondChange(e)
   }
 
   // available funds as jsx.
@@ -81,7 +92,7 @@ export const BondInput = ({
                 placeholder={`0 ${unit}`}
                 value={localBond}
                 onChange={(e) => {
-                  handleChangeBond(e)
+                  handleBondInputChange(e)
                 }}
                 disabled={disabled}
               />
