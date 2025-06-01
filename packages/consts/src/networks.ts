@@ -14,7 +14,7 @@ export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot'),
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
@@ -37,7 +37,7 @@ export const NetworkList: Networks = {
   kusama: {
     name: 'kusama',
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3'),
       rpc: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
@@ -60,7 +60,7 @@ export const NetworkList: Networks = {
   westend: {
     name: 'westend',
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/westend2'),
       rpc: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
@@ -90,7 +90,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     unit: 'DOT',
     defaultFeeReserve: 1000000000n,
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-polkadot',
@@ -106,7 +106,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     unit: 'KSM',
     defaultFeeReserve: 50000000000n,
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_people'),
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-kusama',
@@ -122,7 +122,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     unit: 'WND',
     defaultFeeReserve: 100000000000n,
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/westend_people'),
       rpc: {
         IBP1: 'wss://sys.ibp.network/people-westend',
@@ -138,7 +138,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     unit: 'DOT',
     defaultFeeReserve: 1000000000n,
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_asset_hub'),
       rpc: {
         'Lucky Friday': 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
@@ -158,7 +158,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     unit: 'KSM',
     defaultFeeReserve: 50000000000n,
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/ksmcc3_asset_hub'),
       rpc: {
         'Lucky Friday': 'wss://rpc-asset-hub-kusama.luckyfriday.io',
@@ -176,7 +176,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     unit: 'WND',
     defaultFeeReserve: 100000000000n,
     endpoints: {
-      lightClient: async () =>
+      getLightClient: async () =>
         await import('@substrate/connect-known-chains/westend2_asset_hub'),
       rpc: {
         Parity: 'wss://westend-asset-hub-rpc.polkadot.io',
