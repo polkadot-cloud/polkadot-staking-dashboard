@@ -18,7 +18,7 @@ const initSmWorker = () => {
 // Instantiate a new relay chain smoldot provider
 export const newRelayChainSmProvider = async (networkData: Network) => {
   const client = initSmWorker()
-  const { chainSpec } = await networkData.endpoints.lightClient()
+  const { chainSpec } = await networkData.endpoints.getLightClient()
   const chain = await client.addChain({ chainSpec })
   return new SmoldotProvider(chain)
 }
@@ -29,9 +29,9 @@ export const newSystemChainSmProvider = async (
   systemChainData: SystemChain
 ) => {
   const client = initSmWorker()
-  const { chainSpec } = await networkData.endpoints.lightClient()
+  const { chainSpec } = await networkData.endpoints.getLightClient()
   const { chainSpec: paraChainSpec } =
-    await systemChainData.endpoints.lightClient()
+    await systemChainData.endpoints.getLightClient()
 
   const chain = await client.addChain({
     chainSpec: paraChainSpec,
