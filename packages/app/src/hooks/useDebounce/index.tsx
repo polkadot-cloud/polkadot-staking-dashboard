@@ -3,7 +3,7 @@
 
 import debounce from 'lodash.debounce'
 import type { FormEvent } from 'react'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 /**
  * Custom hook for debouncing function calls
@@ -42,6 +42,55 @@ export const useDebouncedSearch = (
     },
     [debouncedSearch]
   )
+}
+
+/**
+ * Specialized hook for search inputs that prevents character disappearing
+ * Maintains local input state while debouncing the search logic
+ * @param onSearch - Function to call with search value (debounced)
+ * @param initialValue - Initial value for the input
+ * @param delay - Delay in milliseconds (default: 300ms)
+ * @returns Object with inputValue, handleInputChange, and setInputValue
+ */
+export const useDebouncedSearchInput = (
+  onSearch: (value: string) => void,
+  initialValue = '',
+  delay = 300
+) => {
+  const [inputValue, setInputValue] = useState(initialValue)
+  const [hasUserTyped, setHasUserTyped] = useState(false)
+  const debouncedSearch = useDebounce(onSearch, delay)
+
+  // Update local input immediately, debounce the search logic
+  const handleInputChange = useCallback(
+    (e: FormEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value
+      setInputValue(value) // Immediate UI update - prevents character disappearing
+      setHasUserTyped(true) // Mark that user has started typing
+      debouncedSearch(value) // Debounced search logic
+    },
+    [debouncedSearch]
+  )
+
+  // Only sync with external value if user hasn't typed yet
+  useEffect(() => {
+    if (!hasUserTyped) {
+      setInputValue(initialValue)
+    }
+  }, [initialValue, hasUserTyped])
+
+  // Reset user typed flag when initial value changes significantly
+  useEffect(() => {
+    if (initialValue === '') {
+      setHasUserTyped(false)
+    }
+  }, [initialValue])
+
+  return {
+    inputValue,
+    handleInputChange,
+    setInputValue,
+  }
 }
 
 /**

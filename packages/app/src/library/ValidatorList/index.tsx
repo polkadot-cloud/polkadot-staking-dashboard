@@ -20,11 +20,11 @@ import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NominationStatus, Validator } from 'types'
 import { useOverlay } from 'ui-overlay'
-import { useDebouncedSearch } from '../../hooks/useDebounce'
+import { useDebouncedSearchInput } from '../../hooks/useDebounce'
 import { useValidatorFilters } from '../../hooks/useValidatorFilters'
 import { FilterBadges } from './Filters/FilterBadges'
 import { FilterHeaders } from './Filters/FilterHeaders'
@@ -57,10 +57,8 @@ export const ValidatorListInner = ({
     getOrder,
     setOrder,
     getSearchTerm,
-    setSearchTerm,
     resetFilters,
     resetOrder,
-    clearSearchTerm,
     // Inject default filters and orders here
   } = useFilters()
   const listProvider = useList()
@@ -168,24 +166,45 @@ export const ValidatorListInner = ({
     }
   }
 
-  // Create debounced search handler
-  const handleDebouncedSearch = useDebouncedSearch((searchValue: string) => {
-    let filteredValidators = Object.assign(validatorsDefault)
-    if (order !== 'default') {
-      filteredValidators = applyOrder(order, filteredValidators)
-    }
-    filteredValidators = applyFilter(includes, excludes, filteredValidators)
-    filteredValidators = applySearch(filteredValidators, searchValue)
-    // Ensure no duplicates
-    filteredValidators = filteredValidators.filter(
-      (value: Validator, index: number, self: Validator[]) =>
-        index === self.findIndex((i) => i.address === value.address)
-    )
-    setPage(1)
-    setValidators(filteredValidators)
-    setIsSearching(searchValue !== '')
-    setSearchTerm('validators', searchValue)
-  }, 300)
+  // Create debounced search logic (without updating global search term)
+  const debouncedSearchLogic = useCallback(
+    (searchValue: string) => {
+      let filteredValidators = Object.assign(validatorsDefault)
+      if (order !== 'default') {
+        filteredValidators = applyOrder(order, filteredValidators)
+      }
+      filteredValidators = applyFilter(includes, excludes, filteredValidators)
+      filteredValidators = applySearch(filteredValidators, searchValue)
+      // Ensure no duplicates
+      filteredValidators = filteredValidators.filter(
+        (value: Validator, index: number, self: Validator[]) =>
+          index === self.findIndex((i) => i.address === value.address)
+      )
+      setPage(1)
+      setValidators(filteredValidators)
+      setIsSearching(searchValue !== '')
+      // Don't update global search term to prevent race condition
+    },
+    [
+      validatorsDefault,
+      order,
+      includes,
+      excludes,
+      applyOrder,
+      applyFilter,
+      applySearch,
+      setPage,
+      setValidators,
+      setIsSearching,
+    ]
+  )
+
+  // Use the new hook with empty initial value to prevent race condition
+  const { inputValue, handleInputChange } = useDebouncedSearchInput(
+    debouncedSearchLogic,
+    '', // Empty initial value prevents sync issues
+    300
+  )
 
   // Handle validator list bootstrapping.
   const setupValidatorList = () => {
@@ -243,7 +262,6 @@ export const ValidatorListInner = ({
         resetFilters('exclude', 'validators')
         resetFilters('include', 'validators')
         resetOrder('validators')
-        clearSearchTerm('validators')
       }
     }
   }, [syncing])
@@ -297,8 +315,8 @@ export const ValidatorListInner = ({
       <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && (
           <SearchInput
-            value={searchTerm ?? ''}
-            handleChange={handleDebouncedSearch}
+            value={inputValue}
+            handleChange={handleInputChange}
             placeholder={t('searchAddress', { ns: 'app' })}
           />
         )}

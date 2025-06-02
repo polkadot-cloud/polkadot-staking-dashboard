@@ -11,7 +11,7 @@ import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { motion } from 'framer-motion'
-import { useDebouncedSearch } from 'hooks/useDebounce'
+import { useDebouncedSearchInput } from 'hooks/useDebounce'
 import { usePoolFilters } from 'hooks/usePoolFilters'
 import { useSyncing } from 'hooks/useSyncing'
 import { Tabs } from 'library/Filter/Tabs'
@@ -25,8 +25,7 @@ import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
 import { Pool } from 'library/Pool'
-import type { FormEvent } from 'react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import type { PoolListProps } from './types'
@@ -46,11 +45,10 @@ export const PoolList = ({
   const { getThemeValue } = useThemeValues()
   const { listFormat, setListFormat } = useList()
   const { poolSearchFilter, poolsNominations } = useBondedPools()
-  const { getFilters, getSearchTerm, setSearchTerm } = useFilters()
+  const { getFilters } = useFilters()
 
   const includes = getFilters('include', 'pools')
   const excludes = getFilters('exclude', 'pools')
-  const searchTerm = getSearchTerm('pools')
 
   // The current page of pool list.
   const [page, setPage] = useState<number>(1)
@@ -87,8 +85,8 @@ export const PoolList = ({
     setPage(1)
   }
 
-  // Create debounced search handler
-  const handleDebouncedPoolSearch = useDebouncedSearch(
+  // Create debounced search logic (without updating global search term)
+  const debouncedPoolSearchLogic = useCallback(
     (searchValue: string) => {
       let filteredPools: BondedPool[] = Object.assign(poolsDefault)
       filteredPools = applyFilter(includes, excludes, filteredPools)
@@ -101,19 +99,25 @@ export const PoolList = ({
       )
       setPage(1)
       setListPools(filteredPools)
-      setSearchTerm('pools', searchValue)
+      // Don't update global search term to prevent race condition
     },
-    300
+    [
+      poolsDefault,
+      applyFilter,
+      includes,
+      excludes,
+      poolSearchFilter,
+      setPage,
+      setListPools,
+    ]
   )
 
-  // Handle immediate input changes for UI responsiveness
-  const handlePoolSearchInputChange = (e: FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value
-    // Update search term immediately for UI feedback
-    setSearchTerm('pools', newValue)
-    // Debounce the actual filtering
-    handleDebouncedPoolSearch(e)
-  }
+  // Use the new hook with empty initial value to prevent race condition
+  const { inputValue, handleInputChange } = useDebouncedSearchInput(
+    debouncedPoolSearchLogic,
+    '', // Empty initial value prevents sync issues
+    300
+  )
 
   // Refetch list when pool list changes.
   useEffect(() => {
@@ -147,8 +151,8 @@ export const PoolList = ({
       <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
-            value={searchTerm ?? ''}
-            handleChange={handlePoolSearchInputChange}
+            value={inputValue}
+            handleChange={handleInputChange}
             placeholder={t('search')}
           />
         )}
