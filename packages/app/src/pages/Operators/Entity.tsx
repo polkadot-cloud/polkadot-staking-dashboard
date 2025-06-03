@@ -3,23 +3,21 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ValidatorList } from 'library/ValidatorList'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Validator } from 'types'
+import type { OperatorsSupportedNetwork, Validator } from 'types'
 import { ButtonSecondary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
 import { useOperatorsSections } from './context'
 
-export const Entity = () => {
+export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
   const { t } = useTranslation('pages')
   const { isReady } = useApi()
-  const { network } = useNetwork()
   const { getValidators } = useValidators()
   const { setActiveSection, activeItem } = useOperatorsSections()
 
@@ -64,7 +62,7 @@ export const Entity = () => {
         />
       </Page.Heading>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
-        <Item item={activeItem} actionable={false} />
+        <Item item={activeItem} actionable={false} network={network} />
       </ItemsWrapper>
       <CardWrapper>
         {!isReady ? (
