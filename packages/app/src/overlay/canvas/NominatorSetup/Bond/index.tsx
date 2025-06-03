@@ -90,7 +90,6 @@ export const Bond = ({
           inline ? false : progress.bond !== '0' && progress.bond !== ''
         }
         title={t('bond')}
-        helpKey="Bonding"
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

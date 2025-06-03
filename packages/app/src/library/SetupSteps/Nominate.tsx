@@ -67,7 +67,6 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
         thisSection={section}
         complete={progress.nominations.length > 0}
         title={t('nominate')}
-        helpKey="Nominating"
         bondFor={bondFor}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
