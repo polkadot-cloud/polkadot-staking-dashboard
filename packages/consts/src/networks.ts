@@ -88,6 +88,28 @@ export const NetworkList: Networks = {
       supportOperators: true,
     },
   },
+  vara: {
+    name: 'vara',
+    endpoints: {
+      getLightClient: async () => await import('./chainspecs/vara.json'),
+      rpc: {
+        Vara: 'wss://rpc.vara-network.io',
+        'Vara Network': 'wss://rpc.vara.network',
+        BlastApi: 'wss://vara-mainnet.public.blastapi.io',
+      },
+    },
+    unit: 'VARA',
+    units: 12,
+    ss58: 137,
+    defaultFeeReserve: 100000000000n,
+    meta: {
+      hubChain: 'vara',
+      stakingChain: 'vara',
+      peopleChain: 'vara',
+      subscanBalanceChainId: 'vara',
+      supportOperators: false,
+    },
+  },
 }
 
 // All supported system chains

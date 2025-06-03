@@ -7,11 +7,13 @@ import type { FunctionComponent, SVGProps } from 'react'
 
 export type ChainId = NetworkId | SystemChainId
 
-export type NetworkId = DefaultServiceNetworkId
+export type NetworkId = DefaultServiceNetworkId | SoloServiceNetworkId
 
 export type DefaultServiceNetworkId = 'polkadot' | 'kusama' | 'westend'
 
 export type OperatorsSupportedNetwork = 'polkadot' | 'kusama' | 'westend'
+
+export type SoloServiceNetworkId = 'vara'
 
 export type SystemChainId =
   | 'people-polkadot'

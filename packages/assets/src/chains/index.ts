@@ -37,4 +37,13 @@ export const chainIcons: Record<NetworkId, ChainIcons> = {
       size: '0.96em',
     },
   },
+  // TODO: Update to real icons
+  vara: {
+    icon: PolkadotIconSVG,
+    token: PolkadotTokenSVG,
+    inline: {
+      svg: PolkadotInlineSVG,
+      size: '1.05em',
+    },
+  },
 }

@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./*": "./src/*.ts"
+    "./*": "./src/*.ts",
+    "./chainspecs/*": "./src/chainspecs/*.ts"
   },
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist"
