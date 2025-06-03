@@ -7,7 +7,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useProxies } from 'contexts/Proxies'
 import type { SubmittableExtrinsic } from 'dedot'
-import type { AnyJson, MaybeAddress } from 'types'
+import type { MaybeAddress } from 'types'
 
 export const useProxySupported = () => {
   const { getProxyDelegate } = useProxies()
@@ -46,15 +46,15 @@ export const useProxySupported = () => {
     // If a batch call, test if every inner call is a supported proxy call
     if (call === 'Utility.Batch') {
       return (tx.call.palletCall.params.calls || [])
-        .map((c: AnyJson) => ({
+        .map((c: { pallet: string; palletCall: { name: string } }) => ({
           pallet: c.pallet,
           method: c.palletCall.name,
         }))
         .every(
-          (c: AnyJson) =>
-            (isSupportedProxyCall(proxyType, c.pallet, c.palletCall.name) ||
-              (c.pallet === 'Proxy' && c.palletCall.name === 'Proxy')) &&
-            !unmigratedController(`${c.pallet}.${c.palletCall.name}`, delegator)
+          (c: { pallet: string; method: string }) =>
+            (isSupportedProxyCall(proxyType, c.pallet, c.method) ||
+              (c.pallet === 'Proxy' && c.method === 'Proxy')) &&
+            !unmigratedController(`${c.pallet}.${c.method}`, delegator)
         )
     }
 
