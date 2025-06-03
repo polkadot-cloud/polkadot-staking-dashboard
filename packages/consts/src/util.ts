@@ -1,7 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId, Networks, SystemChainId } from 'types'
+import type {
+  ChainId,
+  NetworkId,
+  Networks,
+  OperatorsSupportedNetwork,
+  SystemChainId,
+} from 'types'
 import {
   NetworkList,
   ProductionDisabledNetworks,
@@ -37,7 +43,6 @@ export const getSystemChainData = (chain: SystemChainId) =>
 export const getStakingChainData = (network: NetworkId) => {
   const relayChainData = NetworkList[network]
   const stakingChain = relayChainData.meta.stakingChain
-
   if (stakingChain === network) {
     return relayChainData
   }
@@ -78,15 +83,26 @@ export const getDefaultRpcEndpoints = (network: NetworkId) => {
   }
 }
 
-// Get asset hub chain id from network id
-export const getHubChainId = (network: NetworkId) => {
-  if (network === 'westend') {
-    return 'westmint'
+// Get Hub chain id from network id
+export const getHubChainId = (network: NetworkId): ChainId =>
+  NetworkList[network].meta.hubChain
+
+// Get People chain id from network id
+export const getPeopleChainId = (network: NetworkId): ChainId =>
+  NetworkList[network].meta.peopleChain
+
+// Get whether the chain supports operators
+export const isOperatorsSupported = (network: NetworkId): boolean =>
+  NetworkList[network].meta.supportOperators
+
+// Cast a network as an operator network, or return undefined
+export const asOperatorsSupportedNetwork = (
+  network: NetworkId
+): OperatorsSupportedNetwork | undefined => {
+  if (isOperatorsSupported(network)) {
+    return network as OperatorsSupportedNetwork
   }
-  if (network === 'kusama') {
-    return 'statemine'
-  }
-  return 'statemint'
+  return undefined
 }
 
 // Gets enabled networks depending on environment
