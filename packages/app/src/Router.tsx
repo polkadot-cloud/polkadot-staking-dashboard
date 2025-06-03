@@ -3,7 +3,7 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { extractUrlValue } from '@w3ux/utils'
-import { PagesConfig } from 'config/pages'
+import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -105,7 +105,7 @@ const RouterInner = () => {
               <Headers />
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
                 <Routes>
-                  {PagesConfig.map((page, i) => (
+                  {getPagesConfig(network, advancedMode).map((page, i) => (
                     <Route
                       key={`main_interface_page_${i}`}
                       path={page.hash}

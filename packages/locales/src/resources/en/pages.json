@@ -46,7 +46,6 @@
     "connect": "Connect",
     "connecting": "Connecting",
     "controllerAccount": "Controller Account",
-    "controllerNotImported": "You have not imported your controller account. If you have lost access to your controller account, set a new one now. Otherwise, import the controller into one of your active extensions.",
     "createAPool": "Create a Pool",
     "createPool": "Create Pool",
     "daily": "Daily",

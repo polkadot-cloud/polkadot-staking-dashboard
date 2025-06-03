@@ -5,6 +5,7 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getPeopleChainId } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -381,7 +382,12 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && activeEra.index > 0) {
       fetchValidators()
     }
-  }, [validators.status, isReady, getApiStatus(`people-${network}`), activeEra])
+  }, [
+    validators.status,
+    isReady,
+    getApiStatus(getPeopleChainId(network)),
+    activeEra,
+  ])
 
   // Mark unsynced and fetch session validators and average reward when activeEra changes
   useEffectIgnoreInitial(() => {
