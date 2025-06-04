@@ -44,10 +44,12 @@ export const diffBonded = (prev: Bonded[], cur: Bonded[]) => {
   const curSet = new Set(cur)
 
   const added = cur.filter(
-    ({ stash }) => ![...prevSet].find((p) => p.stash === stash)
+    ({ stash, bonded }) =>
+      ![...prevSet].find((p) => p.stash === stash && p.bonded === bonded)
   )
   const removed = prev.filter(
-    ({ stash }) => ![...curSet].find((c) => c.stash === stash)
+    ({ stash, bonded }) =>
+      ![...curSet].find((c) => c.stash === stash && c.bonded === bonded)
   )
   return { added, removed }
 }
