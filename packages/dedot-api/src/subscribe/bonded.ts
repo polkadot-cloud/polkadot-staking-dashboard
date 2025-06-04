@@ -26,12 +26,17 @@ export class BondedQuery<T extends StakingChain> {
       this.address,
       async (result) => {
         const bonded: Bonded = {
-          synced: true,
+          stash: this.address,
           bonded: result
             ? result.address(this.api.consts.system.ss58Prefix)
             : undefined,
         }
-        setBonded(this.address, bonded)
+
+        if (bonded) {
+          setBonded(bonded)
+        } else {
+          removeBonded(this.address)
+        }
       }
     )
   }

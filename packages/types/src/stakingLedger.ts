@@ -5,7 +5,7 @@ import type { PalletNominationPoolsClaimPermission } from 'dedot/chaintypes'
 import type { RewardDestinaton } from './staking'
 
 export interface Bonded {
-  synced: boolean
+  stash: string
   bonded: string | undefined
 }
 export interface StakingLedger {

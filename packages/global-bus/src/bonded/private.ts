@@ -4,5 +4,4 @@
 import { BehaviorSubject } from 'rxjs'
 import type { Bonded } from 'types'
 
-type State = Record<string, Bonded>
-export const _bonded = new BehaviorSubject<State>({})
+export const _bonded = new BehaviorSubject<Bonded[]>([])
