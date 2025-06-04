@@ -22,8 +22,8 @@ export const useSyncing = (config: SyncConfig = '*') => {
     setSyncIds(activeSyncIds)
   }
 
-  // Helper to determine if pool membership has synced
-  const poolMembershipSynced = (): boolean => {
+  // Helper to determine if active pools have synced
+  const getPoolStatusSynced = (): boolean => {
     const POOL_SYNC_IDS: SyncId[] = [
       'initialization',
       'bonded-pools',
@@ -61,5 +61,5 @@ export const useSyncing = (config: SyncConfig = '*') => {
     }
   }, [])
 
-  return { syncing: syncIds.length > 0, poolMembershipSynced, accountSynced }
+  return { syncing: syncIds.length > 0, getPoolStatusSynced, accountSynced }
 }
