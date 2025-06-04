@@ -1,9 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
-
 import { maxBigInt } from '@w3ux/utils'
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
@@ -32,9 +29,12 @@ export class AccountBalanceQuery<T extends Chain> {
         let free: bigint = data.free
         if (['polkadot', 'kusama'].includes(this.api.runtimeVersion.specName)) {
           const api = this.api as unknown as DedotClient<StakingChain>
-          const ledger = await api.query.staking.ledger(this.address)
-          const active = ledger?.active || 0n
-          free = maxBigInt(data.free - active, 0n)
+          const bonded = await api.query.staking.bonded(this.address)
+          if (bonded) {
+            const ledger = await api.query.staking.ledger(bonded)
+            const active = ledger?.active || 0n
+            free = maxBigInt(data.free - active, 0n)
+          }
         }
         // End of migration
 

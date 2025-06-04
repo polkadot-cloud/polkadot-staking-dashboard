@@ -1,9 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
-
 import { createSafeContext } from '@w3ux/hooks'
 import { useTheme } from 'contexts/Themes'
 import type { ReactNode } from 'react'

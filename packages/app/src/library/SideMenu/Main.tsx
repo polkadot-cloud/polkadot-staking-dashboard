@@ -40,13 +40,6 @@ export const Main = () => {
   let i = 0
   for (const { uri } of pages) {
     const handleBullets = (): boolean => {
-      if (uri === `${import.meta.env.BASE_URL}`) {
-        const warning = !syncing && controllerUnmigrated
-        if (warning) {
-          pages[i].bullet = 'warning'
-          return true
-        }
-      }
       if (uri === `${import.meta.env.BASE_URL}nominate`) {
         if (isNominator) {
           pages[i].bullet = 'accent'
