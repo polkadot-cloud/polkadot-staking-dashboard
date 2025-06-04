@@ -148,6 +148,7 @@
     "metrics": "Metrics",
     "migrateController": "Migrate Controller",
     "migrateControllerDescription": "Controller accounts are being deprecated. Migrate your controller to your stash account to continue using the Staking Dashboard.",
+    "migrateToStash": "Migrate your controller to your stash account",
     "migrationRequired": "Controller Migration Required",
     "minimumBond": "A minimum bond of {{minBondUnit}} {{unit}} is required",
     "missingIdentity": "Missing Identity",

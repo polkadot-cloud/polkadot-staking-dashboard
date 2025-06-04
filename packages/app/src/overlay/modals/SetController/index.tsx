@@ -53,7 +53,7 @@ export const SetController = () => {
       <Close />
       <Padding>
         <Title>{t('migrateController')}</Title>
-        <ActionItem text={'Migrate your controller to your stash account'} />
+        <ActionItem text={t('migrateToStash')} />
         <p>{t('migrateControllerDescription')}</p>
       </Padding>
       <SubmitTx requiresMigratedController valid={true} {...submitExtrinsic} />

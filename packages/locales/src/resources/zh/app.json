@@ -146,6 +146,7 @@
     "metrics": "指标",
     "migrateController": "迁移控制器",
     "migrateControllerDescription": "控制器账户即将被弃用。请将您的控制器迁移至 stash 账户，以便继续使用 Staking Dashboard.",
+    "migrateToStash": "将你的控制器迁移到你的 stash 账户",
     "migrationRequired": "需要迁移控制器",
     "minimumBond": "最低质押为 {{minBondUnit}} {{unit}}",
     "missingIdentity": "无ID",
