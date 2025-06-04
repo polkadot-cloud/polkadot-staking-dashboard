@@ -4,6 +4,10 @@
 import type { PalletNominationPoolsClaimPermission } from 'dedot/chaintypes'
 import type { RewardDestinaton } from './staking'
 
+export interface Bonded {
+  synced: boolean
+  bonded: string | undefined
+}
 export interface StakingLedger {
   synced: boolean
   ledger: Ledger | undefined
