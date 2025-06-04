@@ -50,12 +50,6 @@ export class AccountBalanceQuery<T extends Chain> {
             frozen: data.frozen,
           },
         }
-
-        if (
-          this.address === '1WVEcoqmrMbWKABcC6mNuDkgEok63d2wrH5UCSB3hwM7hM7'
-        ) {
-          console.log(balances)
-        }
         setAccountBalance(this.chainId, this.address, balances)
       }
     )
