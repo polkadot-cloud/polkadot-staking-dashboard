@@ -32,9 +32,12 @@ export class AccountBalanceQuery<T extends Chain> {
         let free: bigint = data.free
         if (['polkadot', 'kusama'].includes(this.api.runtimeVersion.specName)) {
           const api = this.api as unknown as DedotClient<StakingChain>
-          const ledger = await api.query.staking.ledger(this.address)
-          const active = ledger?.active || 0n
-          free = maxBigInt(data.free - active, 0n)
+          const bonded = await api.query.staking.bonded(this.address)
+          if (bonded) {
+            const ledger = await api.query.staking.ledger(bonded)
+            const active = ledger?.active || 0n
+            free = maxBigInt(data.free - active, 0n)
+          }
         }
         // End of migration
 
@@ -46,6 +49,12 @@ export class AccountBalanceQuery<T extends Chain> {
             reserved: data.reserved,
             frozen: data.frozen,
           },
+        }
+
+        if (
+          this.address === '1WVEcoqmrMbWKABcC6mNuDkgEok63d2wrH5UCSB3hwM7hM7'
+        ) {
+          console.log(balances)
         }
         setAccountBalance(this.chainId, this.address, balances)
       }
