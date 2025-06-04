@@ -38,6 +38,7 @@ import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
+import { PoolMembershipQuery } from '../subscribe/poolMembership'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { ProxiesQuery } from '../subscribe/proxies'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
@@ -50,6 +51,7 @@ import type {
   ActivePools,
   BondedAccounts,
   DefaultServiceClass,
+  PoolMemberships,
   Proxies,
   StakingLedgers,
 } from '../types/serviceDefault'
@@ -105,6 +107,7 @@ export class KusamaService
   }
   subBonded: BondedAccounts<KusamaApi> = {}
   subStakingLedgers: StakingLedgers<KusamaApi> = {}
+  subPoolMemberships: PoolMemberships<KusamaApi> = {}
   subProxies: Proxies<KusamaApi> = {}
   subActivePoolIds: Subscription
   subActivePools: ActivePools<KusamaApi> = {}
@@ -203,6 +206,7 @@ export class KusamaService
               getAccountKey(id, account)
             ]?.unsubscribe()
             this.subBonded[address]?.unsubscribe()
+            this.subPoolMemberships[address]?.unsubscribe()
             this.subProxies?.[address]?.unsubscribe()
           })
         }
@@ -216,6 +220,10 @@ export class KusamaService
           new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
         this.subBonded[account.address] = new BondedQuery(
+          this.apiRelay,
+          account.address
+        )
+        this.subPoolMemberships[account.address] = new PoolMembershipQuery(
           this.apiRelay,
           account.address
         )
@@ -276,6 +284,9 @@ export class KusamaService
       sub?.unsubscribe()
     }
     for (const sub of Object.values(this.subBonded)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subPoolMemberships)) {
       sub?.unsubscribe()
     }
     for (const sub of Object.values(this.subProxies)) {

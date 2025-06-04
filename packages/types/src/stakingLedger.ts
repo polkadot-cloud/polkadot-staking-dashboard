@@ -8,12 +8,16 @@ export interface Bonded {
   stash: string
   bonded: string
 }
+
+export interface PoolMembershipState {
+  synced: boolean
+  membership: PoolMembership | undefined
+}
 export interface StakingLedger {
   synced: boolean
   ledger: Ledger | undefined
   payee: Payee | undefined
   nominators: Nominators | undefined
-  poolMembership: PoolMembership | undefined
   controllerUnmigrated: boolean
 }
 

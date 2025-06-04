@@ -7,7 +7,6 @@
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import {
-  addActivePoolId,
   removeActivePoolId,
   removeStakingLedger,
   setStakingLedger,
@@ -43,29 +42,8 @@ export class StakingLedgerQuery<T extends StakingChain> {
           fn: this.api.query.staking.nominators,
           args: [this.address],
         },
-        {
-          fn: this.api.query.nominationPools.poolMembers,
-          args: [this.address],
-        },
-        {
-          fn: this.api.query.nominationPools.claimPermissions,
-          args: [this.address],
-        },
       ],
-      async ([ledger, payee, nominators, poolMember, claimPermission]) => {
-        let balance = 0n
-        let pendingRewards = 0n
-
-        if (poolMember) {
-          ;[balance, pendingRewards] = await Promise.all([
-            this.api.call.nominationPoolsApi.pointsToBalance(
-              poolMember.poolId,
-              poolMember.points
-            ),
-            this.api.call.nominationPoolsApi.pendingRewards(this.address),
-          ])
-        }
-
+      async ([ledger, payee, nominators]) => {
         const stakingLedger: StakingLedger = {
           synced: true,
           ledger:
@@ -104,44 +82,11 @@ export class StakingLedgerQuery<T extends StakingChain> {
                   ),
                   submittedIn: nominators.submittedIn,
                 },
-          poolMembership:
-            poolMember === undefined
-              ? undefined
-              : {
-                  address: this.address,
-                  poolId: poolMember.poolId,
-                  points: poolMember.points,
-                  balance,
-                  lastRecordedRewardCounter:
-                    poolMember.lastRecordedRewardCounter,
-                  unbondingEras: poolMember.unbondingEras,
-                  claimPermission,
-                  pendingRewards,
-                },
           controllerUnmigrated: this.bonded !== this.address,
         }
         setStakingLedger(this.address, stakingLedger)
-
-        switch (this.getPoolIdUpdate(stakingLedger)) {
-          case 'remove':
-            if (this.#poolId) {
-              removeActivePoolId(this.#poolId)
-              this.#poolId = undefined
-            }
-            break
-          case 'set':
-            if (stakingLedger.poolMembership) {
-              this.#poolId = stakingLedger.poolMembership.poolId
-              addActivePoolId(this.#poolId)
-            }
-        }
       }
     )
-  }
-
-  getPoolIdUpdate = ({ poolMembership }: StakingLedger) => {
-    const cur = poolMembership?.poolId
-    return !cur && this.#poolId ? 'remove' : cur ? 'set' : undefined
   }
 
   unsubscribe() {
