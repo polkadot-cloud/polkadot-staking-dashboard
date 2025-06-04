@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PoolMembershipState } from 'types'
-import { defaultPoolMemberhip } from './defaults'
+import { defaultPoolMembership } from './defaults'
 import { _poolMemberships } from './private'
 
-export const pooolMemberships$ = _poolMemberships.asObservable()
+export const poolMemberships$ = _poolMemberships.asObservable()
 
 export const resetPoolMemberships = () => {
   _poolMemberships.next({})
@@ -15,9 +15,9 @@ export const getPoolMembership = (
   address: string | null
 ): PoolMembershipState => {
   if (!address) {
-    return defaultPoolMemberhip
+    return defaultPoolMembership
   }
-  return _poolMemberships.getValue()?.[address] || defaultPoolMemberhip
+  return _poolMemberships.getValue()?.[address] || defaultPoolMembership
 }
 
 export const setPoolMembership = (

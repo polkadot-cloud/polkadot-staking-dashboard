@@ -9,9 +9,9 @@ import { useNetwork } from 'contexts/Network'
 import {
   accountBalances$,
   defaultAccountBalance,
-  defaultPoolMemberhip,
+  defaultPoolMembership,
   defaultStakingLedger,
-  pooolMemberships$,
+  poolMemberships$,
   stakingLedgers$,
 } from 'global-bus'
 import type { ReactNode } from 'react'
@@ -72,9 +72,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // Get an account's pool membership
   const getPoolMembership = (address: MaybeAddress): PoolMembershipState => {
     if (!address) {
-      return defaultPoolMemberhip
+      return defaultPoolMembership
     }
-    return poolMemberships?.[address] || defaultPoolMemberhip
+    return poolMemberships?.[address] || defaultPoolMembership
   }
 
   // Gets an account's nominations from its staking ledger
@@ -102,7 +102,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     const unsubStakingLedgers = stakingLedgers$.subscribe((result) => {
       setStakingLedgers(result)
     })
-    const unsubPoolMemberships = pooolMemberships$.subscribe((result) => {
+    const unsubPoolMemberships = poolMemberships$.subscribe((result) => {
       setPoolMemberships(result)
     })
     return () => {

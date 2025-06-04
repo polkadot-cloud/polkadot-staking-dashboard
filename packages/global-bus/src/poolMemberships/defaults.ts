@@ -3,7 +3,7 @@
 
 import type { PoolMembershipState } from 'types'
 
-export const defaultPoolMemberhip: PoolMembershipState = {
+export const defaultPoolMembership: PoolMembershipState = {
   synced: false,
   membership: undefined,
 }
