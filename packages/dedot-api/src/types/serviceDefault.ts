@@ -26,6 +26,7 @@ import type { AccountBalanceQuery } from '../subscribe/accountBalance'
 import type { ActiveEraQuery } from '../subscribe/activeEra'
 import type { ActivePoolQuery } from '../subscribe/activePool'
 import type { BlockNumberQuery } from '../subscribe/blockNumber'
+import type { BondedQuery } from '../subscribe/bonded'
 import type { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import type { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
@@ -79,6 +80,7 @@ export abstract class DefaultServiceClass<
   subImportedAccounts: Subscription
   subActiveEra: Subscription
   subAccountBalances: AccountBalances<RelayApi, PeopleApi, HubApi>
+  subBonded: BondedAccounts<StakingApi>
   subStakingLedgers: StakingLedgers<StakingApi>
   subActivePoolIds: Subscription
   subActivePools: ActivePools<StakingApi>
@@ -108,6 +110,12 @@ export type AccountBalances<
   people: Record<string, AccountBalanceQuery<PeopleApi>>
   hub: Record<string, AccountBalanceQuery<HubApi>>
 }
+
+// Bonded record
+export type BondedAccounts<StakingApi extends StakingChain> = Record<
+  string,
+  BondedQuery<StakingApi>
+>
 
 // Staking ledgers record
 export type StakingLedgers<StakingApi extends StakingChain> = Record<

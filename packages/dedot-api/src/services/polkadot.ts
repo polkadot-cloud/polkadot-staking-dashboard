@@ -33,6 +33,7 @@ import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { ActivePoolQuery } from '../subscribe/activePool'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
+import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
@@ -46,6 +47,7 @@ import { createPool } from '../tx/createPool'
 import type {
   AccountBalances,
   ActivePools,
+  BondedAccounts,
   DefaultServiceClass,
   Proxies,
   StakingLedgers,
@@ -99,6 +101,7 @@ export class PolkadotService
     people: {},
     hub: {},
   }
+  subBonded: BondedAccounts<PolkadotApi> = {}
   subStakingLedgers: StakingLedgers<PolkadotApi> = {}
   subProxies: Proxies<PolkadotApi> = {}
   subActivePoolIds: Subscription
@@ -197,6 +200,7 @@ export class PolkadotService
             this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
               getAccountKey(id, account)
             ]?.unsubscribe()
+            this.subBonded[address]?.unsubscribe()
             this.subStakingLedgers?.[address]?.unsubscribe()
             this.subProxies?.[address]?.unsubscribe()
           })
@@ -210,9 +214,14 @@ export class PolkadotService
         this.subAccountBalances['hub'][getAccountKey(this.ids[2], account)] =
           new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
+        this.subBonded[account.address] = new BondedQuery(
+          this.apiRelay,
+          account.address
+        )
         this.subStakingLedgers[account.address] = new StakingLedgerQuery(
           this.apiRelay,
           account.address
+          // TODO: plug in bonded address
         )
         this.subProxies[account.address] = new ProxiesQuery(
           this.apiRelay,
@@ -251,6 +260,9 @@ export class PolkadotService
       }
     }
     for (const sub of Object.values(this.subStakingLedgers)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subBonded)) {
       sub?.unsubscribe()
     }
     for (const sub of Object.values(this.subProxies)) {

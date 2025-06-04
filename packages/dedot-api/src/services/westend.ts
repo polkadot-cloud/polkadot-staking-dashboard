@@ -4,6 +4,7 @@
 import type { WestendAssetHubApi } from '@dedot/chaintypes'
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
+import { formatAccountSs58 } from '@w3ux/utils'
 import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
@@ -32,6 +33,7 @@ import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { ActivePoolQuery } from '../subscribe/activePool'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
+import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
@@ -45,6 +47,7 @@ import { createPool } from '../tx/createPool'
 import type {
   AccountBalances,
   ActivePools,
+  BondedAccounts,
   DefaultServiceClass,
   Proxies,
   StakingLedgers,
@@ -98,6 +101,7 @@ export class WestendService
     people: {},
     hub: {},
   }
+  subBonded: BondedAccounts<WestendAssetHubApi> = {}
   subStakingLedgers: StakingLedgers<WestendAssetHubApi> = {}
   subProxies: Proxies<WestendAssetHubApi> = {}
   subActivePoolIds: Subscription
@@ -185,13 +189,20 @@ export class WestendService
         formatAccountAddresses(cur.flat(), ss58)
       )
       removed.forEach((account) => {
-        this.ids.forEach((id, i) => {
-          this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
-            getAccountKey(id, account)
-          ]?.unsubscribe()
-        })
-        this.subStakingLedgers?.[account.address]?.unsubscribe()
-        this.subProxies?.[account.address]?.unsubscribe()
+        const address = formatAccountSs58(
+          account.address,
+          this.apiRelay.consts.system.ss58Prefix
+        )
+        if (address) {
+          this.ids.forEach((id, i) => {
+            this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
+              getAccountKey(id, account)
+            ]?.unsubscribe()
+            this.subBonded[address]?.unsubscribe()
+            this.subStakingLedgers?.[address]?.unsubscribe()
+            this.subProxies?.[address]?.unsubscribe()
+          })
+        }
       })
       added.forEach((account) => {
         this.subAccountBalances['relay'][getAccountKey(this.ids[0], account)] =
@@ -201,6 +212,10 @@ export class WestendService
         this.subAccountBalances['hub'][getAccountKey(this.ids[2], account)] =
           new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
+        this.subBonded[account.address] = new BondedQuery(
+          this.apiHub,
+          account.address
+        )
         this.subStakingLedgers[account.address] = new StakingLedgerQuery(
           this.apiHub,
           account.address
@@ -242,6 +257,9 @@ export class WestendService
       }
     }
     for (const sub of Object.values(this.subStakingLedgers)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subBonded)) {
       sub?.unsubscribe()
     }
     for (const sub of Object.values(this.subProxies)) {
