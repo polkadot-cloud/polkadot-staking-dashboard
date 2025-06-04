@@ -404,6 +404,7 @@ export class KusamaService
       poolWithdraw: (who, numSlashingSpans) =>
         tx.poolWithdraw(this.apiRelay, who, numSlashingSpans),
       proxy: (real, call) => tx.proxy(this.apiRelay, real, call),
+      setController: () => tx.setController(this.apiRelay),
       stakingBondExtra: (bond) => tx.stakingBondExtra(this.apiRelay, bond),
       stakingChill: () => tx.stakingChill(this.apiRelay),
       stakingNominate: (nominees) =>

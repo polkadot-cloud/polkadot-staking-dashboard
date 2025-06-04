@@ -39,12 +39,14 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
       }}
       dimmed={dimmed}
       buttons={
-        total !== '0' && pluginEnabled('staking_api')
+        total !== '0' &&
+        pluginEnabled('staking_api') &&
+        !isReadOnlyAccount(activeAddress)
           ? [
               {
                 title: t('claim', { ns: 'modals' }),
                 icon: faCircleDown,
-                disabled: !isReady || isReadOnlyAccount(activeAddress),
+                disabled: !isReady,
                 small: true,
                 onClick: () =>
                   openModal({

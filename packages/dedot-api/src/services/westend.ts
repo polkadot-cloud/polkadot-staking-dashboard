@@ -391,6 +391,7 @@ export class WestendService
       poolWithdraw: (who, numSlashingSpans) =>
         tx.poolWithdraw(this.apiHub, who, numSlashingSpans),
       proxy: (real, call) => tx.proxy(this.apiHub, real, call),
+      setController: () => tx.setController(this.apiHub),
       stakingBondExtra: (bond) => tx.stakingBondExtra(this.apiHub, bond),
       stakingChill: () => tx.stakingChill(this.apiHub),
       stakingNominate: (nominees) => tx.stakingNominate(this.apiHub, nominees),

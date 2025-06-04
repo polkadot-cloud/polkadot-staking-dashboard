@@ -54,17 +54,13 @@ export const PayoutDestinationStatus = () => {
       icon={payeeIcon}
       stat={getPayeeStatus()}
       buttons={
-        isNominator
+        isNominator && !isReadOnlyAccount(activeAddress)
           ? [
               {
                 title: t('update'),
                 icon: faGear,
                 small: true,
-                disabled:
-                  syncing ||
-                  !isNominator ||
-                  isReadOnlyAccount(activeAddress) ||
-                  isFastUnstaking,
+                disabled: syncing || !isNominator || isFastUnstaking,
                 onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
               },
             ]
