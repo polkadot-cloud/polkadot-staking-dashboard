@@ -4,6 +4,7 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useStaking } from 'contexts/Staking'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { useSyncing } from 'hooks/useSyncing'
@@ -21,13 +22,15 @@ export const SetController = () => {
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { syncing, accountSynced } = useSyncing()
+  const { isReadOnlyAccount } = useImportedAccounts()
   const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
   const canDeprecateController =
     isNominator &&
     !syncing &&
     accountSynced(activeAddress) &&
-    controllerUnmigrated
+    controllerUnmigrated &&
+    !isReadOnlyAccount(activeAddress)
 
   const getTx = () => {
     if (!activeAddress || !canDeprecateController) {
