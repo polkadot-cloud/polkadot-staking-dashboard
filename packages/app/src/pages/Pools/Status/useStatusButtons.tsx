@@ -18,12 +18,12 @@ export const useStatusButtons = () => {
   } = useApi()
   const { isOwner } = useActivePool()
   const { bondedPools } = useBondedPools()
-  const { getStakingLedger } = useBalances()
+  const { getPoolMembership } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const { poolMembership } = getStakingLedger(activeAddress)
+  const { membership } = getPoolMembership(activeAddress)
   const { active } = getTransferOptions(activeAddress).pool
 
   const getCreateDisabled = () => {
@@ -44,14 +44,14 @@ export const useStatusButtons = () => {
     !activeAddress ||
     !bondedPools.length
 
-  if (!poolMembership) {
-    label = t('poolMembership')
+  if (!membership) {
+    label = t('membership')
   } else if (isOwner()) {
-    label = `${t('ownerOfPool')} ${poolMembership.poolId}`
+    label = `${t('ownerOfPool')} ${membership.poolId}`
   } else if (active > 0n) {
-    label = `${t('memberOfPool')} ${poolMembership.poolId}`
+    label = `${t('memberOfPool')} ${membership.poolId}`
   } else {
-    label = `${t('leavingPool')} ${poolMembership.poolId}`
+    label = `${t('leavingPool')} ${membership.poolId}`
   }
   return { label, getJoinDisabled, getCreateDisabled }
 }

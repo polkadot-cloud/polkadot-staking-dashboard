@@ -9,6 +9,7 @@ import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
+  bonded$,
   defaultSyncStatus,
   importedAccounts$,
   removeSyncing,
@@ -33,9 +34,11 @@ import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { ActivePoolQuery } from '../subscribe/activePool'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
+import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
+import { PoolMembershipQuery } from '../subscribe/poolMembership'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { ProxiesQuery } from '../subscribe/proxies'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
@@ -46,11 +49,14 @@ import { createPool } from '../tx/createPool'
 import type {
   AccountBalances,
   ActivePools,
+  BondedAccounts,
   DefaultServiceClass,
+  PoolMemberships,
   Proxies,
   StakingLedgers,
 } from '../types/serviceDefault'
 import {
+  diffBonded,
   diffImportedAccounts,
   diffPoolIds,
   formatAccountAddresses,
@@ -99,10 +105,13 @@ export class PolkadotService
     people: {},
     hub: {},
   }
+  subBonded: BondedAccounts<PolkadotApi> = {}
   subStakingLedgers: StakingLedgers<PolkadotApi> = {}
+  subPoolMemberships: PoolMemberships<PolkadotApi> = {}
   subProxies: Proxies<PolkadotApi> = {}
   subActivePoolIds: Subscription
   subActivePools: ActivePools<PolkadotApi> = {}
+  subActiveBonded: Subscription
 
   constructor(
     public networkConfig: NetworkConfig,
@@ -197,8 +206,9 @@ export class PolkadotService
             this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
               getAccountKey(id, account)
             ]?.unsubscribe()
-            this.subStakingLedgers?.[address]?.unsubscribe()
+            this.subBonded[address]?.unsubscribe()
             this.subProxies?.[address]?.unsubscribe()
+            this.subPoolMemberships?.[address]?.unsubscribe()
           })
         }
       })
@@ -210,7 +220,11 @@ export class PolkadotService
         this.subAccountBalances['hub'][getAccountKey(this.ids[2], account)] =
           new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
-        this.subStakingLedgers[account.address] = new StakingLedgerQuery(
+        this.subBonded[account.address] = new BondedQuery(
+          this.apiRelay,
+          account.address
+        )
+        this.subPoolMemberships[account.address] = new PoolMembershipQuery(
           this.apiRelay,
           account.address
         )
@@ -220,6 +234,22 @@ export class PolkadotService
         )
       })
     })
+
+    this.subActiveBonded = bonded$
+      .pipe(startWith([]), pairwise())
+      .subscribe(([prev, cur]) => {
+        const { added, removed } = diffBonded(prev, cur)
+        removed.forEach(({ stash }) => {
+          this.subStakingLedgers?.[stash]?.unsubscribe()
+        })
+        added.forEach(({ stash, bonded }) => {
+          this.subStakingLedgers[stash] = new StakingLedgerQuery(
+            this.apiRelay,
+            stash,
+            bonded
+          )
+        })
+      })
 
     this.subActivePoolIds = activePoolIds$
       .pipe(startWith([]), pairwise())
@@ -245,12 +275,19 @@ export class PolkadotService
       sub?.unsubscribe()
     }
     this.subActivePoolIds?.unsubscribe()
+    this.subActiveBonded?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {
       for (const sub of Object.values(subs)) {
         sub?.unsubscribe()
       }
     }
     for (const sub of Object.values(this.subStakingLedgers)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subBonded)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subPoolMemberships)) {
       sub?.unsubscribe()
     }
     for (const sub of Object.values(this.subProxies)) {
