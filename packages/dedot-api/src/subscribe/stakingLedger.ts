@@ -45,7 +45,6 @@ export class StakingLedgerQuery<T extends StakingChain> {
       ],
       async ([ledger, payee, nominators]) => {
         const stakingLedger: StakingLedger = {
-          synced: true,
           ledger:
             ledger === undefined
               ? undefined

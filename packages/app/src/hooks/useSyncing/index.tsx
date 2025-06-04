@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import type { MaybeAddress, SyncConfig, SyncId } from 'types'
 
 export const useSyncing = (config: SyncConfig = '*') => {
-  const { getAccountBalance, getStakingLedger } = useBalances()
+  const { getAccountBalance, getPoolMembership } = useBalances()
 
   // Retrieve the ids from the config provided
   const ids = getIdsFromSyncConfig(config)
@@ -41,11 +41,11 @@ export const useSyncing = (config: SyncConfig = '*') => {
     if (!address) {
       return !syncIds.includes('initialization')
     }
-    const { synced: stakingLedgerSynced } = getStakingLedger(address)
+    const { synced: poolMembershipSynced } = getPoolMembership(address)
     const { synced: accountBalanceSynced } = getAccountBalance(address)
 
     return (
-      stakingLedgerSynced &&
+      poolMembershipSynced &&
       accountBalanceSynced &&
       !syncIds.includes('initialization')
     )

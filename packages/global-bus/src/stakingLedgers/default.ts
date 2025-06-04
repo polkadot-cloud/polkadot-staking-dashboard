@@ -4,7 +4,6 @@
 import type { StakingLedger } from 'types'
 
 export const defaultStakingLedger: StakingLedger = {
-  synced: false,
   ledger: undefined,
   payee: undefined,
   nominators: undefined,

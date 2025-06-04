@@ -14,7 +14,6 @@ export interface PoolMembershipState {
   membership: PoolMembership | undefined
 }
 export interface StakingLedger {
-  synced: boolean
   ledger: Ledger | undefined
   payee: Payee | undefined
   nominators: Nominators | undefined
