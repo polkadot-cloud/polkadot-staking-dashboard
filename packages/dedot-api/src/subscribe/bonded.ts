@@ -7,7 +7,6 @@
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import { removeBonded, setBonded } from 'global-bus'
-import type { Bonded } from 'types'
 import type { StakingChain } from '../types'
 
 export class BondedQuery<T extends StakingChain> {
@@ -25,15 +24,11 @@ export class BondedQuery<T extends StakingChain> {
     this.#unsub = await this.api.query.staking.bonded(
       this.address,
       async (result) => {
-        const bonded: Bonded = {
-          stash: this.address,
-          bonded: result
-            ? result.address(this.api.consts.system.ss58Prefix)
-            : undefined,
-        }
-
-        if (bonded) {
-          setBonded(bonded)
+        if (result) {
+          setBonded({
+            stash: this.address,
+            bonded: result.address(this.api.consts.system.ss58Prefix),
+          })
         } else {
           removeBonded(this.address)
         }

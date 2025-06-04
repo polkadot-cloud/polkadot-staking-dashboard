@@ -6,7 +6,7 @@ import type { RewardDestinaton } from './staking'
 
 export interface Bonded {
   stash: string
-  bonded: string | undefined
+  bonded: string
 }
 export interface StakingLedger {
   synced: boolean

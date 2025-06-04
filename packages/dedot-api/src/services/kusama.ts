@@ -9,6 +9,7 @@ import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
+  bonded$,
   defaultSyncStatus,
   importedAccounts$,
   removeSyncing,
@@ -53,6 +54,7 @@ import type {
   StakingLedgers,
 } from '../types/serviceDefault'
 import {
+  diffBonded,
   diffImportedAccounts,
   diffPoolIds,
   formatAccountAddresses,
@@ -106,6 +108,7 @@ export class KusamaService
   subProxies: Proxies<KusamaApi> = {}
   subActivePoolIds: Subscription
   subActivePools: ActivePools<KusamaApi> = {}
+  subActiveBonded: Subscription
 
   constructor(
     public networkConfig: NetworkConfig,
@@ -200,7 +203,6 @@ export class KusamaService
               getAccountKey(id, account)
             ]?.unsubscribe()
             this.subBonded[address]?.unsubscribe()
-            this.subStakingLedgers?.[address]?.unsubscribe()
             this.subProxies?.[address]?.unsubscribe()
           })
         }
@@ -217,16 +219,28 @@ export class KusamaService
           this.apiRelay,
           account.address
         )
-        this.subStakingLedgers[account.address] = new StakingLedgerQuery(
-          this.apiRelay,
-          account.address
-        )
         this.subProxies[account.address] = new ProxiesQuery(
           this.apiRelay,
           account.address
         )
       })
     })
+
+    this.subActiveBonded = bonded$
+      .pipe(startWith([]), pairwise())
+      .subscribe(([prev, cur]) => {
+        const { added, removed } = diffBonded(prev, cur)
+        removed.forEach(({ stash }) => {
+          this.subStakingLedgers?.[stash]?.unsubscribe()
+        })
+        added.forEach(({ stash, bonded }) => {
+          this.subStakingLedgers[stash] = new StakingLedgerQuery(
+            this.apiRelay,
+            stash,
+            bonded
+          )
+        })
+      })
 
     this.subActivePoolIds = activePoolIds$
       .pipe(startWith([]), pairwise())
@@ -252,6 +266,7 @@ export class KusamaService
       sub?.unsubscribe()
     }
     this.subActivePoolIds?.unsubscribe()
+    this.subActiveBonded?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {
       for (const sub of Object.values(subs)) {
         sub?.unsubscribe()

@@ -21,7 +21,8 @@ export class StakingLedgerQuery<T extends StakingChain> {
 
   constructor(
     public api: DedotClient<T>,
-    public address: string
+    public address: string,
+    public bonded: string
   ) {
     this.api = api
     this.subscribe()
@@ -32,7 +33,7 @@ export class StakingLedgerQuery<T extends StakingChain> {
       [
         {
           fn: this.api.query.staking.ledger,
-          args: [this.address],
+          args: [this.bonded],
         },
         {
           fn: this.api.query.staking.payee,
@@ -50,19 +51,8 @@ export class StakingLedgerQuery<T extends StakingChain> {
           fn: this.api.query.nominationPools.claimPermissions,
           args: [this.address],
         },
-        {
-          fn: this.api.query.staking.bonded,
-          args: [this.address],
-        },
       ],
-      async ([
-        ledger,
-        payee,
-        nominators,
-        poolMember,
-        claimPermission,
-        bonded,
-      ]) => {
+      async ([ledger, payee, nominators, poolMember, claimPermission]) => {
         let balance = 0n
         let pendingRewards = 0n
 
@@ -128,9 +118,7 @@ export class StakingLedgerQuery<T extends StakingChain> {
                   claimPermission,
                   pendingRewards,
                 },
-          controllerUnmigrated:
-            bonded !== undefined &&
-            bonded.address(this.api.consts.system.ss58Prefix) !== this.address,
+          controllerUnmigrated: this.bonded !== this.address,
         }
         setStakingLedger(this.address, stakingLedger)
 

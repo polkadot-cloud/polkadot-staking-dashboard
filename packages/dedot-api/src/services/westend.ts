@@ -9,6 +9,7 @@ import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
+  bonded$,
   defaultSyncStatus,
   importedAccounts$,
   removeSyncing,
@@ -53,6 +54,7 @@ import type {
   StakingLedgers,
 } from '../types/serviceDefault'
 import {
+  diffBonded,
   diffImportedAccounts,
   diffPoolIds,
   formatAccountAddresses,
@@ -106,6 +108,7 @@ export class WestendService
   subProxies: Proxies<WestendAssetHubApi> = {}
   subActivePoolIds: Subscription
   subActivePools: ActivePools<WestendAssetHubApi> = {}
+  subActiveBonded: Subscription
 
   constructor(
     public networkConfig: NetworkConfig,
@@ -199,7 +202,6 @@ export class WestendService
               getAccountKey(id, account)
             ]?.unsubscribe()
             this.subBonded[address]?.unsubscribe()
-            this.subStakingLedgers?.[address]?.unsubscribe()
             this.subProxies?.[address]?.unsubscribe()
           })
         }
@@ -216,16 +218,28 @@ export class WestendService
           this.apiHub,
           account.address
         )
-        this.subStakingLedgers[account.address] = new StakingLedgerQuery(
-          this.apiHub,
-          account.address
-        )
         this.subProxies[account.address] = new ProxiesQuery(
           this.apiHub,
           account.address
         )
       })
     })
+
+    this.subActiveBonded = bonded$
+      .pipe(startWith([]), pairwise())
+      .subscribe(([prev, cur]) => {
+        const { added, removed } = diffBonded(prev, cur)
+        removed.forEach(({ stash }) => {
+          this.subStakingLedgers?.[stash]?.unsubscribe()
+        })
+        added.forEach(({ stash, bonded }) => {
+          this.subStakingLedgers[stash] = new StakingLedgerQuery(
+            this.apiHub,
+            stash,
+            bonded
+          )
+        })
+      })
 
     this.subActivePoolIds = activePoolIds$
       .pipe(startWith([]), pairwise())
@@ -251,6 +265,7 @@ export class WestendService
       sub?.unsubscribe()
     }
     this.subActivePoolIds?.unsubscribe()
+    this.subActiveBonded?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {
       for (const sub of Object.values(subs)) {
         sub?.unsubscribe()
