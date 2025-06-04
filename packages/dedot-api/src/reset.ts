@@ -8,6 +8,7 @@ import {
   resetActivePools,
   resetApiStatus,
   resetBlockNumber,
+  resetBonded,
   resetChainSpecs,
   resetConsts,
   resetEraRewardPoints,
@@ -27,6 +28,7 @@ export const onNetworkReset = () => {
 
   resetAccountBalances()
   resetStakingLedgers()
+  resetBonded()
   resetProxies()
 
   resetBlockNumber()
