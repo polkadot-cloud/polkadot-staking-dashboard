@@ -3,7 +3,7 @@
 
 import { isValidAddress } from '@w3ux/utils'
 import { removeLocalInviteConfig } from './local'
-import type { InviteConfig, NominatorInvite, PoolInvite } from './types'
+import type { InviteConfig } from './types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isInviteValid = (raw: any): raw is InviteConfig => {
@@ -19,11 +19,11 @@ export const isInviteValid = (raw: any): raw is InviteConfig => {
 
     switch (raw.type) {
       case 'pool': {
-        const { poolId } = raw.invite as PoolInvite
+        const { poolId } = raw.invite
         return typeof poolId === 'number' && !isNaN(poolId)
       }
       case 'validator': {
-        const { validators } = raw.invite as NominatorInvite
+        const { validators } = raw.invite
         return (
           Array.isArray(validators) &&
           validators.length > 0 &&

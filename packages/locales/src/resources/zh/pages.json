@@ -46,7 +46,6 @@
     "connect": "连接",
     "connecting": "连接中",
     "controllerAccount": "Controller 账户",
-    "controllerNotImported": "尚未导入Controller帐户。如果无法访问该帐户,请立即设置新帐户。否则,请将该账户导入扩展之一",
     "createAPool": "创建提名池",
     "createPool": "创建提名池",
     "daily": "每日",

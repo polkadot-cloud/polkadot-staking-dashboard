@@ -31,13 +31,13 @@ export const SetClaimPermission = ({
 }) => {
   const { t } = useTranslation('modals')
   const { serviceApi } = useApi()
-  const { getStakingLedger } = useBalances()
+  const { getPoolMembership } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
   const { isOwner, isMember } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
 
-  const { poolMembership } = getStakingLedger(activeAddress)
+  const { membership } = getPoolMembership(activeAddress)
 
   // Valid to submit transaction.
   const [valid, setValid] = useState<boolean>(false)
@@ -45,15 +45,15 @@ export const SetClaimPermission = ({
   // Updated claim permission value.
   const [claimPermission, setClaimPermission] = useState<
     ClaimPermission | undefined
-  >(poolMembership?.claimPermission)
+  >(membership?.claimPermission)
 
   // Determine current pool metadata and set in state.
   useEffect(() => {
-    const current = poolMembership?.claimPermission
+    const current = membership?.claimPermission
     if (current) {
-      setClaimPermission(poolMembership?.claimPermission)
+      setClaimPermission(membership?.claimPermission)
     }
-  }, [section, poolMembership])
+  }, [section, membership])
 
   useEffect(() => {
     setValid(isOwner() || (isMember() && claimPermission !== undefined))
@@ -93,14 +93,14 @@ export const SetClaimPermission = ({
         ) : null}
 
         <ClaimPermissionInput
-          current={poolMembership?.claimPermission || defaultClaimPermission}
+          current={membership?.claimPermission || defaultClaimPermission}
           onChange={(val: ClaimPermission | undefined) => {
             setClaimPermission(val)
           }}
         />
       </Padding>
       <SubmitTx
-        valid={valid && claimPermission !== poolMembership?.claimPermission}
+        valid={valid && claimPermission !== membership?.claimPermission}
         buttons={[
           <ButtonSubmitInvert
             key="button_back"
