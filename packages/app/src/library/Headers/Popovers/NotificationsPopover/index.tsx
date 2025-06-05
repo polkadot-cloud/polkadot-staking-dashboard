@@ -20,12 +20,12 @@ export const NotificationsPopover = ({
 }) => {
   const { t } = useTranslation('app')
   const { isNominator } = useStaking()
-  const { getStakingLedger } = useBalances()
+  const { getPoolMembership } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { inviteConfig, dismissInvite } = useInvites()
 
-  const { poolMembership } = getStakingLedger(activeAddress)
-  const alreadyStaking = poolMembership || isNominator
+  const { membership } = getPoolMembership(activeAddress)
+  const alreadyStaking = membership || isNominator
 
   // NOTE: We assume a valid pool invite is active
   const popoverRef = useRef<HTMLDivElement>(null)
@@ -61,7 +61,7 @@ export const NotificationsPopover = ({
             }}
             disabled={true}
           />
-        ) : poolId && !poolMembership ? (
+        ) : poolId && !membership ? (
           <Pool poolId={poolId} setOpen={setOpen} />
         ) : (
           // eslint-disable-next-line react/jsx-no-useless-fragment

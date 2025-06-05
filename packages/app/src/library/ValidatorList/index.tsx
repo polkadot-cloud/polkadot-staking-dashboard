@@ -3,6 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getPeopleChainId } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
@@ -278,7 +279,7 @@ export const ValidatorListInner = ({
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate()
     }
-  }, [order, includes, excludes, getApiStatus(`people-${network}`)])
+  }, [order, includes, excludes, getApiStatus(getPeopleChainId(network))])
 
   // Handle modal resize on list format change
   useEffect(() => {

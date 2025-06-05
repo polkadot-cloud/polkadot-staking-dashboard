@@ -4,12 +4,19 @@
 import type { PalletNominationPoolsClaimPermission } from 'dedot/chaintypes'
 import type { RewardDestinaton } from './staking'
 
-export interface StakingLedger {
+export interface Bonded {
+  stash: string
+  bonded: string
+}
+
+export interface PoolMembershipState {
   synced: boolean
+  membership: PoolMembership | undefined
+}
+export interface StakingLedger {
   ledger: Ledger | undefined
   payee: Payee | undefined
   nominators: Nominators | undefined
-  poolMembership: PoolMembership | undefined
   controllerUnmigrated: boolean
 }
 

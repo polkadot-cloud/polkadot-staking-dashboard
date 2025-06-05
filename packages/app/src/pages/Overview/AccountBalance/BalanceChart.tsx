@@ -28,11 +28,10 @@ export const BalanceChart = () => {
   const { network } = useNetwork()
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
-  const { getStakingLedger } = useBalances()
-  const { getAccountBalance } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
+  const { getStakingLedger, getAccountBalance } = useBalances()
   const { feeReserve, getTransferOptions } = useTransferOptions()
   const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token

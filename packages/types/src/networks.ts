@@ -7,7 +7,11 @@ import type { FunctionComponent, SVGProps } from 'react'
 
 export type ChainId = NetworkId | SystemChainId
 
-export type NetworkId = 'polkadot' | 'kusama' | 'westend'
+export type NetworkId = DefaultServiceNetworkId
+
+export type DefaultServiceNetworkId = 'polkadot' | 'kusama' | 'westend'
+
+export type OperatorsSupportedNetwork = 'polkadot' | 'kusama' | 'westend'
 
 export type SystemChainId =
   | 'people-polkadot'
@@ -109,8 +113,11 @@ export interface Network {
   ss58: number
   defaultFeeReserve: bigint
   meta: {
+    hubChain: ChainId
+    peopleChain: ChainId
     stakingChain: ChainId
     subscanBalanceChainId: string
+    supportOperators: boolean
   }
 }
 

@@ -2,16 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ValidatorEntry } from '@w3ux/validator-assets'
-import { useNetwork } from 'contexts/Network'
 import { useOperators } from 'contexts/Operators'
 import { useEffect, useState } from 'react'
+import type { DefaultServiceNetworkId } from 'types'
 import { Page } from 'ui-core/base'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
 import { useOperatorsSections } from './context'
 
-export const List = () => {
-  const { network } = useNetwork()
+export const List = ({ network }: { network: DefaultServiceNetworkId }) => {
   const { scrollPos } = useOperatorsSections()
   const { validatorOperators } = useOperators()
 
@@ -44,7 +43,12 @@ export const List = () => {
     <Page.Row yMargin>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         {entityItems.map((item, index: number) => (
-          <Item key={`operator_item_${index}`} item={item} actionable />
+          <Item
+            key={`operator_item_${index}`}
+            network={network}
+            item={item}
+            actionable
+          />
         ))}
       </ItemsWrapper>
     </Page.Row>

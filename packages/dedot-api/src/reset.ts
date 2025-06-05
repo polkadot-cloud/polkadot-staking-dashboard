@@ -8,11 +8,13 @@ import {
   resetActivePools,
   resetApiStatus,
   resetBlockNumber,
+  resetBonded,
   resetChainSpecs,
   resetConsts,
   resetEraRewardPoints,
   resetFastUnstakeConfig,
   resetFastUnstakeQueue,
+  resetPoolMemberships,
   resetPoolsConfig,
   resetProxies,
   resetRelayMetrics,
@@ -26,7 +28,9 @@ export const onNetworkReset = () => {
   resetActivePoolIds()
 
   resetAccountBalances()
+  resetPoolMemberships()
   resetStakingLedgers()
+  resetBonded()
   resetProxies()
 
   resetBlockNumber()

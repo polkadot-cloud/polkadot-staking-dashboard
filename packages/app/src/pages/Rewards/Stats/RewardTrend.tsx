@@ -6,9 +6,9 @@ import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
+import { getPoolMembership } from 'global-bus'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { Ticker } from 'library/StatCards/Ticker'
 import {
@@ -25,11 +25,10 @@ export const RewardTrend = () => {
   const { activeEra } = useApi()
   const { isNominator } = useStaking()
   const { erasPerDay } = useErasPerDay()
-  const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
 
   const { unit, units } = getStakingChainData(network)
-  const { poolMembership } = getStakingLedger(activeAddress)
+  const { membership } = getPoolMembership(activeAddress)
   const eras = erasPerDay * 30
   // NOTE: 30 day duration in seconds
   const duration = 2592000
@@ -40,7 +39,7 @@ export const RewardTrend = () => {
   // Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
   const getRewardTrend = async () => {
     if (activeAddress && activeEra.index > 0) {
-      const result = poolMembership
+      const result = membership
         ? await fetchPoolRewardTrend(network, activeAddress, duration)
         : await fetchNominatorRewardTrend(network, activeAddress, eras)
       setRewardTrend(result)
@@ -49,14 +48,14 @@ export const RewardTrend = () => {
 
   useEffect(() => {
     setRewardTrend(null)
-    if (isNominator || poolMembership) {
+    if (isNominator || membership) {
       getRewardTrend()
     }
   }, [
     activeAddress,
     network,
     activeEra.index.toString(),
-    poolMembership,
+    membership,
     isNominator,
   ])
 
