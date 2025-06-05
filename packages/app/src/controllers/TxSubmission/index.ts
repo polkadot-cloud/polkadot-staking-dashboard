@@ -80,7 +80,26 @@ export class TxSubmission {
         }
       )
     } catch (e) {
-      onError('default')
+      // Enhanced error categorization
+      const errorMessage = String(e)
+      if (
+        errorMessage.includes('User rejected') ||
+        errorMessage.includes('Cancelled') ||
+        errorMessage.includes('user rejected') ||
+        errorMessage.includes('cancelled by user') ||
+        errorMessage.includes('UserCancel')
+      ) {
+        onError('user_cancelled', errorMessage)
+      } else if (
+        errorMessage.includes('insufficient') ||
+        errorMessage.includes('balance') ||
+        errorMessage.includes('InsufficientBalance') ||
+        errorMessage.includes('not enough')
+      ) {
+        onError('insufficient_funds', errorMessage)
+      } else {
+        onError('default', errorMessage)
+      }
       this.deleteTx(uid)
     }
   }
@@ -98,7 +117,26 @@ export class TxSubmission {
         this.handleResult(uid, status, onRest)
       })
     } catch (e) {
-      onError('default')
+      // Enhanced error categorization
+      const errorMessage = String(e)
+      if (
+        errorMessage.includes('User rejected') ||
+        errorMessage.includes('Cancelled') ||
+        errorMessage.includes('user rejected') ||
+        errorMessage.includes('cancelled by user') ||
+        errorMessage.includes('UserCancel')
+      ) {
+        onError('user_cancelled', errorMessage)
+      } else if (
+        errorMessage.includes('insufficient') ||
+        errorMessage.includes('balance') ||
+        errorMessage.includes('InsufficientBalance') ||
+        errorMessage.includes('not enough')
+      ) {
+        onError('insufficient_funds', errorMessage)
+      } else {
+        onError('default', errorMessage)
+      }
       this.deleteTx(uid)
     }
   }
