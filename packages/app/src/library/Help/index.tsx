@@ -13,7 +13,7 @@ import { useUi } from 'contexts/UI'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { DefaultLocale } from 'locales'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
 import { Container, Content, Scroll } from 'ui-core/canvas'
@@ -64,6 +64,9 @@ export const Help = () => {
     'resources' | 'definitions' | 'articles' | 'support'
   >('resources')
 
+  // Search functionality state
+  const [searchTerm, setSearchTerm] = useState<string>('')
+
   const onFadeIn = useCallback(async () => {
     await controls.start('visible')
   }, [])
@@ -91,6 +94,11 @@ export const Help = () => {
       window.dispatchEvent(new Event('resize'))
     }
   }, [advancedMode, status])
+
+  // Reset search when switching modes or tabs
+  useEffect(() => {
+    setSearchTerm('')
+  }, [advancedMode, tab])
 
   // render early if help not open
   if (status === 'closed') {
@@ -136,6 +144,22 @@ export const Help = () => {
       )
     })
 
+  // Filter definitions based on search term
+  const filteredDefinitions = activeDefinitions.filter((item) => {
+    if (!searchTerm.trim()) {
+      return true
+    }
+    const searchLower = searchTerm.toLowerCase()
+    return (
+      item.title.toLowerCase().includes(searchLower) ||
+      (Array.isArray(item.description)
+        ? item.description.some((desc: string) =>
+            desc.toLowerCase().includes(searchLower)
+          )
+        : item.description.toLowerCase().includes(searchLower))
+    )
+  })
+
   // get active definiton
   const activeRecord = definition
     ? definitions.find((d) => d === definition)
@@ -178,6 +202,18 @@ export const Help = () => {
     }
   })
 
+  // Filter articles based on search term
+  const filteredExternals = activeExternals.filter((item) => {
+    if (!searchTerm.trim()) {
+      return true
+    }
+    const searchLower = searchTerm.toLowerCase()
+    return (
+      item.title.toLowerCase().includes(searchLower) ||
+      item.website.toLowerCase().includes(searchLower)
+    )
+  })
+
   // Select helpresources file based on language
   let helpResources: typeof helpResourcesEn = helpResourcesEn
   if (i18n.resolvedLanguage === 'es') {
@@ -191,6 +227,29 @@ export const Help = () => {
     const path = advancedMode ? 'advanced' : 'essential'
     const learningPath = helpResources.learningPaths[path]
     const navigation = helpResources.navigation
+
+    // Filter resources based on search term
+    const filteredResources = learningPath.resources.filter(
+      (item: { question: string; answer: string }) => {
+        if (!searchTerm.trim()) {
+          return true
+        }
+        const searchLower = searchTerm.toLowerCase()
+        const questionProcessed = item.question
+          .replace(/\{network\}/g, capitalizedNetwork)
+          .replace(/\{token\}/g, networkUnit)
+          .toLowerCase()
+        const answerProcessed = item.answer
+          .replace(/\{network\}/g, capitalizedNetwork)
+          .replace(/\{token\}/g, networkUnit)
+          .toLowerCase()
+
+        return (
+          questionProcessed.includes(searchLower) ||
+          answerProcessed.includes(searchLower)
+        )
+      }
+    )
     return (
       <Container
         initial={{ opacity: 0, scale: 1.05 }}
@@ -289,7 +348,73 @@ export const Help = () => {
                   <h3 style={{ margin: '0 0 1.5rem 0' }}>
                     {learningPath.description}
                   </h3>
-                  {learningPath.resources.map(
+
+                  {/* Search Input */}
+                  <div style={{ marginBottom: '1.5rem', width: '100%' }}>
+                    <div style={{ position: 'relative' }}>
+                      <input
+                        type="text"
+                        placeholder={`Search ${filteredResources.length} resources...`}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem 1rem',
+                          borderRadius: '0.75rem',
+                          border: '1px solid var(--border-primary)',
+                          background: 'var(--background-default)',
+                          color: 'var(--text-color-primary)',
+                          fontSize: '1rem',
+                          fontFamily: 'Inter, sans-serif',
+                          outline: 'none',
+                          transition: 'border-color 0.2s ease',
+                          boxSizing: 'border-box',
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor =
+                            'var(--accent-color-primary)'
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = 'var(--border-primary)'
+                        }}
+                      />
+                      {searchTerm && (
+                        <button
+                          onClick={() => setSearchTerm('')}
+                          style={{
+                            position: 'absolute',
+                            right: '0.75rem',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: 'none',
+                            border: 'none',
+                            color: 'var(--text-color-secondary)',
+                            cursor: 'pointer',
+                            padding: '0.25rem',
+                            fontSize: '1.1rem',
+                          }}
+                          title="Clear search"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
+                    {searchTerm && (
+                      <p
+                        style={{
+                          margin: '0.5rem 0 0 0',
+                          fontSize: '0.9rem',
+                          color: 'var(--text-color-secondary)',
+                        }}
+                      >
+                        {filteredResources.length === 0
+                          ? 'No resources found matching your search.'
+                          : `Showing ${filteredResources.length} of ${learningPath.resources.length} resources`}
+                      </p>
+                    )}
+                  </div>
+
+                  {filteredResources.map(
                     (item: { question: string; answer: string }, i: number) => (
                       <Definition
                         key={`lp_def_${i}`}
@@ -318,9 +443,76 @@ export const Help = () => {
               ) : tab === 'definitions' ? (
                 <>
                   <HelpTitle>{t('modal.definitions', 'Definitions')}</HelpTitle>
+
                   {activeDefinitions.length > 0 && (
                     <>
-                      {activeDefinitions.map((item, index: number) => (
+                      {/* Search Input for Definitions */}
+                      <div style={{ marginBottom: '1.5rem', width: '100%' }}>
+                        <div style={{ position: 'relative' }}>
+                          <input
+                            type="text"
+                            placeholder={`Search ${filteredDefinitions.length} definitions...`}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{
+                              width: '100%',
+                              padding: '0.75rem 1rem',
+                              borderRadius: '0.75rem',
+                              border: '1px solid var(--border-primary)',
+                              background: 'var(--background-default)',
+                              color: 'var(--text-color-primary)',
+                              fontSize: '1rem',
+                              fontFamily: 'Inter, sans-serif',
+                              outline: 'none',
+                              transition: 'border-color 0.2s ease',
+                              boxSizing: 'border-box',
+                            }}
+                            onFocus={(e) => {
+                              e.target.style.borderColor =
+                                'var(--accent-color-primary)'
+                            }}
+                            onBlur={(e) => {
+                              e.target.style.borderColor =
+                                'var(--border-primary)'
+                            }}
+                          />
+                          {searchTerm && (
+                            <button
+                              onClick={() => setSearchTerm('')}
+                              style={{
+                                position: 'absolute',
+                                right: '0.75rem',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                background: 'none',
+                                border: 'none',
+                                color: 'var(--text-color-secondary)',
+                                cursor: 'pointer',
+                                padding: '0.25rem',
+                                fontSize: '1.1rem',
+                              }}
+                              title="Clear search"
+                            >
+                              ×
+                            </button>
+                          )}
+                        </div>
+                        {searchTerm && (
+                          <p
+                            style={{
+                              margin: '0.5rem 0 0 0',
+                              fontSize: '0.9rem',
+                              color: 'var(--text-color-secondary)',
+                            }}
+                          >
+                            {filteredDefinitions.length === 0
+                              ? 'No definitions found matching your search.'
+                              : `Showing ${filteredDefinitions.length} of ${activeDefinitions.length} definitions`}
+                          </p>
+                        )}
+                      </div>
+
+                      {filteredDefinitions.map((item, index: number) => (
                         <Definition
                           key={`def_${index}`}
                           title={item.title}
@@ -335,7 +527,73 @@ export const Help = () => {
                   <HelpTitle>{t('modal.articles', 'Articles')}</HelpTitle>
                   {activeExternals.length > 0 ? (
                     <>
-                      {activeExternals.map((item, index: number) => (
+                      {/* Search Input for Articles */}
+                      <div style={{ marginBottom: '1.5rem', width: '100%' }}>
+                        <div style={{ position: 'relative' }}>
+                          <input
+                            type="text"
+                            placeholder={`Search ${filteredExternals.length} articles...`}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{
+                              width: '100%',
+                              padding: '0.75rem 1rem',
+                              borderRadius: '0.75rem',
+                              border: '1px solid var(--border-primary)',
+                              background: 'var(--background-default)',
+                              color: 'var(--text-color-primary)',
+                              fontSize: '1rem',
+                              fontFamily: 'Inter, sans-serif',
+                              outline: 'none',
+                              transition: 'border-color 0.2s ease',
+                              boxSizing: 'border-box',
+                            }}
+                            onFocus={(e) => {
+                              e.target.style.borderColor =
+                                'var(--accent-color-primary)'
+                            }}
+                            onBlur={(e) => {
+                              e.target.style.borderColor =
+                                'var(--border-primary)'
+                            }}
+                          />
+                          {searchTerm && (
+                            <button
+                              onClick={() => setSearchTerm('')}
+                              style={{
+                                position: 'absolute',
+                                right: '0.75rem',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                background: 'none',
+                                border: 'none',
+                                color: 'var(--text-color-secondary)',
+                                cursor: 'pointer',
+                                padding: '0.25rem',
+                                fontSize: '1.1rem',
+                              }}
+                              title="Clear search"
+                            >
+                              ×
+                            </button>
+                          )}
+                        </div>
+                        {searchTerm && (
+                          <p
+                            style={{
+                              margin: '0.5rem 0 0 0',
+                              fontSize: '0.9rem',
+                              color: 'var(--text-color-secondary)',
+                            }}
+                          >
+                            {filteredExternals.length === 0
+                              ? 'No articles found matching your search.'
+                              : `Showing ${filteredExternals.length} of ${activeExternals.length} articles`}
+                          </p>
+                        )}
+                      </div>
+
+                      {filteredExternals.map((item, index: number) => (
                         <External
                           key={`ext_${index}`}
                           width="100%"
