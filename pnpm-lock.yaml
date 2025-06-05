@@ -147,8 +147,8 @@ importers:
         specifier: ^2.20.3
         version: 2.20.3(bufferutil@4.0.9)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@3.24.4)
       '@zondax/ledger-substrate':
-        specifier: ^1.1.1
-        version: 1.1.1
+        specifier: ^1.1.2
+        version: 1.1.2
       assets:
         specifier: workspace:*
         version: link:../assets
@@ -2858,8 +2858,8 @@ packages:
   '@zondax/ledger-js@1.2.0':
     resolution: {integrity: sha512-HGvDU0s4zg0scu8ebGenFHFB6g5SLDqmrctncZUY9ie5pGibOU8C0VdjZSHbttSOCyh+IloLi/a4jyMPOEQGuQ==}
 
-  '@zondax/ledger-substrate@1.1.1':
-    resolution: {integrity: sha512-qgsLNJb6ijKZ+gSOsUfsm7DSlyZhFQCsHI1om1LB/PVhQd4SWuD8f9KMgOh9ayfCdXoVaMBJp6+o9p3P+J1szA==}
+  '@zondax/ledger-substrate@1.1.2':
+    resolution: {integrity: sha512-O6DUhAYXNKuEdng0ih/6Gka6CKvDekfjtuaNAHzxv9Eq89vjRxCK8JE6Zh2qUb7DFxmyx8kdJ8um/dzs3t5Q+A==}
 
   abitype@1.0.8:
     resolution: {integrity: sha512-ZeiI6h3GnW06uYDLx0etQtX/p8E24UaHHBj57RSjK7YBFe7iuVn07EDpOeP451D06sF27VOz9JJPlIKJmXgkEg==}
@@ -9092,7 +9092,7 @@ snapshots:
     dependencies:
       '@ledgerhq/hw-transport': 6.31.4
 
-  '@zondax/ledger-substrate@1.1.1':
+  '@zondax/ledger-substrate@1.1.2':
     dependencies:
       '@ledgerhq/hw-transport': 6.31.4
       '@zondax/ledger-js': 1.2.0
