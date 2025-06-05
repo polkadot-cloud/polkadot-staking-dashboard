@@ -81,7 +81,7 @@ export const ClosurePrompts = () => {
                     ? t('unlocked')
                     : String(totalUnlockChunks ?? 0)
                 }
-                disabled={syncing || !isBonding()}
+                disabled={syncing || !isBonding}
                 onClick={() =>
                   openModal({
                     key: 'UnlockChunks',

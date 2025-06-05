@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -36,7 +36,7 @@ export const ClaimCommission = ({
   const { isOwner, activePool } = useActivePool()
   const { getSignerWarnings } = useSignerWarnings()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const poolId = activePool?.id
   const pendingCommission = new BigNumber(
     activePool?.rewardPool?.totalCommissionPending || 0

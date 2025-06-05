@@ -8,7 +8,7 @@ import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import type {
@@ -35,9 +35,9 @@ export const Ledger = () => {
   } = useHardwareAccounts()
   const {
     getFeedback,
+    isExecuting,
     setStatusCode,
     handleUnmount,
-    getIsExecuting,
     resetStatusCode,
     handleGetAddress,
     transportResponse,
@@ -46,7 +46,7 @@ export const Ledger = () => {
   const { setModalResize } = useOverlay().modal
   const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
     useOtherAccounts()
-  const { ss58 } = getNetworkData(network)
+  const { ss58 } = getStakingChainData(network)
   const source: HardwareAccountSource = 'ledger'
 
   // Store addresses retreived from Ledger device. Defaults to local addresses
@@ -54,9 +54,6 @@ export const Ledger = () => {
     getHardwareAccounts(source, network)
   )
   const addressesRef = useRef(addresses)
-
-  // Get whether the ledger device is currently executing a task
-  const isExecuting = getIsExecuting()
 
   // Handle exist check for a ledger address
   const handleExists = (address: string) =>
@@ -107,7 +104,7 @@ export const Ledger = () => {
       return
     }
     const { ack, statusCode, body, options } = response
-    setStatusCode(ack, statusCode)
+    setStatusCode({ ack, statusCode })
 
     if (statusCode === 'ReceivedAddress') {
       const newAddress = body.map(({ pubKey, address }: LedgerAddress) => ({

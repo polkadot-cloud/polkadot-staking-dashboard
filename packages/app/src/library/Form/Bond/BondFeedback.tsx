@@ -3,7 +3,7 @@
 
 import { maxBigInt, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -12,7 +12,6 @@ import { useTransferOptions } from 'contexts/TransferOptions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Warning } from '../Warning'
-import { Spacer } from '../Wrappers'
 import type { BondFeedbackProps } from '../types'
 import { BondInput } from './BondInput'
 
@@ -38,7 +37,7 @@ export const BondFeedback = ({
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const { getTransferOptions } = useTransferOptions()
   const allTransferOptions = getTransferOptions(activeAddress)
 
@@ -177,7 +176,6 @@ export const BondFeedback = ({
       {filteredErrors.map((err, i) => (
         <Warning key={`setup_error_${i}`} text={err} />
       ))}
-      <Spacer />
       <div
         style={{
           width: '100%',

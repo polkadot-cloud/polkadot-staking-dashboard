@@ -4,7 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { maxBigInt, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -27,10 +27,15 @@ export const TransferOptionsProvider = ({
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
-  const { getStakingLedger, getAccountBalance, getEdReserved } = useBalances()
+  const {
+    getPoolMembership,
+    getStakingLedger,
+    getAccountBalance,
+    getEdReserved,
+  } = useBalances()
 
-  const { poolMembership } = getStakingLedger(activeAddress)
-  const { units, defaultFeeReserve } = getNetworkData(network)
+  const { membership } = getPoolMembership(activeAddress)
+  const { units, defaultFeeReserve } = getStakingChainData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
   const [feeReserve, setFeeReserve] = useState<bigint>(
@@ -86,7 +91,7 @@ export const TransferOptionsProvider = ({
     }
 
     const poolBalances = () => {
-      const unlockingPool = (poolMembership?.unbondingEras || []).map(
+      const unlockingPool = (membership?.unbondingEras || []).map(
         ([era, value]) => ({
           era,
           value,
@@ -98,7 +103,7 @@ export const TransferOptionsProvider = ({
       } = getUnlocking(unlockingPool, activeEra.index)
 
       return {
-        active: poolMembership?.balance || 0n,
+        active: membership?.balance || 0n,
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: maxBigInt(transferrableBalance - maxReserve, 0n),

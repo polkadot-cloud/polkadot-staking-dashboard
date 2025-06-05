@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { PolkadotAssetHubApi } from '@dedot/chaintypes'
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import { formatAccountSs58 } from '@w3ux/utils'
@@ -8,9 +9,13 @@ import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
+  bonded$,
+  defaultSyncStatus,
   importedAccounts$,
+  removeSyncing,
   setConsts,
   setMultiChainSpecs,
+  setSyncingMulti,
 } from 'global-bus'
 import { pairwise, startWith, type Subscription } from 'rxjs'
 import type {
@@ -29,9 +34,11 @@ import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { ActivePoolQuery } from '../subscribe/activePool'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
+import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
+import { PoolMembershipQuery } from '../subscribe/poolMembership'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { ProxiesQuery } from '../subscribe/proxies'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
@@ -42,11 +49,14 @@ import { createPool } from '../tx/createPool'
 import type {
   AccountBalances,
   ActivePools,
+  BondedAccounts,
   DefaultServiceClass,
+  PoolMemberships,
   Proxies,
   StakingLedgers,
 } from '../types/serviceDefault'
 import {
+  diffBonded,
   diffImportedAccounts,
   diffPoolIds,
   formatAccountAddresses,
@@ -55,13 +65,22 @@ import {
 } from '../util'
 
 export class PolkadotService
-  implements DefaultServiceClass<PolkadotApi, PolkadotPeopleApi, PolkadotApi>
+  implements
+    DefaultServiceClass<
+      PolkadotApi,
+      PolkadotPeopleApi,
+      PolkadotAssetHubApi,
+      PolkadotApi
+    >
 {
   relayChainSpec: ChainSpecs<PolkadotApi>
   peopleChainSpec: ChainSpecs<PolkadotPeopleApi>
+  hubChainSpec: ChainSpecs<PolkadotAssetHubApi>
+
   apiStatus: {
     relay: ApiStatus<PolkadotApi>
     people: ApiStatus<PolkadotPeopleApi>
+    hub: ApiStatus<PolkadotAssetHubApi>
   }
   coreConsts: CoreConsts<PolkadotApi>
   stakingConsts: StakingConsts<PolkadotApi>
@@ -77,52 +96,66 @@ export class PolkadotService
   subActiveAddress: Subscription
   subImportedAccounts: Subscription
   subActiveEra: Subscription
-  subAccountBalances: AccountBalances<PolkadotApi, PolkadotPeopleApi> = {
+  subAccountBalances: AccountBalances<
+    PolkadotApi,
+    PolkadotPeopleApi,
+    PolkadotAssetHubApi
+  > = {
     relay: {},
     people: {},
+    hub: {},
   }
+  subBonded: BondedAccounts<PolkadotApi> = {}
   subStakingLedgers: StakingLedgers<PolkadotApi> = {}
+  subPoolMemberships: PoolMemberships<PolkadotApi> = {}
   subProxies: Proxies<PolkadotApi> = {}
   subActivePoolIds: Subscription
   subActivePools: ActivePools<PolkadotApi> = {}
+  subActiveBonded: Subscription
 
   constructor(
     public networkConfig: NetworkConfig,
-    public ids: [NetworkId, SystemChainId],
+    public ids: [NetworkId, SystemChainId, SystemChainId],
     public apiRelay: DedotClient<PolkadotApi>,
-    public apiPeople: DedotClient<PolkadotPeopleApi>
+    public apiPeople: DedotClient<PolkadotPeopleApi>,
+    public apiHub: DedotClient<PolkadotAssetHubApi>
   ) {
-    this.ids = ids
-    this.apiRelay = apiRelay
-    this.apiPeople = apiPeople
-    this.networkConfig = networkConfig
     this.apiStatus = {
       relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
       people: new ApiStatus(this.apiPeople, ids[1], networkConfig),
+      hub: new ApiStatus(this.apiHub, ids[2], networkConfig),
     }
   }
 
   getApi = (id: string) => {
     if (id === this.ids[0]) {
       return this.apiRelay
-    } else {
+    } else if (id === this.ids[1]) {
       return this.apiPeople
+    } else {
+      return this.apiHub
     }
   }
 
   start = async () => {
     this.relayChainSpec = new ChainSpecs(this.apiRelay)
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
+    this.hubChainSpec = new ChainSpecs(this.apiHub)
+
     this.coreConsts = new CoreConsts(this.apiRelay)
     this.stakingConsts = new StakingConsts(this.apiRelay)
+
+    setSyncingMulti(defaultSyncStatus)
 
     await Promise.all([
       this.relayChainSpec.fetch(),
       this.peopleChainSpec.fetch(),
+      this.hubChainSpec.fetch(),
     ])
     setMultiChainSpecs({
       [this.ids[0]]: this.relayChainSpec.get(),
       [this.ids[1]]: this.peopleChainSpec.get(),
+      [this.ids[2]]: this.hubChainSpec.get(),
     })
     setConsts(this.ids[0], {
       ...this.coreConsts.get(),
@@ -173,8 +206,9 @@ export class PolkadotService
             this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
               getAccountKey(id, account)
             ]?.unsubscribe()
-            this.subStakingLedgers?.[address]?.unsubscribe()
+            this.subBonded[address]?.unsubscribe()
             this.subProxies?.[address]?.unsubscribe()
+            this.subPoolMemberships?.[address]?.unsubscribe()
           })
         }
       })
@@ -183,8 +217,14 @@ export class PolkadotService
           new AccountBalanceQuery(this.apiRelay, this.ids[0], account.address)
         this.subAccountBalances['people'][getAccountKey(this.ids[1], account)] =
           new AccountBalanceQuery(this.apiPeople, this.ids[1], account.address)
+        this.subAccountBalances['hub'][getAccountKey(this.ids[2], account)] =
+          new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
-        this.subStakingLedgers[account.address] = new StakingLedgerQuery(
+        this.subBonded[account.address] = new BondedQuery(
+          this.apiRelay,
+          account.address
+        )
+        this.subPoolMemberships[account.address] = new PoolMembershipQuery(
           this.apiRelay,
           account.address
         )
@@ -194,6 +234,22 @@ export class PolkadotService
         )
       })
     })
+
+    this.subActiveBonded = bonded$
+      .pipe(startWith([]), pairwise())
+      .subscribe(([prev, cur]) => {
+        const { added, removed } = diffBonded(prev, cur)
+        removed.forEach(({ stash }) => {
+          this.subStakingLedgers?.[stash]?.unsubscribe()
+        })
+        added.forEach(({ stash, bonded }) => {
+          this.subStakingLedgers[stash] = new StakingLedgerQuery(
+            this.apiRelay,
+            stash,
+            bonded
+          )
+        })
+      })
 
     this.subActivePoolIds = activePoolIds$
       .pipe(startWith([]), pairwise())
@@ -211,6 +267,7 @@ export class PolkadotService
           )
         })
       })
+    removeSyncing('initialization')
   }
 
   unsubscribe = async () => {
@@ -218,12 +275,19 @@ export class PolkadotService
       sub?.unsubscribe()
     }
     this.subActivePoolIds?.unsubscribe()
+    this.subActiveBonded?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {
       for (const sub of Object.values(subs)) {
         sub?.unsubscribe()
       }
     }
     for (const sub of Object.values(this.subStakingLedgers)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subBonded)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subPoolMemberships)) {
       sub?.unsubscribe()
     }
     for (const sub of Object.values(this.subProxies)) {
@@ -242,7 +306,11 @@ export class PolkadotService
     this.eraRewardPoints?.unsubscribe()
     this.fastUnstakeQueue?.unsubscribe()
 
-    await Promise.all([this.apiRelay.disconnect(), this.apiPeople.disconnect()])
+    await Promise.all([
+      this.apiRelay.disconnect(),
+      this.apiPeople.disconnect(),
+      this.apiHub.disconnect(),
+    ])
   }
 
   interface: ServiceInterface = {
@@ -337,6 +405,7 @@ export class PolkadotService
       poolWithdraw: (who, numSlashingSpans) =>
         tx.poolWithdraw(this.apiRelay, who, numSlashingSpans),
       proxy: (real, call) => tx.proxy(this.apiRelay, real, call),
+      setController: () => tx.setController(this.apiRelay),
       stakingBondExtra: (bond) => tx.stakingBondExtra(this.apiRelay, bond),
       stakingChill: () => tx.stakingChill(this.apiRelay),
       stakingNominate: (nominees) =>

@@ -5,6 +5,7 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getPeopleChainId } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -262,15 +263,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!inEra) {
       return 0n
     }
-    let totalStake = 0n
-    const { others, own } = inEra
-    if (own) {
-      totalStake = totalStake + BigInt(own)
-    }
-    others.forEach(({ value }) => {
-      totalStake = totalStake + BigInt(value)
-    })
-    return totalStake
+
+    // Use the total directly from the validator data, which comes from the chain
+    // This ensures we get the correct total even if we're missing some nominator data
+    return BigInt(inEra.total)
   }
 
   // Gets average validator reward for provided number of days
@@ -386,7 +382,12 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && activeEra.index > 0) {
       fetchValidators()
     }
-  }, [validators.status, isReady, getApiStatus(`people-${network}`), activeEra])
+  }, [
+    validators.status,
+    isReady,
+    getApiStatus(getPeopleChainId(network)),
+    activeEra,
+  ])
 
   // Mark unsynced and fetch session validators and average reward when activeEra changes
   useEffectIgnoreInitial(() => {

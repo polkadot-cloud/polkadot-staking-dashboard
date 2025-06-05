@@ -7,12 +7,19 @@ import type { FunctionComponent, SVGProps } from 'react'
 
 export type ChainId = NetworkId | SystemChainId
 
-export type NetworkId = 'polkadot' | 'kusama' | 'westend'
+export type NetworkId = DefaultServiceNetworkId
+
+export type DefaultServiceNetworkId = 'polkadot' | 'kusama' | 'westend'
+
+export type OperatorsSupportedNetwork = 'polkadot' | 'kusama' | 'westend'
 
 export type SystemChainId =
   | 'people-polkadot'
   | 'people-kusama'
   | 'people-westend'
+  | 'statemint'
+  | 'statemine'
+  | 'westmint'
 
 export type ProviderType = 'ws' | 'sc'
 
@@ -57,7 +64,6 @@ export interface ChainConsts {
 }
 
 export interface RelayMetrics {
-  totalIssuance: bigint
   auctionCounter: number
   earliestStoredSession: number
 }
@@ -76,6 +82,7 @@ export interface PoolsConfig {
 }
 
 export interface StakingMetrics {
+  totalIssuance: bigint
   erasToCheckPerBlock: number
   minimumActiveStake: bigint
   counterForValidators: number
@@ -97,16 +104,21 @@ export interface NetworkConfig {
 export interface Network {
   name: NetworkId
   endpoints: {
-    lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    lightClient: () => Promise<any>
-    defaultRpc: string
+    getLightClient: () => Promise<any>
     rpc: Record<string, string>
   }
   unit: string
   units: number
   ss58: number
   defaultFeeReserve: bigint
+  meta: {
+    hubChain: ChainId
+    peopleChain: ChainId
+    stakingChain: ChainId
+    subscanBalanceChainId: string
+    supportOperators: boolean
+  }
 }
 
 export interface SystemChain {
@@ -114,11 +126,10 @@ export interface SystemChain {
   ss58: number
   units: number
   unit: string
+  defaultFeeReserve: bigint
   endpoints: {
-    lightClientKey: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    lightClient: () => Promise<any>
-    defaultRpc: string
+    getLightClient: () => Promise<any>
     rpc: Record<string, string>
   }
   relayChain: NetworkId

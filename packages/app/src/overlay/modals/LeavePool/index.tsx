@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -41,14 +41,14 @@ export const LeavePool = ({
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
-  const { getStakingLedger, getPendingPoolRewards } = useBalances()
+  const { getPoolMembership, getPendingPoolRewards } = useBalances()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = getConsts(network)
   const pendingRewards = getPendingPoolRewards(activeAddress)
-  const { poolMembership } = getStakingLedger(activeAddress)
+  const { membership } = getPoolMembership(activeAddress)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
@@ -61,14 +61,14 @@ export const LeavePool = ({
   const [paramsValid, setParamsValid] = useState<boolean>(false)
 
   useEffect(() => {
-    setParamsValid((poolMembership?.points || 0n) > 0 && !!activePool?.id)
+    setParamsValid((membership?.points || 0n) > 0 && !!activePool?.id)
   }, [freeToUnbond])
 
   const getTx = () => {
-    if (!activeAddress || !poolMembership) {
+    if (!activeAddress || !membership) {
       return
     }
-    return serviceApi.tx.poolUnbond(activeAddress, poolMembership.points)
+    return serviceApi.tx.poolUnbond(activeAddress, membership.points)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

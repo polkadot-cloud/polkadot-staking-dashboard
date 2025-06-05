@@ -4,7 +4,7 @@
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { CardLabel, TokenFiat } from 'ui-core/base'
@@ -22,7 +22,7 @@ export const WithFiat = ({
   label?: string
 }) => {
   const { network } = useNetwork()
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
 
   const valueFormatted =
     String(value) === '0' ? 0 : new BigNumber(value).toFormat(units)

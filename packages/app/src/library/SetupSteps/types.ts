@@ -16,7 +16,6 @@ export interface FooterProps {
 
 export interface HeaderProps {
   title?: string
-  helpKey?: string
   complete?: boolean | null
   thisSection: number
   bondFor: BondFor

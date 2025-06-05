@@ -2,27 +2,33 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
+import { useInvites } from 'contexts/Invites'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { CardWrapper } from 'library/Card/Wrappers'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
-import { Main } from 'ui-core/canvas'
-import { useOverlay } from 'ui-overlay'
+import { Head, Main } from 'ui-core/canvas'
+import { CloseCanvas, useOverlay } from 'ui-overlay'
 import { formatIdentities, formatSuperIdentities } from 'utils'
 import { Header } from './Header'
 import { Nominations } from './Nominations'
 import { Overview } from './Overview'
 import { Preloader } from './Preloader'
 import type { RoleIdentities } from './types'
+import { InviteHeader } from './Wrappers'
 
 export const Pool = () => {
+  const { t } = useTranslation('app')
   const {
     config: { options },
   } = useOverlay().canvas
   const { serviceApi } = useApi()
   const { network } = useNetwork()
+  const { inviteConfig } = useInvites()
   const { pluginEnabled } = usePlugins()
   const { poolsMetaData, bondedPools } = useBondedPools()
 
@@ -127,6 +133,17 @@ export const Pool = () => {
         <Preloader />
       ) : (
         <>
+          <Head>
+            <CloseCanvas />
+          </Head>
+          {inviteConfig && inviteConfig.type === 'pool' && (
+            <CardWrapper className="canvas">
+              <InviteHeader>
+                <h2>{t('poolInviteTitle')}</h2>
+                <h4>{t('poolInviteSubtitle')}</h4>
+              </InviteHeader>
+            </CardWrapper>
+          )}
           <Header
             activeTab={activeTab}
             setActiveTab={setActiveTab}

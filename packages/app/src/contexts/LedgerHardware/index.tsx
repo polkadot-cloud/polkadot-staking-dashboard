@@ -5,6 +5,7 @@ import { createSafeContext } from '@w3ux/hooks'
 import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { compare } from 'compare-versions'
+import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
@@ -19,7 +20,6 @@ import type {
   HandleErrorFeedback,
   LedgerHardwareContextInterface,
   LedgerResponse,
-  LedgerStatusCode,
 } from './types'
 
 export const [LedgerHardwareContext, useLedgerHardware] =
@@ -33,28 +33,19 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
-  const { transactionVersion } = getChainSpec(network).version
+  const { transactionVersion } = getChainSpec(getStakingChain(network)).version
 
   // Store whether a Ledger device task is in progress
   const [isExecuting, setIsExecutingState] = useState<boolean>(false)
   const isExecutingRef = useRef(isExecuting)
-  const getIsExecuting = () => isExecutingRef.current
+
   const setIsExecuting = (val: boolean) =>
     setStateWithRef(val, setIsExecutingState, isExecutingRef)
 
   // Store the latest status code received from a Ledger device
-  const [statusCode, setStatusCodeState] = useState<LedgerResponse | null>(null)
-  const statusCodeRef = useRef<LedgerResponse | null>(statusCode)
-  const getStatusCode = () => statusCodeRef.current
-  const setStatusCode = (ack: string, newStatusCode: LedgerStatusCode) => {
-    setStateWithRef(
-      { ack, statusCode: newStatusCode },
-      setStatusCodeState,
-      statusCodeRef
-    )
-  }
-  const resetStatusCode = () =>
-    setStateWithRef(null, setStatusCodeState, statusCodeRef)
+  const [statusCode, setStatusCode] = useState<LedgerResponse | null>(null)
+
+  const resetStatusCode = () => setStatusCode(null)
 
   // Store the feedback message to display as the Ledger device is being interacted with
   const [feedback, setFeedbackState] =
@@ -72,7 +63,7 @@ export const LedgerHardwareProvider = ({
     helpKey,
     message,
   }: HandleErrorFeedback) => {
-    setStatusCode('failure', code)
+    setStatusCode({ ack: 'failure', statusCode: code })
     setFeedback(message, helpKey)
   }
 
@@ -257,7 +248,7 @@ export const LedgerHardwareProvider = ({
       // Handle all other errors
       default:
         setFeedback(t('openAppOnLedger'), 'Open App On Ledger')
-        setStatusCode('failure', 'AppNotOpen')
+        setStatusCode({ ack: 'failure', statusCode: 'AppNotOpen' })
     }
 
     // Reset refs
@@ -288,9 +279,9 @@ export const LedgerHardwareProvider = ({
         setIntegrityChecked,
         checkRuntimeVersion,
         transportResponse,
-        getIsExecuting,
+        isExecuting,
         setIsExecuting,
-        getStatusCode,
+        statusCode,
         setStatusCode,
         resetStatusCode,
         getFeedback,

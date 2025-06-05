@@ -8,6 +8,7 @@ import {
   faPuzzlePiece,
   faToggleOff,
   faToggleOn,
+  faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
@@ -16,6 +17,7 @@ import MoonOutlineSVG from 'assets/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
 import { useCurrency } from 'contexts/Currency'
 import { usePlugins } from 'contexts/Plugins'
+import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,8 +30,9 @@ export const MenuPopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
-  const { currency } = useCurrency()
   const { i18n } = useTranslation()
+  const { currency } = useCurrency()
+  const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
@@ -86,6 +89,22 @@ export const MenuPopover = ({
           <h3>{t('plugins', { ns: 'modals' })}</h3>
         </div>
       </MenuItemButton>
+      {/* NOTE: Temporary disabling nominator invites until supported */}
+      {!isNominator && (
+        <MenuItemButton
+          onClick={() => {
+            setOpen(false)
+            openModal({ key: 'Invite', size: 'sm' })
+          }}
+        >
+          <div>
+            <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
+          </div>
+          <div>
+            <h3>{t('invite', { ns: 'app' })}</h3>
+          </div>
+        </MenuItemButton>
+      )}
       <MenuItemButton
         onClick={() => {
           setOpen(false)

@@ -3,17 +3,25 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { maxBigInt } from '@w3ux/utils'
+import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import {
   accountBalances$,
   defaultAccountBalance,
+  defaultPoolMembership,
   defaultStakingLedger,
+  poolMemberships$,
   stakingLedgers$,
 } from 'global-bus'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
-import type { AccountBalance, MaybeAddress, StakingLedger } from 'types'
+import type {
+  AccountBalance,
+  MaybeAddress,
+  PoolMembershipState,
+  StakingLedger,
+} from 'types'
 import type { BalancesContextInterface } from './types'
 
 export const [BalancesContext, useBalances] =
@@ -22,7 +30,8 @@ export const [BalancesContext, useBalances] =
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
-  const { existentialDeposit } = getChainSpec(network)
+  const stakingChain = getStakingChain(network)
+  const { existentialDeposit } = getChainSpec(stakingChain)
 
   // Store account balances state
   type StateBalances = Record<string, Record<string, AccountBalance>>
@@ -32,12 +41,16 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   type StateLedgers = Record<string, StakingLedger>
   const [stakingLedgers, setStakingLedgers] = useState<StateLedgers>({})
 
+  // Store pool memberships state
+  type PoolMemberships = Record<string, PoolMembershipState>
+  const [poolMemberships, setPoolMemberships] = useState<PoolMemberships>({})
+
   // Get an account balance for the default network chain
   const getAccountBalance = (address: MaybeAddress) => {
     if (!address) {
       return defaultAccountBalance
     }
-    return accountBalances?.[network]?.[address] || defaultAccountBalance
+    return accountBalances?.[stakingChain]?.[address] || defaultAccountBalance
   }
 
   // Get an account's ed reserved balance
@@ -56,6 +69,14 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     return stakingLedgers?.[address] || defaultStakingLedger
   }
 
+  // Get an account's pool membership
+  const getPoolMembership = (address: MaybeAddress): PoolMembershipState => {
+    if (!address) {
+      return defaultPoolMembership
+    }
+    return poolMemberships?.[address] || defaultPoolMembership
+  }
+
   // Gets an account's nominations from its staking ledger
   const getNominations = (address: MaybeAddress) => {
     if (!address) {
@@ -70,8 +91,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     if (!address) {
       return 0n
     }
-    const { poolMembership } = getStakingLedger(address)
-    return poolMembership?.pendingRewards || 0n
+    return getPoolMembership(address).membership?.pendingRewards || 0n
   }
 
   // Subscribe to global bus account balance events
@@ -82,9 +102,13 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     const unsubStakingLedgers = stakingLedgers$.subscribe((result) => {
       setStakingLedgers(result)
     })
+    const unsubPoolMemberships = poolMemberships$.subscribe((result) => {
+      setPoolMemberships(result)
+    })
     return () => {
       unsubBalances.unsubscribe()
       unsubStakingLedgers.unsubscribe()
+      unsubPoolMemberships.unsubscribe()
     }
   }, [])
 
@@ -93,6 +117,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
       value={{
         getAccountBalance,
         getStakingLedger,
+        getPoolMembership,
         getNominations,
         getEdReserved,
         getPendingPoolRewards,

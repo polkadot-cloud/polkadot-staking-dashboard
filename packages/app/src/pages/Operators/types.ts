@@ -3,10 +3,12 @@
 
 import type { ValidatorSupportedChains } from '@w3ux/validator-assets'
 import type { Dispatch, SetStateAction } from 'react'
+import type { OperatorsSupportedNetwork } from 'types'
 
 export interface ItemProps {
   item: Item
   actionable: boolean
+  network: OperatorsSupportedNetwork
 }
 
 export interface Item {

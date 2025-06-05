@@ -3,12 +3,12 @@
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { useSetup } from 'contexts/Setup'
-import { defaultPoolProgress } from 'contexts/Setup/defaults'
+import { usePoolSetups } from 'contexts/PoolSetups'
+import { defaultPoolProgress } from 'contexts/PoolSetups/defaults'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { defaultClaimPermission } from 'global-bus'
 import { useBatchCall } from 'hooks/useBatchCall'
@@ -34,11 +34,12 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     config: { options },
   } = useOverlay().canvas
   const { newBatchCall } = useBatchCall()
-  const { setActiveAccountSetup } = useSetup()
+  const { setPoolSetup } = usePoolSetups()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
-  const { unit, units } = getNetworkData(network)
+
+  const { unit, units } = getStakingChainData(network)
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
   const {
@@ -98,7 +99,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     },
     callbackInBlock: async () => {
       // Reset local storage setup progress
-      setActiveAccountSetup('pool', defaultPoolProgress)
+      setPoolSetup(defaultPoolProgress)
     },
   })
 

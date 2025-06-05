@@ -3,7 +3,7 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -12,7 +12,7 @@ import type {
   Exposure,
   StakingContextInterface,
 } from 'contexts/Staking/types'
-import { Syncs } from 'controllers/Syncs'
+import { removeSyncing, setSyncing } from 'global-bus'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type { MaybeAddress, NominationStatus } from 'types'
@@ -32,7 +32,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { activeAddress } = useActiveAccounts()
   const { getStakingLedger, getNominations } = useBalances()
   const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
 
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
@@ -63,7 +63,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       // Check if account hasn't changed since worker started
       if (activeAddress === who) {
         // Syncing current eraStakers is now complete
-        Syncs.dispatch('era-stakers', 'complete')
+        removeSyncing('era-stakers')
 
         setStateWithRef(
           {
@@ -112,7 +112,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady || activeEra.index === 0) {
       return
     }
-    Syncs.dispatch('era-stakers', 'syncing')
+    setSyncing('era-stakers')
     const exposures = await fetchEraStakers(activeEra.index.toString())
 
     // Worker to calculate stats
@@ -157,19 +157,13 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper function to determine whether the active account is bonding, or is yet to start
-  const isBonding = () =>
-    (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
-
-  // Helper function to determine whether the active account
-  const isUnlocking = () =>
-    (getStakingLedger(activeAddress).ledger?.unlocking || []).length
+  const isBonding = (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
 
   // Helper function to determine whether the active account is nominating, or is yet to start
-  const isNominating = () => getNominations(activeAddress).length > 0
+  const isNominating = getNominations(activeAddress).length > 0
 
-  // Helper function to determine whether the active account is nominating, or is yet to start
-  const inSetup = () =>
-    !activeAddress || (!isBonding() && !isNominating() && !isUnlocking())
+  // Helper function to determine whether the active account is a nominator
+  const isNominator = activeAddress !== null && isBonding && isNominating
 
   // Fetch eras stakers from storage
   const getPagedErasStakers = async (era: string) => {
@@ -244,7 +238,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         getNominationsStatusFromTargets,
         isBonding,
         isNominating,
-        inSetup,
+        isNominator,
         eraStakers,
         getPagedErasStakers,
       }}

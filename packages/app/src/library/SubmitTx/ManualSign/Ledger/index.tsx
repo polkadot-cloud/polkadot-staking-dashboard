@@ -35,16 +35,16 @@ export const Ledger = ({
 }) => {
   const { t } = useTranslation('app')
   const {
+    statusCode,
     setFeedback,
     getFeedback,
-    integrityChecked,
-    handleUnmount,
-    getIsExecuting,
-    getStatusCode,
-    resetStatusCode,
-    runtimesInconsistent,
-    transportResponse,
+    isExecuting,
     setStatusCode,
+    handleUnmount,
+    resetStatusCode,
+    integrityChecked,
+    transportResponse,
+    runtimesInconsistent,
   } = useLedgerHardware()
   const { openHelp } = useHelp()
   const { setModalResize } = useOverlay().modal
@@ -55,19 +55,19 @@ export const Ledger = ({
     if (!response) {
       return
     }
-    const { ack, statusCode, body } = response
+    const { ack, statusCode: newStatusCode, body } = response
 
-    if (statusCode === 'SignedPayload') {
+    if (newStatusCode === 'SignedPayload') {
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
         setFeedback(t('wrongTransaction'), 'Wrong Transaction')
       } else {
-        setStatusCode(ack, statusCode)
+        setStatusCode({ ack, statusCode: newStatusCode })
       }
       // Reset state pertaining to this transaction.
       resetStatusCode()
     } else {
-      setStatusCode(ack, statusCode)
+      setStatusCode({ ack, statusCode: newStatusCode })
     }
   }
 
@@ -80,7 +80,7 @@ export const Ledger = ({
     !valid ||
     submitted ||
     notEnoughFunds ||
-    getIsExecuting()
+    isExecuting
 
   // Resize modal on content change.
   useEffect(() => {
@@ -90,8 +90,8 @@ export const Ledger = ({
     valid,
     submitted,
     notEnoughFunds,
-    getStatusCode(),
-    getIsExecuting(),
+    statusCode,
+    isExecuting,
   ])
 
   // Listen for new Ledger status reports.

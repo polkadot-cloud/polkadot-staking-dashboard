@@ -19,6 +19,7 @@ import { ClaimReward } from './modals/ClaimReward'
 import { DiscordSupport } from './modals/DiscordSupport'
 import { ExternalAccounts } from './modals/ExternalAccounts'
 import { ImportAccounts } from './modals/ImportAccounts'
+import { Invite } from './modals/Invite'
 import { LeavePool } from './modals/LeavePool'
 import { MailSupport } from './modals/MailSupport'
 import { ManageFastUnstake } from './modals/ManageFastUnstake'
@@ -28,6 +29,8 @@ import { Plugins } from './modals/Plugins'
 import { RewardCalculator } from './modals/RewardCalculator'
 import { SelectCurrency } from './modals/SelectCurrency'
 import { SelectLanguage } from './modals/SelectLanguage'
+import { SetController } from './modals/SetController'
+import { StartNominating } from './modals/StartNominating'
 import { StopNominations } from './modals/StopNominations'
 import { Unbond } from './modals/Unbond'
 import { UnlockChunks } from './modals/UnlockChunks'
@@ -55,11 +58,14 @@ export const Overlays = () => {
         LeavePool,
         MailSupport,
         ImportAccounts,
+        Invite,
         ManagePool,
         ManageFastUnstake,
         Networks,
         RewardCalculator,
         SelectCurrency,
+        SetController,
+        StartNominating,
         Plugins,
         UnlockChunks,
         Unstake,

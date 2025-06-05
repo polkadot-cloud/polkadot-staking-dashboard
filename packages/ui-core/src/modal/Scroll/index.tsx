@@ -4,23 +4,32 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import commonClasses from '../../common.module.scss'
+import SimpleBar from 'simplebar-react'
+import 'simplebar/dist/simplebar.min.css'
 import type { ScrollProps } from '../types'
 import classes from './index.module.scss'
 
 export const Scroll = forwardRef(
   (
-    { size, children, style }: ScrollProps,
+    { size, children, style, overflow }: ScrollProps,
     ref?: ForwardedRef<HTMLDivElement>
   ) => {
-    const allClasses = classNames(classes.scroll, commonClasses.scrollBar, {
+    const allClasses = classNames(classes.scroll, {
       [classes.xs]: size === 'xs',
       [classes.lg]: size === 'lg',
       [classes.xl]: size === 'xl',
     })
     return (
       <div ref={ref} className={allClasses} style={style}>
-        {children}
+        <SimpleBar
+          autoHide={true}
+          style={{
+            height: '100%',
+            overflow,
+          }}
+        >
+          {children}
+        </SimpleBar>
       </div>
     )
   }

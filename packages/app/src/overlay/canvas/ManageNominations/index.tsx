@@ -4,7 +4,6 @@
 import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useHelp } from 'contexts/Help'
 import {
   ManageNominationsProvider,
   useManageNominations,
@@ -19,7 +18,6 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DisplayFor, NominationSelection } from 'types'
-import { ButtonHelp } from 'ui-buttons'
 import {
   Footer,
   FootFullWidth,
@@ -32,10 +30,9 @@ import { CloseCanvas, useOverlay } from 'ui-overlay'
 export const Inner = () => {
   const { t } = useTranslation('app')
   const {
-    setCanvasStatus,
+    closeCanvas,
     config: { options },
   } = useOverlay().canvas
-  const { openHelp } = useHelp()
   const { serviceApi } = useApi()
   const { activePool } = useActivePool()
   const { activeAddress } = useActiveAccounts()
@@ -90,7 +87,7 @@ export const Inner = () => {
     from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setCanvasStatus('closing')
+      closeCanvas()
     },
     callbackInBlock: () => {
       if (isPool && activePool) {
@@ -128,14 +125,7 @@ export const Inner = () => {
     <>
       <HeadFullWidth>
         <Title fullWidth>
-          <h1>
-            {t('manageNominations', { ns: 'modals' })}
-            <ButtonHelp
-              onClick={() => openHelp('Nominations')}
-              background="none"
-              outline
-            />
-          </h1>
+          <h1>{t('manageNominations', { ns: 'modals' })}</h1>
         </Title>
         <CloseCanvas sm />
       </HeadFullWidth>

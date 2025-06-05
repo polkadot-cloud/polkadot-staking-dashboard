@@ -17,7 +17,11 @@ export const StatusWrapper = styled.div`
       margin-top: 0;
     }
 
-    &:last-child {
+    &:nth-child(2) {
+      @media (max-width: 1400px) {
+        margin-top: 1rem;
+      }
+
       padding-left: 1.5rem;
       @media (max-width: ${PageWidthMediumThreshold}px) {
         padding-left: 0;
@@ -29,6 +33,10 @@ export const StatusWrapper = styled.div`
       padding-left: 1.5rem;
       padding-bottom: 0.35rem;
       border-radius: 0;
+
+      @media (max-width: ${PageWidthMediumThreshold}px) {
+        padding-left: 1rem;
+      }
 
       > div {
         padding-top: 0;

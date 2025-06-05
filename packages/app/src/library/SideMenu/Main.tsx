@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PageCategory, PageItem, PagesConfigItems } from 'common-types'
-import { PageCategories, PagesConfig } from 'config/pages'
+import { PageCategories } from 'config/pages'
+import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
+import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
-import type { UIContextInterface } from 'contexts/UI/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { Fragment } from 'react'
@@ -20,12 +21,13 @@ import { Primary } from './Primary'
 export const Main = () => {
   const { t } = useTranslation('app')
   const { syncing } = useSyncing()
+  const { network } = useNetwork()
   const { pathname } = useLocation()
   const { inPool } = useActivePool()
+  const { isNominator } = useStaking()
   const { formatWithPrefs } = useValidators()
   const { activeAddress } = useActiveAccounts()
-  const { inSetup: inNominatorSetup } = useStaking()
-  const { sideMenuMinimised }: UIContextInterface = useUi()
+  const { sideMenuMinimised, advancedMode } = useUi()
   const { getNominations, getStakingLedger } = useBalances()
   const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
@@ -34,9 +36,7 @@ export const Main = () => {
     (nominee) => nominee.prefs.commission === 100
   )
 
-  // Inject bullets into menu items
-  const pages: PageItem[] = [...PagesConfig]
-
+  const pages: PageItem[] = getPagesConfig(network, advancedMode)
   let i = 0
   for (const { uri } of pages) {
     const handleBullets = (): boolean => {
@@ -48,20 +48,20 @@ export const Main = () => {
         }
       }
       if (uri === `${import.meta.env.BASE_URL}nominate`) {
-        if (!inNominatorSetup()) {
+        if (isNominator) {
           pages[i].bullet = 'accent'
           return true
         }
         if (
           (!syncing && controllerUnmigrated) ||
-          (!inNominatorSetup() && fullCommissionNominees.length > 0)
+          (isNominator && fullCommissionNominees.length > 0)
         ) {
           pages[i].bullet = 'warning'
           return true
         }
       }
       if (uri === `${import.meta.env.BASE_URL}pools`) {
-        if (inPool()) {
+        if (inPool) {
           pages[i].bullet = 'accent'
           return true
         }
@@ -75,8 +75,13 @@ export const Main = () => {
     }
     i++
   }
+
+  const categories = advancedMode
+    ? PageCategories
+    : PageCategories.filter(({ advanced }) => !advanced)
+
   const pageConfig = {
-    categories: PageCategories,
+    categories,
     pages,
   }
 
