@@ -17,6 +17,8 @@ export const ButtonCopy = ({
   portalContainer,
   xMargin,
   tooltipText,
+  children,
+  style,
 }: ButtonCopyProps) => {
   const [active, setActive] = useState<boolean>(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -27,6 +29,7 @@ export const ButtonCopy = ({
 
   const baseClasses = classNames(classes.btnCopy, {
     [classes.xMargin]: xMargin,
+    [classes.withChildren]: children !== undefined,
   })
 
   const copyClasses = classNames(classes.copyIcon, {
@@ -61,9 +64,11 @@ export const ButtonCopy = ({
       handleOpenChange={handleOpenChange}
     >
       <button
+        style={
+          !children ? { ...style, width: size, height: size } : { ...style }
+        }
         type="button"
         ref={buttonRef}
-        style={size ? { width: size, height: size } : {}}
         className={baseClasses}
         onClick={() => {
           if (typeof onClick === 'function') {
@@ -73,7 +78,9 @@ export const ButtonCopy = ({
           handleClick()
         }}
       >
+        {children}
         <span
+          style={size ? { width: size } : {}}
           className={copyClasses}
           onAnimationEnd={() => {
             setActive(false)
@@ -81,7 +88,7 @@ export const ButtonCopy = ({
         >
           <FontAwesomeIcon icon={faCopy} className={classes.icon} />
         </span>
-        <span className={checkClasses}>
+        <span style={size ? { width: size } : {}} className={checkClasses}>
           <FontAwesomeIcon icon={faCheck} className={classes.icon} />
         </span>
       </button>

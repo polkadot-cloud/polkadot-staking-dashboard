@@ -17,7 +17,7 @@ export const Submit = ({
   disabled,
 }: LedgerSubmitProps) => {
   const { t } = useTranslation('app')
-  const { getIsExecuting, integrityChecked, checkRuntimeVersion } =
+  const { isExecuting, integrityChecked, checkRuntimeVersion } =
     useLedgerHardware()
 
   // Check device runtime version.
@@ -36,7 +36,7 @@ export const Submit = ({
     ? t('confirm')
     : txReady
       ? submitText || ''
-      : getIsExecuting()
+      : isExecuting
         ? t('signing')
         : t('sign')
 

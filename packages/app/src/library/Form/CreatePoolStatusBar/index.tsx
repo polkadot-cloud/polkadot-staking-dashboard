@@ -3,12 +3,13 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { getNetworkData } from 'consts/util'
+import { planckToUnit } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
-import { planckToUnitBn } from 'utils'
 import type { NominateStatusBarProps } from '../types'
 import { Wrapper } from './Wrapper'
 
@@ -17,9 +18,9 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { minCreateBond } = useApi().poolsConfig
   const { network } = useNetwork()
   const { syncing } = useSyncing(['initialization'])
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
-  const minCreateBondUnit = planckToUnitBn(minCreateBond, units)
+  const minCreateBondUnit = new BigNumber(planckToUnit(minCreateBond, units))
   const sectionClassName =
     value.isGreaterThanOrEqualTo(minCreateBondUnit) && !syncing ? 'invert' : ''
 

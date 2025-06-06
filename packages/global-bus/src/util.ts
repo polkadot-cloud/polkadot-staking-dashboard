@@ -2,4 +2,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './externalAccounts/util'
-export * from './network/util'
+export * from './networkConfig/util'
+export * from './syncStatus/util'

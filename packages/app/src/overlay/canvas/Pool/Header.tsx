@@ -3,12 +3,12 @@
 
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { Polkicon } from '@w3ux/react-polkicon'
+import { PerbillMultiplier } from 'consts'
 import { PageTabs } from 'library/PageTabs'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
 import { ButtonPrimaryInvert } from 'ui-buttons'
 import { AccountTitle, Head, HeadTags } from 'ui-core/canvas'
-import { CloseCanvas } from 'ui-overlay'
 import type { HeaderProps } from './types'
 export const Header = ({
   activeTab,
@@ -54,11 +54,9 @@ export const Header = ({
             text={t('chooseAnotherPool', { ns: 'app' })}
             iconLeft={faArrowsRotate}
             onClick={() => handleChooseNewPool()}
-            style={{ marginRight: '1.25rem' }}
             lg
           />
         )}
-        <CloseCanvas />
       </Head>
       <AccountTitle>
         <div>
@@ -85,7 +83,8 @@ export const Header = ({
               {poolCommission && (
                 <h3>
                   <span>
-                    {poolCommission}% {t('commission', { ns: 'modals' })}
+                    {poolCommission / PerbillMultiplier}%{' '}
+                    {t('commission', { ns: 'modals' })}
                   </span>
                 </h3>
               )}

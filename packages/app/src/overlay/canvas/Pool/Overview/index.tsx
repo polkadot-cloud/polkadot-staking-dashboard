@@ -14,14 +14,14 @@ import { Roles } from './Roles'
 import { Stats } from './Stats'
 
 export const Overview = (props: OverviewSectionProps) => {
-  const { inSetup } = useStaking()
   const { inPool } = useActivePool()
+  const { isNominator } = useStaking()
   const { activeAddress } = useActiveAccounts()
   const {
     bondedPool: { state },
   } = props
   const showJoinForm =
-    activeAddress !== null && state === 'Open' && !inPool() && inSetup()
+    activeAddress !== null && state === 'Open' && !inPool && !isNominator
 
   return (
     <Interface

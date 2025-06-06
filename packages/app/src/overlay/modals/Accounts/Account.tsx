@@ -8,15 +8,15 @@ import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn } from '@w3ux/utils'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { setActiveProxy } from 'global-bus'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 import { AccountWrapper } from './Wrappers'
 import type { AccountItemProps } from './types'
 
@@ -31,16 +31,11 @@ export const AccountButton = ({
 }: AccountItemProps) => {
   const { t } = useTranslation('modals')
   const { getAccount } = useImportedAccounts()
-  const {
-    activeProxy,
-    activeAddress,
-    setActiveAccount,
-    setActiveProxy,
-    activeProxyType,
-  } = useActiveAccounts()
   const { network } = useNetwork()
   const { setModalStatus } = useOverlay().modal
-  const { unit, units } = getNetworkData(network)
+  const { activeProxy, activeAddress, setActiveAccount, activeProxyType } =
+    useActiveAccounts()
+  const { unit, units } = getStakingChainData(network)
 
   // Accumulate account data.
   const meta = getAccount(address || '')
@@ -64,9 +59,9 @@ export const AccountButton = ({
     (connectTo === activeAddress &&
       address === activeAddress &&
       !activeProxy) ||
-    (connectProxy === activeProxy &&
+    (connectProxy === activeProxy?.address &&
       proxyType === activeProxyType &&
-      activeProxy)
+      activeProxy.address)
 
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
@@ -78,6 +73,7 @@ export const AccountButton = ({
       account ? { address: account.address, source: account.source } : null
     )
     setActiveProxy(
+      network,
       proxyType && connectProxy
         ? { address: connectProxy, source, proxyType }
         : null
@@ -140,9 +136,8 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnitBn(
-              transferrableBalance || new BigNumber(0),
-              units
+            {`${t('free')}: ${new BigNumber(
+              planckToUnit(transferrableBalance || 0n, units)
             )
               .decimalPlaces(3)
               .toFormat()} ${unit}`}

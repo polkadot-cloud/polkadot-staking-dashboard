@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { HexString } from 'dedot/utils'
 import type { CSSProperties } from 'react'
 
 export interface FrameState {
@@ -11,7 +12,7 @@ export interface FrameState {
 }
 
 export interface ScanType {
-  signature: `0x${string}`
+  signature: HexString
 }
 
 export interface TimerState {

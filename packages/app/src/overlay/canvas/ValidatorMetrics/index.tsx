@@ -5,9 +5,8 @@ import { useSize } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
@@ -18,7 +17,6 @@ import { StatusLabel } from 'library/StatusLabel'
 import { ValidatorGeo } from 'overlay/canvas/ValidatorMetrics/ValidatorGeo'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import {
   AccountTitle,
   GraphContainer,
@@ -44,13 +42,12 @@ export const ValidatorMetrics = () => {
   const {
     config: { options },
   } = useOverlay().canvas
-  const { network } = useNetwork()
   const { activeEra } = useApi()
-  const { openHelp } = useHelp()
+  const { network } = useNetwork()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
   const { getValidators } = useValidators()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const Token = getChainIcons(network).token
   const validator = options!.validator
@@ -62,12 +59,18 @@ export const ValidatorMetrics = () => {
   let validatorOwnStake = new BigNumber(0)
   let otherStake = new BigNumber(0)
   if (validatorInEra) {
-    const { others, own } = validatorInEra
-    others.forEach(({ value }) => {
-      otherStake = otherStake.plus(value)
-    })
+    const { own, total } = validatorInEra
+
+    // Set validator own stake
     if (own) {
       validatorOwnStake = new BigNumber(own)
+    }
+
+    // Calculate nominator stake as total minus own stake
+    // This ensures we get the correct total even if we're missing some nominator data
+    if (total) {
+      const totalStake = new BigNumber(total)
+      otherStake = BigNumber.max(0, totalStake.minus(validatorOwnStake))
     }
   }
 
@@ -139,14 +142,7 @@ export const ValidatorMetrics = () => {
       </GraphContainer>
       <div style={{ margin: '1.5rem 0 3rem 0' }}>
         <Subheading>
-          <h3>
-            {t('recentPerformance', { ns: 'app' })}
-            <ButtonHelp
-              outline
-              marginLeft
-              onClick={() => openHelp('Era Points')}
-            />
-          </h3>
+          <h3>{t('recentPerformance', { ns: 'app' })}</h3>
         </Subheading>
         <GraphInner
           ref={graphEraPointsRef}
@@ -157,7 +153,7 @@ export const ValidatorMetrics = () => {
             <ActiveGraphEraPoints
               network={network}
               validator={validator}
-              fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              fromEra={Math.max(activeEra.index - 1, 0)}
               width={graphSizeEraPoints.width}
               height={graphSizeEraPoints.height}
             />
@@ -177,14 +173,7 @@ export const ValidatorMetrics = () => {
           )}
         </GraphInner>
         <Subheading>
-          <h3>
-            {t('rewardHistory', { ns: 'app' })}
-            <ButtonHelp
-              outline
-              marginLeft
-              onClick={() => openHelp('Validator Reward History')}
-            />
-          </h3>
+          <h3>{t('rewardHistory', { ns: 'app' })}</h3>
         </Subheading>
         <GraphInner
           ref={graphRewardsRef}
@@ -195,7 +184,7 @@ export const ValidatorMetrics = () => {
             <ActiveGraphRewards
               network={network}
               validator={validator}
-              fromEra={BigNumber.max(activeEra.index.minus(1), 0).toNumber()}
+              fromEra={Math.max(activeEra.index - 1, 0)}
               width={graphSizeRewards.width}
               height={graphSizeRewards.height}
             />

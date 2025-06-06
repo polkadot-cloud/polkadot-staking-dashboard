@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -10,6 +11,7 @@ import { usePrompt } from 'contexts/Prompt'
 import { useStaking } from 'contexts/Staking'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useFetchMethods } from 'hooks/useFetchMethods'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect } from 'react'
@@ -24,7 +26,6 @@ import type {
   GenerateNominationsProps,
   SelectHandler,
 } from './types'
-import { useFetchMehods } from './useFetchMethods'
 import { Wrapper } from './Wrapper'
 
 export const GenerateNominations = ({
@@ -36,8 +37,8 @@ export const GenerateNominations = ({
     fetch: fetchFromMethod,
     add: addNomination,
     available: availableToNominate,
-  } = useFetchMehods()
-  const { isReady, consts } = useApi()
+  } = useFetchMethods()
+  const { isReady } = useApi()
   const { stakers } = useStaking().eraStakers
   const { activeAddress } = useActiveAccounts()
   const { favoritesList } = useFavoriteValidators()
@@ -59,7 +60,6 @@ export const GenerateNominations = ({
   } = useManageNominations()
 
   const defaultNominationsCount = defaultNominations.length
-  const { maxNominations } = consts
 
   const resizeCallback = () => {
     setHeight(null)
@@ -84,9 +84,7 @@ export const GenerateNominations = ({
     }
   }
 
-  const maxNominationsReached = maxNominations.isLessThanOrEqualTo(
-    nominations?.length
-  )
+  const maxNominationsReached = MaxNominations <= nominations?.length
 
   // Define handlers
   const selectHandlers: Record<string, SelectHandler> = {
@@ -136,8 +134,7 @@ export const GenerateNominations = ({
       },
       onSelected: false,
       isDisabled: () =>
-        !favoritesList?.length ||
-        maxNominations.isLessThanOrEqualTo(nominations?.length),
+        !favoritesList?.length || MaxNominations <= nominations?.length,
     },
     highPerformance: {
       title: t('highPerformanceValidator', { ns: 'app' }),
@@ -182,7 +179,7 @@ export const GenerateNominations = ({
     //   },
     //   icon: faMagnifyingGlass,
     //   onSelected: false,
-    //   isDisabled: () => maxNominations.isLessThanOrEqualTo(nominations?.length),
+    //   isDisabled: () => MaxNominations <= nominations?.length,
     // },
   }
 
@@ -236,7 +233,7 @@ export const GenerateNominations = ({
             <Subheading>
               <h4>
                 {t('chooseValidators2', {
-                  maxNominations: maxNominations.toString(),
+                  maxNominations: MaxNominations,
                   ns: 'app',
                 })}
               </h4>

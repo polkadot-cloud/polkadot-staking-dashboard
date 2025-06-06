@@ -1,17 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PoolNominate } from 'api/tx/poolNominate'
-import { StakingNominate } from 'api/tx/stakingNominate'
+import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBonded } from 'contexts/Bonded'
-import { useHelp } from 'contexts/Help'
 import {
   ManageNominationsProvider,
   useManageNominations,
 } from 'contexts/ManageNominations'
-import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -22,7 +18,6 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DisplayFor, NominationSelection } from 'types'
-import { ButtonHelp } from 'ui-buttons'
 import {
   Footer,
   FootFullWidth,
@@ -35,24 +30,18 @@ import { CloseCanvas, useOverlay } from 'ui-overlay'
 export const Inner = () => {
   const { t } = useTranslation('app')
   const {
-    setCanvasStatus,
+    closeCanvas,
     config: { options },
   } = useOverlay().canvas
-  const { consts } = useApi()
-  const { openHelp } = useHelp()
-  const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { activePool } = useActivePool()
-  const { getBondedAccount } = useBonded()
   const { activeAddress } = useActiveAccounts()
   const { updatePoolNominations } = useBondedPools()
   const { defaultNominations, nominations, setNominations, method } =
     useManageNominations()
 
-  const { maxNominations } = consts
-  const controller = getBondedAccount(activeAddress)
   const bondFor = options?.bondFor || 'nominator'
   const isPool = bondFor === 'pool'
-  const signingAccount = isPool ? activeAddress : controller
 
   // Whether to display revert changes button
   const allowRevert = !!method
@@ -77,35 +66,28 @@ export const Inner = () => {
     nominations.length === defaultNominations.length
 
   const getTx = () => {
-    const tx = null
     if (!valid) {
-      return tx
+      return
     }
     if (!isPool) {
-      return new StakingNominate(
-        network,
-        nominations.map((nominee) => ({
-          type: 'Id',
-          value: nominee.address,
-        }))
-      ).tx()
+      return serviceApi.tx.stakingNominate(
+        nominations.map((nominee) => nominee.address)
+      )
     }
     if (isPool && activePool) {
-      return new PoolNominate(
-        network,
+      return serviceApi.tx.poolNominate(
         activePool.id,
         nominations.map((nominee) => nominee.address)
-      ).tx()
+      )
     }
-    return tx
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: signingAccount,
+    from: activeAddress,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setCanvasStatus('closing')
+      closeCanvas()
     },
     callbackInBlock: () => {
       if (isPool && activePool) {
@@ -118,10 +100,10 @@ export const Inner = () => {
     },
   })
 
-  // Valid if there are between 1 and `maxNominations` nominations
+  // Valid if there are between 1 and `MaxNominations` nominations
   useEffect(() => {
     setValid(
-      maxNominations.isGreaterThanOrEqualTo(nominations.length) &&
+      MaxNominations >= nominations.length &&
         nominations.length > 0 &&
         !nominationsMatch()
     )
@@ -143,14 +125,7 @@ export const Inner = () => {
     <>
       <HeadFullWidth>
         <Title fullWidth>
-          <h1>
-            {t('manageNominations', { ns: 'modals' })}
-            <ButtonHelp
-              onClick={() => openHelp('Nominations')}
-              background="none"
-              outline
-            />
-          </h1>
+          <h1>{t('manageNominations', { ns: 'modals' })}</h1>
         </Title>
         <CloseCanvas sm />
       </HeadFullWidth>
@@ -176,7 +151,7 @@ export const Inner = () => {
           <SubmitTx
             noMargin
             transparent
-            fromController={!isPool}
+            requiresMigratedController={!isPool}
             valid={valid}
             displayFor="modal"
             {...submitExtrinsic}

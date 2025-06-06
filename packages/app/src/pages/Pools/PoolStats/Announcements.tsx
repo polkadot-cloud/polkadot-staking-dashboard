@@ -3,9 +3,8 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChain, getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -17,14 +16,14 @@ import { planckToUnitBn } from 'utils'
 
 export const Announcements = () => {
   const { t } = useTranslation('pages')
-  const { consts } = useApi()
   const { network } = useNetwork()
+  const { getChainSpec } = useApi()
   const { activePool } = useActivePool()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const { rewardAccountBalance } = activePool || {}
   const { totalRewardsClaimed } = activePool?.rewardPool || {}
-  const { existentialDeposit } = consts
+  const { existentialDeposit } = getChainSpec(getStakingChain(network))
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BigNumber.max(
@@ -35,9 +34,7 @@ export const Announcements = () => {
 
   // calculate total rewards claimed
   const rewardsClaimed = planckToUnitBn(
-    totalRewardsClaimed
-      ? new BigNumber(rmCommas(totalRewardsClaimed))
-      : new BigNumber(0),
+    totalRewardsClaimed ? new BigNumber(totalRewardsClaimed) : new BigNumber(0),
     units
   )
 

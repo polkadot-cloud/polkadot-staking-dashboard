@@ -74,7 +74,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
             !(
               activeAddress &&
               ['polkadot', 'kusama'].includes(network) &&
-              isNominating()
+              isNominating
             )
           }
         />

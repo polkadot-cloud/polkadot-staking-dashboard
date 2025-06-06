@@ -14,4 +14,6 @@ export interface UIContextInterface {
   sideMenuMinimised: boolean
   containerRefs: Record<string, RefObject<HTMLDivElement | null>>
   isBraveBrowser: boolean
+  advancedMode: boolean
+  setAdvancedMode: (value: boolean) => void
 }

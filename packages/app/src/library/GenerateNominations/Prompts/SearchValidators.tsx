@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api'
+import { MaxNominations } from 'consts'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { Notifications } from 'controllers/Notifications'
 import { Identity } from 'library/ListItem/Labels/Identity'
@@ -16,10 +16,7 @@ import type { PromptProps } from '../types'
 
 export const SearchValidators = ({ callback, nominations }: PromptProps) => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
   const { favoritesList } = useFavoriteValidators()
-
-  const { maxNominations } = consts
 
   // Store the total number of selected favorites
   const [selected, setSelected] = useState<Validator[]>([])
@@ -30,11 +27,8 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
   const removeFromSelected = (items: Validator[]) =>
     setSelected([...selected].filter((item) => !items.includes(item)))
 
-  const remaining = maxNominations
-    .minus(nominations.length)
-    .minus(selected.length)
-
-  const canAdd = remaining.isGreaterThan(0)
+  const remaining = MaxNominations - nominations.length - selected.length
+  const canAdd = remaining > 0
 
   return (
     <>

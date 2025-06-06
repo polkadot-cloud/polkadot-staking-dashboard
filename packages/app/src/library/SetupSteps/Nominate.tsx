@@ -1,14 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import {
   ManageNominationsProvider,
   useManageNominations,
 } from 'contexts/ManageNominations'
-import { useSetup } from 'contexts/Setup'
-import type { NominatorProgress } from 'contexts/Setup/types'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
+import type { NominatorProgress } from 'contexts/NominatorSetups/types'
+import { usePoolSetups } from 'contexts/PoolSetups'
+import type { PoolProgress } from 'contexts/PoolSetups/types'
 import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
 import { Footer } from 'library/SetupSteps/Footer'
 import { Header } from 'library/SetupSteps/Header'
@@ -21,10 +23,10 @@ import type { NominationsProps } from './types'
 
 export const Inner = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('app')
-  const { consts } = useApi()
   const { activeAddress } = useActiveAccounts()
   const { setNominations } = useManageNominations()
-  const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()
+  const { getPoolSetup, setPoolSetup } = usePoolSetups()
+  const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 
   const setup =
     bondFor === 'nominator'
@@ -32,12 +34,15 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
       : getPoolSetup(activeAddress)
 
   const { progress } = setup
-  const { maxNominations } = consts
 
   // Handler for updating setup.
-  const handleSetupUpdate = (value: NominatorProgress) => {
+  const handleSetupUpdate = (value: NominatorProgress | PoolProgress) => {
     setNominations(value.nominations)
-    setActiveAccountSetup(bondFor, value)
+    if (bondFor === 'nominator') {
+      setNominatorSetup(value as NominatorProgress)
+    } else {
+      setPoolSetup(value as PoolProgress)
+    }
   }
 
   // Generation component props
@@ -62,14 +67,13 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
         thisSection={section}
         complete={progress.nominations.length > 0}
         title={t('nominate')}
-        helpKey="Nominating"
         bondFor={bondFor}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Subheading>
           <h4>
             {t('chooseValidators', {
-              maxNominations: maxNominations.toString(),
+              maxNominations: MaxNominations,
             })}
           </h4>
         </Subheading>
@@ -82,8 +86,9 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
 }
 
 export const Nominate = (props: NominationsProps) => {
+  const { getPoolSetup } = usePoolSetups()
   const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup, getPoolSetup } = useSetup()
+  const { getNominatorSetup } = useNominatorSetups()
   const setup =
     props.bondFor === 'nominator'
       ? getNominatorSetup(activeAddress)

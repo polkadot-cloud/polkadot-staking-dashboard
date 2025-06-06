@@ -3,9 +3,10 @@
 
 import { faMinus, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
+import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
-import { getNetworkData } from 'consts/util'
+import BigNumber from 'bignumber.js'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -18,7 +19,6 @@ import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages')
@@ -32,7 +32,7 @@ export const ManageBond = () => {
   const { getTransferOptions } = useTransferOptions()
   const { isBonding, isMember, activePool, isDepositor } = useActivePool()
 
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const allTransferOptions = getTransferOptions(activeAddress)
   const {
@@ -43,11 +43,11 @@ export const ManageBond = () => {
 
   const bondDisabled =
     syncing ||
-    !isBonding() ||
+    !isBonding ||
     !isMember() ||
     isReadOnlyAccount(activeAddress) ||
     state === 'Destroying'
-  const canLeavePool = isMember() && !isDepositor() && active?.isGreaterThan(0)
+  const canLeavePool = isMember() && !isDepositor() && active > 0n
 
   return (
     <>
@@ -60,7 +60,7 @@ export const ManageBond = () => {
           <Token />
           <Odometer
             value={minDecimalPlaces(
-              planckToUnitBn(active, units).toFormat(),
+              new BigNumber(planckToUnit(active, units)).toFormat(),
               2
             )}
             zeroDecimals={2}
@@ -108,11 +108,11 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeader>
       <BondedChart
-        active={planckToUnitBn(active, units)}
-        unlocking={planckToUnitBn(totalUnlocking, units)}
-        unlocked={planckToUnitBn(totalUnlocked, units)}
-        free={planckToUnitBn(transferrableBalance, units)}
-        inactive={active.isZero()}
+        active={new BigNumber(planckToUnit(active, units))}
+        unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
+        unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
+        free={new BigNumber(planckToUnit(transferrableBalance, units))}
+        inactive={active === 0n}
       />
     </>
   )

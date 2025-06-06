@@ -1,15 +1,22 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useStaking } from 'contexts/Staking'
+import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
+import { ControllerPrompt } from './ControllerPrompt'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
+import { QuickActions } from './QuickActions'
 import { StakeStatus } from './StakeStatus'
 import { AverageRewardRate } from './Stats/AveragelRewardRate'
 import { NextRewards } from './Stats/NextRewards'
@@ -18,10 +25,19 @@ import { SupplyStaked } from './Stats/SupplyStaked'
 export const Overview = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
+  const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
+  const { getStakingLedger } = useBalances()
+  const { activeAddress } = useActiveAccounts()
+  const { syncing, accountSynced } = useSyncing()
+  const { isReadOnlyAccount } = useImportedAccounts()
+
+  const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
   // Fiat values result in a slightly larger height for Balance & Payouts
   const showFiat = pluginEnabled('staking_api') && network !== 'westend'
+
+  const STATUS_HEIGHT = 110
   const PAYOUTS_HEIGHT = showFiat ? 385 : 380
 
   return (
@@ -32,8 +48,18 @@ export const Overview = () => {
         <SupplyStaked />
         <NextRewards />
       </Stat.Row>
+      {isNominator &&
+        !syncing &&
+        accountSynced(activeAddress) &&
+        controllerUnmigrated &&
+        !isReadOnlyAccount(activeAddress) && <ControllerPrompt />}
       <Page.Row>
-        <StakeStatus />
+        <Page.RowSection>
+          <StakeStatus height={STATUS_HEIGHT} />
+        </Page.RowSection>
+        <Page.RowSection secondary hLast vLast>
+          <QuickActions height={STATUS_HEIGHT} />
+        </Page.RowSection>
       </Page.Row>
       <Page.Row>
         <Page.RowSection secondary>

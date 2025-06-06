@@ -3,8 +3,9 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { useNetwork } from 'contexts/Network'
+import { activeProxy$, setActiveAddress } from 'global-bus'
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ActiveAccount, ActiveProxy } from 'types'
 import type { ActiveAccountsContextInterface } from './types'
 
@@ -22,19 +23,7 @@ export const ActiveAccountsProvider = ({
   const [activeAccount, setActiveAccountState] = useState<ActiveAccount>(null)
 
   // Store the active proxy account
-  const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null)
-
-  // Setter for the active proxy account
-  const setActiveProxy = (account: ActiveProxy, updateLocal = true) => {
-    if (updateLocal) {
-      if (account === null) {
-        localStorage.removeItem(`${network}_active_proxy`)
-      } else {
-        localStorage.setItem(`${network}_active_proxy`, JSON.stringify(account))
-      }
-    }
-    setActiveProxyState(account)
-  }
+  const [activeProxy, setActiveProxy] = useState<ActiveProxy | null>(null)
 
   // Setter for the active account
   const setActiveAccount = (account: ActiveAccount, updateLocal = true) => {
@@ -48,8 +37,21 @@ export const ActiveAccountsProvider = ({
         )
       }
     }
+    // NOTE: Keep global bus in sync with the active account for dedot-api subscriptions
+    setActiveAddress(account?.address || null)
+    // Now update component state
     setActiveAccountState(account)
   }
+
+  // Subscribe to global bus active proxy events
+  useEffect(() => {
+    const unsubActiveProxy = activeProxy$.subscribe((result) => {
+      setActiveProxy(result)
+    })
+    return () => {
+      unsubActiveProxy.unsubscribe()
+    }
+  }, [])
 
   return (
     <ActiveAccountsContext.Provider
@@ -59,7 +61,6 @@ export const ActiveAccountsProvider = ({
         activeProxy,
         activeProxyType: activeProxy?.proxyType || null,
         setActiveAccount,
-        setActiveProxy,
       }}
     >
       {children}

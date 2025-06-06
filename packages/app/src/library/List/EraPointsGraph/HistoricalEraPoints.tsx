@@ -35,7 +35,7 @@ export const HistoricalEraPoints = ({
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
   const syncing = !isReady || !eraPoints.length || !validatorsFetched
   const tooltipText = t('validatorPerformance', {
-    count: Math.ceil(30 / erasPerDay.toNumber()),
+    count: Math.ceil(30 / erasPerDay),
   })
 
   return (

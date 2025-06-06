@@ -35,12 +35,12 @@ export const Nominations = ({
     isNominator: isPoolNominator,
   } = useActivePool()
   const { openHelp } = useHelp()
-  const { inSetup } = useStaking()
   const {
     modal: { openModal },
     canvas: { openCanvas },
   } = useOverlay()
-  const { syncing } = useSyncing(['balances', 'era-stakers'])
+  const { isNominator } = useStaking()
+  const { syncing } = useSyncing(['era-stakers'])
   const { getNominations } = useBalances()
   const { isFastUnstaking } = useUnstaking()
   const { formatWithPrefs } = useValidators()
@@ -75,7 +75,7 @@ export const Nominations = ({
 
   // Determine whether buttons are disabled.
   const btnsDisabled =
-    (!isPool && inSetup()) ||
+    (!isPool && !isNominator) ||
     (!isPool && syncing) ||
     isReadOnlyAccount(activeAddress) ||
     poolDestroying ||

@@ -3,9 +3,10 @@
 
 import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -21,11 +22,12 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { activePool } = useActivePool()
   const { openModal } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
+  const { getPendingPoolRewards } = useBalances()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const { units } = getNetworkData(network)
-  const pendingRewards = activePool?.pendingRewards || 0n
+  const { units } = getStakingChainData(network)
+  const pendingRewards = getPendingPoolRewards(activeAddress)
   const minUnclaimedDisplay = 1000000n
 
   const labelRewards =

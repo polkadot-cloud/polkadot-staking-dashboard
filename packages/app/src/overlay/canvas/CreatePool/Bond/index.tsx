@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useSetup } from 'contexts/Setup'
+import { usePoolSetups } from 'contexts/PoolSetups'
 import { useTxMeta } from 'contexts/TxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar'
@@ -18,7 +18,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { getTxSubmissionByTag } = useTxMeta()
   const { activeAddress } = useActiveAccounts()
-  const { getPoolSetup, setActiveAccountSetup } = useSetup()
+  const { getPoolSetup, setPoolSetup } = usePoolSetups()
 
   const txSubmission = getTxSubmissionByTag('createPool')
   const fee = txSubmission?.fee || 0n
@@ -44,7 +44,7 @@ export const Bond = ({ section }: SetupStepProps) => {
       bond: value.bond.toString(),
     })
     // set pool progress bond value.
-    setActiveAccountSetup('pool', {
+    setPoolSetup({
       ...progress,
       bond: value.bond.toString(),
     })
@@ -61,7 +61,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === section) {
-      setActiveAccountSetup('pool', {
+      setPoolSetup({
         ...progress,
         bond: initialBondValue,
       })
@@ -74,7 +74,6 @@ export const Bond = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={progress.bond !== '0' && progress.bond !== ''}
         title={t('bond')}
-        helpKey="Bonding"
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

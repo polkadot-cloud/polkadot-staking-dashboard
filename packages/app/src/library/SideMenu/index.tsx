@@ -24,6 +24,7 @@ import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { AdvancedToggle } from './Advanced'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
@@ -32,10 +33,11 @@ import { LogoWrapper, Separator, Wrapper } from './Wrapper'
 export const SideMenu = () => {
   const { t } = useTranslation('app')
   const { openHelp } = useHelp()
-  const { apiStatus } = useApi()
+  const { getApiStatus } = useApi()
   const {
     setSideMenu,
     sideMenuOpen,
+    advancedMode,
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
@@ -58,9 +60,9 @@ export const SideMenu = () => {
   })
 
   const apiStatusClass =
-    apiStatus === 'connecting'
+    getApiStatus(network) === 'connecting'
       ? 'warning'
-      : ['connected', 'ready'].includes(apiStatus)
+      : ['connected', 'ready'].includes(getApiStatus(network))
         ? 'success'
         : 'danger'
 
@@ -89,7 +91,7 @@ export const SideMenu = () => {
                 </span>
               </>
             )}
-            {!sideMenuOpen && (
+            {!sideMenuOpen && advancedMode && (
               <span className="toggle">
                 <span className="label">
                   <FontAwesomeIcon
@@ -145,6 +147,11 @@ export const SideMenu = () => {
                 size: sideMenuMinimised ? '1.05em' : '0.9em',
               }}
             />
+          </div>
+        </section>
+        <section>
+          <div className="inner">
+            <AdvancedToggle minimised={sideMenuMinimised} />
           </div>
         </section>
       </Wrapper>

@@ -47,11 +47,9 @@ export interface StakingContextInterface {
     w: MaybeAddress,
     t: string[]
   ) => Record<string, NominationStatus>
-  getControllerNotImported: (a: MaybeAddress) => boolean
-  addressDifferentToStash: (a: MaybeAddress) => boolean
-  isBonding: () => boolean
-  isNominating: () => boolean
-  inSetup: () => boolean
+  isBonding: boolean
+  isNominating: boolean
+  isNominator: boolean
   eraStakers: EraStakers
   getPagedErasStakers: (e: string) => Promise<Exposure[]>
 }

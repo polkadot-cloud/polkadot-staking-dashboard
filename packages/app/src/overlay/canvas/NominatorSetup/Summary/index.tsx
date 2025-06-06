@@ -4,13 +4,15 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
-import { NewNominator } from 'api/tx/newNominator'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useSetup } from 'contexts/Setup'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
+import type { PalletStakingRewardDestination } from 'dedot/chaintypes'
+import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -19,55 +21,67 @@ import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
 import type { SetupStepProps } from 'library/SetupSteps/types'
 import { SubmitTx } from 'library/SubmitTx'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Separator } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { Bond } from '../Bond'
 import { SummaryWrapper } from './Wrapper'
 
-export const Summary = ({ section }: SetupStepProps) => {
+export const Summary = ({
+  section,
+  simple,
+}: SetupStepProps & {
+  simple: boolean
+}) => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
+  const { serviceApi } = useApi()
   const { newBatchCall } = useBatchCall()
   const { getPayeeItems } = usePayeeConfig()
   const { closeCanvas } = useOverlay().canvas
   const { accountHasSigner } = useImportedAccounts()
   const { activeAddress, activeProxy } = useActiveAccounts()
-  const { getNominatorSetup, removeSetupProgress } = useSetup()
-  const { unit, units } = getNetworkData(network)
+  const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
+  const { unit, units } = getStakingChainData(network)
 
   const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
   const { bond, nominations, payee } = progress
 
+  // Track whether bond is valid
+  // TODO: Update depending on bond amount and min to earn rewards
+  const [bondValid, setBondValid] = useState<boolean>(true)
+
   const getTxs = () => {
     if (!activeAddress) {
-      return null
+      return
     }
     if (payee.destination === 'Account' && !payee.account) {
-      return null
+      return
     }
     if (payee.destination !== 'Account' && !payee.destination) {
-      return null
+      return
     }
-
-    const tx = new NewNominator(
-      network,
-      unitToPlanck(bond || '0', units),
+    const destinationParam: PalletStakingRewardDestination =
       payee.destination === 'Account'
         ? {
             type: 'Account' as const,
-            value: payee.account as string,
+            value: new AccountId32(payee.account as string),
           }
         : {
             type: payee.destination,
-          },
-      nominations.map(({ address }: { address: string }) => ({
-        type: 'Id',
-        value: address,
-      }))
-    ).tx()
-
+          }
+    const nominationsParam = nominations.map(
+      ({ address }: { address: string }) => address
+    )
+    const tx = serviceApi.tx.newNominator(
+      unitToPlanck(bond || '0', units),
+      destinationParam,
+      nominationsParam
+    )
     if (!tx) {
-      return null
+      return
     }
     return newBatchCall(tx, activeAddress)
   }
@@ -78,11 +92,10 @@ export const Summary = ({ section }: SetupStepProps) => {
     from: activeAddress,
     shouldSubmit: true,
     callbackInBlock: () => {
-      // Close the canvas after the extrinsic is included in a block.
+      // Close the canvas after the extrinsic is included in a block
       closeCanvas()
-
-      // Reset setup progress.
-      removeSetupProgress('nominator', activeAddress)
+      // Reset setup progress
+      removeNominatorSetup(activeAddress)
     },
   })
 
@@ -92,45 +105,60 @@ export const Summary = ({ section }: SetupStepProps) => {
 
   return (
     <>
-      <Header
-        thisSection={section}
-        complete={null}
-        title={t('summary')}
-        bondFor="nominator"
-      />
+      {!simple && (
+        <Header
+          thisSection={section}
+          complete={null}
+          title={t('summary')}
+          bondFor="nominator"
+        />
+      )}
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!(
           accountHasSigner(activeAddress) ||
           accountHasSigner(activeProxy?.address || null)
         ) && <Warning text={t('readOnly')} />}
-        <SummaryWrapper>
+        <SummaryWrapper style={{ marginTop: simple ? '0' : '1rem' }}>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('payoutDestination')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-12" />
             </div>
             <div>
-              {payee.destination === 'Account'
-                ? `${payeeDisplay}: ${ellipsisFn(payee.account || '')}`
-                : payeeDisplay}
+              <h4>{t('payoutDestination')}</h4>
+              <h2>
+                {payee.destination === 'Account'
+                  ? `${payeeDisplay}: ${ellipsisFn(payee.account || '')}`
+                  : payeeDisplay}
+              </h2>
             </div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominating')}:
-            </div>
-            <div>{t('validatorCount', { count: nominations.length })}</div>
-          </section>
-          <section>
-            <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('bondAmount')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-12" />
             </div>
             <div>
-              {new BigNumber(bond || 0).toFormat()} {unit}
+              <h4>{t('nominating')}</h4>
+              <h2>{t('validatorCount', { count: nominations.length })}</h2>
             </div>
           </section>
+          {!simple ? (
+            <section>
+              <div>
+                <FontAwesomeIcon icon={faCheckCircle} transform="grow-12" />
+              </div>
+              <div>
+                <h4>{t('bondAmount')}:</h4>
+                <h2>
+                  {new BigNumber(bond || 0).toFormat()} {unit}
+                </h2>
+              </div>
+            </section>
+          ) : (
+            <div style={{ padding: '1rem 0.5rem', width: '100%' }}>
+              <Separator transparent />
+              <Bond section={4} inline={true} handleBondValid={setBondValid} />
+            </div>
+          )}
         </SummaryWrapper>
         <div
           style={{
@@ -142,9 +170,9 @@ export const Summary = ({ section }: SetupStepProps) => {
         >
           <SubmitTx
             submitText={t('startNominating')}
-            valid
+            valid={bondValid}
             {...submitExtrinsic}
-            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
+            displayFor="canvas"
           />
         </div>
       </MotionContainer>

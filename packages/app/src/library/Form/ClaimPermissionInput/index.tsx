@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ClaimPermission } from 'contexts/Pools/types'
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ClaimPermission } from 'types'
 import type { ClaimPermissionConfig } from '../types'
 import type { ClaimPermissionInputProps } from './types'
 

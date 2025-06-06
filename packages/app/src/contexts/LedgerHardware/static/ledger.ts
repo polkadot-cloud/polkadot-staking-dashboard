@@ -71,20 +71,15 @@ export class Ledger {
     app: PolkadotGenericApp,
     index: number,
     payload: Uint8Array,
-    txMetadata?: Uint8Array
+    txMetadata: Uint8Array
   ) => {
     await this.ensureOpen()
 
     const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`
     const toSign = Buffer.from(payload)
 
-    let result
-    if (txMetadata) {
-      const buff = Buffer.from(txMetadata)
-      result = await app.signWithMetadata(bip42Path, toSign, buff)
-    } else {
-      result = app.sign(bip42Path, toSign)
-    }
+    const buff = Buffer.from(txMetadata)
+    const result = await app.signWithMetadataEd25519(bip42Path, toSign, buff)
 
     await this.ensureClosed()
     return result

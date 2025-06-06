@@ -23,17 +23,14 @@ export const useStatusButtons = () => {
   const { getTransferOptions } = useTransferOptions()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const membership = getPoolMembership(activeAddress)
+  const { membership } = getPoolMembership(activeAddress)
   const { active } = getTransferOptions(activeAddress).pool
 
   const getCreateDisabled = () => {
     if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {
       return true
     }
-    if (
-      maxPools &&
-      (maxPools.isZero() || bondedPools.length === maxPools?.toNumber())
-    ) {
+    if ((maxPools && maxPools === 0) || bondedPools.length === maxPools) {
       return true
     }
     return false
@@ -48,10 +45,10 @@ export const useStatusButtons = () => {
     !bondedPools.length
 
   if (!membership) {
-    label = t('poolMembership')
+    label = t('membership')
   } else if (isOwner()) {
     label = `${t('ownerOfPool')} ${membership.poolId}`
-  } else if (active?.isGreaterThan(0)) {
+  } else if (active > 0n) {
     label = `${t('memberOfPool')} ${membership.poolId}`
   } else {
     label = `${t('leavingPool')} ${membership.poolId}`

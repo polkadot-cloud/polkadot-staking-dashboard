@@ -27,7 +27,7 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
 
   const empty = Object.values(poolRewardPoints).length === 0
   const syncing = !isReady
-  const tooltipText = `${Math.ceil(30 / erasPerDay.toNumber())} ${t('dayPoolPerformance')}`
+  const tooltipText = `${Math.ceil(30 / erasPerDay)} ${t('dayPoolPerformance')}`
 
   return (
     <Graph syncing={syncing} canvas={displayFor === 'canvas'}>

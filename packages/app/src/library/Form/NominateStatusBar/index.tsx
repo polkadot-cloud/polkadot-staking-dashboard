@@ -3,14 +3,15 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { getNetworkData } from 'consts/util'
+import { planckToUnit } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
-import { planckToUnitBn } from 'utils'
 import type { NominateStatusBarProps } from '../types'
 import { Wrapper } from './Wrapper'
 
@@ -18,15 +19,18 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('app')
   const { openHelp } = useHelp()
   const {
-    networkMetrics: { minimumActiveStake },
-    stakingMetrics: { minNominatorBond },
+    stakingMetrics: { minNominatorBond, minimumActiveStake },
   } = useApi()
   const { network } = useNetwork()
   const { syncing } = useSyncing(['initialization'])
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
-  const minNominatorBondUnit = planckToUnitBn(minNominatorBond, units)
-  const minimumActiveStakeUnit = planckToUnitBn(minimumActiveStake, units)
+  const minNominatorBondUnit = new BigNumber(
+    planckToUnit(minNominatorBond, units)
+  )
+  const minimumActiveStakeUnit = new BigNumber(
+    planckToUnit(minimumActiveStake, units)
+  )
   const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit)
   const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStakeUnit)
 

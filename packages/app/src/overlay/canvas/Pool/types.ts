@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Dispatch, SetStateAction } from 'react'
-import type { AnyJson, BondedPool } from 'types'
+import type { BondedPool, IdentityOf, SuperIdentity } from 'types'
 
 export interface HeaderProps {
   activeTab: number
@@ -26,6 +26,6 @@ export interface OverviewSectionProps {
 }
 
 export type RoleIdentities = {
-  identities: AnyJson
-  supers: AnyJson
+  identities: Record<string, IdentityOf>
+  supers: Record<string, SuperIdentity>
 }

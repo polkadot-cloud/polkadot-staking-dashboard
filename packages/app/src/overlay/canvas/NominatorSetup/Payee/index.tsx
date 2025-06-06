@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useSetup } from 'contexts/Setup'
-import type { PayeeOptions } from 'contexts/Setup/types'
-import { defaultPayee } from 'controllers/Balances/defaults'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
+import type { PayeeOption } from 'contexts/NominatorSetups/types'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { Spacer } from 'library/Form/Wrappers'
 import { PayeeInput } from 'library/PayeeInput'
@@ -23,7 +22,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages')
   const { getPayeeItems } = usePayeeConfig()
   const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup, setActiveAccountSetup } = useSetup()
+  const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 
   const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
@@ -38,9 +37,9 @@ export const Payee = ({ section }: SetupStepProps) => {
     !(payee.destination === 'Account' && payee.account === null)
 
   // update setup progress with payee config.
-  const handleChangeDestination = (destination: PayeeOptions) => {
+  const handleChangeDestination = (destination: PayeeOption) => {
     // set local value to update input element set setup payee
-    setActiveAccountSetup('nominator', {
+    setNominatorSetup({
       ...progress,
       payee: { destination, account },
     })
@@ -49,7 +48,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   // update setup progress with payee account.
   const handleChangeAccount = (newAccount: MaybeAddress) => {
     // set local value to update input element set setup payee
-    setActiveAccountSetup('nominator', {
+    setNominatorSetup({
       ...progress,
       payee: { ...payee, account: newAccount },
     })
@@ -58,9 +57,12 @@ export const Payee = ({ section }: SetupStepProps) => {
   // set initial payee value to `Staked` if not yet set.
   useEffect(() => {
     if (!payee || (!payee.destination && !payee.account)) {
-      setActiveAccountSetup('nominator', {
+      setNominatorSetup({
         ...progress,
-        payee: defaultPayee,
+        payee: {
+          destination: 'Staked',
+          account: null,
+        },
       })
     }
   }, [activeAddress])
@@ -71,7 +73,6 @@ export const Payee = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={isComplete()}
         title={t('payoutDestination')}
-        helpKey="Payout Destination"
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
