@@ -29,3 +29,5 @@ export const setActiveProxy = (
 export const resetActiveProxy = () => {
   _activeProxy.next(null)
 }
+
+export * from './local'
