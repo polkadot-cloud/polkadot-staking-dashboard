@@ -54,7 +54,6 @@ export const Header = ({
             text={t('chooseAnotherPool', { ns: 'app' })}
             iconLeft={faArrowsRotate}
             onClick={() => handleChooseNewPool()}
-            style={{ marginRight: '1.25rem' }}
             lg
           />
         )}
