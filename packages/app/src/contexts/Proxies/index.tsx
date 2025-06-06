@@ -143,7 +143,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // resolved
   useEffectIgnoreInitial(() => {
     const localActiveProxy = getLocalActiveProxy(network)
-    if (proxies.length && localActiveProxy && !activeProxy && activeAccount) {
+    if (proxies.length && localActiveProxy && activeAccount) {
       try {
         const { address, source, proxyType } = localActiveProxy
         // Add proxy address as external account if not imported
@@ -159,7 +159,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
           )?.[1].proxies || []
         ).find((d) => d.delegate === address && d.proxyType === proxyType)
 
-        if (isActive) {
+        if (isActive && !activeProxy) {
           setActiveProxy(network, { address, source, proxyType })
         }
       } catch (err) {
