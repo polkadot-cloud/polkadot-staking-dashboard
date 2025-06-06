@@ -50,6 +50,7 @@ export const Summary = ({
   const { bond, nominations, payee } = progress
 
   // Track whether bond is valid
+  // TODO: Update depending on bond amount and min to earn rewards
   const [bondValid, setBondValid] = useState<boolean>(true)
 
   const getTxs = () => {
