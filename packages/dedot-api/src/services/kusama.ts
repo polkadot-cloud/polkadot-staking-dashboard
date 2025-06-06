@@ -266,8 +266,12 @@ export class KusamaService
         const localProxy = getLocalActiveProxy(this.ids[0])
         if (sync === 'synced' && proxiesSynced && getSyncing('active-proxy')) {
           if (activeAddress && localProxy) {
-            for (const proxy of proxies[activeAddress].proxies) {
-              if (JSON.stringify(proxy) === JSON.stringify(localProxy)) {
+            for (const { proxyType, delegate } of proxies[activeAddress]
+              .proxies) {
+              if (
+                proxyType === localProxy.proxyType &&
+                delegate === localProxy.address
+              ) {
                 setActiveProxy(this.ids[0], localProxy)
                 break
               }
