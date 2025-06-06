@@ -3,9 +3,9 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { useNetwork } from 'contexts/Network'
-import { setActiveAddress } from 'global-bus'
+import { activeProxy$, setActiveAddress, setLocalActiveProxy } from 'global-bus'
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ActiveAccount, ActiveProxy } from 'types'
 import type { ActiveAccountsContextInterface } from './types'
 
@@ -28,11 +28,7 @@ export const ActiveAccountsProvider = ({
   // Setter for the active proxy account
   const setActiveProxy = (account: ActiveProxy | null, updateLocal = true) => {
     if (updateLocal) {
-      if (account === null) {
-        localStorage.removeItem(`${network}_active_proxy`)
-      } else {
-        localStorage.setItem(`${network}_active_proxy`, JSON.stringify(account))
-      }
+      setLocalActiveProxy(network, account)
     }
     setActiveProxyState(account)
   }
@@ -54,6 +50,16 @@ export const ActiveAccountsProvider = ({
     // Now update component state
     setActiveAccountState(account)
   }
+
+  // Subscribe to global bus active proxy events
+  useEffect(() => {
+    const unsubActiveProxy = activeProxy$.subscribe((result) => {
+      setActiveProxyState(result)
+    })
+    return () => {
+      unsubActiveProxy.unsubscribe()
+    }
+  }, [])
 
   return (
     <ActiveAccountsContext.Provider

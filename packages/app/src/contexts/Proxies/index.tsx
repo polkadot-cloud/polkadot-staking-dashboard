@@ -173,11 +173,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [stringifiedAccountsKey, activeAccount, proxies, network])
 
-  // Reset active proxy state on network change & unmount
-  useEffectIgnoreInitial(() => {
-    setActiveProxy(null, false)
-  }, [network])
-
   // Subscribe to global bus proxies
   useEffect(() => {
     const subProxies = proxies$.subscribe((result) => {
