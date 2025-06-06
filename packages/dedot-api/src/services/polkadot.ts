@@ -4,6 +4,7 @@
 import type { PolkadotAssetHubApi } from '@dedot/chaintypes'
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
+import { reconnectSync$ } from '@w3ux/observables-connect'
 import { formatAccountSs58 } from '@w3ux/utils'
 import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
@@ -11,13 +12,18 @@ import {
   activePoolIds$,
   bonded$,
   defaultSyncStatus,
+  getActiveAddress,
+  getLocalActiveProxy,
+  getSyncing,
   importedAccounts$,
+  proxies$,
   removeSyncing,
+  setActiveProxy,
   setConsts,
   setMultiChainSpecs,
   setSyncingMulti,
 } from 'global-bus'
-import { pairwise, startWith, type Subscription } from 'rxjs'
+import { combineLatest, pairwise, startWith, type Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -109,6 +115,7 @@ export class PolkadotService
   subStakingLedgers: StakingLedgers<PolkadotApi> = {}
   subPoolMemberships: PoolMemberships<PolkadotApi> = {}
   subProxies: Proxies<PolkadotApi> = {}
+  subActiveProxies: Subscription
   subActivePoolIds: Subscription
   subActivePools: ActivePools<PolkadotApi> = {}
   subActiveBonded: Subscription
@@ -251,6 +258,31 @@ export class PolkadotService
         })
       })
 
+    this.subActiveProxies = combineLatest([proxies$, reconnectSync$]).subscribe(
+      ([proxies, sync]) => {
+        const activeAddress = getActiveAddress()
+        const proxiesSynced = Object.keys(proxies).find(
+          (address) => address === activeAddress
+        )
+        const localProxy = getLocalActiveProxy(this.ids[0])
+        if (sync === 'synced' && proxiesSynced && getSyncing('active-proxy')) {
+          if (activeAddress && localProxy) {
+            for (const { proxyType, delegate } of proxies[activeAddress]
+              .proxies) {
+              if (
+                proxyType === localProxy.proxyType &&
+                delegate === localProxy.address
+              ) {
+                setActiveProxy(this.ids[0], localProxy)
+                break
+              }
+            }
+          }
+          removeSyncing('active-proxy')
+        }
+      }
+    )
+
     this.subActivePoolIds = activePoolIds$
       .pipe(startWith([]), pairwise())
       .subscribe(([prev, cur]) => {
@@ -274,6 +306,7 @@ export class PolkadotService
     for (const sub of Object.values(this.subActivePools)) {
       sub?.unsubscribe()
     }
+    this.subActiveProxies?.unsubscribe()
     this.subActivePoolIds?.unsubscribe()
     this.subActiveBonded?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {

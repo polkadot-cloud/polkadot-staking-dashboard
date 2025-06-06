@@ -10,7 +10,7 @@ export const resetActiveAddress = () => {
   _activeAddress.next(null)
 }
 
-export const getActiveAddress$ = () => _activeAddress.getValue()
+export const getActiveAddress = () => _activeAddress.getValue()
 
 export const setActiveAddress = (address: MaybeString) => {
   _activeAddress.next(address)
