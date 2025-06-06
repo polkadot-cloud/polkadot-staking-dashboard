@@ -45,12 +45,13 @@ export const Summary = ({
   const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
   const { unit, units } = getStakingChainData(network)
 
-  // Track whether bond is valid
-  const [bondValid, setBondValid] = useState<boolean>(false)
-
   const setup = getNominatorSetup(activeAddress)
   const { progress } = setup
   const { bond, nominations, payee } = progress
+
+  // Track whether bond is valid
+  // TODO: Update depending on bond amount and min to earn rewards
+  const [bondValid, setBondValid] = useState<boolean>(true)
 
   const getTxs = () => {
     if (!activeAddress) {

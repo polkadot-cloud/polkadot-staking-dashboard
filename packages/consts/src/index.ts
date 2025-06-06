@@ -34,5 +34,6 @@ export const ProviderTypeKey = 'providerType'
 export const PoolSetupsKey = 'poolSetups'
 export const NominatorSetupsKey = 'nominatorSetups'
 export const AdvancedModeKey = 'advancedMode'
+export const ActiveProxiesKey = 'activeProxies'
 
 export const rpcEndpointKey = (network: string) => `${network}_rpc_endpoints`

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { localStorageOrDefault } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -10,7 +9,12 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
-import { proxies$ } from 'global-bus'
+import {
+  getLocalActiveProxy,
+  proxies$,
+  removeLocalActiveProxy,
+  setActiveProxy,
+} from 'global-bus'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, Proxies } from 'types'
@@ -29,8 +33,8 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { serviceApi } = useApi()
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
+  const { activeProxy, activeAccount } = useActiveAccounts()
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
-  const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts()
 
   // Store the proxy accounts of each imported account
   const [proxies, setProxies] = useState<Record<string, Proxies>>({})
@@ -133,22 +137,15 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`
+  //
+  // NOTE: this ideally should be on the dedot api side, but better account abstraction is needed
+  // prior to this migration, and adding external accounts + other account duplicate needs to be
+  // resolved
   useEffectIgnoreInitial(() => {
-    const localActiveProxy = localStorageOrDefault(
-      `${network}_active_proxy`,
-      null
-    )
-
-    if (!localActiveProxy) {
-      setActiveProxy(null)
-    } else if (
-      proxies.length &&
-      localActiveProxy &&
-      !activeProxy &&
-      activeAccount
-    ) {
+    const localActiveProxy = getLocalActiveProxy(network)
+    if (Object.keys(proxies).length && localActiveProxy && activeAccount) {
       try {
-        const { address, source, proxyType } = JSON.parse(localActiveProxy)
+        const { address, source, proxyType } = localActiveProxy
         // Add proxy address as external account if not imported
         if (!accounts.find((a) => a.address === address)) {
           const importResult = addExternalAccount(address, 'system')
@@ -156,27 +153,20 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
             addOrReplaceOtherAccount(importResult.account, importResult.type)
           }
         }
-
         const isActive = (
           Object.entries(proxies).find(
             ([key]) => key === activeAccount.address
           )?.[1].proxies || []
         ).find((d) => d.delegate === address && d.proxyType === proxyType)
 
-        if (isActive) {
-          setActiveProxy({ address, source, proxyType })
+        if (isActive && !activeProxy) {
+          setActiveProxy(network, { address, source, proxyType })
         }
-      } catch (e) {
-        // Corrupt local active proxy record. Remove it
-        localStorage.removeItem(`${network}_active_proxy`)
+      } catch (err) {
+        removeLocalActiveProxy(network)
       }
     }
   }, [stringifiedAccountsKey, activeAccount, proxies, network])
-
-  // Reset active proxy state on network change & unmount
-  useEffectIgnoreInitial(() => {
-    setActiveProxy(null, false)
-  }, [network])
 
   // Subscribe to global bus proxies
   useEffect(() => {
