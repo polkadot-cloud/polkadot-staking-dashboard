@@ -23,10 +23,10 @@ export const ActiveAccountsProvider = ({
   const [activeAccount, setActiveAccountState] = useState<ActiveAccount>(null)
 
   // Store the active proxy account
-  const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null)
+  const [activeProxy, setActiveProxyState] = useState<ActiveProxy | null>(null)
 
   // Setter for the active proxy account
-  const setActiveProxy = (account: ActiveProxy, updateLocal = true) => {
+  const setActiveProxy = (account: ActiveProxy | null, updateLocal = true) => {
     if (updateLocal) {
       if (account === null) {
         localStorage.removeItem(`${network}_active_proxy`)

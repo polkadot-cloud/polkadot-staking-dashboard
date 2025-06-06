@@ -31,15 +31,16 @@ export const getActiveAccountLocal = (
 }
 
 // Gets an active proxy from local storage for a network
+// TODO: Deprecate this function
 export const getActiveProxyLocal = (
   network: NetworkId,
   ss58: number
-): ActiveProxy => {
+): ActiveProxy | null => {
   try {
     const account = localStorageOrDefault(
       `${network}_active_proxy`,
       null
-    ) as ActiveProxy
+    ) as ActiveProxy | null
 
     if (account && account?.address) {
       const formatted = formatAccountSs58(account.address, ss58)
