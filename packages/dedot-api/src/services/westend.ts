@@ -4,6 +4,7 @@
 import type { WestendAssetHubApi } from '@dedot/chaintypes'
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
+import { reconnectSync$ } from '@w3ux/observables-connect'
 import { formatAccountSs58 } from '@w3ux/utils'
 import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
@@ -11,13 +12,18 @@ import {
   activePoolIds$,
   bonded$,
   defaultSyncStatus,
+  getActiveAddress,
+  getLocalActiveProxy,
+  getSyncing,
   importedAccounts$,
+  proxies$,
   removeSyncing,
+  setActiveProxy,
   setConsts,
   setMultiChainSpecs,
   setSyncingMulti,
 } from 'global-bus'
-import { pairwise, startWith, type Subscription } from 'rxjs'
+import { combineLatest, pairwise, startWith, type Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -109,6 +115,7 @@ export class WestendService
   subStakingLedgers: StakingLedgers<WestendAssetHubApi> = {}
   subPoolMemberships: PoolMemberships<WestendAssetHubApi> = {}
   subProxies: Proxies<WestendAssetHubApi> = {}
+  subActiveProxies: Subscription
   subActivePoolIds: Subscription
   subActivePools: ActivePools<WestendAssetHubApi> = {}
   subActiveBonded: Subscription
@@ -249,6 +256,27 @@ export class WestendService
         })
       })
 
+    this.subActiveProxies = combineLatest([proxies$, reconnectSync$]).subscribe(
+      ([proxies, sync]) => {
+        const activeAddress = getActiveAddress()
+        const proxiesSynced = Object.keys(proxies).find(
+          (address) => address === activeAddress
+        )
+        const localProxy = getLocalActiveProxy(this.ids[0])
+        if (sync === 'synced' && proxiesSynced && getSyncing('active-proxy')) {
+          if (activeAddress && localProxy) {
+            for (const proxy of proxies[activeAddress].proxies) {
+              if (JSON.stringify(proxy) === JSON.stringify(localProxy)) {
+                setActiveProxy(this.ids[0], localProxy)
+                break
+              }
+            }
+          }
+          removeSyncing('active-proxy')
+        }
+      }
+    )
+
     this.subActivePoolIds = activePoolIds$
       .pipe(startWith([]), pairwise())
       .subscribe(([prev, cur]) => {
@@ -272,6 +300,7 @@ export class WestendService
     for (const sub of Object.values(this.subActivePools)) {
       sub?.unsubscribe()
     }
+    this.subActiveProxies?.unsubscribe()
     this.subActivePoolIds?.unsubscribe()
     this.subActiveBonded?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {

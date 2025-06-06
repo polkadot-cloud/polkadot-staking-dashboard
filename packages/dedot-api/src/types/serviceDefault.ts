@@ -87,6 +87,7 @@ export abstract class DefaultServiceClass<
   subActivePools: ActivePools<StakingApi>
   subPoolMemberships: PoolMemberships<StakingApi>
   subProxies: Proxies<StakingApi>
+  subActiveProxies: Subscription
 
   abstract interface: ServiceInterface
 }
