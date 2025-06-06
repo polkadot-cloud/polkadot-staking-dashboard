@@ -14,7 +14,7 @@ export const setLocalActiveProxy = (
   } else {
     const proxies = { ...getLocalActiveProxies() }
     proxies[network] = proxy
-    localStorage.setItem(ActiveProxiesKey, network)
+    localStorage.setItem(ActiveProxiesKey, JSON.stringify(proxies))
   }
 }
 
