@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { localStorageOrDefault } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -10,7 +9,7 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
-import { proxies$ } from 'global-bus'
+import { getLocalActiveProxy, proxies$ } from 'global-bus'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, Proxies } from 'types'
@@ -134,21 +133,11 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`
   useEffectIgnoreInitial(() => {
-    const localActiveProxy = localStorageOrDefault(
-      `${network}_active_proxy`,
-      null
-    )
+    const localActiveProxy = getLocalActiveProxy(network)
 
-    if (!localActiveProxy) {
-      setActiveProxy(null)
-    } else if (
-      proxies.length &&
-      localActiveProxy &&
-      !activeProxy &&
-      activeAccount
-    ) {
+    if (proxies.length && localActiveProxy && !activeProxy && activeAccount) {
       try {
-        const { address, source, proxyType } = JSON.parse(localActiveProxy)
+        const { address, source, proxyType } = localActiveProxy
         // Add proxy address as external account if not imported
         if (!accounts.find((a) => a.address === address)) {
           const importResult = addExternalAccount(address, 'system')
