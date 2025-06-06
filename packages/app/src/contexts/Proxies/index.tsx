@@ -143,7 +143,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // resolved
   useEffectIgnoreInitial(() => {
     const localActiveProxy = getLocalActiveProxy(network)
-    if (proxies.length && localActiveProxy && activeAccount) {
+    if (Object.keys(proxies).length && localActiveProxy && activeAccount) {
       try {
         const { address, source, proxyType } = localActiveProxy
         // Add proxy address as external account if not imported
