@@ -14,6 +14,7 @@ import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { setActiveProxy } from 'global-bus'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { AccountWrapper } from './Wrappers'
@@ -30,15 +31,10 @@ export const AccountButton = ({
 }: AccountItemProps) => {
   const { t } = useTranslation('modals')
   const { getAccount } = useImportedAccounts()
-  const {
-    activeProxy,
-    activeAddress,
-    setActiveAccount,
-    setActiveProxy,
-    activeProxyType,
-  } = useActiveAccounts()
   const { network } = useNetwork()
   const { setModalStatus } = useOverlay().modal
+  const { activeProxy, activeAddress, setActiveAccount, activeProxyType } =
+    useActiveAccounts()
   const { unit, units } = getStakingChainData(network)
 
   // Accumulate account data.
@@ -77,6 +73,7 @@ export const AccountButton = ({
       account ? { address: account.address, source: account.source } : null
     )
     setActiveProxy(
+      network,
       proxyType && connectProxy
         ? { address: connectProxy, source, proxyType }
         : null

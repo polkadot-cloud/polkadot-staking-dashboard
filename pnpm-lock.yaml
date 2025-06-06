@@ -36,8 +36,8 @@ importers:
         specifier: ^3.10.0
         version: 3.10.1(vite@6.3.5(@types/node@22.15.29)(sass@1.77.6))
       '@w3ux/types':
-        specifier: ^2.2.1
-        version: 2.2.1
+        specifier: ^2.2.3
+        version: 2.2.3
       eslint:
         specifier: ^9.27.0
         version: 9.28.0
@@ -123,8 +123,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.4.6
-        version: 3.4.6(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.4.9
+        version: 3.4.9(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: ^2.0.1
         version: 2.0.1
@@ -338,6 +338,9 @@ importers:
       '@dedot/chaintypes':
         specifier: ^0.113.0
         version: 0.113.0(dedot@0.12.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@w3ux/observables-connect':
+        specifier: ^0.9.40
+        version: 0.9.40(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -361,8 +364,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.2.1
-        version: 2.2.1
+        specifier: ^2.2.3
+        version: 2.2.3
       types:
         specifier: workspace:*
         version: link:../types
@@ -386,8 +389,8 @@ importers:
         version: 7.8.2
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.2.1
-        version: 2.2.1
+        specifier: ^2.2.3
+        version: 2.2.3
       types:
         specifier: workspace:*
         version: link:../types
@@ -480,9 +483,6 @@ importers:
       '@w3ux/react-polkicon':
         specifier: ^3.1.2
         version: 3.1.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@w3ux/types':
-        specifier: ^2.2.1
-        version: 2.2.1
       '@w3ux/utils':
         specifier: 2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -496,6 +496,9 @@ importers:
         specifier: workspace:*
         version: link:../ui-core
     devDependencies:
+      '@w3ux/types':
+        specifier: ^2.2.3
+        version: 2.2.3
       types:
         specifier: workspace:*
         version: link:../types
@@ -2690,8 +2693,8 @@ packages:
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.4.6':
-    resolution: {integrity: sha512-PlDUlhZsQmf+8y5JcXVyEsZWosnaj1vzLwANrPnaHOi5vAmWCXxYtRUQjC0eBgBBkzvRgRQUIcwbacVPkxVvMg==}
+  '@w3ux/react-connect-kit@3.4.9':
+    resolution: {integrity: sha512-Ph0rMFKEmHK97Pc0U4tCWTur6SBfPnlNqHAXEBW/U1LxFm7qYilEqoxT5mhb0gDN678LA3C8htXp0i8TMcNA2w==}
     peerDependencies:
       rxjs: ^7.8.2
 
@@ -2701,8 +2704,8 @@ packages:
   '@w3ux/react-polkicon@3.1.2':
     resolution: {integrity: sha512-7N7qI7DEt9yL9/n60YZTumQfwHFpnAxXolR9wglFhgNuL30iw7NAxAkqy8jd+gyOr32NVpcJE+m0A+1O/+yyLg==}
 
-  '@w3ux/types@2.2.1':
-    resolution: {integrity: sha512-4SmN8QAZSAKN5N9OVNyc4zMOrewvaXTLiw3HZg7X1EAD3xz0AftWr/iZwCAlC1PhprF4gQexIOly24qwIg+Kaw==}
+  '@w3ux/types@2.2.3':
+    resolution: {integrity: sha512-6i2qfTDZX+nQxMRQujskM5DWcr8ANRLRmxZhDXjkUvRQ8rwbWxd8l/pS0GPhGmQOdP6Dx3tx3oY44FeN0V0Pug==}
 
   '@w3ux/utils@2.0.10':
     resolution: {integrity: sha512-utJhLwZyCTxQDxtlZIskPsM7FgckNllBT1Z/XGgAITt0UxqHhMW4mJr7TViV9s4GHCaFhBYwhUrb5PpoDgnZNw==}
@@ -8368,7 +8371,7 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.4.6(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.4.9(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/extension-assets': 2.2.0(react@19.1.0)
       '@w3ux/hooks': 2.1.0(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
@@ -8391,7 +8394,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/types@2.2.1': {}
+  '@w3ux/types@2.2.3': {}
 
   '@w3ux/utils@2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
