@@ -9,7 +9,12 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
-import { getLocalActiveProxy, proxies$, setActiveProxy } from 'global-bus'
+import {
+  getLocalActiveProxy,
+  proxies$,
+  removeLocalActiveProxy,
+  setActiveProxy,
+} from 'global-bus'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, Proxies } from 'types'
@@ -132,9 +137,12 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`
+  //
+  // NOTE: this ideally should be on the dedot api side, but better account abstraction is needed
+  // prior to this migration, and adding external accounts + other account duplicate needs to be
+  // resolved
   useEffectIgnoreInitial(() => {
     const localActiveProxy = getLocalActiveProxy(network)
-
     if (proxies.length && localActiveProxy && !activeProxy && activeAccount) {
       try {
         const { address, source, proxyType } = localActiveProxy
@@ -145,7 +153,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
             addOrReplaceOtherAccount(importResult.account, importResult.type)
           }
         }
-
         const isActive = (
           Object.entries(proxies).find(
             ([key]) => key === activeAccount.address
@@ -155,9 +162,8 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         if (isActive) {
           setActiveProxy(network, { address, source, proxyType })
         }
-      } catch (e) {
-        // Corrupt local active proxy record. Remove it
-        localStorage.removeItem(`${network}_active_proxy`)
+      } catch (err) {
+        removeLocalActiveProxy(network)
       }
     }
   }, [stringifiedAccountsKey, activeAccount, proxies, network])
