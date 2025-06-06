@@ -100,7 +100,7 @@ export const ImportedAccountsProvider = ({
     [stringifiedAccountsKey]
   )
 
-  // Re-sync the active account and active proxy on network change
+  // Re-sync the active account on network change
   useEffectIgnoreInitial(() => {
     const localActiveAccount = getActiveAccountLocal(network, ss58)
     if (getAccount(localActiveAccount?.address || null) !== null) {
