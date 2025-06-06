@@ -2,19 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ActiveProxy, NetworkId } from 'types'
-import { getLocalActiveProxy, setLocalActiveProxy } from './local'
+import { setLocalActiveProxy } from './local'
 import { _activeProxy } from './private'
 
 export const activeProxy$ = _activeProxy.asObservable()
-
-export const initActiveProxy = (network: NetworkId) => {
-  const localProxy = getLocalActiveProxy(network)
-  if (localProxy) {
-    _activeProxy.next(localProxy)
-  } else {
-    _activeProxy.next(null)
-  }
-}
 
 export const getActiveProxy = () => _activeProxy.getValue()
 
