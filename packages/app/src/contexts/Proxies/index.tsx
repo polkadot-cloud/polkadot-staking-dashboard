@@ -9,7 +9,7 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
-import { getLocalActiveProxy, proxies$ } from 'global-bus'
+import { getLocalActiveProxy, proxies$, setActiveProxy } from 'global-bus'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, Proxies } from 'types'
@@ -28,8 +28,8 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { serviceApi } = useApi()
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
+  const { activeProxy, activeAccount } = useActiveAccounts()
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
-  const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts()
 
   // Store the proxy accounts of each imported account
   const [proxies, setProxies] = useState<Record<string, Proxies>>({})
@@ -153,7 +153,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         ).find((d) => d.delegate === address && d.proxyType === proxyType)
 
         if (isActive) {
-          setActiveProxy({ address, source, proxyType })
+          setActiveProxy(network, { address, source, proxyType })
         }
       } catch (e) {
         // Corrupt local active proxy record. Remove it

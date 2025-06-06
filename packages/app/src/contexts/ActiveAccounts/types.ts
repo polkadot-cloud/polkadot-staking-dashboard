@@ -13,8 +13,4 @@ export interface ActiveAccountsContextInterface {
     account: ActiveAccount,
     updateLocalStorage?: boolean
   ) => void
-  setActiveProxy: (
-    account: ActiveProxy | null,
-    updateLocalStorage?: boolean
-  ) => void
 }
