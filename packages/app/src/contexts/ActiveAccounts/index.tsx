@@ -23,7 +23,7 @@ export const ActiveAccountsProvider = ({
   const [activeAccount, setActiveAccountState] = useState<ActiveAccount>(null)
 
   // Store the active proxy account
-  const [activeProxy, setActiveProxyState] = useState<ActiveProxy | null>(null)
+  const [activeProxy, setActiveProxy] = useState<ActiveProxy | null>(null)
 
   // Setter for the active account
   const setActiveAccount = (account: ActiveAccount, updateLocal = true) => {
@@ -46,7 +46,7 @@ export const ActiveAccountsProvider = ({
   // Subscribe to global bus active proxy events
   useEffect(() => {
     const unsubActiveProxy = activeProxy$.subscribe((result) => {
-      setActiveProxyState(result)
+      setActiveProxy(result)
     })
     return () => {
       unsubActiveProxy.unsubscribe()
