@@ -14,6 +14,7 @@ export type SubmitTxProps = SubmitProps & {
   noMargin?: boolean
   onResize?: () => void
   transparent?: boolean
+  txInitiated: boolean
 }
 
 export interface SubmitProps {
