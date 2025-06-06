@@ -12,6 +12,7 @@ import {
   bonded$,
   defaultSyncStatus,
   importedAccounts$,
+  initActiveProxy,
   removeSyncing,
   setConsts,
   setMultiChainSpecs,
@@ -145,6 +146,7 @@ export class WestendService
     this.stakingConsts = new StakingConsts(this.apiHub)
 
     setSyncingMulti(defaultSyncStatus)
+    initActiveProxy(this.ids[0])
 
     await Promise.all([
       this.relayChainSpec.fetch(),

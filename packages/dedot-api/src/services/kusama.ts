@@ -12,6 +12,7 @@ import {
   bonded$,
   defaultSyncStatus,
   importedAccounts$,
+  initActiveProxy,
   removeSyncing,
   setConsts,
   setMultiChainSpecs,
@@ -146,6 +147,7 @@ export class KusamaService
     this.stakingConsts = new StakingConsts(this.apiRelay)
 
     setSyncingMulti(defaultSyncStatus)
+    initActiveProxy(this.ids[0])
 
     await Promise.all([
       this.relayChainSpec.fetch(),
