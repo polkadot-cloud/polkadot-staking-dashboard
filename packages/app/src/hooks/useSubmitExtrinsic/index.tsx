@@ -357,6 +357,7 @@ export const useSubmitExtrinsic = ({
   }, [uid, JSON.stringify(tx?.toHex())])
 
   return {
+    txInitiated: !!tx,
     uid,
     onSubmit,
     submitAddress: from,
