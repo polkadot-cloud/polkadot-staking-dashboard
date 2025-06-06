@@ -4,18 +4,26 @@
 import type { KusamaAssetHubApi } from '@dedot/chaintypes'
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
+import { reconnectSync$ } from '@w3ux/observables-connect'
+import { formatAccountSs58 } from '@w3ux/utils'
 import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import {
   activeAddress$,
   activePoolIds$,
+  bonded$,
   defaultSyncStatus,
+  getActiveAddress,
+  getLocalActiveProxy,
+  getSyncing,
   importedAccounts$,
+  proxies$,
   removeSyncing,
+  setActiveProxy,
   setConsts,
   setMultiChainSpecs,
   setSyncingMulti,
 } from 'global-bus'
-import { pairwise, startWith, type Subscription } from 'rxjs'
+import { combineLatest, pairwise, startWith, type Subscription } from 'rxjs'
 import type {
   NetworkConfig,
   NetworkId,
@@ -32,9 +40,11 @@ import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { ActivePoolQuery } from '../subscribe/activePool'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
+import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
+import { PoolMembershipQuery } from '../subscribe/poolMembership'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { ProxiesQuery } from '../subscribe/proxies'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
@@ -45,11 +55,14 @@ import { createPool } from '../tx/createPool'
 import type {
   AccountBalances,
   ActivePools,
+  BondedAccounts,
   DefaultServiceClass,
+  PoolMemberships,
   Proxies,
   StakingLedgers,
 } from '../types/serviceDefault'
 import {
+  diffBonded,
   diffImportedAccounts,
   diffPoolIds,
   formatAccountAddresses,
@@ -98,10 +111,14 @@ export class KusamaService
     people: {},
     hub: {},
   }
+  subBonded: BondedAccounts<KusamaApi> = {}
   subStakingLedgers: StakingLedgers<KusamaApi> = {}
+  subPoolMemberships: PoolMemberships<KusamaApi> = {}
   subProxies: Proxies<KusamaApi> = {}
+  subActiveProxies: Subscription
   subActivePoolIds: Subscription
   subActivePools: ActivePools<KusamaApi> = {}
+  subActiveBonded: Subscription
 
   constructor(
     public networkConfig: NetworkConfig,
@@ -186,13 +203,20 @@ export class KusamaService
         formatAccountAddresses(cur.flat(), ss58)
       )
       removed.forEach((account) => {
-        this.ids.forEach((id, i) => {
-          this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
-            getAccountKey(id, account)
-          ]?.unsubscribe()
-          this.subStakingLedgers?.[account.address]?.unsubscribe()
-          this.subProxies?.[account.address]?.unsubscribe()
-        })
+        const address = formatAccountSs58(
+          account.address,
+          this.apiRelay.consts.system.ss58Prefix
+        )
+        if (address) {
+          this.ids.forEach((id, i) => {
+            this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
+              getAccountKey(id, account)
+            ]?.unsubscribe()
+            this.subBonded[address]?.unsubscribe()
+            this.subPoolMemberships[address]?.unsubscribe()
+            this.subProxies?.[address]?.unsubscribe()
+          })
+        }
       })
       added.forEach((account) => {
         this.subAccountBalances['relay'][getAccountKey(this.ids[0], account)] =
@@ -202,7 +226,11 @@ export class KusamaService
         this.subAccountBalances['hub'][getAccountKey(this.ids[2], account)] =
           new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
-        this.subStakingLedgers[account.address] = new StakingLedgerQuery(
+        this.subBonded[account.address] = new BondedQuery(
+          this.apiRelay,
+          account.address
+        )
+        this.subPoolMemberships[account.address] = new PoolMembershipQuery(
           this.apiRelay,
           account.address
         )
@@ -212,6 +240,47 @@ export class KusamaService
         )
       })
     })
+
+    this.subActiveBonded = bonded$
+      .pipe(startWith([]), pairwise())
+      .subscribe(([prev, cur]) => {
+        const { added, removed } = diffBonded(prev, cur)
+        removed.forEach(({ stash }) => {
+          this.subStakingLedgers?.[stash]?.unsubscribe()
+        })
+        added.forEach(({ stash, bonded }) => {
+          this.subStakingLedgers[stash] = new StakingLedgerQuery(
+            this.apiRelay,
+            stash,
+            bonded
+          )
+        })
+      })
+
+    this.subActiveProxies = combineLatest([proxies$, reconnectSync$]).subscribe(
+      ([proxies, sync]) => {
+        const activeAddress = getActiveAddress()
+        const proxiesSynced = Object.keys(proxies).find(
+          (address) => address === activeAddress
+        )
+        const localProxy = getLocalActiveProxy(this.ids[0])
+        if (sync === 'synced' && proxiesSynced && getSyncing('active-proxy')) {
+          if (activeAddress && localProxy) {
+            for (const { proxyType, delegate } of proxies[activeAddress]
+              .proxies) {
+              if (
+                proxyType === localProxy.proxyType &&
+                delegate === localProxy.address
+              ) {
+                setActiveProxy(this.ids[0], localProxy)
+                break
+              }
+            }
+          }
+          removeSyncing('active-proxy')
+        }
+      }
+    )
 
     this.subActivePoolIds = activePoolIds$
       .pipe(startWith([]), pairwise())
@@ -236,13 +305,21 @@ export class KusamaService
     for (const sub of Object.values(this.subActivePools)) {
       sub?.unsubscribe()
     }
+    this.subActiveProxies?.unsubscribe()
     this.subActivePoolIds?.unsubscribe()
+    this.subActiveBonded?.unsubscribe()
     for (const subs of Object.values(this.subAccountBalances)) {
       for (const sub of Object.values(subs)) {
         sub?.unsubscribe()
       }
     }
     for (const sub of Object.values(this.subStakingLedgers)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subBonded)) {
+      sub?.unsubscribe()
+    }
+    for (const sub of Object.values(this.subPoolMemberships)) {
       sub?.unsubscribe()
     }
     for (const sub of Object.values(this.subProxies)) {
@@ -360,6 +437,7 @@ export class KusamaService
       poolWithdraw: (who, numSlashingSpans) =>
         tx.poolWithdraw(this.apiRelay, who, numSlashingSpans),
       proxy: (real, call) => tx.proxy(this.apiRelay, real, call),
+      setController: () => tx.setController(this.apiRelay),
       stakingBondExtra: (bond) => tx.stakingBondExtra(this.apiRelay, bond),
       stakingChill: () => tx.stakingChill(this.apiRelay),
       stakingNominate: (nominees) =>

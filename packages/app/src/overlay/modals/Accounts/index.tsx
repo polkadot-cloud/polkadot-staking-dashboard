@@ -25,9 +25,9 @@ export const Accounts = () => {
   const { t } = useTranslation('modals')
   const { getDelegates } = useProxies()
   const { accounts } = useImportedAccounts()
-  const { getStakingLedger } = useBalances()
-  const { activeAddress, activeProxy } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
+  const { activeAddress, activeProxy } = useActiveAccounts()
+  const { getStakingLedger, getPoolMembership } = useBalances()
   const { status: modalStatus, setModalResize } = useOverlay().modal
 
   // construct account groupings
@@ -37,7 +37,8 @@ export const Accounts = () => {
   const notStaking: AccountNotStaking[] = []
 
   for (const { address, source } of accounts) {
-    const { poolMembership, ledger } = getStakingLedger(address)
+    const { ledger } = getStakingLedger(address)
+    const { membership } = getPoolMembership(address)
 
     let isNominating = false
     let isInPool = false
@@ -61,7 +62,7 @@ export const Accounts = () => {
     }
 
     // Check if in pool
-    if (poolMembership) {
+    if (membership) {
       if (!inPool.find((n) => n.address === address)) {
         isInPool = true
       }
@@ -70,7 +71,7 @@ export const Accounts = () => {
     // If not doing anything, add address to `notStaking`
     if (
       !isNominating &&
-      !poolMembership &&
+      !membership &&
       !notStaking.find((n) => n.address === address)
     ) {
       notStaking.push({ address, source, delegates })
@@ -81,11 +82,11 @@ export const Accounts = () => {
     if (
       isNominating &&
       isInPool &&
-      poolMembership &&
+      membership &&
       !nominatingAndPool.find((n) => n.address === address)
     ) {
       nominatingAndPool.push({
-        ...poolMembership,
+        ...membership,
         address,
         source,
         stashImported: true,
@@ -100,8 +101,8 @@ export const Accounts = () => {
       continue
     }
     // In pool only
-    if (!isNominating && isInPool && poolMembership) {
-      inPool.push({ ...poolMembership, source, delegates })
+    if (!isNominating && isInPool && membership) {
+      inPool.push({ ...membership, source, delegates })
     }
   }
 

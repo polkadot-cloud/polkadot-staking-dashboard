@@ -30,8 +30,11 @@ export const NetworkList: Networks = {
     ss58: 0,
     defaultFeeReserve: 1000000000n,
     meta: {
+      hubChain: 'statemint',
+      peopleChain: 'people-polkadot',
       stakingChain: 'polkadot',
       subscanBalanceChainId: 'polkadot',
+      supportOperators: true,
     },
   },
   kusama: {
@@ -53,8 +56,11 @@ export const NetworkList: Networks = {
     ss58: 2,
     defaultFeeReserve: 50000000000n,
     meta: {
+      hubChain: 'statemine',
+      peopleChain: 'people-kusama',
       stakingChain: 'kusama',
       subscanBalanceChainId: 'kusama',
+      supportOperators: true,
     },
   },
   westend: {
@@ -75,8 +81,11 @@ export const NetworkList: Networks = {
     ss58: 42,
     defaultFeeReserve: 100000000000n,
     meta: {
+      hubChain: 'westmint',
       stakingChain: 'westmint',
+      peopleChain: 'people-westend',
       subscanBalanceChainId: 'assethub-westend',
+      supportOperators: true,
     },
   },
 }

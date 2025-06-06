@@ -48,6 +48,7 @@ export const defaultServiceInterface: ServiceInterface = {
     poolUpdateRoles: () => undefined,
     poolWithdraw: () => undefined,
     proxy: () => undefined,
+    setController: () => undefined,
     stakingBondExtra: () => undefined,
     stakingChill: () => undefined,
     stakingNominate: () => undefined,

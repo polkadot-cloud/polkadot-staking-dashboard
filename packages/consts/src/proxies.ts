@@ -27,7 +27,7 @@ export const SupportedProxies: Record<string, string[]> = {
     'NominationPools.Unbond',
     'NominationPools.SetMetadata',
     'NominationPools.SetState',
-    'NominationPoolsWithdrawUnbonded',
+    'NominationPools.WithdrawUnbonded',
     'FastUnstake.RegisterFastUnstake',
     'FastUnstake.Deregister',
   ],

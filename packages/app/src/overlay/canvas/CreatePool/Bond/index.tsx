@@ -74,7 +74,6 @@ export const Bond = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={progress.bond !== '0' && progress.bond !== ''}
         title={t('bond')}
-        helpKey="Bonding"
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

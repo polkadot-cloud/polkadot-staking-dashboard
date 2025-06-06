@@ -41,14 +41,14 @@ export const LeavePool = ({
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
-  const { getStakingLedger, getPendingPoolRewards } = useBalances()
+  const { getPoolMembership, getPendingPoolRewards } = useBalances()
 
   const { unit, units } = getStakingChainData(network)
   const allTransferOptions = getTransferOptions(activeAddress)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = getConsts(network)
   const pendingRewards = getPendingPoolRewards(activeAddress)
-  const { poolMembership } = getStakingLedger(activeAddress)
+  const { membership } = getPoolMembership(activeAddress)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
@@ -61,14 +61,14 @@ export const LeavePool = ({
   const [paramsValid, setParamsValid] = useState<boolean>(false)
 
   useEffect(() => {
-    setParamsValid((poolMembership?.points || 0n) > 0 && !!activePool?.id)
+    setParamsValid((membership?.points || 0n) > 0 && !!activePool?.id)
   }, [freeToUnbond])
 
   const getTx = () => {
-    if (!activeAddress || !poolMembership) {
+    if (!activeAddress || !membership) {
       return
     }
-    return serviceApi.tx.poolUnbond(activeAddress, poolMembership.points)
+    return serviceApi.tx.poolUnbond(activeAddress, membership.points)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({

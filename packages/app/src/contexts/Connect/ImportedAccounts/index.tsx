@@ -11,7 +11,7 @@ import type { ReactNode } from 'react'
 import { useCallback } from 'react'
 import type { ExternalAccount, ImportedAccount, MaybeAddress } from 'types'
 import { useOtherAccounts } from '../OtherAccounts'
-import { getActiveAccountLocal, getActiveProxyLocal } from '../Utils'
+import { getActiveAccountLocal } from '../Utils'
 import type { ImportedAccountsContextInterface } from './types'
 
 export const [ImportedAccountsContext, useImportedAccounts] =
@@ -24,8 +24,8 @@ export const ImportedAccountsProvider = ({
 }) => {
   const { network } = useNetwork()
   const { otherAccounts } = useOtherAccounts()
+  const { setActiveAccount } = useActiveAccounts()
   const { getExtensionAccounts } = useExtensionAccounts()
-  const { setActiveAccount, setActiveProxy } = useActiveAccounts()
 
   const { ss58 } = getStakingChainData(network)
   // Get the imported extension accounts formatted with the current network's ss58 prefix
@@ -100,18 +100,13 @@ export const ImportedAccountsProvider = ({
     [stringifiedAccountsKey]
   )
 
-  // Re-sync the active account and active proxy on network change
+  // Re-sync the active account on network change
   useEffectIgnoreInitial(() => {
     const localActiveAccount = getActiveAccountLocal(network, ss58)
     if (getAccount(localActiveAccount?.address || null) !== null) {
       setActiveAccount(localActiveAccount, false)
     } else {
       setActiveAccount(null, false)
-    }
-
-    const localActiveProxy = getActiveProxyLocal(network, ss58)
-    if (getAccount(localActiveProxy?.address || null)) {
-      setActiveProxy(getActiveProxyLocal(network, ss58), false)
     }
   }, [network, stringifiedAccountsKey])
 

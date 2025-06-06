@@ -8,7 +8,6 @@ import {
   faServer,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNetwork } from 'contexts/Network'
 import { Suspense, lazy, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
@@ -16,10 +15,9 @@ import { ItemWrapper } from './Wrappers'
 import { useOperatorsSections } from './context'
 import type { ItemProps } from './types'
 
-export const Item = ({ item, actionable }: ItemProps) => {
+export const Item = ({ item, actionable, network }: ItemProps) => {
   const { t } = useTranslation('pages')
   const { openModal } = useOverlay().modal
-  const { network } = useNetwork()
 
   const {
     bio,

@@ -14,7 +14,9 @@ export type ActiveProxy = {
   address: string
   source: string
   proxyType: string
-} | null
+}
+
+export type LocalActiveProxies = Record<string, ActiveProxy>
 
 export type ImportedAccount = Account | ExternalAccount
 

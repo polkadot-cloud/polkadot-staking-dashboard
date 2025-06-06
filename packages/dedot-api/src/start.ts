@@ -3,12 +3,18 @@
 
 import {
   getHubChainId,
+  getPeopleChainId,
   getRelayChainData,
   getSystemChainData,
 } from 'consts/util'
 import { DedotClient, WsProvider } from 'dedot'
 import { setMultiApiStatus } from 'global-bus'
-import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
+import type {
+  DefaultServiceNetworkId,
+  NetworkConfig,
+  NetworkId,
+  SystemChainId,
+} from 'types'
 import { Services } from './services'
 import {
   newRelayChainSmProvider,
@@ -18,15 +24,15 @@ import type { Service } from './types'
 import type { DefaultService } from './types/serviceDefault'
 
 // Determines service class and apis for a network
-export const getDefaultService = async <T extends NetworkId>(
+export const getDefaultService = async <T extends DefaultServiceNetworkId>(
   network: T,
   { rpcEndpoints, providerType }: Omit<NetworkConfig, 'network'>
 ): Promise<DefaultService<T>> => {
-  const peopleChainId: SystemChainId = `people-${network}`
-  const hubChainId: SystemChainId = getHubChainId(network)
+  const peopleChainId = getPeopleChainId(network) as SystemChainId
+  const hubChainId = getHubChainId(network) as SystemChainId
 
   const relayData = getRelayChainData(network)
-  const peopleData = getSystemChainData(`people-${network}`)
+  const peopleData = getSystemChainData(peopleChainId)
   const hubData = getSystemChainData(hubChainId)
 
   const ids = [network, peopleChainId, hubChainId] as [

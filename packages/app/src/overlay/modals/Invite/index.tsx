@@ -15,15 +15,15 @@ import { Wrapper } from './Wrapper'
 export const Invite = () => {
   const { network } = useNetwork()
   const { t } = useTranslation()
-  const { getStakingLedger } = useBalances()
+  const { getPoolMembership } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const { poolMembership } = getStakingLedger(activeAddress)
-  const poolId = poolMembership?.poolId || 0
+  const { membership } = getPoolMembership(activeAddress)
+  const poolId = membership?.poolId || 0
 
   let inviteLink = undefined
   let title = t('inviteStart', { ns: 'app' })
 
-  if (poolMembership) {
+  if (membership) {
     inviteLink = `https://staking.polkadot.cloud/#/overview?n=${network}&i=pool&id=${poolId}`
     title = t('copyPoolInviteLink', { ns: 'app' })
   }
