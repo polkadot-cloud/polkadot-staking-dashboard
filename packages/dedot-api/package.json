@@ -10,6 +10,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@w3ux/observables-connect": "^0.9.40",
     "@dedot/chaintypes": "^0.113.0",
     "@w3ux/utils": "^2.0.10",
     "consts": "workspace:*",
@@ -20,7 +21,7 @@
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "@w3ux/types": "^2.2.1",
+    "@w3ux/types": "^2.2.3",
     "types": "workspace:*"
   }
 }

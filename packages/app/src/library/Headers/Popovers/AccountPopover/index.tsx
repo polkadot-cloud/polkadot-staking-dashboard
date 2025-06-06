@@ -5,6 +5,8 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { ellipsisFn } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
+import { setActiveProxy } from 'global-bus'
 import { useRef, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
@@ -17,15 +19,11 @@ export const AccountPopover = ({
   setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
+  const { network } = useNetwork()
   const { openModal } = useOverlay().modal
-  const {
-    activeAddress,
-    activeProxy,
-    activeProxyType,
-    setActiveAccount,
-    setActiveProxy,
-  } = useActiveAccounts()
   const { getAccount } = useImportedAccounts()
+  const { activeAddress, activeProxy, activeProxyType, setActiveAccount } =
+    useActiveAccounts()
 
   const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -65,7 +63,7 @@ export const AccountPopover = ({
           text={t('disconnect', { ns: 'modals' })}
           onClick={() => {
             setActiveAccount(null)
-            setActiveProxy(null)
+            setActiveProxy(network, null)
             setOpen(false)
           }}
         />
