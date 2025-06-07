@@ -22,7 +22,7 @@ export const getInitialNetwork = () => {
 
   // Use network from url if valid
   if (urlNetworkValid) {
-    localStorage.setItem(NetworkKey, urlNetwork)
+    localStorage.setItem(NetworkKey, urlNetwork || '')
     return urlNetwork as NetworkId
   }
 
