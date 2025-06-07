@@ -3,11 +3,6 @@
 
 import BigNumber from 'bignumber.js'
 
-export const defaultAverageEraValidatorReward = {
-  days: 0,
-  reward: new BigNumber(0),
-}
-
 export const defaultValidatorsData = {
   entries: [],
   notFullCommissionCount: 0,
