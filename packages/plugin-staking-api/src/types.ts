@@ -178,3 +178,22 @@ export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
 
 export type RewardResult = NominatorReward | PoolReward
 export type RewardResults = RewardResult[]
+
+export interface AverageRewardRateResult {
+  rate: number
+}
+
+export type ValidatoRanksResult = {
+  validator: string
+  rank: number
+}[]
+
+export type ValidatorStatsResult = Query & {
+  data: ValidatorStatsData
+}
+
+export interface ValidatorStatsData {
+  averageRewardRate: AverageRewardRateResult
+  activeValidatorRanks: ValidatoRanksResult
+  averageValidatorCommission: number
+}
