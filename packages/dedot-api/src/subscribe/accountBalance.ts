@@ -34,7 +34,6 @@ export class AccountBalanceQuery<T extends Chain> {
             const ledger = await api.query.staking.ledger(bonded)
             const active = maxBigInt((ledger?.active || 0n) - data.reserved, 0n)
             free = maxBigInt(data.free - active, 0n)
-            console.log('free:', data.free)
           }
         }
         // End of migration
