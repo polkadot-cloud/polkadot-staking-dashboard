@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFilter } from 'library/Filter/types'
 import type { Dispatch, SetStateAction } from 'react'
 import type {
   AnyJson,
@@ -25,7 +24,7 @@ export interface BondedPoolsContextState {
   ) => NominationStatus
   getPoolNominationStatusCode: (statuses: NominationStatuses | null) => string
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void
-  poolSearchFilter: (filteredPools: AnyFilter, searchTerm: string) => AnyJson[]
+  poolSearchFilter: (pools: BondedPool[], searchTerm: string) => BondedPool[]
   bondedPools: BondedPool[]
   poolsMetaData: Record<number, string>
   poolsNominations: Record<number, Nominator | undefined>
