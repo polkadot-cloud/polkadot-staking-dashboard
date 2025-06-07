@@ -69,8 +69,9 @@ export class TxSubmission {
     tx: SubmittableExtrinsic,
     signer: InjectedSigner,
     nonce: number,
-    { onError, ...onRest }: TxStatusHandlers
+    txStatusHandlers: TxStatusHandlers
   ) {
+    const { onError, ...onRest } = txStatusHandlers
     try {
       this.subs[uid] = await tx.signAndSend(
         from,
@@ -80,7 +81,8 @@ export class TxSubmission {
         }
       )
     } catch (e) {
-      onError('default')
+      // Enhanced error categorization
+      this.handleError(String(e), onError)
       this.deleteTx(uid)
     }
   }
@@ -98,8 +100,25 @@ export class TxSubmission {
         this.handleResult(uid, status, onRest)
       })
     } catch (e) {
-      onError('default')
+      this.handleError(String(e), onError)
       this.deleteTx(uid)
+    }
+  }
+
+  static handleError(
+    errorMessage: string,
+    onError: (type?: string, errorMessage?: string) => void
+  ) {
+    const msgLower = errorMessage.toLowerCase()
+
+    if (/user rejected|cancelled|cancelled by user|usercancel/.test(msgLower)) {
+      onError('user_cancelled', errorMessage)
+    } else if (
+      /insufficient|balance|insufficientbalance|not enough/.test(msgLower)
+    ) {
+      onError('insufficient_funds', errorMessage)
+    } else {
+      onError('default', errorMessage)
     }
   }
 
