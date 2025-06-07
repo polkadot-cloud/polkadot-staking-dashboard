@@ -63,19 +63,20 @@ export const TransferOptionsProvider = ({
     const edReserved = getEdReserved(address)
     const freeBalance = maxBigInt(free - edReserved, 0n)
 
-    // Total free balance after reserved amount of ed is subtracted
-    const transferrableBalance = maxBigInt(
-      freeBalance - edReserved - feeReserve,
-      0n
-    )
-    // Free balance to pay for tx fees
-    const balanceTxFees = maxBigInt(free - edReserved, 0n)
-
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
       unlocking,
       activeEra.index
     )
+
+    // Total free balance after reserved amount of ed is subtracted
+    // Subtract unlocking amounts as they are locked and not transferrable
+    const transferrableBalance = maxBigInt(
+      freeBalance - feeReserve - totalUnlocking - totalUnlocked,
+      0n
+    )
+    // Free balance to pay for tx fees
+    const balanceTxFees = maxBigInt(free - edReserved, 0n)
 
     const nominatorBalances = () => {
       const totalPossibleBond = total + transferrableBalance
