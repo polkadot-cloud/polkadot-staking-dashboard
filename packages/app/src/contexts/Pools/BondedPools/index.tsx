@@ -21,6 +21,7 @@ import type {
   Nominator,
   PoolTab,
 } from 'types'
+import { poolSearchFilter } from 'utils'
 import { useApi } from '../../Api'
 import type { BondedPoolsContextState } from './types'
 
@@ -190,70 +191,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const getBondedPool = (poolId: number) =>
     bondedPools.find((p) => String(p.id) === String(poolId)) ?? null
 
-  // poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to filter those list items that match the search term. Returns the updated filtered list
-  const poolSearchFilter = (list: AnyJson, searchTerm: string) => {
-    const filteredList: AnyJson = []
-
-    for (const pool of list) {
-      // If pool metadata has not yet been synced, include the pool in results
-      if (!Object.values(poolsMetaData).length) {
-        filteredList.push(pool)
-        continue
-      }
-
-      const address = pool?.addresses?.stash ?? ''
-      const metadata = poolsMetaData[pool.id] || ''
-      const searchTermLower = searchTerm.toLowerCase()
-
-      // Enhanced pool ID matching logic
-      let poolIdMatches = false
-
-      // 1. Direct number match (e.g., "123" matches pool 123)
-      if (String(pool.id) === searchTerm) {
-        poolIdMatches = true
-      }
-      // 2. Pool ID contains the search term (for partial matches)
-      else if (String(pool.id).includes(searchTermLower)) {
-        poolIdMatches = true
-      }
-      // 3. "Pool X" format (e.g., "Pool 123" should match pool 123)
-      else if (searchTermLower.startsWith('pool ')) {
-        const poolNumber = searchTermLower.replace('pool ', '').trim()
-        if (String(pool.id) === poolNumber) {
-          poolIdMatches = true
-        }
-      }
-      // 4. Extract numbers from search term and match against pool ID
-      else {
-        const numbersInSearch = searchTerm.match(/\d+/g)
-        if (numbersInSearch) {
-          for (const num of numbersInSearch) {
-            if (String(pool.id) === num) {
-              poolIdMatches = true
-              break
-            }
-          }
-        }
-      }
-
-      if (poolIdMatches) {
-        filteredList.push(pool)
-      }
-      if (address.toLowerCase().includes(searchTermLower)) {
-        filteredList.push(pool)
-      }
-      if (metadata.toLowerCase().includes(searchTermLower)) {
-        filteredList.push(pool)
-      }
-    }
-
-    // Remove duplicates
-    return filteredList.filter(
-      (value: AnyJson, index: number, self: AnyJson[]) =>
-        index === self.findIndex((i: AnyJson) => i.id === value.id)
-    )
-  }
-
   const updateBondedPools = (updatedPools: BondedPool[]) => {
     if (!updatedPools) {
       return
@@ -364,6 +301,10 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [activeEra.index, bondedPools.length])
 
+  // Wrapped pool search filter that uses the provider's metadata
+  const wrappedPoolSearchFilter = (pools: BondedPool[], searchTerm: string) =>
+    poolSearchFilter(pools, searchTerm, poolsMetaData)
+
   return (
     <BondedPoolsContext.Provider
       value={{
@@ -375,7 +316,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         getPoolNominationStatus,
         getPoolNominationStatusCode,
         replacePoolRoles,
-        poolSearchFilter,
+        poolSearchFilter: wrappedPoolSearchFilter,
         bondedPools,
         poolsMetaData,
         poolsNominations,
