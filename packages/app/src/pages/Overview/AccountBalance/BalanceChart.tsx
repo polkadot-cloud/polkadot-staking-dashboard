@@ -43,9 +43,9 @@ export const BalanceChart = () => {
   const { balance } = getAccountBalance(activeAddress)
   const allTransferOptions = getTransferOptions(activeAddress)
 
-  const poolBondOpions = allTransferOptions.pool
+  const poolBondOptions = allTransferOptions.pool
   const unlockingPools =
-    poolBondOpions.totalUnlocking + poolBondOpions.totalUnlocked
+    poolBondOptions.totalUnlocking + poolBondOptions.totalUnlocked
 
   // User's total balance
   const { free, frozen, reserved } = balance
@@ -54,7 +54,7 @@ export const BalanceChart = () => {
   const reservedBn = new BigNumber(reserved)
 
   const totalBalance = planckToUnitBn(
-    freeBn.plus(total).plus(poolBondOpions.active).plus(unlockingPools),
+    freeBn.plus(total).plus(poolBondOptions.active).plus(unlockingPools),
     units
   )
 
@@ -119,9 +119,9 @@ export const BalanceChart = () => {
   }
 
   const isNominating = nominating.isGreaterThan(0)
-  const isInPool = new BigNumber(poolBondOpions.active)
-    .plus(poolBondOpions.totalUnlocked)
-    .plus(poolBondOpions.totalUnlocking)
+  const isInPool = new BigNumber(poolBondOptions.active)
+    .plus(poolBondOptions.totalUnlocked)
+    .plus(poolBondOptions.totalUnlocking)
     .isGreaterThan(0)
 
   return (
