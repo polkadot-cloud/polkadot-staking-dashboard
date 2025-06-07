@@ -203,18 +203,55 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
       const address = pool?.addresses?.stash ?? ''
       const metadata = poolsMetaData[pool.id] || ''
+      const searchTermLower = searchTerm.toLowerCase()
 
-      if (String(pool.id).includes(searchTerm.toLowerCase())) {
+      // Enhanced pool ID matching logic
+      let poolIdMatches = false
+
+      // 1. Direct number match (e.g., "123" matches pool 123)
+      if (String(pool.id) === searchTerm) {
+        poolIdMatches = true
+      }
+      // 2. Pool ID contains the search term (for partial matches)
+      else if (String(pool.id).includes(searchTermLower)) {
+        poolIdMatches = true
+      }
+      // 3. "Pool X" format (e.g., "Pool 123" should match pool 123)
+      else if (searchTermLower.startsWith('pool ')) {
+        const poolNumber = searchTermLower.replace('pool ', '').trim()
+        if (String(pool.id) === poolNumber) {
+          poolIdMatches = true
+        }
+      }
+      // 4. Extract numbers from search term and match against pool ID
+      else {
+        const numbersInSearch = searchTerm.match(/\d+/g)
+        if (numbersInSearch) {
+          for (const num of numbersInSearch) {
+            if (String(pool.id) === num) {
+              poolIdMatches = true
+              break
+            }
+          }
+        }
+      }
+
+      if (poolIdMatches) {
         filteredList.push(pool)
       }
-      if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
+      if (address.toLowerCase().includes(searchTermLower)) {
         filteredList.push(pool)
       }
-      if (metadata.toLowerCase().includes(searchTerm.toLowerCase())) {
+      if (metadata.toLowerCase().includes(searchTermLower)) {
         filteredList.push(pool)
       }
     }
-    return filteredList
+
+    // Remove duplicates
+    return filteredList.filter(
+      (value: AnyJson, index: number, self: AnyJson[]) =>
+        index === self.findIndex((i: AnyJson) => i.id === value.id)
+    )
   }
 
   const updateBondedPools = (updatedPools: BondedPool[]) => {
