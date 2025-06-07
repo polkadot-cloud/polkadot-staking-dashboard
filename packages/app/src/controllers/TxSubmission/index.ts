@@ -69,8 +69,9 @@ export class TxSubmission {
     tx: SubmittableExtrinsic,
     signer: InjectedSigner,
     nonce: number,
-    { onError, ...onRest }: TxStatusHandlers
+    txStatusHandlers: TxStatusHandlers
   ) {
+    const { onError, ...onRest } = txStatusHandlers
     try {
       this.subs[uid] = await tx.signAndSend(
         from,
@@ -81,26 +82,25 @@ export class TxSubmission {
       )
     } catch (e) {
       // Enhanced error categorization
-      const errorMessage = String(e)
-      if (
-        errorMessage.includes('User rejected') ||
-        errorMessage.includes('Cancelled') ||
-        errorMessage.includes('user rejected') ||
-        errorMessage.includes('cancelled by user') ||
-        errorMessage.includes('UserCancel')
-      ) {
-        onError('user_cancelled', errorMessage)
-      } else if (
-        errorMessage.includes('insufficient') ||
-        errorMessage.includes('balance') ||
-        errorMessage.includes('InsufficientBalance') ||
-        errorMessage.includes('not enough')
-      ) {
-        onError('insufficient_funds', errorMessage)
-      } else {
-        onError('default', errorMessage)
-      }
+      this.handleError(String(e), onError)
       this.deleteTx(uid)
+    }
+  }
+
+  static handleError(
+    errorMessage: string,
+    onError: (type?: string, errorMessage?: string) => void
+  ) {
+    const msgLower = errorMessage.toLowerCase()
+
+    if (/user rejected|cancelled|cancelled by user|usercancel/.test(msgLower)) {
+      onError('user_cancelled', errorMessage)
+    } else if (
+      /insufficient|balance|insufficientbalance|not enough/.test(msgLower)
+    ) {
+      onError('insufficient_funds', errorMessage)
+    } else {
+      onError('default', errorMessage)
     }
   }
 
