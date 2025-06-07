@@ -55,7 +55,7 @@ export const BalanceChart = () => {
 
   // freeBn excludes actively bonded funds, so add them back
   const totalBalance = planckToUnitBn(
-    freeBn.plus(active).plus(poolBondOpions.active).plus(unlockingPools),
+    freeBn.plus(active).plus(poolBondOptions.active).plus(unlockingPools),
     units
   )
 
