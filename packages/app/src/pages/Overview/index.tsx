@@ -18,7 +18,7 @@ import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { QuickActions } from './QuickActions'
 import { StakeStatus } from './StakeStatus'
-import { AverageRewardRate } from './Stats/AveragelRewardRate'
+import { AverageRewardRate } from './Stats/AverageRewardRate'
 import { NextRewards } from './Stats/NextRewards'
 import { SupplyStaked } from './Stats/SupplyStaked'
 
