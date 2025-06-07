@@ -38,7 +38,7 @@ export class VaultSigner {
     const signature = await this.#showPrompt(payload)
 
     if (signature === null) {
-      throw 'Invalid signature'
+      throw new Error('Invalid signature')
     }
     return signature
   }

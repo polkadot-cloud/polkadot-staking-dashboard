@@ -116,14 +116,14 @@ export const BondFeedback = ({
       }
     }
 
-    // bond amount must not surpass freeBalalance
-    if (bondBigInt > freeToBond) {
-      newErrors.push(t('moreThanBalance'))
-    }
-
     // bond amount must not be smaller than 1 planck
     if (bond.bond !== '' && bondBigInt < 1) {
       newErrors.push(t('tooSmall'))
+    }
+
+    // bond amount must not surpass freeBalance
+    if (bondBigInt > freeToBond) {
+      newErrors.push(t('moreThanBalance'))
     }
 
     // check bond after transaction fees is still valid
