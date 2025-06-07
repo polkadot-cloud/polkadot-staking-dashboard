@@ -87,6 +87,24 @@ export class TxSubmission {
     }
   }
 
+  static async addSend(
+    uid: number,
+    tx: SubmittableExtrinsic,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signature: ExtrinsicSignatureV4<any, any, any>,
+    { onError, ...onRest }: TxStatusHandlers
+  ) {
+    tx.attachSignature(signature)
+    try {
+      this.subs[uid] = await tx.send(async ({ status }) => {
+        this.handleResult(uid, status, onRest)
+      })
+    } catch (e) {
+      this.handleError(String(e), onError)
+      this.deleteTx(uid)
+    }
+  }
+
   static handleError(
     errorMessage: string,
     onError: (type?: string, errorMessage?: string) => void
@@ -101,43 +119,6 @@ export class TxSubmission {
       onError('insufficient_funds', errorMessage)
     } else {
       onError('default', errorMessage)
-    }
-  }
-
-  static async addSend(
-    uid: number,
-    tx: SubmittableExtrinsic,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    signature: ExtrinsicSignatureV4<any, any, any>,
-    { onError, ...onRest }: TxStatusHandlers
-  ) {
-    tx.attachSignature(signature)
-    try {
-      this.subs[uid] = await tx.send(async ({ status }) => {
-        this.handleResult(uid, status, onRest)
-      })
-    } catch (e) {
-      // Enhanced error categorization
-      const errorMessage = String(e)
-      if (
-        errorMessage.includes('User rejected') ||
-        errorMessage.includes('Cancelled') ||
-        errorMessage.includes('user rejected') ||
-        errorMessage.includes('cancelled by user') ||
-        errorMessage.includes('UserCancel')
-      ) {
-        onError('user_cancelled', errorMessage)
-      } else if (
-        errorMessage.includes('insufficient') ||
-        errorMessage.includes('balance') ||
-        errorMessage.includes('InsufficientBalance') ||
-        errorMessage.includes('not enough')
-      ) {
-        onError('insufficient_funds', errorMessage)
-      } else {
-        onError('default', errorMessage)
-      }
-      this.deleteTx(uid)
     }
   }
 
