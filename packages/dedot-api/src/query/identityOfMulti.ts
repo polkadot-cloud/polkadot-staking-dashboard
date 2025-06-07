@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
+import type { PalletIdentityRegistration } from 'dedot/chaintypes'
 import type { IdentityOf } from 'types'
 import type { PeopleChain } from '../types'
 
@@ -13,25 +14,33 @@ export const identityOfMulti = async <T extends PeopleChain>(
     (item) => {
       // Handle case where chain state is an array of item and hex string
       if (Array.isArray(item)) {
-        return {
-          info: {
-            display: item[0]?.info.display,
-          },
-          judgements: item[0]?.judgements,
-          deposit: item[0]?.deposit,
-        }
+        return handleArrayItem(item)
       }
-      // Handle case where chain state is an object only
+      // Handle case where chain state is a single item
       return item
         ? {
             info: {
-              display: item?.info?.display,
+              display: item.info?.display,
             },
-            judgements: item?.judgements || [0, { type: 'Unknown' }],
-            deposit: item?.deposit,
+            judgements: item.judgements || [0, { type: 'Unknown' }],
+            deposit: item.deposit,
           }
         : undefined
     }
   )
   return result
 }
+
+// Helper function to handle the case where the chain state is an array of items
+const handleArrayItem = (
+  item: (PalletIdentityRegistration | undefined)[]
+): IdentityOf =>
+  item[0]
+    ? {
+        info: {
+          display: item[0]?.info.display,
+        },
+        judgements: item[0]?.judgements,
+        deposit: item[0]?.deposit,
+      }
+    : undefined
