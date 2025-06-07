@@ -23,7 +23,7 @@ import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { formatFiatCurrency } from 'locales/util'
-import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
+import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

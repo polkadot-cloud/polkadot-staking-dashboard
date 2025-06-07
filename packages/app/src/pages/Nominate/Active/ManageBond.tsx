@@ -56,7 +56,6 @@ export const ManageBond = () => {
   const active = ledger?.active || 0n
   const allTransferOptions = getTransferOptions(activeAddress)
 
-  const { freeBalance } = allTransferOptions
   const { totalUnlocking, totalUnlocked } = allTransferOptions.nominate
   const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
@@ -148,7 +147,11 @@ export const ManageBond = () => {
         active={new BigNumber(planckToUnit(active, units))}
         unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
         unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-        free={new BigNumber(planckToUnit(freeBalance, units))}
+        free={
+          new BigNumber(
+            planckToUnit(allTransferOptions.transferrableBalance, units)
+          )
+        }
         inactive={active === 0n}
       />
     </>
