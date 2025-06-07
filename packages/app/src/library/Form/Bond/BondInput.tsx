@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useDebouncedNumericInput } from 'hooks/useDebounce'
+import { useDebounce } from 'hooks/useDebounce'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -55,7 +55,7 @@ export const BondInput = ({
   }
 
   // Create debounced handler for expensive parent state updates
-  const handleDebouncedBondChange = useDebouncedNumericInput((val: string) => {
+  const handleDebouncedBondChange = useDebounce((val: string) => {
     if (val !== '' && new BigNumber(val).isNaN()) {
       return
     }
@@ -71,7 +71,7 @@ export const BondInput = ({
     // Update local state immediately for responsive UI
     setLocalBond(val)
     // Debounce the expensive parent state updates
-    handleDebouncedBondChange(e)
+    handleDebouncedBondChange(val)
   }
 
   // available funds as jsx.

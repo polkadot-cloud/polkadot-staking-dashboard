@@ -92,24 +92,3 @@ export const useDebouncedSearchInput = (
     setInputValue,
   }
 }
-
-/**
- * Specialized hook for debouncing numeric input changes (like bond amounts)
- * @param onChange - Function to call with numeric value
- * @param delay - Delay in milliseconds (default: 500ms)
- * @returns Debounced change handler
- */
-export const useDebouncedNumericInput = (
-  onChange: (value: string) => void,
-  delay = 500
-) => {
-  const debouncedChange = useDebounce(onChange, delay)
-
-  return useCallback(
-    (e: FormEvent<HTMLInputElement>) => {
-      const value = e.currentTarget.value
-      debouncedChange(value)
-    },
-    [debouncedChange]
-  )
-}
