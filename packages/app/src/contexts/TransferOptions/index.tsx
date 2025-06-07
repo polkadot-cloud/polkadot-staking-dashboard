@@ -72,7 +72,7 @@ export const TransferOptionsProvider = ({
     // Total free balance after reserved amount of ed is subtracted
     // Subtract unlocking amounts as they are locked and not transferrable
     const transferrableBalance = maxBigInt(
-      freeBalance - edReserved - feeReserve - totalUnlocking - totalUnlocked,
+      freeBalance - feeReserve - totalUnlocking - totalUnlocked,
       0n
     )
     // Free balance to pay for tx fees
