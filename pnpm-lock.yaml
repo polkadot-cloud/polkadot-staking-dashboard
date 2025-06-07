@@ -120,11 +120,11 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(react@19.1.0)
       '@w3ux/hooks':
-        specifier: ^2.2.1
-        version: 2.2.1(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^2.2.2
+        version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.5.3
-        version: 3.5.3(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.5.4
+        version: 3.5.4(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: ^2.1.0
         version: 2.1.0
@@ -576,8 +576,8 @@ importers:
         specifier: ^6.7.2
         version: 6.7.2
       '@w3ux/hooks':
-        specifier: ^2.2.1
-        version: 2.2.1(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^2.2.2
+        version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: 2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -601,8 +601,8 @@ importers:
   packages/utils:
     dependencies:
       '@w3ux/hooks':
-        specifier: ^2.2.1
-        version: 2.2.1(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^2.2.2
+        version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: 2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -2830,8 +2830,8 @@ packages:
     peerDependencies:
       react: ^19
 
-  '@w3ux/hooks@2.2.1':
-    resolution: {integrity: sha512-wFkCObwN22TznmiRPKH0K1duI1iaYdVzntkT1vakuRb+eN7Jr0AnA7KGxrGknl7wXJxwkrusIsyFOR8QScV+dQ==}
+  '@w3ux/hooks@2.2.2':
+    resolution: {integrity: sha512-EY3swPXTZgHTn98cmnbZaLyBWK///z/UP68OllKWP5p4A0KTMxqQIvDVxEWW2lyoqk/tZo4P7mbysMS0VA8aTg==}
     peerDependencies:
       react: ^19
 
@@ -2840,8 +2840,8 @@ packages:
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.5.3':
-    resolution: {integrity: sha512-4OP7l9ds2mVI2XLe2QNeCc/iH0ylJfg+JMXG7z+LvZ0pGSXlJ9Z1SekYe2MrqyETJzGdtVyG94/3DvoJX2P5OA==}
+  '@w3ux/react-connect-kit@3.5.4':
+    resolution: {integrity: sha512-bekF67x8b5IEaQFkPyoWEikWtbvAwc1rWHPcXnt7HlOBodazpME8vtaJOy5uLy/Jz1BR80VIOl8uFXD09Do39Q==}
     peerDependencies:
       rxjs: ^7.8.2
 
@@ -8701,7 +8701,7 @@ snapshots:
     dependencies:
       react: 19.1.0
 
-  '@w3ux/hooks@2.2.1(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)':
+  '@w3ux/hooks@2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/utils': 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       date-fns: 4.1.0
@@ -8720,9 +8720,9 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.5.3(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.5.4(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
-      '@w3ux/hooks': 2.2.1(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+      '@w3ux/hooks': 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/observables-connect': 0.9.44(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils': 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rxjs: 7.8.2
