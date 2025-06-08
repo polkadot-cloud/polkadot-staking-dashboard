@@ -9,9 +9,9 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useErasPerDay } from '../useErasPerDay'
-import type { useAvgRewardRate } from './types'
+import type { UseAvgRewardRate } from './types'
 
-export const useAvgRewardRate = (): useAvgRewardRate => {
+export const useAvgRewardRate = (): UseAvgRewardRate => {
   const {
     stakingMetrics: { totalIssuance },
   } = useApi()
