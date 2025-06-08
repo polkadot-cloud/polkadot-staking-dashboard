@@ -11,7 +11,7 @@ export const NotificationPrompts = () => {
   // Store the notifications currently in state
   const [notifications, setNotifications] = useState<NotificationItem[]>([])
 
-  // Listen to global bus online status
+  // Listen to global bus notifications
   useEffect(() => {
     const subNotifications = notifications$.subscribe((result) => {
       setNotifications(result)
