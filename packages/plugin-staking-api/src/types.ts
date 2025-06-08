@@ -183,7 +183,7 @@ export interface AverageRewardRateResult {
   rate: number
 }
 
-export type ValidatoRanksResult = {
+export type ValidatorRanksResult = {
   validator: string
   rank: number
 }[]
@@ -194,6 +194,6 @@ export type ValidatorStatsResult = Query & {
 
 export interface ValidatorStatsData {
   averageRewardRate: AverageRewardRateResult
-  activeValidatorRanks: ValidatoRanksResult
+  activeValidatorRanks: ValidatorRanksResult
   averageValidatorCommission: number
 }
