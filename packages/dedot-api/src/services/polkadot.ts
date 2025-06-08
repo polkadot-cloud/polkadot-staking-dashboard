@@ -265,8 +265,12 @@ export class PolkadotService
           (address) => address === activeAddress
         )
         const localProxy = getLocalActiveProxy(this.ids[0])
-        if (sync === 'synced' && proxiesSynced && getSyncing('active-proxy')) {
-          if (activeAddress && localProxy) {
+        if (sync === 'synced' && getSyncing('active-proxy')) {
+          if (!activeAddress) {
+            removeSyncing('active-proxy')
+            return
+          }
+          if (proxiesSynced && activeAddress && localProxy) {
             for (const { proxyType, delegate } of proxies[activeAddress]
               .proxies) {
               if (
