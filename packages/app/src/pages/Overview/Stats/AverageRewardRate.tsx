@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { useAverageRewardRate } from 'hooks/useAvgRewardRate'
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Text } from 'library/StatCards/Text'
 import { useTranslation } from 'react-i18next'
 
