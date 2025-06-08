@@ -46,8 +46,10 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
       let i = 0
       for (const { current: currentContainer } of containerRefs) {
         if (currentContainer) {
-          const icon: HTMLElement | null = currentContainer.querySelector('.icon')
-          const toggle: HTMLElement | null = currentContainer.querySelector('.toggle')
+          const icon: HTMLElement | null =
+            currentContainer.querySelector('.icon')
+          const toggle: HTMLElement | null =
+            currentContainer.querySelector('.toggle')
 
           if (window.innerWidth <= TwoThreshold) {
             currentContainer.style.height = `${
