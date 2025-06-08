@@ -4,7 +4,6 @@
 import { ApolloProvider } from '@apollo/client'
 
 export * from './Client'
-export * from './queries/activeValidatorRanks'
 export * from './queries/canFastUnstake'
 export * from './queries/nominatorRewardTrend'
 export * from './queries/poolCandidates'
@@ -17,6 +16,7 @@ export * from './queries/unclaimedRewards'
 export * from './queries/validatorEraPoints'
 export * from './queries/validatorEraPointsBatch'
 export * from './queries/validatorRewards'
+export * from './queries/validatorStats'
 export * from './util'
 
 export { ApolloProvider }

@@ -4,7 +4,7 @@
 
 import type { Item, OperatorsSectionsContextInterface } from './types'
 
-export const operatorItem: Item = {
+export const defaultOperatorItem: Item = {
   name: '',
   icon: '',
   validators: {},
@@ -13,7 +13,7 @@ export const operatorItem: Item = {
 export const defaultContext: OperatorsSectionsContextInterface = {
   setActiveSection: (t) => {},
   activeSection: 0,
-  activeItem: operatorItem,
+  activeItem: defaultOperatorItem,
   setActiveItem: (item) => {},
   scrollPos: 0,
   setScrollPos: (scrollPos) => {},
