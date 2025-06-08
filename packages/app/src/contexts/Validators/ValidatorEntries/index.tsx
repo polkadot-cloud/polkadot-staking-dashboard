@@ -298,7 +298,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAverageEraValidatorReward({ days, reward })
   }
 
-  const getActiveValidatorRanks = async (): Promise<void> => {
+  const getValidatorStats = async (): Promise<void> => {
     const result = await fetchValidatorStats(network)
     setActiveValidatorRanks(result.activeValidatorRanks)
     setAvgCommission(Number(result.averageValidatorCommission.toFixed(2)))
@@ -358,7 +358,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   // Refetch active validator ranks when network changes
   useEffect(() => {
     if (pluginEnabled('staking_api')) {
-      getActiveValidatorRanks()
+      getValidatorStats()
     }
   }, [network, pluginEnabled('staking_api')])
 
