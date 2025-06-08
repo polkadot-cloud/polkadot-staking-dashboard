@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ellipsisFn } from '@w3ux/utils'
+import type { TooltipItem } from 'chart.js'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import chroma from 'chroma-js'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { Doughnut } from 'react-chartjs-2'
-import type { AnyJson } from 'types'
 import type { GeoDonutProps } from './types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
@@ -49,7 +49,7 @@ export const GeoDonut = ({
         maxHeight: legendHeight,
         labels: {
           boxWidth: 10,
-          generateLabels: (chart: AnyJson) => {
+          generateLabels: (chart: ChartJS) => {
             const ls =
               ChartJS.overrides.doughnut.plugins.legend.labels.generateLabels(
                 chart
@@ -67,7 +67,8 @@ export const GeoDonut = ({
       tooltip: {
         enabled: true,
         callbacks: {
-          label: (context: AnyJson) => ` ${title}: ${context.raw.toFixed(1)} %`,
+          label: (context: TooltipItem<'doughnut'>) =>
+            ` ${title}: ${Number(context.raw).toFixed(1)} %`,
         },
       },
     },

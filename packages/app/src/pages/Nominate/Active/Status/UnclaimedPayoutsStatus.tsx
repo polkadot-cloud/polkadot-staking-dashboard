@@ -47,7 +47,6 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
                 title: t('claim', { ns: 'modals' }),
                 icon: faCircleDown,
                 disabled: !isReady,
-                small: true,
                 onClick: () =>
                   openModal({
                     key: 'ClaimPayouts',

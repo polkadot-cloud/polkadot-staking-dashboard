@@ -13,6 +13,7 @@ import { Metrics } from 'library/ListItem/Buttons/Metrics'
 import { Remove } from 'library/ListItem/Buttons/Remove'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
+import type { Validator } from 'types'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
 import { Select } from '../ListItem/Buttons/Select'
@@ -36,7 +37,7 @@ export const Item = ({
   const commission = prefs?.commission ?? null
 
   const isSelected = !!selected.filter(
-    (item) => item.address === validator.address
+    (item) => (item as Validator).address === validator.address
   ).length
 
   const innerClasses = classNames('inner', {

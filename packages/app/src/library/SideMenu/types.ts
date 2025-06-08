@@ -3,7 +3,6 @@
 
 import type { BulletType } from 'common-types'
 import type { FunctionComponent, SVGProps } from 'react'
-import type { AnyJson } from 'types'
 
 export interface MinimisedProps {
   $minimised?: boolean
@@ -18,7 +17,7 @@ export interface PrimaryProps {
   name: string
   active: boolean
   to: string
-  lottie: AnyJson
+  lottie: unknown // Lottie animation object
   bullet?: BulletType
   minimised: boolean
 }

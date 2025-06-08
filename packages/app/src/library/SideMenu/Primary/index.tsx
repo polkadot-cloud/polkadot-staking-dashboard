@@ -22,7 +22,7 @@ export const Primary = ({
 }: PrimaryProps) => {
   const { setSideMenu } = useUi()
   const { network } = useNetwork()
-  const { icon, play } = useDotLottieButton(lottie)
+  const { icon, play } = useDotLottieButton(lottie as string)
 
   return (
     <Link

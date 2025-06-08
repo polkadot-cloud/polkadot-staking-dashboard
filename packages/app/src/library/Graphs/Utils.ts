@@ -20,7 +20,6 @@ import type {
   RewardResult,
   RewardResults,
 } from 'plugin-staking-api/types'
-import type { AnyJson } from 'types'
 import { planckToUnitBn } from 'utils'
 import type { PayoutDayCursor } from './types'
 
@@ -133,7 +132,7 @@ export const calculateDailyPayouts = (
 
 // Calculate average payouts per day
 export const calculatePayoutAverages = (
-  payouts: AnyJson,
+  payouts: RewardRecord[],
   fromDate: Date,
   days: number,
   avgDays: number
@@ -169,7 +168,7 @@ export const calculatePayoutAverages = (
     // If on last reward and is a zero (current era still processing), use previous reward to
     // prevent misleading dip
     const reward =
-      i === payouts.length - 1 && payouts[i].reward === 0
+      i === payouts.length - 1 && Number(payouts[i].reward) === 0
         ? payoutsAverages[i - 1].reward
         : total / num
 
@@ -337,7 +336,7 @@ export const combineRewards = (
   // We now know pool claims *and* payouts exist
   //
   // Now determine which dates to display
-  let payoutDays: AnyJson[] = []
+  let payoutDays: number[] = []
   // Prefill `dates` with all pool claim and payout days
   poolClaims.forEach((p) => {
     const dayStart = getUnixTime(startOfDay(fromUnixTime(p.timestamp)))
