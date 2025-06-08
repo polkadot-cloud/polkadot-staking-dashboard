@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Dispatch, ReactNode, SetStateAction } from 'react'
-import type { AnyJson, MaybeAddress } from 'types'
+import type { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
+import type { MaybeAddress } from 'types'
 
 export interface SelectItemsProps {
   layout?: 'two-col' | 'three-col'
@@ -12,7 +12,7 @@ export interface SelectItemsProps {
 export interface SelectItemProps {
   title: string
   subtitle: string
-  icon: AnyJson
+  icon: ReactNode
   selected: boolean
   onClick: () => void
   layout?: 'two-col' | 'three-col'
@@ -20,8 +20,8 @@ export interface SelectItemProps {
   grow?: boolean
   disabled?: boolean
   includeToggle?: boolean
-  bodyRef?: AnyJson
-  containerRef?: AnyJson
+  bodyRef?: RefObject<HTMLDivElement | null>
+  containerRef?: RefObject<HTMLDivElement | null>
   account?: MaybeAddress
   setAccount?: Dispatch<SetStateAction<MaybeAddress>>
 }

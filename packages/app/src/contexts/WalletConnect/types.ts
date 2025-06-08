@@ -2,13 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { HexString } from 'dedot/utils'
-import type { AnyFunction, AnyJson } from 'types'
+
+// WalletConnect session object - using unknown since it's from external library
+export type WalletConnectSession = unknown
+
+// Transaction payload for WalletConnect signing
+export interface WalletConnectTxPayload {
+  address: string
+  [key: string]: unknown
+}
+
+// Function type for WalletConnect approval
+export type WalletConnectApprovalFunction = () => Promise<WalletConnectSession>
 
 export interface WalletConnectContextInterface {
   connectProvider: () => Promise<void>
   wcInitialized: boolean
   wcSessionActive: boolean
-  initializeWcSession: () => Promise<AnyJson>
+  initializeWcSession: () => Promise<WalletConnectSession | null>
   updateWcSession: () => Promise<void>
   disconnectWcSession: () => Promise<void>
   fetchAddresses: () => Promise<string[]>
@@ -17,9 +28,9 @@ export interface WalletConnectContextInterface {
 
 export interface WalletConnectConnectedMeta {
   uri: string | undefined
-  approval: AnyFunction
+  approval: WalletConnectApprovalFunction
 }
 
 export type WalletConnectSignTx = (
-  payload: AnyJson
+  payload: WalletConnectTxPayload
 ) => Promise<{ signature: HexString }>
