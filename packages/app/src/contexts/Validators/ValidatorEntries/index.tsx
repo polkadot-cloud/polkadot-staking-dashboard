@@ -4,6 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
+import { PerbillMultiplier } from 'consts'
 import { getPeopleChainId } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -109,19 +110,21 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     let count = 0
     let acc = 0
     result.forEach(([address, { commission, blocked }]) => {
-      if (commission !== 100) {
+      const commissionUnit = commission / PerbillMultiplier
+      if (commissionUnit !== 100) {
         count++
-        acc += commission
+        acc += commissionUnit
       }
       entries.push({
         address,
         prefs: {
-          commission: Number(perbillToPercent(commission).toFixed(2)),
+          commission: Number(perbillToPercent(commissionUnit).toFixed(2)),
           blocked,
         },
       })
     })
-    return { entries, localAvgCommission: count ? acc / count : 0 }
+    const localAvgCommission = Number((count ? acc / count : 0).toFixed(2))
+    return { entries, localAvgCommission }
   }
 
   // Fetches and formats the active validator set, and derives metrics from the result
