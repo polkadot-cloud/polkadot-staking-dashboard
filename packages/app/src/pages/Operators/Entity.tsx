@@ -24,20 +24,20 @@ export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
   const { name, validators: entityAllValidators } = activeItem
   const validators = entityAllValidators[network] ?? []
 
-  // include validators that exist in `erasStakers`
-  const [activeValidators, setActiveValidators] = useState<Validator[]>(
+  // include validators that exist in validator set
+  const [operatorValidators, setOperatorValidators] = useState<Validator[]>(
     getValidators().filter((v) => validators.includes(v.address))
   )
 
   useEffect(() => {
-    setActiveValidators(
+    setOperatorValidators(
       getValidators().filter((v) => validators.includes(v.address))
     )
   }, [getValidators(), network])
 
   useEffect(() => {
-    const newValidators = [...activeValidators]
-    setActiveValidators(newValidators)
+    const newValidators = [...operatorValidators]
+    setOperatorValidators(newValidators)
   }, [name, activeItem, network])
 
   const container = {
@@ -71,7 +71,7 @@ export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
           </div>
         ) : (
           <>
-            {activeValidators.length === 0 && (
+            {operatorValidators.length === 0 && (
               <div className="item">
                 <h3>
                   {validators.length
@@ -80,10 +80,10 @@ export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
                 </h3>
               </div>
             )}
-            {activeValidators.length > 0 && (
+            {operatorValidators.length > 0 && (
               <ValidatorList
                 bondFor="nominator"
-                validators={activeValidators}
+                validators={operatorValidators}
                 allowListFormat={false}
                 selectable={false}
                 allowMoreCols
