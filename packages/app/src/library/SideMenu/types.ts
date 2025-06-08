@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { BulletType } from 'common-types'
 import type { FunctionComponent, SVGProps } from 'react'
+import type { BulletType } from 'types'
 
 export interface MinimisedProps {
   $minimised?: boolean
