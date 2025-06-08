@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { AnimatePresence, motion } from 'framer-motion'
-// import { useNotifications } from 'contexts/Notifications';
 import { notifications$ } from 'global-bus'
 import { useEffect, useState } from 'react'
 import type { NotificationItem } from 'types'
