@@ -9,7 +9,6 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react'
-import type { AnyJson } from 'types'
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper'
 import type { SelectItemsProps } from './types'
 
@@ -31,7 +30,7 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   const handleAdjustHeight = () => {
     const refsInitialised = [...containerRefs]
       .concat(bodyRefs)
-      .every((r: AnyJson) => r !== null)
+      .every((r: RefObject<HTMLDivElement | null>) => r?.current !== null)
 
     if (refsInitialised) {
       // Get max height from button refs.
@@ -47,8 +46,10 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
       let i = 0
       for (const { current: currentContainer } of containerRefs) {
         if (currentContainer) {
-          const icon: AnyJson = currentContainer.querySelector('.icon')
-          const toggle: AnyJson = currentContainer.querySelector('.toggle')
+          const icon: HTMLElement | null =
+            currentContainer.querySelector('.icon')
+          const toggle: HTMLElement | null =
+            currentContainer.querySelector('.toggle')
 
           if (window.innerWidth <= TwoThreshold) {
             currentContainer.style.height = `${
@@ -97,7 +98,8 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
             if (child !== undefined) {
               return (
                 <Fragment key={`select_${i}`}>
-                  {cloneElement<AnyJson>(child as ReactElement, {
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {cloneElement(child as ReactElement<any>, {
                     bodyRef: bodyRefs[i],
                     containerRef: containerRefs[i],
                   })}

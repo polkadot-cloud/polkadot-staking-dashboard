@@ -2,13 +2,29 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
-import type { AnyJson, MaybeAddress } from 'types'
+import type { MaybeAddress } from 'types'
+
+export interface StatButtonProps {
+  title: string
+  large?: boolean
+  icon?: IconProp
+  transform?: string
+  disabled?: boolean
+  onClick: () => void
+}
+
+export interface StatOdometerData {
+  value: string
+  unit?: string
+}
+
+export type StatData = string | StatAddress | StatOdometerData
 
 export interface StatProps {
   label: string
-  stat: AnyJson
+  stat: StatData
   type?: string
-  buttons?: AnyJson[]
+  buttons?: StatButtonProps[]
   dimmed?: boolean
   helpKey: string
   icon?: IconProp

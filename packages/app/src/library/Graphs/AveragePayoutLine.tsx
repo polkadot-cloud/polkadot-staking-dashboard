@@ -148,7 +148,7 @@ export const AveragePayoutLine = ({
     datasets: [
       {
         label: t('payout'),
-        data: combinedPayouts.map(({ reward }: { reward: number }) => reward),
+        data: combinedPayouts.map(({ reward }) => Number(reward)),
         borderColor: color,
         pointStyle: undefined,
         pointRadius: 0,
