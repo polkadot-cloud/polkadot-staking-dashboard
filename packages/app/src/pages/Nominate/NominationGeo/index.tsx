@@ -9,13 +9,14 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { usePlugins } from 'contexts/Plugins'
 
 import { PolkawatchApi } from '@polkawatch/ddp-client'
-import { PolkaWatch } from 'controllers/PolkaWatch'
 import type { ChainMetadata, NominatorDetail } from './types'
 
 import { AnalyzedDays } from './Stats/AnalyzedDays'
 import { AnalyzedEras } from './Stats/AnalyzedEras'
 import { AnalyzedPayouts } from './Stats/AnalyzedPayouts'
 
+import { PolkawatchConfig } from 'consts/plugins'
+import { getPolkawatchConfig } from 'consts/util'
 import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -49,7 +50,7 @@ export const NominationGeo = () => {
 
   const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true)
 
-  const networkSupported = PolkaWatch.SUPPORTED_NETWORKS.includes(network)
+  const networkSupported = PolkawatchConfig.SupportedNetworks.includes(network)
 
   // Min height of the graph container.
   const graphContainerMinHeight = analyticsAvailable ? 320 : 25
@@ -69,7 +70,7 @@ export const NominationGeo = () => {
 
   useEffect(() => {
     if (callPolkawatchApi) {
-      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network))
+      const polkaWatchApi = new PolkawatchApi(getPolkawatchConfig(network))
       polkaWatchApi
         .ddpIpfsAboutChain()
         .then((response) => {
@@ -90,7 +91,7 @@ export const NominationGeo = () => {
   // triggers a change of account also (i.e. different network prefix).
   useEffect(() => {
     if (callPolkawatchApi) {
-      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network))
+      const polkaWatchApi = new PolkawatchApi(getPolkawatchConfig(network))
       polkaWatchApi
         .ddpIpfsNominatorDetail({
           lastDays: 30,

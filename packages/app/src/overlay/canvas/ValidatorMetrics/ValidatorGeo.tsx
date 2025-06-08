@@ -3,10 +3,11 @@
 
 import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client'
 import { useSize } from '@w3ux/hooks'
+import { PolkawatchConfig } from 'consts/plugins'
+import { getPolkawatchConfig } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
-import { PolkaWatch } from 'controllers/PolkaWatch'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { GeoDonut } from 'library/Graphs/GeoDonut'
 import { formatSize } from 'library/Graphs/Utils'
@@ -32,11 +33,11 @@ export const ValidatorGeo = ({ address }: { address: string }) => {
   const { pluginEnabled } = usePlugins()
   const enabled = pluginEnabled('polkawatch')
 
-  const networkSupported = PolkaWatch.SUPPORTED_NETWORKS.includes(network)
+  const networkSupported = PolkawatchConfig.SupportedNetworks.includes(network)
 
   useEffect(() => {
     if (networkSupported && enabled) {
-      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network))
+      const polkaWatchApi = new PolkawatchApi(getPolkawatchConfig(network))
       polkaWatchApi
         .ddpIpfsValidatorDetail({
           lastDays: 60,
