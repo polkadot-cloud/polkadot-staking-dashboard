@@ -3,19 +3,8 @@
 
 import type { HexString } from 'dedot/utils'
 
-// WalletConnect session object - matches external library structure
-export interface WalletConnectSession {
-  namespaces: {
-    [key: string]: {
-      accounts: string[]
-      [key: string]: unknown
-    }
-  }
-  topic?: string
-  pairingTopic?: string
-  expiry?: number
-  [key: string]: unknown
-}
+// WalletConnect session object - flexible to match external library
+export type WalletConnectSession = unknown
 
 // Transaction payload for WalletConnect signing - should match SignerPayloadJSON structure
 export interface WalletConnectTxPayload {

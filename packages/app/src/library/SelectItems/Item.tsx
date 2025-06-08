@@ -29,9 +29,7 @@ export const SelectItem = ({
   >
     <div className="inner" ref={containerRef}>
       <button type="button" onClick={() => onClick()} disabled={disabled}>
-        <div className="icon">
-          {icon}
-        </div>
+        <div className="icon">{icon}</div>
         <div className="body" ref={bodyRef}>
           <h3>{title}</h3>
           <p>{subtitle}</p>

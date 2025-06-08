@@ -16,7 +16,6 @@ import type {
   WalletConnectApprovalFunction,
   WalletConnectContextInterface,
   WalletConnectSession,
-  WalletConnectTxPayload,
 } from './types'
 
 export const [WalletConnectContext, useWalletConnect] =
@@ -222,7 +221,8 @@ export const WalletConnectProvider = ({
 
     // Update session data in provider
     if (wcProvider.current) {
-      wcProvider.current.session = newWcSession
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      wcProvider.current.session = newWcSession as any
     }
 
     return newWcSession
@@ -264,7 +264,7 @@ export const WalletConnectProvider = ({
       request: {
         method: 'polkadot_signTransaction',
         params: {
-          address: payload.address,
+          address: (payload as { address?: string }).address || '',
           transactionPayload: payload,
         },
       },
@@ -274,13 +274,21 @@ export const WalletConnectProvider = ({
   const fetchAddresses = async (): Promise<string[]> => {
     // Retrieve a new session or get current one
     const wcSession = await initializeWcSession()
-    if (wcSession === null || !wcSession.namespaces) {
+    if (wcSession === null || typeof wcSession !== 'object' || !wcSession) {
+      return []
+    }
+
+    // Type guard and safe access to namespaces
+    const sessionObj = wcSession as {
+      namespaces?: Record<string, { accounts?: string[] }>
+    }
+    if (!sessionObj.namespaces) {
       return []
     }
 
     // Get accounts from session
-    const walletConnectAccounts = Object.values(wcSession.namespaces)
-      .map((namespace) => namespace.accounts)
+    const walletConnectAccounts = Object.values(sessionObj.namespaces)
+      .map((namespace) => namespace.accounts || [])
       .flat()
 
     const caip = genesisHash.substring(2).substring(0, 32)

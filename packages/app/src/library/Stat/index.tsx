@@ -11,7 +11,12 @@ import { useNetwork } from 'contexts/Network'
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
-import type { StatAddress, StatButtonProps, StatOdometerData, StatProps } from './types'
+import type {
+  StatAddress,
+  StatButtonProps,
+  StatOdometerData,
+  StatProps,
+} from './types'
 
 export const Stat = ({
   label,
@@ -67,12 +72,14 @@ export const Stat = ({
             spaceAfter="0.4rem"
             zeroDecimals={2}
           />
-          {(stat as StatOdometerData)?.unit ? (stat as StatOdometerData).unit : null}
+          {(stat as StatOdometerData)?.unit
+            ? (stat as StatOdometerData).unit
+            : null}
         </h2>
       )
       break
     default:
-      display = stat
+      display = typeof stat === 'string' ? stat : String(stat)
   }
 
   return (

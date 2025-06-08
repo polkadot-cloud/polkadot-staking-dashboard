@@ -13,6 +13,7 @@ import { Metrics } from 'library/ListItem/Buttons/Metrics'
 import { Remove } from 'library/ListItem/Buttons/Remove'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
+import type { Validator } from 'types'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
 import { Select } from '../ListItem/Buttons/Select'
@@ -21,7 +22,6 @@ import { Commission } from '../ListItem/Labels/Commission'
 import { EraStatus } from '../ListItem/Labels/EraStatus'
 import { Identity } from '../ListItem/Labels/Identity'
 import type { ItemProps } from './types'
-import type { Validator } from 'types'
 
 export const Item = ({
   validator,
