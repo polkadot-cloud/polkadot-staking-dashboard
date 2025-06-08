@@ -251,7 +251,7 @@ export const WalletConnectProvider = ({
 
   // Attempt to sign a transaction and receive a signature
   const signWcTx = async (
-    payload: WalletConnectTxPayload
+    payload: unknown
   ): Promise<{ signature: HexString }> => {
     if (!wcProvider.current || !wcProvider.current.session?.topic) {
       return { signature: '0x' }
@@ -274,13 +274,13 @@ export const WalletConnectProvider = ({
   const fetchAddresses = async (): Promise<string[]> => {
     // Retrieve a new session or get current one
     const wcSession = await initializeWcSession()
-    if (wcSession === null) {
+    if (wcSession === null || !wcSession.namespaces) {
       return []
     }
 
     // Get accounts from session
     const walletConnectAccounts = Object.values(wcSession.namespaces)
-      .map((namespace: AnyJson) => namespace.accounts)
+      .map((namespace) => namespace.accounts)
       .flat()
 
     const caip = genesisHash.substring(2).substring(0, 32)

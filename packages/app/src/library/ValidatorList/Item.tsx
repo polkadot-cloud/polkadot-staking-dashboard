@@ -21,6 +21,7 @@ import { Commission } from '../ListItem/Labels/Commission'
 import { EraStatus } from '../ListItem/Labels/EraStatus'
 import { Identity } from '../ListItem/Labels/Identity'
 import type { ItemProps } from './types'
+import type { Validator } from 'types'
 
 export const Item = ({
   validator,
@@ -36,7 +37,7 @@ export const Item = ({
   const commission = prefs?.commission ?? null
 
   const isSelected = !!selected.filter(
-    (item) => item.address === validator.address
+    (item) => (item as Validator).address === validator.address
   ).length
 
   const innerClasses = classNames('inner', {

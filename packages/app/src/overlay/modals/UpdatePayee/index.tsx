@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { isValidAddress } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -150,6 +151,7 @@ export const UpdatePayee = () => {
               selected={selected.destination === item.value}
               onClick={() => handleChangeDestination(item.value)}
               {...item}
+              icon={<FontAwesomeIcon icon={item.icon} />}
             />
           ))}
         </SelectItems>

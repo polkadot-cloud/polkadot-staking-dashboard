@@ -3,13 +3,34 @@
 
 import type { HexString } from 'dedot/utils'
 
-// WalletConnect session object - using unknown since it's from external library
-export type WalletConnectSession = unknown
+// WalletConnect session object - matches external library structure
+export interface WalletConnectSession {
+  namespaces: {
+    [key: string]: {
+      accounts: string[]
+      [key: string]: unknown
+    }
+  }
+  topic?: string
+  pairingTopic?: string
+  expiry?: number
+  [key: string]: unknown
+}
 
-// Transaction payload for WalletConnect signing
+// Transaction payload for WalletConnect signing - should match SignerPayloadJSON structure
 export interface WalletConnectTxPayload {
   address: string
-  [key: string]: unknown
+  blockHash: string
+  blockNumber: string
+  era: string
+  genesisHash: string
+  method: string
+  nonce: string
+  specVersion: string
+  tip: string
+  transactionVersion: string
+  version: number
+  [key: string]: string | number // Allow any additional properties as strings or numbers
 }
 
 // Function type for WalletConnect approval
@@ -32,5 +53,5 @@ export interface WalletConnectConnectedMeta {
 }
 
 export type WalletConnectSignTx = (
-  payload: WalletConnectTxPayload
+  payload: unknown // Accept any payload type to match external library requirements
 ) => Promise<{ signature: HexString }>

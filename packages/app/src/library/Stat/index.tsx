@@ -11,7 +11,7 @@ import { useNetwork } from 'contexts/Network'
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
-import type { StatAddress, StatButtonProps, StatProps } from './types'
+import type { StatAddress, StatButtonProps, StatOdometerData, StatProps } from './types'
 
 export const Stat = ({
   label,
@@ -50,7 +50,7 @@ export const Stat = ({
   let display
   switch (type) {
     case 'address':
-      display = stat.display
+      display = (stat as StatAddress).display
       break
     case 'odometer':
       display = (
@@ -63,11 +63,11 @@ export const Stat = ({
             }}
           />
           <Odometer
-            value={minDecimalPlaces(stat.value, 2)}
+            value={minDecimalPlaces((stat as StatOdometerData).value, 2)}
             spaceAfter="0.4rem"
             zeroDecimals={2}
           />
-          {stat?.unit ? stat.unit : null}
+          {(stat as StatOdometerData)?.unit ? (stat as StatOdometerData).unit : null}
         </h2>
       )
       break

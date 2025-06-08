@@ -98,7 +98,7 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
             if (child !== undefined) {
               return (
                 <Fragment key={`select_${i}`}>
-                  {cloneElement<AnyJson>(child as ReactElement, {
+                  {cloneElement(child as ReactElement, {
                     bodyRef: bodyRefs[i],
                     containerRef: containerRefs[i],
                   })}

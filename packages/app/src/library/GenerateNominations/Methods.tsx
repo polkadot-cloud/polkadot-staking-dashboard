@@ -7,6 +7,7 @@ import {
   faHeart,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { SelectItems } from 'library/SelectItems'
 import { SelectItem } from 'library/SelectItems/Item'
@@ -76,7 +77,7 @@ export const Methods = ({
           key={`gen_method_${i}`}
           title={m.title}
           subtitle={m.subtitle}
-          icon={m.icon}
+          icon={<FontAwesomeIcon icon={m.icon} />}
           selected={false}
           onClick={m.onClick}
           disabled={isFastUnstaking}
