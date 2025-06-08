@@ -9,10 +9,9 @@ import { getChainIcons } from 'assets'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useLayoutEffect, useRef } from 'react'
-import type { AnyJson } from 'types'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
-import type { StatAddress, StatProps } from './types'
+import type { StatAddress, StatButtonProps, StatProps } from './types'
 
 export const Stat = ({
   label,
@@ -106,7 +105,7 @@ export const Stat = ({
           {display}
           {buttons ? (
             <span ref={subjectRef}>
-              {buttons.map((btn: AnyJson, index: number) => (
+              {buttons.map((btn: StatButtonProps, index: number) => (
                 <span key={`stat_${index}`}>
                   <Button
                     key={`btn_${index}_${Math.random()}`}
