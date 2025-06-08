@@ -3,9 +3,9 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 // import { useNotifications } from 'contexts/Notifications';
-import type { NotificationItem } from 'controllers/Notifications/types'
 import { notifications$ } from 'global-bus'
 import { useEffect, useState } from 'react'
+import type { NotificationItem } from 'types'
 import { Wrapper } from './Wrapper'
 
 export const NotificationPrompts = () => {
