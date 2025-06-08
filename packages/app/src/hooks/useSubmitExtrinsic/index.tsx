@@ -12,6 +12,8 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { useTxMeta } from 'contexts/TxMeta'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { Notifications } from 'controllers/Notifications'
 import { TxSubmission } from 'controllers/TxSubmission'
@@ -50,6 +52,8 @@ export const useSubmitExtrinsic = ({
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
+  const { getTransferOptions } = useTransferOptions()
+  const { getTxSubmission } = useTxMeta()
   const { unit, units } = getStakingChainData(network)
 
   // Store the uid for this transaction.
@@ -295,13 +299,47 @@ export const useSubmitExtrinsic = ({
     })
   }
 
-  const onError = (type?: string) => {
+  const onError = (type?: string, errorMessage?: string) => {
     if (type === 'ledger') {
       handleResetLedgerTask()
     }
+
+    // Get current balance info for context
+    const { transferrableBalance } = getTransferOptions(from)
+    const txFee = getTxSubmission(uid)?.fee || 0n
+    const hasInsufficientFunds = transferrableBalance < txFee
+
+    let title = t('cancelled')
+    let subtitle = t('transactionCancelled')
+
+    // Provide contextual messages based on cancellation reason
+    if (type === 'insufficient_funds' || hasInsufficientFunds) {
+      title = t('insufficientFunds')
+      subtitle = t('addMoreDotForFees', { unit })
+
+      // Add transaction-specific context
+      if (tx?.call.pallet === 'Staking') {
+        subtitle = t('addMoreDotForStaking', { unit, minAmount: unit })
+      } else if (tx?.call.pallet === 'NominationPools') {
+        subtitle = t('addMoreDotForPooling', { unit })
+      }
+    } else if (
+      type === 'user_cancelled' ||
+      errorMessage?.includes('User rejected') ||
+      errorMessage?.includes('Cancelled') ||
+      errorMessage?.includes('user rejected') ||
+      errorMessage?.includes('cancelled by user')
+    ) {
+      title = t('userCancelled')
+      subtitle = t('userCancelledTransaction')
+    } else if (type === 'ledger') {
+      // Ledger-specific errors are handled in LedgerHardware context
+      return
+    }
+
     Notifications.emit({
-      title: t('cancelled'),
-      subtitle: t('transactionCancelled'),
+      title,
+      subtitle,
     })
   }
 
