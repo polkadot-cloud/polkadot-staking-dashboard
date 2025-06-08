@@ -13,11 +13,11 @@ import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useWalletConnect } from 'contexts/WalletConnect'
-import { Notifications } from 'controllers/Notifications'
 import { TxSubmission } from 'controllers/TxSubmission'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
 import { concatU8a, hexToU8a } from 'dedot/utils'
+import { emitNotification } from 'global-bus'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -262,7 +262,7 @@ export const useSubmitExtrinsic = ({
   }, [])
 
   const onReady = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('pending'),
       subtitle: t('transactionInitiated'),
     })
@@ -272,7 +272,7 @@ export const useSubmitExtrinsic = ({
   }
 
   const onInBlock = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('inBlock'),
       subtitle: t('transactionInBlock'),
     })
@@ -282,14 +282,14 @@ export const useSubmitExtrinsic = ({
   }
 
   const onFinalized = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('finalized'),
       subtitle: t('transactionSuccessful'),
     })
   }
 
   const onFailed = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('failed'),
       subtitle: t('errorWithTransaction'),
     })
@@ -299,7 +299,7 @@ export const useSubmitExtrinsic = ({
     if (type === 'ledger') {
       handleResetLedgerTask()
     }
-    Notifications.emit({
+    emitNotification({
       title: t('cancelled'),
       subtitle: t('transactionCancelled'),
     })

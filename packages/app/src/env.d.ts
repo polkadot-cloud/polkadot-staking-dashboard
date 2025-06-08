@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/types'
-import type { NotificationItem } from 'controllers/Notifications/types'
 import type { TxSubmissionItem } from 'controllers/TxSubmission/types'
 
 declare global {
@@ -14,7 +13,6 @@ declare global {
     opera?: boolean
   }
   interface DocumentEventMap {
-    notification: CustomEvent<NotificationItem>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }

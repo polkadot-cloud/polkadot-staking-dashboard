@@ -3,7 +3,7 @@
 
 import { MaxNominations } from 'consts'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
-import { Notifications } from 'controllers/Notifications'
+import { emitNotification } from 'global-bus'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { Title } from 'library/Prompt/Title'
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers'
@@ -66,7 +66,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
             text={t('addToNominations')}
             onClick={() => {
               callback(nominations.concat(selected))
-              Notifications.emit({
+              emitNotification({
                 title: t('favoritesAddedTitle', { count: selected.length }),
                 subtitle: t('favoritesAddedSubtitle', {
                   count: selected.length,
