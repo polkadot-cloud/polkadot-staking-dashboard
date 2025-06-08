@@ -14,12 +14,17 @@ export interface ValidatorsContextInterface {
   sessionValidators: string[]
   validatorsFetched: Sync
   avgRewardRate: number
+  averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]
   getValidatorTotalStake: (address: string) => bigint
   getValidatorRank: (address: string) => number | undefined
   getValidatorRankSegment: (address: string) => number
 }
 
+export interface AverageEraValidatorReward {
+  days: number
+  reward: bigint
+}
 export interface Validators {
   status: Sync
   validators: Validator[]

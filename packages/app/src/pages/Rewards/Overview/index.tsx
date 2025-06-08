@@ -19,6 +19,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { useTokenPrices } from 'contexts/TokenPrice'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useAverageRewardRate } from 'hooks/useAvgRewardRate'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { formatFiatCurrency } from 'locales/util'
@@ -45,10 +46,11 @@ export const Overview = (props: PayoutHistoryProps) => {
   const { currency } = useCurrency()
   const { pluginEnabled } = usePlugins()
   const { openModal } = useOverlay().modal
+  const { avgCommission } = useValidators()
   const { activeAddress } = useActiveAccounts()
   const { price: tokenPrice } = useTokenPrices()
   const { getStakedBalance } = useTransferOptions()
-  const { avgCommission, avgRewardRate } = useValidators()
+  const { getAverageRewardRate } = useAverageRewardRate()
 
   const { unit } = getStakingChainData(network)
   const Token = getChainIcons(network).token
@@ -57,7 +59,7 @@ export const Overview = (props: PayoutHistoryProps) => {
   const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
 
   const currentStake = getStakedBalance(activeAddress).toNumber()
-  const annualRewardBase = currentStake * (avgRewardRate / 100) || 0
+  const annualRewardBase = currentStake * (getAverageRewardRate() / 100) || 0
 
   const annualRewardAfterCommission =
     annualRewardBase * (1 - avgCommission / 100)

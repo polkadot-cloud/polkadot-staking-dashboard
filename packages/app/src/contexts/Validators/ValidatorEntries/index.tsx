@@ -13,6 +13,7 @@ import {
   getValidatorRank as getValidatorRankBus,
   getValidatorRanks,
 } from 'global-bus'
+import { useErasPerDay } from 'hooks/useErasPerDay'
 import { fetchValidatorStats } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
@@ -35,7 +36,10 @@ import type {
   ValidatorsContextInterface,
 } from '../types'
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils'
-import { defaultValidatorsData } from './defaults'
+import {
+  defaultAverageEraValidatorReward,
+  defaultValidatorsData,
+} from './defaults'
 
 export const [ValidatorsContext, useValidators] =
   createSafeContext<ValidatorsContextInterface>()
@@ -45,7 +49,9 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
   const { stakers } = useStaking().eraStakers
-  const { isReady, serviceApi, getApiStatus } = useApi()
+  const { isReady, serviceApi, getConsts, getApiStatus } = useApi()
+  const { erasPerDay, maxSupportedDays } = useErasPerDay()
+  const { historyDepth } = getConsts(network)
 
   // Store validator entries and sync status
   const [validators, setValidators] = useState<Validators>({
@@ -86,14 +92,27 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     ActiveValidatorRank[]
   >([])
 
-  // Fetch validator entries and format the returning data
+  // Stores the average era validator reward
+  const [averageEraValidatorReward, setAverageEraValidatorReward] = useState<{
+    days: number
+    reward: bigint
+  }>(defaultAverageEraValidatorReward)
+
+  // Fetch validator entries, format the returning data, and calculate the average commission
   const getValidatorEntries = async () => {
     if (!isReady) {
       return defaultValidatorsData
     }
     const result = await serviceApi.query.validatorEntries()
     const entries: Validator[] = []
+
+    let count = 0
+    let acc = 0
     result.forEach(([address, { commission, blocked }]) => {
+      if (commission !== 100) {
+        count++
+        acc += commission
+      }
       entries.push({
         address,
         prefs: {
@@ -102,8 +121,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         },
       })
     })
-
-    return { entries }
+    return { entries, localAvgCommission: count ? acc / count : 0 }
   }
 
   // Fetches and formats the active validator set, and derives metrics from the result
@@ -121,17 +139,25 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     )
 
     // The validator entries for the current active era
+    let localAvgCommission = 0
     let validatorEntries: Validator[] = []
     if (localEraValidators) {
       validatorEntries = localEraValidators.entries
+      localAvgCommission = localEraValidators.avgCommission
     } else {
-      const { entries } = await getValidatorEntries()
-
-      validatorEntries = entries
+      const result = await getValidatorEntries()
+      localAvgCommission = result.localAvgCommission
+      validatorEntries = result.entries
     }
 
     // Set entries data for the era to local storage
-    setLocalEraValidators(network, activeEra.index.toString(), validatorEntries)
+    setLocalEraValidators(
+      network,
+      activeEra.index.toString(),
+      validatorEntries,
+      localAvgCommission
+    )
+    setAvgCommission(localAvgCommission)
 
     // NOTE: validators are shuffled before committed to state
     setValidators({ status: 'synced', validators: shuffle(validatorEntries) })
@@ -234,7 +260,44 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     return BigInt(inEra.total)
   }
 
-  // TODO: Expand this function to also fetch average commission and average reward rate too.
+  const getAverageEraValidatorReward = async () => {
+    if (!isReady || activeEra.index === 0) {
+      setAverageEraValidatorReward({
+        days: 0,
+        reward: 0n,
+      })
+      return
+    }
+
+    // If max supported days is less than 30, use 15 day average instead
+    const days = maxSupportedDays > 30 ? 30 : 15
+
+    // Calculates the number of eras required to calculate required `days`, not surpassing
+    // historyDepth
+    const endEra = Math.max(
+      activeEra.index - erasPerDay * days,
+      Math.max(0, activeEra.index - historyDepth)
+    )
+
+    const eras: string[] = []
+    let thisEra = activeEra.index - 1
+    do {
+      eras.push(thisEra.toString())
+      thisEra = thisEra - 1
+    } while (thisEra >= endEra)
+
+    const results = await serviceApi.query.erasValidatorRewardMulti(
+      eras.map((e) => Number(e))
+    )
+
+    const totalReward = results
+      .map((v) => v || 0n)
+      .reduce((prev, current) => prev + current, 0n)
+
+    const reward = totalReward / BigInt(eras.length)
+    setAverageEraValidatorReward({ days, reward })
+  }
+
   const getActiveValidatorRanks = async (): Promise<void> => {
     const result = await fetchValidatorStats(network)
     setActiveValidatorRanks(result.activeValidatorRanks)
@@ -318,6 +381,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         setValidatorsFetched('unsynced')
       }
       fetchSessionValidators()
+
+      if (!pluginEnabled('staking_api')) {
+        getAverageEraValidatorReward()
+      }
     }
   }, [isReady, activeEra])
 
@@ -333,6 +400,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         sessionValidators,
         validatorsFetched: validators.status,
         avgRewardRate,
+        averageEraValidatorReward,
         formatWithPrefs,
         getValidatorTotalStake,
         getValidatorRank,
