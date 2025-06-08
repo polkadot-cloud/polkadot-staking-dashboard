@@ -3,7 +3,6 @@
 
 import type { ExtensionInjected } from '@w3ux/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
-import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
 import type { TxSubmissionItem } from 'controllers/TxSubmission/types'
 import type { FC } from 'react'
 
@@ -17,7 +16,6 @@ declare global {
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>
-    'online-status': CustomEvent<OnlineStatusEvent>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }
