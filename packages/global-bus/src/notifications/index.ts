@@ -5,11 +5,13 @@ import { ToastDelayDuration } from 'consts'
 import type { NotificationText } from 'types'
 import { _notifications } from './private'
 
+let notificationCounter = 0;
+
 export const notifications$ = _notifications.asObservable()
 
 export const emitNotification = ({ title, subtitle }: NotificationText) => {
   // Create a new notification with an index based on the current length of the notifications array
-  const index = _notifications.getValue().length
+  const index = notificationCounter++
 
   // Add the new notification to global bus state
   _notifications.next([
