@@ -1,19 +1,21 @@
 /* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
+@use 'sass:color';
+
 .theme-kusama {
   $base-primary: rgb(51, 51, 53);
   $base-secondary: rgb(141 144 150);
 
   @for $i from 0 through 19 {
     --accent-color-primary-#{100 - ($i * 5)}: #{hsl(
-        hue($base-primary),
-        saturation($base-primary),
+        color.channel($base-primary, 'hue', $space: hsl),
+        color.channel($base-primary, 'saturation', $space: hsl),
         $i * 5%
       )};
     --accent-color-secondary-#{100 - ($i * 5)}: #{hsl(
-        hue($base-secondary),
-        saturation($base-secondary),
+        color.channel($base-secondary, 'hue', $space: hsl),
+        color.channel($base-secondary, 'saturation', $space: hsl),
         $i * 5%
       )};
   }
