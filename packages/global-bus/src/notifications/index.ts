@@ -5,7 +5,7 @@ import { ToastDelayDuration } from 'consts'
 import type { NotificationText } from 'types'
 import { _notifications } from './private'
 
-let notificationCounter = 0;
+let notificationCounter = 0
 
 export const notifications$ = _notifications.asObservable()
 
