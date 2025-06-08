@@ -7,7 +7,7 @@ import { getChainIcons } from 'assets'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { useAverageRewardRate } from 'hooks/useAvgRewardRate'
+import { useAvgRewardRate } from 'hooks/useAvgRewardRate'
 import { Balance } from 'library/Balance'
 import { Title } from 'library/Modal/Title'
 import type { ChangeEvent } from 'react'
@@ -26,7 +26,7 @@ export const RewardCalculator = () => {
   const { network } = useNetwork()
   const { config } = useOverlay().modal
   const { avgCommission } = useValidators()
-  const { getAverageRewardRate } = useAverageRewardRate()
+  const { getAvgRewardRate } = useAvgRewardRate()
 
   const { unit } = getStakingChainData(network)
   const Token = getChainIcons(network).token
@@ -38,7 +38,7 @@ export const RewardCalculator = () => {
   // Whether to show base or commission-adjusted rewards
   const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
 
-  const annualRewardBase = stakeAmount * (getAverageRewardRate() / 100) || 0
+  const annualRewardBase = stakeAmount * (getAvgRewardRate() / 100) || 0
 
   const annualRewardAfterCommission =
     annualRewardBase * (1 - avgCommission / 100)
