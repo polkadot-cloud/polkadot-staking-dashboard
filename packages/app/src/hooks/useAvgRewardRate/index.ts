@@ -9,9 +9,9 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useErasPerDay } from '../useErasPerDay'
-import type { UseAvgRewardRate } from './types'
+import type { UseAverageRewardRate } from './types'
 
-export const useAvgRewardRate = (): UseAvgRewardRate => {
+export const useAverageRewardRate = (): UseAverageRewardRate => {
   const {
     stakingMetrics: { totalIssuance },
   } = useApi()
@@ -26,7 +26,7 @@ export const useAvgRewardRate = (): UseAvgRewardRate => {
 
   // Get average reward rate based on the current staking metrics. Directly returns rate from
   // staking API if available
-  const getAvgRewardRate = (compounded: boolean = false): number => {
+  const getAverageRewardRate = (compounded: boolean = false): number => {
     if (pluginEnabled('staking_api')) {
       return avgRewardRate
     }
@@ -87,6 +87,6 @@ export const useAvgRewardRate = (): UseAvgRewardRate => {
   }
 
   return {
-    getAvgRewardRate,
+    getAverageRewardRate,
   }
 }
