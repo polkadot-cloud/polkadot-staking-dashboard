@@ -20,7 +20,6 @@ import { DefaultLocale, locales } from 'locales'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
 import { Spinner } from 'ui-core/base'
 
 ChartJS.register(
@@ -129,7 +128,7 @@ export const EraPointsLine = ({
         },
         callbacks: {
           title: () => [],
-          label: (context: AnyJson) =>
+          label: (context: { parsed: { y: number } }) =>
             `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints', { ns: 'app' })}`,
         },
         intersect: false,

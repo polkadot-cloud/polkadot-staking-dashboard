@@ -21,7 +21,6 @@ import { format, fromUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
 import { Spinner } from 'ui-core/base'
 import type { PayoutLineEntry } from './types'
 
@@ -133,7 +132,7 @@ export const PayoutLine = ({
         },
         callbacks: {
           title: () => [],
-          label: (context: AnyJson) =>
+          label: (context: { parsed: { y: number } }) =>
             `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
         intersect: false,
