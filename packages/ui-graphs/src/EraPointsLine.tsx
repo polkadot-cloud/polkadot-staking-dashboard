@@ -62,11 +62,8 @@ export const EraPointsLine = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.3,
-    maxBarThickness: 13,
     scales: {
       x: {
-        stacked: true,
         grid: {
           display: false,
         },
@@ -83,7 +80,6 @@ export const EraPointsLine = ({
         },
       },
       y: {
-        stacked: true,
         beginAtZero: true,
         ticks: {
           color: getThemeValue('--grid-canvas-axis'),
