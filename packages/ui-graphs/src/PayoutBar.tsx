@@ -14,16 +14,11 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
-import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
-import { DefaultLocale, locales } from 'locales'
 import { Bar } from 'react-chartjs-2'
-import { useTranslation } from 'react-i18next'
 import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from './types'
-import { formatRewardsForGraphs } from './Utils'
+import { formatRewardsForGraphs } from './util'
 
 ChartJS.register(
   CategoryScale,
@@ -43,11 +38,12 @@ export const PayoutBar = ({
   nominating,
   inPool,
   syncing,
+  getThemeValue,
+  unit,
+  units,
+  dateFormat,
+  labels,
 }: PayoutBarProps) => {
-  const { i18n, t } = useTranslation('app')
-  const { getThemeValue } = useThemeValues()
-  const { network } = useNetwork()
-  const { unit, units } = getStakingChainData(network)
   const staking = nominating || inPool
 
   // Get formatted rewards data
@@ -79,7 +75,7 @@ export const PayoutBar = ({
   const data = {
     labels: graphPayouts.map(({ timestamp }: { timestamp: number }) => {
       const dateObj = format(fromUnixTime(timestamp), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+        locale: dateFormat,
       })
       return `${dateObj}`
     }),
@@ -87,7 +83,7 @@ export const PayoutBar = ({
     datasets: [
       {
         order: 1,
-        label: t('payout'),
+        label: labels.payout,
         data: graphPayouts.map(({ reward }: { reward: string }) => reward),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
@@ -96,7 +92,7 @@ export const PayoutBar = ({
       },
       {
         order: 2,
-        label: t('poolClaim'),
+        label: labels.poolClaim,
         data: graphPoolClaims.map(({ reward }: { reward: string }) => reward),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
@@ -108,7 +104,7 @@ export const PayoutBar = ({
         data: graphUnclaimedPayouts.map(
           ({ reward }: { reward: string }) => reward
         ),
-        label: t('unclaimedPayouts'),
+        label: labels.unclaimedPayouts,
         borderColor: colorPayouts,
         backgroundColor: getThemeValue('--accent-color-pending'),
         pointRadius,
@@ -168,7 +164,7 @@ export const PayoutBar = ({
         callbacks: {
           title: () => [],
           label: ({ dataset, parsed }: TooltipItem<'bar'>) =>
-            `${dataset.order === 3 ? `${t('pending')}: ` : ''}${new BigNumber(
+            `${dataset.order === 3 ? `${labels.pending}: ` : ''}${new BigNumber(
               parsed.y
             )
               .decimalPlaces(units)
@@ -186,7 +182,7 @@ export const PayoutBar = ({
     >
       {syncing && (
         <Spinner
-          style={{ position: 'absolute', right: '2.5rem', top: '-2.5rem' }}
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
         />
       )}
       <Bar options={options} data={data} />
