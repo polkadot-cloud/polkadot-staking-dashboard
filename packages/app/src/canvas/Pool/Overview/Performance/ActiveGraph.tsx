@@ -48,7 +48,6 @@ export const ActiveGraph = ({
 
   return (
     <PayoutLine
-      t={t}
       i18n={i18n}
       locales={locales}
       syncing={loading}
@@ -58,6 +57,11 @@ export const ActiveGraph = ({
       getThemeValue={getThemeValue}
       unit={unit}
       defaultLocale={DefaultLocale}
+      labels={{
+        era: t('era', { ns: 'app' }),
+        reward: t('reward', { ns: 'modals' }),
+        payouts: t('payouts', { ns: 'app' }),
+      }}
     />
   )
 }

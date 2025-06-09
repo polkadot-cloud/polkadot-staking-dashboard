@@ -41,20 +41,24 @@ export const EraPointsLine = ({
   width,
   height,
   getThemeValue,
-  t,
   i18n,
   locales,
   defaultLocale,
+  labels,
 }: {
   entries: ValidatorEraPoints[]
   syncing: boolean
   width: string | number
   height: string | number
   getThemeValue: (key: string) => string
-  t: (key: string) => string
   i18n: { resolvedLanguage?: string }
   locales: Record<string, { dateFormat: Locale }>
   defaultLocale: string
+  labels: {
+    date: string
+    era: string
+    eraPoints: string
+  }
 }) => {
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
@@ -96,7 +100,7 @@ export const EraPointsLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('date')}`,
+          text: labels.date,
         },
       },
       y: {
@@ -116,7 +120,7 @@ export const EraPointsLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('eraPoints')}`,
+          text: labels.eraPoints,
         },
       },
     },
@@ -138,7 +142,7 @@ export const EraPointsLine = ({
         callbacks: {
           title: () => [],
           label: (context: { parsed: { y: number } }) =>
-            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints')}`,
+            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${labels.eraPoints}`,
         },
         intersect: false,
         interaction: {
@@ -159,7 +163,7 @@ export const EraPointsLine = ({
     }),
     datasets: [
       {
-        label: t('era'),
+        label: labels.era,
         data: dataset,
         borderColor: color,
         backgroundColor: color,

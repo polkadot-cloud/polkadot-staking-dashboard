@@ -37,10 +37,10 @@ export const PayoutLine = ({
   height,
   getThemeValue,
   unit,
-  t,
   i18n,
   locales,
   defaultLocale,
+  labels,
 }: {
   entries: PayoutLineEntry[]
   syncing: boolean
@@ -48,10 +48,14 @@ export const PayoutLine = ({
   height: string | number
   getThemeValue: (key: string) => string
   unit: string
-  t: (key: string) => string
   i18n: { resolvedLanguage?: string }
   locales: Record<string, { dateFormat: Locale }>
   defaultLocale: string
+  labels: {
+    era: string
+    reward: string
+    payouts: string
+  }
 }) => {
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
@@ -98,7 +102,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: t('era'),
+          text: labels.era,
         },
       },
       y: {
@@ -115,7 +119,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${unit} ${t('reward')}`,
+          text: `${unit} ${labels.reward}`,
         },
       },
     },
@@ -157,7 +161,7 @@ export const PayoutLine = ({
     }),
     datasets: [
       {
-        label: t('payouts'),
+        label: labels.payouts,
         data: dataset,
         borderColor: color,
         backgroundColor: color,

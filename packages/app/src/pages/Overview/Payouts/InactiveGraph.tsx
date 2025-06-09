@@ -36,10 +36,15 @@ export const InactiveGraph = ({
         getThemeValue={getThemeValue}
         unit={unit}
         units={units}
-        t={t}
         i18n={i18n}
         locales={locales}
         defaultLocale={DefaultLocale}
+        labels={{
+          payout: t('payouts', { ns: 'app' }),
+          poolClaim: t('poolClaim', { ns: 'app' }),
+          unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
+          pending: t('pending', { ns: 'app' }),
+        }}
       />
       <div style={{ marginTop: '3rem' }}>
         <AveragePayoutLine
@@ -52,7 +57,10 @@ export const InactiveGraph = ({
           getThemeValue={getThemeValue}
           unit={unit}
           units={units}
-          t={t}
+          labels={{
+            payout: t('payouts', { ns: 'app' }),
+            dayAverage: t('dayAverage', { ns: 'app' }),
+          }}
         />
       </div>
     </>

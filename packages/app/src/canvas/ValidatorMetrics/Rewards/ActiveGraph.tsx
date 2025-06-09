@@ -52,10 +52,14 @@ export const ActiveGraph = ({
       height={height}
       getThemeValue={getThemeValue}
       unit={unit}
-      t={t}
       i18n={i18n}
       locales={locales}
       defaultLocale={DefaultLocale}
+      labels={{
+        era: t('era', { ns: 'app' }),
+        reward: t('reward', { ns: 'modals' }),
+        payouts: t('payouts', { ns: 'app' }),
+      }}
     />
   )
 }

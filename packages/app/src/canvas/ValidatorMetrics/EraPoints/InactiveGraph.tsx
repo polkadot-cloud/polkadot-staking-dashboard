@@ -23,10 +23,14 @@ export const InactiveGraph = ({
       width={width}
       height={height}
       getThemeValue={getThemeValue}
-      t={t}
       i18n={i18n}
       locales={locales}
       defaultLocale={DefaultLocale}
+      labels={{
+        date: t('date', { ns: 'app' }),
+        era: t('era', { ns: 'app' }),
+        eraPoints: t('eraPoints', { ns: 'app' }),
+      }}
     />
   )
 }

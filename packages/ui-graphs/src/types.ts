@@ -29,10 +29,15 @@ export interface PayoutBarProps {
   getThemeValue: (key: string) => string
   unit: string
   units: number
-  t: (key: string) => string
   i18n: { resolvedLanguage?: string }
   locales: Record<string, { dateFormat: Locale }>
   defaultLocale: string
+  labels: {
+    payout: string
+    poolClaim: string
+    unclaimedPayouts: string
+    pending: string
+  }
 }
 
 export interface AveragePayoutLineProps {

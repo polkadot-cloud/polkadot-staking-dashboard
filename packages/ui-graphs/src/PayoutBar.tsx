@@ -40,10 +40,10 @@ export const PayoutBar = ({
   getThemeValue,
   unit,
   units,
-  t,
   i18n,
   locales,
   defaultLocale,
+  labels,
 }: PayoutBarProps) => {
   const staking = nominating || inPool
 
@@ -84,7 +84,7 @@ export const PayoutBar = ({
     datasets: [
       {
         order: 1,
-        label: t('payout'),
+        label: labels.payout,
         data: graphPayouts.map(({ reward }: { reward: string }) => reward),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
@@ -93,7 +93,7 @@ export const PayoutBar = ({
       },
       {
         order: 2,
-        label: t('poolClaim'),
+        label: labels.poolClaim,
         data: graphPoolClaims.map(({ reward }: { reward: string }) => reward),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
@@ -105,7 +105,7 @@ export const PayoutBar = ({
         data: graphUnclaimedPayouts.map(
           ({ reward }: { reward: string }) => reward
         ),
-        label: t('unclaimedPayouts'),
+        label: labels.unclaimedPayouts,
         borderColor: colorPayouts,
         backgroundColor: getThemeValue('--accent-color-pending'),
         pointRadius,
@@ -165,7 +165,7 @@ export const PayoutBar = ({
         callbacks: {
           title: () => [],
           label: ({ dataset, parsed }: TooltipItem<'bar'>) =>
-            `${dataset.order === 3 ? `${t('pending')}: ` : ''}${new BigNumber(
+            `${dataset.order === 3 ? `${labels.pending}: ` : ''}${new BigNumber(
               parsed.y
             )
               .decimalPlaces(units)
