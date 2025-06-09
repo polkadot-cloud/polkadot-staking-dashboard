@@ -17,7 +17,7 @@ import {
 import type { Locale } from 'date-fns'
 import { format, fromUnixTime } from 'date-fns'
 import { Line } from 'react-chartjs-2'
-import type { PayoutLineEntry } from './GraphTypes'
+import type { PayoutLineEntry } from './types'
 
 ChartJS.register(
   CategoryScale,

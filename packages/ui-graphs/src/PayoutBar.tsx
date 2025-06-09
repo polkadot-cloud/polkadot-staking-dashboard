@@ -16,7 +16,7 @@ import {
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
 import { Bar } from 'react-chartjs-2'
-import type { PayoutBarProps } from './GraphTypes'
+import type { PayoutBarProps } from './types'
 import { formatRewardsForGraphs } from './util'
 
 ChartJS.register(

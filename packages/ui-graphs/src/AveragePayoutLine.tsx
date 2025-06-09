@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import type { AveragePayoutLineProps } from './GraphTypes'
+import type { AveragePayoutLineProps } from './types'
 import {
   calculatePayoutAverages,
   combineRewards,

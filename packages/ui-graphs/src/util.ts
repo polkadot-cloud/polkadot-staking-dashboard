@@ -20,7 +20,7 @@ import type {
   PoolReward,
   RewardResult,
   RewardResults,
-} from './GraphTypes'
+} from './types'
 
 // Constants
 const MAX_PAYOUT_DAYS = 60

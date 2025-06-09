@@ -6,7 +6,7 @@ import type { TooltipItem } from 'chart.js'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import chroma from 'chroma-js'
 import { Doughnut } from 'react-chartjs-2'
-import type { GeoDonutProps } from './GraphTypes'
+import type { GeoDonutProps } from './types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
