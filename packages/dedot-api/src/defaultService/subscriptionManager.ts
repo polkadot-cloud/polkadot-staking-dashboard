@@ -49,7 +49,6 @@ import {
   getAccountKey,
   keysOf,
 } from '../util'
-import type { ChainConfig } from './chainConfig'
 
 /**
  * Manages all subscriptions for a service
@@ -86,8 +85,8 @@ export class SubscriptionManager<
     private apiRelay: DedotClient<RelayApi>,
     private apiPeople: DedotClient<PeopleApi>,
     private apiHub: DedotClient<HubApi>,
+    private stakingApi: DedotClient<StakingApi>,
     private ids: [NetworkId, SystemChainId, SystemChainId],
-    private chainConfig: ChainConfig<RelayApi, PeopleApi, HubApi, StakingApi>,
     private stakingConsts: { poolsPalletId: Uint8Array },
     private serviceInterface: ServiceInterface
   ) {}
@@ -96,18 +95,12 @@ export class SubscriptionManager<
    * Initialize subscriptions that depend on dynamic data
    */
   initializeDynamicSubscriptions() {
-    const stakingApi = this.chainConfig.getStakingApi(
-      this.apiRelay,
-      this.apiPeople,
-      this.apiHub
-    )
-
     // Active address subscription - recreates fast unstake queue
     this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
       if (activeAddress) {
         this.fastUnstakeQueue?.unsubscribe()
         this.fastUnstakeQueue = new FastUnstakeQueueQuery(
-          stakingApi,
+          this.stakingApi,
           activeAddress
         )
       }
@@ -147,15 +140,15 @@ export class SubscriptionManager<
           new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
         this.subBonded[account.address] = new BondedQuery(
-          stakingApi,
+          this.stakingApi,
           account.address
         )
         this.subPoolMemberships[account.address] = new PoolMembershipQuery(
-          stakingApi,
+          this.stakingApi,
           account.address
         )
         this.subProxies[account.address] = new ProxiesQuery(
-          stakingApi,
+          this.stakingApi,
           account.address
         )
       })
@@ -171,7 +164,7 @@ export class SubscriptionManager<
         })
         added.forEach(({ stash, bonded }) => {
           this.subStakingLedgers[stash] = new StakingLedgerQuery(
-            stakingApi,
+            this.stakingApi,
             stash,
             bonded
           )
@@ -218,7 +211,7 @@ export class SubscriptionManager<
         })
         added.forEach((poolId) => {
           this.subActivePools[poolId] = new ActivePoolQuery(
-            stakingApi,
+            this.stakingApi,
             poolId,
             this.stakingConsts.poolsPalletId,
             this.serviceInterface
@@ -238,15 +231,13 @@ export class SubscriptionManager<
     this.subActiveEra = activeEra$.subscribe(
       async ({ index }: { index: number }) => {
         if (index > 0) {
-          const stakingApi = this.chainConfig.getStakingApi(
-            this.apiRelay,
-            this.apiPeople,
-            this.apiHub
-          )
           this.stakingMetrics?.unsubscribe()
-          this.stakingMetrics = new StakingMetricsQuery(stakingApi, index)
+          this.stakingMetrics = new StakingMetricsQuery(this.stakingApi, index)
           this.eraRewardPoints?.unsubscribe()
-          this.eraRewardPoints = new EraRewardPointsQuery(stakingApi, index)
+          this.eraRewardPoints = new EraRewardPointsQuery(
+            this.stakingApi,
+            index
+          )
         }
       }
     )

@@ -6,7 +6,7 @@ import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import type { DedotClient } from 'dedot'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
-import { BaseService, westendChainConfig } from '../defaultService'
+import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../types/serviceDefault'
 
 export class WestendService
@@ -31,6 +31,7 @@ export class WestendService
     public apiPeople: DedotClient<WestendPeopleApi>,
     public apiHub: DedotClient<WestendAssetHubApi>
   ) {
-    super(networkConfig, ids, apiRelay, apiPeople, apiHub, westendChainConfig)
+    // For Westend, staking happens on the asset hub
+    super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub)
   }
 }

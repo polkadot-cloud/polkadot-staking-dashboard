@@ -6,7 +6,7 @@ import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
-import { BaseService, polkadotChainConfig } from '../defaultService'
+import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../types/serviceDefault'
 
 export class PolkadotService
@@ -31,6 +31,7 @@ export class PolkadotService
     public apiPeople: DedotClient<PolkadotPeopleApi>,
     public apiHub: DedotClient<PolkadotAssetHubApi>
   ) {
-    super(networkConfig, ids, apiRelay, apiPeople, apiHub, polkadotChainConfig)
+    // For Polkadot, staking happens on the relay chain
+    super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay)
   }
 }

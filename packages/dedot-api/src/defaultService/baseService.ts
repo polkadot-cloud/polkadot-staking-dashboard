@@ -17,6 +17,8 @@ import type {
 } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
+import { query } from '../query'
+import { runtimeApi } from '../runtimeApi'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
@@ -24,14 +26,14 @@ import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
+import { tx } from '../tx'
+import { createPool } from '../tx/createPool'
 import type {
   AssetHubChain,
   PeopleChain,
   RelayChain,
   StakingChain,
 } from '../types'
-import type { ChainConfig } from './chainConfig'
-import { createServiceInterface } from './interfaceFactory'
 import { SubscriptionManager } from './subscriptionManager'
 
 /**
@@ -83,7 +85,7 @@ export class BaseService<
     public apiRelay: DedotClient<RelayApi>,
     public apiPeople: DedotClient<PeopleApi>,
     public apiHub: DedotClient<HubApi>,
-    private chainConfig: ChainConfig<RelayApi, PeopleApi, HubApi, StakingApi>
+    private stakingApi: DedotClient<StakingApi>
   ) {
     this.apiStatus = {
       relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
@@ -115,16 +117,8 @@ export class BaseService<
     this.hubChainSpec = new ChainSpecs(this.apiHub)
 
     // Initialize constants
-    this.coreConsts = new CoreConsts(
-      this.chainConfig.getCoreConstApi(
-        this.apiRelay,
-        this.apiPeople,
-        this.apiHub
-      )
-    )
-    this.stakingConsts = new StakingConsts(
-      this.chainConfig.getStakingApi(this.apiRelay, this.apiPeople, this.apiHub)
-    )
+    this.coreConsts = new CoreConsts(this.apiRelay)
+    this.stakingConsts = new StakingConsts(this.stakingApi)
 
     // Set default sync status
     setSyncingMulti(defaultSyncStatus)
@@ -149,34 +143,26 @@ export class BaseService<
 
     // Initialize query objects
     this.blockNumber = new BlockNumberQuery(this.apiRelay)
-    this.activeEra = new ActiveEraQuery(
-      this.chainConfig.getStakingApi(this.apiRelay, this.apiPeople, this.apiHub)
-    )
+    this.activeEra = new ActiveEraQuery(this.stakingApi)
     this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
-    this.poolsConfig = new PoolsConfigQuery(
-      this.chainConfig.getStakingApi(this.apiRelay, this.apiPeople, this.apiHub)
-    )
-    this.fastUnstakeConfig = new FastUnstakeConfigQuery(
-      this.chainConfig.getStakingApi(this.apiRelay, this.apiPeople, this.apiHub)
-    )
+    this.poolsConfig = new PoolsConfigQuery(this.stakingApi)
+    this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.stakingApi)
 
     // Initialize service interface
-    this.interface = createServiceInterface(
-      this.apiRelay,
-      this.apiPeople,
-      this.apiHub,
-      this.ids,
-      this.chainConfig,
-      this.getApi
-    )
+    this.interface = {
+      query: query(this.getApi),
+      runtimeApi: runtimeApi(this.getApi),
+      tx: tx(this.getApi),
+      createPool: createPool(this.getApi),
+    }
 
     // Initialize subscription manager
     this.subscriptionManager = new SubscriptionManager(
       this.apiRelay,
       this.apiPeople,
       this.apiHub,
+      this.stakingApi,
       this.ids,
-      this.chainConfig,
       { poolsPalletId: this.stakingConsts.poolsPalletId },
       this.interface
     )

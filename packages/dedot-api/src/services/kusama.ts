@@ -6,7 +6,7 @@ import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { DedotClient } from 'dedot'
 import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
-import { BaseService, kusamaChainConfig } from '../defaultService'
+import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../types/serviceDefault'
 
 export class KusamaService
@@ -26,6 +26,7 @@ export class KusamaService
     public apiPeople: DedotClient<KusamaPeopleApi>,
     public apiHub: DedotClient<KusamaAssetHubApi>
   ) {
-    super(networkConfig, ids, apiRelay, apiPeople, apiHub, kusamaChainConfig)
+    // For Kusama, staking happens on the relay chain
+    super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay)
   }
 }
