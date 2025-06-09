@@ -5,7 +5,7 @@ import { extractUrlValue } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
-import { Notifications } from 'controllers/Notifications'
+import { emitNotification } from 'global-bus'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -25,7 +25,7 @@ export const useAccountFromUrl = () => {
           const { address, source } = account
           setActiveAccount({ address, source })
 
-          Notifications.emit({
+          emitNotification({
             title: t('accountConnected'),
             subtitle: `${t('connectedTo')} ${account.name}.`,
           })

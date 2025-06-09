@@ -1,17 +1,5 @@
 {
-  "compilerOptions": {
-    "rootDir": ".",
-    "declaration": true,
-    "declarationMap": false,
-    "noEmitOnError": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "strictPropertyInitialization": false,
-    "noUnusedLocals": true
-  },
+  "extends": "./tsconfig.base.json",
   "include": ["./packages/**/*", "**/*.d.ts"],
   "exclude": ["**/*/node_modules", "**/*/dist", "**/*/lottie"]
 }

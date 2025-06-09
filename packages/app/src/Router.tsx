@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import { PagesConfig } from 'config/pages'
+import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -19,7 +19,7 @@ import { Prompt } from 'library/Prompt'
 import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
 import { Offline } from 'Offline'
-import { Overlays } from 'overlay'
+import { Overlays } from 'Overlays'
 import { ApolloProvider, client } from 'plugin-staking-api'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -85,7 +85,7 @@ const RouterInner = () => {
               <Headers />
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
                 <Routes>
-                  {PagesConfig.map((page, i) => {
+                  {getPagesConfig(network, advancedMode).map((page, i) => {
                     // Only allow home page and rewards page when in Easy mode (advancedMode is false)
                     // Allow all pages when in Advanced mode (advancedMode is true)
                     if (

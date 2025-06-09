@@ -4,7 +4,7 @@
 import { createSafeContext } from '@w3ux/hooks'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
-import type { AnyFunction, AnyJson } from 'types'
+import type { AnyFunction } from 'types'
 import { defaultExcludes, defaultIncludes } from './defaults'
 import type {
   FilterItem,
@@ -188,9 +188,9 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const applyFilters = (
     t: FilterType,
     g: string,
-    list: AnyJson,
+    list: unknown[],
     fn: AnyFunction
-  ) => {
+  ): unknown[] => {
     const filtersToApply = getFilters(t, g)
 
     if (!filtersToApply) {
@@ -200,7 +200,11 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // apply order to a list
-  const applyOrder = (g: string, list: AnyJson, fn: AnyFunction) => {
+  const applyOrder = (
+    g: string,
+    list: unknown[],
+    fn: AnyFunction
+  ): unknown[] => {
     const orderToApply = getOrder(g)
     if (!orderToApply) {
       return list

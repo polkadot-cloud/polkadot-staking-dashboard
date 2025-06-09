@@ -28,6 +28,7 @@ export const SubmitTx = ({
   requiresMigratedController = false,
   onResize,
   transparent,
+  txInitiated,
 }: SubmitTxProps) => {
   const { t } = useTranslation()
   const { network } = useNetwork()
@@ -51,15 +52,17 @@ export const SubmitTx = ({
     who: getAccount(activeAddress),
   }
 
-  if (activeProxy && proxySupported) {
-    signingOpts = {
-      label: t('signedByProxy', { ns: 'app' }),
-      who: getAccount(activeProxy.address),
-    }
-  } else if (!(activeProxy && proxySupported) && requiresMigratedController) {
-    signingOpts = {
-      label: t('signedByController', { ns: 'app' }),
-      who: getAccount(activeAddress),
+  if (txInitiated) {
+    if (activeProxy && proxySupported) {
+      signingOpts = {
+        label: t('signedByProxy', { ns: 'app' }),
+        who: getAccount(activeProxy.address),
+      }
+    } else if (!(activeProxy && proxySupported) && requiresMigratedController) {
+      signingOpts = {
+        label: t('signedByController', { ns: 'app' }),
+        who: getAccount(activeAddress),
+      }
     }
   }
 

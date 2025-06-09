@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import type { MaybeAddress, SyncConfig, SyncId } from 'types'
 
 export const useSyncing = (config: SyncConfig = '*') => {
-  const { getAccountBalance, getStakingLedger } = useBalances()
+  const { getAccountBalance, getPoolMembership } = useBalances()
 
   // Retrieve the ids from the config provided
   const ids = getIdsFromSyncConfig(config)
@@ -22,8 +22,8 @@ export const useSyncing = (config: SyncConfig = '*') => {
     setSyncIds(activeSyncIds)
   }
 
-  // Helper to determine if pool membership has synced
-  const poolMembersipSynced = (): boolean => {
+  // Helper to determine if active pools have synced
+  const getPoolStatusSynced = (): boolean => {
     const POOL_SYNC_IDS: SyncId[] = [
       'initialization',
       'bonded-pools',
@@ -41,11 +41,11 @@ export const useSyncing = (config: SyncConfig = '*') => {
     if (!address) {
       return !syncIds.includes('initialization')
     }
-    const { synced: stakingLedgerSynced } = getStakingLedger(address)
+    const { synced: poolMembershipSynced } = getPoolMembership(address)
     const { synced: accountBalanceSynced } = getAccountBalance(address)
 
     return (
-      stakingLedgerSynced &&
+      poolMembershipSynced &&
       accountBalanceSynced &&
       !syncIds.includes('initialization')
     )
@@ -60,6 +60,5 @@ export const useSyncing = (config: SyncConfig = '*') => {
       subSyncStatus.unsubscribe()
     }
   }, [])
-
-  return { syncing: syncIds.length > 0, poolMembersipSynced, accountSynced }
+  return { syncing: syncIds.length > 0, getPoolStatusSynced, accountSynced }
 }

@@ -131,6 +131,7 @@ export interface ServiceInterface {
       real: string,
       call: SubmittableExtrinsic
     ) => SubmittableExtrinsic | undefined
+    setController: () => SubmittableExtrinsic | undefined
     stakingBondExtra: (bond: bigint) => SubmittableExtrinsic | undefined
     stakingChill: () => SubmittableExtrinsic | undefined
     stakingNominate: (nominees: string[]) => SubmittableExtrinsic | undefined

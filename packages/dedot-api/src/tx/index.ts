@@ -23,6 +23,7 @@ import { poolUnbond } from './poolUnbond'
 import { poolUpdateRoles } from './poolUpdateRoles'
 import { poolWithdraw } from './poolWithdraw'
 import { proxy } from './proxy'
+import { setController } from './setController'
 import { stakingBondExtra } from './stakingBondExtra'
 import { stakingChill } from './stakingChill'
 import { stakingNominate } from './stakingNominate'
@@ -55,6 +56,7 @@ export const tx = {
   poolUpdateRoles,
   poolWithdraw,
   proxy,
+  setController,
   stakingBondExtra,
   stakingChill,
   stakingNominate,

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import extensions from '@w3ux/extension-assets'
-import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
 import { motion } from 'framer-motion'
@@ -40,7 +39,7 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
       id: key,
       ...value,
     }))
-    .filter(({ id }) => !id.includes('snap')) as ExtensionArrayListItem[]
+    .filter(({ id }) => !id.includes('snap'))
 
   // Determine which web extensions to display. Only display Subwallet Mobile or Nova if in one of
   // those environments. In Nova Wallet's case, fetch `nova-wallet` metadata and overwrite

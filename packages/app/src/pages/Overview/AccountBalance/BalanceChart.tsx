@@ -28,11 +28,10 @@ export const BalanceChart = () => {
   const { network } = useNetwork()
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
-  const { getStakingLedger } = useBalances()
-  const { getAccountBalance } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
+  const { getStakingLedger, getAccountBalance } = useBalances()
   const { feeReserve, getTransferOptions } = useTransferOptions()
   const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
@@ -44,9 +43,9 @@ export const BalanceChart = () => {
   const { balance } = getAccountBalance(activeAddress)
   const allTransferOptions = getTransferOptions(activeAddress)
 
-  const poolBondOpions = allTransferOptions.pool
+  const poolBondOptions = allTransferOptions.pool
   const unlockingPools =
-    poolBondOpions.totalUnlocking + poolBondOpions.totalUnlocked
+    poolBondOptions.totalUnlocking + poolBondOptions.totalUnlocked
 
   // User's total balance
   const { free, frozen, reserved } = balance
@@ -54,8 +53,9 @@ export const BalanceChart = () => {
   const frozenBn = new BigNumber(frozen)
   const reservedBn = new BigNumber(reserved)
 
+  // freeBn excludes actively bonded funds, so add them back
   const totalBalance = planckToUnitBn(
-    freeBn.plus(total).plus(poolBondOpions.active).plus(unlockingPools),
+    freeBn.plus(active).plus(poolBondOptions.active).plus(unlockingPools),
     units
   )
 
@@ -77,8 +77,11 @@ export const BalanceChart = () => {
   // Graph percentages
   const inPool = planckToUnitBn(inPoolPlanck, units)
   const freeBalanceBn = planckToUnitBn(freeBalancePlanck, units)
+  const fundsTransferrable = new BigNumber(
+    planckToUnit(allTransferOptions.transferrableBalance, units)
+  )
 
-  const graphTotal = nominating.plus(inPool).plus(freeBalanceBn)
+  const graphTotal = nominating.plus(inPool).plus(fundsTransferrable)
   const graphNominating = nominating.isGreaterThan(0)
     ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0)
@@ -98,9 +101,6 @@ export const BalanceChart = () => {
   const fundsLocked = planckToUnitBn(maxLockedBn, units)
 
   const fundsFree = planckToUnitBn(freeBalancePlanck, units)
-  const fundsTransferrable = new BigNumber(
-    planckToUnit(allTransferOptions.transferrableBalance, units)
-  )
 
   // Available balance percentages.
   const graphLocked = fundsLocked.isGreaterThan(0)
@@ -120,9 +120,9 @@ export const BalanceChart = () => {
   }
 
   const isNominating = nominating.isGreaterThan(0)
-  const isInPool = new BigNumber(poolBondOpions.active)
-    .plus(poolBondOpions.totalUnlocked)
-    .plus(poolBondOpions.totalUnlocking)
+  const isInPool = new BigNumber(poolBondOptions.active)
+    .plus(poolBondOptions.totalUnlocked)
+    .plus(poolBondOptions.totalUnlocking)
     .isGreaterThan(0)
 
   return (
@@ -149,20 +149,20 @@ export const BalanceChart = () => {
           <BarSegment
             dataClass="d1"
             widthPercent={Number(graphNominating.toFixed(2))}
-            flexGrow={!inPool && !freeBalanceBn && isNominating ? 1 : 0}
+            flexGrow={!inPool && !fundsTransferrable && isNominating ? 1 : 0}
             label={`${nominating.decimalPlaces(3).toFormat()} ${unit}`}
           />
           <BarSegment
             dataClass="d2"
             widthPercent={Number(graphInPool.toFixed(2))}
-            flexGrow={!isNominating && !freeBalanceBn && inPool ? 1 : 0}
+            flexGrow={!isNominating && !fundsTransferrable && inPool ? 1 : 0}
             label={`${inPool.decimalPlaces(3).toFormat()} ${unit}`}
           />
           <BarSegment
             dataClass="d4"
             widthPercent={Number(graphNotStaking.toFixed(2))}
             flexGrow={!isNominating && !inPool ? 1 : 0}
-            label={`${freeBalanceBn.decimalPlaces(3).toFormat()} ${unit}`}
+            label={`${fundsTransferrable.decimalPlaces(3).toFormat()} ${unit}`}
             forceShow={!isNominating && !isInPool}
           />
         </Bar>

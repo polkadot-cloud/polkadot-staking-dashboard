@@ -70,7 +70,6 @@
     "connecting": "Conectando",
     "considerPoolStaking": "Considera el staking en pool hasta que alcances el mínimo",
     "controllerAccount": "Cuenta controladora",
-    "controllerNotImported": "No has importado tu cuenta controladora. Si has perdido acceso a tu cuenta controladora, establece una nueva ahora. De lo contrario, importa la controladora en una de tus extensiones activas.",
     "createAPool": "Crear un Pool",
     "createPool": "Crear Pool",
     "daily": "Diario",

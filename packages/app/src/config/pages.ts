@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PageCategoryItems, PagesConfigItems } from 'common-types'
 import { Home } from 'pages/Home'
 import { Nominate } from 'pages/Nominate'
 import { Operators } from 'pages/Operators'
@@ -9,6 +8,7 @@ import { Overview } from 'pages/Overview'
 import { Pools } from 'pages/Pools'
 import { Rewards } from 'pages/Rewards'
 import { Validators } from 'pages/Validators'
+import type { PageCategoryItems, PagesConfigItems } from 'types'
 
 export const PageCategories: PageCategoryItems = [
   {

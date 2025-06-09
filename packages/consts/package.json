@@ -11,6 +11,7 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
+    "@polkawatch/ddp-client": "^2.0.23",
     "@substrate/connect-known-chains": "^1.10.2",
     "assets": "workspace:*"
   },
