@@ -47,6 +47,21 @@ export interface PayoutBarProps {
   }
 }
 
+export interface PayoutLineProps {
+  entries: PayoutLineEntry[]
+  syncing: boolean
+  width: string | number
+  height: string | number
+  getThemeValue: (key: string) => string
+  unit: string
+  dateFormat: Locale
+  labels: {
+    era: string
+    reward: string
+    payouts: string
+  }
+}
+
 export interface AveragePayoutLineProps {
   days: number
   average: number

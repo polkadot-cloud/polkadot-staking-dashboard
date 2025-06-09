@@ -4,6 +4,7 @@
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { DefaultLocale, locales } from 'locales'
 import { useTranslation } from 'react-i18next'
 import { PayoutLine } from 'ui-graphs'
 
@@ -21,13 +22,13 @@ export const InactiveGraph = ({
 
   return (
     <PayoutLine
-      i18n={i18n}
       syncing={false}
       entries={[]}
       width={width}
       height={height}
       getThemeValue={getThemeValue}
       unit={unit}
+      dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
       labels={{
         era: t('era', { ns: 'app' }),
         reward: t('reward', { ns: 'modals' }),
