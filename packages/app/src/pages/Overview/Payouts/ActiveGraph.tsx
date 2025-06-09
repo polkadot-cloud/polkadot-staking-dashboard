@@ -1,12 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
-import { AveragePayoutLine } from 'library/Graphs/AveragePayoutLine'
-import { PayoutBar } from 'library/Graphs/PayoutBar'
+import { DefaultLocale, locales } from 'locales'
 import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type {
   NominatorReward,
@@ -14,6 +15,8 @@ import type {
   RewardResults,
 } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { AveragePayoutLine, PayoutBar } from 'ui-graphs'
 
 interface Props {
   nominating: boolean
@@ -27,9 +30,12 @@ export const ActiveGraph = ({
   lineMarginTop,
   setLastReward,
 }: Props) => {
+  const { i18n, t } = useTranslation()
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
+  const { getThemeValue } = useThemeValues()
+  const { unit, units } = getStakingChainData(network)
 
   const { data: nominatorRewardData, loading: rewardsLoading } = useRewards({
     network,
@@ -78,6 +84,16 @@ export const ActiveGraph = ({
         nominating={nominating}
         inPool={inPool}
         syncing={rewardsLoading || poolRewardsLoading}
+        getThemeValue={getThemeValue}
+        unit={unit}
+        units={units}
+        dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
+        labels={{
+          payout: t('payouts', { ns: 'app' }),
+          poolClaim: t('poolClaim', { ns: 'app' }),
+          unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
+          pending: t('pending', { ns: 'app' }),
+        }}
       />
       <div style={{ marginTop: lineMarginTop }}>
         <AveragePayoutLine
@@ -87,6 +103,13 @@ export const ActiveGraph = ({
           data={{ payouts, unclaimedPayouts, poolClaims }}
           nominating={nominating}
           inPool={inPool}
+          getThemeValue={getThemeValue}
+          unit={unit}
+          units={units}
+          labels={{
+            payout: t('payouts', { ns: 'app' }),
+            dayAverage: t('dayAverage', { ns: 'app' }),
+          }}
         />
       </div>
     </>

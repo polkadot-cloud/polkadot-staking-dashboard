@@ -14,13 +14,10 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
-import { DefaultLocale, locales } from 'locales'
-import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import { Line } from 'react-chartjs-2'
-import { useTranslation } from 'react-i18next'
 import { Spinner } from 'ui-core/base'
+import type { PayoutLineProps } from './types'
 
 ChartJS.register(
   CategoryScale,
@@ -33,27 +30,24 @@ ChartJS.register(
   Legend
 )
 
-export const EraPointsLine = ({
+export const PayoutLine = ({
   entries,
   syncing,
   width,
   height,
-}: {
-  entries: ValidatorEraPoints[]
-  syncing: boolean
-  width: string | number
-  height: string | number
-}) => {
-  const { i18n, t } = useTranslation()
-  const { getThemeValue } = useThemeValues()
-
+  getThemeValue,
+  unit,
+  dateFormat,
+  labels,
+}: PayoutLineProps) => {
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
     ? []
-    : entries.map((entry) => new BigNumber(entry.points).toString())
+    : entries.map((entry) => new BigNumber(entry.reward).toString())
 
   // Use primary color for line
   const color = getThemeValue('--accent-color-primary')
+
   // Styling of axis titles
   const titleFontSpec: Partial<FontSpec> = {
     family: "'Inter', 'sans-serif'",
@@ -61,25 +55,29 @@ export const EraPointsLine = ({
     size: 11,
   }
   const titleStyle = {
-    color: getThemeValue('--text-color-secondary'),
     display: true,
-    padding: 6,
-    font: titleFontSpec,
+    ...titleFontSpec,
+    color: getThemeValue('--text-color-secondary'),
   }
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.3,
-    maxBarThickness: 13,
+    interaction: {
+      intersect: false,
+    },
+    elements: {
+      point: {
+        hoverRadius: 10,
+        radius: 2,
+      },
+    },
     scales: {
       x: {
-        stacked: true,
         grid: {
           display: false,
         },
         ticks: {
-          color: getThemeValue('--grid-canvas-axis'),
           font: {
             size: 10,
           },
@@ -87,14 +85,11 @@ export const EraPointsLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('date', { ns: 'app' })}`,
+          text: labels.era,
         },
       },
       y: {
-        stacked: true,
-        beginAtZero: true,
         ticks: {
-          color: getThemeValue('--grid-canvas-axis'),
           font: {
             size: 10,
           },
@@ -107,7 +102,7 @@ export const EraPointsLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('eraPoints', { ns: 'app' })}`,
+          text: `${unit} ${labels.reward}`,
         },
       },
     },
@@ -129,7 +124,7 @@ export const EraPointsLine = ({
         callbacks: {
           title: () => [],
           label: (context: { parsed: { y: number } }) =>
-            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints', { ns: 'app' })}`,
+            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
         intersect: false,
         interaction: {
@@ -140,30 +135,30 @@ export const EraPointsLine = ({
   }
 
   const data = {
-    labels: entries.map(({ start }: { start: number }) => {
-      const dateObj = format(fromUnixTime(start), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+    labels: entries.map(({ start }: { start: number }) =>
+      format(fromUnixTime(start), 'dd MMM', {
+        locale: dateFormat,
       })
-      return `${dateObj}`
-    }),
+    ),
     datasets: [
       {
-        label: t('era', { ns: 'app' }),
+        label: labels.payouts,
         data: dataset,
         borderColor: color,
         backgroundColor: color,
-        pointRadius: 0,
-        borderRadius: 3,
+        pointStyle: 'circle',
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        borderWidth: 2,
       },
     ],
   }
 
   return (
     <div
-      className="inner"
       style={{
-        width,
-        height,
+        width: width || '100%',
+        height: height || 'auto',
       }}
     >
       {syncing && (
