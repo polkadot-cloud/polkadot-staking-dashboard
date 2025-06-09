@@ -2,21 +2,31 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
+import type { Locale } from 'date-fns'
+import type {
+  NominatorReward,
+  PoolReward,
+  ValidatorEraPoints,
+} from 'plugin-staking-api/types'
 
 export interface PieProps {
   color1?: string
   color2?: string
 }
 
-export interface BondedProps {
-  active: BigNumber
-  free: BigNumber
-  unlocking: BigNumber
-  unlocked: BigNumber
-  inactive: boolean
+export interface EraPointsLineProps {
+  entries: ValidatorEraPoints[]
+  syncing: boolean
+  width: string | number
+  height: string | number
+  getThemeValue: (key: string) => string
+  dateFormat: Locale
+  labels: {
+    date: string
+    era: string
+    eraPoints: string
+  }
 }
-
 export interface PayoutBarProps {
   days: number
   height: string

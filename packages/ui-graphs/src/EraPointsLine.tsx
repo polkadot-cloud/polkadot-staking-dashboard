@@ -15,8 +15,8 @@ import {
   Tooltip,
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
-import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
+import type { EraPointsLineProps } from './types'
 
 ChartJS.register(
   CategoryScale,
@@ -29,33 +29,15 @@ ChartJS.register(
   Legend
 )
 
-export interface ValidatorEraPoints {
-  era: number
-  points: string
-  start: number
-}
-
 export const EraPointsLine = ({
   entries,
   syncing,
   width,
   height,
   getThemeValue,
-  i18n,
+  dateFormat,
   labels,
-}: {
-  entries: ValidatorEraPoints[]
-  syncing: boolean
-  width: string | number
-  height: string | number
-  getThemeValue: (key: string) => string
-  i18n: { resolvedLanguage?: string }
-  labels: {
-    date: string
-    era: string
-    eraPoints: string
-  }
-}) => {
+}: EraPointsLineProps) => {
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
     ? []
@@ -150,8 +132,6 @@ export const EraPointsLine = ({
 
   const data = {
     labels: entries.map(({ start }: { start: number }) => {
-      const dateFormat =
-        locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat
       const dateObj = format(fromUnixTime(start), 'do MMM', {
         locale: dateFormat,
       })
