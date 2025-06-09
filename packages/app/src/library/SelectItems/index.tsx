@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import classNames from 'classnames'
 import type { ReactElement, ReactNode, RefObject } from 'react'
 import {
   Fragment,
@@ -9,8 +10,11 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react'
-import { SelectItemsWrapper, TwoThreshold } from './Wrapper'
+import classes from './index.module.scss'
 import type { SelectItemsProps } from './types'
+
+// Export threshold for use in component logic
+export const TwoThreshold = 800
 
 export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   // Initialise refs for container and body of items.
@@ -91,8 +95,13 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
     }
   }, [])
 
+  const allClasses = classNames(classes.selectItemsWrapper, {
+    [classes.twoCol]: layout === 'two-col',
+    [classes.threeCol]: layout === 'three-col',
+  })
+
   return (
-    <SelectItemsWrapper className={layout}>
+    <div className={allClasses}>
       {children
         ? children.map((child: ReactNode, i: number) => {
             if (child !== undefined) {
@@ -109,6 +118,6 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
             return null
           })
         : null}
-    </SelectItemsWrapper>
+    </div>
   )
 }

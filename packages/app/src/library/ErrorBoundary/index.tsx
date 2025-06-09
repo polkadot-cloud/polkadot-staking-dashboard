@@ -3,9 +3,10 @@
 
 import { faBug } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 
 export const ErrorFallbackApp = ({
   resetErrorBoundary,
@@ -15,7 +16,7 @@ export const ErrorFallbackApp = ({
   const { t } = useTranslation('app')
 
   return (
-    <Wrapper className="app">
+    <div className={classNames(classes.wrapper, classes.app)}>
       <h3>
         <FontAwesomeIcon icon={faBug} transform="grow-25" />
       </h3>
@@ -28,7 +29,7 @@ export const ErrorFallbackApp = ({
           {t('clickToReload')}
         </button>
       </h2>
-    </Wrapper>
+    </div>
   )
 }
 
@@ -40,8 +41,8 @@ export const ErrorFallbackRoutes = ({
   const { t } = useTranslation('app')
 
   return (
-    <Wrapper>
-      <h3 className="with-margin">
+    <div className={classes.wrapper}>
+      <h3 className={classes.withMargin}>
         <FontAwesomeIcon icon={faBug} transform="grow-25" />
       </h3>
       <h1>{t('errorUnknown')}</h1>
@@ -53,7 +54,7 @@ export const ErrorFallbackRoutes = ({
           {t('clickToReload')}
         </button>
       </h2>
-    </Wrapper>
+    </div>
   )
 }
 
@@ -65,7 +66,7 @@ export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
   const { t } = useTranslation('app')
 
   return (
-    <Wrapper className="modal">
+    <div className={classNames(classes.wrapper, classes.modal)}>
       <h2>{t('errorUnknown')}</h2>
       <h4>
         <button
@@ -75,6 +76,6 @@ export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
           {t('clickToReload')}
         </button>
       </h4>
-    </Wrapper>
+    </div>
   )
 }

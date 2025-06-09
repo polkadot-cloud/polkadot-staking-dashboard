@@ -4,7 +4,7 @@
 import { useTooltip } from 'contexts/Tooltip'
 import type { RefObject } from 'react'
 import { useEffect, useRef } from 'react'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 
 export const Tooltip = () => {
   const {
@@ -57,8 +57,8 @@ export const Tooltip = () => {
 
   return (
     open === 1 && (
-      <Wrapper
-        className="tooltip-trigger-element"
+      <div
+        className={`${classes.wrapper} tooltip-trigger-element`}
         ref={tooltipRef}
         style={{
           position: 'absolute',
@@ -69,7 +69,7 @@ export const Tooltip = () => {
         }}
       >
         <h3 className="tooltip-trigger-element">{text}</h3>
-      </Wrapper>
+      </div>
     )
   )
 }

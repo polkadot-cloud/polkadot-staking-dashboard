@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { notifications$ } from 'global-bus'
 import { useEffect, useState } from 'react'
 import type { NotificationItem } from 'types'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 
 export const NotificationPrompts = () => {
   // Store the notifications currently in state
@@ -22,7 +22,7 @@ export const NotificationPrompts = () => {
   }, [])
 
   return (
-    <Wrapper>
+    <ul className={classes.wrapper}>
       <AnimatePresence initial={false}>
         {notifications.length > 0 &&
           notifications.map((notification: NotificationItem, i: number) => {
@@ -49,6 +49,6 @@ export const NotificationPrompts = () => {
             )
           })}
       </AnimatePresence>
-    </Wrapper>
+    </ul>
   )
 }

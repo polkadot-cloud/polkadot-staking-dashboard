@@ -6,11 +6,12 @@ import { Odometer } from '@w3ux/react-odometer'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
+import classNames from 'classnames'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 import type {
   StatAddress,
   StatButtonProps,
@@ -82,9 +83,13 @@ export const Stat = ({
       display = typeof stat === 'string' ? stat : String(stat)
   }
 
+  const allClasses = classNames(classes.wrapper, {
+    [classes.isAddress]: type === 'address',
+  })
+
   return (
-    <Wrapper
-      $isAddress={type === 'address'}
+    <div
+      className={allClasses}
       style={dimmed ? { opacity: 0.5 } : undefined}
     >
       <h4>
@@ -130,6 +135,6 @@ export const Stat = ({
           ) : null}
         </div>
       </div>
-    </Wrapper>
+    </div>
   )
 }

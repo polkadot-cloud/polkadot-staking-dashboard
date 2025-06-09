@@ -8,3 +8,9 @@
 $network-bar-font-size: 0.9rem;
 $positive-color: #3eb955;
 $negative-color: #d2545d;
+
+// SelectItems breakpoints
+$two-threshold: 800px;
+$three-row-threshold: 1300px;
+$two-threshold-min: $two-threshold + 1px;
+$three-row-threshold-min: $three-row-threshold + 1px;

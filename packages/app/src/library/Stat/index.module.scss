@@ -1,11 +1,18 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
+@use '../variables' as *;
 
-export const Wrapper = styled.div<{ $isAddress?: boolean }>`
+.wrapper {
   width: 100%;
   padding: 0.15rem 0.25rem;
+
+  &.isAddress {
+    .content .text {
+      padding-left: 3rem;
+    }
+  }
+
   h4 {
     font-family: InterSemiBold, sans-serif;
     display: flex;
@@ -43,7 +50,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
     overflow: hidden;
 
     .text {
-      padding-left: ${(props) => (props.$isAddress ? '3rem' : 0)};
+      padding-left: 0;
       font-family: InterBold, sans-serif;
       color: var(--text-color-primary);
       position: absolute;
@@ -89,4 +96,4 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       }
     }
   }
-`
+}

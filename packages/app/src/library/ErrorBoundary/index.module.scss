@@ -1,9 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
-
-export const Wrapper = styled.div`
+.wrapper {
   width: 100%;
   display: flex;
   flex-flow: column wrap;
@@ -13,6 +11,7 @@ export const Wrapper = styled.div`
   &.app {
     height: 100vh;
   }
+
   &.modal {
     padding: 0.75rem 0 0 0;
   }
@@ -28,10 +27,12 @@ export const Wrapper = styled.div`
 
   h3 {
     margin: 1rem 0;
-    &.with-margin {
+    margin-bottom: 3rem;
+
+    &.withMargin {
       margin-top: 10rem;
     }
-    margin-bottom: 3rem;
+
     svg {
       color: var(--text-color-secondary);
     }
@@ -45,4 +46,4 @@ export const Wrapper = styled.div`
       opacity: 0.75;
     }
   }
-`
+}
