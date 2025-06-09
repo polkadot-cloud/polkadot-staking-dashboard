@@ -2,15 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-
-// Graph-specific interfaces that were previously in library/Graphs/types.ts
 import type { Locale } from 'date-fns'
-import type {
-  NominatorReward,
-  PoolReward,
-  RewardResult,
-  RewardResults,
-} from 'plugin-staking-api/types'
+import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
 
 export interface PieProps {
   color1?: string
@@ -54,7 +47,10 @@ export interface AveragePayoutLineProps {
   getThemeValue: (key: string) => string
   unit: string
   units: number
-  t: (key: string) => string
+  labels: {
+    payout: string
+    dayAverage: string
+  }
 }
 
 export interface GraphPayoutData {
@@ -86,6 +82,3 @@ export interface PayoutLineEntry {
   reward: string
   start: number
 }
-
-// Re-export types from plugin-staking-api for convenience
-export type { NominatorReward, PoolReward, RewardResult, RewardResults }
