@@ -46,6 +46,7 @@ export const AveragePayoutLine = ({
 }: AveragePayoutLineProps) => {
   const staking = nominating || inPool
   const inPoolOnly = !nominating && inPool
+
   // Define the most recent date that we will show on the graph
   const fromDate = new Date()
 
