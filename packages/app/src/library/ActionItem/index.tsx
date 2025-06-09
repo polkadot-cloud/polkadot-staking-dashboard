@@ -4,8 +4,8 @@
 import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
+import classes from './index.module.scss'
 import type { ActionItemProps } from './types'
-import { Wrapper } from './Wrapper'
 
 /**
  * @name ActionItem
@@ -25,7 +25,8 @@ export const ActionItem = ({
 
   useEffect(() => setToggle(toggled), [toggled])
   return (
-    <Wrapper
+    <h3
+      className={classes.wrapper}
       style={{
         ...style,
         opacity: inactive ? 0.3 : 1,
@@ -50,6 +51,6 @@ export const ActionItem = ({
       )}
       {text}
       {inlineButton && <span>{inlineButton}</span>}
-    </Wrapper>
+    </h3>
   )
 }

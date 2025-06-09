@@ -8,8 +8,8 @@ import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyJson } from 'types'
+import classes from './index.module.scss'
 import type { QrReaderProps } from './types'
-import { Wrapper } from './Wrapper'
 
 export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
   const { t } = useTranslation('modals')
@@ -61,7 +61,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
         : `${t('invalidAddress')}`
 
   return (
-    <Wrapper>
+    <div className={classes.wrapper}>
       <div className="qrRegion">
         <QrScanSignature
           size={250}
@@ -72,6 +72,6 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
         {feedback}
         {qrData === undefined && <div></div>}
       </h3>
-    </Wrapper>
+    </div>
   )
 }

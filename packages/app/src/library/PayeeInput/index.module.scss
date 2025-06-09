@@ -1,20 +1,18 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
-
-export const Wrapper = styled.div<{ $activeInput?: boolean }>`
+.wrapper {
   > .inner {
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    border-bottom: 1.5px solid
-      ${(props) =>
-        props.$activeInput
-          ? 'var(--accent-color-primary)'
-          : 'var(--border-primary-color)'};
+    border-bottom: 1.5px solid var(--border-primary-color);
     padding: 0rem 0 0.4rem 0;
     transition: border var(--transition-duration);
+
+    &.activeInput {
+      border-bottom-color: var(--accent-color-primary);
+    }
 
     > h4 {
       color: var(--text-color-secondary);
@@ -84,9 +82,10 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      
       > svg {
         margin-right: 0.4rem;
       }
     }
   }
-`
+}

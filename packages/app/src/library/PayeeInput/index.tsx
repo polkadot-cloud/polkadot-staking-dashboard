@@ -5,6 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { formatAccountSs58, isValidAddress, remToUnit } from '@w3ux/utils'
+import classNames from 'classnames'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -12,7 +13,7 @@ import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 import type { PayeeInputProps } from './types'
 
 export const PayeeInput = ({
@@ -91,9 +92,13 @@ export const PayeeInput = ({
   const placeholderDisplay =
     payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress')
 
+  const innerClasses = classNames('inner', {
+    [classes.activeInput]: inputActive,
+  })
+
   return (
-    <Wrapper $activeInput={inputActive}>
-      <div className="inner">
+    <div className={classes.wrapper}>
+      <div className={innerClasses}>
         <h4>{t('payoutAccount')}:</h4>
         <div className="account">
           {showEmpty ? (
@@ -138,6 +143,6 @@ export const PayeeInput = ({
           )}
         </h5>
       </div>
-    </Wrapper>
+    </div>
   )
 }

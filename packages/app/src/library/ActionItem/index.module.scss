@@ -1,9 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
-
-export const Wrapper = styled.h3`
+.wrapper {
   border-bottom: 1px solid var(--border-primary-color);
   color: var(--text-color-primary);
   font-family: InterSemiBold, sans-serif;
@@ -33,4 +31,4 @@ export const Wrapper = styled.h3`
   span {
     margin-left: 0.5rem;
   }
-`
+}
