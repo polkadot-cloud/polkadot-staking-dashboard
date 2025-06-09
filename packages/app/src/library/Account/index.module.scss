@@ -1,12 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
-
-export const Wrapper = styled.div`
+.wrapper {
   border: 1px solid var(--border-primary-color);
   transition: transform var(--transition-duration) ease-out;
-  cursor: default;
+  cursor: pointer;
   font-size: 1.1rem;
   border-radius: 1.5rem;
   box-shadow: none;
@@ -16,16 +14,17 @@ export const Wrapper = styled.div`
   padding: 0.1rem 1.25rem;
   max-width: 235px;
   flex: 1;
-  cursor: pointer;
 
   &:hover {
     transform: scale(1.025);
   }
+
   .polkicon {
     margin: 0.15rem 0.25rem 0 0;
     max-width: 1.5rem;
   }
-  .account-label {
+
+  .accountLabel {
     border-right: 1px solid var(--border-secondary-color);
     color: var(--text-color-secondary);
     font-size: 0.8em;
@@ -63,4 +62,4 @@ export const Wrapper = styled.div`
       opacity: 0.45;
     }
   }
-`
+}

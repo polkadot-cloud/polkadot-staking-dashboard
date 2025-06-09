@@ -18,7 +18,7 @@ import type { MaybeAddress } from 'types'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 
 export const Nominations = ({
   bondFor,
@@ -82,7 +82,7 @@ export const Nominations = ({
     isFastUnstaking
 
   return (
-    <Wrapper>
+    <div className={classes.wrapper}>
       <CardHeader action margin>
         <h3>
           {isPool ? t('poolNominations') : t('nominations')}
@@ -144,6 +144,6 @@ export const Nominations = ({
       ) : (
         <ListStatusHeader>{t('notNominating')}.</ListStatusHeader>
       )}
-    </Wrapper>
+    </div>
   )
 }

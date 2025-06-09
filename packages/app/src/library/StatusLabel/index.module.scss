@@ -1,18 +1,19 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
-import type { WrapperProps } from './types'
-
-export const Wrapper = styled.div<WrapperProps>`
+.wrapper {
   position: absolute;
-  top: ${(props) => (props.$topOffset ? props.$topOffset : '50%')};
+  top: 50%;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2;
+
+  &.customTopOffset {
+    /* Custom top offset will be applied via inline styles */
+  }
 
   > div {
     background: var(--background-list-item);
@@ -27,6 +28,7 @@ export const Wrapper = styled.div<WrapperProps>`
     > svg {
       color: var(--text-color-secondary);
     }
+
     h2 {
       padding: 0;
       margin: 0;
@@ -37,4 +39,4 @@ export const Wrapper = styled.div<WrapperProps>`
       opacity: 0.75;
     }
   }
-`
+}

@@ -5,6 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
+import classNames from 'classnames'
 import { getStakingChainData } from 'consts/util'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -13,7 +14,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
-import { AccountInputWrapper } from './Wrapper'
+import classes from './index.module.scss'
 import type { AccountInputProps } from './types'
 
 export const AccountInput = ({
@@ -156,19 +157,18 @@ export const AccountInput = ({
     }
   }
 
-  const className = []
-  if (inactive) {
-    className.push('inactive')
-  }
-  if (border) {
-    className.push('border')
-  }
+  const allClasses = classNames(classes.accountInputWrapper, {
+    [classes.inactive]: inactive,
+    [classes.border]: border,
+  })
+
+  const inputClasses = classNames('input', {
+    disabled: successLock,
+  })
 
   return (
-    <AccountInputWrapper
-      className={className.length ? className.join(' ') : undefined}
-    >
-      {inactive && <div className="inactive-block" />}
+    <div className={allClasses}>
+      {inactive && <div className={classes.inactiveBlock} />}
       <h5 className={labelClass}>
         {successLock && (
           <>
@@ -178,7 +178,7 @@ export const AccountInput = ({
         )}{' '}
         {label}
       </h5>
-      <div className={`input${successLock ? ` disabled` : ``}`}>
+      <div className={inputClasses}>
         <section>
           <div>
             {isValidAddress(value) ? (
@@ -216,6 +216,6 @@ export const AccountInput = ({
           )}
         </section>
       </div>
-    </AccountInputWrapper>
+    </div>
   )
 }

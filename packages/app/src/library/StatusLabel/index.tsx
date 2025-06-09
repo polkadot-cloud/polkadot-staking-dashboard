@@ -9,7 +9,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { ButtonHelp } from 'ui-buttons'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 import type { StatusLabelProps } from './types'
 
 export const StatusLabel = ({
@@ -40,7 +40,10 @@ export const StatusLabel = ({
   }
 
   return (
-    <Wrapper $topOffset={topOffset}>
+    <div 
+      className={classes.wrapper}
+      style={topOffset !== '50%' ? { top: topOffset } : undefined}
+    >
       <div>
         {hideIcon !== true && <FontAwesomeIcon icon={faExclamationTriangle} />}
         <h2>
@@ -57,6 +60,6 @@ export const StatusLabel = ({
           ) : null}
         </h2>
       </div>
-    </Wrapper>
+    </div>
   )
 }

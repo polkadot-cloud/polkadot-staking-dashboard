@@ -5,10 +5,11 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
+import classNames from 'classnames'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 import type { AccountProps } from './types'
 
 const DefaultAccount = ({
@@ -28,22 +29,26 @@ const DefaultAccount = ({
         ? getAccount(value)?.name || ellipsisFn(value)
         : ellipsisFn(value)
 
+  const titleClasses = classNames('title', {
+    unassigned: text === null,
+  })
+
   return (
-    <Wrapper onClick={onClick} className={className}>
+    <div onClick={onClick} className={classNames(classes.wrapper, className)}>
       {readOnly && (
-        <div className="account-label">
+        <div className={classes.accountLabel}>
           <FontAwesomeIcon icon={faGlasses} />
         </div>
       )}
       {text === null ? (
-        <span className="title unassigned">{t('notStaking')}</span>
+        <span className={titleClasses}>{t('notStaking')}</span>
       ) : (
         <>
           <Polkicon address={value || ''} transform="grow-3" />
           <span className="title">{text}</span>
         </>
       )}
-    </Wrapper>
+    </div>
   )
 }
 

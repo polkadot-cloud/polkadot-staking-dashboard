@@ -1,11 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import classes from './index.module.scss'
 import type { WarningProps } from '../types'
-import { Wrapper } from './Wrapper'
 
 export const Warning = ({ text }: WarningProps) => (
-  <Wrapper>
+  <div className={classes.wrapper}>
     <h4>{text}</h4>
-  </Wrapper>
+  </div>
 )
