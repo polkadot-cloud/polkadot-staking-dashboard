@@ -5,8 +5,12 @@ import type { PolkadotAssetHubApi } from '@dedot/chaintypes'
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { DedotClient } from 'dedot'
-import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
+import type { NetworkConfig, NetworkId, ServiceInterface, SystemChainId } from 'types'
 import { BaseService } from '../defaultService/baseService'
+import { query } from '../query'
+import { runtimeApi } from '../runtimeApi'
+import { tx } from '../tx'
+import { createPool } from '../tx/createPool'
 import type { DefaultServiceClass } from '../types/serviceDefault'
 
 export class PolkadotService
@@ -24,6 +28,9 @@ export class PolkadotService
       PolkadotApi
     >
 {
+  // Service interface
+  interface: ServiceInterface
+
   constructor(
     public networkConfig: NetworkConfig,
     public ids: [NetworkId, SystemChainId, SystemChainId],
@@ -33,5 +40,17 @@ export class PolkadotService
   ) {
     // For Polkadot, staking happens on the relay chain
     super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay)
+    
+    // Initialize service interface with network-specific routing
+    this.interface = {
+      query: query(this.getApi),
+      runtimeApi: runtimeApi(this.getApi),
+      tx: tx(this.getApi),
+      createPool: createPool(this.getApi),
+    }
+  }
+
+  async start() {
+    await super.start(this.interface)
   }
 }

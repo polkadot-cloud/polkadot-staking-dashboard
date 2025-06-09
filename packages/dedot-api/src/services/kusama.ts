@@ -5,8 +5,12 @@ import type { KusamaAssetHubApi } from '@dedot/chaintypes'
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import type { DedotClient } from 'dedot'
-import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
+import type { NetworkConfig, NetworkId, ServiceInterface, SystemChainId } from 'types'
 import { BaseService } from '../defaultService/baseService'
+import { query } from '../query'
+import { runtimeApi } from '../runtimeApi'
+import { tx } from '../tx'
+import { createPool } from '../tx/createPool'
 import type { DefaultServiceClass } from '../types/serviceDefault'
 
 export class KusamaService
@@ -19,6 +23,9 @@ export class KusamaService
       KusamaApi
     >
 {
+  // Service interface
+  interface: ServiceInterface
+
   constructor(
     public networkConfig: NetworkConfig,
     public ids: [NetworkId, SystemChainId, SystemChainId],
@@ -28,5 +35,17 @@ export class KusamaService
   ) {
     // For Kusama, staking happens on the relay chain
     super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay)
+    
+    // Initialize service interface with network-specific routing
+    this.interface = {
+      query: query(this.getApi),
+      runtimeApi: runtimeApi(this.getApi),
+      tx: tx(this.getApi),
+      createPool: createPool(this.getApi),
+    }
+  }
+
+  async start() {
+    await super.start(this.interface)
   }
 }

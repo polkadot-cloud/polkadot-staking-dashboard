@@ -12,13 +12,10 @@ import {
 import type {
   NetworkConfig,
   NetworkId,
-  ServiceInterface,
   SystemChainId,
 } from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
-import { query } from '../query'
-import { runtimeApi } from '../runtimeApi'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
@@ -26,8 +23,6 @@ import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
-import { tx } from '../tx'
-import { createPool } from '../tx/createPool'
 import type {
   AssetHubChain,
   PeopleChain,
@@ -76,9 +71,6 @@ export class BaseService<
     StakingApi
   >
 
-  // Service interface
-  interface: ServiceInterface
-
   constructor(
     public networkConfig: NetworkConfig,
     public ids: [NetworkId, SystemChainId, SystemChainId],
@@ -110,7 +102,7 @@ export class BaseService<
   /**
    * Initialize the service with common setup logic
    */
-  async start() {
+  async start(serviceInterface: any) {
     // Initialize chain specs
     this.relayChainSpec = new ChainSpecs(this.apiRelay)
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
@@ -148,14 +140,6 @@ export class BaseService<
     this.poolsConfig = new PoolsConfigQuery(this.stakingApi)
     this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.stakingApi)
 
-    // Initialize service interface
-    this.interface = {
-      query: query(this.getApi),
-      runtimeApi: runtimeApi(this.getApi),
-      tx: tx(this.getApi),
-      createPool: createPool(this.getApi),
-    }
-
     // Initialize subscription manager
     this.subscriptionManager = new SubscriptionManager(
       this.apiRelay,
@@ -164,7 +148,7 @@ export class BaseService<
       this.stakingApi,
       this.ids,
       { poolsPalletId: this.stakingConsts.poolsPalletId },
-      this.interface
+      serviceInterface
     )
 
     // Set up the active era subscription
