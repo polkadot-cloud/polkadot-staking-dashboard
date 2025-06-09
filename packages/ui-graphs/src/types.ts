@@ -57,10 +57,6 @@ export interface GraphPayoutData {
   poolClaims: PoolReward[]
 }
 
-export interface CardWrapperProps {
-  height?: string | number
-}
-
 export interface PayoutDayCursor {
   reward: BigNumber
 }

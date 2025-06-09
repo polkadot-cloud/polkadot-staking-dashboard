@@ -3,7 +3,7 @@
 
 import { PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
-import type { CardWrapperProps } from 'ui-graphs'
+import type { CardWrapperProps } from './types'
 
 /* CardWrapper
  *

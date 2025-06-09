@@ -48,15 +48,15 @@ export const ActiveGraph = ({
 
   return (
     <PayoutLine
+      t={t}
+      i18n={i18n}
+      locales={locales}
       syncing={loading}
       entries={sorted}
       width={width}
       height={height}
       getThemeValue={getThemeValue}
       unit={unit}
-      t={t}
-      i18n={i18n}
-      locales={locales}
       defaultLocale={DefaultLocale}
     />
   )

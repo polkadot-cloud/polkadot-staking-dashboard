@@ -22,15 +22,15 @@ export const InactiveGraph = ({
 
   return (
     <PayoutLine
+      t={t}
+      i18n={i18n}
+      locales={locales}
       syncing={false}
       entries={[]}
       width={width}
       height={height}
       getThemeValue={getThemeValue}
       unit={unit}
-      t={t}
-      i18n={i18n}
-      locales={locales}
       defaultLocale={DefaultLocale}
     />
   )
