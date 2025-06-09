@@ -15,13 +15,13 @@ import type {
   NetworkId,
   SystemChainId,
 } from 'types'
+import type { DefaultService } from './defaultService/types'
 import { Services } from './services'
 import {
   newRelayChainSmProvider,
   newSystemChainSmProvider,
 } from './smoldot/providers'
 import type { Service } from './types'
-import type { DefaultService } from './types/serviceDefault'
 
 // Determines service class and apis for a network
 export const getDefaultService = async <T extends DefaultServiceNetworkId>(
