@@ -24,7 +24,7 @@ export const NotificationPrompts = () => {
   return (
     <Wrapper>
       <AnimatePresence initial={false}>
-        {notifications.length > 0 &&
+        {notifications.length &&
           notifications.map((notification: NotificationItem, i: number) => {
             const { title, subtitle } = notification
 

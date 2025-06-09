@@ -139,7 +139,7 @@ export const ManageFastUnstake = () => {
       <Close />
       <Padding>
         <Title>{t('fastUnstake', { context: 'title' })}</Title>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning_${i}`} text={text} />

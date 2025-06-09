@@ -83,7 +83,7 @@ export const WithdrawMember = ({
     <>
       <Title title={t('withdrawPoolMember')} />
       <Padding>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />

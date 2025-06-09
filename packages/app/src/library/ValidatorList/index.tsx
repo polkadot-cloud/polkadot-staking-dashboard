@@ -334,7 +334,7 @@ export const ValidatorListInner = ({
           </div>
         </FilterHeaderWrapper>
         {allowFilters && <FilterBadges />}
-        {listItems.length > 0 && itemsPerPage && (
+        {listItems.length && itemsPerPage && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         {BeforeListNode}

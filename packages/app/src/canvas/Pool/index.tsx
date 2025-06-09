@@ -40,7 +40,7 @@ export const Pool = () => {
   const providedPoolId = providedPool?.id || null
 
   // Whether performance data is ready
-  const performanceDataReady = !!providedPoolId || poolCandidates.length > 0
+  const performanceDataReady = !!providedPoolId || poolCandidates.length
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0)

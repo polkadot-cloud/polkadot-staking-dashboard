@@ -23,7 +23,7 @@ export const ValidatorFavorites = () => {
           </ListStatusHeader>
         ) : (
           isReady &&
-          (favoritesList.length > 0 ? (
+          (favoritesList.length ? (
             <ValidatorList
               bondFor="nominator"
               validators={favoritesList}

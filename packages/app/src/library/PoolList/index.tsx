@@ -143,7 +143,7 @@ export const PoolList = ({
   return (
     <ListWrapper>
       <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {allowSearch && poolsDefault.length > 0 && (
+        {allowSearch && poolsDefault.length && (
           <SearchInput
             value={searchTerm ?? ''}
             handleChange={handleSearchChange}
@@ -205,7 +205,7 @@ export const PoolList = ({
           </div>
         </FilterHeaderWrapper>
 
-        {itemsPerPage && poolsToDisplay.length > 0 && (
+        {itemsPerPage && poolsToDisplay.length && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>

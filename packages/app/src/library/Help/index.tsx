@@ -184,7 +184,7 @@ export const Help = () => {
               <ActiveDefinition description={activeDefinition?.description} />
             )}
 
-            {definitions.length > 0 && (
+            {definitions.length && (
               <>
                 <HelpSubtitle>
                   {activeDefinition ? `${t('modal.related')} ` : ''}
@@ -200,7 +200,7 @@ export const Help = () => {
               </>
             )}
 
-            {activeExternals.length > 0 && (
+            {activeExternals.length && (
               <>
                 <HelpSubtitle>{t('modal.articles')}</HelpSubtitle>
                 {activeExternals.map((item, index: number) => (

@@ -12,7 +12,7 @@ export const PoolIdentity = ({
   pool: { addresses, id },
 }: PoolIdentityProps) => {
   const { poolsMetaData } = useBondedPools()
-  const metadataSynced = Object.values(poolsMetaData).length > 0 || false
+  const metadataSynced = Object.values(poolsMetaData).length || false
 
   const display = determinePoolDisplay(
     addresses.stash,

@@ -74,7 +74,7 @@ export const ClaimCommission = ({
   return (
     <>
       <Padding horizontalOnly>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />

@@ -26,7 +26,7 @@ export const ListControls = ({
 
   return (
     <SelectableWrapper>
-      {selected.length > 0 && (
+      {selected.length && (
         <>
           {Object.entries(selectHandlers).map(([k, a], i: number) => {
             const open = opens[k] || false

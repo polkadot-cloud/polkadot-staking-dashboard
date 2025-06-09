@@ -47,7 +47,7 @@ export const PoolFavorites = () => {
           <ListStatusHeader>{t('fetchingFavoritePools')}...</ListStatusHeader>
         ) : (
           isReady &&
-          (favoritesList.length > 0 ? (
+          (favoritesList.length ? (
             <ListProvider>
               <PoolList pools={favoritesList} allowMoreCols itemsPerPage={50} />
             </ListProvider>

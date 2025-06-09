@@ -60,5 +60,5 @@ export const useSyncing = (config: SyncConfig = '*') => {
       subSyncStatus.unsubscribe()
     }
   }, [])
-  return { syncing: syncIds.length > 0, getPoolStatusSynced, accountSynced }
+  return { syncing: syncIds.length, getPoolStatusSynced, accountSynced }
 }

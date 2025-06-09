@@ -186,7 +186,7 @@ export const Unbond = () => {
       <Close />
       <Padding>
         <Title>{t('removeBond')}</Title>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />

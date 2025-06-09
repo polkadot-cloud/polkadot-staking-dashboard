@@ -176,7 +176,7 @@ export const Ledger = () => {
         websiteText="ledger.com"
         websiteUrl="https://ledger.com"
       >
-        {addressesRef.current.length > 0 && (
+        {addressesRef.current.length && (
           <span>
             <ButtonText
               text={t('reset', { ns: 'app' })}
@@ -217,7 +217,7 @@ export const Ledger = () => {
             <h3>{t('importedAccount', { count: 0, ns: 'modals' })}</h3>
           </AccountImport.Empty>
         )}
-        {addresses.length > 0 && (
+        {addresses.length && (
           <>
             <AccountImport.SubHeading
               text={t('importedAccount', {

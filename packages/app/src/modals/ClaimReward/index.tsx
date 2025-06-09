@@ -87,7 +87,7 @@ export const ClaimReward = () => {
         <Title>
           {claimType === 'bond' ? t('compound') : t('withdraw')} {t('rewards')}
         </Title>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />

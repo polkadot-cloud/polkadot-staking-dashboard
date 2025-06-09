@@ -114,7 +114,7 @@ export const Member = ({ member }: { member: FetchedPoolMember }) => {
             <Identity address={member.address} />
             <div>
               <HeaderButtonRow>
-                {menuItems.length > 0 && (
+                {menuItems.length && (
                   <button
                     type="button"
                     className="label"

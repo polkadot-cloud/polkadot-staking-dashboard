@@ -81,7 +81,7 @@ export const UnbondMember = ({
     <>
       <Title title={t('unbondPoolMember')} />
       <Padding>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />

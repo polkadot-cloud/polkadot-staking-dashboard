@@ -54,7 +54,7 @@ export const Main = () => {
         }
         if (
           (!syncing && controllerUnmigrated) ||
-          (isNominator && fullCommissionNominees.length > 0)
+          (isNominator && fullCommissionNominees.length)
         ) {
           pages[i].bullet = 'warning'
           return true

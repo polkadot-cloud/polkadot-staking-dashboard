@@ -42,7 +42,7 @@ export const Sync = () => {
     syncing ||
     onPoolsSyncing() ||
     onValidatorsSyncing() ||
-    uids.filter(({ submitted }) => submitted === true).length > 0
+    uids.filter(({ submitted }) => submitted).length
 
   return isSyncing ? (
     <span style={{ marginRight: '1rem' }}>

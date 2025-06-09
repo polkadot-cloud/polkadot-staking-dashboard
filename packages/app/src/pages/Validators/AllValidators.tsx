@@ -37,7 +37,7 @@ export const AllValidators = () => {
                   <h3>{t('fetchingValidators')}...</h3>
                 </div>
               )}
-              {validators.length > 0 && (
+              {validators.length && (
                 <ValidatorList
                   bondFor="nominator"
                   validators={validators}

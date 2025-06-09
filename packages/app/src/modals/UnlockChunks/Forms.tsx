@@ -115,7 +115,7 @@ export const Forms = forwardRef(
       <ContentWrapper>
         <div ref={ref}>
           <Padding horizontalOnly>
-            {warnings.length > 0 ? (
+            {warnings.length ? (
               <Warnings>
                 {warnings.map((text, i) => (
                   <Warning key={`warning${i}`} text={text} />

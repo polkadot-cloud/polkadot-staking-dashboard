@@ -51,7 +51,7 @@ export const ClosurePrompts = () => {
             <h3>{t('destroyPool')}</h3>
             <h4>
               {t('leftThePool')}.{' '}
-              {targets.length > 0
+              {targets.length
                 ? t('stopNominating')
                 : depositorCanWithdraw
                   ? t('closePool')

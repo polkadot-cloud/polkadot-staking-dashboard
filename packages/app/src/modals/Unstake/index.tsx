@@ -108,7 +108,7 @@ export const Unstake = () => {
       <Close />
       <Padding>
         <Title>{t('unstake')} </Title>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
@@ -123,7 +123,7 @@ export const Unstake = () => {
             })}
           />
         ) : null}
-        {nominations.length > 0 && (
+        {nominations.length && (
           <ActionItem
             text={t('unstakeStopNominating', { count: nominations.length })}
           />

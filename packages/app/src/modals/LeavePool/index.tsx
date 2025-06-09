@@ -96,7 +96,7 @@ export const LeavePool = ({
     <>
       <Padding>
         <Title>{t('leavePool')}</Title>
-        {warnings.length > 0 ? (
+        {warnings.length ? (
           <Warnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />

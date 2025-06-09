@@ -30,7 +30,7 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
         </h3>
       </Subheading>
 
-      {targets.length > 0 && (
+      {targets.length && (
         <NominationList
           bondFor="pool"
           validators={filteredTargets}

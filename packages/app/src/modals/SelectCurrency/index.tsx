@@ -66,7 +66,7 @@ export const SelectCurrency = () => {
       </SearchInput>
       <Padding horizontalOnly>
         <ButtonList forceHeight>
-          {filteredCurrencies.length > 0 ? (
+          {filteredCurrencies.length ? (
             filteredCurrencies.map((c) => (
               <ButtonModal
                 key={`select_${c}`}

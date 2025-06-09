@@ -80,7 +80,7 @@ export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
                 </h3>
               </div>
             )}
-            {operatorValidators.length > 0 && (
+            {operatorValidators.length && (
               <ValidatorList
                 bondFor="nominator"
                 validators={operatorValidators}
