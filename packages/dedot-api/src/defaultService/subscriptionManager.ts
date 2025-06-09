@@ -88,7 +88,7 @@ export class SubscriptionManager<
     private apiHub: DedotClient<HubApi>,
     private ids: [NetworkId, SystemChainId, SystemChainId],
     private chainConfig: ChainConfig<RelayApi, PeopleApi, HubApi, StakingApi>,
-    private stakingConsts: { poolsPalletId: string },
+    private stakingConsts: { poolsPalletId: Uint8Array },
     private serviceInterface: ServiceInterface
   ) {}
 

@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ExtraSignedExtension, type DedotClient } from 'dedot'
 import type { ServiceInterface } from 'types'
 import { query } from '../query'
@@ -42,7 +44,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.erasValidatorRewardMulti
-        ),
+        ) as any,
         eras
       ),
     bondedPool: async (poolId) =>
@@ -52,7 +54,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.bondedPool
-        ),
+        ) as any,
         poolId
       ),
     bondedPoolEntries: async () =>
@@ -62,7 +64,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.bondedPoolEntries
-        )
+        ) as any
       ),
     erasStakersOverviewEntries: async (era) =>
       await query.erasStakersOverviewEntries(
@@ -71,7 +73,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.erasStakersOverviewEntries
-        ),
+        ) as any,
         era
       ),
     erasStakersPagedEntries: async (era, validator) =>
@@ -81,12 +83,12 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.erasStakersPagedEntries
-        ),
+        ) as any,
         era,
         validator
       ),
     identityOfMulti: async (addresses) =>
-      await query.identityOfMulti(apiPeople, addresses),
+      await query.identityOfMulti(apiPeople as any, addresses),
     nominatorsMulti: async (addresses) =>
       await query.nominatorsMulti(
         getApiForOperation(
@@ -94,7 +96,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.nominatorsMulti
-        ),
+        ) as any,
         addresses
       ),
     poolMembersMulti: async (addresses) =>
@@ -104,7 +106,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.poolMembersMulti
-        ),
+        ) as any,
         addresses
       ),
     poolMetadataMulti: async (poolIds) =>
@@ -114,7 +116,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.poolMetadataMulti
-        ),
+        ) as any,
         poolIds
       ),
     proxies: async (address) =>
@@ -124,7 +126,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.proxies
-        ),
+        ) as any,
         address
       ),
     sessionValidators: async () =>
@@ -134,13 +136,13 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.sessionValidators
-        )
+        ) as any
       ),
     superOfMulti: async (addresses) =>
       await query.superOfMulti(
-        apiPeople,
+        apiPeople as any,
         addresses,
-        apiPeople.consts.system.ss58Prefix
+        (apiPeople as any).consts.system.ss58Prefix
       ),
     validatorEntries: async () =>
       await query.validatorEntries(
@@ -149,7 +151,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.validatorEntries
-        )
+        ) as any
       ),
     validatorsMulti: async (addresses) =>
       await query.validatorsMulti(
@@ -158,7 +160,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.queryApis.validatorsMulti
-        ),
+        ) as any,
         addresses
       ),
   },
@@ -170,7 +172,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.runtimeApis.balanceToPoints
-        ),
+        ) as any,
         poolId,
         amount
       ),
@@ -181,7 +183,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.runtimeApis.pendingRewards
-        ),
+        ) as any,
         address
       ),
     pointsToBalance: async (poolId, points) =>
@@ -191,7 +193,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.runtimeApis.pointsToBalance
-        ),
+        ) as any,
         poolId,
         points
       ),
@@ -204,7 +206,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.batch
-        ),
+        ) as any,
         calls
       ),
     createPool: (from, poolId, bond, metadata, nominees, roles) =>
@@ -214,7 +216,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.createPool
-        ),
+        ) as any,
         from,
         poolId,
         bond,
@@ -229,7 +231,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.fastUnstakeDeregister
-        )
+        ) as any
       ),
     fastUnstakeRegister: () =>
       tx.fastUnstakeRegister(
@@ -238,7 +240,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.fastUnstakeRegister
-        )
+        ) as any
       ),
     joinPool: (poolId, bond, claimPermission) =>
       tx.joinPool(
@@ -247,7 +249,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.joinPool
-        ),
+        ) as any,
         poolId,
         bond,
         claimPermission
@@ -259,7 +261,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.newNominator
-        ),
+        ) as any,
         bond,
         payee,
         nominees
@@ -271,7 +273,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.payoutStakersByPage
-        ),
+        ) as any,
         validator,
         era,
         page
@@ -283,7 +285,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolBondExtra
-        ),
+        ) as any,
         type,
         bond
       ),
@@ -294,7 +296,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolChill
-        ),
+        ) as any,
         poolId
       ),
     poolClaimCommission: (poolId) =>
@@ -304,7 +306,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolClaimCommission
-        ),
+        ) as any,
         poolId
       ),
     poolClaimPayout: () =>
@@ -314,7 +316,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolClaimPayout
-        )
+        ) as any
       ),
     poolNominate: (poolId, nominees) =>
       tx.poolNominate(
@@ -323,7 +325,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolNominate
-        ),
+        ) as any,
         poolId,
         nominees
       ),
@@ -334,7 +336,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolSetClaimPermission
-        ),
+        ) as any,
         claimPermission
       ),
     poolSetCommission: (poolId, commission) =>
@@ -344,7 +346,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolSetCommission
-        ),
+        ) as any,
         poolId,
         commission
       ),
@@ -355,7 +357,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolSetCommissionChangeRate
-        ),
+        ) as any,
         poolId,
         maxIncrease,
         minDelay
@@ -367,7 +369,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolSetCommissionMax
-        ),
+        ) as any,
         poolId,
         max
       ),
@@ -378,7 +380,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolSetMetadata
-        ),
+        ) as any,
         poolId,
         metadata
       ),
@@ -389,7 +391,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolSetState
-        ),
+        ) as any,
         poolId,
         state
       ),
@@ -400,7 +402,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolUnbond
-        ),
+        ) as any,
         who,
         points
       ),
@@ -411,7 +413,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolUpdateRoles
-        ),
+        ) as any,
         poolId,
         roles
       ),
@@ -422,7 +424,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.poolWithdraw
-        ),
+        ) as any,
         who,
         numSlashingSpans
       ),
@@ -433,7 +435,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.proxy
-        ),
+        ) as any,
         real,
         call
       ),
@@ -444,7 +446,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.setController
-        )
+        ) as any
       ),
     stakingBondExtra: (bond) =>
       tx.stakingBondExtra(
@@ -453,7 +455,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.stakingBondExtra
-        ),
+        ) as any,
         bond
       ),
     stakingChill: () =>
@@ -463,7 +465,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.stakingChill
-        )
+        ) as any
       ),
     stakingNominate: (nominees) =>
       tx.stakingNominate(
@@ -472,7 +474,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.stakingNominate
-        ),
+        ) as any,
         nominees
       ),
     stakingRebond: (bond) =>
@@ -482,7 +484,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.stakingRebond
-        ),
+        ) as any,
         bond
       ),
     stakingSetPayee: (payee) =>
@@ -492,7 +494,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.stakingSetPayee
-        ),
+        ) as any,
         payee
       ),
     stakingUnbond: (bond) =>
@@ -502,7 +504,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.stakingUnbond
-        ),
+        ) as any,
         bond
       ),
     stakingWithdraw: (numSlashingSpans) =>
@@ -512,7 +514,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.stakingWithdraw
-        ),
+        ) as any,
         numSlashingSpans
       ),
     transferKeepAlive: (to, value) =>
@@ -522,7 +524,7 @@ export const createServiceInterface = <
           apiPeople,
           apiHub,
           chainConfig.txApis.transferKeepAlive
-        ),
+        ) as any,
         to,
         value
       ),
@@ -533,20 +535,20 @@ export const createServiceInterface = <
       signerAddress,
       payloadOptions = undefined
     ) =>
-      new ExtraSignedExtension(getApi(specName), {
+      new ExtraSignedExtension(getApi(specName) as any, {
         signerAddress,
         payloadOptions,
       }),
     metadata: async (specName) =>
-      await getApi(specName).call.metadata.metadataAtVersion(15),
+      await (getApi(specName) as any).call.metadata.metadataAtVersion(15),
   },
   spec: {
-    ss58: (specName) => getApi(specName).consts.system.ss58Prefix,
+    ss58: (specName) => (getApi(specName) as any).consts.system.ss58Prefix,
   },
   codec: {
     $Signature: (specName) =>
-      getApi(specName).registry.findCodec(
-        getApi(specName).registry.metadata.extrinsic.signatureTypeId
+      (getApi(specName) as any).registry.findCodec(
+        (getApi(specName) as any).registry.metadata.extrinsic.signatureTypeId
       ),
   },
 })

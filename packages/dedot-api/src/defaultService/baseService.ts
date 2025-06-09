@@ -9,7 +9,12 @@ import {
   setMultiChainSpecs,
   setSyncingMulti,
 } from 'global-bus'
-import type { NetworkConfig, NetworkId, SystemChainId } from 'types'
+import type {
+  NetworkConfig,
+  NetworkId,
+  ServiceInterface,
+  SystemChainId,
+} from 'types'
 import { CoreConsts } from '../consts/core'
 import { StakingConsts } from '../consts/staking'
 import { ApiStatus } from '../spec/apiStatus'
@@ -73,7 +78,7 @@ export class BaseService<
   interface: ServiceInterface
 
   constructor(
-    private networkConfig: NetworkConfig,
+    public networkConfig: NetworkConfig,
     public ids: [NetworkId, SystemChainId, SystemChainId],
     public apiRelay: DedotClient<RelayApi>,
     public apiPeople: DedotClient<PeopleApi>,
@@ -172,7 +177,7 @@ export class BaseService<
       this.apiHub,
       this.ids,
       this.chainConfig,
-      this.stakingConsts,
+      { poolsPalletId: this.stakingConsts.poolsPalletId },
       this.interface
     )
 
