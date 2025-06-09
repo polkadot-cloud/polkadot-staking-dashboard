@@ -48,9 +48,7 @@ import {
 } from '../util'
 import type { AccountBalances } from './types'
 
-/**
- * Manages all subscriptions for a service
- */
+// Manages all subscriptions for a default service
 export class SubscriptionManager<
   RelayApi extends RelayChain,
   PeopleApi extends PeopleChain,
@@ -89,10 +87,8 @@ export class SubscriptionManager<
     private serviceInterface: ServiceInterface
   ) {}
 
-  /**
-   * Initialize subscriptions that depend on dynamic data
-   */
-  initializeDynamicSubscriptions() {
+  // Initialize default service subscriptions
+  initialize() {
     // Active address subscription - recreates fast unstake queue
     this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
       if (activeAddress) {
@@ -218,9 +214,7 @@ export class SubscriptionManager<
       })
   }
 
-  /**
-   * Set the active era subscription with the provided observable
-   */
+  // Set the active era subscription with the provided observable
   setActiveEraSubscription(activeEra$: {
     subscribe: (
       callback: (data: { index: number }) => Promise<void>
@@ -241,9 +235,7 @@ export class SubscriptionManager<
     )
   }
 
-  /**
-   * Unsubscribe from all subscriptions
-   */
+  // Unsubscribe from all subscriptions
   async unsubscribe() {
     for (const sub of Object.values(this.subActivePools)) {
       sub?.unsubscribe()

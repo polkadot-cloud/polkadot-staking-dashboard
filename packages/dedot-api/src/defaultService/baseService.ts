@@ -150,7 +150,7 @@ export class BaseService<
     this.subscriptionManager.setActiveEraSubscription(this.activeEra.activeEra$)
 
     // Initialize all dynamic subscriptions
-    this.subscriptionManager.initializeDynamicSubscriptions()
+    this.subscriptionManager.initialize()
 
     removeSyncing('initialization')
   }
