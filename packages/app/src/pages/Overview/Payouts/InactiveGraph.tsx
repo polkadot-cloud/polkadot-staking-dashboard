@@ -4,6 +4,7 @@
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { DefaultLocale, locales } from 'locales'
 import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,7 +36,7 @@ export const InactiveGraph = ({
         getThemeValue={getThemeValue}
         unit={unit}
         units={units}
-        i18n={i18n}
+        dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
         labels={{
           payout: t('payouts', { ns: 'app' }),
           poolClaim: t('poolClaim', { ns: 'app' }),

@@ -38,7 +38,7 @@ export interface PayoutBarProps {
   getThemeValue: (key: string) => string
   unit: string
   units: number
-  i18n: { resolvedLanguage?: string }
+  dateFormat: Locale
   labels: {
     payout: string
     poolClaim: string
