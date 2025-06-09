@@ -13,14 +13,14 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns'
-import { planckToUnitBn } from 'utils'
 import type {
   NominatorReward,
-  PayoutDayCursor,
   PoolReward,
   RewardResult,
   RewardResults,
-} from './types'
+} from 'plugin-staking-api/types'
+import { planckToUnitBn } from 'utils'
+import type { PayoutDayCursor } from './types'
 
 // Constants
 const MAX_PAYOUT_DAYS = 60

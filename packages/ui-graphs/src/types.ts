@@ -5,6 +5,12 @@ import type BigNumber from 'bignumber.js'
 
 // Graph-specific interfaces that were previously in library/Graphs/types.ts
 import type { Locale } from 'date-fns'
+import type {
+  NominatorReward,
+  PoolReward,
+  RewardResult,
+  RewardResults,
+} from 'plugin-staking-api/types'
 
 export interface PieProps {
   color1?: string
@@ -81,22 +87,5 @@ export interface PayoutLineEntry {
   start: number
 }
 
-// Simplified reward types for graph usage (avoiding plugin-staking-api dependency)
-export interface NominatorReward {
-  era: number
-  reward: string
-  claimed: boolean
-  timestamp: number
-  validator: string
-  type: string
-}
-
-export interface PoolReward {
-  who: string
-  poolId: number
-  reward: string
-  timestamp: number
-}
-
-export type RewardResult = NominatorReward | PoolReward
-export type RewardResults = RewardResult[]
+// Re-export types from plugin-staking-api for convenience
+export type { NominatorReward, PoolReward, RewardResult, RewardResults }
