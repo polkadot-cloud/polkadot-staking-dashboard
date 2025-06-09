@@ -63,15 +63,6 @@ export const PayoutLine = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    interaction: {
-      intersect: false,
-    },
-    elements: {
-      point: {
-        hoverRadius: 10,
-        radius: 2,
-      },
-    },
     scales: {
       x: {
         grid: {
@@ -146,10 +137,8 @@ export const PayoutLine = ({
         data: dataset,
         borderColor: color,
         backgroundColor: color,
-        pointStyle: 'circle',
-        pointRadius: 2,
-        pointHoverRadius: 5,
-        borderWidth: 2,
+        pointRadius: 0,
+        borderWidth: 3,
       },
     ],
   }
