@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { Locale } from 'date-fns'
 import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
 
 export interface PieProps {
@@ -30,8 +29,6 @@ export interface PayoutBarProps {
   unit: string
   units: number
   i18n: { resolvedLanguage?: string }
-  locales: Record<string, { dateFormat: Locale }>
-  defaultLocale: string
   labels: {
     payout: string
     poolClaim: string

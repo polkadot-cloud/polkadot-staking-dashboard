@@ -15,6 +15,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
+import { DefaultLocale, locales } from 'locales'
 import { Bar } from 'react-chartjs-2'
 import type { PayoutBarProps } from './types'
 import { formatRewardsForGraphs } from './util'
@@ -41,8 +42,6 @@ export const PayoutBar = ({
   unit,
   units,
   i18n,
-  locales,
-  defaultLocale,
   labels,
 }: PayoutBarProps) => {
   const staking = nominating || inPool
@@ -76,7 +75,7 @@ export const PayoutBar = ({
   const data = {
     labels: graphPayouts.map(({ timestamp }: { timestamp: number }) => {
       const dateObj = format(fromUnixTime(timestamp), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage ?? defaultLocale]?.dateFormat,
+        locale: locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat,
       })
       return `${dateObj}`
     }),

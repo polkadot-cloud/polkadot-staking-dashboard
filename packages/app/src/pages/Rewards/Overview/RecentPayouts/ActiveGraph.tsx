@@ -5,7 +5,6 @@ import { MaxPayoutDays } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { DefaultLocale, locales } from 'locales'
 import type { PayoutHistoryProps } from 'pages/Rewards/types'
 import { useTranslation } from 'react-i18next'
 import { AveragePayoutLine, PayoutBar } from 'ui-graphs'
@@ -42,8 +41,6 @@ export const ActiveGraph = ({
         unit={unit}
         units={units}
         i18n={i18n}
-        locales={locales}
-        defaultLocale={DefaultLocale}
         labels={{
           payout: t('payouts', { ns: 'app' }),
           poolClaim: t('poolClaim', { ns: 'app' }),

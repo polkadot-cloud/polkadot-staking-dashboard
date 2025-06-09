@@ -14,8 +14,8 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import type { Locale } from 'date-fns'
 import { format, fromUnixTime } from 'date-fns'
+import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
 
 ChartJS.register(
@@ -42,8 +42,6 @@ export const EraPointsLine = ({
   height,
   getThemeValue,
   i18n,
-  locales,
-  defaultLocale,
   labels,
 }: {
   entries: ValidatorEraPoints[]
@@ -52,8 +50,6 @@ export const EraPointsLine = ({
   height: string | number
   getThemeValue: (key: string) => string
   i18n: { resolvedLanguage?: string }
-  locales: Record<string, { dateFormat: Locale }>
-  defaultLocale: string
   labels: {
     date: string
     era: string
@@ -155,7 +151,7 @@ export const EraPointsLine = ({
   const data = {
     labels: entries.map(({ start }: { start: number }) => {
       const dateFormat =
-        locales[i18n.resolvedLanguage ?? defaultLocale]?.dateFormat
+        locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat
       const dateObj = format(fromUnixTime(start), 'do MMM', {
         locale: dateFormat,
       })

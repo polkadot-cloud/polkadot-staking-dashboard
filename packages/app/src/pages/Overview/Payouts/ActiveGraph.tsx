@@ -7,7 +7,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
-import { DefaultLocale, locales } from 'locales'
 import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type {
   NominatorReward,
@@ -88,8 +87,6 @@ export const ActiveGraph = ({
         unit={unit}
         units={units}
         i18n={i18n}
-        locales={locales}
-        defaultLocale={DefaultLocale}
         labels={{
           payout: t('payouts', { ns: 'app' }),
           poolClaim: t('poolClaim', { ns: 'app' }),

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useThemeValues } from 'contexts/ThemeValues'
-import { DefaultLocale, locales } from 'locales'
 import { useValidatorEraPoints } from 'plugin-staking-api'
 import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
@@ -45,8 +44,6 @@ export const ActiveGraph = ({
       height={height}
       getThemeValue={getThemeValue}
       i18n={i18n}
-      locales={locales}
-      defaultLocale={DefaultLocale}
       labels={{
         date: t('date', { ns: 'app' }),
         era: t('era', { ns: 'app' }),

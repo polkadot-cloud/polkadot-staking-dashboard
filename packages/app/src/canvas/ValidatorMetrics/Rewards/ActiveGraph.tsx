@@ -4,7 +4,6 @@
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { DefaultLocale, locales } from 'locales'
 import { useValidatorRewards } from 'plugin-staking-api'
 import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
@@ -53,8 +52,6 @@ export const ActiveGraph = ({
       getThemeValue={getThemeValue}
       unit={unit}
       i18n={i18n}
-      locales={locales}
-      defaultLocale={DefaultLocale}
       labels={{
         era: t('era', { ns: 'app' }),
         reward: t('reward', { ns: 'modals' }),

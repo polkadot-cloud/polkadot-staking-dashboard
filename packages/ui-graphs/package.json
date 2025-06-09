@@ -18,6 +18,7 @@
     "date-fns": "^4.1.0",
     "plugin-staking-api": "workspace:*",
     "react": "^19.1.0",
+    "locales": "workspace:*",
     "react-chartjs-2": "^5.2.0",
     "styled-components": "^6.1.18",
     "utils": "workspace:*"
