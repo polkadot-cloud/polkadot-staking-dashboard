@@ -9,9 +9,8 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { GeoDonut } from 'library/Graphs/GeoDonut'
-import { formatSize } from 'library/Graphs/Utils'
-import { ValidatorGeoWrapper } from 'library/Graphs/Wrapper'
+import { useThemeValues } from 'contexts/ThemeValues'
+import { formatSize, GeoDonut, ValidatorGeoWrapper } from 'ui-graphs'
 import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,6 +20,7 @@ export const ValidatorGeo = ({ address }: { address: string }) => {
   const { t } = useTranslation('modals')
   const { network } = useNetwork()
   const { containerRefs } = useUi()
+  const { getThemeValue } = useThemeValues()
 
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref, {
@@ -100,6 +100,7 @@ export const ValidatorGeo = ({ address }: { address: string }) => {
                 title={t('rewards')}
                 series={pwData.topCountryDistributionChart}
                 maxLabelLen={10}
+                getThemeValue={getThemeValue}
               />
             </ValidatorGeoWrapper>
             <ValidatorGeoWrapper
@@ -112,6 +113,7 @@ export const ValidatorGeo = ({ address }: { address: string }) => {
                 title={t('rewards')}
                 series={pwData.topNetworkDistributionChart}
                 maxLabelLen={10}
+                getThemeValue={getThemeValue}
               />
             </ValidatorGeoWrapper>
           </div>
