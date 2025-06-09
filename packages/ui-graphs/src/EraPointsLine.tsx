@@ -51,7 +51,7 @@ export const EraPointsLine = ({
   height: string | number
   getThemeValue: (key: string) => string
   t: (key: string) => string
-  i18n: { resolvedLanguage: string }
+  i18n: { resolvedLanguage?: string }
   locales: Record<string, { dateFormat: any }>
   defaultLocale: string
 }) => {

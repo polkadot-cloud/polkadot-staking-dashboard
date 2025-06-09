@@ -3,9 +3,12 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
+import { useThemeValues } from 'contexts/ThemeValues'
+import { DefaultLocale, locales } from 'locales'
 import { useValidatorRewards } from 'plugin-staking-api'
+import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
+import { PayoutLine } from 'ui-graphs'
 
 interface Props {
   network: NetworkId
@@ -21,12 +24,14 @@ export const ActiveGraph = ({
   width,
   height,
 }: Props) => {
+  const { i18n, t } = useTranslation()
+  const { getThemeValue } = useThemeValues()
   const { data, loading, error } = useValidatorRewards({
     network,
     validator,
     fromEra,
   })
-  const { units } = getStakingChainData(network)
+  const { units, unit } = getStakingChainData(network)
 
   const list =
     loading || error || data?.validatorRewards === undefined
@@ -45,6 +50,12 @@ export const ActiveGraph = ({
       entries={sorted}
       width={width}
       height={height}
+      getThemeValue={getThemeValue}
+      unit={unit}
+      t={t}
+      i18n={i18n}
+      locales={locales}
+      defaultLocale={DefaultLocale}
     />
   )
 }

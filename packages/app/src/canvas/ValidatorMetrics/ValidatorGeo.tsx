@@ -7,14 +7,14 @@ import { PolkawatchConfig } from 'consts/plugins'
 import { getPolkawatchConfig } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useUi } from 'contexts/UI'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { useThemeValues } from 'contexts/ThemeValues'
-import { formatSize, GeoDonut, ValidatorGeoWrapper } from 'ui-graphs'
 import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
+import { formatSize, GeoDonut, ValidatorGeoWrapper } from 'ui-graphs'
 
 export const ValidatorGeo = ({ address }: { address: string }) => {
   const { t } = useTranslation('modals')

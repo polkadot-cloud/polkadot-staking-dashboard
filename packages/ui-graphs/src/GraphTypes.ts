@@ -24,7 +24,7 @@ export interface PayoutBarProps {
   unit: string
   units: number
   t: (key: string) => string
-  i18n: { resolvedLanguage: string }
+  i18n: { resolvedLanguage?: string }
   locales: Record<string, { dateFormat: any }>
   defaultLocale: string
 }

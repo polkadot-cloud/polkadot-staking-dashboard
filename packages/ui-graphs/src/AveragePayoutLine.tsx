@@ -13,7 +13,6 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { format, fromUnixTime } from 'date-fns'
 import { Line } from 'react-chartjs-2'
 import type { AveragePayoutLineProps } from './GraphTypes'
 import {

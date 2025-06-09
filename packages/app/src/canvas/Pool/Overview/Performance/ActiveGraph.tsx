@@ -2,9 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
+import { getStakingChainData } from 'consts/util'
+import { useThemeValues } from 'contexts/ThemeValues'
+import { DefaultLocale, locales } from 'locales'
 import { useRewards } from 'plugin-staking-api'
+import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
+import { PayoutLine } from 'ui-graphs'
 
 interface Props {
   network: NetworkId
@@ -22,6 +26,9 @@ export const ActiveGraph = ({
   height,
   units,
 }: Props) => {
+  const { i18n, t } = useTranslation()
+  const { getThemeValue } = useThemeValues()
+  const { unit } = getStakingChainData(network)
   const { data, loading, error } = useRewards({
     network,
     who: stash,
@@ -45,6 +52,12 @@ export const ActiveGraph = ({
       entries={sorted}
       width={width}
       height={height}
+      getThemeValue={getThemeValue}
+      unit={unit}
+      t={t}
+      i18n={i18n}
+      locales={locales}
+      defaultLocale={DefaultLocale}
     />
   )
 }

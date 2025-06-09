@@ -1,9 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { EraPointsLine } from 'library/Graphs/EraPointsLine'
+import { useThemeValues } from 'contexts/ThemeValues'
+import { DefaultLocale, locales } from 'locales'
 import { useValidatorEraPoints } from 'plugin-staking-api'
+import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
+import { EraPointsLine } from 'ui-graphs'
 
 interface Props {
   network: NetworkId
@@ -19,6 +22,8 @@ export const ActiveGraph = ({
   width,
   height,
 }: Props) => {
+  const { i18n, t } = useTranslation()
+  const { getThemeValue } = useThemeValues()
   const { data, loading, error } = useValidatorEraPoints({
     network,
     validator,
@@ -38,6 +43,11 @@ export const ActiveGraph = ({
       entries={sorted}
       width={width}
       height={height}
+      getThemeValue={getThemeValue}
+      t={t}
+      i18n={i18n}
+      locales={locales}
+      defaultLocale={DefaultLocale}
     />
   )
 }
