@@ -12,11 +12,11 @@ import type {
   SystemChainId,
 } from 'types'
 import { BaseService } from '../defaultService/baseService'
+import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
-import type { DefaultServiceClass } from '../types/serviceDefault'
 
 export class PolkadotService
   extends BaseService<

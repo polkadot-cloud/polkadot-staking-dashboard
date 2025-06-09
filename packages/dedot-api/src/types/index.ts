@@ -12,6 +12,11 @@ import type { ServiceInterface } from 'types'
 import type { KusamaService } from '../services/kusama'
 import type { PolkadotService } from '../services/polkadot'
 import type { WestendService } from '../services/westend'
+import type { ActivePoolQuery } from '../subscribe/activePool'
+import type { BondedQuery } from '../subscribe/bonded'
+import type { PoolMembershipQuery } from '../subscribe/poolMembership'
+import type { ProxiesQuery } from '../subscribe/proxies'
+import type { StakingLedgerQuery } from '../subscribe/stakingLedger'
 
 // All available chains
 export type Chain =
@@ -61,3 +66,33 @@ export abstract class ServiceClass {
   abstract start(): Promise<void>
   abstract unsubscribe(): Promise<void>
 }
+
+// Bonded record
+export type BondedAccounts<StakingApi extends StakingChain> = Record<
+  string,
+  BondedQuery<StakingApi>
+>
+
+// Staking ledgers record
+export type StakingLedgers<StakingApi extends StakingChain> = Record<
+  string,
+  StakingLedgerQuery<StakingApi>
+>
+
+// Active pools record
+export type ActivePools<StakingApi extends StakingChain> = Record<
+  number,
+  ActivePoolQuery<StakingApi>
+>
+
+// Pool Memberships record
+export type PoolMemberships<StakingApi extends StakingChain> = Record<
+  string,
+  PoolMembershipQuery<StakingApi>
+>
+
+// Proxies record
+export type Proxies<StakingApi extends StakingChain> = Record<
+  string,
+  ProxiesQuery<StakingApi>
+>

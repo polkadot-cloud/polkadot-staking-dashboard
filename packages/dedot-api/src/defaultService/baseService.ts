@@ -32,9 +32,7 @@ import type {
 } from '../types'
 import { SubscriptionManager } from './subscriptionManager'
 
-/**
- * Base service utility that handles common initialization and management
- */
+// Base service utility that handles common initialization and management
 export class BaseService<
   RelayApi extends RelayChain,
   PeopleApi extends PeopleChain,
@@ -87,9 +85,7 @@ export class BaseService<
     }
   }
 
-  /**
-   * Standard getApi implementation used by all services
-   */
+  // Standard getApi implementation used by all services
   getApi = (id: string) => {
     if (id === this.ids[0]) {
       return this.apiRelay
@@ -100,9 +96,7 @@ export class BaseService<
     }
   }
 
-  /**
-   * Initialize the service with common setup logic
-   */
+  // Initialize the service with common setup logic
   async start(serviceInterface: ServiceInterface) {
     // Initialize chain specs
     this.relayChainSpec = new ChainSpecs(this.apiRelay)
@@ -161,9 +155,7 @@ export class BaseService<
     removeSyncing('initialization')
   }
 
-  /**
-   * Common unsubscribe logic
-   */
+  // Common unsubscribe logic
   async unsubscribe() {
     await this.subscriptionManager.unsubscribe()
 
@@ -180,7 +172,7 @@ export class BaseService<
     ])
   }
 
-  // Expose subscription manager properties for compatibility
+  // Expose subscription manager properties for compatibility with the default service interface
   get subActiveAddress() {
     return this.subscriptionManager.subActiveAddress
   }

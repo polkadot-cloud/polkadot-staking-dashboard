@@ -28,19 +28,16 @@ import { ProxiesQuery } from '../subscribe/proxies'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 import type {
-  AssetHubChain,
-  PeopleChain,
-  RelayChain,
-  StakingChain,
-} from '../types'
-import type {
-  AccountBalances,
   ActivePools,
+  AssetHubChain,
   BondedAccounts,
+  PeopleChain,
   PoolMemberships,
   Proxies,
+  RelayChain,
+  StakingChain,
   StakingLedgers,
-} from '../types/serviceDefault'
+} from '../types'
 import {
   diffBonded,
   diffImportedAccounts,
@@ -49,6 +46,7 @@ import {
   getAccountKey,
   keysOf,
 } from '../util'
+import type { AccountBalances } from './types'
 
 /**
  * Manages all subscriptions for a service
