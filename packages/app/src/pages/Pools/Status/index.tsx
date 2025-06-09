@@ -14,29 +14,29 @@ import { RewardsStatus } from './RewardsStatus'
 import type { StatusProps } from './types'
 
 export const Status = ({ height }: StatusProps) => {
-  const { poolMembersipSyncing } = useSyncing()
+  const { getPoolStatusSynced } = useSyncing()
   const { activeAddress } = useActiveAccounts()
   const { activePool, inPool } = useActivePool()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const syncing = poolMembersipSyncing()
+  const syncing = !getPoolStatusSynced()
 
   return (
     <CardWrapper
       height={height}
-      className={!syncing && !activePool && !inPool() ? 'prompt' : undefined}
+      className={!syncing && !activePool && !inPool ? 'prompt' : undefined}
     >
       <MembershipStatus />
       <Separator />
-      <RewardsStatus dimmed={inPool() === null} />
+      <RewardsStatus dimmed={inPool === null} />
       {!syncing ? (
-        activePool && inPool() ? (
+        activePool && inPool ? (
           <>
             <Separator />
             <PoolStatus />
           </>
         ) : (
-          !inPool() &&
+          !inPool &&
           !isReadOnlyAccount(activeAddress) && <NewMember syncing={syncing} />
         )
       ) : (

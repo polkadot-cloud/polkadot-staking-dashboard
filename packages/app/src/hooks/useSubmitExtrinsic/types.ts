@@ -14,6 +14,7 @@ export interface UseSubmitExtrinsicProps {
 }
 
 export interface UseSubmitExtrinsic {
+  txInitiated: boolean
   uid: number
   onSubmit: () => void
   proxySupported: boolean

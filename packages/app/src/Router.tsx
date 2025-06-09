@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PagesConfig } from 'config/pages'
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -18,7 +19,7 @@ import { Prompt } from 'library/Prompt'
 import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
 import { Offline } from 'Offline'
-import { Overlays } from 'overlay'
+import { Overlays } from 'Overlays'
 import { ApolloProvider, client } from 'plugin-staking-api'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -61,7 +62,7 @@ const RouterInner = () => {
   useAccountFromUrl()
 
   // Jump back to overview page on advanced mode change
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     navigate(`/overview`)
   }, [advancedMode])
 
@@ -84,7 +85,7 @@ const RouterInner = () => {
               <Headers />
               <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
                 <Routes>
-                  {PagesConfig.map((page, i) => (
+                  {getPagesConfig(network, advancedMode).map((page, i) => (
                     <Route
                       key={`main_interface_page_${i}`}
                       path={page.hash}

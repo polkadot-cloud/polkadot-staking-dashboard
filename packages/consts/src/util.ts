@@ -1,12 +1,20 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId, Networks, SystemChainId } from 'types'
+import { Configuration } from '@polkawatch/ddp-client'
+import type {
+  ChainId,
+  NetworkId,
+  Networks,
+  OperatorsSupportedNetwork,
+  SystemChainId,
+} from 'types'
 import {
   NetworkList,
   ProductionDisabledNetworks,
   SystemChainList,
 } from './networks'
+import { PolkawatchConfig } from './plugins'
 import { SupportedProxies } from './proxies'
 
 // Check if proxy type is supported in the dashboard
@@ -28,11 +36,24 @@ export const isSupportedProxyCall = (
 }
 
 // Get network data from network list
-export const getNetworkData = (network: NetworkId) => NetworkList[network]
+export const getRelayChainData = (network: NetworkId) => NetworkList[network]
 
-// Get system chain data from network list
 export const getSystemChainData = (chain: SystemChainId) =>
   SystemChainList[chain]
+
+// Get staking chain data from either network list or system chain list
+export const getStakingChainData = (network: NetworkId) => {
+  const relayChainData = NetworkList[network]
+  const stakingChain = relayChainData.meta.stakingChain
+  if (stakingChain === network) {
+    return relayChainData
+  }
+  if (Object.keys(SystemChainList).includes(stakingChain)) {
+    return SystemChainList[stakingChain]
+  }
+  // NOTE: fallback - should not happen
+  return relayChainData
+}
 
 // Get default rpc endpoints for a relay chain and accompanying system chains for a given network
 export const getDefaultRpcEndpoints = (network: NetworkId) => {
@@ -64,15 +85,26 @@ export const getDefaultRpcEndpoints = (network: NetworkId) => {
   }
 }
 
-// Get asset hub chain id from network id
-export const getHubChainId = (network: NetworkId) => {
-  if (network === 'westend') {
-    return 'westmint'
+// Get Hub chain id from network id
+export const getHubChainId = (network: NetworkId): ChainId =>
+  NetworkList[network].meta.hubChain
+
+// Get People chain id from network id
+export const getPeopleChainId = (network: NetworkId): ChainId =>
+  NetworkList[network].meta.peopleChain
+
+// Get whether the chain supports operators
+export const isOperatorsSupported = (network: NetworkId): boolean =>
+  NetworkList[network].meta.supportOperators
+
+// Cast a network as an operator network, or return undefined
+export const asOperatorsSupportedNetwork = (
+  network: NetworkId
+): OperatorsSupportedNetwork | undefined => {
+  if (isOperatorsSupported(network)) {
+    return network as OperatorsSupportedNetwork
   }
-  if (network === 'kusama') {
-    return 'statemine'
-  }
-  return 'statemint'
+  return undefined
 }
 
 // Gets enabled networks depending on environment
@@ -92,3 +124,17 @@ export const getEnabledNetworks = (): Networks =>
 // Checks if a network is enabled
 export const isNetworkEnabled = (network: NetworkId) =>
   Object.keys(getEnabledNetworks()).includes(network)
+
+// Get default staking chain for a network
+export const getStakingChain = (network: NetworkId) =>
+  NetworkList[network].meta.stakingChain
+
+// Get subscan balance chain id by network
+export const getSubscanBalanceChainId = (network: NetworkId) =>
+  NetworkList[network].meta.subscanBalanceChainId
+
+// Get polkawatch configuration for a given network
+export const getPolkawatchConfig = (network: NetworkId): Configuration =>
+  new Configuration({
+    basePath: `https://${network}-${PolkawatchConfig.ApiVersion}-api.polkawatch.app`,
+  })

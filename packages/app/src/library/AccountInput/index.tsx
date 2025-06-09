@@ -5,7 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { FormEvent } from 'react'
@@ -33,7 +33,7 @@ export const AccountInput = ({
   const { network } = useNetwork()
   const { accounts } = useImportedAccounts()
   const { setModalResize } = useOverlay().modal
-  const { ss58 } = getNetworkData(network)
+  const { ss58 } = getStakingChainData(network)
 
   // store current input value
   const [value, setValue] = useState<string>(initialValue || '')

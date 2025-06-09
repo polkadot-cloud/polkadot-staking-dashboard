@@ -1,13 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
-
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import {
-  addActivePoolId,
   removeActivePoolId,
   removeStakingLedger,
   setStakingLedger,
@@ -21,7 +17,8 @@ export class StakingLedgerQuery<T extends StakingChain> {
 
   constructor(
     public api: DedotClient<T>,
-    public address: string
+    public address: string,
+    public bonded: string
   ) {
     this.api = api
     this.subscribe()
@@ -32,7 +29,7 @@ export class StakingLedgerQuery<T extends StakingChain> {
       [
         {
           fn: this.api.query.staking.ledger,
-          args: [this.address],
+          args: [this.bonded],
         },
         {
           fn: this.api.query.staking.payee,
@@ -42,40 +39,8 @@ export class StakingLedgerQuery<T extends StakingChain> {
           fn: this.api.query.staking.nominators,
           args: [this.address],
         },
-        {
-          fn: this.api.query.nominationPools.poolMembers,
-          args: [this.address],
-        },
-        {
-          fn: this.api.query.nominationPools.claimPermissions,
-          args: [this.address],
-        },
-        {
-          fn: this.api.query.staking.bonded,
-          args: [this.address],
-        },
       ],
-      async ([
-        ledger,
-        payee,
-        nominators,
-        poolMember,
-        claimPermission,
-        bonded,
-      ]) => {
-        let balance = 0n
-        let pendingRewards = 0n
-
-        if (poolMember) {
-          ;[balance, pendingRewards] = await Promise.all([
-            this.api.call.nominationPoolsApi.pointsToBalance(
-              poolMember.poolId,
-              poolMember.points
-            ),
-            this.api.call.nominationPoolsApi.pendingRewards(this.address),
-          ])
-        }
-
+      async ([ledger, payee, nominators]) => {
         const stakingLedger: StakingLedger = {
           ledger:
             ledger === undefined
@@ -113,46 +78,11 @@ export class StakingLedgerQuery<T extends StakingChain> {
                   ),
                   submittedIn: nominators.submittedIn,
                 },
-          poolMembership:
-            poolMember === undefined
-              ? undefined
-              : {
-                  address: this.address,
-                  poolId: poolMember.poolId,
-                  points: poolMember.points,
-                  balance,
-                  lastRecordedRewardCounter:
-                    poolMember.lastRecordedRewardCounter,
-                  unbondingEras: poolMember.unbondingEras,
-                  claimPermission,
-                  pendingRewards,
-                },
-          controllerUnmigrated:
-            bonded !== undefined &&
-            bonded.address(this.api.consts.system.ss58Prefix) !== this.address,
+          controllerUnmigrated: this.bonded !== this.address,
         }
         setStakingLedger(this.address, stakingLedger)
-
-        switch (this.getPoolIdUpdate(stakingLedger)) {
-          case 'remove':
-            if (this.#poolId) {
-              removeActivePoolId(this.#poolId)
-              this.#poolId = undefined
-            }
-            break
-          case 'set':
-            if (stakingLedger.poolMembership) {
-              this.#poolId = stakingLedger.poolMembership.poolId
-              addActivePoolId(this.#poolId)
-            }
-        }
       }
     )
-  }
-
-  getPoolIdUpdate = ({ poolMembership }: StakingLedger) => {
-    const cur = poolMembership?.poolId
-    return !cur && this.#poolId ? 'remove' : cur ? 'set' : undefined
   }
 
   unsubscribe() {

@@ -4,7 +4,7 @@
 import { useSize } from '@w3ux/hooks'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -14,14 +14,13 @@ import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
 import { useSyncing } from 'hooks/useSyncing'
 import { Balance } from 'library/Balance'
-import { formatSize } from 'library/Graphs/Utils'
-import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import type { RewardResult } from 'plugin-staking-api/types'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
+import { formatSize, GraphWrapper } from 'ui-graphs'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
@@ -29,16 +28,16 @@ import { InactiveGraph } from './InactiveGraph'
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages')
   const { network } = useNetwork()
-  const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
   const { currency } = useCurrency()
+  const { isNominator } = useStaking()
   const { pluginEnabled } = usePlugins()
 
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
-  const staking = !inSetup() || inPool
+  const staking = isNominator || inPool
   const notStaking = !syncing && !staking
 
   const [lastReward, setLastReward] = useState<RewardResult>()
@@ -109,8 +108,8 @@ export const Payouts = () => {
         >
           {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
-              nominating={!inSetup()}
-              inPool={inPool()}
+              nominating={isNominator}
+              inPool={inPool}
               lineMarginTop="3rem"
               setLastReward={setLastReward}
             />

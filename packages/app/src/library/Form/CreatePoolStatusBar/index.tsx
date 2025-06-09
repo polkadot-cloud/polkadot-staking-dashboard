@@ -5,7 +5,7 @@ import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useSyncing } from 'hooks/useSyncing'
@@ -18,7 +18,7 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { minCreateBond } = useApi().poolsConfig
   const { network } = useNetwork()
   const { syncing } = useSyncing(['initialization'])
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const minCreateBondUnit = new BigNumber(planckToUnit(minCreateBond, units))
   const sectionClassName =

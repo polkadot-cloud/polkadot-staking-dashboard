@@ -3,7 +3,7 @@
 
 import { maxBigInt, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -37,7 +37,7 @@ export const BondFeedback = ({
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const { getTransferOptions } = useTransferOptions()
   const allTransferOptions = getTransferOptions(activeAddress)
 
@@ -116,14 +116,14 @@ export const BondFeedback = ({
       }
     }
 
-    // bond amount must not surpass freeBalalance
-    if (bondBigInt > freeToBond) {
-      newErrors.push(t('moreThanBalance'))
-    }
-
     // bond amount must not be smaller than 1 planck
     if (bond.bond !== '' && bondBigInt < 1) {
       newErrors.push(t('tooSmall'))
+    }
+
+    // bond amount must not surpass freeBalance
+    if (bondBigInt > freeToBond) {
+      newErrors.push(t('moreThanBalance'))
     }
 
     // check bond after transaction fees is still valid

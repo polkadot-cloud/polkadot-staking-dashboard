@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Sync } from '@w3ux/types'
-import type BigNumber from 'bignumber.js'
 import type { AnyJson, IdentityOf, Validator, ValidatorStatus } from 'types'
 
 export interface ValidatorsContextInterface {
@@ -14,6 +13,7 @@ export interface ValidatorsContextInterface {
   avgCommission: number
   sessionValidators: string[]
   validatorsFetched: Sync
+  avgRewardRate: number
   averageEraValidatorReward: AverageEraValidatorReward
   formatWithPrefs: (addresses: string[]) => Validator[]
   getValidatorTotalStake: (address: string) => bigint
@@ -21,14 +21,13 @@ export interface ValidatorsContextInterface {
   getValidatorRankSegment: (address: string) => number
 }
 
+export interface AverageEraValidatorReward {
+  days: number
+  reward: bigint
+}
 export interface Validators {
   status: Sync
   validators: Validator[]
-}
-
-export interface AverageEraValidatorReward {
-  days: number
-  reward: BigNumber
 }
 
 export interface FavoriteValidatorsContextInterface {

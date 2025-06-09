@@ -11,7 +11,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -23,7 +23,7 @@ import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { formatFiatCurrency } from 'locales/util'
-import { AverageRewardRate } from 'pages/Overview/Stats/AveragelRewardRate'
+import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -51,17 +51,15 @@ export const Overview = (props: PayoutHistoryProps) => {
   const { price: tokenPrice } = useTokenPrices()
   const { getStakedBalance } = useTransferOptions()
   const { getAverageRewardRate } = useAverageRewardRate()
-  const { avgRateBeforeCommission } = getAverageRewardRate(false)
 
-  const { unit } = getNetworkData(network)
-  const rewardRate = avgRateBeforeCommission.toNumber()
+  const { unit } = getStakingChainData(network)
   const Token = getChainIcons(network).token
 
   // Whether to show base or commission-adjusted rewards
   const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
 
   const currentStake = getStakedBalance(activeAddress).toNumber()
-  const annualRewardBase = currentStake * (rewardRate / 100) || 0
+  const annualRewardBase = currentStake * (getAverageRewardRate() / 100) || 0
 
   const annualRewardAfterCommission =
     annualRewardBase * (1 - avgCommission / 100)

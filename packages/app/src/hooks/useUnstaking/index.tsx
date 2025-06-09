@@ -11,7 +11,7 @@ import { useNominationStatus } from '../useNominationStatus'
 
 export const useUnstaking = () => {
   const { t } = useTranslation('app')
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { activeAddress } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
@@ -45,7 +45,7 @@ export const useUnstaking = () => {
 
   return {
     getFastUnstakeText,
-    isUnstaking: !inSetup() && !nominees.active.length && active === 0n,
+    isUnstaking: isNominator && !nominees.active.length && active === 0n,
     isFastUnstaking: !!registered,
   }
 }

@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -28,6 +28,7 @@ export const SubmitTx = ({
   requiresMigratedController = false,
   onResize,
   transparent,
+  txInitiated,
 }: SubmitTxProps) => {
   const { t } = useTranslation()
   const { network } = useNetwork()
@@ -37,7 +38,7 @@ export const SubmitTx = ({
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
@@ -51,15 +52,17 @@ export const SubmitTx = ({
     who: getAccount(activeAddress),
   }
 
-  if (activeProxy && proxySupported) {
-    signingOpts = {
-      label: t('signedByProxy', { ns: 'app' }),
-      who: getAccount(activeProxy.address),
-    }
-  } else if (!(activeProxy && proxySupported) && requiresMigratedController) {
-    signingOpts = {
-      label: t('signedByController', { ns: 'app' }),
-      who: getAccount(activeAddress),
+  if (txInitiated) {
+    if (activeProxy && proxySupported) {
+      signingOpts = {
+        label: t('signedByProxy', { ns: 'app' }),
+        who: getAccount(activeProxy.address),
+      }
+    } else if (!(activeProxy && proxySupported) && requiresMigratedController) {
+      signingOpts = {
+        label: t('signedByController', { ns: 'app' }),
+        who: getAccount(activeAddress),
+      }
     }
   }
 

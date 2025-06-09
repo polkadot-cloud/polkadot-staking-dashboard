@@ -2,16 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
-import type { AnyJson } from 'types'
 
 export type ListFormat = 'row' | 'col'
 
+// Type for items that can be selected in lists (validators, pools, etc.)
+export type SelectableListItem = unknown
+
 export interface ListContextInterface {
-  addToSelected: (item: AnyJson) => void
-  removeFromSelected: (items: AnyJson[]) => void
+  addToSelected: (item: SelectableListItem) => void
+  removeFromSelected: (items: SelectableListItem[]) => void
   resetSelected: () => void
   setListFormat: (v: ListFormat) => void
-  selected: AnyJson[]
+  selected: SelectableListItem[]
   selectable: boolean
   listFormat: ListFormat
   pagination: {

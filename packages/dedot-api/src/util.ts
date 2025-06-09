@@ -3,7 +3,7 @@
 
 import { formatAccountSs58 } from '@w3ux/utils'
 import type { SubmittableExtrinsic } from 'dedot'
-import type { ChainId, ImportedAccount } from 'types'
+import type { Bonded, ChainId, ImportedAccount } from 'types'
 
 // Gets added and removed accounts by comparing two lists of accounts
 export const diffImportedAccounts = (
@@ -35,6 +35,22 @@ export const diffPoolIds = (prev: number[], cur: number[]) => {
   const added = cur.filter((id) => !prevSet.has(id))
   const removed = prev.filter((id) => !curSet.has(id))
 
+  return { added, removed }
+}
+
+// Gets added and removed bonded accounts by comparing stashes
+export const diffBonded = (prev: Bonded[], cur: Bonded[]) => {
+  const prevSet = new Set(prev)
+  const curSet = new Set(cur)
+
+  const added = cur.filter(
+    ({ stash, bonded }) =>
+      ![...prevSet].find((p) => p.stash === stash && p.bonded === bonded)
+  )
+  const removed = prev.filter(
+    ({ stash, bonded }) =>
+      ![...curSet].find((c) => c.stash === stash && c.bonded === bonded)
+  )
   return { added, removed }
 }
 

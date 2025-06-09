@@ -1,20 +1,21 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import classNames from 'classnames'
 import { motion } from 'framer-motion'
+import SimpleBar from 'simplebar-react'
+import 'simplebar/dist/simplebar.min.css'
 import type { ScrollProps } from '../types'
 import classes from './index.module.scss'
 
-export const Scroll = ({ children, size, ...rest }: ScrollProps) => {
-  const allClasses = classNames(classes.scroll, {
-    [classes.lg]: size === 'lg',
-    [classes.xl]: size === 'xl',
-  })
-
-  return (
-    <motion.div className={allClasses} {...rest}>
+export const Scroll = ({ children, ...rest }: ScrollProps) => (
+  <motion.div className={classes.scroll} {...rest}>
+    <SimpleBar
+      autoHide={true}
+      style={{
+        height: '100%',
+      }}
+    >
       {children}
-    </motion.div>
-  )
-}
+    </SimpleBar>
+  </motion.div>
+)

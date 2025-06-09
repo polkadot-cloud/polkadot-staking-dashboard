@@ -3,11 +3,11 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { useState } from 'react'
-import type { AnyJson } from 'types'
 import type {
   ListContextInterface,
   ListFormat,
   ListProviderProps,
+  SelectableListItem,
 } from './types'
 
 export const [ListContext, useList] = createSafeContext<ListContextInterface>()
@@ -24,7 +24,7 @@ export const ListProvider = ({
   const [page, setPage] = useState<number>(1)
 
   // Store the currently selected validators from the list.
-  const [selected, setSelected] = useState<AnyJson[]>([])
+  const [selected, setSelected] = useState<SelectableListItem[]>([])
 
   // Store whether validator selection is active
   const [selectable] = useState<boolean>(initialSelectable ?? false)
@@ -32,11 +32,11 @@ export const ListProvider = ({
   // Store the list format of the list
   const [listFormat, _setListFormat] = useState<ListFormat>('col')
 
-  const addToSelected = (_item: AnyJson) => {
+  const addToSelected = (_item: SelectableListItem) => {
     setSelected([...selected].concat(_item))
   }
 
-  const removeFromSelected = (items: AnyJson[]) => {
+  const removeFromSelected = (items: SelectableListItem[]) => {
     setSelected([...selected].filter((item) => !items.includes(item)))
   }
 
