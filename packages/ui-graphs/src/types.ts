@@ -62,6 +62,12 @@ export interface PayoutLineProps {
   }
 }
 
+export interface PayoutLineEntry {
+  era: number
+  reward: string
+  start: number
+}
+
 export interface AveragePayoutLineProps {
   days: number
   average: number
@@ -86,10 +92,6 @@ export interface GraphPayoutData {
   poolClaims: PoolReward[]
 }
 
-export interface PayoutDayCursor {
-  reward: BigNumber
-}
-
 export interface GeoDonutProps {
   title: string
   series: {
@@ -104,8 +106,6 @@ export interface GeoDonutProps {
   getThemeValue: (key: string) => string
 }
 
-export interface PayoutLineEntry {
-  era: number
-  reward: string
-  start: number
+export interface PayoutDayCursor {
+  reward: BigNumber
 }
