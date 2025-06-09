@@ -7,7 +7,8 @@
     "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo",
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
-    "lint:fix": "eslint './**' --fix && prettier --write ."
+    "lint:fix": "eslint './**' --fix && prettier --write .",
+    "test": "pnpm -r --if-present test"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",

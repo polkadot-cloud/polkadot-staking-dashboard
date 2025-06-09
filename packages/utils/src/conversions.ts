@@ -10,7 +10,7 @@ export const planckToUnitBn = (val: BigNumber, units: number): BigNumber =>
     planckToUnit(val.decimalPlaces(0).toFormat({ groupSeparator: '' }), units)
   )
 
-// Converts a string to a BigNumber.
+// Converts a string to a BigNumber
 export const stringToBn = (value: string): BigNumber =>
   new BigNumber(rmCommas(value))
 

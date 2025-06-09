@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -20,11 +21,10 @@ import { getPolkawatchConfig } from 'consts/util'
 import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { GeoDonut } from 'library/Graphs/GeoDonut'
-import { NominatorGeoWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
+import { GeoDonut, NominatorGeoWrapper } from 'ui-graphs'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -35,6 +35,7 @@ export const NominationGeo = () => {
   const { isNominating } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
+  const { getThemeValue } = useThemeValues()
 
   const enabled = pluginEnabled('polkawatch')
 
@@ -172,6 +173,7 @@ export const NominationGeo = () => {
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={0}
+                    getThemeValue={getThemeValue}
                   />
                 </NominatorGeoWrapper>
                 <NominatorGeoWrapper>
@@ -182,6 +184,7 @@ export const NominationGeo = () => {
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={maxLabelLen}
+                    getThemeValue={getThemeValue}
                   />
                 </NominatorGeoWrapper>
                 <NominatorGeoWrapper>
@@ -192,6 +195,7 @@ export const NominationGeo = () => {
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={maxLabelLen}
+                    getThemeValue={getThemeValue}
                   />
                 </NominatorGeoWrapper>
               </>
