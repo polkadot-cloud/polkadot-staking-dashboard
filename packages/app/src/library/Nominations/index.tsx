@@ -59,7 +59,7 @@ export const Nominations = ({
         : []
 
   // Determine if this nominator is actually nominating.
-  const isNominating = nominated?.length ?? false
+  const isNominating = (nominated?.length ?? 0) > 0
 
   // Determine whether this is a pool that is in Destroying state & not nominating.
   const poolDestroying =
