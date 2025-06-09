@@ -16,6 +16,7 @@ import {
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
 import { Line } from 'react-chartjs-2'
+import { Spinner } from 'ui-core/base'
 import type { PayoutLineProps } from './types'
 
 ChartJS.register(
@@ -161,18 +162,8 @@ export const PayoutLine = ({
       }}
     >
       {syncing && (
-        <div
-          style={{
-            position: 'absolute',
-            right: '2.5rem',
-            top: '-2.5rem',
-            width: '16px',
-            height: '16px',
-            border: '2px solid #f3f3f3',
-            borderTop: '2px solid #3498db',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-          }}
+        <Spinner
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
         />
       )}
       <Line options={options} data={data} />

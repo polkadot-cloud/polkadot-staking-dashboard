@@ -21,6 +21,7 @@
     "locales": "workspace:*",
     "react-chartjs-2": "^5.2.0",
     "styled-components": "^6.1.18",
+    "ui-core": "workspace:*",
     "utils": "workspace:*"
   },
   "devDependencies": {

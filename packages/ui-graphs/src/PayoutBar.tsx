@@ -16,6 +16,7 @@ import {
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
 import { Bar } from 'react-chartjs-2'
+import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from './types'
 import { formatRewardsForGraphs } from './util'
 
@@ -180,18 +181,8 @@ export const PayoutBar = ({
       }}
     >
       {syncing && (
-        <div
-          style={{
-            position: 'absolute',
-            right: '2.5rem',
-            top: '-2.5rem',
-            width: '16px',
-            height: '16px',
-            border: '2px solid #f3f3f3',
-            borderTop: '2px solid #3498db',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-          }}
+        <Spinner
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
         />
       )}
       <Bar options={options} data={data} />
