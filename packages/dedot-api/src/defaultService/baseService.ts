@@ -12,6 +12,7 @@ import {
 import type {
   NetworkConfig,
   NetworkId,
+  ServiceInterface,
   SystemChainId,
 } from 'types'
 import { CoreConsts } from '../consts/core'
@@ -102,7 +103,7 @@ export class BaseService<
   /**
    * Initialize the service with common setup logic
    */
-  async start(serviceInterface: any) {
+  async start(serviceInterface: ServiceInterface) {
     // Initialize chain specs
     this.relayChainSpec = new ChainSpecs(this.apiRelay)
     this.peopleChainSpec = new ChainSpecs(this.apiPeople)
