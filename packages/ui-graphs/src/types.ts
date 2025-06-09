@@ -9,48 +9,36 @@ import type {
   ValidatorEraPoints,
 } from 'plugin-staking-api/types'
 
-// Base props shared across graph components
-export interface BaseGraphProps {
-  getThemeValue: (key: string) => string
-  dateFormat?: Locale
-}
-
-// Props for components that need unit formatting
-export interface UnitFormattingProps {
-  unit: string
-  units: number
-}
-
-// Dimensions props
-export interface GraphDimensionsProps {
-  width?: string | number
-  height?: string | number
-}
-
 export interface PieProps {
   color1?: string
   color2?: string
 }
 
-export interface EraPointsLineProps
-  extends BaseGraphProps,
-    GraphDimensionsProps {
+export interface EraPointsLineProps {
   entries: ValidatorEraPoints[]
   syncing: boolean
+  width: string | number
+  height: string | number
+  getThemeValue: (key: string) => string
+  dateFormat: Locale
   labels: {
     date: string
     era: string
     eraPoints: string
   }
 }
-
-export interface PayoutBarProps extends BaseGraphProps, UnitFormattingProps {
+export interface PayoutBarProps {
   days: number
   height: string
   data: GraphPayoutData
   nominating: boolean
   inPool: boolean
   syncing: boolean
+  // Theme and translation props
+  getThemeValue: (key: string) => string
+  unit: string
+  units: number
+  dateFormat: Locale
   labels: {
     payout: string
     poolClaim: string
@@ -59,12 +47,14 @@ export interface PayoutBarProps extends BaseGraphProps, UnitFormattingProps {
   }
 }
 
-export interface PayoutLineProps
-  extends BaseGraphProps,
-    UnitFormattingProps,
-    GraphDimensionsProps {
+export interface PayoutLineProps {
   entries: PayoutLineEntry[]
   syncing: boolean
+  width: string | number
+  height: string | number
+  getThemeValue: (key: string) => string
+  unit: string
+  dateFormat: Locale
   labels: {
     era: string
     reward: string
@@ -78,9 +68,7 @@ export interface PayoutLineEntry {
   start: number
 }
 
-export interface AveragePayoutLineProps
-  extends BaseGraphProps,
-    UnitFormattingProps {
+export interface AveragePayoutLineProps {
   days: number
   average: number
   height: string
@@ -88,6 +76,10 @@ export interface AveragePayoutLineProps
   data: GraphPayoutData
   nominating: boolean
   inPool: boolean
+  // Theme and translation props
+  getThemeValue: (key: string) => string
+  unit: string
+  units: number
   labels: {
     payout: string
     dayAverage: string
@@ -100,7 +92,7 @@ export interface GraphPayoutData {
   poolClaims: PoolReward[]
 }
 
-export interface GeoDonutProps extends BaseGraphProps {
+export interface GeoDonutProps {
   title: string
   series: {
     labels: string[]
@@ -110,14 +102,10 @@ export interface GeoDonutProps extends BaseGraphProps {
   maxHeight?: string | number
   legendHeight?: number
   maxLabelLen?: number
+  // Theme props
+  getThemeValue: (key: string) => string
 }
 
 export interface PayoutDayCursor {
   reward: BigNumber
-}
-
-// Internal type for reward processing
-export interface RewardRecord {
-  reward: string
-  timestamp: number
 }

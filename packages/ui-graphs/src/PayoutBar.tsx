@@ -3,17 +3,33 @@
 
 import BigNumber from 'bignumber.js'
 import type { TooltipItem } from 'chart.js'
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
 import { Bar } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
-import { createBaseChartOptions, createTooltipConfig } from './chartUtils'
-import {
-  getSecondaryColor,
-  getStakingColor,
-  SYNCING_SPINNER_STYLE,
-} from './constants'
 import type { PayoutBarProps } from './types'
 import { formatRewardsForGraphs } from './util'
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 export const PayoutBar = ({
   days,
@@ -44,12 +60,15 @@ export const PayoutBar = ({
   const { p: graphUnclaimedPayouts } = allUnclaimedPayouts
   const { p: graphPoolClaims } = allPoolClaims
 
-  // Determine colors for payouts and pool claims
-  const inPoolOnly = !nominating && inPool
-  const colorPayouts = getStakingColor(getThemeValue, staking, inPoolOnly)
+  // Determine color for payouts
+  const colorPayouts = !staking
+    ? getThemeValue('--accent-color-transparent')
+    : getThemeValue('--accent-color-primary')
+
+  // Determine color for poolClaims
   const colorPoolClaims = !staking
     ? getThemeValue('--accent-color-transparent')
-    : getSecondaryColor(getThemeValue)
+    : getThemeValue('--accent-color-secondary')
 
   const borderRadius = 3.5
   const pointRadius = 0
@@ -95,7 +114,8 @@ export const PayoutBar = ({
   }
 
   const options = {
-    ...createBaseChartOptions(),
+    responsive: true,
+    maintainAspectRatio: false,
     barPercentage: 0.5,
     maxBarThickness: 12,
     scales: {
@@ -134,7 +154,13 @@ export const PayoutBar = ({
         display: false,
       },
       tooltip: {
-        ...createTooltipConfig(getThemeValue),
+        displayColors: false,
+        backgroundColor: getThemeValue('--background-invert'),
+        titleColor: getThemeValue('--text-color-invert'),
+        bodyColor: getThemeValue('--text-color-invert'),
+        bodyFont: {
+          weight: 600,
+        },
         callbacks: {
           title: () => [],
           label: ({ dataset, parsed }: TooltipItem<'bar'>) =>
@@ -154,7 +180,11 @@ export const PayoutBar = ({
         height: height || 'auto',
       }}
     >
-      {syncing && <Spinner style={SYNCING_SPINNER_STYLE} />}
+      {syncing && (
+        <Spinner
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
+        />
+      )}
       <Bar options={options} data={data} />
     </div>
   )

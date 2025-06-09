@@ -20,8 +20,15 @@ import type {
   RewardResults,
 } from 'plugin-staking-api/types'
 import { planckToUnitBn } from 'utils'
-import { MAX_PAYOUT_DAYS, PAYOUT_AVERAGE_DAYS } from './constants'
-import type { PayoutDayCursor, RewardRecord } from './types'
+import type { PayoutDayCursor } from './types'
+
+// Constants
+const MAX_PAYOUT_DAYS = 60
+
+type RewardRecord = {
+  reward: string
+  timestamp: number
+}
 
 export const percentageOf = (n1: number, n2: number): number => {
   if (n2 === 0) {
@@ -257,13 +264,14 @@ const processPayouts = (
   // Reverse payouts: most recent last
   p = p.reverse()
 
-  // Use normalised payouts for calculating the average prior to the start of the payout
+  // Use normalised payouts for calculating the 10-day average prior to the start of the payout
   // graph
+  const avgDays = 10
   const preNormalised = getPreMaxDaysPayouts(
     normalised,
     fromDate,
     days,
-    PAYOUT_AVERAGE_DAYS
+    avgDays
   )
   // Start of average calculation should be the earliest date
   const averageFromDate = subDays(fromDate, MAX_PAYOUT_DAYS)
@@ -271,7 +279,7 @@ const processPayouts = (
   let a = calculateDailyPayouts(
     preNormalised,
     averageFromDate,
-    PAYOUT_AVERAGE_DAYS,
+    avgDays,
     units,
     subject
   )

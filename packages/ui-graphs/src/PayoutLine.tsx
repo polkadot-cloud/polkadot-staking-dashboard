@@ -2,16 +2,33 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import type { FontSpec } from 'chart.js'
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
 import { Line } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
-import {
-  createBaseChartOptions,
-  createTitleStyle,
-  createTooltipConfig,
-} from './chartUtils'
-import { getPrimaryColor, SYNCING_SPINNER_STYLE } from './constants'
 import type { PayoutLineProps } from './types'
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 export const PayoutLine = ({
   entries,
@@ -29,11 +46,23 @@ export const PayoutLine = ({
     : entries.map((entry) => new BigNumber(entry.reward).toString())
 
   // Use primary color for line
-  const color = getPrimaryColor(getThemeValue)
-  const titleStyle = createTitleStyle(getThemeValue)
+  const color = getThemeValue('--accent-color-primary')
+
+  // Styling of axis titles
+  const titleFontSpec: Partial<FontSpec> = {
+    family: "'Inter', 'sans-serif'",
+    weight: 'lighter',
+    size: 11,
+  }
+  const titleStyle = {
+    display: true,
+    ...titleFontSpec,
+    color: getThemeValue('--text-color-secondary'),
+  }
 
   const options = {
-    ...createBaseChartOptions(),
+    responsive: true,
+    maintainAspectRatio: false,
     interaction: {
       intersect: false,
     },
@@ -85,11 +114,21 @@ export const PayoutLine = ({
         display: false,
       },
       tooltip: {
-        ...createTooltipConfig(getThemeValue),
+        displayColors: false,
+        backgroundColor: getThemeValue('--background-invert'),
+        titleColor: getThemeValue('--text-color-invert'),
+        bodyColor: getThemeValue('--text-color-invert'),
+        bodyFont: {
+          weight: 600,
+        },
         callbacks: {
           title: () => [],
           label: (context: { parsed: { y: number } }) =>
             `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
+        },
+        intersect: false,
+        interaction: {
+          mode: 'nearest',
         },
       },
     },
@@ -122,7 +161,11 @@ export const PayoutLine = ({
         height: height || 'auto',
       }}
     >
-      {syncing && <Spinner style={SYNCING_SPINNER_STYLE} />}
+      {syncing && (
+        <Spinner
+          style={{ position: 'absolute', right: '3rem', top: '-4rem' }}
+        />
+      )}
       <Line options={options} data={data} />
     </div>
   )

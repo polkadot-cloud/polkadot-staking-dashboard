@@ -3,10 +3,12 @@
 
 import { ellipsisFn } from '@w3ux/utils'
 import type { TooltipItem } from 'chart.js'
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import chroma from 'chroma-js'
 import { Doughnut } from 'react-chartjs-2'
-import { createBaseChartOptions } from './chartUtils'
 import type { GeoDonutProps } from './types'
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 export const GeoDonut = ({
   title,
@@ -27,7 +29,6 @@ export const GeoDonut = ({
   data = data.map((value: number) => (value / total) * 100)
 
   const options = {
-    ...createBaseChartOptions(),
     borderColor: getThemeValue('--background-default'),
     hoverBorderColor: getThemeValue('--background-default'),
     backgroundColor,
@@ -35,6 +36,8 @@ export const GeoDonut = ({
       backgroundColor,
       getThemeValue('--background-default'),
     ],
+    responsive: true,
+    maintainAspectRatio: false,
     spacing: 0,
     cutout: '75%',
     plugins: {
