@@ -9,10 +9,14 @@ import { getChainIcons } from 'assets'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useLayoutEffect, useRef } from 'react'
-import type { AnyJson } from 'types'
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
-import type { StatAddress, StatProps } from './types'
+import type {
+  StatAddress,
+  StatButtonProps,
+  StatOdometerData,
+  StatProps,
+} from './types'
 
 export const Stat = ({
   label,
@@ -51,7 +55,7 @@ export const Stat = ({
   let display
   switch (type) {
     case 'address':
-      display = stat.display
+      display = (stat as StatAddress).display
       break
     case 'odometer':
       display = (
@@ -64,16 +68,18 @@ export const Stat = ({
             }}
           />
           <Odometer
-            value={minDecimalPlaces(stat.value, 2)}
+            value={minDecimalPlaces((stat as StatOdometerData).value, 2)}
             spaceAfter="0.4rem"
             zeroDecimals={2}
           />
-          {stat?.unit ? stat.unit : null}
+          {(stat as StatOdometerData)?.unit
+            ? (stat as StatOdometerData).unit
+            : null}
         </h2>
       )
       break
     default:
-      display = stat
+      display = typeof stat === 'string' ? stat : String(stat)
   }
 
   return (
@@ -106,7 +112,7 @@ export const Stat = ({
           {display}
           {buttons ? (
             <span ref={subjectRef}>
-              {buttons.map((btn: AnyJson, index: number) => (
+              {buttons.map((btn: StatButtonProps, index: number) => (
                 <span key={`stat_${index}`}>
                   <Button
                     key={`btn_${index}_${Math.random()}`}

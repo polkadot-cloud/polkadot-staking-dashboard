@@ -34,7 +34,7 @@ importers:
         version: 8.33.1(eslint@9.28.0)(typescript@5.8.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.10.0
-        version: 3.10.1(vite@6.3.5(@types/node@22.15.30)(sass@1.77.6))
+        version: 3.10.1(vite@6.3.5(@types/node@22.15.30)(sass@1.89.1))
       '@w3ux/types':
         specifier: ^2.3.0
         version: 2.3.0
@@ -75,8 +75,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(prettier@3.5.3)(typescript@5.8.3)
       sass:
-        specifier: 1.77.6
-        version: 1.77.6
+        specifier: 1.89.1
+        version: 1.89.1
       typescript:
         specifier: ^5.7.2
         version: 5.8.3
@@ -161,9 +161,6 @@ importers:
       chart.js:
         specifier: ^4.4.9
         version: 4.4.9
-      chroma-js:
-        specifier: ^3.1.1
-        version: 3.1.2
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -300,9 +297,6 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@22.15.30)(sass@1.89.1))
-      vitest:
-        specifier: ^3.1.4
-        version: 3.2.2(@types/debug@4.1.12)(@types/node@22.15.30)(sass@1.89.1)
 
   packages/assets:
     dependencies:
@@ -322,6 +316,9 @@ importers:
 
   packages/consts:
     dependencies:
+      '@polkawatch/ddp-client':
+        specifier: ^2.0.23
+        version: 2.0.23
       '@substrate/connect-known-chains':
         specifier: ^1.10.2
         version: 1.10.2
@@ -456,6 +453,28 @@ importers:
 
   packages/styles: {}
 
+  packages/tests:
+    dependencies:
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      ui-graphs:
+        specifier: workspace:*
+        version: link:../ui-graphs
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.3
+      vitest:
+        specifier: ^3.1.4
+        version: 3.2.2(@types/debug@4.1.12)(@types/node@22.15.30)(sass@1.89.1)
+
   packages/types:
     dependencies:
       dedot:
@@ -548,12 +567,46 @@ importers:
 
   packages/ui-graphs:
     dependencies:
+      '@w3ux/utils':
+        specifier: ^2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
+      chart.js:
+        specifier: ^4.4.9
+        version: 4.4.9
+      chroma-js:
+        specifier: ^3.1.1
+        version: 3.1.2
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      locales:
+        specifier: workspace:*
+        version: link:../locales
+      plugin-staking-api:
+        specifier: workspace:*
+        version: link:../plugin-staking-api
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      react-chartjs-2:
+        specifier: ^5.2.0
+        version: 5.3.0(chart.js@4.4.9)(react@19.1.0)
       styled-components:
         specifier: ^6.1.18
         version: 6.1.18(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      ui-core:
+        specifier: workspace:*
+        version: link:../ui-core
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/ui-identity:
     dependencies:
@@ -3145,10 +3198,6 @@ packages:
   bignumber.js@9.3.0:
     resolution: {integrity: sha512-EM7aMFTXbptt/wZdMlBv2t8IViwQL+h6SLHosp8Yf0dqJMTnY6iL32opnAB6kAdL0SZPuvcAzFr31o0c/R3/RA==}
 
-  binary-extensions@2.3.0:
-    resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
-    engines: {node: '>=8'}
-
   blakejs@1.2.1:
     resolution: {integrity: sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==}
 
@@ -3242,10 +3291,6 @@ packages:
   check-error@2.1.1:
     resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
     engines: {node: '>= 16'}
-
-  chokidar@3.6.0:
-    resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
-    engines: {node: '>= 8.10.0'}
 
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
@@ -4046,9 +4091,6 @@ packages:
     resolution: {integrity: sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==}
     engines: {node: '>= 4'}
 
-  immutable@4.3.7:
-    resolution: {integrity: sha512-1hqclzwYwjRDFLjcFxOM5AYkkG0rpFPpr1RLPMEuGczoS7YA8gLhy8SWXYRAA/XwfEHpfo3cw5JGioS32fnMRw==}
-
   immutable@5.1.2:
     resolution: {integrity: sha512-qHKXW1q6liAk1Oys6umoaZbDRqjcjgSrbnrifHsfsttza7zcvRAsL7mMV6xWcyhwQy7Xj5v4hhbr6b+iDYwlmQ==}
 
@@ -4101,10 +4143,6 @@ packages:
   is-bigint@1.1.0:
     resolution: {integrity: sha512-n4ZT37wG78iz03xPRKJrHTdZbe3IicyucEtdRsV5yglwc3GyUfbAfpSeD0FJ41NbUNSt5wbhqfp1fS+BgnvDFQ==}
     engines: {node: '>= 0.4'}
-
-  is-binary-path@2.1.0:
-    resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
-    engines: {node: '>=8'}
 
   is-boolean-object@1.2.2:
     resolution: {integrity: sha512-wa56o2/ElJMYqjCjGkXri7it5FbebW5usLw/nPmCMs5DeZ7eziSYZhSmPRn0txqeW4LnAmQQU7FgqLpsEFKM4A==}
@@ -4947,10 +4985,6 @@ packages:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
     engines: {node: '>= 6'}
 
-  readdirp@3.6.0:
-    resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
-    engines: {node: '>=8.10.0'}
-
   readdirp@4.1.2:
     resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
     engines: {node: '>= 14.18.0'}
@@ -5066,11 +5100,6 @@ packages:
   safe-stable-stringify@2.5.0:
     resolution: {integrity: sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==}
     engines: {node: '>=10'}
-
-  sass@1.77.6:
-    resolution: {integrity: sha512-ByXE1oLD79GVq9Ht1PeHWCPMPB8XHpBuz1r85oByKHjZY6qV6rWnQovQzXJXuQ/XyE1Oj3iPk3lo28uzaRA2/Q==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
 
   sass@1.89.1:
     resolution: {integrity: sha512-eMLLkl+qz7tx/0cJ9wI+w09GQ2zodTkcE/aVfywwdlRcI3EO19xGnbmJwg/JMIm+5MxVJ6outddLZ4Von4E++Q==}
@@ -8655,11 +8684,11 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.7.11':
     optional: true
 
-  '@vitejs/plugin-react-swc@3.10.1(vite@6.3.5(@types/node@22.15.30)(sass@1.77.6))':
+  '@vitejs/plugin-react-swc@3.10.1(vite@6.3.5(@types/node@22.15.30)(sass@1.89.1))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.9
       '@swc/core': 1.11.29
-      vite: 6.3.5(@types/node@22.15.30)(sass@1.77.6)
+      vite: 6.3.5(@types/node@22.15.30)(sass@1.89.1)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -9560,8 +9589,6 @@ snapshots:
 
   bignumber.js@9.3.0: {}
 
-  binary-extensions@2.3.0: {}
-
   blakejs@1.2.1: {}
 
   bn.js@5.2.2: {}
@@ -9655,18 +9682,6 @@ snapshots:
       '@kurkle/color': 0.3.4
 
   check-error@2.1.1: {}
-
-  chokidar@3.6.0:
-    dependencies:
-      anymatch: 3.1.3
-      braces: 3.0.3
-      glob-parent: 5.1.2
-      is-binary-path: 2.1.0
-      is-glob: 4.0.3
-      normalize-path: 3.0.0
-      readdirp: 3.6.0
-    optionalDependencies:
-      fsevents: 2.3.3
 
   chokidar@4.0.3:
     dependencies:
@@ -10606,10 +10621,7 @@ snapshots:
 
   ignore@7.0.5: {}
 
-  immutable@4.3.7: {}
-
-  immutable@5.1.2:
-    optional: true
+  immutable@5.1.2: {}
 
   import-fresh@3.3.1:
     dependencies:
@@ -10667,10 +10679,6 @@ snapshots:
   is-bigint@1.1.0:
     dependencies:
       has-bigints: 1.1.0
-
-  is-binary-path@2.1.0:
-    dependencies:
-      binary-extensions: 2.3.0
 
   is-boolean-object@1.2.2:
     dependencies:
@@ -11559,10 +11567,6 @@ snapshots:
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
 
-  readdirp@3.6.0:
-    dependencies:
-      picomatch: 2.3.1
-
   readdirp@4.1.2: {}
 
   real-require@0.1.0: {}
@@ -11695,12 +11699,6 @@ snapshots:
 
   safe-stable-stringify@2.5.0: {}
 
-  sass@1.77.6:
-    dependencies:
-      chokidar: 3.6.0
-      immutable: 4.3.7
-      source-map-js: 1.2.1
-
   sass@1.89.1:
     dependencies:
       chokidar: 4.0.3
@@ -11708,7 +11706,6 @@ snapshots:
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.5.1
-    optional: true
 
   scheduler@0.26.0: {}
 
@@ -12417,19 +12414,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  vite@6.3.5(@types/node@22.15.30)(sass@1.77.6):
-    dependencies:
-      esbuild: 0.25.4
-      fdir: 6.4.4(picomatch@4.0.2)
-      picomatch: 4.0.2
-      postcss: 8.5.3
-      rollup: 4.41.0
-      tinyglobby: 0.2.14
-    optionalDependencies:
-      '@types/node': 22.15.30
-      fsevents: 2.3.3
-      sass: 1.77.6
 
   vite@6.3.5(@types/node@22.15.30)(sass@1.89.1):
     dependencies:

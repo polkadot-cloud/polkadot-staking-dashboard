@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Configuration } from '@polkawatch/ddp-client'
 import type {
   ChainId,
   NetworkId,
@@ -13,6 +14,7 @@ import {
   ProductionDisabledNetworks,
   SystemChainList,
 } from './networks'
+import { PolkawatchConfig } from './plugins'
 import { SupportedProxies } from './proxies'
 
 // Check if proxy type is supported in the dashboard
@@ -130,3 +132,9 @@ export const getStakingChain = (network: NetworkId) =>
 // Get subscan balance chain id by network
 export const getSubscanBalanceChainId = (network: NetworkId) =>
   NetworkList[network].meta.subscanBalanceChainId
+
+// Get polkawatch configuration for a given network
+export const getPolkawatchConfig = (network: NetworkId): Configuration =>
+  new Configuration({
+    basePath: `https://${network}-${PolkawatchConfig.ApiVersion}-api.polkawatch.app`,
+  })
