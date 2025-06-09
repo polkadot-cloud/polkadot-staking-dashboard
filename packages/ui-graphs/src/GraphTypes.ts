@@ -4,6 +4,8 @@
 import type BigNumber from 'bignumber.js'
 
 // Graph-specific interfaces that were previously in library/Graphs/types.ts
+import type { Locale } from 'date-fns'
+
 export interface BondedProps {
   active: BigNumber
   free: BigNumber
@@ -25,7 +27,7 @@ export interface PayoutBarProps {
   units: number
   t: (key: string) => string
   i18n: { resolvedLanguage?: string }
-  locales: Record<string, { dateFormat: any }>
+  locales: Record<string, { dateFormat: Locale }>
   defaultLocale: string
 }
 

@@ -14,6 +14,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import type { Locale } from 'date-fns'
 import { format, fromUnixTime } from 'date-fns'
 import { Line } from 'react-chartjs-2'
 
@@ -52,7 +53,7 @@ export const EraPointsLine = ({
   getThemeValue: (key: string) => string
   t: (key: string) => string
   i18n: { resolvedLanguage?: string }
-  locales: Record<string, { dateFormat: any }>
+  locales: Record<string, { dateFormat: Locale }>
   defaultLocale: string
 }) => {
   // Format reward points as an array of strings, or an empty array if syncing
@@ -149,7 +150,8 @@ export const EraPointsLine = ({
 
   const data = {
     labels: entries.map(({ start }: { start: number }) => {
-      const dateFormat = locales[i18n.resolvedLanguage ?? defaultLocale]?.dateFormat
+      const dateFormat =
+        locales[i18n.resolvedLanguage ?? defaultLocale]?.dateFormat
       const dateObj = format(fromUnixTime(start), 'do MMM', {
         locale: dateFormat,
       })

@@ -1,16 +1,25 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { AveragePayoutLine } from 'library/Graphs/AveragePayoutLine'
-import { PayoutBar } from 'library/Graphs/PayoutBar'
+import { getStakingChainData } from 'consts/util'
+import { useNetwork } from 'contexts/Network'
+import { useThemeValues } from 'contexts/ThemeValues'
+import { DefaultLocale, locales } from 'locales'
 import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { AveragePayoutLine, PayoutBar } from 'ui-graphs'
 
 export const InactiveGraph = ({
   setLastReward,
 }: {
   setLastReward: (reward: NominatorReward | undefined) => void
 }) => {
+  const { i18n, t } = useTranslation()
+  const { network } = useNetwork()
+  const { getThemeValue } = useThemeValues()
+  const { unit, units } = getStakingChainData(network)
+
   useEffect(() => {
     setLastReward(undefined)
   }, [])
@@ -24,6 +33,13 @@ export const InactiveGraph = ({
         nominating={false}
         inPool={false}
         syncing={false}
+        getThemeValue={getThemeValue}
+        unit={unit}
+        units={units}
+        t={t}
+        i18n={i18n}
+        locales={locales}
+        defaultLocale={DefaultLocale}
       />
       <div style={{ marginTop: '3rem' }}>
         <AveragePayoutLine
@@ -33,6 +49,10 @@ export const InactiveGraph = ({
           data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
           nominating={false}
           inPool={false}
+          getThemeValue={getThemeValue}
+          unit={unit}
+          units={units}
+          t={t}
         />
       </div>
     </>
