@@ -3,33 +3,15 @@
 
 import BigNumber from 'bignumber.js'
 import type { TooltipItem } from 'chart.js'
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import { createBaseChartOptions, createTooltipConfig } from './chartUtils'
+import { getStakingColor, PAYOUT_AVERAGE_DAYS } from './constants'
 import type { AveragePayoutLineProps } from './types'
 import {
   calculatePayoutAverages,
   combineRewards,
   formatRewardsForGraphs,
 } from './util'
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
 
 export const AveragePayoutLine = ({
   days,
@@ -71,23 +53,19 @@ export const AveragePayoutLine = ({
   )
   const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims)
 
+  // Calculate combined payouts for the chart
   const combinedPayouts = calculatePayoutAverages(
     preCombined.concat(combined),
     fromDate,
     days,
-    10
+    PAYOUT_AVERAGE_DAYS
   )
 
   // Determine color for payouts
-  const color = !staking
-    ? getThemeValue('--accent-color-primary')
-    : !inPoolOnly
-      ? getThemeValue('--accent-color-primary')
-      : getThemeValue('--accent-color-secondary')
+  const color = getStakingColor(getThemeValue, staking, inPoolOnly)
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    ...createBaseChartOptions(),
     scales: {
       x: {
         grid: {
@@ -117,23 +95,13 @@ export const AveragePayoutLine = ({
         display: false,
       },
       tooltip: {
-        displayColors: false,
-        backgroundColor: getThemeValue('--background-invert'),
-        titleColor: getThemeValue('--text-color-invert'),
-        bodyColor: getThemeValue('--text-color-invert'),
-        bodyFont: {
-          weight: 600,
-        },
+        ...createTooltipConfig(getThemeValue),
         callbacks: {
           title: () => [],
           label: ({ parsed }: TooltipItem<'line'>) =>
             ` ${new BigNumber(parsed.y)
               .decimalPlaces(units)
               .toFormat()} ${unit}`,
-        },
-        intersect: false,
-        interaction: {
-          mode: 'nearest',
         },
       },
     },
