@@ -14,15 +14,10 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
-import { useThemeValues } from 'contexts/ThemeValues'
 import { format, fromUnixTime } from 'date-fns'
-import { DefaultLocale, locales } from 'locales'
 import { Line } from 'react-chartjs-2'
-import { useTranslation } from 'react-i18next'
 import { Spinner } from 'ui-core/base'
-import type { PayoutLineEntry } from './types'
+import type { EraPointsLineProps } from './types'
 
 ChartJS.register(
   CategoryScale,
@@ -35,30 +30,22 @@ ChartJS.register(
   Legend
 )
 
-export const PayoutLine = ({
+export const EraPointsLine = ({
   entries,
   syncing,
   width,
   height,
-}: {
-  entries: PayoutLineEntry[]
-  syncing: boolean
-  width: string | number
-  height: string | number
-}) => {
-  const { i18n, t } = useTranslation()
-  const { network } = useNetwork()
-  const { getThemeValue } = useThemeValues()
-  const { unit } = getStakingChainData(network)
-
+  getThemeValue,
+  dateFormat,
+  labels,
+}: EraPointsLineProps) => {
   // Format reward points as an array of strings, or an empty array if syncing
   const dataset = syncing
     ? []
-    : entries.map((entry) => new BigNumber(entry.reward).toString())
+    : entries.map((entry) => new BigNumber(entry.points).toString())
 
   // Use primary color for line
   const color = getThemeValue('--accent-color-primary')
-
   // Styling of axis titles
   const titleFontSpec: Partial<FontSpec> = {
     family: "'Inter', 'sans-serif'",
@@ -71,6 +58,7 @@ export const PayoutLine = ({
     padding: 6,
     font: titleFontSpec,
   }
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -91,7 +79,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${t('date', { ns: 'app' })}`,
+          text: labels.date,
         },
       },
       y: {
@@ -111,7 +99,7 @@ export const PayoutLine = ({
         },
         title: {
           ...titleStyle,
-          text: `${unit} ${t('reward', { ns: 'modals' })}`,
+          text: labels.eraPoints,
         },
       },
     },
@@ -133,7 +121,7 @@ export const PayoutLine = ({
         callbacks: {
           title: () => [],
           label: (context: { parsed: { y: number } }) =>
-            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
+            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${labels.eraPoints}`,
         },
         intersect: false,
         interaction: {
@@ -146,13 +134,13 @@ export const PayoutLine = ({
   const data = {
     labels: entries.map(({ start }: { start: number }) => {
       const dateObj = format(fromUnixTime(start), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+        locale: dateFormat,
       })
       return `${dateObj}`
     }),
     datasets: [
       {
-        label: t('era', { ns: 'app' }),
+        label: labels.era,
         data: dataset,
         borderColor: color,
         backgroundColor: color,

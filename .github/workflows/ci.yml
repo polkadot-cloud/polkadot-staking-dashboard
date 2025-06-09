@@ -63,7 +63,6 @@ jobs:
       - run: pnpm build:verify
         working-directory: packages/app
       - run: pnpm test
-        working-directory: packages/app
       - run: pnpm run validate
         working-directory: packages/locales
 

@@ -13,7 +13,6 @@ import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { formatSize } from 'library/Graphs/Utils'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,6 +26,7 @@ import {
   Stat,
   Subheading,
 } from 'ui-core/canvas'
+import { formatSize } from 'ui-graphs'
 import { CloseCanvas, useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph as ActiveGraphEraPoints } from './EraPoints/ActiveGraph'

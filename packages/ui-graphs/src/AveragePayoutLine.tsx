@@ -13,17 +13,13 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
-import { useThemeValues } from 'contexts/ThemeValues'
 import { Line } from 'react-chartjs-2'
-import { useTranslation } from 'react-i18next'
 import type { AveragePayoutLineProps } from './types'
 import {
   calculatePayoutAverages,
   combineRewards,
   formatRewardsForGraphs,
-} from './Utils'
+} from './util'
 
 ChartJS.register(
   CategoryScale,
@@ -43,14 +39,14 @@ export const AveragePayoutLine = ({
   data: { payouts, poolClaims },
   nominating,
   inPool,
+  getThemeValue,
+  unit,
+  units,
+  labels,
 }: AveragePayoutLineProps) => {
-  const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const { getThemeValue } = useThemeValues()
-  const { unit, units } = getStakingChainData(network)
-
   const staking = nominating || inPool
   const inPoolOnly = !nominating && inPool
+
   // Define the most recent date that we will show on the graph
   const fromDate = new Date()
 
@@ -147,7 +143,7 @@ export const AveragePayoutLine = ({
     labels: combinedPayouts.map(() => ''),
     datasets: [
       {
-        label: t('payout'),
+        label: labels.payout,
         data: combinedPayouts.map(({ reward }) => Number(reward)),
         borderColor: color,
         pointStyle: undefined,
@@ -162,7 +158,7 @@ export const AveragePayoutLine = ({
   return (
     <>
       <h5 className="secondary" style={{ paddingLeft: '1.5rem' }}>
-        {average > 1 ? `${average} ${t('dayAverage')}` : null}
+        {average > 1 ? `${average} ${labels.dayAverage}` : null}
       </h5>
       <div
         style={{

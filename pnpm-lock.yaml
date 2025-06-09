@@ -161,9 +161,6 @@ importers:
       chart.js:
         specifier: ^4.4.9
         version: 4.4.9
-      chroma-js:
-        specifier: ^3.1.1
-        version: 3.1.2
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -297,9 +294,6 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@22.15.30)(sass@1.89.1))
-      vitest:
-        specifier: ^3.1.4
-        version: 3.2.2(@types/debug@4.1.12)(@types/node@22.15.30)(sass@1.89.1)
 
   packages/assets:
     dependencies:
@@ -456,6 +450,28 @@ importers:
 
   packages/styles: {}
 
+  packages/tests:
+    dependencies:
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      ui-graphs:
+        specifier: workspace:*
+        version: link:../ui-graphs
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.3
+      vitest:
+        specifier: ^3.1.4
+        version: 3.2.2(@types/debug@4.1.12)(@types/node@22.15.30)(sass@1.89.1)
+
   packages/types:
     dependencies:
       dedot:
@@ -548,12 +564,46 @@ importers:
 
   packages/ui-graphs:
     dependencies:
+      '@w3ux/utils':
+        specifier: ^2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      bignumber.js:
+        specifier: ^9.3.0
+        version: 9.3.0
+      chart.js:
+        specifier: ^4.4.9
+        version: 4.4.9
+      chroma-js:
+        specifier: ^3.1.1
+        version: 3.1.2
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      locales:
+        specifier: workspace:*
+        version: link:../locales
+      plugin-staking-api:
+        specifier: workspace:*
+        version: link:../plugin-staking-api
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      react-chartjs-2:
+        specifier: ^5.2.0
+        version: 5.3.0(chart.js@4.4.9)(react@19.1.0)
       styled-components:
         specifier: ^6.1.18
         version: 6.1.18(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      ui-core:
+        specifier: workspace:*
+        version: link:../ui-core
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
 
   packages/ui-identity:
     dependencies:

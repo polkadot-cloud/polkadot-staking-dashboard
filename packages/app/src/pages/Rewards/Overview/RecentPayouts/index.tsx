@@ -7,18 +7,18 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useSyncing } from 'hooks/useSyncing'
-import {
-  formatSize,
-  getPayoutsFromDate,
-  getPayoutsToDate,
-} from 'library/Graphs/Utils'
-import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import type { PayoutHistoryProps } from 'pages/Rewards/types'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
+import {
+  formatSize,
+  getPayoutsFromDate,
+  getPayoutsToDate,
+  GraphWrapper,
+} from 'ui-graphs'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 
