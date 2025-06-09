@@ -19,7 +19,7 @@ import {
   calculatePayoutAverages,
   combineRewards,
   formatRewardsForGraphs,
-} from './Utils'
+} from './util'
 
 ChartJS.register(
   CategoryScale,

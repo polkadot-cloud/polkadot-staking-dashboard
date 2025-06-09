@@ -52,11 +52,6 @@ export interface GraphPayoutData {
   poolClaims: PoolReward[]
 }
 
-export interface CardHeaderWrapperProps {
-  $withAction?: boolean
-  $withMargin?: boolean
-}
-
 export interface CardWrapperProps {
   height?: string | number
 }
