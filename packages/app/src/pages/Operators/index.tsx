@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PageProps } from 'common-types'
 import { asOperatorsSupportedNetwork } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useTranslation } from 'react-i18next'
+import type { PageProps } from 'types'
 import { Page } from 'ui-core/base'
 import { Entity } from './Entity'
 import { List } from './List'

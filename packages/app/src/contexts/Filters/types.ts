@@ -1,9 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFunction, AnyJson } from 'types'
+import type { AnyFunction } from 'types'
 
 export type FilterType = 'exclude' | 'include'
+
+// Generic filter function type
+export type FilterFunction<T = unknown> = (
+  list: T[],
+  filter: string | string[]
+) => T[]
+export type OrderFunction<T = unknown> = (list: T[], order: string) => T[]
 
 export interface FiltersContextInterface {
   getFilters: (type: FilterType, group: string) => string[] | null
@@ -19,10 +26,10 @@ export interface FiltersContextInterface {
   applyFilters: (
     type: FilterType,
     g: string,
-    list: AnyJson,
+    list: unknown[],
     fn: AnyFunction
-  ) => void
-  applyOrder: (g: string, list: AnyJson, fn: AnyFunction) => void
+  ) => unknown[]
+  applyOrder: (g: string, list: unknown[], fn: AnyFunction) => unknown[]
 }
 
 export type FilterItems = FilterItem[]

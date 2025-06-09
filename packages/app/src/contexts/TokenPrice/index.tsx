@@ -6,11 +6,10 @@ import { getStakingChainData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { isCustomEvent } from 'controllers/utils'
+import { onlineStatus$ } from 'global-bus'
 import { fetchTokenPrice, formatTokenPrice } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
-import { useEventListener } from 'usehooks-ts'
+import { useEffect, useState } from 'react'
 import { defaultTokenPrice } from './defaults'
 import type { TokenPricesContextInterface } from './types'
 
@@ -37,12 +36,6 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     setTokenPrice(result || defaultTokenPrice)
   }
 
-  const handleOnlineStatus = (e: Event) => {
-    if (isCustomEvent(e) && e.detail.online) {
-      getTokenPrice()
-    }
-  }
-
   useEffect(() => {
     let interval: NodeJS.Timeout
 
@@ -56,11 +49,17 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
     return () => clearInterval(interval)
   }, [network, currency, pluginEnabled('staking_api')])
 
-  useEventListener(
-    'online-status',
-    handleOnlineStatus,
-    useRef<Document>(document)
-  )
+  // Listen to global bus online status
+  useEffect(() => {
+    const subOnlineStatus = onlineStatus$.subscribe((result) => {
+      if (result.online) {
+        getTokenPrice()
+      }
+    })
+    return () => {
+      subOnlineStatus.unsubscribe()
+    }
+  }, [])
 
   return (
     <TokenPricesContext.Provider

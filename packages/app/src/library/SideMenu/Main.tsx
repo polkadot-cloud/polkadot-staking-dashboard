@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PageCategory, PageItem, PagesConfigItems } from 'common-types'
 import { PageCategories } from 'config/pages'
 import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -15,6 +14,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
+import type { PageCategory, PageItem, PagesConfigItems } from 'types'
 import { Heading } from './Heading/Heading'
 import { Primary } from './Primary'
 

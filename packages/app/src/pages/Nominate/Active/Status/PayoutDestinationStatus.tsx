@@ -59,7 +59,6 @@ export const PayoutDestinationStatus = () => {
               {
                 title: t('update'),
                 icon: faGear,
-                small: true,
                 disabled: syncing || !isNominator || isFastUnstaking,
                 onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
               },
