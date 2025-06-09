@@ -30,9 +30,7 @@ export const useNominationStatus = () => {
 
   // Utility to get the nominees of a provided nomination status.
   const getNomineesByStatus = (nominees: AnyJson[], status: string) =>
-    nominees
-      .map(([k, v]) => (v === status ? k : false))
-      .filter((v) => v !== false)
+    nominees.map(([k, v]) => (v === status ? k : false)).filter((v) => v)
 
   // Utility to get the status of the provided account's nominations, and whether they are earning
   // reards.

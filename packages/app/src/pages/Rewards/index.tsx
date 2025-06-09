@@ -64,12 +64,9 @@ export const Rewards = () => {
     ])
 
     const payouts =
-      allRewards.filter((reward: NominatorReward) => reward.claimed === true) ??
-      []
+      allRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
     const unclaimedPayouts =
-      allRewards.filter(
-        (reward: NominatorReward) => reward.claimed === false
-      ) ?? []
+      allRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
     const poolClaims = poolRewards ?? []
 
     // Filter zero rewards and order via timestamp, most recent first

@@ -202,7 +202,7 @@ export const OtherAccountsProvider = ({
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts
   useEffectIgnoreInitial(() => {
-    if (extensionsSynced && otherAccountsSynced === true) {
+    if (extensionsSynced && otherAccountsSynced) {
       setAccountsInitialised(true)
     }
   }, [extensionsSynced, otherAccountsSynced])
