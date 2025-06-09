@@ -1,0 +1,10 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+// Import shared variables
+@use '../variables' as *;
+
+// App-specific component variables
+$network-bar-font-size: 0.9rem;
+$positive-color: #3eb955;
+$negative-color: #d2545d;

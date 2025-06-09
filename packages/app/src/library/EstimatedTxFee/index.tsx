@@ -7,7 +7,7 @@ import { useNetwork } from 'contexts/Network'
 import { useTxMeta } from 'contexts/TxMeta'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
-import { Wrapper } from './Wrapper'
+import classes from './index.module.scss'
 import type { EstimatedTxFeeProps } from './types'
 
 export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
@@ -27,11 +27,11 @@ export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
       <div>{fee === 0n ? `...` : `${txFeesUnit} ${unit}`}</div>
     </>
   ) : (
-    <Wrapper>
+    <div className={classes.wrapper}>
       <p>
         <span>{t('estimatedFee')}:</span>
         {fee === 0n ? `...` : `${txFeesUnit} ${unit}`}
       </p>
-    </Wrapper>
+    </div>
   )
 }

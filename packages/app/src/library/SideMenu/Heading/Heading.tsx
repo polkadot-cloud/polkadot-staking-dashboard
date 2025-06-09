@@ -1,11 +1,18 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import classNames from 'classnames'
+import classes from './index.module.scss'
 import type { HeadingProps } from '../types'
-import { Wrapper } from './Wrapper'
 
-export const Heading = ({ title, minimised }: HeadingProps) => (
-  <Wrapper $minimised={minimised}>
-    {minimised ? <h5>&bull;</h5> : <h5>{title}</h5>}
-  </Wrapper>
-)
+export const Heading = ({ title, minimised }: HeadingProps) => {
+  const allClasses = classNames(classes.wrapper, {
+    [classes.minimised]: minimised,
+  })
+
+  return (
+    <div className={allClasses}>
+      {minimised ? <h5>&bull;</h5> : <h5>{title}</h5>}
+    </div>
+  )
+}

@@ -6,8 +6,8 @@ import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
+import classes from './index.module.scss'
 import type { HeaderProps } from '../types'
-import { Wrapper } from './Wrapper'
 
 export const Header = ({
   title,
@@ -26,7 +26,7 @@ export const Header = ({
       : getPoolSetup(activeAddress)
 
   return (
-    <Wrapper>
+    <div className={classes.wrapper}>
       <section>
         <h2>{title}</h2>
       </section>
@@ -51,6 +51,6 @@ export const Header = ({
           </>
         )}
       </section>
-    </Wrapper>
+    </div>
   )
 }

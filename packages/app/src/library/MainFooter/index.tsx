@@ -7,6 +7,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import CloudIconSVG from 'assets/icons/cloud.svg?react'
 import BigNumber from 'bignumber.js'
+import classNames from 'classnames'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { IGNORE_NETWORKS } from 'contexts/TokenPrice'
@@ -14,9 +15,9 @@ import { blockNumber$ } from 'global-bus'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
+import classes from './index.module.scss'
 import { Status } from './Status'
 import { TokenPrice } from './TokenPrice'
-import { Summary, Wrapper } from './Wrappers'
 
 export const MainFooter = () => {
   const { t } = useTranslation('app')
@@ -40,9 +41,9 @@ export const MainFooter = () => {
 
   return (
     <Page.Footer>
-      <Wrapper className="page-padding container-width">
+      <div className={classNames(classes.wrapper, 'page-padding container-width')}>
         <CloudIconSVG className="icon" />
-        <Summary>
+        <div className={classes.summary}>
           <section>
             <p>
               {ORGANISATION === undefined
@@ -77,7 +78,7 @@ export const MainFooter = () => {
             )}
           </section>
           <section>
-            <div className="hide-small">
+            <div className={classes.hideSmall}>
               {plugins.includes('staking_api') &&
                 !IGNORE_NETWORKS.includes(network) && <TokenPrice />}
               {import.meta.env.MODE === 'development' && (
@@ -92,8 +93,8 @@ export const MainFooter = () => {
               )}
             </div>
           </section>
-        </Summary>
-      </Wrapper>
+        </div>
+      </div>
     </Page.Footer>
   )
 }
