@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
-import classes from './index.module.scss'
 import type { HeadingProps } from '../types'
+import classes from './index.module.scss'
 
 export const Heading = ({ title, minimised }: HeadingProps) => {
   const allClasses = classNames(classes.wrapper, {

@@ -41,7 +41,9 @@ export const MainFooter = () => {
 
   return (
     <Page.Footer>
-      <div className={classNames(classes.wrapper, 'page-padding container-width')}>
+      <div
+        className={classNames(classes.wrapper, 'page-padding container-width')}
+      >
         <CloudIconSVG className="icon" />
         <div className={classes.summary}>
           <section>

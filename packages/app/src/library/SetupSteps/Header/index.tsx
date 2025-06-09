@@ -6,8 +6,8 @@ import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
-import classes from './index.module.scss'
 import type { HeaderProps } from '../types'
+import classes from './index.module.scss'
 
 export const Header = ({
   title,

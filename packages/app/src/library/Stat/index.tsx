@@ -88,10 +88,7 @@ export const Stat = ({
   })
 
   return (
-    <div
-      className={allClasses}
-      style={dimmed ? { opacity: 0.5 } : undefined}
-    >
+    <div className={allClasses} style={dimmed ? { opacity: 0.5 } : undefined}>
       <h4>
         {label}
         {helpKey !== undefined ? (

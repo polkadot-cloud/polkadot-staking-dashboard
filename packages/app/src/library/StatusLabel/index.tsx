@@ -40,7 +40,7 @@ export const StatusLabel = ({
   }
 
   return (
-    <div 
+    <div
       className={classes.wrapper}
       style={topOffset !== '50%' ? { top: topOffset } : undefined}
     >
