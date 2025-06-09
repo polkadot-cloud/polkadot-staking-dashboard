@@ -297,9 +297,6 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@22.15.30)(sass@1.89.1))
-      vitest:
-        specifier: ^3.1.4
-        version: 3.2.2(@types/debug@4.1.12)(@types/node@22.15.30)(sass@1.89.1)
 
   packages/assets:
     dependencies:
@@ -455,6 +452,28 @@ importers:
         version: 0.11.4
 
   packages/styles: {}
+
+  packages/tests:
+    dependencies:
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      ui-graphs:
+        specifier: workspace:*
+        version: link:../ui-graphs
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.3
+      vitest:
+        specifier: ^3.1.4
+        version: 3.2.2(@types/debug@4.1.12)(@types/node@22.15.30)(sass@1.89.1)
 
   packages/types:
     dependencies:

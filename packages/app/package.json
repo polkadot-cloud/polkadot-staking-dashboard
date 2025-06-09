@@ -9,7 +9,6 @@
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
     "dev": "vite",
     "preview": "vite preview",
-    "test": "vitest",
     "visualizer": "vite-bundle-visualizer"
   },
   "dependencies": {
@@ -84,7 +83,6 @@
     "vite-plugin-checker": "^0.9.3",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.1.4"
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

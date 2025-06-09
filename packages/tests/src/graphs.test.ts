@@ -7,7 +7,7 @@ import {
   normalisePayouts,
   postFillMissingDays,
   prefillMissingDays,
-} from 'library/Graphs/Utils'
+} from 'ui-graphs'
 import { expect, test } from 'vitest'
 
 // payouts that were made 2, 3 and 4 days ago.
