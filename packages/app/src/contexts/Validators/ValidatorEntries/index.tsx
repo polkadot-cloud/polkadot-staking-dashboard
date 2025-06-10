@@ -118,7 +118,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       entries.push({
         address,
         prefs: {
-          commission: Number(perbillToPercent(commissionUnit).toFixed(2)),
+          commission: Number(commissionUnit.toFixed(2)),
           blocked,
         },
       })
