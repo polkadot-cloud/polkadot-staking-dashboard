@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@w3ux/hooks": "^2.2.2",
-    "@w3ux/utils": "2.0.10",
+    "@w3ux/utils": "2.1.0",
     "bignumber.js": "^9.3.0",
     "date-fns": "^4.1.0",
     "dedot": "^0.13.0",
