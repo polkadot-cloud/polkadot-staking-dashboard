@@ -9,8 +9,7 @@ import { useNetwork } from 'contexts/Network'
 import { ButtonCopy } from 'library/ButtonCopy'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
-import { Padding } from 'ui-core/modal'
-import { Wrapper } from './Wrapper'
+import { Padding, Support } from 'ui-core/modal'
 
 export const Invite = () => {
   const { network } = useNetwork()
@@ -32,13 +31,14 @@ export const Invite = () => {
     <>
       <Title />
       <Padding verticalOnly>
-        <Wrapper>
-          <FontAwesomeIcon icon={faEnvelopeOpenText} className="icon" />
+        <Support>
+          <FontAwesomeIcon icon={faEnvelopeOpenText} />
           {inviteLink ? (
             <>
               <ButtonCopy
                 value={inviteLink}
                 size="1rem"
+                style={{ marginTop: '1.5rem' }}
                 children={
                   <h2>
                     {title}
@@ -54,7 +54,7 @@ export const Invite = () => {
               <p>{t('inviteDescription', { ns: 'app' })}</p>
             </>
           )}
-        </Wrapper>
+        </Support>
       </Padding>
     </>
   )

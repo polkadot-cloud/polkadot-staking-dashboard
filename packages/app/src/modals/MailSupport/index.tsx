@@ -5,8 +5,7 @@ import MailSVG from 'assets/icons/mail.svg?react'
 import { MailSupportAddress } from 'consts'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
-import { Padding } from 'ui-core/modal'
-import { SupportWrapper } from './Wrapper'
+import { Padding, Support } from 'ui-core/modal'
 
 export const MailSupport = () => {
   const { t } = useTranslation('modals')
@@ -14,11 +13,11 @@ export const MailSupport = () => {
     <>
       <Title />
       <Padding verticalOnly>
-        <SupportWrapper>
+        <Support>
           <MailSVG />
           <h4>{t('supportEmail')}</h4>
           <h1>{MailSupportAddress}</h1>
-        </SupportWrapper>
+        </Support>
       </Padding>
     </>
   )
