@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { maxBigInt, planckToUnit } from '@w3ux/utils'
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { getUnlocking } from 'contexts/Balances/Utils'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { MaybeAddress } from 'types'
+import { calculateAllBalances } from 'utils'
 import type { TransferOptions, TransferOptionsContextInterface } from './types'
 import { getLocalFeeReserve, setLocalFeeReserve } from './Utils'
 
@@ -46,79 +46,39 @@ export const TransferOptionsProvider = ({
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `Balances`
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
-    const {
-      balance: { free, frozen, reserved },
-    } = getAccountBalance(address)
-
+    const accountBalance = getAccountBalance(address)
     const stakingLedger = getStakingLedger(address)
-    const { active, total } = stakingLedger.ledger || {
-      active: 0n,
-      total: 0n,
-    }
-    const unlocking = stakingLedger?.ledger?.unlocking || []
-    const maxReserve = maxBigInt(frozen, reserved)
-
-    // Calculate a forced amount of free balance that needs to be reserved to keep the account
-    // alive. Deducts `locks` from free balance reserve needed
     const edReserved = getEdReserved(address)
-    const freeBalance = maxBigInt(free - edReserved, 0n)
 
-    // Total amount unlocking and unlocked.
-    const { totalUnlocking, totalUnlocked } = getUnlocking(
-      unlocking,
+    const balances = calculateAllBalances(
+      accountBalance,
+      stakingLedger,
+      membership,
+      edReserved,
+      feeReserve,
       activeEra.index
     )
 
-    // Total free balance after reserved amount of ed is subtracted
-    // Subtract unlocking amounts as they are locked and not transferrable
-    const transferrableBalance = maxBigInt(
-      freeBalance - feeReserve - totalUnlocking - totalUnlocked,
-      0n
-    )
-    // Free balance to pay for tx fees
-    const balanceTxFees = maxBigInt(free - edReserved, 0n)
-
-    const nominatorBalances = () => {
-      const totalPossibleBond = total + transferrableBalance
-
-      return {
-        active,
-        totalUnlocking,
-        totalUnlocked,
-        totalPossibleBond,
-        totalAdditionalBond: maxBigInt(totalPossibleBond - total, 0n),
-        totalUnlockChunks: unlocking.length,
-      }
-    }
-
-    const poolBalances = () => {
-      const unlockingPool = (membership?.unbondingEras || []).map(
-        ([era, value]) => ({
-          era,
-          value,
-        })
-      )
-      const {
-        totalUnlocking: totalUnlockingPool,
-        totalUnlocked: totalUnlockedPool,
-      } = getUnlocking(unlockingPool, activeEra.index)
-
-      return {
-        active: membership?.balance || 0n,
-        totalUnlocking: totalUnlockingPool,
-        totalUnlocked: totalUnlockedPool,
-        totalPossibleBond: maxBigInt(transferrableBalance - maxReserve, 0n),
-        totalUnlockChunks: unlockingPool.length,
-      }
-    }
-
     return {
-      freeBalance,
-      transferrableBalance,
-      balanceTxFees,
-      edReserved,
-      nominate: nominatorBalances(),
-      pool: poolBalances(),
+      freeBalance: balances.freeBalance,
+      transferrableBalance: balances.transferableBalance,
+      balanceTxFees: balances.balanceTxFees,
+      edReserved: balances.edReserved,
+      nominate: {
+        active: balances.nominator.active,
+        totalUnlocking: balances.nominator.totalUnlocking,
+        totalUnlocked: balances.nominator.totalUnlocked,
+        totalPossibleBond: balances.nominator.totalPossibleBond,
+        totalAdditionalBond: balances.nominator.totalAdditionalBond,
+        totalUnlockChunks: balances.nominator.totalUnlockChunks,
+      },
+      pool: {
+        active: balances.pool.active,
+        totalUnlocking: balances.pool.totalUnlocking,
+        totalUnlocked: balances.pool.totalUnlocked,
+        totalPossibleBond: balances.pool.totalPossibleBond,
+        totalUnlockChunks: balances.pool.totalUnlockChunks,
+      },
     }
   }
 

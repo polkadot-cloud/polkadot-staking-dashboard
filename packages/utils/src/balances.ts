@@ -45,12 +45,8 @@ export const calculateTransferableBalance = (
   feeReserve: bigint,
   totalUnlocking: bigint,
   totalUnlocked: bigint
-): bigint => {
-  return maxBigInt(
-    freeBalance - feeReserve - totalUnlocking - totalUnlocked,
-    0n
-  )
-}
+): bigint =>
+  maxBigInt(freeBalance - feeReserve - totalUnlocking - totalUnlocked, 0n)
 
 // Calculate balance available for transaction fees
 export const calculateBalanceTxFees = (
@@ -184,8 +180,10 @@ export const calculateAllBalances = (
   const balanceTxFees = calculateBalanceTxFees(accountBalance, edReserved)
 
   // Calculate nominator balances first (needed for transferable calculation)
-  const { totalUnlocking: nominatorUnlocking, totalUnlocked: nominatorUnlocked } = 
-    getUnlocking(stakingLedger?.ledger?.unlocking || [], currentEra)
+  const {
+    totalUnlocking: nominatorUnlocking,
+    totalUnlocked: nominatorUnlocked,
+  } = getUnlocking(stakingLedger?.ledger?.unlocking || [], currentEra)
 
   // Calculate transferable balance
   const transferableBalance = calculateTransferableBalance(

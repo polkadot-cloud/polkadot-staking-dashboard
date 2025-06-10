@@ -7,6 +7,7 @@ import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useCurrency } from 'contexts/Currency'
@@ -21,7 +22,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
+import { calculateAllBalances, planckToUnitBn } from 'utils'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
@@ -31,56 +32,63 @@ export const BalanceChart = () => {
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
-  const { getStakingLedger, getAccountBalance } = useBalances()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { activeEra } = useApi()
+  const {
+    getStakingLedger,
+    getAccountBalance,
+    getPoolMembership,
+    getEdReserved,
+  } = useBalances()
+  const { feeReserve } = useTransferOptions()
   const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
 
+  // Calculate all balances using the utility function
+  const accountBalance = getAccountBalance(activeAddress)
   const stakingLedger = getStakingLedger(activeAddress)
-  const active = stakingLedger?.ledger?.active || 0n
-  const total = stakingLedger?.ledger?.total || 0n
+  const { membership } = getPoolMembership(activeAddress)
+  const edReserved = getEdReserved(activeAddress)
 
-  const { balance } = getAccountBalance(activeAddress)
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const balances = calculateAllBalances(
+    accountBalance,
+    stakingLedger,
+    membership,
+    edReserved,
+    feeReserve,
+    activeEra.index
+  )
 
-  const poolBondOptions = allTransferOptions.pool
-  const unlockingPools =
-    poolBondOptions.totalUnlocking + poolBondOptions.totalUnlocked
-
-  // User's total balance
-  const { free, frozen, reserved } = balance
-  const freeBn = new BigNumber(free)
-  const frozenBn = new BigNumber(frozen)
-  const reservedBn = new BigNumber(reserved)
-
-  // freeBn excludes actively bonded funds, so add them back
+  // Convert to BigNumber for display and percentage calculations
   const totalBalance = planckToUnitBn(
-    freeBn.plus(active).plus(poolBondOptions.active).plus(unlockingPools),
+    new BigNumber(balances.totalBalance),
+    units
+  )
+  const nominating = planckToUnitBn(
+    new BigNumber(
+      balances.nominator.active +
+        balances.nominator.totalUnlocking +
+        balances.nominator.totalUnlocked
+    ),
+    units
+  )
+  const inPoolPlanck =
+    balances.pool.active +
+    balances.pool.totalUnlocking +
+    balances.pool.totalUnlocked
+  const inPool = planckToUnitBn(new BigNumber(inPoolPlanck), units)
+  const fundsTransferrable = new BigNumber(
+    planckToUnit(balances.transferableBalance, units)
+  )
+  const fundsLocked = planckToUnitBn(
+    new BigNumber(balances.lockedBalance),
+    units
+  )
+  const freeBalanceBn = planckToUnitBn(
+    new BigNumber(balances.freeBalance),
     units
   )
 
-  // Total funds nominating
-  const nominating = planckToUnitBn(new BigNumber(total), units)
-
-  // Total funds in pool
-  const inPoolPlanck = new BigNumber(allTransferOptions.pool.active)
-    .plus(allTransferOptions.pool.totalUnlocking)
-    .plus(allTransferOptions.pool.totalUnlocked)
-
-  // Total locked funds (minus actively staking)
-  const maxLockedBn = BigNumber.max(frozenBn, reservedBn)
-    .minus(active)
-    .minus(inPoolPlanck)
-
-  const freeBalancePlanck = new BigNumber(allTransferOptions.freeBalance)
-
-  // Graph percentages
-  const inPool = planckToUnitBn(inPoolPlanck, units)
-  const freeBalanceBn = planckToUnitBn(freeBalancePlanck, units)
-  const fundsTransferrable = new BigNumber(
-    planckToUnit(allTransferOptions.transferrableBalance, units)
-  )
-
+  // Graph percentages for staking overview
   const graphTotal = nominating.plus(inPool).plus(fundsTransferrable)
   const graphNominating = nominating.isGreaterThan(0)
     ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
@@ -97,12 +105,10 @@ export const BalanceChart = () => {
       )
     : new BigNumber(0)
 
-  // Available balance data.
-  const fundsLocked = planckToUnitBn(maxLockedBn, units)
+  // Available balance data
+  const fundsFree = freeBalanceBn
 
-  const fundsFree = planckToUnitBn(freeBalancePlanck, units)
-
-  // Available balance percentages.
+  // Available balance percentages
   const graphLocked = fundsLocked.isGreaterThan(0)
     ? fundsLocked.dividedBy(freeBalanceBn.multipliedBy(0.01))
     : new BigNumber(0)
@@ -113,17 +119,14 @@ export const BalanceChart = () => {
 
   // Total amount reserved for fees and existential deposit
   let fundsReserved = new BigNumber(
-    planckToUnit(allTransferOptions.edReserved + feeReserve, units)
+    planckToUnit(balances.edReserved + feeReserve, units)
   )
   if (freeBalanceBn.isLessThan(fundsReserved)) {
     fundsReserved = freeBalanceBn
   }
 
   const isNominating = nominating.isGreaterThan(0)
-  const isInPool = new BigNumber(poolBondOptions.active)
-    .plus(poolBondOptions.totalUnlocked)
-    .plus(poolBondOptions.totalUnlocking)
-    .isGreaterThan(0)
+  const isInPool = inPool.isGreaterThan(0)
 
   return (
     <>
@@ -231,11 +234,9 @@ export const BalanceChart = () => {
                     iconRight={
                       syncing
                         ? undefined
-                        : feeReserve > 0n &&
-                            allTransferOptions.edReserved !== 0n
+                        : feeReserve > 0n && balances.edReserved !== 0n
                           ? faCheckDouble
-                          : feeReserve === 0n &&
-                              allTransferOptions.edReserved === 0n
+                          : feeReserve === 0n && balances.edReserved === 0n
                             ? undefined
                             : faCheck
                     }

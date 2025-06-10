@@ -52,7 +52,7 @@ const mockPoolMembership = {
     [102, 30000000000000n], // 30 DOT unlocking
     [98, 20000000000000n], // 20 DOT unlocked (past era)
   ] as [number, bigint][],
-  claimPermission: 'Permissioned' as any,
+  claimPermission: 'Permissioned',
   pendingRewards: 5000000000000n, // 5 DOT
 }
 
