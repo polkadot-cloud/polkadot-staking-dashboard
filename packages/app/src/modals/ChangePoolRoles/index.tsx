@@ -7,10 +7,8 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { SubmitTx } from 'library/SubmitTx'
 import { useTranslation } from 'react-i18next'
-import { Padding, Title } from 'ui-core/modal'
+import { Padding, RoleChange, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { RoleChange } from './RoleChange'
-import { Wrapper } from './Wrapper'
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals')
@@ -48,7 +46,7 @@ export const ChangePoolRoles = () => {
       <Close />
       <Padding>
         <Title>{t('changePoolRoles')}</Title>
-        <Wrapper>
+        <Padding verticalOnly>
           <RoleChange
             roleName={t('root')}
             oldAddress={roleEdits?.root?.oldAddress}
@@ -64,7 +62,7 @@ export const ChangePoolRoles = () => {
             oldAddress={roleEdits?.bouncer?.oldAddress}
             newAddress={roleEdits?.bouncer?.newAddress}
           />
-        </Wrapper>
+        </Padding>
       </Padding>
       <SubmitTx {...submitExtrinsic} valid />
     </>
