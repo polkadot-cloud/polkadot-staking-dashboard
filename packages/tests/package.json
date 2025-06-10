@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
