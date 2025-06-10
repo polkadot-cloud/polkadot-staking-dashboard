@@ -26,10 +26,8 @@
       }
     }
 
-    &:last-child {
-      flex-grow: 1;
-      justify-content: flex-start;
-
+    &:nth-child(2),
+    &:nth-child(3) {
       > h3 {
         color: var(--text-color-secondary);
         font-size: 1.25rem;
@@ -37,6 +35,11 @@
           margin-left: 0.5rem;
         }
       }
+    }
+
+    &:last-child {
+      flex-grow: 1;
+      justify-content: flex-start;
 
       > div {
         flex-grow: 1;
