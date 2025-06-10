@@ -14,7 +14,7 @@
     "@w3ux/observables-connect": "^0.9.44",
     "@w3ux/utils": "^2.1.0",
     "consts": "workspace:*",
-    "dedot": "^0.12.0",
+    "dedot": "^0.13.1",
     "global-bus": "workspace:*",
     "rxjs": "^7.8.2",
     "smoldot": "^2.0.36",
