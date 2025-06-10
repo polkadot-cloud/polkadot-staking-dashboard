@@ -4,7 +4,7 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo",
+    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo node_modules",
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
     "lint:fix": "eslint './**' --fix && prettier --write .",
@@ -55,6 +55,16 @@
     },
     "ignoredBuiltDependencies": [
       "unrs-resolver"
+    ],
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "bufferutil",
+      "esbuild",
+      "keccak",
+      "sharp",
+      "unrs-resolver",
+      "utf-8-validate"
     ]
   },
   "packageManager": "pnpm@10.11.0"
