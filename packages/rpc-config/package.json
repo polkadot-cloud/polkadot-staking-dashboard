@@ -11,7 +11,7 @@
     "consts": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^22.15.19",
+    "@types/node": "^24.0.0",
     "fs": "0.0.1-security",
     "path": "^0.12.7",
     "url": "^0.11.4",
