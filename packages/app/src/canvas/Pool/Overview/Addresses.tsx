@@ -4,8 +4,9 @@
 import { CardWrapper } from 'library/Card/Wrappers'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { useTranslation } from 'react-i18next'
+import { Identity } from 'ui-core/base'
 import { Subheading } from 'ui-core/canvas'
-import { Identity } from 'ui-identity'
+import { formatIdentityValue } from 'utils'
 import type { OverviewSectionProps } from '../types'
 import { AddressesWrapper } from '../Wrappers'
 
@@ -22,14 +23,16 @@ export const Addresses = ({
       <AddressesWrapper>
         <section>
           <Identity
-            title={'Stash'}
+            label={'Stash'}
+            value={formatIdentityValue(addresses.stash)}
             address={addresses.stash}
             Action={<CopyAddress address={addresses.stash} />}
           />
         </section>
         <section>
           <Identity
-            title={'Reward'}
+            label={'Reward'}
+            value={formatIdentityValue(addresses.reward)}
             address={addresses.reward}
             Action={<CopyAddress address={addresses.reward} />}
           />
