@@ -248,9 +248,6 @@ importers:
       ui-graphs:
         specifier: workspace:*
         version: link:../ui-graphs
-      ui-identity:
-        specifier: workspace:*
-        version: link:../ui-identity
       ui-overlay:
         specifier: workspace:*
         version: link:../ui-overlay
@@ -533,6 +530,9 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.1.0)
+      '@w3ux/react-polkicon':
+        specifier: ^3.2.1
+        version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: 2.0.10
         version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -604,21 +604,6 @@ importers:
       types:
         specifier: workspace:*
         version: link:../types
-
-  packages/ui-identity:
-    dependencies:
-      '@w3ux/react-polkicon':
-        specifier: ^3.2.1
-        version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      ui-core:
-        specifier: workspace:*
-        version: link:../ui-core
 
   packages/ui-overlay:
     dependencies:
