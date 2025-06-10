@@ -4,7 +4,7 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo",
+    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo node_modules",
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
     "lint:fix": "eslint './**' --fix && prettier --write .",
@@ -16,7 +16,7 @@
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@types/react-helmet": "^6.1.11",
-    "@typescript-eslint/parser": "^8.32.1",
+    "@typescript-eslint/parser": "^8.34.0",
     "@vitejs/plugin-react-swc": "^3.10.0",
     "@w3ux/types": "^2.3.0",
     "eslint": "^9.27.0",
@@ -31,7 +31,7 @@
     "globals": "^16.2.0",
     "prettier": "^3.5.2",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "sass": "1.89.1",
+    "sass": "1.89.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.32.1"
   },
@@ -55,6 +55,16 @@
     },
     "ignoredBuiltDependencies": [
       "unrs-resolver"
+    ],
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "bufferutil",
+      "esbuild",
+      "keccak",
+      "sharp",
+      "unrs-resolver",
+      "utf-8-validate"
     ]
   },
   "packageManager": "pnpm@10.11.0"
