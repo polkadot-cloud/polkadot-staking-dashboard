@@ -129,8 +129,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       '@w3ux/react-polkicon':
-        specifier: ^3.2.1
-        version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^3.2.4
+        version: 3.2.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.1.0
         version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -497,8 +497,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.1.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.1
-        version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^3.2.4
+        version: 3.2.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: 2.1.0
         version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -531,8 +531,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.1.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.1
-        version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^3.2.4
+        version: 3.2.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: 2.1.0
         version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -2792,8 +2792,8 @@ packages:
   '@w3ux/react-odometer@2.1.0':
     resolution: {integrity: sha512-jmtm1CmXhK3JJIVFocKH1/VuS69fCWV2Qz0szZGAOQcGmGha5KPA0IMrh17qwARY4bjvpMVY34gXjLdRUBxZZg==}
 
-  '@w3ux/react-polkicon@3.2.1':
-    resolution: {integrity: sha512-WRKtxhaTQH6TtKEgeF52ZxK17WTZWCLwJUVI0isSNV0V8bxRmV3jNp78ASTlO/G0rxIZrTUm3PGFIyB01hLiSA==}
+  '@w3ux/react-polkicon@3.2.4':
+    resolution: {integrity: sha512-kLAstKWtqH/XxD7K+or3w59T2hAdwk29kiAvu0QkG4bfgKlmJYqfj7ZacSOr1SPe+EmdeoajN1kyovW6c4AX0Q==}
 
   '@w3ux/types@2.3.0':
     resolution: {integrity: sha512-oJSCB9vw12jaZsavjy2kAa17FNdp68l8EEFNEi9jO1onl2gbyg5l8WcoTgm8TeRpwD5ZDDySNGIPChTXZXgSpQ==}
@@ -8488,7 +8488,7 @@ snapshots:
 
   '@w3ux/react-odometer@2.1.0': {}
 
-  '@w3ux/react-polkicon@3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@w3ux/react-polkicon@3.2.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/crypto': 1.1.0
       '@w3ux/utils': 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
