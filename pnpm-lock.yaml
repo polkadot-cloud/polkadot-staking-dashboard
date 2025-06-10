@@ -198,8 +198,8 @@ importers:
         specifier: workspace:*
         version: link:../plugin-staking-api
       qrcode-generator:
-        specifier: 1.4.4
-        version: 1.4.4
+        specifier: 1.5.0
+        version: 1.5.0
       radix-ui:
         specifier: ^1.4.2
         version: 1.4.2(@types/react-dom@19.1.6(@types/react@19.1.7))(@types/react@19.1.7)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -392,8 +392,8 @@ importers:
   packages/locales:
     dependencies:
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       consts:
         specifier: workspace:*
         version: link:../consts
@@ -500,8 +500,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -534,8 +534,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -617,8 +617,8 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       framer-motion:
         specifier: ^12.14.0
         version: 12.16.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -642,8 +642,8 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bignumber.js:
         specifier: ^9.3.0
         version: 9.3.0
@@ -775,10 +775,6 @@ packages:
 
   '@dedot/api@0.13.0':
     resolution: {integrity: sha512-OyM+iSmENebqUjrPwRLVAQSsz8om2RFra2Gye9apeBC7RsPfh1GMjMjhQvoRi8oDsbCbzmtuLUpiantgldjNdQ==}
-    engines: {node: '>=18'}
-
-  '@dedot/api@0.8.1':
-    resolution: {integrity: sha512-2Vms0ikA4hCJZLzBJ2HSpnmSwDaJBWE1JALgQ12zSs4YqM9vxqL8CpQPsOxsuXZzryaGFEP0mLFednc88DynSA==}
     engines: {node: '>=18'}
 
   '@dedot/chaintypes@0.113.0':
@@ -919,10 +915,6 @@ packages:
 
   '@dedot/utils@0.13.0':
     resolution: {integrity: sha512-2vFftA54Fx/r1J1qqf87Aie42Ag9el/28ROzfMknGHp12LZtBs6VG0FHhfCCIsokRrJ4ggO0p2JBkaD1DUYR2A==}
-    engines: {node: '>=18'}
-
-  '@dedot/utils@0.8.1':
-    resolution: {integrity: sha512-DuTL4UpjjrUUiw0sruBfHRJG/pgJMBGIwE4hGSr7tP+yZ1LtKHkiOInd7w0WLpU+amylpPZBF9HixGaeDaAQqg==}
     engines: {node: '>=18'}
 
   '@ecies/ciphers@0.2.3':
@@ -1536,10 +1528,6 @@ packages:
 
   '@polkadot-api/wasm-executor@0.1.2':
     resolution: {integrity: sha512-a5wGenltB3EFPdf72u8ewi6HsUg2qubUAf3ekJprZf24lTK3+w8a/GUF/y6r08LJF35MALZ32SAtLqtVTIOGnQ==}
-
-  '@polkadot/types-support@15.10.2':
-    resolution: {integrity: sha512-sHamH6MehJa7aGZ/DHTB6vJAhSN5VrJx5lpDpb3xgBFTr0cVc5IsociqgJ/mgvyEIdLF3laraPxREqxCmuxTaQ==}
-    engines: {node: '>=18'}
 
   '@polkadot/types-support@16.1.2':
     resolution: {integrity: sha512-dt0ORyCNfbxpLobWotD/L/TdohJUzYDGLLWXVqmwEhdgrNSlGF6L6Wab4VWNV1OX19/j9Xztb7UdRhNgHokVlg==}
@@ -2900,9 +2888,6 @@ packages:
   '@w3ux/types@2.3.0':
     resolution: {integrity: sha512-oJSCB9vw12jaZsavjy2kAa17FNdp68l8EEFNEi9jO1onl2gbyg5l8WcoTgm8TeRpwD5ZDDySNGIPChTXZXgSpQ==}
 
-  '@w3ux/utils@2.0.10':
-    resolution: {integrity: sha512-utJhLwZyCTxQDxtlZIskPsM7FgckNllBT1Z/XGgAITt0UxqHhMW4mJr7TViV9s4GHCaFhBYwhUrb5PpoDgnZNw==}
-
   '@w3ux/utils@2.1.0':
     resolution: {integrity: sha512-yMDr8oMnDb+5nhed/puZLc/cY18F0B5h3GqgKczrkTfZfM4fV/2Cwnr8UQzLd63jMblwOLexnv2BM/+H73to+Q==}
 
@@ -3474,11 +3459,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  dedot@0.8.1:
-    resolution: {integrity: sha512-r/jSlrPjzbEhxEbhSEfnEnQ1cMBUL0oaKk7v5qUYLGrnxsDYpi4P8wtype6dz9Y9kXjngf2FPZsox3kwilDWIQ==}
-    engines: {node: '>=18'}
-    hasBin: true
-
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
@@ -3509,9 +3489,6 @@ packages:
     resolution: {integrity: sha512-OCg2UsLbXK7GmmpzMXhYkdO64vhJ1ROUUGaTFyHjVwEdMEcTTRj7W1TxLbSBxdY8QLBPCcp66MTyaSy0RpO17A==}
     peerDependencies:
       valtio: '*'
-
-  deshape@0.0.1:
-    resolution: {integrity: sha512-ZwrsnoB4t0gu0NOANDAh4Eww8X8CaQ6yHSjhO4Fi4D9PAX/NmPsTevGirXzTz/+VArJcMf4fO78iQdedDIWrdA==}
 
   deshape@0.1.0:
     resolution: {integrity: sha512-6Z941WJcKPE2nMz2lqq5H3OlOAgxECQqOj/OtHluaqgM8ajKESt/vcexMkUw7JGzeuLVKXkGe7+vsCC71NC9SQ==}
@@ -4840,8 +4817,8 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  qrcode-generator@1.4.4:
-    resolution: {integrity: sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==}
+  qrcode-generator@1.5.0:
+    resolution: {integrity: sha512-sqo7otiDq5rA4djRkFI7IjLQqxRrLpIou0d3rqr03JJLUGf5raPh91xCio+lFFbQf0SlcVckStz0EmDEX3EeZA==}
 
   qrcode@1.5.3:
     resolution: {integrity: sha512-puyri6ApkEHYiVl4CFzo1tDkAZ+ATcnbJrJ6RiBM1Fhctdn/ix9MTE3hRph33omisEbC/2fcfemsseiKgBPKZg==}
@@ -6509,12 +6486,6 @@ snapshots:
       '@scure/base': 1.2.6
       eventemitter3: 5.0.1
 
-  '@dedot/utils@0.8.1':
-    dependencies:
-      '@noble/hashes': 1.8.0
-      '@scure/base': 1.2.6
-      eventemitter3: 5.0.1
-
   '@ecies/ciphers@0.2.3(@noble/ciphers@1.3.0)':
     dependencies:
       '@noble/ciphers': 1.3.0
@@ -7142,11 +7113,6 @@ snapshots:
   '@pkgr/core@0.2.7': {}
 
   '@polkadot-api/wasm-executor@0.1.2': {}
-
-  '@polkadot/types-support@15.10.2':
-    dependencies:
-      '@polkadot/util': 13.5.1
-      tslib: 2.8.1
 
   '@polkadot/types-support@16.1.2':
     dependencies:
@@ -8816,13 +8782,6 @@ snapshots:
 
   '@w3ux/types@2.3.0': {}
 
-  '@w3ux/utils@2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      dedot: 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@w3ux/utils@2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       dedot: 0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -10083,21 +10042,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  dedot@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10):
-    dependencies:
-      '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/cli': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.8.1
-      '@dedot/contracts': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/providers': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/runtime-specs': 0.8.1
-      '@dedot/shape': 0.8.1
-      '@dedot/types': 0.8.1
-      '@dedot/utils': 0.8.1
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   deep-eql@5.0.2: {}
 
   deep-is@0.1.4: {}
@@ -10123,8 +10067,6 @@ snapshots:
   derive-valtio@0.1.0(valtio@1.13.2(@types/react@19.1.7)(react@19.1.0)):
     dependencies:
       valtio: 1.13.2(@types/react@19.1.7)(react@19.1.0)
-
-  deshape@0.0.1: {}
 
   deshape@0.1.0: {}
 
@@ -11591,7 +11533,7 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  qrcode-generator@1.4.4: {}
+  qrcode-generator@1.5.0: {}
 
   qrcode@1.5.3:
     dependencies:
