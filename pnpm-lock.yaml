@@ -392,8 +392,8 @@ importers:
   packages/locales:
     dependencies:
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       consts:
         specifier: workspace:*
         version: link:../consts
@@ -500,8 +500,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -534,8 +534,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -617,8 +617,8 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       framer-motion:
         specifier: ^12.14.0
         version: 12.16.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -642,8 +642,8 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.0.10
-        version: 2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.1.0
+        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bignumber.js:
         specifier: ^9.3.0
         version: 9.3.0
@@ -773,10 +773,6 @@ packages:
     resolution: {integrity: sha512-OyM+iSmENebqUjrPwRLVAQSsz8om2RFra2Gye9apeBC7RsPfh1GMjMjhQvoRi8oDsbCbzmtuLUpiantgldjNdQ==}
     engines: {node: '>=18'}
 
-  '@dedot/api@0.8.1':
-    resolution: {integrity: sha512-2Vms0ikA4hCJZLzBJ2HSpnmSwDaJBWE1JALgQ12zSs4YqM9vxqL8CpQPsOxsuXZzryaGFEP0mLFednc88DynSA==}
-    engines: {node: '>=18'}
-
   '@dedot/chaintypes@0.113.0':
     resolution: {integrity: sha512-jYmk6tw/8B0gvYS6pBYzePyZ9g+fhCZYNC97BNRBi2PLNix2+Y+zcBEfykYTamZxRRxVbPnHRXl99CwN+JPEDA==}
     peerDependencies:
@@ -787,33 +783,16 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@dedot/cli@0.8.1':
-    resolution: {integrity: sha512-bS7K6JvBNJrhqcOSLBpAFfezFKsagehngraL1c2VAsPC+NC6P6tz/zSahi4g0IUNGf5UCh73v+88WAR1EAd0eg==}
-    engines: {node: '>=18'}
-    hasBin: true
-
   '@dedot/codecs@0.13.0':
     resolution: {integrity: sha512-duGShMdpmGM4fcbNZmYUk65QDOaMvxAe7PwvfEfK1apwTsVs7M/xYuVEWBV3Aj3ljz+fjlPnD89zIGKeWj2ezw==}
-    engines: {node: '>=18'}
-
-  '@dedot/codecs@0.8.1':
-    resolution: {integrity: sha512-2PuSFYbFPpBmMlMeDqHzHeTJ1KP/1jV2pKoNg9THpYjX2vZUHCp/XQmn0ELWicDKDr+KGfR32tBj1V+DAfwbGg==}
     engines: {node: '>=18'}
 
   '@dedot/codegen@0.13.0':
     resolution: {integrity: sha512-qc8Q6N7fFBhfDdgLMFs/KdWqDV7GntSHkcvm18b9HEsGFFrMQjxF8VA4tlLoClcxUYxqz0GD4aCWsI4wIopAxA==}
     engines: {node: '>=18'}
 
-  '@dedot/codegen@0.8.1':
-    resolution: {integrity: sha512-yhLIfi19zLionA5RD+TfGZ7Ssdm4ml0v/dgcM5BVdQTiXhDv7AWtTftsMZsaxkFMmjVOcPrS9NtGzPD/haKGng==}
-    engines: {node: '>=18'}
-
   '@dedot/contracts@0.13.0':
     resolution: {integrity: sha512-lZ4P51xk1IQLlRLE0ND09blCvDH8XHKM+NHNb2Au7eFwgQh/9uCtEjS6wqok/65Hc99ZezRyAGCYAjEm/ZE/zQ==}
-    engines: {node: '>=18'}
-
-  '@dedot/contracts@0.8.1':
-    resolution: {integrity: sha512-9mFZIKLvUrue2Tyunvsawuh7rVVoeUoO1R+WZzfUpRYFiHN2ix/KwZckpQTgksJrrW82El22A8tYTD72GTrB7g==}
     engines: {node: '>=18'}
 
   '@dedot/merkleized-metadata@0.13.0':
@@ -824,24 +803,12 @@ packages:
     resolution: {integrity: sha512-9C4+mL21oXr5Q5K+g00h89NBlMHfkXiHvHHwGL+v7rlKZLgRi8L6rblqTauumdVByT5N5lVtcgEWqwHzS5BU1g==}
     engines: {node: '>=18'}
 
-  '@dedot/providers@0.8.1':
-    resolution: {integrity: sha512-NXN33se+O1ChiC9heTVHdWTrZg2Le1Tqo6rj6LwZ9pGcgKkGs2lov8Aq9zKLgOVMKSUA93UpXx3EY6iC+cUhcg==}
-    engines: {node: '>=18'}
-
   '@dedot/runtime-specs@0.13.0':
     resolution: {integrity: sha512-dhNx1gtE485BGtC2ajdYS1tHTCDC2uRmU7HzdvyeX0S/W+LoJXb9pm+dyD01paME0C/RXMVybztCdfbd43GYtA==}
     engines: {node: '>=18'}
 
-  '@dedot/runtime-specs@0.8.1':
-    resolution: {integrity: sha512-jwGce7JCO+QXZpgunv49ie/ETm45iiR7UB4F/54A8Uo1wvkvqqWJ4V75poBhSt8Zj8Ny0CUr1E2A8NvuJp+Ffw==}
-    engines: {node: '>=18'}
-
   '@dedot/shape@0.13.0':
     resolution: {integrity: sha512-nu2OrbIcZv96fsLjvdoqvRwBmQ1EGFETQt2HQd6o6m4dLG5XCssYEZwhxap2lSqZeNNhFtXEODoXc8zYFQUmwQ==}
-    engines: {node: '>=18'}
-
-  '@dedot/shape@0.8.1':
-    resolution: {integrity: sha512-Jsi/hdqA457Z4ihwJ0KxCNA6iOCNxtpF7nix9pj+kJt+ZbDkwni1R+DRuSOX2OXm0hpudluuNNAF6QJqLBZCdQ==}
     engines: {node: '>=18'}
 
   '@dedot/smoldot@0.13.0':
@@ -852,24 +819,12 @@ packages:
     resolution: {integrity: sha512-R7NTsv1oaBZWTqHK6HTTpyQ9gJz6gOK0k47eI7L/OeUmUZrZGVOzrRDNOLmKxgKOhsQTMQ8ifFT5fGITJZrkzw==}
     engines: {node: '>=18'}
 
-  '@dedot/storage@0.8.1':
-    resolution: {integrity: sha512-k9jVFME2nE1laaUfK5jArBa8rEolhPeo3hdP0Ow1KQLCfeqSONvqmTWR8VjHtFGeqk+mEYRMpY7EoESzLR2+ww==}
-    engines: {node: '>=18'}
-
   '@dedot/types@0.13.0':
     resolution: {integrity: sha512-ugcv6PupNuI96DfKbYujDS3hP+qv7eMT98G7IckoL7KwldJxuIKCdCS9VA4dY8/Isf4VrE7Jm+v/9yvCMwTJaw==}
     engines: {node: '>=18'}
 
-  '@dedot/types@0.8.1':
-    resolution: {integrity: sha512-f2xIInBeXhPxiC7YC3GkE3IObdKknXdNw2Ys3Md48PCjjlfpTF9g0vCbRuNJpwfoI5aJlYclkzGsWYaOOOHV/w==}
-    engines: {node: '>=18'}
-
   '@dedot/utils@0.13.0':
     resolution: {integrity: sha512-2vFftA54Fx/r1J1qqf87Aie42Ag9el/28ROzfMknGHp12LZtBs6VG0FHhfCCIsokRrJ4ggO0p2JBkaD1DUYR2A==}
-    engines: {node: '>=18'}
-
-  '@dedot/utils@0.8.1':
-    resolution: {integrity: sha512-DuTL4UpjjrUUiw0sruBfHRJG/pgJMBGIwE4hGSr7tP+yZ1LtKHkiOInd7w0WLpU+amylpPZBF9HixGaeDaAQqg==}
     engines: {node: '>=18'}
 
   '@ecies/ciphers@0.2.3':
@@ -1483,10 +1438,6 @@ packages:
 
   '@polkadot-api/wasm-executor@0.1.2':
     resolution: {integrity: sha512-a5wGenltB3EFPdf72u8ewi6HsUg2qubUAf3ekJprZf24lTK3+w8a/GUF/y6r08LJF35MALZ32SAtLqtVTIOGnQ==}
-
-  '@polkadot/types-support@15.10.2':
-    resolution: {integrity: sha512-sHamH6MehJa7aGZ/DHTB6vJAhSN5VrJx5lpDpb3xgBFTr0cVc5IsociqgJ/mgvyEIdLF3laraPxREqxCmuxTaQ==}
-    engines: {node: '>=18'}
 
   '@polkadot/types-support@16.1.2':
     resolution: {integrity: sha512-dt0ORyCNfbxpLobWotD/L/TdohJUzYDGLLWXVqmwEhdgrNSlGF6L6Wab4VWNV1OX19/j9Xztb7UdRhNgHokVlg==}
@@ -2847,9 +2798,6 @@ packages:
   '@w3ux/types@2.3.0':
     resolution: {integrity: sha512-oJSCB9vw12jaZsavjy2kAa17FNdp68l8EEFNEi9jO1onl2gbyg5l8WcoTgm8TeRpwD5ZDDySNGIPChTXZXgSpQ==}
 
-  '@w3ux/utils@2.0.10':
-    resolution: {integrity: sha512-utJhLwZyCTxQDxtlZIskPsM7FgckNllBT1Z/XGgAITt0UxqHhMW4mJr7TViV9s4GHCaFhBYwhUrb5PpoDgnZNw==}
-
   '@w3ux/utils@2.1.0':
     resolution: {integrity: sha512-yMDr8oMnDb+5nhed/puZLc/cY18F0B5h3GqgKczrkTfZfM4fV/2Cwnr8UQzLd63jMblwOLexnv2BM/+H73to+Q==}
 
@@ -3416,11 +3364,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  dedot@0.8.1:
-    resolution: {integrity: sha512-r/jSlrPjzbEhxEbhSEfnEnQ1cMBUL0oaKk7v5qUYLGrnxsDYpi4P8wtype6dz9Y9kXjngf2FPZsox3kwilDWIQ==}
-    engines: {node: '>=18'}
-    hasBin: true
-
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
@@ -3451,9 +3394,6 @@ packages:
     resolution: {integrity: sha512-OCg2UsLbXK7GmmpzMXhYkdO64vhJ1ROUUGaTFyHjVwEdMEcTTRj7W1TxLbSBxdY8QLBPCcp66MTyaSy0RpO17A==}
     peerDependencies:
       valtio: '*'
-
-  deshape@0.0.1:
-    resolution: {integrity: sha512-ZwrsnoB4t0gu0NOANDAh4Eww8X8CaQ6yHSjhO4Fi4D9PAX/NmPsTevGirXzTz/+VArJcMf4fO78iQdedDIWrdA==}
 
   deshape@0.1.0:
     resolution: {integrity: sha512-6Z941WJcKPE2nMz2lqq5H3OlOAgxECQqOj/OtHluaqgM8ajKESt/vcexMkUw7JGzeuLVKXkGe7+vsCC71NC9SQ==}
@@ -6169,19 +6109,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/api@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@dedot/codecs': 0.8.1
-      '@dedot/providers': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/runtime-specs': 0.8.1
-      '@dedot/shape': 0.8.1
-      '@dedot/storage': 0.8.1
-      '@dedot/types': 0.8.1
-      '@dedot/utils': 0.8.1
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@dedot/chaintypes@0.113.0(dedot@0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       dedot: 0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -6199,28 +6126,10 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/cli@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.8.1
-      '@dedot/codegen': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@polkadot-api/wasm-executor': 0.1.2
-      '@polkadot/types-support': 15.10.2
-      ora: 8.2.0
-      yargs: 17.7.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@dedot/codecs@0.13.0':
     dependencies:
       '@dedot/shape': 0.13.0
       '@dedot/utils': 0.13.0
-
-  '@dedot/codecs@0.8.1':
-    dependencies:
-      '@dedot/shape': 0.8.1
-      '@dedot/utils': 0.8.1
 
   '@dedot/codegen@0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
@@ -6238,22 +6147,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/codegen@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.8.1
-      '@dedot/contracts': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/providers': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/runtime-specs': 0.8.1
-      '@dedot/shape': 0.8.1
-      '@dedot/types': 0.8.1
-      '@dedot/utils': 0.8.1
-      handlebars: 4.7.8
-      prettier: 3.5.3
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@dedot/contracts@0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/api': 0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -6261,16 +6154,6 @@ snapshots:
       '@dedot/types': 0.13.0
       '@dedot/utils': 0.13.0
       '@ethereumjs/rlp': 10.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
-  '@dedot/contracts@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.8.1
-      '@dedot/types': 0.8.1
-      '@dedot/utils': 0.8.1
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6289,35 +6172,16 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/providers@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@dedot/utils': 0.8.1
-      '@polkadot/x-ws': 13.5.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@dedot/runtime-specs@0.13.0':
     dependencies:
       '@dedot/codecs': 0.13.0
       '@dedot/shape': 0.13.0
       '@dedot/types': 0.13.0
 
-  '@dedot/runtime-specs@0.8.1':
-    dependencies:
-      '@dedot/codecs': 0.8.1
-      '@dedot/shape': 0.8.1
-      '@dedot/types': 0.8.1
-
   '@dedot/shape@0.13.0':
     dependencies:
       '@dedot/utils': 0.13.0
       deshape: 0.1.0
-
-  '@dedot/shape@0.8.1':
-    dependencies:
-      '@dedot/utils': 0.8.1
-      deshape: 0.0.1
 
   '@dedot/smoldot@0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
@@ -6328,27 +6192,13 @@ snapshots:
 
   '@dedot/storage@0.13.0': {}
 
-  '@dedot/storage@0.8.1': {}
-
   '@dedot/types@0.13.0':
     dependencies:
       '@dedot/codecs': 0.13.0
       '@dedot/shape': 0.13.0
       '@dedot/utils': 0.13.0
 
-  '@dedot/types@0.8.1':
-    dependencies:
-      '@dedot/codecs': 0.8.1
-      '@dedot/shape': 0.8.1
-      '@dedot/utils': 0.8.1
-
   '@dedot/utils@0.13.0':
-    dependencies:
-      '@noble/hashes': 1.8.0
-      '@scure/base': 1.2.6
-      eventemitter3: 5.0.1
-
-  '@dedot/utils@0.8.1':
     dependencies:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
@@ -6981,11 +6831,6 @@ snapshots:
   '@pkgr/core@0.2.7': {}
 
   '@polkadot-api/wasm-executor@0.1.2': {}
-
-  '@polkadot/types-support@15.10.2':
-    dependencies:
-      '@polkadot/util': 13.5.1
-      tslib: 2.8.1
 
   '@polkadot/types-support@16.1.2':
     dependencies:
@@ -8655,13 +8500,6 @@ snapshots:
 
   '@w3ux/types@2.3.0': {}
 
-  '@w3ux/utils@2.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
-    dependencies:
-      dedot: 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@w3ux/utils@2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       dedot: 0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -9904,21 +9742,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  dedot@0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10):
-    dependencies:
-      '@dedot/api': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/cli': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/codecs': 0.8.1
-      '@dedot/contracts': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/providers': 0.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/runtime-specs': 0.8.1
-      '@dedot/shape': 0.8.1
-      '@dedot/types': 0.8.1
-      '@dedot/utils': 0.8.1
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   deep-eql@5.0.2: {}
 
   deep-is@0.1.4: {}
@@ -9944,8 +9767,6 @@ snapshots:
   derive-valtio@0.1.0(valtio@1.13.2(@types/react@19.1.7)(react@19.1.0)):
     dependencies:
       valtio: 1.13.2(@types/react@19.1.7)(react@19.1.0)
-
-  deshape@0.0.1: {}
 
   deshape@0.1.0: {}
 
