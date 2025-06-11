@@ -13,10 +13,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      '@w3ux/react-odometer':
-        specifier: 2.2.4
-        version: 2.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.27.0
@@ -2783,12 +2779,6 @@ packages:
       react: ^19.1.0
       react-dom: ^19.1.0
       rxjs: ^7.8.2
-
-  '@w3ux/react-odometer@2.2.4':
-    resolution: {integrity: sha512-a/4gc1TPCELgFF/qR4KNvCUUT/rkEzTiEfiNjKELiepm5UdmWGbR+Jz//q4IsSyXGMFyKmo13rs/pz6IORC+KQ==}
-    peerDependencies:
-      react: ^19.1.0
-      react-dom: ^19.1.0
 
   '@w3ux/react-odometer@2.2.6':
     resolution: {integrity: sha512-VS6bFABpDElIlOTmHa1t4FuDm4OnHt1BfEjaxVsxTxuBccHV+QPSpEM2ngvvrvCBb7y7+deRyUzvhnMLNxYMww==}
@@ -8445,11 +8435,6 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-
-  '@w3ux/react-odometer@2.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
-    dependencies:
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
 
   '@w3ux/react-odometer@2.2.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
