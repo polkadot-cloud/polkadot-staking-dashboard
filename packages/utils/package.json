@@ -8,8 +8,8 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "dependencies": {
-    "@w3ux/hooks": "^2.2.2",
-    "@w3ux/utils": "2.1.0",
+    "@w3ux/hooks": "^2.3.4",
+    "@w3ux/utils": "2.2.1",
     "bignumber.js": "^9.3.0",
     "date-fns": "^4.1.0",
     "dedot": "^0.13.1",
