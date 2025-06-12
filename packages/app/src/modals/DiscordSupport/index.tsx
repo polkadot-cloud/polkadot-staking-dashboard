@@ -7,8 +7,7 @@ import DiscordOutlineSvg from 'assets/brands/discordOutline.svg?react'
 import { DiscordSupportUrl } from 'consts'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
-import { Padding } from 'ui-core/modal'
-import { SupportWrapper } from './Wrapper'
+import { Padding, Support } from 'ui-core/modal'
 
 export const DiscordSupport = () => {
   const { t } = useTranslation('modals')
@@ -16,7 +15,7 @@ export const DiscordSupport = () => {
     <>
       <Title />
       <Padding verticalOnly>
-        <SupportWrapper>
+        <Support>
           <DiscordOutlineSvg />
           <h4>{t('supportDiscord')}</h4>
           <h1>
@@ -25,7 +24,7 @@ export const DiscordSupport = () => {
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
             </a>
           </h1>
-        </SupportWrapper>
+        </Support>
       </Padding>
     </>
   )

@@ -3,13 +3,12 @@
 
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
 
 interface StaticNoteProps {
   value: string
   tKey: string
   valueKey: string
-  deps?: AnyJson[]
+  deps?: unknown[]
 }
 
 // Static notes store a single piece of text that is not updated after the initial render unless
