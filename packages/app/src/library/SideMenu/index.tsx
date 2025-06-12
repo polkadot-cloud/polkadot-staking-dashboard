@@ -148,6 +148,7 @@ export const SideMenu = () => {
               }}
             />
           </div>
+          <Separator />
         </section>
         <section>
           <div className="inner">

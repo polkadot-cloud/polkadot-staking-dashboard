@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Home } from 'pages/Home'
 import { Nominate } from 'pages/Nominate'
 import { Operators } from 'pages/Operators'
 import { Overview } from 'pages/Overview'
@@ -28,6 +29,15 @@ export const PageCategories: PageCategoryItems = [
 ]
 
 export const PagesConfig: PagesConfigItems = [
+  {
+    category: 1,
+    key: 'home',
+    uri: `${import.meta.env.BASE_URL}`,
+    hash: '/home',
+    Entry: Home,
+    lottie: 'home',
+    advanced: false,
+  },
   {
     category: 2,
     key: 'overview',
