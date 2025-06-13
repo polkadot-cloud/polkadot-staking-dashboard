@@ -28,7 +28,7 @@ export const getUnlocking = (chunks: UnlockChunk[], currentEra: number) => {
 }
 
 // Calculate free balance after existential deposit reserve
-const getFreeBalance = (
+export const getFreeBalance = (
   accountBalance: AccountBalance,
   edReserved: bigint
 ): bigint => {
@@ -37,7 +37,7 @@ const getFreeBalance = (
 }
 
 // Calculate transferable balance (free minus fees, unlocking, and unlocked amounts)
-const getTransferrableBalance = (
+export const getTransferrableBalance = (
   freeBalance: bigint,
   feeReserve: bigint,
   totalUnlocking: bigint,
@@ -46,7 +46,7 @@ const getTransferrableBalance = (
   maxBigInt(freeBalance - feeReserve - totalUnlocking - totalUnlocked, 0n)
 
 // Calculate balance available for transaction fees
-const balanceForTxFees = (
+export const balanceForTxFees = (
   accountBalance: AccountBalance,
   edReserved: bigint
 ): bigint => {
@@ -55,7 +55,7 @@ const balanceForTxFees = (
 }
 
 // Calculate nominator balances from staking ledger and transferable balance
-const nominatorBalances = (
+export const nominatorBalances = (
   stakingLedger: StakingLedger,
   transferableBalance: bigint,
   currentEra: number
@@ -80,7 +80,7 @@ const nominatorBalances = (
 }
 
 // Calculate pool balances from membership and account data
-const poolBalances = (
+export const poolBalances = (
   membership: PoolMembership | undefined,
   transferableBalance: bigint,
   maxReserve: bigint,
@@ -107,7 +107,7 @@ const poolBalances = (
 }
 
 // Calculate total account balance including all staked funds
-const getTotalBalance = (
+export const getTotalBalance = (
   accountBalance: AccountBalance,
   nominatorActive: bigint,
   poolActive: bigint,
@@ -119,7 +119,7 @@ const getTotalBalance = (
 }
 
 // Calculate locked balance (max of frozen/reserved minus actively staking)
-const getLockedBalance = (
+export const getLockedBalance = (
   accountBalance: AccountBalance,
   nominatorActive: bigint,
   poolTotal: bigint
