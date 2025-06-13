@@ -13,11 +13,11 @@ export const useUnstaking = () => {
   const { t } = useTranslation('app')
   const { isNominator } = useStaking()
   const { activeAddress } = useActiveAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
 
-  const transferOptions = getTransferOptions(activeAddress).nominate
+  const transferOptions = getAllBalances(activeAddress).nominator
   const { nominees } = getNominationStatus(activeAddress, 'nominator')
 
   // determine if user is regular unstaking

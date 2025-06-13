@@ -19,12 +19,12 @@ export const ClosurePrompts = () => {
   const { getThemeValue } = useThemeValues()
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { isBonding, activePool, isDepositor, activePoolNominations } =
     useActivePool()
 
   const { state, memberCounter } = activePool?.bondedPool || {}
-  const { active, totalUnlockChunks } = getTransferOptions(activeAddress).pool
+  const { active, totalUnlockChunks } = getAllBalances(activeAddress).pool
   const targets = activePoolNominations?.targets ?? []
 
   // is the pool in a state for the depositor to close

@@ -31,19 +31,19 @@ export const UnbondFeedback = ({
   const { network } = useNetwork()
   const { isDepositor } = useActivePool()
   const { activeAddress } = useActiveAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const {
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi()
 
   const { unit, units } = getStakingChainData(network)
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const allTransferOptions = getAllBalances(activeAddress)
   const defaultValue = defaultBond ? String(defaultBond) : ''
 
   // get bond options for either nominating or pooling.
   const transferOptions =
-    bondFor === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate
+    bondFor === 'pool' ? allTransferOptions.pool : allTransferOptions.nominator
   const { active } = transferOptions
 
   // store errors

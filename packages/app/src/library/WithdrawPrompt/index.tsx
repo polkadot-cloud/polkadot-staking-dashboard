@@ -28,15 +28,15 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { state } = activePool?.bondedPool || {}
 
   const { bondDuration } = getConsts(network)
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const allTransferOptions = getAllBalances(activeAddress)
 
   const totalUnlockChunks =
     bondFor === 'nominator'
-      ? allTransferOptions.nominate.totalUnlockChunks
+      ? allTransferOptions.nominator.totalUnlockChunks
       : allTransferOptions.pool.totalUnlockChunks
 
   const bondDurationFormatted = timeleftAsString(

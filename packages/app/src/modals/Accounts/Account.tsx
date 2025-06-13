@@ -27,7 +27,7 @@ export const AccountButton = ({
   delegator,
   proxyType,
   noBorder = false,
-  transferrableBalance,
+  transferableBalance,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals')
   const { getAccount } = useImportedAccounts()
@@ -137,7 +137,7 @@ export const AccountButton = ({
         <section className="foot">
           <span className="balance">
             {`${t('free')}: ${new BigNumber(
-              planckToUnit(transferrableBalance || 0n, units)
+              planckToUnit(transferableBalance || 0n, units)
             )
               .decimalPlaces(3)
               .toFormat()} ${unit}`}

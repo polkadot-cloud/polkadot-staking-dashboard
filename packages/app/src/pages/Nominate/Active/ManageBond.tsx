@@ -46,7 +46,7 @@ export const ManageBond = () => {
   const { activeAddress } = useActiveAccounts()
   const { getFastUnstakeText } = useUnstaking()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
 
@@ -54,9 +54,9 @@ export const ManageBond = () => {
   const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const active = ledger?.active || 0n
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const allTransferOptions = getAllBalances(activeAddress)
 
-  const { totalUnlocking, totalUnlocked } = allTransferOptions.nominate
+  const { totalUnlocking, totalUnlocked } = allTransferOptions.nominator
   const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
   // Determine whether to display fast unstake button or regular unstake button.
@@ -149,7 +149,7 @@ export const ManageBond = () => {
         unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
         free={
           new BigNumber(
-            planckToUnit(allTransferOptions.transferrableBalance, units)
+            planckToUnit(allTransferOptions.transferableBalance, units)
           )
         }
         inactive={active === 0n}

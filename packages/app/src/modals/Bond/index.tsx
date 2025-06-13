@@ -34,19 +34,19 @@ export const Bond = () => {
   const { activeAddress } = useActiveAccounts()
   const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { feeReserve, getAllBalances } = useTransferOptions()
   const { unit, units } = getStakingChainData(network)
 
   const { bondFor } = options
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
-  const { nominate, transferrableBalance } = getTransferOptions(activeAddress)
+  const { nominator, transferableBalance } = getAllBalances(activeAddress)
 
   const freeToBond = new BigNumber(
     planckToUnit(
       (bondFor === 'nominator'
-        ? nominate.totalAdditionalBond
-        : transferrableBalance) - feeReserve,
+        ? nominator.totalAdditionalBond
+        : transferableBalance) - feeReserve,
       units
     )
   )

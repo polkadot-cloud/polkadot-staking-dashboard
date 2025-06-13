@@ -25,7 +25,7 @@ export const Accounts = () => {
   const { t } = useTranslation('modals')
   const { getDelegates } = useProxies()
   const { accounts } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getStakingLedger, getPoolMembership } = useBalances()
   const { status: modalStatus, setModalResize } = useOverlay().modal
@@ -48,8 +48,7 @@ export const Accounts = () => {
     if (delegates?.delegates) {
       delegates.delegates = delegates?.delegates.map((d) => ({
         ...d,
-        transferrableBalance: getTransferOptions(d.delegate)
-          .transferrableBalance,
+        transferableBalance: getAllBalances(d.delegate).transferableBalance,
       }))
     }
 
@@ -150,8 +149,8 @@ export const Accounts = () => {
             {nominatingAndPool.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_nominating_and_pool_${i}`}>
                 <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
+                  transferableBalance={
+                    getAllBalances(address).transferableBalance
                   }
                   address={address}
                   source={source}
@@ -175,8 +174,8 @@ export const Accounts = () => {
             {nominating.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_nominating_${i}`}>
                 <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
+                  transferableBalance={
+                    getAllBalances(address).transferableBalance
                   }
                   address={address}
                   source={source}
@@ -200,8 +199,8 @@ export const Accounts = () => {
             {inPool.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_in_pool_${i}`}>
                 <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
+                  transferableBalance={
+                    getAllBalances(address).transferableBalance
                   }
                   address={address}
                   source={source}
@@ -225,8 +224,8 @@ export const Accounts = () => {
             {notStaking.map(({ address, source, delegates }, i) => (
               <Fragment key={`acc_not_staking_${i}`}>
                 <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
+                  transferableBalance={
+                    getAllBalances(address).transferableBalance
                   }
                   address={address}
                   source={source}

@@ -13,12 +13,12 @@ import type { BondFor } from 'types'
 export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   const { serviceApi } = useApi()
   const { activeAddress } = useActiveAccounts()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { feeReserve, getAllBalances } = useTransferOptions()
   const transferOptions = useMemo(
-    () => getTransferOptions(activeAddress),
+    () => getAllBalances(activeAddress),
     [activeAddress]
   )
-  const { transferrableBalance } = transferOptions
+  const { transferableBalance } = transferOptions
 
   // store the largest possible tx fees for bonding.
   const [largestTxFee, setLargestTxFee] = useState<BigNumber>(new BigNumber(0))
@@ -36,7 +36,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const bond = maxBigInt(transferrableBalance - feeReserve, 0n)
+    const bond = maxBigInt(transferableBalance - feeReserve, 0n)
 
     let tx: SubmittableExtrinsic | undefined
     if (bondFor === 'pool') {

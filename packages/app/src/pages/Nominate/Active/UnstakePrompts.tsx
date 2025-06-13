@@ -27,9 +27,9 @@ export const UnstakePrompts = () => {
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
 
   const { unit } = getStakingChainData(network)
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
-    getTransferOptions(activeAddress).nominate
+    getAllBalances(activeAddress).nominator
 
   // unstaking can withdraw
   const canWithdrawUnlocks =

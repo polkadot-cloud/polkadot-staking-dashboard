@@ -20,11 +20,11 @@ export const useStatusButtons = () => {
   const { bondedPools } = useBondedPools()
   const { getPoolMembership } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { isReadOnlyAccount } = useImportedAccounts()
 
   const { membership } = getPoolMembership(activeAddress)
-  const { active } = getTransferOptions(activeAddress).pool
+  const { active } = getAllBalances(activeAddress).pool
 
   const getCreateDisabled = () => {
     if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {

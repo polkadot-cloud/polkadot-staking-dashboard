@@ -34,7 +34,7 @@ export const NominatorSetupsProvider = ({
   const { network } = useNetwork()
   const { fetch } = useFetchMethods()
   const { activeAddress } = useActiveAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { units } = getStakingChainData(network)
 
@@ -155,8 +155,8 @@ export const NominatorSetupsProvider = ({
 
   const generateOptimalSetup = (): NominatorProgress => {
     const {
-      nominate: { totalPossibleBond },
-    } = getTransferOptions(activeAddress)
+      nominator: { totalPossibleBond },
+    } = getAllBalances(activeAddress)
 
     const setup = {
       payee: {

@@ -11,9 +11,9 @@ import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
-import type { MaybeAddress } from 'types'
-import { getAllBalances } from 'utils'
-import type { TransferOptions, TransferOptionsContextInterface } from './types'
+import type { AllBalances, MaybeAddress } from 'types'
+import { calculateAllBalances } from 'utils'
+import type { TransferOptionsContextInterface } from './types'
 import { getLocalFeeReserve, setLocalFeeReserve } from './Utils'
 
 export const [TransferOptionsContext, useTransferOptions] =
@@ -24,17 +24,15 @@ export const TransferOptionsProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const { activeEra } = useApi()
-  const { network } = useNetwork()
-  const { activeAddress } = useActiveAccounts()
   const {
     getPoolMembership,
     getStakingLedger,
     getAccountBalance,
     getEdReserved,
   } = useBalances()
-
-  const { membership } = getPoolMembership(activeAddress)
+  const { activeEra } = useApi()
+  const { network } = useNetwork()
+  const { activeAddress } = useActiveAccounts()
   const { units, defaultFeeReserve } = getStakingChainData(network)
 
   // A user-configurable reserve amount to be used to pay for transaction fees
@@ -45,12 +43,12 @@ export const TransferOptionsProvider = ({
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `Balances`
-  const getTransferOptions = (address: MaybeAddress): TransferOptions => {
+  const getAllBalances = (address: MaybeAddress): AllBalances => {
     const accountBalance = getAccountBalance(address)
     const stakingLedger = getStakingLedger(address)
+    const { membership } = getPoolMembership(activeAddress)
     const edReserved = getEdReserved(address)
-
-    const balances = getAllBalances(
+    const balances = calculateAllBalances(
       accountBalance,
       stakingLedger,
       membership,
@@ -58,28 +56,7 @@ export const TransferOptionsProvider = ({
       feeReserve,
       activeEra.index
     )
-
-    return {
-      freeBalance: balances.freeBalance,
-      transferrableBalance: balances.transferableBalance,
-      balanceTxFees: balances.balanceTxFees,
-      edReserved: balances.edReserved,
-      nominate: {
-        active: balances.nominator.active,
-        totalUnlocking: balances.nominator.totalUnlocking,
-        totalUnlocked: balances.nominator.totalUnlocked,
-        totalPossibleBond: balances.nominator.totalPossibleBond,
-        totalAdditionalBond: balances.nominator.totalAdditionalBond,
-        totalUnlockChunks: balances.nominator.totalUnlockChunks,
-      },
-      pool: {
-        active: balances.pool.active,
-        totalUnlocking: balances.pool.totalUnlocking,
-        totalUnlocked: balances.pool.totalUnlocked,
-        totalPossibleBond: balances.pool.totalPossibleBond,
-        totalUnlockChunks: balances.pool.totalUnlockChunks,
-      },
-    }
+    return balances
   }
 
   // Updates account's reserve amount in state and in local storage
@@ -93,13 +70,13 @@ export const TransferOptionsProvider = ({
 
   // Gets staked balance, whether nominating or in pool, for an account
   const getStakedBalance = (address: MaybeAddress) => {
-    const allTransferOptions = getTransferOptions(address)
+    const allTransferOptions = getAllBalances(address)
 
     // Total funds nominating
     const nominating = planckToUnit(
-      allTransferOptions.nominate.active +
-        allTransferOptions.nominate.totalUnlocking +
-        allTransferOptions.nominate.totalUnlocked,
+      allTransferOptions.nominator.active +
+        allTransferOptions.nominator.totalUnlocking +
+        allTransferOptions.nominator.totalUnlocked,
       units
     )
 
@@ -135,7 +112,7 @@ export const TransferOptionsProvider = ({
   return (
     <TransferOptionsContext.Provider
       value={{
-        getTransferOptions,
+        getAllBalances,
         getStakedBalance,
         setFeeReserveBalance,
         feeReserve,

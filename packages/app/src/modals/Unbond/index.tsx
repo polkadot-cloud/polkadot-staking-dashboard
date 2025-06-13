@@ -34,7 +34,7 @@ export const Unbond = () => {
   const { erasToSeconds } = useErasToTimeLeft()
   const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { isDepositor, activePool } = useActivePool()
   const {
     serviceApi,
@@ -67,10 +67,10 @@ export const Unbond = () => {
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
 
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const allTransferOptions = getAllBalances(activeAddress)
   const { active } = isPooling
     ? allTransferOptions.pool
-    : allTransferOptions.nominate
+    : allTransferOptions.nominator
 
   // convert BigNumber values to number
   const freeToUnbond = new BigNumber(planckToUnit(active, units))

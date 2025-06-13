@@ -34,7 +34,7 @@ export const SubmitTx = ({
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { setModalResize } = useOverlay().modal
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
@@ -43,8 +43,8 @@ export const SubmitTx = ({
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
-  const { transferrableBalance } = getTransferOptions(from)
-  const notEnoughFunds = transferrableBalance - fee < 0n && fee > 0n
+  const { transferableBalance } = getAllBalances(from)
+  const notEnoughFunds = transferableBalance - fee < 0n && fee > 0n
 
   // Default to active account
   let signingOpts = {

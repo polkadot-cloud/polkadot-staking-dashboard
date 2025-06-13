@@ -30,11 +30,11 @@ export const UpdateReserve = () => {
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { accountHasSigner } = useImportedAccounts()
-  const { feeReserve, setFeeReserveBalance, getTransferOptions } =
+  const { feeReserve, setFeeReserveBalance, getAllBalances } =
     useTransferOptions()
 
   const { unit, units } = getStakingChainData(network)
-  const { edReserved } = getTransferOptions(activeAddress)
+  const { edReserved } = getAllBalances(activeAddress)
   const minReserve = new BigNumber(planckToUnit(edReserved, units))
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1

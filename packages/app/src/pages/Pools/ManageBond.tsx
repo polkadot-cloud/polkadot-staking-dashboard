@@ -29,15 +29,15 @@ export const ManageBond = () => {
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { isBonding, isMember, activePool, isDepositor } = useActivePool()
 
   const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const allTransferOptions = getAllBalances(activeAddress)
   const {
     pool: { active, totalUnlocking, totalUnlocked },
-    transferrableBalance,
+    transferableBalance,
   } = allTransferOptions
   const { state } = activePool?.bondedPool || {}
 
@@ -111,7 +111,7 @@ export const ManageBond = () => {
         active={new BigNumber(planckToUnit(active, units))}
         unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
         unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-        free={new BigNumber(planckToUnit(transferrableBalance, units))}
+        free={new BigNumber(planckToUnit(transferableBalance, units))}
         inactive={active === 0n}
       />
     </>

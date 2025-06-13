@@ -35,9 +35,9 @@ export const Tips = () => {
   const { activeAddress } = useActiveAccounts()
   const { fillVariables } = useFillVariables()
   const { syncing } = useSyncing(['initialization'])
-  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { feeReserve, getAllBalances } = useTransferOptions()
 
-  const { freeBalance } = getTransferOptions(activeAddress)
+  const { freeBalance } = getAllBalances(activeAddress)
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false

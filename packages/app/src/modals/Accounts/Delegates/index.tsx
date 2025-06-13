@@ -23,9 +23,9 @@ export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
 
   return delegatesList.length ? (
     <DelegatesWrapper>
-      {delegatesList.map(({ delegate, proxyType, transferrableBalance }, i) => (
+      {delegatesList.map(({ delegate, proxyType, transferableBalance }, i) => (
         <AccountButton
-          transferrableBalance={transferrableBalance}
+          transferableBalance={transferableBalance}
           key={`_del_${i}`}
           address={delegate}
           source={source}

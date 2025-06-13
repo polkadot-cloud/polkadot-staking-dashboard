@@ -38,16 +38,16 @@ export const BondFeedback = ({
     stakingMetrics: { minNominatorBond },
   } = useApi()
   const { unit, units } = getStakingChainData(network)
-  const { getTransferOptions } = useTransferOptions()
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const { getAllBalances } = useTransferOptions()
+  const allTransferOptions = getAllBalances(activeAddress)
 
   const defaultBondStr = defaultBond ? String(defaultBond) : ''
 
   // get bond options for either staking or pooling.
   const availableBalance =
     bondFor === 'nominator'
-      ? allTransferOptions.nominate.totalAdditionalBond
-      : allTransferOptions.transferrableBalance
+      ? allTransferOptions.nominator.totalAdditionalBond
+      : allTransferOptions.transferableBalance
 
   // the default bond balance. If we are bonding, subtract tx fees from bond amount.
   const freeToBond = !disableTxFeeUpdate

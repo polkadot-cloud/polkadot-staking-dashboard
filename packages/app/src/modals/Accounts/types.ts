@@ -12,7 +12,7 @@ export interface AccountItemProps {
   delegator?: string
   noBorder?: boolean
   proxyType?: string
-  transferrableBalance?: bigint
+  transferableBalance?: bigint
 }
 
 export interface DelegatesProps {

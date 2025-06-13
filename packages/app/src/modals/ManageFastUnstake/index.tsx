@@ -36,16 +36,16 @@ export const ManageFastUnstake = () => {
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { setModalResize, setModalStatus } = useOverlay().modal
-  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { feeReserve, getAllBalances } = useTransferOptions()
   const { counterForQueue, queueDeposit, fastUnstakeStatus, exposed } =
     useFastUnstake()
 
   const { unit, units } = getStakingChainData(network)
   const { bondDuration, fastUnstakeDeposit } = getConsts(network)
-  const allTransferOptions = getTransferOptions(activeAddress)
-  const { nominate, transferrableBalance } = allTransferOptions
-  const { totalUnlockChunks } = nominate
-  const enoughForDeposit = transferrableBalance >= fastUnstakeDeposit
+  const allTransferOptions = getAllBalances(activeAddress)
+  const { nominator, transferableBalance } = allTransferOptions
+  const { totalUnlockChunks } = nominator
+  const enoughForDeposit = transferableBalance >= fastUnstakeDeposit
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)
@@ -65,7 +65,7 @@ export const ManageFastUnstake = () => {
     totalUnlockChunks,
     isFastUnstaking,
     fastUnstakeDeposit,
-    transferrableBalance,
+    transferableBalance,
     feeReserve,
   ])
 

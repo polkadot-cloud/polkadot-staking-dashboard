@@ -7,8 +7,6 @@ import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -22,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { getAllBalances, planckToUnitBn } from 'utils'
+import { planckToUnitBn } from 'utils'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
@@ -32,31 +30,10 @@ export const BalanceChart = () => {
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
-  const { activeEra } = useApi()
-  const {
-    getStakingLedger,
-    getAccountBalance,
-    getPoolMembership,
-    getEdReserved,
-  } = useBalances()
-  const { feeReserve } = useTransferOptions()
+  const { feeReserve, getAllBalances } = useTransferOptions()
   const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
-
-  // Calculate all balances using the utility function
-  const accountBalance = getAccountBalance(activeAddress)
-  const stakingLedger = getStakingLedger(activeAddress)
-  const { membership } = getPoolMembership(activeAddress)
-  const edReserved = getEdReserved(activeAddress)
-
-  const balances = getAllBalances(
-    accountBalance,
-    stakingLedger,
-    membership,
-    edReserved,
-    feeReserve,
-    activeEra.index
-  )
+  const balances = getAllBalances(activeAddress)
 
   // Convert to BigNumber for display and percentage calculations
   const totalBalance = planckToUnitBn(

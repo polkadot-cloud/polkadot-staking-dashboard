@@ -28,10 +28,10 @@ export const MembershipStatus = ({
   const { poolsMetaData } = useBondedPools()
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { activePool, isOwner, isBouncer, isMember } = useActivePool()
 
-  const { active } = getTransferOptions(activeAddress).pool
+  const { active } = getAllBalances(activeAddress).pool
   const poolState = activePool?.bondedPool?.state ?? null
 
   const membershipButtons = []

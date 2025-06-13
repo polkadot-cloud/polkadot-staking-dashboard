@@ -40,11 +40,11 @@ export const LeavePool = ({
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { getPoolMembership, getPendingPoolRewards } = useBalances()
 
   const { unit, units } = getStakingChainData(network)
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const allTransferOptions = getAllBalances(activeAddress)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = getConsts(network)
   const pendingRewards = getPendingPoolRewards(activeAddress)

@@ -33,14 +33,14 @@ export const Unstake = () => {
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
   const { setModalStatus, setModalResize } = useOverlay().modal
 
   const { bondDuration } = getConsts(network)
   const { unit, units } = getStakingChainData(network)
   const nominations = getNominations(activeAddress)
-  const allTransferOptions = getTransferOptions(activeAddress)
-  const { active } = allTransferOptions.nominate
+  const allTransferOptions = getAllBalances(activeAddress)
+  const { active } = allTransferOptions.nominator
 
   const bondDurationFormatted = timeleftAsString(
     t,

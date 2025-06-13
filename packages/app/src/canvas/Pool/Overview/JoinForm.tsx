@@ -37,14 +37,14 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { setPoolSetup } = usePoolSetups()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getTransferOptions } = useTransferOptions()
+  const { getAllBalances } = useTransferOptions()
 
   const { unit, units } = getStakingChainData(network)
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
   const {
     pool: { totalPossibleBond },
-  } = getTransferOptions(activeAddress)
+  } = getAllBalances(activeAddress)
 
   // Pool claim permission value.
   const [claimPermission, setClaimPermission] = useState<ClaimPermission>(
