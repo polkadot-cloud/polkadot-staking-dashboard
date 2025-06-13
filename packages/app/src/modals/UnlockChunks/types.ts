@@ -1,8 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { UnlockChunk } from 'contexts/Balances/types'
-import type { BondFor } from 'types'
+import type { BondFor, UnlockChunk } from 'types'
 
 export interface FormsProps {
   setSection: (section: number) => void
