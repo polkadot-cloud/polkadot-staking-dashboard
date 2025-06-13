@@ -1,18 +1,17 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ClaimPermission } from 'types'
 import {
-  getAllBalances,
-  calculateBalanceTxFees,
-  calculateFreeBalance,
-  calculateLockedBalance,
-  calculateNominatorBalances,
-  calculatePoolBalances,
-  calculateTotalBalance,
-  calculateTransferableBalance,
+  balanceForTxFees,
+  calculateAllBalances,
+  getFreeBalance,
+  getLockedBalance,
+  getTotalBalance,
+  getTransferrableBalance,
   getUnlocking,
-  maxBigInt,
-  minBigInt,
+  nominatorBalances,
+  poolBalances,
 } from 'utils'
 import { expect, test } from 'vitest'
 
@@ -52,25 +51,13 @@ const mockPoolMembership = {
     [102, 30000000000000n], // 30 DOT unlocking
     [98, 20000000000000n], // 20 DOT unlocked (past era)
   ] as [number, bigint][],
-  claimPermission: 'Permissioned',
+  claimPermission: 'Permissioned' as ClaimPermission,
   pendingRewards: 5000000000000n, // 5 DOT
 }
 
 const currentEra = 101
 const edReserved = 10000000000000n // 10 DOT
 const feeReserve = 5000000000000n // 5 DOT
-
-test('maxBigInt returns the larger value', () => {
-  expect(maxBigInt(100n, 200n)).toBe(200n)
-  expect(maxBigInt(300n, 200n)).toBe(300n)
-  expect(maxBigInt(100n, 100n)).toBe(100n)
-})
-
-test('minBigInt returns the smaller value', () => {
-  expect(minBigInt(100n, 200n)).toBe(100n)
-  expect(minBigInt(300n, 200n)).toBe(200n)
-  expect(minBigInt(100n, 100n)).toBe(100n)
-})
 
 test('getUnlocking correctly separates unlocking and unlocked amounts', () => {
   const chunks = [
@@ -91,26 +78,26 @@ test('getUnlocking handles empty chunks', () => {
   expect(result.totalUnlocked).toBe(0n)
 })
 
-test('calculateFreeBalance subtracts ED reserve from free balance', () => {
-  const result = calculateFreeBalance(mockAccountBalance, edReserved)
+test('getFreeBalance subtracts ED reserve from free balance', () => {
+  const result = getFreeBalance(mockAccountBalance, edReserved)
   expect(result).toBe(990000000000000n) // 1000 - 10
 })
 
-test('calculateFreeBalance handles insufficient balance', () => {
+test('getFreeBalance handles insufficient balance', () => {
   const insufficientBalance = {
     ...mockAccountBalance,
     balance: { ...mockAccountBalance.balance, free: 5000000000000n }, // 5 DOT
   }
-  const result = calculateFreeBalance(insufficientBalance, edReserved)
+  const result = getFreeBalance(insufficientBalance, edReserved)
   expect(result).toBe(0n) // max(5 - 10, 0) = 0
 })
 
-test('calculateTransferableBalance subtracts all locked amounts', () => {
+test('getTransferrableBalance subtracts all locked amounts', () => {
   const freeBalance = 990000000000000n
   const totalUnlocking = 50000000000000n
   const totalUnlocked = 50000000000000n
 
-  const result = calculateTransferableBalance(
+  const result = getTransferrableBalance(
     freeBalance,
     feeReserve,
     totalUnlocking,
@@ -119,8 +106,8 @@ test('calculateTransferableBalance subtracts all locked amounts', () => {
   expect(result).toBe(885000000000000n) // 990 - 5 - 50 - 50
 })
 
-test('calculateTransferableBalance handles insufficient balance', () => {
-  const result = calculateTransferableBalance(
+test('getTransferrableBalance handles insufficient balance', () => {
+  const result = getTransferrableBalance(
     10000000000000n, // 10 DOT
     feeReserve,
     50000000000000n,
@@ -129,14 +116,14 @@ test('calculateTransferableBalance handles insufficient balance', () => {
   expect(result).toBe(0n) // max(10 - 5 - 50 - 50, 0) = 0
 })
 
-test('calculateBalanceTxFees equals calculateFreeBalance', () => {
-  const result = calculateBalanceTxFees(mockAccountBalance, edReserved)
+test('balanceForTxFees equals getFreeBalance', () => {
+  const result = balanceForTxFees(mockAccountBalance, edReserved)
   expect(result).toBe(990000000000000n) // 1000 - 10
 })
 
-test('calculateNominatorBalances calculates all nominator-related balances', () => {
+test('nominatorBalances calculates all nominator-related balances', () => {
   const transferableBalance = 885000000000000n
-  const result = calculateNominatorBalances(
+  const result = nominatorBalances(
     mockStakingLedger,
     transferableBalance,
     currentEra
@@ -150,7 +137,7 @@ test('calculateNominatorBalances calculates all nominator-related balances', () 
   expect(result.totalUnlockChunks).toBe(2)
 })
 
-test('calculateNominatorBalances handles undefined ledger', () => {
+test('nominatorBalances handles undefined ledger', () => {
   const ledgerUndefined = {
     ledger: undefined,
     payee: undefined,
@@ -158,7 +145,7 @@ test('calculateNominatorBalances handles undefined ledger', () => {
     controllerUnmigrated: false,
   }
 
-  const result = calculateNominatorBalances(
+  const result = nominatorBalances(
     ledgerUndefined,
     885000000000000n,
     currentEra
@@ -172,11 +159,11 @@ test('calculateNominatorBalances handles undefined ledger', () => {
   expect(result.totalUnlockChunks).toBe(0)
 })
 
-test('calculatePoolBalances calculates all pool-related balances', () => {
+test('poolBalances calculates all pool-related balances', () => {
   const transferableBalance = 885000000000000n
   const maxReserve = 50000000000000n
 
-  const result = calculatePoolBalances(
+  const result = poolBalances(
     mockPoolMembership,
     transferableBalance,
     maxReserve,
@@ -190,8 +177,8 @@ test('calculatePoolBalances calculates all pool-related balances', () => {
   expect(result.totalUnlockChunks).toBe(2)
 })
 
-test('calculatePoolBalances handles undefined membership', () => {
-  const result = calculatePoolBalances(
+test('poolBalances handles undefined membership', () => {
+  const result = poolBalances(
     undefined,
     885000000000000n,
     50000000000000n,
@@ -205,13 +192,13 @@ test('calculatePoolBalances handles undefined membership', () => {
   expect(result.totalUnlockChunks).toBe(0)
 })
 
-test('calculateTotalBalance sums all account balances', () => {
+test('getTotalBalance sums all account balances', () => {
   const nominatorActive = 400000000000000n
   const poolActive = 300000000000000n
   const poolUnlocking = 30000000000000n
   const poolUnlocked = 20000000000000n
 
-  const result = calculateTotalBalance(
+  const result = getTotalBalance(
     mockAccountBalance,
     nominatorActive,
     poolActive,
@@ -222,11 +209,11 @@ test('calculateTotalBalance sums all account balances', () => {
   expect(result).toBe(1750000000000000n) // 1000 + 400 + 300 + 30 + 20
 })
 
-test('calculateLockedBalance calculates locked funds correctly', () => {
+test('getLockedBalance calculates locked funds correctly', () => {
   const nominatorActive = 400000000000000n
   const poolTotal = 350000000000000n // 300 + 30 + 20
 
-  const result = calculateLockedBalance(
+  const result = getLockedBalance(
     mockAccountBalance,
     nominatorActive,
     poolTotal
@@ -237,7 +224,7 @@ test('calculateLockedBalance calculates locked funds correctly', () => {
   expect(result).toBe(0n)
 })
 
-test('calculateLockedBalance with higher reserves', () => {
+test('getLockedBalance with higher reserves', () => {
   const highReserveBalance = {
     ...mockAccountBalance,
     balance: {
@@ -247,7 +234,7 @@ test('calculateLockedBalance with higher reserves', () => {
     },
   }
 
-  const result = calculateLockedBalance(
+  const result = getLockedBalance(
     highReserveBalance,
     400000000000000n,
     350000000000000n
@@ -258,8 +245,8 @@ test('calculateLockedBalance with higher reserves', () => {
   expect(result).toBe(50000000000000n)
 })
 
-test('getAllBalances provides comprehensive balance calculations', () => {
-  const result = getAllBalances(
+test('calculateAllBalances provides comprehensive balance calculations', () => {
+  const result = calculateAllBalances(
     mockAccountBalance,
     mockStakingLedger,
     mockPoolMembership,
@@ -294,7 +281,7 @@ test('getAllBalances provides comprehensive balance calculations', () => {
   expect(result.lockedBalance).toBe(0n)
 })
 
-test('getAllBalances handles edge cases with zero balances', () => {
+test('calculateAllBalances handles edge cases with zero balances', () => {
   const zeroBalance = {
     synced: true,
     nonce: 0,
@@ -312,7 +299,7 @@ test('getAllBalances handles edge cases with zero balances', () => {
     controllerUnmigrated: false,
   }
 
-  const result = getAllBalances(
+  const result = calculateAllBalances(
     zeroBalance,
     emptyLedger,
     undefined,
