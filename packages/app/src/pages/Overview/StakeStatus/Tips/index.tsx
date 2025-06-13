@@ -7,10 +7,11 @@ import { TipsConfig } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { useSyncing } from 'hooks/useSyncing'
 import { DefaultLocale } from 'locales'
@@ -31,13 +32,14 @@ export const Tips = () => {
   } = useApi()
   const { inPool } = useActivePool()
   const { isOwner } = useActivePool()
+  const { feeReserve } = useBalances()
   const { isNominating } = useStaking()
   const { activeAddress } = useActiveAccounts()
   const { fillVariables } = useFillVariables()
   const { syncing } = useSyncing(['initialization'])
-  const { feeReserve, getTransferOptions } = useTransferOptions()
-
-  const { freeBalance } = getTransferOptions(activeAddress)
+  const {
+    balances: { freeBalance },
+  } = useAccountBalances(activeAddress)
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false

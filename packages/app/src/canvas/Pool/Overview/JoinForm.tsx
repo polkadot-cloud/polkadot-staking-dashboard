@@ -9,8 +9,8 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import { defaultPoolProgress } from 'contexts/PoolSetups/defaults'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { defaultClaimPermission } from 'global-bus'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -37,14 +37,14 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { setPoolSetup } = usePoolSetups()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getTransferOptions } = useTransferOptions()
+  const {
+    balances: {
+      pool: { totalPossibleBond },
+    },
+  } = useAccountBalances(activeAddress)
 
   const { unit, units } = getStakingChainData(network)
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
-
-  const {
-    pool: { totalPossibleBond },
-  } = getTransferOptions(activeAddress)
 
   // Pool claim permission value.
   const [claimPermission, setClaimPermission] = useState<ClaimPermission>(

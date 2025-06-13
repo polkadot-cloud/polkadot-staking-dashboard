@@ -12,7 +12,6 @@
     "packages/ui-buttons": {},
     "packages/ui-core": {},
     "packages/ui-graphs": {},
-    "packages/ui-identity": {},
     "packages/ui-overlay": {},
     "packages/utils": {}
   }
