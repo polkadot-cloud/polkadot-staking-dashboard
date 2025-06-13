@@ -4,7 +4,7 @@
 import type { Proxy } from 'contexts/Proxies/types'
 import type { MaybeAddress, PoolMembership } from 'types'
 
-export interface AccountItemProps {
+export interface AccountButtonProps {
   address: MaybeAddress
   source: string
   label?: string[]
@@ -12,7 +12,7 @@ export interface AccountItemProps {
   delegator?: string
   noBorder?: boolean
   proxyType?: string
-  transferrableBalance?: bigint
+  transferableBalance?: bigint
 }
 
 export interface DelegatesProps {
@@ -21,22 +21,15 @@ export interface DelegatesProps {
   delegates: Proxy | undefined
 }
 
-export interface AccountInPool extends PoolMembership {
+export interface AccountInPoolProps extends PoolMembership {
   source: string
   delegates?: Proxy
 }
 
-export interface AccountNominating {
-  address: MaybeAddress
-  source: string
-  stashImported: boolean
-  delegates?: Proxy
-}
-
-export interface AccountNotStaking {
+export interface AccountItemProps {
   address: string
   source: string
   delegates?: Proxy
 }
 
-export type AccountNominatingAndInPool = AccountNominating & AccountInPool
+export type AccountNominatingInPoolProps = AccountItemProps & AccountInPoolProps

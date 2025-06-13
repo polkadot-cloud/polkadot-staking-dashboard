@@ -5,36 +5,32 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { ActionItem } from 'library/ActionItem'
-import { Fragment, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CustomHeader, Padding } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { AccountButton } from './Account'
-import { Delegates } from './Delegates'
+import { AccountItem } from './AccountItem'
 import { AccountSeparator, AccountWrapper } from './Wrappers'
 import type {
-  AccountInPool,
-  AccountNominating,
-  AccountNominatingAndInPool,
-  AccountNotStaking,
+  AccountInPoolProps,
+  AccountItemProps,
+  AccountNominatingInPoolProps,
 } from './types'
 
 export const Accounts = () => {
   const { t } = useTranslation('modals')
   const { getDelegates } = useProxies()
   const { accounts } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getStakingLedger, getPoolMembership } = useBalances()
   const { status: modalStatus, setModalResize } = useOverlay().modal
 
   // construct account groupings
-  const nominating: AccountNominating[] = []
-  const inPool: AccountInPool[] = []
-  const nominatingAndPool: AccountNominatingAndInPool[] = []
-  const notStaking: AccountNotStaking[] = []
+  const nominating: AccountItemProps[] = []
+  const inPool: AccountInPoolProps[] = []
+  const nominatingAndPool: AccountNominatingInPoolProps[] = []
+  const notStaking: AccountItemProps[] = []
 
   for (const { address, source } of accounts) {
     const { ledger } = getStakingLedger(address)
@@ -48,8 +44,6 @@ export const Accounts = () => {
     if (delegates?.delegates) {
       delegates.delegates = delegates?.delegates.map((d) => ({
         ...d,
-        transferrableBalance: getTransferOptions(d.delegate)
-          .transferrableBalance,
       }))
     }
 
@@ -89,7 +83,6 @@ export const Accounts = () => {
         ...membership,
         address,
         source,
-        stashImported: true,
         delegates,
       })
       continue
@@ -97,7 +90,7 @@ export const Accounts = () => {
 
     // Nominating only
     if (isNominating && !isInPool) {
-      nominating.push({ address, source, stashImported: true, delegates })
+      nominating.push({ address, source, delegates })
       continue
     }
     // In pool only
@@ -142,106 +135,42 @@ export const Accounts = () => {
             </div>
           </AccountWrapper>
         )}
-
-        {nominatingAndPool.length ? (
+        {!!nominatingAndPool.length && (
           <>
             <AccountSeparator />
             <ActionItem text={t('nominatingAndInPool')} />
-            {nominatingAndPool.map(({ address, source, delegates }, i) => (
-              <Fragment key={`acc_nominating_and_pool_${i}`}>
-                <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
-                  }
-                  address={address}
-                  source={source}
-                />
-                {address && (
-                  <Delegates
-                    delegator={address}
-                    source={source}
-                    delegates={delegates}
-                  />
-                )}
-              </Fragment>
+            {nominatingAndPool.map((item, i) => (
+              <AccountItem key={`acc_nominating_and_pool_${i}`} {...item} />
             ))}
           </>
-        ) : null}
-
-        {nominating.length ? (
+        )}
+        {!!nominating.length && (
           <>
             <AccountSeparator />
             <ActionItem text={t('nominating')} />
-            {nominating.map(({ address, source, delegates }, i) => (
-              <Fragment key={`acc_nominating_${i}`}>
-                <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
-                  }
-                  address={address}
-                  source={source}
-                />
-                {address && (
-                  <Delegates
-                    delegator={address}
-                    source={source}
-                    delegates={delegates}
-                  />
-                )}
-              </Fragment>
+            {nominating.map((item, i) => (
+              <AccountItem key={`acc_nominating_${i}`} {...item} />
             ))}
           </>
-        ) : null}
-
-        {inPool.length ? (
+        )}
+        {!!inPool.length && (
           <>
             <AccountSeparator />
             <ActionItem text={t('inPool')} />
-            {inPool.map(({ address, source, delegates }, i) => (
-              <Fragment key={`acc_in_pool_${i}`}>
-                <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
-                  }
-                  address={address}
-                  source={source}
-                />
-                {address && (
-                  <Delegates
-                    delegator={address}
-                    source={source}
-                    delegates={delegates}
-                  />
-                )}
-              </Fragment>
+            {inPool.map((item, i) => (
+              <AccountItem key={`acc_in_pool_${i}`} {...item} />
             ))}
           </>
-        ) : null}
-
-        {notStaking.length ? (
+        )}
+        {!!notStaking.length && (
           <>
             <AccountSeparator />
             <ActionItem text={t('notStaking')} />
-            {notStaking.map(({ address, source, delegates }, i) => (
-              <Fragment key={`acc_not_staking_${i}`}>
-                <AccountButton
-                  transferrableBalance={
-                    getTransferOptions(address).transferrableBalance
-                  }
-                  address={address}
-                  source={source}
-                />
-                {address && (
-                  <Delegates
-                    delegator={address}
-                    source={source}
-                    delegates={delegates}
-                  />
-                )}
-              </Fragment>
+            {notStaking.map((item, i) => (
+              <AccountItem key={`acc_not_staking_${i}`} {...item} />
             ))}
           </>
-        ) : null}
+        )}
       </Padding>
     </>
   )

@@ -8,7 +8,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Warning } from '../Warning'
@@ -31,19 +31,18 @@ export const UnbondFeedback = ({
   const { network } = useNetwork()
   const { isDepositor } = useActivePool()
   const { activeAddress } = useActiveAccounts()
-  const { getTransferOptions } = useTransferOptions()
   const {
-    poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
+    poolsConfig: { minJoinBond, minCreateBond },
   } = useApi()
+  const { balances } = useAccountBalances(activeAddress)
 
   const { unit, units } = getStakingChainData(network)
-  const allTransferOptions = getTransferOptions(activeAddress)
   const defaultValue = defaultBond ? String(defaultBond) : ''
 
   // get bond options for either nominating or pooling.
   const transferOptions =
-    bondFor === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate
+    bondFor === 'pool' ? balances.pool : balances.nominator
   const { active } = transferOptions
 
   // store errors
