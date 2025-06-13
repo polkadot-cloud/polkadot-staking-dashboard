@@ -26,7 +26,7 @@ export const useAccountBalances = (address: MaybeString) => {
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `Balances`
-  const getAllBalances = (): AllBalances => {
+  const getBalances = (): AllBalances => {
     const accountBalance = getAccountBalance(address)
     const stakingLedger = getStakingLedger(address)
     const { membership } = getPoolMembership(address)
@@ -44,7 +44,7 @@ export const useAccountBalances = (address: MaybeString) => {
 
   // Gets staked balance, whether nominating or in pool, for an account
   const getStakedBalance = () => {
-    const allTransferOptions = getAllBalances()
+    const allTransferOptions = getBalances()
 
     // Total funds nominating
     const nominating = planckToUnit(
@@ -73,7 +73,7 @@ export const useAccountBalances = (address: MaybeString) => {
   }
 
   return {
-    balances: getAllBalances(),
+    balances: getBalances(),
     stakedBalance: getStakedBalance(),
   }
 }
