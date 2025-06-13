@@ -7,10 +7,11 @@ import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Title } from 'library/Modal/Title'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'modals/ManagePool/Wrappers'
@@ -30,11 +31,11 @@ export const UpdateReserve = () => {
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { accountHasSigner } = useImportedAccounts()
-  const { feeReserve, setFeeReserveBalance, getTransferOptions } =
-    useTransferOptions()
+  const { feeReserve, setFeeReserveBalance } = useBalances()
+  const { balances } = useAccountBalances(activeAddress)
 
+  const { edReserved } = balances
   const { unit, units } = getStakingChainData(network)
-  const { edReserved } = getTransferOptions(activeAddress)
   const minReserve = new BigNumber(planckToUnit(edReserved, units))
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
