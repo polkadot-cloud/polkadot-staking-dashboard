@@ -36,8 +36,8 @@ importers:
         specifier: ^3.10.0
         version: 3.10.2(vite@6.3.5(@types/node@22.15.31)(sass@1.89.2))
       '@w3ux/types':
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^2.4.1
+        version: 2.4.1
       eslint:
         specifier: ^9.27.0
         version: 9.28.0
@@ -117,26 +117,26 @@ importers:
         specifier: ^2.2.5
         version: 2.2.5(react@19.1.0)
       '@w3ux/factories':
-        specifier: ^2.1.1
-        version: 2.1.1(react@19.1.0)
+        specifier: ^2.2.1
+        version: 2.2.1(react@19.1.0)
       '@w3ux/hooks':
-        specifier: ^2.2.2
-        version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^2.3.4
+        version: 2.3.4(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.5.4
-        version: 3.5.4(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.6.5
+        version: 3.6.5(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: 2.2.6
+        version: 2.2.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.6
-        version: 3.2.6(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^3.2.7
+        version: 3.2.7(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: ^2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/validator-assets':
-        specifier: ^1.1.1
-        version: 1.1.1(react@19.1.0)
+        specifier: ^1.2.0
+        version: 1.2.0(react@19.1.0)
       '@walletconnect/modal':
         specifier: ^2.7.0
         version: 2.7.0(@types/react@19.1.7)(react@19.1.0)
@@ -333,11 +333,11 @@ importers:
         specifier: ^0.113.0
         version: 0.113.0(dedot@0.13.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@w3ux/observables-connect':
-        specifier: ^0.9.44
-        version: 0.9.44(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.10.2
+        version: 0.10.2(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: ^2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       consts:
         specifier: workspace:*
         version: link:../consts
@@ -358,8 +358,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^2.4.1
+        version: 2.4.1
       types:
         specifier: workspace:*
         version: link:../types
@@ -367,11 +367,11 @@ importers:
   packages/global-bus:
     dependencies:
       '@w3ux/observables-connect':
-        specifier: ^0.9.44
-        version: 0.9.44(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.10.2
+        version: 0.10.2(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: ^2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       consts:
         specifier: workspace:*
         version: link:../consts
@@ -383,8 +383,8 @@ importers:
         version: 7.8.2
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^2.4.1
+        version: 2.4.1
       types:
         specifier: workspace:*
         version: link:../types
@@ -392,8 +392,8 @@ importers:
   packages/locales:
     dependencies:
       '@w3ux/utils':
-        specifier: 2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       consts:
         specifier: workspace:*
         version: link:../consts
@@ -497,11 +497,11 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.1.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.6
-        version: 3.2.6(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^3.2.7
+        version: 3.2.7(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -513,8 +513,8 @@ importers:
         version: link:../ui-core
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^2.4.1
+        version: 2.4.1
       types:
         specifier: workspace:*
         version: link:../types
@@ -531,11 +531,11 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.1.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.6
-        version: 3.2.6(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^3.2.7
+        version: 3.2.7(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -565,8 +565,8 @@ importers:
   packages/ui-graphs:
     dependencies:
       '@w3ux/utils':
-        specifier: ^2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: ^2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bignumber.js:
         specifier: ^9.3.0
         version: 9.3.0
@@ -614,11 +614,11 @@ importers:
         specifier: ^6.7.2
         version: 6.7.2
       '@w3ux/hooks':
-        specifier: ^2.2.2
-        version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^2.3.4
+        version: 2.3.4(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       framer-motion:
         specifier: ^12.14.0
         version: 12.16.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -639,11 +639,11 @@ importers:
   packages/utils:
     dependencies:
       '@w3ux/hooks':
-        specifier: ^2.2.2
-        version: 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+        specifier: ^2.3.4
+        version: 2.3.4(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: 2.1.0
-        version: 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bignumber.js:
         specifier: ^9.3.0
         version: 9.3.0
@@ -2750,53 +2750,58 @@ packages:
   '@vitest/utils@3.2.3':
     resolution: {integrity: sha512-4zFBCU5Pf+4Z6v+rwnZ1HU1yzOKKvDkMXZrymE2PBlbjKJRlrOxbvpfPSvJTGRIwGoahaOGvp+kbCoxifhzJ1Q==}
 
-  '@w3ux/crypto@1.1.0':
-    resolution: {integrity: sha512-qG54AVQaoXGNikVmm4MMC+lMBnCpCvMpkJN719EU14HcKTiBvt5nQ4zNQWyaLlpVPGWKJ5WtXrjLXlUw/HAUwg==}
+  '@w3ux/crypto@1.2.1':
+    resolution: {integrity: sha512-mnwC6ULIGN1sgrxs2asnLbAbtMMBs0MCXaYNaO0kJg67YGIr8lAWimhiiJ63nIAajyH0+08dntAGC0TyCplyvA==}
 
   '@w3ux/extension-assets@2.2.5':
     resolution: {integrity: sha512-sPocfDrAZWfmF8pnZIC6Chu07Nk/g5TCk+USMUEKTxD139SHaIxAaxtp2SQCaYHLsLmr8aqptgxIGdZpQvwj8A==}
     peerDependencies:
       react: ^19
 
-  '@w3ux/factories@2.1.1':
-    resolution: {integrity: sha512-fojsouoEYDZwa0j4Gyis4GNvsqhfW6UlNLuRBq/br4qf+8qug+to2asZ17+wpDnb9WSEmYUh0jQv4Jw9Fco9eA==}
+  '@w3ux/factories@2.2.1':
+    resolution: {integrity: sha512-sPhbRq+v3SvdShXQ5NIoppXxkzjaWGozrw9FUyw7lgNZnJ96xLgKEMTzEJhnuTlmpCU4jxDohqc7/CAI7RhuEg==}
     peerDependencies:
-      react: ^19
+      react: ^19.1.0
 
-  '@w3ux/hooks@2.2.2':
-    resolution: {integrity: sha512-EY3swPXTZgHTn98cmnbZaLyBWK///z/UP68OllKWP5p4A0KTMxqQIvDVxEWW2lyoqk/tZo4P7mbysMS0VA8aTg==}
+  '@w3ux/hooks@2.3.4':
+    resolution: {integrity: sha512-6FwM9flFWBnOhWXZbdvpjdFNLxJUqWCoiv079ZA+mdZGG0wD7ACf1PmWt+zFq28i+QuYbceFETZRIr9Erbcl8g==}
     peerDependencies:
-      react: ^19
+      react: ^19.1.0
 
-  '@w3ux/observables-connect@0.9.44':
-    resolution: {integrity: sha512-Vct6E/lBeYqfRbdKEgXQUcwmvB243zbOMjYnkU8jUNtTPjI3gdbQKydry7SNrU+VDeHyTOYqE9meqbtvt3v4bw==}
-    peerDependencies:
-      rxjs: ^7.8.2
-
-  '@w3ux/react-connect-kit@3.5.4':
-    resolution: {integrity: sha512-bekF67x8b5IEaQFkPyoWEikWtbvAwc1rWHPcXnt7HlOBodazpME8vtaJOy5uLy/Jz1BR80VIOl8uFXD09Do39Q==}
+  '@w3ux/observables-connect@0.10.2':
+    resolution: {integrity: sha512-+OE/Nx5/8LXBfTCwqCKldIvVmNle1VS3N5if++301TPoLNWom1kZxkOV8AQiv/sTX3Je629Wa2Sl4pPBHXIIyg==}
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-odometer@2.1.0':
-    resolution: {integrity: sha512-jmtm1CmXhK3JJIVFocKH1/VuS69fCWV2Qz0szZGAOQcGmGha5KPA0IMrh17qwARY4bjvpMVY34gXjLdRUBxZZg==}
+  '@w3ux/react-connect-kit@3.6.5':
+    resolution: {integrity: sha512-SAY1xS/0sCnoDGfLj5Rvl96MkPhtWcEg+n7YW9elf1MZSysg1BUY8kMMvBcehI0MxKaG7EpCJkWs3YbUipenQQ==}
+    peerDependencies:
+      react: ^19.1.0
+      react-dom: ^19.1.0
+      rxjs: ^7.8.2
 
-  '@w3ux/react-polkicon@3.2.6':
-    resolution: {integrity: sha512-QYuUcvmCbzKQc6/pH44dmVZck3cuhqJ9Zc7yz+uLu7e4fci3Cq6RawHR6lmCM3Nb4WMCw0+FLnsM+mbPuXNHpQ==}
+  '@w3ux/react-odometer@2.2.6':
+    resolution: {integrity: sha512-VS6bFABpDElIlOTmHa1t4FuDm4OnHt1BfEjaxVsxTxuBccHV+QPSpEM2ngvvrvCBb7y7+deRyUzvhnMLNxYMww==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
 
-  '@w3ux/types@2.3.0':
-    resolution: {integrity: sha512-oJSCB9vw12jaZsavjy2kAa17FNdp68l8EEFNEi9jO1onl2gbyg5l8WcoTgm8TeRpwD5ZDDySNGIPChTXZXgSpQ==}
-
-  '@w3ux/utils@2.1.0':
-    resolution: {integrity: sha512-yMDr8oMnDb+5nhed/puZLc/cY18F0B5h3GqgKczrkTfZfM4fV/2Cwnr8UQzLd63jMblwOLexnv2BM/+H73to+Q==}
-
-  '@w3ux/validator-assets@1.1.1':
-    resolution: {integrity: sha512-fHWPpKO8O10yjBk2ComCu3TZMRZWj8s2Nry5nuT+hoATAiL+D3R+gg1TfyvrQevDzpqm9CAEcfg+sCXqsNUPDA==}
+  '@w3ux/react-polkicon@3.2.7':
+    resolution: {integrity: sha512-9oXdaxTZCSREc6JDN5IcVgIJ0NjmuN4dCql4hWGPsmHS0XWtnYSRTLtVhD5ledwtPgZ6umUEDGjXBMeECrpVHg==}
     peerDependencies:
-      react: ^19
+      react: ^19.1.0
+      react-dom: ^19.1.0
+
+  '@w3ux/types@2.4.1':
+    resolution: {integrity: sha512-vqKVJ9NH71fPcaOVM3xuRLJeasOOPDvVdsRvghaDF/e9Zq4OOrMRF7a9KqtwtGX17utzo9Y2GjIcJpNbSjAuzA==}
+
+  '@w3ux/utils@2.2.1':
+    resolution: {integrity: sha512-yEcAtOyeYVWpBhFFcWM2TvW6/2e3HQ4kvqZ6eQQqNTvY5twRuwbj5mq+vOf1OXWxO6gnKKkzWU4Cx7J2mrDTkQ==}
+
+  '@w3ux/validator-assets@1.2.0':
+    resolution: {integrity: sha512-/C0fI5G05mE21ePRNjIGNwdj3NHXvge8OewjwmLTOWCjKyIaGGUsa9f2JTICFfGZHT/BWD4SVCZtRQVahNWyUg==}
+    peerDependencies:
+      react: ^19.1.0
 
   '@wagmi/connectors@5.8.5':
     resolution: {integrity: sha512-CHh4uYP6MziCMlSVXmuAv7wMoYWdxXliuzwCRAxHNNkgXE7z37ez5XzJu0Sm39NUau3Fl8WSjwKo4a4w9BOYNA==}
@@ -4650,6 +4655,9 @@ packages:
   preact@10.26.8:
     resolution: {integrity: sha512-1nMfdFjucm5hKvq0IClqZwK4FJkGXhRrQstOQ3P4vp8HxKrJEMFcY6RdBRVTdfQS/UlnX6gfbPuTvaqx/bDoeQ==}
 
+  preact@10.26.9:
+    resolution: {integrity: sha512-SSjF9vcnF27mJK1XyFMNJzFd5u3pQiATFqoaDy03XuN00u4ziveVVEGt5RKJrDR8MHE/wJo9Nnad56RLzS2RMA==}
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -6040,7 +6048,7 @@ snapshots:
       eth-json-rpc-filters: 6.0.1
       eventemitter3: 5.0.1
       keccak: 3.0.4
-      preact: 10.26.8
+      preact: 10.26.9
       sha.js: 2.4.11
     transitivePeerDependencies:
       - supports-color
@@ -8385,7 +8393,7 @@ snapshots:
       loupe: 3.1.3
       tinyrainbow: 2.0.0
 
-  '@w3ux/crypto@1.1.0':
+  '@w3ux/crypto@1.2.1':
     dependencies:
       blakejs: 1.2.1
 
@@ -8393,46 +8401,50 @@ snapshots:
     dependencies:
       react: 19.1.0
 
-  '@w3ux/factories@2.1.1(react@19.1.0)':
+  '@w3ux/factories@2.2.1(react@19.1.0)':
     dependencies:
       react: 19.1.0
 
-  '@w3ux/hooks@2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)':
+  '@w3ux/hooks@2.3.4(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)':
     dependencies:
-      '@w3ux/utils': 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@w3ux/utils': 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       date-fns: 4.1.0
       react: 19.1.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/observables-connect@0.9.44(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/observables-connect@0.10.2(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/extension-assets': 2.2.5(react@19.1.0)
-      '@w3ux/utils': 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@w3ux/utils': 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rxjs: 7.8.2
     transitivePeerDependencies:
       - bufferutil
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.5.4(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.6.5(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
-      '@w3ux/hooks': 2.2.2(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
-      '@w3ux/observables-connect': 0.9.44(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
-      '@w3ux/utils': 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@w3ux/hooks': 2.3.4(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
+      '@w3ux/observables-connect': 0.10.2(bufferutil@4.0.9)(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+      '@w3ux/utils': 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       rxjs: 7.8.2
     transitivePeerDependencies:
       - bufferutil
-      - react
       - utf-8-validate
 
-  '@w3ux/react-odometer@2.1.0': {}
-
-  '@w3ux/react-polkicon@3.2.6(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)':
+  '@w3ux/react-odometer@2.2.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@w3ux/crypto': 1.1.0
-      '@w3ux/utils': 2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+
+  '@w3ux/react-polkicon@3.2.7(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@w3ux/crypto': 1.2.1
+      '@w3ux/utils': 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       dedot: 0.13.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -8440,16 +8452,16 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/types@2.3.0': {}
+  '@w3ux/types@2.4.1': {}
 
-  '@w3ux/utils@2.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@w3ux/utils@2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       dedot: 0.13.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/validator-assets@1.1.1(react@19.1.0)':
+  '@w3ux/validator-assets@1.2.0(react@19.1.0)':
     dependencies:
       react: 19.1.0
 
@@ -11116,6 +11128,8 @@ snapshots:
       source-map-js: 1.2.1
 
   preact@10.26.8: {}
+
+  preact@10.26.9: {}
 
   prelude-ls@1.2.1: {}
 
