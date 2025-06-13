@@ -20,7 +20,7 @@ import { useFastUnstake } from 'contexts/FastUnstake'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
@@ -46,17 +46,16 @@ export const ManageBond = () => {
   const { activeAddress } = useActiveAccounts()
   const { getFastUnstakeText } = useUnstaking()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getAllBalances } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
+  const { balances } = useAccountBalances(activeAddress)
 
   const { ledger } = getStakingLedger(activeAddress)
   const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const active = ledger?.active || 0n
-  const allTransferOptions = getAllBalances(activeAddress)
 
-  const { totalUnlocking, totalUnlocked } = allTransferOptions.nominator
+  const { totalUnlocking, totalUnlocked } = balances.nominator
   const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
   // Determine whether to display fast unstake button or regular unstake button.
@@ -147,11 +146,7 @@ export const ManageBond = () => {
         active={new BigNumber(planckToUnit(active, units))}
         unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
         unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-        free={
-          new BigNumber(
-            planckToUnit(allTransferOptions.transferableBalance, units)
-          )
-        }
+        free={new BigNumber(planckToUnit(balances.transferableBalance, units))}
         inactive={active === 0n}
       />
     </>

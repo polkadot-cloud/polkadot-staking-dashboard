@@ -7,8 +7,8 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -28,16 +28,15 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
-  const { getAllBalances } = useTransferOptions()
   const { state } = activePool?.bondedPool || {}
 
+  const { balances } = useAccountBalances(activeAddress)
   const { bondDuration } = getConsts(network)
-  const allTransferOptions = getAllBalances(activeAddress)
 
   const totalUnlockChunks =
     bondFor === 'nominator'
-      ? allTransferOptions.nominator.totalUnlockChunks
-      : allTransferOptions.pool.totalUnlockChunks
+      ? balances.nominator.totalUnlockChunks
+      : balances.pool.totalUnlockChunks
 
   const bondDurationFormatted = timeleftAsString(
     t,

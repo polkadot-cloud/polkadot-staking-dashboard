@@ -8,8 +8,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
@@ -33,14 +33,13 @@ export const Unstake = () => {
   const { activeAddress } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { setModalStatus, setModalResize } = useOverlay().modal
 
   const { bondDuration } = getConsts(network)
   const { unit, units } = getStakingChainData(network)
   const nominations = getNominations(activeAddress)
-  const allTransferOptions = getAllBalances(activeAddress)
-  const { active } = allTransferOptions.nominator
+  const { active } = balances.nominator
 
   const bondDurationFormatted = timeleftAsString(
     t,

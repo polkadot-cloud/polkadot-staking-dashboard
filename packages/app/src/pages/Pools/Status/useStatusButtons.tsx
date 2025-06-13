@@ -7,7 +7,7 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useTranslation } from 'react-i18next'
 
 export const useStatusButtons = () => {
@@ -20,11 +20,11 @@ export const useStatusButtons = () => {
   const { bondedPools } = useBondedPools()
   const { getPoolMembership } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const { getAllBalances } = useTransferOptions()
   const { isReadOnlyAccount } = useImportedAccounts()
 
+  const { balances } = useAccountBalances(activeAddress)
   const { membership } = getPoolMembership(activeAddress)
-  const { active } = getAllBalances(activeAddress).pool
+  const { active } = balances.pool
 
   const getCreateDisabled = () => {
     if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {

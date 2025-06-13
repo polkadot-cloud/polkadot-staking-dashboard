@@ -7,10 +7,11 @@ import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { Balance } from 'library/Balance'
 import { BarSegment } from 'library/BarChart/BarSegment'
@@ -26,14 +27,14 @@ export const BalanceChart = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { currency } = useCurrency()
+  const { feeReserve } = useBalances()
   const { openModal } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
-  const { feeReserve, getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
-  const balances = getAllBalances(activeAddress)
 
   // Convert to BigNumber for display and percentage calculations
   const totalBalance = planckToUnitBn(

@@ -1,27 +1,17 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { createSafeContext } from '@w3ux/hooks'
+import type { MaybeString } from '@w3ux/types'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import type { ReactNode } from 'react'
-import type { AllBalances, MaybeAddress } from 'types'
+import type { AllBalances } from 'types'
 import { calculateAllBalances } from 'utils'
-import type { TransferOptionsContextInterface } from './types'
 
-export const [TransferOptionsContext, useTransferOptions] =
-  createSafeContext<TransferOptionsContextInterface>()
-
-export const TransferOptionsProvider = ({
-  children,
-}: {
-  children: ReactNode
-}) => {
+export const useAccountBalances = (address: MaybeString) => {
   const {
     getPoolMembership,
     getStakingLedger,
@@ -31,16 +21,15 @@ export const TransferOptionsProvider = ({
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { feeReserve } = useBalances()
-  const { activeAddress } = useActiveAccounts()
   const { units } = getStakingChainData(network)
 
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `Balances`
-  const getAllBalances = (address: MaybeAddress): AllBalances => {
+  const getAllBalances = (): AllBalances => {
     const accountBalance = getAccountBalance(address)
     const stakingLedger = getStakingLedger(address)
-    const { membership } = getPoolMembership(activeAddress)
+    const { membership } = getPoolMembership(address)
     const edReserved = getEdReserved(address)
     const balances = calculateAllBalances(
       accountBalance,
@@ -54,8 +43,8 @@ export const TransferOptionsProvider = ({
   }
 
   // Gets staked balance, whether nominating or in pool, for an account
-  const getStakedBalance = (address: MaybeAddress) => {
-    const allTransferOptions = getAllBalances(address)
+  const getStakedBalance = () => {
+    const allTransferOptions = getAllBalances()
 
     // Total funds nominating
     const nominating = planckToUnit(
@@ -83,14 +72,8 @@ export const TransferOptionsProvider = ({
         : new BigNumber(0)
   }
 
-  return (
-    <TransferOptionsContext.Provider
-      value={{
-        getAllBalances,
-        getStakedBalance,
-      }}
-    >
-      {children}
-    </TransferOptionsContext.Provider>
-  )
+  return {
+    balances: getAllBalances(),
+    stakedBalance: getStakedBalance(),
+  }
 }

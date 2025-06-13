@@ -9,7 +9,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
@@ -28,10 +28,10 @@ export const MembershipStatus = ({
   const { poolsMetaData } = useBondedPools()
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { activePool, isOwner, isBouncer, isMember } = useActivePool()
 
-  const { active } = getAllBalances(activeAddress).pool
+  const { active } = balances.pool
   const poolState = activePool?.bondedPool?.state ?? null
 
   const membershipButtons = []

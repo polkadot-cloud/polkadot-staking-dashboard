@@ -4,8 +4,8 @@
 import { isSupportedProxy } from 'consts/util'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import type { ProxyDelegateWithBalance } from 'contexts/Proxies/types'
-import { AccountButton } from '../Account'
 import type { DelegatesProps } from '../types'
+import { DelegateItem } from './DelegateItem'
 import { DelegatesWrapper } from './Wrapper'
 
 export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
@@ -23,14 +23,13 @@ export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
 
   return delegatesList.length ? (
     <DelegatesWrapper>
-      {delegatesList.map(({ delegate, proxyType, transferableBalance }, i) => (
-        <AccountButton
-          transferableBalance={transferableBalance}
+      {delegatesList.map(({ delegate, proxyType }, i) => (
+        <DelegateItem
           key={`_del_${i}`}
-          address={delegate}
-          source={source}
           delegator={delegator}
           proxyType={proxyType}
+          source={source}
+          delegate={delegate}
         />
       ))}
     </DelegatesWrapper>

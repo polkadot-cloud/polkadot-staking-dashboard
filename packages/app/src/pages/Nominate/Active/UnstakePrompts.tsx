@@ -7,7 +7,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -24,12 +24,12 @@ export const UnstakePrompts = () => {
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
   const { activeAddress } = useActiveAccounts()
+  const { balances } = useAccountBalances(activeAddress)
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
+  const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
+    balances.nominator
 
   const { unit } = getStakingChainData(network)
-  const { getAllBalances } = useTransferOptions()
-  const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
-    getAllBalances(activeAddress).nominator
 
   // unstaking can withdraw
   const canWithdrawUnlocks =

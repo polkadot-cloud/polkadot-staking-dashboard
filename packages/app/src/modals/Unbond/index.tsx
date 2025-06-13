@@ -9,10 +9,10 @@ import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
 import { getUnixTime } from 'date-fns'
 import type { SubmittableExtrinsic } from 'dedot'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -34,7 +34,7 @@ export const Unbond = () => {
   const { erasToSeconds } = useErasToTimeLeft()
   const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { isDepositor, activePool } = useActivePool()
   const {
     serviceApi,
@@ -66,11 +66,7 @@ export const Unbond = () => {
 
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
-
-  const allTransferOptions = getAllBalances(activeAddress)
-  const { active } = isPooling
-    ? allTransferOptions.pool
-    : allTransferOptions.nominator
+  const { active } = isPooling ? balances.pool : balances.nominator
 
   // convert BigNumber values to number
   const freeToUnbond = new BigNumber(planckToUnit(active, units))

@@ -18,7 +18,7 @@ import { setActiveProxy } from 'global-bus'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { AccountWrapper } from './Wrappers'
-import type { AccountItemProps } from './types'
+import type { AccountButtonProps } from './types'
 
 export const AccountButton = ({
   label,
@@ -28,10 +28,10 @@ export const AccountButton = ({
   proxyType,
   noBorder = false,
   transferableBalance,
-}: AccountItemProps) => {
+}: AccountButtonProps) => {
   const { t } = useTranslation('modals')
-  const { getAccount } = useImportedAccounts()
   const { network } = useNetwork()
+  const { getAccount } = useImportedAccounts()
   const { setModalStatus } = useOverlay().modal
   const { activeProxy, activeAddress, setActiveAccount, activeProxyType } =
     useActiveAccounts()

@@ -5,7 +5,7 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -19,12 +19,12 @@ export const ClosurePrompts = () => {
   const { getThemeValue } = useThemeValues()
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
-  const { getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { isBonding, activePool, isDepositor, activePoolNominations } =
     useActivePool()
 
   const { state, memberCounter } = activePool?.bondedPool || {}
-  const { active, totalUnlockChunks } = getAllBalances(activeAddress).pool
+  const { active, totalUnlockChunks } = balances.pool
   const targets = activePoolNominations?.targets ?? []
 
   // is the pool in a state for the depositor to close

@@ -8,7 +8,7 @@ import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFetchMethods } from 'hooks/useFetchMethods'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
@@ -34,7 +34,11 @@ export const NominatorSetupsProvider = ({
   const { network } = useNetwork()
   const { fetch } = useFetchMethods()
   const { activeAddress } = useActiveAccounts()
-  const { getAllBalances } = useTransferOptions()
+  const {
+    balances: {
+      nominator: { totalPossibleBond },
+    },
+  } = useAccountBalances(activeAddress)
   const { accounts, stringifiedAccountsKey } = useImportedAccounts()
   const { units } = getStakingChainData(network)
 
@@ -154,10 +158,6 @@ export const NominatorSetupsProvider = ({
   }, [activeAddress, network, stringifiedAccountsKey])
 
   const generateOptimalSetup = (): NominatorProgress => {
-    const {
-      nominator: { totalPossibleBond },
-    } = getAllBalances(activeAddress)
-
     const setup = {
       payee: {
         destination: 'Staked' as PayeeOption,

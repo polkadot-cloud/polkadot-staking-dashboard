@@ -8,8 +8,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import type { SubmittableExtrinsic } from 'dedot'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -32,15 +32,15 @@ export const Bond = () => {
   const { serviceApi } = useApi()
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
-  const { getPendingPoolRewards } = useBalances()
   const { getSignerWarnings } = useSignerWarnings()
-  const { feeReserve, getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
+  const { getPendingPoolRewards, feeReserve } = useBalances()
   const { unit, units } = getStakingChainData(network)
 
   const { bondFor } = options
   const isStaking = bondFor === 'nominator'
   const isPooling = bondFor === 'pool'
-  const { nominator, transferableBalance } = getAllBalances(activeAddress)
+  const { nominator, transferableBalance } = balances
 
   const freeToBond = new BigNumber(
     planckToUnit(

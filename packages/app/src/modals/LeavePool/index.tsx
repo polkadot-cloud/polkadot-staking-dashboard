@@ -9,8 +9,8 @@ import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -40,12 +40,11 @@ export const LeavePool = ({
   const { setModalStatus } = useOverlay().modal
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
-  const { getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { getPoolMembership, getPendingPoolRewards } = useBalances()
 
   const { unit, units } = getStakingChainData(network)
-  const allTransferOptions = getAllBalances(activeAddress)
-  const { active: activeBn } = allTransferOptions.pool
+  const { active: activeBn } = balances.pool
   const { bondDuration } = getConsts(network)
   const pendingRewards = getPendingPoolRewards(activeAddress)
   const { membership } = getPoolMembership(activeAddress)

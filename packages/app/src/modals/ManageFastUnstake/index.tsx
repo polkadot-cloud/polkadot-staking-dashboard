@@ -6,11 +6,12 @@ import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
 import type { SubmittableExtrinsic } from 'dedot'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { useUnstaking } from 'hooks/useUnstaking'
@@ -31,19 +32,19 @@ export const ManageFastUnstake = () => {
     stakingMetrics: { erasToCheckPerBlock },
   } = useApi()
   const { network } = useNetwork()
+  const { feeReserve } = useBalances()
   const { getTxSubmission } = useTxMeta()
   const { isFastUnstaking } = useUnstaking()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { setModalResize, setModalStatus } = useOverlay().modal
-  const { feeReserve, getAllBalances } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { counterForQueue, queueDeposit, fastUnstakeStatus, exposed } =
     useFastUnstake()
 
   const { unit, units } = getStakingChainData(network)
   const { bondDuration, fastUnstakeDeposit } = getConsts(network)
-  const allTransferOptions = getAllBalances(activeAddress)
-  const { nominator, transferableBalance } = allTransferOptions
+  const { nominator, transferableBalance } = balances
   const { totalUnlockChunks } = nominator
   const enoughForDeposit = transferableBalance >= fastUnstakeDeposit
 
