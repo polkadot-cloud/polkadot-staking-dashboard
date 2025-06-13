@@ -16,8 +16,3 @@ export interface BalancesContextInterface {
   getEdReserved: (address: MaybeAddress) => bigint
   getPendingPoolRewards: (address: MaybeAddress) => bigint
 }
-
-export interface UnlockChunk {
-  era: number
-  value: bigint
-}

@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { calculateAllBalances, planckToUnitBn } from 'utils'
+import { getAllBalances, planckToUnitBn } from 'utils'
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages')
@@ -49,7 +49,7 @@ export const BalanceChart = () => {
   const { membership } = getPoolMembership(activeAddress)
   const edReserved = getEdReserved(activeAddress)
 
-  const balances = calculateAllBalances(
+  const balances = getAllBalances(
     accountBalance,
     stakingLedger,
     membership,

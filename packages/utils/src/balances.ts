@@ -1,19 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AccountBalance, PoolMembership, StakingLedger } from 'types'
-
-// Utility to get maximum of two bigint values
-export const maxBigInt = (a: bigint, b: bigint): bigint => (a > b ? a : b)
-
-// Utility to get minimum of two bigint values
-export const minBigInt = (a: bigint, b: bigint): bigint => (a < b ? a : b)
-
-// Interface for unlock chunks
-export interface UnlockChunk {
-  era: number
-  value: bigint
-}
+import { maxBigInt } from '@w3ux/utils'
+import type {
+  AccountBalance,
+  AllBalances,
+  NominatorBalances,
+  PoolBalances,
+  PoolMembership,
+  StakingLedger,
+  UnlockChunk,
+} from 'types'
 
 // Gets the total unlocking and unlocked amount from unlock chunks
 export const getUnlocking = (chunks: UnlockChunk[], currentEra: number) => {
@@ -31,7 +28,7 @@ export const getUnlocking = (chunks: UnlockChunk[], currentEra: number) => {
 }
 
 // Calculate free balance after existential deposit reserve
-export const calculateFreeBalance = (
+export const getFreeBalance = (
   accountBalance: AccountBalance,
   edReserved: bigint
 ): bigint => {
@@ -40,7 +37,7 @@ export const calculateFreeBalance = (
 }
 
 // Calculate transferable balance (free minus fees, unlocking, and unlocked amounts)
-export const calculateTransferableBalance = (
+export const getTransferrableBalance = (
   freeBalance: bigint,
   feeReserve: bigint,
   totalUnlocking: bigint,
@@ -49,7 +46,7 @@ export const calculateTransferableBalance = (
   maxBigInt(freeBalance - feeReserve - totalUnlocking - totalUnlocked, 0n)
 
 // Calculate balance available for transaction fees
-export const calculateBalanceTxFees = (
+export const balanceForTxFees = (
   accountBalance: AccountBalance,
   edReserved: bigint
 ): bigint => {
@@ -57,18 +54,8 @@ export const calculateBalanceTxFees = (
   return maxBigInt(free - edReserved, 0n)
 }
 
-// Interface for nominator balance calculations
-export interface NominatorBalances {
-  active: bigint
-  totalUnlocking: bigint
-  totalUnlocked: bigint
-  totalPossibleBond: bigint
-  totalAdditionalBond: bigint
-  totalUnlockChunks: number
-}
-
 // Calculate nominator balances from staking ledger and transferable balance
-export const calculateNominatorBalances = (
+export const nominatorBalances = (
   stakingLedger: StakingLedger,
   transferableBalance: bigint,
   currentEra: number
@@ -92,17 +79,8 @@ export const calculateNominatorBalances = (
   }
 }
 
-// Interface for pool balance calculations
-export interface PoolBalances {
-  active: bigint
-  totalUnlocking: bigint
-  totalUnlocked: bigint
-  totalPossibleBond: bigint
-  totalUnlockChunks: number
-}
-
 // Calculate pool balances from membership and account data
-export const calculatePoolBalances = (
+export const poolBalances = (
   membership: PoolMembership | undefined,
   transferableBalance: bigint,
   maxReserve: bigint,
@@ -129,7 +107,7 @@ export const calculatePoolBalances = (
 }
 
 // Calculate total account balance including all staked funds
-export const calculateTotalBalance = (
+export const getTotalBalance = (
   accountBalance: AccountBalance,
   nominatorActive: bigint,
   poolActive: bigint,
@@ -141,7 +119,7 @@ export const calculateTotalBalance = (
 }
 
 // Calculate locked balance (max of frozen/reserved minus actively staking)
-export const calculateLockedBalance = (
+export const getLockedBalance = (
   accountBalance: AccountBalance,
   nominatorActive: bigint,
   poolTotal: bigint
@@ -151,33 +129,21 @@ export const calculateLockedBalance = (
   return maxBigInt(maxReserve - nominatorActive - poolTotal, 0n)
 }
 
-// Interface for comprehensive balance calculations
-export interface BalanceCalculations {
-  freeBalance: bigint
-  transferableBalance: bigint
-  balanceTxFees: bigint
-  edReserved: bigint
-  totalBalance: bigint
-  lockedBalance: bigint
-  nominator: NominatorBalances
-  pool: PoolBalances
-}
-
 // Comprehensive balance calculation function
-export const calculateAllBalances = (
+export const getAllBalances = (
   accountBalance: AccountBalance,
   stakingLedger: StakingLedger,
   membership: PoolMembership | undefined,
   edReserved: bigint,
   feeReserve: bigint,
   currentEra: number
-): BalanceCalculations => {
+): AllBalances => {
   const { frozen, reserved } = accountBalance.balance
   const maxReserve = maxBigInt(frozen, reserved)
 
   // Calculate basic balances
-  const freeBalance = calculateFreeBalance(accountBalance, edReserved)
-  const balanceTxFees = calculateBalanceTxFees(accountBalance, edReserved)
+  const freeBalance = getFreeBalance(accountBalance, edReserved)
+  const balanceTxFees = balanceForTxFees(accountBalance, edReserved)
 
   // Calculate nominator balances first (needed for transferable calculation)
   const {
@@ -186,7 +152,7 @@ export const calculateAllBalances = (
   } = getUnlocking(stakingLedger?.ledger?.unlocking || [], currentEra)
 
   // Calculate transferable balance
-  const transferableBalance = calculateTransferableBalance(
+  const transferableBalance = getTransferrableBalance(
     freeBalance,
     feeReserve,
     nominatorUnlocking,
@@ -194,13 +160,13 @@ export const calculateAllBalances = (
   )
 
   // Calculate detailed balances
-  const nominator = calculateNominatorBalances(
+  const nominator = nominatorBalances(
     stakingLedger,
     transferableBalance,
     currentEra
   )
 
-  const pool = calculatePoolBalances(
+  const pool = poolBalances(
     membership,
     transferableBalance,
     maxReserve,
@@ -208,7 +174,7 @@ export const calculateAllBalances = (
   )
 
   // Calculate total and locked balances
-  const totalBalance = calculateTotalBalance(
+  const totalBalance = getTotalBalance(
     accountBalance,
     nominator.active,
     pool.active,
@@ -217,7 +183,7 @@ export const calculateAllBalances = (
   )
 
   const poolTotal = pool.active + pool.totalUnlocking + pool.totalUnlocked
-  const lockedBalance = calculateLockedBalance(
+  const lockedBalance = getLockedBalance(
     accountBalance,
     nominator.active,
     poolTotal

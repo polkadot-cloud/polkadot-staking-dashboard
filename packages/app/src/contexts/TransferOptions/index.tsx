@@ -12,7 +12,7 @@ import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { MaybeAddress } from 'types'
-import { calculateAllBalances } from 'utils'
+import { getAllBalances } from 'utils'
 import type { TransferOptions, TransferOptionsContextInterface } from './types'
 import { getLocalFeeReserve, setLocalFeeReserve } from './Utils'
 
@@ -50,7 +50,7 @@ export const TransferOptionsProvider = ({
     const stakingLedger = getStakingLedger(address)
     const edReserved = getEdReserved(address)
 
-    const balances = calculateAllBalances(
+    const balances = getAllBalances(
       accountBalance,
       stakingLedger,
       membership,

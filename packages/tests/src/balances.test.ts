@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-  calculateAllBalances,
+  getAllBalances,
   calculateBalanceTxFees,
   calculateFreeBalance,
   calculateLockedBalance,
@@ -258,8 +258,8 @@ test('calculateLockedBalance with higher reserves', () => {
   expect(result).toBe(50000000000000n)
 })
 
-test('calculateAllBalances provides comprehensive balance calculations', () => {
-  const result = calculateAllBalances(
+test('getAllBalances provides comprehensive balance calculations', () => {
+  const result = getAllBalances(
     mockAccountBalance,
     mockStakingLedger,
     mockPoolMembership,
@@ -294,7 +294,7 @@ test('calculateAllBalances provides comprehensive balance calculations', () => {
   expect(result.lockedBalance).toBe(0n)
 })
 
-test('calculateAllBalances handles edge cases with zero balances', () => {
+test('getAllBalances handles edge cases with zero balances', () => {
   const zeroBalance = {
     synced: true,
     nonce: 0,
@@ -312,7 +312,7 @@ test('calculateAllBalances handles edge cases with zero balances', () => {
     controllerUnmigrated: false,
   }
 
-  const result = calculateAllBalances(
+  const result = getAllBalances(
     zeroBalance,
     emptyLedger,
     undefined,
