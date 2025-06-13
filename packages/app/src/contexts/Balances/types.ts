@@ -15,4 +15,6 @@ export interface BalancesContextInterface {
   getNominations: (address: MaybeAddress) => string[]
   getEdReserved: (address: MaybeAddress) => bigint
   getPendingPoolRewards: (address: MaybeAddress) => bigint
+  feeReserve: bigint
+  setFeeReserveBalance: (reserve: bigint) => void
 }

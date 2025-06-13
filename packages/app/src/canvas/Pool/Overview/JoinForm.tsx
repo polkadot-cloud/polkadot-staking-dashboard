@@ -36,8 +36,8 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { newBatchCall } = useBatchCall()
   const { setPoolSetup } = usePoolSetups()
   const { activeAddress } = useActiveAccounts()
-  const { getSignerWarnings } = useSignerWarnings()
   const { getAllBalances } = useTransferOptions()
+  const { getSignerWarnings } = useSignerWarnings()
 
   const { unit, units } = getStakingChainData(network)
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })

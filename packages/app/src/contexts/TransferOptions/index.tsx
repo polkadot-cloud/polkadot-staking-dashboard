@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import { createSafeContext } from '@w3ux/hooks'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
@@ -10,11 +10,9 @@ import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
-import { useState } from 'react'
 import type { AllBalances, MaybeAddress } from 'types'
 import { calculateAllBalances } from 'utils'
 import type { TransferOptionsContextInterface } from './types'
-import { getLocalFeeReserve, setLocalFeeReserve } from './Utils'
 
 export const [TransferOptionsContext, useTransferOptions] =
   createSafeContext<TransferOptionsContextInterface>()
@@ -32,13 +30,9 @@ export const TransferOptionsProvider = ({
   } = useBalances()
   const { activeEra } = useApi()
   const { network } = useNetwork()
+  const { feeReserve } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const { units, defaultFeeReserve } = getStakingChainData(network)
-
-  // A user-configurable reserve amount to be used to pay for transaction fees
-  const [feeReserve, setFeeReserve] = useState<bigint>(
-    getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
-  )
+  const { units } = getStakingChainData(network)
 
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
@@ -57,15 +51,6 @@ export const TransferOptionsProvider = ({
       activeEra.index
     )
     return balances
-  }
-
-  // Updates account's reserve amount in state and in local storage
-  const setFeeReserveBalance = (amount: bigint) => {
-    if (!activeAddress) {
-      return
-    }
-    setLocalFeeReserve(activeAddress, amount, network)
-    setFeeReserve(amount)
   }
 
   // Gets staked balance, whether nominating or in pool, for an account
@@ -98,25 +83,11 @@ export const TransferOptionsProvider = ({
         : new BigNumber(0)
   }
 
-  // Gets a fee reserve value from local storage for an account, or the default value otherwise
-  const getFeeReserve = (address: MaybeAddress): bigint =>
-    getLocalFeeReserve(address, defaultFeeReserve, { network, units })
-
-  // Update an account's reserve amount on account or network change
-  useEffectIgnoreInitial(() => {
-    setFeeReserve(
-      getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
-    )
-  }, [activeAddress, network])
-
   return (
     <TransferOptionsContext.Provider
       value={{
         getAllBalances,
         getStakedBalance,
-        setFeeReserveBalance,
-        feeReserve,
-        getFeeReserve,
       }}
     >
       {children}
