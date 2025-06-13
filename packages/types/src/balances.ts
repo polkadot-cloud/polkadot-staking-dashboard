@@ -29,7 +29,7 @@ export interface PoolBalances {
 }
 
 // Interface for comprehensive balance calculations
-export interface AllBalances {
+export interface AccountBalances {
   freeBalance: bigint
   transferableBalance: bigint
   balanceTxFees: bigint

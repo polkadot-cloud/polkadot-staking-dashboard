@@ -8,7 +8,7 @@ import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import type { AllBalances } from 'types'
+import type { AccountBalances } from 'types'
 import { calculateAllBalances } from 'utils'
 
 export const useAccountBalances = (address: MaybeString) => {
@@ -26,7 +26,7 @@ export const useAccountBalances = (address: MaybeString) => {
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `Balances`
-  const getBalances = (): AllBalances => {
+  const getBalances = (): AccountBalances => {
     const accountBalance = getAccountBalance(address)
     const stakingLedger = getStakingLedger(address)
     const { membership } = getPoolMembership(address)
@@ -43,7 +43,7 @@ export const useAccountBalances = (address: MaybeString) => {
   }
 
   // Gets staked balance, whether nominating or in pool, for an account
-  const getStakedBalance = () => {
+  const getStakedBalance = (): BigNumber => {
     const allTransferOptions = getBalances()
 
     // Total funds nominating

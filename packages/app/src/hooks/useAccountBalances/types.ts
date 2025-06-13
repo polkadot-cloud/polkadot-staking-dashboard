@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { AllBalances, MaybeAddress } from 'types'
+import type { AccountBalances, MaybeAddress } from 'types'
 
 export interface TransferOptionsContextInterface {
-  getAllBalances: (address: MaybeAddress) => AllBalances
+  getAllBalances: (address: MaybeAddress) => AccountBalances
   getStakedBalance: (address: MaybeAddress) => BigNumber
 }

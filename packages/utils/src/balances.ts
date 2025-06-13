@@ -4,7 +4,7 @@
 import { maxBigInt } from '@w3ux/utils'
 import type {
   AccountBalance,
-  AllBalances,
+  AccountBalances,
   NominatorBalances,
   PoolBalances,
   PoolMembership,
@@ -137,7 +137,7 @@ export const calculateAllBalances = (
   edReserved: bigint,
   feeReserve: bigint,
   currentEra: number
-): AllBalances => {
+): AccountBalances => {
   const { frozen, reserved } = accountBalance.balance
   const maxReserve = maxBigInt(frozen, reserved)
 
