@@ -54,8 +54,8 @@ export const useValidatorFilters = () => {
     list.filter((validator: AnyFilter) => {
       const blocked: boolean | undefined = validator?.prefs?.blocked
       return !blocked
-  })
-    
+    })
+  }
 
   /*
    * filterActive: Filters the supplied list and removes items that are inactive. Returns the
