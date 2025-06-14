@@ -52,7 +52,7 @@ export const sanitizeEndpoints = (
     // No healthy endpoints found, use random endpoint from defaults
     const defaultEndpoints = Object.keys(getChainRpcEndpoints(chain))
     result[chain] =
-      defaultEndpoints[(defaultEndpoints.length * Math.random()) << 0]
+      defaultEndpoints[Math.floor(defaultEndpoints.length * Math.random())]
   }
 
   // Set sanitized endpoints in local storage
