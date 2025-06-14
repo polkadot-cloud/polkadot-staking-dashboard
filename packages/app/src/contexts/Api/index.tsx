@@ -23,7 +23,7 @@ import {
   serviceInterface$,
   stakingMetrics$,
 } from 'global-bus'
-import { getInitialProviderType, getInitialRpcEndpoints } from 'global-bus/util'
+import { getInitialProviderType } from 'global-bus/util'
 import type {
   ApiStatus,
   ChainConsts,
@@ -47,9 +47,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     getInitialProviderType()
   )
   // RPC endpoints for active chains
-  const [, setRpcEndpoints] = useState<RpcEndpoints>(
-    getInitialRpcEndpoints(network)
-  )
+  const [, setRpcEndpoints] = useState<RpcEndpoints>(getRpcEndpoints())
   // Store Api connection status for active chains
   const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
 

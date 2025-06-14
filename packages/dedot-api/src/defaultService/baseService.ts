@@ -165,11 +165,15 @@ export class BaseService<
     this.fastUnstakeConfig?.unsubscribe()
     this.activeEra?.unsubscribe()
 
-    await Promise.all([
-      this.apiRelay.disconnect(),
-      this.apiPeople.disconnect(),
-      this.apiHub.disconnect(),
-    ])
+    try {
+      await Promise.all([
+        this.apiRelay.disconnect(),
+        this.apiPeople.disconnect(),
+        this.apiHub.disconnect(),
+      ])
+    } catch (err) {
+      // Silent disconnect error. Move on to network reset and rely on garbage collection
+    }
   }
 
   // Expose subscription manager properties for compatibility with the default service interface
