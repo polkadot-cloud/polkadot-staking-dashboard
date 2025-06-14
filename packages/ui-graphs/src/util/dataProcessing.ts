@@ -16,7 +16,12 @@ import type {
   RewardResults,
 } from 'plugin-staking-api/types'
 import { daysPassed, planckToUnitBn } from 'utils'
-import type { PayoutDayCursor, RewardRecord } from '../types'
+import type {
+  DailyPayoutConfig,
+  PayoutDayCursor,
+  ProcessPayoutsConfig,
+  RewardRecord,
+} from '../types'
 import {
   fillGapDays,
   getPayoutsInTimeRange,
@@ -24,17 +29,6 @@ import {
   postFillMissingDays,
   prefillMissingDays,
 } from './dateUtils'
-
-/**
- * Configuration for daily payout calculations
- */
-interface DailyPayoutConfig {
-  payouts: RewardResults
-  fromDate: Date
-  maxDays: number
-  units: number
-  subject: 'pools' | 'nominate'
-}
 
 /**
  * Internal implementation of daily payout calculation
@@ -145,17 +139,6 @@ export const calculateDailyPayouts = (
  */
 export const calculateDailyPayoutsWithConfig = (config: DailyPayoutConfig) =>
   calculateDailyPayoutsInternal(config)
-
-/**
- * Configuration for processing payouts
- */
-interface ProcessPayoutsConfig {
-  payouts: RewardResults
-  fromDate: Date
-  days: number
-  units: number
-  subject: 'pools' | 'nominate'
-}
 
 /**
  * Internal implementation of process payouts
