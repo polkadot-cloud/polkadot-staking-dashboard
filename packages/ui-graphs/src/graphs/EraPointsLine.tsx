@@ -17,7 +17,7 @@ import {
 import { format, fromUnixTime } from 'date-fns'
 import { Line } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
-import type { EraPointsLineProps } from './types'
+import type { EraPointsLineProps } from '../types'
 
 ChartJS.register(
   CategoryScale,

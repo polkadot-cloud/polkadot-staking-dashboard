@@ -26,9 +26,8 @@ import {
   Stat,
   Subheading,
 } from 'ui-core/canvas'
-import { formatSize } from 'ui-graphs'
 import { CloseCanvas, useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
+import { formatSize, planckToUnitBn } from 'utils'
 import { ActiveGraph as ActiveGraphEraPoints } from './EraPoints/ActiveGraph'
 import { InactiveGraph as InactiveGraphEraPoints } from './EraPoints/InactiveGraph'
 import { ActiveGraph as ActiveGraphRewards } from './Rewards/ActiveGraph'
