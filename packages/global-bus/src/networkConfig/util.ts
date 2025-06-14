@@ -4,14 +4,19 @@
 import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList, SystemChainList } from 'consts/networks'
-import { getDefaultRpcEndpoints, getEnabledNetworks } from 'consts/util'
+import {
+  getChainRpcEndpoints,
+  getDefaultRpcEndpoints,
+  getEnabledNetworks,
+} from 'consts/util'
+import { fetchRpcEndpointHealth } from 'plugin-staking-api'
 import type {
   NetworkConfig,
   NetworkId,
   ProviderType,
   RpcEndpoints,
 } from 'types'
-import { setLocalRpcEndpoints } from './local'
+import { sanitizeEndpoints } from './health'
 
 export const getInitialNetwork = () => {
   // Attempt to get network from URL
@@ -51,11 +56,11 @@ export const getInitialRpcEndpoints = async (
         JSON.stringify(Object.keys(b).sort()) &&
       Object.values(a).every((v) => typeof v === 'string') &&
       Object.values(b).every((v) => typeof v === 'string')
+
     // Check if values are valid RPC keys
+    const allChains = { ...NetworkList, ...SystemChainList }
     const valueCheck = Object.entries(a).every(([k, v]) =>
-      Object.keys(
-        { ...NetworkList, ...SystemChainList }[k]?.endpoints?.rpc || []
-      ).includes(v)
+      Object.keys(allChains[k]?.endpoints?.rpc || []).includes(v)
     )
     return typeCheck && valueCheck
   }
@@ -66,14 +71,17 @@ export const getInitialRpcEndpoints = async (
     true
   ) as RpcEndpoints
 
+  const healthResult = await fetchRpcEndpointHealth(network)
   const fallback = getDefaultRpcEndpoints(network)
+
   if (local) {
     if (validateRpcEndpoints(local, fallback)) {
-      return local
+      // Return sanitized local endpoints
+      return sanitizeEndpoints(network, local, healthResult)
     }
   }
-  setLocalRpcEndpoints(network, fallback)
-  return fallback
+  // Return sanitized fallback endpoints
+  return sanitizeEndpoints(network, fallback, healthResult)
 }
 
 export const getInitialProviderType = (): ProviderType => {
@@ -93,4 +101,13 @@ export const getInitialNetworkConfig = async (): Promise<NetworkConfig> => {
     rpcEndpoints,
     providerType,
   }
+}
+
+// Attempts to get an RPC endpoint from network list
+export const getRpcEndpointFromKey = (
+  chain: string,
+  key: string
+): string | undefined => {
+  const endpoints = getChainRpcEndpoints(chain)
+  return endpoints?.[key]
 }
