@@ -27,15 +27,11 @@ export const useRpcEndpointHealth = ({
   return { loading, error, data, refetch }
 }
 
-export const fetcRpcEndpointHealth = async (
-  network: string,
-  who: string,
-  eras: number
-) => {
+export const fetcRpcEndpointHealth = async (network: string) => {
   try {
     const result = await client.query({
       query: QUERY,
-      variables: { network, who, eras },
+      variables: { network },
     })
     return result.data.rpcEndpointHealth
   } catch (error) {
