@@ -1,7 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
+import {
+  extractUrlValue,
+  localStorageOrDefault,
+  withTimeout,
+} from '@w3ux/utils'
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList, SystemChainList } from 'consts/networks'
 import {
@@ -10,6 +14,7 @@ import {
   getEnabledNetworks,
 } from 'consts/util'
 import { fetchRpcEndpointHealth } from 'plugin-staking-api'
+import type { RpcEndpointChainHealth } from 'plugin-staking-api/types'
 import type {
   NetworkConfig,
   NetworkId,
@@ -71,7 +76,11 @@ export const getInitialRpcEndpoints = async (
     true
   ) as RpcEndpoints
 
-  const healthResult = await fetchRpcEndpointHealth(network)
+  const healthResult = (await withTimeout(
+    1000,
+    fetchRpcEndpointHealth(network)
+  )) as RpcEndpointChainHealth
+
   const fallback = getDefaultRpcEndpoints(network)
 
   if (local) {
