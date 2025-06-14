@@ -38,5 +38,5 @@ export const NominatorSetupsKey = 'nominatorSetups'
 export const AdvancedModeKey = 'advancedMode'
 export const ActiveProxiesKey = 'activeProxies'
 
-export const rpcEndpointKey = (network: string) => `${network}rpcEndpoints`
+export const rpcEndpointKey = (network: string) => `${network}RpcEndpoints`
 export const rpcHealthCacheKey = (network: string) => `${network}RpcHealth`
