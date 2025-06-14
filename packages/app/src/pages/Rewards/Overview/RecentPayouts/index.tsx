@@ -13,12 +13,8 @@ import type { PayoutHistoryProps } from 'pages/Rewards/types'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
-import {
-  formatSize,
-  getPayoutsFromDate,
-  getPayoutsToDate,
-  GraphWrapper,
-} from 'ui-graphs'
+import { getPayoutsFromDate, getPayoutsToDate, GraphWrapper } from 'ui-graphs'
+import { formatSize } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 

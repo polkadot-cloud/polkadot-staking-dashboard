@@ -26,6 +26,7 @@ export const MaxPayoutDays = 60
 export const MaxEraRewardPointsEras = 10
 export const PerbillMultiplier = 10000000
 export const ToastDelayDuration = 3000
+export const MaximumPayoutDays = 60
 
 // Local storage keys
 export const FiatCurrencyKey = 'currency'

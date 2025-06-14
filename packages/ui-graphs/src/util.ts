@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { MaximumPayoutDays } from 'consts'
 import type { Locale } from 'date-fns'
 import {
   addDays,
-  differenceInDays,
   format,
   fromUnixTime,
   getUnixTime,
@@ -19,16 +19,8 @@ import type {
   RewardResult,
   RewardResults,
 } from 'plugin-staking-api/types'
-import { planckToUnitBn } from 'utils'
-import type { PayoutDayCursor } from './types'
-
-// Constants
-const MAX_PAYOUT_DAYS = 60
-
-type RewardRecord = {
-  reward: string
-  timestamp: number
-}
+import { daysPassed, planckToUnitBn } from 'utils'
+import type { PayoutDayCursor, RewardRecord } from './types'
 
 export const percentageOf = (n1: number, n2: number): number => {
   if (n2 === 0) {
@@ -274,7 +266,7 @@ const processPayouts = (
     avgDays
   )
   // Start of average calculation should be the earliest date
-  const averageFromDate = subDays(fromDate, MAX_PAYOUT_DAYS)
+  const averageFromDate = subDays(fromDate, MaximumPayoutDays)
 
   let a = calculateDailyPayouts(
     preNormalised,
@@ -521,26 +513,6 @@ export const normalisePayouts = (payouts: RewardResults): RewardResults =>
     timestamp: getUnixTime(startOfDay(fromUnixTime(p.timestamp))),
   }))
 
-// Utility: days passed since 2 dates
-export const daysPassed = (from: Date, to: Date) =>
-  differenceInDays(startOfDay(to), startOfDay(from))
-
-// Utility: Formats a width and height pair
-export const formatSize = (
-  {
-    width,
-    height,
-  }: {
-    width: string | number
-    height: number
-  },
-  minHeight: number
-) => ({
-  width: width || '100%',
-  height: height || minHeight,
-  minHeight,
-})
-
 // Take non-zero rewards in most-recent order
 export const removeNonZeroAmountAndSort = (payouts: RewardResults) => {
   const list = payouts
@@ -548,7 +520,7 @@ export const removeNonZeroAmountAndSort = (payouts: RewardResults) => {
     .sort((a, b) => b.timestamp - a.timestamp)
 
   // Calculates from the current date.
-  const fromTimestamp = getUnixTime(subDays(new Date(), MAX_PAYOUT_DAYS))
+  const fromTimestamp = getUnixTime(subDays(new Date(), MaximumPayoutDays))
   // Ensure payouts not older than `MaxPayoutDays` are returned.
   return list.filter(({ timestamp }) => timestamp >= fromTimestamp)
 }

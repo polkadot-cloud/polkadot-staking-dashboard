@@ -14,6 +14,7 @@
     "@w3ux/utils": "^2.2.1",
     "bignumber.js": "^9.3.0",
     "chart.js": "^4.4.9",
+    "consts": "workspace:*",
     "chroma-js": "^3.1.1",
     "date-fns": "^4.1.0",
     "locales": "workspace:*",

@@ -3,11 +3,11 @@
 
 import { fromUnixTime, getUnixTime, startOfToday, subDays } from 'date-fns'
 import {
-  daysPassed,
   normalisePayouts,
   postFillMissingDays,
   prefillMissingDays,
 } from 'ui-graphs'
+import { daysPassed } from 'utils'
 import { expect, test } from 'vitest'
 
 // payouts that were made 2, 3 and 4 days ago.

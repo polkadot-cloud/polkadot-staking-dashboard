@@ -109,3 +109,8 @@ export interface GeoDonutProps {
 export interface PayoutDayCursor {
   reward: BigNumber
 }
+
+export interface RewardRecord {
+  reward: string
+  timestamp: number
+}
