@@ -44,7 +44,7 @@ export const sanitizeEndpoints = (
     // If not healthy, replace with a random healthy endpoint
     if (healthyEndpoints.length > 0) {
       const fallback =
-        healthyEndpoints[(healthyEndpoints.length * Math.random()) << 0]
+        healthyEndpoints[Math.floor(healthyEndpoints.length * Math.random())]
       result[chain] = fallback
       continue
     }
