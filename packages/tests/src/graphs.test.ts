@@ -3,10 +3,10 @@
 
 import { fromUnixTime, getUnixTime, startOfToday, subDays } from 'date-fns'
 import {
-  normalisePayouts,
+  normalizePayouts,
   postFillMissingDays,
   prefillMissingDays,
-} from 'ui-graphs'
+} from 'ui-graphs/util'
 import { daysPassed } from 'utils'
 import { expect, test } from 'vitest'
 
@@ -36,7 +36,7 @@ const mockPayouts = [
 //
 // `daysPassed` is a utility function that is used throughout the graph data accumulation process.
 test('days passed works', () => {
-  const payouts = normalisePayouts(mockPayouts)
+  const payouts = normalizePayouts(mockPayouts)
   // days passed works on `mockPayouts`.
   expect(daysPassed(fromUnixTime(payouts[0].timestamp), startOfToday())).toBe(2)
   expect(daysPassed(fromUnixTime(payouts[1].timestamp), startOfToday())).toBe(3)
@@ -54,7 +54,7 @@ test('days passed works', () => {
 test('post fill missing days works', () => {
   //  p0,  p1,  p2,   p3,   p4,  p5,   p6
   //  -    -    x     x     x    0     0
-  const payouts = normalisePayouts(mockPayouts)
+  const payouts = normalizePayouts(mockPayouts)
   const fromDate = new Date()
   const maxDays = 7
 
@@ -89,7 +89,7 @@ test('post fill missing days works', () => {
 test('pre fill missing days works', () => {
   //  p0,  p1,  p2,   p3,   p4,   p5,   p6
   //            x     x     x     -     -
-  const payouts = normalisePayouts(mockPayouts)
+  const payouts = normalizePayouts(mockPayouts)
   const fromDate = new Date()
   const maxDays = 7
 
@@ -124,7 +124,7 @@ test('pre fill missing days works', () => {
 test('pre fill and post fill missing days work together', () => {
   //  p0,  p1,  p2,   p3,   p4,   p5,   p6,   p7,   p8,   p9
   //  -    -    x     x     x     -     -     -     -     -
-  const payouts = normalisePayouts(mockPayouts)
+  const payouts = normalizePayouts(mockPayouts)
   const fromDate = new Date()
   const maxDays = 10
 

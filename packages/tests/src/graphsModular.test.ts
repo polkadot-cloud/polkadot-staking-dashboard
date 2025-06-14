@@ -5,9 +5,9 @@ import { getUnixTime, subDays } from 'date-fns'
 import {
   calculateDailyPayoutsWithConfig,
   formatRewardsForGraphsWithConfig,
-  normalisePayouts,
+  normalizePayouts,
   processPayoutsWithConfig,
-} from 'ui-graphs'
+} from 'ui-graphs/util'
 import { expect, test } from 'vitest'
 
 // Test the new config-based APIs to ensure they work alongside the old ones
@@ -33,7 +33,7 @@ const mockPayouts = [
 ]
 
 test('new config-based APIs work correctly', () => {
-  const payouts = normalisePayouts(mockPayouts)
+  const payouts = normalizePayouts(mockPayouts)
   const fromDate = new Date()
   const maxDays = 7
   const units = 10
