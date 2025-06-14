@@ -22,7 +22,7 @@ export const useDotLottieButton = (
   }
 
   const handleComplete = () => {
-    if (options?.autoLoop !== true) {
+    if (!options?.autoLoop) {
       lottieRef.current?.stop()
     }
   }

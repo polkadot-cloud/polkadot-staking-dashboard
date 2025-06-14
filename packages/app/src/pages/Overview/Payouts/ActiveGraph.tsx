@@ -58,13 +58,9 @@ export const ActiveGraph = ({
 
   const nominatorRewards = nominatorRewardData?.allRewards ?? []
   const payouts =
-    nominatorRewards.filter(
-      (reward: NominatorReward) => reward.claimed === true
-    ) ?? []
+    nominatorRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
   const unclaimedPayouts =
-    nominatorRewards.filter(
-      (reward: NominatorReward) => reward.claimed === false
-    ) ?? []
+    nominatorRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
 
   const poolClaims = poolRewardsData?.poolRewards ?? []
   const allRewards = (nominatorRewards as RewardResults)
