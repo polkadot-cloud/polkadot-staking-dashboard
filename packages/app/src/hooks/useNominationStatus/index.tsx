@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson, BondFor, MaybeAddress } from 'types'
+import type { BondFor, MaybeAddress, NominationStatus } from 'types'
 
 export const useNominationStatus = () => {
   const { t } = useTranslation()
@@ -29,8 +29,10 @@ export const useNominationStatus = () => {
   }
 
   // Utility to get the nominees of a provided nomination status.
-  const getNomineesByStatus = (nominees: AnyJson[], status: string) =>
-    nominees.map(([k, v]) => (v === status ? k : false)).filter((v) => v)
+  const getNomineesByStatus = (
+    nominees: [string, NominationStatus][],
+    status: string
+  ) => nominees.map(([k, v]) => (v === status ? k : false)).filter((v) => !!v)
 
   // Utility to get the status of the provided account's nominations, and whether they are earning
   // reards.
