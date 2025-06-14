@@ -14,12 +14,12 @@ import {
   Tooltip,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import type { AveragePayoutLineProps } from './types'
+import type { AveragePayoutLineProps } from '../types'
 import {
   calculatePayoutAverages,
   combineRewards,
   formatRewardsForGraphs,
-} from './util'
+} from '../util/index'
 
 ChartJS.register(
   CategoryScale,

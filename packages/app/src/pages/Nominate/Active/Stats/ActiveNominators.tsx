@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api'
 import { useStaking } from 'contexts/Staking'
 import { Pie } from 'library/StatCards/Pie'
 import { useTranslation } from 'react-i18next'
-import { percentageOf } from 'ui-graphs'
+import { percentageOf } from 'ui-graphs/util'
 
 export const ActiveNominators = () => {
   const { t } = useTranslation('pages')
