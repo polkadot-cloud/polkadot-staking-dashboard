@@ -13,9 +13,11 @@ let service: ServiceClass
 
 // Start service for the current network
 export const initDedotService = async () => {
+  const initialNetworkConfig = await getInitialNetworkConfig()
+
   // Subscribe to network config changes
   networkConfig$
-    .pipe(startWith(getInitialNetworkConfig()), pairwise())
+    .pipe(startWith(initialNetworkConfig), pairwise())
     .subscribe(async ([prev, cur]) => {
       // Unsubscribe from previous service if on new network config, and clear stale global state
       if (

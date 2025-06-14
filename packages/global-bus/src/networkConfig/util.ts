@@ -41,7 +41,9 @@ export const getInitialNetwork = () => {
   return DefaultNetwork
 }
 
-export const getInitialRpcEndpoints = (network: NetworkId): RpcEndpoints => {
+export const getInitialRpcEndpoints = async (
+  network: NetworkId
+): Promise<RpcEndpoints> => {
   // Validates local RPC endpoints by checking against the default values
   const validateRpcEndpoints = (a: object, b: object) => {
     const typeCheck =
@@ -82,9 +84,9 @@ export const getInitialProviderType = (): ProviderType => {
   return 'ws'
 }
 
-export const getInitialNetworkConfig = (): NetworkConfig => {
+export const getInitialNetworkConfig = async (): Promise<NetworkConfig> => {
   const network = getInitialNetwork()
-  const rpcEndpoints = getInitialRpcEndpoints(network)
+  const rpcEndpoints = await getInitialRpcEndpoints(network)
   const providerType = getInitialProviderType()
   return {
     network,

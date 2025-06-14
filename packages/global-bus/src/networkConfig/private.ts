@@ -6,5 +6,5 @@ import type { NetworkConfig } from 'types'
 import { getInitialNetworkConfig } from '../util'
 
 export const _networkConfig = new BehaviorSubject<NetworkConfig>(
-  getInitialNetworkConfig()
+  await getInitialNetworkConfig()
 )
