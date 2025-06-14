@@ -27,9 +27,9 @@ export const useRpcEndpointHealth = ({
   return { loading, error, data, refetch }
 }
 
-export const fetcRpcEndpointHealth = async (
+export const fetchRpcEndpointHealth = async (
   network: string
-): Promise<RpcEndpointChainHealth | null> => {
+): Promise<RpcEndpointChainHealth> => {
   try {
     const result = await client.query({
       query: QUERY,
@@ -37,6 +37,8 @@ export const fetcRpcEndpointHealth = async (
     })
     return result.data.rpcEndpointHealth
   } catch (error) {
-    return null
+    return {
+      chains: [],
+    }
   }
 }
