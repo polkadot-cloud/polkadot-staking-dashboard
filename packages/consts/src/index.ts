@@ -39,5 +39,4 @@ export const AdvancedModeKey = 'advancedMode'
 export const ActiveProxiesKey = 'activeProxies'
 
 export const rpcEndpointKey = (network: string) => `${network}_rpc_endpoints`
-export const rpcHealthCacheKey = (network: string) =>
-  `${network}_rpc_health_cache`
+export const rpcHealthCacheKey = (network: string) => `${network}RpcHealth`
