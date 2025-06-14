@@ -21,6 +21,7 @@ import type {
   ProviderType,
   RpcEndpoints,
 } from 'types'
+import { pluginEnabled } from '../plugins'
 import { sanitizeEndpoints } from './health'
 
 export const getInitialNetwork = () => {
@@ -70,27 +71,38 @@ export const getInitialRpcEndpoints = async (
     return typeCheck && valueCheck
   }
 
+  // Get the local and fallback RPC endpoints
   const local = localStorageOrDefault<RpcEndpoints>(
     rpcEndpointKey(network),
     {},
     true
   ) as RpcEndpoints
-
-  const healthResult = (await withTimeout(
-    1000,
-    fetchRpcEndpointHealth(network)
-  )) as RpcEndpointChainHealth
-
   const fallback = getDefaultRpcEndpoints(network)
 
+  // If staking API is enabled, fetch health of RPC endpoints
+  let healthResult: RpcEndpointChainHealth = { chains: [] }
+  const stakingApiEnabled = pluginEnabled('staking_api')
+  if (stakingApiEnabled) {
+    const result = (await withTimeout(
+      2000,
+      fetchRpcEndpointHealth(network)
+    )) as RpcEndpointChainHealth | undefined
+
+    healthResult = result || { chains: [] }
+  }
+
+  // Return sanitized local endpoints if valid
   if (local) {
     if (validateRpcEndpoints(local, fallback)) {
-      // Return sanitized local endpoints
-      return sanitizeEndpoints(network, local, healthResult)
+      return stakingApiEnabled
+        ? sanitizeEndpoints(network, local, healthResult)
+        : local
     }
   }
   // Return sanitized fallback endpoints
-  return sanitizeEndpoints(network, fallback, healthResult)
+  return stakingApiEnabled
+    ? sanitizeEndpoints(network, fallback, healthResult)
+    : fallback
 }
 
 export const getInitialProviderType = (): ProviderType => {
