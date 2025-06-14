@@ -6,6 +6,7 @@ import type { Locale } from 'date-fns'
 import type {
   NominatorReward,
   PoolReward,
+  RewardResults,
   ValidatorEraPoints,
 } from 'plugin-staking-api/types'
 
@@ -113,4 +114,29 @@ export interface PayoutDayCursor {
 export interface RewardRecord {
   reward: string
   timestamp: number
+}
+
+export interface FormatRewardsConfig {
+  fromDate: Date
+  days: number
+  units: number
+  payouts: NominatorReward[]
+  poolClaims: PoolReward[]
+  unclaimedPayouts: NominatorReward[]
+}
+
+export interface DailyPayoutConfig {
+  payouts: RewardResults
+  fromDate: Date
+  maxDays: number
+  units: number
+  subject: 'pools' | 'nominate'
+}
+
+export interface ProcessPayoutsConfig {
+  payouts: RewardResults
+  fromDate: Date
+  days: number
+  units: number
+  subject: 'pools' | 'nominate'
 }
