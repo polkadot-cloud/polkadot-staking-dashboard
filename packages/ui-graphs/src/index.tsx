@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './AveragePayoutLine'
+export * from './BarChart'
 export * from './EraPointsLine'
 export * from './GeoDonut'
 export * from './PayoutBar'
