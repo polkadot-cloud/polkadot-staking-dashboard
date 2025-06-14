@@ -13,7 +13,7 @@ import {
 } from 'date-fns'
 import type { RewardResult, RewardResults } from 'plugin-staking-api/types'
 import { daysPassed } from 'utils'
-import type { RewardRecord } from './types'
+import type { RewardRecord } from '../types'
 
 /**
  * Normalize payout timestamps to start of day

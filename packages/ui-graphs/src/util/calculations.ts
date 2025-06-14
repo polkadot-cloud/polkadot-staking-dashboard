@@ -3,7 +3,7 @@
 
 import { fromUnixTime } from 'date-fns'
 import { daysPassed } from 'utils'
-import type { RewardRecord } from './types'
+import type { RewardRecord } from '../types'
 
 /**
  * Calculate percentage of n1 relative to n2

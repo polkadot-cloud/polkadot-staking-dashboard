@@ -8,7 +8,8 @@
   },
   "exports": {
     ".": "./src/index.tsx",
-    "./types": "./src/types.ts"
+    "./types": "./src/types.ts",
+    "./util": "./src/util/index.ts"
   },
   "dependencies": {
     "@w3ux/utils": "^2.2.1",

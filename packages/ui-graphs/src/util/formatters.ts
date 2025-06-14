@@ -2,19 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
+import type { FormatRewardsConfig } from '../types'
 import { getLatestReward, processPayouts } from './dataProcessing'
-
-/**
- * Configuration for formatting rewards for graphs
- */
-interface FormatRewardsConfig {
-  fromDate: Date
-  days: number
-  units: number
-  payouts: NominatorReward[]
-  poolClaims: PoolReward[]
-  unclaimedPayouts: NominatorReward[]
-}
 
 /**
  * Internal helper for formatting rewards

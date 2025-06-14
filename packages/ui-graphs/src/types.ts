@@ -114,3 +114,12 @@ export interface RewardRecord {
   reward: string
   timestamp: number
 }
+
+export interface FormatRewardsConfig {
+  fromDate: Date
+  days: number
+  units: number
+  payouts: NominatorReward[]
+  poolClaims: PoolReward[]
+  unclaimedPayouts: NominatorReward[]
+}

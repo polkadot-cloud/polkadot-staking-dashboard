@@ -23,7 +23,7 @@ import {
   postFillMissingDays,
   prefillMissingDays,
 } from './dateUtils'
-import type { PayoutDayCursor, RewardRecord } from './types'
+import type { PayoutDayCursor, RewardRecord } from '../types'
 
 /**
  * Configuration for daily payout calculations
