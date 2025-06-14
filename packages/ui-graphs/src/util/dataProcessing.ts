@@ -16,6 +16,7 @@ import type {
   RewardResults,
 } from 'plugin-staking-api/types'
 import { daysPassed, planckToUnitBn } from 'utils'
+import type { PayoutDayCursor, RewardRecord } from '../types'
 import {
   fillGapDays,
   getPayoutsInTimeRange,
@@ -23,7 +24,6 @@ import {
   postFillMissingDays,
   prefillMissingDays,
 } from './dateUtils'
-import type { PayoutDayCursor, RewardRecord } from '../types'
 
 /**
  * Configuration for daily payout calculations
