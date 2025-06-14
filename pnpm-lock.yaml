@@ -461,12 +461,6 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
-      global-bus:
-        specifier: workspace:*
-        version: link:../global-bus
-      plugin-staking-api:
-        specifier: workspace:*
-        version: link:../plugin-staking-api
       ui-graphs:
         specifier: workspace:*
         version: link:../ui-graphs
