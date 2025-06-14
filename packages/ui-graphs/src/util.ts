@@ -15,7 +15,7 @@ export {
   normalizePayouts as normalisePayouts, // Keep old spelling for backward compatibility
   postFillMissingDays,
   prefillMissingDays,
-  filterAndSortRewards as removeNonZeroAmountAndSort, // Keep old name for backward compatibility
+  filterAndSortRewards as removeNonZeroAmountAndSort,
 } from './dateUtils'
 
 // Data processing - export both old signature and new config-based versions
