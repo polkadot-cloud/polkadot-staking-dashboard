@@ -23,6 +23,7 @@ import type {
 } from 'types'
 import { pluginEnabled } from '../plugins'
 import { sanitizeEndpoints } from './health'
+import { getLocalRpcHealthCache, setLocalRpcHealthCache } from './local'
 
 export const getInitialNetwork = () => {
   // Attempt to get network from URL
@@ -83,12 +84,26 @@ export const getInitialRpcEndpoints = async (
   let healthResult: RpcEndpointChainHealth = { chains: [] }
   const stakingApiEnabled = pluginEnabled('staking_api')
   if (stakingApiEnabled) {
-    const result = (await withTimeout(
-      2000,
-      fetchRpcEndpointHealth(network)
-    )) as RpcEndpointChainHealth | undefined
+    // Try to get cached health data first
+    const cachedHealth = getLocalRpcHealthCache(network)
 
-    healthResult = result || { chains: [] }
+    if (cachedHealth) {
+      // Use cached data if available and fresh
+      healthResult = cachedHealth
+    } else {
+      // Fetch fresh data from API if cache is stale or missing
+      const result = (await withTimeout(
+        2000,
+        fetchRpcEndpointHealth(network)
+      )) as RpcEndpointChainHealth | undefined
+
+      healthResult = result || { chains: [] }
+
+      // Cache the fresh data if it was successfully fetched
+      if (result && result.chains.length > 0) {
+        setLocalRpcHealthCache(network, result)
+      }
+    }
   }
 
   // Return sanitized local endpoints if valid
