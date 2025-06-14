@@ -14,10 +14,10 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
-import { BondedChart } from 'library/BarChart/BondedChart'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
+import { BondedChart } from 'ui-graphs'
 import { useOverlay } from 'ui-overlay'
 
 export const ManageBond = () => {
@@ -107,11 +107,20 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeader>
       <BondedChart
-        active={new BigNumber(planckToUnit(active, units))}
-        unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
-        unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-        free={new BigNumber(planckToUnit(transferableBalance, units))}
+        active={active}
+        unlocking={totalUnlocking}
+        unlocked={totalUnlocked}
+        free={transferableBalance}
         inactive={active === 0n}
+        labels={{
+          bonded: t('bonded'),
+          unlocking: t('unlocking'),
+          free: t('free'),
+          available: t('available'),
+        }}
+        unit={getStakingChainData(network).unit}
+        units={units}
+        onHelpClick={openHelp}
       />
     </>
   )

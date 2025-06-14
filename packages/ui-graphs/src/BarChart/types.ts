@@ -29,6 +29,7 @@ export interface BarChartWrapperProps {
 
 export interface LegendProps {
   children: ReactNode
+  className?: string
 }
 
 export interface BarProps {

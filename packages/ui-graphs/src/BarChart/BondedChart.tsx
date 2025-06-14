@@ -26,7 +26,8 @@ export const BondedChart = ({
   // Calculate percentages for the graph
   const graphActive = total > 0n ? Number((active * 100n) / total) : 0
 
-  const graphUnlocking = total > 0n ? Number((totalUnlocking * 100n) / total) : 0
+  const graphUnlocking =
+    total > 0n ? Number((totalUnlocking * 100n) / total) : 0
 
   const graphFree = total > 0n ? Number((free * 100n) / total) : 0
 
@@ -35,7 +36,9 @@ export const BondedChart = ({
   const MinimumNoNZeroPercent = 5
 
   const adjustedGraphFree =
-    free > 0n && graphFree < MinimumLowerBound ? MinimumNoNZeroPercent : graphFree
+    free > 0n && graphFree < MinimumLowerBound
+      ? MinimumNoNZeroPercent
+      : graphFree
 
   const finalStyle = {
     marginTop: '2rem',

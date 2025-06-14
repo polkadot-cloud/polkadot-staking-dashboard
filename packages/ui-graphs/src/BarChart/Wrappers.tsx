@@ -20,9 +20,13 @@ export const BarChartWrapper = ({
   )
 }
 
-export const Legend = ({ children }: LegendProps) => (
-  <div className={classes.legend}>{children}</div>
-)
+export const Legend = ({ children, className }: LegendProps) => {
+  const legendClass = className
+    ? `${classes.legend} ${className}`
+    : classes.legend
+
+  return <div className={legendClass}>{children}</div>
+}
 
 export const Bar = ({ children }: BarProps) => (
   <div className={classes.bar}>{children}</div>
