@@ -18,7 +18,7 @@ let service: ServiceClass
 
 // Start service for the current network
 export const initDedotService = async () => {
-  // Populate network config with santitized RPC endpoints
+  // Populate network config with sanitized RPC endpoints
   const config = await getInitialNetworkConfig()
   setNetworkConfig(config.network, config.rpcEndpoints, config.providerType)
 
