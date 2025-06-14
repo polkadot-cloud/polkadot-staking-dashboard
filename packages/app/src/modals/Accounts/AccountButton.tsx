@@ -18,7 +18,7 @@ import { setActiveProxy } from 'global-bus'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { AccountWrapper } from './Wrappers'
-import type { AccountItemProps } from './types'
+import type { AccountButtonProps } from './types'
 
 export const AccountButton = ({
   label,
@@ -27,11 +27,11 @@ export const AccountButton = ({
   delegator,
   proxyType,
   noBorder = false,
-  transferrableBalance,
-}: AccountItemProps) => {
+  transferableBalance,
+}: AccountButtonProps) => {
   const { t } = useTranslation('modals')
-  const { getAccount } = useImportedAccounts()
   const { network } = useNetwork()
+  const { getAccount } = useImportedAccounts()
   const { setModalStatus } = useOverlay().modal
   const { activeProxy, activeAddress, setActiveAccount, activeProxyType } =
     useActiveAccounts()
@@ -137,7 +137,7 @@ export const AccountButton = ({
         <section className="foot">
           <span className="balance">
             {`${t('free')}: ${new BigNumber(
-              planckToUnit(transferrableBalance || 0n, units)
+              planckToUnit(transferableBalance || 0n, units)
             )
               .decimalPlaces(3)
               .toFormat()} ${unit}`}

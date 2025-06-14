@@ -29,3 +29,8 @@ export type RewardDestinaton =
   | 'Controller'
   | 'Account'
   | 'None'
+
+export interface UnlockChunk {
+  era: number
+  value: bigint
+}

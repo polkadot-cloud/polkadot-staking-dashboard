@@ -378,6 +378,9 @@ importers:
       dedot:
         specifier: ^0.13.1
         version: 0.13.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      plugin-staking-api:
+        specifier: workspace:*
+        version: link:../plugin-staking-api
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
@@ -388,6 +391,9 @@ importers:
       types:
         specifier: workspace:*
         version: link:../types
+      vite:
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@22.15.31)(sass@1.89.2)
 
   packages/locales:
     dependencies:
@@ -449,6 +455,9 @@ importers:
 
   packages/tests:
     dependencies:
+      '@w3ux/utils':
+        specifier: ^2.2.1
+        version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -576,6 +585,9 @@ importers:
       chroma-js:
         specifier: ^3.1.1
         version: 3.1.2
+      consts:
+        specifier: workspace:*
+        version: link:../consts
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0

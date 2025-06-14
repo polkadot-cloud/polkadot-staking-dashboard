@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./*": "./src/*.ts"
+    "./*": "./src/*.ts",
+    "./util": "./src/util/index.ts"
   },
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"

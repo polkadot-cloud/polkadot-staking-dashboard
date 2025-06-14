@@ -17,8 +17,8 @@ import {
 import { format, fromUnixTime } from 'date-fns'
 import { Bar } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
-import type { PayoutBarProps } from './types'
-import { formatRewardsForGraphs } from './util'
+import type { PayoutBarProps } from '../types'
+import { formatRewardsForGraphs } from '../util/index'
 
 ChartJS.register(
   CategoryScale,

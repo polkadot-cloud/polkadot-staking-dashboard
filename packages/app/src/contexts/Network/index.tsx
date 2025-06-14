@@ -25,8 +25,10 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
 
   // handle network switching
   const switchNetwork = async (name: NetworkId): Promise<void> => {
+    const rpcEndpoints = await getInitialRpcEndpoints(name)
+
     if (isNetworkEnabled(name)) {
-      setNetworkConfig(name, getInitialRpcEndpoints(name), getProviderType())
+      setNetworkConfig(name, rpcEndpoints, getProviderType())
       varToUrlHash('n', name, false)
     }
   }

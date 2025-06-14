@@ -4,7 +4,7 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useTranslation } from 'react-i18next'
 import type { AnyJson } from 'types'
 import { useNominationStatus } from '../useNominationStatus'
@@ -13,15 +13,15 @@ export const useUnstaking = () => {
   const { t } = useTranslation('app')
   const { isNominator } = useStaking()
   const { activeAddress } = useActiveAccounts()
-  const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
 
-  const transferOptions = getTransferOptions(activeAddress).nominate
+  const {
+    balances: {
+      nominator: { active },
+    },
+  } = useAccountBalances(activeAddress)
   const { nominees } = getNominationStatus(activeAddress, 'nominator')
-
-  // determine if user is regular unstaking
-  const { active } = transferOptions
 
   // determine if user is fast unstaking.
   const inHead =

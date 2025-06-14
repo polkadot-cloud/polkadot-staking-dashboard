@@ -5,8 +5,8 @@ import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,7 +34,6 @@ export const SubmitTx = ({
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { setModalResize } = useOverlay().modal
-  const { getTransferOptions } = useTransferOptions()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
@@ -43,8 +42,11 @@ export const SubmitTx = ({
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
-  const { transferrableBalance } = getTransferOptions(from)
-  const notEnoughFunds = transferrableBalance - fee < 0n && fee > 0n
+
+  const {
+    balances: { transferableBalance },
+  } = useAccountBalances(from)
+  const notEnoughFunds = transferableBalance - fee < 0n && fee > 0n
 
   // Default to active account
   let signingOpts = {
