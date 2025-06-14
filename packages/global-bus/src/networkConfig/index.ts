@@ -3,9 +3,11 @@
 
 import type { NetworkId, ProviderType, RpcEndpoints } from 'types'
 import {
+  getLocalRpcHealthCache,
   setLocalNetwork,
   setLocalProviderType,
   setLocalRpcEndpoints,
+  setLocalRpcHealthCache,
 } from './local'
 import { _networkConfig } from './private'
 
@@ -60,3 +62,6 @@ export const setProviderType = (providerType: ProviderType) => {
     providerType,
   })
 }
+
+// Export cache functions for testing and direct access
+export { getLocalRpcHealthCache, setLocalRpcHealthCache }
