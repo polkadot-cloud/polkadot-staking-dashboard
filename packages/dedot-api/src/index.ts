@@ -1,7 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { networkConfig$, setServiceInterface } from 'global-bus'
+import {
+  getNetworkConfig,
+  networkConfig$,
+  setNetworkConfig,
+  setServiceInterface,
+} from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
 import { onNetworkReset } from './reset'
@@ -13,9 +18,13 @@ let service: ServiceClass
 
 // Start service for the current network
 export const initDedotService = async () => {
+  // Populate network config with sanitized RPC endpoints
+  const config = await getInitialNetworkConfig()
+  setNetworkConfig(config.network, config.rpcEndpoints, config.providerType)
+
   // Subscribe to network config changes
   networkConfig$
-    .pipe(startWith(getInitialNetworkConfig()), pairwise())
+    .pipe(startWith(getNetworkConfig()), pairwise())
     .subscribe(async ([prev, cur]) => {
       // Unsubscribe from previous service if on new network config, and clear stale global state
       if (

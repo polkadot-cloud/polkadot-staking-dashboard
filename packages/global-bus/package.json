@@ -15,10 +15,12 @@
     "@w3ux/utils": "^2.2.1",
     "consts": "workspace:*",
     "dedot": "^0.13.1",
+    "plugin-staking-api": "workspace:*",
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "@w3ux/types": "^2.4.1",
-    "types": "workspace:*"
+    "types": "workspace:*",
+    "vite": "^6.3.5"
   }
 }
