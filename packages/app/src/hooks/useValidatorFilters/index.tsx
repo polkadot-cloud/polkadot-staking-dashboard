@@ -50,8 +50,12 @@ export const useValidatorFilters = () => {
    * filterBlockedNominations: Filters the supplied list and removes items that have blocked
    * nominations. Returns the updated filtered list.
    */
-  const filterBlockedNominations = (list: AnyFilter) =>
-    list.filter((validator: AnyFilter) => !validator?.prefs?.blocked)
+  const filterBlockedNominations = (list: AnyFilter) => {
+    list.filter((validator: AnyFilter) => {
+      const blocked: boolean | undefined = validator?.prefs?.blocked
+      return !blocked
+  })
+    
 
   /*
    * filterActive: Filters the supplied list and removes items that are inactive. Returns the
