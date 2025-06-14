@@ -186,7 +186,7 @@ export const OtherAccountsProvider = ({
 
   // Once extensions are fully initialised, fetch accounts from other sources
   useEffectIgnoreInitial(() => {
-    if (extensionsSynced) {
+    if (extensionsSynced === 'synced') {
       // Fetch accounts from supported hardware wallets
       importLocalOtherAccounts('vault', getHardwareAccounts)
       importLocalOtherAccounts('ledger', getHardwareAccounts)
@@ -202,7 +202,7 @@ export const OtherAccountsProvider = ({
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts
   useEffectIgnoreInitial(() => {
-    if (extensionsSynced && otherAccountsSynced === true) {
+    if (extensionsSynced === 'synced' && otherAccountsSynced) {
       setAccountsInitialised(true)
     }
   }, [extensionsSynced, otherAccountsSynced])

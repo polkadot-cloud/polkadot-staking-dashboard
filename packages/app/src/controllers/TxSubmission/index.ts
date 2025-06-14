@@ -165,8 +165,6 @@ export class TxSubmission {
   }
 
   static pendingTxCount(from: string) {
-    return this.uids.filter(
-      (item) => item.from === from && item.pending === true
-    ).length
+    return this.uids.filter((item) => item.from === from && item.pending).length
   }
 }

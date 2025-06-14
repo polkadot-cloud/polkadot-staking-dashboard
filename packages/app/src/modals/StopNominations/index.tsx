@@ -32,10 +32,9 @@ export const StopNominations = () => {
   const isPool = bondFor === 'pool'
   const isStaking = bondFor === 'nominator'
 
-  const nominations =
-    isPool === true
-      ? activePoolNominations?.targets || []
-      : getNominations(activeAddress)
+  const nominations = isPool
+    ? activePoolNominations?.targets || []
+    : getNominations(activeAddress)
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)
