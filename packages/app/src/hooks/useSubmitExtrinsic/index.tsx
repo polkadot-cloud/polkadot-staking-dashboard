@@ -319,29 +319,23 @@ export const useSubmitExtrinsic = ({
     let title = t('cancelled')
     let subtitle = t('transactionCancelled')
 
-    // Provide contextual messages based on cancellation reason
     if (type === 'insufficient_funds' || hasInsufficientFunds) {
       title = t('insufficientFunds')
-      subtitle = t('addMoreDotForFees', { unit })
 
-      // Add transaction-specific context
       if (tx?.call.pallet === 'Staking') {
         subtitle = t('addMoreDotForStaking', { unit, minAmount: unit })
       } else if (tx?.call.pallet === 'NominationPools') {
         subtitle = t('addMoreDotForPooling', { unit })
+      } else {
+        subtitle = t('addMoreDotForFees', { unit })
       }
     } else if (
       type === 'user_cancelled' ||
-      errorMessage?.includes('User rejected') ||
-      errorMessage?.includes('Cancelled') ||
-      errorMessage?.includes('user rejected') ||
-      errorMessage?.includes('cancelled by user')
+      (errorMessage &&
+        /user\s*rejected|cancelled\s*by\s*user|cancelled/i.test(errorMessage))
     ) {
       title = t('userCancelled')
       subtitle = t('userCancelledTransaction')
-    } else if (type === 'ledger') {
-      // Ledger-specific errors are handled in LedgerHardware context
-      return
     }
 
     emitNotification({
