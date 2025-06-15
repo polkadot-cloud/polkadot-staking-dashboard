@@ -1,7 +1,0 @@
-{
-  "extends": "../../tsconfig.react.json",
-  "compilerOptions": {
-    "types": ["node"]
-  },
-  "include": ["src", "../../env.d.ts"]
-}
