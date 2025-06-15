@@ -17,7 +17,6 @@ import { useSyncing } from 'hooks/useSyncing'
 import { DefaultLocale } from 'locales'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
 import { Items } from './Items'
 import { PageToggle } from './PageToggle'
 import { Syncing } from './Syncing'
@@ -98,7 +97,7 @@ export const Tips = () => {
   const pageRef = useRef(page)
 
   // accumulate segments to include in tips
-  const segments: AnyJson = []
+  const segments: number[] = []
   if (!activeAddress) {
     segments.push(1)
   } else if (!isNominating && !inPool) {
