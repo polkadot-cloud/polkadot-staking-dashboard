@@ -84,17 +84,17 @@ export const handleResult = (
 
 export const handleError = (
   errorMessage: string,
-  onError: (type?: string, errorMessage?: string) => void
+  onError: (type?: string) => void
 ) => {
   const msgLower = errorMessage.toLowerCase()
 
   if (/user rejected|cancelled|cancelled by user|usercancel/.test(msgLower)) {
-    onError('user_cancelled', errorMessage)
+    onError('user_cancelled')
   } else if (
     /insufficient|balance|insufficientbalance|not enough/.test(msgLower)
   ) {
-    onError('insufficient_funds', errorMessage)
+    onError('insufficient_funds')
   } else {
-    onError('default', errorMessage)
+    onError('default')
   }
 }

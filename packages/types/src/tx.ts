@@ -17,5 +17,5 @@ export interface TxStatusHandlers {
   onInBlock: () => void
   onFinalized: () => void
   onFailed: (err: Error) => void
-  onError: (type?: string, errorMessage?: string) => void
+  onError: (type?: string) => void
 }

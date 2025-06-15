@@ -308,7 +308,7 @@ export const useSubmitExtrinsic = ({
     })
   }
 
-  const onError = (type?: string, errorMessage?: string) => {
+  const onError = (type?: string) => {
     if (type === 'ledger') {
       handleResetLedgerTask()
     }
@@ -329,11 +329,7 @@ export const useSubmitExtrinsic = ({
       } else {
         subtitle = t('addMoreDotForFees', { unit })
       }
-    } else if (
-      type === 'user_cancelled' ||
-      (errorMessage &&
-        /user\s*rejected|cancelled\s*by\s*user|cancelled/i.test(errorMessage))
-    ) {
+    } else if (type === 'user_cancelled') {
       title = t('userCancelled')
       subtitle = t('userCancelledTransaction')
     }
