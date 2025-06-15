@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import type { FormEvent } from 'react'
+import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyJson } from 'types'
@@ -20,8 +20,8 @@ export const Input = ({
   const [metadata, setMetadata] = useState<string>(value)
 
   // handle change for bonding
-  const handleChange = (e: AnyJson) => {
-    const val = e.target.value
+  const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    const val = ev.target.value
     listenIsValid(val !== '')
     setMetadata(val)
 
@@ -47,7 +47,7 @@ export const Input = ({
           style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
           placeholder={t('poolName')}
           type="text"
-          onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
+          onChange={(e) => handleChange(e)}
           value={metadata ?? ''}
         />
       </div>

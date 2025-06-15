@@ -8,24 +8,19 @@ import type {
   ExposureOther,
   Staker,
 } from 'contexts/Staking/types'
-import type { AnyJson } from 'types'
 import type { ProcessExposuresArgs } from './types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any
 
 // handle incoming message and route to correct handler.
-ctx.addEventListener('message', (event: AnyJson) => {
+ctx.addEventListener('message', (event: MessageEvent) => {
   const { data } = event
   const { task } = data
-  let message: AnyJson = {}
-  switch (task) {
-    case 'processExposures':
-      message = processExposures(data as ProcessExposuresArgs)
-      break
-    default:
+  if (task === 'processExposures') {
+    const message = processExposures(data as ProcessExposuresArgs)
+    postMessage({ ...message })
   }
-  postMessage({ task, ...message })
 })
 
 // process exposures.
