@@ -4,8 +4,7 @@
 import type { SubmittableExtrinsic } from 'dedot'
 import type { ExtrinsicSignatureV4 } from 'dedot/codecs'
 import type { InjectedSigner, TxStatus, Unsub } from 'dedot/types'
-import type { MaybeAddress } from 'types'
-import type { TxStatusHandlers, TxSubmissionItem } from './types'
+import type { MaybeAddress, TxStatusHandlers, TxSubmissionItem } from 'types'
 
 export class TxSubmission {
   // Transaction items
