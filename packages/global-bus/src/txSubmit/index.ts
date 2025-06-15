@@ -9,9 +9,8 @@ export const uids$ = _uids.asObservable()
 
 export let subs: Record<number, Unsub> = {}
 
-export const getUid = (id: number) => {
+export const getUid = (id: number) =>
   _uids.getValue().find((item) => item.uid === id)
-}
 
 export const addUid = ({ from, tag }: { from: MaybeAddress; tag?: string }) => {
   let newUids = [..._uids.getValue()]

@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { isCustomEvent } from 'controllers/utils'
+import { uids$ } from 'global-bus'
 import type { ReactNode } from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { TxSubmissionItem } from 'types'
-import { useEventListener } from 'usehooks-ts'
 import type { TxMetaContextInterface } from './types'
 
 export const [TxMetaContext, useTxMeta] =
@@ -16,13 +15,6 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   // Store uids of transactions, along with their status
   const [uids, setUids] = useState<TxSubmissionItem[]>([])
 
-  const handleNewUidStatus = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const { uids: eventUids } = e.detail
-      setUids(eventUids)
-    }
-  }
-
   // Get a tx submission
   const getTxSubmission = (uid?: number) =>
     uids.find((item) => item.uid === uid)
@@ -31,11 +23,15 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const getTxSubmissionByTag = (tag?: string) =>
     uids.find((item) => item.tag === tag)
 
-  useEventListener(
-    'new-tx-uid-status',
-    handleNewUidStatus,
-    useRef<Document>(document)
-  )
+  // Subscribe to global bus tx submission
+  useEffect(() => {
+    const subUids = uids$.subscribe((result) => {
+      setUids(result)
+    })
+    return () => {
+      subUids.unsubscribe()
+    }
+  }, [])
 
   return (
     <TxMetaContext.Provider
