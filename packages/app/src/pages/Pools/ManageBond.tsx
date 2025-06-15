@@ -12,7 +12,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { useTranslation } from 'react-i18next'
@@ -29,16 +29,15 @@ export const ManageBond = () => {
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['active-pools'])
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { isBonding, isMember, activePool, isDepositor } = useActivePool()
 
   const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
-  const allTransferOptions = getTransferOptions(activeAddress)
   const {
     pool: { active, totalUnlocking, totalUnlocked },
-    transferrableBalance,
-  } = allTransferOptions
+    transferableBalance,
+  } = balances
   const { state } = activePool?.bondedPool || {}
 
   const bondDisabled =
@@ -111,7 +110,7 @@ export const ManageBond = () => {
         active={new BigNumber(planckToUnit(active, units))}
         unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
         unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-        free={new BigNumber(planckToUnit(transferrableBalance, units))}
+        free={new BigNumber(planckToUnit(transferableBalance, units))}
         inactive={active === 0n}
       />
     </>

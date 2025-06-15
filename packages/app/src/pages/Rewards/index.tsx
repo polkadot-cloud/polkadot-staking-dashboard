@@ -7,13 +7,13 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { getUnixTime } from 'date-fns'
-import { removeNonZeroAmountAndSort } from 'library/Graphs/Utils'
 import { PageTabs } from 'library/PageTabs'
 import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
+import { filterAndSortRewards } from 'ui-graphs/util'
 import { Overview } from './Overview'
 import { RecentPayouts } from './RecentPayouts'
 import { Wrapper } from './Wrappers'
@@ -64,17 +64,14 @@ export const Rewards = () => {
     ])
 
     const payouts =
-      allRewards.filter((reward: NominatorReward) => reward.claimed === true) ??
-      []
+      allRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
     const unclaimedPayouts =
-      allRewards.filter(
-        (reward: NominatorReward) => reward.claimed === false
-      ) ?? []
+      allRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
     const poolClaims = poolRewards ?? []
 
     // Filter zero rewards and order via timestamp, most recent first
     setPayoutsList(
-      removeNonZeroAmountAndSort(
+      filterAndSortRewards(
         (allRewards as RewardResults).concat(poolClaims) as RewardResults
       )
     )

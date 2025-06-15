@@ -1,18 +1,22 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ListContextInterface } from 'contexts/List/types'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import type {
-  AnyFunction,
-  AnyJson,
   BondFor,
   DisplayFor,
   MaybeAddress,
   NominationStatus,
   Validator,
 } from 'types'
+
+export interface ValidatorListDefaultFilters {
+  includes?: string[]
+  excludes?: string[]
+}
 
 export interface ValidatorListProps {
   validators: Validator[]
@@ -25,11 +29,11 @@ export interface ValidatorListProps {
   itemsPerPage?: number
   title?: string
   selectable?: boolean
-  onSelected?: AnyFunction
+  onSelected?: (listProvider: ListContextInterface) => void
   displayFor?: DisplayFor
   allowSearch?: boolean
   allowListFormat?: boolean
-  defaultFilters?: AnyJson
+  defaultFilters?: ValidatorListDefaultFilters
   defaultOrder?: string
   BeforeListNode?: ReactNode
   onRemove?: (params: {

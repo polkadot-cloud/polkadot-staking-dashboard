@@ -15,6 +15,9 @@ import 'styles/fonts/font.scss'
 import 'styles/theme/index.scss'
 import 'styles/theme/theme.scss'
 
+// Package styles
+import '@w3ux/react-odometer/index.css'
+
 // Global services
 import { initDedotService } from 'dedot-api'
 

@@ -81,7 +81,7 @@ export const Roles = ({
 
   const isRoleEditsValid = () => {
     for (const roleEdit of Object.values<RoleEditEntry>(roleEdits)) {
-      if (roleEdit?.valid === false) {
+      if (!roleEdit?.valid) {
         return false
       }
     }
@@ -151,7 +151,7 @@ export const Roles = ({
           </h3>
         )}
 
-        {!(isOwner() === true || setters.length) ? null : (
+        {!(isOwner() || setters.length) ? null : (
           <ButtonRow>
             {isEditing && (
               <ButtonType

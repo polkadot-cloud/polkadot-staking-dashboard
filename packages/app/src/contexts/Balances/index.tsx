@@ -1,9 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { createSafeContext } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { maxBigInt } from '@w3ux/utils'
-import { getStakingChain } from 'consts/util'
+import { getStakingChain, getStakingChainData } from 'consts/util'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import {
@@ -23,6 +24,7 @@ import type {
   StakingLedger,
 } from 'types'
 import type { BalancesContextInterface } from './types'
+import { getLocalFeeReserve, setLocalFeeReserve } from './util'
 
 export const [BalancesContext, useBalances] =
   createSafeContext<BalancesContextInterface>()
@@ -31,7 +33,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { getChainSpec } = useApi()
   const stakingChain = getStakingChain(network)
+  const { activeAddress } = useActiveAccounts()
   const { existentialDeposit } = getChainSpec(stakingChain)
+  const { units, defaultFeeReserve } = getStakingChainData(network)
 
   // Store account balances state
   type StateBalances = Record<string, Record<string, AccountBalance>>
@@ -44,6 +48,20 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // Store pool memberships state
   type PoolMemberships = Record<string, PoolMembershipState>
   const [poolMemberships, setPoolMemberships] = useState<PoolMemberships>({})
+
+  // A user-configurable reserve amount to be used to pay for transaction fees
+  const [feeReserve, setFeeReserve] = useState<bigint>(
+    getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
+  )
+
+  // Updates account's reserve amount in state and in local storage
+  const setFeeReserveBalance = (amount: bigint) => {
+    if (!activeAddress) {
+      return
+    }
+    setLocalFeeReserve(activeAddress, amount, network)
+    setFeeReserve(amount)
+  }
 
   // Get an account balance for the default network chain
   const getAccountBalance = (address: MaybeAddress) => {
@@ -94,6 +112,13 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     return getPoolMembership(address).membership?.pendingRewards || 0n
   }
 
+  // Update an account's reserve amount on account or network change
+  useEffectIgnoreInitial(() => {
+    setFeeReserve(
+      getLocalFeeReserve(activeAddress, defaultFeeReserve, { network, units })
+    )
+  }, [activeAddress, network])
+
   // Subscribe to global bus account balance events
   useEffect(() => {
     const unsubBalances = accountBalances$.subscribe((result) => {
@@ -121,6 +146,8 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getNominations,
         getEdReserved,
         getPendingPoolRewards,
+        feeReserve,
+        setFeeReserveBalance,
       }}
     >
       {children}

@@ -37,7 +37,6 @@ import { ProxiesProvider } from 'contexts/Proxies'
 import { StakingProvider } from 'contexts/Staking'
 import { TokenPricesProvider } from 'contexts/TokenPrice'
 import { TooltipProvider } from 'contexts/Tooltip'
-import { TransferOptionsProvider } from 'contexts/TransferOptions'
 import { TxMetaProvider } from 'contexts/TxMeta'
 import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
@@ -82,7 +81,6 @@ export const Providers = () => {
       BondedPoolsProvider,
       PoolMembersProvider,
       ActivePoolProvider,
-      TransferOptionsProvider,
       ValidatorsProvider,
       FavoriteValidatorsProvider,
       FastUnstakeProvider,

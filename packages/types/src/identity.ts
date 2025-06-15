@@ -3,7 +3,6 @@
 
 import type { PalletIdentityJudgement } from 'dedot/chaintypes'
 import type { AccountId32 } from 'dedot/codecs'
-import type { AnyJson } from './common'
 
 export type IdentityOf =
   | {
@@ -29,12 +28,6 @@ export type SuperOf =
       }
     }
   | undefined
-
-export interface Identity {
-  deposit: string
-  info: AnyJson
-  judgements: AnyJson[]
-}
 
 export interface SuperIdentity {
   superOf: {

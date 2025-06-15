@@ -21,6 +21,7 @@ import type {
   Nominator,
   PoolTab,
 } from 'types'
+import { poolSearchFilter } from 'utils'
 import { useApi } from '../../Api'
 import type { BondedPoolsContextState } from './types'
 
@@ -190,33 +191,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const getBondedPool = (poolId: number) =>
     bondedPools.find((p) => String(p.id) === String(poolId)) ?? null
 
-  // poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to filter those list items that match the search term. Returns the updated filtered list
-  const poolSearchFilter = (list: AnyJson, searchTerm: string) => {
-    const filteredList: AnyJson = []
-
-    for (const pool of list) {
-      // If pool metadata has not yet been synced, include the pool in results
-      if (!Object.values(poolsMetaData).length) {
-        filteredList.push(pool)
-        continue
-      }
-
-      const address = pool?.addresses?.stash ?? ''
-      const metadata = poolsMetaData[pool.id] || ''
-
-      if (String(pool.id).includes(searchTerm.toLowerCase())) {
-        filteredList.push(pool)
-      }
-      if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
-        filteredList.push(pool)
-      }
-      if (metadata.toLowerCase().includes(searchTerm.toLowerCase())) {
-        filteredList.push(pool)
-      }
-    }
-    return filteredList
-  }
-
   const updateBondedPools = (updatedPools: BondedPool[]) => {
     if (!updatedPools) {
       return
@@ -327,6 +301,10 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [activeEra.index, bondedPools.length])
 
+  // Wrapped pool search filter that uses the provider's metadata
+  const wrappedPoolSearchFilter = (pools: BondedPool[], searchTerm: string) =>
+    poolSearchFilter(pools, searchTerm, poolsMetaData)
+
   return (
     <BondedPoolsContext.Provider
       value={{
@@ -338,7 +316,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         getPoolNominationStatus,
         getPoolNominationStatusCode,
         replacePoolRoles,
-        poolSearchFilter,
+        poolSearchFilter: wrappedPoolSearchFilter,
         bondedPools,
         poolsMetaData,
         poolsNominations,

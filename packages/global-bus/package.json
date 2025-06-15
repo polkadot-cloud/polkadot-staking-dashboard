@@ -4,21 +4,23 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "exports": {
     ".": "./src/index.ts",
     "./util": "./src/util.ts"
   },
   "dependencies": {
-    "@w3ux/observables-connect": "^0.9.40",
-    "@w3ux/utils": "^2.0.10",
+    "@w3ux/observables-connect": "^0.10.2",
+    "@w3ux/utils": "^2.2.1",
     "consts": "workspace:*",
-    "dedot": "^0.12.0",
+    "dedot": "^0.13.1",
+    "plugin-staking-api": "workspace:*",
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
-    "@w3ux/types": "^2.2.3",
-    "types": "workspace:*"
+    "@w3ux/types": "^2.4.1",
+    "types": "workspace:*",
+    "vite": "^6.3.5"
   }
 }

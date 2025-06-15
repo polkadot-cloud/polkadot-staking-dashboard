@@ -1,0 +1,21 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
+  },
+  "dependencies": {
+    "@w3ux/utils": "^2.2.1",
+    "date-fns": "^4.1.0",
+    "ui-graphs": "workspace:*",
+    "utils": "workspace:*"
+  },
+  "devDependencies": {
+    "types": "workspace:*",
+    "typescript": "^5.8.2",
+    "vitest": "^3.1.4"
+  }
+}
