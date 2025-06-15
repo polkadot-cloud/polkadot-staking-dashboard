@@ -62,6 +62,37 @@ export class TxSubmission {
     this.dispatchEvent()
   }
 
+  static removeSub(uid: number) {
+    const sub = this.subs[uid]
+    if (sub) {
+      sub()
+      this.subs = Object.fromEntries(
+        Object.entries(this.subs).filter(([key]) => Number(key) !== uid)
+      )
+    }
+  }
+
+  static deleteTx(uid: number) {
+    this.setUidSubmitted(uid, false)
+    this.setUidPending(uid, false)
+    this.removeUid(uid)
+    this.removeSub(uid)
+  }
+
+  static dispatchEvent = () => {
+    document.dispatchEvent(
+      new CustomEvent('new-tx-uid-status', {
+        detail: {
+          uids: this.uids,
+        },
+      })
+    )
+  }
+
+  static pendingTxCount(from: string) {
+    return this.uids.filter((item) => item.from === from && item.pending).length
+  }
+
   static async addSignAndSend(
     uid: number,
     from: string,
@@ -134,36 +165,5 @@ export class TxSubmission {
       onFailed(Error('Invalid'))
       this.deleteTx(uid)
     }
-  }
-
-  static removeSub(uid: number) {
-    const sub = this.subs[uid]
-    if (sub) {
-      sub()
-      this.subs = Object.fromEntries(
-        Object.entries(this.subs).filter(([key]) => Number(key) !== uid)
-      )
-    }
-  }
-
-  static deleteTx(uid: number) {
-    this.setUidSubmitted(uid, false)
-    this.setUidPending(uid, false)
-    this.removeUid(uid)
-    this.removeSub(uid)
-  }
-
-  static dispatchEvent = () => {
-    document.dispatchEvent(
-      new CustomEvent('new-tx-uid-status', {
-        detail: {
-          uids: this.uids,
-        },
-      })
-    )
-  }
-
-  static pendingTxCount(from: string) {
-    return this.uids.filter((item) => item.from === from && item.pending).length
   }
 }
