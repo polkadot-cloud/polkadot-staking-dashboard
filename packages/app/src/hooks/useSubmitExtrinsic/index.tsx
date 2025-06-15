@@ -12,6 +12,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
+import { useTxMeta } from 'contexts/TxMeta'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
@@ -26,6 +27,7 @@ import {
   setUidSubmitted,
   updateFee,
 } from 'global-bus'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -58,7 +60,11 @@ export const useSubmitExtrinsic = ({
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
+  const { getTxSubmission } = useTxMeta()
   const { unit, units } = getStakingChainData(network)
+  const {
+    balances: { transferableBalance },
+  } = useAccountBalances(from)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)
@@ -306,9 +312,31 @@ export const useSubmitExtrinsic = ({
     if (type === 'ledger') {
       handleResetLedgerTask()
     }
+
+    const txFee = getTxSubmission(uid)?.fee || 0n
+    const hasInsufficientFunds = transferableBalance < txFee
+
+    let title = t('cancelled')
+    let subtitle = t('transactionCancelled')
+
+    if (type === 'insufficient_funds' || hasInsufficientFunds) {
+      title = t('insufficientFunds')
+
+      if (tx?.call.pallet === 'Staking') {
+        subtitle = t('addMoreDotForStaking', { unit, minAmount: unit })
+      } else if (tx?.call.pallet === 'NominationPools') {
+        subtitle = t('addMoreDotForPooling', { unit })
+      } else {
+        subtitle = t('addMoreDotForFees', { unit })
+      }
+    } else if (type === 'user_cancelled') {
+      title = t('userCancelled')
+      subtitle = t('userCancelledTransaction')
+    }
+
     emitNotification({
-      title: t('cancelled'),
-      subtitle: t('transactionCancelled'),
+      title,
+      subtitle,
     })
   }
 
