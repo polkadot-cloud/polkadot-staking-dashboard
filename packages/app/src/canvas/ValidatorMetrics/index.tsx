@@ -8,9 +8,9 @@ import BigNumber from 'bignumber.js'
 import { ValidatorGeo } from 'canvas/ValidatorMetrics/ValidatorGeo'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { StatusLabel } from 'library/StatusLabel'
@@ -37,7 +37,7 @@ export const ValidatorMetrics = () => {
   const { t } = useTranslation()
   const {
     eraStakers: { stakers },
-  } = useStaking()
+  } = useEraStakers()
   const {
     config: { options },
   } = useOverlay().canvas

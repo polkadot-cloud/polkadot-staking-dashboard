@@ -7,9 +7,9 @@ import { shuffle } from '@w3ux/utils'
 import { PerbillMultiplier } from 'consts'
 import { getPeopleChainId } from 'consts/util'
 import { useApi } from 'contexts/Api'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useStaking } from 'contexts/Staking'
 import {
   getValidatorRank as getValidatorRankBus,
   getValidatorRanks,
@@ -46,12 +46,15 @@ export const [ValidatorsContext, useValidators] =
   createSafeContext<ValidatorsContextInterface>()
 
 export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
+  const {
+    eraStakers: { stakers },
+  } = useEraStakers()
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { pluginEnabled } = usePlugins()
-  const { stakers } = useStaking().eraStakers
-  const { isReady, serviceApi, getConsts, getApiStatus } = useApi()
   const { erasPerDay, maxSupportedDays } = useErasPerDay()
+  const { isReady, serviceApi, getConsts, getApiStatus } = useApi()
+
   const { historyDepth } = getConsts(network)
 
   // Store validator entries and sync status

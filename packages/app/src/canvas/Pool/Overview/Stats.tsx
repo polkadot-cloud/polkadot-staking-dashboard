@@ -5,8 +5,8 @@ import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Stat, Subheading } from 'ui-core/canvas'
@@ -20,7 +20,7 @@ export const Stats = ({
 }) => {
   const { t } = useTranslation('app')
   const { network } = useNetwork()
-  const { eraStakers } = useStaking()
+  const { eraStakers } = useEraStakers()
   const { isReady, serviceApi } = useApi()
 
   const { unit, units } = getStakingChainData(network)

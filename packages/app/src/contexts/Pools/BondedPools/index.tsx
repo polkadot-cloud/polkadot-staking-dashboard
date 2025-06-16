@@ -5,10 +5,10 @@ import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { hexToString } from 'dedot/utils'
 import { removeSyncing } from 'global-bus'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
+import { useNominationStatus } from 'hooks/useNominationStatus'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type {
@@ -37,7 +37,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     poolsConfig: { lastPoolId },
   } = useApi()
   const createPoolAccounts = useCreatePoolAccounts()
-  const { getNominationsStatusFromTargets } = useStaking()
+  const { getNominationsStatusFromTargets } = useNominationStatus()
 
   // Store bonded pools. Used implicitly in callbacks, ref is also defined
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([])

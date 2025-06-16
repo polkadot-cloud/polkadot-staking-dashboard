@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useBalances } from 'contexts/Balances'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -11,14 +12,44 @@ import type { BondFor, MaybeAddress, NominationStatus } from 'types'
 
 export const useNominationStatus = () => {
   const { t } = useTranslation()
-  const { getValidators } = useValidators()
+  const { isNominator } = useStaking()
+  const { eraStakers } = useEraStakers()
   const { getNominations } = useBalances()
+  const { getValidators } = useValidators()
   const { activePoolNominations } = useActivePool()
-  const { isNominator, eraStakers, getNominationsStatusFromTargets } =
-    useStaking()
   const { syncing, activePoolSynced, accountSynced } = useSyncing([
     'era-stakers',
   ])
+
+  // Gets the nomination statuses of passed in nominations
+  const getNominationsStatusFromTargets = (
+    who: MaybeAddress,
+    fromTargets: string[]
+  ) => {
+    const statuses: Record<string, NominationStatus> = {}
+
+    if (!fromTargets.length) {
+      return statuses
+    }
+
+    for (const target of fromTargets) {
+      const staker = eraStakers.stakers.find(
+        ({ address }) => address === target
+      )
+
+      if (staker === undefined) {
+        statuses[target] = 'waiting'
+        continue
+      }
+
+      if (!(staker.others ?? []).find((o) => o.who === who)) {
+        statuses[target] = 'inactive'
+        continue
+      }
+      statuses[target] = 'active'
+    }
+    return statuses
+  }
 
   // Utility to check if the nomination status is
   //
@@ -114,5 +145,6 @@ export const useNominationStatus = () => {
     getNominationStatus,
     getNominationSetStatus,
     nominationStatusSyncing,
+    getNominationsStatusFromTargets,
   }
 }
