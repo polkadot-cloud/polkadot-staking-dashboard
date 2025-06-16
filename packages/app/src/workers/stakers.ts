@@ -3,11 +3,8 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type {
-  ActiveAccountStaker,
-  ExposureOther,
-  Staker,
-} from 'contexts/Staking/types'
+import type { ExposureOther, Staker } from 'contexts/EraStakers/types'
+import type { ActiveAccountStaker } from 'contexts/Staking/types'
 import type { ProcessExposuresArgs } from './types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +36,7 @@ const processExposures = (data: ProcessExposuresArgs) => {
 
     const address = keys[1]
     let others =
-      val?.others.map((o) => ({
+      val.others.map((o) => ({
         ...o,
         value: o.value,
       })) ?? []
