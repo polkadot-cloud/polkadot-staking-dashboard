@@ -3,8 +3,8 @@
 
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +22,7 @@ export const NominationStatus = ({
   const { network } = useNetwork()
   const {
     eraStakers: { activeAccountOwnStake, stakers },
-  } = useStaking()
+  } = useEraStakers()
   const { syncing } = useSyncing(['era-stakers'])
   const { unit, units } = getStakingChainData(network)
 

@@ -29,21 +29,6 @@ export type SuperOf =
     }
   | undefined
 
-// Legacy Identity interface - consider using IdentityOf instead for new code
-export interface Identity {
-  deposit: string
-  info: {
-    display?: {
-      type: string
-      value?: string
-    }
-    [key: string]: unknown
-  }
-  judgements: Array<{
-    [key: string]: unknown
-  }>
-}
-
 export interface SuperIdentity {
   superOf: {
     identity: IdentityOf

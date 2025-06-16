@@ -7,7 +7,6 @@ import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
 import type { QrReaderProps } from './types'
 import { Wrapper } from './Wrapper'
 
@@ -21,7 +20,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
   const vaultAccounts = getHardwareAccounts(source, network)
 
   // Store data from QR Code scanner.
-  const [qrData, setQrData] = useState<AnyJson>(undefined)
+  const [qrData, setQrData] = useState<string | undefined>(undefined)
 
   // Handle a newly received QR signature.
   const handleQrData = (signature: string) => {
@@ -29,6 +28,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
   }
 
   const valid =
+    qrData &&
     isValidAddress(qrData) &&
     !hardwareAccountExists(source, network, qrData) &&
     formatAccountSs58(qrData, ss58) !== null

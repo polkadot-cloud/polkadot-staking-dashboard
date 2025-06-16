@@ -14,7 +14,8 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
-import { formatSize, GeoDonut, ValidatorGeoWrapper } from 'ui-graphs'
+import { GeoDonut, ValidatorGeoWrapper } from 'ui-graphs'
+import { formatSize } from 'utils'
 
 export const ValidatorGeo = ({ address }: { address: string }) => {
   const { t } = useTranslation('modals')

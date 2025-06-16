@@ -37,7 +37,7 @@ export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
           {helpKey ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
         </h2>
       </div>
-      {hideDone !== true ? (
+      {!hideDone ? (
         <div>
           <Close onClose={closePrompt} />
         </div>

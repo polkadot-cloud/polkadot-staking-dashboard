@@ -2,16 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { setStateWithRef } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Subscan } from 'controllers/Subscan'
+import { getAvailablePlugins, plugins$, setPlugins } from 'global-bus'
+import { Subscan } from 'library/Subscan'
 import type { ReactNode } from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Plugin } from 'types'
 import type { PluginsContextInterface } from './types'
-import { getAvailablePlugins } from './Utils'
 
 export const [PluginsContext, usePlugins] =
   createSafeContext<PluginsContextInterface>()
@@ -22,26 +21,22 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   const { activeAddress } = useActiveAccounts()
 
   // Store the currently active plugins
-  const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins())
-  const pluginsRef = useRef(plugins)
+  const [plugins, setPluginsState] = useState<Plugin[]>(getAvailablePlugins())
 
   // Toggle a plugin
   const togglePlugin = (key: Plugin) => {
-    let localPlugins = [...plugins]
-    const found = localPlugins.find((p) => p === key)
-
+    let newPlugins = [...plugins]
+    const found = newPlugins.find((p) => p === key)
     if (found) {
-      localPlugins = localPlugins.filter((p) => p !== key)
+      newPlugins = newPlugins.filter((p) => p !== key)
     } else {
-      localPlugins.push(key)
+      newPlugins.push(key)
     }
-
-    localStorage.setItem('plugins', JSON.stringify(localPlugins))
-    setStateWithRef(localPlugins, setPlugins, pluginsRef)
+    setPlugins(newPlugins)
   }
 
   // Check if a plugin is currently enabled
-  const pluginEnabled = (key: Plugin) => pluginsRef.current.includes(key)
+  const pluginEnabled = (key: Plugin) => plugins.includes(key)
 
   // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts
   useEffectIgnoreInitial(() => {
@@ -50,12 +45,22 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [plugins.includes('subscan'), isReady, network, activeAddress, activeEra])
 
+  // Subscribe to global bus for plugin changes
+  useEffect(() => {
+    const sub = plugins$.subscribe((result) => {
+      setPluginsState(result)
+    })
+    return () => {
+      sub.unsubscribe()
+    }
+  }, [])
+
   return (
     <PluginsContext.Provider
       value={{
         togglePlugin,
         pluginEnabled,
-        plugins: pluginsRef.current,
+        plugins,
       }}
     >
       {children}
