@@ -1,36 +1,38 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getStakingChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useFastUnstake } from 'contexts/FastUnstake'
+import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
 import { useNominationStatus } from '../useNominationStatus'
 
 export const useUnstaking = () => {
   const { t } = useTranslation('app')
+  const { network } = useNetwork()
   const { isNominator } = useStaking()
   const { activeAddress } = useActiveAccounts()
-  const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
-
-  const transferOptions = getTransferOptions(activeAddress).nominate
+  const {
+    balances: {
+      nominator: { active },
+    },
+  } = useAccountBalances(activeAddress)
+  const { ss58 } = getStakingChainData(network)
   const { nominees } = getNominationStatus(activeAddress, 'nominator')
 
-  // determine if user is regular unstaking
-  const { active } = transferOptions
-
-  // determine if user is fast unstaking.
+  // Determine if user is fast unstaking
   const inHead =
-    head?.stashes.find((s: AnyJson) => s[0] === activeAddress) ?? undefined
+    head?.stashes.find((s) => s[0].address(ss58) === activeAddress) ?? undefined
   const inQueue = queueDeposit?.queue !== undefined && queueDeposit.queue > 0n
 
   const registered = inHead || inQueue
 
-  // determine unstake button
+  // Fetermine unstake button
   const getFastUnstakeText = () => {
     if (exposed && fastUnstakeStatus?.lastExposed) {
       return t('fastUnstakeExposed', {

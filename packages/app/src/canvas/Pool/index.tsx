@@ -110,13 +110,14 @@ export const Pool = () => {
 
   // Fetch pool role identities when bonded pool changes
   const handleRoleIdentities = async (addresses: string[]) => {
-    const identities = formatIdentities(
-      addresses,
-      await serviceApi.query.identityOfMulti(addresses)
-    )
-    const supers = formatSuperIdentities(
-      await serviceApi.query.superOfMulti(addresses)
-    )
+    const [identitiesResult, supersResult] = await Promise.all([
+      serviceApi.query.identityOfMulti(addresses),
+      serviceApi.query.superOfMulti(addresses),
+    ])
+
+    const identities = formatIdentities(addresses, identitiesResult)
+    const supers = formatSuperIdentities(supersResult)
+
     setRoleIdentities({ identities, supers })
   }
 

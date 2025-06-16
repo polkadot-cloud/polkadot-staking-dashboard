@@ -32,7 +32,7 @@ export class AccountBalanceQuery<T extends Chain> {
           const bonded = await api.query.staking.bonded(this.address)
           if (bonded) {
             const ledger = await api.query.staking.ledger(bonded)
-            const active = maxBigInt((ledger?.active || 0n) - data.reserved, 0n)
+            const active = ledger?.active || 0n
             free = maxBigInt(data.free - active, 0n)
           }
         }

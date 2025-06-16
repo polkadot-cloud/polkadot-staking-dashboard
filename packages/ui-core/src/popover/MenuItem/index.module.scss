@@ -30,18 +30,18 @@
       flex-grow: 1;
       justify-content: flex-start;
 
-      > h3 {
-        color: var(--text-color-secondary);
-        font-size: 1.25rem;
-        > svg {
-          margin-left: 0.5rem;
-        }
-      }
-
       > div {
         flex-grow: 1;
         display: flex;
         justify-content: flex-end;
+      }
+    }
+
+    > h3 {
+      color: var(--text-color-secondary);
+      font-size: 1.25rem;
+      > svg {
+        margin-left: 0.5rem;
       }
     }
   }

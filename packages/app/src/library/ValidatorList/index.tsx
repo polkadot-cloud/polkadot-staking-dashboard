@@ -307,7 +307,7 @@ export const ValidatorListInner = ({
         <FilterHeaderWrapper>
           <div>{allowFilters && <FilterHeaders />}</div>
           <div>
-            {allowListFormat === true && (
+            {allowListFormat && (
               <>
                 <button type="button" onClick={() => setListFormat('row')}>
                   <FontAwesomeIcon

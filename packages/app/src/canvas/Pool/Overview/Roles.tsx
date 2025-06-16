@@ -5,8 +5,9 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { useTranslation } from 'react-i18next'
+import { Identity } from 'ui-core/base'
 import { Subheading } from 'ui-core/canvas'
-import { Identity } from 'ui-identity'
+import { formatIdentityValue } from 'utils'
 import type { OverviewSectionProps } from '../types'
 import { AddressesWrapper } from '../Wrappers'
 
@@ -53,9 +54,9 @@ export const Roles = ({
           {bondedPool.roles.root && (
             <section>
               <Identity
-                title={t('root')}
+                label={t('root')}
                 address={rootAddress}
-                identity={rootIdentity}
+                value={formatIdentityValue(rootAddress, rootIdentity)}
                 Action={<CopyAddress address={rootAddress} />}
                 iconSize={iconSize}
               />
@@ -64,9 +65,9 @@ export const Roles = ({
           {bondedPool.roles.nominator && (
             <section>
               <Identity
-                title={t('nominator')}
+                label={t('nominator')}
                 address={nominatorAddress}
-                identity={nominatorIdentity}
+                value={formatIdentityValue(nominatorAddress, nominatorIdentity)}
                 Action={<CopyAddress address={nominatorAddress} />}
                 iconSize={iconSize}
               />
@@ -75,9 +76,9 @@ export const Roles = ({
           {bondedPool.roles.bouncer && (
             <section>
               <Identity
-                title={t('bouncer')}
+                label={t('bouncer')}
                 address={bouncerAddress}
-                identity={bouncerIdentity}
+                value={formatIdentityValue(bouncerAddress, bouncerIdentity)}
                 Action={<CopyAddress address={bouncerAddress} />}
                 iconSize={iconSize}
               />
@@ -86,9 +87,9 @@ export const Roles = ({
           {bondedPool.roles.depositor && (
             <section>
               <Identity
-                title={t('depositor')}
+                label={t('depositor')}
                 address={depositorAddress}
-                identity={depositorIdentity}
+                value={formatIdentityValue(depositorAddress, depositorIdentity)}
                 Action={<CopyAddress address={depositorAddress} />}
                 iconSize={iconSize}
               />

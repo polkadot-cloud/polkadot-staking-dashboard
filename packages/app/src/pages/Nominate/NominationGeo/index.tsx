@@ -24,7 +24,7 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
-import { GeoDonut, NominatorGeoWrapper } from 'ui-graphs'
+import { GeoDonut, GraphWrapper } from 'ui-graphs'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -165,7 +165,7 @@ export const NominationGeo = () => {
             )}
             {enabled && analyticsAvailable && (
               <>
-                <NominatorGeoWrapper>
+                <GraphWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topRegionalDistributionChart}
@@ -175,8 +175,8 @@ export const NominationGeo = () => {
                     maxLabelLen={0}
                     getThemeValue={getThemeValue}
                   />
-                </NominatorGeoWrapper>
-                <NominatorGeoWrapper>
+                </GraphWrapper>
+                <GraphWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topCountryDistributionChart}
@@ -186,8 +186,8 @@ export const NominationGeo = () => {
                     maxLabelLen={maxLabelLen}
                     getThemeValue={getThemeValue}
                   />
-                </NominatorGeoWrapper>
-                <NominatorGeoWrapper>
+                </GraphWrapper>
+                <GraphWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topNetworkDistributionChart}
@@ -197,7 +197,7 @@ export const NominationGeo = () => {
                     maxLabelLen={maxLabelLen}
                     getThemeValue={getThemeValue}
                   />
-                </NominatorGeoWrapper>
+                </GraphWrapper>
               </>
             )}
           </GraphsWrapper>

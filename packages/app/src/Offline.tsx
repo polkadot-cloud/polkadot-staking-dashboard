@@ -19,7 +19,7 @@ export const Offline = () => {
   // Listen to global bus online status
   useEffect(() => {
     const subOnlineStatus = onlineStatus$.subscribe((result) => {
-      setOffline(result.online === false)
+      setOffline(!result.online)
     })
     return () => {
       subOnlineStatus.unsubscribe()

@@ -3,17 +3,19 @@
 
 import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
-import { useStaking } from 'contexts/Staking'
+import { useEraStakers } from 'contexts/EraStakers'
 import { Pie } from 'library/StatCards/Pie'
 import { useTranslation } from 'react-i18next'
-import { percentageOf } from 'ui-graphs'
+import { percentageOf } from 'ui-graphs/util'
 
 export const ActiveNominators = () => {
   const { t } = useTranslation('pages')
   const {
     stakingMetrics: { counterForNominators },
   } = useApi()
-  const { totalActiveNominators } = useStaking().eraStakers
+  const {
+    eraStakers: { totalActiveNominators },
+  } = useEraStakers()
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0

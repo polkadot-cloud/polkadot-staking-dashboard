@@ -5,7 +5,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { motion } from 'framer-motion'
@@ -39,8 +38,8 @@ export const NominationList = ({
   const { activeAddress } = useActiveAccounts()
   const { setModalResize } = useOverlay().modal
   const { injectValidatorListData } = useValidators()
-  const { getPoolNominationStatus } = useBondedPools()
-  const { getNominationSetStatus } = useNominationStatus()
+  const { getNominationSetStatus, getPoolNominationStatus } =
+    useNominationStatus()
 
   // Determine the nominator of the list. Fallback to activeAddress if not provided
   const nominator = initialNominator || activeAddress

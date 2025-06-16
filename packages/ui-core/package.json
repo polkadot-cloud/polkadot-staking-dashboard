@@ -4,7 +4,7 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "exports": {
     "./base": "./src/base/index.tsx",
@@ -20,7 +20,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@w3ux/utils": "2.0.10",
+    "@w3ux/react-polkicon": "^3.2.7",
+    "@w3ux/utils": "2.2.1",
     "classnames": "^2.5.1",
     "framer-motion": "^12.14.0",
     "radix-ui": "^1.4.2",

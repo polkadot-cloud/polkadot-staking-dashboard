@@ -4,10 +4,11 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "test": "vitest",
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+    "test": "vitest run",
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "dependencies": {
+    "@w3ux/utils": "^2.2.1",
     "date-fns": "^4.1.0",
     "ui-graphs": "workspace:*",
     "utils": "workspace:*"
