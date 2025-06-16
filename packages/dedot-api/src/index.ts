@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-  getNetworkConfig,
   networkConfig$,
   setNetworkConfig,
   setServiceInterface,
@@ -24,7 +23,7 @@ export const initDedotService = async () => {
 
   // Subscribe to network config changes
   networkConfig$
-    .pipe(startWith(getNetworkConfig()), pairwise())
+    .pipe(startWith(config), pairwise())
     .subscribe(async ([prev, cur]) => {
       // Unsubscribe from previous service if on new network config, and clear stale global state
       if (
