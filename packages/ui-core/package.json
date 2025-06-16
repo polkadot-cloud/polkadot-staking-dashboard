@@ -23,7 +23,7 @@
     "@w3ux/react-polkicon": "^3.2.7",
     "@w3ux/utils": "2.2.1",
     "classnames": "^2.5.1",
-    "framer-motion": "^12.14.0",
+    "framer-motion": "^12.18.1",
     "radix-ui": "^1.4.2",
     "react": "^19.1.0",
     "simplebar": "6.3.0",
