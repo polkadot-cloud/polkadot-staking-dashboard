@@ -13,8 +13,10 @@ import type { BondedPool } from 'types'
 export const PoolNominateStatus = ({ pool }: { pool: BondedPool }) => {
   const { t } = useTranslation('app')
   const { eraStakers } = useEraStakers()
-  const { getNominationsStatusFromTargets } = useNominationStatus()
-  const { getPoolNominationStatusCode, poolsNominations } = useBondedPools()
+  const { poolsNominations } = useBondedPools()
+  const { getNominationsStatusFromTargets, getPoolNominationStatusCode } =
+    useNominationStatus()
+
   const { addresses } = pool
 
   // get pool targets from nominations meta batch

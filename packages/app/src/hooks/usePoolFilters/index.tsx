@@ -10,8 +10,8 @@ import type { AnyFunction, AnyJson, BondedPool } from 'types'
 export const usePoolFilters = () => {
   const { t } = useTranslation('app')
   const { poolsNominations } = useBondedPools()
-  const { getPoolNominationStatusCode } = useBondedPools()
-  const { getNominationsStatusFromTargets } = useNominationStatus()
+  const { getNominationsStatusFromTargets, getPoolNominationStatusCode } =
+    useNominationStatus()
 
   /*
    * Include active pools.

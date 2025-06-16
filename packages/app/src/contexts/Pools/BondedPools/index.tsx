@@ -8,16 +8,12 @@ import { useNetwork } from 'contexts/Network'
 import { hexToString } from 'dedot/utils'
 import { removeSyncing } from 'global-bus'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
-import { useNominationStatus } from 'hooks/useNominationStatus'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type {
   AnyJson,
   BondedPool,
   BondedPoolQuery,
-  MaybeAddress,
-  NominationStatus,
-  NominationStatuses,
   Nominator,
   PoolTab,
 } from 'types'
@@ -37,7 +33,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     poolsConfig: { lastPoolId },
   } = useApi()
   const createPoolAccounts = useCreatePoolAccounts()
-  const { getNominationsStatusFromTargets } = useNominationStatus()
 
   // Store bonded pools. Used implicitly in callbacks, ref is also defined
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([])
@@ -135,50 +130,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       id,
       addresses: createPoolAccounts(id),
     }
-  }
-
-  // Get bonded pool nomination statuses
-  const getPoolNominationStatus = (
-    nominator: MaybeAddress,
-    nomination: MaybeAddress
-  ): NominationStatus => {
-    const pool = bondedPools.find((p) => p.addresses.stash === nominator)
-
-    if (!pool) {
-      return 'waiting'
-    }
-
-    // get pool targets from nominations metadata
-    const nominations = poolsNominations[pool.id]
-    const targets = nominations ? nominations.targets : []
-    const target = targets.find((t) => t === nomination)
-
-    if (!target) {
-      return 'waiting'
-    }
-
-    const nominationStatus = getNominationsStatusFromTargets(nominator, [
-      target,
-    ])
-    return getPoolNominationStatusCode(nominationStatus)
-  }
-
-  // Determine bonded pool's current nomination statuse
-  const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
-    let status: NominationStatus = 'waiting'
-
-    if (statuses) {
-      for (const childStatus of Object.values(statuses)) {
-        if (childStatus === 'active') {
-          status = 'active'
-          break
-        }
-        if (childStatus === 'inactive') {
-          status = 'inactive'
-        }
-      }
-    }
-    return status
   }
 
   // Helper: to add addresses to pool record
@@ -313,8 +264,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         updateBondedPools,
         addToBondedPools,
         removeFromBondedPools,
-        getPoolNominationStatus,
-        getPoolNominationStatusCode,
         replacePoolRoles,
         poolSearchFilter: wrappedPoolSearchFilter,
         bondedPools,
