@@ -113,6 +113,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.80.5
         version: 5.80.6(react@19.1.0)
+      '@types/lodash.debounce':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@w3ux/extension-assets':
         specifier: ^2.2.5
         version: 2.2.5(react@19.1.0)
