@@ -15,6 +15,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
+import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from '../types'
@@ -46,10 +47,13 @@ export const PayoutBar = ({
 }: PayoutBarProps) => {
   const staking = nominating || inPool
 
+  // Memoize current date to avoid creating new Date objects on every render
+  const currentDate = useMemo(() => new Date(), [])
+
   // Get formatted rewards data
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
     formatRewardsForGraphs(
-      new Date(),
+      currentDate,
       days,
       units,
       payouts,
