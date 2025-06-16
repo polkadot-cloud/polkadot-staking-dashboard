@@ -386,8 +386,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       if (validators.status === 'synced') {
         setValidatorsFetched('unsynced')
       }
-      fetchSessionValidators()
 
+      // NOTE: Once validator list can be synced via staking api, fetch session validators only if
+      // staking api is disabled
+      fetchSessionValidators()
       if (!pluginEnabled('staking_api')) {
         getAverageEraValidatorReward()
       }
