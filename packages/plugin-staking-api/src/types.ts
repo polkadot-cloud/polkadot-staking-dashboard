@@ -197,3 +197,14 @@ export interface ValidatorStatsData {
   activeValidatorRanks: ValidatorRanksResult
   averageValidatorCommission: number
 }
+
+export type RpcEndpointHealthResult = Query & {
+  data: RpcEndpointChainHealth
+}
+
+export interface RpcEndpointChainHealth {
+  chains: {
+    chain: string
+    endpoints: string[]
+  }[]
+}

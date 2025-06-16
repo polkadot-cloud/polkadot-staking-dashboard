@@ -10,3 +10,32 @@ export interface AccountBalance {
     frozen: bigint
   }
 }
+
+export interface NominatorBalances {
+  active: bigint
+  totalUnlocking: bigint
+  totalUnlocked: bigint
+  totalPossibleBond: bigint
+  totalAdditionalBond: bigint
+  totalUnlockChunks: number
+}
+
+export interface PoolBalances {
+  active: bigint
+  totalUnlocking: bigint
+  totalUnlocked: bigint
+  totalPossibleBond: bigint
+  totalUnlockChunks: number
+}
+
+// Interface for comprehensive balance calculations
+export interface AccountBalances {
+  freeBalance: bigint
+  transferableBalance: bigint
+  balanceTxFees: bigint
+  edReserved: bigint
+  totalBalance: bigint
+  lockedBalance: bigint
+  nominator: NominatorBalances
+  pool: PoolBalances
+}

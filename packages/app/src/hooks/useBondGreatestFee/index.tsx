@@ -5,20 +5,19 @@ import { maxBigInt } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useBalances } from 'contexts/Balances'
 import type { SubmittableExtrinsic } from 'dedot'
-import { useEffect, useMemo, useState } from 'react'
+import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useEffect, useState } from 'react'
 import type { BondFor } from 'types'
 
 export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   const { serviceApi } = useApi()
+  const { feeReserve } = useBalances()
   const { activeAddress } = useActiveAccounts()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
-  const transferOptions = useMemo(
-    () => getTransferOptions(activeAddress),
-    [activeAddress]
-  )
-  const { transferrableBalance } = transferOptions
+  const {
+    balances: { freeBalance, transferableBalance },
+  } = useAccountBalances(activeAddress)
 
   // store the largest possible tx fees for bonding.
   const [largestTxFee, setLargestTxFee] = useState<BigNumber>(new BigNumber(0))
@@ -26,7 +25,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   // update max tx fee on free balance change
   useEffect(() => {
     handleFetch()
-  }, [transferOptions])
+  }, [freeBalance.toString()])
 
   // handle fee fetching
   const handleFetch = async () => {
@@ -36,7 +35,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const bond = maxBigInt(transferrableBalance - feeReserve, 0n)
+    const bond = maxBigInt(transferableBalance - feeReserve, 0n)
 
     let tx: SubmittableExtrinsic | undefined
     if (bondFor === 'pool') {

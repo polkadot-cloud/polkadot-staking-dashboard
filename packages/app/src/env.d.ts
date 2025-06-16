@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionInjected } from '@w3ux/types'
-import type { TxSubmissionItem } from 'controllers/TxSubmission/types'
 
 declare global {
   interface Window {
@@ -11,8 +10,5 @@ declare global {
     }
     injectedWeb3?: Record<string, ExtensionInjected>
     opera?: boolean
-  }
-  interface DocumentEventMap {
-    'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }

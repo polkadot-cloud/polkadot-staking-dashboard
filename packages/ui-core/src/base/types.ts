@@ -16,7 +16,8 @@ export type TooltipAreaProps = ComponentBase & {
 }
 
 export type IdentityProps = ComponentBase & {
-  Icon: React.ReactNode
+  address: string
+  iconSize?: string | number
   Action?: React.ReactNode
   label: string
   value: string

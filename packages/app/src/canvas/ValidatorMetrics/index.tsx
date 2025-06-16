@@ -8,9 +8,9 @@ import BigNumber from 'bignumber.js'
 import { ValidatorGeo } from 'canvas/ValidatorMetrics/ValidatorGeo'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { StatusLabel } from 'library/StatusLabel'
@@ -26,9 +26,8 @@ import {
   Stat,
   Subheading,
 } from 'ui-core/canvas'
-import { formatSize } from 'ui-graphs'
 import { CloseCanvas, useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
+import { formatSize, planckToUnitBn } from 'utils'
 import { ActiveGraph as ActiveGraphEraPoints } from './EraPoints/ActiveGraph'
 import { InactiveGraph as InactiveGraphEraPoints } from './EraPoints/InactiveGraph'
 import { ActiveGraph as ActiveGraphRewards } from './Rewards/ActiveGraph'
@@ -38,7 +37,7 @@ export const ValidatorMetrics = () => {
   const { t } = useTranslation()
   const {
     eraStakers: { stakers },
-  } = useStaking()
+  } = useEraStakers()
   const {
     config: { options },
   } = useOverlay().canvas

@@ -3,8 +3,8 @@
 
 import { BehaviorSubject } from 'rxjs'
 import type { NetworkConfig } from 'types'
-import { getInitialNetworkConfig } from '../util'
+import { defaultNetworkConfig } from './default'
 
 export const _networkConfig = new BehaviorSubject<NetworkConfig>(
-  getInitialNetworkConfig()
+  defaultNetworkConfig
 )

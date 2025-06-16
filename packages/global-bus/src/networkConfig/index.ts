@@ -11,6 +11,8 @@ import { _networkConfig } from './private'
 
 export const networkConfig$ = _networkConfig.asObservable()
 
+export const getNetworkConfig = () => _networkConfig.getValue()
+
 export const setNetworkConfig = (
   network: NetworkId,
   rpcEndpoints: RpcEndpoints,
@@ -26,17 +28,17 @@ export const setNetworkConfig = (
   })
 }
 
-export const getNetwork = () => _networkConfig.getValue().network
+export const getNetwork = () => getNetworkConfig().network
 
 export const setNetwork = (network: NetworkId) => {
   setLocalNetwork(network)
   _networkConfig.next({
-    ..._networkConfig.getValue(),
+    ...getNetworkConfig(),
     network,
   })
 }
 
-export const getRpcEndpoints = () => _networkConfig.getValue().rpcEndpoints
+export const getRpcEndpoints = () => getNetworkConfig().rpcEndpoints
 
 export const setRpcEndpoints = (
   network: NetworkId,
@@ -44,17 +46,19 @@ export const setRpcEndpoints = (
 ) => {
   setLocalRpcEndpoints(network, rpcEndpoints)
   _networkConfig.next({
-    ..._networkConfig.getValue(),
+    ...getNetworkConfig(),
     rpcEndpoints,
   })
 }
 
-export const getProviderType = () => _networkConfig.getValue().providerType
+export const getProviderType = () => getNetworkConfig().providerType
 
 export const setProviderType = (providerType: ProviderType) => {
   setLocalProviderType(providerType)
   _networkConfig.next({
-    ..._networkConfig.getValue(),
+    ...getNetworkConfig(),
     providerType,
   })
 }
+
+export * from './local'

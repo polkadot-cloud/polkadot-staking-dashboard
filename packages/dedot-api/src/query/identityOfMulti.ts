@@ -22,7 +22,7 @@ export const identityOfMulti = async <T extends PeopleChain>(
             info: {
               display: item.info?.display,
             },
-            judgements: item.judgements || [0, { type: 'Unknown' }],
+            judgements: item.judgements || [[0, { type: 'Unknown' }]],
             deposit: item.deposit,
           }
         : undefined
