@@ -67,7 +67,7 @@ const NetworkStatsInner = () => {
     stakingMetrics: { lastTotalStake, totalIssuance, validatorCount },
   } = useApi()
   const { getAverageRewardRate } = useAverageRewardRate()
-  const { avgRateBeforeCommission } = getAverageRewardRate(false)
+  const avgRateBeforeCommission = new BigNumber(getAverageRewardRate(false))
 
   // Get network-specific data with useMemo
   const { Token, units } = useMemo(() => {

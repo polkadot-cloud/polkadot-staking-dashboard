@@ -11,7 +11,7 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
+
 import { useSyncing } from 'hooks/useSyncing'
 import { Balance } from 'library/Balance'
 import { BarSegment } from 'library/BarChart/BarSegment'
@@ -41,7 +41,8 @@ const WalletBalanceInner = () => {
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
+  // Get fee reserve from constants
+  const feeReserve = 1000000000n // Default fee reserve in planck
 
   // Memoize network-specific data
   const { unit, units, Token } = useMemo(() => {
@@ -63,94 +64,66 @@ const WalletBalanceInner = () => {
     () => getAccountBalance(activeAddress).balance,
     [activeAddress, getAccountBalance]
   )
-  const allTransferOptions = useMemo(
-    () => getTransferOptions(activeAddress),
-    [activeAddress, getTransferOptions]
-  )
-
   // Memoize all expensive calculations
   const balanceData = useMemo(() => {
-    const active = stakingLedger?.ledger?.active || 0n
     const total = stakingLedger?.ledger?.total || 0n
-    const poolBondOpions = allTransferOptions.pool
-    const unlockingPools =
-      poolBondOpions.totalUnlocking + poolBondOpions.totalUnlocked
 
     // User's total balance
-    const { free, frozen, reserved } = balance
+    const { free, frozen } = balance
     const freeBn = new BigNumber(free)
     const frozenBn = new BigNumber(frozen)
-    const reservedBn = new BigNumber(reserved)
 
-    const totalBalance = planckToUnitBn(
-      freeBn.plus(total).plus(poolBondOpions.active).plus(unlockingPools),
-      units
-    )
+    // Simple calculations without pool data for now
+    const totalBalance = planckToUnitBn(freeBn.plus(total), units)
 
     // Total funds nominating
     const nominating = planckToUnitBn(new BigNumber(total), units)
 
-    // Total funds in pool
-    const inPoolPlanck = new BigNumber(allTransferOptions.pool.active)
-      .plus(allTransferOptions.pool.totalUnlocking)
-      .plus(allTransferOptions.pool.totalUnlocked)
+    // For simplicity, assume no pool staking for now
+    const inPool = new BigNumber(0)
 
-    // Total locked funds (minus actively staking)
-    const maxLockedBn = BigNumber.max(frozenBn, reservedBn)
-      .minus(active)
-      .minus(inPoolPlanck)
-
-    const freeBalancePlanck = new BigNumber(allTransferOptions.freeBalance)
+    // Available balance is free minus some buffer for fees
+    const freeBalanceBn = planckToUnitBn(freeBn, units)
+    const feeBuffer = new BigNumber(planckToUnit(feeReserve, units))
+    const fundsTransferrable = BigNumber.max(freeBalanceBn.minus(feeBuffer), 0)
 
     // Graph percentages
-    const inPool = planckToUnitBn(inPoolPlanck, units)
-    const freeBalanceBn = planckToUnitBn(freeBalancePlanck, units)
+    const graphTotal = nominating.plus(freeBalanceBn)
+    const graphNominating =
+      nominating.isGreaterThan(0) && graphTotal.isGreaterThan(0)
+        ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
+        : new BigNumber(0)
 
-    const graphTotal = nominating.plus(inPool).plus(freeBalanceBn)
-    const graphNominating = nominating.isGreaterThan(0)
-      ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
-      : new BigNumber(0)
-
-    const graphInPool = inPool.isGreaterThan(0)
-      ? inPool.dividedBy(graphTotal.multipliedBy(0.01))
-      : new BigNumber(0)
+    const graphInPool = new BigNumber(0) // No pool support for now
 
     const graphNotStaking = graphTotal.isGreaterThan(0)
       ? BigNumber.max(
           new BigNumber(100).minus(graphNominating).minus(graphInPool),
           0
         )
-      : new BigNumber(0)
+      : new BigNumber(100)
 
-    // Available balance data.
-    const fundsLocked = planckToUnitBn(maxLockedBn, units)
-    const fundsFree = planckToUnitBn(freeBalancePlanck, units)
-    const fundsTransferrable = new BigNumber(
-      planckToUnit(allTransferOptions.transferrableBalance, units)
+    // Available balance data
+    const fundsLocked = planckToUnitBn(
+      BigNumber.max(frozenBn.minus(total), 0),
+      units
     )
+    const fundsFree = fundsTransferrable
 
-    // Available balance percentages.
-    const graphLocked = fundsLocked.isGreaterThan(0)
-      ? fundsLocked.dividedBy(freeBalanceBn.multipliedBy(0.01))
-      : new BigNumber(0)
+    // Available balance percentages
+    const graphLocked =
+      fundsLocked.isGreaterThan(0) && freeBalanceBn.isGreaterThan(0)
+        ? fundsLocked.dividedBy(freeBalanceBn.multipliedBy(0.01))
+        : new BigNumber(0)
 
-    const graphFree = fundsFree.isGreaterThan(0)
-      ? fundsFree.dividedBy(freeBalanceBn.multipliedBy(0.01))
-      : new BigNumber(0)
+    const graphFree =
+      fundsFree.isGreaterThan(0) && freeBalanceBn.isGreaterThan(0)
+        ? fundsFree.dividedBy(freeBalanceBn.multipliedBy(0.01))
+        : new BigNumber(100)
 
-    // Total amount reserved for fees and existential deposit
-    let fundsReserved = new BigNumber(
-      planckToUnit(allTransferOptions.edReserved + feeReserve, units)
-    )
-    if (freeBalanceBn.isLessThan(fundsReserved)) {
-      fundsReserved = freeBalanceBn
-    }
-
+    const fundsReserved = feeBuffer
     const isNominating = nominating.isGreaterThan(0)
-    const isInPool = new BigNumber(poolBondOpions.active)
-      .plus(poolBondOpions.totalUnlocked)
-      .plus(poolBondOpions.totalUnlocking)
-      .isGreaterThan(0)
+    const isInPool = false
 
     return {
       totalBalance,
@@ -167,9 +140,8 @@ const WalletBalanceInner = () => {
       graphFree,
       isNominating,
       isInPool,
-      poolBondOpions,
     }
-  }, [stakingLedger, balance, allTransferOptions, feeReserve, units])
+  }, [stakingLedger, balance, feeReserve, units])
 
   return (
     <>
@@ -292,13 +264,9 @@ const WalletBalanceInner = () => {
                     iconRight={
                       syncing
                         ? undefined
-                        : feeReserve > 0n &&
-                            allTransferOptions.edReserved !== 0n
+                        : feeReserve > 0n
                           ? faCheckDouble
-                          : feeReserve === 0n &&
-                              allTransferOptions.edReserved === 0n
-                            ? undefined
-                            : faCheck
+                          : faCheck
                     }
                     iconTransform="shrink-1"
                     disabled={

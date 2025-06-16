@@ -19,7 +19,7 @@ import { usePayouts } from 'contexts/Payouts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
@@ -52,7 +52,6 @@ export const CompactStakeInfo = () => {
   const { currency } = useCurrency()
   const { openModal } = useOverlay().modal
   const { openCanvas } = useOverlay().canvas
-  const { getStakedBalance } = useTransferOptions()
   const { getPendingPoolRewards, getStakingLedger, getNominations } =
     useBalances()
   const { unclaimedRewards } = usePayouts()
@@ -78,7 +77,8 @@ export const CompactStakeInfo = () => {
   }
 
   // Get bonded funds balance
-  const stakedBalance = getStakedBalance(activeAddress)
+  const stakingLedger = getStakingLedger(activeAddress)
+  const stakedBalance = new BigNumber(stakingLedger?.ledger?.active || 0n)
 
   // Get pending rewards
   let pendingRewards = new BigNumber(0)

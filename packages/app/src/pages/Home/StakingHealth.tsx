@@ -15,7 +15,7 @@ import { useBalances } from 'contexts/Balances'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
@@ -50,13 +50,12 @@ export const StakingHealth = () => {
   const { activeAddress } = useActiveAccounts()
   const { isNominator } = useStaking()
   const { inPool } = useActivePool()
-  const { getNominations, getStakingLedger } = useBalances()
+  const { getNominations, getStakingLedger, getPoolMembership } = useBalances()
   const { formatWithPrefs, avgCommission } = useValidators()
   const { getNominationStatus } = useNominationStatus()
   const { advancedMode } = useUi()
   const navigate = useNavigate()
   const { poolsMetaData } = useBondedPools()
-  const { getStakedBalance } = useTransferOptions()
   const { openModal } = useOverlay().modal
   const { openCanvas } = useOverlay().canvas
 
@@ -77,7 +76,8 @@ export const StakingHealth = () => {
   const isInPool = inPool
 
   // Get pool information if user is in a pool
-  const { poolMembership } = getStakingLedger(activeAddress)
+  const poolMembershipState = getPoolMembership(activeAddress)
+  const poolMembership = poolMembershipState.membership
   const poolId = poolMembership?.poolId ? String(poolMembership.poolId) : null
 
   // Get pool metadata if available
@@ -88,7 +88,7 @@ export const StakingHealth = () => {
 
   // Get network average reward rate
   const { getAverageRewardRate } = useAverageRewardRate()
-  const { avgRateBeforeCommission } = getAverageRewardRate(false)
+  const avgRateBeforeCommission = new BigNumber(getAverageRewardRate(false))
 
   // Calculate pool performance
   const calculatePoolPerformance = () => {
@@ -113,9 +113,8 @@ export const StakingHealth = () => {
     }
 
     let individualRate = new BigNumber(0)
-    const stakedAmount = new BigNumber(
-      getStakedBalance(activeAddress).toString()
-    )
+    const stakingLedger = getStakingLedger(activeAddress)
+    const stakedAmount = new BigNumber(stakingLedger?.ledger?.active || 0n)
 
     if (stakedAmount.isZero()) {
       return new BigNumber(0)

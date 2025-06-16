@@ -6,8 +6,8 @@ import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { Warning } from 'library/Form/Warning'
@@ -170,15 +170,17 @@ export const Send = () => {
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
+  const { getAccountBalance } = useBalances()
   const { unit, units } = getStakingChainData(network)
 
-  // Get the user's transferrable balance
-  const { transferrableBalance } = getTransferOptions(activeAddress)
+  // Get the user's transferable balance
+  const accountBalance = getAccountBalance(activeAddress)
+  const transferableBalance = accountBalance.balance.free
+  const feeReserve = 1000000000n // Default fee reserve in planck
 
   // Calculate the max amount user can send (taking into account tx fees)
   const freeToSend = new BigNumber(
-    planckToUnit(transferrableBalance - feeReserve, units)
+    planckToUnit(transferableBalance - feeReserve, units)
   )
 
   // Recipient address state

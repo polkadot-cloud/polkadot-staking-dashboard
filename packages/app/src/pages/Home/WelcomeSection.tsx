@@ -32,7 +32,7 @@ export const WelcomeSection = () => {
   const { activeEra } = useApi()
   const { isNominator } = useStaking()
   const { inPool } = useActivePool()
-  const { getStakingLedger } = useBalances()
+  const { getPoolMembership } = useBalances()
   const { erasPerDay } = useErasPerDay()
 
   // State to store 30-day reward amount
@@ -56,7 +56,7 @@ export const WelcomeSection = () => {
         setIsLoading(true)
 
         try {
-          const { poolMembership } = getStakingLedger(activeAddress)
+          const poolMembership = getPoolMembership(activeAddress)
           const eras = erasPerDay * 30
           // 30 day duration in seconds
           const duration = 2592000
