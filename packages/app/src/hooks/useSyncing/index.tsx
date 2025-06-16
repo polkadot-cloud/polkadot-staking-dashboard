@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useBalances } from 'contexts/Balances'
-import { getSyncIds, syncStatus$ } from 'global-bus'
+import { getActivePool, getSyncIds, syncStatus$ } from 'global-bus'
 import { getIdsFromSyncConfig } from 'global-bus/util'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, SyncConfig, SyncId } from 'types'
@@ -51,6 +51,20 @@ export const useSyncing = (config: SyncConfig = '*') => {
     )
   }
 
+  // Helper to determine whether the account's active pool (if any) has synced. For syncing to have
+  // finished, either the account is not in a pool, or the pool membership must be synced and the
+  // active pool must exist.
+  const activePoolSynced = (address: MaybeAddress): boolean => {
+    const { synced, membership } = getPoolMembership(address)
+    if (!synced) {
+      return false
+    }
+    if (!membership) {
+      return true
+    }
+    return !!getActivePool(membership.poolId)
+  }
+
   // Subscribe to global bus
   useEffect(() => {
     const subSyncStatus = syncStatus$.subscribe((result) => {
@@ -60,5 +74,10 @@ export const useSyncing = (config: SyncConfig = '*') => {
       subSyncStatus.unsubscribe()
     }
   }, [])
-  return { syncing: syncIds.length > 0, getPoolStatusSynced, accountSynced }
+  return {
+    syncing: syncIds.length > 0,
+    accountSynced,
+    activePoolSynced,
+    getPoolStatusSynced,
+  }
 }

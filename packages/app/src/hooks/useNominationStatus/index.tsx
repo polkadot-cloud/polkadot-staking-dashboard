@@ -2,26 +2,80 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useBalances } from 'contexts/Balances'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
-import type { BondFor, MaybeAddress, NominationStatus } from 'types'
+import type {
+  BondFor,
+  MaybeAddress,
+  NominationStatus,
+  NominationStatuses,
+} from 'types'
 
 export const useNominationStatus = () => {
   const { t } = useTranslation()
-  const { getValidators } = useValidators()
+  const { isNominator } = useStaking()
+  const { eraStakers } = useEraStakers()
   const { getNominations } = useBalances()
-  const { syncing } = useSyncing(['era-stakers'])
+  const { getValidators } = useValidators()
   const { activePoolNominations } = useActivePool()
-  const { isNominator, eraStakers, getNominationsStatusFromTargets } =
-    useStaking()
+  const { bondedPools, poolsNominations } = useBondedPools()
+  const { syncing, activePoolSynced, accountSynced } = useSyncing([
+    'era-stakers',
+  ])
+
+  // Gets the nomination statuses of passed in nominations
+  const getNominationsStatusFromTargets = (
+    who: MaybeAddress,
+    fromTargets: string[]
+  ) => {
+    const statuses: Record<string, NominationStatus> = {}
+
+    if (!fromTargets.length) {
+      return statuses
+    }
+
+    for (const target of fromTargets) {
+      const staker = eraStakers.stakers.find(
+        ({ address }) => address === target
+      )
+
+      if (staker === undefined) {
+        statuses[target] = 'waiting'
+        continue
+      }
+
+      if (!(staker.others ?? []).find((o) => o.who === who)) {
+        statuses[target] = 'inactive'
+        continue
+      }
+      statuses[target] = 'active'
+    }
+    return statuses
+  }
+
+  // Utility to check if the nomination status is
+  //
+  // NOTE: Not currently being used, requires more logic for nominator status
+  const nominationStatusSyncing = (who: MaybeAddress, bondFor: BondFor) => {
+    if (!accountSynced(who)) {
+      return true
+    }
+    if (bondFor === 'pool') {
+      return !activePoolSynced(who)
+    } else {
+      return false
+    }
+  }
 
   // Utility to get an account's nominees alongside their status.
-  const getNominationSetStatus = (who: MaybeAddress, type: BondFor) => {
+  const getNominationSetStatus = (who: MaybeAddress, bondFor: BondFor) => {
     const nominations =
-      type === 'nominator'
+      bondFor === 'nominator'
         ? getNominations(who)
         : (activePoolNominations?.targets ?? [])
 
@@ -94,5 +148,56 @@ export const useNominationStatus = () => {
     }
   }
 
-  return { getNominationStatus, getNominationSetStatus }
+  // Get bonded pool nomination statuses
+  const getPoolNominationStatus = (
+    nominator: MaybeAddress,
+    nomination: MaybeAddress
+  ): NominationStatus => {
+    const pool = bondedPools.find((p) => p.addresses.stash === nominator)
+
+    if (!pool) {
+      return 'waiting'
+    }
+
+    // get pool targets from nominations metadata
+    const nominations = poolsNominations[pool.id]
+    const targets = nominations ? nominations.targets : []
+    const target = targets.find((item) => item === nomination)
+
+    if (!target) {
+      return 'waiting'
+    }
+
+    const nominationStatus = getNominationsStatusFromTargets(nominator, [
+      target,
+    ])
+    return getPoolNominationStatusCode(nominationStatus)
+  }
+
+  // Determine bonded pool's current nomination statuse
+  const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
+    let status: NominationStatus = 'waiting'
+
+    if (statuses) {
+      for (const childStatus of Object.values(statuses)) {
+        if (childStatus === 'active') {
+          status = 'active'
+          break
+        }
+        if (childStatus === 'inactive') {
+          status = 'inactive'
+        }
+      }
+    }
+    return status
+  }
+
+  return {
+    getNominationStatus,
+    getNominationSetStatus,
+    nominationStatusSyncing,
+    getNominationsStatusFromTargets,
+    getPoolNominationStatus,
+    getPoolNominationStatusCode,
+  }
 }

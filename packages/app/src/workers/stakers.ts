@@ -1,13 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@w3ux/utils'
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type {
-  ActiveAccountStaker,
-  ExposureOther,
-  Staker,
-} from 'contexts/Staking/types'
+import type { ExposureOther, Staker } from 'contexts/EraStakers/types'
+import type { ActiveAccountStaker } from 'contexts/Staking/types'
 import type { ProcessExposuresArgs } from './types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,29 +36,29 @@ const processExposures = (data: ProcessExposuresArgs) => {
 
     const address = keys[1]
     let others =
-      val?.others.map((o) => ({
+      val.others.map((o) => ({
         ...o,
-        value: rmCommas(o.value),
+        value: o.value,
       })) ?? []
 
     // Accumulate active nominators and min active stake threshold.
     if (others.length) {
       // Sort `others` by value bonded, largest first.
       others = others.sort((a, b) => {
-        const r = new BigNumber(rmCommas(b.value)).minus(rmCommas(a.value))
+        const r = new BigNumber(b.value).minus(a.value)
         return r.isZero() ? 0 : r.isLessThan(0) ? -1 : 1
       })
 
       stakers.push({
         address,
         others,
-        own: rmCommas(val.own),
-        total: rmCommas(val.total),
+        own: val.own,
+        total: val.total,
       })
 
       // Accumulate active stake for all nominators.
       for (const o of others) {
-        const value = new BigNumber(rmCommas(o.value))
+        const value = new BigNumber(o.value)
 
         // Check nominator already exists.
         const index = nominators.findIndex(({ who }) => who === o.who)
@@ -84,7 +81,7 @@ const processExposures = (data: ProcessExposuresArgs) => {
       if (own !== undefined) {
         activeAccountOwnStake.push({
           address,
-          value: planckToUnit(rmCommas(own.value), units),
+          value: planckToUnit(own.value, units),
         })
       }
     }

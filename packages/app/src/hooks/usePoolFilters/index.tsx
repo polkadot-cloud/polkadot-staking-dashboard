@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useStaking } from 'contexts/Staking'
+import { useNominationStatus } from 'hooks/useNominationStatus'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
 import type { AnyFunction, AnyJson, BondedPool } from 'types'
@@ -10,8 +10,8 @@ import type { AnyFunction, AnyJson, BondedPool } from 'types'
 export const usePoolFilters = () => {
   const { t } = useTranslation('app')
   const { poolsNominations } = useBondedPools()
-  const { getNominationsStatusFromTargets } = useStaking()
-  const { getPoolNominationStatusCode } = useBondedPools()
+  const { getNominationsStatusFromTargets, getPoolNominationStatusCode } =
+    useNominationStatus()
 
   /*
    * Include active pools.

@@ -15,6 +15,7 @@ import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
+import { EraStakersProvider } from 'contexts/EraStakers'
 import { FastUnstakeProvider } from 'contexts/FastUnstake'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
@@ -76,6 +77,7 @@ export const Providers = () => {
       CurrencyProvider,
       TokenPricesProvider,
       BalancesProvider,
+      EraStakersProvider,
       StakingProvider,
       FavoritePoolsProvider,
       BondedPoolsProvider,
