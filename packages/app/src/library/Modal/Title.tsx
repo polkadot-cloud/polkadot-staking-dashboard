@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { CSSProperties } from 'styled-components'
-import type { AnyJson } from 'types'
 import { ButtonHelp } from 'ui-buttons'
 import { Title as Wrapper } from 'ui-core/modal'
 import { Close } from 'ui-overlay'
@@ -15,7 +14,7 @@ import { TitleWrapper } from './Wrappers'
 interface TitleProps {
   title?: string
   icon?: IconProp
-  Svg?: FunctionComponent<SVGProps<AnyJson>>
+  Svg?: FunctionComponent<SVGProps<unknown>>
   fixed?: boolean
   helpKey?: string
   style?: CSSProperties

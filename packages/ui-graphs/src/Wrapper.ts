@@ -21,10 +21,3 @@ export const ValidatorGeoWrapper = styled.div`
     min-height: 125px;
   }
 `
-
-export const NominatorGeoWrapper = styled.div`
-  position: relative;
-  flex: 0;
-  padding: 1rem 2rem 1rem 0;
-  width: 100%;
-`

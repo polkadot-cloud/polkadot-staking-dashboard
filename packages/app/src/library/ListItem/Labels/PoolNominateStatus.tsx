@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useStaking } from 'contexts/Staking'
+import { useNominationStatus } from 'hooks/useNominationStatus'
 import { PoolStatusWrapper } from 'library/ListItem/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,8 +12,11 @@ import type { BondedPool } from 'types'
 
 export const PoolNominateStatus = ({ pool }: { pool: BondedPool }) => {
   const { t } = useTranslation('app')
-  const { getPoolNominationStatusCode, poolsNominations } = useBondedPools()
-  const { eraStakers, getNominationsStatusFromTargets } = useStaking()
+  const { eraStakers } = useEraStakers()
+  const { poolsNominations } = useBondedPools()
+  const { getNominationsStatusFromTargets, getPoolNominationStatusCode } =
+    useNominationStatus()
+
   const { addresses } = pool
 
   // get pool targets from nominations meta batch

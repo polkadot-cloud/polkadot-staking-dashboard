@@ -8,7 +8,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Warning } from '../Warning'
@@ -38,16 +38,18 @@ export const BondFeedback = ({
     stakingMetrics: { minNominatorBond },
   } = useApi()
   const { unit, units } = getStakingChainData(network)
-  const { getTransferOptions } = useTransferOptions()
-  const allTransferOptions = getTransferOptions(activeAddress)
+  const {
+    balances: {
+      transferableBalance,
+      nominator: { totalAdditionalBond },
+    },
+  } = useAccountBalances(activeAddress)
 
   const defaultBondStr = defaultBond ? String(defaultBond) : ''
 
   // get bond options for either staking or pooling.
   const availableBalance =
-    bondFor === 'nominator'
-      ? allTransferOptions.nominate.totalAdditionalBond
-      : allTransferOptions.transferrableBalance
+    bondFor === 'nominator' ? totalAdditionalBond : transferableBalance
 
   // the default bond balance. If we are bonding, subtract tx fees from bond amount.
   const freeToBond = !disableTxFeeUpdate

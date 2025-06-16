@@ -15,9 +15,6 @@ export interface BalancesContextInterface {
   getNominations: (address: MaybeAddress) => string[]
   getEdReserved: (address: MaybeAddress) => bigint
   getPendingPoolRewards: (address: MaybeAddress) => bigint
-}
-
-export interface UnlockChunk {
-  era: number
-  value: bigint
+  feeReserve: bigint
+  setFeeReserveBalance: (reserve: bigint) => void
 }
