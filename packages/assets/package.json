@@ -4,7 +4,7 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "clear": "rm -rf build dist"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "exports": {
     ".": "./src/index.ts",
@@ -14,6 +14,8 @@
     "react": "^19.1.0"
   },
   "devDependencies": {
-    "types": "workspace:*"
+    "types": "workspace:*",
+    "vite": "^6.3.5",
+    "vite-plugin-svgr": "^4.3.0"
   }
 }

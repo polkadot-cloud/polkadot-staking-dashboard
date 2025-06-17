@@ -5,16 +5,19 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./*": "./src/*.ts"
+    "./*": "./src/*.ts",
+    "./util": "./src/util/index.ts"
   },
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "dependencies": {
-    "@substrate/connect-known-chains": "^1.10.1",
+    "@polkawatch/ddp-client": "^3.0.1",
+    "@substrate/connect-known-chains": "^1.10.2",
     "assets": "workspace:*"
   },
   "devDependencies": {
-    "types": "workspace:*"
+    "types": "workspace:*",
+    "vite": "^6.3.5"
   }
 }

@@ -1,26 +1,29 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PageCategoryItems, PagesConfigItems } from 'common-types'
 import { Nominate } from 'pages/Nominate'
 import { Operators } from 'pages/Operators'
 import { Overview } from 'pages/Overview'
 import { Pools } from 'pages/Pools'
 import { Rewards } from 'pages/Rewards'
 import { Validators } from 'pages/Validators'
+import type { PageCategoryItems, PagesConfigItems } from 'types'
 
 export const PageCategories: PageCategoryItems = [
   {
     id: 1,
     key: 'default',
+    advanced: false,
   },
   {
     id: 2,
     key: 'stake',
+    advanced: false,
   },
   {
     id: 3,
     key: 'validators',
+    advanced: true,
   },
 ]
 
@@ -32,6 +35,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/overview',
     Entry: Overview,
     lottie: 'globe',
+    advanced: false,
   },
   {
     category: 2,
@@ -40,6 +44,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/pools',
     Entry: Pools,
     lottie: 'groups',
+    advanced: false,
   },
   {
     category: 2,
@@ -48,6 +53,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/nominate',
     Entry: Nominate,
     lottie: 'trending',
+    advanced: false,
   },
   {
     category: 2,
@@ -56,6 +62,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/rewards',
     Entry: Rewards,
     lottie: 'analytics',
+    advanced: false,
   },
   {
     category: 3,
@@ -64,6 +71,7 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/validators',
     Entry: Validators,
     lottie: 'view',
+    advanced: false,
   },
   {
     category: 3,
@@ -72,5 +80,6 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/operators',
     Entry: Operators,
     lottie: 'label',
+    advanced: false,
   },
 ]

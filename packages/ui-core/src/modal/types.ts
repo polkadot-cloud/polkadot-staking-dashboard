@@ -28,6 +28,7 @@ export type PaddingProps = ComponentBase & {
 
 export type ScrollProps = ComponentBase & {
   size: string
+  overflow: string
 }
 
 export type SectionProps = ComponentBase & {
@@ -36,4 +37,10 @@ export type SectionProps = ComponentBase & {
 
 export type ContainerProps = BaseWithAnimation & {
   onClose: () => void
+}
+
+export interface RoleChangeProps {
+  roleName: string
+  oldAddress?: string
+  newAddress?: string
 }

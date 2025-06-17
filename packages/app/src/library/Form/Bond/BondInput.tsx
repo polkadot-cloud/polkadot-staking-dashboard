@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
@@ -24,7 +24,7 @@ export const BondInput = ({
   const { t } = useTranslation('app')
   const { network } = useNetwork()
   const { activeAddress } = useActiveAccounts()
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
 
   // the current local bond value
   const [localBond, setLocalBond] = useState<string>(value)
@@ -43,21 +43,22 @@ export const BondInput = ({
   // handle change for bonding.
   const handleChangeBond = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
-    if (new BigNumber(val).isNaN() && val !== '') {
+    if (val !== '' && new BigNumber(val).isNaN()) {
       return
     }
     setLocalBond(val)
-    updateParentState(new BigNumber(val))
+    updateParentState(val)
   }
 
   // apply bond to parent setters.
-  const updateParentState = (val: BigNumber) => {
+  const updateParentState = (val: string) => {
+    val = val || '0'
     if (new BigNumber(val).isNaN()) {
       return
     }
     for (const setter of setters) {
       setter({
-        bond: val,
+        bond: new BigNumber(val),
       })
     }
   }
@@ -94,7 +95,7 @@ export const BondInput = ({
             disabled={disabled || syncing || freeToBond.isZero()}
             onClick={() => {
               setLocalBond(freeToBond.toString())
-              updateParentState(freeToBond)
+              updateParentState(freeToBond.toString())
             }}
           />
         </section>

@@ -10,3 +10,8 @@ import type { Plugin } from 'types'
 export const CompulsoryPluginsProduction: Plugin[] = ['staking_api']
 
 export const PluginsList: Plugin[] = ['staking_api', 'subscan', 'polkawatch']
+
+export const PolkawatchConfig = {
+  ApiVersion: 'v2',
+  SupportedNetworks: ['polkadot', 'kusama'],
+}

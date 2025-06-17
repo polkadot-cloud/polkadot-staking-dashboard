@@ -5,15 +5,15 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist"
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "dependencies": {
-    "@w3ux/hooks": "^2.1.0",
-    "@w3ux/utils": "2.0.10",
+    "@w3ux/hooks": "^2.3.4",
+    "@w3ux/utils": "2.2.1",
     "bignumber.js": "^9.3.0",
     "date-fns": "^4.1.0",
-    "dedot": "^0.9.5",
-    "i18next": "^25.0.2"
+    "dedot": "^0.13.1",
+    "i18next": "^25.2.1"
   },
   "devDependencies": {
     "types": "workspace:*"

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { PerbillMultiplier } from 'consts'
+import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -25,7 +26,7 @@ export const PoolStats = () => {
   const { activePool } = useActivePool()
   const { getCurrentCommission } = usePoolCommission()
 
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
   const poolId = activePool?.id || 0
 
   const { state, points, memberCounter } = activePool?.bondedPool || {}
@@ -58,7 +59,7 @@ export const PoolStats = () => {
   if (currentCommission) {
     items.push({
       label: t('poolCommission'),
-      value: `${currentCommission}%`,
+      value: `${currentCommission / PerbillMultiplier}%`,
     })
   }
 

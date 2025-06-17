@@ -1,12 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
 import { useTxMeta } from 'contexts/TxMeta'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,22 +28,25 @@ export const SubmitTx = ({
   requiresMigratedController = false,
   onResize,
   transparent,
+  txInitiated,
 }: SubmitTxProps) => {
   const { t } = useTranslation()
   const { network } = useNetwork()
   const { getTxSubmission } = useTxMeta()
   const { setModalResize } = useOverlay().modal
-  const { getTransferOptions } = useTransferOptions()
   const { activeAddress, activeProxy } = useActiveAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
 
-  const { unit } = getNetworkData(network)
+  const { unit } = getStakingChainData(network)
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
   const submitted = txSubmission?.submitted || false
-  const { transferrableBalance } = getTransferOptions(from)
-  const notEnoughFunds = transferrableBalance - fee < 0n && fee > 0n
+
+  const {
+    balances: { transferableBalance },
+  } = useAccountBalances(from)
+  const notEnoughFunds = transferableBalance - fee < 0n && fee > 0n
 
   // Default to active account
   let signingOpts = {
@@ -51,15 +54,17 @@ export const SubmitTx = ({
     who: getAccount(activeAddress),
   }
 
-  if (activeProxy && proxySupported) {
-    signingOpts = {
-      label: t('signedByProxy', { ns: 'app' }),
-      who: getAccount(activeProxy.address),
-    }
-  } else if (!(activeProxy && proxySupported) && requiresMigratedController) {
-    signingOpts = {
-      label: t('signedByController', { ns: 'app' }),
-      who: getAccount(activeAddress),
+  if (txInitiated) {
+    if (activeProxy && proxySupported) {
+      signingOpts = {
+        label: t('signedByProxy', { ns: 'app' }),
+        who: getAccount(activeProxy.address),
+      }
+    } else if (!(activeProxy && proxySupported) && requiresMigratedController) {
+      signingOpts = {
+        label: t('signedByController', { ns: 'app' }),
+        who: getAccount(activeAddress),
+      }
     }
   }
 

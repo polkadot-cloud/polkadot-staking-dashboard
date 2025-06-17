@@ -4,7 +4,7 @@
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { defaultContext, operatorItem } from './defaults'
+import { defaultContext, defaultOperatorItem } from './defaults'
 import type { Item, OperatorsSectionsContextInterface } from './types'
 
 export const OperatorsSectionsContext =
@@ -23,7 +23,7 @@ export const OperatorsSectionsProvider = ({
   const [activeSection, setActiveSectionState] = useState<number>(0)
 
   // store the active entity item of the operators page
-  const [activeItem, setActiveItem] = useState<Item>(operatorItem)
+  const [activeItem, setActiveItem] = useState<Item>(defaultOperatorItem)
 
   // store the Y scroll position when the last entity was visited
   // used to automatically scroll back down upon returning to the entity list.
@@ -32,7 +32,7 @@ export const OperatorsSectionsProvider = ({
   // go back to first section and reset item when network switches
   useEffect(() => {
     setActiveSectionState(0)
-    setActiveItem(operatorItem)
+    setActiveItem(defaultOperatorItem)
   }, [network])
 
   const setActiveSection = (t: number) => {

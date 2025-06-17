@@ -9,7 +9,7 @@ import {
 } from '@w3ux/react-connect-kit'
 import type { HardwareAccountSource } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { getInitialExternalAccounts } from 'global-bus/util'
@@ -34,7 +34,7 @@ export const OtherAccountsProvider = ({
   const { activeAddress, setActiveAccount } = useActiveAccounts()
   const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
-  const { ss58 } = getNetworkData(network)
+  const { ss58 } = getStakingChainData(network)
   const extensionAccounts = getExtensionAccounts(ss58)
 
   // Store whether other (non-extension) accounts have been initialised
@@ -186,7 +186,7 @@ export const OtherAccountsProvider = ({
 
   // Once extensions are fully initialised, fetch accounts from other sources
   useEffectIgnoreInitial(() => {
-    if (extensionsSynced) {
+    if (extensionsSynced === 'synced') {
       // Fetch accounts from supported hardware wallets
       importLocalOtherAccounts('vault', getHardwareAccounts)
       importLocalOtherAccounts('ledger', getHardwareAccounts)
@@ -202,7 +202,7 @@ export const OtherAccountsProvider = ({
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts
   useEffectIgnoreInitial(() => {
-    if (extensionsSynced && otherAccountsSynced === true) {
+    if (extensionsSynced === 'synced' && otherAccountsSynced) {
       setAccountsInitialised(true)
     }
   }, [extensionsSynced, otherAccountsSynced])

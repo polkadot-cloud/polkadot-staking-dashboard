@@ -11,7 +11,7 @@ import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -20,7 +20,7 @@ import { useFastUnstake } from 'contexts/FastUnstake'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
@@ -39,25 +39,23 @@ export const ManageBond = () => {
   const { network } = useNetwork()
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { openModal } = useOverlay().modal
   const { getStakingLedger } = useBalances()
   const { isFastUnstaking } = useUnstaking()
   const { activeAddress } = useActiveAccounts()
   const { getFastUnstakeText } = useUnstaking()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
+  const { balances } = useAccountBalances(activeAddress)
 
   const { ledger } = getStakingLedger(activeAddress)
-  const { units } = getNetworkData(network)
+  const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
   const active = ledger?.active || 0n
-  const allTransferOptions = getTransferOptions(activeAddress)
 
-  const { freeBalance } = allTransferOptions
-  const { totalUnlocking, totalUnlocked } = allTransferOptions.nominate
+  const { totalUnlocking, totalUnlocked } = balances.nominator
   const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
   // Determine whether to display fast unstake button or regular unstake button.
@@ -88,7 +86,7 @@ export const ManageBond = () => {
     )
 
   const unstakeDisabled =
-    inSetup() || syncing || isReadOnlyAccount(activeAddress)
+    !isNominator || syncing || isReadOnlyAccount(activeAddress)
 
   const bondDisabled = unstakeDisabled || isFastUnstaking
 
@@ -148,7 +146,7 @@ export const ManageBond = () => {
         active={new BigNumber(planckToUnit(active, units))}
         unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
         unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-        free={new BigNumber(planckToUnit(freeBalance, units))}
+        free={new BigNumber(planckToUnit(balances.transferableBalance, units))}
         inactive={active === 0n}
       />
     </>

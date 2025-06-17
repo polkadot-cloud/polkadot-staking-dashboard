@@ -7,16 +7,16 @@ import { TipsConfig } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { useSyncing } from 'hooks/useSyncing'
 import { DefaultLocale } from 'locales'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
 import { Items } from './Items'
 import { PageToggle } from './PageToggle'
 import { Syncing } from './Syncing'
@@ -31,13 +31,14 @@ export const Tips = () => {
   } = useApi()
   const { inPool } = useActivePool()
   const { isOwner } = useActivePool()
+  const { feeReserve } = useBalances()
   const { isNominating } = useStaking()
   const { activeAddress } = useActiveAccounts()
   const { fillVariables } = useFillVariables()
   const { syncing } = useSyncing(['initialization'])
-  const { feeReserve, getTransferOptions } = useTransferOptions()
-
-  const { freeBalance } = getTransferOptions(activeAddress)
+  const {
+    balances: { freeBalance },
+  } = useAccountBalances(activeAddress)
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false
@@ -96,10 +97,10 @@ export const Tips = () => {
   const pageRef = useRef(page)
 
   // accumulate segments to include in tips
-  const segments: AnyJson = []
+  const segments: number[] = []
   if (!activeAddress) {
     segments.push(1)
-  } else if (!isNominating() && !inPool()) {
+  } else if (!isNominating && !inPool) {
     if (freeBalance - feeReserve > minNominatorBond) {
       segments.push(2)
     } else {
@@ -107,10 +108,10 @@ export const Tips = () => {
     }
     segments.push(4)
   } else {
-    if (isNominating()) {
+    if (isNominating) {
       segments.push(5)
     }
-    if (inPool()) {
+    if (inPool) {
       if (!isOwner()) {
         segments.push(6)
       } else {

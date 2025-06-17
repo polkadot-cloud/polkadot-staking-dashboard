@@ -4,7 +4,7 @@
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import type { HardwareAccount } from '@w3ux/types'
 import { DappName, ManualSigners } from 'consts'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -13,11 +13,19 @@ import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useWalletConnect } from 'contexts/WalletConnect'
-import { Notifications } from 'controllers/Notifications'
-import { TxSubmission } from 'controllers/TxSubmission'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
 import { concatU8a, hexToU8a } from 'dedot/utils'
+import {
+  addSend,
+  addSignAndSend,
+  addUid,
+  emitNotification,
+  getUid,
+  pendingTxCount,
+  setUidSubmitted,
+  updateFee,
+} from 'global-bus'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -50,7 +58,7 @@ export const useSubmitExtrinsic = ({
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)
@@ -89,7 +97,7 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler
   const onSubmit = async () => {
-    if (!tx || TxSubmission.getUid(uid)?.submitted) {
+    if (!tx || getUid(uid)?.submitted) {
       return
     }
     if (from === null) {
@@ -118,7 +126,7 @@ export const useSubmitExtrinsic = ({
     }
 
     // Pre-submission state update
-    TxSubmission.setUidSubmitted(uid, true)
+    setUidSubmitted(uid, true)
 
     // Handle signed transaction
     let signer: InjectedSigner | undefined
@@ -197,8 +205,7 @@ export const useSubmitExtrinsic = ({
             )
           },
           closePrompt: () => closePrompt(),
-          setSubmitting: (val: boolean) =>
-            TxSubmission.setUidSubmitted(uid, val),
+          setSubmitting: (val: boolean) => setUidSubmitted(uid, val),
         }).sign(prefixedPayload)
 
         encodedSig = {
@@ -231,7 +238,7 @@ export const useSubmitExtrinsic = ({
         onError('default')
         return
       }
-      TxSubmission.addSend(uid, tx, encodedSig, handlers)
+      addSend(uid, tx, encodedSig, handlers)
     } else {
       // Extension signer
       //
@@ -241,12 +248,12 @@ export const useSubmitExtrinsic = ({
         onError('default')
         return
       }
-      TxSubmission.addSignAndSend(
+      addSignAndSend(
         uid,
         from,
         tx,
         signer as InjectedSigner,
-        getAccountBalance(from).nonce + TxSubmission.pendingTxCount(from),
+        getAccountBalance(from).nonce + pendingTxCount(from),
         handlers
       )
     }
@@ -256,13 +263,13 @@ export const useSubmitExtrinsic = ({
   useEffect(() => {
     // Add a new uid for this transaction
     if (uid === 0) {
-      const newUid = TxSubmission.addUid({ from, tag })
+      const newUid = addUid({ from, tag })
       setUid(newUid)
     }
   }, [])
 
   const onReady = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('pending'),
       subtitle: t('transactionInitiated'),
     })
@@ -272,7 +279,7 @@ export const useSubmitExtrinsic = ({
   }
 
   const onInBlock = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('inBlock'),
       subtitle: t('transactionInBlock'),
     })
@@ -282,14 +289,14 @@ export const useSubmitExtrinsic = ({
   }
 
   const onFinalized = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('finalized'),
       subtitle: t('transactionSuccessful'),
     })
   }
 
   const onFailed = () => {
-    Notifications.emit({
+    emitNotification({
       title: t('failed'),
       subtitle: t('errorWithTransaction'),
     })
@@ -299,7 +306,7 @@ export const useSubmitExtrinsic = ({
     if (type === 'ledger') {
       handleResetLedgerTask()
     }
-    Notifications.emit({
+    emitNotification({
       title: t('cancelled'),
       subtitle: t('transactionCancelled'),
     })
@@ -309,7 +316,7 @@ export const useSubmitExtrinsic = ({
   const fetchTxFee = async () => {
     if (tx && from) {
       const { partialFee } = await tx.paymentInfo(from)
-      TxSubmission.updateFee(uid, partialFee)
+      updateFee(uid, partialFee)
     }
   }
   useEffect(() => {
@@ -319,6 +326,7 @@ export const useSubmitExtrinsic = ({
   }, [uid, JSON.stringify(tx?.toHex())])
 
   return {
+    txInitiated: !!tx,
     uid,
     onSubmit,
     submitAddress: from,

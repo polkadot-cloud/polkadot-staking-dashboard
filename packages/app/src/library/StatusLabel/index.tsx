@@ -23,12 +23,12 @@ export const StatusLabel = ({
   const { openHelp } = useHelp()
   const { syncing } = useSyncing()
   const { plugins } = usePlugins()
-  const { inSetup } = useStaking()
   const { inPool } = useActivePool()
+  const { isNominator } = useStaking()
 
   // syncing or not staking
   if (status === 'sync_or_setup') {
-    if (syncing || !inSetup() || inPool()) {
+    if (syncing || isNominator || inPool) {
       return null
     }
   }
@@ -42,7 +42,7 @@ export const StatusLabel = ({
   return (
     <Wrapper $topOffset={topOffset}>
       <div>
-        {hideIcon !== true && <FontAwesomeIcon icon={faExclamationTriangle} />}
+        {!hideIcon && <FontAwesomeIcon icon={faExclamationTriangle} />}
         <h2>
           &nbsp;&nbsp;
           {title}

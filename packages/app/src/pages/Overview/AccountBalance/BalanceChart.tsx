@@ -5,13 +5,13 @@ import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { Balance } from 'library/Balance'
 import { BarSegment } from 'library/BarChart/BarSegment'
@@ -27,58 +27,47 @@ export const BalanceChart = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
   const { currency } = useCurrency()
+  const { feeReserve } = useBalances()
   const { openModal } = useOverlay().modal
-  const { getStakingLedger } = useBalances()
-  const { getAccountBalance } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { syncing } = useSyncing(['initialization'])
   const { accountHasSigner } = useImportedAccounts()
-  const { feeReserve, getTransferOptions } = useTransferOptions()
-  const { unit, units } = getNetworkData(network)
+  const { balances } = useAccountBalances(activeAddress)
+  const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
 
-  const stakingLedger = getStakingLedger(activeAddress)
-  const active = stakingLedger?.ledger?.active || 0n
-  const total = stakingLedger?.ledger?.total || 0n
-
-  const { balance } = getAccountBalance(activeAddress)
-  const allTransferOptions = getTransferOptions(activeAddress)
-
-  const poolBondOpions = allTransferOptions.pool
-  const unlockingPools =
-    poolBondOpions.totalUnlocking + poolBondOpions.totalUnlocked
-
-  // User's total balance
-  const { free, frozen, reserved } = balance
-  const freeBn = new BigNumber(free)
-  const frozenBn = new BigNumber(frozen)
-  const reservedBn = new BigNumber(reserved)
-
+  // Convert to BigNumber for display and percentage calculations
   const totalBalance = planckToUnitBn(
-    freeBn.plus(poolBondOpions.active).plus(unlockingPools),
+    new BigNumber(balances.totalBalance),
+    units
+  )
+  const nominating = planckToUnitBn(
+    new BigNumber(
+      balances.nominator.active +
+        balances.nominator.totalUnlocking +
+        balances.nominator.totalUnlocked
+    ),
+    units
+  )
+  const inPoolPlanck =
+    balances.pool.active +
+    balances.pool.totalUnlocking +
+    balances.pool.totalUnlocked
+  const inPool = planckToUnitBn(new BigNumber(inPoolPlanck), units)
+  const fundsTransferrable = new BigNumber(
+    planckToUnit(balances.transferableBalance, units)
+  )
+  const fundsLocked = planckToUnitBn(
+    new BigNumber(balances.lockedBalance),
+    units
+  )
+  const freeBalanceBn = planckToUnitBn(
+    new BigNumber(balances.freeBalance),
     units
   )
 
-  // Total funds nominating
-  const nominating = planckToUnitBn(new BigNumber(total), units)
-
-  // Total funds in pool
-  const inPoolPlanck = new BigNumber(allTransferOptions.pool.active)
-    .plus(allTransferOptions.pool.totalUnlocking)
-    .plus(allTransferOptions.pool.totalUnlocked)
-
-  // Total locked funds (minus actively staking)
-  const maxLockedBn = BigNumber.max(frozenBn, reservedBn)
-    .minus(active)
-    .minus(inPoolPlanck)
-
-  const freeBalancePlanck = new BigNumber(allTransferOptions.freeBalance)
-
-  // Graph percentages
-  const inPool = planckToUnitBn(inPoolPlanck, units)
-  const freeBalanceBn = planckToUnitBn(freeBalancePlanck, units)
-
-  const graphTotal = nominating.plus(inPool).plus(freeBalanceBn)
+  // Graph percentages for staking overview
+  const graphTotal = nominating.plus(inPool).plus(fundsTransferrable)
   const graphNominating = nominating.isGreaterThan(0)
     ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0)
@@ -94,15 +83,10 @@ export const BalanceChart = () => {
       )
     : new BigNumber(0)
 
-  // Available balance data.
-  const fundsLocked = planckToUnitBn(maxLockedBn, units)
+  // Available balance data
+  const fundsFree = freeBalanceBn
 
-  const fundsFree = planckToUnitBn(freeBalancePlanck, units)
-  const fundsTransferrable = new BigNumber(
-    planckToUnit(allTransferOptions.transferrableBalance, units)
-  )
-
-  // Available balance percentages.
+  // Available balance percentages
   const graphLocked = fundsLocked.isGreaterThan(0)
     ? fundsLocked.dividedBy(freeBalanceBn.multipliedBy(0.01))
     : new BigNumber(0)
@@ -113,17 +97,14 @@ export const BalanceChart = () => {
 
   // Total amount reserved for fees and existential deposit
   let fundsReserved = new BigNumber(
-    planckToUnit(allTransferOptions.edReserved + feeReserve, units)
+    planckToUnit(balances.edReserved + feeReserve, units)
   )
   if (freeBalanceBn.isLessThan(fundsReserved)) {
     fundsReserved = freeBalanceBn
   }
 
   const isNominating = nominating.isGreaterThan(0)
-  const isInPool = new BigNumber(poolBondOpions.active)
-    .plus(poolBondOpions.totalUnlocked)
-    .plus(poolBondOpions.totalUnlocking)
-    .isGreaterThan(0)
+  const isInPool = inPool.isGreaterThan(0)
 
   return (
     <>
@@ -149,20 +130,20 @@ export const BalanceChart = () => {
           <BarSegment
             dataClass="d1"
             widthPercent={Number(graphNominating.toFixed(2))}
-            flexGrow={!inPool && !freeBalanceBn && isNominating ? 1 : 0}
+            flexGrow={!inPool && !fundsTransferrable && isNominating ? 1 : 0}
             label={`${nominating.decimalPlaces(3).toFormat()} ${unit}`}
           />
           <BarSegment
             dataClass="d2"
             widthPercent={Number(graphInPool.toFixed(2))}
-            flexGrow={!isNominating && !freeBalanceBn && inPool ? 1 : 0}
+            flexGrow={!isNominating && !fundsTransferrable && inPool ? 1 : 0}
             label={`${inPool.decimalPlaces(3).toFormat()} ${unit}`}
           />
           <BarSegment
             dataClass="d4"
             widthPercent={Number(graphNotStaking.toFixed(2))}
             flexGrow={!isNominating && !inPool ? 1 : 0}
-            label={`${freeBalanceBn.decimalPlaces(3).toFormat()} ${unit}`}
+            label={`${fundsTransferrable.decimalPlaces(3).toFormat()} ${unit}`}
             forceShow={!isNominating && !isInPool}
           />
         </Bar>
@@ -231,11 +212,9 @@ export const BalanceChart = () => {
                     iconRight={
                       syncing
                         ? undefined
-                        : feeReserve > 0n &&
-                            allTransferOptions.edReserved !== 0n
+                        : feeReserve > 0n && balances.edReserved !== 0n
                           ? faCheckDouble
-                          : feeReserve === 0n &&
-                              allTransferOptions.edReserved === 0n
+                          : feeReserve === 0n && balances.edReserved === 0n
                             ? undefined
                             : faCheck
                     }

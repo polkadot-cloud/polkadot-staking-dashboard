@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network'
+import { useThemeValues } from 'contexts/ThemeValues'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -9,21 +10,21 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { usePlugins } from 'contexts/Plugins'
 
 import { PolkawatchApi } from '@polkawatch/ddp-client'
-import { PolkaWatch } from 'controllers/PolkaWatch'
 import type { ChainMetadata, NominatorDetail } from './types'
 
 import { AnalyzedDays } from './Stats/AnalyzedDays'
 import { AnalyzedEras } from './Stats/AnalyzedEras'
 import { AnalyzedPayouts } from './Stats/AnalyzedPayouts'
 
+import { PolkawatchConfig } from 'consts/plugins'
+import { getPolkawatchConfig } from 'consts/util'
 import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { GeoDonut } from 'library/Graphs/GeoDonut'
-import { NominatorGeoWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
+import { GeoDonut, GraphWrapper } from 'ui-graphs'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 
@@ -34,6 +35,7 @@ export const NominationGeo = () => {
   const { isNominating } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
+  const { getThemeValue } = useThemeValues()
 
   const enabled = pluginEnabled('polkawatch')
 
@@ -49,7 +51,7 @@ export const NominationGeo = () => {
 
   const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true)
 
-  const networkSupported = PolkaWatch.SUPPORTED_NETWORKS.includes(network)
+  const networkSupported = PolkawatchConfig.SupportedNetworks.includes(network)
 
   // Min height of the graph container.
   const graphContainerMinHeight = analyticsAvailable ? 320 : 25
@@ -61,15 +63,15 @@ export const NominationGeo = () => {
 
   // Status label config.
   const showDisabledLabel = !enabled
-  const showNotNominatingLabel = enabled && !isNominating()
-  const showNotAvailableLabel = enabled && !analyticsAvailable && isNominating()
+  const showNotNominatingLabel = enabled && !isNominating
+  const showNotAvailableLabel = enabled && !analyticsAvailable && isNominating
 
   // Whether to interact with Polkawatch API.
-  const callPolkawatchApi = networkSupported && enabled && isNominating()
+  const callPolkawatchApi = networkSupported && enabled && isNominating
 
   useEffect(() => {
     if (callPolkawatchApi) {
-      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network))
+      const polkaWatchApi = new PolkawatchApi(getPolkawatchConfig(network))
       polkaWatchApi
         .ddpIpfsAboutChain()
         .then((response) => {
@@ -84,13 +86,13 @@ export const NominationGeo = () => {
       setNetworkMeta({} as ChainMetadata)
       setAnalyticsAvailable(false)
     }
-  }, [activeAddress, network, enabled, isNominating()])
+  }, [activeAddress, network, enabled, isNominating])
 
   // NOTE: The list of dependencies assume that changing network
   // triggers a change of account also (i.e. different network prefix).
   useEffect(() => {
     if (callPolkawatchApi) {
-      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network))
+      const polkaWatchApi = new PolkawatchApi(getPolkawatchConfig(network))
       polkaWatchApi
         .ddpIpfsNominatorDetail({
           lastDays: 30,
@@ -108,7 +110,7 @@ export const NominationGeo = () => {
       setNominationDetail({} as NominatorDetail)
       setAnalyticsAvailable(false)
     }
-  }, [activeAddress, network, enabled, isNominating()])
+  }, [activeAddress, network, enabled, isNominating])
 
   return (
     <>
@@ -163,7 +165,7 @@ export const NominationGeo = () => {
             )}
             {enabled && analyticsAvailable && (
               <>
-                <NominatorGeoWrapper>
+                <GraphWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topRegionalDistributionChart}
@@ -171,9 +173,10 @@ export const NominationGeo = () => {
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={0}
+                    getThemeValue={getThemeValue}
                   />
-                </NominatorGeoWrapper>
-                <NominatorGeoWrapper>
+                </GraphWrapper>
+                <GraphWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topCountryDistributionChart}
@@ -181,9 +184,10 @@ export const NominationGeo = () => {
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={maxLabelLen}
+                    getThemeValue={getThemeValue}
                   />
-                </NominatorGeoWrapper>
-                <NominatorGeoWrapper>
+                </GraphWrapper>
+                <GraphWrapper>
                   <GeoDonut
                     title={t('rewards')}
                     series={nominationDetail.topNetworkDistributionChart}
@@ -191,8 +195,9 @@ export const NominationGeo = () => {
                     width={donutSize}
                     legendHeight={legendHeight}
                     maxLabelLen={maxLabelLen}
+                    getThemeValue={getThemeValue}
                   />
-                </NominatorGeoWrapper>
+                </GraphWrapper>
               </>
             )}
           </GraphsWrapper>

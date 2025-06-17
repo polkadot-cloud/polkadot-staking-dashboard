@@ -7,6 +7,5 @@ export const defaultStakingLedger: StakingLedger = {
   ledger: undefined,
   payee: undefined,
   nominators: undefined,
-  poolMembership: undefined,
   controllerUnmigrated: false,
 }

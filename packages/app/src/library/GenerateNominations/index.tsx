@@ -6,11 +6,12 @@ import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useManageNominations } from 'contexts/ManageNominations'
 import { usePrompt } from 'contexts/Prompt'
-import { useStaking } from 'contexts/Staking'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useFetchMethods } from 'hooks/useFetchMethods'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect } from 'react'
@@ -25,7 +26,6 @@ import type {
   GenerateNominationsProps,
   SelectHandler,
 } from './types'
-import { useFetchMehods } from './useFetchMethods'
 import { Wrapper } from './Wrapper'
 
 export const GenerateNominations = ({
@@ -34,12 +34,14 @@ export const GenerateNominations = ({
 }: GenerateNominationsProps) => {
   const { t } = useTranslation()
   const {
+    eraStakers: { stakers },
+  } = useEraStakers()
+  const {
     fetch: fetchFromMethod,
     add: addNomination,
     available: availableToNominate,
-  } = useFetchMehods()
+  } = useFetchMethods()
   const { isReady } = useApi()
-  const { stakers } = useStaking().eraStakers
   const { activeAddress } = useActiveAccounts()
   const { favoritesList } = useFavoriteValidators()
   const { openPromptWith, closePrompt } = usePrompt()

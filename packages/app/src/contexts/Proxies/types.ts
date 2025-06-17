@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
-import type { AnyJson, MaybeAddress } from 'types'
+import type { MaybeAddress } from 'types'
 
 export type Proxies = Proxy[]
 
@@ -33,7 +33,7 @@ export interface ProxiedAccount {
 }
 
 export interface ProxyDelegateWithBalance {
-  transferrableBalance: bigint
+  transferableBalance: bigint
   delegate: string
   proxyType: string
 }
@@ -41,6 +41,6 @@ export interface ProxyDelegateWithBalance {
 export interface ProxiesContextInterface {
   getDelegates: (a: MaybeAddress) => Proxy | undefined
   getProxyDelegate: (x: MaybeAddress, y: MaybeAddress) => ProxyDelegate | null
-  handleDeclareDelegate: (delegator: string) => Promise<AnyJson[]>
+  handleDeclareDelegate: (delegator: string) => Promise<ProxyDelegate[]>
   formatProxiesToDelegates: () => Delegates
 }

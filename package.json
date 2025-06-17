@@ -4,35 +4,36 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo",
+    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo node_modules",
     "dev": "cd packages/app && pnpm dev",
     "lint:check": "eslint './**' && prettier --check .",
-    "lint:fix": "eslint './**' --fix && prettier --write ."
+    "lint:fix": "eslint './**' --fix && prettier --write .",
+    "test": "pnpm -r --if-present test"
   },
   "devDependencies": {
-    "@eslint/js": "^9.25.1",
+    "@eslint/js": "^9.29.0",
     "@types/chroma-js": "^3.1.1",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
     "@types/react-helmet": "^6.1.11",
-    "@typescript-eslint/parser": "^8.31.1",
-    "@vitejs/plugin-react-swc": "^3.9.0",
-    "@w3ux/types": "^2.2.1",
-    "eslint": "^9.25.1",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-import-resolver-typescript": "^4.3.4",
+    "@typescript-eslint/parser": "^8.34.0",
+    "@vitejs/plugin-react-swc": "^3.10.0",
+    "@w3ux/types": "^2.4.1",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.4.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prefer-arrow-functions": "^3.6.2",
-    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "globals": "^16.0.0",
+    "globals": "^16.2.0",
     "prettier": "^3.5.2",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "sass": "1.77.6",
+    "sass": "1.89.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.31.1"
+    "typescript-eslint": "^8.32.1"
   },
   "prettier": {
     "arrowParens": "always",
@@ -54,7 +55,17 @@
     },
     "ignoredBuiltDependencies": [
       "unrs-resolver"
+    ],
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "bufferutil",
+      "esbuild",
+      "keccak",
+      "sharp",
+      "unrs-resolver",
+      "utf-8-validate"
     ]
   },
-  "packageManager": "pnpm@10.7.1"
+  "packageManager": "pnpm@10.11.0"
 }

@@ -2,25 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useHelp } from 'contexts/Help'
-import { useSetup } from 'contexts/Setup'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
+import { usePoolSetups } from 'contexts/PoolSetups'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonSecondary } from 'ui-buttons'
+import { ButtonSecondary } from 'ui-buttons'
 import type { HeaderProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const Header = ({
   title,
-  helpKey,
   complete,
   thisSection,
   bondFor,
 }: HeaderProps) => {
   const { t } = useTranslation('app')
-  const { openHelp } = useHelp()
   const { activeAddress } = useActiveAccounts()
-  const { getPoolSetup, getNominatorSetup, setActiveAccountSetupSection } =
-    useSetup()
+  const { getPoolSetup, setPoolSetupSection } = usePoolSetups()
+  const { getNominatorSetup, setNominatorSetupSection } = useNominatorSetups()
 
   const setup =
     bondFor === 'nominator'
@@ -30,12 +28,7 @@ export const Header = ({
   return (
     <Wrapper>
       <section>
-        <h2>
-          {title}
-          {helpKey !== undefined ? (
-            <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-          ) : null}
-        </h2>
+        <h2>{title}</h2>
       </section>
       <section>
         {complete && (
@@ -45,7 +38,11 @@ export const Header = ({
                 <ButtonSecondary
                   text={t('update')}
                   onClick={() => {
-                    setActiveAccountSetupSection(bondFor, thisSection)
+                    if (bondFor === 'nominator') {
+                      setNominatorSetupSection(thisSection)
+                    } else {
+                      setPoolSetupSection(thisSection)
+                    }
                   }}
                 />
               </span>

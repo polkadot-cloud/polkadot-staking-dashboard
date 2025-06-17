@@ -9,7 +9,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useStaking } from 'contexts/Staking'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
@@ -22,16 +22,16 @@ export const MembershipStatus = ({
 }: MembershipStatusProps) => {
   const { t } = useTranslation('pages')
   const { isReady } = useApi()
-  const { inSetup } = useStaking()
+  const { isNominator } = useStaking()
   const { label } = useStatusButtons()
   const { openModal } = useOverlay().modal
   const { poolsMetaData } = useBondedPools()
   const { activeAddress } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
-  const { getTransferOptions } = useTransferOptions()
+  const { balances } = useAccountBalances(activeAddress)
   const { activePool, isOwner, isBouncer, isMember } = useActivePool()
 
-  const { active } = getTransferOptions(activeAddress).pool
+  const { active } = balances.pool
   const poolState = activePool?.bondedPool?.state ?? null
 
   const membershipButtons = []
@@ -83,7 +83,7 @@ export const MembershipStatus = ({
     <Stat
       label={t('poolMembership')}
       helpKey="Pool Membership"
-      stat={!inSetup() ? t('alreadyNominating') : t('notInPool')}
+      stat={isNominator ? t('alreadyNominating') : t('notInPool')}
       buttonType={buttonType}
     />
   )

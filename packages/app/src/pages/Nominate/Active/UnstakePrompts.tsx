@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { useTransferOptions } from 'contexts/TransferOptions'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -19,24 +19,24 @@ import { useOverlay } from 'ui-overlay'
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages')
   const { syncing } = useSyncing()
-  const { inSetup } = useStaking()
   const { network } = useNetwork()
+  const { isNominator } = useStaking()
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
   const { activeAddress } = useActiveAccounts()
+  const { balances } = useAccountBalances(activeAddress)
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
-
-  const { unit } = getNetworkData(network)
-  const { getTransferOptions } = useTransferOptions()
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
-    getTransferOptions(activeAddress).nominate
+    balances.nominator
+
+  const { unit } = getStakingChainData(network)
 
   // unstaking can withdraw
   const canWithdrawUnlocks =
     isUnstaking && active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
   return (
-    !inSetup() &&
+    isNominator &&
     (isUnstaking || isFastUnstaking) &&
     !syncing && (
       <Page.Row>

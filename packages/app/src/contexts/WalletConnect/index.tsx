@@ -5,14 +5,18 @@ import { createSafeContext } from '@w3ux/hooks'
 import { WalletConnectModal } from '@walletconnect/modal'
 import UniversalProvider from '@walletconnect/universal-provider'
 import { getSdkError } from '@walletconnect/utils'
+import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
 import type { HexString } from 'dedot/utils'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import type { AnyFunction, AnyJson } from 'types'
-import type { WalletConnectContextInterface } from './types'
+import type {
+  WalletConnectApprovalFunction,
+  WalletConnectContextInterface,
+  WalletConnectSession,
+} from './types'
 
 export const [WalletConnectContext, useWalletConnect] =
   createSafeContext<WalletConnectContextInterface>()
@@ -27,7 +31,7 @@ export const WalletConnectProvider = ({
 }) => {
   const { network } = useNetwork()
   const { isReady, getChainSpec } = useApi()
-  const { genesisHash } = getChainSpec(network)
+  const { genesisHash } = getChainSpec(getStakingChain(network))
 
   // The WalletConnect provider
   const wcProvider = useRef<UniversalProvider | null>(null)
@@ -41,7 +45,7 @@ export const WalletConnectProvider = ({
   // Connect metadata for the WalletConnect provider
   const [wcMeta, setWcMeta] = useState<{
     uri: string | undefined
-    approval: AnyFunction
+    approval: WalletConnectApprovalFunction
   } | null>(null)
 
   // Store whether the provider has been wcInitialized
@@ -182,20 +186,21 @@ export const WalletConnectProvider = ({
   }
 
   // Initiate a new Wallet Connect session, if not already wcInitialized
-  const initializeWcSession = async () => {
-    if (wcInitialized) {
-      let wcSession
-      if (wcProvider.current?.session) {
-        wcSession = wcProvider.current.session
-      } else {
-        wcSession = await initializeNewSession()
-      }
+  const initializeWcSession =
+    async (): Promise<WalletConnectSession | null> => {
+      if (wcInitialized) {
+        let wcSession
+        if (wcProvider.current?.session) {
+          wcSession = wcProvider.current.session
+        } else {
+          wcSession = await initializeNewSession()
+        }
 
-      setWcSessionActive(true)
-      return wcSession
+        setWcSessionActive(true)
+        return wcSession
+      }
+      return null
     }
-    return null
-  }
 
   // Handle `approval()` by summoning a new modal and initiating a new Wallet Connect session
   const initializeNewSession = async () => {
@@ -216,7 +221,8 @@ export const WalletConnectProvider = ({
 
     // Update session data in provider
     if (wcProvider.current) {
-      wcProvider.current.session = newWcSession
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      wcProvider.current.session = newWcSession as any
     }
 
     return newWcSession
@@ -245,7 +251,7 @@ export const WalletConnectProvider = ({
 
   // Attempt to sign a transaction and receive a signature
   const signWcTx = async (
-    payload: AnyJson
+    payload: unknown
   ): Promise<{ signature: HexString }> => {
     if (!wcProvider.current || !wcProvider.current.session?.topic) {
       return { signature: '0x' }
@@ -258,7 +264,7 @@ export const WalletConnectProvider = ({
       request: {
         method: 'polkadot_signTransaction',
         params: {
-          address: payload.address,
+          address: (payload as { address?: string }).address || '',
           transactionPayload: payload,
         },
       },
@@ -268,13 +274,21 @@ export const WalletConnectProvider = ({
   const fetchAddresses = async (): Promise<string[]> => {
     // Retrieve a new session or get current one
     const wcSession = await initializeWcSession()
-    if (wcSession === null) {
+    if (wcSession === null || typeof wcSession !== 'object' || !wcSession) {
+      return []
+    }
+
+    // Type guard and safe access to namespaces
+    const sessionObj = wcSession as {
+      namespaces?: Record<string, { accounts?: string[] }>
+    }
+    if (!sessionObj.namespaces) {
       return []
     }
 
     // Get accounts from session
-    const walletConnectAccounts = Object.values(wcSession.namespaces)
-      .map((namespace: AnyJson) => namespace.accounts)
+    const walletConnectAccounts = Object.values(sessionObj.namespaces)
+      .map((namespace) => namespace.accounts || [])
       .flat()
 
     const caip = genesisHash.substring(2).substring(0, 32)

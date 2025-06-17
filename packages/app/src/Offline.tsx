@@ -3,33 +3,28 @@
 
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { OnlineStatus } from 'controllers/OnlineStatus'
-import { isCustomEvent } from 'controllers/utils'
-import { useEffect, useRef, useState } from 'react'
+import { listenOnlineStatus, onlineStatus$ } from 'global-bus'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Offline as Wrapper } from 'ui-core/base'
-import { useEventListener } from 'usehooks-ts'
 
 export const Offline = () => {
   const { t } = useTranslation('app')
   const [offline, setOffline] = useState<boolean>(false)
 
-  const handleOnlineStatus = (e: Event): void => {
-    if (isCustomEvent(e)) {
-      const { online } = e.detail
-      setOffline(!online)
-    }
-  }
-
   useEffect(() => {
-    OnlineStatus.initOnlineEvents()
+    listenOnlineStatus()
   }, [])
 
-  useEventListener(
-    'online-status',
-    handleOnlineStatus,
-    useRef<Document>(document)
-  )
+  // Listen to global bus online status
+  useEffect(() => {
+    const subOnlineStatus = onlineStatus$.subscribe((result) => {
+      setOffline(!result.online)
+    })
+    return () => {
+      subOnlineStatus.unsubscribe()
+    }
+  }, [])
 
   if (!offline) {
     return null

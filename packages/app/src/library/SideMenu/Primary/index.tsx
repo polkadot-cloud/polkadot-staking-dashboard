@@ -19,7 +19,7 @@ export const Primary = ({
   lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi()
-  const { icon, play } = useDotLottieButton(lottie)
+  const { icon, play } = useDotLottieButton(lottie as string)
 
   return (
     <Link

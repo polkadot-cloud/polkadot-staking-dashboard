@@ -25,10 +25,18 @@ export const MaxNominations = 16
 export const MaxPayoutDays = 60
 export const MaxEraRewardPointsEras = 10
 export const PerbillMultiplier = 10000000
+export const ToastDelayDuration = 3000
+export const MaximumPayoutDays = 60
 
 // Local storage keys
 export const FiatCurrencyKey = 'currency'
 export const NetworkKey = 'network'
 export const ExternalAccountsKey = 'external_accounts'
 export const ProviderTypeKey = 'providerType'
-export const rpcEndpointKey = (network: string) => `${network}_rpc_endpoints`
+export const PoolSetupsKey = 'poolSetups'
+export const NominatorSetupsKey = 'nominatorSetups'
+export const AdvancedModeKey = 'advancedMode'
+export const ActiveProxiesKey = 'activeProxies'
+
+export const rpcEndpointKey = (network: string) => `${network}RpcEndpoints`
+export const rpcHealthCacheKey = (network: string) => `${network}RpcHealth`

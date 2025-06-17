@@ -5,7 +5,7 @@ import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getNetworkData } from 'consts/util'
+import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
@@ -23,7 +23,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   } = useApi()
   const { network } = useNetwork()
   const { syncing } = useSyncing(['initialization'])
-  const { unit, units } = getNetworkData(network)
+  const { unit, units } = getStakingChainData(network)
 
   const minNominatorBondUnit = new BigNumber(
     planckToUnit(minNominatorBond, units)
