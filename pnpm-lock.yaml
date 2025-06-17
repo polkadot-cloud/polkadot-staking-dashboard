@@ -15,7 +15,7 @@ importers:
   .:
     devDependencies:
       '@eslint/js':
-        specifier: ^9.27.0
+        specifier: ^9.29.0
         version: 9.29.0
       '@types/chroma-js':
         specifier: ^3.1.1
