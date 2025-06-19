@@ -15,6 +15,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
+import { memo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from '../types'
@@ -31,7 +32,7 @@ ChartJS.register(
   Legend
 )
 
-export const PayoutBar = ({
+const PayoutBarComponent = ({
   days,
   height,
   data: { payouts, poolClaims, unclaimedPayouts },
@@ -189,3 +190,52 @@ export const PayoutBar = ({
     </div>
   )
 }
+
+// Custom comparison function to prevent expensive Chart.js re-initializations
+const arePropsEqual = (
+  prevProps: PayoutBarProps,
+  nextProps: PayoutBarProps
+): boolean => {
+  // Check syncing state
+  if (prevProps.syncing !== nextProps.syncing) {
+    return false
+  }
+
+  // Check dimensions and configuration
+  if (
+    prevProps.days !== nextProps.days ||
+    prevProps.height !== nextProps.height ||
+    prevProps.nominating !== nextProps.nominating ||
+    prevProps.inPool !== nextProps.inPool
+  ) {
+    return false
+  }
+
+  // Check styling props
+  if (
+    prevProps.unit !== nextProps.unit ||
+    prevProps.units !== nextProps.units ||
+    prevProps.dateFormat !== nextProps.dateFormat
+  ) {
+    return false
+  }
+
+  // Check labels object
+  if (JSON.stringify(prevProps.labels) !== JSON.stringify(nextProps.labels)) {
+    return false
+  }
+
+  // Check data object (most important for chart updates)
+  if (JSON.stringify(prevProps.data) !== JSON.stringify(nextProps.data)) {
+    return false
+  }
+
+  // Theme changes detection
+  if (prevProps.getThemeValue !== nextProps.getThemeValue) {
+    return false
+  }
+
+  return true
+}
+
+export const PayoutBar = memo(PayoutBarComponent, arePropsEqual)

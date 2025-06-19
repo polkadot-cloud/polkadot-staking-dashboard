@@ -13,6 +13,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import { memo } from 'react'
 import { Line } from 'react-chartjs-2'
 import type { AveragePayoutLineProps } from '../types'
 import {
@@ -31,7 +32,7 @@ ChartJS.register(
   Legend
 )
 
-export const AveragePayoutLine = ({
+const AveragePayoutLineComponent = ({
   days,
   average,
   height,
@@ -131,10 +132,6 @@ export const AveragePayoutLine = ({
               .decimalPlaces(units)
               .toFormat()} ${unit}`,
         },
-        intersect: false,
-        interaction: {
-          mode: 'nearest',
-        },
       },
     },
   }
@@ -173,3 +170,48 @@ export const AveragePayoutLine = ({
     </>
   )
 }
+
+// Custom comparison function to prevent expensive Chart.js re-initializations
+const arePropsEqual = (
+  prevProps: AveragePayoutLineProps,
+  nextProps: AveragePayoutLineProps
+): boolean => {
+  // Check dimensions and configuration
+  if (
+    prevProps.days !== nextProps.days ||
+    prevProps.average !== nextProps.average ||
+    prevProps.height !== nextProps.height ||
+    prevProps.background !== nextProps.background ||
+    prevProps.nominating !== nextProps.nominating ||
+    prevProps.inPool !== nextProps.inPool
+  ) {
+    return false
+  }
+
+  // Check styling props
+  if (
+    prevProps.unit !== nextProps.unit ||
+    prevProps.units !== nextProps.units
+  ) {
+    return false
+  }
+
+  // Check labels object
+  if (JSON.stringify(prevProps.labels) !== JSON.stringify(nextProps.labels)) {
+    return false
+  }
+
+  // Check data object (most important for chart updates)
+  if (JSON.stringify(prevProps.data) !== JSON.stringify(nextProps.data)) {
+    return false
+  }
+
+  // Theme changes detection
+  if (prevProps.getThemeValue !== nextProps.getThemeValue) {
+    return false
+  }
+
+  return true
+}
+
+export const AveragePayoutLine = memo(AveragePayoutLineComponent, arePropsEqual)
