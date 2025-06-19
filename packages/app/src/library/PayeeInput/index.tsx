@@ -64,18 +64,18 @@ export const PayeeInput = ({
     }
   }
 
-  // Adjust width as ref values change.
+  // Consolidated effect: Handle width adjustments on ref changes and window resize
   useEffect(() => {
+    // Adjust width as ref values change
     handleAdjustWidth()
-  }, [hiddenRef.current, showingRef.current, payee.destination])
 
-  // Adjust width on window resize.
-  useEffect(() => {
+    // Add resize listener
     window.addEventListener('resize', handleAdjustWidth)
+
     return () => {
       window.removeEventListener('resize', handleAdjustWidth)
     }
-  }, [])
+  }, [hiddenRef.current, showingRef.current, payee.destination])
 
   // Show empty Identicon on `None` and invalid `Account` accounts.
   const showEmpty =

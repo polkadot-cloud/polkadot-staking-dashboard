@@ -113,27 +113,30 @@ export const PoolList = ({
     setSearchTerm('pools', newValue)
   }
 
-  // Refetch list when pool list changes.
+  // Consolidated effect: Handle pool list updates and filtering
   useEffect(() => {
+    // Refetch list when pool list changes
     const poolIds = pools?.map((pool) => pool.id)
     const poolIdsDefault = poolsDefault?.map((pool) => pool.id)
     if (JSON.stringify(poolIds) !== JSON.stringify(poolIdsDefault) && synced) {
       resetPoolList()
     }
-  }, [JSON.stringify(pools?.map((pool) => pool.id))])
 
-  // List ui changes / validator changes trigger re-render of list.
-  useEffect(() => {
-    // only filter when pool nominations have been synced.
+    // List ui changes / validator changes trigger re-render of list
+    // only filter when pool nominations have been synced
     if (!syncing && Object.keys(poolsNominations).length) {
       handlePoolsFilterUpdate()
     }
-  }, [syncing, includes, excludes, Object.keys(poolsNominations).length])
 
-  // Scroll to top of the window on every filter.
-  useEffect(() => {
+    // Scroll to top of the window on every filter
     window.scrollTo(0, 0)
-  }, [includes, excludes])
+  }, [
+    JSON.stringify(pools?.map((pool) => pool.id)),
+    syncing,
+    includes,
+    excludes,
+    Object.keys(poolsNominations).length,
+  ])
 
   // Reset list on network change or active era change.
   useEffectIgnoreInitial(() => {

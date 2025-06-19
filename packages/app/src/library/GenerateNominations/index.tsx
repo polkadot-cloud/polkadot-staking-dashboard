@@ -185,8 +185,9 @@ export const GenerateNominations = ({
     // },
   }
 
-  // Update nominations on account switch, or if `defaultNominations` change
+  // Consolidated effect: Handle nominations updates and setup
   useEffect(() => {
+    // Update nominations on account switch, or if `defaultNominations` change
     if (
       JSON.stringify(nominations) !== JSON.stringify(defaultNominations) &&
       defaultNominationsCount > 0
@@ -196,31 +197,32 @@ export const GenerateNominations = ({
         setMethod('manual')
       }
     }
-  }, [activeAddress, defaultNominations])
 
-  // Refetch if fetching is triggered
-  useEffect(() => {
+    // Refetch if fetching is triggered
     if (
-      !isReady ||
-      !getValidators()?.length ||
-      !stakers?.length ||
-      validatorsFetched !== 'synced'
+      isReady &&
+      getValidators()?.length &&
+      stakers?.length &&
+      validatorsFetched === 'synced' &&
+      fetching
     ) {
-      return
-    }
-
-    if (fetching) {
       fetchNominationsForMethod()
     }
-  })
 
-  // Reset fixed height on window size change
-  useEffect(() => {
+    // Setup window resize listener
     window.addEventListener('resize', resizeCallback)
     return () => {
       window.removeEventListener('resize', resizeCallback)
     }
-  }, [])
+  }, [
+    activeAddress,
+    defaultNominations,
+    isReady,
+    getValidators()?.length,
+    stakers?.length,
+    validatorsFetched,
+    fetching,
+  ])
 
   return (
     <Wrapper

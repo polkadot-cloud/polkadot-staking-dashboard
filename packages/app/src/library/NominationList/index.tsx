@@ -134,27 +134,38 @@ export const NominationList = ({
     }
   }
 
-  // Reset list when list changes
+  // Consolidated effect: Handle list reset and setup
   useEffect(() => {
+    // Reset list when list changes
     setFetched(false)
   }, [initialValidators, nominator])
 
-  // Fetch performance queries when list changes
+  // Consolidated effect: Handle list configuration, performance data, and modal resize
   useEffect(() => {
-    getPerformanceData(pageKey)
-  }, [pageKey, pluginEnabled('staking_api')])
-
-  // Configure list when network is ready to fetch
-  useEffect(() => {
-    if (isReady && activeEra.index > 0) {
+    // Configure list when network is ready to fetch
+    if (isReady && activeEra.index > 0 && !fetched) {
       setupValidatorList()
     }
-  }, [isReady, activeEra.index, syncing, fetched])
 
-  // Handle modal resize on list format change
-  useEffect(() => {
-    maybeHandleModalResize()
-  }, [validators])
+    // Fetch performance queries when list changes
+    if (pluginEnabled('staking_api') && fetched && pageKey) {
+      getPerformanceData(pageKey)
+    }
+
+    // Handle modal resize on list format change
+    if (displayFor === 'modal' && validators.length > 0) {
+      maybeHandleModalResize()
+    }
+  }, [
+    isReady,
+    activeEra.index,
+    syncing,
+    fetched,
+    pageKey,
+    pluginEnabled('staking_api'),
+    validators,
+    displayFor,
+  ])
 
   return (
     <ListWrapper>

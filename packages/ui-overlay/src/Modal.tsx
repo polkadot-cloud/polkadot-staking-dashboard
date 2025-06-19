@@ -69,18 +69,17 @@ export const Modal = ({
     setModalHeight(modalRef.current?.clientHeight || 0)
   }
 
-  // Control on modal status change
+  // Consolidated effect: Handle modal status, canvas, and overlay changes
   useEffect(() => {
+    // Control on modal status change
     if (activeOverlayInstance === 'modal' && status === 'open') {
       onIn()
     }
     if (status === 'closing') {
       onOutClose()
     }
-  }, [status])
 
-  // Control on canvas status change
-  useEffect(() => {
+    // Control on canvas status change
     // fade out modal if canvas has been opened
     if (canvasStatus === 'open' && status === 'open') {
       onOut()
@@ -91,10 +90,8 @@ export const Modal = ({
         onIn()
       }
     }
-  }, [canvasStatus])
 
-  // Control dim external overlay change
-  useEffect(() => {
+    // Control dim external overlay change
     // fade out modal if external overlay has been opened
     if (externalOverlayStatus === 'open' && status === 'open') {
       onOut()
@@ -106,18 +103,19 @@ export const Modal = ({
     ) {
       onIn()
     }
-  }, [externalOverlayStatus])
+  }, [status, canvasStatus, externalOverlayStatus, activeOverlayInstance])
 
-  // Resize modal on status or resize change
-  useEffect(() => handleResize(), [modalResizeCounter, status])
-
-  // Resize modal on window size change
+  // Consolidated effect: Handle modal resizing
   useEffect(() => {
+    // Resize modal on status or resize change
+    handleResize()
+
+    // Setup window resize listener
     windowResize()
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  })
+  }, [modalResizeCounter, status])
 
   // Update the modal's content ref as they are initialised
   useEffect(() => {

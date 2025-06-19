@@ -42,15 +42,14 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
     setPoolSetup(value)
   }
 
-  // update pool roles on account change
+  // Consolidated effect: Handle pool roles updates
   useEffect(() => {
+    // update pool roles on account change
     setRoles({
       roles: initialValue,
     })
-  }, [activeAddress])
 
-  // apply initial pool roles to setup progress
-  useEffect(() => {
+    // apply initial pool roles to setup progress
     // only update if this section is currently active
     if (setup.section === section) {
       setPoolSetup({
@@ -58,7 +57,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
         roles: initialValue,
       })
     }
-  }, [setup.section])
+  }, [activeAddress, setup.section])
 
   return (
     <>

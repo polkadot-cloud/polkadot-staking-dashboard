@@ -28,20 +28,19 @@ export const Menu = () => {
     closeMenu()
   })
 
-  // Check position and show the menu if menu has been opened.
+  // Consolidated effect: Handle menu positioning and window resize
   useEffect(() => {
+    // Check position and show the menu if menu has been opened
     if (open) {
       checkMenuPosition(menuRef)
     }
-  }, [open])
 
-  // Close the menu on window resize.
-  useEffect(() => {
+    // Setup window resize listener
     window.addEventListener('resize', resizeCallback)
     return () => {
       window.removeEventListener('resize', resizeCallback)
     }
-  }, [])
+  }, [open])
 
   return (
     open && (

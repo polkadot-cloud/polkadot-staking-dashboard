@@ -250,41 +250,65 @@ export const ValidatorListInner = ({
     }
   }, [syncing])
 
-  // Reset list when validator list changes
+  // Consolidated effect: Handle list reset and setup
   useEffect(() => {
+    // Reset list when validator list or nominator changes
     setFetched(false)
   }, [initialValidators, nominator])
 
-  // Fetch performance queries when validator list changes
+  // Consolidated effect: Handle list configuration and performance data
   useEffect(() => {
-    getPerformanceData(pageKey)
-  }, [pageKey, pluginEnabled('staking_api')])
-
-  // Configure validator list when network is ready to fetch
-  useEffect(() => {
-    if (isReady && activeEra.index > 0) {
+    // Configure validator list when network is ready to fetch
+    if (isReady && activeEra.index > 0 && !fetched) {
       setupValidatorList()
     }
-  }, [isReady, activeEra.index, syncing, fetched])
 
-  // Trigger `onSelected` when selection changes
+    // Fetch performance queries when page changes or plugin status changes
+    if (pluginEnabled('staking_api') && fetched && pageKey) {
+      getPerformanceData(pageKey)
+    }
+  }, [
+    isReady,
+    activeEra.index,
+    syncing,
+    fetched,
+    pageKey,
+    pluginEnabled('staking_api'),
+  ])
+
+  // Consolidated effect: Handle UI updates and list filtering
   useEffect(() => {
-    if (onSelected) {
+    // Trigger `onSelected` when selection changes
+    if (onSelected && selected) {
       onSelected(listProvider)
     }
-  }, [selected])
 
-  // List ui changes / validator changes trigger re-render of list
-  useEffect(() => {
-    if (allowFilters && fetched) {
+    // List ui changes / validator changes trigger re-render of list
+    if (allowFilters && fetched && order && includes && excludes) {
       handleValidatorsFilterUpdate()
     }
-  }, [order, includes, excludes, getApiStatus(getPeopleChainId(network))])
 
-  // Handle modal resize on list format change
-  useEffect(() => {
-    maybeHandleModalResize()
-  }, [listFormat, validators, page])
+    // Handle modal resize on list format change
+    if (
+      displayFor === 'modal' &&
+      (listFormat || validators.length > 0 || page)
+    ) {
+      maybeHandleModalResize()
+    }
+  }, [
+    selected,
+    order,
+    includes,
+    excludes,
+    getApiStatus(getPeopleChainId(network)),
+    listFormat,
+    validators,
+    page,
+    allowFilters,
+    fetched,
+    onSelected,
+    displayFor,
+  ])
 
   if (!bootstrapped) {
     return (
