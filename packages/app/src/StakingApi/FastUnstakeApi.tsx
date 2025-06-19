@@ -18,7 +18,7 @@ export const FastUnstakeApi = ({ who, network }: Props) => {
     if (!loading && !error && data?.canFastUnstake) {
       setFastUnstakeStatus(data.canFastUnstake)
     }
-  }, [JSON.stringify(data?.canFastUnstake)])
+  }, [loading, error, data?.canFastUnstake])
 
   return null
 }
