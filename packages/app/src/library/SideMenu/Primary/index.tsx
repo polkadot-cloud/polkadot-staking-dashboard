@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faHouseUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUi } from 'contexts/UI'
 import { useDotLottieButton } from 'hooks/useDotLottieButton'
@@ -42,7 +42,25 @@ export const Primary = ({
         }}
       >
         <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {icon}
+          {to.includes('/home') || to === '/' ? (
+            <button
+              type="button"
+              style={{
+                height: 'inherit',
+                width: 'inherit',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faHouseUser}
+                style={{ fontSize: '1.2rem' }}
+              />
+            </button>
+          ) : (
+            icon
+          )}
         </div>
         {!minimised && (
           <>
