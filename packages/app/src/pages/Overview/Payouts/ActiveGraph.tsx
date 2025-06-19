@@ -14,7 +14,7 @@ import type {
   RewardResult,
   RewardResults,
 } from 'plugin-staking-api/types'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AveragePayoutLine, PayoutBar } from 'ui-graphs'
 
@@ -44,9 +44,12 @@ export const ActiveGraph = ({
   })
 
   const days = 30
-  const fromDate = new Date()
-  fromDate.setDate(fromDate.getDate() - days)
-  fromDate.setHours(0, 0, 0, 0)
+  const fromDate = useMemo(() => {
+    const date = new Date()
+    date.setDate(date.getDate() - days)
+    date.setHours(0, 0, 0, 0)
+    return date
+  }, [days])
 
   const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
     {
