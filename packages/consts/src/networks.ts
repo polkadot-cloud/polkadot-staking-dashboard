@@ -7,7 +7,7 @@ import type { NetworkId, Networks, SystemChain } from 'types'
 export const DefaultNetwork: NetworkId = 'polkadot'
 
 // Networks that are disabled in production
-export const ProductionDisabledNetworks: NetworkId[] = ['westend']
+export const ProductionDisabledNetworks: NetworkId[] = []
 
 // All supported networks
 export const NetworkList: Networks = {
