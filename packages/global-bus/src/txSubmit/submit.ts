@@ -13,8 +13,9 @@ export const addSignAndSend = async (
   tx: SubmittableExtrinsic,
   signer: InjectedSigner,
   nonce: number,
-  { onError, ...onRest }: TxStatusHandlers
+  txStatusHandlers: TxStatusHandlers
 ) => {
+  const { onError, ...onRest } = txStatusHandlers
   try {
     subs[uid] = await tx.signAndSend(
       from,
@@ -24,7 +25,7 @@ export const addSignAndSend = async (
       }
     )
   } catch (e) {
-    onError('default')
+    handleError(String(e), onError)
     deleteTx(uid)
   }
 }
@@ -42,7 +43,7 @@ export const addSend = async (
       handleResult(uid, status, onRest)
     })
   } catch (e) {
-    onError('default')
+    handleError(String(e), onError)
     deleteTx(uid)
   }
 }
@@ -78,5 +79,22 @@ export const handleResult = (
   if (status.type === 'Invalid') {
     onFailed(Error('Invalid'))
     deleteTx(uid)
+  }
+}
+
+export const handleError = (
+  errorMessage: string,
+  onError: (type?: string) => void
+) => {
+  const msgLower = errorMessage.toLowerCase()
+
+  if (/user rejected|cancelled|cancelled by user|usercancel/.test(msgLower)) {
+    onError('user_cancelled')
+  } else if (
+    /insufficient|balance|insufficientbalance|not enough/.test(msgLower)
+  ) {
+    onError('insufficient_funds')
+  } else {
+    onError('default')
   }
 }
