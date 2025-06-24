@@ -6,6 +6,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 20
+    ignore:
+      - dependency-name: "qrcode-generator"
+      - dependency-name: "framer-motion"
     groups:
       eslint:
         patterns:
@@ -38,9 +41,7 @@ updates:
           - 'chroma-js'
           - 'xxhash-wasm'
           - 'html5-qrcode'
-          - 'qrcode-generator'
           - 'chroma-js'
-          - 'framer-motion'
       vite:
         patterns:
           - 'vite*'
