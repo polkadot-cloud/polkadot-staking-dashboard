@@ -6,3 +6,6 @@ import type { SyncId } from 'types'
 import { defaultSyncStatus } from './default'
 
 export const _syncStatus = new BehaviorSubject<SyncId[]>(defaultSyncStatus)
+
+// Track active timeouts for each sync ID
+export const _syncTimeouts = new Map<SyncId, NodeJS.Timeout>()
