@@ -1,13 +1,15 @@
 # Changelog
 
-## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/styles-v1.2.0...styles-v1.3.0) (2025-04-02)
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/styles-v1.2.0...styles-v1.3.0) (2025-06-17)
 
 
 ### Features
 
 * **refactor:** Migrate from yarn to pnpm ([#2628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2628)) ([7efe25e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7efe25e7e98895ad89a69c3e55a2688e088f82a5))
+* **ux:** Canvas uses `SimpleBar` ([#2746](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2746)) ([85f3a9f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/85f3a9f3820f366b9a78c8e0a1b2d9a7244ccc27))
 * **ux:** Manage Nominations Full Screen UI, Remove confirm dialogue ([#2613](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2613)) ([7afb86f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7afb86fc9ebeed9ddd580a01179ebb1ef6f90320))
 * **ux:** Revised wallet & hardware account management flow ([#2595](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2595)) ([2f7faea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2f7faea0080322e67f62f1f02ac70ead7865caf9))
+* **ux:** Stop body scroll on canvas open ([#2745](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2745)) ([1f15235](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1f152351e814ffa3c1bbd943b0f34fe301f6bc0c))
 
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/styles-v1.1.0...styles-v1.2.0) (2025-02-24)
 

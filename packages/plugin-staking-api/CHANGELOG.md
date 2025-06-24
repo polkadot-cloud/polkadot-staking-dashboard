@@ -1,12 +1,16 @@
 # Changelog
 
-## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.2.0...plugin-staking-api-v1.3.0) (2025-04-02)
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.2.0...plugin-staking-api-v1.3.0) (2025-06-17)
 
 
 ### Features
 
+* Implement RPC health check on network connect ([#2822](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2822)) ([6891521](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/689152198ab00deb7a7e1a11866a83c048636f76))
+* Init `global-bus`, refactor assets, consts, network data. Network to global bus ([#2640](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2640)) ([00d7ca4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/00d7ca4d765777ca59ce055484c23fc138bdb935))
 * **locales:** Add multi-currency support for staking rewards & balances ([#2563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2563)) ([c25e64f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c25e64f0b35beb555641a1a6f018b63bb3cf32db))
 * **refactor:** Migrate from yarn to pnpm ([#2628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2628)) ([7efe25e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7efe25e7e98895ad89a69c3e55a2688e088f82a5))
+* **refactor:** Optimise tsconfigs ([#2781](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2781)) ([00245a0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/00245a01717d82f7b0e33c384a7e9cf2fb5a728f))
+* **refactor:** Use `validatorStats` endpoint ([#2791](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2791)) ([7e1d8a6](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e1d8a6adbab3d273bb02c50fd7579f0e709bfc8))
 
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.1.0...plugin-staking-api-v1.2.0) (2025-02-24)
 
