@@ -14,7 +14,7 @@
     "@w3ux/observables-connect": "^0.10.3",
     "@w3ux/utils": "^2.2.1",
     "consts": "workspace:*",
-    "dedot": "^0.13.1",
+    "dedot": "^0.13.2",
     "plugin-staking-api": "workspace:*",
     "rxjs": "^7.8.2"
   },
