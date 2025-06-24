@@ -14,6 +14,7 @@ export const getSyncIds = (activeIds: SyncConfig) => {
   return _syncStatus.getValue().filter((id) => activeIds.includes(id))
 }
 
+// Helper to get a specific sync ID status
 export const getSyncing = (id: string) =>
   _syncStatus.getValue().find((syncId) => syncId === id)
 
@@ -44,6 +45,7 @@ const startSyncTimeout = (id: SyncId) => {
   _syncTimeouts.set(id, timeoutId)
 }
 
+// Function to set syncing status for a single ID
 export const setSyncing = (id: SyncId) => {
   const newSyncStatus = [..._syncStatus.getValue()]
   if (!newSyncStatus.includes(id)) {
@@ -55,6 +57,7 @@ export const setSyncing = (id: SyncId) => {
   startSyncTimeout(id)
 }
 
+// Function to set syncing status for multiple IDs
 export const setSyncingMulti = (ids: SyncId[]) => {
   const newSyncStatus = [..._syncStatus.getValue()]
   ids.forEach((id) => {
@@ -67,6 +70,7 @@ export const setSyncingMulti = (ids: SyncId[]) => {
   _syncStatus.next(newSyncStatus)
 }
 
+// Function to remove a specific syncing ID
 export const removeSyncing = (id: SyncId) => {
   // Clear timeout for this ID
   clearSyncTimeout(id)
