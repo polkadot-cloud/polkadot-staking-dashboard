@@ -436,6 +436,9 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      global-bus:
+        specifier: workspace:*
+        version: link:../global-bus
       ui-graphs:
         specifier: workspace:*
         version: link:../ui-graphs
