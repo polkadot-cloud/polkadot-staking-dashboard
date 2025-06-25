@@ -106,7 +106,7 @@ export const handleError = (
 // Enhanced technical error classification
 const classifyTechnicalError = (errorMessage: string): string => {
   const msgLower = errorMessage.toLowerCase()
-  
+
   // Signer-related errors
   if (/signer|signature|signing/.test(msgLower)) {
     if (/missing|not found|undefined/.test(msgLower)) {
@@ -120,7 +120,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'signer_error'
   }
-  
+
   // Network connectivity errors
   if (/network|connection|connectivity/.test(msgLower)) {
     if (/timeout|timed out/.test(msgLower)) {
@@ -134,7 +134,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'network_error'
   }
-  
+
   // Transaction parameter errors
   if (/parameter|argument|invalid/.test(msgLower)) {
     if (/nonce|sequence/.test(msgLower)) {
@@ -148,7 +148,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'invalid_parameters'
   }
-  
+
   // Hardware wallet specific errors
   if (/ledger|hardware|device/.test(msgLower)) {
     if (/locked|unlock/.test(msgLower)) {
@@ -165,7 +165,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'hardware_error'
   }
-  
+
   // Wallet Connect errors
   if (/wallet.?connect|wc/.test(msgLower)) {
     if (/session|disconnected/.test(msgLower)) {
@@ -176,7 +176,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'wallet_connect_error'
   }
-  
+
   // Vault/QR code errors
   if (/vault|qr|qrcode/.test(msgLower)) {
     if (/scan|read/.test(msgLower)) {
@@ -187,7 +187,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'vault_error'
   }
-  
+
   // Runtime/version errors
   if (/runtime|version|metadata/.test(msgLower)) {
     if (/incompatible|mismatch/.test(msgLower)) {
@@ -198,7 +198,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'runtime_error'
   }
-  
+
   // Pool-specific errors
   if (/pool|nomination.?pool/.test(msgLower)) {
     if (/full|maximum|limit|exceeded/.test(msgLower)) {
@@ -218,7 +218,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'pool_error'
   }
-  
+
   // Staking-specific errors
   if (/staking|stake|bond/.test(msgLower)) {
     if (/minimum|min.?bond|below/.test(msgLower)) {
@@ -232,7 +232,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'staking_error'
   }
-  
+
   // Commission errors
   if (/commission|comission/.test(msgLower)) {
     if (/exceeds|above|maximum|max/.test(msgLower)) {
@@ -249,7 +249,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'commission_error'
   }
-  
+
   // Balance and fee errors
   if (/balance|fee|payment/.test(msgLower)) {
     if (/reserve|locked|freeze/.test(msgLower)) {
@@ -263,7 +263,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'balance_error'
   }
-  
+
   // Validation errors
   if (/validation|validate|invalid/.test(msgLower)) {
     if (/address|format/.test(msgLower)) {
@@ -280,7 +280,7 @@ const classifyTechnicalError = (errorMessage: string): string => {
     }
     return 'validation_error'
   }
-  
+
   // Generic technical errors
   if (/timeout|timed out/.test(msgLower)) {
     return 'general_timeout'
@@ -291,6 +291,6 @@ const classifyTechnicalError = (errorMessage: string): string => {
   if (/quota|limit/.test(msgLower)) {
     return 'rate_limited'
   }
-  
+
   return 'unknown_technical'
 }
