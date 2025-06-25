@@ -156,7 +156,7 @@ export const useSubmitExtrinsic = ({
 
       const $Signature = serviceApi.codec.$Signature(specName)
       if (!$Signature) {
-        onError('default')
+        onError('technical')
         return
       }
 
@@ -183,7 +183,7 @@ export const useSubmitExtrinsic = ({
       if (source === 'vault') {
         const extra = serviceApi.signer.extraSignedExtension(specName, from)
         if (!extra) {
-          onError('default')
+          onError('technical')
           return
         }
         await extra.init()
@@ -224,7 +224,7 @@ export const useSubmitExtrinsic = ({
       if (source === 'wallet_connect') {
         const extra = serviceApi.signer.extraSignedExtension(specName, from)
         if (!extra) {
-          onError('default')
+          onError('technical')
           return
         }
         await extra.init()
@@ -241,7 +241,7 @@ export const useSubmitExtrinsic = ({
       //
       // Submit the transaction with the raw signature
       if (!encodedSig) {
-        onError('default')
+        onError('technical')
         return
       }
       addSend(uid, tx, encodedSig, handlers)
@@ -251,7 +251,7 @@ export const useSubmitExtrinsic = ({
       // Get the signer for this account and submit the transaction
       signer = getExtensionAccount(from)?.signer as InjectedSigner | undefined
       if (!signer) {
-        onError('default')
+        onError('technical')
         return
       }
       addSignAndSend(
@@ -332,6 +332,8 @@ export const useSubmitExtrinsic = ({
     } else if (type === 'user_cancelled') {
       title = t('userCancelled')
       subtitle = t('userCancelledTransaction')
+    } else if (type === 'technical') {
+      subtitle = t('transactionCancelledTechnical')
     }
 
     emitNotification({

@@ -88,13 +88,13 @@ export const handleError = (
 ) => {
   const msgLower = errorMessage.toLowerCase()
 
-  if (/user rejected|cancelled|cancelled by user|usercancel/.test(msgLower)) {
+  if (/user rejected|cancel(l)?ed|cancel(l)?ed by user|usercancel/.test(msgLower)) {
     onError('user_cancelled')
   } else if (
     /insufficient|balance|insufficientbalance|not enough/.test(msgLower)
   ) {
     onError('insufficient_funds')
   } else {
-    onError('default')
+    onError('technical')
   }
 }
