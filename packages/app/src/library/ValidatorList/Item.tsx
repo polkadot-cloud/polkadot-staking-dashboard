@@ -16,6 +16,7 @@ import { Wrapper } from 'library/ListItem/Wrappers'
 import { memo } from 'react'
 import type { Validator } from 'types'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
+import { deepEqual } from 'ui-graphs/util/deepEqual'
 import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
 import { Select } from '../ListItem/Buttons/Select'
 import { Blocked } from '../ListItem/Labels/Blocked'
@@ -124,21 +125,17 @@ const arePropsEqual = (prevProps: ItemProps, nextProps: ItemProps): boolean => {
     return false
   }
 
-  // Check validator preferences (blocked status, etc.)
-  if (
-    JSON.stringify(prevProps.validator.prefs) !==
-    JSON.stringify(nextProps.validator.prefs)
-  ) {
+  // Check validator preferences (blocked status, etc.) using deepEqual
+  if (!deepEqual(prevProps.validator.prefs, nextProps.validator.prefs)) {
     return false
   }
 
-  // Check era points changes (shallow comparison)
+  // Check era points changes using deepEqual
   if (
     prevProps.eraPoints?.length !== nextProps.eraPoints?.length ||
     (prevProps.eraPoints &&
       nextProps.eraPoints &&
-      JSON.stringify(prevProps.eraPoints) !==
-        JSON.stringify(nextProps.eraPoints))
+      !deepEqual(prevProps.eraPoints, nextProps.eraPoints))
   ) {
     return false
   }
@@ -152,3 +149,4 @@ const arePropsEqual = (prevProps: ItemProps, nextProps: ItemProps): boolean => {
 }
 
 export const Item = memo(ItemComponent, arePropsEqual)
+Item.displayName = 'ValidatorListItem'

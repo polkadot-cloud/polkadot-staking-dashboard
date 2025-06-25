@@ -19,6 +19,7 @@ import { memo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 import { formatRewardsForGraphs } from '../util/index'
 
 ChartJS.register(
@@ -220,13 +221,13 @@ const arePropsEqual = (
     return false
   }
 
-  // Check labels object
-  if (JSON.stringify(prevProps.labels) !== JSON.stringify(nextProps.labels)) {
+  // Check labels object using deepEqual instead of JSON.stringify
+  if (!deepEqual(prevProps.labels, nextProps.labels)) {
     return false
   }
 
   // Check data object (most important for chart updates)
-  if (JSON.stringify(prevProps.data) !== JSON.stringify(nextProps.data)) {
+  if (!deepEqual(prevProps.data, nextProps.data)) {
     return false
   }
 
@@ -239,3 +240,4 @@ const arePropsEqual = (
 }
 
 export const PayoutBar = memo(PayoutBarComponent, arePropsEqual)
+PayoutBar.displayName = 'PayoutBar'

@@ -14,6 +14,7 @@ import { Wrapper } from 'library/ListItem/Wrappers'
 import { usePoolsTabs } from 'pages/Pools/context'
 import { memo } from 'react'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
+import { deepEqual } from 'ui-graphs/util/deepEqual'
 import { More } from '../ListItem/Buttons/More'
 import { Members } from '../ListItem/Labels/Members'
 import { PoolId } from '../ListItem/Labels/PoolId'
@@ -81,10 +82,10 @@ const arePropsEqual = (prevProps: PoolProps, nextProps: PoolProps): boolean => {
     return false
   }
 
-  // Check pool metadata changes
+  // Check pool metadata changes using deepEqual
   if (
     prevPool.addresses.reward !== nextPool.addresses.reward ||
-    JSON.stringify(prevPool.addresses) !== JSON.stringify(nextPool.addresses)
+    !deepEqual(prevPool.addresses, nextPool.addresses)
   ) {
     return false
   }
@@ -94,15 +95,13 @@ const arePropsEqual = (prevProps: PoolProps, nextProps: PoolProps): boolean => {
     return false
   }
 
-  // Check commission changes
-  if (
-    JSON.stringify(prevPool.commission) !== JSON.stringify(nextPool.commission)
-  ) {
+  // Check commission changes using deepEqual
+  if (!deepEqual(prevPool.commission, nextPool.commission)) {
     return false
   }
 
-  // Check roles changes
-  if (JSON.stringify(prevPool.roles) !== JSON.stringify(nextPool.roles)) {
+  // Check roles changes using deepEqual
+  if (!deepEqual(prevPool.roles, nextPool.roles)) {
     return false
   }
 
@@ -110,3 +109,4 @@ const arePropsEqual = (prevProps: PoolProps, nextProps: PoolProps): boolean => {
 }
 
 export const Pool = memo(PoolComponent, arePropsEqual)
+Pool.displayName = 'Pool'

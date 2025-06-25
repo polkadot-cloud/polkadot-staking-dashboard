@@ -19,6 +19,7 @@ import { memo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { PayoutLineProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 
 ChartJS.register(
   CategoryScale,
@@ -187,15 +188,15 @@ const arePropsEqual = (
     return false
   }
 
-  // Check labels object
-  if (JSON.stringify(prevProps.labels) !== JSON.stringify(nextProps.labels)) {
+  // Check labels object using deepEqual instead of JSON.stringify
+  if (!deepEqual(prevProps.labels, nextProps.labels)) {
     return false
   }
 
   // Check entries data (most important for chart updates)
   if (
     prevProps.entries.length !== nextProps.entries.length ||
-    JSON.stringify(prevProps.entries) !== JSON.stringify(nextProps.entries)
+    !deepEqual(prevProps.entries, nextProps.entries)
   ) {
     return false
   }
@@ -210,3 +211,4 @@ const arePropsEqual = (
 }
 
 export const PayoutLine = memo(PayoutLineComponent, arePropsEqual)
+PayoutLine.displayName = 'PayoutLine'

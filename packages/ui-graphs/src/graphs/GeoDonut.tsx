@@ -8,6 +8,7 @@ import chroma from 'chroma-js'
 import { memo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import type { GeoDonutProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -114,15 +115,15 @@ const arePropsEqual = (
     return false
   }
 
-  // Check series data (most important for chart updates)
+  // Check series data (most important for chart updates) using deepEqual
   const prevSeries = prevProps.series || { labels: [], data: [] }
   const nextSeries = nextProps.series || { labels: [], data: [] }
 
   if (
     prevSeries.labels.length !== nextSeries.labels.length ||
     prevSeries.data.length !== nextSeries.data.length ||
-    JSON.stringify(prevSeries.labels) !== JSON.stringify(nextSeries.labels) ||
-    JSON.stringify(prevSeries.data) !== JSON.stringify(nextSeries.data)
+    !deepEqual(prevSeries.labels, nextSeries.labels) ||
+    !deepEqual(prevSeries.data, nextSeries.data)
   ) {
     return false
   }
@@ -136,3 +137,4 @@ const arePropsEqual = (
 }
 
 export const GeoDonut = memo(GeoDonutComponent, arePropsEqual)
+GeoDonut.displayName = 'GeoDonut'

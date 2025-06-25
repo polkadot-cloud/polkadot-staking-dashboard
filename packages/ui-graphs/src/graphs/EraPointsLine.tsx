@@ -19,6 +19,7 @@ import { memo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { EraPointsLineProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 
 ChartJS.register(
   CategoryScale,
@@ -188,15 +189,15 @@ const arePropsEqual = (
     return false
   }
 
-  // Check labels object
-  if (JSON.stringify(prevProps.labels) !== JSON.stringify(nextProps.labels)) {
+  // Check labels object using deepEqual
+  if (!deepEqual(prevProps.labels, nextProps.labels)) {
     return false
   }
 
-  // Check era points data (most important for chart updates)
+  // Check era points data (most important for chart updates) using deepEqual
   if (
     prevProps.entries.length !== nextProps.entries.length ||
-    JSON.stringify(prevProps.entries) !== JSON.stringify(nextProps.entries)
+    !deepEqual(prevProps.entries, nextProps.entries)
   ) {
     return false
   }
@@ -210,3 +211,4 @@ const arePropsEqual = (
 }
 
 export const EraPointsLine = memo(EraPointsLineComponent, arePropsEqual)
+EraPointsLine.displayName = 'EraPointsLine'

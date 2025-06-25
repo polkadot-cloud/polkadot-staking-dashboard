@@ -16,6 +16,7 @@ import {
 import { memo } from 'react'
 import { Line } from 'react-chartjs-2'
 import type { AveragePayoutLineProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 import {
   calculatePayoutAverages,
   combineRewards,
@@ -196,13 +197,13 @@ const arePropsEqual = (
     return false
   }
 
-  // Check labels object
-  if (JSON.stringify(prevProps.labels) !== JSON.stringify(nextProps.labels)) {
+  // Check labels object using deepEqual
+  if (!deepEqual(prevProps.labels, nextProps.labels)) {
     return false
   }
 
-  // Check data object (most important for chart updates)
-  if (JSON.stringify(prevProps.data) !== JSON.stringify(nextProps.data)) {
+  // Check data object (most important for chart updates) using deepEqual
+  if (!deepEqual(prevProps.data, nextProps.data)) {
     return false
   }
 
@@ -215,3 +216,4 @@ const arePropsEqual = (
 }
 
 export const AveragePayoutLine = memo(AveragePayoutLineComponent, arePropsEqual)
+AveragePayoutLine.displayName = 'AveragePayoutLine'
