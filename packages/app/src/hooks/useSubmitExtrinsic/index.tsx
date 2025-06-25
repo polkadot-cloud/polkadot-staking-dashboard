@@ -156,7 +156,7 @@ export const useSubmitExtrinsic = ({
 
       const $Signature = serviceApi.codec.$Signature(specName)
       if (!$Signature) {
-        onError('technical')
+        onError('technical', 'missing_signer')
         return
       }
 
@@ -183,7 +183,7 @@ export const useSubmitExtrinsic = ({
       if (source === 'vault') {
         const extra = serviceApi.signer.extraSignedExtension(specName, from)
         if (!extra) {
-          onError('technical')
+          onError('technical', 'missing_signer')
           return
         }
         await extra.init()
@@ -224,7 +224,7 @@ export const useSubmitExtrinsic = ({
       if (source === 'wallet_connect') {
         const extra = serviceApi.signer.extraSignedExtension(specName, from)
         if (!extra) {
-          onError('technical')
+          onError('technical', 'missing_signer')
           return
         }
         await extra.init()
@@ -241,7 +241,7 @@ export const useSubmitExtrinsic = ({
       //
       // Submit the transaction with the raw signature
       if (!encodedSig) {
-        onError('technical')
+        onError('technical', 'invalid_signer')
         return
       }
       addSend(uid, tx, encodedSig, handlers)
@@ -251,7 +251,7 @@ export const useSubmitExtrinsic = ({
       // Get the signer for this account and submit the transaction
       signer = getExtensionAccount(from)?.signer as InjectedSigner | undefined
       if (!signer) {
-        onError('technical')
+        onError('technical', 'missing_signer')
         return
       }
       addSignAndSend(
@@ -301,14 +301,45 @@ export const useSubmitExtrinsic = ({
     })
   }
 
-  const onFailed = () => {
+  const onFailed = (error?: Error) => {
+    const title = t('failed')
+    let subtitle = t('errorWithTransaction')
+
+    // Enhanced network-level error handling
+    if (error) {
+      const errorMessage = error.message.toLowerCase()
+
+      // Check for specific network-level error patterns
+      if (/invalid|parameter|argument/.test(errorMessage)) {
+        if (/nonce|sequence/.test(errorMessage)) {
+          subtitle = t('technicalErrorInvalidNonce')
+        } else if (/fee|payment/.test(errorMessage)) {
+          subtitle = t('technicalErrorInvalidFee')
+        } else if (/call|method/.test(errorMessage)) {
+          subtitle = t('technicalErrorInvalidCall')
+        } else {
+          subtitle = t('technicalErrorInvalidCall')
+        }
+      } else if (/timeout|timed out/.test(errorMessage)) {
+        subtitle = t('technicalErrorNetworkTimeout')
+      } else if (/disconnected|offline/.test(errorMessage)) {
+        subtitle = t('technicalErrorNetworkDisconnected')
+      } else if (/unreachable|failed to connect/.test(errorMessage)) {
+        subtitle = t('technicalErrorNetworkUnreachable')
+      } else if (/permission|access/.test(errorMessage)) {
+        subtitle = t('technicalErrorPermissionDenied')
+      } else if (/quota|limit/.test(errorMessage)) {
+        subtitle = t('technicalErrorRateLimited')
+      }
+    }
+
     emitNotification({
-      title: t('failed'),
-      subtitle: t('errorWithTransaction'),
+      title,
+      subtitle,
     })
   }
 
-  const onError = (type?: string) => {
+  const onError = (type?: string, details?: string) => {
     if (type === 'ledger') {
       handleResetLedgerTask()
     }
@@ -333,13 +364,60 @@ export const useSubmitExtrinsic = ({
       title = t('userCancelled')
       subtitle = t('userCancelledTransaction')
     } else if (type === 'technical') {
-      subtitle = t('transactionCancelledTechnical')
+      // Enhanced technical error handling with specific details
+      subtitle = getTechnicalErrorMessage(details)
     }
 
     emitNotification({
       title,
       subtitle,
     })
+  }
+
+  // Helper function to get specific technical error messages
+  const getTechnicalErrorMessage = (details?: string): string => {
+    if (!details) {
+      return t('transactionCancelledTechnical')
+    }
+
+    // Map error details to specific translation keys
+    const errorKeyMap: Record<string, string> = {
+      missing_signer: 'technicalErrorMissingSigner',
+      invalid_signer: 'technicalErrorMissingSigner',
+      signer_timeout: 'technicalErrorGeneralTimeout',
+      signer_error: 'technicalErrorMissingSigner',
+      network_timeout: 'technicalErrorNetworkTimeout',
+      network_disconnected: 'technicalErrorNetworkDisconnected',
+      network_unreachable: 'technicalErrorNetworkUnreachable',
+      network_error: 'technicalErrorNetworkDisconnected',
+      invalid_nonce: 'technicalErrorInvalidNonce',
+      invalid_fee: 'technicalErrorInvalidFee',
+      invalid_call: 'technicalErrorInvalidCall',
+      invalid_parameters: 'technicalErrorInvalidCall',
+      device_locked: 'technicalErrorDeviceLocked',
+      device_busy: 'technicalErrorDeviceBusy',
+      device_disconnected: 'technicalErrorDeviceDisconnected',
+      app_not_open: 'technicalErrorAppNotOpen',
+      hardware_error: 'technicalErrorDeviceDisconnected',
+      wc_session_disconnected: 'technicalErrorWcSessionDisconnected',
+      wc_timeout: 'technicalErrorWcTimeout',
+      wallet_connect_error: 'technicalErrorWcSessionDisconnected',
+      qr_scan_error: 'technicalErrorQrScanError',
+      qr_invalid: 'technicalErrorQrInvalid',
+      vault_error: 'technicalErrorQrScanError',
+      runtime_incompatible: 'technicalErrorRuntimeIncompatible',
+      runtime_unsupported: 'technicalErrorRuntimeUnsupported',
+      runtime_error: 'technicalErrorRuntimeIncompatible',
+      general_timeout: 'technicalErrorGeneralTimeout',
+      permission_denied: 'technicalErrorPermissionDenied',
+      rate_limited: 'technicalErrorRateLimited',
+      unknown_technical: 'technicalErrorUnknown',
+    }
+
+    const translationKey = errorKeyMap[details]
+    return translationKey
+      ? t(translationKey)
+      : t('transactionCancelledTechnical')
   }
 
   // Re-fetch tx fee if tx changes

@@ -77,24 +77,138 @@ export const handleResult = (
     deleteTx(uid)
   }
   if (status.type === 'Invalid') {
-    onFailed(Error('Invalid'))
+    onFailed(Error('Invalid transaction'))
     deleteTx(uid)
   }
 }
 
 export const handleError = (
   errorMessage: string,
-  onError: (type?: string) => void
+  onError: (type?: string, details?: string) => void
 ) => {
   const msgLower = errorMessage.toLowerCase()
 
-  if (/user rejected|cancel(l)?ed|cancel(l)?ed by user|usercancel/.test(msgLower)) {
+  if (
+    /user rejected|cancel(l)?ed|cancel(l)?ed by user|usercancel/.test(msgLower)
+  ) {
     onError('user_cancelled')
   } else if (
     /insufficient|balance|insufficientbalance|not enough/.test(msgLower)
   ) {
     onError('insufficient_funds')
   } else {
-    onError('technical')
+    // Enhanced technical error classification
+    const technicalDetails = classifyTechnicalError(errorMessage)
+    onError('technical', technicalDetails)
   }
+}
+
+// Enhanced technical error classification
+const classifyTechnicalError = (errorMessage: string): string => {
+  const msgLower = errorMessage.toLowerCase()
+
+  // Signer-related errors
+  if (/signer|signature|signing/.test(msgLower)) {
+    if (/missing|not found|undefined/.test(msgLower)) {
+      return 'missing_signer'
+    }
+    if (/invalid|failed|error/.test(msgLower)) {
+      return 'invalid_signer'
+    }
+    if (/timeout|timed out/.test(msgLower)) {
+      return 'signer_timeout'
+    }
+    return 'signer_error'
+  }
+
+  // Network connectivity errors
+  if (/network|connection|connectivity/.test(msgLower)) {
+    if (/timeout|timed out/.test(msgLower)) {
+      return 'network_timeout'
+    }
+    if (/disconnected|offline/.test(msgLower)) {
+      return 'network_disconnected'
+    }
+    if (/unreachable|failed to connect/.test(msgLower)) {
+      return 'network_unreachable'
+    }
+    return 'network_error'
+  }
+
+  // Transaction parameter errors
+  if (/parameter|argument|invalid/.test(msgLower)) {
+    if (/nonce|sequence/.test(msgLower)) {
+      return 'invalid_nonce'
+    }
+    if (/fee|payment/.test(msgLower)) {
+      return 'invalid_fee'
+    }
+    if (/call|method/.test(msgLower)) {
+      return 'invalid_call'
+    }
+    return 'invalid_parameters'
+  }
+
+  // Hardware wallet specific errors
+  if (/ledger|hardware|device/.test(msgLower)) {
+    if (/locked|unlock/.test(msgLower)) {
+      return 'device_locked'
+    }
+    if (/busy|in use/.test(msgLower)) {
+      return 'device_busy'
+    }
+    if (/not connected|disconnected/.test(msgLower)) {
+      return 'device_disconnected'
+    }
+    if (/app not open|open app/.test(msgLower)) {
+      return 'app_not_open'
+    }
+    return 'hardware_error'
+  }
+
+  // Wallet Connect errors
+  if (/wallet.?connect|wc/.test(msgLower)) {
+    if (/session|disconnected/.test(msgLower)) {
+      return 'wc_session_disconnected'
+    }
+    if (/timeout|timed out/.test(msgLower)) {
+      return 'wc_timeout'
+    }
+    return 'wallet_connect_error'
+  }
+
+  // Vault/QR code errors
+  if (/vault|qr|qrcode/.test(msgLower)) {
+    if (/scan|read/.test(msgLower)) {
+      return 'qr_scan_error'
+    }
+    if (/invalid|failed/.test(msgLower)) {
+      return 'qr_invalid'
+    }
+    return 'vault_error'
+  }
+
+  // Runtime/version errors
+  if (/runtime|version|metadata/.test(msgLower)) {
+    if (/incompatible|mismatch/.test(msgLower)) {
+      return 'runtime_incompatible'
+    }
+    if (/not supported|unsupported/.test(msgLower)) {
+      return 'runtime_unsupported'
+    }
+    return 'runtime_error'
+  }
+
+  // Generic technical errors
+  if (/timeout|timed out/.test(msgLower)) {
+    return 'general_timeout'
+  }
+  if (/permission|access/.test(msgLower)) {
+    return 'permission_denied'
+  }
+  if (/quota|limit/.test(msgLower)) {
+    return 'rate_limited'
+  }
+
+  return 'unknown_technical'
 }
