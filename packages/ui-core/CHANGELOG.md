@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.2.0...ui-core-v1.3.0) (2025-06-17)
+
+
+### Features
+
+* **fix:** identity formatting, rm `@polkadot/util`, add `dedot` ([#2629](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2629)) ([2e7cac0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2e7cac0eeb3bbab33c7defa3349a8ea3931e0ae6))
+* **locales:** Add multi-currency support for staking rewards & balances ([#2563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2563)) ([c25e64f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c25e64f0b35beb555641a1a6f018b63bb3cf32db))
+* Quick actions component for overview page ([#2728](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2728)) ([ce60b2f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ce60b2f8800d19287647d388bb47f3a98eecabc3))
+* **refactor:** `[@w3ux](https://github.com/w3ux) bumps`, types updates ([#2619](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2619)) ([08a0027](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/08a0027f941cf2505311c381855e7994aef582ff))
+* **refactor:** Draw down modal wrappers ([#2816](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2816)) ([501928a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/501928a85ca155c0c1ababe8435c93ec064aa57e))
+* **refactor:** Global bus external accounts, use `activeAddress` ([#2642](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2642)) ([f2e0842](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f2e084261201dfe67ac8ca613940f8e1b7fd1bd9))
+* **refactor:** Migrate from yarn to pnpm ([#2628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2628)) ([7efe25e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7efe25e7e98895ad89a69c3e55a2688e088f82a5))
+* **refactor:** Optimise tsconfigs ([#2781](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2781)) ([00245a0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/00245a01717d82f7b0e33c384a7e9cf2fb5a728f))
+* **refactor:** Unified hardware account providers ([#2639](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2639)) ([71a36de](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/71a36dea72b3e038c77adede02d89816161e1037))
+* **refactor:** Upgrade to `tsup` builds of `[@w3ux](https://github.com/w3ux)` library ([#2821](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2821)) ([cb39a10](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/cb39a106f21d18fd2f8d7a1d09c71d205be24963))
+* support unmigrated controller accounts in `dedot-api` ([#2779](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2779)) ([9c36a4e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9c36a4edbe0ecd28502812e6b8e90f6b2618e354))
+* **ux:** Add canvas max width support ([#2609](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2609)) ([077ba6b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/077ba6b790acbc2a4becdae5f9a6867b3a3c7877))
+* **ux:** Canvas uses `SimpleBar` ([#2746](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2746)) ([85f3a9f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/85f3a9f3820f366b9a78c8e0a1b2d9a7244ccc27))
+* **ux:** Expanded balance UI on `Overview` ([#2576](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2576)) ([e179dca](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e179dcadcc372724acc348b6f8a2fb0ad8c93732))
+* **ux:** Improved nomination management selection UI ([#2603](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2603)) ([f75ff6f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f75ff6ff07409b8b90c73f9b7f0b0b10c1d592ea))
+* **ux:** Manage Nominations Full Screen UI, Remove confirm dialogue ([#2613](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2613)) ([7afb86f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7afb86fc9ebeed9ddd580a01179ebb1ef6f90320))
+* **ux:** nomination management UI improvements, confirm dialogues ([#2604](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2604)) ([ee1dfef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ee1dfefb6d1337c1d1d5b913bfd505d0d10cdc04))
+* **ux:** Nomination pool invites ([#2751](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2751)) ([7d8d098](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7d8d0989a607a07fc56bfaea93b1175475a3bb6a))
+* **ux:** Revised wallet & hardware account management flow ([#2595](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2595)) ([2f7faea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2f7faea0080322e67f62f1f02ac70ead7865caf9))
+* **ux:** Simplebar to modal ([#2744](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2744)) ([2a06e07](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2a06e07b33ff1465462f48e359d08d991aa0957c))
+* **ux:** Simplified header UI, new Account, Settings popovers ([#2573](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2573)) ([d384b83](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d384b83409e6941187da2fd910a96b803644fcdc))
+* **ux:** use SimpleBar in Connect Container ([#2601](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2601)) ([5765c7d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/5765c7dea82e692cf28a892cd3acdd16fb0a7c54))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.1.0...ui-core-v1.2.0) (2025-02-24)
 
 
