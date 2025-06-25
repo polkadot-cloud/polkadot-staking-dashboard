@@ -6,7 +6,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { getUnixTime } from 'date-fns'
+import { getUnixTime, startOfToday, subDays } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type {
@@ -14,7 +14,7 @@ import type {
   RewardResult,
   RewardResults,
 } from 'plugin-staking-api/types'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AveragePayoutLine, PayoutBar } from 'ui-graphs'
 
@@ -44,12 +44,7 @@ export const ActiveGraph = ({
   })
 
   const days = 30
-  const fromDate = useMemo(() => {
-    const date = new Date()
-    date.setDate(date.getDate() - days)
-    date.setHours(0, 0, 0, 0)
-    return date
-  }, [days])
+  const fromDate = subDays(startOfToday(), days)
 
   const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
     {

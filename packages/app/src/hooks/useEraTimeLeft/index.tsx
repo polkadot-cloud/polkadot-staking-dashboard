@@ -5,20 +5,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
 
-// Cache for current timestamp to avoid repeated Date object creation
-let cachedTimestamp = 0
-let cacheTime = 0
-const CACHE_DURATION = 1000 // 1 second cache for timestamp
-
-const getCurrentTimestamp = (): number => {
-  const now = Date.now()
-  if (now - cacheTime > CACHE_DURATION) {
-    cachedTimestamp = getUnixTime(new Date())
-    cacheTime = now
-  }
-  return cachedTimestamp
-}
-
 export const useEraTimeLeft = () => {
   const { network } = useNetwork()
   const { getConsts, activeEra } = useApi()
@@ -39,8 +25,8 @@ export const useEraTimeLeft = () => {
     // Estimate the end time of the era
     const end = Number(start) + eraDuration
 
-    // Estimate remaining time of era using cached timestamp
-    const timeleft = Math.max(0, end - getCurrentTimestamp())
+    // Estimate remaining time of era
+    const timeleft = Math.max(0, end - getUnixTime(new Date()))
 
     // Percentage of eraDuration
     const percentage = eraDuration / 100
