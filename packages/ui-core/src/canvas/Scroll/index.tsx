@@ -21,3 +21,5 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     </motion.div>
   )
 )
+
+Scroll.displayName = 'Scroll'

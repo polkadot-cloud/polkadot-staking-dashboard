@@ -195,7 +195,6 @@ export const TabButton = styled.button<{ selected: boolean }>`
 
 // Enhanced support button with equal width and proper icon styling
 export const StyledSupportButton = styled.a`
-  display: inline-block;
   background: var(--accent-color-primary);
   color: #fff;
   font-weight: 600;
