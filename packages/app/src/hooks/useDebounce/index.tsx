@@ -17,11 +17,12 @@ export const useDebounce = <T extends (...args: never[]) => unknown>(
 ): T => {
   const debouncedFn = useMemo(() => debounce(fn, delay), [fn, delay])
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       debouncedFn.cancel()
-    }
-  }, [debouncedFn])
+    },
+    [debouncedFn]
+  )
 
   // Cleanup on unmount
   return useCallback(((...args: Parameters<T>) => debouncedFn(...args)) as T, [
