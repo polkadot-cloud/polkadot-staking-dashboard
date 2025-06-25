@@ -153,7 +153,10 @@ export const ValidatorListInner = ({
   }
 
   // Get subset for page display.
-  const listItems = validators.slice(pageStart).slice(0, pageLength)
+  const listItems = useMemo(
+    () => validators.slice(pageStart, pageStart + pageLength),
+    [validators, pageStart, pageLength]
+  )
 
   // Create stable page key using useMemo to avoid expensive JSON.stringify on every render
   const pageKey = useMemo(() => {
