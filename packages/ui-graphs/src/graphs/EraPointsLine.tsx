@@ -15,9 +15,11 @@ import {
   Tooltip,
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
+import { memo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { EraPointsLineProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +32,7 @@ ChartJS.register(
   Legend
 )
 
-export const EraPointsLine = ({
+const EraPointsLineComponent = ({
   entries,
   syncing,
   width,
@@ -163,3 +165,50 @@ export const EraPointsLine = ({
     </div>
   )
 }
+
+// Custom comparison function to prevent expensive Chart.js re-initializations
+const arePropsEqual = (
+  prevProps: EraPointsLineProps,
+  nextProps: EraPointsLineProps
+): boolean => {
+  // Check syncing state
+  if (prevProps.syncing !== nextProps.syncing) {
+    return false
+  }
+
+  // Check dimensions
+  if (
+    prevProps.width !== nextProps.width ||
+    prevProps.height !== nextProps.height
+  ) {
+    return false
+  }
+
+  // Check date format
+  if (prevProps.dateFormat !== nextProps.dateFormat) {
+    return false
+  }
+
+  // Check labels object using deepEqual
+  if (!deepEqual(prevProps.labels, nextProps.labels)) {
+    return false
+  }
+
+  // Check era points data (most important for chart updates) using deepEqual
+  if (
+    prevProps.entries.length !== nextProps.entries.length ||
+    !deepEqual(prevProps.entries, nextProps.entries)
+  ) {
+    return false
+  }
+
+  // Theme changes detection
+  if (prevProps.getThemeValue !== nextProps.getThemeValue) {
+    return false
+  }
+
+  return true
+}
+
+export const EraPointsLine = memo(EraPointsLineComponent, arePropsEqual)
+EraPointsLine.displayName = 'EraPointsLine'
