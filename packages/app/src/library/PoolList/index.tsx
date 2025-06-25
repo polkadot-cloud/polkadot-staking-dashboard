@@ -88,7 +88,7 @@ export const PoolList = ({
   // Create debounced search logic (without updating global search term)
   const debouncedPoolSearchLogic = useCallback(
     (searchValue: string) => {
-      let filteredPools: BondedPool[] = Object.assign(poolsDefault)
+      let filteredPools: BondedPool[] = [...poolsDefault]
       filteredPools = applyFilter(includes, excludes, filteredPools)
       filteredPools = poolSearchFilter(filteredPools, searchValue)
 

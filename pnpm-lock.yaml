@@ -120,25 +120,25 @@ importers:
         specifier: ^2.2.5
         version: 2.2.5(react@19.1.0)
       '@w3ux/factories':
-        specifier: ^2.2.1
+        specifier: ^2.0.2
         version: 2.2.1(react@19.1.0)
       '@w3ux/hooks':
-        specifier: ^2.3.4
+        specifier: ^2.1.0
         version: 2.3.4(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.6.10
+        specifier: ^3.4.9
         version: 3.6.10(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
-        specifier: 2.2.6
+        specifier: ^2.0.1
         version: 2.2.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.7
+        specifier: ^3.1.2
         version: 3.2.7(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(utf-8-validate@5.0.10)
       '@w3ux/utils':
-        specifier: ^2.2.1
+        specifier: ^2.0.10
         version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/validator-assets':
-        specifier: ^1.2.0
+        specifier: ^1.0.0
         version: 1.2.0(react@19.1.0)
       '@walletconnect/modal':
         specifier: ^2.7.0

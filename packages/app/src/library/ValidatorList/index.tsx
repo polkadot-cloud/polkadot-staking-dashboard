@@ -135,7 +135,7 @@ export const ValidatorListInner = ({
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = (
-    filteredValidators = Object.assign(validatorsDefault)
+    filteredValidators = [...validatorsDefault]
   ) => {
     if (allowFilters) {
       if (order !== 'default') {
@@ -170,7 +170,7 @@ export const ValidatorListInner = ({
   // Create debounced search logic (without updating global search term)
   const debouncedSearchLogic = useCallback(
     (searchValue: string) => {
-      let filteredValidators = Object.assign(validatorsDefault)
+      let filteredValidators = [...validatorsDefault]
       if (order !== 'default') {
         filteredValidators = applyOrder(order, filteredValidators)
       }
