@@ -31,6 +31,9 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
   const eraStakersRef = useRef(eraStakers)
 
+  // Store active validators
+  const [activeValidators, setActiveValidators] = useState<number>(0)
+
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data }: { data: ProcessExposuresResponse } = message
@@ -45,13 +48,8 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
         return
       }
 
-      const {
-        stakers,
-        totalActiveNominators,
-        activeValidators,
-        activeAccountOwnStake,
-        who,
-      } = data
+      const { stakers, totalActiveNominators, activeAccountOwnStake, who } =
+        data
 
       // Check if account hasn't changed since worker started
       if (activeAddress === who) {
@@ -63,7 +61,6 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
             ...eraStakersRef.current,
             stakers,
             totalActiveNominators,
-            activeValidators,
             activeAccountOwnStake,
           },
           setEraStakers,
@@ -106,7 +103,10 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
       return
     }
     setSyncing('era-stakers')
+
     const exposures = await fetchEraStakers(activeEra.index.toString())
+
+    setActiveValidators(exposures.length)
 
     // Worker to calculate stats
     worker.postMessage({
@@ -189,6 +189,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
     <EraStakersContext.Provider
       value={{
         eraStakers,
+        activeValidators,
         fetchEraStakers,
         getPagedErasStakers,
       }}
