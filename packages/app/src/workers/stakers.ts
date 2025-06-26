@@ -27,13 +27,10 @@ const processExposures = (data: ProcessExposuresArgs) => {
   const { task, networkName, era, units, exposures, activeAccount } = data
 
   const stakers: Staker[] = []
-  let activeValidators = 0
   const activeAccountOwnStake: ActiveAccountStaker[] = []
   const nominators: ExposureOther[] = []
 
   exposures.forEach(({ keys, val }) => {
-    activeValidators++
-
     const address = keys[1]
     let others =
       val.others.map((o) => ({
@@ -93,7 +90,6 @@ const processExposures = (data: ProcessExposuresArgs) => {
     stakers,
     totalActiveNominators: nominators.length,
     activeAccountOwnStake,
-    activeValidators,
     task,
     who: activeAccount,
   }
