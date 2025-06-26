@@ -174,6 +174,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 
   useEffectIgnoreInitial(() => {
     if (getApiStatus(network) === 'connecting') {
+      setActiveValidators(0)
       setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef)
     }
   }, [getApiStatus(network)])
