@@ -11,6 +11,7 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
 import { useWalletConnect } from 'contexts/WalletConnect'
@@ -61,6 +62,7 @@ export const useSubmitExtrinsic = ({
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
   const { getTxSubmission } = useTxMeta()
+  const { pluginEnabled } = usePlugins()
   const { unit, units } = getStakingChainData(network)
   const {
     balances: { transferableBalance },
@@ -305,91 +307,36 @@ export const useSubmitExtrinsic = ({
     const title = t('failed')
     let subtitle = t('errorWithTransaction')
 
-    // Enhanced network-level error handling
+    // Handle only known, user-reported errors - focus on balance-related issues
     if (error) {
       const errorMessage = error.message.toLowerCase()
 
-      // Check for specific network-level error patterns
-      if (/invalid|parameter|argument/.test(errorMessage)) {
-        if (/nonce|sequence/.test(errorMessage)) {
-          subtitle = t('technicalErrorInvalidNonce')
-        } else if (/fee|payment/.test(errorMessage)) {
-          subtitle = t('technicalErrorInvalidFee')
-        } else if (/call|method/.test(errorMessage)) {
-          subtitle = t('technicalErrorInvalidCall')
-        } else {
-          subtitle = t('technicalErrorInvalidCall')
-        }
-      } else if (/timeout|timed out/.test(errorMessage)) {
-        subtitle = t('technicalErrorNetworkTimeout')
-      } else if (/disconnected|offline/.test(errorMessage)) {
-        subtitle = t('technicalErrorNetworkDisconnected')
-      } else if (/unreachable|failed to connect/.test(errorMessage)) {
-        subtitle = t('technicalErrorNetworkUnreachable')
-      } else if (/permission|access/.test(errorMessage)) {
-        subtitle = t('technicalErrorPermissionDenied')
-      } else if (/quota|limit/.test(errorMessage)) {
-        subtitle = t('technicalErrorRateLimited')
-      } else if (/pool|nomination.?pool/.test(errorMessage)) {
-        if (/full|maximum|limit|exceeded/.test(errorMessage)) {
-          subtitle = t('poolErrorFull')
-        } else if (/blocked|blocking/.test(errorMessage)) {
-          subtitle = t('poolErrorBlocked')
-        } else if (/destroying|destroyed/.test(errorMessage)) {
-          subtitle = t('poolErrorDestroying')
-        } else if (/invalid.?state|state/.test(errorMessage)) {
-          subtitle = t('poolErrorInvalidState')
-        } else {
-          subtitle = t('poolErrorInvalidState')
-        }
-      } else if (/staking|stake|bond/.test(errorMessage)) {
-        if (/minimum|min.?bond|below/.test(errorMessage)) {
-          subtitle = t('stakingErrorMinBond')
-        } else if (/maximum|max.?nominations|16/.test(errorMessage)) {
-          subtitle = t('stakingErrorMaxNominations')
-        } else if (/era|epoch|session/.test(errorMessage)) {
-          subtitle = t('stakingErrorEraConstraint')
-        } else {
-          subtitle = t('stakingErrorMinBond')
-        }
-      } else if (/commission|comission/.test(errorMessage)) {
-        if (/exceeds|above|maximum|max/.test(errorMessage)) {
-          if (/global/.test(errorMessage)) {
-            subtitle = t('commissionErrorExceedsGlobal')
-          } else {
-            subtitle = t('commissionErrorExceedsMax')
-          }
-        } else if (/change.?rate|rate.?change/.test(errorMessage)) {
-          subtitle = t('commissionErrorChangeRate')
-        } else if (/payee|recipient/.test(errorMessage)) {
-          subtitle = t('commissionErrorInvalidPayee')
-        } else {
-          subtitle = t('commissionErrorExceedsMax')
-        }
-      } else if (/balance|reserve|locked/.test(errorMessage)) {
+      // Balance-related errors (these are legitimate runtime issues)
+      if (/balance|reserve|locked/.test(errorMessage)) {
         if (/reserve|minimum/.test(errorMessage)) {
           subtitle = t('balanceErrorReserveRequired')
         } else if (/locked|freeze/.test(errorMessage)) {
           subtitle = t('balanceErrorLocked')
-        } else if (/calculation|compute/.test(errorMessage)) {
-          subtitle = t('balanceErrorFeeCalculation')
         } else {
           subtitle = t('balanceErrorReserveRequired')
         }
-      } else if (/validation|validate|invalid/.test(errorMessage)) {
-        if (/address|format/.test(errorMessage)) {
-          subtitle = t('validationErrorAddressFormat')
-        } else if (/metadata|length/.test(errorMessage)) {
-          subtitle = t('validationErrorMetadataTooLong')
-        } else if (/parameter|range/.test(errorMessage)) {
-          subtitle = t('validationErrorParameterRange')
-        } else if (/validator/.test(errorMessage)) {
-          subtitle = t('validationErrorInvalidValidator')
-        } else if (/pool.?id/.test(errorMessage)) {
-          subtitle = t('validationErrorInvalidPoolId')
-        } else {
-          subtitle = t('validationErrorParameterRange')
-        }
+      }
+      // Keep basic insufficient funds detection
+      else if (/insufficient|funds|balance/.test(errorMessage)) {
+        subtitle = t('balanceErrorReserveRequired')
+      }
+
+      // Send full error details to Staking API for monitoring (if enabled)
+      if (pluginEnabled('staking_api')) {
+        // TODO: Implement error reporting to Staking API
+        // This will help identify what errors users are actually receiving
+        console.log('Staking API Error Report:', {
+          error: error.message,
+          transaction: tx?.call?.pallet,
+          method: tx?.call?.palletCall?.name,
+          network,
+          timestamp: new Date().toISOString(),
+        })
       }
     }
 
