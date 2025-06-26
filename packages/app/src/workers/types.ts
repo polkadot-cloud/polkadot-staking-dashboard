@@ -21,6 +21,5 @@ export interface ProcessExposuresResponse {
   stakers: Staker[]
   totalActiveNominators: number
   activeAccountOwnStake: ActiveAccountStaker[]
-  activeValidators: number
   who: MaybeAddress
 }
