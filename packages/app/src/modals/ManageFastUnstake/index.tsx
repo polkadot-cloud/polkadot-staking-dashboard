@@ -29,7 +29,11 @@ export const ManageFastUnstake = () => {
     getConsts,
     activeEra,
     serviceApi,
-    stakingMetrics: { erasToCheckPerBlock },
+    stakingMetrics: {
+      erasToCheckPerBlock,
+      minNominatorBond,
+      minimumActiveStake,
+    },
   } = useApi()
   const { network } = useNetwork()
   const { feeReserve } = useBalances()
@@ -45,8 +49,23 @@ export const ManageFastUnstake = () => {
   const { unit, units } = getStakingChainData(network)
   const { bondDuration, fastUnstakeDeposit } = getConsts(network)
   const { nominator, transferableBalance } = balances
-  const { totalUnlockChunks } = nominator
+  const { totalUnlockChunks, active: bondedAmount } = nominator
   const enoughForDeposit = transferableBalance >= fastUnstakeDeposit
+
+  // Calculate minimum threshold for active nominations
+  const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
+
+  // Check if this is a legacy nominator below active thresholds
+  const isLegacyNominator =
+    bondedAmount > 0n &&
+    new BigNumber(bondedAmount.toString()).isLessThan(
+      new BigNumber(minToEarnRewards.toString())
+    )
+
+  // Override exposure status for legacy nominators
+  const effectivelyNotExposed =
+    fastUnstakeStatus?.status === 'NOT_EXPOSED' ||
+    (isLegacyNominator && fastUnstakeStatus?.status === 'EXPOSED')
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false)
@@ -56,7 +75,7 @@ export const ManageFastUnstake = () => {
       erasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
           enoughForDeposit &&
-          fastUnstakeStatus?.status === 'NOT_EXPOSED' &&
+          effectivelyNotExposed &&
           totalUnlockChunks === 0) ||
           isFastUnstaking)
     )
@@ -68,6 +87,8 @@ export const ManageFastUnstake = () => {
     fastUnstakeDeposit,
     transferableBalance,
     feeReserve,
+    effectivelyNotExposed,
+    isLegacyNominator,
   ])
 
   useEffect(
@@ -135,6 +156,9 @@ export const ManageFastUnstake = () => {
     new BigNumber(bondDuration).minus(lastExposedAgo)
   )
 
+  // Update the exposed logic for UI display
+  const shouldShowExposedUI = exposed && !isLegacyNominator
+
   return (
     <>
       <Close />
@@ -148,7 +172,7 @@ export const ManageFastUnstake = () => {
           </Warnings>
         ) : null}
 
-        {exposed ? (
+        {shouldShowExposedUI ? (
           <>
             <ActionItem
               text={t('fastUnstakeExposedAgo', {
@@ -192,7 +216,7 @@ export const ManageFastUnstake = () => {
           </>
         )}
       </Padding>
-      {!exposed ? (
+      {!shouldShowExposedUI ? (
         <SubmitTx
           requiresMigratedController
           valid={valid}
