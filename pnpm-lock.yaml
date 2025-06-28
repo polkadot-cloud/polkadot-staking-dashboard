@@ -135,8 +135,8 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@w3ux/validator-assets':
-        specifier: ^1.2.0
-        version: 1.2.0(react@19.1.0)
+        specifier: ^1.2.1
+        version: 1.2.1(react@19.1.0)
       '@walletconnect/modal':
         specifier: ^2.7.0
         version: 2.7.0(@types/react@19.1.8)(react@19.1.0)
@@ -2777,8 +2777,8 @@ packages:
   '@w3ux/utils@2.2.1':
     resolution: {integrity: sha512-yEcAtOyeYVWpBhFFcWM2TvW6/2e3HQ4kvqZ6eQQqNTvY5twRuwbj5mq+vOf1OXWxO6gnKKkzWU4Cx7J2mrDTkQ==}
 
-  '@w3ux/validator-assets@1.2.0':
-    resolution: {integrity: sha512-/C0fI5G05mE21ePRNjIGNwdj3NHXvge8OewjwmLTOWCjKyIaGGUsa9f2JTICFfGZHT/BWD4SVCZtRQVahNWyUg==}
+  '@w3ux/validator-assets@1.2.1':
+    resolution: {integrity: sha512-8Bv0tB6ycO5uPjX5+vMll1oSH/qbypNqrr7tjOyzgPdKlfpNvYsNwK292Wcv5PQQ5NSuN5bMsgij0cROwMYX4Q==}
     peerDependencies:
       react: ^19.1.0
 
@@ -8251,7 +8251,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/validator-assets@1.2.0(react@19.1.0)':
+  '@w3ux/validator-assets@1.2.1(react@19.1.0)':
     dependencies:
       react: 19.1.0
 
