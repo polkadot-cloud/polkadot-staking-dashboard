@@ -118,7 +118,7 @@ test('getTransferrableBalance handles insufficient balance', () => {
 
 test('balanceForTxFees equals getFreeBalance', () => {
   const result = balanceForTxFees(mockAccountBalance, edReserved)
-  expect(result).toBe(990000000000000n) // 1000 - 10
+  expect(result).toBe(940000000000000n) // 1000 - 10 - 50
 })
 
 test('nominatorBalances calculates all nominator-related balances', () => {
@@ -258,7 +258,7 @@ test('calculateAllBalances provides comprehensive balance calculations', () => {
   // Verify all calculated fields
   expect(result.freeBalance).toBe(990000000000000n) // 1000 - 10
   expect(result.transferableBalance).toBe(885000000000000n) // 990 - 5 - 50 - 50
-  expect(result.balanceTxFees).toBe(990000000000000n) // 1000 - 10
+  expect(result.balanceTxFees).toBe(940000000000000n) // 1000 - 10 - 50
   expect(result.edReserved).toBe(edReserved)
 
   // Verify nominator balances

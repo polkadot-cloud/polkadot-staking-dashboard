@@ -5,7 +5,6 @@ import type { EraStakers } from './types'
 
 export const defaultEraStakers: EraStakers = {
   activeAccountOwnStake: [],
-  activeValidators: 0,
   stakers: [],
   totalActiveNominators: 0,
 }
