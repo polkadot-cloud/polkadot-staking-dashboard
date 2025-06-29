@@ -158,9 +158,6 @@ importers:
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
-      chart.js:
-        specifier: ^4.4.9
-        version: 4.5.0
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -209,9 +206,6 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
-      react-chartjs-2:
-        specifier: ^5.2.0
-        version: 5.3.0(chart.js@4.5.0)(react@19.1.0)
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
