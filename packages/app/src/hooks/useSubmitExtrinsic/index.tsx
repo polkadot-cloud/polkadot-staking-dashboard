@@ -310,37 +310,17 @@ export const useSubmitExtrinsic = ({
 
     // Handle only known, user-reported errors - focus on balance-related issues
     if (error) {
-      const errorMessage = error.message.toLowerCase()
-
-      // Balance-related errors (these are legitimate runtime issues)
-      if (/balance|reserve|locked/.test(errorMessage)) {
-        if (/reserve|minimum/.test(errorMessage)) {
-          subtitle = t('balanceErrorReserveRequired')
-        } else if (/locked|freeze/.test(errorMessage)) {
+      const msg = error.message.toLowerCase()
+      if (
+        /balance|reserve|locked|freeze|insufficient|funds|minimum/.test(msg)
+      ) {
+        if (/locked|freeze/.test(msg)) {
           subtitle = t('balanceErrorLocked')
         } else {
           subtitle = t('balanceErrorReserveRequired')
         }
       }
-      // Keep basic insufficient funds detection
-      else if (/insufficient|funds|balance/.test(errorMessage)) {
-        subtitle = t('balanceErrorReserveRequired')
-      }
-
-      // Send full error details to Staking API for monitoring (if enabled)
-      if (pluginEnabled('staking_api')) {
-        // TODO: Implement error reporting to Staking API
-        // This will help identify what errors users are actually receiving
-        console.log('Staking API Error Report:', {
-          error: error.message,
-          transaction: tx?.call?.pallet,
-          method: tx?.call?.palletCall?.name,
-          network,
-          timestamp: new Date().toISOString(),
-        })
-      }
     }
-
     emitNotification({
       title,
       subtitle,
@@ -361,18 +341,21 @@ export const useSubmitExtrinsic = ({
     if (type === 'insufficient_funds' || hasInsufficientFunds) {
       title = t('insufficientFunds')
 
-      if (tx?.call.pallet === 'Staking') {
-        subtitle = t('addMoreDotForStaking', { unit })
-      } else if (tx?.call.pallet === 'NominationPools') {
-        subtitle = t('addMoreDotForPooling', { unit })
-      } else {
-        subtitle = t('addMoreDotForFees', { unit })
+      switch (tx?.call.pallet) {
+        case 'Staking':
+          subtitle = t('addMoreDotForStaking', { unit })
+          break
+        case 'NominationPools':
+          subtitle = t('addMoreDotForPooling', { unit })
+          break
+        default:
+          subtitle = t('addMoreDotForFees', { unit })
+          break
       }
     } else if (type === 'user_cancelled') {
       title = t('userCancelled')
       subtitle = t('userCancelledTransaction')
     } else if (type === 'technical') {
-      // Enhanced technical error handling with specific details
       subtitle = getTechnicalErrorMessage(details)
     }
 
