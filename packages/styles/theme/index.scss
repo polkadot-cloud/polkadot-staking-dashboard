@@ -151,3 +151,12 @@ label {
 .disable-body-scroll {
   overflow: hidden;
 }
+
+[data-simplebar] {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+[data-simplebar]::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
