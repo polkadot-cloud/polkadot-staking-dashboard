@@ -12,7 +12,6 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
 import { useWalletConnect } from 'contexts/WalletConnect'
@@ -53,6 +52,7 @@ export const useSubmitExtrinsic = ({
   const { t } = useTranslation('app')
   const { serviceApi } = useApi()
   const { network } = useNetwork()
+  const { getTxSubmission } = useTxMeta()
   const { signWcTx } = useWalletConnect()
   const { getAccountBalance } = useBalances()
   const { activeProxy } = useActiveAccounts()
@@ -62,8 +62,6 @@ export const useSubmitExtrinsic = ({
   const { handleResetLedgerTask } = useLedgerHardware()
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
-  const { getTxSubmission } = useTxMeta()
-  const { pluginEnabled } = usePlugins()
   const { unit, units } = getStakingChainData(network)
   const {
     balances: { transferableBalance },
