@@ -117,11 +117,7 @@ test('getTransferrableBalance handles insufficient balance', () => {
 })
 
 test('balanceForTxFees equals getFreeBalance', () => {
-  const result = balanceForTxFees(
-    mockAccountBalance,
-    edReserved,
-    mockAccountBalance.balance.frozen
-  )
+  const result = balanceForTxFees(mockAccountBalance, edReserved)
   expect(result).toBe(940000000000000n) // 1000 - 10 - 50
 })
 
