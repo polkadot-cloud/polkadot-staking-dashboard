@@ -362,7 +362,7 @@ export const useSubmitExtrinsic = ({
       title = t('insufficientFunds')
 
       if (tx?.call.pallet === 'Staking') {
-        subtitle = t('addMoreDotForStaking', { unit, minAmount: unit })
+        subtitle = t('addMoreDotForStaking', { unit })
       } else if (tx?.call.pallet === 'NominationPools') {
         subtitle = t('addMoreDotForPooling', { unit })
       } else {

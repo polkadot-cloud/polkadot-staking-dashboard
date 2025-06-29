@@ -15,7 +15,7 @@
     "addFromFavorites": "Add From Favorites",
     "addMoreDotForFees": "Please add more {{unit}} to cover transaction fees",
     "addMoreDotForPooling": "Please add more {{unit}} to cover pool transaction fees",
-    "addMoreDotForStaking": "Please add more {{unit}} to cover staking fees (minimum: {{minAmount}} {{unit}})",
+    "addMoreDotForStaking": "Please add more {{unit}} to cover staking fees",
     "address": "Address",
     "addressCopiedToClipboard": "Address Copied to Clipboard",
     "addresses": "Addresses",

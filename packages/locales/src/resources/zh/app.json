@@ -15,7 +15,7 @@
     "addFromFavorites": "从收藏夹添加",
     "addMoreDotForFees": "请添加更多 {{unit}} 以支付交易手续费",
     "addMoreDotForPooling": "请添加更多 {{unit}} 以支付池交易手续费",
-    "addMoreDotForStaking": "请添加更多 {{unit}} 以支付质押手续费（最低：{{minAmount}} {{unit}}）",
+    "addMoreDotForStaking": "请添加更多 {{unit}} 以支付质押手续费",
     "address": "地址",
     "addressCopiedToClipboard": "复制到剪贴板的地址",
     "addresses": "地址",
