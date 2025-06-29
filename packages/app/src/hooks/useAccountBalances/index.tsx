@@ -30,7 +30,7 @@ export const useAccountBalances = (address: MaybeString) => {
     const accountBalance = getAccountBalance(address)
     const stakingLedger = getStakingLedger(address)
     const { membership } = getPoolMembership(address)
-    const edReserved = getEdReserved(address)
+    const edReserved = getEdReserved()
     const balances = calculateAllBalances(
       accountBalance,
       stakingLedger,

@@ -13,7 +13,7 @@ export interface BalancesContextInterface {
   getStakingLedger: (address: MaybeAddress) => StakingLedger
   getPoolMembership: (address: MaybeAddress) => PoolMembershipState
   getNominations: (address: MaybeAddress) => string[]
-  getEdReserved: (address: MaybeAddress) => bigint
+  getEdReserved: () => bigint
   getPendingPoolRewards: (address: MaybeAddress) => bigint
   feeReserve: bigint
   setFeeReserveBalance: (reserve: bigint) => void
