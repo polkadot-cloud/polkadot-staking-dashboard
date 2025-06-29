@@ -28,7 +28,7 @@ export const NetworkList: Networks = {
     unit: 'DOT',
     units: 10,
     ss58: 0,
-    defaultFeeReserve: 1000000000n,
+    defaultFeeReserve: 5000000000n,
     meta: {
       hubChain: 'statemint',
       peopleChain: 'people-polkadot',
@@ -97,7 +97,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 0,
     units: 10,
     unit: 'DOT',
-    defaultFeeReserve: 1000000000n,
+    defaultFeeReserve: 5000000000n,
     endpoints: {
       getLightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_people'),
@@ -145,7 +145,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     ss58: 0,
     units: 10,
     unit: 'DOT',
-    defaultFeeReserve: 1000000000n,
+    defaultFeeReserve: 5000000000n,
     endpoints: {
       getLightClient: async () =>
         await import('@substrate/connect-known-chains/polkadot_asset_hub'),

@@ -35,8 +35,13 @@ export const UpdateReserve = () => {
   const { balances } = useAccountBalances(activeAddress)
 
   const { edReserved } = balances
-  const { unit, units } = getStakingChainData(network)
-  const minReserve = new BigNumber(planckToUnit(edReserved, units))
+  const { unit, units, defaultFeeReserve } = getStakingChainData(network)
+
+  // Force the minimum reserve to be the max of the ED reserve and the default fee reserve
+  const minReserve = BigNumber.max(
+    planckToUnit(edReserved, units),
+    planckToUnit(defaultFeeReserve, units)
+  )
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
   )
