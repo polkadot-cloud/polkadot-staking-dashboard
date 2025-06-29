@@ -10,9 +10,7 @@ import { percentageOf } from 'ui-graphs/util'
 
 export const ActiveValidators = () => {
   const { t } = useTranslation('pages')
-  const {
-    eraStakers: { activeValidators },
-  } = useEraStakers()
+  const { activeValidators } = useEraStakers()
   const { validatorCount } = useApi().stakingMetrics
 
   // active validators as percent. Avoiding dividing by zero.
