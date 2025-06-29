@@ -313,9 +313,9 @@ export const useSubmitExtrinsic = ({
         /balance|reserve|locked|freeze|insufficient|funds|minimum/.test(msg)
       ) {
         if (/locked|freeze/.test(msg)) {
-          subtitle = t('balanceErrorLocked')
+          subtitle = t('errors.balanceErrorLocked')
         } else {
-          subtitle = t('balanceErrorReserveRequired')
+          subtitle = t('errors.balanceErrorReserveRequired')
         }
       }
     }
@@ -341,13 +341,13 @@ export const useSubmitExtrinsic = ({
 
       switch (tx?.call.pallet) {
         case 'Staking':
-          subtitle = t('addMoreDotForStaking', { unit })
+          subtitle = t('errors.addMoreDotForStaking', { unit })
           break
         case 'NominationPools':
-          subtitle = t('addMoreDotForPooling', { unit })
+          subtitle = t('errors.addMoreDotForPooling', { unit })
           break
         default:
-          subtitle = t('addMoreDotForFees', { unit })
+          subtitle = t('errors.addMoreDotForFees', { unit })
           break
       }
     } else if (type === 'user_cancelled') {
