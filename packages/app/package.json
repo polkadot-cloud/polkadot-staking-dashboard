@@ -56,7 +56,7 @@
     "react-error-boundary": "^6.0.0",
     "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.5.1",
-    "react-router-dom": "^7.6.0",
+    "react-router-dom": "^7.6.3",
     "rxjs": "^7.8.2",
     "styled-components": "^6.1.18",
     "styles": "workspace:*",
