@@ -7,14 +7,12 @@ import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
 import { Help } from 'library/Help'
 import { MainFooter } from 'library/MainFooter'
-import { Disclaimer } from 'library/MainFooter/Disclaimer'
 import { Menu } from 'library/Menu'
 import { NotificationPrompts } from 'library/NotificationPrompts'
 import { PageWithTitle } from 'library/PageWithTitle'
@@ -42,7 +40,6 @@ import { registerLastVisited, registerSaEvent } from 'utils'
 const RouterInner = () => {
   const navigate = useNavigate()
   const { network } = useNetwork()
-  const { openPromptWith } = usePrompt()
   const { pluginEnabled } = usePlugins()
   const { pathname, search } = useLocation()
   const { activeAddress } = useActiveAccounts()
@@ -53,12 +50,6 @@ const RouterInner = () => {
     const utmSource = extractUrlValue('utm_source', search)
     if (utmSource) {
       registerSaEvent(`conversion_${utmSource}`)
-    }
-
-    if (!localStorage.getItem('last_visited')) {
-      setTimeout(() => {
-        openPromptWith(<Disclaimer />)
-      }, 5000)
     }
     registerLastVisited(utmSource)
   }, [])
