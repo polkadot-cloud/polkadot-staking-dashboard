@@ -50,8 +50,8 @@ export const balanceForTxFees = (
   accountBalance: AccountBalance,
   edReserved: bigint
 ): bigint => {
-  const { free } = accountBalance.balance
-  return maxBigInt(free - edReserved, 0n)
+  const { free, frozen, reserved } = accountBalance.balance
+  return maxBigInt(free - edReserved - maxBigInt(reserved, frozen), 0n)
 }
 
 // Calculate nominator balances from staking ledger and transferable balance

@@ -4,6 +4,7 @@
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import type { HardwareAccount } from '@w3ux/types'
 import { DappName, ManualSigners } from 'consts'
+import { TxErrorKeyMap } from 'consts/tx'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -12,6 +13,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
+import { useTxMeta } from 'contexts/TxMeta'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
@@ -26,6 +28,7 @@ import {
   setUidSubmitted,
   updateFee,
 } from 'global-bus'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -49,6 +52,7 @@ export const useSubmitExtrinsic = ({
   const { t } = useTranslation('app')
   const { serviceApi } = useApi()
   const { network } = useNetwork()
+  const { getTxSubmission } = useTxMeta()
   const { signWcTx } = useWalletConnect()
   const { getAccountBalance } = useBalances()
   const { activeProxy } = useActiveAccounts()
@@ -59,6 +63,9 @@ export const useSubmitExtrinsic = ({
   const { getExtensionAccount } = useExtensionAccounts()
   const { getAccount, requiresManualSign } = useImportedAccounts()
   const { unit, units } = getStakingChainData(network)
+  const {
+    balances: { transferableBalance },
+  } = useAccountBalances(from)
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0)
@@ -150,7 +157,7 @@ export const useSubmitExtrinsic = ({
 
       const $Signature = serviceApi.codec.$Signature(specName)
       if (!$Signature) {
-        onError('default')
+        onError('technical', 'missing_signer')
         return
       }
 
@@ -177,7 +184,7 @@ export const useSubmitExtrinsic = ({
       if (source === 'vault') {
         const extra = serviceApi.signer.extraSignedExtension(specName, from)
         if (!extra) {
-          onError('default')
+          onError('technical', 'missing_signer')
           return
         }
         await extra.init()
@@ -218,7 +225,7 @@ export const useSubmitExtrinsic = ({
       if (source === 'wallet_connect') {
         const extra = serviceApi.signer.extraSignedExtension(specName, from)
         if (!extra) {
-          onError('default')
+          onError('technical', 'missing_signer')
           return
         }
         await extra.init()
@@ -235,7 +242,7 @@ export const useSubmitExtrinsic = ({
       //
       // Submit the transaction with the raw signature
       if (!encodedSig) {
-        onError('default')
+        onError('technical', 'invalid_signer')
         return
       }
       addSend(uid, tx, encodedSig, handlers)
@@ -245,7 +252,7 @@ export const useSubmitExtrinsic = ({
       // Get the signer for this account and submit the transaction
       signer = getExtensionAccount(from)?.signer as InjectedSigner | undefined
       if (!signer) {
-        onError('default')
+        onError('technical', 'missing_signer')
         return
       }
       addSignAndSend(
@@ -295,21 +302,77 @@ export const useSubmitExtrinsic = ({
     })
   }
 
-  const onFailed = () => {
+  const onFailed = (error?: Error) => {
+    const title = t('failed')
+    let subtitle = t('errorWithTransaction')
+
+    // Handle only known, user-reported errors - focus on balance-related issues
+    if (error) {
+      const msg = error.message.toLowerCase()
+      if (
+        /balance|reserve|locked|freeze|insufficient|funds|minimum/.test(msg)
+      ) {
+        if (/locked|freeze/.test(msg)) {
+          subtitle = t('errors.balanceErrorLocked')
+        } else {
+          subtitle = t('errors.balanceErrorReserveRequired')
+        }
+      }
+    }
     emitNotification({
-      title: t('failed'),
-      subtitle: t('errorWithTransaction'),
+      title,
+      subtitle,
     })
   }
 
-  const onError = (type?: string) => {
+  const onError = (type?: string, details?: string) => {
     if (type === 'ledger') {
       handleResetLedgerTask()
     }
+
+    const txFee = getTxSubmission(uid)?.fee || 0n
+    const hasInsufficientFunds = transferableBalance < txFee
+
+    let title = t('cancelled')
+    let subtitle = t('transactionCancelled')
+
+    if (type === 'insufficient_funds' || hasInsufficientFunds) {
+      title = t('insufficientFunds')
+
+      switch (tx?.call.pallet) {
+        case 'Staking':
+          subtitle = t('errors.addMoreDotForStaking', { unit })
+          break
+        case 'NominationPools':
+          subtitle = t('errors.addMoreDotForPooling', { unit })
+          break
+        default:
+          subtitle = t('errors.addMoreDotForFees', { unit })
+          break
+      }
+    } else if (type === 'user_cancelled') {
+      title = t('userCancelled')
+      subtitle = t('userCancelledTransaction')
+    } else if (type === 'technical') {
+      subtitle = getTechnicalErrorMessage(details)
+    }
+
     emitNotification({
-      title: t('cancelled'),
-      subtitle: t('transactionCancelled'),
+      title,
+      subtitle,
     })
+  }
+
+  // Helper function to get specific technical error messages
+  const getTechnicalErrorMessage = (details?: string): string => {
+    if (!details) {
+      return t('transactionCancelledTechnical')
+    }
+
+    const translationKey = TxErrorKeyMap[details]
+    return translationKey
+      ? t(translationKey)
+      : t('transactionCancelledTechnical')
   }
 
   // Re-fetch tx fee if tx changes

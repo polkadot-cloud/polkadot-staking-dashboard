@@ -5,6 +5,7 @@ import type { SubmittableExtrinsic } from 'dedot'
 import type { ExtrinsicSignatureV4 } from 'dedot/codecs'
 import type { InjectedSigner, TxStatus } from 'dedot/types'
 import type { TxStatusHandlers } from 'types'
+import { getErrorKeyFromMessage } from './error'
 import { deleteTx, setUidPending, setUidSubmitted, subs } from './index'
 
 export const addSignAndSend = async (
@@ -13,8 +14,9 @@ export const addSignAndSend = async (
   tx: SubmittableExtrinsic,
   signer: InjectedSigner,
   nonce: number,
-  { onError, ...onRest }: TxStatusHandlers
+  txStatusHandlers: TxStatusHandlers
 ) => {
+  const { onError, ...onRest } = txStatusHandlers
   try {
     subs[uid] = await tx.signAndSend(
       from,
@@ -24,7 +26,7 @@ export const addSignAndSend = async (
       }
     )
   } catch (e) {
-    onError('default')
+    handleError(String(e), onError)
     deleteTx(uid)
   }
 }
@@ -42,7 +44,7 @@ export const addSend = async (
       handleResult(uid, status, onRest)
     })
   } catch (e) {
-    onError('default')
+    handleError(String(e), onError)
     deleteTx(uid)
   }
 }
@@ -76,7 +78,28 @@ export const handleResult = (
     deleteTx(uid)
   }
   if (status.type === 'Invalid') {
-    onFailed(Error('Invalid'))
+    onFailed(Error('Invalid transaction'))
     deleteTx(uid)
+  }
+}
+
+export const handleError = (
+  errorMessage: string,
+  onError: (type?: string, details?: string) => void
+) => {
+  const msgLower = errorMessage.toLowerCase()
+
+  if (
+    /user rejected|cancel(l)?ed|cancel(l)?ed by user|usercancel/.test(msgLower)
+  ) {
+    onError('user_cancelled')
+  } else if (
+    /insufficient|balance|insufficientbalance|not enough/.test(msgLower)
+  ) {
+    onError('insufficient_funds')
+  } else {
+    // Enhanced technical error classification
+    const technicalDetails = getErrorKeyFromMessage(errorMessage)
+    onError('technical', technicalDetails)
   }
 }
