@@ -102,6 +102,27 @@ export const ValidatorCommunity: ValidatorEntry[] = [
     },
   },
   {
+    name: 'ChainSafe Systems',
+    icon: 'Chainsafe',
+    bio: 'ChainSafe Systems is a leading blockchain research and development firm specializing in infrastructure development and operations. Our validator nodes run on high-performance dedicated hardware with 24/7 monitoring, focusing on reliability, security, and network decentralization.',
+    email: 'staking@chainsafe.io',
+    x: '@ChainSafeth',
+    website: 'https://chainsafe.io/',
+    validators: {
+      polkadot: [
+        '149AnEATtGViYqvJ5EqRMt1BkrJo88GUAdmiG9RuvMz8CKUk',
+        '15ASn2hhzYBquxFNMf2dF2kKLrgkijGUYqbYeLSuLHX6zLyQ',
+      ],
+      kusama: [
+        'DfeM94UC7ejfD8n5AYijUtHhUC616wcjKCRGFrYLngiM6qR',
+        'FqgULtg9pC2hqHnuPAryu8an5gQGBaQUeemQk1kQRR1L37W',
+        'JKeq1gQAaSkbGTv86UY8irovrtTU3kBxi9AJTr8oDQpuvDP',
+        'J8yYAHKHScHUAbEw2AzZBm6SXycRPiiHtzWSj6gS4KXgkBj',
+        'FhiGMCZqczqyoDJg7o3zWRbN1NhWykJhMYaNMVxUTibsqpZ',
+      ],
+    },
+  },
+  {
     name: 'Coinbase Cloud',
     icon: 'CoinbaseCloud',
     bio: 'Our staking infrastructure powers the leading crypto products and exchanges. We offer the same infrastructure in our public validators and make it available to you.',
