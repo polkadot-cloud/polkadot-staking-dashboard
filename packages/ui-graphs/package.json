@@ -9,7 +9,8 @@
   "exports": {
     ".": "./src/index.tsx",
     "./types": "./src/types.ts",
-    "./util": "./src/util/index.ts"
+    "./util": "./src/util/index.ts",
+    "./util/deepEqual": "./src/util/deepEqual.ts"
   },
   "dependencies": {
     "@w3ux/utils": "^2.2.1",

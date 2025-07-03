@@ -13,8 +13,10 @@ import { Metrics } from 'library/ListItem/Buttons/Metrics'
 import { Remove } from 'library/ListItem/Buttons/Remove'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
+import { memo } from 'react'
 import type { Validator } from 'types'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
+import { deepEqual } from 'ui-graphs/util/deepEqual'
 import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
 import { Select } from '../ListItem/Buttons/Select'
 import { Blocked } from '../ListItem/Labels/Blocked'
@@ -23,7 +25,7 @@ import { EraStatus } from '../ListItem/Labels/EraStatus'
 import { Identity } from '../ListItem/Labels/Identity'
 import type { ItemProps } from './types'
 
-export const Item = ({
+const ItemComponent = ({
   validator,
   toggleFavorites,
   displayFor,
@@ -102,3 +104,49 @@ export const Item = ({
     </Wrapper>
   )
 }
+
+// Custom comparison function to prevent unnecessary re-renders
+const arePropsEqual = (prevProps: ItemProps, nextProps: ItemProps): boolean => {
+  // Check if validator core properties changed
+  if (
+    prevProps.validator.address !== nextProps.validator.address ||
+    prevProps.validator.validatorStatus !==
+      nextProps.validator.validatorStatus ||
+    prevProps.displayFor !== nextProps.displayFor ||
+    prevProps.toggleFavorites !== nextProps.toggleFavorites
+  ) {
+    return false
+  }
+
+  // Check commission changes
+  const prevCommission = prevProps.validator.prefs?.commission
+  const nextCommission = nextProps.validator.prefs?.commission
+  if (prevCommission !== nextCommission) {
+    return false
+  }
+
+  // Check validator preferences (blocked status, etc.) using deepEqual
+  if (!deepEqual(prevProps.validator.prefs, nextProps.validator.prefs)) {
+    return false
+  }
+
+  // Check era points changes using deepEqual
+  if (
+    prevProps.eraPoints?.length !== nextProps.eraPoints?.length ||
+    (prevProps.eraPoints &&
+      nextProps.eraPoints &&
+      !deepEqual(prevProps.eraPoints, nextProps.eraPoints))
+  ) {
+    return false
+  }
+
+  // Check onRemove function reference (important for buttons)
+  if (prevProps.onRemove !== nextProps.onRemove) {
+    return false
+  }
+
+  return true
+}
+
+export const Item = memo(ItemComponent, arePropsEqual)
+Item.displayName = 'ValidatorListItem'
