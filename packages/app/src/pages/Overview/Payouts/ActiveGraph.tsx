@@ -6,7 +6,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { getUnixTime } from 'date-fns'
+import { getUnixTime, startOfToday, subDays } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
 import { usePoolRewards, useRewards } from 'plugin-staking-api'
 import type {
@@ -44,9 +44,7 @@ export const ActiveGraph = ({
   })
 
   const days = 30
-  const fromDate = new Date()
-  fromDate.setDate(fromDate.getDate() - days)
-  fromDate.setHours(0, 0, 0, 0)
+  const fromDate = subDays(startOfToday(), days)
 
   const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
     {
