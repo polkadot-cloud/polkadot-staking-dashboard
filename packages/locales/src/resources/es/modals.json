@@ -200,6 +200,7 @@
     "nominateQuickSubtitle": "Apueste inmediatamente con una configuración optimizada",
     "nominateQuickTitle": "Configuración con un solo clic",
     "nominating": "Nominando",
+    "nominatingAndInPool": "Nominando y en Pool",
     "nomination_one": "{{count}} Nominación",
     "nomination_other": "{{count}} Nominaciones",
     "nominator": "Nominador",

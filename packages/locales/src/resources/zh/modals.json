@@ -190,6 +190,7 @@
     "nominateQuickSubtitle": "使用优化设置立即进行质押",
     "nominateQuickTitle": "一键设置",
     "nominating": "提名中",
+    "nominatingAndInPool": "提名中 & 提名池中",
     "nomination": "{{count}} 个提名",
     "nominator": "提名人",
     "nominatorStake": "提名人抵押",
