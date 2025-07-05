@@ -12,7 +12,7 @@
     "./util": "./src/util/index.ts"
   },
   "dependencies": {
-    "@w3ux/utils": "^2.2.1",
+    "@w3ux/utils": "^2.2.3",
     "bignumber.js": "^9.3.0",
     "chart.js": "^4.4.9",
     "consts": "workspace:*",
