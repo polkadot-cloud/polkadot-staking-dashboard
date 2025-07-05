@@ -73,7 +73,7 @@
   "devDependencies": {
     "types": "workspace:*",
     "typescript": "^5.8.2",
-    "vite": "^6.3.5",
+    "vite": "^7.0.2",
     "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-checker": "^0.9.3",
     "vite-plugin-eslint": "^1.8.1",
