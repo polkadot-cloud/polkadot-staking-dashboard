@@ -66,10 +66,7 @@ export const ManageBond = () => {
     !exposed
 
   // Whether unstake buttons should be disabled
-  const unstakeDisabled = !isBonding || (syncing && !isBonding)
-
-  // Whether unstake buttons should be hidden
-  const unstakeHidden = unstakeDisabled || isReadOnlyAccount(activeAddress)
+  const unstakeDisabled = !isReady || !isBonding || (syncing && !isBonding)
 
   // Whether the bond buttons should be disabled
   const bondDisabled =
@@ -77,12 +74,12 @@ export const ManageBond = () => {
 
   // The available unstake buttons to display. If fast unstaking is available, it will show the fast
   // unstake button. Regular unstake button will always be available if the user can unbond
-  const unstakeButtons = (
+  const unstakeButtons = !isReadOnlyAccount(activeAddress) ? (
     <>
       {fastUnstakeEligible && (
         <ButtonPrimary
           size="md"
-          disabled={isReadOnlyAccount(activeAddress)}
+          disabled={unstakeDisabled}
           text={getFastUnstakeText()}
           iconLeft={faBolt}
           onClick={() => {
@@ -94,16 +91,11 @@ export const ManageBond = () => {
         size="md"
         text={t('unstake')}
         iconLeft={faSignOutAlt}
-        disabled={
-          !isReady ||
-          isReadOnlyAccount(activeAddress) ||
-          !activeAddress ||
-          !isBonding
-        }
+        disabled={unstakeDisabled}
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
       />
     </>
-  )
+  ) : null
 
   return (
     <>
@@ -154,7 +146,7 @@ export const ManageBond = () => {
               text=""
             />
           </MultiButton.Container>
-          {!unstakeHidden && unstakeButtons}
+          {unstakeButtons}
         </ButtonRow>
       </CardHeader>
       <BondedChart
