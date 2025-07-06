@@ -72,8 +72,9 @@ export const ManageBond = () => {
   const bondDisabled =
     unstakeDisabled || isFastUnstaking || isReadOnlyAccount(activeAddress)
 
-  // The available unstake buttons to display. If fast unstaking is available, it will show the fast
-  // unstake button. Regular unstake button will always be available if the user can unbond
+  // The available unstake buttons to display. If fast unstaking is available the fast unstake
+  // button will be displayed. Regular unstake button is always showing - unless the account is
+  // read-only.
   const unstakeButtons = !isReadOnlyAccount(activeAddress) ? (
     <>
       {fastUnstakeEligible && (
