@@ -22,7 +22,7 @@ import { SearchInput } from 'library/List/SearchInput'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NominationStatus, Validator } from 'types'
 import { useOverlay } from 'ui-overlay'
@@ -153,14 +153,20 @@ export const ValidatorListInner = ({
   }
 
   // Get subset for page display.
-  const listItems = validators.slice(pageStart).slice(0, pageLength)
-  // A unique key for the current page of items
-  const pageKey =
-    JSON.stringify(listItems.map(({ address }, i) => `${i}${address}`)) +
-    JSON.stringify(includes) +
-    JSON.stringify(excludes) +
-    JSON.stringify(order) +
-    JSON.stringify(searchTerm)
+  const listItems = useMemo(
+    () => validators.slice(pageStart, pageStart + pageLength),
+    [validators, pageStart, pageLength]
+  )
+
+  const pageKey = useMemo(() => {
+    const itemKeys = listItems
+      .map(({ address }, i) => `${i}${address}`)
+      .join(',')
+    const inc = includes?.join(',') ?? ''
+    const exc = excludes?.join(',') ?? ''
+    const search = searchTerm ?? ''
+    return `${itemKeys}|${inc}|${exc}|${order}|${search}`
+  }, [listItems, includes, excludes, order, searchTerm])
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
