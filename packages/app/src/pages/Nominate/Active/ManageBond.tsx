@@ -58,11 +58,6 @@ export const ManageBond = () => {
   const { totalUnlocking, totalUnlocked } = balances.nominator
   const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
-  // Check for actual bonded funds directly from ledger to handle dual staking scenarios
-  // where isBonding might be false due to subscription issues
-  const hasNominatorFunds = active > 0n
-  const canUnbond = hasNominatorFunds || isBonding
-
   // Determine whether fast unstake is available
   const fastUnstakeEligible =
     erasToCheckPerBlock > 0 &&
@@ -71,7 +66,7 @@ export const ManageBond = () => {
     !exposed
 
   // Whether unstake buttons should be disabled
-  const unstakeDisabled = !canUnbond || (syncing && !hasNominatorFunds)
+  const unstakeDisabled = !isBonding || (syncing && !isBonding)
 
   // Whether unstake buttons should be hidden
   const unstakeHidden = unstakeDisabled || isReadOnlyAccount(activeAddress)
@@ -103,7 +98,7 @@ export const ManageBond = () => {
           !isReady ||
           isReadOnlyAccount(activeAddress) ||
           !activeAddress ||
-          !canUnbond
+          !isBonding
         }
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
       />
