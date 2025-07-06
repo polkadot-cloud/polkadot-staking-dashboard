@@ -63,33 +63,28 @@ export const ManageBond = () => {
   const hasNominatorFunds = active > 0n
   const canUnbond = hasNominatorFunds || isBonding
 
-  // Determine whether to display fast unstake button.
-  const showFastUnstake =
+  // Determine whether fast unstake is available
+  const fastUnstakeEligible =
     erasToCheckPerBlock > 0 &&
     !nominationStatus.nominees.active.length &&
     fastUnstakeStatus !== null &&
     !exposed
 
-  // Only show the regular unstake button if not read-only
-  const regularUnstakeButton = (
-    <ButtonPrimary
-      size="md"
-      text={t('unstake')}
-      iconLeft={faSignOutAlt}
-      disabled={
-        !isReady ||
-        isReadOnlyAccount(activeAddress) ||
-        !activeAddress ||
-        !canUnbond
-      }
-      onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
-    />
-  )
+  // Whether unstake buttons should be disabled
+  const unstakeDisabled = !canUnbond || (syncing && !hasNominatorFunds)
 
-  // Show both buttons if both are available, but both are disabled for read-only
+  // Whether unstake buttons should be hidden
+  const unstakeHidden = unstakeDisabled || isReadOnlyAccount(activeAddress)
+
+  // Whether the bond buttons should be disabled
+  const bondDisabled =
+    unstakeDisabled || isFastUnstaking || isReadOnlyAccount(activeAddress)
+
+  // The available unstake buttons to display. If fast unstaking is available, it will show the fast
+  // unstake button. Regular unstake button will always be available if the user can unbond
   const unstakeButtons = (
     <>
-      {showFastUnstake && (
+      {fastUnstakeEligible && (
         <ButtonPrimary
           size="md"
           disabled={isReadOnlyAccount(activeAddress)}
@@ -100,16 +95,20 @@ export const ManageBond = () => {
           }}
         />
       )}
-      {regularUnstakeButton}
+      <ButtonPrimary
+        size="md"
+        text={t('unstake')}
+        iconLeft={faSignOutAlt}
+        disabled={
+          !isReady ||
+          isReadOnlyAccount(activeAddress) ||
+          !activeAddress ||
+          !canUnbond
+        }
+        onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
+      />
     </>
   )
-
-  const unstakeDisabled =
-    !canUnbond ||
-    (syncing && !hasNominatorFunds) ||
-    isReadOnlyAccount(activeAddress)
-
-  const bondDisabled = unstakeDisabled || isFastUnstaking
 
   return (
     <>
@@ -160,7 +159,7 @@ export const ManageBond = () => {
               text=""
             />
           </MultiButton.Container>
-          {!unstakeDisabled && unstakeButtons}
+          {!unstakeHidden && unstakeButtons}
         </ButtonRow>
       </CardHeader>
       <BondedChart
