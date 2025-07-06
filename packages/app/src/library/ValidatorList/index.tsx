@@ -158,10 +158,14 @@ export const ValidatorListInner = ({
     [validators, pageStart, pageLength]
   )
 
-  // Create stable page key using useMemo to avoid expensive JSON.stringify on every render
   const pageKey = useMemo(() => {
-    const itemKeys = listItems.map(({ address }, i) => `${i}${address}`)
-    return `${itemKeys.join(',')}|${(includes || []).join(',')}|${(excludes || []).join(',')}|${order}|${searchTerm || ''}`
+    const itemKeys = listItems
+      .map(({ address }, i) => `${i}${address}`)
+      .join(',')
+    const inc = includes?.join(',') ?? ''
+    const exc = excludes?.join(',') ?? ''
+    const search = searchTerm ?? ''
+    return `${itemKeys}|${inc}|${exc}|${order}|${search}`
   }, [listItems, includes, excludes, order, searchTerm])
 
   // if in modal, handle resize
