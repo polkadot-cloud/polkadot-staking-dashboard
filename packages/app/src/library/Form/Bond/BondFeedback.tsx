@@ -107,7 +107,7 @@ export const BondFeedback = ({
       newErrors.push(`${t('noFree', { unit })}`)
     }
 
-    if (bonding || joiningPool) {
+    if (!bonding || joiningPool) {
       if (freeToBond < minBond) {
         disabled = true
         newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`)
