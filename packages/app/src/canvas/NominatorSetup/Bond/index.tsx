@@ -96,7 +96,7 @@ export const Bond = ({
         <BondFeedback
           syncing={fee === 0n}
           bondFor="nominator"
-          inSetup
+          bonding={false}
           listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
           setters={[handleSetBond]}
