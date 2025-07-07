@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
@@ -22,6 +23,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const navigate = useNavigate()
   const { advancedMode } = useUi()
   const { inPool } = useActivePool()
+  const { isNominator } = useStaking()
   const { openModal } = useOverlay().modal
   const { openCanvas } = useOverlay().canvas
   const { activeAddress } = useActiveAccounts()
@@ -29,7 +31,11 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { generateOptimalSetup, setNominatorSetup } = useNominatorSetups()
 
   const nominateButtonDisabled =
-    !isReady || !activeAddress || isReadOnlyAccount(activeAddress) || inPool
+    !isReady ||
+    !activeAddress ||
+    inPool ||
+    isNominator ||
+    isReadOnlyAccount(activeAddress)
 
   return (
     <CallToActionWrapper>
