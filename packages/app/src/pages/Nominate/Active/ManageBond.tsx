@@ -38,7 +38,6 @@ export const ManageBond = () => {
   } = useApi()
   const { network } = useNetwork()
   const { openHelp } = useHelp()
-  const { syncing } = useSyncing()
   const { isBonding } = useStaking()
   const { openModal } = useOverlay().modal
   const { getStakingLedger } = useBalances()
@@ -49,6 +48,7 @@ export const ManageBond = () => {
   const { getNominationStatus } = useNominationStatus()
   const { exposed, fastUnstakeStatus } = useFastUnstake()
   const { balances } = useAccountBalances(activeAddress)
+  const { syncing } = useSyncing(['initialization', 'era-stakers'])
 
   const { ledger } = getStakingLedger(activeAddress)
   const { units } = getStakingChainData(network)
@@ -66,7 +66,8 @@ export const ManageBond = () => {
     !exposed
 
   // Whether unstake buttons should be disabled
-  const unstakeDisabled = !isReady || !isBonding || (syncing && !isBonding)
+  const unstakeDisabled =
+    !isReady || !isBonding || syncing || (syncing && !isBonding)
 
   // Whether the bond buttons should be disabled
   const bondDisabled =
