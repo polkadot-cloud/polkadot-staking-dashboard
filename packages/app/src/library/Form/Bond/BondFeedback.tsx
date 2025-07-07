@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
@@ -33,6 +34,7 @@ export const BondFeedback = ({
   const { network } = useNetwork()
   const { isDepositor } = useActivePool()
   const { activeAddress } = useActiveAccounts()
+  const { getStakingLedger } = useBalances()
   const {
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
@@ -44,6 +46,10 @@ export const BondFeedback = ({
       nominator: { totalAdditionalBond },
     },
   } = useAccountBalances(activeAddress)
+
+  // Get the current active bonded amount for the account
+  const { ledger } = getStakingLedger(activeAddress)
+  const currentActiveBond = ledger?.active || 0n
 
   const defaultBondStr = defaultBond ? String(defaultBond) : ''
 
@@ -108,13 +114,20 @@ export const BondFeedback = ({
     }
 
     if (inSetup || joiningPool) {
-      if (freeToBond < minBond) {
+      // For nominators, check if they already meet minimum bond requirement through existing bonds
+      if (bondFor === 'nominator' && currentActiveBond >= minNominatorBond) {
+        // User already has sufficient bonded amount, no need to enforce minimum on additional bonds
+      } else if (freeToBond < minBond) {
         disabled = true
         newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`)
       }
-      // bond amount must be more than minimum required bond
+
+      // bond amount must be more than minimum required bond (only for new nominators)
       if (bond.bond !== '' && bondBigInt < minBond) {
-        newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`)
+        // Only enforce this for new nominators who don't have existing bonds
+        if (bondFor !== 'nominator' || currentActiveBond < minNominatorBond) {
+          newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`)
+        }
       }
     }
 
