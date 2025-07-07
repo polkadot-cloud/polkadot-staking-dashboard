@@ -11,7 +11,7 @@ export interface BondFeedbackProps {
   setters: BondSetter[]
   bondFor: BondFor
   defaultBond: string | null
-  inSetup?: boolean
+  bonding?: boolean
   joiningPool?: boolean
   listenIsValid?: ((valid: boolean, errors: string[]) => void) | (() => void)
   parentErrors?: string[]

@@ -130,6 +130,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
             setters={[handleSetBond]}
             parentErrors={warnings}
             txFees={BigInt(largestTxFee.toString())}
+            bonding={false}
           />
         </div>
       </div>
