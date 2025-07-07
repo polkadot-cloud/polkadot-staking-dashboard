@@ -23,10 +23,10 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const navigate = useNavigate()
   const { advancedMode } = useUi()
   const { inPool } = useActivePool()
-  const { isNominator } = useStaking()
   const { openModal } = useOverlay().modal
   const { openCanvas } = useOverlay().canvas
   const { activeAddress } = useActiveAccounts()
+  const { isBonding, isNominating } = useStaking()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { generateOptimalSetup, setNominatorSetup } = useNominatorSetups()
 
@@ -34,7 +34,8 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
     !isReady ||
     !activeAddress ||
     inPool ||
-    isNominator ||
+    isBonding ||
+    isNominating ||
     isReadOnlyAccount(activeAddress)
 
   return (
