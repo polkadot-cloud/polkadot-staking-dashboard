@@ -16,7 +16,12 @@ import { Wrapper } from 'library/ListItem/Wrappers'
 import { memo } from 'react'
 import type { Validator } from 'types'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
-import { deepEqual } from 'ui-graphs/util/deepEqual'
+import {
+  boolEqual,
+  arePropsEqual as composePropsEqual,
+  deepEqual,
+  stringEqual,
+} from '../../../../utils/src/props'
 import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
 import { Select } from '../ListItem/Buttons/Select'
 import { Blocked } from '../ListItem/Labels/Blocked'
@@ -106,47 +111,34 @@ const ItemComponent = ({
 }
 
 // Custom comparison function to prevent unnecessary re-renders
-const arePropsEqual = (prevProps: ItemProps, nextProps: ItemProps): boolean => {
-  // Check if validator core properties changed
-  if (
-    prevProps.validator.address !== nextProps.validator.address ||
-    prevProps.validator.validatorStatus !==
-      nextProps.validator.validatorStatus ||
-    prevProps.displayFor !== nextProps.displayFor ||
-    prevProps.toggleFavorites !== nextProps.toggleFavorites
-  ) {
-    return false
-  }
+const areValidatorItemPropsEqual = (
+  prevProps: ItemProps,
+  nextProps: ItemProps
+): boolean =>
+  composePropsEqual(
+    // Validator address
+    stringEqual(prevProps.validator.address, nextProps.validator.address),
+    // Validator status
+    stringEqual(
+      prevProps.validator.validatorStatus,
+      nextProps.validator.validatorStatus
+    ),
+    // DisplayFor
+    stringEqual(prevProps.displayFor, nextProps.displayFor),
+    // ToggleFavorites
+    boolEqual(!!prevProps.toggleFavorites, !!nextProps.toggleFavorites),
+    // Commission (ensure boolean)
+    !!(
+      prevProps.validator.prefs?.commission ===
+      nextProps.validator.prefs?.commission
+    ),
+    // Validator preferences (blocked status, etc.)
+    deepEqual(prevProps.validator.prefs, nextProps.validator.prefs),
+    // Era points
+    deepEqual(prevProps.eraPoints, nextProps.eraPoints),
+    // onRemove function reference
+    !!(prevProps.onRemove === nextProps.onRemove)
+  )
 
-  // Check commission changes
-  const prevCommission = prevProps.validator.prefs?.commission
-  const nextCommission = nextProps.validator.prefs?.commission
-  if (prevCommission !== nextCommission) {
-    return false
-  }
-
-  // Check validator preferences (blocked status, etc.) using deepEqual
-  if (!deepEqual(prevProps.validator.prefs, nextProps.validator.prefs)) {
-    return false
-  }
-
-  // Check era points changes using deepEqual
-  if (
-    prevProps.eraPoints?.length !== nextProps.eraPoints?.length ||
-    (prevProps.eraPoints &&
-      nextProps.eraPoints &&
-      !deepEqual(prevProps.eraPoints, nextProps.eraPoints))
-  ) {
-    return false
-  }
-
-  // Check onRemove function reference (important for buttons)
-  if (prevProps.onRemove !== nextProps.onRemove) {
-    return false
-  }
-
-  return true
-}
-
-export const Item = memo(ItemComponent, arePropsEqual)
+export const Item = memo(ItemComponent, areValidatorItemPropsEqual)
 Item.displayName = 'ValidatorListItem'
