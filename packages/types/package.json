@@ -10,7 +10,7 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
   },
   "dependencies": {
-    "dedot": "^0.14.0"
+    "dedot": "^0.14.1"
   },
   "devDependencies": {
     "@dedot/chaintypes": "^0.123.0",
