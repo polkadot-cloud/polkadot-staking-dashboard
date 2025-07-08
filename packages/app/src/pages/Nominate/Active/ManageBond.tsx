@@ -74,20 +74,19 @@ export const ManageBond = () => {
     unstakeDisabled || isFastUnstaking || isReadOnlyAccount(activeAddress)
 
   // The available unstake buttons to display. If fast unstaking is available the fast unstake
-  // button will be displayed. Regular unstake button is always showing - unless the account is
-  // read-only or syncing is in progress
+  // button will be displayed. Otherwise show the normal unstake button. If the account is
+  // read-only, no buttons will be displayed.
   const unstakeButtons = !isReadOnlyAccount(activeAddress) ? (
-    <>
-      {fastUnstakeEligible && !unstakeDisabled && (
-        <ButtonPrimary
-          size="md"
-          text={getFastUnstakeText()}
-          iconLeft={faBolt}
-          onClick={() => {
-            openModal({ key: 'ManageFastUnstake', size: 'sm' })
-          }}
-        />
-      )}
+    fastUnstakeEligible && !unstakeDisabled ? (
+      <ButtonPrimary
+        size="md"
+        text={getFastUnstakeText()}
+        iconLeft={faBolt}
+        onClick={() => {
+          openModal({ key: 'ManageFastUnstake', size: 'sm' })
+        }}
+      />
+    ) : (
       <ButtonPrimary
         size="md"
         text={t('unstake')}
@@ -95,7 +94,7 @@ export const ManageBond = () => {
         disabled={unstakeDisabled}
         onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
       />
-    </>
+    )
   ) : null
 
   return (
