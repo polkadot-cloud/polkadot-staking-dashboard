@@ -65,9 +65,3 @@ jobs:
       - run: pnpm test
       - run: pnpm run validate
         working-directory: packages/locales
-
-  all:
-    needs: [check-license, markdown-link-check, verify]
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo Success
