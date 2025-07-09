@@ -12,10 +12,10 @@ import { StatusWrapper } from './Wrappers'
 
 export const StakeStatus = ({ height }: { height: number }) => {
   const { inPool } = useActivePool()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
 
-  const notStaking = !inPool && !isNominator
-  const showNominate = notStaking || isNominator
+  const notStaking = !inPool && !isBonding
+  const showNominate = notStaking || isBonding
   const showMembership = notStaking || inPool
 
   return (

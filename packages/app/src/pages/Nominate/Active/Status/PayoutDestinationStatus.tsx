@@ -16,7 +16,7 @@ import { useOverlay } from 'ui-overlay'
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages')
   const { syncing } = useSyncing()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { openModal } = useOverlay().modal
   const { getStakingLedger } = useBalances()
   const { isFastUnstaking } = useUnstaking()
@@ -28,7 +28,7 @@ export const PayoutDestinationStatus = () => {
 
   // Get payee status text to display.
   const getPayeeStatus = () => {
-    if (!isNominator) {
+    if (!isBonding) {
       return t('notAssigned')
     }
     const status = getPayeeItems(true).find(
@@ -42,7 +42,7 @@ export const PayoutDestinationStatus = () => {
   }
 
   // Get the payee destination icon to display, falling back to wallet icon.
-  const payeeIcon = !isNominator
+  const payeeIcon = !isBonding
     ? undefined
     : getPayeeItems(true).find(({ value }) => value === payee?.destination)
         ?.icon || faWallet
@@ -54,12 +54,12 @@ export const PayoutDestinationStatus = () => {
       icon={payeeIcon}
       stat={getPayeeStatus()}
       buttons={
-        isNominator && !isReadOnlyAccount(activeAddress)
+        isBonding && !isReadOnlyAccount(activeAddress)
           ? [
               {
                 title: t('update'),
                 icon: faGear,
-                disabled: syncing || !isNominator || isFastUnstaking,
+                disabled: syncing || !isBonding || isFastUnstaking,
                 onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
               },
             ]

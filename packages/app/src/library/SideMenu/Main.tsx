@@ -24,7 +24,7 @@ export const Main = () => {
   const { network } = useNetwork()
   const { pathname } = useLocation()
   const { inPool } = useActivePool()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { formatWithPrefs } = useValidators()
   const { activeAddress } = useActiveAccounts()
   const { sideMenuMinimised, advancedMode } = useUi()
@@ -48,13 +48,13 @@ export const Main = () => {
         }
       }
       if (uri === `${import.meta.env.BASE_URL}nominate`) {
-        if (isNominator) {
+        if (isBonding) {
           pages[i].bullet = 'accent'
           return true
         }
         if (
           (!syncing && controllerUnmigrated) ||
-          (isNominator && fullCommissionNominees.length > 0)
+          (isBonding && fullCommissionNominees.length > 0)
         ) {
           pages[i].bullet = 'warning'
           return true

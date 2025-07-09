@@ -25,7 +25,7 @@ import { SupplyStaked } from './Stats/SupplyStaked'
 export const Overview = () => {
   const { t } = useTranslation('pages')
   const { network } = useNetwork()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { pluginEnabled } = usePlugins()
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
@@ -48,7 +48,7 @@ export const Overview = () => {
         <SupplyStaked />
         <NextRewards />
       </Stat.Row>
-      {isNominator &&
+      {isBonding &&
         !syncing &&
         accountSynced(activeAddress) &&
         controllerUnmigrated &&

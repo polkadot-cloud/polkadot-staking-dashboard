@@ -29,7 +29,7 @@ export const RecentPayouts = ({
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { pluginEnabled } = usePlugins()
 
   const payoutsFromDate = getPayoutsFromDate(
@@ -40,7 +40,7 @@ export const RecentPayouts = ({
     payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
-  const staking = isNominator || inPool
+  const staking = isBonding || inPool
   const notStaking = !syncing && !staking
 
   const ref = useRef<HTMLDivElement>(null)
@@ -100,7 +100,7 @@ export const RecentPayouts = ({
         >
           {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
-              nominating={isNominator}
+              nominating={isBonding}
               inPool={inPool}
               payoutGraphData={payoutGraphData}
               loading={loading}

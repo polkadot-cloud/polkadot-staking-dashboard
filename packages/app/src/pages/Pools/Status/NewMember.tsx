@@ -17,16 +17,16 @@ import { useStatusButtons } from './useStatusButtons'
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation()
   const { network } = useNetwork()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { setActiveTab } = usePoolsTabs()
   const { openCanvas } = useOverlay().canvas
   const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
 
   // Alias for create button disabled state
-  const createDisabled = getCreateDisabled() || isNominator
+  const createDisabled = getCreateDisabled() || isBonding
 
   // Disable opening the canvas if data is not ready.
-  const joinButtonDisabled = getJoinDisabled() || isNominator
+  const joinButtonDisabled = getJoinDisabled() || isBonding
 
   return (
     <CallToActionWrapper>
