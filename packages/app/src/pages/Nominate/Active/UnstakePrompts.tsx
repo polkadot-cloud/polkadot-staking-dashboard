@@ -20,7 +20,7 @@ export const UnstakePrompts = () => {
   const { t } = useTranslation('pages')
   const { syncing } = useSyncing()
   const { network } = useNetwork()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { openModal } = useOverlay().modal
   const { getThemeValue } = useThemeValues()
   const { activeAddress } = useActiveAccounts()
@@ -36,7 +36,7 @@ export const UnstakePrompts = () => {
     isUnstaking && active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
   return (
-    isNominator &&
+    isBonding &&
     (isUnstaking || isFastUnstaking) &&
     !syncing && (
       <Page.Row>
