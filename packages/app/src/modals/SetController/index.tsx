@@ -17,7 +17,7 @@ import { Close, useOverlay } from 'ui-overlay'
 export const SetController = () => {
   const { t } = useTranslation('app')
   const { serviceApi } = useApi()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { getStakingLedger } = useBalances()
   const { activeAddress } = useActiveAccounts()
   const { setModalStatus } = useOverlay().modal
@@ -26,7 +26,7 @@ export const SetController = () => {
   const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
   const canDeprecateController =
-    isNominator &&
+    isBonding &&
     !syncing &&
     accountSynced(activeAddress) &&
     controllerUnmigrated &&
