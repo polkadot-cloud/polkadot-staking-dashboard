@@ -27,7 +27,7 @@ export class AccountBalanceQuery<T extends Chain> {
         // MIGRATION: Westend now factors staking amount into the free balance. Temporarily deduct
         // the active ledger from free balance for other relay chains
         let free: bigint = data.free
-        if (['polkadot', 'kusama'].includes(this.api.runtimeVersion.specName)) {
+        if (['polkadot'].includes(this.api.runtimeVersion.specName)) {
           const api = this.api as unknown as DedotClient<StakingChain>
           const bonded = await api.query.staking.bonded(this.address)
           if (bonded) {
