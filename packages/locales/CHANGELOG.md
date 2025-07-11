@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.3.0...locales-v1.4.0) (2025-07-11)
+
+
+### Features
+
+* add missing nominatingAndInPool translations for dual staking ([#2872](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2872)) ([519b34b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/519b34b7bce0d9dd0fd250331786d927604de23d))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.2.0...locales-v1.3.0) (2025-06-17)
 
 
