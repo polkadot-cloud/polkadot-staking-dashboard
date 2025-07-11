@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0-beta.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.0...app-v2.1.0-beta.0) (2025-07-11)
+
+
+### Features
+
+* **fix:** Bond checks `isBonding`, disallow new nominator if bonding or nominating already ([#2878](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2878)) ([39bd910](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/39bd91098e46fe5fb0841d228610ec638b5bbf0b))
+* **fix:** treat bonding only as nominating ([#2884](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2884)) ([38682e0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/38682e0165ca41d5c5cf26a24a13253cb8b6f6cf))
+
+
+### Bug Fixes
+
+* allow unbond/unstake for any user with bonded funds, not just active nominators ([#2874](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2874)) ([fbab4e0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/fbab4e0b13d87ea64fee297c244399fd7527028e))
+
 ## [2.0.0-beta.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.9.0...app-v2.0.0-beta.0) (2025-06-17)
 
 
