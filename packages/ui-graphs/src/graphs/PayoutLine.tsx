@@ -15,9 +15,11 @@ import {
   Tooltip,
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
+import { memo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { PayoutLineProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +32,7 @@ ChartJS.register(
   Legend
 )
 
-export const PayoutLine = ({
+const PayoutLineComponent = ({
   entries,
   syncing,
   width,
@@ -159,3 +161,54 @@ export const PayoutLine = ({
     </div>
   )
 }
+
+// Custom comparison function to prevent expensive Chart.js re-initializations
+const arePropsEqual = (
+  prevProps: PayoutLineProps,
+  nextProps: PayoutLineProps
+): boolean => {
+  // Check syncing state
+  if (prevProps.syncing !== nextProps.syncing) {
+    return false
+  }
+
+  // Check dimensions
+  if (
+    prevProps.width !== nextProps.width ||
+    prevProps.height !== nextProps.height
+  ) {
+    return false
+  }
+
+  // Check styling props
+  if (
+    prevProps.unit !== nextProps.unit ||
+    prevProps.dateFormat !== nextProps.dateFormat
+  ) {
+    return false
+  }
+
+  // Check labels object using deepEqual instead of JSON.stringify
+  if (!deepEqual(prevProps.labels, nextProps.labels)) {
+    return false
+  }
+
+  // Check entries data (most important for chart updates)
+  if (
+    prevProps.entries.length !== nextProps.entries.length ||
+    !deepEqual(prevProps.entries, nextProps.entries)
+  ) {
+    return false
+  }
+
+  // Theme changes are harder to detect, but we can check if the function reference changed
+  // This isn't perfect but prevents most unnecessary re-renders
+  if (prevProps.getThemeValue !== nextProps.getThemeValue) {
+    return false
+  }
+
+  return true
+}
+
+export const PayoutLine = memo(PayoutLineComponent, arePropsEqual)
+PayoutLine.displayName = 'PayoutLine'
