@@ -27,7 +27,7 @@
     "radix-ui": "^1.4.2",
     "react": "^19.1.0",
     "simplebar": "6.3.2",
-    "simplebar-react": "3.3.0",
+    "simplebar-react": "3.3.2",
     "styles": "workspace:*"
   },
   "devDependencies": {
