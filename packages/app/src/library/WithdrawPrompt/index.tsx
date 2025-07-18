@@ -49,9 +49,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const displayPrompt = totalUnlockChunks > 0
 
   return (
-    /* NOTE: ClosurePrompts is a component that displays a prompt to the user when a pool is being
-    destroyed. */
-    state !== 'Destroying' &&
+    /* NOTE: WithdrawPrompt allows withdrawals regardless of pool state after unbonding period. */
     displayPrompt && (
       <Page.Row>
         <CardWrapper
@@ -74,9 +72,8 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
                       bondFor,
                       disableWindowResize: true,
                       disableScroll: true,
-                      // NOTE: This will always be false as a different prompt is displayed when a
-                      // pool is being destroyed.
-                      poolClosure: false,
+                      // NOTE: Properly handle pool closure state for destroying pools.
+                      poolClosure: state === 'Destroying',
                     },
                     size: 'sm',
                   })
