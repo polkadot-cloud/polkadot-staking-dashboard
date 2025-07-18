@@ -23,25 +23,11 @@ export class AccountBalanceQuery<T extends Chain> {
     this.#unsub = await this.api.query.system.account(
       this.address,
       async ({ nonce, data }) => {
-        // MIGRATION: Westend now factors staking amount into the free balance. Temporarily deduct
-        // the active ledger from free balance for other relay chains
-        const free: bigint = data.free
-        // NOTE: Migration logic commented out as all chains now handle free balance correctly
-        // if (['polkadot'].includes(this.api.runtimeVersion.specName)) {
-        //   const api = this.api as unknown as DedotClient<StakingChain>
-        //   const bonded = await api.query.staking.bonded(this.address)
-        //   if (bonded) {
-        //     const ledger = await api.query.staking.ledger(bonded)
-        //     const active = ledger?.active || 0n
-        //     free = maxBigInt(data.free - active, 0n)
-        //   }
-        // }
-        // End of migration
         const balances: AccountBalance = {
           synced: true,
           nonce,
           balance: {
-            free,
+            free: data.free,
             reserved: data.reserved,
             frozen: data.frozen,
           },

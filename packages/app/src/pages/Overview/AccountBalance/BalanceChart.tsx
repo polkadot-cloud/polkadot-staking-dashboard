@@ -36,8 +36,6 @@ export const BalanceChart = () => {
   const { unit, units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
 
-  console.log(balances)
-
   // Convert to BigNumber for display and percentage calculations
   const totalBalance = planckToUnitBn(
     new BigNumber(balances.totalBalance),
@@ -68,7 +66,6 @@ export const BalanceChart = () => {
     units
   )
 
-  console.log('freeBalanceBn', freeBalanceBn.toString())
   // Graph percentages for staking overview
   const graphTotal = nominating.plus(inPool).plus(fundsTransferrable)
   const graphNominating = nominating.isGreaterThan(0)
