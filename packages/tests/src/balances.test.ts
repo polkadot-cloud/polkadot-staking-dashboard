@@ -94,31 +94,22 @@ test('getFreeBalance handles insufficient balance', () => {
 
 test('getTransferrableBalance subtracts all locked amounts', () => {
   const freeBalance = 990000000000000n
-  const totalUnlocking = 50000000000000n
-  const totalUnlocked = 50000000000000n
 
-  const result = getTransferrableBalance(
-    freeBalance,
-    feeReserve,
-    totalUnlocking,
-    totalUnlocked
-  )
-  expect(result).toBe(885000000000000n) // 990 - 5 - 50 - 50
+  const result = getTransferrableBalance(freeBalance, feeReserve)
+  expect(result).toBe(985000000000000n) // 990 - 5
 })
 
 test('getTransferrableBalance handles insufficient balance', () => {
   const result = getTransferrableBalance(
     10000000000000n, // 10 DOT
-    feeReserve,
-    50000000000000n,
-    50000000000000n
+    feeReserve
   )
-  expect(result).toBe(0n) // max(10 - 5 - 50 - 50, 0) = 0
+  expect(result).toBe(5000000000000n) // max(10 - 5, 0) = 0
 })
 
 test('balanceForTxFees equals getFreeBalance', () => {
   const result = balanceForTxFees(mockAccountBalance, edReserved)
-  expect(result).toBe(940000000000000n) // 1000 - 10 - 50
+  expect(result).toBe(990000000000000n) // 1000 - 10
 })
 
 test('nominatorBalances calculates all nominator-related balances', () => {
@@ -257,23 +248,23 @@ test('calculateAllBalances provides comprehensive balance calculations', () => {
 
   // Verify all calculated fields
   expect(result.freeBalance).toBe(990000000000000n) // 1000 - 10
-  expect(result.transferableBalance).toBe(885000000000000n) // 990 - 5 - 50 - 50
-  expect(result.balanceTxFees).toBe(940000000000000n) // 1000 - 10 - 50
+  expect(result.transferableBalance).toBe(985000000000000n) // 990 - 5
+  expect(result.balanceTxFees).toBe(990000000000000n) // 1000 - 10
   expect(result.edReserved).toBe(edReserved)
 
   // Verify nominator balances
   expect(result.nominator.active).toBe(400000000000000n)
   expect(result.nominator.totalUnlocking).toBe(50000000000000n)
   expect(result.nominator.totalUnlocked).toBe(50000000000000n)
-  expect(result.nominator.totalPossibleBond).toBe(1385000000000000n)
-  expect(result.nominator.totalAdditionalBond).toBe(885000000000000n)
+  expect(result.nominator.totalPossibleBond).toBe(1485000000000000n)
+  expect(result.nominator.totalAdditionalBond).toBe(985000000000000n)
   expect(result.nominator.totalUnlockChunks).toBe(2)
 
   // Verify pool balances
   expect(result.pool.active).toBe(300000000000000n)
   expect(result.pool.totalUnlocking).toBe(30000000000000n)
   expect(result.pool.totalUnlocked).toBe(20000000000000n)
-  expect(result.pool.totalPossibleBond).toBe(835000000000000n) // 885 - 50
+  expect(result.pool.totalPossibleBond).toBe(935000000000000n) // 885
   expect(result.pool.totalUnlockChunks).toBe(2)
 
   // Verify total and locked
