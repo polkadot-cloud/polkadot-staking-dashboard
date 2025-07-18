@@ -62,7 +62,7 @@ export const ManageBond = () => {
   const fastUnstakeEligible =
     erasToCheckPerBlock > 0 &&
     !nominationStatus.nominees.active.length &&
-    fastUnstakeStatus !== null &&
+    fastUnstakeStatus?.status === 'NOT_EXPOSED' &&
     !exposed
 
   // Whether unstake buttons should be disabled
