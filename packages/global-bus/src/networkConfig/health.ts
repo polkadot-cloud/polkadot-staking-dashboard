@@ -45,8 +45,15 @@ export const sanitizeEndpoints = (
     if (healthyEndpoints.length > 0) {
       const newEndpoint =
         healthyEndpoints[Math.floor(healthyEndpoints.length * Math.random())]
-      result[chain] = newEndpoint
-      continue
+
+      // Get rpcKey from the new endpoint
+      const newEndpointKey = Object.keys(getChainRpcEndpoints(chain)).find(
+        (key) => getRpcEndpointFromKey(chain, key) === newEndpoint
+      )
+      if (newEndpointKey) {
+        result[chain] = newEndpoint
+        continue
+      }
     }
 
     // No healthy endpoints found, use random endpoint from defaults
