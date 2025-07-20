@@ -5,12 +5,14 @@ import { ellipsisFn } from '@w3ux/utils'
 import type { TooltipItem } from 'chart.js'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import chroma from 'chroma-js'
+import { memo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import type { GeoDonutProps } from '../types'
+import { deepEqual } from '../util/deepEqual'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-export const GeoDonut = ({
+const GeoDonutComponent = ({
   title,
   series = { labels: [], data: [] },
   legendHeight = 25,
@@ -94,3 +96,45 @@ export const GeoDonut = ({
     </div>
   )
 }
+
+// Custom comparison function to prevent expensive Chart.js re-initializations
+const arePropsEqual = (
+  prevProps: GeoDonutProps,
+  nextProps: GeoDonutProps
+): boolean => {
+  // Check title
+  if (prevProps.title !== nextProps.title) {
+    return false
+  }
+
+  // Check legend and label configuration
+  if (
+    prevProps.legendHeight !== nextProps.legendHeight ||
+    prevProps.maxLabelLen !== nextProps.maxLabelLen
+  ) {
+    return false
+  }
+
+  // Check series data (most important for chart updates) using deepEqual
+  const prevSeries = prevProps.series || { labels: [], data: [] }
+  const nextSeries = nextProps.series || { labels: [], data: [] }
+
+  if (
+    prevSeries.labels.length !== nextSeries.labels.length ||
+    prevSeries.data.length !== nextSeries.data.length ||
+    !deepEqual(prevSeries.labels, nextSeries.labels) ||
+    !deepEqual(prevSeries.data, nextSeries.data)
+  ) {
+    return false
+  }
+
+  // Theme changes detection
+  if (prevProps.getThemeValue !== nextProps.getThemeValue) {
+    return false
+  }
+
+  return true
+}
+
+export const GeoDonut = memo(GeoDonutComponent, arePropsEqual)
+GeoDonut.displayName = 'GeoDonut'
