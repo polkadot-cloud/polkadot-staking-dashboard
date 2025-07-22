@@ -87,7 +87,7 @@ export const Html5QrCodePlugin = ({
           }
         )
       }
-    } catch {
+    } catch (err) {
       qrCodeErrorCallback(String(err))
     }
   }

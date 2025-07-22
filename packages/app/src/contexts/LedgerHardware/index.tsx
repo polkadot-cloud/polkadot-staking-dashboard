@@ -109,7 +109,7 @@ export const LedgerHardwareProvider = ({
         runtimesInconsistent.current = true
       }
       setIntegrityChecked(true)
-    } catch {
+    } catch (err) {
       handleErrors(err)
     }
   }
@@ -132,7 +132,7 @@ export const LedgerHardwareProvider = ({
         device: { productName },
         body: [result],
       })
-    } catch {
+    } catch (err) {
       handleErrors(err)
     }
   }
@@ -162,7 +162,7 @@ export const LedgerHardwareProvider = ({
           sig: result.signature,
         },
       })
-    } catch {
+    } catch (err) {
       handleErrors(err)
     }
   }
