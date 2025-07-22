@@ -83,7 +83,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
     const overviews = await serviceApi.query.erasStakersOverviewEntries(
       activeEra.index
     )
-    // Commit active nominator count from oveviews if staking API is disabled
+    // Commit active nominator count from overviews if staking API is disabled
     if (!pluginEnabled('staking_api')) {
       const totalNominators = overviews.reduce(
         (prev, [, { nominatorCount }]) => prev + nominatorCount,
