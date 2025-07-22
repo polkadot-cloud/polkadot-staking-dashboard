@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -20,6 +20,7 @@ import type { AnyFunction, AnyJson, Validator } from 'types'
 import { Confirm } from '../Prompt/Confirm'
 import { ListControls } from './Controls/ListControls'
 import { Methods } from './Methods'
+import { SearchValidators } from './Prompts/SearchValidators'
 import { SelectFavorites } from './Prompts/SelectFavorites'
 import type {
   AddNominationsType,
@@ -165,24 +166,24 @@ export const GenerateNominations = ({
         maxNominationsReached ||
         !availableToNominate(nominations).randomValidators.length,
     },
-    // TODO: Enable feature in future PR
-    // searchValidators: {
-    //   title: 'Search Validators',
-    //   onClick: () => {
-    //     const updateList = (newNominations: Validator[]) => {
-    //       setNominations([...newNominations])
-    //       updateSetters(newNominations)
-    //       closePrompt()
-    //     }
-    //     openPromptWith(
-    //       <SearchValidators callback={updateList} nominations={nominations} />,
-    //       'lg'
-    //     )
-    //   },
-    //   icon: faMagnifyingGlass,
-    //   onSelected: false,
-    //   isDisabled: () => MaxNominations <= nominations?.length,
-    // },
+
+    searchValidators: {
+      title: 'Search Validators',
+      onClick: () => {
+        const updateList = (newNominations: Validator[]) => {
+          setNominations([...newNominations])
+          updateSetters(setters, newNominations)
+          closePrompt()
+        }
+        openPromptWith(
+          <SearchValidators callback={updateList} nominations={nominations} />,
+          'lg'
+        )
+      },
+      icon: faMagnifyingGlass,
+      onSelected: false,
+      isDisabled: () => MaxNominations <= nominations?.length,
+    },
   }
 
   // Update nominations on account switch, or if `defaultNominations` change
