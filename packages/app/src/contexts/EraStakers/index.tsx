@@ -207,7 +207,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
         handleEraTotalNominators()
       }
     }
-  }, [isReady, activeEra.index, pluginEnabled('staking_api')])
+  }, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
 
   return (
     <EraStakersContext.Provider
