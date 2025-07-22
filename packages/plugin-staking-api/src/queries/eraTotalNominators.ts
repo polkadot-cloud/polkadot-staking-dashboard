@@ -6,12 +6,9 @@ import { client } from '../Client'
 import type { EraTotalNominatorsResult } from '../types'
 
 const QUERY = gql`
-  query PoolRewards($network: String!, $who: String!, $from: Int!) {
-    poolRewards(network: $network, who: $who, from: $from) {
-      poolId
-      reward
-      timestamp
-      who
+  query EraTotalNominators($network: String!, $era: Int!) {
+    eraTotalNominators(network: $network, era: $era) {
+      totalNominators
     }
   }
 `
@@ -29,14 +26,17 @@ export const useEraTotalNominators = ({
   return { loading, error, data, refetch }
 }
 
-export const fetchEraTotalNominators = async (network: string, era: number) => {
+export const fetchEraTotalNominators = async (
+  network: string,
+  era: number
+): Promise<number | null> => {
   try {
     const result = await client.query({
       query: QUERY,
       variables: { network, era },
     })
-    return result.data.totalNominators
-  } catch (error) {
+    return result.data.eraTotalNominators.totalNominators as number
+  } catch (err) {
     return null
   }
 }

@@ -6,7 +6,9 @@ import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { removeSyncing, setSyncing } from 'global-bus'
+import { fetchEraTotalNominators } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import Worker from 'workers/stakers?worker'
@@ -23,6 +25,7 @@ export const [EraStakersContext, useEraStakers] =
 
 export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
+  const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
   const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
   const { units } = getStakingChainData(network)
@@ -59,7 +62,10 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
         // Syncing current eraStakers is now complete
         removeSyncing('era-stakers')
 
-        setActiveNominatorsCount(totalActiveNominators)
+        // Commit active nominator count from worker only if staking API is disabled
+        if (!pluginEnabled('staking_api')) {
+          setActiveNominatorsCount(totalActiveNominators)
+        }
         setStateWithRef(
           {
             ...eraStakersRef.current,
@@ -175,6 +181,11 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
     return result
   }
 
+  const handleEraTotalNominators = async () => {
+    const result = await fetchEraTotalNominators(network, activeEra.index)
+    setActiveNominatorsCount(result || 0)
+  }
+
   useEffectIgnoreInitial(() => {
     if (getApiStatus(network) === 'connecting') {
       setActiveValidators(0)
@@ -186,8 +197,12 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchActiveEraStakers()
+      // If staking API is enabled, fetch total nominators from it
+      if (pluginEnabled('staking_api') && activeEra.index > 0) {
+        handleEraTotalNominators()
+      }
     }
-  }, [isReady, activeEra.index, activeAddress])
+  }, [isReady, activeEra.index, pluginEnabled('staking_api')])
 
   return (
     <EraStakersContext.Provider
