@@ -67,6 +67,12 @@ export type PoolRewardResults = Query & {
   }
 }
 
+export type EraTotalNominatorsResult = Query & {
+  data: {
+    totalNominators: number
+  }
+}
+
 export type FastUnstakeStatus =
   | 'UNSUPPORTED_CHAIN'
   | 'NOT_PROCESSED'
