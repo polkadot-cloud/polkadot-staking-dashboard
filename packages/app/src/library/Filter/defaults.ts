@@ -5,13 +5,13 @@
 import type { ValidatorFilterContextInterface } from './types'
 
 export const defaultContext: ValidatorFilterContextInterface = {
-  orderValidators: (_v) => {},
-  applyValidatorOrder: (_l, _o) => {},
-  applyValidatorFilters: (_l, _k, _f) => {},
-  toggleFilterValidators: (_v) => {},
-  toggleAllValidatorFilters: (_t) => {},
+  orderValidators: (v) => {},
+  applyValidatorOrder: (l, o) => {},
+  applyValidatorFilters: (l, k, f) => {},
+  toggleFilterValidators: (v) => {},
+  toggleAllValidatorFilters: (t) => {},
   resetValidatorFilters: () => {},
-  validatorSearchFilter: (_l, _k, _v) => {},
+  validatorSearchFilter: (l, k, v) => {},
   validatorFilters: [],
   validatorOrder: 'default',
 }
