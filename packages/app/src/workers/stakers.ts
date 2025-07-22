@@ -10,7 +10,7 @@ import type { ProcessExposuresArgs } from './types'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any
 
-// handle incoming message and route to correct handler.
+// handle incoming message and route to correct handler
 ctx.addEventListener('message', (event: MessageEvent) => {
   const { data } = event
   const { task } = data
@@ -20,9 +20,7 @@ ctx.addEventListener('message', (event: MessageEvent) => {
   }
 })
 
-// process exposures.
-//
-// abstracts active nominators erasStakers.
+// Process exposures with active account stake
 const processExposures = (data: ProcessExposuresArgs) => {
   const { task, networkName, era, units, exposures, activeAccount } = data
 
@@ -37,7 +35,6 @@ const processExposures = (data: ProcessExposuresArgs) => {
         value: o.value,
       })) ?? []
 
-    // Accumulate active nominators and min active stake threshold.
     if (others.length) {
       // Sort `others` by value bonded, largest first.
       others = others.sort((a, b) => {
