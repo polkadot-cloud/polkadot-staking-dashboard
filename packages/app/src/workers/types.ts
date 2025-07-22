@@ -19,7 +19,6 @@ export interface ProcessExposuresResponse {
   networkName: NetworkId
   era: string
   stakers: Staker[]
-  totalActiveNominators: number
   activeAccountOwnStake: ActiveAccountStaker[]
   who: MaybeAddress
 }

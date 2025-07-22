@@ -3,7 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type { ExposureOther, Staker } from 'contexts/EraStakers/types'
+import type { Staker } from 'contexts/EraStakers/types'
 import type { ActiveAccountStaker } from 'contexts/Staking/types'
 import type { ProcessExposuresArgs } from './types'
 
@@ -28,7 +28,6 @@ const processExposures = (data: ProcessExposuresArgs) => {
 
   const stakers: Staker[] = []
   const activeAccountOwnStake: ActiveAccountStaker[] = []
-  const nominators: ExposureOther[] = []
 
   exposures.forEach(({ keys, val }) => {
     const address = keys[1]
@@ -45,35 +44,12 @@ const processExposures = (data: ProcessExposuresArgs) => {
         const r = new BigNumber(b.value).minus(a.value)
         return r.isZero() ? 0 : r.isLessThan(0) ? -1 : 1
       })
-
       stakers.push({
         address,
         others,
         own: val.own,
         total: val.total,
       })
-
-      // Accumulate active stake for all nominators.
-      for (const o of others) {
-        const value = new BigNumber(o.value)
-
-        // Check nominator already exists.
-        const index = nominators.findIndex(({ who }) => who === o.who)
-
-        // Add value to nominator, otherwise add new entry.
-        if (index === -1) {
-          nominators.push({
-            who: o.who,
-            value: value.toString(),
-          })
-        } else {
-          nominators[index].value = new BigNumber(nominators[index].value)
-            .plus(value)
-            .toString()
-        }
-      }
-
-      // get own stake if present
       const own = others.find(({ who }) => who === activeAccount)
       if (own !== undefined) {
         activeAccountOwnStake.push({
@@ -88,7 +64,6 @@ const processExposures = (data: ProcessExposuresArgs) => {
     networkName,
     era,
     stakers,
-    totalActiveNominators: nominators.length,
     activeAccountOwnStake,
     task,
     who: activeAccount,

@@ -6,7 +6,6 @@ export interface EraStakersContextInterface {
   activeValidators: number
   activeNominatorsCount: number
   fetchEraStakers: (era: string) => Promise<Exposure[]>
-  getPagedErasStakers: (e: string) => Promise<Exposure[]>
 }
 
 export interface ActiveAccountOwnStake {

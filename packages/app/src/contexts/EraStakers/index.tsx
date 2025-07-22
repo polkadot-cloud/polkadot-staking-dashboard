@@ -11,6 +11,7 @@ import { removeSyncing, setSyncing } from 'global-bus'
 import { fetchEraTotalNominators } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
+import type { ErasStakersOverviewEntries } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
@@ -54,18 +55,12 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
         return
       }
 
-      const { stakers, totalActiveNominators, activeAccountOwnStake, who } =
-        data
+      const { stakers, activeAccountOwnStake, who } = data
 
       // Check if account hasn't changed since worker started
       if (activeAddress === who) {
         // Syncing current eraStakers is now complete
         removeSyncing('era-stakers')
-
-        // Commit active nominator count from worker only if staking API is disabled
-        if (!pluginEnabled('staking_api')) {
-          setActiveNominatorsCount(totalActiveNominators)
-        }
         setStateWithRef(
           {
             ...eraStakersRef.current,
@@ -84,6 +79,18 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady || activeEra.index === 0) {
       return []
     }
+    // Fetch current era overviews
+    const overviews = await serviceApi.query.erasStakersOverviewEntries(
+      activeEra.index
+    )
+    // Commit active nominator count from oveviews if staking API is disabled
+    if (!pluginEnabled('staking_api')) {
+      const totalNominators = overviews.reduce(
+        (prev, [, { nominatorCount }]) => prev + nominatorCount,
+        0
+      )
+      setActiveNominatorsCount(totalNominators)
+    }
 
     let exposures: Exposure[] = []
     const localExposures = getLocalEraExposures(
@@ -91,18 +98,16 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
       era,
       activeEra.index.toString()
     )
-
     if (localExposures) {
       exposures = localExposures
     } else {
-      exposures = await getPagedErasStakers(era)
+      exposures = await getPagedErasStakers(era, overviews)
     }
 
     // For resource limitation concerns, only store the current era in local storage
     if (era === activeEra.index.toString()) {
       setLocalEraExposures(network, era, exposures)
     }
-
     return exposures
   }
 
@@ -129,20 +134,20 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Fetch eras stakers from storage
-  const getPagedErasStakers = async (era: string) => {
-    const overview = await serviceApi.query.erasStakersOverviewEntries(
-      activeEra.index
-    )
+  const getPagedErasStakers = async (
+    era: string,
+    overviews: ErasStakersOverviewEntries
+  ) => {
     const validators: Record<string, { own: bigint; total: bigint }> =
-      overview.reduce(
+      overviews.reduce(
         (prev, [[, validator], { own, total }]) => ({
           ...prev,
           [validator]: { own, total },
         }),
         {}
       )
-    const validatorKeys = Object.keys(validators)
 
+    const validatorKeys = Object.keys(validators)
     const pagedResults = await Promise.all(
       validatorKeys.map((v) =>
         serviceApi.query.erasStakersPagedEntries(Number(era), v)
@@ -211,7 +216,6 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
         activeValidators,
         activeNominatorsCount,
         fetchEraStakers,
-        getPagedErasStakers,
       }}
     >
       {children}
