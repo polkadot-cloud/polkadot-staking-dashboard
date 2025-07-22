@@ -31,6 +31,9 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
   const eraStakersRef = useRef(eraStakers)
 
+  // Store the total active nominators
+  const [activeNominatorsCount, setActiveNominatorsCount] = useState<number>(0)
+
   // Store active validators
   const [activeValidators, setActiveValidators] = useState<number>(0)
 
@@ -56,11 +59,11 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
         // Syncing current eraStakers is now complete
         removeSyncing('era-stakers')
 
+        setActiveNominatorsCount(totalActiveNominators)
         setStateWithRef(
           {
             ...eraStakersRef.current,
             stakers,
-            totalActiveNominators,
             activeAccountOwnStake,
           },
           setEraStakers,
@@ -191,6 +194,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
       value={{
         eraStakers,
         activeValidators,
+        activeNominatorsCount,
         fetchEraStakers,
         getPagedErasStakers,
       }}
