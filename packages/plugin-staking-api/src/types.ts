@@ -214,3 +214,17 @@ export interface RpcEndpointChainHealth {
     endpoints: string[]
   }[]
 }
+
+export type SearchValidatorsResult = Query & {
+  data: SearchValidatorsData
+}
+export interface SearchValidatorsData {
+  total: number
+  validators: {
+    address: string
+    commission: number
+    blocked: boolean
+    display: string
+    superDisplay: string
+  }[]
+}
