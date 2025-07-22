@@ -44,7 +44,7 @@ export const fetchPoolRewardTrend = async (
       variables: { network, who, duration },
     })
     return result.data.poolRewardTrend
-  } catch (error) {
+  } catch {
     return null
   }
 }

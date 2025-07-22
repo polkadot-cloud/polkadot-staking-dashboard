@@ -44,7 +44,7 @@ export const fetchRewards = async (
       variables: { network, who, fromEra },
     })
     return result.data.allRewards
-  } catch (error) {
+  } catch {
     return null
   }
 }

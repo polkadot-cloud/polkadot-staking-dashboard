@@ -40,7 +40,7 @@ export const fetchValidatorStats = async (
       variables: { network },
     })
     return result.data.validatorStats
-  } catch (error) {
+  } catch {
     return {
       averageRewardRate: {
         rate: 0,

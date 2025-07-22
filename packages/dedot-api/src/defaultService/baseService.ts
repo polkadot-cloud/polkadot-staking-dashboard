@@ -171,7 +171,7 @@ export class BaseService<
         this.apiPeople.disconnect(),
         this.apiHub.disconnect(),
       ])
-    } catch (err) {
+    } catch {
       // Silent disconnect error. Move on to network reset and rely on garbage collection
     }
   }

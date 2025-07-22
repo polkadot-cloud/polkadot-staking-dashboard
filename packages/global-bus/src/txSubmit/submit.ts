@@ -25,7 +25,7 @@ export const addSignAndSend = async (
         handleResult(uid, status, onRest)
       }
     )
-  } catch (e) {
+  } catch {
     handleError(String(e), onError)
     deleteTx(uid)
   }
@@ -43,7 +43,7 @@ export const addSend = async (
     subs[uid] = await tx.send(async ({ status }) => {
       handleResult(uid, status, onRest)
     })
-  } catch (e) {
+  } catch {
     handleError(String(e), onError)
     deleteTx(uid)
   }

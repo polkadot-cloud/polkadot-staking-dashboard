@@ -42,7 +42,7 @@ export const fetchPoolRewards = async (
       variables: { network, who, from },
     })
     return result.data.poolRewards
-  } catch (error) {
+  } catch {
     return null
   }
 }
