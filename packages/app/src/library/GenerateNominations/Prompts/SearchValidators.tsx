@@ -21,7 +21,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
   const { t } = useTranslation()
   const { network } = useNetwork()
 
-  // Store the total number of selected favorites
+  // Store the validators selected from search results
   const [selected, setSelected] = useState<Validator[]>([])
 
   // Store the search input value
