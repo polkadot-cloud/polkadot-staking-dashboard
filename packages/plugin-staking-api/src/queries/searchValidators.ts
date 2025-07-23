@@ -3,7 +3,7 @@
 
 import { gql, useQuery } from '@apollo/client'
 import { client } from '../Client'
-import type { SearchValidatorsResult } from '../types'
+import type { SearchValidatorsData, SearchValidatorsResult } from '../types'
 
 const QUERY = gql`
   query SearchValidators($network: String!, $searchTerm: String!) {
@@ -36,7 +36,7 @@ export const useSearchValidators = ({
 export const fetchSearchValidators = async (
   network: string,
   searchTerm: string
-): Promise<SearchValidatorsResult | null> => {
+): Promise<SearchValidatorsData | null> => {
   try {
     const result = await client.query({
       query: QUERY,

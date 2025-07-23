@@ -46,19 +46,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
       try {
         const result = await fetchSearchValidators(network, term)
         if (result) {
-          // Work around type issue - the function actually returns SearchValidatorsData
-          const data = result as unknown as {
-            total: number
-            validators: {
-              address: string
-              commission: number
-              blocked: boolean
-              display: string
-              superDisplay: string
-            }[]
-          }
-
-          const transformedValidators: Validator[] = data.validators.map(
+          const transformedValidators: Validator[] = result.validators.map(
             (validator) => ({
               address: validator.address,
               prefs: {
@@ -85,7 +73,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       debouncedSearch(searchTerm)
-    }, 300) // 300ms debounce delay
+    }, 300)
 
     return () => clearTimeout(timeoutId)
   }, [searchTerm, debouncedSearch])
