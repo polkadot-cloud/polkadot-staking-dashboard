@@ -21,12 +21,6 @@ export interface LedgerHardwareContextInterface {
   handleErrors: (err: unknown) => void
   runtimesInconsistent: boolean
   handleGetAddress: (accountIndex: number, ss58Prefix: number) => Promise<void>
-  handleSignTx: (
-    uid: number,
-    index: number,
-    payload: AnyJson,
-    txMetadata: AnyJson
-  ) => Promise<void>
   handleResetLedgerTask: () => void
 }
 
