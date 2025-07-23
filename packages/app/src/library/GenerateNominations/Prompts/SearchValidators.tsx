@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import type { Validator } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
+import { SearchList } from 'ui-core/modal'
 import type { PromptProps } from '../types'
 
 export const SearchValidators = ({ callback, nominations }: PromptProps) => {
@@ -110,50 +111,16 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
       <Title title={'Search Validators'} />
       <div className="padded">
         <h3 className="subheading">Add validators to your nomination list</h3>
-        {/* Nominations Counter */}
-        <div
-          style={{
-            padding: '0.75rem 0',
-            margin: '1rem 0 0.5rem 0',
-            borderRadius: '0.75rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <span
-            style={{
-              color: 'var(--text-color-secondary)',
-              fontFamily: 'InterSemiBold, sans-serif',
-            }}
-          >
-            Your Nominations: {nominations.length + selected.length} /{' '}
-            {MaxNominations}
-          </span>
-          <span
-            style={{
-              color:
-                remaining > 0
-                  ? 'var(--accent-color-primary)'
-                  : 'var(--status-error-color)',
-            }}
-          >
-            {remaining} Remaining
-          </span>
-        </div>
+        <SearchList.NominationsCounter
+          current={nominations.length + selected.length}
+          total={MaxNominations}
+          remaining={remaining}
+        />
 
         {/* Two Column Layout */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '1rem',
-            height: '50vh',
-            maxHeight: '450px',
-            overflow: 'hidden',
-          }}
-        >
+        <SearchList.Container>
           {/* Left Column - Search and Favorites (2/3 width) */}
-          <div style={{ flex: '2' }}>
+          <SearchList.LeftColumn>
             <SearchInput
               value={searchTerm}
               handleChange={handleSearchChange}
@@ -163,20 +130,13 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
             {/* Search Results Section */}
             {searchTerm.length > 0 && (
               <div>
-                <h5
-                  style={{
-                    margin: '1rem 0 0.5rem 0',
-                    color: 'var(--text-color-secondary)',
-                  }}
-                >
+                <SearchList.SearchHeader>
                   {isSearching
                     ? 'Searching...'
                     : `Search Results (${searchResults.length})`}
-                </h5>
+                </SearchList.SearchHeader>
                 {isSearching ? (
-                  <div style={{ padding: '1rem', textAlign: 'center' }}>
-                    Loading...
-                  </div>
+                  <SearchList.Loading message="Loading..." />
                 ) : searchResults.length > 0 ? (
                   searchResults.map((validator: Validator, i) => {
                     const inInitial = !!nominations.find(
@@ -207,9 +167,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
                     )
                   })
                 ) : (
-                  <div style={{ padding: '1rem', textAlign: 'center' }}>
-                    No validators found
-                  </div>
+                  <SearchList.NoResults />
                 )}
               </div>
             )}
@@ -217,14 +175,9 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
             {/* Favorites Section */}
             {favoritesList && favoritesList.length > 0 && (
               <div>
-                <h5
-                  style={{
-                    margin: '1rem 0 0.5rem 0',
-                    color: 'var(--text-color-secondary)',
-                  }}
-                >
+                <SearchList.SearchHeader>
                   Your Favorites ({favoritesList.length})
-                </h5>
+                </SearchList.SearchHeader>
 
                 {favoritesList?.map((favorite: Validator, i) => {
                   const inInitial = !!nominations.find(
@@ -256,35 +209,16 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
                 })}
               </div>
             )}
-          </div>
+          </SearchList.LeftColumn>
 
           {/* Right Column - Selected Validators (1/3 width) */}
-          <div
-            style={{
-              flex: '1',
-              borderLeft: '1px solid var(--border-primary-color)',
-              paddingLeft: '1rem',
-            }}
-          >
-            <h5
-              style={{
-                margin: '0 0 0.5rem 0',
-                color: 'var(--text-color-secondary)',
-              }}
-            >
+          <SearchList.RightColumn>
+            <SearchList.Header>
               Selected Validators ({selected.length})
-            </h5>
+            </SearchList.Header>
 
             {selected.length > 0 ? (
-              <div
-                style={{
-                  maxHeight: '350px',
-                  overflowY: 'auto',
-                  border: '1px solid var(--border-secondary-color)',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem',
-                }}
-              >
+              <SearchList.SelectedList>
                 {selected.map((validator: Validator, i) => (
                   <PromptListItem key={`selected_${i}`}>
                     <Checkbox
@@ -296,44 +230,21 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
                     <Identity address={validator.address} />
                   </PromptListItem>
                 ))}
-              </div>
+              </SearchList.SelectedList>
             ) : (
-              <div
-                style={{
-                  padding: '2rem 1rem',
-                  textAlign: 'center',
-                  color: 'var(--text-color-secondary)',
-                  border: '1px dashed var(--border-secondary-color)',
-                  borderRadius: '0.5rem',
-                }}
-              >
-                No validators selected
-                <br />
-                <small>Search or select from favorites to add validators</small>
-              </div>
+              <SearchList.EmptyState
+                message="No validators selected"
+                submessage="Search or select from favorites to add validators"
+              />
             )}
 
             {selected.length > 0 && (
-              <div style={{ marginTop: '0.5rem' }}>
-                <button
-                  onClick={() => setSelected([])}
-                  style={{
-                    width: '100%',
-                    padding: '0.5rem',
-                    background: 'transparent',
-                    border: '1px solid var(--status-error-color)',
-                    borderRadius: '0.25rem',
-                    color: 'var(--status-error-color)',
-                    cursor: 'pointer',
-                    fontSize: '0.875rem',
-                  }}
-                >
-                  Clear All Selected
-                </button>
-              </div>
+              <SearchList.ClearButton onClick={() => setSelected([])}>
+                Clear All Selected
+              </SearchList.ClearButton>
             )}
-          </div>
-        </div>
+          </SearchList.RightColumn>
+        </SearchList.Container>
 
         <FooterWrapper>
           <ButtonPrimary
