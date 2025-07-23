@@ -13,15 +13,13 @@ export const ActiveNominators = () => {
   const {
     stakingMetrics: { counterForNominators },
   } = useApi()
-  const {
-    eraStakers: { totalActiveNominators },
-  } = useEraStakers()
+  const { activeNominatorsCount } = useEraStakers()
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0
   if (counterForNominators > 0) {
     totalNominatorsAsPercent = percentageOf(
-      totalActiveNominators,
+      activeNominatorsCount,
       counterForNominators
     )
   }
@@ -29,7 +27,7 @@ export const ActiveNominators = () => {
   const params = {
     label: t('activeNominators'),
     stat: {
-      value: totalActiveNominators,
+      value: activeNominatorsCount,
       total: counterForNominators,
       unit: '',
     },

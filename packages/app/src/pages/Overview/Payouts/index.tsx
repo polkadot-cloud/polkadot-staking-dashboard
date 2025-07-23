@@ -32,12 +32,12 @@ export const Payouts = () => {
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
   const { currency } = useCurrency()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { pluginEnabled } = usePlugins()
 
   const { units } = getStakingChainData(network)
   const Token = getChainIcons(network).token
-  const staking = isNominator || inPool
+  const staking = isBonding || inPool
   const notStaking = !syncing && !staking
 
   const [lastReward, setLastReward] = useState<RewardResult>()
@@ -112,7 +112,7 @@ export const Payouts = () => {
         >
           {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
-              nominating={isNominator}
+              nominating={isBonding}
               inPool={inPool}
               lineMarginTop="3rem"
               setLastReward={setLastReward}

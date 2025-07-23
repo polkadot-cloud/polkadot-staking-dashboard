@@ -32,7 +32,7 @@ export const fetchPoolCandidates = async (
     })
 
     return result.data
-  } catch (error) {
+  } catch {
     return {
       poolCandidates: [],
     }

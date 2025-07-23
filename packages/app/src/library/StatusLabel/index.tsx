@@ -24,11 +24,11 @@ export const StatusLabel = ({
   const { syncing } = useSyncing()
   const { plugins } = usePlugins()
   const { inPool } = useActivePool()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
 
   // syncing or not staking
   if (status === 'sync_or_setup') {
-    if (syncing || isNominator || inPool) {
+    if (syncing || isBonding || inPool) {
       return null
     }
   }

@@ -67,7 +67,7 @@ export const ActiveGraph = ({
 
   useEffect(() => {
     setLastReward(allRewards[0])
-  }, [JSON.stringify(allRewards[0])])
+  }, [allRewards.length, allRewards[0]?.timestamp, allRewards[0]?.reward])
 
   return (
     <>

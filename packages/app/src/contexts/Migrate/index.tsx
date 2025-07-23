@@ -43,6 +43,11 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version
       if (localAppVersion !== version) {
+        // Added in 2.0.0-beta.1
+        localStorage.removeItem('polkadotRpcEndpoints')
+        localStorage.removeItem('kusamaRpcEndpoints')
+        localStorage.removeItem('westendRpcEndpoints')
+
         // Added in 1.9.2
         localStorage.removeItem('pool_setups')
         localStorage.removeItem('nominator_setups')
