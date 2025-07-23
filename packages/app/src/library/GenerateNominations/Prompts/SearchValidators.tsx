@@ -8,6 +8,7 @@ import { SearchInput } from 'library/List/SearchInput'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { Title } from 'library/Prompt/Title'
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers'
+import { StyledSlider } from 'library/StyledSlider'
 import { fetchSearchValidators } from 'plugin-staking-api'
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,6 +33,9 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 
   // Store loading state for search
   const [isSearching, setIsSearching] = useState<boolean>(false)
+
+  // Store commission filter value (default 10%)
+  const [maxCommission, setMaxCommission] = useState<number>(10)
 
   // Debounced search function
   const debouncedSearch = useCallback(
@@ -92,6 +96,11 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
     setSearchTerm(value)
   }
 
+  // Filter search results by commission
+  const filteredSearchResults = searchResults.filter(
+    (validator) => (validator.prefs?.commission || 0) <= maxCommission
+  )
+
   return (
     <>
       <Title title={t('validatorSearch.searchValidators', { ns: 'app' })} />
@@ -115,20 +124,43 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
               placeholder={`${t('validatorSearch.searchValidators', { ns: 'app' })}...`}
             />
 
+            {/* Commission Filter */}
+            <div style={{ margin: '1rem 0' }}>
+              <h5
+                style={{
+                  marginBottom: '0.5rem',
+                  color: 'var(--text-color-secondary)',
+                }}
+              >
+                {t('maxCommission', { ns: 'modals' })}: {maxCommission}%
+              </h5>
+              <StyledSlider
+                value={maxCommission}
+                min={0}
+                max={100}
+                step={0.1}
+                onChange={(val) => {
+                  if (typeof val === 'number') {
+                    setMaxCommission(val)
+                  }
+                }}
+              />
+            </div>
+
             {/* Search Results Section */}
             {searchTerm.length > 0 && (
               <div>
                 <SearchList.SearchHeader>
                   {isSearching
                     ? `${t('validatorSearch.searching', { ns: 'app' })}...`
-                    : `${t('validatorSearch.searchResults', { ns: 'app' })} (${searchResults.length})`}
+                    : `${t('validatorSearch.searchResults', { ns: 'app' })} (${filteredSearchResults.length})`}
                 </SearchList.SearchHeader>
                 {isSearching ? (
                   <SearchList.Loading
                     message={`${t('validatorSearch.searching', { ns: 'app' })}...`}
                   />
-                ) : searchResults.length > 0 ? (
-                  searchResults.map((validator: Validator, i) => {
+                ) : filteredSearchResults.length > 0 ? (
+                  filteredSearchResults.map((validator: Validator, i) => {
                     const inInitial = !!nominations.find(
                       ({ address }) => address === validator.address
                     )

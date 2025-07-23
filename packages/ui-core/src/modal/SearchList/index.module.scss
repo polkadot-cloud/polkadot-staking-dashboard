@@ -55,6 +55,7 @@
 }
 
 .loadingWrapper {
+  color: var(--text-color-secondary);
   padding: 1rem;
   text-align: center;
 }
@@ -91,7 +92,7 @@
 
 .clearButton {
   border: 1px solid var(--status-error-color);
-  color: var(--status-error-color);
+  color: var(--text-color-primary);
   margin-top: 0.5rem;
   width: 100%;
   padding: 0.5rem;
@@ -126,6 +127,6 @@
   }
 
   &.noRemaining {
-    color: var(--status-error-color);
+    color: var(--text-color-secondary);
   }
 }
