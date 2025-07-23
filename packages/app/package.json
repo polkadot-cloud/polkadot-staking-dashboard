@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
@@ -34,7 +34,7 @@
     "@walletconnect/utils": "^2.20.3",
     "@zondax/ledger-substrate": "^1.1.2",
     "assets": "workspace:*",
-    "bignumber.js": "^9.3.0",
+    "bignumber.js": "^9.3.1",
     "buffer": "^6.0.3",
     "classnames": "^2.5.1",
     "compare-versions": "^6.1.1",
@@ -66,7 +66,7 @@
     "ui-overlay": "workspace:*",
     "usehooks-ts": "^3.0.2",
     "utils": "workspace:*",
-    "viem": "^2.31.3",
+    "viem": "^2.33.0",
     "wagmi": "^2.15.4",
     "xxhash-wasm": "^1.0.2"
   },

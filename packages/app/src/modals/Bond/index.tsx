@@ -8,6 +8,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
@@ -31,6 +32,7 @@ export const Bond = () => {
   } = useOverlay().modal
   const { serviceApi } = useApi()
   const { network } = useNetwork()
+  const { isBonding } = useStaking()
   const { activeAddress } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { balances } = useAccountBalances(activeAddress)
@@ -162,6 +164,7 @@ export const Bond = () => {
           setters={[handleSetBond]}
           parentErrors={warnings}
           txFees={BigInt(largestTxFee.toString())}
+          bonding={isBonding}
         />
         <p>{t('newlyBondedFunds')}</p>
       </Padding>

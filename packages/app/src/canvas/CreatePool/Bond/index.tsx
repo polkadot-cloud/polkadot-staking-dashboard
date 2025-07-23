@@ -80,7 +80,7 @@ export const Bond = ({ section }: SetupStepProps) => {
         <BondFeedback
           syncing={fee === 0n}
           bondFor="pool"
-          inSetup
+          bonding={false}
           listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
           setters={[handleSetBond]}

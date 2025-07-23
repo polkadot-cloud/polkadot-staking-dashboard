@@ -65,7 +65,7 @@ export const getLocalRpcHealthCache = (
     // Cache is expired, remove it
     localStorage.removeItem(rpcHealthCacheKey(network))
     return null
-  } catch (error) {
+  } catch {
     // Invalid cache data, remove it
     localStorage.removeItem(rpcHealthCacheKey(network))
     return null

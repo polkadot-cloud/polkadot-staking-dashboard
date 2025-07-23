@@ -17,11 +17,11 @@ import type { QuickActionGroup } from './types'
 export const QuickActions = ({ height }: { height: number }) => {
   const { t } = useTranslation('pages')
   const { inPool } = useActivePool()
-  const { isNominator } = useStaking()
+  const { isBonding } = useStaking()
   const { accountSynced } = useSyncing()
   const { activeAddress } = useActiveAccounts()
 
-  const isStaking = inPool || isNominator
+  const isStaking = inPool || isBonding
   const syncing = !accountSynced(activeAddress)
 
   let actionGroup: QuickActionGroup = 'staking'
