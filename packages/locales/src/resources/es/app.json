@@ -350,9 +350,9 @@
     "validatorSearch": {
       "addToList": "Agregar validadores a tu lista de nominaciones",
       "clearAllSelected": "Limpiar todos los seleccionados",
+      "searchResults": "Resultados de la Búsqueda",
       "searchValidators": "Buscar Validadores",
-      "searching": "Buscando...",
-      "searchResults": "Resultados de la Búsqueda"
+      "searching": "Buscando..."
     },
     "validators": "Validadores",
     "valueTooSmall": "El valor es demasiado pequeño",

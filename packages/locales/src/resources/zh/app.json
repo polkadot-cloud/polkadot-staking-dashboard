@@ -337,12 +337,12 @@
     "validAddress": "有效地址",
     "validatorCommission": "验证人佣金",
     "validatorPerformance": "{{count}}天内验证人表现",
-    "validatorSearch": { 
+    "validatorSearch": {
       "addToList": "将验证人添加到您的提名列表",
       "clearAllSelected": "清除所有选定项",
+      "searchResults": "搜索结果",
       "searchValidators": "搜索验证人",
-      "searching": "搜索中...",
-      "searchResults": "搜索结果"
+      "searching": "搜索中..."
     },
     "validators": "验证人",
     "valueTooSmall": "值太小",
