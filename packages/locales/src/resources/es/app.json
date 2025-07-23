@@ -205,7 +205,7 @@
     "noFree": "No tienes {{unit}} libre para vincular",
     "noMatch": "Ningún pool coincide con este criterio.",
     "noPayoutAddress": "Sin dirección de pago.",
-    "noValidators": "Sin validadores.",
+    "noValidators": "Sin validadores",
     "noValidatorsMatch": "Ningún validador coincide con este criterio.",
     "nominate": "Nominar",
     "nominateActive": "Activo",
@@ -347,6 +347,13 @@
     "validAddress": "Dirección Válida",
     "validatorCommission": "Comisión del validador",
     "validatorPerformance": "{{count}} Días de Rendimiento del Validador",
+    "validatorSearch": {
+      "addToList": "Agregar validadores a tu lista de nominaciones",
+      "clearAllSelected": "Limpiar todos los seleccionados",
+      "searchValidators": "Buscar Validadores",
+      "searching": "Buscando...",
+      "searchResults": "Resultados de la Búsqueda"
+    },
     "validators": "Validadores",
     "valueTooSmall": "El valor es demasiado pequeño",
     "viewInvite": "Ver Invitación",

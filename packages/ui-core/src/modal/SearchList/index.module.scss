@@ -11,6 +11,8 @@
 
 .leftColumn {
   flex: 2;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .rightColumn {
@@ -73,7 +75,7 @@
 
   &:hover {
     background: var(--status-error-color);
-    color: var(--background-primary);
+    color: var(--text-color-secondary);
   }
 }
 

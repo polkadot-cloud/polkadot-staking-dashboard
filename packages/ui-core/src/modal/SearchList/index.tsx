@@ -65,18 +65,11 @@ const SelectedList = ({
 
 const EmptyState = ({
   message,
-  submessage,
   className,
   style,
 }: SearchListEmptyStateProps) => (
   <div className={classNames(classes.emptyState, className)} style={style}>
     {message}
-    {submessage && (
-      <>
-        <br />
-        <small>{submessage}</small>
-      </>
-    )}
   </div>
 )
 

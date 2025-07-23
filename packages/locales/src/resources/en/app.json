@@ -205,7 +205,7 @@
     "noFree": "You have no free {{unit}} to bond.",
     "noMatch": "No pools match this criteria.",
     "noPayoutAddress": "No Payout Address",
-    "noValidators": "No validators.",
+    "noValidators": "No validators",
     "noValidatorsMatch": "No validators match this criteria.",
     "nominate": "Nominate",
     "nominateActive": "Active",
@@ -347,6 +347,13 @@
     "validAddress": "Valid address",
     "validatorCommission": "Validator Commission",
     "validatorPerformance": "{{count}} Day Validator Performance",
+    "validatorSearch": {
+      "addToList": "Add validators to your nomination list",
+      "clearAllSelected": "Clear all selected",
+      "searchValidators": "Search Validators",
+      "searching": "Searching",
+      "searchResults": "Search Results"
+    },
     "validators": "Validators",
     "valueTooSmall": "Value is too small",
     "viewInvite": "View Invite",

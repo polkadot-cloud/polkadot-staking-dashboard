@@ -3,7 +3,6 @@
 
 import { MaxNominations } from 'consts'
 import { useNetwork } from 'contexts/Network'
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { emitNotification } from 'global-bus'
 import { SearchInput } from 'library/List/SearchInput'
 import { Identity } from 'library/ListItem/Labels/Identity'
@@ -19,9 +18,8 @@ import { SearchList } from 'ui-core/modal'
 import type { PromptProps } from '../types'
 
 export const SearchValidators = ({ callback, nominations }: PromptProps) => {
-  const { t } = useTranslation('modals')
+  const { t } = useTranslation()
   const { network } = useNetwork()
-  const { favoritesList } = useFavoriteValidators()
 
   // Store the total number of selected favorites
   const [selected, setSelected] = useState<Validator[]>([])
@@ -108,9 +106,11 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 
   return (
     <>
-      <Title title={'Search Validators'} />
+      <Title title={t('validatorSearch.searchValidators', { ns: 'app' })} />
       <div className="padded">
-        <h3 className="subheading">Add validators to your nomination list</h3>
+        <h3 className="subheading">
+          {t('validatorSearch.addToList', { ns: 'app' })}
+        </h3>
         <SearchList.NominationsCounter
           current={nominations.length + selected.length}
           total={MaxNominations}
@@ -124,7 +124,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
             <SearchInput
               value={searchTerm}
               handleChange={handleSearchChange}
-              placeholder="Search validators..."
+              placeholder={`${t('validatorSearch.searchValidators', { ns: 'app' })}...`}
             />
 
             {/* Search Results Section */}
@@ -132,11 +132,13 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
               <div>
                 <SearchList.SearchHeader>
                   {isSearching
-                    ? 'Searching...'
-                    : `Search Results (${searchResults.length})`}
+                    ? `${t('validatorSearch.searching', { ns: 'app' })}...`
+                    : `${t('validatorSearch.searchResults', { ns: 'app' })} (${searchResults.length})`}
                 </SearchList.SearchHeader>
                 {isSearching ? (
-                  <SearchList.Loading message="Loading..." />
+                  <SearchList.Loading
+                    message={`${t('validatorSearch.searching', { ns: 'app' })}...`}
+                  />
                 ) : searchResults.length > 0 ? (
                   searchResults.map((validator: Validator, i) => {
                     const inInitial = !!nominations.find(
@@ -171,44 +173,6 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
                 )}
               </div>
             )}
-
-            {/* Favorites Section */}
-            {favoritesList && favoritesList.length > 0 && (
-              <div>
-                <SearchList.SearchHeader>
-                  Your Favorites ({favoritesList.length})
-                </SearchList.SearchHeader>
-
-                {favoritesList?.map((favorite: Validator, i) => {
-                  const inInitial = !!nominations.find(
-                    ({ address }) => address === favorite.address
-                  )
-                  const disabled = !canAdd || inInitial
-
-                  return (
-                    <PromptListItem
-                      key={`favorite_${i}`}
-                      className={disabled && inInitial ? 'inactive' : undefined}
-                    >
-                      <Checkbox
-                        checked={inInitial || selected.includes(favorite)}
-                        onClick={() => {
-                          if (selected.includes(favorite)) {
-                            removeFromSelected([favorite])
-                          } else {
-                            addToSelected(favorite)
-                          }
-                        }}
-                      />
-                      <Identity
-                        key={`favorite_${i}`}
-                        address={favorite.address}
-                      />
-                    </PromptListItem>
-                  )
-                })}
-              </div>
-            )}
           </SearchList.LeftColumn>
 
           {/* Right Column - Selected Validators (1/3 width) */}
@@ -233,14 +197,13 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
               </SearchList.SelectedList>
             ) : (
               <SearchList.EmptyState
-                message="No validators selected"
-                submessage="Search or select from favorites to add validators"
+                message={t('noValidators', { ns: 'app' })}
               />
             )}
 
             {selected.length > 0 && (
               <SearchList.ClearButton onClick={() => setSelected([])}>
-                Clear All Selected
+                {t('validatorSearch.clearAllSelected', { ns: 'app' })}
               </SearchList.ClearButton>
             )}
           </SearchList.RightColumn>
@@ -248,12 +211,16 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 
         <FooterWrapper>
           <ButtonPrimary
-            text={t('addToNominations')}
+            text={t('addToNominations', { ns: 'modals' })}
             onClick={() => {
               callback(nominations.concat(selected))
               emitNotification({
-                title: t('favoritesAddedTitle', { count: selected.length }),
+                title: t('favoritesAddedTitle', {
+                  ns: 'modals',
+                  count: selected.length,
+                }),
                 subtitle: t('favoritesAddedSubtitle', {
+                  ns: 'modals',
                   count: selected.length,
                 }),
               })

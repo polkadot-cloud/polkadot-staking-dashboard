@@ -15,7 +15,6 @@ export type SearchListSelectedListProps = ComponentBaseWithClassName
 
 export interface SearchListEmptyStateProps extends ComponentBaseWithClassName {
   message: string
-  submessage?: string
 }
 
 export interface SearchListLoadingProps extends ComponentBaseWithClassName {
