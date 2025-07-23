@@ -164,7 +164,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         if (isActive && !activeProxy) {
           setActiveProxy(network, { address, source, proxyType })
         }
-      } catch (err) {
+      } catch {
         removeLocalActiveProxy(network)
       }
     }

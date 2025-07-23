@@ -36,7 +36,7 @@ export const fetchRpcEndpointHealth = async (
       variables: { network },
     })
     return result.data.rpcEndpointHealth
-  } catch (error) {
+  } catch {
     return {
       chains: [],
     }

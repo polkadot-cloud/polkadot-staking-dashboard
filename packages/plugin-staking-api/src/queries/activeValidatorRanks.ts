@@ -34,7 +34,7 @@ export const fetchActiveValidatorRanks = async (
       variables: { network },
     })
     return result.data
-  } catch (error) {
+  } catch {
     return {
       activeValidatorRanks: [],
     }
