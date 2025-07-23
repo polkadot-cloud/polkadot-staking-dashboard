@@ -132,7 +132,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
                   color: 'var(--text-color-secondary)',
                 }}
               >
-                {t('maxCommissionFilter', { ns: 'modals' })}: {maxCommission}%
+                {t('maxCommission', { ns: 'modals' })}: {maxCommission}%
               </h5>
               <StyledSlider
                 value={maxCommission}

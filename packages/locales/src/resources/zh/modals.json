@@ -164,7 +164,6 @@
     "managePool": "管理池",
     "manageUnlocks": "管理解锁",
     "maxCommission": "最高佣金值",
-    "maxCommissionFilter": "最高佣金",
     "maximumCommissionUpdated": "最高佣金值最新值",
     "methodNotSupported": "调用方法不受支持,无法签署交易",
     "minDelayBetweenUpdates": "更新之间的最小延迟",
