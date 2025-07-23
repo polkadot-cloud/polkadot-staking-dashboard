@@ -8,6 +8,7 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
+import { useAccountSwitchNavigation } from 'hooks/useAccountSwitchNavigation'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
 import { Help } from 'library/Help'
@@ -60,6 +61,9 @@ const RouterInner = () => {
 
   // Support active account from url
   useAccountFromUrl()
+
+  // Handle automatic navigation on account switch based on staking status
+  useAccountSwitchNavigation()
 
   // Jump back to overview page on advanced mode change
   useEffectIgnoreInitial(() => {
