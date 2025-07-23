@@ -1,0 +1,445 @@
+{
+  "help": {
+    "definitions": {
+      "activeNominators": [
+        "Aktive Nominatoren",
+        ["Nominatoren, die in der aktuellen Sitzung aktiv sind."]
+      ],
+      "activePools": [
+        "Aktive Pools",
+        ["Die aktuelle Anzahl aktiver Nominierungspools auf {NETWORK_NAME}."]
+      ],
+      "activeStakeThreshold": [
+        "Aktiver Stake-Schwellenwert",
+        [
+          "Die Menge an {NETWORK_UNIT}, die benötigt wird, um in einer Era aktiv zu nominieren.",
+          "Dieser Wert gilt sowohl für Nominatoren als auch für Pools. Im Fall von Pools ist es wichtig, einem Pool beizutreten, dessen Gesamtbond mindestens diesem Wert entspricht.",
+          "Wenn Sie über diesem Wert liegen, garantieren Sie lediglich, dass Sie im aktiven Nominatorensatz für die Era enthalten sein werden.",
+          "Sie können diese Metriken im Dashboard verfolgen und Ihre Staking-Position bei Bedarf anpassen, sei es durch Erhöhung Ihres gebundenen {NETWORK_UNIT}, Änderung Ihrer Nominierungen oder Beitritt zu einem anderen Pool."
+        ]
+      ],
+      "activeValidator": [
+        "Aktiver Validator",
+        [
+          "Ein Validator, der aktiv Blöcke validiert. Belohnungen werden basierend auf der Aktivität des Validators angesammelt.",
+          "Für jede Era wird ein neuer Satz von Validatoren ausgewählt, daher gibt es keine Garantie, dass derselbe Validator in folgenden Eren aktiv sein wird.",
+          "{NETWORK_NAME} erlaubt einem Nominator, bis zu 16 Validatoren zu nominieren, was Ihre Chancen maximiert, in jeder Era einen aktiven Validator zu nominieren."
+        ]
+      ],
+      "averageCommission": [
+        "Durchschnittliche Provision",
+        [
+          "Die durchschnittliche Validator-Provision auf {NETWORK_NAME}.",
+          "Diese Metrik schließt Validatoren mit 100% Provision aus, da diese Knoten normalerweise Nominierungen blockieren und für Staking auf zentralen Börsenplattformen betrieben werden."
+        ]
+      ],
+      "averageRewardRate": [
+        "Durchschnittliche Belohnungsrate",
+        [
+          "Die durchschnittliche Belohnungsrate ist eine geschätzte jährliche Rendite der Staking-Belohnungen.",
+          "Sie wird berechnet, indem die durchschnittliche Validator-Auszahlung der letzten {AVERAGE_REWARD_RATE_DAYS} Tage genommen und eine geschätzte jährliche Steigerung basierend auf diesem Durchschnitt und der aktuellen Gesamtemission von {NETWORK_UNIT} berechnet wird."
+        ]
+      ],
+      "blockedNominations": [
+        "Gesperrte Nominierungen",
+        [
+          "Wenn ein Validator Nominierungen blockiert hat, können Nominatoren ihn nicht nominieren."
+        ]
+      ],
+      "bondedInPool": [
+        "Im Pool gebunden",
+        [
+          "Die Menge an {NETWORK_UNIT}, die aktuell in einem Pool gebunden ist.",
+          "Im Gegensatz zur direkten Nominierung, bei der Ihre gebundenen Mittel auf Ihrem Konto verbleiben aber gesperrt werden, werden die {NETWORK_UNIT}, die Sie an einen Pool binden, auf das Stash-Konto des Pools übertragen. Dennoch haben Pool-Mitglieder jederzeit Zugriff auf das Entbinden ihrer Mittel."
+        ]
+      ],
+      "bonding": [
+        "Bonding",
+        [
+          "Das Binden von Mitteln ist der Prozess des 'Sperrens' (oder Staking) von {NETWORK_UNIT}. Gebundene {NETWORK_UNIT} werden dann automatisch einem oder mehreren Ihrer nominierten Validatoren zugewiesen.",
+          "Als Nominator weisen Sie Nominierungen selbst zu. In einem Pool weist der Pool-Besitzer oder Pool-Nominator Nominierungen in Ihrem Namen zu, und Ihre gebundenen Mittel unterstützen diese Nominierungen.",
+          "Das Minimum, um Belohnungen zu erhalten, ist die minimale Menge an {NETWORK_UNIT}, die von einem Nominator für die aktuelle Era gebunden wird. Dieser Wert ist auch die Mindestmenge, die benötigt wird, um Belohnungen zu erhalten."
+        ]
+      ],
+      "commission": [
+        "Provision",
+        [
+          "Validatoren können einen Prozentsatz der Belohnungen, die sie verdienen, einbehalten. Dieser Anteil wird ihre Provision genannt.",
+          "Das Nominieren von Validatoren mit niedrigen Provisionen bedeutet, dass Sie einen größeren Anteil der von ihnen generierten Belohnungen erhalten.",
+          "Viele Validatoren haben eine Provision von 100%, was bedeutet, dass Sie durch das Nominieren dieser Validatoren keine Belohnungen erhalten.",
+          "Beispiele für solche Validatoren sind solche, die im Namen von Börsen betrieben werden, wo Nominierungen und Belohnungsverteilung zentral auf der jeweiligen Börse durchgeführt werden.",
+          "Ein Validator kann seine Provisionssätze nach Belieben aktualisieren, und solche Änderungen werden sich auf Ihre Rentabilität auswirken. Überwachen Sie Ihre Nominierungen auf diesem Dashboard, um über ihre Provisionssätze auf dem Laufenden zu bleiben."
+        ]
+      ],
+      "decentralizationAnalyticsPeriod": [
+        "Dezentralisierungsanalysezeitraum",
+        [
+          "Die Dezentralisierung Ihrer Nominierung wird berechnet, indem die in den letzten 30 Tagen ausgezahlten Belohnungen analysiert werden. Abhängig vom Netzwerk entspricht dies einer Anzahl von Eren.",
+          "30 Tage liefern genügend Informationen, damit die Aggregation aussagekräftig ist, und sind gleichzeitig kurz genug, damit Änderungen in den Nominierungen nach einigen Tagen beginnen, diese Analyse zu beeinflussen."
+        ]
+      ],
+      "epoch": [
+        "Epoche",
+        [
+          "Eine Epoche ist ein anderer Name für eine Sitzung in {NETWORK_NAME}. Jede Era ist in 6 Epochen unterteilt, während derer Validatoren als Blockproduzenten bestimmten Zeitfenstern oder Slots zugewiesen werden.",
+          "1 Epoche dauert derzeit 4 Stunden in Polkadot."
+        ]
+      ],
+      "era": [
+        "Era",
+        [
+          "Am Ende jeder Era erhalten Validatoren {NETWORK_UNIT}-Belohnungen basierend darauf, wie viele Era-Punkte sie in dieser Era angesammelt haben. Diese {NETWORK_UNIT}-Belohnung wird dann über eine Auszahlung an die Nominatoren des Validators verteilt.",
+          "1 Era dauert derzeit 24 Stunden in Polkadot."
+        ]
+      ],
+      "eraPoints": [
+        "Era-Punkte",
+        [
+          "Era-Punkte sind ein Maß dafür, wie gut ein Validator in der aktuellen Era performt hat. Je mehr Era-Punkte ein Validator hat, desto mehr Belohnungen erhält er am Ende der Era."
+        ]
+      ],
+      "geolocationOfEachNomination": [
+        "Geolokalisierung jeder Nominierung",
+        [
+          "Jeder nominierte Validator läuft in einem bestimmten Rechenzentrum, das über seine IP-Adresse geolokalisiert werden kann.",
+          "Die Tabelle zeigt die letzte Region, das Land und das Netzwerk, in dem jeder nominierte Validator geolokalisiert wurde.",
+          "Wenn der Validator während des Analysezeitraums an mehr als einem Standort lokalisiert wurde, wird ein ++-Zeichen angezeigt.",
+          "Der angezeigte Prozentsatz ist der Anteil der Belohnungen, die Ihnen in diesem Analysezeitraum von diesem Validator ausgezahlt wurden."
+        ]
+      ],
+      "idealStaked": [
+        "Idealer Stake",
+        [
+          "Der Prozentsatz des gestakten Gesamtangebots unter idealen Netzwerkbedingungen."
+        ]
+      ],
+      "inactiveNominations": [
+        "Inaktive Nominierungen",
+        [
+          "Nominierungen, die im aktiven Validatorensatz für die aktuelle Era sind, aber denen keine gebundenen Mittel zugewiesen wurden."
+        ]
+      ],
+      "inflation": [
+        "Inflation",
+        [
+          "{NETWORK_UNIT} ist inflationär; es gibt keine maximale Anzahl von {NETWORK_UNIT}.",
+          "Die Inflation ist so konzipiert, dass sie jährlich etwa 10% beträgt, wobei Validator-Belohnungen eine Funktion der gestakten Menge sind und der Rest an das Treasury geht.",
+          "Die Zahl 'Letzte Inflationsrate für Staker' repräsentiert, wie viel der Inflation an Staker geht. Die restliche Inflation wird an das Treasury weitergeleitet."
+        ]
+      ],
+      "lastEraPayout": [
+        "Letzte Era-Auszahlung",
+        [
+          "Die Gesamtmenge an {NETWORK_UNIT}, die für die letzte aktive Era ausgezahlt wurde.",
+          "Auszahlungen werden gleichmäßig unter den aktiven Validatoren für diese Era verteilt und dann weiter an die aktiven Nominatoren, die in dieser Era teilgenommen haben.",
+          "Die erhaltenen Auszahlungsbeträge hängen davon ab, wie viel {NETWORK_UNIT} die Nominatoren und die Validatoren selbst für diese Era gebunden hatten."
+        ]
+      ],
+      "ledgerAppNotOnLatestRuntimeVersion": [
+        "Ledger App nicht auf neuester Runtime-Version",
+        [
+          "Diese Meldung erscheint, wenn Ihre Ledger-App nicht auf die neueste Runtime-Metadaten konfiguriert ist. Sie können dennoch versuchen, Ihre Transaktion zu senden, aber sie könnte fehlschlagen.",
+          "Um diese Warnung zu vermeiden, aktualisieren Sie Ihr Ledger-Gerät auf die neueste Version.",
+          "Es gibt normalerweise eine Verzögerung zwischen der Bereitstellung von Runtime-Upgrades und Ledger-App-Updates. Wenn ein App-Update verfügbar ist, können Sie Ihre App in Ledger Live aktualisieren."
+        ]
+      ],
+      "ledgerHardwareWallets": [
+        "Ledger Hardware Wallets",
+        [
+          "Kompatible Ledger-Geräte werden auf dem Staking-Dashboard vollständig unterstützt. Verwenden Sie Ihr Ledger, um Ihre Staking-Aktivitäten auf {NETWORK_NAME} zu verwalten.",
+          "Die Verwendung einer Hardware-Wallet gewährleistet eine sichere Erfahrung, bei der Ihre Schlüssel jederzeit auf dem Hardware-Gerät bleiben. Dies wird auch als Cold Storage bezeichnet, da keine aktive Internetverbindung zu Ihrer Wallet besteht.",
+          "Um Transaktionen mit Ihrem Ledger-Gerät zu importieren und zu signieren, muss auf Ihrem Gerät die {NETWORK_NAME}-Ledger-App installiert sein. Die {NETWORK_NAME}-App kann über Ledgers eigene Ledger-Live-Anwendung installiert werden.",
+          "Weitere Informationen zu Ledger finden Sie auf deren offizieller Website ledger.com."
+        ]
+      ],
+      "ledgerRejectedTransaction": [
+        "Ledger hat Transaktion abgelehnt",
+        [
+          "Die Transaktion wurde auf dem Ledger-Gerät abgelehnt und wird nicht gesendet.",
+          "Senden Sie eine Transaktion, indem Sie sie auf dem Ledger-Gerät bestätigen."
+        ]
+      ],
+      "ledgerRequestTimeout": [
+        "Ledger-Anfragezeitüberschreitung",
+        [
+          "Timeout-Fehler können auftreten, wenn das Ledger-Gerät beschäftigt ist oder wenn ein Vorgang nicht rechtzeitig abgeschlossen werden kann.",
+          "Versuchen Sie, den Vorgang erneut durchzuführen, und wenn der Fehler bestehen bleibt, versuchen Sie, das Ledger-Gerät neu zu starten."
+        ]
+      ],
+      "lockedBalance": [
+        "Gesperrtes Guthaben",
+        [
+          "In {NETWORK_NAME} erfordern einige Aktionen, dass Ihr Guthaben gesperrt wird, wie z.B. Staking oder Governance-Abstimmungen. Wenn ein Teil Ihres Guthabens gesperrt ist, kann es nicht übertragen werden.",
+          "Die auf dem Staking-Dashboard angezeigte Menge an gesperrtem Guthaben repräsentiert alle Ihre Sperren außer der Staking-Sperre - daher werden alle gesperrten Guthaben angezeigt, die Ihnen zur Nominierung zur Verfügung stehen.",
+          "Sie können mit jedem verbleibenden gesperrten Guthaben nominieren, aber Sie können keinem Pool beitreten, da dies eine Übertragung auf das Pool-Konto erfordert."
+        ]
+      ],
+      "minimumToCreatePool": [
+        "Minimum zum Pool-Erstellen",
+        [
+          "Die Mindestmenge an {NETWORK_UNIT}, die gebunden werden muss, um einen Pool zu erstellen.",
+          "Das Erstellen eines Pools erfordert eine höhere Einlage als der Beitritt zu einem Pool."
+        ]
+      ],
+      "minimumToJoinPool": [
+        "Minimum zum Pool-Beitritt",
+        [
+          "Die Mindestmenge an {NETWORK_UNIT}, die gebunden werden muss, um einem Pool beizutreten.",
+          "Dieser Betrag unterscheidet sich von der Bindung, die zum Erstellen eines Pools benötigt wird."
+        ]
+      ],
+      "nominating": [
+        "Nominieren",
+        [
+          "Nominieren ist der Prozess der Auswahl von Validatoren, denen Sie Ihre {NETWORK_UNIT} staken möchten. Sie können bis zu 16 Validatoren für jedes Ihrer Konten nominieren.",
+          "Sobald Sie Ihre ausgewählten Validatoren nominiert haben, werden diese zu Ihren Nominierungen."
+        ]
+      ],
+      "nominationPayoutDistribution": [
+        "Nominierungsauszahlungsverteilung",
+        [
+          "Die Dezentralisierung Ihrer Nominierung.",
+          "Die folgenden Diagramme zeigen die Verteilung der Belohnungen, aggregiert nach der Region, dem Land und dem IP-Netzwerk des Validators, der die Belohnung ausgezahlt hat."
+        ]
+      ],
+      "nominationPools": [
+        "Nominierungspools",
+        [
+          "Nominierungspools ermöglichen es Nutzern, {NETWORK_UNIT} beizusteuern und Staking-Belohnungen zu verdienen.",
+          "Im Gegensatz zur Nominierung erfordert das Staking mit Pools eine kleine Menge an {NETWORK_UNIT}, und der Pool verwaltet Nominierungen in Ihrem Namen."
+        ]
+      ],
+      "nominationStatus": [
+        "Nominierungsstatus",
+        [
+          "Der Status Ihrer Nominierungen auf einen Blick.",
+          "Ein Satz von Nominierungen wird inaktiv sein, wenn keiner dieser Nominees am aktuellen Validatorensatz teilnimmt (der Satz von Validatoren, die aktuell gewählt sind, um das Netzwerk zu validieren).",
+          "Wenn mindestens einer Ihrer Nominees aktiv ist, wird dieser Nominierungsstatus als aktiv nominierend angezeigt."
+        ]
+      ],
+      "nominations": [
+        "Nominierungen",
+        [
+          "Nominierungen sind die Validatoren, die ein Staker auswählt zu nominieren. Sie können auf {NETWORK_NAME} bis zu {MAX_NOMINATIONS} Validatoren nominieren.",
+          "Für Nominierungspools sind der Pool-Besitzer und der Pool-Nominator für die Nominierung von Validatoren im Namen aller Pool-Mitglieder verantwortlich.",
+          "Sobald Nominierungen eingereicht wurden, werden gebundene Mittel automatisch an Nominees verteilt, die in der aktuellen Era aktiv sind.",
+          "Solange mindestens eine Ihrer Nominierungen in einer Sitzung aktiv validiert, werden Ihre Mittel diesen Validator unterstützen."
+        ]
+      ],
+      "nominatorStake": [
+        "Nominator-Stake",
+        [
+          "Die Menge an {NETWORK_UNIT}, die den Validator von seinen Nominatoren unterstützt.",
+          "Dieser Wert wird zum Selbststake des Validators addiert, um den Gesamtstake des Validators zu bilden. Beachten Sie, dass dieser Wert sich jede Era ändert, da die gebundenen Mittel der Nominatoren an die aktiven Validatoren dieser Sitzung neu verteilt werden."
+        ]
+      ],
+      "openAppOnLedger": [
+        "App auf Ledger öffnen",
+        [
+          "Diese Meldung erscheint, wenn die {NETWORK_NAME}-Ledger-App nicht auf dem verbundenen Gerät geöffnet ist.",
+          "Öffnen Sie die Polkadot-App auf dem Ledger-Gerät und versuchen Sie es erneut."
+        ]
+      ],
+      "payout": [
+        "Auszahlung",
+        [
+          "Auszahlungen sind Staking-Belohnungen auf {NETWORK_NAME}. Sie hängen davon ab, wie viele 'Era-Punkte' Ihre nominierten Validatoren über die Zeit ansammeln. Belohnungen werden am Ende jeder Era (24-Stunden-Perioden) bestimmt.",
+          "Um Staking-Belohnungen zu erhalten, muss eine Auszahlung angefordert werden. Jeder Nominator, der den betreffenden Validator unterstützt, kann eine Auszahlung anfordern.",
+          "Eine Auszahlungsanforderung löst die Belohnungsauszahlung für jeden Nominator aus."
+        ]
+      ],
+      "payoutDestination": [
+        "Auszahlungsziel",
+        [
+          "Ihr Auszahlungsziel bestimmt, auf welches Konto Ihre Auszahlungen gesendet werden.",
+          "Auszahlungen können automatisch zusätzlich zu Ihrer aktuellen Bindung gebunden werden, oder sie können an Ihr Stash-, Controller-Konto oder ein externes Konto Ihrer Wahl gesendet werden."
+        ]
+      ],
+      "payoutHistory": [
+        "Auszahlungshistorie",
+        [
+          "Historische Aufzeichnungen von Auszahlungen für aktive Nominierungen.",
+          "Das Anfordern von Auszahlungen ist ein manueller Prozess, daher können Sie Auszahlungen für mehrere Ären in schneller Folge oder sporadisch erhalten. Ihre Auszahlungsdiagramme können daher mehrere Auszahlungen am selben Tag aufweisen oder Tage, an denen keine Auszahlungen stattfanden.",
+          "Dies bedeutet nicht, dass Sie in diesem Zeitraum nicht nominiert oder Belohnungen generiert haben - nur dass die Auszahlung für diesen Zeitraum noch nicht erfolgt ist."
+        ]
+      ],
+      "polkadotVault": [
+        "Polkadot Vault",
+        [
+          "Polkadot Vault (ehemals Parity Signer) ist eine Cold-Storage-Lösung, die es Ihnen ermöglicht, ein Telefon im Flugzeugmodus als air-gapped Wallet zu verwenden.",
+          "Die Vault-App ist technisch gesehen keine Wallet, da sie keine Überweisungen ermöglicht.",
+          "Es ist eher ein Keychain-Tool, das Ihnen die Erstellung, Verwaltung und Wiederherstellung von Konten ermöglicht."
+        ]
+      ],
+      "poolCommissionChangeRate": [
+        "Pool-Provision-Änderungsrate",
+        [
+          "Die Provisionsänderungsrate wird vom Pool-Root festgelegt und bestimmt, um wie viel und wie oft die Provision erhöht werden kann.",
+          "Die maximale Erhöhung der Änderungsrate bestimmt, wie stark der Provisionssatz in einer einzelnen Aktualisierung erhöht werden kann. Die minimale Verzögerung bestimmt, wie viele Blöcke vergehen müssen, bevor der Provisionssatz erneut erhöht werden kann.",
+          "Sobald eine anfängliche Änderungsrate festgelegt wurde, können danach nur noch restriktivere Werte festgelegt werden. Restriktivere Werte umfassen eine kleinere maximale Erhöhung und eine längere minimale Verzögerung."
+        ]
+      ],
+      "poolCommissionRate": [
+        "Pool-Provision",
+        [
+          "Der Provisionssatz des Pools. Dieser Wert wird vom Pool-Root festgelegt und ist der Prozentsatz der Belohnungen, den der Pool von seinen Mitgliedern einbehält.",
+          "Es muss auch ein Empfängerkonto für den Erhalt der Provision angegeben werden.",
+          "Der Provisionssatz wird von den Belohnungen des Pools abgezogen, bevor sie an seine Mitglieder verteilt werden."
+        ]
+      ],
+      "poolMaxCommission": [
+        "Maximale Pool-Provision",
+        [
+          "Der maximale Provisionssatz, den ein Pool-Besitzer für den Pool festlegen kann.",
+          "Dieser Wert wird vom Pool-Root festgelegt und ist der maximale Prozentsatz der Belohnungen, den der Pool von seinen Mitgliedern einbehält.",
+          "Sobald eine anfängliche maximale Provision festgelegt wurde, können danach nur noch restriktivere Werte festgelegt werden."
+        ]
+      ],
+      "poolMembership": [
+        "Pool-Mitgliedschaft",
+        [
+          "Ihr Pool-Mitgliedschaftsstatus spiegelt wider, ob Sie Mitglied eines Pools sind.",
+          "Pool-Mitgliedschaften können entweder die eines Pool-Mitglieds oder eines Pool-Besitzers sein.",
+          "Aktuell können Konten auf {NETWORK_NAME} nur einem Pool gleichzeitig beitreten. Wenn Sie einem anderen Pool beitreten möchten, müssen Sie Ihren aktuellen Pool zunächst verlassen.",
+          "Um einen Pool zu verlassen, müssen Sie einfach all Ihre gebundenen {NETWORK_UNIT} entbinden und abheben. Das Staking-Dashboard bietet eine spezielle Schaltfläche 'Verlassen', um aus einem Pool zu entbinden."
+        ]
+      ],
+      "poolRewardHistory": [
+        "Pool-Belohnungshistorie",
+        [
+          "Die gesamte Belohnung, die der Pool pro Era generiert hat. Diese Belohnungen werden entsprechend des Anteils jedes Mitglieds am Pool unter den Pool-Mitgliedern verteilt."
+        ]
+      ],
+      "poolRewards": [
+        "Pool-Belohnungen",
+        [
+          "Die Menge an {NETWORK_UNIT}, die durch aktive Teilnahme an einem Pool generiert wird.",
+          "Pool-Mitglieder müssen ihre Belohnungen beanspruchen, um sie auf ihr Guthaben übertragen zu lassen.",
+          "Nutzer haben 2 Möglichkeiten, Belohnungen zu beanspruchen. Sie können zurück in den Pool gebunden werden, was Ihren Anteil am Pool erhöht und weitere Belohnungen ansammelt. Belohnungen können auch vom Pool auf Ihr Konto als freie {NETWORK_UNIT} abgehoben werden."
+        ]
+      ],
+      "poolRoles": [
+        "Pool-Rollen",
+        [
+          "Ein Pool besteht aus 4 Rollen, von denen jede unterschiedliche Verantwortlichkeiten bei der Verwaltung des Pool-Betriebs hat.",
+          "Root: Kann den Nominator, Bouncer oder sich selbst ändern. Darüber hinaus kann es alle Aktionen ausführen, die der Nominator oder Bouncer ausführen kann.",
+          "Depositor: Erstellt den Pool und ist das erste Mitglied. Der Depositor kann den Pool erst verlassen, nachdem alle anderen Mitglieder ihn verlassen haben. Sobald er durch Abhebung verlässt, wird der Pool vollständig aus dem System entfernt.",
+          "Nominator: Kann die Validatoren auswählen, die der Pool nominiert.",
+          "Bouncer: Kann den Status des Pools ändern und Mitglieder kicken (erlaubnislos entbinden/abheben), wenn der Pool blockiert ist."
+        ]
+      ],
+      "proxyAccounts": [
+        "Proxy-Konten",
+        [
+          "Proxy-Konten sind Konten, die im Namen eines anderen Kontos handeln.",
+          "In Proxy-Konto-Begriffen wird das Proxy-Konto als Delegat-Konto bezeichnet, und das kontoführende Konto, in dessen Namen es handelt, wird als Delegator-Konto bezeichnet.",
+          "Das Staking-Dashboard ermöglicht es Delegaten, Transaktionen im Namen eines Delegators zu signieren. Wenn ein Delegat im Dashboard ohne seinen Delegator existiert, wird der Delegator automatisch als nur-lesbares Konto importiert."
+        ]
+      ],
+      "readOnlyAccounts": [
+        "Nur-Lese-Konten",
+        [
+          "Nur-lesbare Konten sind Konten, die importiert werden können, aber keine Transaktionen signieren können. Dies bedeutet, dass Sie das Guthaben und die Staking-Informationen des Kontos einsehen können, aber keine Staking-Aktionen damit durchführen können."
+        ]
+      ],
+      "reserveBalance": [
+        "Reserveguthaben",
+        [
+          "In {NETWORK_NAME} müssen Sie ein Guthaben über einem bestimmten Betrag haben, damit Ihr Konto on-chain existiert. Dieser Betrag wird als 'existential deposit' bezeichnet.",
+          "Das Staking-Dashboard stellt sicher, dass dieser Betrag an {NETWORK_UNIT} niemals angetastet wird."
+        ]
+      ],
+      "reserveBalanceForExistentialDeposit": [
+        "Reserve für Existenzdeposit",
+        [
+          "Wenn Ihr Konto bereits gesperrtes Guthaben hat, das den existential deposit Ihres Kontos abdeckt, wie z.B. für Nominierungen gesperrtes Guthaben, dann wird das Staking-Dashboard kein zusätzliches freies Guthaben sperren.",
+          "In diesem Szenario wird unter \"Reserve For Existential Deposit\" in Ihren Reserve-Balance-Einstellungen \"None\" angezeigt."
+        ]
+      ],
+      "rewardsByCountryAndNetwork": [
+        "Belohnungen nach Land und Netzwerk",
+        [
+          "Zeigt den geschätzten Prozentsatz der Belohnungen, die aus verschiedenen Ländern und IP-Netzwerken generiert werden.",
+          "Die Dezentralisierungsanalysen von Polkawatch werden durch die Aggregation von Belohnungen nach der IP-Geolokalisierung des Validators berechnet. Der Stichprobenzeitraum beträgt die letzten 60 Tage."
+        ]
+      ],
+      "selfStake": [
+        "Eigenes Stake",
+        [
+          "Die Menge an {NETWORK_UNIT}, die der Validator selbst gebunden hat.",
+          "Dieser Wert wird zur Menge an {NETWORK_UNIT} addiert, die von Nominatoren gebunden wurde, um den Gesamtstake des Validators zu bilden."
+        ]
+      ],
+      "supplyStaked": [
+        "Gestaktes Angebot",
+        [
+          "Die aktuelle kumulative Menge an {NETWORK_UNIT}, die global gestaked wird.",
+          "Der Prozentsatz an gestakten {NETWORK_UNIT} ist relativ zum Gesamtangebot an {NETWORK_UNIT}."
+        ]
+      ],
+      "totalNominators": [
+        "Gesamte Nominatoren",
+        [
+          "Anzahl aller Nominatoren im Netzwerk, unabhängig davon, ob sie in der aktuellen Sitzung aktiv oder inaktiv sind.",
+          "Um {NETWORK_UNIT} zu staken, können Sie entweder Nominator werden oder einem Pool beitreten - die selbst als Nominatoren fungieren."
+        ]
+      ],
+      "totalPayoutsAnalysed": [
+        "Analysierte Gesamtauszahlungen",
+        [
+          "Die aggregierten {NETWORK_UNIT}-Belohnungen, die von nominierten Validatoren in den letzten 30 Tagen ausgezahlt wurden.",
+          "Diese Auszahlungen wurden verwendet, um die Dezentralisierung Ihrer Nominierung zu berechnen."
+        ]
+      ],
+      "validator": [
+        "Validator",
+        [
+          "Eine Entität, die Blöcke für die {NETWORK_NAME}-Relay-Chain validiert. Validatoren spielen eine Schlüsselrolle in {NETWORK_NAME}, um das Netzwerk zu sichern und Blöcke zu produzieren.",
+          "Als Nominator wählen Sie aus, welche Validatoren Sie unterstützen möchten, und erhalten Belohnungen dafür."
+        ]
+      ],
+      "validatorRewardHistory": [
+        "Validator-Belohnungshistorie",
+        [
+          "Die gesamte Belohnung, die der Validator pro Era generiert hat. Die Gesamtbelohnung ist die Summe der Belohnung des Validators plus der Belohnung jedes Nominators, der den Validator unterstützt."
+        ]
+      ],
+      "wrongTransaction": [
+        "Falsche Transaktion",
+        [
+          "Dieser Fehler tritt auf, wenn ein Ledger-Gerät eine andere Transaktion signiert hat oder gerade signiert als die aktuell aktive im Dashboard.",
+          "Stellen Sie sicher, dass keine ausstehenden Transaktionen auf dem Ledger-Gerät vorhanden sind, und versuchen Sie es erneut."
+        ]
+      ],
+      "yourBalance": [
+        "Ihr Guthaben",
+        [
+          "Ihr Guthaben repräsentiert die gesamten {NETWORK_UNIT}, die Ihnen zusätzlich zu Ihrem gesamten gestakten Betrag zur Verfügung stehen, einschließlich des Betrags, den Sie in einem Pool gebunden haben.",
+          "Im Gegensatz zu Ihrem gestakten Guthaben wird Ihr gebundenes Pool-Guthaben im Pool selbst gehalten und gesperrt."
+        ]
+      ]
+    },
+    "externals": {
+      "bondMore": "Mehr Token an Ihren bestehenden Stake binden",
+      "changeAccount": "Controller-Konto ändern",
+      "changeDestination": "Auszahlungsziel ändern",
+      "changeNominations": "Nominierungen ändern",
+      "chooseValidators": "Validatoren auswählen",
+      "claimRewards": "Belohnungen beanspruchen",
+      "connectAccounts": "Konten verbinden",
+      "createPools": "Pools erstellen",
+      "howToUse": "Nutzungshandbuch",
+      "polkawatchAnalytics": "Dezentralisierungsanalysen",
+      "rebonding": "Rebonding",
+      "stakeDot": "DOT staken",
+      "unbondingTokens": "Token entbinden"
+    },
+    "modal": {
+      "articles": "Artikel",
+      "close": "Schließen",
+      "definitions": "Definitionen",
+      "helpResources": "Hilferessourcen",
+      "related": "Verwandte"
+    }
+  }
+}
