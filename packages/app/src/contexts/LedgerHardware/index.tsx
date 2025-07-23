@@ -51,6 +51,7 @@ export const LedgerHardwareProvider = ({
   const [feedback, setFeedbackState] =
     useState<FeedbackMessage>(defaultFeedback)
   const feedbackRef = useRef(feedback)
+
   const getFeedback = () => feedbackRef.current
   const setFeedback = (message: MaybeString, helpKey: MaybeString = null) =>
     setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef)
@@ -131,36 +132,6 @@ export const LedgerHardwareProvider = ({
         },
         device: { productName },
         body: [result],
-      })
-    } catch (err) {
-      handleErrors(err)
-    }
-  }
-
-  // Signs a payload on Ledger device
-  const handleSignTx = async (
-    uid: number,
-    index: number,
-    payload: AnyJson,
-    txMetadata: AnyJson
-  ) => {
-    try {
-      setIsExecuting(true)
-      const { app, productName } = await Ledger.initialise()
-      setFeedback(t('approveTransactionLedger'))
-
-      const result = await Ledger.signPayload(app, index, payload, txMetadata)
-
-      setIsExecuting(false)
-      setFeedback(t('signedTransactionSuccessfully'))
-
-      setTransportResponse({
-        statusCode: 'SignedPayload',
-        device: { productName },
-        body: {
-          uid,
-          sig: result.signature,
-        },
       })
     } catch (err) {
       handleErrors(err)
@@ -288,7 +259,6 @@ export const LedgerHardwareProvider = ({
         setFeedback,
         resetFeedback,
         handleGetAddress,
-        handleSignTx,
         handleResetLedgerTask,
         handleErrors,
         handleUnmount,

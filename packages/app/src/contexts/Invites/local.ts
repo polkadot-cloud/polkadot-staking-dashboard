@@ -16,7 +16,7 @@ export const getLocalInviteConfig = () => {
       return result
     }
     throw new Error()
-  } catch (err) {
+  } catch {
     removeLocalInviteConfig()
     return undefined
   }

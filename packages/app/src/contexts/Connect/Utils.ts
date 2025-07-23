@@ -24,7 +24,7 @@ export const getActiveAccountLocal = (
       }
     }
     return null
-  } catch (e) {
+  } catch {
     localStorage.removeItem(`${network}_active_account`)
     return null
   }

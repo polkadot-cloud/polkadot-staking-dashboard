@@ -44,7 +44,7 @@ export const fetchNominatorRewardTrend = async (
       variables: { network, who, eras },
     })
     return result.data.nominatorRewardTrend
-  } catch (error) {
+  } catch {
     return null
   }
 }
