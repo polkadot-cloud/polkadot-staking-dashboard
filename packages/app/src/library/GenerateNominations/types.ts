@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import type {
   AnyFunction,
   AnyJson,
@@ -34,6 +35,16 @@ export interface SelectHandler {
     callback: (args: { selected: AnyJson[]; callback?: AnyFunction }) => void
   }
 }
+
+export interface FilterHandler {
+  title: string
+  onClick: () => void
+  onSelected: boolean
+  isDisabled: () => boolean
+  icon?: IconDefinition
+}
+
+export type FilterHandlers = Record<string, FilterHandler>
 
 export interface PromptProps {
   callback: (newNominations: Validator[]) => void
