@@ -11,6 +11,7 @@ import { useManageNominations } from 'contexts/ManageNominations'
 import { usePrompt } from 'contexts/Prompt'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { pluginEnabled } from 'global-bus'
 import { useFetchMethods } from 'hooks/useFetchMethods'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
@@ -24,6 +25,7 @@ import { SearchValidators } from './Prompts/SearchValidators'
 import { SelectFavorites } from './Prompts/SelectFavorites'
 import type {
   AddNominationsType,
+  FilterHandlers,
   GenerateNominationsProps,
   SelectHandler,
 } from './types'
@@ -121,7 +123,7 @@ export const GenerateNominations = ({
     },
   }
 
-  const filterHandlers = {
+  const filterHandlers: FilterHandlers = {
     addFromFavorites: {
       title: t('addFromFavorites', { ns: 'app' }),
       onClick: () => {
@@ -166,8 +168,10 @@ export const GenerateNominations = ({
         maxNominationsReached ||
         !availableToNominate(nominations).randomValidators.length,
     },
+  }
 
-    searchValidators: {
+  if (pluginEnabled('staking_api')) {
+    filterHandlers['searchValidators'] = {
       title: 'Search Validators',
       onClick: () => {
         const updateList = (newNominations: Validator[]) => {
@@ -183,7 +187,7 @@ export const GenerateNominations = ({
       icon: faMagnifyingGlass,
       onSelected: false,
       isDisabled: () => MaxNominations <= nominations?.length,
-    },
+    }
   }
 
   // Update nominations on account switch, or if `defaultNominations` change
