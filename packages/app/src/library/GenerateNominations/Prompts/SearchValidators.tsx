@@ -147,7 +147,9 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
           style={{
             display: 'flex',
             gap: '1rem',
-            minHeight: '400px',
+            height: '50vh',
+            maxHeight: '450px',
+            overflow: 'hidden',
           }}
         >
           {/* Left Column - Search and Favorites (2/3 width) */}
