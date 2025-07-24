@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.1.0-beta.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.0...app-v2.1.0-beta.0) (2025-07-24)
+## [2.0.0-beta.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.0...app-v2.0.0-beta.1) (2025-07-24)
 
 
 ### Features
