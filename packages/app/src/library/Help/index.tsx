@@ -507,7 +507,7 @@ export const Help = () => {
             </div>
             <HelpTitle>
               {activeDefinition
-                ? `${activeDefinition.title}`
+                ? `${t(activeDefinition.title, { ns: 'help' })}`
                 : `${t('modal.helpResources', { ns: 'help' })}`}
             </HelpTitle>
 
@@ -518,15 +518,12 @@ export const Help = () => {
             {definitions.length > 0 && (
               <>
                 <HelpSubtitle>
-                  {activeDefinition
-                    ? `${t('modal.related', { ns: 'help' })} `
-                    : ''}
                   {t('modal.definitions', { ns: 'help' })}
                 </HelpSubtitle>
                 {activeDefinitions.map((item, index: number) => (
                   <Definition
                     key={`def_${index}`}
-                    title={item.title}
+                    title={t(item.title, { ns: 'help' })}
                     description={item.description}
                   />
                 ))}
@@ -542,7 +539,7 @@ export const Help = () => {
                   <External
                     key={`ext_${index}`}
                     width="100%"
-                    title={t(item.title)}
+                    title={t(item.title, { ns: 'help' })}
                     url={item.url}
                     website={item.website}
                   />
