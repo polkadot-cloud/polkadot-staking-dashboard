@@ -27,7 +27,7 @@ export const Invite = () => {
 
   let inviteLink = undefined
   let toCopy = ''
-  let title = t('inviteStart', { ns: 'app' })
+  let title = ''
   let subtitle = ''
   let faIcon = faEnvelopeOpenText
 
