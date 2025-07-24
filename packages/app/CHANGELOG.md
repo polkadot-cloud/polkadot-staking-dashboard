@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.1.0-beta.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.0...app-v2.1.0-beta.0) (2025-07-24)
+
+
+### Features
+
+* Auto-navigate between pools/nominate on account switch ([#2902](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2902)) ([d888fb9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d888fb9e7828b847ec76adebc38158a854114cbb))
+* **fix:** Bond checks `isBonding`, disallow new nominator if bonding or nominating already ([#2878](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2878)) ([39bd910](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/39bd91098e46fe5fb0841d228610ec638b5bbf0b))
+* **fix:** treat bonding only as nominating ([#2884](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2884)) ([38682e0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/38682e0165ca41d5c5cf26a24a13253cb8b6f6cf))
+* **refactor:** Total Nominator Count optimisations ([#2897](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2897)) ([5a3ec27](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/5a3ec2777b0e8470a8e410f3142518c0e7411fb2))
+* Search for validators in Manage Nominations ([#2900](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2900)) ([7e925ea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e925ea4cfa9092f8765e27aff9e7d66f35bb85d))
+* **ux:** Share nominee addresses via header menu ([#2903](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2903)) ([395ce5e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/395ce5ec8a9e7d7a626f82764b7401c5f28715d8))
+* **ux:** Tiered, network-aware help resources with multi-language support ([#2748](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2748)) ([330142b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/330142bf9506be41857f311969ef45f017139f25))
+* Validator search commission filter for Manage Nominations ([#2901](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2901)) ([de64b5d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/de64b5d1260d2704d1b0f4188b875e4f94dccf40))
+
+
+### Bug Fixes
+
+* align fast unstake UI eligibility with transaction validation ([#2894](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2894)) ([a2b0b56](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a2b0b56096f4d7c827f2488e4c3511152e1277c6))
+* allow unbond/unstake for any user with bonded funds, not just active nominators ([#2874](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2874)) ([fbab4e0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/fbab4e0b13d87ea64fee297c244399fd7527028e))
+* allow withdrawals from destroying pools after unbonding period ([#2893](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2893)) ([2310182](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2310182714624e28d29452e0b012ce847e211941))
+
 ## [2.0.0-beta.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v1.9.0...app-v2.0.0-beta.0) (2025-06-17)
 
 
