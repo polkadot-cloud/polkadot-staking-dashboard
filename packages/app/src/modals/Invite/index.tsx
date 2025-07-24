@@ -25,16 +25,14 @@ export const Invite = () => {
 
   const canCopy = nominated.length > 0 || membership !== undefined
 
-  let inviteLink = undefined
   let toCopy = ''
   let title = ''
   let subtitle = ''
   let faIcon = faEnvelopeOpenText
 
   if (membership) {
-    inviteLink = `https://staking.polkadot.cloud/#/overview?n=${network}&i=pool&id=${poolId}`
-    toCopy = inviteLink
-    subtitle = inviteLink
+    toCopy = `https://staking.polkadot.cloud/#/overview?n=${network}&i=pool&id=${poolId}`
+    subtitle = toCopy
     title = t('copyPoolInviteLink', { ns: 'app' })
   } else if (nominated.length > 0) {
     faIcon = faList
