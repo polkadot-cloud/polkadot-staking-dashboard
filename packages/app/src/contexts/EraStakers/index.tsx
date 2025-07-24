@@ -6,9 +6,12 @@ import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
 import { removeSyncing, setSyncing } from 'global-bus'
+import { fetchEraTotalNominators } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
+import type { ErasStakersOverviewEntries } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
@@ -23,6 +26,7 @@ export const [EraStakersContext, useEraStakers] =
 
 export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
+  const { pluginEnabled } = usePlugins()
   const { activeAddress } = useActiveAccounts()
   const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
   const { units } = getStakingChainData(network)
@@ -30,6 +34,9 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
   const eraStakersRef = useRef(eraStakers)
+
+  // Store the total active nominators
+  const [activeNominatorsCount, setActiveNominatorsCount] = useState<number>(0)
 
   // Store active validators
   const [activeValidators, setActiveValidators] = useState<number>(0)
@@ -48,19 +55,16 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
         return
       }
 
-      const { stakers, totalActiveNominators, activeAccountOwnStake, who } =
-        data
+      const { stakers, activeAccountOwnStake, who } = data
 
       // Check if account hasn't changed since worker started
       if (activeAddress === who) {
         // Syncing current eraStakers is now complete
         removeSyncing('era-stakers')
-
         setStateWithRef(
           {
             ...eraStakersRef.current,
             stakers,
-            totalActiveNominators,
             activeAccountOwnStake,
           },
           setEraStakers,
@@ -75,6 +79,18 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady || activeEra.index === 0) {
       return []
     }
+    // Fetch current era overviews
+    const overviews = await serviceApi.query.erasStakersOverviewEntries(
+      activeEra.index
+    )
+    // Commit active nominator count from overviews if staking API is disabled
+    if (!pluginEnabled('staking_api')) {
+      const totalNominators = overviews.reduce(
+        (prev, [, { nominatorCount }]) => prev + nominatorCount,
+        0
+      )
+      setActiveNominatorsCount(totalNominators)
+    }
 
     let exposures: Exposure[] = []
     const localExposures = getLocalEraExposures(
@@ -82,18 +98,16 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
       era,
       activeEra.index.toString()
     )
-
     if (localExposures) {
       exposures = localExposures
     } else {
-      exposures = await getPagedErasStakers(era)
+      exposures = await getPagedErasStakers(era, overviews)
     }
 
     // For resource limitation concerns, only store the current era in local storage
     if (era === activeEra.index.toString()) {
       setLocalEraExposures(network, era, exposures)
     }
-
     return exposures
   }
 
@@ -120,20 +134,20 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Fetch eras stakers from storage
-  const getPagedErasStakers = async (era: string) => {
-    const overview = await serviceApi.query.erasStakersOverviewEntries(
-      activeEra.index
-    )
+  const getPagedErasStakers = async (
+    era: string,
+    overviews: ErasStakersOverviewEntries
+  ) => {
     const validators: Record<string, { own: bigint; total: bigint }> =
-      overview.reduce(
+      overviews.reduce(
         (prev, [[, validator], { own, total }]) => ({
           ...prev,
           [validator]: { own, total },
         }),
         {}
       )
-    const validatorKeys = Object.keys(validators)
 
+    const validatorKeys = Object.keys(validators)
     const pagedResults = await Promise.all(
       validatorKeys.map((v) =>
         serviceApi.query.erasStakersPagedEntries(Number(era), v)
@@ -172,6 +186,11 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
     return result
   }
 
+  const handleEraTotalNominators = async () => {
+    const result = await fetchEraTotalNominators(network, activeEra.index)
+    setActiveNominatorsCount(result || 0)
+  }
+
   useEffectIgnoreInitial(() => {
     if (getApiStatus(network) === 'connecting') {
       setActiveValidators(0)
@@ -183,16 +202,20 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchActiveEraStakers()
+      // If staking API is enabled, fetch total nominators from it
+      if (pluginEnabled('staking_api') && activeEra.index > 0) {
+        handleEraTotalNominators()
+      }
     }
-  }, [isReady, activeEra.index, activeAddress])
+  }, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
 
   return (
     <EraStakersContext.Provider
       value={{
         eraStakers,
         activeValidators,
+        activeNominatorsCount,
         fetchEraStakers,
-        getPagedErasStakers,
       }}
     >
       {children}

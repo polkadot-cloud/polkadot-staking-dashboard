@@ -12,8 +12,8 @@
     "./util": "./src/util/index.ts"
   },
   "dependencies": {
-    "@w3ux/utils": "^2.2.1",
-    "bignumber.js": "^9.3.0",
+    "@w3ux/utils": "^2.2.3",
+    "bignumber.js": "^9.3.1",
     "chart.js": "^4.4.9",
     "consts": "workspace:*",
     "chroma-js": "^3.1.1",

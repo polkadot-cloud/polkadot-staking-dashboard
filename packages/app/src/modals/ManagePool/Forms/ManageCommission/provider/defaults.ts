@@ -5,15 +5,15 @@
 import type { PoolCommissionContextInterface } from './types'
 
 export const defaultPoolCommissionContext: PoolCommissionContextInterface = {
-  setCommission: (commission) => {},
-  setPayee: (payee) => {},
-  setMaxCommission: (maxCommission) => {},
-  setChangeRate: (changeRate) => {},
-  getInitial: (feature) => {},
-  getCurrent: (feature) => {},
-  getEnabled: (feature) => false,
-  setEnabled: (feature, enabled) => {},
-  isUpdated: (feature) => false,
-  hasValue: (feature) => false,
+  setCommission: (_commission) => {},
+  setPayee: (_payee) => {},
+  setMaxCommission: (_maxCommission) => {},
+  setChangeRate: (_changeRate) => {},
+  getInitial: (_feature) => {},
+  getCurrent: (_feature) => {},
+  getEnabled: (_feature) => false,
+  setEnabled: (_feature, _enabled) => {},
+  isUpdated: (_feature) => false,
+  hasValue: (_feature) => false,
   resetAll: () => {},
 }

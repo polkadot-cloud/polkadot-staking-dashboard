@@ -14,14 +14,22 @@ export const MenuItem = ({ children }: { children: ReactNode }) => {
 export const MenuItemButton = ({
   children,
   onClick,
+  disabled,
 }: {
   children: ReactNode
   onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void
+  disabled?: boolean
 }) => {
-  const allClasses = classNames(classes.menuItem)
-
+  const allClasses = classNames(classes.menuItem, {
+    [classes.disabled]: disabled,
+  })
   return (
-    <button type="button" onClick={(e) => onClick(e)} className={allClasses}>
+    <button
+      type="button"
+      onClick={(e) => onClick(e)}
+      className={allClasses}
+      disabled={disabled}
+    >
       {children}
     </button>
   )

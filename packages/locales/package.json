@@ -13,10 +13,10 @@
     "validate": "node ./.scripts/localeValidate.cjs"
   },
   "dependencies": {
-    "@w3ux/utils": "2.2.1",
+    "@w3ux/utils": "2.2.3",
     "consts": "workspace:*",
     "date-fns": "^4.1.0",
-    "i18next": "^25.2.1",
+    "i18next": "^25.3.1",
     "react-i18next": "^15.5.1",
     "utils": "workspace:*"
   },

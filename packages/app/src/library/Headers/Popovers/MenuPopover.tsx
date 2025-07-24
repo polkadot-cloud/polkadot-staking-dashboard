@@ -15,6 +15,8 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import LanguageSVG from 'assets/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useCurrency } from 'contexts/Currency'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
@@ -36,8 +38,13 @@ export const MenuPopover = ({
   const { pluginEnabled } = usePlugins()
   const { mode, toggleTheme } = useTheme()
   const { openModal } = useOverlay().modal
+  const { getPoolMembership } = useBalances()
+  const { activeAddress } = useActiveAccounts()
 
+  const { membership } = getPoolMembership(activeAddress)
   const popoverRef = useRef<HTMLDivElement>(null)
+
+  const notStaking = !isNominator && !membership
 
   // Close the menu if clicked outside of its container
   useOutsideAlerter(popoverRef, () => {
@@ -65,35 +72,6 @@ export const MenuPopover = ({
           </div>
         </div>
       </MenuItemButton>
-      <MenuItemButton
-        onClick={() => {
-          setOpen(false)
-          openModal({ key: 'Plugins' })
-        }}
-      >
-        <div>
-          <FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
-        </div>
-        <div>
-          <h3>{t('plugins', { ns: 'modals' })}</h3>
-        </div>
-      </MenuItemButton>
-      {/* NOTE: Temporary disabling nominator invites until supported */}
-      {!isNominator && (
-        <MenuItemButton
-          onClick={() => {
-            setOpen(false)
-            openModal({ key: 'Invite', size: 'sm' })
-          }}
-        >
-          <div>
-            <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
-          </div>
-          <div>
-            <h3>{t('invite', { ns: 'app' })}</h3>
-          </div>
-        </MenuItemButton>
-      )}
       <MenuItemButton
         onClick={() => {
           setOpen(false)
@@ -132,6 +110,34 @@ export const MenuPopover = ({
           </div>
         </MenuItemButton>
       )}
+      <MenuItemButton
+        disabled={notStaking}
+        onClick={() => {
+          setOpen(false)
+          openModal({ key: 'Invite', size: 'sm' })
+        }}
+      >
+        <div>
+          <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
+        </div>
+        <div>
+          <h3>{t('share', { ns: 'app' })}</h3>
+          {notStaking && <div>{t('notStaking', { ns: 'app' })}</div>}
+        </div>
+      </MenuItemButton>
+      <MenuItemButton
+        onClick={() => {
+          setOpen(false)
+          openModal({ key: 'Plugins' })
+        }}
+      >
+        <div>
+          <FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
+        </div>
+        <div>
+          <h3>{t('plugins', { ns: 'modals' })}</h3>
+        </div>
+      </MenuItemButton>
       <MenuItemButton
         onClick={() => {
           setOpen(false)
