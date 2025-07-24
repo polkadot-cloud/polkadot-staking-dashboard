@@ -9,12 +9,13 @@ export const SearchInput = ({
   value,
   handleChange,
   placeholder,
+  secondary = false,
 }: SearchInputProps) => (
   <SearchInputWrapper>
     <input
       type="text"
       value={value}
-      className="search"
+      className={`search ${secondary ? 'secondary' : ''}`}
       placeholder={placeholder}
       onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
     />

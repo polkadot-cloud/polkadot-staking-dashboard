@@ -438,8 +438,10 @@
       "articles": "Artículos",
       "close": "Cerrar",
       "definitions": "Definiciones",
-      "helpResources": "Recursos de Ayudas",
-      "related": "Relacionado"
+      "noArticles": "No hay artículos disponibles.",
+      "noResultsFound": "No se encontraron resultados",
+      "resources": "Recursos",
+      "showingFoundOfTotal": "Mostrando {{found}} de {{total}} Recursos"
     }
   }
 }
