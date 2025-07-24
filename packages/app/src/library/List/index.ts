@@ -161,6 +161,12 @@ export const SearchInputWrapper = styled.div`
     padding: 0.9rem 1.25rem;
     font-size: 1.15rem;
     width: 100%;
+
+    &.secondary {
+      background: var(--background-default);
+      padding: 1.25rem 1.25rem;
+      font-size: 1.25rem;
+    }
   }
 `
 

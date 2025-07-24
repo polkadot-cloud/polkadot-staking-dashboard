@@ -436,8 +436,10 @@
       "articles": "Articles",
       "close": "Close",
       "definitions": "Definitions",
-      "helpResources": "Help Resources",
-      "related": "Related"
+      "noArticles": "No articles available.",
+      "noResultsFound": "No results found",
+      "resources": "Resources",
+      "showingFoundOfTotal": "Showing {{found}} of {{total}} Resources"
     }
   }
 }

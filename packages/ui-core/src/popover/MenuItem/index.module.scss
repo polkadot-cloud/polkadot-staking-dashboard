@@ -11,6 +11,14 @@
   &:hover {
     background: var(--button-popover-tab-background);
   }
+
+  &.disabled {
+    cursor: default;
+    > div {
+      opacity: 0.4;
+    }
+  }
+
   > div {
     display: flex;
     align-items: center;

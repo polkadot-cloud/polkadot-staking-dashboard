@@ -25,6 +25,7 @@ export interface SearchInputProps {
   value: string
   handleChange: (e: FormEvent<HTMLInputElement>) => void
   placeholder: string
+  secondary?: boolean
 }
 
 export interface EraPointsHistoricalProps {
