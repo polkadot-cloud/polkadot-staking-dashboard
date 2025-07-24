@@ -144,17 +144,6 @@ export const ItemWrapper = styled(motion.div)<{
   }
 `
 
-export const SupportLinks = styled.div`
-  margin-top: 2.5rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  border-top: 1px solid var(--border-primary);
-  padding-top: 1.5rem;
-`
-
 // Tab bar styles
 export const TabBar = styled.div.attrs(() => ({
   role: 'tablist',
@@ -192,21 +181,5 @@ export const TabButton = styled.button<{ selected: boolean }>`
           ? 'var(--accent-color-primary)'
           : 'var(--text-color-secondary)'};
     }
-  }
-`
-
-export const SupportButton = styled.a`
-  display: inline-block;
-  background: var(--accent-color-primary);
-  color: #fff;
-  font-weight: 600;
-  border-radius: 6px;
-  padding: 0.5rem 1.25rem;
-  text-decoration: none;
-  margin-right: 1rem;
-  margin-bottom: 0.5rem;
-  transition: background 0.2s;
-  &:hover {
-    background: var(--accent-color-primary-hover, #7b2ff2);
   }
 `
