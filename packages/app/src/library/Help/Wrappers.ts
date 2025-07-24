@@ -193,34 +193,6 @@ export const TabButton = styled.button<{ selected: boolean }>`
   }
 `
 
-// Enhanced support button with equal width and proper icon styling
-export const StyledSupportButton = styled.a`
-  background: var(--accent-color-primary);
-  color: #fff;
-  font-weight: 600;
-  border-radius: 6px;
-  padding: 0.75rem 1.5rem;
-  text-decoration: none;
-  margin-bottom: 0.75rem;
-  transition: background 0.2s;
-  width: 200px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-
-  &:hover {
-    background: var(--accent-color-primary-hover, #7b2ff2);
-  }
-
-  svg {
-    path {
-      fill: #fff;
-    }
-  }
-`
-
 export const SupportButton = styled.a`
   display: inline-block;
   background: var(--accent-color-primary);

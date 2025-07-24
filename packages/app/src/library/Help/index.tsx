@@ -2,14 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { camelize } from '@w3ux/utils'
-import DiscordSVG from 'assets/brands/discord.svg?react'
 import BookSVG from 'assets/icons/book.svg?react'
-import EnvelopeSVG from 'assets/icons/envelope.svg?react'
 import ForumSVG from 'assets/icons/forum.svg?react'
 import GlassesSVG from 'assets/icons/glasses.svg?react'
 import { HelpConfig } from 'config/help'
 import { HelpResourceItems } from 'config/helpResources'
-import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { NetworkList } from 'consts/networks'
 import { useHelp } from 'contexts/Help'
 import type {
@@ -21,7 +18,6 @@ import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
-import { CardWrapper as Card } from 'library/Card/Wrappers'
 import { DefaultLocale } from 'locales'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -31,13 +27,7 @@ import { Content as ModalContent } from 'ui-core/modal'
 import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'
-import {
-  HelpSubtitle,
-  HelpTitle,
-  StyledSupportButton,
-  TabBar,
-  TabButton,
-} from './Wrappers'
+import { HelpSubtitle, HelpTitle, TabBar, TabButton } from './Wrappers'
 
 export const Help = () => {
   const { t, i18n } = useTranslation()
@@ -320,24 +310,9 @@ export const Help = () => {
                   />
                   {t('modal.articlesTab', 'Articles', { ns: 'help' })}
                 </TabButton>
-                <TabButton
-                  selected={tab === 'support'}
-                  onClick={() => setTab('support')}
-                  type="button"
-                >
-                  <EnvelopeSVG
-                    style={{
-                      width: '1.1em',
-                      height: '1.1em',
-                      marginRight: '0.5em',
-                      verticalAlign: 'middle',
-                    }}
-                  />
-                  {t('modal.supportTab', 'Support', { ns: 'help' })}
-                </TabButton>
               </TabBar>
               {/* Tab Content */}
-              {tab === 'resources' ? (
+              {tab === 'resources' && (
                 <>
                   <HelpTitle>
                     {t(`${path}.title`, { ns: 'helpResources' })}
@@ -441,7 +416,9 @@ export const Help = () => {
                     />
                   </div>
                 </>
-              ) : tab === 'definitions' ? (
+              )}
+
+              {tab === 'definitions' && (
                 <>
                   <HelpTitle>
                     {t('modal.definitions', 'Definitions', { ns: 'help' })}
@@ -525,7 +502,9 @@ export const Help = () => {
                     </>
                   )}
                 </>
-              ) : tab === 'articles' ? (
+              )}
+
+              {tab === 'articles' && (
                 <>
                   <HelpTitle>
                     {t('modal.articles', 'Articles', { ns: 'help' })}
@@ -616,76 +595,6 @@ export const Help = () => {
                     </p>
                   )}
                 </>
-              ) : (
-                // Support tab
-                <div
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '2rem',
-                  }}
-                >
-                  <Card
-                    style={{
-                      maxWidth: 420,
-                      width: '100%',
-                      padding: '2rem 2rem 1.5rem 2rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                    }}
-                  >
-                    <HelpTitle
-                      style={{ margin: '0 0 1.25rem 0', textAlign: 'center' }}
-                    >
-                      {t('modal.support', 'Support', { ns: 'help' })}
-                    </HelpTitle>
-                    <p
-                      style={{
-                        margin: '0 0 1.5rem 0',
-                        color: 'var(--text-color-primary)',
-                        textAlign: 'center',
-                      }}
-                    >
-                      {t('modal.supportIntro', { ns: 'help' })}
-                    </p>
-                    <StyledSupportButton
-                      href={DiscordSupportUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <DiscordSVG
-                        style={{
-                          width: '1.2em',
-                          height: '1.2em',
-                          verticalAlign: 'middle',
-                        }}
-                      />
-                      {t('modals:goToDiscord', { ns: 'help' })}
-                    </StyledSupportButton>
-                    <StyledSupportButton href={`mailto:${MailSupportAddress}`}>
-                      <EnvelopeSVG
-                        style={{
-                          width: '1.2em',
-                          height: '1.2em',
-                          verticalAlign: 'middle',
-                        }}
-                      />
-                      {t('pages:email', { ns: 'help' })}
-                    </StyledSupportButton>
-                    <p
-                      style={{
-                        color: 'var(--text-color-secondary)',
-                        textAlign: 'center',
-                        margin: 0,
-                      }}
-                    >
-                      {t('modal.supportOutro', { ns: 'help' })}
-                    </p>
-                  </Card>
-                </div>
               )}
             </Content>
           </ModalContent>
