@@ -11,10 +11,10 @@ export const defaultOperatorItem: Item = {
 }
 
 export const defaultContext: OperatorsSectionsContextInterface = {
-  setActiveSection: (t) => {},
+  setActiveSection: (_t) => {},
   activeSection: 0,
   activeItem: defaultOperatorItem,
-  setActiveItem: (item) => {},
+  setActiveItem: (_item) => {},
   scrollPos: 0,
-  setScrollPos: (scrollPos) => {},
+  setScrollPos: (_scrollPos) => {},
 }

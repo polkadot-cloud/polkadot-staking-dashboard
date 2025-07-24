@@ -8,13 +8,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUi } from 'contexts/UI'
-import type { UIContextInterface } from 'contexts/UI/types'
 import { useTranslation } from 'react-i18next'
 import { AdvancedToggleWrapper } from './Wrapper'
 
 export const AdvancedToggle = ({ minimised }: { minimised: boolean }) => {
   const { t } = useTranslation('app')
-  const { advancedMode, setAdvancedMode }: UIContextInterface = useUi()
+  const { advancedMode, setAdvancedMode } = useUi()
 
   return (
     <AdvancedToggleWrapper

@@ -1,0 +1,128 @@
+{
+  "helpResources": {
+    "advanced": {
+      "description": "In-depth explanations, technical details, and strategies for experienced users.",
+      "resources": {
+        "can-lose-funds": {
+          "a": "Yes. {token} can be lost due to slashing (if your validator misbehaves), bugs, or protocol changes. Always research validators and pools before staking your {token}.",
+          "q": "Can I lose my funds?"
+        },
+        "fast-unstake": {
+          "a": "Fast unstake allows immediate withdrawal of staked {token} if you haven't received rewards recently and aren't actively nominating. It's available when your stake hasn't been used to back validators in recent eras.",
+          "q": "What is fast unstake and when can I use it?"
+        },
+        "governance-participation": {
+          "a": "Hold {token} to vote on referenda, proposals, and network upgrades. You can vote directly or delegate your voting power to trusted community members. Governance participation is crucial for network evolution and decentralization.",
+          "q": "How can I participate in {network} governance?"
+        },
+        "how-to-start": {
+          "a": "Choose a staking method (solo, pool, or liquid), select a validator or pool, and bond your {token} using a supported wallet or dashboard. Review {network}-specific requirements and fees.",
+          "q": "How do I start staking?"
+        },
+        "how-to-stop": {
+          "a": "Unbond your {token} through your wallet or dashboard. After the unbonding period, your {token} becomes transferable again. The unbonding period varies by network.",
+          "q": "How do I stop staking?"
+        },
+        "optimal-staking-strategy": {
+          "a": "Diversify across multiple high-performing validators with low commission rates. Monitor validator performance, avoid oversubscribed validators, and consider pool staking for smaller holdings. Regularly compound rewards and adjust nominations based on performance.",
+          "q": "What's the optimal staking strategy?"
+        },
+        "staking-rewards": {
+          "a": "Rewards are distributed to stakers based on their contribution to {network} network security and block production. Rewards depend on network inflation, your staked {token}, validator performance, and commission rates.",
+          "q": "What are staking rewards?"
+        },
+        "staking-risks": {
+          "a": "Risks include slashing (loss of {token} for validator misbehavior), lock-up periods (illiquidity), and potential changes in network rules. Pool participants also depend on the pool's performance and security.",
+          "q": "What are the risks of staking?"
+        },
+        "types-of-staking": {
+          "a": "Staking can be done as a solo validator, as a nominator (delegating your {token} to validators), or by joining a nomination pool. Each method has different requirements, risks, and reward structures. Advanced users may also explore liquid staking and staking derivatives.",
+          "q": "What are the different types of staking?"
+        },
+        "validator-evaluation": {
+          "a": "Analyze commission rates, self-stake amounts, nomination pool size, historical performance, slash history, and operational transparency. Look for validators with consistent uptime, reasonable fees (1-5%), and active community engagement.",
+          "q": "How do I evaluate validators for nomination?"
+        },
+        "what-is-compounding": {
+          "a": "Compounding means regularly adding your staking rewards to your staked {token}, increasing your future rewards. Some networks or pools offer automatic compounding.",
+          "q": "What is compounding in staking?"
+        },
+        "what-is-nomination": {
+          "a": "Nomination is the act of selecting one or more validators to stake your {token} on your behalf. Nominators share in the rewards and risks of the validators they support.",
+          "q": "What is nomination?"
+        },
+        "what-is-nomination-pool": {
+          "a": "A nomination pool is a group of users who combine their {token} to nominate validators together. Pools make staking accessible to users with smaller balances and automate some management tasks.",
+          "q": "What is a nomination pool?"
+        },
+        "what-is-slashing": {
+          "a": "Slashing is a penalty for validators (and sometimes nominators) who break {network} network rules, such as double-signing or downtime. A portion of the staked {token} is destroyed or redistributed as punishment.",
+          "q": "What is slashing?"
+        },
+        "what-is-staking": {
+          "a": "Staking is the process of locking up your {network} ({token}) to participate in the consensus and security of a Proof-of-Stake (PoS) blockchain. Stakers (nominators or validators) help validate transactions and produce new blocks, earning rewards in return.",
+          "q": "What is staking?"
+        },
+        "what-is-unbonding-period": {
+          "a": "The unbonding period is the time you must wait after stopping staking before your {token} becomes available for transfer. This period helps protect the {network} network from sudden changes in stake.",
+          "q": "What is the unbonding period?"
+        },
+        "what-is-validator": {
+          "a": "A validator is a participant who locks up {token} and runs a node to produce blocks and validate transactions on the {network} network. Validators earn rewards and can be penalized for misbehavior.",
+          "q": "What is a validator?"
+        },
+        "why-important": {
+          "a": "Staking is critical for {network} network security and decentralization. By staking your {token}, you contribute to the chain's resistance to attacks and help maintain its integrity. Staking also aligns incentives between network participants and the protocol.",
+          "q": "Why is staking important?"
+        }
+      },
+      "title": "Advanced Staking"
+    },
+    "essential": {
+      "description": "A simple guide to staking for everyone. Clear explanations, no jargon.",
+      "resources": {
+        "can-lose-funds": {
+          "a": "If you follow the rules, staking your {token} is safe. But if you act against the network (like trying to cheat), you could lose some of your staked {token}.",
+          "q": "Can I lose my funds?"
+        },
+        "how-much-can-earn": {
+          "a": "Staking rewards vary, but you can typically earn around 10-15% per year on {network}. The exact amount depends on how many people are staking and network conditions. Remember, rewards aren't guaranteed and can change.",
+          "q": "How much can I earn from staking?"
+        },
+        "how-to-start": {
+          "a": "To start staking, choose the {network} network, select a staking method (solo or pool), and follow the steps in your wallet or dashboard. Pool staking is recommended for beginners.",
+          "q": "How do I start staking?"
+        },
+        "how-to-stop": {
+          "a": "You can stop staking at any time, but your {token} may be locked for a short period (called the unbonding period) before you can use it again.",
+          "q": "How do I stop staking?"
+        },
+        "staking-rewards": {
+          "a": "Staking rewards are extra {token} you earn for helping the {network} network. The amount depends on how much you stake and the network's rules.",
+          "q": "What are staking rewards?"
+        },
+        "staking-risks": {
+          "a": "Staking is generally safe, but there are risks. For example, if you break the rules, you could lose some of your staked {token} (this is called slashing). Also, your {token} is locked for a period and can't be used right away.",
+          "q": "What are the risks of staking?"
+        },
+        "types-of-staking": {
+          "a": "You can stake on your own (solo staking) or join with others in a group (pool staking). Pool staking is easier for most people and lets you start with a smaller amount of {token}.",
+          "q": "What are the different types of staking?"
+        },
+        "wallet-safety": {
+          "a": "Never share your seed phrase or private keys. Use official wallets and double-check all website URLs. Consider using a hardware wallet for extra security, especially for large amounts.",
+          "q": "How do I keep my wallet safe when staking?"
+        },
+        "what-is-staking": {
+          "a": "Staking means locking up your {network} ({token}) to help run and secure the {network} network. In return, you can earn rewards. It's a way to participate in the network and support its operations.",
+          "q": "What is staking?"
+        },
+        "why-important": {
+          "a": "Staking helps keep the {network} network safe and running smoothly. The more people stake their {token}, the more secure and reliable the network becomes.",
+          "q": "Why is staking important?"
+        }
+      },
+      "title": "Staking Essentials"
+    }
+  }
+}
