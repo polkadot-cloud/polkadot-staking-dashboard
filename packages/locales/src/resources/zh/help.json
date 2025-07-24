@@ -445,10 +445,8 @@
     },
     "modal": {
       "articles": "文章",
-      "articlesTab": "文章",
       "close": "关闭",
       "definitions": "定义",
-      "definitionsTab": "定义",
       "noArticles": "暂无相关文章。",
       "resources": "资源",
       "noResultsFound": "未找到结果",

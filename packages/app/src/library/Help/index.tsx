@@ -289,7 +289,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.definitionsTab', { ns: 'help' })}
+                  {t('modal.definitions', { ns: 'help' })}
                 </TabButton>
                 <TabButton
                   selected={tab === 'articles'}
@@ -304,7 +304,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.articlesTab', { ns: 'help' })}
+                  {t('modal.articles', { ns: 'help' })}
                 </TabButton>
               </TabBar>
               {/* Tab Content */}

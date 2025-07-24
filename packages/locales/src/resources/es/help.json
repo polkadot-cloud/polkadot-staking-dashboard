@@ -436,10 +436,8 @@
     },
     "modal": {
       "articles": "Artículos",
-      "articlesTab": "Artículos",
       "close": "Cerrar",
       "definitions": "Definiciones",
-      "definitionsTab": "Definiciones",
       "noArticles": "No hay artículos disponibles.",
       "resources": "Recursos",
       "noResultsFound": "No se encontraron resultados",

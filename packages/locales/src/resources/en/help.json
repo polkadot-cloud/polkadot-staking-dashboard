@@ -434,10 +434,8 @@
     },
     "modal": {
       "articles": "Articles",
-      "articlesTab": "Articles",
       "close": "Close",
       "definitions": "Definitions",
-      "definitionsTab": "Definitions",
       "noArticles": "No articles available.",
       "resources": "Resources",
       "noResultsFound": "No results found",
