@@ -442,7 +442,8 @@
       "definitionsTab": "Definiciones",
       "noArticles": "No hay artículos disponibles.",
       "resources": "Recursos",
-      "resourcesTab": "Recursos"
+      "noResultsFound": "No se encontraron resultados",
+      "showingFoundOfTotal": "Mostrando {{found}} de {{total}} Recursos"
     }
   }
 }

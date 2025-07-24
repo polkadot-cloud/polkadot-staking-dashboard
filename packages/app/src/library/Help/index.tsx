@@ -274,7 +274,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.resourcesTab', 'Resources', { ns: 'help' })}
+                  {t('modal.resources', { ns: 'help' })}
                 </TabButton>
                 <TabButton
                   selected={tab === 'definitions'}
@@ -289,7 +289,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.definitionsTab', 'Definitions', { ns: 'help' })}
+                  {t('modal.definitionsTab', { ns: 'help' })}
                 </TabButton>
                 <TabButton
                   selected={tab === 'articles'}
@@ -304,7 +304,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.articlesTab', 'Articles', { ns: 'help' })}
+                  {t('modal.articlesTab', { ns: 'help' })}
                 </TabButton>
               </TabBar>
               {/* Tab Content */}
@@ -322,7 +322,7 @@ export const Help = () => {
                     <SearchInput
                       value={searchTerm}
                       handleChange={(e) => setSearchTerm(e.currentTarget.value)}
-                      placeholder={`Search ${filteredResources.length} resources...`}
+                      placeholder={`Search ${filteredResources.length} ${t('modal.resources', { ns: 'help' })}...`}
                       secondary
                     />
                     {searchTerm && (
@@ -334,8 +334,14 @@ export const Help = () => {
                         }}
                       >
                         {filteredResources.length === 0
-                          ? 'No resources found matching your search.'
-                          : `Showing ${filteredResources.length} of ${pathResourceCount} resources`}
+                          ? t('modal.noResultsFound', {
+                              ns: 'help',
+                            })
+                          : t('modal.showingFoundOfTotal', {
+                              ns: 'help',
+                              found: filteredResources.length,
+                              total: pathResourceCount,
+                            })}
                       </p>
                     )}
                   </div>
@@ -361,7 +367,7 @@ export const Help = () => {
               {tab === 'definitions' && (
                 <>
                   <HelpTitle>
-                    {t('modal.definitions', 'Definitions', { ns: 'help' })}
+                    {t('modal.definitions', { ns: 'help' })}
                   </HelpTitle>
 
                   {activeDefinitions.length > 0 && (
@@ -373,7 +379,7 @@ export const Help = () => {
                           handleChange={(e) =>
                             setSearchTerm(e.currentTarget.value)
                           }
-                          placeholder={`Search ${filteredDefinitions.length} definitions...`}
+                          placeholder={`${t('search', { ns: 'app' })} ${filteredDefinitions.length} ${t('modal.definitions', { ns: 'help' })}...`}
                           secondary
                         />
                         {searchTerm && (
@@ -385,8 +391,14 @@ export const Help = () => {
                             }}
                           >
                             {filteredDefinitions.length === 0
-                              ? 'No definitions found matching your search.'
-                              : `Showing ${filteredDefinitions.length} of ${activeDefinitions.length} definitions`}
+                              ? t('modal.noResultsFound', {
+                                  ns: 'help',
+                                })
+                              : t('modal.showingFoundOfTotal', {
+                                  ns: 'help',
+                                  found: filteredDefinitions.length,
+                                  total: activeDefinitions.length,
+                                })}
                           </p>
                         )}
                       </div>
@@ -417,7 +429,7 @@ export const Help = () => {
                           handleChange={(e) =>
                             setSearchTerm(e.currentTarget.value)
                           }
-                          placeholder={`Search ${filteredExternals.length} articles...`}
+                          placeholder={`Search ${filteredExternals.length} ${t('modal.articles', { ns: 'help' })}...`}
                           secondary
                         />
                         {searchTerm && (
@@ -429,8 +441,14 @@ export const Help = () => {
                             }}
                           >
                             {filteredExternals.length === 0
-                              ? 'No articles found matching your search.'
-                              : `Showing ${filteredExternals.length} of ${activeExternals.length} articles`}
+                              ? t('modal.noResultsFound', {
+                                  ns: 'help',
+                                })
+                              : t('modal.showingFoundOfTotal', {
+                                  ns: 'help',
+                                  found: filteredExternals.length,
+                                  total: activeExternals.length,
+                                })}
                           </p>
                         )}
                       </div>
