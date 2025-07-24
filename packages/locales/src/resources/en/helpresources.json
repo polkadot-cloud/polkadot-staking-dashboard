@@ -123,10 +123,6 @@
           "a": "The unbonding period is the time you must wait after stopping staking before your {token} becomes available for transfer. This period helps protect the {network} network from sudden changes in stake."
         }
       }
-    },
-    "navigation": {
-      "basicToAdvanced": "Ready to learn more? Switch to Advanced Mode for deeper insights.",
-      "advancedToBasic": "Prefer simple explanations? Switch to Essentials for easy guides."
     }
   }
 }

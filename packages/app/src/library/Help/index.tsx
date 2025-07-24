@@ -33,11 +33,12 @@ import { HelpSubtitle, HelpTitle, TabBar, TabButton } from './Wrappers'
 export const Help = () => {
   const { t, i18n } = useTranslation()
   const controls = useAnimation()
+  const { advancedMode } = useUi()
+  const { network } = useNetwork()
   const { fillVariables } = useFillVariables()
   const { setStatus, status, definition, closeHelp } = useHelp()
-  const { advancedMode, setAdvancedMode } = useUi()
+
   const scrollRef = useRef<HTMLDivElement>(null)
-  const { network } = useNetwork()
   const capitalizedNetwork = NetworkList[network]?.name
     ? NetworkList[network].name.charAt(0).toUpperCase() +
       NetworkList[network].name.slice(1)
@@ -68,15 +69,6 @@ export const Help = () => {
       onFadeOut()
     }
   }, [status])
-
-  useEffect(() => {
-    // When switching between easy/advanced, scroll to top and trigger reflow
-    if (status === 'open' && scrollRef.current) {
-      scrollRef.current.scrollTop = 0
-      // Trigger a window resize event to force modal recalculation
-      window.dispatchEvent(new Event('resize'))
-    }
-  }, [advancedMode, status])
 
   // Reset search when switching modes or tabs
   useEffect(() => {
@@ -363,20 +355,6 @@ export const Help = () => {
                       />
                     )
                   )}
-                  <div style={{ marginTop: '2rem', width: '100%' }}>
-                    <ButtonPrimaryInvert
-                      text={
-                        advancedMode
-                          ? t('navigation.advancedToBasic', {
-                              ns: 'helpResources',
-                            })
-                          : t('navigation.basicToAdvanced', {
-                              ns: 'helpResources',
-                            })
-                      }
-                      onClick={() => setAdvancedMode(!advancedMode)}
-                    />
-                  </div>
                 </>
               )}
 
