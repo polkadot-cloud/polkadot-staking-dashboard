@@ -437,8 +437,8 @@
       "close": "Close",
       "definitions": "Definitions",
       "noArticles": "No articles available.",
-      "resources": "Resources",
       "noResultsFound": "No results found",
+      "resources": "Resources",
       "showingFoundOfTotal": "Showing {{found}} of {{total}} Resources"
     }
   }

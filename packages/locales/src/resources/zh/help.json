@@ -448,8 +448,8 @@
       "close": "关闭",
       "definitions": "定义",
       "noArticles": "暂无相关文章。",
-      "resources": "资源",
       "noResultsFound": "未找到结果",
+      "resources": "资源",
       "showingFoundOfTotal": "显示 {{found}} 个资源，共 {{total}} 个"
     }
   }

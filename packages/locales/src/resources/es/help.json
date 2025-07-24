@@ -439,8 +439,8 @@
       "close": "Cerrar",
       "definitions": "Definiciones",
       "noArticles": "No hay artículos disponibles.",
-      "resources": "Recursos",
       "noResultsFound": "No se encontraron resultados",
+      "resources": "Recursos",
       "showingFoundOfTotal": "Mostrando {{found}} de {{total}} Recursos"
     }
   }
