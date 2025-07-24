@@ -60,7 +60,6 @@ export const useAccountSwitchNavigation = () => {
     // Only redirect if we're on the relevant pages and the account state is clear
     if (pathname === '/pools' && accountNominating && !accountInPool) {
       // On pools page, switching to nominating account -> go to nominate page
-      console.log('Navigating from pools to nominate')
       navigate('/nominate')
     } else if (
       pathname === '/nominate' &&
@@ -68,7 +67,6 @@ export const useAccountSwitchNavigation = () => {
       !accountNominating
     ) {
       // On nominate page, switching to pool member account -> go to pools page
-      console.log('Navigating from nominate to pools')
       navigate('/pools')
     }
   }, [
