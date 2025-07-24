@@ -2,16 +2,26 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { camelize } from '@w3ux/utils'
+import DiscordSVG from 'assets/brands/discord.svg?react'
+import BookSVG from 'assets/icons/book.svg?react'
+import EnvelopeSVG from 'assets/icons/envelope.svg?react'
+import ForumSVG from 'assets/icons/forum.svg?react'
+import GlassesSVG from 'assets/icons/glasses.svg?react'
 import { HelpConfig } from 'config/help'
+import { HelpResourceItems } from 'config/helpResources'
+import { DiscordSupportUrl, MailSupportAddress } from 'consts'
+import { NetworkList } from 'consts/networks'
 import { useHelp } from 'contexts/Help'
 import type {
   DefinitionWithKeys,
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types'
+import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
+import { CardWrapper as Card } from 'library/Card/Wrappers'
 import { DefaultLocale } from 'locales'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,27 +38,9 @@ import {
   TabBar,
   TabButton,
 } from './Wrappers'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import helpResourcesEn from './helpresources.json'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import helpResourcesEs from '../../../../locales/src/resources/es/helpresources.json'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import DiscordSVG from 'assets/brands/discord.svg?react'
-import BookSVG from 'assets/icons/book.svg?react'
-import EnvelopeSVG from 'assets/icons/envelope.svg?react'
-import ForumSVG from 'assets/icons/forum.svg?react'
-import GlassesSVG from 'assets/icons/glasses.svg?react'
-import { DiscordSupportUrl, MailSupportAddress } from 'consts'
-import { NetworkList } from 'consts/networks'
-import { useNetwork } from 'contexts/Network'
-import { CardWrapper as Card } from 'library/Card/Wrappers'
-import helpResourcesZh from '../../../../locales/src/resources/zh/helpresources.json'
 
 export const Help = () => {
-  const { t, i18n } = useTranslation('help')
+  const { t, i18n } = useTranslation()
   const controls = useAnimation()
   const { fillVariables } = useFillVariables()
   const { setStatus, status, definition, closeHelp } = useHelp()
@@ -214,22 +206,25 @@ export const Help = () => {
     )
   })
 
-  // Select helpresources file based on language
-  let helpResources: typeof helpResourcesEn = helpResourcesEn
-  if (i18n.resolvedLanguage === 'es') {
-    helpResources = helpResourcesEs
-  } else if (i18n.resolvedLanguage === 'zh') {
-    helpResources = helpResourcesZh
-  }
-
   // Tabbed UI: show tab bar and switch content
   if (!definition) {
     const path = advancedMode ? 'advanced' : 'essential'
-    const learningPath = helpResources.learningPaths[path]
-    const navigation = helpResources.navigation
+    const pathResources = HelpResourceItems[path]
+    const pathResourceCount = pathResources.length
+
+    // Format resources with correct language content
+    const resourcesContent = pathResources.map((key) => {
+      const question = t(`${path}.resources.${key}.q`, { ns: 'helpResources' })
+      const answer = t(`${path}.resources.${key}.a`, { ns: 'helpResources' })
+      return {
+        id: key,
+        question,
+        answer,
+      }
+    })
 
     // Filter resources based on search term
-    const filteredResources = learningPath.resources.filter(
+    const filteredResources = resourcesContent.filter(
       (item: { question: string; answer: string }) => {
         if (!searchTerm.trim()) {
           return true
@@ -274,7 +269,7 @@ export const Help = () => {
               >
                 <ButtonPrimaryInvert
                   lg
-                  text={t('modal.close')}
+                  text={t('modal.close', { ns: 'help' })}
                   onClick={() => closeHelp()}
                 />
               </div>
@@ -293,7 +288,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.resourcesTab', 'Resources')}
+                  {t('modal.resourcesTab', 'Resources', { ns: 'help' })}
                 </TabButton>
                 <TabButton
                   selected={tab === 'definitions'}
@@ -308,7 +303,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.definitionsTab', 'Definitions')}
+                  {t('modal.definitionsTab', 'Definitions', { ns: 'help' })}
                 </TabButton>
                 <TabButton
                   selected={tab === 'articles'}
@@ -323,7 +318,7 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.articlesTab', 'Articles')}
+                  {t('modal.articlesTab', 'Articles', { ns: 'help' })}
                 </TabButton>
                 <TabButton
                   selected={tab === 'support'}
@@ -338,15 +333,17 @@ export const Help = () => {
                       verticalAlign: 'middle',
                     }}
                   />
-                  {t('modal.supportTab', 'Support')}
+                  {t('modal.supportTab', 'Support', { ns: 'help' })}
                 </TabButton>
               </TabBar>
               {/* Tab Content */}
               {tab === 'resources' ? (
                 <>
-                  <HelpTitle>{learningPath.title}</HelpTitle>
+                  <HelpTitle>
+                    {t(`${path}.title`, { ns: 'helpResources' })}
+                  </HelpTitle>
                   <h3 style={{ margin: '0 0 1.5rem 0' }}>
-                    {learningPath.description}
+                    {t(`${path}.description`, { ns: 'helpResources' })}
                   </h3>
 
                   {/* Search Input */}
@@ -409,7 +406,7 @@ export const Help = () => {
                       >
                         {filteredResources.length === 0
                           ? 'No resources found matching your search.'
-                          : `Showing ${filteredResources.length} of ${learningPath.resources.length} resources`}
+                          : `Showing ${filteredResources.length} of ${pathResourceCount} resources`}
                       </p>
                     )}
                   </div>
@@ -433,8 +430,12 @@ export const Help = () => {
                     <ButtonPrimaryInvert
                       text={
                         advancedMode
-                          ? navigation.advancedToBasic
-                          : navigation.basicToAdvanced
+                          ? t('navigation.advancedToBasic', {
+                              ns: 'helpResources',
+                            })
+                          : t('navigation.basicToAdvanced', {
+                              ns: 'helpResources',
+                            })
                       }
                       onClick={() => setAdvancedMode(!advancedMode)}
                     />
@@ -442,7 +443,9 @@ export const Help = () => {
                 </>
               ) : tab === 'definitions' ? (
                 <>
-                  <HelpTitle>{t('modal.definitions', 'Definitions')}</HelpTitle>
+                  <HelpTitle>
+                    {t('modal.definitions', 'Definitions', { ns: 'help' })}
+                  </HelpTitle>
 
                   {activeDefinitions.length > 0 && (
                     <>
@@ -515,7 +518,7 @@ export const Help = () => {
                       {filteredDefinitions.map((item, index: number) => (
                         <Definition
                           key={`def_${index}`}
-                          title={item.title}
+                          title={t(item.title, { ns: 'help' })}
                           description={item.description}
                         />
                       ))}
@@ -524,7 +527,9 @@ export const Help = () => {
                 </>
               ) : tab === 'articles' ? (
                 <>
-                  <HelpTitle>{t('modal.articles', 'Articles')}</HelpTitle>
+                  <HelpTitle>
+                    {t('modal.articles', 'Articles', { ns: 'help' })}
+                  </HelpTitle>
                   {activeExternals.length > 0 ? (
                     <>
                       {/* Search Input for Articles */}
@@ -597,14 +602,18 @@ export const Help = () => {
                         <External
                           key={`ext_${index}`}
                           width="100%"
-                          title={t(item.title)}
+                          title={t(item.title, { ns: 'help' })}
                           url={item.url}
                           website={item.website}
                         />
                       ))}
                     </>
                   ) : (
-                    <p>{t('modal.noArticles', 'No articles available.')}</p>
+                    <p>
+                      {t('modal.noArticles', 'No articles available.', {
+                        ns: 'help',
+                      })}
+                    </p>
                   )}
                 </>
               ) : (
@@ -631,7 +640,7 @@ export const Help = () => {
                     <HelpTitle
                       style={{ margin: '0 0 1.25rem 0', textAlign: 'center' }}
                     >
-                      {t('modal.support', 'Support')}
+                      {t('modal.support', 'Support', { ns: 'help' })}
                     </HelpTitle>
                     <p
                       style={{
@@ -640,7 +649,7 @@ export const Help = () => {
                         textAlign: 'center',
                       }}
                     >
-                      {t('modal.supportIntro')}
+                      {t('modal.supportIntro', { ns: 'help' })}
                     </p>
                     <StyledSupportButton
                       href={DiscordSupportUrl}
@@ -654,7 +663,7 @@ export const Help = () => {
                           verticalAlign: 'middle',
                         }}
                       />
-                      {t('modals:goToDiscord')}
+                      {t('modals:goToDiscord', { ns: 'help' })}
                     </StyledSupportButton>
                     <StyledSupportButton href={`mailto:${MailSupportAddress}`}>
                       <EnvelopeSVG
@@ -664,7 +673,7 @@ export const Help = () => {
                           verticalAlign: 'middle',
                         }}
                       />
-                      {t('pages:email')}
+                      {t('pages:email', { ns: 'help' })}
                     </StyledSupportButton>
                     <p
                       style={{
@@ -673,7 +682,7 @@ export const Help = () => {
                         margin: 0,
                       }}
                     >
-                      {t('modal.supportOutro')}
+                      {t('modal.supportOutro', { ns: 'help' })}
                     </p>
                   </Card>
                 </div>
@@ -725,14 +734,14 @@ export const Help = () => {
             >
               <ButtonPrimaryInvert
                 lg
-                text={t('modal.close')}
+                text={t('modal.close', { ns: 'help' })}
                 onClick={() => closeHelp()}
               />
             </div>
             <HelpTitle>
               {activeDefinition
                 ? `${activeDefinition.title}`
-                : `${t('modal.helpResources')}`}
+                : `${t('modal.helpResources', { ns: 'help' })}`}
             </HelpTitle>
 
             {activeDefinition !== null && (
@@ -742,8 +751,10 @@ export const Help = () => {
             {definitions.length > 0 && (
               <>
                 <HelpSubtitle>
-                  {activeDefinition ? `${t('modal.related')} ` : ''}
-                  {t('modal.definitions')}
+                  {activeDefinition
+                    ? `${t('modal.related', { ns: 'help' })} `
+                    : ''}
+                  {t('modal.definitions', { ns: 'help' })}
                 </HelpSubtitle>
                 {activeDefinitions.map((item, index: number) => (
                   <Definition
@@ -757,7 +768,9 @@ export const Help = () => {
 
             {activeExternals.length > 0 && (
               <>
-                <HelpSubtitle>{t('modal.articles')}</HelpSubtitle>
+                <HelpSubtitle>
+                  {t('modal.articles', { ns: 'help' })}
+                </HelpSubtitle>
                 {activeExternals.map((item, index: number) => (
                   <External
                     key={`ext_${index}`}
