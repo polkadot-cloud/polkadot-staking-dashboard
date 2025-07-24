@@ -143,3 +143,43 @@ export const ItemWrapper = styled(motion.div)<{
     }
   }
 `
+
+// Tab bar styles
+export const TabBar = styled.div.attrs(() => ({
+  role: 'tablist',
+}))`
+  display: flex;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-primary);
+`
+
+export const TabButton = styled.button<{ selected: boolean }>`
+  background: none;
+  border: none;
+  outline: none;
+  font-family: InterSemiBold, sans-serif;
+  font-size: 1.1rem;
+  color: ${(p) =>
+    p.selected ? 'var(--accent-color-primary)' : 'var(--text-color-secondary)'};
+  border-bottom: 2px solid
+    ${(p) => (p.selected ? 'var(--accent-color-primary)' : 'transparent')};
+  margin-right: 2rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-bottom 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+
+  svg {
+    path {
+      fill: ${(p) =>
+        p.selected
+          ? 'var(--accent-color-primary)'
+          : 'var(--text-color-secondary)'};
+    }
+  }
+`

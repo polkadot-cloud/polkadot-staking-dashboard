@@ -7,6 +7,7 @@
 
 * **refactor:** Total Nominator Count optimisations ([#2897](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2897)) ([5a3ec27](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/5a3ec2777b0e8470a8e410f3142518c0e7411fb2))
 * Search for validators in Manage Nominations ([#2900](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2900)) ([7e925ea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e925ea4cfa9092f8765e27aff9e7d66f35bb85d))
+* **ux:** Tiered, network-aware help resources with multi-language support ([#2748](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2748)) ([330142b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/330142bf9506be41857f311969ef45f017139f25))
 
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.2.0...plugin-staking-api-v1.3.0) (2025-06-17)
 

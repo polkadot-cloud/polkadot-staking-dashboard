@@ -43,7 +43,7 @@ export const fetchSearchValidators = async (
       variables: { network, searchTerm },
     })
     return result.data.searchValidators
-  } catch (err) {
+  } catch {
     return null
   }
 }
