@@ -442,11 +442,7 @@
       "definitionsTab": "Definiciones",
       "noArticles": "No hay artículos disponibles.",
       "resources": "Recursos",
-      "resourcesTab": "Recursos",
-      "support": "Soporte",
-      "supportIntro": "Si necesita más ayuda, puede comunicarse con nuestro equipo:",
-      "supportOutro": "Estamos aquí para ayudarle con cualquier pregunta sobre staking, pools o el uso del panel de control.",
-      "supportTab": "Soporte"
+      "resourcesTab": "Recursos"
     }
   }
 }
