@@ -156,7 +156,9 @@ export const SupportLinks = styled.div`
 `
 
 // Tab bar styles
-export const TabBar = styled.div`
+export const TabBar = styled.div.attrs(() => ({
+  role: 'tablist',
+}))`
   display: flex;
   width: 100%;
   margin-bottom: 1.5rem;
