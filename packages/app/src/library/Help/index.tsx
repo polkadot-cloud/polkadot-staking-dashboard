@@ -249,7 +249,10 @@ export const Help = () => {
       >
         <Scroll ref={scrollRef}>
           <ModalContent>
-            <Content size="lg" style={{ alignItems: 'flex-start' }}>
+            <Content
+              size="lg"
+              style={{ alignItems: 'flex-start', padding: '0 1rem' }}
+            >
               <div
                 style={{
                   padding: '0 0.1rem',
