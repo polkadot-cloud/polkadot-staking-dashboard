@@ -18,6 +18,7 @@ import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
+import { SearchInput } from 'library/List/SearchInput'
 import { DefaultLocale } from 'locales'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -323,54 +324,12 @@ export const Help = () => {
 
                   {/* Search Input */}
                   <div style={{ marginBottom: '1.5rem', width: '100%' }}>
-                    <div style={{ position: 'relative' }}>
-                      <input
-                        type="text"
-                        placeholder={`Search ${filteredResources.length} resources...`}
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{
-                          width: '100%',
-                          padding: '0.75rem 1rem',
-                          borderRadius: '0.75rem',
-                          border: '1px solid var(--border-primary)',
-                          background: 'var(--background-default)',
-                          color: 'var(--text-color-primary)',
-                          fontSize: '1rem',
-                          fontFamily: 'Inter, sans-serif',
-                          outline: 'none',
-                          transition: 'border-color 0.2s ease',
-                          boxSizing: 'border-box',
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor =
-                            'var(--accent-color-primary)'
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = 'var(--border-primary)'
-                        }}
-                      />
-                      {searchTerm && (
-                        <button
-                          onClick={() => setSearchTerm('')}
-                          style={{
-                            position: 'absolute',
-                            right: '0.75rem',
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--text-color-secondary)',
-                            cursor: 'pointer',
-                            padding: '0.25rem',
-                            fontSize: '1.1rem',
-                          }}
-                          title="Clear search"
-                        >
-                          ×
-                        </button>
-                      )}
-                    </div>
+                    <SearchInput
+                      value={searchTerm}
+                      handleChange={(e) => setSearchTerm(e.currentTarget.value)}
+                      placeholder={`Search ${filteredResources.length} resources...`}
+                      secondary
+                    />
                     {searchTerm && (
                       <p
                         style={{
@@ -428,55 +387,14 @@ export const Help = () => {
                     <>
                       {/* Search Input for Definitions */}
                       <div style={{ marginBottom: '1.5rem', width: '100%' }}>
-                        <div style={{ position: 'relative' }}>
-                          <input
-                            type="text"
-                            placeholder={`Search ${filteredDefinitions.length} definitions...`}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{
-                              width: '100%',
-                              padding: '0.75rem 1rem',
-                              borderRadius: '0.75rem',
-                              border: '1px solid var(--border-primary)',
-                              background: 'var(--background-default)',
-                              color: 'var(--text-color-primary)',
-                              fontSize: '1rem',
-                              fontFamily: 'Inter, sans-serif',
-                              outline: 'none',
-                              transition: 'border-color 0.2s ease',
-                              boxSizing: 'border-box',
-                            }}
-                            onFocus={(e) => {
-                              e.target.style.borderColor =
-                                'var(--accent-color-primary)'
-                            }}
-                            onBlur={(e) => {
-                              e.target.style.borderColor =
-                                'var(--border-primary)'
-                            }}
-                          />
-                          {searchTerm && (
-                            <button
-                              onClick={() => setSearchTerm('')}
-                              style={{
-                                position: 'absolute',
-                                right: '0.75rem',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                background: 'none',
-                                border: 'none',
-                                color: 'var(--text-color-secondary)',
-                                cursor: 'pointer',
-                                padding: '0.25rem',
-                                fontSize: '1.1rem',
-                              }}
-                              title="Clear search"
-                            >
-                              ×
-                            </button>
-                          )}
-                        </div>
+                        <SearchInput
+                          value={searchTerm}
+                          handleChange={(e) =>
+                            setSearchTerm(e.currentTarget.value)
+                          }
+                          placeholder={`Search ${filteredDefinitions.length} definitions...`}
+                          secondary
+                        />
                         {searchTerm && (
                           <p
                             style={{
@@ -513,55 +431,14 @@ export const Help = () => {
                     <>
                       {/* Search Input for Articles */}
                       <div style={{ marginBottom: '1.5rem', width: '100%' }}>
-                        <div style={{ position: 'relative' }}>
-                          <input
-                            type="text"
-                            placeholder={`Search ${filteredExternals.length} articles...`}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{
-                              width: '100%',
-                              padding: '0.75rem 1rem',
-                              borderRadius: '0.75rem',
-                              border: '1px solid var(--border-primary)',
-                              background: 'var(--background-default)',
-                              color: 'var(--text-color-primary)',
-                              fontSize: '1rem',
-                              fontFamily: 'Inter, sans-serif',
-                              outline: 'none',
-                              transition: 'border-color 0.2s ease',
-                              boxSizing: 'border-box',
-                            }}
-                            onFocus={(e) => {
-                              e.target.style.borderColor =
-                                'var(--accent-color-primary)'
-                            }}
-                            onBlur={(e) => {
-                              e.target.style.borderColor =
-                                'var(--border-primary)'
-                            }}
-                          />
-                          {searchTerm && (
-                            <button
-                              onClick={() => setSearchTerm('')}
-                              style={{
-                                position: 'absolute',
-                                right: '0.75rem',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                background: 'none',
-                                border: 'none',
-                                color: 'var(--text-color-secondary)',
-                                cursor: 'pointer',
-                                padding: '0.25rem',
-                                fontSize: '1.1rem',
-                              }}
-                              title="Clear search"
-                            >
-                              ×
-                            </button>
-                          )}
-                        </div>
+                        <SearchInput
+                          value={searchTerm}
+                          handleChange={(e) =>
+                            setSearchTerm(e.currentTarget.value)
+                          }
+                          placeholder={`Search ${filteredExternals.length} articles...`}
+                          secondary
+                        />
                         {searchTerm && (
                           <p
                             style={{
