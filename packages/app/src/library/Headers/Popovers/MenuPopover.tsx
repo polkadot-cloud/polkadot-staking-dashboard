@@ -78,22 +78,20 @@ export const MenuPopover = ({
           <h3>{t('plugins', { ns: 'modals' })}</h3>
         </div>
       </MenuItemButton>
-      {/* NOTE: Temporary disabling nominator invites until supported */}
-      {!isNominator && (
-        <MenuItemButton
-          onClick={() => {
-            setOpen(false)
-            openModal({ key: 'Invite', size: 'sm' })
-          }}
-        >
-          <div>
-            <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
-          </div>
-          <div>
-            <h3>{t('invite', { ns: 'app' })}</h3>
-          </div>
-        </MenuItemButton>
-      )}
+      <MenuItemButton
+        onClick={() => {
+          setOpen(false)
+          openModal({ key: 'Invite', size: 'sm' })
+        }}
+      >
+        <div>
+          <FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
+        </div>
+        <div>
+          <h3>{t(isNominator ? 'share' : 'invite', { ns: 'app' })}</h3>
+        </div>
+      </MenuItemButton>
+
       <MenuItemButton
         onClick={() => {
           setOpen(false)
