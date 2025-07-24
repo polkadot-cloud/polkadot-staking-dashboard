@@ -1,10 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  faEnvelopeOpenText,
-  faShareFromSquare,
-} from '@fortawesome/free-solid-svg-icons'
+import { faEnvelopeOpenText, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -40,9 +37,9 @@ export const Invite = () => {
     subtitle = inviteLink
     title = t('copyPoolInviteLink', { ns: 'app' })
   } else if (nominated.length > 0) {
-    faIcon = faShareFromSquare
+    faIcon = faList
     toCopy = nominated.map((validator) => validator.address).join('\n')
-    title = t('copyAddresses', { ns: 'app' })
+    title = t('copyNominations', { ns: 'app' })
     subtitle = t('copyValidatorAddresses', { ns: 'app' })
   }
 

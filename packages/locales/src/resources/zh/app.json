@@ -66,7 +66,7 @@
     "copied": "已复制!",
     "copy": "复制",
     "copyAddress": "复制地址",
-    "copyAddresses": "复制地址",
+    "copyNominations": "复制提名地址",
     "copyPoolAddress": "复制池{{type}}地址",
     "copyPoolInviteLink": "复制提名池邀请链接",
     "copyValidatorAddresses": "复制您指定的验证者地址以便与他人分享.",

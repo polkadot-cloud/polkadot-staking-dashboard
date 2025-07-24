@@ -66,7 +66,7 @@
     "copied": "Copied!",
     "copy": "Copy",
     "copyAddress": "Copy Address",
-    "copyAddresses": "Copy Addresses",
+    "copyNominations": "Copy Nomination Addresses",
     "copyPoolAddress": "Copy Pool {{type}} Address",
     "copyPoolInviteLink": "Copy Pool Invite Link",
     "copyValidatorAddresses": "Copy your nominated validator addresses to share with others.",
