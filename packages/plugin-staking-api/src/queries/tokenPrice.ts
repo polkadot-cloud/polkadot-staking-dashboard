@@ -34,7 +34,7 @@ export const fetchTokenPrice = async (
       variables: { ticker },
     })
     return result.data.tokenPrice
-  } catch (error) {
+  } catch {
     return null
   }
 }

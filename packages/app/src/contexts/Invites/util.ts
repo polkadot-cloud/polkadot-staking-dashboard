@@ -33,7 +33,7 @@ export const isInviteValid = (raw: any): raw is InviteConfig => {
       default:
         return false
     }
-  } catch (error) {
+  } catch {
     removeLocalInviteConfig()
     return false
   }

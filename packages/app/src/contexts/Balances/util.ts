@@ -2,22 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeString } from '@w3ux/types'
-import type { NetworkId, UnlockChunk } from 'types'
-
-// Gets the total unlocking and unlocked amount.
-export const getUnlocking = (chunks: UnlockChunk[], thisEra: number) => {
-  let totalUnlocking = 0n
-  let totalUnlocked = 0n
-
-  for (const { value, era } of chunks) {
-    if (thisEra > era) {
-      totalUnlocked = totalUnlocked + value
-    } else {
-      totalUnlocking = totalUnlocking + value
-    }
-  }
-  return { totalUnlocking, totalUnlocked }
-}
+import type { NetworkId } from 'types'
 
 // Get the local storage record for an account reserve balance
 export const getLocalFeeReserve = (
@@ -53,7 +38,7 @@ export const setLocalFeeReserve = (
     networkReserves[address] = amount.toString()
     newReserves[network] = networkReserves
     localStorage.setItem('reserve_balances', JSON.stringify(newReserves))
-  } catch (e) {
+  } catch {
     localStorage.removeItem('reserve_balances')
   }
 }

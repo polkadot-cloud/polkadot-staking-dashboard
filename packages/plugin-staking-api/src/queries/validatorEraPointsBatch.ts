@@ -60,7 +60,7 @@ export const fetchValidatorEraPointsBatch = async (
       variables: { network, validators, fromEra, depth },
     })
     return result.data
-  } catch (error) {
+  } catch {
     return {
       validatorEraPointsBatch: [],
     }

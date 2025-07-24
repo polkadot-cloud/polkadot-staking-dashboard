@@ -105,7 +105,7 @@ export const Html5QrCodePlugin = ({
         if (html5QrCodeRef.current) {
           html5QrCodeRef.current.stop()
         }
-      } catch (err) {
+      } catch {
         // Silently ignore error
       }
     }

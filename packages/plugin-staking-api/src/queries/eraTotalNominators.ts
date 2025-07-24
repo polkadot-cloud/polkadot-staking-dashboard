@@ -36,7 +36,7 @@ export const fetchEraTotalNominators = async (
       variables: { network, era },
     })
     return result.data.eraTotalNominators.totalNominators as number
-  } catch (err) {
+  } catch {
     return null
   }
 }
