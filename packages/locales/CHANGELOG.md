@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.3.0...locales-v1.4.0) (2025-07-24)
+
+
+### Features
+
+* add missing nominatingAndInPool translations for dual staking ([#2872](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2872)) ([519b34b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/519b34b7bce0d9dd0fd250331786d927604de23d))
+* Search for validators in Manage Nominations ([#2900](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2900)) ([7e925ea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e925ea4cfa9092f8765e27aff9e7d66f35bb85d))
+* **ux:** Share nominee addresses via header menu ([#2903](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2903)) ([395ce5e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/395ce5ec8a9e7d7a626f82764b7401c5f28715d8))
+* **ux:** Tiered, network-aware help resources with multi-language support ([#2748](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2748)) ([330142b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/330142bf9506be41857f311969ef45f017139f25))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.2.0...locales-v1.3.0) (2025-06-17)
 
 
