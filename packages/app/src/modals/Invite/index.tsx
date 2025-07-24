@@ -32,8 +32,8 @@ export const Invite = () => {
 
   if (membership) {
     toCopy = `https://staking.polkadot.cloud/#/overview?n=${network}&i=pool&id=${poolId}`
-    subtitle = toCopy
     title = t('copyPoolInviteLink', { ns: 'app' })
+    subtitle = toCopy
   } else if (nominated.length > 0) {
     faIcon = faList
     toCopy = nominated.map((validator) => validator.address).join('\n')
