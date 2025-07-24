@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.3.0...ui-core-v1.4.0) (2025-07-24)
+
+
+### Features
+
+* Search for validators in Manage Nominations ([#2900](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2900)) ([7e925ea](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e925ea4cfa9092f8765e27aff9e7d66f35bb85d))
+* **ux:** Share nominee addresses via header menu ([#2903](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2903)) ([395ce5e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/395ce5ec8a9e7d7a626f82764b7401c5f28715d8))
+* Validator search commission filter for Manage Nominations ([#2901](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2901)) ([de64b5d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/de64b5d1260d2704d1b0f4188b875e4f94dccf40))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.2.0...ui-core-v1.3.0) (2025-06-17)
 
 

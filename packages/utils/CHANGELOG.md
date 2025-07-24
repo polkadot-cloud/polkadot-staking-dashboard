@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.2.0...utils-v1.2.1) (2025-07-24)
+
+
+### Bug Fixes
+
+* Balance fixes ([#2892](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2892)) ([fc0fbfe](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/fc0fbfe5f6340de484423b3bea7e8f08624adfb9))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.1.0...utils-v1.2.0) (2025-06-17)
 
 
