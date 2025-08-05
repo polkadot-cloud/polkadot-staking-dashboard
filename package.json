@@ -32,7 +32,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "sass": "1.89.2",
-    "typescript": "^5.7.2",
+    "typescript": "^5.9.2",
     "typescript-eslint": "^8.32.1"
   },
   "prettier": {
