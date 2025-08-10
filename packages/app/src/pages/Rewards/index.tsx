@@ -10,7 +10,7 @@ import { getUnixTime } from 'date-fns'
 import { PageTabs } from 'library/PageTabs'
 import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { filterAndSortRewards } from 'ui-graphs/util'
@@ -42,6 +42,14 @@ export const Rewards = () => {
     poolClaims: [],
   })
 
+  // Memoize fromDate to avoid creating new Date objects repeatedly
+  const fromDate = useMemo(() => {
+    const date = new Date()
+    date.setDate(date.getDate() - MaxPayoutDays)
+    date.setHours(0, 0, 0, 0)
+    return date
+  }, [])
+
   // Payouts list props to pass to each tab
   const pageProps = {
     payoutsList,
@@ -50,10 +58,6 @@ export const Rewards = () => {
 
   // Get payout data on account or staking api toggle
   const getPayoutData = async () => {
-    const fromDate = new Date()
-    fromDate.setDate(fromDate.getDate() - MaxPayoutDays)
-    fromDate.setHours(0, 0, 0, 0)
-
     const [allRewards, poolRewards] = await Promise.all([
       fetchRewards(
         network,
