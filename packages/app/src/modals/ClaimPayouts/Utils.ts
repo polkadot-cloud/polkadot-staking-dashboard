@@ -5,9 +5,9 @@ import BigNumber from 'bignumber.js'
 import type { ValidatorUnclaimedReward } from 'plugin-staking-api/types'
 
 export const getTotalPayout = (
-  validators: ValidatorUnclaimedReward[]
+	validators: ValidatorUnclaimedReward[],
 ): BigNumber =>
-  validators.reduce(
-    (acc: BigNumber, { reward }: ValidatorUnclaimedReward) => acc.plus(reward),
-    new BigNumber(0)
-  )
+	validators.reduce(
+		(acc: BigNumber, { reward }: ValidatorUnclaimedReward) => acc.plus(reward),
+		new BigNumber(0),
+	)

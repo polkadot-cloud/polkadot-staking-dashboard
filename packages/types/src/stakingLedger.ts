@@ -5,48 +5,48 @@ import type { PalletNominationPoolsClaimPermission } from 'dedot/chaintypes'
 import type { RewardDestinaton } from './staking'
 
 export interface Bonded {
-  stash: string
-  bonded: string
+	stash: string
+	bonded: string
 }
 
 export interface PoolMembershipState {
-  synced: boolean
-  membership: PoolMembership | undefined
+	synced: boolean
+	membership: PoolMembership | undefined
 }
 export interface StakingLedger {
-  ledger: Ledger | undefined
-  payee: Payee | undefined
-  nominators: Nominators | undefined
-  controllerUnmigrated: boolean
+	ledger: Ledger | undefined
+	payee: Payee | undefined
+	nominators: Nominators | undefined
+	controllerUnmigrated: boolean
 }
 
 interface Ledger {
-  stash: string
-  total: bigint
-  active: bigint
-  unlocking: {
-    value: bigint
-    era: number
-  }[]
+	stash: string
+	total: bigint
+	active: bigint
+	unlocking: {
+		value: bigint
+		era: number
+	}[]
 }
 
 interface Payee {
-  destination: RewardDestinaton
-  account: string | undefined
+	destination: RewardDestinaton
+	account: string | undefined
 }
 
 interface Nominators {
-  targets: string[]
-  submittedIn: number
+	targets: string[]
+	submittedIn: number
 }
 
 export interface PoolMembership {
-  address: string
-  poolId: number
-  points: bigint
-  balance: bigint
-  lastRecordedRewardCounter: bigint
-  unbondingEras: [number, bigint][]
-  claimPermission: PalletNominationPoolsClaimPermission
-  pendingRewards: bigint
+	address: string
+	poolId: number
+	points: bigint
+	balance: bigint
+	lastRecordedRewardCounter: bigint
+	unbondingEras: [number, bigint][]
+	claimPermission: PalletNominationPoolsClaimPermission
+	pendingRewards: bigint
 }

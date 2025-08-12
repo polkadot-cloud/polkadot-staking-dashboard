@@ -9,17 +9,17 @@ import type { ScrollProps } from '../types'
 import classes from './index.module.scss'
 
 export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
-  ({ children, ...rest }, ref) => (
-    <motion.div className={classes.scroll} {...rest}>
-      <SimpleBar
-        autoHide={true}
-        style={{ height: '100%' }}
-        scrollableNodeProps={{ ref }}
-      >
-        {children}
-      </SimpleBar>
-    </motion.div>
-  )
+	({ children, ...rest }, ref) => (
+		<motion.div className={classes.scroll} {...rest}>
+			<SimpleBar
+				autoHide={true}
+				style={{ height: '100%' }}
+				scrollableNodeProps={{ ref }}
+			>
+				{children}
+			</SimpleBar>
+		</motion.div>
+	),
 )
 
 Scroll.displayName = 'Scroll'

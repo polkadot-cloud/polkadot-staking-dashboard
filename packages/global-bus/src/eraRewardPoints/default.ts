@@ -4,6 +4,6 @@
 import type { EraRewardPoints } from 'types'
 
 export const defaultEraRewardPoints: EraRewardPoints = {
-  total: 0,
-  individual: [],
+	total: 0,
+	individual: [],
 }

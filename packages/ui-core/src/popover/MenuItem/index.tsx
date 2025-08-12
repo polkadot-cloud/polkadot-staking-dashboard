@@ -6,31 +6,31 @@ import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const MenuItem = ({ children }: { children: ReactNode }) => {
-  const allClasses = classNames(classes.menuItem)
+	const allClasses = classNames(classes.menuItem)
 
-  return <div className={allClasses}>{children}</div>
+	return <div className={allClasses}>{children}</div>
 }
 
 export const MenuItemButton = ({
-  children,
-  onClick,
-  disabled,
+	children,
+	onClick,
+	disabled,
 }: {
-  children: ReactNode
-  onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void
-  disabled?: boolean
+	children: ReactNode
+	onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void
+	disabled?: boolean
 }) => {
-  const allClasses = classNames(classes.menuItem, {
-    [classes.disabled]: disabled,
-  })
-  return (
-    <button
-      type="button"
-      onClick={(e) => onClick(e)}
-      className={allClasses}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  )
+	const allClasses = classNames(classes.menuItem, {
+		[classes.disabled]: disabled,
+	})
+	return (
+		<button
+			type="button"
+			onClick={(e) => onClick(e)}
+			className={allClasses}
+			disabled={disabled}
+		>
+			{children}
+		</button>
+	)
 }

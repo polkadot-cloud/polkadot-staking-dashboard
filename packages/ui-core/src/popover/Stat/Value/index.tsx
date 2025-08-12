@@ -5,5 +5,5 @@ import type { ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Value = ({ children }: { children: ReactNode }) => (
-  <p className={classes.value}>{children}</p>
+	<p className={classes.value}>{children}</p>
 )

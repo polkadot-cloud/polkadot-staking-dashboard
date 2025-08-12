@@ -14,9 +14,9 @@ export const Wrapper = styled.div`
 // NOTE: used for member lists and payout list only.
 export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   border-bottom: ${(props) =>
-    props.$displayFor === 'canvas'
-      ? '1px solid var(--border-secondary-color)'
-      : '1px solid var(--border-primary-color)'};
+		props.$displayFor === 'canvas'
+			? '1px solid var(--border-secondary-color)'
+			: '1px solid var(--border-primary-color)'};
 
   display: flex;
   flex-flow: row wrap;
@@ -78,17 +78,17 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-          props.$next
-            ? 'var(--accent-color-primary)'
-            : 'var(--text-color-secondary)'};
+					props.$next
+						? 'var(--accent-color-primary)'
+						: 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-          props.$prev
-            ? 'var(--accent-color-primary)'
-            : 'var(--text-color-secondary)'};
+					props.$prev
+						? 'var(--accent-color-primary)'
+						: 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$prev ? 1 : 0.4)};
       }

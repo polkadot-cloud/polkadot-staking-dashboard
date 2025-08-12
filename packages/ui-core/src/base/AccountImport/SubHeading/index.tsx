@@ -5,12 +5,12 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const SubHeading = ({
-  text,
-  style,
+	text,
+	style,
 }: ComponentBase & {
-  text: string
+	text: string
 }) => (
-  <h4 className={classes.subHeading} style={style}>
-    {text}
-  </h4>
+	<h4 className={classes.subHeading} style={style}>
+		{text}
+	</h4>
 )

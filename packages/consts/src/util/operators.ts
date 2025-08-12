@@ -6,14 +6,14 @@ import { NetworkList } from '../networks'
 
 // Get whether the chain supports operators
 export const isOperatorsSupported = (network: NetworkId): boolean =>
-  NetworkList[network].meta.supportOperators
+	NetworkList[network].meta.supportOperators
 
 // Cast a network as an operator network, or return undefined
 export const asOperatorsSupportedNetwork = (
-  network: NetworkId
+	network: NetworkId,
 ): OperatorsSupportedNetwork | undefined => {
-  if (isOperatorsSupported(network)) {
-    return network as OperatorsSupportedNetwork
-  }
-  return undefined
+	if (isOperatorsSupported(network)) {
+		return network as OperatorsSupportedNetwork
+	}
+	return undefined
 }

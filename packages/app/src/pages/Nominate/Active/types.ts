@@ -4,13 +4,13 @@
 import type BigNumber from 'bignumber.js'
 
 export interface BondedChartProps {
-  active: BigNumber
-  free: BigNumber
-  unlocking: BigNumber
-  unlocked: BigNumber
-  inactive: boolean
+	active: BigNumber
+	free: BigNumber
+	unlocking: BigNumber
+	unlocked: BigNumber
+	inactive: boolean
 }
 
 export interface NewNominatorProps {
-  syncing: boolean
+	syncing: boolean
 }

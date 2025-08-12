@@ -10,11 +10,13 @@ export const CallToActionWrapper = styled.div`
   height: inherit;
   width: 100%;
 
-  > .inner {
+  > div {
     flex: 1;
     display: flex;
     flex-direction: row;
-    margin-top: 0.38rem;
+    flex-flow: row nowrap;
+    width: 100%;
+    margin-top: 0.38rem;   
 
     @media (max-width: 650px) {
       flex-wrap: wrap;
@@ -74,7 +76,8 @@ export const CallToActionWrapper = styled.div`
       .buttons {
         border-radius: var(--button-border-radius);
         display: flex;
-        flex-wrap: nowrap;
+        flex-direction: row;
+        max-width: 100%;
         width: 100%;
 
         @media (max-width: 650px) {
@@ -90,6 +93,7 @@ export const CallToActionWrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           transition: filter 0.15s;
+          flex-shrink: 1;
 
           &.primary {
             background-color: var(--accent-color-primary);

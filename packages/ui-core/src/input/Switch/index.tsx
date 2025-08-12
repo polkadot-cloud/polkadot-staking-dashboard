@@ -6,7 +6,7 @@ import type { SwitchProps } from '../types'
 import classes from './index.module.scss'
 
 export const Switch = ({ checked }: SwitchProps) => (
-  <RadixSwitch.Root className={classes.Root} checked={checked}>
-    <RadixSwitch.Thumb className={classes.Thumb} />
-  </RadixSwitch.Root>
+	<RadixSwitch.Root className={classes.Root} checked={checked}>
+		<RadixSwitch.Thumb className={classes.Thumb} />
+	</RadixSwitch.Root>
 )

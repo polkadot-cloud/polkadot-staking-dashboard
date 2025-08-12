@@ -4,24 +4,24 @@
 import type { Locale } from 'date-fns'
 
 export interface LocaleJson {
-  [key: string]:
-    | string
-    | string[]
-    | string[][]
-    | (string | string[])[]
-    | LocaleJson
-    | LocaleJson[]
+	[key: string]:
+		| string
+		| string[]
+		| string[][]
+		| (string | string[])[]
+		| LocaleJson
+		| LocaleJson[]
 }
 
 export type LocaleJsonValue =
-  | string
-  | string[]
-  | string[][]
-  | (string | string[])[]
-  | LocaleJson
-  | LocaleJson[]
+	| string
+	| string[]
+	| string[][]
+	| (string | string[])[]
+	| LocaleJson
+	| LocaleJson[]
 
 export interface LocaleEntry {
-  dateFormat: Locale
-  label: string
+	dateFormat: Locale
+	label: string
 }

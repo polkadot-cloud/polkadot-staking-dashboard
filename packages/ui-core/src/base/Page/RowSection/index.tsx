@@ -10,24 +10,24 @@ import type { RowSectionProps } from './types'
  * @summary Container for primary and secondary modules in a PageRow.
  */
 export const RowSection = ({
-  children,
-  style,
-  vLast,
-  hLast,
-  secondary,
-  standalone,
+	children,
+	style,
+	vLast,
+	hLast,
+	secondary,
+	standalone,
 }: RowSectionProps) => {
-  const mainClass = secondary ? classes.secondary : classes.primary
-  const hClass = hLast ? classes.first : classes.last
+	const mainClass = secondary ? classes.secondary : classes.primary
+	const hClass = hLast ? classes.first : classes.last
 
-  const rowClasses = classNames(mainClass, hClass, {
-    [classes.vLast]: vLast,
-    [classes.standalone]: standalone,
-  })
+	const rowClasses = classNames(mainClass, hClass, {
+		[classes.vLast]: vLast,
+		[classes.standalone]: standalone,
+	})
 
-  return (
-    <div className={rowClasses} style={style}>
-      {children}
-    </div>
-  )
+	return (
+		<div className={rowClasses} style={style}>
+			{children}
+		</div>
+	)
 }

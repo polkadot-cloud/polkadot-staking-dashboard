@@ -23,60 +23,60 @@ import { NextRewards } from './Stats/NextRewards'
 import { SupplyStaked } from './Stats/SupplyStaked'
 
 export const Overview = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { isBonding } = useStaking()
-  const { pluginEnabled } = usePlugins()
-  const { getStakingLedger } = useBalances()
-  const { activeAddress } = useActiveAccounts()
-  const { syncing, accountSynced } = useSyncing()
-  const { isReadOnlyAccount } = useImportedAccounts()
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { isBonding } = useStaking()
+	const { pluginEnabled } = usePlugins()
+	const { getStakingLedger } = useBalances()
+	const { activeAddress } = useActiveAccounts()
+	const { syncing, accountSynced } = useSyncing()
+	const { isReadOnlyAccount } = useImportedAccounts()
 
-  const { controllerUnmigrated } = getStakingLedger(activeAddress)
+	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
-  // Fiat values result in a slightly larger height for Balance & Payouts
-  const showFiat = pluginEnabled('staking_api') && network !== 'westend'
+	// Fiat values result in a slightly larger height for Balance & Payouts
+	const showFiat = pluginEnabled('staking_api') && network !== 'westend'
 
-  const STATUS_HEIGHT = 110
-  const PAYOUTS_HEIGHT = showFiat ? 385 : 380
+	const STATUS_HEIGHT = 110
+	const PAYOUTS_HEIGHT = showFiat ? 385 : 380
 
-  return (
-    <>
-      <Page.Title title={t('overview')} />
-      <Stat.Row>
-        <AverageRewardRate />
-        <SupplyStaked />
-        <NextRewards />
-      </Stat.Row>
-      {isBonding &&
-        !syncing &&
-        accountSynced(activeAddress) &&
-        controllerUnmigrated &&
-        !isReadOnlyAccount(activeAddress) && <ControllerPrompt />}
-      <Page.Row>
-        <Page.RowSection>
-          <StakeStatus height={STATUS_HEIGHT} />
-        </Page.RowSection>
-        <Page.RowSection secondary hLast vLast>
-          <QuickActions height={STATUS_HEIGHT} />
-        </Page.RowSection>
-      </Page.Row>
-      <Page.Row>
-        <Page.RowSection secondary>
-          <CardWrapper height={PAYOUTS_HEIGHT}>
-            <BalanceChart />
-            <BalanceLinks />
-          </CardWrapper>
-        </Page.RowSection>
-        <Page.RowSection hLast vLast>
-          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
-            <Payouts />
-          </CardWrapper>
-        </Page.RowSection>
-      </Page.Row>
-      <Page.Row>
-        <NetworkStats />
-      </Page.Row>
-    </>
-  )
+	return (
+		<>
+			<Page.Title title={t('overview')} />
+			<Stat.Row>
+				<AverageRewardRate />
+				<SupplyStaked />
+				<NextRewards />
+			</Stat.Row>
+			{isBonding &&
+				!syncing &&
+				accountSynced(activeAddress) &&
+				controllerUnmigrated &&
+				!isReadOnlyAccount(activeAddress) && <ControllerPrompt />}
+			<Page.Row>
+				<Page.RowSection>
+					<StakeStatus height={STATUS_HEIGHT} />
+				</Page.RowSection>
+				<Page.RowSection secondary hLast vLast>
+					<QuickActions height={STATUS_HEIGHT} />
+				</Page.RowSection>
+			</Page.Row>
+			<Page.Row>
+				<Page.RowSection secondary>
+					<CardWrapper height={PAYOUTS_HEIGHT}>
+						<BalanceChart />
+						<BalanceLinks />
+					</CardWrapper>
+				</Page.RowSection>
+				<Page.RowSection hLast vLast>
+					<CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
+						<Payouts />
+					</CardWrapper>
+				</Page.RowSection>
+			</Page.Row>
+			<Page.Row>
+				<NetworkStats />
+			</Page.Row>
+		</>
+	)
 }

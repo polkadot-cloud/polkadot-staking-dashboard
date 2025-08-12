@@ -13,48 +13,48 @@ import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const BalanceTest = () => {
-  const { serviceApi } = useApi()
-  const { network } = useNetwork()
-  const { newBatchCall } = useBatchCall()
-  const { activeAddress } = useActiveAccounts()
-  const { setModalStatus } = useOverlay().modal
-  const { units } = getStakingChainData(network)
+	const { serviceApi } = useApi()
+	const { network } = useNetwork()
+	const { newBatchCall } = useBatchCall()
+	const { activeAddress } = useActiveAccounts()
+	const { setModalStatus } = useOverlay().modal
+	const { units } = getStakingChainData(network)
 
-  const getTx = () => {
-    if (!activeAddress) {
-      return
-    }
-    const txs = [
-      serviceApi.tx.transferKeepAlive(
-        '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
-        unitToPlanck('0.1', units)
-      ),
-      serviceApi.tx.transferKeepAlive(
-        '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
-        unitToPlanck('0.1', units)
-      ),
-    ].filter((tx) => tx !== undefined)
+	const getTx = () => {
+		if (!activeAddress) {
+			return
+		}
+		const txs = [
+			serviceApi.tx.transferKeepAlive(
+				'1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
+				unitToPlanck('0.1', units),
+			),
+			serviceApi.tx.transferKeepAlive(
+				'1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
+				unitToPlanck('0.1', units),
+			),
+		].filter((tx) => tx !== undefined)
 
-    const batch = newBatchCall(txs, activeAddress)
-    return batch
-  }
+		const batch = newBatchCall(txs, activeAddress)
+		return batch
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: true,
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: true,
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+	})
 
-  return (
-    <>
-      <Close />
-      <Padding>
-        <Title>Balance Test</Title>
-      </Padding>
-      <SubmitTx valid {...submitExtrinsic} />
-    </>
-  )
+	return (
+		<>
+			<Close />
+			<Padding>
+				<Title>Balance Test</Title>
+			</Padding>
+			<SubmitTx valid {...submitExtrinsic} />
+		</>
+	)
 }

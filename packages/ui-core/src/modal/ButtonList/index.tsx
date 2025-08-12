@@ -6,18 +6,18 @@ import type { ComponentBaseWithClassName } from 'types'
 import classes from './index.module.scss'
 
 export const ButtonList = ({
-  children,
-  style,
-  forceHeight,
+	children,
+	style,
+	forceHeight,
 }: ComponentBaseWithClassName & {
-  forceHeight?: boolean
+	forceHeight?: boolean
 }) => {
-  const allClasses = classNames(classes.btnList, {
-    [classes.forceHeight]: !!forceHeight,
-  })
-  return (
-    <div className={allClasses} style={style}>
-      <div className={classes.inner}>{children}</div>
-    </div>
-  )
+	const allClasses = classNames(classes.btnList, {
+		[classes.forceHeight]: !!forceHeight,
+	})
+	return (
+		<div className={allClasses} style={style}>
+			<div className={classes.inner}>{children}</div>
+		</div>
+	)
 }

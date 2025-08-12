@@ -5,6 +5,6 @@ import { Label } from './Label'
 import { Standalone } from './Standalone'
 
 export const ButtonAccount = {
-  Standalone,
-  Label,
+	Standalone,
+	Label,
 }

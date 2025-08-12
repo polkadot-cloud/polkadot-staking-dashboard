@@ -24,143 +24,143 @@ import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const UpdatePayee = () => {
-  const { t } = useTranslation('modals')
-  const { serviceApi } = useApi()
-  const { getStakingLedger } = useBalances()
-  const { getPayeeItems } = usePayeeConfig()
-  const { activeAddress } = useActiveAccounts()
-  const { setModalStatus } = useOverlay().modal
-  const { getSignerWarnings } = useSignerWarnings()
+	const { t } = useTranslation('modals')
+	const { serviceApi } = useApi()
+	const { getStakingLedger } = useBalances()
+	const { getPayeeItems } = usePayeeConfig()
+	const { activeAddress } = useActiveAccounts()
+	const { setModalStatus } = useOverlay().modal
+	const { getSignerWarnings } = useSignerWarnings()
 
-  const payee = getStakingLedger(activeAddress).payee
+	const payee = getStakingLedger(activeAddress).payee
 
-  const DefaultSelected: PayeeConfig = {
-    destination: null,
-    account: null,
-  }
+	const DefaultSelected: PayeeConfig = {
+		destination: null,
+		account: null,
+	}
 
-  // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAddress>(payee?.account || null)
+	// Store the current user-inputted custom payout account.
+	const [account, setAccount] = useState<MaybeAddress>(payee?.account || null)
 
-  // Store the currently selected payee option.
-  const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected)
+	// Store the currently selected payee option.
+	const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected)
 
-  // update setup progress with payee config.
-  const handleChangeDestination = (destination: PayeeOption) => {
-    setSelected({
-      destination,
-      account: isValidAddress(account || '') ? account : null,
-    })
-  }
+	// update setup progress with payee config.
+	const handleChangeDestination = (destination: PayeeOption) => {
+		setSelected({
+			destination,
+			account: isValidAddress(account || '') ? account : null,
+		})
+	}
 
-  // update setup progress with payee account.
-  const handleChangeAccount = (newAccount: MaybeAddress) => {
-    setSelected({
-      destination: selected?.destination ?? null,
-      account: newAccount,
-    })
-  }
+	// update setup progress with payee account.
+	const handleChangeAccount = (newAccount: MaybeAddress) => {
+		setSelected({
+			destination: selected?.destination ?? null,
+			account: newAccount,
+		})
+	}
 
-  // determine whether this section is completed.
-  const isComplete = () =>
-    selected.destination !== null &&
-    !(selected.destination === 'Account' && selected.account === null)
+	// determine whether this section is completed.
+	const isComplete = () =>
+		selected.destination !== null &&
+		!(selected.destination === 'Account' && selected.account === null)
 
-  const getTx = () => {
-    if (!selected.destination) {
-      return
-    }
-    if (selected.destination === 'Account' && !selected.account) {
-      return
-    }
-    return serviceApi.tx.stakingSetPayee(
-      !isComplete()
-        ? { type: 'Staked' }
-        : selected.destination === 'Account'
-          ? {
-              type: 'Account',
-              value: new AccountId32(selected.account as string),
-            }
-          : { type: selected.destination }
-    )
-  }
+	const getTx = () => {
+		if (!selected.destination) {
+			return
+		}
+		if (selected.destination === 'Account' && !selected.account) {
+			return
+		}
+		return serviceApi.tx.stakingSetPayee(
+			!isComplete()
+				? { type: 'Staked' }
+				: selected.destination === 'Account'
+					? {
+							type: 'Account',
+							value: new AccountId32(selected.account as string),
+						}
+					: { type: selected.destination },
+		)
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: isComplete(),
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: isComplete(),
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+	})
 
-  // Reset selected value on account change.
-  useEffect(() => {
-    setSelected(DefaultSelected)
-  }, [activeAddress])
+	// Reset selected value on account change.
+	useEffect(() => {
+		setSelected(DefaultSelected)
+	}, [activeAddress])
 
-  // Inject default value after component mount.
-  useEffect(() => {
-    const initialSelected = getPayeeItems(true).find(
-      (item) => item.value === payee?.destination
-    )
-    setSelected(
-      initialSelected
-        ? {
-            destination: initialSelected.value,
-            account,
-          }
-        : DefaultSelected
-    )
-  }, [])
+	// Inject default value after component mount.
+	useEffect(() => {
+		const initialSelected = getPayeeItems(true).find(
+			(item) => item.value === payee?.destination,
+		)
+		setSelected(
+			initialSelected
+				? {
+						destination: initialSelected.value,
+						account,
+					}
+				: DefaultSelected,
+		)
+	}, [])
 
-  const warnings = getSignerWarnings(
-    activeAddress,
-    true,
-    submitExtrinsic.proxySupported
-  )
+	const warnings = getSignerWarnings(
+		activeAddress,
+		true,
+		submitExtrinsic.proxySupported,
+	)
 
-  return (
-    <>
-      <Title
-        title={t('updatePayoutDestination')}
-        helpKey="Payout Destination"
-      />
-      <Padding horizontalOnly>
-        {warnings.length > 0 ? (
-          <Warnings>
-            {warnings.map((text, i) => (
-              <Warning key={`warning${i}`} text={text} />
-            ))}
-          </Warnings>
-        ) : null}
-        <div style={{ width: '100%', padding: '0 0.5rem' }}>
-          <PayeeInput
-            payee={selected}
-            account={account}
-            setAccount={setAccount}
-            handleChange={handleChangeAccount}
-          />
-        </div>
-        <SelectItems>
-          {getPayeeItems(true).map((item) => (
-            <SelectItem
-              key={`payee_option_${item.value}`}
-              account={account}
-              setAccount={setAccount}
-              selected={selected.destination === item.value}
-              onClick={() => handleChangeDestination(item.value)}
-              {...item}
-              icon={<FontAwesomeIcon icon={item.icon} />}
-            />
-          ))}
-        </SelectItems>
-      </Padding>
-      <SubmitTx
-        requiresMigratedController
-        valid={isComplete()}
-        {...submitExtrinsic}
-      />
-    </>
-  )
+	return (
+		<>
+			<Title
+				title={t('updatePayoutDestination')}
+				helpKey="Payout Destination"
+			/>
+			<Padding horizontalOnly>
+				{warnings.length > 0 ? (
+					<Warnings>
+						{warnings.map((text, i) => (
+							<Warning key={`warning${i}`} text={text} />
+						))}
+					</Warnings>
+				) : null}
+				<div style={{ width: '100%', padding: '0 0.5rem' }}>
+					<PayeeInput
+						payee={selected}
+						account={account}
+						setAccount={setAccount}
+						handleChange={handleChangeAccount}
+					/>
+				</div>
+				<SelectItems>
+					{getPayeeItems(true).map((item) => (
+						<SelectItem
+							key={`payee_option_${item.value}`}
+							account={account}
+							setAccount={setAccount}
+							selected={selected.destination === item.value}
+							onClick={() => handleChangeDestination(item.value)}
+							{...item}
+							icon={<FontAwesomeIcon icon={item.icon} />}
+						/>
+					))}
+				</SelectItems>
+			</Padding>
+			<SubmitTx
+				requiresMigratedController
+				valid={isComplete()}
+				{...submitExtrinsic}
+			/>
+		</>
+	)
 }

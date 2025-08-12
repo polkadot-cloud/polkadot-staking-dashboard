@@ -6,20 +6,20 @@ import { ButtonHelp } from 'ui-buttons'
 import type { LegendItemProps } from './types'
 
 export const LegendItem = ({
-  dataClass,
-  label,
-  helpKey,
-  button,
+	dataClass,
+	label,
+	helpKey,
+	button,
 }: LegendItemProps) => {
-  const { openHelp } = useHelp()
+	const { openHelp } = useHelp()
 
-  return (
-    <h4>
-      {dataClass ? <span className={dataClass} /> : null} {label}
-      {helpKey ? (
-        <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-      ) : null}
-      {button && button}
-    </h4>
-  )
+	return (
+		<h4>
+			{dataClass ? <span className={dataClass} /> : null} {label}
+			{helpKey ? (
+				<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+			) : null}
+			{button && button}
+		</h4>
+	)
 }

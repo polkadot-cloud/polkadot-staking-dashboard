@@ -2,6 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export type CurrencyContextInterface = {
-  currency: string
-  setCurrency: (currency: string) => void
+	currency: string
+	setCurrency: (currency: string) => void
 }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface MembersListProps {
-  pagination: boolean
-  itemsPerPage: number
-  memberCount: number
+	pagination: boolean
+	itemsPerPage: number
+	memberCount: number
 }

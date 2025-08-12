@@ -8,13 +8,13 @@ import { _fastUnstakeConfig } from './private'
 export const fastUnstakeConfig$ = _fastUnstakeConfig.asObservable()
 
 export const resetFastUnstakeConfig = () => {
-  _fastUnstakeConfig.next(defaultFastUnstakeConfig)
+	_fastUnstakeConfig.next(defaultFastUnstakeConfig)
 }
 
 export const getFastUnstakeConfig = () => _fastUnstakeConfig.getValue()
 
 export const setFastUnstakeConfig = (value: FastUnstakeConfig) => {
-  _fastUnstakeConfig.next(value)
+	_fastUnstakeConfig.next(value)
 }
 
 export * from './default'

@@ -6,18 +6,18 @@ import { ButtonCopy } from 'library/ButtonCopy'
 import { Padding, Stat } from 'ui-core/popover'
 
 export const Account = ({
-  address,
-  label,
+	address,
+	label,
 }: {
-  address: string
-  label: string
+	address: string
+	label: string
 }) => (
-  <Padding>
-    <Polkicon address={address} fontSize="3.5rem" />
-    <Stat.Label>{label}</Stat.Label>
-    <Stat.Value>
-      {address} &nbsp;
-      <ButtonCopy value={address} size="0.95rem" />
-    </Stat.Value>
-  </Padding>
+	<Padding>
+		<Polkicon address={address} fontSize="3.5rem" />
+		<Stat.Label>{label}</Stat.Label>
+		<Stat.Value>
+			{address} &nbsp;
+			<ButtonCopy value={address} size="0.95rem" />
+		</Stat.Value>
+	</Padding>
 )

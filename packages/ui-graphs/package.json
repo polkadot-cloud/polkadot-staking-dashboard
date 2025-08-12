@@ -1,32 +1,34 @@
 {
-  "name": "ui-graphs",
-  "version": "1.2.0",
-  "license": "GPL-3.0-only",
-  "type": "module",
-  "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
-  },
-  "exports": {
-    ".": "./src/index.tsx",
-    "./types": "./src/types.ts",
-    "./util": "./src/util/index.ts"
-  },
-  "dependencies": {
-    "@w3ux/utils": "^2.2.3",
-    "bignumber.js": "^9.3.1",
-    "chart.js": "^4.4.9",
-    "consts": "workspace:*",
-    "chroma-js": "^3.1.1",
-    "date-fns": "^4.1.0",
-    "locales": "workspace:*",
-    "plugin-staking-api": "workspace:*",
-    "react": "^19.1.0",
-    "react-chartjs-2": "^5.2.0",
-    "styled-components": "^6.1.18",
-    "ui-core": "workspace:*",
-    "utils": "workspace:*"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "ui-graphs",
+	"version": "1.2.0",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"scripts": {
+		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
+		"check": "biome check .",
+		"lint": "biome check --write ."
+	},
+	"exports": {
+		".": "./src/index.tsx",
+		"./types": "./src/types.ts",
+		"./util": "./src/util/index.ts"
+	},
+	"dependencies": {
+		"@w3ux/utils": "^2.2.3",
+		"bignumber.js": "^9.3.1",
+		"chart.js": "^4.4.9",
+		"consts": "workspace:*",
+		"chroma-js": "^3.1.1",
+		"date-fns": "^4.1.0",
+		"locales": "workspace:*",
+		"plugin-staking-api": "workspace:*",
+		"react": "^19.1.0",
+		"react-chartjs-2": "^5.2.0",
+		"styled-components": "^6.1.18",
+		"ui-core": "workspace:*",
+		"utils": "workspace:*"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

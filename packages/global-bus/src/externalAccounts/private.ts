@@ -6,5 +6,5 @@ import type { ExternalAccount } from 'types'
 import { getInitialExternalAccounts } from '../util'
 
 export const _externalAccounts = new BehaviorSubject<ExternalAccount[]>(
-  getInitialExternalAccounts()
+	getInitialExternalAccounts(),
 )

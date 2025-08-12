@@ -11,43 +11,43 @@ import { useTranslation } from 'react-i18next'
 import { useNominationStatus } from '../useNominationStatus'
 
 export const useUnstaking = () => {
-  const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const { isNominator } = useStaking()
-  const { activeAddress } = useActiveAccounts()
-  const { getNominationStatus } = useNominationStatus()
-  const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
-  const {
-    balances: {
-      nominator: { active },
-    },
-  } = useAccountBalances(activeAddress)
-  const { ss58 } = getStakingChainData(network)
-  const { nominees } = getNominationStatus(activeAddress, 'nominator')
+	const { t } = useTranslation('app')
+	const { network } = useNetwork()
+	const { isNominator } = useStaking()
+	const { activeAddress } = useActiveAccounts()
+	const { getNominationStatus } = useNominationStatus()
+	const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
+	const {
+		balances: {
+			nominator: { active },
+		},
+	} = useAccountBalances(activeAddress)
+	const { ss58 } = getStakingChainData(network)
+	const { nominees } = getNominationStatus(activeAddress, 'nominator')
 
-  // Determine if user is fast unstaking
-  const inHead =
-    head?.stashes.find((s) => s[0].address(ss58) === activeAddress) ?? undefined
-  const inQueue = queueDeposit?.queue !== undefined && queueDeposit.queue > 0n
+	// Determine if user is fast unstaking
+	const inHead =
+		head?.stashes.find((s) => s[0].address(ss58) === activeAddress) ?? undefined
+	const inQueue = queueDeposit?.queue !== undefined && queueDeposit.queue > 0n
 
-  const registered = inHead || inQueue
+	const registered = inHead || inQueue
 
-  // Fetermine unstake button
-  const getFastUnstakeText = () => {
-    if (exposed && fastUnstakeStatus?.lastExposed) {
-      return t('fastUnstakeExposed', {
-        count: Number(fastUnstakeStatus.lastExposed),
-      })
-    }
-    if (registered) {
-      return t('inQueue')
-    }
-    return t('fastUnstake')
-  }
+	// Fetermine unstake button
+	const getFastUnstakeText = () => {
+		if (exposed && fastUnstakeStatus?.lastExposed) {
+			return t('fastUnstakeExposed', {
+				count: Number(fastUnstakeStatus.lastExposed),
+			})
+		}
+		if (registered) {
+			return t('inQueue')
+		}
+		return t('fastUnstake')
+	}
 
-  return {
-    getFastUnstakeText,
-    isUnstaking: isNominator && !nominees.active.length && active === 0n,
-    isFastUnstaking: !!registered,
-  }
+	return {
+		getFastUnstakeText,
+		isUnstaking: isNominator && !nominees.active.length && active === 0n,
+		isFastUnstaking: !!registered,
+	}
 }

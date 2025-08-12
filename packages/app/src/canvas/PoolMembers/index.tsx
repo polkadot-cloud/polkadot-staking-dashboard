@@ -7,17 +7,17 @@ import { Head, Main, Title } from 'ui-core/canvas'
 import { CloseCanvas } from 'ui-overlay'
 
 export const PoolMembers = () => {
-  const { t } = useTranslation()
+	const { t } = useTranslation()
 
-  return (
-    <Main>
-      <Head>
-        <CloseCanvas />
-      </Head>
-      <Title>
-        <h1>{t('poolMembers', { ns: 'modals' })}</h1>
-      </Title>
-      <Members />
-    </Main>
-  )
+	return (
+		<Main>
+			<Head>
+				<CloseCanvas />
+			</Head>
+			<Title>
+				<h1>{t('poolMembers', { ns: 'modals' })}</h1>
+			</Title>
+			<Members />
+		</Main>
+	)
 }

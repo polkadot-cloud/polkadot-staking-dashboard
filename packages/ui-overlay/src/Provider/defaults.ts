@@ -4,13 +4,13 @@
 import type { CanvasConfig, ModalConfig } from './types'
 
 export const defaultModalConfig: ModalConfig = {
-  key: '',
-  size: undefined,
-  options: {},
+	key: '',
+	size: undefined,
+	options: {},
 }
 
 export const defaultCanvasConfig: CanvasConfig = {
-  key: '',
-  options: {},
-  scroll: true,
+	key: '',
+	options: {},
+	scroll: true,
 }

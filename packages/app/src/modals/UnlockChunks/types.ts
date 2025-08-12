@@ -4,15 +4,15 @@
 import type { BondFor, UnlockChunk } from 'types'
 
 export interface FormsProps {
-  setSection: (section: number) => void
-  unlock: UnlockChunk | null
-  task: string | null
-  incrementCalculateHeight: () => void
-  onResize: () => void
+	setSection: (section: number) => void
+	unlock: UnlockChunk | null
+	task: string | null
+	incrementCalculateHeight: () => void
+	onResize: () => void
 }
 
 export interface ChunkProps {
-  chunk: UnlockChunk
-  bondFor: BondFor
-  onRebond: (chunk: UnlockChunk) => void
+	chunk: UnlockChunk
+	bondFor: BondFor
+	onRebond: (chunk: UnlockChunk) => void
 }

@@ -4,8 +4,8 @@
 import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import {
-  ManageNominationsProvider,
-  useManageNominations,
+	ManageNominationsProvider,
+	useManageNominations,
 } from 'contexts/ManageNominations'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import type { NominatorProgress } from 'contexts/NominatorSetups/types'
@@ -22,83 +22,83 @@ import { GenerateNominations } from '../GenerateNominations'
 import type { NominationsProps } from './types'
 
 export const Inner = ({ bondFor, section }: NominationsProps) => {
-  const { t } = useTranslation('app')
-  const { activeAddress } = useActiveAccounts()
-  const { setNominations } = useManageNominations()
-  const { getPoolSetup, setPoolSetup } = usePoolSetups()
-  const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
+	const { t } = useTranslation('app')
+	const { activeAddress } = useActiveAccounts()
+	const { setNominations } = useManageNominations()
+	const { getPoolSetup, setPoolSetup } = usePoolSetups()
+	const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 
-  const setup =
-    bondFor === 'nominator'
-      ? getNominatorSetup(activeAddress)
-      : getPoolSetup(activeAddress)
+	const setup =
+		bondFor === 'nominator'
+			? getNominatorSetup(activeAddress)
+			: getPoolSetup(activeAddress)
 
-  const { progress } = setup
+	const { progress } = setup
 
-  // Handler for updating setup.
-  const handleSetupUpdate = (value: NominatorProgress | PoolProgress) => {
-    setNominations(value.nominations)
-    if (bondFor === 'nominator') {
-      setNominatorSetup(value as NominatorProgress)
-    } else {
-      setPoolSetup(value as PoolProgress)
-    }
-  }
+	// Handler for updating setup.
+	const handleSetupUpdate = (value: NominatorProgress | PoolProgress) => {
+		setNominations(value.nominations)
+		if (bondFor === 'nominator') {
+			setNominatorSetup(value as NominatorProgress)
+		} else {
+			setPoolSetup(value as PoolProgress)
+		}
+	}
 
-  // Generation component props
-  const displayFor: DisplayFor = 'modal'
-  const setters = [
-    {
-      current: {
-        callable: true,
-        fn: () =>
-          (bondFor === 'nominator'
-            ? getNominatorSetup(activeAddress)
-            : getPoolSetup(activeAddress)
-          ).progress,
-      },
-      set: handleSetupUpdate,
-    },
-  ]
+	// Generation component props
+	const displayFor: DisplayFor = 'modal'
+	const setters = [
+		{
+			current: {
+				callable: true,
+				fn: () =>
+					(bondFor === 'nominator'
+						? getNominatorSetup(activeAddress)
+						: getPoolSetup(activeAddress)
+					).progress,
+			},
+			set: handleSetupUpdate,
+		},
+	]
 
-  return (
-    <>
-      <Header
-        thisSection={section}
-        complete={progress.nominations.length > 0}
-        title={t('nominate')}
-        bondFor={bondFor}
-      />
-      <MotionContainer thisSection={section} activeSection={setup.section}>
-        <Subheading>
-          <h4>
-            {t('chooseValidators', {
-              maxNominations: MaxNominations,
-            })}
-          </h4>
-        </Subheading>
-        <InlineControls displayFor={displayFor} allowRevert setters={setters} />
-        <GenerateNominations setters={setters} displayFor={displayFor} />
-        <Footer complete={progress.nominations.length > 0} bondFor={bondFor} />
-      </MotionContainer>
-    </>
-  )
+	return (
+		<>
+			<Header
+				thisSection={section}
+				complete={progress.nominations.length > 0}
+				title={t('nominate')}
+				bondFor={bondFor}
+			/>
+			<MotionContainer thisSection={section} activeSection={setup.section}>
+				<Subheading>
+					<h4>
+						{t('chooseValidators', {
+							maxNominations: MaxNominations,
+						})}
+					</h4>
+				</Subheading>
+				<InlineControls displayFor={displayFor} allowRevert setters={setters} />
+				<GenerateNominations setters={setters} displayFor={displayFor} />
+				<Footer complete={progress.nominations.length > 0} bondFor={bondFor} />
+			</MotionContainer>
+		</>
+	)
 }
 
 export const Nominate = (props: NominationsProps) => {
-  const { getPoolSetup } = usePoolSetups()
-  const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup } = useNominatorSetups()
-  const setup =
-    props.bondFor === 'nominator'
-      ? getNominatorSetup(activeAddress)
-      : getPoolSetup(activeAddress)
+	const { getPoolSetup } = usePoolSetups()
+	const { activeAddress } = useActiveAccounts()
+	const { getNominatorSetup } = useNominatorSetups()
+	const setup =
+		props.bondFor === 'nominator'
+			? getNominatorSetup(activeAddress)
+			: getPoolSetup(activeAddress)
 
-  const { progress } = setup
+	const { progress } = setup
 
-  return (
-    <ManageNominationsProvider nominations={progress.nominations}>
-      <Inner {...props} />
-    </ManageNominationsProvider>
-  )
+	return (
+		<ManageNominationsProvider nominations={progress.nominations}>
+			<Inner {...props} />
+		</ManageNominationsProvider>
+	)
 }

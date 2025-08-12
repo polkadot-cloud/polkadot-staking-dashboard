@@ -10,11 +10,11 @@ export type OverlayType = 'modal' | 'canvas'
 export type CanvasStatus = 'open' | 'closing' | 'closed'
 
 export type ModalStatus =
-  | 'opening'
-  | 'open'
-  | 'closing'
-  | 'closed'
-  | 'replacing'
+	| 'opening'
+	| 'open'
+	| 'closing'
+	| 'closed'
+	| 'replacing'
 
 export type ModalSize = 'xs' | 'sm' | 'lg' | 'xl'
 

@@ -7,6 +7,6 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolSetClaimPermission = <T extends StakingChain>(
-  api: DedotClient<T>,
-  claimPermission: ClaimPermission
+	api: DedotClient<T>,
+	claimPermission: ClaimPermission,
 ) => asTx(api.tx.nominationPools.setClaimPermission(claimPermission))

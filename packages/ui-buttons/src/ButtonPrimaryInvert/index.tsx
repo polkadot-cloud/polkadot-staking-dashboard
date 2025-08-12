@@ -18,83 +18,83 @@ import classes from './index.module.scss'
  * @returns {JSX.Element} The rendered primary button component.
  */
 export const ButtonPrimaryInvert = (
-  props: ButtonPrimaryInvertProps
+	props: ButtonPrimaryInvertProps,
 ): JSX.Element => {
-  const {
-    colorSecondary,
-    disabled,
-    grow,
-    iconLeft,
-    iconRight,
-    iconTransform,
-    lg,
-    marginLeft,
-    marginRight,
-    marginX,
-    className,
-    style,
-    text,
-    onClick,
-    onMouseOver,
-    onMouseMove,
-    onMouseOut,
-    asLabel,
-  } = props
+	const {
+		colorSecondary,
+		disabled,
+		grow,
+		iconLeft,
+		iconRight,
+		iconTransform,
+		lg,
+		marginLeft,
+		marginRight,
+		marginX,
+		className,
+		style,
+		text,
+		onClick,
+		onMouseOver,
+		onMouseMove,
+		onMouseOut,
+		asLabel,
+	} = props
 
-  const buttonClasses = classNames(
-    commonClasses.btnCore,
-    classes.btnPrimaryInvert,
-    {
-      [commonClasses.btnLarge]: lg,
-      [commonClasses.btnSmall]: !lg,
-      [commonClasses.btnGrow]: grow,
-      [commonClasses.btnSpacingLeft]: marginLeft,
-      [commonClasses.btnSpacingRight]: marginRight,
-      [commonClasses.btnMarginX]: marginX,
-      [commonClasses.btnDisabled]: disabled,
-      [commonClasses.btnActiveTransforms]: !disabled,
-      [classes.secondary]: colorSecondary,
-    },
-    className
-  )
+	const buttonClasses = classNames(
+		commonClasses.btnCore,
+		classes.btnPrimaryInvert,
+		{
+			[commonClasses.btnLarge]: lg,
+			[commonClasses.btnSmall]: !lg,
+			[commonClasses.btnGrow]: grow,
+			[commonClasses.btnSpacingLeft]: marginLeft,
+			[commonClasses.btnSpacingRight]: marginRight,
+			[commonClasses.btnMarginX]: marginX,
+			[commonClasses.btnDisabled]: disabled,
+			[commonClasses.btnActiveTransforms]: !disabled,
+			[classes.secondary]: colorSecondary,
+		},
+		className,
+	)
 
-  const buttonContent = (
-    <>
-      {iconLeft && (
-        <FontAwesomeIcon
-          icon={iconLeft}
-          className={text && commonClasses.btnIconLeftSpacing}
-          transform={iconTransform}
-        />
-      )}
-      {text}
-      {iconRight && (
-        <FontAwesomeIcon
-          icon={iconRight}
-          className={text && commonClasses.btnIconRightSpacing}
-          transform={iconTransform}
-        />
-      )}
-    </>
-  )
+	const buttonContent = (
+		<>
+			{iconLeft && (
+				<FontAwesomeIcon
+					icon={iconLeft}
+					className={text && commonClasses.btnIconLeftSpacing}
+					transform={iconTransform}
+				/>
+			)}
+			{text}
+			{iconRight && (
+				<FontAwesomeIcon
+					icon={iconRight}
+					className={text && commonClasses.btnIconRightSpacing}
+					transform={iconTransform}
+				/>
+			)}
+		</>
+	)
 
-  if (asLabel) {
-    return (
-      <div className={buttonClasses} style={style}>
-        {buttonContent}
-      </div>
-    )
-  }
+	if (asLabel) {
+		return (
+			<div className={buttonClasses} style={style}>
+				{buttonContent}
+			</div>
+		)
+	}
 
-  return (
-    <button
-      className={buttonClasses}
-      style={style}
-      type="button"
-      disabled={disabled}
-      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
-    >
-      {buttonContent}
-    </button>
-  )
+	return (
+		<button
+			className={buttonClasses}
+			style={style}
+			type="button"
+			disabled={disabled}
+			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+		>
+			{buttonContent}
+		</button>
+	)
 }

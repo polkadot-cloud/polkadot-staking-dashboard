@@ -15,48 +15,48 @@ import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const SetController = () => {
-  const { t } = useTranslation('app')
-  const { serviceApi } = useApi()
-  const { isBonding } = useStaking()
-  const { getStakingLedger } = useBalances()
-  const { activeAddress } = useActiveAccounts()
-  const { setModalStatus } = useOverlay().modal
-  const { syncing, accountSynced } = useSyncing()
-  const { isReadOnlyAccount } = useImportedAccounts()
-  const { controllerUnmigrated } = getStakingLedger(activeAddress)
+	const { t } = useTranslation('app')
+	const { serviceApi } = useApi()
+	const { isBonding } = useStaking()
+	const { getStakingLedger } = useBalances()
+	const { activeAddress } = useActiveAccounts()
+	const { setModalStatus } = useOverlay().modal
+	const { syncing, accountSynced } = useSyncing()
+	const { isReadOnlyAccount } = useImportedAccounts()
+	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
-  const canDeprecateController =
-    isBonding &&
-    !syncing &&
-    accountSynced(activeAddress) &&
-    controllerUnmigrated &&
-    !isReadOnlyAccount(activeAddress)
+	const canDeprecateController =
+		isBonding &&
+		!syncing &&
+		accountSynced(activeAddress) &&
+		controllerUnmigrated &&
+		!isReadOnlyAccount(activeAddress)
 
-  const getTx = () => {
-    if (!activeAddress || !canDeprecateController) {
-      return
-    }
-    return serviceApi.tx.setController()
-  }
+	const getTx = () => {
+		if (!activeAddress || !canDeprecateController) {
+			return
+		}
+		return serviceApi.tx.setController()
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: true,
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: true,
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+	})
 
-  return (
-    <>
-      <Close />
-      <Padding>
-        <Title>{t('migrateController')}</Title>
-        <ActionItem text={t('migrateToStash')} />
-        <p>{t('migrateControllerDescription')}</p>
-      </Padding>
-      <SubmitTx requiresMigratedController valid={true} {...submitExtrinsic} />
-    </>
-  )
+	return (
+		<>
+			<Close />
+			<Padding>
+				<Title>{t('migrateController')}</Title>
+				<ActionItem text={t('migrateToStash')} />
+				<p>{t('migrateControllerDescription')}</p>
+			</Padding>
+			<SubmitTx requiresMigratedController valid={true} {...submitExtrinsic} />
+		</>
+	)
 }

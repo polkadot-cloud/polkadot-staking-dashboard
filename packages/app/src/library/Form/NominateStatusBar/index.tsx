@@ -16,68 +16,68 @@ import type { NominateStatusBarProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
-  const { t } = useTranslation('app')
-  const { openHelp } = useHelp()
-  const {
-    stakingMetrics: { minNominatorBond, minimumActiveStake },
-  } = useApi()
-  const { network } = useNetwork()
-  const { syncing } = useSyncing(['initialization'])
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('app')
+	const { openHelp } = useHelp()
+	const {
+		stakingMetrics: { minNominatorBond, minimumActiveStake },
+	} = useApi()
+	const { network } = useNetwork()
+	const { syncing } = useSyncing(['initialization'])
+	const { unit, units } = getStakingChainData(network)
 
-  const minNominatorBondUnit = new BigNumber(
-    planckToUnit(minNominatorBond, units)
-  )
-  const minimumActiveStakeUnit = new BigNumber(
-    planckToUnit(minimumActiveStake, units)
-  )
-  const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit)
-  const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStakeUnit)
+	const minNominatorBondUnit = new BigNumber(
+		planckToUnit(minNominatorBond, units),
+	)
+	const minimumActiveStakeUnit = new BigNumber(
+		planckToUnit(minimumActiveStake, units),
+	)
+	const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit)
+	const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStakeUnit)
 
-  return (
-    <Wrapper>
-      <div className="bars">
-        <section className={gtMinNominatorBond && !syncing ? 'invert' : ''}>
-          <h4>&nbsp;</h4>
-          <div className="bar">
-            <h5>{t('nominateInactive')}</h5>
-          </div>
-        </section>
-        <section className={gtMinNominatorBond && !syncing ? 'invert' : ''}>
-          <h4>
-            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
-            &nbsp; {t('nominate')}
-            <ButtonHelp marginLeft onClick={() => openHelp('Nominating')} />
-          </h4>
-          <div className="bar">
-            <h5>
-              {minNominatorBondUnit.decimalPlaces(3).toFormat()} {unit}
-            </h5>
-          </div>
-        </section>
-        <section className={gtMinActiveStake && !syncing ? 'invert' : ''}>
-          <h4>
-            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
-            &nbsp;{t('nominateActive')}
-            <ButtonHelp
-              marginLeft
-              onClick={() => openHelp('Active Stake Threshold')}
-            />
-          </h4>
-          <div className="bar">
-            <h5>
-              {syncing
-                ? '...'
-                : `${(minimumActiveStakeUnit.isLessThan(minNominatorBondUnit)
-                    ? minNominatorBondUnit
-                    : minimumActiveStakeUnit
-                  )
-                    .decimalPlaces(3)
-                    .toFormat()} ${unit}`}
-            </h5>
-          </div>
-        </section>
-      </div>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<div className="bars">
+				<section className={gtMinNominatorBond && !syncing ? 'invert' : ''}>
+					<h4>&nbsp;</h4>
+					<div className="bar">
+						<h5>{t('nominateInactive')}</h5>
+					</div>
+				</section>
+				<section className={gtMinNominatorBond && !syncing ? 'invert' : ''}>
+					<h4>
+						<FontAwesomeIcon icon={faFlag} transform="shrink-4" />
+						&nbsp; {t('nominate')}
+						<ButtonHelp marginLeft onClick={() => openHelp('Nominating')} />
+					</h4>
+					<div className="bar">
+						<h5>
+							{minNominatorBondUnit.decimalPlaces(3).toFormat()} {unit}
+						</h5>
+					</div>
+				</section>
+				<section className={gtMinActiveStake && !syncing ? 'invert' : ''}>
+					<h4>
+						<FontAwesomeIcon icon={faFlag} transform="shrink-4" />
+						&nbsp;{t('nominateActive')}
+						<ButtonHelp
+							marginLeft
+							onClick={() => openHelp('Active Stake Threshold')}
+						/>
+					</h4>
+					<div className="bar">
+						<h5>
+							{syncing
+								? '...'
+								: `${(minimumActiveStakeUnit.isLessThan(minNominatorBondUnit)
+										? minNominatorBondUnit
+										: minimumActiveStakeUnit
+									)
+										.decimalPlaces(3)
+										.toFormat()} ${unit}`}
+						</h5>
+					</div>
+				</section>
+			</div>
+		</Wrapper>
+	)
 }

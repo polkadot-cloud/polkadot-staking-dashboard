@@ -9,29 +9,29 @@ import { ItemWrapper } from '../Wrappers'
 import type { ExternalProps } from './types'
 
 export const External = ({ width, title, url, website }: ExternalProps) => {
-  const handleClick = useCallback(() => {
-    window.open(url, '_blank')
-  }, [url])
+	const handleClick = useCallback(() => {
+		window.open(url, '_blank')
+	}, [url])
 
-  return (
-    <ItemWrapper width={width}>
-      <motion.button
-        className="item"
-        whileHover={{ scale: 1.004 }}
-        whileTap={{ scale: 0.99 }}
-        transition={{
-          duration: 0.5,
-          type: 'spring',
-          bounce: 0.4,
-        }}
-        onClick={handleClick}
-      >
-        <h2>{title}</h2>
-        <p className="icon">
-          <FontAwesomeIcon icon={faExt} className="ext" />
-          {website !== undefined && website}
-        </p>
-      </motion.button>
-    </ItemWrapper>
-  )
+	return (
+		<ItemWrapper width={width}>
+			<motion.button
+				className="item"
+				whileHover={{ scale: 1.004 }}
+				whileTap={{ scale: 0.99 }}
+				transition={{
+					duration: 0.5,
+					type: 'spring',
+					bounce: 0.4,
+				}}
+				onClick={handleClick}
+			>
+				<h2>{title}</h2>
+				<p className="icon">
+					<FontAwesomeIcon icon={faExt} className="ext" />
+					{website !== undefined && website}
+				</p>
+			</motion.button>
+		</ItemWrapper>
+	)
 }

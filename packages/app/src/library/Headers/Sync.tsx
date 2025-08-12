@@ -10,43 +10,43 @@ import { useLocation } from 'react-router-dom'
 import { Spinner } from 'ui-core/base'
 
 export const Sync = () => {
-  const { uids } = useTxMeta()
-  const { syncing } = useSyncing()
-  const { pathname } = useLocation()
-  const { getValidators } = useValidators()
-  const { bondedPools } = useBondedPools()
+	const { uids } = useTxMeta()
+	const { syncing } = useSyncing()
+	const { pathname } = useLocation()
+	const { getValidators } = useValidators()
+	const { bondedPools } = useBondedPools()
 
-  // Keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
-  // member sync if Subscan is enabled
-  const onPoolsSyncing = () => {
-    if (pageFromUri(pathname, 'overview') === 'pools') {
-      if (!bondedPools.length) {
-        return true
-      }
-    }
-    return false
-  }
+	// Keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
+	// member sync if Subscan is enabled
+	const onPoolsSyncing = () => {
+		if (pageFromUri(pathname, 'overview') === 'pools') {
+			if (!bondedPools.length) {
+				return true
+			}
+		}
+		return false
+	}
 
-  // Keep syncing if on validators page and still fetching
-  const onValidatorsSyncing = () => {
-    if (
-      pageFromUri(pathname, 'overview') === 'validators' &&
-      !getValidators().length
-    ) {
-      return true
-    }
-    return false
-  }
+	// Keep syncing if on validators page and still fetching
+	const onValidatorsSyncing = () => {
+		if (
+			pageFromUri(pathname, 'overview') === 'validators' &&
+			!getValidators().length
+		) {
+			return true
+		}
+		return false
+	}
 
-  const isSyncing =
-    syncing ||
-    onPoolsSyncing() ||
-    onValidatorsSyncing() ||
-    uids.filter(({ submitted }) => submitted).length > 0
+	const isSyncing =
+		syncing ||
+		onPoolsSyncing() ||
+		onValidatorsSyncing() ||
+		uids.filter(({ submitted }) => submitted).length > 0
 
-  return isSyncing ? (
-    <span style={{ marginRight: '1rem' }}>
-      <Spinner />
-    </span>
-  ) : null
+	return isSyncing ? (
+		<span style={{ marginRight: '1rem' }}>
+			<Spinner />
+		</span>
+	) : null
 }

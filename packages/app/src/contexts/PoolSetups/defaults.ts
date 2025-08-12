@@ -4,8 +4,8 @@
 import type { PoolProgress } from './types'
 
 export const defaultPoolProgress: PoolProgress = {
-  metadata: '',
-  bond: '',
-  nominations: [],
-  roles: null,
+	metadata: '',
+	bond: '',
+	nominations: [],
+	roles: null,
 }

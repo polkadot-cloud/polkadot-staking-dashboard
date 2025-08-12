@@ -7,40 +7,40 @@ import type { ComponentBase } from 'types'
 export type BaseWithAnimation = ComponentBase & AnimationProps
 
 export type CardProps = ComponentBase & {
-  dimmed?: boolean
+	dimmed?: boolean
 }
 export type ContentProps = BaseWithAnimation & {
-  canvas?: boolean
+	canvas?: boolean
 }
 
 export type FixedTitleProps = ComponentBase & {
-  withStyle?: boolean
+	withStyle?: boolean
 }
 
 export type NotesProps = ComponentBase & {
-  withPadding?: boolean
+	withPadding?: boolean
 }
 
 export type PaddingProps = ComponentBase & {
-  verticalOnly?: boolean
-  horizontalOnly?: boolean
+	verticalOnly?: boolean
+	horizontalOnly?: boolean
 }
 
 export type ScrollProps = ComponentBase & {
-  size: string
-  overflow: string
+	size: string
+	overflow: string
 }
 
 export type SectionProps = ComponentBase & {
-  type: 'tab' | 'carousel'
+	type: 'tab' | 'carousel'
 }
 
 export type ContainerProps = BaseWithAnimation & {
-  onClose: () => void
+	onClose: () => void
 }
 
 export interface RoleChangeProps {
-  roleName: string
-  oldAddress?: string
-  newAddress?: string
+	roleName: string
+	oldAddress?: string
+	newAddress?: string
 }

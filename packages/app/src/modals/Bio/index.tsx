@@ -6,12 +6,12 @@ import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const Bio = () => {
-  const { name, bio } = useOverlay().modal.config.options
+	const { name, bio } = useOverlay().modal.config.options
 
-  return (
-    <>
-      <Title title={name} />
-      <Padding>{bio !== undefined && <h4>{bio}</h4>}</Padding>
-    </>
-  )
+	return (
+		<>
+			<Title title={name} />
+			<Padding>{bio !== undefined && <h4>{bio}</h4>}</Padding>
+		</>
+	)
 }

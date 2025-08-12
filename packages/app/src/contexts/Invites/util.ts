@@ -5,36 +5,36 @@ import { isValidAddress } from '@w3ux/utils'
 import { removeLocalInviteConfig } from './local'
 import type { InviteConfig } from './types'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <>
 export const isInviteValid = (raw: any): raw is InviteConfig => {
-  try {
-    if (
-      !raw ||
-      typeof raw !== 'object' ||
-      typeof raw.network !== 'string' ||
-      typeof raw.invite !== 'object'
-    ) {
-      return false
-    }
+	try {
+		if (
+			!raw ||
+			typeof raw !== 'object' ||
+			typeof raw.network !== 'string' ||
+			typeof raw.invite !== 'object'
+		) {
+			return false
+		}
 
-    switch (raw.type) {
-      case 'pool': {
-        const { poolId } = raw.invite
-        return typeof poolId === 'number' && !isNaN(poolId)
-      }
-      case 'validator': {
-        const { validators } = raw.invite
-        return (
-          Array.isArray(validators) &&
-          validators.length > 0 &&
-          validators.every((v) => isValidAddress(v))
-        )
-      }
-      default:
-        return false
-    }
-  } catch {
-    removeLocalInviteConfig()
-    return false
-  }
+		switch (raw.type) {
+			case 'pool': {
+				const { poolId } = raw.invite
+				return typeof poolId === 'number' && !isNaN(poolId)
+			}
+			case 'validator': {
+				const { validators } = raw.invite
+				return (
+					Array.isArray(validators) &&
+					validators.length > 0 &&
+					validators.every((v) => isValidAddress(v))
+				)
+			}
+			default:
+				return false
+		}
+	} catch {
+		removeLocalInviteConfig()
+		return false
+	}
 }

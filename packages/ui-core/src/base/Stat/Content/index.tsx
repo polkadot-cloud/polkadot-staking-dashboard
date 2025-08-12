@@ -9,7 +9,7 @@ import classes from './index.module.scss'
  * @summary Used to house the title contents within a `StatRow`.
  */
 export const Content = ({ children, style }: ComponentBase) => (
-  <div className={classes.content} style={style}>
-    {children}
-  </div>
+	<div className={classes.content} style={style}>
+		{children}
+	</div>
 )

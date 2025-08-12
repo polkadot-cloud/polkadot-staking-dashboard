@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const HeadTags = ({ children, style }: ComponentBase) => (
-  <div className={classes.headTags} style={style}>
-    {children}
-  </div>
+	<div className={classes.headTags} style={style}>
+		{children}
+	</div>
 )

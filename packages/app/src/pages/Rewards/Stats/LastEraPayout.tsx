@@ -9,19 +9,19 @@ import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
 export const LastEraPayout = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { lastReward } = useApi().stakingMetrics
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { lastReward } = useApi().stakingMetrics
+	const { unit, units } = getStakingChainData(network)
 
-  const lastRewardUnit = parseFloat(planckToUnit(lastReward || 0, units))
+	const lastRewardUnit = parseFloat(planckToUnit(lastReward || 0, units))
 
-  const params = {
-    label: t('lastEraPayout'),
-    value: lastRewardUnit,
-    decimals: 3,
-    unit,
-    helpKey: 'Last Era Payout',
-  }
-  return <Number {...params} />
+	const params = {
+		label: t('lastEraPayout'),
+		value: lastRewardUnit,
+		decimals: 3,
+		unit,
+		helpKey: 'Last Era Payout',
+	}
+	return <Number {...params} />
 }

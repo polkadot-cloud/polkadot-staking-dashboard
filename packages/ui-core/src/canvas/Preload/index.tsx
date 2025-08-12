@@ -5,25 +5,25 @@ import { Loader } from '../Loader'
 import classes from './index.module.scss'
 
 export const Preload = ({
-  percentPassed,
-  title,
+	percentPassed,
+	title,
 }: {
-  percentPassed?: string
-  title: string
+	percentPassed?: string
+	title: string
 }) => (
-  <div className={classes.preload}>
-    <h2>{title}</h2>
-    {!percentPassed ? (
-      <Loader />
-    ) : (
-      <div className={classes.loader}>
-        <div>
-          <div
-            className={classes.progress}
-            style={{ width: `${percentPassed}%` }}
-          ></div>
-        </div>
-      </div>
-    )}
-  </div>
+	<div className={classes.preload}>
+		<h2>{title}</h2>
+		{!percentPassed ? (
+			<Loader />
+		) : (
+			<div className={classes.loader}>
+				<div>
+					<div
+						className={classes.progress}
+						style={{ width: `${percentPassed}%` }}
+					></div>
+				</div>
+			</div>
+		)}
+	</div>
 )

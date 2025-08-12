@@ -6,7 +6,7 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolWithdraw = <T extends StakingChain>(
-  api: DedotClient<T>,
-  who: string,
-  numSlashingSpans: number
+	api: DedotClient<T>,
+	who: string,
+	numSlashingSpans: number,
 ) => asTx(api.tx.nominationPools.withdrawUnbonded(who, numSlashingSpans))

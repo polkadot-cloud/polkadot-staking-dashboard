@@ -5,6 +5,6 @@ import type { AnimationProps } from 'framer-motion'
 import type { ComponentBase } from 'types'
 
 export type BackdropProps = ComponentBase &
-  AnimationProps & {
-    blur?: string
-  }
+	AnimationProps & {
+		blur?: string
+	}

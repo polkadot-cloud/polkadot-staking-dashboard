@@ -3,71 +3,71 @@
 
 import type { FC, RefObject } from 'react'
 import type {
-  ActiveOverlayInstance,
-  AnyJson,
-  CanvasSize,
-  CanvasStatus,
-  ModalSize,
-  ModalStatus,
-  OverlayInstanceDirection,
-  OverlayType,
+	ActiveOverlayInstance,
+	AnyJson,
+	CanvasSize,
+	CanvasStatus,
+	ModalSize,
+	ModalStatus,
+	OverlayInstanceDirection,
+	OverlayType,
 } from 'types'
 
 export interface OverlayContextInterface {
-  openOverlayInstances: number
-  setOpenOverlayInstances: (
-    direction: OverlayInstanceDirection,
-    instanceType: OverlayType
-  ) => void
-  activeOverlayInstance: ActiveOverlayInstance
-  setActiveOverlayInstance: (instance: ActiveOverlayInstance) => void
-  canvas: {
-    status: CanvasStatus
-    config: CanvasConfig
-    openCanvas: (config: CanvasConfig) => void
-    closeCanvas: () => void
-    setCanvasStatus: (status: CanvasStatus) => void
-  }
-  modal: {
-    status: ModalStatus
-    config: AnyJson
-    modalHeight: number
-    modalResizeCounter: number
-    modalMaxHeight: number
-    openModal: (config: ModalConfig) => void
-    replaceModal: (config: ModalConfig) => void
-    setModalHeight: (height: number) => void
-    setModalResize: () => void
-    setModalStatus: (status: ModalStatus) => void
-    setModalRef: (modalRef: RefObject<HTMLDivElement | null>) => void
-    setModalHeightRef: (heightRef: RefObject<HTMLDivElement | null>) => void
-  }
+	openOverlayInstances: number
+	setOpenOverlayInstances: (
+		direction: OverlayInstanceDirection,
+		instanceType: OverlayType,
+	) => void
+	activeOverlayInstance: ActiveOverlayInstance
+	setActiveOverlayInstance: (instance: ActiveOverlayInstance) => void
+	canvas: {
+		status: CanvasStatus
+		config: CanvasConfig
+		openCanvas: (config: CanvasConfig) => void
+		closeCanvas: () => void
+		setCanvasStatus: (status: CanvasStatus) => void
+	}
+	modal: {
+		status: ModalStatus
+		config: AnyJson
+		modalHeight: number
+		modalResizeCounter: number
+		modalMaxHeight: number
+		openModal: (config: ModalConfig) => void
+		replaceModal: (config: ModalConfig) => void
+		setModalHeight: (height: number) => void
+		setModalResize: () => void
+		setModalStatus: (status: ModalStatus) => void
+		setModalRef: (modalRef: RefObject<HTMLDivElement | null>) => void
+		setModalHeightRef: (heightRef: RefObject<HTMLDivElement | null>) => void
+	}
 }
 export interface Fallback {
-  fallback: FC
+	fallback: FC
 }
 
 export type CanvasProps = Fallback & {
-  canvas?: Record<string, FC>
-  externalOverlayStatus: CanvasStatus
+	canvas?: Record<string, FC>
+	externalOverlayStatus: CanvasStatus
 }
 
 export type ModalProps = Fallback & {
-  modals?: Record<string, FC>
-  externalOverlayStatus: CanvasStatus
+	modals?: Record<string, FC>
+	externalOverlayStatus: CanvasStatus
 }
 export type OverlayProps = ModalProps & CanvasProps
 export type ConfigOptions = Record<string, AnyJson>
 
 export interface ModalConfig {
-  key: string
-  options?: ConfigOptions
-  size?: ModalSize
+	key: string
+	options?: ConfigOptions
+	size?: ModalSize
 }
 
 export interface CanvasConfig {
-  key: string
-  scroll?: boolean
-  size?: CanvasSize
-  options?: ConfigOptions
+	key: string
+	scroll?: boolean
+	size?: CanvasSize
+	options?: ConfigOptions
 }

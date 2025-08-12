@@ -7,28 +7,28 @@ import { useTranslation } from 'react-i18next'
 import { EraPointsLine } from 'ui-graphs'
 
 export const InactiveGraph = ({
-  width,
-  height,
+	width,
+	height,
 }: {
-  width: string | number
-  height: string | number
+	width: string | number
+	height: string | number
 }) => {
-  const { i18n, t } = useTranslation()
-  const { getThemeValue } = useThemeValues()
+	const { i18n, t } = useTranslation()
+	const { getThemeValue } = useThemeValues()
 
-  return (
-    <EraPointsLine
-      syncing={false}
-      entries={[]}
-      width={width}
-      height={height}
-      getThemeValue={getThemeValue}
-      dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat}
-      labels={{
-        date: t('date', { ns: 'app' }),
-        era: t('era', { ns: 'app' }),
-        eraPoints: t('eraPoints', { ns: 'app' }),
-      }}
-    />
-  )
+	return (
+		<EraPointsLine
+			syncing={false}
+			entries={[]}
+			width={width}
+			height={height}
+			getThemeValue={getThemeValue}
+			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat}
+			labels={{
+				date: t('date', { ns: 'app' }),
+				era: t('era', { ns: 'app' }),
+				eraPoints: t('eraPoints', { ns: 'app' }),
+			}}
+		/>
+	)
 }

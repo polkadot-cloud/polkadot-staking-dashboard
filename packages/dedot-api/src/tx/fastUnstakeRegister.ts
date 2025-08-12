@@ -6,5 +6,5 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const fastUnstakeRegister = <T extends StakingChain>(
-  api: DedotClient<T>
+	api: DedotClient<T>,
 ) => asTx(api.tx.fastUnstake.registerFastUnstake())

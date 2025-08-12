@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const FootFullWidth = ({ children, style }: ComponentBase) => (
-  <div className={classes.footFullWidth} style={style}>
-    {children}
-  </div>
+	<div className={classes.footFullWidth} style={style}>
+		{children}
+	</div>
 )

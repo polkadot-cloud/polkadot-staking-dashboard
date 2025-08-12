@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface NotificationItem extends NotificationText {
-  index: number
+	index: number
 }
 
 export interface NotificationText {
-  title: string
-  subtitle: string
+	title: string
+	subtitle: string
 }

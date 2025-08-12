@@ -1,26 +1,28 @@
 {
-  "name": "locales",
-  "version": "1.4.0",
-  "license": "GPL-3.0-only",
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts",
-    "./util": "./src/util/index.ts"
-  },
-  "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
-    "order": "node ./.scripts/localeOrderKeys.cjs",
-    "validate": "node ./.scripts/localeValidate.cjs"
-  },
-  "dependencies": {
-    "@w3ux/utils": "2.2.3",
-    "consts": "workspace:*",
-    "date-fns": "^4.1.0",
-    "i18next": "^25.3.1",
-    "react-i18next": "^15.5.1",
-    "utils": "workspace:*"
-  },
-  "devDependencies": {
-    "vite": "^6.3.5"
-  }
+	"name": "locales",
+	"version": "1.4.0",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./util": "./src/util/index.ts"
+	},
+	"scripts": {
+		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
+		"check": "biome check .",
+		"lint": "biome check --write .",
+		"order": "node ./.scripts/localeOrderKeys.cjs",
+		"validate": "node ./.scripts/localeValidate.cjs"
+	},
+	"dependencies": {
+		"@w3ux/utils": "2.2.3",
+		"consts": "workspace:*",
+		"date-fns": "^4.1.0",
+		"i18next": "^25.3.1",
+		"react-i18next": "^15.5.1",
+		"utils": "workspace:*"
+	},
+	"devDependencies": {
+		"vite": "^6.3.5"
+	}
 }

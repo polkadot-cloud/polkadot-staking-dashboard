@@ -8,31 +8,31 @@ export type SearchListContainerProps = ComponentBaseWithClassName
 export type SearchListColumnProps = ComponentBaseWithClassName
 
 export interface SearchListHeaderProps extends ComponentBaseWithClassName {
-  children: React.ReactNode
+	children: React.ReactNode
 }
 
 export type SearchListSelectedListProps = ComponentBaseWithClassName
 
 export interface SearchListEmptyStateProps extends ComponentBaseWithClassName {
-  message: string
+	message: string
 }
 
 export interface SearchListLoadingProps extends ComponentBaseWithClassName {
-  message?: string
+	message?: string
 }
 
 export interface SearchListNoResultsProps extends ComponentBaseWithClassName {
-  message?: string
+	message?: string
 }
 
 export interface SearchListClearButtonProps extends ComponentBaseWithClassName {
-  onClick: () => void
-  children: React.ReactNode
+	onClick: () => void
+	children: React.ReactNode
 }
 
 export interface SearchListNominationsCounterProps
-  extends ComponentBaseWithClassName {
-  current: number
-  total: number
-  remaining: number
+	extends ComponentBaseWithClassName {
+	current: number
+	total: number
+	remaining: number
 }

@@ -18,47 +18,47 @@ import classes from './index.module.scss'
  * and supporting additional customization for icons, colors, and margins.
  */
 export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
-  const {
-    disabled,
-    className,
-    style,
-    active,
-    title,
-    badge,
-    onClick,
-    colorSecondary,
-    onMouseOver,
-    onMouseMove,
-    onMouseOut,
-  } = props
+	const {
+		disabled,
+		className,
+		style,
+		active,
+		title,
+		badge,
+		onClick,
+		colorSecondary,
+		onMouseOver,
+		onMouseMove,
+		onMouseOut,
+	} = props
 
-  const activeClass = colorSecondary
-    ? classes.btnTabSecondaryColorActive
-    : classes.btnTabActive
+	const activeClass = colorSecondary
+		? classes.btnTabSecondaryColorActive
+		: classes.btnTabActive
 
-  const buttonClasses = classNames(
-    commonClasses.btnCore,
-    classes.btnTab,
-    {
-      [commonClasses.btnDisabled]: disabled,
-      [activeClass]: active,
-      [classes.btnTabSecondaryColor]: colorSecondary,
-    },
-    className
-  )
+	const buttonClasses = classNames(
+		commonClasses.btnCore,
+		classes.btnTab,
+		{
+			[commonClasses.btnDisabled]: disabled,
+			[activeClass]: active,
+			[classes.btnTabSecondaryColor]: colorSecondary,
+		},
+		className,
+	)
 
-  return (
-    <button
-      className={buttonClasses}
-      style={style}
-      type="button"
-      disabled={disabled}
-      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
-    >
-      <span className={classes.btnTabInner}>
-        {title}
-        {badge && <span className={classes.btnTabBadge}>{badge}</span>}
-      </span>
-    </button>
-  )
+	return (
+		<button
+			className={buttonClasses}
+			style={style}
+			type="button"
+			disabled={disabled}
+			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+		>
+			<span className={classes.btnTabInner}>
+				{title}
+				{badge && <span className={classes.btnTabBadge}>{badge}</span>}
+			</span>
+		</button>
+	)
 }

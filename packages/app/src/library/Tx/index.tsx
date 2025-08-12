@@ -11,30 +11,30 @@ import { Wrapper } from './Wrapper'
  * @summary A wrapper to handle transaction submission.
  */
 export const Tx = ({
-  margin,
-  label,
-  name,
-  notEnoughFunds,
-  dangerMessage,
-  SignerComponent,
-  displayFor = 'default',
-  transparent,
+	margin,
+	label,
+	name,
+	notEnoughFunds,
+	dangerMessage,
+	SignerComponent,
+	displayFor = 'default',
+	transparent,
 }: TxProps) => {
-  const innerClasses = classNames('inner', {
-    [displayFor]: ['canvas', 'card'].includes(displayFor),
-    transparent: !!transparent,
-  })
-  return (
-    <Wrapper className={margin ? 'margin' : undefined}>
-      <div className={innerClasses}>
-        <Signer
-          dangerMessage={dangerMessage}
-          notEnoughFunds={notEnoughFunds}
-          name={name}
-          label={label}
-        />
-        <section>{SignerComponent}</section>
-      </div>
-    </Wrapper>
-  )
+	const innerClasses = classNames('inner', {
+		[displayFor]: ['canvas', 'card'].includes(displayFor),
+		transparent: !!transparent,
+	})
+	return (
+		<Wrapper className={margin ? 'margin' : undefined}>
+			<div className={innerClasses}>
+				<Signer
+					dangerMessage={dangerMessage}
+					notEnoughFunds={notEnoughFunds}
+					name={name}
+					label={label}
+				/>
+				<section>{SignerComponent}</section>
+			</div>
+		</Wrapper>
+	)
 }

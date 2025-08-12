@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classes from './index.module.scss'
 
 export const Icon = ({ faIcon }: { faIcon: IconDefinition }) => (
-  <div className={classes.icon}>
-    <FontAwesomeIcon icon={faIcon} />
-  </div>
+	<div className={classes.icon}>
+		<FontAwesomeIcon icon={faIcon} />
+	</div>
 )

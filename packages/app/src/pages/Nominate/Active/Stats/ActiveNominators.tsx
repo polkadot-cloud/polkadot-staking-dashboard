@@ -9,34 +9,34 @@ import { useTranslation } from 'react-i18next'
 import { percentageOf } from 'ui-graphs/util'
 
 export const ActiveNominators = () => {
-  const { t } = useTranslation('pages')
-  const {
-    stakingMetrics: { counterForNominators },
-  } = useApi()
-  const { activeNominatorsCount } = useEraStakers()
+	const { t } = useTranslation('pages')
+	const {
+		stakingMetrics: { counterForNominators },
+	} = useApi()
+	const { activeNominatorsCount } = useEraStakers()
 
-  // active nominators as percent
-  let totalNominatorsAsPercent = 0
-  if (counterForNominators > 0) {
-    totalNominatorsAsPercent = percentageOf(
-      activeNominatorsCount,
-      counterForNominators
-    )
-  }
+	// active nominators as percent
+	let totalNominatorsAsPercent = 0
+	if (counterForNominators > 0) {
+		totalNominatorsAsPercent = percentageOf(
+			activeNominatorsCount,
+			counterForNominators,
+		)
+	}
 
-  const params = {
-    label: t('activeNominators'),
-    stat: {
-      value: activeNominatorsCount,
-      total: counterForNominators,
-      unit: '',
-    },
-    pieValue: totalNominatorsAsPercent,
-    tooltip: `${new BigNumber(totalNominatorsAsPercent)
-      .decimalPlaces(2)
-      .toFormat()}%`,
-    helpKey: 'Active Nominators',
-  }
+	const params = {
+		label: t('activeNominators'),
+		stat: {
+			value: activeNominatorsCount,
+			total: counterForNominators,
+			unit: '',
+		},
+		pieValue: totalNominatorsAsPercent,
+		tooltip: `${new BigNumber(totalNominatorsAsPercent)
+			.decimalPlaces(2)
+			.toFormat()}%`,
+		helpKey: 'Active Nominators',
+	}
 
-  return <Pie {...params} />
+	return <Pie {...params} />
 }

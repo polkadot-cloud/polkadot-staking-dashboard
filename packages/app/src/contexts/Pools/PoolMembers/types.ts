@@ -5,17 +5,17 @@ import type { Sync } from '@w3ux/types'
 import type { PalletNominationPoolsPoolMember } from 'dedot/chaintypes'
 
 export interface PoolMemberContext {
-  fetchPoolMemberData: (addresses: string[]) => void
-  meta: FetchedPoolMembers
-  fetchedPoolMembersApi: Sync
-  setFetchedPoolMembersApi: (s: Sync) => void
+	fetchPoolMemberData: (addresses: string[]) => void
+	meta: FetchedPoolMembers
+	fetchedPoolMembersApi: Sync
+	setFetchedPoolMembersApi: (s: Sync) => void
 }
 
 export interface FetchedPoolMembers {
-  poolMembers: (FetchedPoolMember | undefined)[]
-  addresses: string[]
+	poolMembers: (FetchedPoolMember | undefined)[]
+	addresses: string[]
 }
 
 export type FetchedPoolMember = PalletNominationPoolsPoolMember & {
-  address: string
+	address: string
 }

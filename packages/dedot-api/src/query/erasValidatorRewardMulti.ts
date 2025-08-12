@@ -5,6 +5,6 @@ import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
 export const erasValidatorRewardMulti = async <T extends StakingChain>(
-  api: DedotClient<T>,
-  eras: number[]
+	api: DedotClient<T>,
+	eras: number[],
 ) => await api.query.staking.erasValidatorReward.multi(eras)

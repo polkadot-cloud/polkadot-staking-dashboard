@@ -2,6 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export const defaultUnclaimedRewards = {
-  total: '0',
-  entries: [],
+	total: '0',
+	entries: [],
 }

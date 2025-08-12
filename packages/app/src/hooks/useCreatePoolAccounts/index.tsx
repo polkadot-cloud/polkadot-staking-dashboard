@@ -7,13 +7,13 @@ import { useNetwork } from 'contexts/Network'
 import { createPoolAccounts as createUtil } from 'utils'
 
 export const useCreatePoolAccounts = () => {
-  const { network } = useNetwork()
-  const { getChainSpec, getConsts } = useApi()
-  const { poolsPalletId } = getConsts(network)
-  const { ss58Format } = getChainSpec(getStakingChain(network)).properties
+	const { network } = useNetwork()
+	const { getChainSpec, getConsts } = useApi()
+	const { poolsPalletId } = getConsts(network)
+	const { ss58Format } = getChainSpec(getStakingChain(network)).properties
 
-  const createPoolAccounts = (poolId: number) =>
-    createUtil(poolId, poolsPalletId, ss58Format)
+	const createPoolAccounts = (poolId: number) =>
+		createUtil(poolId, poolsPalletId, ss58Format)
 
-  return createPoolAccounts
+	return createPoolAccounts
 }

@@ -14,57 +14,57 @@ import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 
 export const PayoutDestinationStatus = () => {
-  const { t } = useTranslation('pages')
-  const { syncing } = useSyncing()
-  const { isBonding } = useStaking()
-  const { openModal } = useOverlay().modal
-  const { getStakingLedger } = useBalances()
-  const { isFastUnstaking } = useUnstaking()
-  const { getPayeeItems } = usePayeeConfig()
-  const { activeAddress } = useActiveAccounts()
-  const { isReadOnlyAccount } = useImportedAccounts()
+	const { t } = useTranslation('pages')
+	const { syncing } = useSyncing()
+	const { isBonding } = useStaking()
+	const { openModal } = useOverlay().modal
+	const { getStakingLedger } = useBalances()
+	const { isFastUnstaking } = useUnstaking()
+	const { getPayeeItems } = usePayeeConfig()
+	const { activeAddress } = useActiveAccounts()
+	const { isReadOnlyAccount } = useImportedAccounts()
 
-  const payee = getStakingLedger(activeAddress).payee
+	const payee = getStakingLedger(activeAddress).payee
 
-  // Get payee status text to display.
-  const getPayeeStatus = () => {
-    if (!isBonding) {
-      return t('notAssigned')
-    }
-    const status = getPayeeItems(true).find(
-      ({ value }) => value === payee?.destination
-    )?.activeTitle
+	// Get payee status text to display.
+	const getPayeeStatus = () => {
+		if (!isBonding) {
+			return t('notAssigned')
+		}
+		const status = getPayeeItems(true).find(
+			({ value }) => value === payee?.destination,
+		)?.activeTitle
 
-    if (status) {
-      return status
-    }
-    return t('notAssigned')
-  }
+		if (status) {
+			return status
+		}
+		return t('notAssigned')
+	}
 
-  // Get the payee destination icon to display, falling back to wallet icon.
-  const payeeIcon = !isBonding
-    ? undefined
-    : getPayeeItems(true).find(({ value }) => value === payee?.destination)
-        ?.icon || faWallet
+	// Get the payee destination icon to display, falling back to wallet icon.
+	const payeeIcon = !isBonding
+		? undefined
+		: getPayeeItems(true).find(({ value }) => value === payee?.destination)
+				?.icon || faWallet
 
-  return (
-    <Stat
-      label={t('payoutDestination')}
-      helpKey="Payout Destination"
-      icon={payeeIcon}
-      stat={getPayeeStatus()}
-      buttons={
-        isBonding && !isReadOnlyAccount(activeAddress)
-          ? [
-              {
-                title: t('update'),
-                icon: faGear,
-                disabled: syncing || !isBonding || isFastUnstaking,
-                onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
-              },
-            ]
-          : []
-      }
-    />
-  )
+	return (
+		<Stat
+			label={t('payoutDestination')}
+			helpKey="Payout Destination"
+			icon={payeeIcon}
+			stat={getPayeeStatus()}
+			buttons={
+				isBonding && !isReadOnlyAccount(activeAddress)
+					? [
+							{
+								title: t('update'),
+								icon: faGear,
+								disabled: syncing || !isBonding || isFastUnstaking,
+								onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
+							},
+						]
+					: []
+			}
+		/>
+	)
 }

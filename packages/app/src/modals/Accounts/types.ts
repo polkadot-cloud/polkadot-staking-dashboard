@@ -5,31 +5,31 @@ import type { Proxy } from 'contexts/Proxies/types'
 import type { MaybeAddress, PoolMembership } from 'types'
 
 export interface AccountButtonProps {
-  address: MaybeAddress
-  source: string
-  label?: string[]
-  asElement?: boolean
-  delegator?: string
-  noBorder?: boolean
-  proxyType?: string
-  transferableBalance?: bigint
+	address: MaybeAddress
+	source: string
+	label?: string[]
+	asElement?: boolean
+	delegator?: string
+	noBorder?: boolean
+	proxyType?: string
+	transferableBalance?: bigint
 }
 
 export interface DelegatesProps {
-  delegator: string
-  source: string
-  delegates: Proxy | undefined
+	delegator: string
+	source: string
+	delegates: Proxy | undefined
 }
 
 export interface AccountInPoolProps extends PoolMembership {
-  source: string
-  delegates?: Proxy
+	source: string
+	delegates?: Proxy
 }
 
 export interface AccountItemProps {
-  address: string
-  source: string
-  delegates?: Proxy
+	address: string
+	source: string
+	delegates?: Proxy
 }
 
 export type AccountNominatingInPoolProps = AccountItemProps & AccountInPoolProps

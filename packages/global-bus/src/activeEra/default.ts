@@ -4,6 +4,6 @@
 import type { ActiveEra } from 'types'
 
 export const defaultActiveEra: ActiveEra = {
-  index: 0,
-  start: 0n,
+	index: 0,
+	start: 0n,
 }

@@ -5,14 +5,14 @@ import type { ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Heading = ({
-  text,
-  children,
+	text,
+	children,
 }: {
-  text: string
-  children: ReactNode
+	text: string
+	children: ReactNode
 }) => (
-  <div className={classes.heading}>
-    <h4>{text}</h4>
-    <div>{children}</div>
-  </div>
+	<div className={classes.heading}>
+		<h4>{text}</h4>
+		<div>{children}</div>
+	</div>
 )

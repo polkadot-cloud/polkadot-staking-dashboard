@@ -7,8 +7,8 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export type EntryProps = ComponentBase & {
-  mode: 'light' | 'dark'
-  theme: string
+	mode: 'light' | 'dark'
+	theme: string
 }
 
 /**
@@ -16,16 +16,16 @@ export type EntryProps = ComponentBase & {
  * @summary The outer-most wrapper that hosts core tag styling.
  */
 export const Entry = forwardRef(
-  (
-    { children, style, mode, theme }: EntryProps,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => (
-    <div
-      ref={ref}
-      className={`${classes.entry} theme-${mode} theme-${theme}`}
-      style={style}
-    >
-      {children}
-    </div>
-  )
+	(
+		{ children, style, mode, theme }: EntryProps,
+		ref: ForwardedRef<HTMLDivElement>,
+	) => (
+		<div
+			ref={ref}
+			className={`${classes.entry} theme-${mode} theme-${theme}`}
+			style={style}
+		>
+			{children}
+		</div>
+	),
 )

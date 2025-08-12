@@ -6,8 +6,8 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 const STAKING_API_ENDPOINT = 'https://api.staking.polkadot.cloud'
 
 const client = new ApolloClient({
-  uri: STAKING_API_ENDPOINT,
-  cache: new InMemoryCache(),
+	uri: STAKING_API_ENDPOINT,
+	cache: new InMemoryCache(),
 })
 
 export { client }

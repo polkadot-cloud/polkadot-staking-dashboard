@@ -6,6 +6,6 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const stakingBondExtra = <T extends StakingChain>(
-  api: DedotClient<T>,
-  bond: bigint
+	api: DedotClient<T>,
+	bond: bigint,
 ) => asTx(api.tx.staking.bondExtra(bond))

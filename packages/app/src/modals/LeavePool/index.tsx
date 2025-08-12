@@ -26,110 +26,110 @@ import { useOverlay } from 'ui-overlay'
 import { timeleftAsString } from 'utils'
 
 export const LeavePool = ({
-  onResize,
-  onClick,
+	onResize,
+	onClick,
 }: {
-  onResize?: () => void
-  onClick?: () => void
+	onResize?: () => void
+	onClick?: () => void
 }) => {
-  const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { activePool } = useActivePool()
-  const { getConsts, serviceApi } = useApi()
-  const { erasToSeconds } = useErasToTimeLeft()
-  const { setModalStatus } = useOverlay().modal
-  const { activeAddress } = useActiveAccounts()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { balances } = useAccountBalances(activeAddress)
-  const { getPoolMembership, getPendingPoolRewards } = useBalances()
+	const { t } = useTranslation('modals')
+	const { network } = useNetwork()
+	const { activePool } = useActivePool()
+	const { getConsts, serviceApi } = useApi()
+	const { erasToSeconds } = useErasToTimeLeft()
+	const { setModalStatus } = useOverlay().modal
+	const { activeAddress } = useActiveAccounts()
+	const { getSignerWarnings } = useSignerWarnings()
+	const { balances } = useAccountBalances(activeAddress)
+	const { getPoolMembership, getPendingPoolRewards } = useBalances()
 
-  const { unit, units } = getStakingChainData(network)
-  const { active: activeBn } = balances.pool
-  const { bondDuration } = getConsts(network)
-  const pendingRewards = getPendingPoolRewards(activeAddress)
-  const { membership } = getPoolMembership(activeAddress)
-  const bondDurationFormatted = timeleftAsString(
-    t,
-    getUnixTime(new Date()) + 1,
-    erasToSeconds(bondDuration),
-    true
-  )
-  const freeToUnbond = planckToUnit(activeBn, units)
-  const pendingRewardsUnit = planckToUnit(pendingRewards, units)
+	const { unit, units } = getStakingChainData(network)
+	const { active: activeBn } = balances.pool
+	const { bondDuration } = getConsts(network)
+	const pendingRewards = getPendingPoolRewards(activeAddress)
+	const { membership } = getPoolMembership(activeAddress)
+	const bondDurationFormatted = timeleftAsString(
+		t,
+		getUnixTime(new Date()) + 1,
+		erasToSeconds(bondDuration),
+		true,
+	)
+	const freeToUnbond = planckToUnit(activeBn, units)
+	const pendingRewardsUnit = planckToUnit(pendingRewards, units)
 
-  const [paramsValid, setParamsValid] = useState<boolean>(false)
+	const [paramsValid, setParamsValid] = useState<boolean>(false)
 
-  useEffect(() => {
-    setParamsValid((membership?.points || 0n) > 0 && !!activePool?.id)
-  }, [freeToUnbond])
+	useEffect(() => {
+		setParamsValid((membership?.points || 0n) > 0 && !!activePool?.id)
+	}, [freeToUnbond])
 
-  const getTx = () => {
-    if (!activeAddress || !membership) {
-      return
-    }
-    return serviceApi.tx.poolUnbond(activeAddress, membership.points)
-  }
+	const getTx = () => {
+		if (!activeAddress || !membership) {
+			return
+		}
+		return serviceApi.tx.poolUnbond(activeAddress, membership.points)
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: paramsValid,
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: paramsValid,
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+	})
 
-  const warnings = getSignerWarnings(
-    activeAddress,
-    false,
-    submitExtrinsic.proxySupported
-  )
+	const warnings = getSignerWarnings(
+		activeAddress,
+		false,
+		submitExtrinsic.proxySupported,
+	)
 
-  if (pendingRewards > 0) {
-    warnings.push(
-      `${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`
-    )
-  }
+	if (pendingRewards > 0) {
+		warnings.push(
+			`${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`,
+		)
+	}
 
-  return (
-    <>
-      <Padding>
-        <Title>{t('leavePool')}</Title>
-        {warnings.length > 0 ? (
-          <Warnings>
-            {warnings.map((text, i) => (
-              <Warning key={`warning${i}`} text={text} />
-            ))}
-          </Warnings>
-        ) : null}
-        <ActionItem
-          text={`${t('unbond')} ${freeToUnbond.toString()} ${unit}`}
-        />
-        <StaticNote
-          value={bondDurationFormatted}
-          tKey="onceUnbonding"
-          valueKey="bondDurationFormatted"
-          deps={[bondDuration]}
-        />
-      </Padding>
-      <SubmitTx
-        valid={paramsValid}
-        buttons={
-          onClick
-            ? [
-                <ButtonSubmitInvert
-                  key="button_back"
-                  text={t('back')}
-                  iconLeft={faChevronLeft}
-                  iconTransform="shrink-1"
-                  onClick={onClick}
-                />,
-              ]
-            : undefined
-        }
-        onResize={onResize}
-        {...submitExtrinsic}
-      />
-    </>
-  )
+	return (
+		<>
+			<Padding>
+				<Title>{t('leavePool')}</Title>
+				{warnings.length > 0 ? (
+					<Warnings>
+						{warnings.map((text, i) => (
+							<Warning key={`warning${i}`} text={text} />
+						))}
+					</Warnings>
+				) : null}
+				<ActionItem
+					text={`${t('unbond')} ${freeToUnbond.toString()} ${unit}`}
+				/>
+				<StaticNote
+					value={bondDurationFormatted}
+					tKey="onceUnbonding"
+					valueKey="bondDurationFormatted"
+					deps={[bondDuration]}
+				/>
+			</Padding>
+			<SubmitTx
+				valid={paramsValid}
+				buttons={
+					onClick
+						? [
+								<ButtonSubmitInvert
+									key="button_back"
+									text={t('back')}
+									iconLeft={faChevronLeft}
+									iconTransform="shrink-1"
+									onClick={onClick}
+								/>,
+							]
+						: undefined
+				}
+				onResize={onResize}
+				{...submitExtrinsic}
+			/>
+		</>
+	)
 }

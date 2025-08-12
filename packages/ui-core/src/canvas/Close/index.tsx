@@ -7,20 +7,20 @@ import classNames from 'classnames'
 import classes from './index.module.scss'
 
 export const Close = ({
-  onClose,
-  sm,
+	onClose,
+	sm,
 }: {
-  onClose: () => void
-  sm?: boolean
+	onClose: () => void
+	sm?: boolean
 }) => {
-  const allClasses = classNames(classes.close, {
-    [classes.sm]: !!sm,
-  })
-  return (
-    <div className={allClasses}>
-      <button type="button" onClick={() => onClose()}>
-        <FontAwesomeIcon icon={faXmark} />
-      </button>
-    </div>
-  )
+	const allClasses = classNames(classes.close, {
+		[classes.sm]: !!sm,
+	})
+	return (
+		<div className={allClasses}>
+			<button type="button" onClick={() => onClose()}>
+				<FontAwesomeIcon icon={faXmark} />
+			</button>
+		</div>
+	)
 }

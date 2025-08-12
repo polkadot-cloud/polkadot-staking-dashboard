@@ -10,47 +10,47 @@ import type { HeaderProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const Header = ({
-  title,
-  complete,
-  thisSection,
-  bondFor,
+	title,
+	complete,
+	thisSection,
+	bondFor,
 }: HeaderProps) => {
-  const { t } = useTranslation('app')
-  const { activeAddress } = useActiveAccounts()
-  const { getPoolSetup, setPoolSetupSection } = usePoolSetups()
-  const { getNominatorSetup, setNominatorSetupSection } = useNominatorSetups()
+	const { t } = useTranslation('app')
+	const { activeAddress } = useActiveAccounts()
+	const { getPoolSetup, setPoolSetupSection } = usePoolSetups()
+	const { getNominatorSetup, setNominatorSetupSection } = useNominatorSetups()
 
-  const setup =
-    bondFor === 'nominator'
-      ? getNominatorSetup(activeAddress)
-      : getPoolSetup(activeAddress)
+	const setup =
+		bondFor === 'nominator'
+			? getNominatorSetup(activeAddress)
+			: getPoolSetup(activeAddress)
 
-  return (
-    <Wrapper>
-      <section>
-        <h2>{title}</h2>
-      </section>
-      <section>
-        {complete && (
-          <>
-            {setup.section !== thisSection && thisSection < setup.section && (
-              <span>
-                <ButtonSecondary
-                  text={t('update')}
-                  onClick={() => {
-                    if (bondFor === 'nominator') {
-                      setNominatorSetupSection(thisSection)
-                    } else {
-                      setPoolSetupSection(thisSection)
-                    }
-                  }}
-                />
-              </span>
-            )}
-            <h4 className="complete">{t('complete')}</h4>
-          </>
-        )}
-      </section>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<section>
+				<h2>{title}</h2>
+			</section>
+			<section>
+				{complete && (
+					<>
+						{setup.section !== thisSection && thisSection < setup.section && (
+							<span>
+								<ButtonSecondary
+									text={t('update')}
+									onClick={() => {
+										if (bondFor === 'nominator') {
+											setNominatorSetupSection(thisSection)
+										} else {
+											setPoolSetupSection(thisSection)
+										}
+									}}
+								/>
+							</span>
+						)}
+						<h4 className="complete">{t('complete')}</h4>
+					</>
+				)}
+			</section>
+		</Wrapper>
+	)
 }

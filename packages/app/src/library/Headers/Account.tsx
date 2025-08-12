@@ -13,54 +13,54 @@ import { AccountPopover } from './Popovers/AccountPopover'
 import type { ToggleConnectProps } from './Popovers/types'
 
 export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
-  const { t } = useTranslation('app')
-  const { themeElementRef } = useTheme()
-  const { openModal } = useOverlay().modal
-  const { activeAddress, activeProxy } = useActiveAccounts()
-  const { accountHasSigner, getAccount, accounts } = useImportedAccounts()
+	const { t } = useTranslation('app')
+	const { themeElementRef } = useTheme()
+	const { openModal } = useOverlay().modal
+	const { activeAddress, activeProxy } = useActiveAccounts()
+	const { accountHasSigner, getAccount, accounts } = useImportedAccounts()
 
-  const [open, setOpen] = useState<boolean>(false)
+	const [open, setOpen] = useState<boolean>(false)
 
-  const totalImportedAccounts = accounts.length
+	const totalImportedAccounts = accounts.length
 
-  return !activeAddress ? (
-    <ButtonAccount.Standalone
-      label={totalImportedAccounts ? t('selectAccount') : t('connectAccounts')}
-      onClick={() => {
-        if (!totalImportedAccounts) {
-          setOpenConnect(true)
-        } else {
-          openModal({ key: 'Accounts' })
-        }
-      }}
-    />
-  ) : (
-    <Popover
-      open={open}
-      portalContainer={themeElementRef.current || undefined}
-      content={<AccountPopover setOpen={setOpen} />}
-      onTriggerClick={() => {
-        if (!totalImportedAccounts) {
-          return
-        }
-        if (activeAddress) {
-          setOpen(!open)
-        } else {
-          openModal({ key: 'Accounts' })
-        }
-      }}
-    >
-      <ButtonAccount.Label
-        className="header-account"
-        activeAccount={getAccount(activeAddress)}
-        label={
-          getAccount(activeProxy?.address || null)
-            ? t('proxy', { ns: 'app' })
-            : undefined
-        }
-        readOnly={!accountHasSigner(activeAddress)}
-        open={open}
-      />
-    </Popover>
-  )
+	return !activeAddress ? (
+		<ButtonAccount.Standalone
+			label={totalImportedAccounts ? t('selectAccount') : t('connectAccounts')}
+			onClick={() => {
+				if (!totalImportedAccounts) {
+					setOpenConnect(true)
+				} else {
+					openModal({ key: 'Accounts' })
+				}
+			}}
+		/>
+	) : (
+		<Popover
+			open={open}
+			portalContainer={themeElementRef.current || undefined}
+			content={<AccountPopover setOpen={setOpen} />}
+			onTriggerClick={() => {
+				if (!totalImportedAccounts) {
+					return
+				}
+				if (activeAddress) {
+					setOpen(!open)
+				} else {
+					openModal({ key: 'Accounts' })
+				}
+			}}
+		>
+			<ButtonAccount.Label
+				className="header-account"
+				activeAccount={getAccount(activeAddress)}
+				label={
+					getAccount(activeProxy?.address || null)
+						? t('proxy', { ns: 'app' })
+						: undefined
+				}
+				readOnly={!accountHasSigner(activeAddress)}
+				open={open}
+			/>
+		</Popover>
+	)
 }

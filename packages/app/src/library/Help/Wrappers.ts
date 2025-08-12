@@ -99,7 +99,7 @@ export const HelpSubtitle = styled.h3`
 `
 
 export const ItemWrapper = styled(motion.div)<{
-  width: string | number
+	width: string | number
 }>`
   display: flex;
   width: ${(props) => props.width};
@@ -146,7 +146,7 @@ export const ItemWrapper = styled(motion.div)<{
 
 // Tab bar styles
 export const TabBar = styled.div.attrs(() => ({
-  role: 'tablist',
+	role: 'tablist',
 }))`
   display: flex;
   width: 100%;
@@ -161,7 +161,7 @@ export const TabButton = styled.button<{ selected: boolean }>`
   font-family: InterSemiBold, sans-serif;
   font-size: 1.1rem;
   color: ${(p) =>
-    p.selected ? 'var(--accent-color-primary)' : 'var(--text-color-secondary)'};
+		p.selected ? 'var(--accent-color-primary)' : 'var(--text-color-secondary)'};
   border-bottom: 2px solid
     ${(p) => (p.selected ? 'var(--accent-color-primary)' : 'transparent')};
   margin-right: 2rem;
@@ -177,9 +177,9 @@ export const TabButton = styled.button<{ selected: boolean }>`
   svg {
     path {
       fill: ${(p) =>
-        p.selected
-          ? 'var(--accent-color-primary)'
-          : 'var(--text-color-secondary)'};
+				p.selected
+					? 'var(--accent-color-primary)'
+					: 'var(--text-color-secondary)'};
     }
   }
 `

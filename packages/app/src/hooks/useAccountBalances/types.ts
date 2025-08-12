@@ -5,6 +5,6 @@ import type BigNumber from 'bignumber.js'
 import type { AccountBalances, MaybeAddress } from 'types'
 
 export interface TransferOptionsContextInterface {
-  getAllBalances: (address: MaybeAddress) => AccountBalances
-  getStakedBalance: (address: MaybeAddress) => BigNumber
+	getAllBalances: (address: MaybeAddress) => AccountBalances
+	getStakedBalance: (address: MaybeAddress) => BigNumber
 }

@@ -7,27 +7,27 @@ import { QrScan } from './Scan.js'
 import type { ScanSignatureProps } from './types.js'
 
 const ScanSignature = ({
-  className,
-  onError,
-  onScan,
-  size,
-  style,
+	className,
+	onError,
+	onScan,
+	size,
+	style,
 }: ScanSignatureProps): ReactElement<ScanSignatureProps> => {
-  const onScanCallback = useCallback(
-    (signature: string | null) =>
-      signature && onScan({ signature: `0x${signature}` }),
-    [onScan]
-  )
+	const onScanCallback = useCallback(
+		(signature: string | null) =>
+			signature && onScan({ signature: `0x${signature}` }),
+		[onScan],
+	)
 
-  return (
-    <QrScan
-      className={className}
-      onError={onError}
-      onScan={onScanCallback}
-      size={size}
-      style={style}
-    />
-  )
+	return (
+		<QrScan
+			className={className}
+			onError={onError}
+			onScan={onScanCallback}
+			size={size}
+			style={style}
+		/>
+	)
 }
 
 export const QrScanSignature = memo(ScanSignature)

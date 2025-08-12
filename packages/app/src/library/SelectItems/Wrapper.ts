@@ -52,9 +52,9 @@ export const SelectItemsWrapper = styled.div`
 
 // Item and surrounding padded area.
 export const Wrapper = styled.div<{
-  $selected?: boolean
-  $grow: boolean
-  $hoverBorder: boolean
+	$selected?: boolean
+	$grow: boolean
+	$hoverBorder: boolean
 }>`
   padding: 0.6rem;
   width: 100%;
@@ -85,9 +85,9 @@ export const Wrapper = styled.div<{
     background: var(--background-primary);
     border: 1.75px solid
       ${(props) =>
-        props.$selected
-          ? 'var(--accent-color-primary)'
-          : 'var(--border-primary-color)'};
+				props.$selected
+					? 'var(--accent-color-primary)'
+					: 'var(--border-primary-color)'};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -95,11 +95,11 @@ export const Wrapper = styled.div<{
 
     &:hover {
       border-color: ${(props) =>
-        props.$hoverBorder
-          ? 'var(--accent-color-primary)'
-          : props.$selected
-            ? 'var(--accent-color-primary)'
-            : 'var(--border-primary-color)'};
+				props.$hoverBorder
+					? 'var(--accent-color-primary)'
+					: props.$selected
+						? 'var(--accent-color-primary)'
+						: 'var(--border-primary-color)'};
     }
 
     > button {
@@ -147,9 +147,9 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-          props.$selected
-            ? 'var(--accent-color-primary)'
-            : 'var(--text-color-secondary)'};
+					props.$selected
+						? 'var(--accent-color-primary)'
+						: 'var(--text-color-secondary)'};
         opacity: ${(props) => (props.$selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;

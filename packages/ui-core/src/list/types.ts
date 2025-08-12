@@ -4,21 +4,21 @@
 import type { ComponentBase } from 'types'
 
 export type GraphProps = ComponentBase & {
-  syncing: boolean
-  canvas?: boolean
+	syncing: boolean
+	canvas?: boolean
 }
 
 export type CheckboxProps = ComponentBase & {
-  onClick: () => void
-  checked: boolean
+	onClick: () => void
+	checked: boolean
 }
 
 export type HeaderButtonProps = ComponentBase & {
-  outline?: boolean
-  withText?: boolean
-  noMargin?: boolean
+	outline?: boolean
+	withText?: boolean
+	noMargin?: boolean
 }
 
 export type LabelRowProps = ComponentBase & {
-  inline?: boolean
+	inline?: boolean
 }

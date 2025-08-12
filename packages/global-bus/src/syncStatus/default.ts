@@ -4,17 +4,17 @@
 import type { SyncId } from 'types'
 
 export const allSyncIds: SyncId[] = [
-  'initialization',
-  'era-stakers',
-  'bonded-pools',
-  'active-pools',
-  'active-proxy',
+	'initialization',
+	'era-stakers',
+	'bonded-pools',
+	'active-pools',
+	'active-proxy',
 ]
 
 export const defaultSyncStatus: SyncId[] = [
-  'initialization',
-  'era-stakers',
-  'bonded-pools',
-  'active-pools',
-  'active-proxy',
+	'initialization',
+	'era-stakers',
+	'bonded-pools',
+	'active-pools',
+	'active-proxy',
 ]

@@ -5,5 +5,5 @@ import { ButtonCopy } from 'library/ButtonCopy'
 import type { CopyAddressProps } from '../types'
 
 export const CopyAddress = ({ address }: CopyAddressProps) => (
-  <ButtonCopy value={address} size="0.95rem" xMargin />
+	<ButtonCopy value={address} size="0.95rem" xMargin />
 )

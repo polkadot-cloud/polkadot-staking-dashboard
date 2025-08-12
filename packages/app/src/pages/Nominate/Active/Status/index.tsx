@@ -14,37 +14,37 @@ import { PayoutDestinationStatus } from './PayoutDestinationStatus'
 import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus'
 
 export const Status = ({ height }: { height: number }) => {
-  const { syncing } = useSyncing()
-  const { isBonding } = useStaking()
-  const { pluginEnabled } = usePlugins()
-  const { activeAddress } = useActiveAccounts()
-  const { isReadOnlyAccount } = useImportedAccounts()
+	const { syncing } = useSyncing()
+	const { isBonding } = useStaking()
+	const { pluginEnabled } = usePlugins()
+	const { activeAddress } = useActiveAccounts()
+	const { isReadOnlyAccount } = useImportedAccounts()
 
-  return (
-    <CardWrapper
-      height={height}
-      className={!syncing && !isBonding ? 'prompt' : undefined}
-    >
-      <NominationStatus />
-      <Separator />
-      <UnclaimedPayoutsStatus
-        dimmed={!isBonding || !pluginEnabled('staking_api')}
-      />
+	return (
+		<CardWrapper
+			height={height}
+			className={!syncing && !isBonding ? 'prompt' : undefined}
+		>
+			<NominationStatus />
+			<Separator />
+			<UnclaimedPayoutsStatus
+				dimmed={!isBonding || !pluginEnabled('staking_api')}
+			/>
 
-      {!syncing ? (
-        isBonding ? (
-          <>
-            <Separator />
-            <PayoutDestinationStatus />
-          </>
-        ) : (
-          !isReadOnlyAccount(activeAddress) && (
-            <NewNominator syncing={syncing} />
-          )
-        )
-      ) : (
-        <NewNominator syncing={syncing} />
-      )}
-    </CardWrapper>
-  )
+			{!syncing ? (
+				isBonding ? (
+					<>
+						<Separator />
+						<PayoutDestinationStatus />
+					</>
+				) : (
+					!isReadOnlyAccount(activeAddress) && (
+						<NewNominator syncing={syncing} />
+					)
+				)
+			) : (
+				<NewNominator syncing={syncing} />
+			)}
+		</CardWrapper>
+	)
 }

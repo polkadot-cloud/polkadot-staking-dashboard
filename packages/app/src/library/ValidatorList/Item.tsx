@@ -24,81 +24,81 @@ import { Identity } from '../ListItem/Labels/Identity'
 import type { ItemProps } from './types'
 
 export const Item = ({
-  validator,
-  toggleFavorites,
-  displayFor,
-  eraPoints,
-  onRemove,
+	validator,
+	toggleFavorites,
+	displayFor,
+	eraPoints,
+	onRemove,
 }: ItemProps) => {
-  const { pluginEnabled } = usePlugins()
-  const { selectable, selected } = useList()
-  const { validatorIdentities, validatorSupers } = useValidators()
-  const { address, prefs, validatorStatus } = validator
-  const commission = prefs?.commission ?? null
+	const { pluginEnabled } = usePlugins()
+	const { selectable, selected } = useList()
+	const { validatorIdentities, validatorSupers } = useValidators()
+	const { address, prefs, validatorStatus } = validator
+	const commission = prefs?.commission ?? null
 
-  const isSelected = !!selected.filter(
-    (item) => (item as Validator).address === validator.address
-  ).length
+	const isSelected = !!selected.filter(
+		(item) => (item as Validator).address === validator.address,
+	).length
 
-  const innerClasses = classNames('inner', {
-    [displayFor]: true,
-    selected: isSelected,
-  })
+	const innerClasses = classNames('inner', {
+		[displayFor]: true,
+		selected: isSelected,
+	})
 
-  return (
-    <Wrapper>
-      <div className={innerClasses}>
-        <div className="row top">
-          {selectable && <Select item={validator} />}
-          <Identity address={address} />
-          <div>
-            <HeaderButtonRow>
-              <CopyAddress address={address} />
-              {toggleFavorites && <FavoriteValidator address={address} />}
-              {displayFor === 'default' && (
-                <Metrics
-                  address={address}
-                  display={
-                    getIdentityDisplay(
-                      validatorIdentities[address],
-                      validatorSupers[address]
-                    ).node
-                  }
-                />
-              )}
-            </HeaderButtonRow>
-            {typeof onRemove === 'function' && (
-              <Remove
-                address={address}
-                onRemove={() => onRemove({ selected: [validator] })}
-                displayFor={displayFor}
-              />
-            )}
-          </div>
-        </div>
-        <Separator />
-        <div className="row bottom lg">
-          <div>
-            {pluginEnabled('staking_api') ? (
-              <HistoricalEraPoints
-                address={address}
-                displayFor={displayFor}
-                eraPoints={eraPoints}
-              />
-            ) : (
-              <CurrentEraPoints address={address} displayFor={displayFor} />
-            )}
-          </div>
-          <div>
-            <LabelRow inline>
-              <Quartile address={address} />
-              <Blocked prefs={prefs} />
-              <Commission commission={commission} />
-            </LabelRow>
-            <EraStatus address={address} status={validatorStatus} noMargin />
-          </div>
-        </div>
-      </div>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<div className={innerClasses}>
+				<div className="row top">
+					{selectable && <Select item={validator} />}
+					<Identity address={address} />
+					<div>
+						<HeaderButtonRow>
+							<CopyAddress address={address} />
+							{toggleFavorites && <FavoriteValidator address={address} />}
+							{displayFor === 'default' && (
+								<Metrics
+									address={address}
+									display={
+										getIdentityDisplay(
+											validatorIdentities[address],
+											validatorSupers[address],
+										).node
+									}
+								/>
+							)}
+						</HeaderButtonRow>
+						{typeof onRemove === 'function' && (
+							<Remove
+								address={address}
+								onRemove={() => onRemove({ selected: [validator] })}
+								displayFor={displayFor}
+							/>
+						)}
+					</div>
+				</div>
+				<Separator />
+				<div className="row bottom lg">
+					<div>
+						{pluginEnabled('staking_api') ? (
+							<HistoricalEraPoints
+								address={address}
+								displayFor={displayFor}
+								eraPoints={eraPoints}
+							/>
+						) : (
+							<CurrentEraPoints address={address} displayFor={displayFor} />
+						)}
+					</div>
+					<div>
+						<LabelRow inline>
+							<Quartile address={address} />
+							<Blocked prefs={prefs} />
+							<Commission commission={commission} />
+						</LabelRow>
+						<EraStatus address={address} status={validatorStatus} noMargin />
+					</div>
+				</div>
+			</div>
+		</Wrapper>
+	)
 }

@@ -11,42 +11,42 @@ import { Identity as Wrapper } from 'ui-core/list'
 import type { IdentityProps } from '../types'
 
 export const Identity = ({ address }: IdentityProps) => {
-  const { validatorIdentities, validatorSupers, validatorsFetched } =
-    useValidators()
+	const { validatorIdentities, validatorSupers, validatorsFetched } =
+		useValidators()
 
-  const [display, setDisplay] = useState<ReactNode>(
-    getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
-      .node
-  )
+	const [display, setDisplay] = useState<ReactNode>(
+		getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
+			.node,
+	)
 
-  useEffect(() => {
-    setDisplay(
-      getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
-        .node
-    )
-  }, [validatorSupers, validatorIdentities, address])
+	useEffect(() => {
+		setDisplay(
+			getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
+				.node,
+		)
+	}, [validatorSupers, validatorIdentities, address])
 
-  const polkiconSize = '2rem'
+	const polkiconSize = '2rem'
 
-  return (
-    <Wrapper>
-      <div
-        style={{
-          minWidth: polkiconSize,
-          maxWidth: polkiconSize,
-          /* Safari fix */
-          border: '0.1rem solid transparent',
-        }}
-      >
-        <Polkicon address={address} fontSize={polkiconSize} />
-      </div>
-      <div>
-        {validatorsFetched && display !== null ? (
-          <h4>{display}</h4>
-        ) : (
-          <h4>{ellipsisFn(address, 6)}</h4>
-        )}
-      </div>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<div
+				style={{
+					minWidth: polkiconSize,
+					maxWidth: polkiconSize,
+					/* Safari fix */
+					border: '0.1rem solid transparent',
+				}}
+			>
+				<Polkicon address={address} fontSize={polkiconSize} />
+			</div>
+			<div>
+				{validatorsFetched && display !== null ? (
+					<h4>{display}</h4>
+				) : (
+					<h4>{ellipsisFn(address, 6)}</h4>
+				)}
+			</div>
+		</Wrapper>
+	)
 }

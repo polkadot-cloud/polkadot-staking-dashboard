@@ -16,171 +16,171 @@ import type { MaybeAddress } from 'types'
 import { defaultNominatorProgress } from './defaults'
 import { getLocalNominatorSetups, setLocalNominatorSetups } from './local'
 import type {
-  NominatorProgress,
-  NominatorSetup,
-  NominatorSetups,
-  NominatorSetupsContextInterface,
-  PayeeOption,
+	NominatorProgress,
+	NominatorSetup,
+	NominatorSetups,
+	NominatorSetupsContextInterface,
+	PayeeOption,
 } from './types'
 
 export const [NominatorSetupContext, useNominatorSetups] =
-  createSafeContext<NominatorSetupsContextInterface>()
+	createSafeContext<NominatorSetupsContextInterface>()
 
 export const NominatorSetupsProvider = ({
-  children,
+	children,
 }: {
-  children: ReactNode
+	children: ReactNode
 }) => {
-  const { network } = useNetwork()
-  const { fetch } = useFetchMethods()
-  const { activeAddress } = useActiveAccounts()
-  const {
-    balances: {
-      nominator: { totalPossibleBond },
-    },
-  } = useAccountBalances(activeAddress)
-  const { accounts, stringifiedAccountsKey } = useImportedAccounts()
-  const { units } = getStakingChainData(network)
+	const { network } = useNetwork()
+	const { fetch } = useFetchMethods()
+	const { activeAddress } = useActiveAccounts()
+	const {
+		balances: {
+			nominator: { totalPossibleBond },
+		},
+	} = useAccountBalances(activeAddress)
+	const { accounts, stringifiedAccountsKey } = useImportedAccounts()
+	const { units } = getStakingChainData(network)
 
-  // Store all imported accounts nominator setups
-  const [nominatorSetups, setNominatorSetupsState] = useState<NominatorSetups>(
-    {}
-  )
+	// Store all imported accounts nominator setups
+	const [nominatorSetups, setNominatorSetupsState] = useState<NominatorSetups>(
+		{},
+	)
 
-  // Update nominator setups state
-  const setNominatorSetups = (setups: NominatorSetups) => {
-    setLocalNominatorSetups(setups)
-    setNominatorSetupsState(setups)
-  }
+	// Update nominator setups state
+	const setNominatorSetups = (setups: NominatorSetups) => {
+		setLocalNominatorSetups(setups)
+		setNominatorSetupsState(setups)
+	}
 
-  // Gets the setup progress for a connected account. Falls back to default setup if progress does
-  // not yet exist
-  const getNominatorSetup = (address: MaybeAddress): NominatorSetup => {
-    const setup = Object.fromEntries(
-      Object.entries(nominatorSetups).filter(([k]) => k === address)
-    )
-    return (
-      setup[address || ''] || {
-        progress: defaultNominatorProgress,
-        section: 1,
-        simple: false,
-      }
-    )
-  }
+	// Gets the setup progress for a connected account. Falls back to default setup if progress does
+	// not yet exist
+	const getNominatorSetup = (address: MaybeAddress): NominatorSetup => {
+		const setup = Object.fromEntries(
+			Object.entries(nominatorSetups).filter(([k]) => k === address),
+		)
+		return (
+			setup[address || ''] || {
+				progress: defaultNominatorProgress,
+				section: 1,
+				simple: false,
+			}
+		)
+	}
 
-  const setNominatorSetup = (
-    progress: NominatorProgress,
-    simple?: boolean,
-    section?: number
-  ) => {
-    if (activeAddress) {
-      const updatedSetups = updateSetups(
-        { ...nominatorSetups },
-        progress,
-        activeAddress,
-        section,
-        simple
-      )
-      setNominatorSetups(updatedSetups)
-    }
-  }
+	const setNominatorSetup = (
+		progress: NominatorProgress,
+		simple?: boolean,
+		section?: number,
+	) => {
+		if (activeAddress) {
+			const updatedSetups = updateSetups(
+				{ ...nominatorSetups },
+				progress,
+				activeAddress,
+				section,
+				simple,
+			)
+			setNominatorSetups(updatedSetups)
+		}
+	}
 
-  // Remove setup progress for an account
-  const removeNominatorSetup = (address: MaybeAddress) => {
-    const updatedSetups = Object.fromEntries(
-      Object.entries(nominatorSetups).filter(([k]) => k !== address)
-    )
-    setNominatorSetups(updatedSetups)
-  }
+	// Remove setup progress for an account
+	const removeNominatorSetup = (address: MaybeAddress) => {
+		const updatedSetups = Object.fromEntries(
+			Object.entries(nominatorSetups).filter(([k]) => k !== address),
+		)
+		setNominatorSetups(updatedSetups)
+	}
 
-  // Sets a nominator setup section for an address
-  const setNominatorSetupSection = (section: number) => {
-    if (activeAddress) {
-      const newSetups = { ...nominatorSetups }
-      const updatedSetups = updateSetups(
-        newSetups,
-        newSetups[activeAddress]?.progress || defaultNominatorProgress,
-        activeAddress,
-        section
-      )
-      setNominatorSetups(updatedSetups)
-    }
-  }
+	// Sets a nominator setup section for an address
+	const setNominatorSetupSection = (section: number) => {
+		if (activeAddress) {
+			const newSetups = { ...nominatorSetups }
+			const updatedSetups = updateSetups(
+				newSetups,
+				newSetups[activeAddress]?.progress || defaultNominatorProgress,
+				activeAddress,
+				section,
+			)
+			setNominatorSetups(updatedSetups)
+		}
+	}
 
-  // Utility to update the progress item of a nominator setup
-  const updateSetups = (
-    all: NominatorSetups,
-    progress: NominatorProgress,
-    account: string,
-    maybeSection: number | undefined,
-    maybeSimple?: boolean
-  ) => {
-    const current = Object.assign(all[account] || {})
-    const section = maybeSection ?? current.section ?? 1
-    const simple = maybeSimple ?? current.simple ?? false
+	// Utility to update the progress item of a nominator setup
+	const updateSetups = (
+		all: NominatorSetups,
+		progress: NominatorProgress,
+		account: string,
+		maybeSection: number | undefined,
+		maybeSimple?: boolean,
+	) => {
+		const current = Object.assign(all[account] || {})
+		const section = maybeSection ?? current.section ?? 1
+		const simple = maybeSimple ?? current.simple ?? false
 
-    all[account] = {
-      ...current,
-      progress,
-      section,
-      simple,
-    }
-    return all
-  }
+		all[account] = {
+			...current,
+			progress,
+			section,
+			simple,
+		}
+		return all
+	}
 
-  // Gets the stake setup progress as a percentage for an address
-  const getNominatorSetupPercent = (address: MaybeAddress) => {
-    if (!address) {
-      return 0
-    }
-    const { progress } = getNominatorSetup(address)
-    const bond = new BigNumber(unitToPlanck(progress?.bond || '0', units))
+	// Gets the stake setup progress as a percentage for an address
+	const getNominatorSetupPercent = (address: MaybeAddress) => {
+		if (!address) {
+			return 0
+		}
+		const { progress } = getNominatorSetup(address)
+		const bond = new BigNumber(unitToPlanck(progress?.bond || '0', units))
 
-    const p = 33
-    let percentage = 0
-    if (bond.isGreaterThan(0)) {
-      percentage += p
-    }
-    if (progress.nominations.length) {
-      percentage += p
-    }
-    if (progress.payee.destination !== null) {
-      percentage += p
-    }
-    return percentage
-  }
+		const p = 33
+		let percentage = 0
+		if (bond.isGreaterThan(0)) {
+			percentage += p
+		}
+		if (progress.nominations.length) {
+			percentage += p
+		}
+		if (progress.payee.destination !== null) {
+			percentage += p
+		}
+		return percentage
+	}
 
-  // Update setup state when active address, network or imported accounts change
-  useEffectIgnoreInitial(() => {
-    if (accounts.length) {
-      setNominatorSetups(getLocalNominatorSetups())
-    }
-  }, [activeAddress, network, stringifiedAccountsKey])
+	// Update setup state when active address, network or imported accounts change
+	useEffectIgnoreInitial(() => {
+		if (accounts.length) {
+			setNominatorSetups(getLocalNominatorSetups())
+		}
+	}, [activeAddress, network, stringifiedAccountsKey])
 
-  const generateOptimalSetup = (): NominatorProgress => {
-    const setup = {
-      payee: {
-        destination: 'Staked' as PayeeOption,
-        account: null,
-      },
-      nominations: fetch('Optimal Selection'),
-      bond: totalPossibleBond.toString(),
-    }
-    return setup
-  }
+	const generateOptimalSetup = (): NominatorProgress => {
+		const setup = {
+			payee: {
+				destination: 'Staked' as PayeeOption,
+				account: null,
+			},
+			nominations: fetch('Optimal Selection'),
+			bond: totalPossibleBond.toString(),
+		}
+		return setup
+	}
 
-  return (
-    <NominatorSetupContext.Provider
-      value={{
-        getNominatorSetup,
-        setNominatorSetup,
-        removeNominatorSetup,
-        getNominatorSetupPercent,
-        setNominatorSetupSection,
-        generateOptimalSetup,
-      }}
-    >
-      {children}
-    </NominatorSetupContext.Provider>
-  )
+	return (
+		<NominatorSetupContext.Provider
+			value={{
+				getNominatorSetup,
+				setNominatorSetup,
+				removeNominatorSetup,
+				getNominatorSetupPercent,
+				setNominatorSetupSection,
+				generateOptimalSetup,
+			}}
+		>
+			{children}
+		</NominatorSetupContext.Provider>
+	)
 }

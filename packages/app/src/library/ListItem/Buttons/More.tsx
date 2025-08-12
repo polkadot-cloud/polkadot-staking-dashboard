@@ -7,29 +7,29 @@ import { useOverlay } from 'ui-overlay'
 import type { MoreProps } from '../types'
 
 export const More = ({ pool, setActiveTab, disabled, outline }: MoreProps) => {
-  const { t } = useTranslation('tips')
-  const { openCanvas } = useOverlay().canvas
-  const { id } = pool
-  return (
-    <HeaderButton outline={outline} withText>
-      <button
-        type="button"
-        onClick={() => {
-          openCanvas({
-            key: 'Pool',
-            options: {
-              providedPool: {
-                id,
-              },
-              onJoinCallback: () => setActiveTab(0),
-            },
-            size: 'xl',
-          })
-        }}
-        disabled={disabled}
-      >
-        {t('module.more')}
-      </button>
-    </HeaderButton>
-  )
+	const { t } = useTranslation('tips')
+	const { openCanvas } = useOverlay().canvas
+	const { id } = pool
+	return (
+		<HeaderButton outline={outline} withText>
+			<button
+				type="button"
+				onClick={() => {
+					openCanvas({
+						key: 'Pool',
+						options: {
+							providedPool: {
+								id,
+							},
+							onJoinCallback: () => setActiveTab(0),
+						},
+						size: 'xl',
+					})
+				}}
+				disabled={disabled}
+			>
+				{t('module.more')}
+			</button>
+		</HeaderButton>
+	)
 }

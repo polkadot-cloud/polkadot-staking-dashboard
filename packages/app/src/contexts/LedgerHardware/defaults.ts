@@ -2,6 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export const defaultFeedback = {
-  message: null,
-  helpKey: null,
+	message: null,
+	helpKey: null,
 }

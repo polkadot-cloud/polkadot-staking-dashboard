@@ -4,15 +4,15 @@
 import type { FilterItem } from './types'
 
 export const defaultIncludes: FilterItem[] = [
-  {
-    key: 'pools',
-    filters: ['active'],
-  },
+	{
+		key: 'pools',
+		filters: ['active'],
+	},
 ]
 
 export const defaultExcludes: FilterItem[] = [
-  {
-    key: 'pools',
-    filters: ['locked', 'destroying'],
-  },
+	{
+		key: 'pools',
+		filters: ['locked', 'destroying'],
+	},
 ]

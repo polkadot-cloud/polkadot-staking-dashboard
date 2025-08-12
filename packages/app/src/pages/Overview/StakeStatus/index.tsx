@@ -11,39 +11,39 @@ import { Tips } from './Tips'
 import { StatusWrapper } from './Wrappers'
 
 export const StakeStatus = ({ height }: { height: number }) => {
-  const { inPool } = useActivePool()
-  const { isBonding } = useStaking()
+	const { inPool } = useActivePool()
+	const { isBonding } = useStaking()
 
-  const notStaking = !inPool && !isBonding
-  const showNominate = notStaking || isBonding
-  const showMembership = notStaking || inPool
+	const notStaking = !inPool && !isBonding
+	const showNominate = notStaking || isBonding
+	const showMembership = notStaking || inPool
 
-  return (
-    <CardWrapper style={{ padding: 0 }} height={height}>
-      <StatusWrapper>
-        {showNominate && (
-          <Page.RowSection
-            secondary={showMembership}
-            standalone={!showMembership}
-          >
-            <section>
-              <NominationStatus />
-            </section>
-          </Page.RowSection>
-        )}
-        {showMembership && (
-          <Page.RowSection
-            hLast={showNominate}
-            vLast={showNominate}
-            standalone={true}
-          >
-            <section>
-              <MembershipStatus showButtons={false} />
-            </section>
-          </Page.RowSection>
-        )}
-      </StatusWrapper>
-      <Tips />
-    </CardWrapper>
-  )
+	return (
+		<CardWrapper style={{ padding: 0 }} height={height}>
+			<StatusWrapper>
+				{showNominate && (
+					<Page.RowSection
+						secondary={showMembership}
+						standalone={!showMembership}
+					>
+						<section>
+							<NominationStatus />
+						</section>
+					</Page.RowSection>
+				)}
+				{showMembership && (
+					<Page.RowSection
+						hLast={showNominate}
+						vLast={showNominate}
+						standalone={true}
+					>
+						<section>
+							<MembershipStatus showButtons={false} />
+						</section>
+					</Page.RowSection>
+				)}
+			</StatusWrapper>
+			<Tips />
+		</CardWrapper>
+	)
 }

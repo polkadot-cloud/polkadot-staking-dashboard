@@ -17,111 +17,111 @@ import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 
 export const Announcements = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { bondedPools } = useBondedPools()
-  const {
-    stakingMetrics: { totalStaked, lastReward },
-  } = useApi()
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { bondedPools } = useBondedPools()
+	const {
+		stakingMetrics: { totalStaked, lastReward },
+	} = useApi()
 
-  const { unit, units } = getStakingChainData(network)
-  const lastRewardUnit = new BigNumber(planckToUnit(lastReward || 0, units))
+	const { unit, units } = getStakingChainData(network)
+	const lastRewardUnit = new BigNumber(planckToUnit(lastReward || 0, units))
 
-  let totalPoolPoints = new BigNumber(0)
-  bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(b.points)
-  })
-  const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
+	let totalPoolPoints = new BigNumber(0)
+	bondedPools.forEach((b: BondedPool) => {
+		totalPoolPoints = totalPoolPoints.plus(b.points)
+	})
+	const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.25,
-      },
-    },
-  }
+	const container = {
+		hidden: { opacity: 0 },
+		show: {
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.25,
+			},
+		},
+	}
 
-  const listItem = {
-    hidden: {
-      opacity: 0,
-    },
-    show: {
-      opacity: 1,
-    },
-  }
+	const listItem = {
+		hidden: {
+			opacity: 0,
+		},
+		show: {
+			opacity: 1,
+		},
+	}
 
-  const announcements = []
+	const announcements = []
 
-  // Total staked on the network
-  if (totalStaked > 0n) {
-    announcements.push({
-      class: 'neutral',
-      title: t('networkCurrentlyStaked', {
-        total: new BigNumber(planckToUnit(totalStaked, units))
-          .integerValue()
-          .toFormat(),
-        unit,
-        network: capitalizeFirstLetter(network),
-      }),
-      subtitle: t('networkCurrentlyStakedSubtitle', {
-        unit,
-      }),
-    })
-  } else {
-    announcements.push(null)
-  }
+	// Total staked on the network
+	if (totalStaked > 0n) {
+		announcements.push({
+			class: 'neutral',
+			title: t('networkCurrentlyStaked', {
+				total: new BigNumber(planckToUnit(totalStaked, units))
+					.integerValue()
+					.toFormat(),
+				unit,
+				network: capitalizeFirstLetter(network),
+			}),
+			subtitle: t('networkCurrentlyStakedSubtitle', {
+				unit,
+			}),
+		})
+	} else {
+		announcements.push(null)
+	}
 
-  // Total locked in pools
-  if (bondedPools.length) {
-    announcements.push({
-      class: 'neutral',
-      title: `${totalPoolPointsUnit.integerValue().toFormat()} ${unit} ${t(
-        'inPools'
-      )}`,
-      subtitle: `${t('bondedInPools', { networkUnit: unit })}`,
-    })
-  } else {
-    announcements.push(null)
-  }
+	// Total locked in pools
+	if (bondedPools.length) {
+		announcements.push({
+			class: 'neutral',
+			title: `${totalPoolPointsUnit.integerValue().toFormat()} ${unit} ${t(
+				'inPools',
+			)}`,
+			subtitle: `${t('bondedInPools', { networkUnit: unit })}`,
+		})
+	} else {
+		announcements.push(null)
+	}
 
-  // Last era payout
-  if (lastRewardUnit.isGreaterThan(0)) {
-    announcements.push({
-      class: 'neutral',
-      title: `${lastRewardUnit.integerValue().toFormat()} ${unit} ${t('paidOutLastEraTitle')}`,
-      subtitle: `${t('paidOutLastEraSubtitle')}`,
-    })
-  } else {
-    announcements.push(null)
-  }
+	// Last era payout
+	if (lastRewardUnit.isGreaterThan(0)) {
+		announcements.push({
+			class: 'neutral',
+			title: `${lastRewardUnit.integerValue().toFormat()} ${unit} ${t('paidOutLastEraTitle')}`,
+			subtitle: `${t('paidOutLastEraSubtitle')}`,
+		})
+	} else {
+		announcements.push(null)
+	}
 
-  announcements.sort(sortWithNull(true))
+	announcements.sort(sortWithNull(true))
 
-  return (
-    <motion.div
-      variants={container}
-      initial="hidden"
-      animate="show"
-      style={{ width: '100%' }}
-    >
-      {announcements.map((item, index) =>
-        item === null ? (
-          <AnnouncementLoader key={`announcement_${index}`} />
-        ) : (
-          <Item key={`announcement_${index}`} variants={listItem}>
-            <h4 className={item.class}>
-              <FontAwesomeIcon
-                icon={faBack}
-                style={{ marginRight: '0.6rem' }}
-              />
-              {item.title}
-            </h4>
-            <p>{item.subtitle}</p>
-          </Item>
-        )
-      )}
-    </motion.div>
-  )
+	return (
+		<motion.div
+			variants={container}
+			initial="hidden"
+			animate="show"
+			style={{ width: '100%' }}
+		>
+			{announcements.map((item, index) =>
+				item === null ? (
+					<AnnouncementLoader key={`announcement_${index}`} />
+				) : (
+					<Item key={`announcement_${index}`} variants={listItem}>
+						<h4 className={item.class}>
+							<FontAwesomeIcon
+								icon={faBack}
+								style={{ marginRight: '0.6rem' }}
+							/>
+							{item.title}
+						</h4>
+						<p>{item.subtitle}</p>
+					</Item>
+				),
+			)}
+		</motion.div>
+	)
 }

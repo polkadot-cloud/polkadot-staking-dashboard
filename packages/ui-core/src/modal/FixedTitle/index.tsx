@@ -8,18 +8,18 @@ import type { FixedTitleProps } from '../types'
 import classes from './index.module.scss'
 
 export const FixedTitle = forwardRef(
-  (
-    { children, style, withStyle }: FixedTitleProps,
-    ref?: ForwardedRef<HTMLDivElement>
-  ) => {
-    const allClasses = classNames(classes.fixedTitle, {
-      [classes.withStyle]: withStyle,
-    })
-    return (
-      <div ref={ref} className={allClasses} style={style}>
-        {children}
-      </div>
-    )
-  }
+	(
+		{ children, style, withStyle }: FixedTitleProps,
+		ref?: ForwardedRef<HTMLDivElement>,
+	) => {
+		const allClasses = classNames(classes.fixedTitle, {
+			[classes.withStyle]: withStyle,
+		})
+		return (
+			<div ref={ref} className={allClasses} style={style}>
+				{children}
+			</div>
+		)
+	},
 )
 FixedTitle.displayName = 'FixedTitle'

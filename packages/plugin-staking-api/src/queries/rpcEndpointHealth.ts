@@ -17,28 +17,28 @@ const QUERY = gql`
 `
 
 export const useRpcEndpointHealth = ({
-  network,
+	network,
 }: {
-  network: string
+	network: string
 }): RpcEndpointHealthResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchRpcEndpointHealth = async (
-  network: string
+	network: string,
 ): Promise<RpcEndpointChainHealth> => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { network },
-    })
-    return result.data.rpcEndpointHealth
-  } catch {
-    return {
-      chains: [],
-    }
-  }
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { network },
+		})
+		return result.data.rpcEndpointHealth
+	} catch {
+		return {
+			chains: [],
+		}
+	}
 }

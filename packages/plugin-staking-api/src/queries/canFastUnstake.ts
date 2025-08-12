@@ -13,14 +13,14 @@ const QUERY = gql`
 `
 
 export const useCanFastUnstake = ({
-  network,
-  who,
+	network,
+	who,
 }: {
-  network: string
-  who: string
+	network: string
+	who: string
 }): CanFastUnstakeResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, who },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, who },
+	})
+	return { loading, error, data, refetch }
 }

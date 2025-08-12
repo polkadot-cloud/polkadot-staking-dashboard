@@ -10,55 +10,55 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const FilterBadges = () => {
-  const { t } = useTranslation('app')
-  const { getFilters, getOrder, toggleFilter } = useFilters()
-  const { includesToLabels, excludesToLabels, ordersToLabels } =
-    useValidatorFilters()
+	const { t } = useTranslation('app')
+	const { getFilters, getOrder, toggleFilter } = useFilters()
+	const { includesToLabels, excludesToLabels, ordersToLabels } =
+		useValidatorFilters()
 
-  const includes = getFilters('include', 'validators')
-  const excludes = getFilters('exclude', 'validators')
-  const hasFilters = includes?.length || excludes?.length
-  const order = getOrder('validators')
+	const includes = getFilters('include', 'validators')
+	const excludes = getFilters('exclude', 'validators')
+	const hasFilters = includes?.length || excludes?.length
+	const order = getOrder('validators')
 
-  // scroll to top of the window on every filter.
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [includes, excludes])
+	// scroll to top of the window on every filter.
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [includes, excludes])
 
-  return (
-    <Container>
-      <div className="items">
-        <Item
-          label={
-            order === 'default'
-              ? `${t('unordered')}`
-              : `${t('order')}: ${ordersToLabels[order]}`
-          }
-          disabled
-        />
-        {!hasFilters && <Item label={t('noFilters')} disabled />}
-        {includes?.map((e, i) => (
-          <Item
-            key={`validator_include_${i}`}
-            label={includesToLabels[e]}
-            icon={faCheck}
-            onClick={() => {
-              toggleFilter('include', 'validators', e)
-            }}
-          />
-        ))}
-        {excludes?.map((e, i) => (
-          <Item
-            key={`validator_exclude_${i}`}
-            label={excludesToLabels[e]}
-            icon={faBan}
-            transform="shrink-2"
-            onClick={() => {
-              toggleFilter('exclude', 'validators', e)
-            }}
-          />
-        ))}
-      </div>
-    </Container>
-  )
+	return (
+		<Container>
+			<div className="items">
+				<Item
+					label={
+						order === 'default'
+							? `${t('unordered')}`
+							: `${t('order')}: ${ordersToLabels[order]}`
+					}
+					disabled
+				/>
+				{!hasFilters && <Item label={t('noFilters')} disabled />}
+				{includes?.map((e, i) => (
+					<Item
+						key={`validator_include_${i}`}
+						label={includesToLabels[e]}
+						icon={faCheck}
+						onClick={() => {
+							toggleFilter('include', 'validators', e)
+						}}
+					/>
+				))}
+				{excludes?.map((e, i) => (
+					<Item
+						key={`validator_exclude_${i}`}
+						label={excludesToLabels[e]}
+						icon={faBan}
+						transform="shrink-2"
+						onClick={() => {
+							toggleFilter('exclude', 'validators', e)
+						}}
+					/>
+				))}
+			</div>
+		</Container>
+	)
 }

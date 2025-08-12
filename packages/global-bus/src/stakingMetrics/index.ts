@@ -8,13 +8,13 @@ import { _stakingMetrics } from './private'
 export const stakingMetrics$ = _stakingMetrics.asObservable()
 
 export const resetStakingMetrics = () => {
-  _stakingMetrics.next(defaultStakingMetrics)
+	_stakingMetrics.next(defaultStakingMetrics)
 }
 
 export const getStakingyMetrics = () => _stakingMetrics.getValue()
 
 export const setStakingMetrics = (metrics: StakingMetrics) => {
-  _stakingMetrics.next(metrics)
+	_stakingMetrics.next(metrics)
 }
 
 export * from './default'

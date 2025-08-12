@@ -7,7 +7,7 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolSetMetadata = <T extends StakingChain>(
-  api: DedotClient<T>,
-  poolId: number,
-  metadata: BytesLike
+	api: DedotClient<T>,
+	poolId: number,
+	metadata: BytesLike,
 ) => asTx(api.tx.nominationPools.setMetadata(poolId, metadata))

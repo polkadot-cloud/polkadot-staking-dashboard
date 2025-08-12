@@ -9,30 +9,30 @@ import { Identity } from 'ui-core/list'
 import type { PoolIdentityProps } from '../types'
 
 export const PoolIdentity = ({
-  pool: { addresses, id },
+	pool: { addresses, id },
 }: PoolIdentityProps) => {
-  const { poolsMetaData } = useBondedPools()
-  const metadataSynced = Object.values(poolsMetaData).length > 0 || false
+	const { poolsMetaData } = useBondedPools()
+	const metadataSynced = Object.values(poolsMetaData).length > 0 || false
 
-  const display = determinePoolDisplay(
-    addresses.stash,
-    poolsMetaData[Number(id)]
-  )
+	const display = determinePoolDisplay(
+		addresses.stash,
+		poolsMetaData[Number(id)],
+	)
 
-  const polkiconSize = '2rem'
+	const polkiconSize = '2rem'
 
-  return (
-    <Identity>
-      <div style={{ maxWidth: polkiconSize }}>
-        <Polkicon address={addresses.stash} fontSize={polkiconSize} />
-      </div>
-      <div>
-        {!metadataSynced ? (
-          <h4>{ellipsisFn(addresses.stash)}</h4>
-        ) : (
-          <h4>{display}</h4>
-        )}
-      </div>
-    </Identity>
-  )
+	return (
+		<Identity>
+			<div style={{ maxWidth: polkiconSize }}>
+				<Polkicon address={addresses.stash} fontSize={polkiconSize} />
+			</div>
+			<div>
+				{!metadataSynced ? (
+					<h4>{ellipsisFn(addresses.stash)}</h4>
+				) : (
+					<h4>{display}</h4>
+				)}
+			</div>
+		</Identity>
+	)
 }

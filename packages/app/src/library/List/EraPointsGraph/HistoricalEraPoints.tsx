@@ -14,41 +14,41 @@ import { normaliseEraPoints, prefillEraPoints } from '../Utils'
 import { Inner } from './Inner'
 
 export const HistoricalEraPoints = ({
-  displayFor,
-  eraPoints,
+	displayFor,
+	eraPoints,
 }: EraPointsHistoricalProps) => {
-  const { t } = useTranslation('app')
-  const { isReady } = useApi()
-  const { erasPerDay } = useErasPerDay()
-  const { validatorsFetched } = useValidators()
-  const { setTooltipTextAndOpen } = useTooltip()
+	const { t } = useTranslation('app')
+	const { isReady } = useApi()
+	const { erasPerDay } = useErasPerDay()
+	const { validatorsFetched } = useValidators()
+	const { setTooltipTextAndOpen } = useTooltip()
 
-  const eraPointData: bigint[] = eraPoints.map(({ points }) => BigInt(points))
-  const high = eraPointData.sort((a, b) => Number(b - a))[0]
+	const eraPointData: bigint[] = eraPoints.map(({ points }) => BigInt(points))
+	const high = eraPointData.sort((a, b) => Number(b - a))[0]
 
-  const normalisedPoints = normaliseEraPoints(
-    Object.fromEntries(
-      eraPoints.map(({ era, points }) => [era, new BigNumber(points)])
-    ),
-    new BigNumber(high || 1)
-  )
-  const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
-  const syncing = !isReady || !eraPoints.length || !validatorsFetched
-  const tooltipText = t('validatorPerformance', {
-    count: Math.ceil(30 / erasPerDay),
-  })
+	const normalisedPoints = normaliseEraPoints(
+		Object.fromEntries(
+			eraPoints.map(({ era, points }) => [era, new BigNumber(points)]),
+		),
+		new BigNumber(high || 1),
+	)
+	const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
+	const syncing = !isReady || !eraPoints.length || !validatorsFetched
+	const tooltipText = t('validatorPerformance', {
+		count: Math.ceil(30 / erasPerDay),
+	})
 
-  return (
-    <Graph syncing={syncing} canvas={displayFor === 'canvas'}>
-      <TooltipArea
-        text={tooltipText}
-        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-      />
-      <Inner
-        points={prefilledPoints}
-        syncing={syncing}
-        displayFor={displayFor}
-      />
-    </Graph>
-  )
+	return (
+		<Graph syncing={syncing} canvas={displayFor === 'canvas'}>
+			<TooltipArea
+				text={tooltipText}
+				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+			/>
+			<Inner
+				points={prefilledPoints}
+				syncing={syncing}
+				displayFor={displayFor}
+			/>
+		</Graph>
+	)
 }

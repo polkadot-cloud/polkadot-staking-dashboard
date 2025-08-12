@@ -6,6 +6,6 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const stakingNominate = <T extends StakingChain>(
-  api: DedotClient<T>,
-  nominees: string[]
+	api: DedotClient<T>,
+	nominees: string[],
 ) => asTx(api.tx.staking.nominate(nominees))

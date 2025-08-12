@@ -12,14 +12,14 @@ import type { SideProps } from './types'
  * @summary Handles maximised and minimised transitions.
  */
 export const Side = ({ children, style, open, minimised }: SideProps) => {
-  const classses = classNames(classes.side, {
-    [classes.hidden]: !open,
-    [classes.minimised]: minimised,
-  })
+	const classses = classNames(classes.side, {
+		[classes.hidden]: !open,
+		[classes.minimised]: minimised,
+	})
 
-  return (
-    <div style={{ ...style }} className={classses}>
-      {children}
-    </div>
-  )
+	return (
+		<div style={{ ...style }} className={classses}>
+			{children}
+		</div>
+	)
 }

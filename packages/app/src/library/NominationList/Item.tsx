@@ -19,77 +19,77 @@ import { NominationStatus } from '../ListItem/Labels/NominationStatus'
 import type { ItemProps } from './types'
 
 export const Item = ({
-  validator,
-  nominator,
-  toggleFavorites,
-  bondFor,
-  displayFor,
-  nominationStatus,
-  eraPoints,
+	validator,
+	nominator,
+	toggleFavorites,
+	bondFor,
+	displayFor,
+	nominationStatus,
+	eraPoints,
 }: ItemProps) => {
-  const { pluginEnabled } = usePlugins()
-  const { validatorIdentities, validatorSupers } = useValidators()
-  const { address, prefs } = validator
-  const commission = prefs?.commission ?? null
+	const { pluginEnabled } = usePlugins()
+	const { validatorIdentities, validatorSupers } = useValidators()
+	const { address, prefs } = validator
+	const commission = prefs?.commission ?? null
 
-  // Whether buttons should be styled as outline.
-  const outline = displayFor === 'canvas'
+	// Whether buttons should be styled as outline.
+	const outline = displayFor === 'canvas'
 
-  return (
-    <Wrapper>
-      <div className={`inner ${displayFor}`}>
-        <div className="row top">
-          <Identity address={address} />
-          <div>
-            <HeaderButtonRow>
-              <CopyAddress address={address} />
-              {toggleFavorites && (
-                <FavoriteValidator address={address} outline={outline} />
-              )}
-              {displayFor !== 'canvas' && (
-                <Metrics
-                  address={address}
-                  display={
-                    getIdentityDisplay(
-                      validatorIdentities[address],
-                      validatorSupers[address]
-                    ).node
-                  }
-                  outline={outline}
-                />
-              )}
-            </HeaderButtonRow>
-          </div>
-        </div>
-        <Separator />
-        <div className="row bottom lg">
-          <div>
-            {pluginEnabled('staking_api') ? (
-              <HistoricalEraPoints
-                address={address}
-                displayFor={displayFor}
-                eraPoints={eraPoints}
-              />
-            ) : (
-              <CurrentEraPoints address={address} displayFor={displayFor} />
-            )}
-          </div>
-          <div>
-            <LabelRow inline>
-              <Quartile address={address} />
-              <Blocked prefs={prefs} />
-              <Commission commission={commission} />
-            </LabelRow>
-            <NominationStatus
-              address={address}
-              bondFor={bondFor}
-              nominator={nominator}
-              status={nominationStatus}
-              noMargin
-            />
-          </div>
-        </div>
-      </div>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<div className={`inner ${displayFor}`}>
+				<div className="row top">
+					<Identity address={address} />
+					<div>
+						<HeaderButtonRow>
+							<CopyAddress address={address} />
+							{toggleFavorites && (
+								<FavoriteValidator address={address} outline={outline} />
+							)}
+							{displayFor !== 'canvas' && (
+								<Metrics
+									address={address}
+									display={
+										getIdentityDisplay(
+											validatorIdentities[address],
+											validatorSupers[address],
+										).node
+									}
+									outline={outline}
+								/>
+							)}
+						</HeaderButtonRow>
+					</div>
+				</div>
+				<Separator />
+				<div className="row bottom lg">
+					<div>
+						{pluginEnabled('staking_api') ? (
+							<HistoricalEraPoints
+								address={address}
+								displayFor={displayFor}
+								eraPoints={eraPoints}
+							/>
+						) : (
+							<CurrentEraPoints address={address} displayFor={displayFor} />
+						)}
+					</div>
+					<div>
+						<LabelRow inline>
+							<Quartile address={address} />
+							<Blocked prefs={prefs} />
+							<Commission commission={commission} />
+						</LabelRow>
+						<NominationStatus
+							address={address}
+							bondFor={bondFor}
+							nominator={nominator}
+							status={nominationStatus}
+							noMargin
+						/>
+					</div>
+				</div>
+			</div>
+		</Wrapper>
+	)
 }

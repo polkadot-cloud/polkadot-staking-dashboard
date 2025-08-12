@@ -7,67 +7,67 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { setActiveProxy } from 'global-bus'
-import { useRef, type Dispatch, type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 import { Account } from './Account'
 
 export const AccountPopover = ({
-  setOpen,
+	setOpen,
 }: {
-  setOpen: Dispatch<SetStateAction<boolean>>
+	setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
-  const { t } = useTranslation()
-  const { network } = useNetwork()
-  const { openModal } = useOverlay().modal
-  const { getAccount } = useImportedAccounts()
-  const { activeAddress, activeProxy, activeProxyType, setActiveAccount } =
-    useActiveAccounts()
+	const { t } = useTranslation()
+	const { network } = useNetwork()
+	const { openModal } = useOverlay().modal
+	const { getAccount } = useImportedAccounts()
+	const { activeAddress, activeProxy, activeProxyType, setActiveAccount } =
+		useActiveAccounts()
 
-  const popoverRef = useRef<HTMLDivElement>(null)
+	const popoverRef = useRef<HTMLDivElement>(null)
 
-  // Close the menu if clicked outside of its container
-  useOutsideAlerter(popoverRef, () => {
-    setOpen(false)
-  }, ['header-account'])
+	// Close the menu if clicked outside of its container
+	useOutsideAlerter(popoverRef, () => {
+		setOpen(false)
+	}, ['header-account'])
 
-  const account = getAccount(activeAddress)
-  const name = account?.name || ''
+	const account = getAccount(activeAddress)
+	const name = account?.name || ''
 
-  const accountLabel =
-    activeAddress && activeAddress !== ''
-      ? name || ellipsisFn(activeAddress)
-      : ''
+	const accountLabel =
+		activeAddress && activeAddress !== ''
+			? name || ellipsisFn(activeAddress)
+			: ''
 
-  return (
-    <div ref={popoverRef} style={{ paddingTop: '1.5rem' }}>
-      <Account address={activeAddress || ''} label={accountLabel} />
-      {activeProxy && activeProxyType && (
-        <Account
-          address={activeProxy.address}
-          label={`Signer (${activeProxyType} Proxy):`}
-        />
-      )}
+	return (
+		<div ref={popoverRef} style={{ paddingTop: '1.5rem' }}>
+			<Account address={activeAddress || ''} label={accountLabel} />
+			{activeProxy && activeProxyType && (
+				<Account
+					address={activeProxy.address}
+					label={`Signer (${activeProxyType} Proxy):`}
+				/>
+			)}
 
-      <PopoverTab.Container position="bottom" yMargin>
-        <PopoverTab.Button
-          text={t('switchAccount', { ns: 'app' })}
-          onClick={() => {
-            setOpen(false)
-            openModal({ key: 'Accounts' })
-          }}
-        />
-        <PopoverTab.Button
-          status="danger"
-          text={t('disconnect', { ns: 'modals' })}
-          onClick={() => {
-            setActiveAccount(null)
-            setActiveProxy(network, null)
-            setOpen(false)
-          }}
-        />
-      </PopoverTab.Container>
-    </div>
-  )
+			<PopoverTab.Container position="bottom" yMargin>
+				<PopoverTab.Button
+					text={t('switchAccount', { ns: 'app' })}
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'Accounts' })
+					}}
+				/>
+				<PopoverTab.Button
+					status="danger"
+					text={t('disconnect', { ns: 'modals' })}
+					onClick={() => {
+						setActiveAccount(null)
+						setActiveProxy(network, null)
+						setOpen(false)
+					}}
+				/>
+			</PopoverTab.Container>
+		</div>
+	)
 }

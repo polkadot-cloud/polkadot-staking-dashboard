@@ -8,19 +8,19 @@ import { useTranslation } from 'react-i18next'
 import { useActivePool } from '../../../../contexts/Pools/ActivePool'
 
 export const NominationStatus = () => {
-  const { t } = useTranslation('pages')
-  const { inPool } = useActivePool()
-  const { activeAddress } = useActiveAccounts()
-  const { getNominationStatus } = useNominationStatus()
+	const { t } = useTranslation('pages')
+	const { inPool } = useActivePool()
+	const { activeAddress } = useActiveAccounts()
+	const { getNominationStatus } = useNominationStatus()
 
-  const nominationStatus = getNominationStatus(activeAddress, 'nominator')
-  // Determine whether to display fast unstake button or regular unstake button.
+	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
+	// Determine whether to display fast unstake button or regular unstake button.
 
-  return (
-    <Stat
-      label={t('status')}
-      helpKey="Nomination Status"
-      stat={inPool ? t('alreadyInPool') : nominationStatus.message}
-    />
-  )
+	return (
+		<Stat
+			label={t('status')}
+			helpKey="Nomination Status"
+			stat={inPool ? t('alreadyInPool') : nominationStatus.message}
+		/>
+	)
 }

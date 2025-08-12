@@ -9,38 +9,38 @@ import { useOverlay } from 'ui-overlay'
 import type { SetOpenProp } from './types'
 
 export const Proxies = ({ setOpen }: SetOpenProp) => {
-  const { t } = useTranslation()
-  const { openModal } = useOverlay().modal
+	const { t } = useTranslation()
+	const { openModal } = useOverlay().modal
 
-  return (
-    <ConnectItem.Container>
-      <h4>{t('proxies', { ns: 'modals' })}</h4>
-      <section>
-        <ConnectItem.Item
-          asButton
-          last={true}
-          onClick={() => {
-            setOpen(false)
-            openModal({
-              key: 'ExternalAccounts',
-              size: 'sm',
-              options: {
-                type: 'proxies',
-              },
-            })
-          }}
-        >
-          <div>
-            <ConnectItem.Logo Svg={ArrowsSvg} />
-          </div>
-          <div>
-            <div>
-              <h3>{t('proxyAccounts', { ns: 'modals' })}</h3>
-            </div>
-            <ConnectItem.Icon faIcon={faChevronRight} />
-          </div>
-        </ConnectItem.Item>
-      </section>
-    </ConnectItem.Container>
-  )
+	return (
+		<ConnectItem.Container>
+			<h4>{t('proxies', { ns: 'modals' })}</h4>
+			<section>
+				<ConnectItem.Item
+					asButton
+					last={true}
+					onClick={() => {
+						setOpen(false)
+						openModal({
+							key: 'ExternalAccounts',
+							size: 'sm',
+							options: {
+								type: 'proxies',
+							},
+						})
+					}}
+				>
+					<div>
+						<ConnectItem.Logo Svg={ArrowsSvg} />
+					</div>
+					<div>
+						<div>
+							<h3>{t('proxyAccounts', { ns: 'modals' })}</h3>
+						</div>
+						<ConnectItem.Icon faIcon={faChevronRight} />
+					</div>
+				</ConnectItem.Item>
+			</section>
+		</ConnectItem.Container>
+	)
 }

@@ -4,17 +4,17 @@
 import { DefinitionWrapper } from '../Wrappers'
 
 export const ActiveDefinition = ({
-  description,
+	description,
 }: {
-  description: string[]
+	description: string[]
 }) => (
-  <DefinitionWrapper>
-    <div>
-      {description.map((item, index: number) => (
-        <h4 key={`inner_def_${index}`} className="definition">
-          {item}
-        </h4>
-      ))}
-    </div>
-  </DefinitionWrapper>
+	<DefinitionWrapper>
+		<div>
+			{description.map((item, index: number) => (
+				<h4 key={`inner_def_${index}`} className="definition">
+					{item}
+				</h4>
+			))}
+		</div>
+	</DefinitionWrapper>
 )

@@ -6,6 +6,6 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const stakingWithdraw = <T extends StakingChain>(
-  api: DedotClient<T>,
-  numSlashingSpans: number
+	api: DedotClient<T>,
+	numSlashingSpans: number,
 ) => asTx(api.tx.staking.withdrawUnbonded(numSlashingSpans))

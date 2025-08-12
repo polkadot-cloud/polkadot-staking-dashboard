@@ -8,28 +8,28 @@ import { AccountButton } from './AccountButton'
 import { Delegates } from './Delegates'
 
 export const AccountItem = ({
-  source,
-  address,
-  delegates,
+	source,
+	address,
+	delegates,
 }: {
-  source: string
-  address: string
-  delegates?: Proxy
+	source: string
+	address: string
+	delegates?: Proxy
 }) => {
-  const {
-    balances: { transferableBalance },
-  } = useAccountBalances(address)
+	const {
+		balances: { transferableBalance },
+	} = useAccountBalances(address)
 
-  return (
-    <Fragment>
-      <AccountButton
-        transferableBalance={transferableBalance}
-        address={address}
-        source={source}
-      />
-      {address && (
-        <Delegates delegator={address} source={source} delegates={delegates} />
-      )}
-    </Fragment>
-  )
+	return (
+		<Fragment>
+			<AccountButton
+				transferableBalance={transferableBalance}
+				address={address}
+				source={source}
+			/>
+			{address && (
+				<Delegates delegator={address} source={source} delegates={delegates} />
+			)}
+		</Fragment>
+	)
 }

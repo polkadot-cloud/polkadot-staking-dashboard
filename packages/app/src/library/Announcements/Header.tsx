@@ -3,36 +3,36 @@
 
 import { useHelp } from 'contexts/Help'
 import { ButtonHelp, ButtonTertiary } from 'ui-buttons'
-import { HeaderWrapper } from './Wrappers'
 import type { HeaderProps } from './types'
+import { HeaderWrapper } from './Wrappers'
 
 export const Header = ({ items }: HeaderProps) => {
-  const { openHelp } = useHelp()
+	const { openHelp } = useHelp()
 
-  return (
-    <HeaderWrapper>
-      {items.map(({ label, value, button, helpKey }, i) => (
-        <div key={`head_stat_${i}`}>
-          <div className="inner">
-            <h2>
-              {value}
-              {button && (
-                <ButtonTertiary
-                  text={button.text}
-                  onClick={() => button.onClick()}
-                  disabled={button.disabled}
-                />
-              )}
-            </h2>
-            <h4>
-              {label}
-              {!!helpKey && (
-                <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-              )}
-            </h4>
-          </div>
-        </div>
-      ))}
-    </HeaderWrapper>
-  )
+	return (
+		<HeaderWrapper>
+			{items.map(({ label, value, button, helpKey }, i) => (
+				<div key={`head_stat_${i}`}>
+					<div className="inner">
+						<h2>
+							{value}
+							{button && (
+								<ButtonTertiary
+									text={button.text}
+									onClick={() => button.onClick()}
+									disabled={button.disabled}
+								/>
+							)}
+						</h2>
+						<h4>
+							{label}
+							{!!helpKey && (
+								<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							)}
+						</h4>
+					</div>
+				</div>
+			))}
+		</HeaderWrapper>
+	)
 }

@@ -17,74 +17,74 @@ import type { MembershipStatusProps } from './types'
 import { useStatusButtons } from './useStatusButtons'
 
 export const MembershipStatus = ({
-  showButtons = true,
-  buttonType = 'primary',
+	showButtons = true,
+	buttonType = 'primary',
 }: MembershipStatusProps) => {
-  const { t } = useTranslation('pages')
-  const { isReady } = useApi()
-  const { isBonding } = useStaking()
-  const { label } = useStatusButtons()
-  const { openModal } = useOverlay().modal
-  const { poolsMetaData } = useBondedPools()
-  const { activeAddress } = useActiveAccounts()
-  const { isReadOnlyAccount } = useImportedAccounts()
-  const { balances } = useAccountBalances(activeAddress)
-  const { activePool, isOwner, isBouncer, isMember } = useActivePool()
+	const { t } = useTranslation('pages')
+	const { isReady } = useApi()
+	const { isBonding } = useStaking()
+	const { label } = useStatusButtons()
+	const { openModal } = useOverlay().modal
+	const { poolsMetaData } = useBondedPools()
+	const { activeAddress } = useActiveAccounts()
+	const { isReadOnlyAccount } = useImportedAccounts()
+	const { balances } = useAccountBalances(activeAddress)
+	const { activePool, isOwner, isBouncer, isMember } = useActivePool()
 
-  const { active } = balances.pool
-  const poolState = activePool?.bondedPool?.state ?? null
+	const { active } = balances.pool
+	const poolState = activePool?.bondedPool?.state ?? null
 
-  const membershipButtons = []
-  let membershipDisplay = t('notInPool')
+	const membershipButtons = []
+	let membershipDisplay = t('notInPool')
 
-  if (activePool) {
-    // Determine pool membership display.
-    membershipDisplay = determinePoolDisplay(
-      activePool.addresses.stash,
-      poolsMetaData[Number(activePool.id)]
-    )
+	if (activePool) {
+		// Determine pool membership display.
+		membershipDisplay = determinePoolDisplay(
+			activePool.addresses.stash,
+			poolsMetaData[Number(activePool.id)],
+		)
 
-    // Display manage button if active account is pool owner or bouncer.
-    // Or display manage button if active account is a pool member.
-    if (
-      (poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
-      (isMember() && active > 0n)
-    ) {
-      // Display manage button if active account is not a read-only account.
-      if (!isReadOnlyAccount(activeAddress)) {
-        membershipButtons.push({
-          title: t('manage'),
-          icon: faCog,
-          disabled: !isReady,
-          small: true,
-          onClick: () =>
-            openModal({
-              key: 'ManagePool',
-              options: { disableWindowResize: true, disableScroll: true },
-              size: 'sm',
-            }),
-        })
-      }
-    }
-  }
+		// Display manage button if active account is pool owner or bouncer.
+		// Or display manage button if active account is a pool member.
+		if (
+			(poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
+			(isMember() && active > 0n)
+		) {
+			// Display manage button if active account is not a read-only account.
+			if (!isReadOnlyAccount(activeAddress)) {
+				membershipButtons.push({
+					title: t('manage'),
+					icon: faCog,
+					disabled: !isReady,
+					small: true,
+					onClick: () =>
+						openModal({
+							key: 'ManagePool',
+							options: { disableWindowResize: true, disableScroll: true },
+							size: 'sm',
+						}),
+				})
+			}
+		}
+	}
 
-  return activePool ? (
-    <Stat
-      label={label}
-      helpKey="Pool Membership"
-      type="address"
-      stat={{
-        address: activePool?.addresses?.stash ?? '',
-        display: membershipDisplay,
-      }}
-      buttons={showButtons ? membershipButtons : []}
-    />
-  ) : (
-    <Stat
-      label={t('poolMembership')}
-      helpKey="Pool Membership"
-      stat={isBonding ? t('alreadyNominating') : t('notInPool')}
-      buttonType={buttonType}
-    />
-  )
+	return activePool ? (
+		<Stat
+			label={label}
+			helpKey="Pool Membership"
+			type="address"
+			stat={{
+				address: activePool?.addresses?.stash ?? '',
+				display: membershipDisplay,
+			}}
+			buttons={showButtons ? membershipButtons : []}
+		/>
+	) : (
+		<Stat
+			label={t('poolMembership')}
+			helpKey="Pool Membership"
+			stat={isBonding ? t('alreadyNominating') : t('notInPool')}
+			buttonType={buttonType}
+		/>
+	)
 }

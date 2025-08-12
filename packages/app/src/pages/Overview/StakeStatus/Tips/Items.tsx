@@ -7,120 +7,120 @@ import { usePrompt } from 'contexts/Prompt'
 import { useAnimationControls } from 'framer-motion'
 import { Tip } from 'library/Tips/Tip'
 import { useEffect, useState } from 'react'
-import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers'
 import type { TipDisplayWithControls, TipItemsProps } from './types'
+import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers'
 
 export const Items = ({ items, page }: TipItemsProps) => {
-  const controls = useAnimationControls()
+	const controls = useAnimationControls()
 
-  // stores whether this is the initial display of tips
-  const [initial, setInitial] = useState<boolean>(true)
+	// stores whether this is the initial display of tips
+	const [initial, setInitial] = useState<boolean>(true)
 
-  useEffect(() => {
-    doControls(true)
-    setInitial(false)
-  }, [page])
+	useEffect(() => {
+		doControls(true)
+		setInitial(false)
+	}, [page])
 
-  const doControls = async (transition: boolean) => {
-    if (transition) {
-      controls.set('hidden')
-      controls.start('show')
-    } else {
-      controls.set('show')
-    }
-  }
+	const doControls = async (transition: boolean) => {
+		if (transition) {
+			controls.set('hidden')
+			controls.start('show')
+		} else {
+			controls.set('show')
+		}
+	}
 
-  return (
-    <ItemsWrapper
-      initial="hidden"
-      animate={controls}
-      variants={{
-        hidden: { opacity: 0 },
-        show: {
-          opacity: 1,
-        },
-      }}
-    >
-      {items.map((item, index: number) => (
-        <Item
-          key={`tip_${index}_${page}`}
-          index={index}
-          {...item}
-          controls={controls}
-          initial={initial}
-        />
-      ))}
-    </ItemsWrapper>
-  )
+	return (
+		<ItemsWrapper
+			initial="hidden"
+			animate={controls}
+			variants={{
+				hidden: { opacity: 0 },
+				show: {
+					opacity: 1,
+				},
+			}}
+		>
+			{items.map((item, index: number) => (
+				<Item
+					key={`tip_${index}_${page}`}
+					index={index}
+					{...item}
+					controls={controls}
+					initial={initial}
+				/>
+			))}
+		</ItemsWrapper>
+	)
 }
 
 const Item = ({
-  title,
-  subtitle,
-  description,
-  index,
-  controls,
-  initial,
-  page,
+	title,
+	subtitle,
+	description,
+	index,
+	controls,
+	initial,
+	page,
 }: TipDisplayWithControls) => {
-  const { openPromptWith } = usePrompt()
-  const [isStopped, setIsStopped] = useState<boolean>(true)
+	const { openPromptWith } = usePrompt()
+	const [isStopped, setIsStopped] = useState<boolean>(true)
 
-  useEffect(() => {
-    const delay = index * 75
+	useEffect(() => {
+		const delay = index * 75
 
-    if (initial) {
-      setTimeout(() => {
-        if (isStopped) {
-          setIsStopped(false)
-        }
-      }, delay)
-    }
-  }, [])
+		if (initial) {
+			setTimeout(() => {
+				if (isStopped) {
+					setIsStopped(false)
+				}
+			}, delay)
+		}
+	}, [])
 
-  return (
-    <ItemWrapper
-      animate={controls}
-      custom={index}
-      transition={{
-        delay: index * 0.2,
-        duration: 0.7,
-        type: 'spring',
-        bounce: 0.35,
-      }}
-      variants={{
-        hidden: {
-          y: 15,
-        },
-        show: {
-          y: 0,
-        },
-      }}
-    >
-      <ItemInnerWrapper>
-        <section />
-        <section>
-          <div className="desc active">
-            <button
-              onClick={() =>
-                openPromptWith(
-                  <Tip title={title} description={description} page={page} />,
-                  'lg'
-                )
-              }
-              type="button"
-            >
-              <h4>
-                {subtitle}
-                <FontAwesomeIcon
-                  icon={faExternalLinkAlt}
-                  transform="shrink-2"
-                />
-              </h4>
-            </button>
-          </div>
-        </section>
-      </ItemInnerWrapper>
-    </ItemWrapper>
-  )
+	return (
+		<ItemWrapper
+			animate={controls}
+			custom={index}
+			transition={{
+				delay: index * 0.2,
+				duration: 0.7,
+				type: 'spring',
+				bounce: 0.35,
+			}}
+			variants={{
+				hidden: {
+					y: 15,
+				},
+				show: {
+					y: 0,
+				},
+			}}
+		>
+			<ItemInnerWrapper>
+				<section />
+				<section>
+					<div className="desc active">
+						<button
+							onClick={() =>
+								openPromptWith(
+									<Tip title={title} description={description} page={page} />,
+									'lg',
+								)
+							}
+							type="button"
+						>
+							<h4>
+								{subtitle}
+								<FontAwesomeIcon
+									icon={faExternalLinkAlt}
+									transform="shrink-2"
+								/>
+							</h4>
+						</button>
+					</div>
+				</section>
+			</ItemInnerWrapper>
+		</ItemWrapper>
+	)
 }

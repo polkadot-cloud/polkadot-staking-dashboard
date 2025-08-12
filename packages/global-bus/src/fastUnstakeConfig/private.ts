@@ -6,5 +6,5 @@ import type { FastUnstakeConfig } from 'types'
 import { defaultFastUnstakeConfig } from './default'
 
 export const _fastUnstakeConfig = new BehaviorSubject<FastUnstakeConfig>(
-  defaultFastUnstakeConfig
+	defaultFastUnstakeConfig,
 )

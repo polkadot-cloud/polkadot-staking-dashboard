@@ -6,4 +6,4 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const setController = <T extends StakingChain>(api: DedotClient<T>) =>
-  asTx(api.tx.staking.setController())
+	asTx(api.tx.staking.setController())

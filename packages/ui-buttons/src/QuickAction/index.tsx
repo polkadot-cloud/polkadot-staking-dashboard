@@ -5,7 +5,7 @@ import { Button, PreloadingButton } from './Button'
 import { Container } from './Container'
 
 export const QuickAction = {
-  Button,
-  Container,
-  PreloadingButton,
+	Button,
+	Container,
+	PreloadingButton,
 }

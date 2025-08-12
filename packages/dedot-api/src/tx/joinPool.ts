@@ -8,15 +8,15 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const joinPool = <T extends StakingChain>(
-  api: DedotClient<T>,
-  poolId: number,
-  bond: bigint,
-  claimPermission: ClaimPermission
+	api: DedotClient<T>,
+	poolId: number,
+	bond: bigint,
+	claimPermission: ClaimPermission,
 ) => {
-  const txs = [asTx(api.tx.nominationPools.join(bond, poolId))]
-  if (claimPermission === defaultClaimPermission) {
-    return [txs[0]]
-  }
-  txs.push(asTx(api.tx.nominationPools.setClaimPermission(claimPermission)))
-  return txs
+	const txs = [asTx(api.tx.nominationPools.join(bond, poolId))]
+	if (claimPermission === defaultClaimPermission) {
+		return [txs[0]]
+	}
+	txs.push(asTx(api.tx.nominationPools.setClaimPermission(claimPermission)))
+	return txs
 }

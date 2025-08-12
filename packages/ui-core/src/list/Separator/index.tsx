@@ -5,5 +5,5 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Separator = ({ style }: ComponentBase) => (
-  <div className={classes.separator} style={style} />
+	<div className={classes.separator} style={style} />
 )

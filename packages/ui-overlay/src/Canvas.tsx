@@ -10,90 +10,90 @@ import { useOverlay } from './Provider'
 import type { CanvasProps } from './Provider/types'
 
 export const Canvas = ({
-  canvas,
-  externalOverlayStatus,
-  fallback: Fallback,
+	canvas,
+	externalOverlayStatus,
+	fallback: Fallback,
 }: CanvasProps) => {
-  const controls = useAnimation()
-  const {
-    setOpenOverlayInstances,
-    activeOverlayInstance,
-    setActiveOverlayInstance,
-    modal: { status: modalStatus },
-    canvas: {
-      status,
-      setCanvasStatus,
-      config: { key, size },
-    },
-  } = useOverlay()
+	const controls = useAnimation()
+	const {
+		setOpenOverlayInstances,
+		activeOverlayInstance,
+		setActiveOverlayInstance,
+		modal: { status: modalStatus },
+		canvas: {
+			status,
+			setCanvasStatus,
+			config: { key, size },
+		},
+	} = useOverlay()
 
-  const onIn = async () => {
-    await controls.start('visible')
-  }
+	const onIn = async () => {
+		await controls.start('visible')
+	}
 
-  const onOut = async (closing: boolean) => {
-    if (closing) {
-      setOpenOverlayInstances('dec', 'canvas')
-      setActiveOverlayInstance(modalStatus === 'open' ? 'modal' : null)
-    }
-    await controls.start('hidden')
+	const onOut = async (closing: boolean) => {
+		if (closing) {
+			setOpenOverlayInstances('dec', 'canvas')
+			setActiveOverlayInstance(modalStatus === 'open' ? 'modal' : null)
+		}
+		await controls.start('hidden')
 
-    if (closing) {
-      setCanvasStatus('closed')
-    }
-  }
+		if (closing) {
+			setCanvasStatus('closed')
+		}
+	}
 
-  // Control dim help status change
-  useEffect(() => {
-    if (externalOverlayStatus === 'open' && status === 'open') {
-      onOut(false)
-    }
+	// Control dim help status change
+	useEffect(() => {
+		if (externalOverlayStatus === 'open' && status === 'open') {
+			onOut(false)
+		}
 
-    if (externalOverlayStatus === 'closing') {
-      if (activeOverlayInstance === 'canvas') {
-        setCanvasStatus('open')
-        onIn()
-      }
-    }
-  }, [externalOverlayStatus])
+		if (externalOverlayStatus === 'closing') {
+			if (activeOverlayInstance === 'canvas') {
+				setCanvasStatus('open')
+				onIn()
+			}
+		}
+	}, [externalOverlayStatus])
 
-  // Control fade in and out on opening and closing states
-  useEffect(() => {
-    if (status === 'open') {
-      onIn()
-    }
-    if (status === 'closing') {
-      onOut(true)
-    }
-  }, [status])
+	// Control fade in and out on opening and closing states
+	useEffect(() => {
+		if (status === 'open') {
+			onIn()
+		}
+		if (status === 'closing') {
+			onOut(true)
+		}
+	}, [status])
 
-  const ActiveCanvas: FC | null = canvas?.[key] || null
+	const ActiveCanvas: FC | null = canvas?.[key] || null
 
-  return status === 'closed' ? null : (
-    <Container
-      initial={{
-        opacity: 0,
-      }}
-      animate={controls}
-      transition={{
-        duration: 0.15,
-      }}
-      variants={{
-        hidden: {
-          opacity: 0,
-        },
-        visible: {
-          opacity: 1,
-        },
-      }}
-    >
-      <Scroll>
-        <Content size={size}>
-          <ErrorBoundary FallbackComponent={Fallback}>
-            {ActiveCanvas && <ActiveCanvas />}
-          </ErrorBoundary>
-        </Content>
-      </Scroll>
-    </Container>
-  )
+	return status === 'closed' ? null : (
+		<Container
+			initial={{
+				opacity: 0,
+			}}
+			animate={controls}
+			transition={{
+				duration: 0.15,
+			}}
+			variants={{
+				hidden: {
+					opacity: 0,
+				},
+				visible: {
+					opacity: 1,
+				},
+			}}
+		>
+			<Scroll>
+				<Content size={size}>
+					<ErrorBoundary FallbackComponent={Fallback}>
+						{ActiveCanvas && <ActiveCanvas />}
+					</ErrorBoundary>
+				</Content>
+			</Scroll>
+		</Container>
+	)
 }

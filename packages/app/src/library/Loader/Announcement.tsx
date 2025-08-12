@@ -4,5 +4,5 @@
 import { LoaderWrapper } from './Wrappers'
 
 export const Announcement = () => (
-  <LoaderWrapper style={{ width: '100%', height: 60 }} />
+	<LoaderWrapper style={{ width: '100%', height: 60 }} />
 )

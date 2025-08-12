@@ -5,18 +5,18 @@ import type { SubmittableExtrinsic } from 'dedot'
 import type { MaybeAddress } from 'types'
 
 export interface UseSubmitExtrinsicProps {
-  tx: SubmittableExtrinsic | undefined
-  tag?: string
-  from: MaybeAddress
-  shouldSubmit: boolean
-  callbackSubmit?: () => void
-  callbackInBlock?: () => void
+	tx: SubmittableExtrinsic | undefined
+	tag?: string
+	from: MaybeAddress
+	shouldSubmit: boolean
+	callbackSubmit?: () => void
+	callbackInBlock?: () => void
 }
 
 export interface UseSubmitExtrinsic {
-  txInitiated: boolean
-  uid: number
-  onSubmit: () => void
-  proxySupported: boolean
-  submitAddress: MaybeAddress
+	txInitiated: boolean
+	uid: number
+	onSubmit: () => void
+	proxySupported: boolean
+	submitAddress: MaybeAddress
 }

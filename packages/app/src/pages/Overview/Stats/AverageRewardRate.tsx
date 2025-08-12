@@ -7,16 +7,16 @@ import { Text } from 'library/StatCards/Text'
 import { useTranslation } from 'react-i18next'
 
 export const AverageRewardRate = () => {
-  const { t } = useTranslation('pages')
-  const { getAverageRewardRate } = useAverageRewardRate()
+	const { t } = useTranslation('pages')
+	const { getAverageRewardRate } = useAverageRewardRate()
 
-  const params = {
-    label: `${t('averageRewardRate')}`,
-    value: `${new BigNumber(getAverageRewardRate()).decimalPlaces(2).toFormat()}%`,
-    helpKey: 'Average Reward Rate',
+	const params = {
+		label: `${t('averageRewardRate')}`,
+		value: `${new BigNumber(getAverageRewardRate()).decimalPlaces(2).toFormat()}%`,
+		helpKey: 'Average Reward Rate',
 
-    primary: true,
-  }
+		primary: true,
+	}
 
-  return <Text {...params} />
+	return <Text {...params} />
 }

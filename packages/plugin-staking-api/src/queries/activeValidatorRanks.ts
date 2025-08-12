@@ -15,28 +15,28 @@ const QUERY = gql`
 `
 
 export const useActiveValidatorRanks = ({
-  network,
+	network,
 }: {
-  network: string
+	network: string
 }): ActiveValidatorRanksResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchActiveValidatorRanks = async (
-  network: string
+	network: string,
 ): Promise<{ activeValidatorRanks: ActiveValidatorRank[] }> => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { network },
-    })
-    return result.data
-  } catch {
-    return {
-      activeValidatorRanks: [],
-    }
-  }
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { network },
+		})
+		return result.data
+	} catch {
+		return {
+			activeValidatorRanks: [],
+		}
+	}
 }

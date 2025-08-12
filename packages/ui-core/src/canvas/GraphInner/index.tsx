@@ -7,22 +7,22 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 type Props = ComponentBase & {
-  width: string | number
-  height: string | number
+	width: string | number
+	height: string | number
 }
 export const GraphInner = forwardRef(
-  (
-    { width, height, children, style }: Props,
-    ref: ForwardedRef<HTMLDivElement | null>
-  ) => (
-    <div
-      className={classes.graphInner}
-      style={{ width, height, ...style }}
-      ref={ref}
-    >
-      <div className={classes.inner}>{children}</div>
-    </div>
-  )
+	(
+		{ width, height, children, style }: Props,
+		ref: ForwardedRef<HTMLDivElement | null>,
+	) => (
+		<div
+			className={classes.graphInner}
+			style={{ width, height, ...style }}
+			ref={ref}
+		>
+			<div className={classes.inner}>{children}</div>
+		</div>
+	),
 )
 
 GraphInner.displayName = 'GraphInner'

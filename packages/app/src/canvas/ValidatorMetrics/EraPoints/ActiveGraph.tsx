@@ -9,47 +9,47 @@ import type { NetworkId } from 'types'
 import { EraPointsLine } from 'ui-graphs'
 
 interface Props {
-  network: NetworkId
-  validator: string
-  fromEra: number
-  width: string | number
-  height: string | number
+	network: NetworkId
+	validator: string
+	fromEra: number
+	width: string | number
+	height: string | number
 }
 export const ActiveGraph = ({
-  network,
-  validator,
-  fromEra,
-  width,
-  height,
+	network,
+	validator,
+	fromEra,
+	width,
+	height,
 }: Props) => {
-  const { i18n, t } = useTranslation()
-  const { getThemeValue } = useThemeValues()
-  const { data, loading, error } = useValidatorEraPoints({
-    network,
-    validator,
-    fromEra,
-  })
+	const { i18n, t } = useTranslation()
+	const { getThemeValue } = useThemeValues()
+	const { data, loading, error } = useValidatorEraPoints({
+		network,
+		validator,
+		fromEra,
+	})
 
-  const list =
-    loading || error || data?.validatorEraPoints === undefined
-      ? []
-      : data.validatorEraPoints
+	const list =
+		loading || error || data?.validatorEraPoints === undefined
+			? []
+			: data.validatorEraPoints
 
-  const sorted = [...list].sort((a, b) => a.era - b.era)
+	const sorted = [...list].sort((a, b) => a.era - b.era)
 
-  return (
-    <EraPointsLine
-      syncing={loading}
-      entries={sorted}
-      width={width}
-      height={height}
-      getThemeValue={getThemeValue}
-      dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat}
-      labels={{
-        date: t('date', { ns: 'app' }),
-        era: t('era', { ns: 'app' }),
-        eraPoints: t('eraPoints', { ns: 'app' }),
-      }}
-    />
-  )
+	return (
+		<EraPointsLine
+			syncing={loading}
+			entries={sorted}
+			width={width}
+			height={height}
+			getThemeValue={getThemeValue}
+			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat}
+			labels={{
+				date: t('date', { ns: 'app' }),
+				era: t('era', { ns: 'app' }),
+				eraPoints: t('eraPoints', { ns: 'app' }),
+			}}
+		/>
+	)
 }

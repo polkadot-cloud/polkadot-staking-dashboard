@@ -6,22 +6,22 @@ import type { ComponentBaseWithClassName } from 'types'
 import classes from './index.module.scss'
 
 export const Container = ({
-  position,
-  yMargin,
-  style,
-  children,
+	position,
+	yMargin,
+	style,
+	children,
 }: ComponentBaseWithClassName & {
-  position: 'top' | 'bottom'
-  yMargin?: boolean
+	position: 'top' | 'bottom'
+	yMargin?: boolean
 }) => {
-  const allClasses = classNames(classes.container, {
-    [classes.top]: position === 'top',
-    [classes.bottom]: position === 'bottom',
-    [classes.yMargin]: yMargin,
-  })
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	const allClasses = classNames(classes.container, {
+		[classes.top]: position === 'top',
+		[classes.bottom]: position === 'bottom',
+		[classes.yMargin]: yMargin,
+	})
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

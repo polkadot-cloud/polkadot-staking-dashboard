@@ -13,71 +13,71 @@ import { ButtonSubmit } from 'ui-buttons'
 import type { SubmitProps } from '../../types'
 
 export const Vault = ({
-  uid,
-  onSubmit,
-  submitted,
-  valid,
-  submitText,
-  buttons,
-  submitAddress,
-  displayFor,
-  notEnoughFunds,
+	uid,
+	onSubmit,
+	submitted,
+	valid,
+	submitText,
+	buttons,
+	submitAddress,
+	displayFor,
+	notEnoughFunds,
 }: SubmitProps & {
-  buttons?: ReactNode[]
-  notEnoughFunds: boolean
-  submitted: boolean
+	buttons?: ReactNode[]
+	notEnoughFunds: boolean
+	submitted: boolean
 }) => {
-  const { t } = useTranslation('app')
-  const { status: promptStatus } = usePrompt()
-  const { accountHasSigner } = useImportedAccounts()
+	const { t } = useTranslation('app')
+	const { status: promptStatus } = usePrompt()
+	const { accountHasSigner } = useImportedAccounts()
 
-  // The state under which submission is disabled.
-  const disabled =
-    submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
+	// The state under which submission is disabled.
+	const disabled =
+		submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
 
-  // Format submit button based on whether signature currently exists or submission is ongoing.
-  let buttonText: string
-  let buttonDisabled: boolean
-  let buttonPulse: boolean
+	// Format submit button based on whether signature currently exists or submission is ongoing.
+	let buttonText: string
+	let buttonDisabled: boolean
+	let buttonPulse: boolean
 
-  if (submitted) {
-    buttonText = submitText || ''
-    buttonDisabled = disabled
-    buttonPulse = !(!valid || promptStatus !== 0)
-  } else {
-    buttonText = t('sign')
-    buttonDisabled = disabled || promptStatus !== 0
-    buttonPulse = !disabled || promptStatus === 0
-  }
+	if (submitted) {
+		buttonText = submitText || ''
+		buttonDisabled = disabled
+		buttonPulse = !(!valid || promptStatus !== 0)
+	} else {
+		buttonText = t('sign')
+		buttonDisabled = disabled || promptStatus !== 0
+		buttonPulse = !disabled || promptStatus === 0
+	}
 
-  return (
-    <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
-      <div>
-        <EstimatedTxFee uid={uid} />
-        {valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
-      </div>
-      <div>
-        {buttons}
-        {displayFor !== 'card' ? (
-          <ButtonSubmit
-            disabled={buttonDisabled}
-            lg={displayFor === 'canvas'}
-            text={buttonText}
-            iconLeft={faSquarePen}
-            iconTransform="grow-2"
-            onClick={() => onSubmit()}
-            pulse={buttonPulse}
-          />
-        ) : (
-          <ButtonSubmitLarge
-            disabled={disabled}
-            submitText={buttonText}
-            onSubmit={onSubmit}
-            icon={faSquarePen}
-            pulse={!disabled}
-          />
-        )}
-      </div>
-    </div>
-  )
+	return (
+		<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
+			<div>
+				<EstimatedTxFee uid={uid} />
+				{valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
+			</div>
+			<div>
+				{buttons}
+				{displayFor !== 'card' ? (
+					<ButtonSubmit
+						disabled={buttonDisabled}
+						lg={displayFor === 'canvas'}
+						text={buttonText}
+						iconLeft={faSquarePen}
+						iconTransform="grow-2"
+						onClick={() => onSubmit()}
+						pulse={buttonPulse}
+					/>
+				) : (
+					<ButtonSubmitLarge
+						disabled={disabled}
+						submitText={buttonText}
+						onSubmit={onSubmit}
+						icon={faSquarePen}
+						pulse={!disabled}
+					/>
+				)}
+			</div>
+		</div>
+	)
 }

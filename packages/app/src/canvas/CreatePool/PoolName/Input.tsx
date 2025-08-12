@@ -8,50 +8,50 @@ import { useTranslation } from 'react-i18next'
 import type { AnyJson } from 'types'
 
 export const Input = ({
-  listenIsValid,
-  defaultValue,
-  setters = [],
-  value = '',
+	listenIsValid,
+	defaultValue,
+	setters = [],
+	value = '',
 }: AnyJson) => {
-  const { t } = useTranslation('pages')
-  const { activeAddress } = useActiveAccounts()
+	const { t } = useTranslation('pages')
+	const { activeAddress } = useActiveAccounts()
 
-  // the current local bond value
-  const [metadata, setMetadata] = useState<string>(value)
+	// the current local bond value
+	const [metadata, setMetadata] = useState<string>(value)
 
-  // handle change for bonding
-  const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    const val = ev.target.value
-    listenIsValid(val !== '')
-    setMetadata(val)
+	// handle change for bonding
+	const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
+		const val = ev.target.value
+		listenIsValid(val !== '')
+		setMetadata(val)
 
-    // apply value to parent setters
-    for (const s of setters) {
-      s.set({
-        ...s.current,
-        metadata: val,
-      })
-    }
-  }
+		// apply value to parent setters
+		for (const s of setters) {
+			s.set({
+				...s.current,
+				metadata: val,
+			})
+		}
+	}
 
-  // reset value to default when changing account
-  useEffect(() => {
-    setMetadata(defaultValue ?? '')
-  }, [activeAddress])
+	// reset value to default when changing account
+	useEffect(() => {
+		setMetadata(defaultValue ?? '')
+	}, [activeAddress])
 
-  return (
-    <>
-      <div style={{ margin: '1rem 0' }}>
-        <input
-          className="underline"
-          style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
-          placeholder={t('poolName')}
-          type="text"
-          onChange={(e) => handleChange(e)}
-          value={metadata ?? ''}
-        />
-      </div>
-      <p>{t('poolNameSupport')}</p>
-    </>
-  )
+	return (
+		<>
+			<div style={{ margin: '1rem 0' }}>
+				<input
+					className="underline"
+					style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
+					placeholder={t('poolName')}
+					type="text"
+					onChange={(e) => handleChange(e)}
+					value={metadata ?? ''}
+				/>
+			</div>
+			<p>{t('poolNameSupport')}</p>
+		</>
+	)
 }

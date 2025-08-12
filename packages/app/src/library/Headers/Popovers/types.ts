@@ -4,6 +4,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 
 export interface ToggleConnectProps {
-  openConnect: boolean
-  setOpenConnect: Dispatch<SetStateAction<boolean>>
+	openConnect: boolean
+	setOpenConnect: Dispatch<SetStateAction<boolean>>
 }

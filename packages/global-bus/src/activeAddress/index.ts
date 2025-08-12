@@ -7,11 +7,11 @@ import { _activeAddress } from './private'
 export const activeAddress$ = _activeAddress.asObservable()
 
 export const resetActiveAddress = () => {
-  _activeAddress.next(null)
+	_activeAddress.next(null)
 }
 
 export const getActiveAddress = () => _activeAddress.getValue()
 
 export const setActiveAddress = (address: MaybeString) => {
-  _activeAddress.next(address)
+	_activeAddress.next(address)
 }

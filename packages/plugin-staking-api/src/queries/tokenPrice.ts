@@ -15,34 +15,34 @@ const QUERY = gql`
 `
 
 export const useTokenPrice = ({
-  ticker,
+	ticker,
 }: {
-  ticker: string
+	ticker: string
 }): UseTokenPriceResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { ticker },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { ticker },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchTokenPrice = async (
-  ticker: string
+	ticker: string,
 ): Promise<TokenPrice | null> => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { ticker },
-    })
-    return result.data.tokenPrice
-  } catch {
-    return null
-  }
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { ticker },
+		})
+		return result.data.tokenPrice
+	} catch {
+		return null
+	}
 }
 
 export const formatTokenPrice = (
-  maybePrice: number | null,
-  maybeChange: number | null
+	maybePrice: number | null,
+	maybeChange: number | null,
 ): { price: number; change: number } => ({
-  price: Number((maybePrice || 0).toFixed(2)),
-  change: Number((maybeChange || 0).toFixed(2)),
+	price: Number((maybePrice || 0).toFixed(2)),
+	change: Number((maybeChange || 0).toFixed(2)),
 })

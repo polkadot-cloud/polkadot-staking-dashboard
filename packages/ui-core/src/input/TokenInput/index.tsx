@@ -6,26 +6,26 @@ import type { TokenInputProps } from '../types'
 import classes from './index.module.scss'
 
 export const TokenInput = ({
-  onChange,
-  placeholder,
-  value,
-  marginY,
-  id,
-  label,
+	onChange,
+	placeholder,
+	value,
+	marginY,
+	id,
+	label,
 }: TokenInputProps) => {
-  const allClasses = classNames(classes.tokenInput, {
-    [classes.marginY]: !!marginY,
-  })
+	const allClasses = classNames(classes.tokenInput, {
+		[classes.marginY]: !!marginY,
+	})
 
-  return (
-    <div className={allClasses}>
-      <label htmlFor={id}>{label}</label>
-      <input
-        id={id}
-        value={value}
-        onChange={(e) => onChange(e)}
-        placeholder={placeholder}
-      />
-    </div>
-  )
+	return (
+		<div className={allClasses}>
+			<label htmlFor={id}>{label}</label>
+			<input
+				id={id}
+				value={value}
+				onChange={(e) => onChange(e)}
+				placeholder={placeholder}
+			/>
+		</div>
+	)
 }

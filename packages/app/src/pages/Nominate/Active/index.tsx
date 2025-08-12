@@ -26,84 +26,84 @@ import { Status } from './Status'
 import { UnstakePrompts } from './UnstakePrompts'
 
 export const Active = () => {
-  const { t } = useTranslation()
-  const { openHelp } = useHelp()
-  const { syncing } = useSyncing()
-  const { isBonding } = useStaking()
-  const { getNominations } = useBalances()
-  const { openCanvas } = useOverlay().canvas
-  const { isFastUnstaking } = useUnstaking()
-  const { formatWithPrefs } = useValidators()
-  const { activeAddress } = useActiveAccounts()
+	const { t } = useTranslation()
+	const { openHelp } = useHelp()
+	const { syncing } = useSyncing()
+	const { isBonding } = useStaking()
+	const { getNominations } = useBalances()
+	const { openCanvas } = useOverlay().canvas
+	const { isFastUnstaking } = useUnstaking()
+	const { formatWithPrefs } = useValidators()
+	const { activeAddress } = useActiveAccounts()
 
-  const nominated = formatWithPrefs(getNominations(activeAddress))
-  const ROW_HEIGHT = 220
+	const nominated = formatWithPrefs(getNominations(activeAddress))
+	const ROW_HEIGHT = 220
 
-  return (
-    <>
-      <Stat.Row>
-        <ActiveNominators />
-        <MinimumNominatorBond />
-        <MinimumActiveStake />
-      </Stat.Row>
-      <CommissionPrompt />
+	return (
+		<>
+			<Stat.Row>
+				<ActiveNominators />
+				<MinimumNominatorBond />
+				<MinimumActiveStake />
+			</Stat.Row>
+			<CommissionPrompt />
 
-      {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}
-      <UnstakePrompts />
-      <Page.Row>
-        <Page.RowSection secondary vLast>
-          <CardWrapper height={ROW_HEIGHT}>
-            <ManageBond />
-          </CardWrapper>
-        </Page.RowSection>
-        <Page.RowSection hLast>
-          <Status height={ROW_HEIGHT} />
-        </Page.RowSection>
-      </Page.Row>
-      {isBonding && (
-        <Page.Row>
-          <CardWrapper>
-            {nominated?.length || syncing ? (
-              <Nominations bondFor="nominator" nominator={activeAddress} />
-            ) : (
-              <>
-                <CardHeader action margin>
-                  <h3>
-                    {t('nominate', { ns: 'pages' })}
-                    <ButtonHelp
-                      marginLeft
-                      onClick={() => openHelp('Nominations')}
-                    />
-                  </h3>
-                  <div>
-                    <ButtonPrimary
-                      size="md"
-                      iconLeft={faChevronCircleRight}
-                      iconTransform="grow-1"
-                      text={`${t('nominate', { ns: 'pages' })}`}
-                      disabled={syncing || isFastUnstaking}
-                      onClick={() =>
-                        openCanvas({
-                          key: 'ManageNominations',
-                          scroll: false,
-                          options: {
-                            bondFor: 'nominator',
-                            nominator: activeAddress,
-                            nominated,
-                          },
-                        })
-                      }
-                    />
-                  </div>
-                </CardHeader>
-                <ListStatusHeader>
-                  {t('notNominating', { ns: 'app' })}.
-                </ListStatusHeader>
-              </>
-            )}
-          </CardWrapper>
-        </Page.Row>
-      )}
-    </>
-  )
+			{!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}
+			<UnstakePrompts />
+			<Page.Row>
+				<Page.RowSection secondary vLast>
+					<CardWrapper height={ROW_HEIGHT}>
+						<ManageBond />
+					</CardWrapper>
+				</Page.RowSection>
+				<Page.RowSection hLast>
+					<Status height={ROW_HEIGHT} />
+				</Page.RowSection>
+			</Page.Row>
+			{isBonding && (
+				<Page.Row>
+					<CardWrapper>
+						{nominated?.length || syncing ? (
+							<Nominations bondFor="nominator" nominator={activeAddress} />
+						) : (
+							<>
+								<CardHeader action margin>
+									<h3>
+										{t('nominate', { ns: 'pages' })}
+										<ButtonHelp
+											marginLeft
+											onClick={() => openHelp('Nominations')}
+										/>
+									</h3>
+									<div>
+										<ButtonPrimary
+											size="md"
+											iconLeft={faChevronCircleRight}
+											iconTransform="grow-1"
+											text={`${t('nominate', { ns: 'pages' })}`}
+											disabled={syncing || isFastUnstaking}
+											onClick={() =>
+												openCanvas({
+													key: 'ManageNominations',
+													scroll: false,
+													options: {
+														bondFor: 'nominator',
+														nominator: activeAddress,
+														nominated,
+													},
+												})
+											}
+										/>
+									</div>
+								</CardHeader>
+								<ListStatusHeader>
+									{t('notNominating', { ns: 'app' })}.
+								</ListStatusHeader>
+							</>
+						)}
+					</CardWrapper>
+				</Page.Row>
+			)}
+		</>
+	)
 }

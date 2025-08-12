@@ -19,79 +19,79 @@ import { planckToUnitBn } from 'utils'
 import { Announcements } from './Announcements'
 
 export const PoolStats = () => {
-  const { t } = useTranslation('pages')
-  const { openCanvas } = useOverlay().canvas
-  const { network } = useNetwork()
-  const { pluginEnabled } = usePlugins()
-  const { activePool } = useActivePool()
-  const { getCurrentCommission } = usePoolCommission()
+	const { t } = useTranslation('pages')
+	const { openCanvas } = useOverlay().canvas
+	const { network } = useNetwork()
+	const { pluginEnabled } = usePlugins()
+	const { activePool } = useActivePool()
+	const { getCurrentCommission } = usePoolCommission()
 
-  const { unit, units } = getStakingChainData(network)
-  const poolId = activePool?.id || 0
+	const { unit, units } = getStakingChainData(network)
+	const poolId = activePool?.id || 0
 
-  const { state, points, memberCounter } = activePool?.bondedPool || {}
-  const currentCommission = getCurrentCommission(poolId)
+	const { state, points, memberCounter } = activePool?.bondedPool || {}
+	const currentCommission = getCurrentCommission(poolId)
 
-  const bonded = planckToUnitBn(new BigNumber(points || 0), units)
-    .decimalPlaces(3)
-    .toFormat()
+	const bonded = planckToUnitBn(new BigNumber(points || 0), units)
+		.decimalPlaces(3)
+		.toFormat()
 
-  let stateDisplay
-  switch (state) {
-    case 'Blocked':
-      stateDisplay = t('locked')
-      break
-    case 'Destroying':
-      stateDisplay = t('destroying')
-      break
-    default:
-      stateDisplay = t('open')
-      break
-  }
+	let stateDisplay
+	switch (state) {
+		case 'Blocked':
+			stateDisplay = t('locked')
+			break
+		case 'Destroying':
+			stateDisplay = t('destroying')
+			break
+		default:
+			stateDisplay = t('open')
+			break
+	}
 
-  const items: PoolStatLabel[] = [
-    {
-      label: t('poolState'),
-      value: stateDisplay,
-    },
-  ]
+	const items: PoolStatLabel[] = [
+		{
+			label: t('poolState'),
+			value: stateDisplay,
+		},
+	]
 
-  if (currentCommission) {
-    items.push({
-      label: t('poolCommission'),
-      value: `${currentCommission / PerbillMultiplier}%`,
-    })
-  }
+	if (currentCommission) {
+		items.push({
+			label: t('poolCommission'),
+			value: `${currentCommission / PerbillMultiplier}%`,
+		})
+	}
 
-  items.push(
-    {
-      label: t('poolMembers'),
-      value: `${memberCounter}`,
-      button: pluginEnabled('subscan')
-        ? {
-            text: t('browseMembers'),
-            onClick: () => {
-              openCanvas({ key: 'PoolMembers', size: 'xl' })
-            },
-            disabled: [0, undefined].includes(memberCounter),
-          }
-        : undefined,
-    },
-    {
-      label: t('totalBonded'),
-      value: `${bonded} ${unit}`,
-    }
-  )
+	items.push(
+		{
+			label: t('poolMembers'),
+			value: `${memberCounter}`,
+			button: pluginEnabled('subscan')
+				? {
+						text: t('browseMembers'),
+						onClick: () => {
+							openCanvas({ key: 'PoolMembers', size: 'xl' })
+						},
+						disabled: [0, undefined].includes(memberCounter),
+					}
+				: undefined,
+		},
+		{
+			label: t('totalBonded'),
+			value: `${bonded} ${unit}`,
+		},
+	)
 
-  return (
-    <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
-      <CardHeader margin>
-        <h3>{t('poolStats')}</h3>
-      </CardHeader>
-      <Wrapper>
-        <Header items={items} />
-        <Announcements />
-      </Wrapper>
-    </CardWrapper>
-  )
+	return (
+		<CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
+			<CardHeader margin>
+				<h3>{t('poolStats')}</h3>
+			</CardHeader>
+			<Wrapper>
+				<Header items={items} />
+				<Announcements />
+			</Wrapper>
+		</CardWrapper>
+	)
 }

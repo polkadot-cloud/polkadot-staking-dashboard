@@ -25,18 +25,18 @@ const QUERY = gql`
 `
 
 export const useValidatorRewards = ({
-  network,
-  validator,
-  fromEra,
-  depth,
+	network,
+	validator,
+	fromEra,
+	depth,
 }: {
-  network: string
-  validator: string
-  fromEra: number
-  depth?: number
+	network: string
+	validator: string
+	fromEra: number
+	depth?: number
 }): ValidatorRewardsResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, validator, fromEra, depth },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, validator, fromEra, depth },
+	})
+	return { loading, error, data, refetch }
 }

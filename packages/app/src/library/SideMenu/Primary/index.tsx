@@ -13,12 +13,12 @@ import { BulletWrapper } from '../Wrapper'
 import { Wrapper } from './Wrappers'
 
 export const Primary = ({
-  name,
-  active,
-  to,
-  bullet,
-  minimised,
-  lottie,
+	name,
+	active,
+	to,
+	bullet,
+	minimised,
+	lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi()
   const { network } = useNetwork()

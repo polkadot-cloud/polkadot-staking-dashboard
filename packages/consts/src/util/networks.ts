@@ -6,18 +6,18 @@ import { NetworkList, ProductionDisabledNetworks } from '../networks'
 
 // Gets enabled networks depending on environment
 export const getEnabledNetworks = (): Networks =>
-  Object.entries(NetworkList).reduce((acc: Networks, [key, item]) => {
-    if (
-      !(
-        import.meta.env.PROD &&
-        ProductionDisabledNetworks.includes(key as NetworkId)
-      )
-    ) {
-      acc[key] = item
-    }
-    return acc
-  }, {})
+	Object.entries(NetworkList).reduce((acc: Networks, [key, item]) => {
+		if (
+			!(
+				import.meta.env.PROD &&
+				ProductionDisabledNetworks.includes(key as NetworkId)
+			)
+		) {
+			acc[key] = item
+		}
+		return acc
+	}, {})
 
 // Checks if a network is enabled
 export const isNetworkEnabled = (network: NetworkId) =>
-  Object.keys(getEnabledNetworks()).includes(network)
+	Object.keys(getEnabledNetworks()).includes(network)

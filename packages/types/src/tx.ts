@@ -4,18 +4,18 @@
 import type { MaybeAddress } from 'types'
 
 export type TxSubmissionItem = {
-  uid: number
-  tag?: string
-  fee: bigint
-  from: MaybeAddress
-  submitted: boolean
-  pending: boolean
+	uid: number
+	tag?: string
+	fee: bigint
+	from: MaybeAddress
+	submitted: boolean
+	pending: boolean
 }
 
 export interface TxStatusHandlers {
-  onReady: () => void
-  onInBlock: () => void
-  onFinalized: () => void
-  onFailed: (err: Error) => void
-  onError: (type?: string) => void
+	onReady: () => void
+	onInBlock: () => void
+	onFinalized: () => void
+	onFailed: (err: Error) => void
+	onError: (type?: string) => void
 }

@@ -7,20 +7,20 @@ import { useUi } from 'contexts/UI'
 import { Item } from './Wrappers'
 
 export const SideMenuToggle = () => {
-  const { setSideMenu, sideMenuOpen } = useUi()
+	const { setSideMenu, sideMenuOpen } = useUi()
 
-  return (
-    <div className="menu">
-      <Item
-        style={{ width: '50px', flex: 0 }}
-        onClick={() => {
-          setSideMenu(!sideMenuOpen)
-        }}
-      >
-        <span>
-          <FontAwesomeIcon className="icon" icon={faBars} />
-        </span>
-      </Item>
-    </div>
-  )
+	return (
+		<div className="menu">
+			<Item
+				style={{ width: '50px', flex: 0 }}
+				onClick={() => {
+					setSideMenu(!sideMenuOpen)
+				}}
+			>
+				<span>
+					<FontAwesomeIcon className="icon" icon={faBars} />
+				</span>
+			</Item>
+		</div>
+	)
 }

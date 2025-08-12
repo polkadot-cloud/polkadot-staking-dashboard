@@ -4,10 +4,10 @@
 import type { ImportedAccount, MaybeAddress } from 'types'
 
 export interface ImportedAccountsContextInterface {
-  accounts: ImportedAccount[]
-  getAccount: (address: MaybeAddress) => ImportedAccount | null
-  isReadOnlyAccount: (address: MaybeAddress) => boolean
-  accountHasSigner: (address: MaybeAddress) => boolean
-  requiresManualSign: (address: MaybeAddress) => boolean
-  stringifiedAccountsKey: string
+	accounts: ImportedAccount[]
+	getAccount: (address: MaybeAddress) => ImportedAccount | null
+	isReadOnlyAccount: (address: MaybeAddress) => boolean
+	accountHasSigner: (address: MaybeAddress) => boolean
+	requiresManualSign: (address: MaybeAddress) => boolean
+	stringifiedAccountsKey: string
 }

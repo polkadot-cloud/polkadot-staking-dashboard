@@ -25,18 +25,18 @@ const QUERY = gql`
 `
 
 export const usePoolEraPoints = ({
-  network,
-  poolId,
-  fromEra,
-  depth,
+	network,
+	poolId,
+	fromEra,
+	depth,
 }: {
-  network: string
-  poolId: number
-  fromEra: number
-  depth?: number
+	network: string
+	poolId: number
+	fromEra: number
+	depth?: number
 }): PoolEraPointsResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, poolId, fromEra, depth },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, poolId, fromEra, depth },
+	})
+	return { loading, error, data, refetch }
 }

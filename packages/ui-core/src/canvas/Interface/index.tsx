@@ -4,14 +4,14 @@
 import classes from './index.module.scss'
 
 export const Interface = ({
-  Main,
-  Side,
+	Main,
+	Side,
 }: {
-  Main: React.ReactNode
-  Side?: React.ReactNode
+	Main: React.ReactNode
+	Side?: React.ReactNode
 }) => (
-  <div className={classes.interface}>
-    {Main && <div className={classes.main}>{Main}</div>}
-    {Side && <div className={classes.side}>{Side}</div>}
-  </div>
+	<div className={classes.interface}>
+		{Main && <div className={classes.main}>{Main}</div>}
+		{Side && <div className={classes.side}>{Side}</div>}
+	</div>
 )

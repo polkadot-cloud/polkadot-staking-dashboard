@@ -10,51 +10,51 @@ import type { ButtonAccountLabelProps } from '../types'
 import classes from './index.module.scss'
 
 export const Label = ({
-  activeAccount,
-  readOnly,
-  open,
-  label,
-  className,
-  marginLeft,
-  style,
+	activeAccount,
+	readOnly,
+	open,
+	label,
+	className,
+	marginLeft,
+	style,
 }: ButtonAccountLabelProps) => {
-  const allClasses = classNames(classes.btnAccount, {
-    [classes.marginLeft]: marginLeft,
-  })
-  const arrowClasses = classNames(classes.arrow, {
-    [classes.open]: open,
-  })
+	const allClasses = classNames(classes.btnAccount, {
+		[classes.marginLeft]: marginLeft,
+	})
+	const arrowClasses = classNames(classes.arrow, {
+		[classes.open]: open,
+	})
 
-  const address = activeAccount?.address || ''
-  const name = activeAccount?.name || ''
+	const address = activeAccount?.address || ''
+	const name = activeAccount?.name || ''
 
-  const accountDisplay: string | null =
-    address === null
-      ? null
-      : address !== ''
-        ? name || ellipsisFn(address)
-        : ellipsisFn(address)
+	const accountDisplay: string | null =
+		address === null
+			? null
+			: address !== ''
+				? name || ellipsisFn(address)
+				: ellipsisFn(address)
 
-  return (
-    <div
-      className={`${className ? `${className} ` : ' '}${allClasses}`}
-      style={style}
-    >
-      <span className={classes.polkicon}>
-        <Polkicon
-          background="transparent"
-          address={address}
-          transform="grow-9"
-        />
-      </span>
-      <span className={classes.display}>{accountDisplay}</span>
-      {label && <span className={classes.label}>/ {label}</span>}
-      {readOnly && (
-        <FontAwesomeIcon icon={faGlasses} className={classes.icon} />
-      )}
-      <div className={arrowClasses}>
-        <FontAwesomeIcon icon={faChevronDown} transform="shrink-5" />
-      </div>
-    </div>
-  )
+	return (
+		<div
+			className={`${className ? `${className} ` : ' '}${allClasses}`}
+			style={style}
+		>
+			<span className={classes.polkicon}>
+				<Polkicon
+					background="transparent"
+					address={address}
+					transform="grow-9"
+				/>
+			</span>
+			<span className={classes.display}>{accountDisplay}</span>
+			{label && <span className={classes.label}>/ {label}</span>}
+			{readOnly && (
+				<FontAwesomeIcon icon={faGlasses} className={classes.icon} />
+			)}
+			<div className={arrowClasses}>
+				<FontAwesomeIcon icon={faChevronDown} transform="shrink-5" />
+			</div>
+		</div>
+	)
 }

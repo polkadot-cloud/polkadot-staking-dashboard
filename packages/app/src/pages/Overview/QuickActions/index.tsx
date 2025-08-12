@@ -15,40 +15,40 @@ import { Staking } from './Staking'
 import type { QuickActionGroup } from './types'
 
 export const QuickActions = ({ height }: { height: number }) => {
-  const { t } = useTranslation('pages')
-  const { inPool } = useActivePool()
-  const { isBonding } = useStaking()
-  const { accountSynced } = useSyncing()
-  const { activeAddress } = useActiveAccounts()
+	const { t } = useTranslation('pages')
+	const { inPool } = useActivePool()
+	const { isBonding } = useStaking()
+	const { accountSynced } = useSyncing()
+	const { activeAddress } = useActiveAccounts()
 
-  const isStaking = inPool || isBonding
-  const syncing = !accountSynced(activeAddress)
+	const isStaking = inPool || isBonding
+	const syncing = !accountSynced(activeAddress)
 
-  let actionGroup: QuickActionGroup = 'staking'
-  if (!activeAddress) {
-    actionGroup = 'disconnected'
-  } else if (!isStaking) {
-    actionGroup = 'notStaking'
-  }
+	let actionGroup: QuickActionGroup = 'staking'
+	if (!activeAddress) {
+		actionGroup = 'disconnected'
+	} else if (!isStaking) {
+		actionGroup = 'notStaking'
+	}
 
-  return (
-    <CardWrapper style={{ padding: 0 }} height={height}>
-      <CardHeader style={{ padding: '1.25rem 1rem 0.5rem 1.25rem' }}>
-        <h4>{t('quickActions')}</h4>
-      </CardHeader>
-      {syncing ? (
-        <QuickAction.Container>
-          <QuickAction.PreloadingButton />
-        </QuickAction.Container>
-      ) : (
-        <>
-          {actionGroup === 'disconnected' && <Disconnected />}
-          {actionGroup === 'notStaking' && <NotStaking />}
-          {actionGroup === 'staking' && (
-            <Staking bondFor={inPool ? 'pool' : 'nominator'} />
-          )}
-        </>
-      )}
-    </CardWrapper>
-  )
+	return (
+		<CardWrapper style={{ padding: 0 }} height={height}>
+			<CardHeader style={{ padding: '1.25rem 1rem 0.5rem 1.25rem' }}>
+				<h4>{t('quickActions')}</h4>
+			</CardHeader>
+			{syncing ? (
+				<QuickAction.Container>
+					<QuickAction.PreloadingButton />
+				</QuickAction.Container>
+			) : (
+				<>
+					{actionGroup === 'disconnected' && <Disconnected />}
+					{actionGroup === 'notStaking' && <NotStaking />}
+					{actionGroup === 'staking' && (
+						<Staking bondFor={inPool ? 'pool' : 'nominator'} />
+					)}
+				</>
+			)}
+		</CardWrapper>
+	)
 }

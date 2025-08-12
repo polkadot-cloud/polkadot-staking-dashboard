@@ -1,17 +1,19 @@
 {
-  "name": "plugin-staking-api",
-  "version": "1.4.0",
-  "license": "GPL-3.0-only",
-  "type": "module",
-  "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
-  },
-  "exports": {
-    ".": "./src/index.ts",
-    "./types": "./src/types.ts"
-  },
-  "dependencies": {
-    "@apollo/client": "^3.13.8",
-    "graphql": "^16.11.0"
-  }
+	"name": "plugin-staking-api",
+	"version": "1.4.0",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"scripts": {
+		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
+		"check": "biome check .",
+		"lint": "biome check --write ."
+	},
+	"exports": {
+		".": "./src/index.ts",
+		"./types": "./src/types.ts"
+	},
+	"dependencies": {
+		"@apollo/client": "^3.13.9",
+		"graphql": "^16.11.0"
+	}
 }
