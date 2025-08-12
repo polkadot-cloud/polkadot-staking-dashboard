@@ -28,7 +28,8 @@
 			"suspicious": {
 				"noArrayIndexKey": "off",
 				"noImplicitAnyLet": "off",
-				"noShadowRestrictedNames": "off"
+				"noShadowRestrictedNames": "off",
+				"noGlobalIsNan": "off"
 			},
 			"a11y": {
 				"noStaticElementInteractions": "off",

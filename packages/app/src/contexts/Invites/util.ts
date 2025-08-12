@@ -20,7 +20,7 @@ export const isInviteValid = (raw: any): raw is InviteConfig => {
 		switch (raw.type) {
 			case 'pool': {
 				const { poolId } = raw.invite
-				return typeof poolId === 'number' && !Number.isNaN(poolId)
+				return typeof poolId === 'number' && !isNaN(poolId)
 			}
 			case 'validator': {
 				const { validators } = raw.invite

@@ -57,7 +57,7 @@ const getDeepKeys = (obj) => {
 		let isSubstring = false
 
 		// not number
-		if (Number.isNaN(key)) {
+		if (isNaN(key)) {
 			// check if key includes any special substrings
 			if (endsWithIgnoreSuffix(key)) {
 				isSubstring = true
