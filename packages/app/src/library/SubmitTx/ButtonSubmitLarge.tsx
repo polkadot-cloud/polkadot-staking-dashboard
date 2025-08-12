@@ -15,7 +15,7 @@ export const ButtonSubmitLarge = ({
 	pulse,
 }: ButtonSubmitLargeProps) => (
 	<CallToActionWrapper>
-		<div className="inner">
+		<div>
 			<section className="standalone">
 				<div className="buttons">
 					<div

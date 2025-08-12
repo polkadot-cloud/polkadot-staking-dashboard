@@ -40,7 +40,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 
 	return (
 		<CallToActionWrapper>
-			<div className="inner">
+			<div>
 				{syncing ? (
 					<CallToActionLoader />
 				) : (

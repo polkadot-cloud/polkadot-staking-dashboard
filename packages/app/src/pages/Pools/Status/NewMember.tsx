@@ -27,7 +27,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 
 	return (
 		<CallToActionWrapper>
-			<div className="inner">
+			<div>
 				{syncing ? (
 					<CallToActionLoader />
 				) : (
