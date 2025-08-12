@@ -12,10 +12,10 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"dedot": "^0.14.0"
+		"dedot": "^0.15.0"
 	},
 	"devDependencies": {
-		"@dedot/chaintypes": "^0.123.0",
+		"@dedot/chaintypes": "^0.135.0",
 		"bignumber.js": "^9.3.1"
 	}
 }
