@@ -4,15 +4,15 @@
 import type { ActivePool, Nominations, PoolRoles, PoolUnlocking } from 'types'
 
 export interface ActivePoolContextState {
-  inPool: boolean
-  isBonding: boolean
-  isNominator: () => boolean
-  isOwner: () => boolean
-  isMember: () => boolean
-  isDepositor: () => boolean
-  isBouncer: () => boolean
-  getPoolUnlocking: () => PoolUnlocking[]
-  getPoolRoles: () => PoolRoles
-  activePool: ActivePool | undefined
-  activePoolNominations: Nominations | null
+	inPool: boolean
+	isBonding: boolean
+	isNominator: () => boolean
+	isOwner: () => boolean
+	isMember: () => boolean
+	isDepositor: () => boolean
+	isBouncer: () => boolean
+	getPoolUnlocking: () => PoolUnlocking[]
+	getPoolRoles: () => PoolRoles
+	activePool: ActivePool | undefined
+	activePoolNominations: Nominations | null
 }

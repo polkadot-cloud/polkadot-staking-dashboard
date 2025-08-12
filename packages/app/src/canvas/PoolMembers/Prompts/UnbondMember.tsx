@@ -24,87 +24,87 @@ import { Notes, Padding, Warnings } from 'ui-core/modal'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const UnbondMember = ({
-  who,
-  member,
+	who,
+	member,
 }: {
-  who: string
-  member: FetchedPoolMember
+	who: string
+	member: FetchedPoolMember
 }) => {
-  const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { closePrompt } = usePrompt()
-  const { getConsts, serviceApi } = useApi()
-  const { activeAddress } = useActiveAccounts()
-  const { erasToSeconds } = useErasToTimeLeft()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('modals')
+	const { network } = useNetwork()
+	const { closePrompt } = usePrompt()
+	const { getConsts, serviceApi } = useApi()
+	const { activeAddress } = useActiveAccounts()
+	const { erasToSeconds } = useErasToTimeLeft()
+	const { getSignerWarnings } = useSignerWarnings()
+	const { unit, units } = getStakingChainData(network)
 
-  const { points } = member
-  const { bondDuration } = getConsts(network)
-  const freeToUnbond = planckToUnitBn(new BigNumber(points), units)
-  const bondDurationFormatted = timeleftAsString(
-    t,
-    getUnixTime(new Date()) + 1,
-    erasToSeconds(bondDuration),
-    true
-  )
+	const { points } = member
+	const { bondDuration } = getConsts(network)
+	const freeToUnbond = planckToUnitBn(new BigNumber(points), units)
+	const bondDurationFormatted = timeleftAsString(
+		t,
+		getUnixTime(new Date()) + 1,
+		erasToSeconds(bondDuration),
+		true,
+	)
 
-  const [paramsValid, setParamsValid] = useState<boolean>(false)
+	const [paramsValid, setParamsValid] = useState<boolean>(false)
 
-  useEffect(() => {
-    setParamsValid(BigInt(points) > 0)
-  }, [freeToUnbond.toString()])
+	useEffect(() => {
+		setParamsValid(BigInt(points) > 0)
+	}, [freeToUnbond.toString()])
 
-  const getTx = () => {
-    if (!activeAddress) {
-      return
-    }
-    return serviceApi.tx.poolUnbond(who, points)
-  }
+	const getTx = () => {
+		if (!activeAddress) {
+			return
+		}
+		return serviceApi.tx.poolUnbond(who, points)
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: paramsValid,
-    callbackSubmit: () => {
-      closePrompt()
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: paramsValid,
+		callbackSubmit: () => {
+			closePrompt()
+		},
+	})
 
-  const warnings = getSignerWarnings(
-    activeAddress,
-    false,
-    submitExtrinsic.proxySupported
-  )
+	const warnings = getSignerWarnings(
+		activeAddress,
+		false,
+		submitExtrinsic.proxySupported,
+	)
 
-  return (
-    <>
-      <Title title={t('unbondPoolMember')} />
-      <Padding>
-        {warnings.length > 0 ? (
-          <Warnings>
-            {warnings.map((text, i) => (
-              <Warning key={`warning${i}`} text={text} />
-            ))}
-          </Warnings>
-        ) : null}
-        <h3 style={{ display: 'flex', alignItems: 'center' }}>
-          <Polkicon address={who} transform="grow-3" />
-          &nbsp; {ellipsisFn(who, 7)}
-        </h3>
-        <Notes>
-          <p>
-            {t('amountWillBeUnbonded', { bond: freeToUnbond.toString(), unit })}
-          </p>
-          <StaticNote
-            value={bondDurationFormatted}
-            tKey="onceUnbondingPoolMember"
-            valueKey="bondDurationFormatted"
-            deps={[bondDuration]}
-          />
-        </Notes>
-      </Padding>
-      <SubmitTx noMargin valid={paramsValid} {...submitExtrinsic} />
-    </>
-  )
+	return (
+		<>
+			<Title title={t('unbondPoolMember')} />
+			<Padding>
+				{warnings.length > 0 ? (
+					<Warnings>
+						{warnings.map((text, i) => (
+							<Warning key={`warning${i}`} text={text} />
+						))}
+					</Warnings>
+				) : null}
+				<h3 style={{ display: 'flex', alignItems: 'center' }}>
+					<Polkicon address={who} transform="grow-3" />
+					&nbsp; {ellipsisFn(who, 7)}
+				</h3>
+				<Notes>
+					<p>
+						{t('amountWillBeUnbonded', { bond: freeToUnbond.toString(), unit })}
+					</p>
+					<StaticNote
+						value={bondDurationFormatted}
+						tKey="onceUnbondingPoolMember"
+						valueKey="bondDurationFormatted"
+						deps={[bondDuration]}
+					/>
+				</Notes>
+			</Padding>
+			<SubmitTx noMargin valid={paramsValid} {...submitExtrinsic} />
+		</>
+	)
 }

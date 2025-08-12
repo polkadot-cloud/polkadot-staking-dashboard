@@ -6,23 +6,23 @@ import type { CanvasSize, ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Main = ({
-  children,
-  style,
-  size,
-  withMenu,
+	children,
+	style,
+	size,
+	withMenu,
 }: ComponentBase & {
-  size?: CanvasSize
-  withMenu?: boolean
+	size?: CanvasSize
+	withMenu?: boolean
 }) => {
-  const allClasses = classNames(classes.main, {
-    [classes.withMenu]: !!withMenu,
-    [classes.lg]: size === 'lg',
-    [classes.xl]: size === 'xl',
-  })
+	const allClasses = classNames(classes.main, {
+		[classes.withMenu]: !!withMenu,
+		[classes.lg]: size === 'lg',
+		[classes.xl]: size === 'xl',
+	})
 
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

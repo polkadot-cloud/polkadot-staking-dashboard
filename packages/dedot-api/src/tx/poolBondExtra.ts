@@ -7,16 +7,16 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolBondExtra = <T extends StakingChain>(
-  api: DedotClient<T>,
-  type: 'FreeBalance' | 'Rewards',
-  bond: bigint = 0n
+	api: DedotClient<T>,
+	type: 'FreeBalance' | 'Rewards',
+	bond: bigint = 0n,
 ) => {
-  const extra: PalletNominationPoolsBondExtra =
-    type === 'FreeBalance'
-      ? {
-          type,
-          value: bond,
-        }
-      : { type: 'Rewards' }
-  return asTx(api.tx.nominationPools.bondExtra(extra))
+	const extra: PalletNominationPoolsBondExtra =
+		type === 'FreeBalance'
+			? {
+					type,
+					value: bond,
+				}
+			: { type: 'Rewards' }
+	return asTx(api.tx.nominationPools.bondExtra(extra))
 }

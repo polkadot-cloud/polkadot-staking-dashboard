@@ -11,44 +11,44 @@ import { MenuPopover } from './Popovers/MenuPopover'
 import type { ToggleConnectProps } from './Popovers/types'
 
 export const Settings = ({
-  openConnect,
-  setOpenConnect,
+	openConnect,
+	setOpenConnect,
 }: ToggleConnectProps) => {
-  const { themeElementRef } = useTheme()
+	const { themeElementRef } = useTheme()
 
-  const [openSettings, setOpenSettings] = useState<boolean>(false)
+	const [openSettings, setOpenSettings] = useState<boolean>(false)
 
-  return (
-    <>
-      <Popover
-        open={openConnect}
-        portalContainer={themeElementRef.current || undefined}
-        content={<ConnectPopover setOpen={setOpenConnect} />}
-        onTriggerClick={() => {
-          setOpenConnect(!openConnect)
-        }}
-        width="350px"
-      >
-        <InactiveButtonHeader
-          className="header-connect"
-          marginLeft
-          icon={faPlug}
-        />
-      </Popover>
-      <Popover
-        open={openSettings}
-        portalContainer={themeElementRef.current || undefined}
-        content={<MenuPopover setOpen={setOpenSettings} />}
-        onTriggerClick={() => {
-          setOpenSettings(!openSettings)
-        }}
-      >
-        <InactiveButtonHeader
-          className="header-settings"
-          marginLeft
-          icon={faCog}
-        />
-      </Popover>
-    </>
-  )
+	return (
+		<>
+			<Popover
+				open={openConnect}
+				portalContainer={themeElementRef.current || undefined}
+				content={<ConnectPopover setOpen={setOpenConnect} />}
+				onTriggerClick={() => {
+					setOpenConnect(!openConnect)
+				}}
+				width="350px"
+			>
+				<InactiveButtonHeader
+					className="header-connect"
+					marginLeft
+					icon={faPlug}
+				/>
+			</Popover>
+			<Popover
+				open={openSettings}
+				portalContainer={themeElementRef.current || undefined}
+				content={<MenuPopover setOpen={setOpenSettings} />}
+				onTriggerClick={() => {
+					setOpenSettings(!openSettings)
+				}}
+			>
+				<InactiveButtonHeader
+					className="header-settings"
+					marginLeft
+					icon={faCog}
+				/>
+			</Popover>
+		</>
+	)
 }

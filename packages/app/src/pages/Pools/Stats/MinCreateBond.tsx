@@ -9,17 +9,17 @@ import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
 export const MinCreateBond = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { minCreateBond } = useApi().poolsConfig
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { minCreateBond } = useApi().poolsConfig
+	const { unit, units } = getStakingChainData(network)
 
-  const params = {
-    label: t('minimumToCreatePool'),
-    value: parseFloat(planckToUnit(minCreateBond, units)),
-    decimals: 3,
-    unit,
-    helpKey: 'Minimum To Create Pool',
-  }
-  return <Number {...params} />
+	const params = {
+		label: t('minimumToCreatePool'),
+		value: parseFloat(planckToUnit(minCreateBond, units)),
+		decimals: 3,
+		unit,
+		helpKey: 'Minimum To Create Pool',
+	}
+	return <Number {...params} />
 }

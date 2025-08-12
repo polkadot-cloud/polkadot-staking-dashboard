@@ -2,23 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface InvitesContextInterface {
-  dismissInvite: () => void
-  acknowledged: boolean
-  setAcknowledged: (acknowledged: boolean) => void
-  inviteConfig: InviteConfig | undefined
+	dismissInvite: () => void
+	acknowledged: boolean
+	setAcknowledged: (acknowledged: boolean) => void
+	inviteConfig: InviteConfig | undefined
 }
 
 export type InviteType = 'pool' | 'validator'
 
 export interface InviteConfig {
-  type: InviteType
-  network: string
-  invite: PoolInvite | NominatorInvite
+	type: InviteType
+	network: string
+	invite: PoolInvite | NominatorInvite
 }
 
 export type PoolInvite = {
-  poolId: number
+	poolId: number
 }
 export type NominatorInvite = {
-  validators: string
+	validators: string
 }

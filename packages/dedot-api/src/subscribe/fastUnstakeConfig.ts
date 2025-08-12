@@ -8,44 +8,44 @@ import type { FastUnstakeConfig } from 'types'
 import type { StakingChain } from '../types'
 
 export class FastUnstakeConfigQuery<T extends StakingChain> {
-  config: FastUnstakeConfig = defaultFastUnstakeConfig
+	config: FastUnstakeConfig = defaultFastUnstakeConfig
 
-  #unsub: Unsub | undefined = undefined
+	#unsub: Unsub | undefined = undefined
 
-  constructor(public api: DedotClient<T>) {
-    this.api = api
-    this.subscribe()
-  }
+	constructor(public api: DedotClient<T>) {
+		this.api = api
+		this.subscribe()
+	}
 
-  async subscribe() {
-    this.#unsub = await this.api.queryMulti(
-      [
-        {
-          fn: this.api.query.fastUnstake.head,
-          args: [],
-        },
-        {
-          fn: this.api.query.fastUnstake.counterForQueue,
-          args: [],
-        },
-      ],
-      ([head, counterForQueue]) => {
-        const stashes = head?.stashes || []
-        const checked = head?.checked || []
-        const config = {
-          head: {
-            stashes,
-            checked,
-          },
-          counterForQueue,
-        }
-        this.config = config
-        setFastUnstakeConfig(this.config)
-      }
-    )
-  }
+	async subscribe() {
+		this.#unsub = await this.api.queryMulti(
+			[
+				{
+					fn: this.api.query.fastUnstake.head,
+					args: [],
+				},
+				{
+					fn: this.api.query.fastUnstake.counterForQueue,
+					args: [],
+				},
+			],
+			([head, counterForQueue]) => {
+				const stashes = head?.stashes || []
+				const checked = head?.checked || []
+				const config = {
+					head: {
+						stashes,
+						checked,
+					},
+					counterForQueue,
+				}
+				this.config = config
+				setFastUnstakeConfig(this.config)
+			},
+		)
+	}
 
-  unsubscribe() {
-    this.#unsub?.()
-  }
+	unsubscribe() {
+		this.#unsub?.()
+	}
 }

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-  PageWidthMediumThreshold,
-  SideMenuHiddenWidth,
-  SideMenuMaximisedWidth,
-  SideMenuMinimisedWidth,
+	PageWidthMediumThreshold,
+	SideMenuHiddenWidth,
+	SideMenuMaximisedWidth,
+	SideMenuMinimisedWidth,
 } from 'consts'
 import styled from 'styled-components'
 import type { MinimisedProps } from './types'
@@ -20,16 +20,16 @@ export const Wrapper = styled.div<MinimisedProps>`
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
   width: ${(props) =>
-    props.$minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
+		props.$minimised
+			? `${SideMenuMinimisedWidth}px`
+			: `${SideMenuMaximisedWidth}px`};
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
     width: ${SideMenuHiddenWidth}px;
   }
 
   padding: ${(props) =>
-    props.$minimised ? `0.5rem 1rem 0.5rem 1rem` : `0rem 1rem 1rem 1rem`};
+		props.$minimised ? `0.5rem 1rem 0.5rem 1rem` : `0rem 1rem 1rem 1rem`};
   margin: 0.75rem 0;
 
   &::-webkit-scrollbar {

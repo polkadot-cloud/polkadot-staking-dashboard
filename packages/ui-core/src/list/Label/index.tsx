@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Label = ({ children, style }: ComponentBase) => (
-  <div className={classes.label} style={style}>
-    {children}
-  </div>
+	<div className={classes.label} style={style}>
+		{children}
+	</div>
 )

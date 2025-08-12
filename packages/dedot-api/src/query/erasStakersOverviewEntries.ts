@@ -6,13 +6,13 @@ import type { ErasStakersOverviewEntries } from 'types'
 import type { StakingChain } from '../types'
 
 export const erasStakersOverviewEntries = async <T extends StakingChain>(
-  api: DedotClient<T>,
-  era: number
+	api: DedotClient<T>,
+	era: number,
 ): Promise<ErasStakersOverviewEntries> => {
-  const result = await api.query.staking.erasStakersOverview.entries(era)
+	const result = await api.query.staking.erasStakersOverview.entries(era)
 
-  return result.map(([key, value]) => [
-    [key[0], key[1].address(api.consts.system.ss58Prefix)],
-    value,
-  ])
+	return result.map(([key, value]) => [
+		[key[0], key[1].address(api.consts.system.ss58Prefix)],
+		value,
+	])
 }

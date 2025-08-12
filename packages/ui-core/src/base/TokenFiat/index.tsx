@@ -6,14 +6,14 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const TokenFiat = ({
-  children,
-  style,
-  Token,
+	children,
+	style,
+	Token,
 }: ComponentBase & {
-  Token: ReactNode
+	Token: ReactNode
 }) => (
-  <div className={classes.tokenFiat} style={style}>
-    <div>{Token}</div>
-    <div>{children}</div>
-  </div>
+	<div className={classes.tokenFiat} style={style}>
+		<div>{Token}</div>
+		<div>{children}</div>
+	</div>
 )

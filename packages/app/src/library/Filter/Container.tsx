@@ -5,9 +5,9 @@ import type { ReactNode } from 'react'
 import { Wrapper } from './Wrappers'
 
 export const Container = ({ children }: { children: ReactNode }) => (
-  <Wrapper>
-    <div className="hide-scrollbar">
-      <div>{children}</div>
-    </div>
-  </Wrapper>
+	<Wrapper>
+		<div className="hide-scrollbar">
+			<div>{children}</div>
+		</div>
+	</Wrapper>
 )

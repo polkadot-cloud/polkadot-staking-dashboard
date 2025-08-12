@@ -4,6 +4,6 @@
 import type { ClientOptionsWithBytecode } from 'smoldot'
 
 export type WorkerOpts = Omit<
-  ClientOptionsWithBytecode,
-  'bytecode' | 'portToWorker'
+	ClientOptionsWithBytecode,
+	'bytecode' | 'portToWorker'
 >

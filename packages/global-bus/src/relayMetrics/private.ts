@@ -6,5 +6,5 @@ import type { RelayMetrics } from 'types'
 import { defaultRelayMetrics } from './default'
 
 export const _relayMetrics = new BehaviorSubject<RelayMetrics>(
-  defaultRelayMetrics
+	defaultRelayMetrics,
 )

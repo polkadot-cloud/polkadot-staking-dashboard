@@ -12,45 +12,45 @@ import { CardHeader } from 'ui-core/base'
 import { Announcements } from './Announcements'
 
 export const NetworkStats = () => {
-  const { t } = useTranslation()
-  const { bondedPools } = useBondedPools()
-  const {
-    poolsConfig: { counterForPoolMembers },
-  } = useApi()
-  const { counterForNominators, counterForValidators } = useApi().stakingMetrics
+	const { t } = useTranslation()
+	const { bondedPools } = useBondedPools()
+	const {
+		poolsConfig: { counterForPoolMembers },
+	} = useApi()
+	const { counterForNominators, counterForValidators } = useApi().stakingMetrics
 
-  const items = [
-    {
-      label: t('totalValidators', { ns: 'pages' }),
-      value: new BigNumber(counterForValidators).toFormat(0),
-      helpKey: 'Validator',
-    },
-    {
-      label: t('totalNominators', { ns: 'pages' }),
-      value: new BigNumber(counterForNominators).toFormat(0),
-      helpKey: 'Total Nominators',
-    },
-    {
-      label: t('activePools', { ns: 'pages' }),
-      value: new BigNumber(bondedPools.length).toFormat(),
-      helpKey: 'Active Pools',
-    },
-    {
-      label: t('poolMembers', { ns: 'modals' }),
-      value: `${new BigNumber(counterForPoolMembers).toFormat()}`,
-      helpKey: 'Nomination Pools',
-    },
-  ]
+	const items = [
+		{
+			label: t('totalValidators', { ns: 'pages' }),
+			value: new BigNumber(counterForValidators).toFormat(0),
+			helpKey: 'Validator',
+		},
+		{
+			label: t('totalNominators', { ns: 'pages' }),
+			value: new BigNumber(counterForNominators).toFormat(0),
+			helpKey: 'Total Nominators',
+		},
+		{
+			label: t('activePools', { ns: 'pages' }),
+			value: new BigNumber(bondedPools.length).toFormat(),
+			helpKey: 'Active Pools',
+		},
+		{
+			label: t('poolMembers', { ns: 'modals' }),
+			value: `${new BigNumber(counterForPoolMembers).toFormat()}`,
+			helpKey: 'Nomination Pools',
+		},
+	]
 
-  return (
-    <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
-      <CardHeader margin>
-        <h3>{t('networkStats', { ns: 'pages' })}</h3>
-      </CardHeader>
-      <Wrapper>
-        <Header items={items} />
-        <Announcements />
-      </Wrapper>
-    </CardWrapper>
-  )
+	return (
+		<CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
+			<CardHeader margin>
+				<h3>{t('networkStats', { ns: 'pages' })}</h3>
+			</CardHeader>
+			<Wrapper>
+				<Header items={items} />
+				<Announcements />
+			</Wrapper>
+		</CardWrapper>
+	)
 }

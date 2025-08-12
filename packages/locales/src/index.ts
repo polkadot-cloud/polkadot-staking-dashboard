@@ -18,29 +18,29 @@ export const DefaultLocale = 'en'
 
 // Available locales as key value pairs.
 export const locales: Record<string, LocaleEntry> = {
-  en: { dateFormat: enGB, label: 'English' },
-  zh: { dateFormat: zhCN, label: '中文' },
-  es: { dateFormat: es, label: 'Español' },
+	en: { dateFormat: enGB, label: 'English' },
+	zh: { dateFormat: zhCN, label: '中文' },
+	es: { dateFormat: es, label: 'Español' },
 }
 
 // Supported namespaces.
 export const lngNamespaces: string[] = [
-  'app',
-  'help',
-  'helpResources',
-  'modals',
-  'pages',
-  'tips',
+	'app',
+	'help',
+	'helpResources',
+	'modals',
+	'pages',
+	'tips',
 ]
 
 // Default structure of language resources.
 export const fallbackResources = {
-  ...appEn,
-  ...helpEn,
-  ...helpResourcesEn,
-  ...modalsEn,
-  ...pagesEn,
-  ...tipsEn,
+	...appEn,
+	...helpEn,
+	...helpResourcesEn,
+	...modalsEn,
+	...pagesEn,
+	...tipsEn,
 }
 
 // Get initial language.
@@ -55,18 +55,18 @@ const defaultLng = dynamicLoad ? DefaultLocale : lng
 
 // Configure i18n object.
 i18next
-  // .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    debug: import.meta.env.VITE_DEBUG_I18N === '1',
-    fallbackLng: DefaultLocale,
-    lng: defaultLng,
-    resources,
-  })
+	// .use(LanguageDetector)
+	.use(initReactI18next)
+	.init({
+		debug: import.meta.env.VITE_DEBUG_I18N === '1',
+		fallbackLng: DefaultLocale,
+		lng: defaultLng,
+		resources,
+	})
 
 // Dynamically load default language resources if needed.
 if (dynamicLoad) {
-  doDynamicImport(lng, i18next)
+	doDynamicImport(lng, i18next)
 }
 
 export { i18next }

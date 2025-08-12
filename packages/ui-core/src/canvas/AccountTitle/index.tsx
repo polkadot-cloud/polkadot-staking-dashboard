@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const AccountTitle = ({ children, style }: ComponentBase) => (
-  <div className={classes.accountTitle} style={style}>
-    {children}
-  </div>
+	<div className={classes.accountTitle} style={style}>
+		{children}
+	</div>
 )

@@ -11,50 +11,50 @@ import type { PoolAccountProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
-  const { t } = useTranslation('pages')
+	const { t } = useTranslation('pages')
 
-  const roleIdentities = pool?.bondedPool?.roleIdentities
-  const identities = roleIdentities?.identities || {}
-  const supers = roleIdentities?.supers || {}
-  const synced = roleIdentities !== undefined
+	const roleIdentities = pool?.bondedPool?.roleIdentities
+	const identities = roleIdentities?.identities || {}
+	const supers = roleIdentities?.supers || {}
+	const synced = roleIdentities !== undefined
 
-  const display = address
-    ? getIdentityDisplay(identities[address], supers[address]).node
-    : null
+	const display = address
+		? getIdentityDisplay(identities[address], supers[address]).node
+		: null
 
-  return (
-    <Wrapper>
-      <motion.div
-        className="account"
-        initial={{ opacity: 0.5 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        {address === null ? (
-          <h4>{t('notSet')}</h4>
-        ) : synced && display !== null ? (
-          <>
-            <div className="icon">
-              <Polkicon address={address} />
-            </div>
-            <h4>{display}</h4>
-          </>
-        ) : (
-          <>
-            <div className="icon">
-              <Polkicon address={address} />
-            </div>
-            <h4>{ellipsisFn(address)}</h4>
-          </>
-        )}
-        <div>
-          {address !== null && (
-            <span className="copy">
-              <ButtonCopy value={address} size="1rem" />
-            </span>
-          )}
-        </div>
-      </motion.div>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<motion.div
+				className="account"
+				initial={{ opacity: 0.5 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.3 }}
+			>
+				{address === null ? (
+					<h4>{t('notSet')}</h4>
+				) : synced && display !== null ? (
+					<>
+						<div className="icon">
+							<Polkicon address={address} />
+						</div>
+						<h4>{display}</h4>
+					</>
+				) : (
+					<>
+						<div className="icon">
+							<Polkicon address={address} />
+						</div>
+						<h4>{ellipsisFn(address)}</h4>
+					</>
+				)}
+				<div>
+					{address !== null && (
+						<span className="copy">
+							<ButtonCopy value={address} size="1rem" />
+						</span>
+					)}
+				</div>
+			</motion.div>
+		</Wrapper>
+	)
 }

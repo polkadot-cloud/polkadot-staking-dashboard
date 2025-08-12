@@ -6,18 +6,18 @@ import { SearchInputWrapper } from '.'
 import type { SearchInputProps } from './types'
 
 export const SearchInput = ({
-  value,
-  handleChange,
-  placeholder,
-  secondary = false,
+	value,
+	handleChange,
+	placeholder,
+	secondary = false,
 }: SearchInputProps) => (
-  <SearchInputWrapper>
-    <input
-      type="text"
-      value={value}
-      className={`search ${secondary ? 'secondary' : ''}`}
-      placeholder={placeholder}
-      onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
-    />
-  </SearchInputWrapper>
+	<SearchInputWrapper>
+		<input
+			type="text"
+			value={value}
+			className={`search ${secondary ? 'secondary' : ''}`}
+			placeholder={placeholder}
+			onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
+		/>
+	</SearchInputWrapper>
 )

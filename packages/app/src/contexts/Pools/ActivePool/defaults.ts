@@ -4,13 +4,13 @@
 export const nominationStatus = {}
 
 export const defaultPoolRoles = {
-  depositor: '',
-  nominator: '',
-  root: '',
-  bouncer: '',
+	depositor: '',
+	nominator: '',
+	root: '',
+	bouncer: '',
 }
 
 export const defaultPoolNominations = {
-  targets: [],
-  submittedIn: 0,
+	targets: [],
+	submittedIn: 0,
 }

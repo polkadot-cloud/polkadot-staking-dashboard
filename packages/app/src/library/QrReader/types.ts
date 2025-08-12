@@ -4,7 +4,7 @@
 import type { ImportedAccount } from 'types'
 
 export interface QrReaderProps {
-  network: string
-  ss58: number
-  onSuccess: (account: ImportedAccount) => void
+	network: string
+	ss58: number
+	onSuccess: (account: ImportedAccount) => void
 }

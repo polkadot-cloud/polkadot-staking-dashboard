@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Offline = ({ children, style }: ComponentBase) => (
-  <div className={classes.offlineLabel} style={style}>
-    {children}
-  </div>
+	<div className={classes.offlineLabel} style={style}>
+		{children}
+	</div>
 )

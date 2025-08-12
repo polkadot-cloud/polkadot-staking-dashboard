@@ -9,37 +9,37 @@ import { Pie } from 'ui-graphs'
 import type { TimeleftProps } from './types'
 
 export const Timeleft = ({
-  label,
-  timeleft,
-  graph,
-  tooltip,
-  helpKey,
+	label,
+	timeleft,
+	graph,
+	tooltip,
+	helpKey,
 }: TimeleftProps) => {
-  const { openHelp } = useHelp()
+	const { openHelp } = useHelp()
 
-  return (
-    <Stat.Card>
-      <div>
-        <Stat.Graphic>
-          <Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
-        </Stat.Graphic>
-        {tooltip && (
-          <label>
-            <h3>{tooltip}</h3>
-          </label>
-        )}
-        <Stat.Content>
-          <CountdownWrapper>
-            <Countdown timeleft={timeleft} />
-          </CountdownWrapper>
-          <Stat.Subtitle>
-            {label}{' '}
-            {helpKey !== undefined ? (
-              <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-            ) : null}
-          </Stat.Subtitle>
-        </Stat.Content>
-      </div>
-    </Stat.Card>
-  )
+	return (
+		<Stat.Card>
+			<div>
+				<Stat.Graphic>
+					<Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
+				</Stat.Graphic>
+				{tooltip && (
+					<label>
+						<h3>{tooltip}</h3>
+					</label>
+				)}
+				<Stat.Content>
+					<CountdownWrapper>
+						<Countdown timeleft={timeleft} />
+					</CountdownWrapper>
+					<Stat.Subtitle>
+						{label}{' '}
+						{helpKey !== undefined ? (
+							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+						) : null}
+					</Stat.Subtitle>
+				</Stat.Content>
+			</div>
+		</Stat.Card>
+	)
 }

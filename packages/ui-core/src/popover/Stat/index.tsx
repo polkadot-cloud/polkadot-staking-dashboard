@@ -5,6 +5,6 @@ import { Label } from './Label'
 import { Value } from './Value'
 
 export const Stat = {
-  Label,
-  Value,
+	Label,
+	Value,
 }

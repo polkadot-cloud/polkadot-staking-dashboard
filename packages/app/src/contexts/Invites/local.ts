@@ -7,27 +7,27 @@ import { isInviteValid } from './util'
 
 // Get a local invite configuration from local storage
 export const getLocalInviteConfig = () => {
-  try {
-    const result = localStorageOrDefault('invite', undefined, true) as
-      | InviteConfig
-      | undefined
-    const valid = isInviteValid(result)
-    if (valid) {
-      return result
-    }
-    throw new Error()
-  } catch {
-    removeLocalInviteConfig()
-    return undefined
-  }
+	try {
+		const result = localStorageOrDefault('invite', undefined, true) as
+			| InviteConfig
+			| undefined
+		const valid = isInviteValid(result)
+		if (valid) {
+			return result
+		}
+		throw new Error()
+	} catch {
+		removeLocalInviteConfig()
+		return undefined
+	}
 }
 
 // Set a local invite configuration in local storage
 export const setLocalInviteConfig = (inviteConfig: InviteConfig) => {
-  localStorage.setItem('invite', JSON.stringify(inviteConfig))
+	localStorage.setItem('invite', JSON.stringify(inviteConfig))
 }
 
 // Remove invite from local storage
 export const removeLocalInviteConfig = () => {
-  localStorage.removeItem('invite')
+	localStorage.removeItem('invite')
 }

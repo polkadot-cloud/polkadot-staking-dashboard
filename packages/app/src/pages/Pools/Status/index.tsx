@@ -14,34 +14,34 @@ import { RewardsStatus } from './RewardsStatus'
 import type { StatusProps } from './types'
 
 export const Status = ({ height }: StatusProps) => {
-  const { getPoolStatusSynced } = useSyncing()
-  const { activeAddress } = useActiveAccounts()
-  const { activePool, inPool } = useActivePool()
-  const { isReadOnlyAccount } = useImportedAccounts()
+	const { getPoolStatusSynced } = useSyncing()
+	const { activeAddress } = useActiveAccounts()
+	const { activePool, inPool } = useActivePool()
+	const { isReadOnlyAccount } = useImportedAccounts()
 
-  const syncing = !getPoolStatusSynced()
+	const syncing = !getPoolStatusSynced()
 
-  return (
-    <CardWrapper
-      height={height}
-      className={!syncing && !activePool && !inPool ? 'prompt' : undefined}
-    >
-      <MembershipStatus />
-      <Separator />
-      <RewardsStatus dimmed={inPool === null} />
-      {!syncing ? (
-        activePool && inPool ? (
-          <>
-            <Separator />
-            <PoolStatus />
-          </>
-        ) : (
-          !inPool &&
-          !isReadOnlyAccount(activeAddress) && <NewMember syncing={syncing} />
-        )
-      ) : (
-        <NewMember syncing={syncing} />
-      )}
-    </CardWrapper>
-  )
+	return (
+		<CardWrapper
+			height={height}
+			className={!syncing && !activePool && !inPool ? 'prompt' : undefined}
+		>
+			<MembershipStatus />
+			<Separator />
+			<RewardsStatus dimmed={inPool === null} />
+			{!syncing ? (
+				activePool && inPool ? (
+					<>
+						<Separator />
+						<PoolStatus />
+					</>
+				) : (
+					!inPool &&
+					!isReadOnlyAccount(activeAddress) && <NewMember syncing={syncing} />
+				)
+			) : (
+				<NewMember syncing={syncing} />
+			)}
+		</CardWrapper>
+	)
 }

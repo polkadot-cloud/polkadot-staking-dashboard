@@ -8,31 +8,31 @@ import { _poolMemberships } from './private'
 export const poolMemberships$ = _poolMemberships.asObservable()
 
 export const resetPoolMemberships = () => {
-  _poolMemberships.next({})
+	_poolMemberships.next({})
 }
 
 export const getPoolMembership = (
-  address: string | null
+	address: string | null,
 ): PoolMembershipState => {
-  if (!address) {
-    return defaultPoolMembership
-  }
-  return _poolMemberships.getValue()?.[address] || defaultPoolMembership
+	if (!address) {
+		return defaultPoolMembership
+	}
+	return _poolMemberships.getValue()?.[address] || defaultPoolMembership
 }
 
 export const setPoolMembership = (
-  address: string,
-  value: PoolMembershipState
+	address: string,
+	value: PoolMembershipState,
 ) => {
-  const next = { ..._poolMemberships.getValue() }
-  next[address] = value
-  _poolMemberships.next(next)
+	const next = { ..._poolMemberships.getValue() }
+	next[address] = value
+	_poolMemberships.next(next)
 }
 
 export const removePoolMembership = (address: string) => {
-  const next = { ..._poolMemberships.getValue() }
-  delete next[address]
-  _poolMemberships.next(next)
+	const next = { ..._poolMemberships.getValue() }
+	delete next[address]
+	_poolMemberships.next(next)
 }
 
 export * from './defaults'

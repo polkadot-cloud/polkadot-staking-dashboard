@@ -8,9 +8,9 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Container = ({ style, children }: ComponentBase) => (
-  <motion.div style={style} className={classes.container}>
-    <SimpleBar style={{ maxHeight: '75vh' }} autoHide={true}>
-      <div className={classes.inner}>{children}</div>
-    </SimpleBar>
-  </motion.div>
+	<motion.div style={style} className={classes.container}>
+		<SimpleBar style={{ maxHeight: '75vh' }} autoHide={true}>
+			<div className={classes.inner}>{children}</div>
+		</SimpleBar>
+	</motion.div>
 )

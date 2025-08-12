@@ -4,9 +4,9 @@
 import type { FastUnstakeConfig } from 'types'
 
 export const defaultFastUnstakeConfig: FastUnstakeConfig = {
-  head: {
-    stashes: [],
-    checked: [],
-  },
-  counterForQueue: 0,
+	head: {
+		stashes: [],
+		checked: [],
+	},
+	counterForQueue: 0,
 }

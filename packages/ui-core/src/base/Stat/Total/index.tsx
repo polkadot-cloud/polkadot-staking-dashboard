@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Total = ({ children, style }: ComponentBase) => (
-  <span className={classes.total} style={style}>
-    {children}
-  </span>
+	<span className={classes.total} style={style}>
+		{children}
+	</span>
 )

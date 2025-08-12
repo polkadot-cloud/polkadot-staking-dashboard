@@ -19,105 +19,105 @@ import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const RenamePool = ({
-  setSection,
-  section,
-  onResize,
+	setSection,
+	section,
+	onResize,
 }: {
-  setSection: Dispatch<SetStateAction<number>>
-  section: number
-  onResize: () => void
+	setSection: Dispatch<SetStateAction<number>>
+	section: number
+	onResize: () => void
 }) => {
-  const { t } = useTranslation('modals')
-  const { serviceApi } = useApi()
-  const { setModalStatus } = useOverlay().modal
-  const { activeAddress } = useActiveAccounts()
-  const { isOwner, activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { bondedPools, poolsMetaData } = useBondedPools()
+	const { t } = useTranslation('modals')
+	const { serviceApi } = useApi()
+	const { setModalStatus } = useOverlay().modal
+	const { activeAddress } = useActiveAccounts()
+	const { isOwner, activePool } = useActivePool()
+	const { getSignerWarnings } = useSignerWarnings()
+	const { bondedPools, poolsMetaData } = useBondedPools()
 
-  const poolId = activePool?.id
+	const poolId = activePool?.id
 
-  // Valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false)
+	// Valid to submit transaction
+	const [valid, setValid] = useState<boolean>(false)
 
-  // Updated metadata value
-  const [metadata, setMetadata] = useState<string>('')
+	// Updated metadata value
+	const [metadata, setMetadata] = useState<string>('')
 
-  // Determine current pool metadata and set in state.
-  useEffect(() => {
-    const pool = bondedPools.find(
-      ({ addresses }) => addresses.stash === activePool?.addresses.stash
-    )
-    if (pool) {
-      setMetadata(poolsMetaData[Number(pool.id)] || '')
-    }
-  }, [section])
+	// Determine current pool metadata and set in state.
+	useEffect(() => {
+		const pool = bondedPools.find(
+			({ addresses }) => addresses.stash === activePool?.addresses.stash,
+		)
+		if (pool) {
+			setMetadata(poolsMetaData[Number(pool.id)] || '')
+		}
+	}, [section])
 
-  useEffect(() => {
-    setValid(isOwner())
-  }, [isOwner()])
+	useEffect(() => {
+		setValid(isOwner())
+	}, [isOwner()])
 
-  const getTx = () => {
-    if (!valid || !poolId) {
-      return
-    }
-    return serviceApi.tx.poolSetMetadata(poolId, stringToU8a(metadata))
-  }
+	const getTx = () => {
+		if (!valid || !poolId) {
+			return
+		}
+		return serviceApi.tx.poolSetMetadata(poolId, stringToU8a(metadata))
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: true,
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: true,
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+	})
 
-  const handleMetadataChange = (e: FormEvent<HTMLInputElement>) => {
-    setMetadata(e.currentTarget.value)
-    setValid(true)
-  }
+	const handleMetadataChange = (e: FormEvent<HTMLInputElement>) => {
+		setMetadata(e.currentTarget.value)
+		setValid(true)
+	}
 
-  const warnings = getSignerWarnings(
-    activeAddress,
-    false,
-    submitExtrinsic.proxySupported
-  )
+	const warnings = getSignerWarnings(
+		activeAddress,
+		false,
+		submitExtrinsic.proxySupported,
+	)
 
-  return (
-    <>
-      <Padding horizontalOnly>
-        {warnings.length > 0 ? (
-          <Warnings>
-            {warnings.map((text, i) => (
-              <Warning key={`warning${i}`} text={text} />
-            ))}
-          </Warnings>
-        ) : null}
-        <input
-          className="underline"
-          style={{ width: '100%' }}
-          placeholder={t('poolName')}
-          type="text"
-          onChange={(e: FormEvent<HTMLInputElement>) => handleMetadataChange(e)}
-          value={metadata ?? ''}
-        />
-        <p>{t('storedOnChain')}</p>
-      </Padding>
-      <SubmitTx
-        valid={valid}
-        buttons={[
-          <ButtonSubmitInvert
-            key="button_back"
-            text={t('back')}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-1"
-            onClick={() => setSection(0)}
-          />,
-        ]}
-        onResize={onResize}
-        {...submitExtrinsic}
-      />
-    </>
-  )
+	return (
+		<>
+			<Padding horizontalOnly>
+				{warnings.length > 0 ? (
+					<Warnings>
+						{warnings.map((text, i) => (
+							<Warning key={`warning${i}`} text={text} />
+						))}
+					</Warnings>
+				) : null}
+				<input
+					className="underline"
+					style={{ width: '100%' }}
+					placeholder={t('poolName')}
+					type="text"
+					onChange={(e: FormEvent<HTMLInputElement>) => handleMetadataChange(e)}
+					value={metadata ?? ''}
+				/>
+				<p>{t('storedOnChain')}</p>
+			</Padding>
+			<SubmitTx
+				valid={valid}
+				buttons={[
+					<ButtonSubmitInvert
+						key="button_back"
+						text={t('back')}
+						iconLeft={faChevronLeft}
+						iconTransform="shrink-1"
+						onClick={() => setSection(0)}
+					/>,
+				]}
+				onResize={onResize}
+				{...submitExtrinsic}
+			/>
+		</>
+	)
 }

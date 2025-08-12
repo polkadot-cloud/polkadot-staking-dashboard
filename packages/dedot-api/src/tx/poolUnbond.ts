@@ -6,7 +6,7 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolUnbond = <T extends StakingChain>(
-  api: DedotClient<T>,
-  who: string,
-  points: bigint
+	api: DedotClient<T>,
+	who: string,
+	points: bigint,
 ) => asTx(api.tx.nominationPools.unbond(who, points))

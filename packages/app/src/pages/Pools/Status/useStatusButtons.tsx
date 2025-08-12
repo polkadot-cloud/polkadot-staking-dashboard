@@ -11,47 +11,47 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useTranslation } from 'react-i18next'
 
 export const useStatusButtons = () => {
-  const { t } = useTranslation('pages')
-  const {
-    isReady,
-    poolsConfig: { maxPools },
-  } = useApi()
-  const { isOwner } = useActivePool()
-  const { bondedPools } = useBondedPools()
-  const { getPoolMembership } = useBalances()
-  const { activeAddress } = useActiveAccounts()
-  const { isReadOnlyAccount } = useImportedAccounts()
+	const { t } = useTranslation('pages')
+	const {
+		isReady,
+		poolsConfig: { maxPools },
+	} = useApi()
+	const { isOwner } = useActivePool()
+	const { bondedPools } = useBondedPools()
+	const { getPoolMembership } = useBalances()
+	const { activeAddress } = useActiveAccounts()
+	const { isReadOnlyAccount } = useImportedAccounts()
 
-  const { balances } = useAccountBalances(activeAddress)
-  const { membership } = getPoolMembership(activeAddress)
-  const { active } = balances.pool
+	const { balances } = useAccountBalances(activeAddress)
+	const { membership } = getPoolMembership(activeAddress)
+	const { active } = balances.pool
 
-  const getCreateDisabled = () => {
-    if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {
-      return true
-    }
-    if ((maxPools && maxPools === 0) || bondedPools.length === maxPools) {
-      return true
-    }
-    return false
-  }
+	const getCreateDisabled = () => {
+		if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {
+			return true
+		}
+		if ((maxPools && maxPools === 0) || bondedPools.length === maxPools) {
+			return true
+		}
+		return false
+	}
 
-  let label
+	let label
 
-  const getJoinDisabled = () =>
-    !isReady ||
-    isReadOnlyAccount(activeAddress) ||
-    !activeAddress ||
-    !bondedPools.length
+	const getJoinDisabled = () =>
+		!isReady ||
+		isReadOnlyAccount(activeAddress) ||
+		!activeAddress ||
+		!bondedPools.length
 
-  if (!membership) {
-    label = t('membership')
-  } else if (isOwner()) {
-    label = `${t('ownerOfPool')} ${membership.poolId}`
-  } else if (active > 0n) {
-    label = `${t('memberOfPool')} ${membership.poolId}`
-  } else {
-    label = `${t('leavingPool')} ${membership.poolId}`
-  }
-  return { label, getJoinDisabled, getCreateDisabled }
+	if (!membership) {
+		label = t('membership')
+	} else if (isOwner()) {
+		label = `${t('ownerOfPool')} ${membership.poolId}`
+	} else if (active > 0n) {
+		label = `${t('memberOfPool')} ${membership.poolId}`
+	} else {
+		label = `${t('leavingPool')} ${membership.poolId}`
+	}
+	return { label, getJoinDisabled, getCreateDisabled }
 }

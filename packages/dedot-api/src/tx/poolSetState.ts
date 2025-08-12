@@ -7,7 +7,7 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolSetState = <T extends StakingChain>(
-  api: DedotClient<T>,
-  poolId: number,
-  state: PalletNominationPoolsPoolState
+	api: DedotClient<T>,
+	poolId: number,
+	state: PalletNominationPoolsPoolState,
 ) => asTx(api.tx.nominationPools.setState(poolId, state))

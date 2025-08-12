@@ -6,20 +6,20 @@ import { _onlineStatus } from './private'
 export const onlineStatus$ = _onlineStatus.asObservable()
 
 export const listenOnlineStatus = () => {
-  window.addEventListener('offline', async () => {
-    setOnlineStatus(false)
-  })
-  window.addEventListener('online', () => {
-    setOnlineStatus(true)
-  })
+	window.addEventListener('offline', async () => {
+		setOnlineStatus(false)
+	})
+	window.addEventListener('online', () => {
+		setOnlineStatus(true)
+	})
 }
 
 export const getOnlineStatus = () => _onlineStatus.getValue()
 
 export const setOnlineStatus = (online: boolean) => {
-  _onlineStatus.next({
-    online,
-  })
+	_onlineStatus.next({
+		online,
+	})
 }
 
 export * from './default'

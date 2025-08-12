@@ -13,57 +13,57 @@ import type { Plugin } from 'types'
 import type { PluginsContextInterface } from './types'
 
 export const [PluginsContext, usePlugins] =
-  createSafeContext<PluginsContextInterface>()
+	createSafeContext<PluginsContextInterface>()
 
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
-  const { network } = useNetwork()
-  const { isReady, activeEra } = useApi()
-  const { activeAddress } = useActiveAccounts()
+	const { network } = useNetwork()
+	const { isReady, activeEra } = useApi()
+	const { activeAddress } = useActiveAccounts()
 
-  // Store the currently active plugins
-  const [plugins, setPluginsState] = useState<Plugin[]>(getAvailablePlugins())
+	// Store the currently active plugins
+	const [plugins, setPluginsState] = useState<Plugin[]>(getAvailablePlugins())
 
-  // Toggle a plugin
-  const togglePlugin = (key: Plugin) => {
-    let newPlugins = [...plugins]
-    const found = newPlugins.find((p) => p === key)
-    if (found) {
-      newPlugins = newPlugins.filter((p) => p !== key)
-    } else {
-      newPlugins.push(key)
-    }
-    setPlugins(newPlugins)
-  }
+	// Toggle a plugin
+	const togglePlugin = (key: Plugin) => {
+		let newPlugins = [...plugins]
+		const found = newPlugins.find((p) => p === key)
+		if (found) {
+			newPlugins = newPlugins.filter((p) => p !== key)
+		} else {
+			newPlugins.push(key)
+		}
+		setPlugins(newPlugins)
+	}
 
-  // Check if a plugin is currently enabled
-  const pluginEnabled = (key: Plugin) => plugins.includes(key)
+	// Check if a plugin is currently enabled
+	const pluginEnabled = (key: Plugin) => plugins.includes(key)
 
-  // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts
-  useEffectIgnoreInitial(() => {
-    if (plugins.includes('subscan')) {
-      Subscan.network = network
-    }
-  }, [plugins.includes('subscan'), isReady, network, activeAddress, activeEra])
+	// Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts
+	useEffectIgnoreInitial(() => {
+		if (plugins.includes('subscan')) {
+			Subscan.network = network
+		}
+	}, [plugins.includes('subscan'), isReady, network, activeAddress, activeEra])
 
-  // Subscribe to global bus for plugin changes
-  useEffect(() => {
-    const sub = plugins$.subscribe((result) => {
-      setPluginsState(result)
-    })
-    return () => {
-      sub.unsubscribe()
-    }
-  }, [])
+	// Subscribe to global bus for plugin changes
+	useEffect(() => {
+		const sub = plugins$.subscribe((result) => {
+			setPluginsState(result)
+		})
+		return () => {
+			sub.unsubscribe()
+		}
+	}, [])
 
-  return (
-    <PluginsContext.Provider
-      value={{
-        togglePlugin,
-        pluginEnabled,
-        plugins,
-      }}
-    >
-      {children}
-    </PluginsContext.Provider>
-  )
+	return (
+		<PluginsContext.Provider
+			value={{
+				togglePlugin,
+				pluginEnabled,
+				plugins,
+			}}
+		>
+			{children}
+		</PluginsContext.Provider>
+	)
 }

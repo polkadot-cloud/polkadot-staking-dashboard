@@ -8,13 +8,13 @@ import { _relayMetrics } from './private'
 export const relayMetrics$ = _relayMetrics.asObservable()
 
 export const resetRelayMetrics = () => {
-  _relayMetrics.next(defaultRelayMetrics)
+	_relayMetrics.next(defaultRelayMetrics)
 }
 
 export const getRelayMetrics = () => _relayMetrics.getValue()
 
 export const setRelayMetrics = (metrics: RelayMetrics) => {
-  _relayMetrics.next(metrics)
+	_relayMetrics.next(metrics)
 }
 
 export * from './default'

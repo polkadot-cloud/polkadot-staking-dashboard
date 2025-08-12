@@ -13,63 +13,63 @@ import { ButtonRow, CardHeader, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const ManagePool = () => {
-  const { t } = useTranslation()
-  const { openCanvas } = useOverlay().canvas
-  const { formatWithPrefs } = useValidators()
-  const { isOwner, isNominator, activePoolNominations, activePool } =
-    useActivePool()
+	const { t } = useTranslation()
+	const { openCanvas } = useOverlay().canvas
+	const { formatWithPrefs } = useValidators()
+	const { isOwner, isNominator, activePoolNominations, activePool } =
+		useActivePool()
 
-  const poolNominated = activePoolNominations
-    ? formatWithPrefs(activePoolNominations.targets)
-    : []
+	const poolNominated = activePoolNominations
+		? formatWithPrefs(activePoolNominations.targets)
+		: []
 
-  const isNominating = !!activePoolNominations?.targets?.length
-  const nominator = activePool?.addresses?.stash ?? null
-  const { state } = activePool?.bondedPool || {}
-  const { openHelp } = useHelp()
+	const isNominating = !!activePoolNominations?.targets?.length
+	const nominator = activePool?.addresses?.stash ?? null
+	const { state } = activePool?.bondedPool || {}
+	const { openHelp } = useHelp()
 
-  const canNominate = isOwner() || isNominator()
+	const canNominate = isOwner() || isNominator()
 
-  return (
-    <Page.Row>
-      <CardWrapper>
-        {canNominate && !isNominating && state !== 'Destroying' ? (
-          <>
-            <CardHeader action margin>
-              <h3>
-                {t('nominations', { ns: 'pages' })}
-                <ButtonHelp
-                  marginLeft
-                  onClick={() => openHelp('Nominations')}
-                />
-              </h3>
-              <ButtonRow>
-                <ButtonPrimary
-                  size="md"
-                  iconLeft={faChevronCircleRight}
-                  iconTransform="grow-1"
-                  text={t('nominate', { ns: 'pages' })}
-                  disabled={!canNominate}
-                  onClick={() =>
-                    openCanvas({
-                      key: 'ManageNominations',
-                      scroll: false,
-                      options: {
-                        bondFor: 'pool',
-                        nominator,
-                        nominated: poolNominated || [],
-                      },
-                    })
-                  }
-                />
-              </ButtonRow>
-            </CardHeader>
-            <h4>{t('notNominating', { ns: 'app' })}.</h4>
-          </>
-        ) : (
-          <Nominations bondFor="pool" nominator={nominator} />
-        )}
-      </CardWrapper>
-    </Page.Row>
-  )
+	return (
+		<Page.Row>
+			<CardWrapper>
+				{canNominate && !isNominating && state !== 'Destroying' ? (
+					<>
+						<CardHeader action margin>
+							<h3>
+								{t('nominations', { ns: 'pages' })}
+								<ButtonHelp
+									marginLeft
+									onClick={() => openHelp('Nominations')}
+								/>
+							</h3>
+							<ButtonRow>
+								<ButtonPrimary
+									size="md"
+									iconLeft={faChevronCircleRight}
+									iconTransform="grow-1"
+									text={t('nominate', { ns: 'pages' })}
+									disabled={!canNominate}
+									onClick={() =>
+										openCanvas({
+											key: 'ManageNominations',
+											scroll: false,
+											options: {
+												bondFor: 'pool',
+												nominator,
+												nominated: poolNominated || [],
+											},
+										})
+									}
+								/>
+							</ButtonRow>
+						</CardHeader>
+						<h4>{t('notNominating', { ns: 'app' })}.</h4>
+					</>
+				) : (
+					<Nominations bondFor="pool" nominator={nominator} />
+				)}
+			</CardWrapper>
+		</Page.Row>
+	)
 }

@@ -11,10 +11,10 @@ import classes from './index.module.scss'
  * @summary A column flex wrapper that hosts the main page content.
  */
 export const Main = forwardRef(
-  ({ children, style }: ComponentBase, ref?: ForwardedRef<HTMLDivElement>) => (
-    <div className={classes.main} ref={ref} style={style}>
-      {children}
-    </div>
-  )
+	({ children, style }: ComponentBase, ref?: ForwardedRef<HTMLDivElement>) => (
+		<div className={classes.main} ref={ref} style={style}>
+			{children}
+		</div>
+	),
 )
 Main.displayName = 'Main'

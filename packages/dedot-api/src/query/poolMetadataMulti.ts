@@ -5,6 +5,6 @@ import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
 export const poolMetadataMulti = async <T extends StakingChain>(
-  api: DedotClient<T>,
-  ids: number[]
+	api: DedotClient<T>,
+	ids: number[],
 ) => await api.query.nominationPools.metadata.multi(ids)

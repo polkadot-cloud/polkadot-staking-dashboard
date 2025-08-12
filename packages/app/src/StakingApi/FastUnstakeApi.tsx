@@ -7,20 +7,20 @@ import { useEffect } from 'react'
 import type { Props } from './types'
 
 export const FastUnstakeApi = ({ who, network }: Props) => {
-  const { setFastUnstakeStatus } = useFastUnstake()
-  const { data, loading, error } = useCanFastUnstake({
-    network,
-    who,
-  })
+	const { setFastUnstakeStatus } = useFastUnstake()
+	const { data, loading, error } = useCanFastUnstake({
+		network,
+		who,
+	})
 
-  const { status, lastExposed } = data?.canFastUnstake || {}
+	const { status, lastExposed } = data?.canFastUnstake || {}
 
-  // Update fast unstake status on active account change. Must be bonding
-  useEffect(() => {
-    if (!loading && !error && data?.canFastUnstake) {
-      setFastUnstakeStatus(data.canFastUnstake)
-    }
-  }, [status, lastExposed, loading, error])
+	// Update fast unstake status on active account change. Must be bonding
+	useEffect(() => {
+		if (!loading && !error && data?.canFastUnstake) {
+			setFastUnstakeStatus(data.canFastUnstake)
+		}
+	}, [status, lastExposed, loading, error])
 
-  return null
+	return null
 }

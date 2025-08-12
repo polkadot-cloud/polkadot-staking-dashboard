@@ -6,13 +6,13 @@ import type { SectionProps } from '../types'
 import classes from './index.module.scss'
 
 export const Section = ({ children, style, type }: SectionProps) => {
-  const allClasses = classNames({
-    [classes.carousel]: type === 'carousel',
-    [classes.tab]: type === 'tab',
-  })
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	const allClasses = classNames({
+		[classes.carousel]: type === 'carousel',
+		[classes.tab]: type === 'tab',
+	})
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

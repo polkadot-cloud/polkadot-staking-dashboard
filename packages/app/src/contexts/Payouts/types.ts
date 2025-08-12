@@ -4,6 +4,6 @@
 import type { UnclaimedRewards } from 'plugin-staking-api/types'
 
 export interface PayoutsContextInterface {
-  unclaimedRewards: UnclaimedRewards
-  setUnclaimedRewards: (unclaimedRewards: UnclaimedRewards) => void
+	unclaimedRewards: UnclaimedRewards
+	setUnclaimedRewards: (unclaimedRewards: UnclaimedRewards) => void
 }

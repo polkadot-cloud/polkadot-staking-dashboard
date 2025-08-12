@@ -7,52 +7,52 @@ import { useTheme } from 'contexts/Themes'
 import { useEffect, useRef } from 'react'
 
 export const useDotLottieButton = (
-  filename: string,
-  options?: { autoLoop?: boolean }
+	filename: string,
+	options?: { autoLoop?: boolean },
 ) => {
-  const { mode } = useTheme()
-  const lottieRef = useRef<DotLottie | null>(null)
+	const { mode } = useTheme()
+	const lottieRef = useRef<DotLottie | null>(null)
 
-  const lottieRefCallback = (dotLottie: DotLottie) => {
-    lottieRef.current = dotLottie
-  }
+	const lottieRefCallback = (dotLottie: DotLottie) => {
+		lottieRef.current = dotLottie
+	}
 
-  const handlePlayAnimation = async () => {
-    lottieRef.current?.play()
-  }
+	const handlePlayAnimation = async () => {
+		lottieRef.current?.play()
+	}
 
-  const handleComplete = () => {
-    if (!options?.autoLoop) {
-      lottieRef.current?.stop()
-    }
-  }
-  useEffect(() => {
-    if (!lottieRef.current) {
-      return
-    }
-    lottieRef.current.addEventListener('loop', () => handleComplete())
-  }, [lottieRef.current])
+	const handleComplete = () => {
+		if (!options?.autoLoop) {
+			lottieRef.current?.stop()
+		}
+	}
+	useEffect(() => {
+		if (!lottieRef.current) {
+			return
+		}
+		lottieRef.current.addEventListener('loop', () => handleComplete())
+	}, [lottieRef.current])
 
-  const icon = (
-    <button
-      type="button"
-      style={{
-        height: 'inherit',
-        width: 'inherit',
-      }}
-      onClick={() => handlePlayAnimation()}
-    >
-      <DotLottieReact
-        dotLottieRefCallback={lottieRefCallback}
-        loop
-        autoplay={options?.autoLoop ? true : undefined}
-        src={`${import.meta.env.BASE_URL}lottie/${filename}-${mode}.lottie`}
-        renderConfig={{
-          autoResize: true,
-        }}
-      />
-    </button>
-  )
+	const icon = (
+		<button
+			type="button"
+			style={{
+				height: 'inherit',
+				width: 'inherit',
+			}}
+			onClick={() => handlePlayAnimation()}
+		>
+			<DotLottieReact
+				dotLottieRefCallback={lottieRefCallback}
+				loop
+				autoplay={options?.autoLoop ? true : undefined}
+				src={`${import.meta.env.BASE_URL}lottie/${filename}-${mode}.lottie`}
+				renderConfig={{
+					autoResize: true,
+				}}
+			/>
+		</button>
+	)
 
-  return { icon, play: handlePlayAnimation }
+	return { icon, play: handlePlayAnimation }
 }

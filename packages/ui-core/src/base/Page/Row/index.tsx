@@ -11,13 +11,13 @@ import classes from './index.module.scss'
  * `RowSecondary`.
  */
 export const Row = ({ children, style, yMargin }: RowProps) => {
-  const buttonClasses = classNames(classes.row, 'page-padding', {
-    [classes.yMargin]: yMargin,
-  })
+	const buttonClasses = classNames(classes.row, 'page-padding', {
+		[classes.yMargin]: yMargin,
+	})
 
-  return (
-    <div className={buttonClasses} style={style}>
-      {children}
-    </div>
-  )
+	return (
+		<div className={buttonClasses} style={style}>
+			{children}
+		</div>
+	)
 }

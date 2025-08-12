@@ -39,48 +39,48 @@ import { UpdateReserve } from 'modals/UpdateReserve'
 import { Overlay } from 'ui-overlay'
 
 export const Overlays = () => {
-  const { status } = useHelp()
-  return (
-    <Overlay
-      fallback={ErrorFallbackModal}
-      externalOverlayStatus={status}
-      modals={{
-        Bio,
-        Bond,
-        ExternalAccounts,
-        StopNominations,
-        ChangePoolRoles,
-        SelectLanguage,
-        ClaimPayouts,
-        ClaimReward,
-        Accounts,
-        DiscordSupport,
-        LeavePool,
-        MailSupport,
-        ImportAccounts,
-        Invite,
-        ManagePool,
-        ManageFastUnstake,
-        Networks,
-        RewardCalculator,
-        SelectCurrency,
-        SetController,
-        StartNominating,
-        Plugins,
-        UnlockChunks,
-        Unstake,
-        Unbond,
-        UpdatePayee,
-        UpdateReserve,
-      }}
-      canvas={{
-        ManageNominations,
-        PoolMembers,
-        Pool,
-        CreatePool,
-        NominatorSetup,
-        ValidatorMetrics,
-      }}
-    />
-  )
+	const { status } = useHelp()
+	return (
+		<Overlay
+			fallback={ErrorFallbackModal}
+			externalOverlayStatus={status}
+			modals={{
+				Bio,
+				Bond,
+				ExternalAccounts,
+				StopNominations,
+				ChangePoolRoles,
+				SelectLanguage,
+				ClaimPayouts,
+				ClaimReward,
+				Accounts,
+				DiscordSupport,
+				LeavePool,
+				MailSupport,
+				ImportAccounts,
+				Invite,
+				ManagePool,
+				ManageFastUnstake,
+				Networks,
+				RewardCalculator,
+				SelectCurrency,
+				SetController,
+				StartNominating,
+				Plugins,
+				UnlockChunks,
+				Unstake,
+				Unbond,
+				UpdatePayee,
+				UpdateReserve,
+			}}
+			canvas={{
+				ManageNominations,
+				PoolMembers,
+				Pool,
+				CreatePool,
+				NominatorSetup,
+				ValidatorMetrics,
+			}}
+		/>
+	)
 }

@@ -12,54 +12,54 @@ import { planckToUnitBn } from 'utils'
 import type { NominationStatusProps } from '../types'
 
 export const NominationStatus = ({
-  address,
-  nominator,
-  bondFor,
-  noMargin = false,
-  status,
+	address,
+	nominator,
+	bondFor,
+	noMargin = false,
+	status,
 }: NominationStatusProps) => {
-  const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const {
-    eraStakers: { activeAccountOwnStake, stakers },
-  } = useEraStakers()
-  const { syncing } = useSyncing(['era-stakers'])
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('app')
+	const { network } = useNetwork()
+	const {
+		eraStakers: { activeAccountOwnStake, stakers },
+	} = useEraStakers()
+	const { syncing } = useSyncing(['era-stakers'])
+	const { unit, units } = getStakingChainData(network)
 
-  let stakedAmount = new BigNumber(0)
-  if (bondFor === 'nominator') {
-    // bonded amount within the validator.
-    stakedAmount =
-      status === 'active'
-        ? new BigNumber(
-            activeAccountOwnStake?.find((own) => own.address)?.value ?? 0
-          )
-        : new BigNumber(0)
-  } else {
-    const staker = stakers?.find((s) => s.address === address)
-    const exists = (staker?.others || []).find(({ who }) => who === nominator)
-    if (exists) {
-      stakedAmount = planckToUnitBn(new BigNumber(exists.value), units)
-    }
-  }
+	let stakedAmount = new BigNumber(0)
+	if (bondFor === 'nominator') {
+		// bonded amount within the validator.
+		stakedAmount =
+			status === 'active'
+				? new BigNumber(
+						activeAccountOwnStake?.find((own) => own.address)?.value ?? 0,
+					)
+				: new BigNumber(0)
+	} else {
+		const staker = stakers?.find((s) => s.address === address)
+		const exists = (staker?.others || []).find(({ who }) => who === nominator)
+		if (exists) {
+			stakedAmount = planckToUnitBn(new BigNumber(exists.value), units)
+		}
+	}
 
-  let statusTKey
-  if (status === 'active') {
-    statusTKey = 'backing'
-  } else if (status === 'inactive') {
-    statusTKey = 'notBacking'
-  } else {
-    statusTKey = 'waiting'
-  }
+	let statusTKey
+	if (status === 'active') {
+		statusTKey = 'backing'
+	} else if (status === 'inactive') {
+		statusTKey = 'notBacking'
+	} else {
+		statusTKey = 'waiting'
+	}
 
-  return (
-    <ValidatorStatusWrapper $status={status || 'waiting'} $noMargin={noMargin}>
-      <h5>
-        {t(statusTKey)}
-        {stakedAmount.isGreaterThan(0)
-          ? ` / ${syncing ? '...' : `${stakedAmount.toFormat()} ${unit}`}`
-          : null}
-      </h5>
-    </ValidatorStatusWrapper>
-  )
+	return (
+		<ValidatorStatusWrapper $status={status || 'waiting'} $noMargin={noMargin}>
+			<h5>
+				{t(statusTKey)}
+				{stakedAmount.isGreaterThan(0)
+					? ` / ${syncing ? '...' : `${stakedAmount.toFormat()} ${unit}`}`
+					: null}
+			</h5>
+		</ValidatorStatusWrapper>
+	)
 }

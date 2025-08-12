@@ -5,18 +5,18 @@ import type { CSSProperties, ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Padding = ({
-  flex,
-  children,
-  style,
+	flex,
+	children,
+	style,
 }: {
-  flex?: boolean
-  children: ReactNode
-  style?: CSSProperties
+	flex?: boolean
+	children: ReactNode
+	style?: CSSProperties
 }) => (
-  <div
-    className={classes.padding}
-    style={{ ...style, display: flex ? 'flex' : 'block' }}
-  >
-    {children}
-  </div>
+	<div
+		className={classes.padding}
+		style={{ ...style, display: flex ? 'flex' : 'block' }}
+	>
+		{children}
+	</div>
 )

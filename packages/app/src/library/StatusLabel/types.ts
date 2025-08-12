@@ -4,14 +4,14 @@
 import type { Plugin } from 'types'
 
 export interface StatusLabelProps {
-  hideIcon?: boolean
-  status: string
-  statusFor?: Plugin
-  title: string
-  topOffset?: string
-  helpKey?: string
+	hideIcon?: boolean
+	status: string
+	statusFor?: Plugin
+	title: string
+	topOffset?: string
+	helpKey?: string
 }
 
 export interface WrapperProps {
-  $topOffset?: string
+	$topOffset?: string
 }

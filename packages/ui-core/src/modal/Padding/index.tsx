@@ -8,20 +8,20 @@ import type { PaddingProps } from '../types'
 import classes from './index.module.scss'
 
 export const Padding = forwardRef(
-  (
-    { children, style, verticalOnly, horizontalOnly }: PaddingProps,
-    ref?: ForwardedRef<HTMLDivElement | null>
-  ) => {
-    const allClasses = classNames(classes.padding, {
-      [classes.verticalOnly]: verticalOnly,
-      [classes.horizontalOnly]: horizontalOnly,
-    })
-    return (
-      <div ref={ref} className={allClasses} style={style}>
-        {children}
-      </div>
-    )
-  }
+	(
+		{ children, style, verticalOnly, horizontalOnly }: PaddingProps,
+		ref?: ForwardedRef<HTMLDivElement | null>,
+	) => {
+		const allClasses = classNames(classes.padding, {
+			[classes.verticalOnly]: verticalOnly,
+			[classes.horizontalOnly]: horizontalOnly,
+		})
+		return (
+			<div ref={ref} className={allClasses} style={style}>
+				{children}
+			</div>
+		)
+	},
 )
 
 Padding.displayName = 'Padding'

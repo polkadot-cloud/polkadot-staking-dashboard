@@ -12,50 +12,50 @@ import { Separator } from 'ui-core/base'
 import { MoreWrapper } from '../Wrappers'
 
 export const BalanceLinks = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { isNominating } = useStaking()
-  const { activeAddress } = useActiveAccounts()
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { isNominating } = useStaking()
+	const { activeAddress } = useActiveAccounts()
 
-  return (
-    <MoreWrapper>
-      <Separator />
-      <h4>{t('moreResources')}</h4>
-      <section>
-        <ButtonPrimaryInvert
-          lg
-          onClick={() =>
-            window.open(
-              `https://${getSubscanBalanceChainId(network)}.subscan.io/account/${activeAddress}`,
-              '_blank'
-            )
-          }
-          iconRight={faExternalLinkAlt}
-          iconTransform="shrink-2"
-          text="Subscan"
-          marginRight
-          disabled={!activeAddress}
-        />
-        <ButtonPrimaryInvert
-          lg
-          onClick={() =>
-            window.open(
-              `https://${network}.polkawatch.app/nomination/${activeAddress}`,
-              '_blank'
-            )
-          }
-          iconRight={faExternalLinkAlt}
-          iconTransform="shrink-2"
-          text="Polkawatch"
-          disabled={
-            !(
-              activeAddress &&
-              ['polkadot', 'kusama'].includes(network) &&
-              isNominating
-            )
-          }
-        />
-      </section>
-    </MoreWrapper>
-  )
+	return (
+		<MoreWrapper>
+			<Separator />
+			<h4>{t('moreResources')}</h4>
+			<section>
+				<ButtonPrimaryInvert
+					lg
+					onClick={() =>
+						window.open(
+							`https://${getSubscanBalanceChainId(network)}.subscan.io/account/${activeAddress}`,
+							'_blank',
+						)
+					}
+					iconRight={faExternalLinkAlt}
+					iconTransform="shrink-2"
+					text="Subscan"
+					marginRight
+					disabled={!activeAddress}
+				/>
+				<ButtonPrimaryInvert
+					lg
+					onClick={() =>
+						window.open(
+							`https://${network}.polkawatch.app/nomination/${activeAddress}`,
+							'_blank',
+						)
+					}
+					iconRight={faExternalLinkAlt}
+					iconTransform="shrink-2"
+					text="Polkawatch"
+					disabled={
+						!(
+							activeAddress &&
+							['polkadot', 'kusama'].includes(network) &&
+							isNominating
+						)
+					}
+				/>
+			</section>
+		</MoreWrapper>
+	)
 }

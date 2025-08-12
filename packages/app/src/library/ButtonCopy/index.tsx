@@ -7,19 +7,19 @@ import { ButtonCopy as Wrapper } from 'ui-buttons'
 import type { ButtonCopyProps } from 'ui-buttons/types'
 
 export const ButtonCopy = (
-  props: Omit<ButtonCopyProps, 'tooltipText' | 'portalContainer'>
+	props: Omit<ButtonCopyProps, 'tooltipText' | 'portalContainer'>,
 ) => {
-  const { t } = useTranslation('app')
-  const { themeElementRef } = useTheme()
+	const { t } = useTranslation('app')
+	const { themeElementRef } = useTheme()
 
-  return (
-    <Wrapper
-      {...props}
-      portalContainer={themeElementRef.current || undefined}
-      tooltipText={{
-        copy: t('copyAddress'),
-        copied: t('copied'),
-      }}
-    />
-  )
+	return (
+		<Wrapper
+			{...props}
+			portalContainer={themeElementRef.current || undefined}
+			tooltipText={{
+				copy: t('copyAddress'),
+				copied: t('copied'),
+			}}
+		/>
+	)
 }

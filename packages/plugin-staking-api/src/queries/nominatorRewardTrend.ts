@@ -19,32 +19,32 @@ const QUERY = gql`
 `
 
 export const useNominatorRewardTrend = ({
-  network,
-  who,
-  eras,
+	network,
+	who,
+	eras,
 }: {
-  network: string
-  who: string
-  eras: number
+	network: string
+	who: string
+	eras: number
 }): RewardTrendResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, who, eras },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, who, eras },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchNominatorRewardTrend = async (
-  network: string,
-  who: string,
-  eras: number
+	network: string,
+	who: string,
+	eras: number,
 ) => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { network, who, eras },
-    })
-    return result.data.nominatorRewardTrend
-  } catch {
-    return null
-  }
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { network, who, eras },
+		})
+		return result.data.nominatorRewardTrend
+	} catch {
+		return null
+	}
 }

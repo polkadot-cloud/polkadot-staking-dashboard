@@ -4,5 +4,5 @@
 import type { ValidatorEntry } from '@w3ux/validator-assets'
 
 export interface OperatorsContextInterface {
-  validatorOperators: ValidatorEntry[]
+	validatorOperators: ValidatorEntry[]
 }

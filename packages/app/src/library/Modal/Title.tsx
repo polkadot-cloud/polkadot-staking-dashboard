@@ -12,46 +12,46 @@ import { Close } from 'ui-overlay'
 import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {
-  title?: string
-  icon?: IconProp
-  Svg?: FunctionComponent<SVGProps<unknown>>
-  fixed?: boolean
-  helpKey?: string
-  style?: CSSProperties
+	title?: string
+	icon?: IconProp
+	Svg?: FunctionComponent<SVGProps<unknown>>
+	fixed?: boolean
+	helpKey?: string
+	style?: CSSProperties
 }
 
 export const Title = ({
-  helpKey,
-  title,
-  icon,
-  fixed,
-  Svg,
-  style,
+	helpKey,
+	title,
+	icon,
+	fixed,
+	Svg,
+	style,
 }: TitleProps) => {
-  const { openHelp } = useHelp()
+	const { openHelp } = useHelp()
 
-  const graphic = Svg ? (
-    <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
-  ) : icon ? (
-    <FontAwesomeIcon transform="grow-3" icon={icon} />
-  ) : null
+	const graphic = Svg ? (
+		<Svg style={{ width: '1.5rem', height: '1.5rem' }} />
+	) : icon ? (
+		<FontAwesomeIcon transform="grow-3" icon={icon} />
+	) : null
 
-  return (
-    <>
-      <Close />
-      <TitleWrapper $fixed={fixed || false} style={{ ...style }}>
-        <div>
-          {graphic}
-          {title && (
-            <Wrapper>
-              {title}
-              {helpKey ? (
-                <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-              ) : null}
-            </Wrapper>
-          )}
-        </div>
-      </TitleWrapper>
-    </>
-  )
+	return (
+		<>
+			<Close />
+			<TitleWrapper $fixed={fixed || false} style={{ ...style }}>
+				<div>
+					{graphic}
+					{title && (
+						<Wrapper>
+							{title}
+							{helpKey ? (
+								<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							) : null}
+						</Wrapper>
+					)}
+				</div>
+			</TitleWrapper>
+		</>
+	)
 }

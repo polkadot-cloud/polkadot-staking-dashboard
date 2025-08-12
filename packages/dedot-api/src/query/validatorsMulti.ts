@@ -5,6 +5,6 @@ import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
 export const validatorsMulti = async <T extends StakingChain>(
-  api: DedotClient<T>,
-  addresses: string[]
+	api: DedotClient<T>,
+	addresses: string[],
 ) => await api.query.staking.validators.multi(addresses)

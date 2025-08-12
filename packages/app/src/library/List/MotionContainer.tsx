@@ -5,25 +5,25 @@ import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 
 export const MotionContainer = ({
-  children,
-  staggerChildren = 0.015,
+	children,
+	staggerChildren = 0.015,
 }: {
-  staggerChildren?: number
-  children: ReactNode
+	staggerChildren?: number
+	children: ReactNode
 }) => (
-  <motion.div
-    initial="hidden"
-    animate="show"
-    variants={{
-      hidden: { opacity: 0 },
-      show: {
-        opacity: 1,
-        transition: {
-          staggerChildren,
-        },
-      },
-    }}
-  >
-    {children}
-  </motion.div>
+	<motion.div
+		initial="hidden"
+		animate="show"
+		variants={{
+			hidden: { opacity: 0 },
+			show: {
+				opacity: 1,
+				transition: {
+					staggerChildren,
+				},
+			},
+		}}
+	>
+		{children}
+	</motion.div>
 )

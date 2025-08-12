@@ -4,6 +4,6 @@
 import type { NetworkId } from 'types'
 
 export interface NetworkContextInterface {
-  network: NetworkId
-  switchNetwork: (network: NetworkId) => Promise<void>
+	network: NetworkId
+	switchNetwork: (network: NetworkId) => Promise<void>
 }

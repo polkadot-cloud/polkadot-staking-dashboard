@@ -4,5 +4,5 @@
 import { BehaviorSubject } from 'rxjs'
 
 export const _onlineStatus = new BehaviorSubject<{ online: boolean }>({
-  online: true,
+	online: true,
 })

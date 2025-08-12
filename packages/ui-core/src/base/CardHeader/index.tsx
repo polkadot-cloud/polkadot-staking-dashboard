@@ -6,19 +6,19 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const CardHeader = ({
-  children,
-  style,
-  action,
-  margin,
+	children,
+	style,
+	action,
+	margin,
 }: ComponentBase & { action?: boolean; margin?: boolean }) => {
-  const allClasses = classNames(classes.cardHeader, {
-    [classes.action]: !!action,
-    [classes.margin]: !!margin,
-  })
+	const allClasses = classNames(classes.cardHeader, {
+		[classes.action]: !!action,
+		[classes.margin]: !!margin,
+	})
 
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

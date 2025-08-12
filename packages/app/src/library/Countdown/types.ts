@@ -4,6 +4,6 @@
 import type { TimeLeftFormatted } from '@w3ux/types'
 
 export interface CountdownProps {
-  timeleft: TimeLeftFormatted
-  markup?: boolean
+	timeleft: TimeLeftFormatted
+	markup?: boolean
 }

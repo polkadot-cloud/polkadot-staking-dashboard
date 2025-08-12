@@ -10,22 +10,22 @@ import { useTranslation } from 'react-i18next'
 import { Padding, Support } from 'ui-core/modal'
 
 export const DiscordSupport = () => {
-  const { t } = useTranslation('modals')
-  return (
-    <>
-      <Title />
-      <Padding verticalOnly>
-        <Support>
-          <DiscordOutlineSvg />
-          <h4>{t('supportDiscord')}</h4>
-          <h1>
-            <a href={DiscordSupportUrl} target="_blank" rel="noreferrer">
-              {t('goToDiscord')} &nbsp;
-              <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
-            </a>
-          </h1>
-        </Support>
-      </Padding>
-    </>
-  )
+	const { t } = useTranslation('modals')
+	return (
+		<>
+			<Title />
+			<Padding verticalOnly>
+				<Support>
+					<DiscordOutlineSvg />
+					<h4>{t('supportDiscord')}</h4>
+					<h1>
+						<a href={DiscordSupportUrl} target="_blank" rel="noreferrer">
+							{t('goToDiscord')} &nbsp;
+							<FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
+						</a>
+					</h1>
+				</Support>
+			</Padding>
+		</>
+	)
 }

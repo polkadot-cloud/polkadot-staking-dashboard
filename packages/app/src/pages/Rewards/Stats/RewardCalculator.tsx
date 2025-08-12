@@ -7,20 +7,20 @@ import { Button } from 'library/StatCards/Button'
 import { useTranslation } from 'react-i18next'
 
 export const RewardCalculator = ({ onClick }: { onClick: () => void }) => {
-  const { t } = useTranslation('pages')
+	const { t } = useTranslation('pages')
 
-  const params = {
-    Icon: (
-      <FontAwesomeIcon
-        icon={faCalculator}
-        color="var(--accent-color-primary"
-        style={{ marginLeft: '0.25rem', height: '2.1rem' }}
-      />
-    ),
-    label: t('useCustomAmount'),
-    title: t('rewardsCalculator'),
-    onClick,
-  }
+	const params = {
+		Icon: (
+			<FontAwesomeIcon
+				icon={faCalculator}
+				color="var(--accent-color-primary"
+				style={{ marginLeft: '0.25rem', height: '2.1rem' }}
+			/>
+		),
+		label: t('useCustomAmount'),
+		title: t('rewardsCalculator'),
+		onClick,
+	}
 
-  return <Button {...params} />
+	return <Button {...params} />
 }

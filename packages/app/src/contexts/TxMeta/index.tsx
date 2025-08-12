@@ -9,39 +9,39 @@ import type { TxSubmissionItem } from 'types'
 import type { TxMetaContextInterface } from './types'
 
 export const [TxMetaContext, useTxMeta] =
-  createSafeContext<TxMetaContextInterface>()
+	createSafeContext<TxMetaContextInterface>()
 
 export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
-  // Store uids of transactions, along with their status
-  const [uids, setUids] = useState<TxSubmissionItem[]>([])
+	// Store uids of transactions, along with their status
+	const [uids, setUids] = useState<TxSubmissionItem[]>([])
 
-  // Get a tx submission
-  const getTxSubmission = (uid?: number) =>
-    uids.find((item) => item.uid === uid)
+	// Get a tx submission
+	const getTxSubmission = (uid?: number) =>
+		uids.find((item) => item.uid === uid)
 
-  // Get a tx submission by tag
-  const getTxSubmissionByTag = (tag?: string) =>
-    uids.find((item) => item.tag === tag)
+	// Get a tx submission by tag
+	const getTxSubmissionByTag = (tag?: string) =>
+		uids.find((item) => item.tag === tag)
 
-  // Subscribe to global bus tx submission
-  useEffect(() => {
-    const subUids = uids$.subscribe((result) => {
-      setUids(result)
-    })
-    return () => {
-      subUids.unsubscribe()
-    }
-  }, [])
+	// Subscribe to global bus tx submission
+	useEffect(() => {
+		const subUids = uids$.subscribe((result) => {
+			setUids(result)
+		})
+		return () => {
+			subUids.unsubscribe()
+		}
+	}, [])
 
-  return (
-    <TxMetaContext.Provider
-      value={{
-        uids,
-        getTxSubmission,
-        getTxSubmissionByTag,
-      }}
-    >
-      {children}
-    </TxMetaContext.Provider>
-  )
+	return (
+		<TxMetaContext.Provider
+			value={{
+				uids,
+				getTxSubmission,
+				getTxSubmissionByTag,
+			}}
+		>
+			{children}
+		</TxMetaContext.Provider>
+	)
 }

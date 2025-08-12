@@ -11,50 +11,50 @@ import { BulletWrapper } from '../Wrapper'
 import { Wrapper } from './Wrappers'
 
 export const Primary = ({
-  name,
-  active,
-  to,
-  bullet,
-  minimised,
-  lottie,
+	name,
+	active,
+	to,
+	bullet,
+	minimised,
+	lottie,
 }: PrimaryProps) => {
-  const { setSideMenu } = useUi()
-  const { icon, play } = useDotLottieButton(lottie as string)
+	const { setSideMenu } = useUi()
+	const { icon, play } = useDotLottieButton(lottie as string)
 
-  return (
-    <Link
-      to={to}
-      onClick={() => {
-        if (!active) {
-          play()
-          setSideMenu(false)
-        }
-      }}
-    >
-      <Wrapper
-        className={`${active ? `active` : `inactive`}${
-          minimised ? ` minimised` : ``
-        }${bullet ? ` ${bullet}` : ``}`}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{
-          duration: 0.1,
-        }}
-      >
-        <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {icon}
-        </div>
-        {!minimised && (
-          <>
-            <h4 className="name">{name}</h4>
-            {bullet && (
-              <BulletWrapper className={bullet}>
-                <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-              </BulletWrapper>
-            )}
-          </>
-        )}
-      </Wrapper>
-    </Link>
-  )
+	return (
+		<Link
+			to={to}
+			onClick={() => {
+				if (!active) {
+					play()
+					setSideMenu(false)
+				}
+			}}
+		>
+			<Wrapper
+				className={`${active ? `active` : `inactive`}${
+					minimised ? ` minimised` : ``
+				}${bullet ? ` ${bullet}` : ``}`}
+				whileHover={{ scale: 1.02 }}
+				whileTap={{ scale: 0.98 }}
+				transition={{
+					duration: 0.1,
+				}}
+			>
+				<div className={`dotlottie${minimised ? ` minimised` : ``}`}>
+					{icon}
+				</div>
+				{!minimised && (
+					<>
+						<h4 className="name">{name}</h4>
+						{bullet && (
+							<BulletWrapper className={bullet}>
+								<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+							</BulletWrapper>
+						)}
+					</>
+				)}
+			</Wrapper>
+		</Link>
+	)
 }

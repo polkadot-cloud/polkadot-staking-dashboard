@@ -13,76 +13,76 @@ import { getLocalFavorites } from '../Utils'
 import { useValidators } from '../ValidatorEntries'
 
 export const [FavoriteValidatorsContext, useFavoriteValidators] =
-  createSafeContext<FavoriteValidatorsContextInterface>()
+	createSafeContext<FavoriteValidatorsContextInterface>()
 
 export const FavoriteValidatorsProvider = ({
-  children,
+	children,
 }: {
-  children: ReactNode
+	children: ReactNode
 }) => {
-  const { isReady } = useApi()
-  const { network } = useNetwork()
-  const { fetchValidatorPrefs } = useValidators()
-  const { name } = getRelayChainData(network)
+	const { isReady } = useApi()
+	const { network } = useNetwork()
+	const { fetchValidatorPrefs } = useValidators()
+	const { name } = getRelayChainData(network)
 
-  // Stores the user's favorite validators
-  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name))
+	// Stores the user's favorite validators
+	const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name))
 
-  // Stores the user's favorites validators as list
-  const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null)
+	// Stores the user's favorites validators as list
+	const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null)
 
-  const fetchFavoriteList = async () => {
-    // Fetch preferences
-    const favoritesWithPrefs = await fetchValidatorPrefs(
-      [...favorites].map((address) => ({
-        address,
-      }))
-    )
-    setFavoritesList(favoritesWithPrefs || [])
-  }
+	const fetchFavoriteList = async () => {
+		// Fetch preferences
+		const favoritesWithPrefs = await fetchValidatorPrefs(
+			[...favorites].map((address) => ({
+				address,
+			})),
+		)
+		setFavoritesList(favoritesWithPrefs || [])
+	}
 
-  // Adds a favorite validator
-  const addFavorite = (address: string) => {
-    const newFavorites = Object.assign(favorites)
-    if (!newFavorites.includes(address)) {
-      newFavorites.push(address)
-    }
+	// Adds a favorite validator
+	const addFavorite = (address: string) => {
+		const newFavorites = Object.assign(favorites)
+		if (!newFavorites.includes(address)) {
+			newFavorites.push(address)
+		}
 
-    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites))
-    setFavorites([...newFavorites])
-  }
+		localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites))
+		setFavorites([...newFavorites])
+	}
 
-  // Removes a favorite validator if they exist
-  const removeFavorite = (address: string) => {
-    const newFavorites = Object.assign(favorites).filter(
-      (validator: string) => validator !== address
-    )
-    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites))
-    setFavorites([...newFavorites])
-  }
+	// Removes a favorite validator if they exist
+	const removeFavorite = (address: string) => {
+		const newFavorites = Object.assign(favorites).filter(
+			(validator: string) => validator !== address,
+		)
+		localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites))
+		setFavorites([...newFavorites])
+	}
 
-  // Re-fetch favorites on network change
-  useEffectIgnoreInitial(() => {
-    setFavorites(getLocalFavorites(name))
-  }, [network])
+	// Re-fetch favorites on network change
+	useEffectIgnoreInitial(() => {
+		setFavorites(getLocalFavorites(name))
+	}, [network])
 
-  // Fetch favorites in validator list format
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      fetchFavoriteList()
-    }
-  }, [isReady, JSON.stringify(favorites)])
+	// Fetch favorites in validator list format
+	useEffectIgnoreInitial(() => {
+		if (isReady) {
+			fetchFavoriteList()
+		}
+	}, [isReady, JSON.stringify(favorites)])
 
-  return (
-    <FavoriteValidatorsContext.Provider
-      value={{
-        addFavorite,
-        removeFavorite,
-        favorites,
-        favoritesList,
-      }}
-    >
-      {children}
-    </FavoriteValidatorsContext.Provider>
-  )
+	return (
+		<FavoriteValidatorsContext.Provider
+			value={{
+				addFavorite,
+				removeFavorite,
+				favorites,
+				favoritesList,
+			}}
+		>
+			{children}
+		</FavoriteValidatorsContext.Provider>
+	)
 }

@@ -17,55 +17,55 @@ const REFETCH_PRICE_INTERVAL = 30_000 // 30 seconds
 export const IGNORE_NETWORKS = ['westend']
 
 export const [TokenPricesContext, useTokenPrices] =
-  createSafeContext<TokenPricesContextInterface>()
+	createSafeContext<TokenPricesContextInterface>()
 
 export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
-  const { network } = useNetwork()
-  const { currency } = useCurrency()
-  const { pluginEnabled } = usePlugins()
-  const { unit } = getStakingChainData(network)
+	const { network } = useNetwork()
+	const { currency } = useCurrency()
+	const { pluginEnabled } = usePlugins()
+	const { unit } = getStakingChainData(network)
 
-  // Store token price and change
-  const [tokenPrice, setTokenPrice] =
-    useState<TokenPricesContextInterface>(defaultTokenPrice)
+	// Store token price and change
+	const [tokenPrice, setTokenPrice] =
+		useState<TokenPricesContextInterface>(defaultTokenPrice)
 
-  const getTokenPrice = async () => {
-    const result = await fetchTokenPrice(
-      `${unit}${currency}${currency === 'USD' ? 'T' : ''}`
-    )
-    setTokenPrice(result || defaultTokenPrice)
-  }
+	const getTokenPrice = async () => {
+		const result = await fetchTokenPrice(
+			`${unit}${currency}${currency === 'USD' ? 'T' : ''}`,
+		)
+		setTokenPrice(result || defaultTokenPrice)
+	}
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout
+	useEffect(() => {
+		let interval: NodeJS.Timeout
 
-    if (pluginEnabled('staking_api') && !IGNORE_NETWORKS.includes(network)) {
-      getTokenPrice()
-      interval = setInterval(getTokenPrice, REFETCH_PRICE_INTERVAL)
-    } else {
-      setTokenPrice(defaultTokenPrice)
-    }
+		if (pluginEnabled('staking_api') && !IGNORE_NETWORKS.includes(network)) {
+			getTokenPrice()
+			interval = setInterval(getTokenPrice, REFETCH_PRICE_INTERVAL)
+		} else {
+			setTokenPrice(defaultTokenPrice)
+		}
 
-    return () => clearInterval(interval)
-  }, [network, currency, pluginEnabled('staking_api')])
+		return () => clearInterval(interval)
+	}, [network, currency, pluginEnabled('staking_api')])
 
-  // Listen to global bus online status
-  useEffect(() => {
-    const subOnlineStatus = onlineStatus$.subscribe((result) => {
-      if (result.online) {
-        getTokenPrice()
-      }
-    })
-    return () => {
-      subOnlineStatus.unsubscribe()
-    }
-  }, [])
+	// Listen to global bus online status
+	useEffect(() => {
+		const subOnlineStatus = onlineStatus$.subscribe((result) => {
+			if (result.online) {
+				getTokenPrice()
+			}
+		})
+		return () => {
+			subOnlineStatus.unsubscribe()
+		}
+	}, [])
 
-  return (
-    <TokenPricesContext.Provider
-      value={{ ...formatTokenPrice(tokenPrice.price, tokenPrice.change) }}
-    >
-      {children}
-    </TokenPricesContext.Provider>
-  )
+	return (
+		<TokenPricesContext.Provider
+			value={{ ...formatTokenPrice(tokenPrice.price, tokenPrice.change) }}
+		>
+			{children}
+		</TokenPricesContext.Provider>
+	)
 }

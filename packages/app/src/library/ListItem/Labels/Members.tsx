@@ -9,19 +9,19 @@ import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 
 export const Members = ({ memberCounter }: { memberCounter: number }) => {
-  const { t } = useTranslation('app')
-  const { setTooltipTextAndOpen } = useTooltip()
+	const { t } = useTranslation('app')
+	const { setTooltipTextAndOpen } = useTooltip()
 
-  const tooltipText = t('poolMembers')
+	const tooltipText = t('poolMembers')
 
-  return (
-    <Label>
-      <TooltipArea
-        text={tooltipText}
-        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-      />
-      <FontAwesomeIcon icon={faUsers} />
-      &nbsp;{memberCounter}
-    </Label>
-  )
+	return (
+		<Label>
+			<TooltipArea
+				text={tooltipText}
+				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+			/>
+			<FontAwesomeIcon icon={faUsers} />
+			&nbsp;{memberCounter}
+		</Label>
+	)
 }

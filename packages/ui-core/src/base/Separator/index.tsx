@@ -10,18 +10,18 @@ import classes from './index.module.scss'
  * @summary A horizontal spacer with a bottom border. General spacer for separating content by row.
  */
 export const Separator = ({
-  children,
-  style,
-  transparent,
-  lg,
+	children,
+	style,
+	transparent,
+	lg,
 }: ComponentBase & { transparent?: boolean; lg?: boolean }) => {
-  const allClasses = classNames(classes.separator, {
-    [classes.transparent]: !!transparent,
-    [classes.lg]: !!lg,
-  })
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	const allClasses = classNames(classes.separator, {
+		[classes.transparent]: !!transparent,
+		[classes.lg]: !!lg,
+	})
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

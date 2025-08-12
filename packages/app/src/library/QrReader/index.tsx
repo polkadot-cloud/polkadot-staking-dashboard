@@ -11,67 +11,67 @@ import type { QrReaderProps } from './types'
 import { Wrapper } from './Wrapper'
 
 export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
-  const { t } = useTranslation('modals')
-  const { addHardwareAccount, hardwareAccountExists, getHardwareAccounts } =
-    useHardwareAccounts()
+	const { t } = useTranslation('modals')
+	const { addHardwareAccount, hardwareAccountExists, getHardwareAccounts } =
+		useHardwareAccounts()
 
-  const source: HardwareAccountSource = 'vault'
+	const source: HardwareAccountSource = 'vault'
 
-  const vaultAccounts = getHardwareAccounts(source, network)
+	const vaultAccounts = getHardwareAccounts(source, network)
 
-  // Store data from QR Code scanner.
-  const [qrData, setQrData] = useState<string | undefined>(undefined)
+	// Store data from QR Code scanner.
+	const [qrData, setQrData] = useState<string | undefined>(undefined)
 
-  // Handle a newly received QR signature.
-  const handleQrData = (signature: string) => {
-    setQrData(signature.split(':')?.[1] || '')
-  }
+	// Handle a newly received QR signature.
+	const handleQrData = (signature: string) => {
+		setQrData(signature.split(':')?.[1] || '')
+	}
 
-  const valid =
-    qrData &&
-    isValidAddress(qrData) &&
-    !hardwareAccountExists(source, network, qrData) &&
-    formatAccountSs58(qrData, ss58) !== null
+	const valid =
+		qrData &&
+		isValidAddress(qrData) &&
+		!hardwareAccountExists(source, network, qrData) &&
+		formatAccountSs58(qrData, ss58) !== null
 
-  useEffect(() => {
-    // Add account and close overlay if valid.
-    if (valid) {
-      const account = addHardwareAccount(
-        source,
-        network,
-        qrData,
-        vaultAccounts.length
-      )
-      if (account) {
-        onSuccess(account)
-      }
-    }
-  })
+	useEffect(() => {
+		// Add account and close overlay if valid.
+		if (valid) {
+			const account = addHardwareAccount(
+				source,
+				network,
+				qrData,
+				vaultAccounts.length,
+			)
+			if (account) {
+				onSuccess(account)
+			}
+		}
+	})
 
-  // Display feedback.
-  const feedback =
-    qrData === undefined
-      ? `${t('waitingForQRCode')}`
-      : isValidAddress(qrData)
-        ? formatAccountSs58(qrData, ss58) !== qrData
-          ? `${t('differentNetworkAddress')}`
-          : hardwareAccountExists(source, network, qrData)
-            ? `${t('accountAlreadyImported')}`
-            : `${t('addressReceived')}`
-        : `${t('invalidAddress')}`
+	// Display feedback.
+	const feedback =
+		qrData === undefined
+			? `${t('waitingForQRCode')}`
+			: isValidAddress(qrData)
+				? formatAccountSs58(qrData, ss58) !== qrData
+					? `${t('differentNetworkAddress')}`
+					: hardwareAccountExists(source, network, qrData)
+						? `${t('accountAlreadyImported')}`
+						: `${t('addressReceived')}`
+				: `${t('invalidAddress')}`
 
-  return (
-    <Wrapper>
-      <div className="qrRegion">
-        <QrScanSignature
-          size={250}
-          onScan={({ signature }) => handleQrData(signature)}
-        />
-      </div>
-      <h3>
-        {feedback}
-        {qrData === undefined && <div></div>}
-      </h3>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<div className="qrRegion">
+				<QrScanSignature
+					size={250}
+					onScan={({ signature }) => handleQrData(signature)}
+				/>
+			</div>
+			<h3>
+				{feedback}
+				{qrData === undefined && <div></div>}
+			</h3>
+		</Wrapper>
+	)
 }

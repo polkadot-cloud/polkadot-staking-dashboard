@@ -9,31 +9,31 @@ import { useTranslation } from 'react-i18next'
 import { PayoutLine } from 'ui-graphs'
 
 export const InactiveGraph = ({
-  width,
-  height,
+	width,
+	height,
 }: {
-  width: string | number
-  height: string | number
+	width: string | number
+	height: string | number
 }) => {
-  const { i18n, t } = useTranslation()
-  const { network } = useNetwork()
-  const { getThemeValue } = useThemeValues()
-  const { unit } = getStakingChainData(network)
+	const { i18n, t } = useTranslation()
+	const { network } = useNetwork()
+	const { getThemeValue } = useThemeValues()
+	const { unit } = getStakingChainData(network)
 
-  return (
-    <PayoutLine
-      syncing={false}
-      entries={[]}
-      width={width}
-      height={height}
-      getThemeValue={getThemeValue}
-      unit={unit}
-      dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
-      labels={{
-        era: t('era', { ns: 'app' }),
-        reward: t('reward', { ns: 'modals' }),
-        payouts: t('payouts', { ns: 'app' }),
-      }}
-    />
-  )
+	return (
+		<PayoutLine
+			syncing={false}
+			entries={[]}
+			width={width}
+			height={height}
+			getThemeValue={getThemeValue}
+			unit={unit}
+			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
+			labels={{
+				era: t('era', { ns: 'app' }),
+				reward: t('reward', { ns: 'modals' }),
+				payouts: t('payouts', { ns: 'app' }),
+			}}
+		/>
+	)
 }

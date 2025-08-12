@@ -13,14 +13,14 @@ import { Side } from './Side'
 import { Title } from './Title'
 
 export const Page = {
-  Body,
-  Container,
-  Entry,
-  Footer,
-  Heading,
-  Main,
-  Row,
-  RowSection,
-  Side,
-  Title,
+	Body,
+	Container,
+	Entry,
+	Footer,
+	Heading,
+	Main,
+	Row,
+	RowSection,
+	Side,
+	Title,
 }

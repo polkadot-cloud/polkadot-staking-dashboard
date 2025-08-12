@@ -13,74 +13,76 @@ import type { NewMemberProps } from './types'
 import { useStatusButtons } from './useStatusButtons'
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
-  const { t } = useTranslation()
-  const { isBonding } = useStaking()
-  const { setActiveTab } = usePoolsTabs()
-  const { openCanvas } = useOverlay().canvas
-  const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
+	const { t } = useTranslation()
+	const { isBonding } = useStaking()
+	const { setActiveTab } = usePoolsTabs()
+	const { openCanvas } = useOverlay().canvas
+	const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
 
-  // Alias for create button disabled state
-  const createDisabled = getCreateDisabled() || isBonding
+	// Alias for create button disabled state
+	const createDisabled = getCreateDisabled() || isBonding
 
-  // Disable opening the canvas if data is not ready.
-  const joinButtonDisabled = getJoinDisabled() || isBonding
+	// Disable opening the canvas if data is not ready.
+	const joinButtonDisabled = getJoinDisabled() || isBonding
 
-  return (
-    <CallToActionWrapper>
-      <div className="inner">
-        {syncing ? (
-          <CallToActionLoader />
-        ) : (
-          <>
-            <section className="fixedWidth">
-              <div className="buttons">
-                <div
-                  className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${!joinButtonDisabled ? ` pulse` : ``}`}
-                >
-                  <button
-                    onClick={() => {
-                      openCanvas({
-                        key: 'Pool',
-                        options: {},
-                        size: 'xl',
-                      })
-                    }}
-                    disabled={joinButtonDisabled}
-                  >
-                    {t('joinPool', { ns: 'pages' })}
-                    <FontAwesomeIcon icon={faUserPlus} />
-                  </button>
-                </div>
-              </div>
-            </section>
-            <section>
-              <div className="buttons">
-                <div
-                  className={`button standalone secondary ${createDisabled ? ` disabled` : ``}`}
-                >
-                  <button
-                    onClick={() => {
-                      openCanvas({
-                        key: 'CreatePool',
-                        options: {},
-                        size: 'xl',
-                      })
-                    }}
-                    disabled={createDisabled}
-                  >
-                    {t('createPool', { ns: 'pages' })}
-                  </button>
-                </div>
-                <div className={`button standalone secondary`}>
-                  <button onClick={() => setActiveTab(1)}>
-                    {t('browsePools', { ns: 'pages' })}
-                  </button>
-                </div>
-              </div>
-            </section>
-          </>
-        )}
-      </div>
-    </CallToActionWrapper>
-  )
+	return (
+		<CallToActionWrapper>
+			<div>
+				{syncing ? (
+					<CallToActionLoader />
+				) : (
+					<>
+						<section className="fixedWidth">
+							<div className="buttons">
+								<div
+									className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${!joinButtonDisabled ? ` pulse` : ``}`}
+								>
+									<button
+										type="button"
+										onClick={() => {
+											openCanvas({
+												key: 'Pool',
+												options: {},
+												size: 'xl',
+											})
+										}}
+										disabled={joinButtonDisabled}
+									>
+										{t('joinPool', { ns: 'pages' })}
+										<FontAwesomeIcon icon={faUserPlus} />
+									</button>
+								</div>
+							</div>
+						</section>
+						<section>
+							<div className="buttons">
+								<div
+									className={`button standalone secondary ${createDisabled ? ` disabled` : ``}`}
+								>
+									<button
+										type="button"
+										onClick={() => {
+											openCanvas({
+												key: 'CreatePool',
+												options: {},
+												size: 'xl',
+											})
+										}}
+										disabled={createDisabled}
+									>
+										{t('createPool', { ns: 'pages' })}
+									</button>
+								</div>
+								<div className={`button standalone secondary`}>
+									<button type="button" onClick={() => setActiveTab(1)}>
+										{t('browsePools', { ns: 'pages' })}
+									</button>
+								</div>
+							</div>
+						</section>
+					</>
+				)}
+			</div>
+		</CallToActionWrapper>
+	)
 }

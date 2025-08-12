@@ -9,7 +9,7 @@ import classes from './index.module.scss'
  * @summary Footer container.
  */
 export const Footer = ({ children, style }: ComponentBase) => (
-  <div className={classes.footer} style={style}>
-    {children}
-  </div>
+	<div className={classes.footer} style={style}>
+		{children}
+	</div>
 )

@@ -8,21 +8,21 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolUpdateRoles = <T extends StakingChain>(
-  api: DedotClient<T>,
-  poolId: number,
-  roles: PoolRoles
+	api: DedotClient<T>,
+	poolId: number,
+	roles: PoolRoles,
 ) =>
-  asTx(
-    api.tx.nominationPools.updateRoles(
-      poolId,
-      roles?.root
-        ? { type: 'Set', value: new AccountId32(roles.root) }
-        : { type: 'Remove' },
-      roles.nominator
-        ? { type: 'Set', value: new AccountId32(roles.nominator) }
-        : { type: 'Remove' },
-      roles.bouncer
-        ? { type: 'Set', value: new AccountId32(roles.bouncer) }
-        : { type: 'Remove' }
-    )
-  )
+	asTx(
+		api.tx.nominationPools.updateRoles(
+			poolId,
+			roles?.root
+				? { type: 'Set', value: new AccountId32(roles.root) }
+				: { type: 'Remove' },
+			roles.nominator
+				? { type: 'Set', value: new AccountId32(roles.nominator) }
+				: { type: 'Remove' },
+			roles.bouncer
+				? { type: 'Set', value: new AccountId32(roles.bouncer) }
+				: { type: 'Remove' },
+		),
+	)

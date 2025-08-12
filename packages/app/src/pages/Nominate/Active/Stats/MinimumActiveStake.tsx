@@ -10,19 +10,19 @@ import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
 export const MinimumActiveStake = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { minNominatorBond, minimumActiveStake } = useApi().stakingMetrics
-  const { unit, units } = getStakingChainData(network)
-  const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { minNominatorBond, minimumActiveStake } = useApi().stakingMetrics
+	const { unit, units } = getStakingChainData(network)
+	const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
 
-  const params = {
-    label: t('minimumToEarnRewards'),
-    value: planckToUnitBn(minToEarnRewards, units).toNumber(),
-    decimals: 3,
-    unit: `${unit}`,
-    helpKey: 'Bonding',
-  }
+	const params = {
+		label: t('minimumToEarnRewards'),
+		value: planckToUnitBn(minToEarnRewards, units).toNumber(),
+		decimals: 3,
+		unit: `${unit}`,
+		helpKey: 'Bonding',
+	}
 
-  return <Number {...params} />
+	return <Number {...params} />
 }

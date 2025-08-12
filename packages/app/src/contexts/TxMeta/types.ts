@@ -4,7 +4,7 @@
 import type { TxSubmissionItem } from 'types'
 
 export interface TxMetaContextInterface {
-  uids: TxSubmissionItem[]
-  getTxSubmission: (uid?: number) => TxSubmissionItem | undefined
-  getTxSubmissionByTag: (tag: string) => TxSubmissionItem | undefined
+	uids: TxSubmissionItem[]
+	getTxSubmission: (uid?: number) => TxSubmissionItem | undefined
+	getTxSubmissionByTag: (tag: string) => TxSubmissionItem | undefined
 }

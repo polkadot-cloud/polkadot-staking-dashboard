@@ -20,15 +20,15 @@ import type { StakingLedgerQuery } from '../subscribe/stakingLedger'
 
 // All available chains
 export type Chain =
-  | PolkadotApi
-  | PolkadotPeopleApi
-  | PolkadotAssetHubApi
-  | KusamaApi
-  | KusamaPeopleApi
-  | KusamaAssetHubApi
-  | WestendApi
-  | WestendPeopleApi
-  | WestendAssetHubApi
+	| PolkadotApi
+	| PolkadotPeopleApi
+	| PolkadotAssetHubApi
+	| KusamaApi
+	| KusamaPeopleApi
+	| KusamaAssetHubApi
+	| WestendApi
+	| WestendPeopleApi
+	| WestendAssetHubApi
 
 // Relay chains
 export type RelayChain = PolkadotApi | KusamaApi | WestendApi
@@ -38,61 +38,61 @@ export type PeopleChain = PolkadotPeopleApi | KusamaPeopleApi | WestendPeopleApi
 
 // Asset hub chains
 export type AssetHubChain =
-  | PolkadotAssetHubApi
-  | KusamaAssetHubApi
-  | WestendAssetHubApi
+	| PolkadotAssetHubApi
+	| KusamaAssetHubApi
+	| WestendAssetHubApi
 
 // Chains that are used for staking and nomination pools
 export type StakingChain = PolkadotApi | KusamaApi | WestendAssetHubApi
 
 // Mapping of service types for each network
 export interface ServiceType {
-  polkadot: typeof PolkadotService
-  kusama: typeof KusamaService
-  westend: typeof WestendService
+	polkadot: typeof PolkadotService
+	kusama: typeof KusamaService
+	westend: typeof WestendService
 }
 
 // Mapping of the required chains for each service
 export type Service = {
-  polkadot: [PolkadotApi, PolkadotPeopleApi, PolkadotAssetHubApi]
-  kusama: [KusamaApi, KusamaPeopleApi, KusamaAssetHubApi]
-  westend: [WestendApi, WestendPeopleApi, WestendAssetHubApi]
+	polkadot: [PolkadotApi, PolkadotPeopleApi, PolkadotAssetHubApi]
+	kusama: [KusamaApi, KusamaPeopleApi, KusamaAssetHubApi]
+	westend: [WestendApi, WestendPeopleApi, WestendAssetHubApi]
 }
 
 // Generic service class that all services must implement
 export abstract class ServiceClass {
-  abstract interface: ServiceInterface
+	abstract interface: ServiceInterface
 
-  abstract start(): Promise<void>
-  abstract unsubscribe(): Promise<void>
+	abstract start(): Promise<void>
+	abstract unsubscribe(): Promise<void>
 }
 
 // Bonded record
 export type BondedAccounts<StakingApi extends StakingChain> = Record<
-  string,
-  BondedQuery<StakingApi>
+	string,
+	BondedQuery<StakingApi>
 >
 
 // Staking ledgers record
 export type StakingLedgers<StakingApi extends StakingChain> = Record<
-  string,
-  StakingLedgerQuery<StakingApi>
+	string,
+	StakingLedgerQuery<StakingApi>
 >
 
 // Active pools record
 export type ActivePools<StakingApi extends StakingChain> = Record<
-  number,
-  ActivePoolQuery<StakingApi>
+	number,
+	ActivePoolQuery<StakingApi>
 >
 
 // Pool Memberships record
 export type PoolMemberships<StakingApi extends StakingChain> = Record<
-  string,
-  PoolMembershipQuery<StakingApi>
+	string,
+	PoolMembershipQuery<StakingApi>
 >
 
 // Proxies record
 export type Proxies<StakingApi extends StakingChain> = Record<
-  string,
-  ProxiesQuery<StakingApi>
+	string,
+	ProxiesQuery<StakingApi>
 >

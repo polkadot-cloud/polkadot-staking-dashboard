@@ -1,6 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Offline } from 'Offline'
+import { Overlays } from 'Overlays'
+import { StakingApi } from 'StakingApi'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -19,102 +22,99 @@ import { PageWithTitle } from 'library/PageWithTitle'
 import { Prompt } from 'library/Prompt'
 import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
-import { Offline } from 'Offline'
-import { Overlays } from 'Overlays'
 import { ApolloProvider, client } from 'plugin-staking-api'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { HelmetProvider } from 'react-helmet-async'
 import {
-  HashRouter,
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
+	HashRouter,
+	Navigate,
+	Route,
+	Routes,
+	useLocation,
+	useNavigate,
 } from 'react-router-dom'
-import { StakingApi } from 'StakingApi'
 import { Page } from 'ui-core/base'
 
 const RouterInner = () => {
-  const navigate = useNavigate()
-  const { network } = useNetwork()
-  const { pathname } = useLocation()
-  const { pluginEnabled } = usePlugins()
-  const { activeAddress } = useActiveAccounts()
-  const { setContainerRefs, advancedMode } = useUi()
+	const navigate = useNavigate()
+	const { network } = useNetwork()
+	const { pathname } = useLocation()
+	const { pluginEnabled } = usePlugins()
+	const { activeAddress } = useActiveAccounts()
+	const { setContainerRefs, advancedMode } = useUi()
 
-  // References to outer container
-  const mainInterfaceRef = useRef<HTMLDivElement>(null)
+	// References to outer container
+	const mainInterfaceRef = useRef<HTMLDivElement>(null)
 
-  // Scroll to top of the window on every page change or network change
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname, network])
+	// Scroll to top of the window on every page change or network change
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [pathname, network])
 
-  // Set container references to UI context and make available throughout app
-  useEffect(() => {
-    setContainerRefs({
-      mainInterface: mainInterfaceRef,
-    })
-  }, [])
+	// Set container references to UI context and make available throughout app
+	useEffect(() => {
+		setContainerRefs({
+			mainInterface: mainInterfaceRef,
+		})
+	}, [])
 
-  // Support active account from url
-  useAccountFromUrl()
+	// Support active account from url
+	useAccountFromUrl()
 
-  // Handle automatic navigation on account switch based on staking status
-  useAccountSwitchNavigation()
+	// Handle automatic navigation on account switch based on staking status
+	useAccountSwitchNavigation()
 
-  // Jump back to overview page on advanced mode change
-  useEffectIgnoreInitial(() => {
-    navigate(`/overview`)
-  }, [advancedMode])
+	// Jump back to overview page on advanced mode change
+	useEffectIgnoreInitial(() => {
+		navigate(`/overview`)
+	}, [advancedMode])
 
-  return (
-    <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      <ApolloProvider client={client}>
-        {pluginEnabled('staking_api') && activeAddress && (
-          <StakingApi who={activeAddress} network={network} />
-        )}
-        <NotificationPrompts />
-        <Page.Body>
-          <Help />
-          <Overlays />
-          <Menu />
-          <Tooltip />
-          <Prompt />
-          <SideMenu />
-          <Page.Main ref={mainInterfaceRef}>
-            <HelmetProvider>
-              <Headers />
-              <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
-                <Routes>
-                  {getPagesConfig(network, advancedMode).map((page, i) => (
-                    <Route
-                      key={`main_interface_page_${i}`}
-                      path={page.hash}
-                      element={<PageWithTitle page={page} />}
-                    />
-                  ))}
-                  <Route
-                    key="main_interface_navigate"
-                    path="*"
-                    element={<Navigate to="/overview" />}
-                  />
-                </Routes>
-              </ErrorBoundary>
-              <MainFooter />
-            </HelmetProvider>
-          </Page.Main>
-        </Page.Body>
-        <Offline />
-      </ApolloProvider>
-    </ErrorBoundary>
-  )
+	return (
+		<ErrorBoundary FallbackComponent={ErrorFallbackApp}>
+			<ApolloProvider client={client}>
+				{pluginEnabled('staking_api') && activeAddress && (
+					<StakingApi who={activeAddress} network={network} />
+				)}
+				<NotificationPrompts />
+				<Page.Body>
+					<Help />
+					<Overlays />
+					<Menu />
+					<Tooltip />
+					<Prompt />
+					<SideMenu />
+					<Page.Main ref={mainInterfaceRef}>
+						<HelmetProvider>
+							<Headers />
+							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
+								<Routes>
+									{getPagesConfig(network, advancedMode).map((page, i) => (
+										<Route
+											key={`main_interface_page_${i}`}
+											path={page.hash}
+											element={<PageWithTitle page={page} />}
+										/>
+									))}
+									<Route
+										key="main_interface_navigate"
+										path="*"
+										element={<Navigate to="/overview" />}
+									/>
+								</Routes>
+							</ErrorBoundary>
+							<MainFooter />
+						</HelmetProvider>
+					</Page.Main>
+				</Page.Body>
+				<Offline />
+			</ApolloProvider>
+		</ErrorBoundary>
+	)
 }
 
 export const Router = () => (
-  <HashRouter basename="/">
-    <RouterInner />
-  </HashRouter>
+	<HashRouter basename="/">
+		<RouterInner />
+	</HashRouter>
 )

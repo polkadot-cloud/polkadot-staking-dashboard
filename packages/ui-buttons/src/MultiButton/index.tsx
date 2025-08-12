@@ -5,6 +5,6 @@ import { Button } from './Button'
 import { Container } from './Container'
 
 export const MultiButton = {
-  Container,
-  Button,
+	Container,
+	Button,
 }

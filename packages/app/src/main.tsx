@@ -23,16 +23,16 @@ import { initDedotService } from 'dedot-api'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {
-  throw new Error('Failed to find the root element')
+	throw new Error('Failed to find the root element')
 }
 
 // Refresh local storage language resources if in development, or if new app version is present.
 // This ensures all language keys are up to date
 if (
-  localStorage.getItem('app_version') !== version ||
-  import.meta.env.MODE === 'development'
+	localStorage.getItem('app_version') !== version ||
+	import.meta.env.MODE === 'development'
 ) {
-  localStorage.removeItem('lng_resources')
+	localStorage.removeItem('lng_resources')
 }
 
 // Initialise global api service

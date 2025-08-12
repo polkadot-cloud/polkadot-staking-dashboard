@@ -5,5 +5,5 @@ import { BehaviorSubject } from 'rxjs'
 import type { FastUnstakeQueue } from 'types'
 
 export const _fastUnstakeQueue = new BehaviorSubject<FastUnstakeQueue>(
-  undefined
+	undefined,
 )

@@ -7,14 +7,14 @@ import { PagesConfig } from './pages'
 
 // Get pages config, and remove operators page if it is not supported
 export const getPagesConfig = (network: NetworkId, advancedMode: boolean) => {
-  const operatorsSupported = isOperatorsSupported(network)
+	const operatorsSupported = isOperatorsSupported(network)
 
-  let pagesConfig = !operatorsSupported
-    ? PagesConfig.filter((page) => page.key === 'operators')
-    : PagesConfig
+	let pagesConfig = !operatorsSupported
+		? PagesConfig.filter((page) => page.key === 'operators')
+		: PagesConfig
 
-  if (!advancedMode) {
-    pagesConfig = pagesConfig.filter(({ advanced }) => !advanced)
-  }
-  return pagesConfig
+	if (!advancedMode) {
+		pagesConfig = pagesConfig.filter(({ advanced }) => !advanced)
+	}
+	return pagesConfig
 }

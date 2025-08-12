@@ -18,161 +18,161 @@ import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const Vault = () => {
-  const { t } = useTranslation()
-  const { network } = useNetwork()
-  const {
-    getHardwareAccount,
-    getHardwareAccounts,
-    hardwareAccountExists,
-    renameHardwareAccount,
-    removeHardwareAccount,
-  } = useHardwareAccounts()
-  const { setModalResize } = useOverlay().modal
-  const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
-    useOtherAccounts()
-  const { ss58 } = getStakingChainData(network)
-  const source: HardwareAccountSource = 'vault'
+	const { t } = useTranslation()
+	const { network } = useNetwork()
+	const {
+		getHardwareAccount,
+		getHardwareAccounts,
+		hardwareAccountExists,
+		renameHardwareAccount,
+		removeHardwareAccount,
+	} = useHardwareAccounts()
+	const { setModalResize } = useOverlay().modal
+	const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
+		useOtherAccounts()
+	const { ss58 } = getStakingChainData(network)
+	const source: HardwareAccountSource = 'vault'
 
-  // Whether the import account button is active
-  const [importActive, setImportActive] = useState<boolean>(false)
+	// Whether the import account button is active
+	const [importActive, setImportActive] = useState<boolean>(false)
 
-  // Get vault accounts
-  const vaultAccounts = getHardwareAccounts(source, network)
+	// Get vault accounts
+	const vaultAccounts = getHardwareAccounts(source, network)
 
-  // Handle exist check for a vault address
-  const handleExists = (address: string) =>
-    hardwareAccountExists(source, network, address)
+	// Handle exist check for a vault address
+	const handleExists = (address: string) =>
+		hardwareAccountExists(source, network, address)
 
-  // Handle renaming a vault address
-  const handleRename = (address: string, newName: string) => {
-    renameOtherAccount(address, newName)
-    renameHardwareAccount(source, network, address, newName)
-  }
+	// Handle renaming a vault address
+	const handleRename = (address: string, newName: string) => {
+		renameOtherAccount(address, newName)
+		renameHardwareAccount(source, network, address, newName)
+	}
 
-  // Handle removing a vault address
-  const handleRemove = (address: string): void => {
-    if (confirm(t('areYouSure', { ns: 'app' }))) {
-      const existingOther = getHardwareAccount(source, network, address)
-      if (existingOther) {
-        forgetOtherAccounts([existingOther])
-      }
-      removeHardwareAccount(source, network, address)
-    }
-  }
+	// Handle removing a vault address
+	const handleRemove = (address: string): void => {
+		if (confirm(t('areYouSure', { ns: 'app' }))) {
+			const existingOther = getHardwareAccount(source, network, address)
+			if (existingOther) {
+				forgetOtherAccounts([existingOther])
+			}
+			removeHardwareAccount(source, network, address)
+		}
+	}
 
-  // Account container ref
-  const accountsRef = useRef<HTMLDivElement>(null)
-  const [accountsHeight, setAccountsHeight] = useState(0)
+	// Account container ref
+	const accountsRef = useRef<HTMLDivElement>(null)
+	const [accountsHeight, setAccountsHeight] = useState(0)
 
-  useEffect(() => {
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.contentRect) {
-          setAccountsHeight(entry.contentRect.height)
-        }
-      }
-    })
-    if (accountsRef.current) {
-      observer.observe(accountsRef.current)
-    }
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
+	useEffect(() => {
+		const observer = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				if (entry.contentRect) {
+					setAccountsHeight(entry.contentRect.height)
+				}
+			}
+		})
+		if (accountsRef.current) {
+			observer.observe(accountsRef.current)
+		}
+		return () => {
+			observer.disconnect()
+		}
+	}, [])
 
-  // Resize modal on importActive change
-  useEffect(() => {
-    setModalResize()
-  }, [vaultAccounts.length, accountsHeight])
+	// Resize modal on importActive change
+	useEffect(() => {
+		setModalResize()
+	}, [vaultAccounts.length, accountsHeight])
 
-  // Accounts container style depending on whether import is active
-  const accountsStyle: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    minHeight: importActive ? '20rem' : 0,
-    opacity: importActive ? 0.1 : 1,
-    transition: 'all 0.2s',
-  }
+	// Accounts container style depending on whether import is active
+	const accountsStyle: CSSProperties = {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
+		minHeight: importActive ? '20rem' : 0,
+		opacity: importActive ? 0.1 : 1,
+		transition: 'all 0.2s',
+	}
 
-  return (
-    <>
-      {importActive ? <AccountImport.Inactive /> : <Close />}
-      <AccountImport.Header
-        Logo={<PolkadotVaultSVG />}
-        title="Polkadot Vault"
-        websiteText="vault.novasama.io"
-        websiteUrl="https://vault.novasama.io"
-      >
-        <span>
-          <ButtonText
-            text={
-              !importActive
-                ? t('addAccount', { ns: 'app' })
-                : t('cancel', { ns: 'app' })
-            }
-            iconLeft={faQrcode}
-            onClick={() => {
-              setImportActive(!importActive)
-            }}
-          />
-        </span>
-      </AccountImport.Header>
+	return (
+		<>
+			{importActive ? <AccountImport.Inactive /> : <Close />}
+			<AccountImport.Header
+				Logo={<PolkadotVaultSVG />}
+				title="Polkadot Vault"
+				websiteText="vault.novasama.io"
+				websiteUrl="https://vault.novasama.io"
+			>
+				<span>
+					<ButtonText
+						text={
+							!importActive
+								? t('addAccount', { ns: 'app' })
+								: t('cancel', { ns: 'app' })
+						}
+						iconLeft={faQrcode}
+						onClick={() => {
+							setImportActive(!importActive)
+						}}
+					/>
+				</span>
+			</AccountImport.Header>
 
-      {importActive && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '9.2rem',
-            left: 0,
-            width: '100%',
-            zIndex: 9,
-          }}
-        >
-          <QrReader
-            network={network}
-            ss58={ss58}
-            onSuccess={(account) => {
-              addOtherAccounts([account])
-              setImportActive(false)
-            }}
-          />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <ButtonSubmitInvert
-              text={t('cancel', { ns: 'app' })}
-              onClick={() => setImportActive(false)}
-            />
-          </div>
-        </div>
-      )}
-      <div ref={accountsRef} style={{ ...accountsStyle }}>
-        {vaultAccounts.length === 0 ? (
-          <AccountImport.Empty>
-            <h3>{t('importedAccount', { count: 0, ns: 'modals' })}</h3>
-          </AccountImport.Empty>
-        ) : (
-          <>
-            <AccountImport.SubHeading
-              text={t('importedAccount', {
-                ns: 'modals',
-                count: vaultAccounts.length,
-              })}
-            />
-            {vaultAccounts.map(({ address, name }, i) => (
-              <AccountImport.Item
-                key={`vault_imported_${i}`}
-                address={address}
-                initial={name}
-                last={i === vaultAccounts.length - 1}
-                Identicon={<Polkicon address={address} fontSize="3.3rem" />}
-                existsHandler={handleExists}
-                renameHandler={handleRename}
-                onRemove={handleRemove}
-              />
-            ))}
-          </>
-        )}
-      </div>
-    </>
-  )
+			{importActive && (
+				<div
+					style={{
+						position: 'absolute',
+						top: '9.2rem',
+						left: 0,
+						width: '100%',
+						zIndex: 9,
+					}}
+				>
+					<QrReader
+						network={network}
+						ss58={ss58}
+						onSuccess={(account) => {
+							addOtherAccounts([account])
+							setImportActive(false)
+						}}
+					/>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<ButtonSubmitInvert
+							text={t('cancel', { ns: 'app' })}
+							onClick={() => setImportActive(false)}
+						/>
+					</div>
+				</div>
+			)}
+			<div ref={accountsRef} style={{ ...accountsStyle }}>
+				{vaultAccounts.length === 0 ? (
+					<AccountImport.Empty>
+						<h3>{t('importedAccount', { count: 0, ns: 'modals' })}</h3>
+					</AccountImport.Empty>
+				) : (
+					<>
+						<AccountImport.SubHeading
+							text={t('importedAccount', {
+								ns: 'modals',
+								count: vaultAccounts.length,
+							})}
+						/>
+						{vaultAccounts.map(({ address, name }, i) => (
+							<AccountImport.Item
+								key={`vault_imported_${i}`}
+								address={address}
+								initial={name}
+								last={i === vaultAccounts.length - 1}
+								Identicon={<Polkicon address={address} fontSize="3.3rem" />}
+								existsHandler={handleExists}
+								renameHandler={handleRename}
+								onRemove={handleRemove}
+							/>
+						))}
+					</>
+				)}
+			</div>
+		</>
+	)
 }

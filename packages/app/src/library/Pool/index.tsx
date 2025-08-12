@@ -19,48 +19,48 @@ import { PoolId } from '../ListItem/Labels/PoolId'
 import type { PoolProps } from './types'
 
 export const Pool = ({ pool }: PoolProps) => {
-  const { memberCounter, addresses, id } = pool
-  const { setActiveTab } = usePoolsTabs()
-  const { syncing } = useSyncing(['active-pools'])
-  const { getCurrentCommission } = usePoolCommission()
+	const { memberCounter, addresses, id } = pool
+	const { setActiveTab } = usePoolsTabs()
+	const { syncing } = useSyncing(['active-pools'])
+	const { getCurrentCommission } = usePoolCommission()
 
-  const currentCommission = getCurrentCommission(id)
+	const currentCommission = getCurrentCommission(id)
 
-  return (
-    <Wrapper className="pool">
-      <div className="inner">
-        <div className="row top">
-          <PoolIdentity pool={pool} />
-          <div>
-            <HeaderButtonRow>
-              <FavoritePool address={addresses.stash} />
-              <More
-                pool={pool}
-                setActiveTab={setActiveTab}
-                disabled={syncing}
-              />
-            </HeaderButtonRow>
-          </div>
-        </div>
-        <Separator />
-        <div className="row bottom lg pools">
-          <div>
-            <PoolNominateStatus pool={pool} />
-          </div>
-          <div>
-            <LabelRow>
-              {currentCommission > 0 && (
-                <PoolCommission
-                  commission={`${new BigNumber(currentCommission / PerbillMultiplier).decimalPlaces(3).toFormat()}%`}
-                />
-              )}
-              <PoolId id={id} />
-              <Members memberCounter={memberCounter} />
-              <PoolBonded pool={pool} />
-            </LabelRow>
-          </div>
-        </div>
-      </div>
-    </Wrapper>
-  )
+	return (
+		<Wrapper className="pool">
+			<div className="inner">
+				<div className="row top">
+					<PoolIdentity pool={pool} />
+					<div>
+						<HeaderButtonRow>
+							<FavoritePool address={addresses.stash} />
+							<More
+								pool={pool}
+								setActiveTab={setActiveTab}
+								disabled={syncing}
+							/>
+						</HeaderButtonRow>
+					</div>
+				</div>
+				<Separator />
+				<div className="row bottom lg pools">
+					<div>
+						<PoolNominateStatus pool={pool} />
+					</div>
+					<div>
+						<LabelRow>
+							{currentCommission > 0 && (
+								<PoolCommission
+									commission={`${new BigNumber(currentCommission / PerbillMultiplier).decimalPlaces(3).toFormat()}%`}
+								/>
+							)}
+							<PoolId id={id} />
+							<Members memberCounter={memberCounter} />
+							<PoolBonded pool={pool} />
+						</LabelRow>
+					</div>
+				</div>
+			</div>
+		</Wrapper>
+	)
 }

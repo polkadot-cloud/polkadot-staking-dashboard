@@ -5,7 +5,7 @@ import type { FunctionComponent, SVGProps } from 'react'
 import classes from './index.module.scss'
 
 export const Logo = ({
-  Svg,
+	Svg,
 }: {
-  Svg: FunctionComponent<SVGProps<SVGSVGElement>>
+	Svg: FunctionComponent<SVGProps<SVGSVGElement>>
 }) => <span className={classes.logo}>{<Svg />}</span>

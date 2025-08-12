@@ -7,6 +7,6 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const stakingSetPayee = <T extends StakingChain>(
-  api: DedotClient<T>,
-  payee: PalletStakingRewardDestination
+	api: DedotClient<T>,
+	payee: PalletStakingRewardDestination,
 ) => asTx(api.tx.staking.setPayee(payee))

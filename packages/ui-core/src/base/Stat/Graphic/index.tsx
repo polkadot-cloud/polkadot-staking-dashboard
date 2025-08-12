@@ -9,7 +9,7 @@ import classes from './index.module.scss'
  * @summary Used to house a graphic in a `StatCard`
  */
 export const Graphic = ({ children, style }: ComponentBase) => (
-  <div className={classes.graphic} style={style}>
-    {children}
-  </div>
+	<div className={classes.graphic} style={style}>
+		{children}
+	</div>
 )

@@ -12,58 +12,58 @@ import { AverageCommission } from './Stats/AverageCommission'
 import { TotalValidators } from './Stats/TotalValidators'
 
 export const AllValidators = () => {
-  const { t } = useTranslation('pages')
-  const { isReady } = useApi()
-  const { getValidators } = useValidators()
-  const validators = getValidators()
+	const { t } = useTranslation('pages')
+	const { isReady } = useApi()
+	const { getValidators } = useValidators()
+	const validators = getValidators()
 
-  return (
-    <>
-      <Stat.Row>
-        <ActiveValidators />
-        <TotalValidators />
-        <AverageCommission />
-      </Stat.Row>
-      <Page.Row>
-        <CardWrapper>
-          {!isReady ? (
-            <div className="item">
-              <h3>{t('connecting')}...</h3>
-            </div>
-          ) : (
-            <>
-              {validators.length === 0 && (
-                <div className="item">
-                  <h3>{t('fetchingValidators')}...</h3>
-                </div>
-              )}
-              {validators.length > 0 && (
-                <ValidatorList
-                  bondFor="nominator"
-                  validators={validators}
-                  title={t('networkValidators')}
-                  selectable={false}
-                  defaultFilters={{
-                    includes: ['active'],
-                    excludes: [
-                      'all_commission',
-                      'blocked_nominations',
-                      'missing_identity',
-                    ],
-                  }}
-                  defaultOrder="rank"
-                  allowListFormat={false}
-                  allowMoreCols
-                  allowFilters
-                  allowSearch
-                  itemsPerPage={50}
-                  toggleFavorites
-                />
-              )}
-            </>
-          )}
-        </CardWrapper>
-      </Page.Row>
-    </>
-  )
+	return (
+		<>
+			<Stat.Row>
+				<ActiveValidators />
+				<TotalValidators />
+				<AverageCommission />
+			</Stat.Row>
+			<Page.Row>
+				<CardWrapper>
+					{!isReady ? (
+						<div className="item">
+							<h3>{t('connecting')}...</h3>
+						</div>
+					) : (
+						<>
+							{validators.length === 0 && (
+								<div className="item">
+									<h3>{t('fetchingValidators')}...</h3>
+								</div>
+							)}
+							{validators.length > 0 && (
+								<ValidatorList
+									bondFor="nominator"
+									validators={validators}
+									title={t('networkValidators')}
+									selectable={false}
+									defaultFilters={{
+										includes: ['active'],
+										excludes: [
+											'all_commission',
+											'blocked_nominations',
+											'missing_identity',
+										],
+									}}
+									defaultOrder="rank"
+									allowListFormat={false}
+									allowMoreCols
+									allowFilters
+									allowSearch
+									itemsPerPage={50}
+									toggleFavorites
+								/>
+							)}
+						</>
+					)}
+				</CardWrapper>
+			</Page.Row>
+		</>
+	)
 }

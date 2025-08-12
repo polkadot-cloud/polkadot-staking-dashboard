@@ -8,73 +8,64 @@ import { useTranslation } from 'react-i18next'
 import { Wrapper } from './Wrapper'
 
 export const ErrorFallbackApp = ({
-  resetErrorBoundary,
+	resetErrorBoundary,
 }: {
-  resetErrorBoundary: () => void
+	resetErrorBoundary: () => void
 }) => {
-  const { t } = useTranslation('app')
+	const { t } = useTranslation('app')
 
-  return (
-    <Wrapper className="app">
-      <h3>
-        <FontAwesomeIcon icon={faBug} transform="grow-25" />
-      </h3>
-      <h1>{t('errorUnknown')}</h1>
-      <h2>
-        <button
-          type="button"
-          onClick={() => resetErrorBoundary && resetErrorBoundary()}
-        >
-          {t('clickToReload')}
-        </button>
-      </h2>
-    </Wrapper>
-  )
+	return (
+		<Wrapper className="app">
+			<h3>
+				<FontAwesomeIcon icon={faBug} transform="grow-25" />
+			</h3>
+			<h1>{t('errorUnknown')}</h1>
+			<h2>
+				<button type="button" onClick={() => resetErrorBoundary?.()}>
+					{t('clickToReload')}
+				</button>
+			</h2>
+		</Wrapper>
+	)
 }
 
 export const ErrorFallbackRoutes = ({
-  resetErrorBoundary,
+	resetErrorBoundary,
 }: {
-  resetErrorBoundary: () => void
+	resetErrorBoundary: () => void
 }) => {
-  const { t } = useTranslation('app')
+	const { t } = useTranslation('app')
 
-  return (
-    <Wrapper>
-      <h3 className="with-margin">
-        <FontAwesomeIcon icon={faBug} transform="grow-25" />
-      </h3>
-      <h1>{t('errorUnknown')}</h1>
-      <h2>
-        <button
-          type="button"
-          onClick={() => resetErrorBoundary && resetErrorBoundary()}
-        >
-          {t('clickToReload')}
-        </button>
-      </h2>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<h3 className="with-margin">
+				<FontAwesomeIcon icon={faBug} transform="grow-25" />
+			</h3>
+			<h1>{t('errorUnknown')}</h1>
+			<h2>
+				<button type="button" onClick={() => resetErrorBoundary?.()}>
+					{t('clickToReload')}
+				</button>
+			</h2>
+		</Wrapper>
+	)
 }
 
 interface ErrorFallbackProps {
-  resetErrorBoundary?: () => void
+	resetErrorBoundary?: () => void
 }
 export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
-  const { resetErrorBoundary } = props
-  const { t } = useTranslation('app')
+	const { resetErrorBoundary } = props
+	const { t } = useTranslation('app')
 
-  return (
-    <Wrapper className="modal">
-      <h2>{t('errorUnknown')}</h2>
-      <h4>
-        <button
-          type="button"
-          onClick={() => resetErrorBoundary && resetErrorBoundary()}
-        >
-          {t('clickToReload')}
-        </button>
-      </h4>
-    </Wrapper>
-  )
+	return (
+		<Wrapper className="modal">
+			<h2>{t('errorUnknown')}</h2>
+			<h4>
+				<button type="button" onClick={() => resetErrorBoundary?.()}>
+					{t('clickToReload')}
+				</button>
+			</h4>
+		</Wrapper>
+	)
 }

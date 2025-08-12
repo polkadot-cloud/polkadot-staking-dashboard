@@ -6,7 +6,7 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolSetCommissionMax = <T extends StakingChain>(
-  api: DedotClient<T>,
-  poolId: number,
-  max: number
+	api: DedotClient<T>,
+	poolId: number,
+	max: number,
 ) => asTx(api.tx.nominationPools.setCommissionMax(poolId, max))

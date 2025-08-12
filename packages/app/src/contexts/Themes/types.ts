@@ -6,7 +6,7 @@ import type { RefObject } from 'react'
 export type Theme = 'light' | 'dark'
 
 export interface ThemeContextInterface {
-  themeElementRef: RefObject<HTMLDivElement | null>
-  toggleTheme: (str?: Theme) => void
-  mode: Theme
+	themeElementRef: RefObject<HTMLDivElement | null>
+	toggleTheme: (str?: Theme) => void
+	mode: Theme
 }

@@ -1,10 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { ThemedRouter } from 'Themes'
 import { withProviders } from '@w3ux/factories'
 import {
-  ExtensionsProvider,
-  HardwareAccountsProvider,
+	ExtensionsProvider,
+	HardwareAccountsProvider,
 } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
@@ -28,11 +29,11 @@ import { NominatorSetupsProvider } from 'contexts/NominatorSetups'
 import { OperatorsProvider } from 'contexts/Operators'
 import { PayoutsProvider } from 'contexts/Payouts'
 import { PluginsProvider } from 'contexts/Plugins'
+import { PoolSetupsProvider } from 'contexts/PoolSetups'
 import { ActivePoolProvider } from 'contexts/Pools/ActivePool'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
-import { PoolSetupsProvider } from 'contexts/PoolSetups'
 import { PromptProvider } from 'contexts/Prompt'
 import { ProxiesProvider } from 'contexts/Proxies'
 import { StakingProvider } from 'contexts/Staking'
@@ -44,62 +45,61 @@ import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidato
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { WalletConnectProvider } from 'contexts/WalletConnect'
 import { Tooltip } from 'radix-ui'
-import { ThemedRouter } from 'Themes'
 import { OverlayProvider } from 'ui-overlay'
 
 export const Providers = () => {
-  const { network } = useNetwork()
-  const { ss58 } = getStakingChainData(network)
+	const { network } = useNetwork()
+	const { ss58 } = getStakingChainData(network)
 
-  return withProviders(
-    // !! Provider order matters.
-    [
-      ActiveAccountsProvider,
-      UIProvider,
-      [APIProvider, { network }],
-      LedgerHardwareProvider,
-      [
-        ExtensionsProvider,
+	return withProviders(
+		// !! Provider order matters.
+		[
+			ActiveAccountsProvider,
+			UIProvider,
+			[APIProvider, { network }],
+			LedgerHardwareProvider,
+			[
+				ExtensionsProvider,
 
-        {
-          dappName: DappName,
-          ss58,
-        },
-      ],
-      HardwareAccountsProvider,
-      ExternalAccountsProvider,
-      OtherAccountsProvider,
-      ImportedAccountsProvider,
-      WalletConnectProvider,
-      ProxiesProvider,
-      HelpProvider,
-      PluginsProvider,
-      CurrencyProvider,
-      TokenPricesProvider,
-      BalancesProvider,
-      EraStakersProvider,
-      StakingProvider,
-      FavoritePoolsProvider,
-      BondedPoolsProvider,
-      PoolMembersProvider,
-      ActivePoolProvider,
-      ValidatorsProvider,
-      FavoriteValidatorsProvider,
-      FastUnstakeProvider,
-      PayoutsProvider,
-      PoolSetupsProvider,
-      NominatorSetupsProvider,
-      MenuProvider,
-      TooltipProvider,
-      TxMetaProvider,
-      OverlayProvider,
-      PromptProvider,
-      MigrateProvider,
-      FiltersProvider,
-      OperatorsProvider,
-      InvitesProvider,
-      Tooltip.Provider,
-    ],
-    ThemedRouter
-  )
+				{
+					dappName: DappName,
+					ss58,
+				},
+			],
+			HardwareAccountsProvider,
+			ExternalAccountsProvider,
+			OtherAccountsProvider,
+			ImportedAccountsProvider,
+			WalletConnectProvider,
+			ProxiesProvider,
+			HelpProvider,
+			PluginsProvider,
+			CurrencyProvider,
+			TokenPricesProvider,
+			BalancesProvider,
+			EraStakersProvider,
+			StakingProvider,
+			FavoritePoolsProvider,
+			BondedPoolsProvider,
+			PoolMembersProvider,
+			ActivePoolProvider,
+			ValidatorsProvider,
+			FavoriteValidatorsProvider,
+			FastUnstakeProvider,
+			PayoutsProvider,
+			PoolSetupsProvider,
+			NominatorSetupsProvider,
+			MenuProvider,
+			TooltipProvider,
+			TxMetaProvider,
+			OverlayProvider,
+			PromptProvider,
+			MigrateProvider,
+			FiltersProvider,
+			OperatorsProvider,
+			InvitesProvider,
+			Tooltip.Provider,
+		],
+		ThemedRouter,
+	)
 }

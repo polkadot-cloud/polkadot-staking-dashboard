@@ -13,33 +13,33 @@ import { Label } from 'ui-core/list'
 import { planckToUnitBn } from 'utils'
 
 export const PoolBonded = ({ pool }: { pool: BondedPool }) => {
-  const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const { setTooltipTextAndOpen } = useTooltip()
-  const { units } = getStakingChainData(network)
+	const { t } = useTranslation('app')
+	const { network } = useNetwork()
+	const { setTooltipTextAndOpen } = useTooltip()
+	const { units } = getStakingChainData(network)
 
-  const tooltipText = t('bonded')
-  const { points } = pool
-  const Token = getChainIcons(network).token
+	const tooltipText = t('bonded')
+	const { points } = pool
+	const Token = getChainIcons(network).token
 
-  // Format total bonded pool amount.
-  const bonded = planckToUnitBn(new BigNumber(points), units)
+	// Format total bonded pool amount.
+	const bonded = planckToUnitBn(new BigNumber(points), units)
 
-  return (
-    <Label>
-      <TooltipArea
-        text={tooltipText}
-        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-      />
+	return (
+		<Label>
+			<TooltipArea
+				text={tooltipText}
+				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+			/>
 
-      <Token
-        style={{
-          maxWidth: '1.25rem',
-          height: '1.25rem',
-          marginRight: '0.25rem',
-        }}
-      />
-      {bonded.decimalPlaces(0).toFormat()}
-    </Label>
-  )
+			<Token
+				style={{
+					maxWidth: '1.25rem',
+					height: '1.25rem',
+					marginRight: '0.25rem',
+				}}
+			/>
+			{bonded.decimalPlaces(0).toFormat()}
+		</Label>
+	)
 }

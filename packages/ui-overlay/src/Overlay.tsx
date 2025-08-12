@@ -7,22 +7,22 @@ import { Modal } from './Modal'
 import type { OverlayProps } from './Provider/types'
 
 export const Overlay = ({
-  modals = {},
-  canvas = {},
-  fallback,
-  externalOverlayStatus,
+	modals = {},
+	canvas = {},
+	fallback,
+	externalOverlayStatus,
 }: OverlayProps) => (
-  <>
-    <Background externalOverlayStatus={externalOverlayStatus} />
-    <Modal
-      fallback={fallback}
-      modals={modals}
-      externalOverlayStatus={externalOverlayStatus}
-    />
-    <Canvas
-      fallback={fallback}
-      canvas={canvas}
-      externalOverlayStatus={externalOverlayStatus}
-    />
-  </>
+	<>
+		<Background externalOverlayStatus={externalOverlayStatus} />
+		<Modal
+			fallback={fallback}
+			modals={modals}
+			externalOverlayStatus={externalOverlayStatus}
+		/>
+		<Canvas
+			fallback={fallback}
+			canvas={canvas}
+			externalOverlayStatus={externalOverlayStatus}
+		/>
+	</>
 )

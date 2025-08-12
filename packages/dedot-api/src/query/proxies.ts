@@ -5,11 +5,11 @@ import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
 export const proxies = async <T extends StakingChain>(
-  api: DedotClient<T>,
-  address: string
+	api: DedotClient<T>,
+	address: string,
 ) => {
-  const [result] = await api.query.proxy.proxies(address)
+	const [result] = await api.query.proxy.proxies(address)
 
-  // NOTE: Only returning the delegate accounts of any returned proxies
-  return result.map((r) => r.delegate.address(api.consts.system.ss58Prefix))
+	// NOTE: Only returning the delegate accounts of any returned proxies
+	return result.map((r) => r.delegate.address(api.consts.system.ss58Prefix))
 }

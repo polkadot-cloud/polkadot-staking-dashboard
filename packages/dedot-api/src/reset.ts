@@ -2,51 +2,51 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-  resetAccountBalances,
-  resetActiveEra,
-  resetActivePoolIds,
-  resetActivePools,
-  resetActiveProxy,
-  resetApiStatus,
-  resetBlockNumber,
-  resetBonded,
-  resetChainSpecs,
-  resetConsts,
-  resetEraRewardPoints,
-  resetFastUnstakeConfig,
-  resetFastUnstakeQueue,
-  resetPoolMemberships,
-  resetPoolsConfig,
-  resetProxies,
-  resetRelayMetrics,
-  resetServiceInterface,
-  resetStakingLedgers,
-  resetStakingMetrics,
+	resetAccountBalances,
+	resetActiveEra,
+	resetActivePoolIds,
+	resetActivePools,
+	resetActiveProxy,
+	resetApiStatus,
+	resetBlockNumber,
+	resetBonded,
+	resetChainSpecs,
+	resetConsts,
+	resetEraRewardPoints,
+	resetFastUnstakeConfig,
+	resetFastUnstakeQueue,
+	resetPoolMemberships,
+	resetPoolsConfig,
+	resetProxies,
+	resetRelayMetrics,
+	resetServiceInterface,
+	resetStakingLedgers,
+	resetStakingMetrics,
 } from 'global-bus'
 
 export const onNetworkReset = () => {
-  resetActivePools()
-  resetActivePoolIds()
+	resetActivePools()
+	resetActivePoolIds()
 
-  resetAccountBalances()
-  resetPoolMemberships()
-  resetStakingLedgers()
-  resetBonded()
-  resetProxies()
-  resetActiveProxy()
+	resetAccountBalances()
+	resetPoolMemberships()
+	resetStakingLedgers()
+	resetBonded()
+	resetProxies()
+	resetActiveProxy()
 
-  resetBlockNumber()
-  resetActiveEra()
-  resetFastUnstakeConfig()
-  resetFastUnstakeQueue()
-  resetEraRewardPoints()
+	resetBlockNumber()
+	resetActiveEra()
+	resetFastUnstakeConfig()
+	resetFastUnstakeQueue()
+	resetEraRewardPoints()
 
-  resetApiStatus()
-  resetRelayMetrics()
-  resetStakingMetrics()
-  resetPoolsConfig()
-  resetServiceInterface()
+	resetApiStatus()
+	resetRelayMetrics()
+	resetStakingMetrics()
+	resetPoolsConfig()
+	resetServiceInterface()
 
-  resetChainSpecs()
-  resetConsts()
+	resetChainSpecs()
+	resetConsts()
 }

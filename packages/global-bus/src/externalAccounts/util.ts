@@ -8,15 +8,15 @@ import type { ExternalAccount, NetworkId } from 'types'
 // Gets existing external accounts from local storage. Ensures that no system-added accounts are
 // returned
 export const getInitialExternalAccounts = (_?: string, network?: NetworkId) => {
-  let localAccounts = localStorageOrDefault(
-    ExternalAccountsKey,
-    [],
-    true
-  ) as ExternalAccount[]
-  if (network) {
-    localAccounts = localAccounts.filter(
-      (l) => l.network === network && l.addedBy !== 'system'
-    )
-  }
-  return localAccounts
+	let localAccounts = localStorageOrDefault(
+		ExternalAccountsKey,
+		[],
+		true,
+	) as ExternalAccount[]
+	if (network) {
+		localAccounts = localAccounts.filter(
+			(l) => l.network === network && l.addedBy !== 'system',
+		)
+	}
+	return localAccounts
 }

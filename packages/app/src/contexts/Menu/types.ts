@@ -4,22 +4,22 @@
 import type { MouseEvent as ReactMouseEvent, ReactNode, RefObject } from 'react'
 
 export interface MenuContextInterface {
-  open: boolean
-  show: boolean
-  inner: ReactNode | null
-  position: [number, number]
-  openMenu: (ev: MenuMouseEvent, newInner?: ReactNode) => void
-  closeMenu: () => void
-  setMenuInner: (items: ReactNode) => void
-  checkMenuPosition: (ref: RefObject<HTMLDivElement | null>) => void
+	open: boolean
+	show: boolean
+	inner: ReactNode | null
+	position: [number, number]
+	openMenu: (ev: MenuMouseEvent, newInner?: ReactNode) => void
+	closeMenu: () => void
+	setMenuInner: (items: ReactNode) => void
+	checkMenuPosition: (ref: RefObject<HTMLDivElement | null>) => void
 }
 
 export interface MenuItem {
-  icon: ReactNode
-  title: string
-  cb: () => void
+	icon: ReactNode
+	title: string
+	cb: () => void
 }
 
 export type MenuMouseEvent =
-  | MouseEvent
-  | ReactMouseEvent<HTMLButtonElement, MouseEvent>
+	| MouseEvent
+	| ReactMouseEvent<HTMLButtonElement, MouseEvent>

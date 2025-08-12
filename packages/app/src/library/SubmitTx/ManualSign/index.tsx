@@ -10,27 +10,27 @@ import { Vault } from './Vault'
 import { WalletConnect } from './WalletConnect'
 
 export const ManualSign = (
-  props: SubmitProps & {
-    buttons?: ReactNode[]
-    submitted: boolean
-    notEnoughFunds: boolean
-  }
+	props: SubmitProps & {
+		buttons?: ReactNode[]
+		submitted: boolean
+		notEnoughFunds: boolean
+	},
 ) => {
-  const { getTxSubmission } = useTxMeta()
-  const { getAccount } = useImportedAccounts()
-  const from = getTxSubmission(props.uid)?.from || null
+	const { getTxSubmission } = useTxMeta()
+	const { getAccount } = useImportedAccounts()
+	const from = getTxSubmission(props.uid)?.from || null
 
-  const accountMeta = getAccount(from)
-  const source = accountMeta?.source
+	const accountMeta = getAccount(from)
+	const source = accountMeta?.source
 
-  // Determine which signing method to use. NOTE: Falls back to `ledger` on all other sources to
-  // ensure submit button is displayed.
-  switch (source) {
-    case 'vault':
-      return <Vault {...props} />
-    case 'wallet_connect':
-      return <WalletConnect {...props} />
-    default:
-      return <Ledger {...props} />
-  }
+	// Determine which signing method to use. NOTE: Falls back to `ledger` on all other sources to
+	// ensure submit button is displayed.
+	switch (source) {
+		case 'vault':
+			return <Vault {...props} />
+		case 'wallet_connect':
+			return <WalletConnect {...props} />
+		default:
+			return <Ledger {...props} />
+	}
 }

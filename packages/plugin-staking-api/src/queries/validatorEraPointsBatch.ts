@@ -4,8 +4,8 @@
 import { gql, useQuery } from '@apollo/client'
 import { client } from '../Client'
 import type {
-  ValidatorEraPointsBatch,
-  ValidatorEraPointsBatchResult,
+	ValidatorEraPointsBatch,
+	ValidatorEraPointsBatchResult,
 } from '../types'
 
 const QUERY = gql`
@@ -32,37 +32,37 @@ const QUERY = gql`
 `
 
 export const useValidatorEraPointsBatch = ({
-  network,
-  validators,
-  fromEra,
-  depth,
+	network,
+	validators,
+	fromEra,
+	depth,
 }: {
-  network: string
-  validators: string[]
-  fromEra: number
-  depth?: number
+	network: string
+	validators: string[]
+	fromEra: number
+	depth?: number
 }): ValidatorEraPointsBatchResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, validators, fromEra, depth },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, validators, fromEra, depth },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchValidatorEraPointsBatch = async (
-  network: string,
-  validators: string[],
-  fromEra: number,
-  depth?: number
+	network: string,
+	validators: string[],
+	fromEra: number,
+	depth?: number,
 ): Promise<{ validatorEraPointsBatch: ValidatorEraPointsBatch[] }> => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { network, validators, fromEra, depth },
-    })
-    return result.data
-  } catch {
-    return {
-      validatorEraPointsBatch: [],
-    }
-  }
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { network, validators, fromEra, depth },
+		})
+		return result.data
+	} catch {
+		return {
+			validatorEraPointsBatch: [],
+		}
+	}
 }

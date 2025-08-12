@@ -4,17 +4,17 @@
 import type { Dispatch, SetStateAction } from 'react'
 
 export interface ChangeRateInput {
-  years: number
-  months: number
-  days: number
-  hours: number
-  minutes: number
+	years: number
+	months: number
+	days: number
+	hours: number
+	minutes: number
 }
 
 export interface FormsProps {
-  setSection: Dispatch<SetStateAction<number>>
-  task?: string
-  section: number
-  incrementCalculateHeight: () => void
-  onResize: () => void
+	setSection: Dispatch<SetStateAction<number>>
+	task?: string
+	section: number
+	incrementCalculateHeight: () => void
+	onResize: () => void
 }

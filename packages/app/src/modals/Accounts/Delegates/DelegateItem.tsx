@@ -5,27 +5,27 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { AccountButton } from '../AccountButton'
 
 export const DelegateItem = ({
-  delegator,
-  proxyType,
-  source,
-  delegate,
+	delegator,
+	proxyType,
+	source,
+	delegate,
 }: {
-  delegator: string
-  proxyType: string
-  source: string
-  delegate: string
+	delegator: string
+	proxyType: string
+	source: string
+	delegate: string
 }) => {
-  const {
-    balances: { transferableBalance },
-  } = useAccountBalances(delegate)
+	const {
+		balances: { transferableBalance },
+	} = useAccountBalances(delegate)
 
-  return (
-    <AccountButton
-      transferableBalance={transferableBalance}
-      address={delegate}
-      source={source}
-      delegator={delegator}
-      proxyType={proxyType}
-    />
-  )
+	return (
+		<AccountButton
+			transferableBalance={transferableBalance}
+			address={delegate}
+			source={source}
+			delegator={delegator}
+			proxyType={proxyType}
+		/>
+	)
 }

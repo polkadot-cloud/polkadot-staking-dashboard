@@ -18,62 +18,62 @@ import classes from './index.module.scss'
  * provided props and supporting additional customization for icons, colors, and margins.
  */
 export const ButtonTertiary = (props: ButtonTertiaryProps): JSX.Element => {
-  const {
-    disabled,
-    grow,
-    iconLeft,
-    iconRight,
-    iconTransform,
-    marginLeft,
-    marginRight,
-    marginX,
-    className,
-    style,
-    text,
-    onClick,
-    onMouseOver,
-    onMouseMove,
-    onMouseOut,
-  } = props
+	const {
+		disabled,
+		grow,
+		iconLeft,
+		iconRight,
+		iconTransform,
+		marginLeft,
+		marginRight,
+		marginX,
+		className,
+		style,
+		text,
+		onClick,
+		onMouseOver,
+		onMouseMove,
+		onMouseOut,
+	} = props
 
-  const buttonClasses = classNames(
-    commonClasses.btnCore,
-    classes.btnTertiary,
-    commonClasses.btnSmall,
-    {
-      [commonClasses.btnGrow]: grow,
-      [commonClasses.btnSpacingLeft]: marginLeft,
-      [commonClasses.btnSpacingRight]: marginRight,
-      [commonClasses.btnMarginX]: marginX,
-      [commonClasses.btnDisabled]: disabled,
-      [commonClasses.btnActiveTransforms]: !disabled,
-    },
-    className
-  )
+	const buttonClasses = classNames(
+		commonClasses.btnCore,
+		classes.btnTertiary,
+		commonClasses.btnSmall,
+		{
+			[commonClasses.btnGrow]: grow,
+			[commonClasses.btnSpacingLeft]: marginLeft,
+			[commonClasses.btnSpacingRight]: marginRight,
+			[commonClasses.btnMarginX]: marginX,
+			[commonClasses.btnDisabled]: disabled,
+			[commonClasses.btnActiveTransforms]: !disabled,
+		},
+		className,
+	)
 
-  return (
-    <button
-      className={buttonClasses}
-      style={style}
-      type="button"
-      disabled={disabled}
-      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
-    >
-      {iconLeft && (
-        <FontAwesomeIcon
-          icon={iconLeft}
-          className={text && commonClasses.btnIconLeftSpacing}
-          transform={iconTransform}
-        />
-      )}
-      {text}
-      {iconRight && (
-        <FontAwesomeIcon
-          icon={iconRight}
-          className={text && commonClasses.btnIconRightSpacing}
-          transform={iconTransform}
-        />
-      )}
-    </button>
-  )
+	return (
+		<button
+			className={buttonClasses}
+			style={style}
+			type="button"
+			disabled={disabled}
+			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+		>
+			{iconLeft && (
+				<FontAwesomeIcon
+					icon={iconLeft}
+					className={text && commonClasses.btnIconLeftSpacing}
+					transform={iconTransform}
+				/>
+			)}
+			{text}
+			{iconRight && (
+				<FontAwesomeIcon
+					icon={iconRight}
+					className={text && commonClasses.btnIconRightSpacing}
+					transform={iconTransform}
+				/>
+			)}
+		</button>
+	)
 }

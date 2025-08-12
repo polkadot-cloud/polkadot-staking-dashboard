@@ -4,11 +4,11 @@
 import type { AccountBalance } from 'types'
 
 export const defaultAccountBalance: AccountBalance = {
-  synced: false,
-  nonce: 0,
-  balance: {
-    free: 0n,
-    reserved: 0n,
-    frozen: 0n,
-  },
+	synced: false,
+	nonce: 0,
+	balance: {
+		free: 0n,
+		reserved: 0n,
+		frozen: 0n,
+	},
 }

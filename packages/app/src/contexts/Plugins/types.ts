@@ -4,7 +4,7 @@
 import type { Plugin } from 'types'
 
 export interface PluginsContextInterface {
-  togglePlugin: (k: Plugin) => void
-  pluginEnabled: (key: Plugin) => boolean
-  plugins: Plugin[]
+	togglePlugin: (k: Plugin) => void
+	pluginEnabled: (key: Plugin) => boolean
+	plugins: Plugin[]
 }

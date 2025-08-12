@@ -6,7 +6,7 @@ import type { ComponentBase } from 'types'
 import { Cell } from '../Cell'
 
 export const Cells = ({
-  items,
+	items,
 }: ComponentBase & {
-  items: React.ReactNode[]
+	items: React.ReactNode[]
 }): ReactNode => items.map((item, i) => <Cell key={`cell_${i}`}>{item}</Cell>)

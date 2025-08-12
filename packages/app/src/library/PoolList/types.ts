@@ -4,9 +4,9 @@
 import type { BondedPool } from 'types'
 
 export interface PoolListProps {
-  allowMoreCols?: boolean
-  allowSearch?: boolean
-  allowListFormat?: boolean
-  pools?: BondedPool[]
-  itemsPerPage?: number
+	allowMoreCols?: boolean
+	allowSearch?: boolean
+	allowListFormat?: boolean
+	pools?: BondedPool[]
+	itemsPerPage?: number
 }

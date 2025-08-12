@@ -5,5 +5,5 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Inactive = ({ style }: ComponentBase) => (
-  <div className={classes.inactive} style={style} />
+	<div className={classes.inactive} style={style} />
 )

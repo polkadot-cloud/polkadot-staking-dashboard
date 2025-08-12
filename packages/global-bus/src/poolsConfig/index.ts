@@ -8,13 +8,13 @@ import { _poolsConfig } from './private'
 export const poolsConfig$ = _poolsConfig.asObservable()
 
 export const resetPoolsConfig = () => {
-  _poolsConfig.next(defaultPoolsConfig)
+	_poolsConfig.next(defaultPoolsConfig)
 }
 
 export const getPoolsConfig = () => _poolsConfig.getValue()
 
 export const setPoolsConfig = (config: PoolsConfig) => {
-  _poolsConfig.next(config)
+	_poolsConfig.next(config)
 }
 
 export * from './default'

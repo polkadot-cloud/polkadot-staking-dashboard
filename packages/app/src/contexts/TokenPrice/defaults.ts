@@ -4,6 +4,6 @@
 import type { TokenPricesContextInterface } from './types'
 
 export const defaultTokenPrice: TokenPricesContextInterface = {
-  price: 0,
-  change: 0,
+	price: 0,
+	change: 0,
 }

@@ -7,19 +7,19 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 import { formatFiatCurrency } from 'locales/util'
 
 export const Value = ({
-  tokenBalance,
-  currency,
+	tokenBalance,
+	currency,
 }: {
-  tokenBalance: string | number
-  currency: string
+	tokenBalance: string | number
+	currency: string
 }) => {
-  const { price } = useTokenPrices()
+	const { price } = useTokenPrices()
 
-  // Convert balance to fiat value
-  const freeFiat = new BigNumber(rmCommas(String(tokenBalance)))
-    .multipliedBy(price)
-    .decimalPlaces(2)
+	// Convert balance to fiat value
+	const freeFiat = new BigNumber(rmCommas(String(tokenBalance)))
+		.multipliedBy(price)
+		.decimalPlaces(2)
 
-  // Format using the user's preferred currency
-  return <>{formatFiatCurrency(freeFiat.toNumber(), currency)}</>
+	// Format using the user's preferred currency
+	return <>{formatFiatCurrency(freeFiat.toNumber(), currency)}</>
 }

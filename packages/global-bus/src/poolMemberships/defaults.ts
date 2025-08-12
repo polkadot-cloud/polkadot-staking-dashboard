@@ -4,6 +4,6 @@
 import type { PoolMembershipState } from 'types'
 
 export const defaultPoolMembership: PoolMembershipState = {
-  synced: false,
-  membership: undefined,
+	synced: false,
+	membership: undefined,
 }

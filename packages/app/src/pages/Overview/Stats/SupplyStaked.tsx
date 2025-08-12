@@ -10,31 +10,31 @@ import { Pie } from 'library/StatCards/Pie'
 import { useTranslation } from 'react-i18next'
 
 export const SupplyStaked = () => {
-  const { t } = useTranslation('pages')
-  const {
-    stakingMetrics: { lastTotalStake, totalIssuance },
-  } = useApi()
-  const { network } = useNetwork()
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('pages')
+	const {
+		stakingMetrics: { lastTotalStake, totalIssuance },
+	} = useApi()
+	const { network } = useNetwork()
+	const { unit, units } = getStakingChainData(network)
 
-  // total supply as percent.
-  const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))
-  const lastTotalStakeUnit = new BigNumber(planckToUnit(lastTotalStake, units))
-  const supplyAsPercent =
-    lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
-      ? new BigNumber(0)
-      : lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01))
+	// total supply as percent.
+	const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))
+	const lastTotalStakeUnit = new BigNumber(planckToUnit(lastTotalStake, units))
+	const supplyAsPercent =
+		lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
+			? new BigNumber(0)
+			: lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01))
 
-  const params = {
-    label: t('unitSupplyStaked', { unit }),
-    stat: {
-      value: `${supplyAsPercent.decimalPlaces(2).toFormat()}`,
-      unit: '%',
-    },
-    pieValue: supplyAsPercent.decimalPlaces(2).toNumber(),
-    tooltip: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
-    helpKey: 'Supply Staked',
-  }
+	const params = {
+		label: t('unitSupplyStaked', { unit }),
+		stat: {
+			value: `${supplyAsPercent.decimalPlaces(2).toFormat()}`,
+			unit: '%',
+		},
+		pieValue: supplyAsPercent.decimalPlaces(2).toNumber(),
+		tooltip: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
+		helpKey: 'Supply Staked',
+	}
 
-  return <Pie {...params} />
+	return <Pie {...params} />
 }

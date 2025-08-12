@@ -12,81 +12,81 @@ import { useErasPerDay } from '../useErasPerDay'
 import type { UseAverageRewardRate } from './types'
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
-  const {
-    stakingMetrics: { totalIssuance },
-  } = useApi()
-  const { network } = useNetwork()
-  const { erasPerDay } = useErasPerDay()
-  const { pluginEnabled } = usePlugins()
-  const { lastTotalStake } = useApi().stakingMetrics
-  const { avgCommission, averageEraValidatorReward, avgRewardRate } =
-    useValidators()
+	const {
+		stakingMetrics: { totalIssuance },
+	} = useApi()
+	const { network } = useNetwork()
+	const { erasPerDay } = useErasPerDay()
+	const { pluginEnabled } = usePlugins()
+	const { lastTotalStake } = useApi().stakingMetrics
+	const { avgCommission, averageEraValidatorReward, avgRewardRate } =
+		useValidators()
 
-  const { units } = getStakingChainData(network)
+	const { units } = getStakingChainData(network)
 
-  // Get average reward rate based on the current staking metrics. Directly returns rate from
-  // staking API if available
-  const getAverageRewardRate = (compounded: boolean = false): number => {
-    if (pluginEnabled('staking_api')) {
-      return avgRewardRate
-    }
+	// Get average reward rate based on the current staking metrics. Directly returns rate from
+	// staking API if available
+	const getAverageRewardRate = (compounded: boolean = false): number => {
+		if (pluginEnabled('staking_api')) {
+			return avgRewardRate
+		}
 
-    if (
-      totalIssuance === 0n ||
-      erasPerDay === 0 ||
-      avgCommission === 0 ||
-      averageEraValidatorReward.reward === 0n
-    ) {
-      return 0
-    }
+		if (
+			totalIssuance === 0n ||
+			erasPerDay === 0 ||
+			avgCommission === 0 ||
+			averageEraValidatorReward.reward === 0n
+		) {
+			return 0
+		}
 
-    // Total supply as percent
-    const totalIssuanceUnit = Number(planckToUnit(totalIssuance, units))
-    const lastTotalStakeUnit = Number(planckToUnit(lastTotalStake, units))
-    const supplyStaked =
-      lastTotalStakeUnit === 0 || totalIssuanceUnit === 0
-        ? 0
-        : lastTotalStakeUnit / totalIssuanceUnit
+		// Total supply as percent
+		const totalIssuanceUnit = Number(planckToUnit(totalIssuance, units))
+		const lastTotalStakeUnit = Number(planckToUnit(lastTotalStake, units))
+		const supplyStaked =
+			lastTotalStakeUnit === 0 || totalIssuanceUnit === 0
+				? 0
+				: lastTotalStakeUnit / totalIssuanceUnit
 
-    // Calculate average daily reward as a percentage of total issuance
-    const averageRewardPerDay =
-      averageEraValidatorReward.reward * BigInt(erasPerDay)
+		// Calculate average daily reward as a percentage of total issuance
+		const averageRewardPerDay =
+			averageEraValidatorReward.reward * BigInt(erasPerDay)
 
-    const dayRewardRate =
-      totalIssuance === 0n
-        ? 0
-        : new BigNumber(averageRewardPerDay)
-            .div(new BigNumber(totalIssuance).div(100))
-            .toNumber()
+		const dayRewardRate =
+			totalIssuance === 0n
+				? 0
+				: new BigNumber(averageRewardPerDay)
+						.div(new BigNumber(totalIssuance).div(100))
+						.toNumber()
 
-    let inflationToStakers = 0
-    if (!compounded) {
-      // Base rate without compounding
-      inflationToStakers = dayRewardRate * 365
-    } else {
-      // Daily Compound Interest: A = P[(1+r)^t]
-      // Where:
-      // A = the future value of the investment
-      // P = the principal investment amount
-      // r = the daily interest rate (decimal)
-      // t = the number of days the money is invested for
-      // ^ = ... to the power of ...
+		let inflationToStakers = 0
+		if (!compounded) {
+			// Base rate without compounding
+			inflationToStakers = dayRewardRate * 365
+		} else {
+			// Daily Compound Interest: A = P[(1+r)^t]
+			// Where:
+			// A = the future value of the investment
+			// P = the principal investment amount
+			// r = the daily interest rate (decimal)
+			// t = the number of days the money is invested for
+			// ^ = ... to the power of ...
 
-      const multipilier = new BigNumber(dayRewardRate)
-        .dividedBy(100)
-        .plus(1)
-        .exponentiatedBy(365)
+			const multipilier = new BigNumber(dayRewardRate)
+				.dividedBy(100)
+				.plus(1)
+				.exponentiatedBy(365)
 
-      inflationToStakers = 100 * Number(multipilier.toString()) - 100
-    }
+			inflationToStakers = 100 * Number(multipilier.toString()) - 100
+		}
 
-    const rate =
-      supplyStaked === 0 ? 0 : Number(inflationToStakers) / supplyStaked
+		const rate =
+			supplyStaked === 0 ? 0 : Number(inflationToStakers) / supplyStaked
 
-    return rate
-  }
+		return rate
+	}
 
-  return {
-    getAverageRewardRate,
-  }
+	return {
+		getAverageRewardRate,
+	}
 }

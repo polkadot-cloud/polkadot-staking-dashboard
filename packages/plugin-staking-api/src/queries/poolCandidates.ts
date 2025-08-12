@@ -12,29 +12,29 @@ const QUERY = gql`
 `
 
 export const usePoolCandidates = ({
-  network,
+	network,
 }: {
-  network: string
+	network: string
 }): PoolCandidatesResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchPoolCandidates = async (
-  network: string
+	network: string,
 ): Promise<{ poolCandidates: number[] }> => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { network },
-    })
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { network },
+		})
 
-    return result.data
-  } catch {
-    return {
-      poolCandidates: [],
-    }
-  }
+		return result.data
+	} catch {
+		return {
+			poolCandidates: [],
+		}
+	}
 }

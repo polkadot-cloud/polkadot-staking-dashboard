@@ -5,8 +5,8 @@ import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
 export const sessionValidators = async <T extends StakingChain>(
-  api: DedotClient<T>
+	api: DedotClient<T>,
 ) => {
-  const result = await api.query.session.validators()
-  return result.map((address) => address.address(api.consts.system.ss58Prefix))
+	const result = await api.query.session.validators()
+	return result.map((address) => address.address(api.consts.system.ss58Prefix))
 }

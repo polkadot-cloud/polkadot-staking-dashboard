@@ -17,32 +17,32 @@ const QUERY = gql`
 `
 
 export const usePoolRewards = ({
-  network,
-  who,
-  from,
+	network,
+	who,
+	from,
 }: {
-  network: string
-  who: string
-  from: number
+	network: string
+	who: string
+	from: number
 }): PoolRewardResults => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, who, from },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, who, from },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchPoolRewards = async (
-  network: string,
-  who: string,
-  from: number
+	network: string,
+	who: string,
+	from: number,
 ) => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { network, who, from },
-    })
-    return result.data.poolRewards
-  } catch {
-    return null
-  }
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { network, who, from },
+		})
+		return result.data.poolRewards
+	} catch {
+		return null
+	}
 }
