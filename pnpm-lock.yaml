@@ -238,9 +238,6 @@ importers:
       vite-plugin-checker:
         specifier: ^0.9.3
         version: 0.9.3(@biomejs/biome@2.1.4)(eslint@9.33.0)(optionator@0.9.4)(typescript@5.9.2)(vite@6.3.5(@types/node@24.0.14)(sass@1.89.2))
-      vite-plugin-eslint:
-        specifier: ^1.8.1
-        version: 1.8.1(eslint@9.33.0)(vite@6.3.5(@types/node@24.0.14)(sass@1.89.2))
       vite-plugin-svgr:
         specifier: ^4.3.0
         version: 4.3.0(rollup@4.45.1)(typescript@5.9.2)(vite@6.3.5(@types/node@24.0.14)(sass@1.89.2))
@@ -2220,10 +2217,6 @@ packages:
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
 
-  '@rollup/pluginutils@4.2.1':
-    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
-    engines: {node: '>= 8.0.0'}
-
   '@rollup/pluginutils@5.2.0':
     resolution: {integrity: sha512-qWJ2ZTbmumwiLFomfzTyt5Kng4hwPi9rwCYN4SHb6eaRU1KNO4ccxINHr/VhH4GgPlt1XfSTLX2LBTme8ne4Zw==}
     engines: {node: '>=14.0.0'}
@@ -2538,9 +2531,6 @@ packages:
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
-
-  '@types/eslint@8.56.12':
-    resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
@@ -4290,11 +4280,6 @@ packages:
       rollup:
         optional: true
 
-  rollup@2.79.2:
-    resolution: {integrity: sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
-
   rollup@4.45.1:
     resolution: {integrity: sha512-4iya7Jb76fVpQyLoiVpzUrsjQ12r3dM7fIVz+4NwoYvZOShknRmiv+iu9CClZml5ZLGb0XMcYLutK6w9tgxHDw==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -4807,12 +4792,6 @@ packages:
         optional: true
       vue-tsc:
         optional: true
-
-  vite-plugin-eslint@1.8.1:
-    resolution: {integrity: sha512-PqdMf3Y2fLO9FsNPmMX+//2BF5SF8nEWspZdgl4kSt7UvHDRHVVfHvxsD7ULYzZrJDGRxR81Nq7TOFgwMnUang==}
-    peerDependencies:
-      eslint: '>=7'
-      vite: '>=2'
 
   vite-plugin-svgr@4.3.0:
     resolution: {integrity: sha512-Jy9qLB2/PyWklpYy0xk0UU3TlU0t2UMpJXZvf+hWII1lAmRHrOUKi11Uw8N3rxoNk7atZNYO3pR3vI1f7oi+6w==}
@@ -5633,8 +5612,10 @@ snapshots:
     dependencies:
       eslint: 9.33.0
       eslint-visitor-keys: 3.4.3
+    optional: true
 
-  '@eslint-community/regexpp@4.12.1': {}
+  '@eslint-community/regexpp@4.12.1':
+    optional: true
 
   '@eslint/config-array@0.21.0':
     dependencies:
@@ -5643,12 +5624,15 @@ snapshots:
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
-  '@eslint/config-helpers@0.3.1': {}
+  '@eslint/config-helpers@0.3.1':
+    optional: true
 
   '@eslint/core@0.15.2':
     dependencies:
       '@types/json-schema': 7.0.15
+    optional: true
 
   '@eslint/eslintrc@3.3.1':
     dependencies:
@@ -5663,15 +5647,19 @@ snapshots:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
-  '@eslint/js@9.33.0': {}
+  '@eslint/js@9.33.0':
+    optional: true
 
-  '@eslint/object-schema@2.1.6': {}
+  '@eslint/object-schema@2.1.6':
+    optional: true
 
   '@eslint/plugin-kit@0.3.5':
     dependencies:
       '@eslint/core': 0.15.2
       levn: 0.4.1
+    optional: true
 
   '@ethereumjs/common@3.2.0':
     dependencies:
@@ -5740,18 +5728,23 @@ snapshots:
     dependencies:
       graphql: 16.11.0
 
-  '@humanfs/core@0.19.1': {}
+  '@humanfs/core@0.19.1':
+    optional: true
 
   '@humanfs/node@0.16.6':
     dependencies:
       '@humanfs/core': 0.19.1
       '@humanwhocodes/retry': 0.3.1
+    optional: true
 
-  '@humanwhocodes/module-importer@1.0.1': {}
+  '@humanwhocodes/module-importer@1.0.1':
+    optional: true
 
-  '@humanwhocodes/retry@0.3.1': {}
+  '@humanwhocodes/retry@0.3.1':
+    optional: true
 
-  '@humanwhocodes/retry@0.4.3': {}
+  '@humanwhocodes/retry@0.4.3':
+    optional: true
 
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
@@ -7168,11 +7161,6 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
-  '@rollup/pluginutils@4.2.1':
-    dependencies:
-      estree-walker: 2.0.2
-      picomatch: 2.3.1
-
   '@rollup/pluginutils@5.2.0(rollup@4.45.1)':
     dependencies:
       '@types/estree': 1.0.8
@@ -7449,14 +7437,10 @@ snapshots:
 
   '@types/deep-eql@4.0.2': {}
 
-  '@types/eslint@8.56.12':
-    dependencies:
-      '@types/estree': 1.0.8
-      '@types/json-schema': 7.0.15
-
   '@types/estree@1.0.8': {}
 
-  '@types/json-schema@7.0.15': {}
+  '@types/json-schema@7.0.15':
+    optional: true
 
   '@types/ms@2.1.0': {}
 
@@ -8436,8 +8420,10 @@ snapshots:
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
       acorn: 8.15.0
+    optional: true
 
-  acorn@8.15.0: {}
+  acorn@8.15.0:
+    optional: true
 
   ajv@6.12.6:
     dependencies:
@@ -8445,6 +8431,7 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+    optional: true
 
   ansi-regex@5.0.1: {}
 
@@ -8493,7 +8480,8 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  balanced-match@1.0.2: {}
+  balanced-match@1.0.2:
+    optional: true
 
   base-x@5.0.1: {}
 
@@ -8513,6 +8501,7 @@ snapshots:
     dependencies:
       balanced-match: 1.0.2
       concat-map: 0.0.1
+    optional: true
 
   braces@3.0.3:
     dependencies:
@@ -8580,6 +8569,7 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    optional: true
 
   chalk@5.4.1: {}
 
@@ -8629,7 +8619,8 @@ snapshots:
 
   compare-versions@6.1.1: {}
 
-  concat-map@0.0.1: {}
+  concat-map@0.0.1:
+    optional: true
 
   convert-source-map@2.0.0: {}
 
@@ -8667,6 +8658,7 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+    optional: true
 
   crossws@0.3.5:
     dependencies:
@@ -8740,7 +8732,8 @@ snapshots:
 
   deep-eql@5.0.2: {}
 
-  deep-is@0.1.4: {}
+  deep-is@0.1.4:
+    optional: true
 
   define-data-property@1.1.4:
     dependencies:
@@ -8880,16 +8873,20 @@ snapshots:
 
   escalade@3.2.0: {}
 
-  escape-string-regexp@4.0.0: {}
+  escape-string-regexp@4.0.0:
+    optional: true
 
   eslint-scope@8.4.0:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 5.3.0
+    optional: true
 
-  eslint-visitor-keys@3.4.3: {}
+  eslint-visitor-keys@3.4.3:
+    optional: true
 
-  eslint-visitor-keys@4.2.1: {}
+  eslint-visitor-keys@4.2.1:
+    optional: true
 
   eslint@9.33.0:
     dependencies:
@@ -8930,22 +8927,27 @@ snapshots:
       optionator: 0.9.4
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   espree@10.4.0:
     dependencies:
       acorn: 8.15.0
       acorn-jsx: 5.3.2(acorn@8.15.0)
       eslint-visitor-keys: 4.2.1
+    optional: true
 
   esquery@1.6.0:
     dependencies:
       estraverse: 5.3.0
+    optional: true
 
   esrecurse@4.3.0:
     dependencies:
       estraverse: 5.3.0
+    optional: true
 
-  estraverse@5.3.0: {}
+  estraverse@5.3.0:
+    optional: true
 
   estree-walker@2.0.2: {}
 
@@ -8953,7 +8955,8 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.8
 
-  esutils@2.0.3: {}
+  esutils@2.0.3:
+    optional: true
 
   eth-block-tracker@7.1.0:
     dependencies:
@@ -9004,9 +9007,11 @@ snapshots:
 
   fast-deep-equal@3.1.3: {}
 
-  fast-json-stable-stringify@2.1.0: {}
+  fast-json-stable-stringify@2.1.0:
+    optional: true
 
-  fast-levenshtein@2.0.6: {}
+  fast-levenshtein@2.0.6:
+    optional: true
 
   fast-redact@3.5.0: {}
 
@@ -9019,6 +9024,7 @@ snapshots:
   file-entry-cache@8.0.0:
     dependencies:
       flat-cache: 4.0.1
+    optional: true
 
   fill-range@7.1.1:
     dependencies:
@@ -9036,13 +9042,16 @@ snapshots:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
+    optional: true
 
   flat-cache@4.0.1:
     dependencies:
       flatted: 3.3.3
       keyv: 4.5.4
+    optional: true
 
-  flatted@3.3.3: {}
+  flatted@3.3.3:
+    optional: true
 
   follow-redirects@1.15.9: {}
 
@@ -9102,8 +9111,10 @@ snapshots:
   glob-parent@6.0.2:
     dependencies:
       is-glob: 4.0.3
+    optional: true
 
-  globals@14.0.0: {}
+  globals@14.0.0:
+    optional: true
 
   globals@16.3.0: {}
 
@@ -9139,7 +9150,8 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.19.3
 
-  has-flag@4.0.0: {}
+  has-flag@4.0.0:
+    optional: true
 
   has-property-descriptors@1.0.2:
     dependencies:
@@ -9183,7 +9195,8 @@ snapshots:
 
   ieee754@1.2.1: {}
 
-  ignore@5.3.2: {}
+  ignore@5.3.2:
+    optional: true
 
   immutable@5.1.3: {}
 
@@ -9201,7 +9214,8 @@ snapshots:
 
   import-meta-resolve@4.1.0: {}
 
-  imurmurhash@0.1.4: {}
+  imurmurhash@0.1.4:
+    optional: true
 
   inherits@2.0.4: {}
 
@@ -9222,7 +9236,8 @@ snapshots:
 
   is-docker@2.2.1: {}
 
-  is-extglob@2.1.1: {}
+  is-extglob@2.1.1:
+    optional: true
 
   is-fullwidth-code-point@3.0.0: {}
 
@@ -9236,6 +9251,7 @@ snapshots:
   is-glob@4.0.3:
     dependencies:
       is-extglob: 2.1.1
+    optional: true
 
   is-interactive@2.0.0: {}
 
@@ -9267,7 +9283,8 @@ snapshots:
 
   isarray@2.0.5: {}
 
-  isexe@2.0.0: {}
+  isexe@2.0.0:
+    optional: true
 
   isows@1.0.6(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)):
     dependencies:
@@ -9287,7 +9304,8 @@ snapshots:
 
   jsesc@3.1.0: {}
 
-  json-buffer@3.0.1: {}
+  json-buffer@3.0.1:
+    optional: true
 
   json-parse-even-better-errors@2.3.1: {}
 
@@ -9298,9 +9316,11 @@ snapshots:
 
   json-rpc-random-id@1.0.1: {}
 
-  json-schema-traverse@0.4.1: {}
+  json-schema-traverse@0.4.1:
+    optional: true
 
-  json-stable-stringify-without-jsonify@1.0.1: {}
+  json-stable-stringify-without-jsonify@1.0.1:
+    optional: true
 
   json5@2.2.3: {}
 
@@ -9313,6 +9333,7 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+    optional: true
 
   keyvaluestorage-interface@1.0.0: {}
 
@@ -9320,6 +9341,7 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+    optional: true
 
   lines-and-columns@1.2.4: {}
 
@@ -9362,12 +9384,14 @@ snapshots:
   locate-path@6.0.0:
     dependencies:
       p-locate: 5.0.0
+    optional: true
 
   lodash-es@4.17.21: {}
 
   lodash.debounce@4.0.8: {}
 
-  lodash.merge@4.6.2: {}
+  lodash.merge@4.6.2:
+    optional: true
 
   lodash@4.17.21: {}
 
@@ -9417,6 +9441,7 @@ snapshots:
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.12
+    optional: true
 
   minimist@1.2.8: {}
 
@@ -9445,7 +9470,8 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  natural-compare@1.4.0: {}
+  natural-compare@1.4.0:
+    optional: true
 
   neo-async@2.6.2: {}
 
@@ -9523,6 +9549,7 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.5
+    optional: true
 
   ora@8.2.0:
     dependencies:
@@ -9601,6 +9628,7 @@ snapshots:
   p-limit@3.1.0:
     dependencies:
       yocto-queue: 0.1.0
+    optional: true
 
   p-locate@4.1.0:
     dependencies:
@@ -9609,6 +9637,7 @@ snapshots:
   p-locate@5.0.0:
     dependencies:
       p-limit: 3.1.0
+    optional: true
 
   p-try@2.2.0: {}
 
@@ -9625,7 +9654,8 @@ snapshots:
 
   path-exists@4.0.0: {}
 
-  path-key@3.1.1: {}
+  path-key@3.1.1:
+    optional: true
 
   path-key@4.0.0: {}
 
@@ -9690,7 +9720,8 @@ snapshots:
 
   preact@10.27.0: {}
 
-  prelude-ls@1.2.1: {}
+  prelude-ls@1.2.1:
+    optional: true
 
   prettier-plugin-organize-imports@4.2.0(prettier@3.6.2)(typescript@5.9.2):
     dependencies:
@@ -9720,7 +9751,8 @@ snapshots:
       end-of-stream: 1.4.5
       once: 1.4.0
 
-  punycode@2.3.1: {}
+  punycode@2.3.1:
+    optional: true
 
   qrcode-generator@1.5.0: {}
 
@@ -9946,10 +9978,6 @@ snapshots:
     optionalDependencies:
       rollup: 4.45.1
 
-  rollup@2.79.2:
-    optionalDependencies:
-      fsevents: 2.3.3
-
   rollup@4.45.1:
     dependencies:
       '@types/estree': 1.0.8
@@ -10030,8 +10058,10 @@ snapshots:
   shebang-command@2.0.0:
     dependencies:
       shebang-regex: 3.0.0
+    optional: true
 
-  shebang-regex@3.0.0: {}
+  shebang-regex@3.0.0:
+    optional: true
 
   siginfo@2.0.0: {}
 
@@ -10133,7 +10163,8 @@ snapshots:
     dependencies:
       ansi-regex: 6.1.0
 
-  strip-json-comments@3.1.1: {}
+  strip-json-comments@3.1.1:
+    optional: true
 
   strip-literal@3.0.0:
     dependencies:
@@ -10160,6 +10191,7 @@ snapshots:
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
+    optional: true
 
   svg-parser@2.0.4: {}
 
@@ -10218,6 +10250,7 @@ snapshots:
   type-check@0.4.0:
     dependencies:
       prelude-ls: 1.2.1
+    optional: true
 
   typed-array-buffer@1.0.3:
     dependencies:
@@ -10268,6 +10301,7 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+    optional: true
 
   use-callback-ref@1.3.3(@types/react@19.1.10)(react@19.1.1):
     dependencies:
@@ -10437,14 +10471,6 @@ snapshots:
       optionator: 0.9.4
       typescript: 5.9.2
 
-  vite-plugin-eslint@1.8.1(eslint@9.33.0)(vite@6.3.5(@types/node@24.0.14)(sass@1.89.2)):
-    dependencies:
-      '@rollup/pluginutils': 4.2.1
-      '@types/eslint': 8.56.12
-      eslint: 9.33.0
-      rollup: 2.79.2
-      vite: 6.3.5(@types/node@24.0.14)(sass@1.89.2)
-
   vite-plugin-svgr@4.3.0(rollup@4.45.1)(typescript@5.9.2)(vite@6.3.5(@types/node@24.0.14)(sass@1.89.2)):
     dependencies:
       '@rollup/pluginutils': 5.2.0(rollup@4.45.1)
@@ -10588,13 +10614,15 @@ snapshots:
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
+    optional: true
 
   why-is-node-running@2.3.0:
     dependencies:
       siginfo: 2.0.0
       stackback: 0.0.2
 
-  word-wrap@1.2.5: {}
+  word-wrap@1.2.5:
+    optional: true
 
   wordwrap@1.0.0: {}
 
@@ -10680,7 +10708,8 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 21.1.1
 
-  yocto-queue@0.1.0: {}
+  yocto-queue@0.1.0:
+    optional: true
 
   zen-observable-ts@1.2.5:
     dependencies:
