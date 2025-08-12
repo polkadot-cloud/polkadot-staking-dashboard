@@ -9,10 +9,10 @@ import { Logo } from './Logo'
 import { WebUrl } from './WebUrl'
 
 export const ConnectItem = {
-  Container,
-  Heading,
-  Icon,
-  Item,
-  Logo,
-  WebUrl,
+	Container,
+	Heading,
+	Icon,
+	Item,
+	Logo,
+	WebUrl,
 }

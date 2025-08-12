@@ -21,29 +21,29 @@ const QUERY = gql`
 `
 
 export const useSearchValidators = ({
-  network,
-  searchTerm,
+	network,
+	searchTerm,
 }: {
-  network: string
-  searchTerm: string
+	network: string
+	searchTerm: string
 }): SearchValidatorsResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, searchTerm },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, searchTerm },
+	})
+	return { loading, error, data, refetch }
 }
 
 export const fetchSearchValidators = async (
-  network: string,
-  searchTerm: string
+	network: string,
+	searchTerm: string,
 ): Promise<SearchValidatorsData | null> => {
-  try {
-    const result = await client.query({
-      query: QUERY,
-      variables: { network, searchTerm },
-    })
-    return result.data.searchValidators
-  } catch {
-    return null
-  }
+	try {
+		const result = await client.query({
+			query: QUERY,
+			variables: { network, searchTerm },
+		})
+		return result.data.searchValidators
+	} catch {
+		return null
+	}
 }

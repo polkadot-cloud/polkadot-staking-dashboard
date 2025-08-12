@@ -10,25 +10,25 @@ import { Label } from 'ui-core/list'
 import type { BlockedProps } from '../types'
 
 export const Blocked = ({ prefs }: BlockedProps) => {
-  const { t } = useTranslation('app')
-  const blocked = prefs?.blocked ?? null
-  const { setTooltipTextAndOpen } = useTooltip()
+	const { t } = useTranslation('app')
+	const blocked = prefs?.blocked ?? null
+	const { setTooltipTextAndOpen } = useTooltip()
 
-  const tooltipText = t('blockingNominations')
+	const tooltipText = t('blockingNominations')
 
-  return (
-    blocked && (
-      <Label>
-        <TooltipArea
-          text={tooltipText}
-          onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-        />
-        <FontAwesomeIcon
-          icon={faUserSlash}
-          color="#d2545d"
-          transform="shrink-1"
-        />
-      </Label>
-    )
-  )
+	return (
+		blocked && (
+			<Label>
+				<TooltipArea
+					text={tooltipText}
+					onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+				/>
+				<FontAwesomeIcon
+					icon={faUserSlash}
+					color="#d2545d"
+					transform="shrink-1"
+				/>
+			</Label>
+		)
+	)
 }

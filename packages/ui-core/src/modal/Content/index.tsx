@@ -7,12 +7,12 @@ import type { ContentProps } from '../types'
 import classes from './index.module.scss'
 
 export const Content = ({ children, canvas, style }: ContentProps) => {
-  const allClasses = classNames(classes.content, {
-    [classes.canvas]: canvas,
-  })
-  return (
-    <motion.div className={allClasses} style={style}>
-      {children}
-    </motion.div>
-  )
+	const allClasses = classNames(classes.content, {
+		[classes.canvas]: canvas,
+	})
+	return (
+		<motion.div className={allClasses} style={style}>
+			{children}
+		</motion.div>
+	)
 }

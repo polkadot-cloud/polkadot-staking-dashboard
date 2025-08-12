@@ -8,13 +8,13 @@ import { _activeEra } from './private'
 export const activeEra$ = _activeEra.asObservable()
 
 export const resetActiveEra = () => {
-  _activeEra.next(defaultActiveEra)
+	_activeEra.next(defaultActiveEra)
 }
 
 export const getActiveEra = () => _activeEra.getValue()
 
 export const setActiveEra = (activeEra: ActiveEra) => {
-  _activeEra.next(activeEra)
+	_activeEra.next(activeEra)
 }
 
 export * from './default'

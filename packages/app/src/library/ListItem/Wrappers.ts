@@ -103,17 +103,17 @@ export const Wrapper = styled.div`
 `
 
 export const ValidatorStatusWrapper = styled.div<{
-  $status: string
-  $noMargin?: boolean
+	$status: string
+	$noMargin?: boolean
 }>`
   margin-right: ${(props) => (props.$noMargin ? '0' : '0.35rem')};
   padding: 0 0.5rem;
 
   h5 {
     color: ${(props) =>
-      props.$status === 'active'
-        ? 'var(--status-success-color)'
-        : 'var(--text-color-secondary)'};
+			props.$status === 'active'
+				? 'var(--status-success-color)'
+				: 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
@@ -123,7 +123,7 @@ export const ValidatorStatusWrapper = styled.div<{
 `
 
 export const PoolStatusWrapper = styled.div<{
-  $status: string
+	$status: string
 }>`
   h4,
   h5 {
@@ -137,19 +137,19 @@ export const PoolStatusWrapper = styled.div<{
     font-size: 1rem;
 
     padding-top: ${(props) =>
-      props.$status === 'active' ? '0.15rem' : '0.25rem'};
+			props.$status === 'active' ? '0.15rem' : '0.25rem'};
 
     > span {
       color: ${(props) =>
-        props.$status === 'active'
-          ? 'var(--status-success-color)'
-          : 'var(--text-color-tertiary)'};
+				props.$status === 'active'
+					? 'var(--status-success-color)'
+					: 'var(--text-color-tertiary)'};
 
       border: 0.75px solid
         ${(props) =>
-          props.$status === 'active'
-            ? 'var(--status-success-color)'
-            : 'transparent'};
+					props.$status === 'active'
+						? 'var(--status-success-color)'
+						: 'transparent'};
 
       padding: ${(props) => (props.$status === 'active' ? '0 0.5rem' : '0')};
       border-radius: 0.3rem;

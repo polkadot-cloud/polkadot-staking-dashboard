@@ -9,38 +9,38 @@ import { useOverlay } from 'ui-overlay'
 import type { SetOpenProp } from './types'
 
 export const ReadOnly = ({ setOpen }: SetOpenProp) => {
-  const { t } = useTranslation()
-  const { openModal } = useOverlay().modal
+	const { t } = useTranslation()
+	const { openModal } = useOverlay().modal
 
-  return (
-    <ConnectItem.Container>
-      <h4>{t('readOnly', { ns: 'modals' })}</h4>
-      <section>
-        <ConnectItem.Item
-          asButton
-          last={true}
-          onClick={() => {
-            setOpen(false)
-            openModal({
-              key: 'ExternalAccounts',
-              size: 'sm',
-              options: {
-                type: 'read-only',
-              },
-            })
-          }}
-        >
-          <div>
-            <ConnectItem.Logo Svg={GlassesSvg} />
-          </div>
-          <div>
-            <div>
-              <h3>{t('readOnlyAccounts', { ns: 'modals' })}</h3>
-            </div>
-            <ConnectItem.Icon faIcon={faChevronRight} />
-          </div>
-        </ConnectItem.Item>
-      </section>
-    </ConnectItem.Container>
-  )
+	return (
+		<ConnectItem.Container>
+			<h4>{t('readOnly', { ns: 'modals' })}</h4>
+			<section>
+				<ConnectItem.Item
+					asButton
+					last={true}
+					onClick={() => {
+						setOpen(false)
+						openModal({
+							key: 'ExternalAccounts',
+							size: 'sm',
+							options: {
+								type: 'read-only',
+							},
+						})
+					}}
+				>
+					<div>
+						<ConnectItem.Logo Svg={GlassesSvg} />
+					</div>
+					<div>
+						<div>
+							<h3>{t('readOnlyAccounts', { ns: 'modals' })}</h3>
+						</div>
+						<ConnectItem.Icon faIcon={faChevronRight} />
+					</div>
+				</ConnectItem.Item>
+			</section>
+		</ConnectItem.Container>
+	)
 }

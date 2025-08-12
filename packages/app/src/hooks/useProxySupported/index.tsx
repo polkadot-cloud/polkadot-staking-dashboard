@@ -10,62 +10,62 @@ import type { SubmittableExtrinsic } from 'dedot'
 import type { MaybeAddress } from 'types'
 
 export const useProxySupported = () => {
-  const { getProxyDelegate } = useProxies()
-  const { activeProxy } = useActiveAccounts()
-  const { getStakingLedger } = useBalances()
+	const { getProxyDelegate } = useProxies()
+	const { activeProxy } = useActiveAccounts()
+	const { getStakingLedger } = useBalances()
 
-  // Check if the controller account of sender is unmigrated
-  const unmigratedController = (c: string, f: MaybeAddress) => {
-    const { controllerUnmigrated } = getStakingLedger(f)
-    return UnsupportedIfUniqueController.includes(c) && controllerUnmigrated
-  }
+	// Check if the controller account of sender is unmigrated
+	const unmigratedController = (c: string, f: MaybeAddress) => {
+		const { controllerUnmigrated } = getStakingLedger(f)
+		return UnsupportedIfUniqueController.includes(c) && controllerUnmigrated
+	}
 
-  // Determine whether the provided tx is proxy supported
-  const isProxySupported = (
-    tx: SubmittableExtrinsic | undefined,
-    delegator: MaybeAddress
-  ) => {
-    const proxyDelegate = getProxyDelegate(
-      delegator,
-      activeProxy?.address || null
-    )
-    if (!tx || !proxyDelegate) {
-      return false
-    }
+	// Determine whether the provided tx is proxy supported
+	const isProxySupported = (
+		tx: SubmittableExtrinsic | undefined,
+		delegator: MaybeAddress,
+	) => {
+		const proxyDelegate = getProxyDelegate(
+			delegator,
+			activeProxy?.address || null,
+		)
+		if (!tx || !proxyDelegate) {
+			return false
+		}
 
-    // if already wrapped in a proxy call, return early
-    if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
-      return true
-    }
+		// if already wrapped in a proxy call, return early
+		if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
+			return true
+		}
 
-    const proxyType = proxyDelegate.proxyType
-    const pallet: string = tx.call.pallet
-    const method: string = tx.call.palletCall.name
-    const call = `${pallet}.${method}`
+		const proxyType = proxyDelegate.proxyType
+		const pallet: string = tx.call.pallet
+		const method: string = tx.call.palletCall.name
+		const call = `${pallet}.${method}`
 
-    // If a batch call, test if every inner call is a supported proxy call
-    if (call === 'Utility.Batch') {
-      return (tx.call.palletCall.params.calls || [])
-        .map((c: { pallet: string; palletCall: { name: string } }) => ({
-          pallet: c.pallet,
-          method: c.palletCall.name,
-        }))
-        .every(
-          (c: { pallet: string; method: string }) =>
-            (isSupportedProxyCall(proxyType, c.pallet, c.method) ||
-              (c.pallet === 'Proxy' && c.method === 'Proxy')) &&
-            !unmigratedController(`${c.pallet}.${c.method}`, delegator)
-        )
-    }
+		// If a batch call, test if every inner call is a supported proxy call
+		if (call === 'Utility.Batch') {
+			return (tx.call.palletCall.params.calls || [])
+				.map((c: { pallet: string; palletCall: { name: string } }) => ({
+					pallet: c.pallet,
+					method: c.palletCall.name,
+				}))
+				.every(
+					(c: { pallet: string; method: string }) =>
+						(isSupportedProxyCall(proxyType, c.pallet, c.method) ||
+							(c.pallet === 'Proxy' && c.method === 'Proxy')) &&
+						!unmigratedController(`${c.pallet}.${c.method}`, delegator),
+				)
+		}
 
-    // Check if the non-batch call is a supported proxy call
-    return (
-      isSupportedProxyCall(proxyType, pallet, method) &&
-      !unmigratedController(call, delegator)
-    )
-  }
+		// Check if the non-batch call is a supported proxy call
+		return (
+			isSupportedProxyCall(proxyType, pallet, method) &&
+			!unmigratedController(call, delegator)
+		)
+	}
 
-  return {
-    isProxySupported,
-  }
+	return {
+		isProxySupported,
+	}
 }

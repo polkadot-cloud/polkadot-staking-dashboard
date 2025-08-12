@@ -8,10 +8,10 @@ import { PolkawatchConfig } from '../plugins'
 
 // Get subscan balance chain id by network
 export const getSubscanBalanceChainId = (network: NetworkId) =>
-  NetworkList[network].meta.subscanBalanceChainId
+	NetworkList[network].meta.subscanBalanceChainId
 
 // Get polkawatch configuration for a given network
 export const getPolkawatchConfig = (network: NetworkId): Configuration =>
-  new Configuration({
-    basePath: `https://${network}-${PolkawatchConfig.ApiVersion}-api.polkawatch.app`,
-  })
+	new Configuration({
+		basePath: `https://${network}-${PolkawatchConfig.ApiVersion}-api.polkawatch.app`,
+	})

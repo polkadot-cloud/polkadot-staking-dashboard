@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Cell = ({ children, style }: ComponentBase) => (
-  <div className={classes.cell} style={style}>
-    {children}
-  </div>
+	<div className={classes.cell} style={style}>
+		{children}
+	</div>
 )

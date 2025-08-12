@@ -11,37 +11,37 @@ import { Close } from 'ui-core/modal'
 import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {
-  title: string
-  icon?: IconProp
-  Svg?: FunctionComponent<SVGProps<SVGElement>>
-  helpKey?: string
-  hideDone?: boolean
+	title: string
+	icon?: IconProp
+	Svg?: FunctionComponent<SVGProps<SVGElement>>
+	helpKey?: string
+	hideDone?: boolean
 }
 
 export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
-  const { closePrompt } = usePrompt()
-  const { openHelp } = useHelp()
+	const { closePrompt } = usePrompt()
+	const { openHelp } = useHelp()
 
-  const graphic = Svg ? (
-    <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
-  ) : icon ? (
-    <FontAwesomeIcon transform="grow-3" icon={icon} />
-  ) : null
+	const graphic = Svg ? (
+		<Svg style={{ width: '1.5rem', height: '1.5rem' }} />
+	) : icon ? (
+		<FontAwesomeIcon transform="grow-3" icon={icon} />
+	) : null
 
-  return (
-    <TitleWrapper>
-      <div>
-        {graphic}
-        <h2>
-          {title}
-          {helpKey ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
-        </h2>
-      </div>
-      {!hideDone ? (
-        <div>
-          <Close onClose={closePrompt} />
-        </div>
-      ) : null}
-    </TitleWrapper>
-  )
+	return (
+		<TitleWrapper>
+			<div>
+				{graphic}
+				<h2>
+					{title}
+					{helpKey ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
+				</h2>
+			</div>
+			{!hideDone ? (
+				<div>
+					<Close onClose={closePrompt} />
+				</div>
+			) : null}
+		</TitleWrapper>
+	)
 }

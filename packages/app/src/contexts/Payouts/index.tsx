@@ -9,21 +9,21 @@ import { defaultUnclaimedRewards } from './defaults'
 import type { PayoutsContextInterface } from './types'
 
 export const [PayoutsContext, usePayouts] =
-  createSafeContext<PayoutsContextInterface>()
+	createSafeContext<PayoutsContextInterface>()
 
 export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
-  const [unclaimedRewards, setUnclaimedRewards] = useState<UnclaimedRewards>(
-    defaultUnclaimedRewards
-  )
+	const [unclaimedRewards, setUnclaimedRewards] = useState<UnclaimedRewards>(
+		defaultUnclaimedRewards,
+	)
 
-  return (
-    <PayoutsContext.Provider
-      value={{
-        unclaimedRewards,
-        setUnclaimedRewards,
-      }}
-    >
-      {children}
-    </PayoutsContext.Provider>
-  )
+	return (
+		<PayoutsContext.Provider
+			value={{
+				unclaimedRewards,
+				setUnclaimedRewards,
+			}}
+		>
+			{children}
+		</PayoutsContext.Provider>
+	)
 }

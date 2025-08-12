@@ -6,53 +6,53 @@ import type { ValidatorListEntry } from 'contexts/Validators/types'
 import type { ValidatorEraPoints } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import type {
-  BondFor,
-  DisplayFor,
-  MaybeAddress,
-  NominationStatus,
-  Validator,
+	BondFor,
+	DisplayFor,
+	MaybeAddress,
+	NominationStatus,
+	Validator,
 } from 'types'
 
 export interface ValidatorListDefaultFilters {
-  includes?: string[]
-  excludes?: string[]
+	includes?: string[]
+	excludes?: string[]
 }
 
 export interface ValidatorListProps {
-  validators: Validator[]
-  bondFor: BondFor
-  allowMoreCols?: boolean
-  generateMethod?: string
-  nominator?: MaybeAddress
-  allowFilters?: boolean
-  toggleFavorites?: boolean
-  itemsPerPage?: number
-  title?: string
-  selectable?: boolean
-  onSelected?: (listProvider: ListContextInterface) => void
-  displayFor?: DisplayFor
-  allowSearch?: boolean
-  allowListFormat?: boolean
-  defaultFilters?: ValidatorListDefaultFilters
-  defaultOrder?: string
-  BeforeListNode?: ReactNode
-  onRemove?: (params: {
-    selected: Validator[]
-    resetSelection?: () => void
-  }) => void
+	validators: Validator[]
+	bondFor: BondFor
+	allowMoreCols?: boolean
+	generateMethod?: string
+	nominator?: MaybeAddress
+	allowFilters?: boolean
+	toggleFavorites?: boolean
+	itemsPerPage?: number
+	title?: string
+	selectable?: boolean
+	onSelected?: (listProvider: ListContextInterface) => void
+	displayFor?: DisplayFor
+	allowSearch?: boolean
+	allowListFormat?: boolean
+	defaultFilters?: ValidatorListDefaultFilters
+	defaultOrder?: string
+	BeforeListNode?: ReactNode
+	onRemove?: (params: {
+		selected: Validator[]
+		resetSelection?: () => void
+	}) => void
 }
 
 export interface ItemProps {
-  validator: ValidatorListEntry
-  bondFor: BondFor
-  displayFor: DisplayFor
-  nominator: MaybeAddress
-  format?: string
-  toggleFavorites?: boolean
-  nominationStatus?: NominationStatus
-  eraPoints: ValidatorEraPoints[]
-  onRemove?: (params: {
-    selected: Validator[]
-    resetSelection?: () => void
-  }) => void
+	validator: ValidatorListEntry
+	bondFor: BondFor
+	displayFor: DisplayFor
+	nominator: MaybeAddress
+	format?: string
+	toggleFavorites?: boolean
+	nominationStatus?: NominationStatus
+	eraPoints: ValidatorEraPoints[]
+	onRemove?: (params: {
+		selected: Validator[]
+		resetSelection?: () => void
+	}) => void
 }

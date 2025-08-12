@@ -7,21 +7,21 @@ import { Stat } from 'ui-core/base'
 import type { TextProps } from './types'
 
 export const Text = ({ label, value, helpKey, primary }: TextProps) => {
-  const { openHelp } = useHelp()
+	const { openHelp } = useHelp()
 
-  return (
-    <Stat.Card>
-      <div>
-        <Stat.Content>
-          <Stat.Title primary={primary}>{value}</Stat.Title>
-          <Stat.Subtitle>
-            {label}
-            {helpKey !== undefined ? (
-              <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-            ) : null}
-          </Stat.Subtitle>
-        </Stat.Content>
-      </div>
-    </Stat.Card>
-  )
+	return (
+		<Stat.Card>
+			<div>
+				<Stat.Content>
+					<Stat.Title primary={primary}>{value}</Stat.Title>
+					<Stat.Subtitle>
+						{label}
+						{helpKey !== undefined ? (
+							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+						) : null}
+					</Stat.Subtitle>
+				</Stat.Content>
+			</div>
+		</Stat.Card>
+	)
 }

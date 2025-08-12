@@ -4,14 +4,14 @@
 import type { ActivePool, MaybeAddress } from 'types'
 
 export interface AccountProps {
-  value: MaybeAddress
-  readOnly?: boolean
-  onClick?: () => void
-  className?: string
+	value: MaybeAddress
+	readOnly?: boolean
+	onClick?: () => void
+	className?: string
 }
 
 export interface PoolAccountProps {
-  pool: ActivePool
-  label: string
-  syncing: boolean
+	pool: ActivePool
+	label: string
+	syncing: boolean
 }

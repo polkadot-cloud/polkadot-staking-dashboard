@@ -9,20 +9,20 @@ export type ListFormat = 'row' | 'col'
 export type SelectableListItem = unknown
 
 export interface ListContextInterface {
-  addToSelected: (item: SelectableListItem) => void
-  removeFromSelected: (items: SelectableListItem[]) => void
-  resetSelected: () => void
-  setListFormat: (v: ListFormat) => void
-  selected: SelectableListItem[]
-  selectable: boolean
-  listFormat: ListFormat
-  pagination: {
-    page: number
-    setPage: Dispatch<SetStateAction<number>>
-  }
+	addToSelected: (item: SelectableListItem) => void
+	removeFromSelected: (items: SelectableListItem[]) => void
+	resetSelected: () => void
+	setListFormat: (v: ListFormat) => void
+	selected: SelectableListItem[]
+	selectable: boolean
+	listFormat: ListFormat
+	pagination: {
+		page: number
+		setPage: Dispatch<SetStateAction<number>>
+	}
 }
 
 export interface ListProviderProps {
-  selectable?: boolean
-  children: ReactNode
+	selectable?: boolean
+	children: ReactNode
 }

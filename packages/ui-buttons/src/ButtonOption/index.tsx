@@ -20,42 +20,42 @@ import classes from './index.module.scss'
  * a right-facing chevron icon.
  */
 export const ButtonOption = (props: ButtonOptionProps): JSX.Element => {
-  const {
-    children,
-    className,
-    style,
-    disabled,
-    onClick,
-    onMouseOver,
-    onMouseMove,
-    onMouseOut,
-  } = props
+	const {
+		children,
+		className,
+		style,
+		disabled,
+		onClick,
+		onMouseOver,
+		onMouseMove,
+		onMouseOut,
+	} = props
 
-  const buttonClasses = classNames(
-    commonClasses.btnCore,
-    classes.btnOption,
-    {
-      [commonClasses.btnDisabled]: disabled,
-    },
-    className
-  )
+	const buttonClasses = classNames(
+		commonClasses.btnCore,
+		classes.btnOption,
+		{
+			[commonClasses.btnDisabled]: disabled,
+		},
+		className,
+	)
 
-  return (
-    <button
-      className={buttonClasses}
-      style={style}
-      type="button"
-      disabled={disabled}
-      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
-    >
-      <div className={classes.btnContentDetails}>{children}</div>
-      <div>
-        <FontAwesomeIcon
-          transform="shrink-2"
-          icon={faChevronRight}
-          className={classes.btnContentIcon}
-        />
-      </div>
-    </button>
-  )
+	return (
+		<button
+			className={buttonClasses}
+			style={style}
+			type="button"
+			disabled={disabled}
+			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+		>
+			<div className={classes.btnContentDetails}>{children}</div>
+			<div>
+				<FontAwesomeIcon
+					transform="shrink-2"
+					icon={faChevronRight}
+					className={classes.btnContentIcon}
+				/>
+			</div>
+		</button>
+	)
 }

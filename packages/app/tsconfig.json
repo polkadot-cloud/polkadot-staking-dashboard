@@ -1,23 +1,23 @@
 {
-  "extends": "../../tsconfig.react.json",
-  "compilerOptions": {
-    "baseUrl": "src",
-    "outDir": "build",
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "Bundler",
-    "allowSyntheticDefaultImports": true,
-    "allowImportingTsExtensions": true,
-    "allowJs": false,
-    "esModuleInterop": false,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "noEmit": true
-  },
-  "include": ["src", "tests"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+	"extends": "../../tsconfig.react.json",
+	"compilerOptions": {
+		"baseUrl": "src",
+		"outDir": "build",
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"module": "ESNext",
+		"skipLibCheck": true,
+		"moduleResolution": "Bundler",
+		"allowSyntheticDefaultImports": true,
+		"allowImportingTsExtensions": true,
+		"allowJs": false,
+		"esModuleInterop": false,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"noEmit": true
+	},
+	"include": ["src", "tests"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }

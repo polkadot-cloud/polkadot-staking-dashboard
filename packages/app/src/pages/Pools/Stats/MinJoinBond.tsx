@@ -9,16 +9,16 @@ import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
 export const MinJoinBond = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { minJoinBond } = useApi().poolsConfig
-  const { unit, units } = getStakingChainData(network)
-  const params = {
-    label: t('minimumToJoinPool'),
-    value: parseFloat(planckToUnit(minJoinBond, units)),
-    decimals: 3,
-    unit: ` ${unit}`,
-    helpKey: 'Minimum To Join Pool',
-  }
-  return <Number {...params} />
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { minJoinBond } = useApi().poolsConfig
+	const { unit, units } = getStakingChainData(network)
+	const params = {
+		label: t('minimumToJoinPool'),
+		value: parseFloat(planckToUnit(minJoinBond, units)),
+		decimals: 3,
+		unit: ` ${unit}`,
+		helpKey: 'Minimum To Join Pool',
+	}
+	return <Number {...params} />
 }

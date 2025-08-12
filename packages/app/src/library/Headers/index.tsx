@@ -10,15 +10,15 @@ import { Sync } from './Sync'
 import { Wrapper } from './Wrappers'
 
 export const Headers = () => {
-  const [openConnect, setOpenConnect] = useState<boolean>(false)
+	const [openConnect, setOpenConnect] = useState<boolean>(false)
 
-  return (
-    <Wrapper>
-      <SideMenuToggle />
-      <Sync />
-      <Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
-      <Invite />
-      <Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<SideMenuToggle />
+			<Sync />
+			<Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
+			<Invite />
+			<Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
+		</Wrapper>
+	)
 }

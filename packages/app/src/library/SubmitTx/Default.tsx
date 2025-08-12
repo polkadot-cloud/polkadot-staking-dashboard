@@ -11,55 +11,55 @@ import { ButtonSubmitLarge } from './ButtonSubmitLarge'
 import type { SubmitProps } from './types'
 
 export const Default = ({
-  uid,
-  onSubmit,
-  submitted,
-  valid,
-  submitText,
-  buttons,
-  submitAddress,
-  displayFor,
-  notEnoughFunds,
+	uid,
+	onSubmit,
+	submitted,
+	valid,
+	submitText,
+	buttons,
+	submitAddress,
+	displayFor,
+	notEnoughFunds,
 }: SubmitProps & {
-  buttons?: ReactNode[]
-  notEnoughFunds: boolean
-  submitted: boolean
+	buttons?: ReactNode[]
+	notEnoughFunds: boolean
+	submitted: boolean
 }) => {
-  const { accountHasSigner } = useImportedAccounts()
+	const { accountHasSigner } = useImportedAccounts()
 
-  const disabled =
-    submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
+	const disabled =
+		submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
 
-  return (
-    <>
-      <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
-        <div>
-          <EstimatedTxFee uid={uid} />
-        </div>
-        <div>
-          {buttons}
-          {displayFor !== 'card' && (
-            <ButtonSubmit
-              lg={displayFor === 'canvas'}
-              text={submitText || ''}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => onSubmit()}
-              disabled={disabled}
-              pulse={!disabled}
-            />
-          )}
-        </div>
-      </div>
-      {displayFor === 'card' && (
-        <ButtonSubmitLarge
-          disabled={disabled}
-          onSubmit={() => onSubmit()}
-          submitText={submitText || ''}
-          icon={faArrowAltCircleUp}
-          pulse={!disabled}
-        />
-      )}
-    </>
-  )
+	return (
+		<>
+			<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
+				<div>
+					<EstimatedTxFee uid={uid} />
+				</div>
+				<div>
+					{buttons}
+					{displayFor !== 'card' && (
+						<ButtonSubmit
+							lg={displayFor === 'canvas'}
+							text={submitText || ''}
+							iconLeft={faArrowAltCircleUp}
+							iconTransform="grow-2"
+							onClick={() => onSubmit()}
+							disabled={disabled}
+							pulse={!disabled}
+						/>
+					)}
+				</div>
+			</div>
+			{displayFor === 'card' && (
+				<ButtonSubmitLarge
+					disabled={disabled}
+					onSubmit={() => onSubmit()}
+					submitText={submitText || ''}
+					icon={faArrowAltCircleUp}
+					pulse={!disabled}
+				/>
+			)}
+		</>
+	)
 }

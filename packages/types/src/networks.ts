@@ -14,12 +14,12 @@ export type DefaultServiceNetworkId = 'polkadot' | 'kusama' | 'westend'
 export type OperatorsSupportedNetwork = 'polkadot' | 'kusama' | 'westend'
 
 export type SystemChainId =
-  | 'people-polkadot'
-  | 'people-kusama'
-  | 'people-westend'
-  | 'statemint'
-  | 'statemine'
-  | 'westmint'
+	| 'people-polkadot'
+	| 'people-kusama'
+	| 'people-westend'
+	| 'statemint'
+	| 'statemine'
+	| 'westmint'
 
 export type ProviderType = 'ws' | 'sc'
 
@@ -30,122 +30,122 @@ export type RpcEndpoints = Record<string, string>
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready'
 
 export interface ActiveEra {
-  index: number
-  start: bigint
+	index: number
+	start: bigint
 }
 
 export interface ChainSpec {
-  genesisHash: HexString
-  properties: ChainProperties
-  existentialDeposit: bigint
-  version: ChainSpecVersion
+	genesisHash: HexString
+	properties: ChainProperties
+	existentialDeposit: bigint
+	version: ChainSpecVersion
 }
 
 export interface ChainSpecVersion {
-  specName: string
-  implName: string
-  authoringVersion: number
-  specVersion: number
-  implVersion: number
-  apis: (readonly [HexString, number])[]
-  transactionVersion: number
-  stateVersion: number
+	specName: string
+	implName: string
+	authoringVersion: number
+	specVersion: number
+	implVersion: number
+	apis: (readonly [HexString, number])[]
+	transactionVersion: number
+	stateVersion: number
 }
 
 export interface ChainConsts {
-  bondDuration: number
-  sessionsPerEra: number
-  maxExposurePageSize: number
-  historyDepth: number
-  epochDuration: bigint
-  expectedBlockTime: bigint
-  fastUnstakeDeposit: bigint
-  poolsPalletId: Uint8Array
+	bondDuration: number
+	sessionsPerEra: number
+	maxExposurePageSize: number
+	historyDepth: number
+	epochDuration: bigint
+	expectedBlockTime: bigint
+	fastUnstakeDeposit: bigint
+	poolsPalletId: Uint8Array
 }
 
 export interface RelayMetrics {
-  auctionCounter: number
-  earliestStoredSession: number
+	auctionCounter: number
+	earliestStoredSession: number
 }
 
 export interface PoolsConfig {
-  counterForPoolMembers: number
-  counterForBondedPools: number
-  counterForRewardPools: number
-  lastPoolId: number
-  maxPoolMembers: number | undefined
-  maxPoolMembersPerPool: number | undefined
-  maxPools: number | undefined
-  minCreateBond: bigint
-  minJoinBond: bigint
-  globalMaxCommission: number
+	counterForPoolMembers: number
+	counterForBondedPools: number
+	counterForRewardPools: number
+	lastPoolId: number
+	maxPoolMembers: number | undefined
+	maxPoolMembersPerPool: number | undefined
+	maxPools: number | undefined
+	minCreateBond: bigint
+	minJoinBond: bigint
+	globalMaxCommission: number
 }
 
 export interface StakingMetrics {
-  totalIssuance: bigint
-  erasToCheckPerBlock: number
-  minimumActiveStake: bigint
-  counterForValidators: number
-  maxValidatorsCount: number | undefined
-  validatorCount: number
-  lastReward: bigint | undefined
-  lastTotalStake: bigint
-  minNominatorBond: bigint
-  totalStaked: bigint
-  counterForNominators: number
+	totalIssuance: bigint
+	erasToCheckPerBlock: number
+	minimumActiveStake: bigint
+	counterForValidators: number
+	maxValidatorsCount: number | undefined
+	validatorCount: number
+	lastReward: bigint | undefined
+	lastTotalStake: bigint
+	minNominatorBond: bigint
+	totalStaked: bigint
+	counterForNominators: number
 }
 
 export interface NetworkConfig {
-  network: NetworkId
-  rpcEndpoints: Record<string, string>
-  providerType: ProviderType
+	network: NetworkId
+	rpcEndpoints: Record<string, string>
+	providerType: ProviderType
 }
 
 export interface Network {
-  name: NetworkId
-  endpoints: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getLightClient: () => Promise<any>
-    rpc: Record<string, string>
-  }
-  unit: string
-  units: number
-  ss58: number
-  defaultFeeReserve: bigint
-  meta: {
-    hubChain: ChainId
-    peopleChain: ChainId
-    stakingChain: ChainId
-    subscanBalanceChainId: string
-    supportOperators: boolean
-  }
+	name: NetworkId
+	endpoints: {
+		// biome-ignore lint/suspicious/noExplicitAny: <>
+		getLightClient: () => Promise<any>
+		rpc: Record<string, string>
+	}
+	unit: string
+	units: number
+	ss58: number
+	defaultFeeReserve: bigint
+	meta: {
+		hubChain: ChainId
+		peopleChain: ChainId
+		stakingChain: ChainId
+		subscanBalanceChainId: string
+		supportOperators: boolean
+	}
 }
 
 export interface SystemChain {
-  name: string
-  ss58: number
-  units: number
-  unit: string
-  defaultFeeReserve: bigint
-  endpoints: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getLightClient: () => Promise<any>
-    rpc: Record<string, string>
-  }
-  relayChain: NetworkId
+	name: string
+	ss58: number
+	units: number
+	unit: string
+	defaultFeeReserve: bigint
+	endpoints: {
+		// biome-ignore lint/suspicious/noExplicitAny: <>
+		getLightClient: () => Promise<any>
+		rpc: Record<string, string>
+	}
+	relayChain: NetworkId
 }
 
 export interface ChainIcons {
-  icon: FunctionComponent<
-    SVGProps<SVGSVGElement> & { title?: string | undefined }
-  >
-  token: FunctionComponent<
-    SVGProps<SVGSVGElement> & { title?: string | undefined }
-  >
-  inline: {
-    svg: FunctionComponent<
-      SVGProps<SVGSVGElement> & { title?: string | undefined }
-    >
-    size: string
-  }
+	icon: FunctionComponent<
+		SVGProps<SVGSVGElement> & { title?: string | undefined }
+	>
+	token: FunctionComponent<
+		SVGProps<SVGSVGElement> & { title?: string | undefined }
+	>
+	inline: {
+		svg: FunctionComponent<
+			SVGProps<SVGSVGElement> & { title?: string | undefined }
+		>
+		size: string
+	}
 }

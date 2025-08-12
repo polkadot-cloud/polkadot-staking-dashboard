@@ -11,33 +11,33 @@ import type { OverviewSectionProps } from '../types'
 import { AddressesWrapper } from '../Wrappers'
 
 export const Addresses = ({
-  bondedPool: { addresses },
+	bondedPool: { addresses },
 }: OverviewSectionProps) => {
-  const { t } = useTranslation('app')
-  return (
-    <CardWrapper className="canvas secondary">
-      <Subheading>
-        <h3>{t('addresses')}</h3>
-      </Subheading>
+	const { t } = useTranslation('app')
+	return (
+		<CardWrapper className="canvas secondary">
+			<Subheading>
+				<h3>{t('addresses')}</h3>
+			</Subheading>
 
-      <AddressesWrapper>
-        <section>
-          <Identity
-            label={'Stash'}
-            value={formatIdentityValue(addresses.stash)}
-            address={addresses.stash}
-            Action={<CopyAddress address={addresses.stash} />}
-          />
-        </section>
-        <section>
-          <Identity
-            label={'Reward'}
-            value={formatIdentityValue(addresses.reward)}
-            address={addresses.reward}
-            Action={<CopyAddress address={addresses.reward} />}
-          />
-        </section>
-      </AddressesWrapper>
-    </CardWrapper>
-  )
+			<AddressesWrapper>
+				<section>
+					<Identity
+						label={'Stash'}
+						value={formatIdentityValue(addresses.stash)}
+						address={addresses.stash}
+						Action={<CopyAddress address={addresses.stash} />}
+					/>
+				</section>
+				<section>
+					<Identity
+						label={'Reward'}
+						value={formatIdentityValue(addresses.reward)}
+						address={addresses.reward}
+						Action={<CopyAddress address={addresses.reward} />}
+					/>
+				</section>
+			</AddressesWrapper>
+		</CardWrapper>
+	)
 }

@@ -18,54 +18,55 @@ import classes from './index.module.scss'
  * @returns {JSX.Element} The rendered ButtonHelp component.
  */
 export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
-  const {
-    disabled,
-    marginLeft,
-    marginRight,
-    marginX,
-    className,
-    style,
-    onClick,
-    onMouseOver,
-    onMouseMove,
-    onMouseOut,
-    outline = false,
-    background = 'primary',
-  } = props
+	const {
+		disabled,
+		marginLeft,
+		marginRight,
+		marginX,
+		className,
+		style,
+		onClick,
+		onMouseOver,
+		onMouseMove,
+		onMouseOut,
+		outline = false,
+		background = 'primary',
+	} = props
 
-  const buttonClasses = classNames(
-    commonClasses.btnCore,
-    classes.btnHelp,
-    {
-      [classes.btnHelpSecondaryBackground]: background === 'secondary',
-      [classes.btnHelpNoBackground]: background === 'none',
-      [classes.btnHelpOutline]: outline,
-      [commonClasses.btnSpacingLeft]: marginLeft,
-      [commonClasses.btnSpacingRight]: marginRight,
-      [commonClasses.marginLeft]: marginLeft,
-      [commonClasses.btnMarginX]: marginX,
-      [commonClasses.btnDisabled]: disabled,
-    },
-    className
-  )
+	const buttonClasses = classNames(
+		commonClasses.btnCore,
+		classes.btnHelp,
+		{
+			[classes.btnHelpSecondaryBackground]: background === 'secondary',
+			[classes.btnHelpNoBackground]: background === 'none',
+			[classes.btnHelpOutline]: outline,
+			[commonClasses.btnSpacingLeft]: marginLeft,
+			[commonClasses.btnSpacingRight]: marginRight,
+			[commonClasses.marginLeft]: marginLeft,
+			[commonClasses.btnMarginX]: marginX,
+			[commonClasses.btnDisabled]: disabled,
+		},
+		className,
+	)
 
-  return (
-    <button
-      className={buttonClasses}
-      style={style}
-      type="button"
-      disabled={disabled}
-      {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 64 64"
-        width="100%"
-        height="100%"
-        className={classes.btnHelpIcon}
-      >
-        <path d="M32 15c-2.5 0-4.5 2-4.5 4.5s2 4.5 4.5 4.5 4.5-2 4.5-4.5-2-4.5-4.5-4.5zm0 14.5c-2.5 0-4.5 2-4.5 4.5v12c0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5V34c0-2.5-2-4.5-4.5-4.5z" />
-      </svg>
-    </button>
-  )
+	return (
+		<button
+			className={buttonClasses}
+			style={style}
+			type="button"
+			disabled={disabled}
+			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 64 64"
+				width="100%"
+				height="100%"
+				className={classes.btnHelpIcon}
+			>
+				<title>Help</title>
+				<path d="M32 15c-2.5 0-4.5 2-4.5 4.5s2 4.5 4.5 4.5 4.5-2 4.5-4.5-2-4.5-4.5-4.5zm0 14.5c-2.5 0-4.5 2-4.5 4.5v12c0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5V34c0-2.5-2-4.5-4.5-4.5z" />
+			</svg>
+		</button>
+	)
 }

@@ -6,12 +6,12 @@ import type { LabelRowProps } from '../types'
 import classes from './index.module.scss'
 
 export const HeaderButtonRow = ({ children, style, inline }: LabelRowProps) => {
-  const allClasses = classNames(classes.headerButtonRow, {
-    [classes.inline]: !!inline,
-  })
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	const allClasses = classNames(classes.headerButtonRow, {
+		[classes.inline]: !!inline,
+	})
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

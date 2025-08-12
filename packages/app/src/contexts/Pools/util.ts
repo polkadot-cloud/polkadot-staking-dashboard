@@ -9,6 +9,6 @@ import type { AnyJson } from 'types'
  * @summary A pool will be displayed with either its set metadata or its address.
  */
 export const determinePoolDisplay = (address: string, batchItem: AnyJson) => {
-  const defaultDisplay = ellipsisFn(address, 6)
-  return batchItem || defaultDisplay
+	const defaultDisplay = ellipsisFn(address, 6)
+	return batchItem || defaultDisplay
 }

@@ -5,6 +5,6 @@ import { Button } from './Button'
 import { Container } from './Container'
 
 export const PopoverTab = {
-  Button,
-  Container,
+	Button,
+	Container,
 }

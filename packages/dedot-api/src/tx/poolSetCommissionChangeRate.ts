@@ -6,14 +6,14 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolSetCommissionChangeRate = <T extends StakingChain>(
-  api: DedotClient<T>,
-  poolId: number,
-  maxIncrease: number,
-  minDelay: number
+	api: DedotClient<T>,
+	poolId: number,
+	maxIncrease: number,
+	minDelay: number,
 ) =>
-  asTx(
-    api.tx.nominationPools.setCommissionChangeRate(poolId, {
-      maxIncrease,
-      minDelay,
-    })
-  )
+	asTx(
+		api.tx.nominationPools.setCommissionChangeRate(poolId, {
+			maxIncrease,
+			minDelay,
+		}),
+	)

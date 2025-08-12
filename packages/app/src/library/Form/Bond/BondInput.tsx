@@ -9,98 +9,98 @@ import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
-import { InputWrapper } from '../Wrappers'
 import type { BondInputProps } from '../types'
+import { InputWrapper } from '../Wrappers'
 
 export const BondInput = ({
-  setters = [],
-  disabled,
-  defaultValue,
-  freeToBond,
-  disableTxFeeUpdate = false,
-  value = '0',
-  syncing = false,
+	setters = [],
+	disabled,
+	defaultValue,
+	freeToBond,
+	disableTxFeeUpdate = false,
+	value = '0',
+	syncing = false,
 }: BondInputProps) => {
-  const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const { activeAddress } = useActiveAccounts()
-  const { unit } = getStakingChainData(network)
+	const { t } = useTranslation('app')
+	const { network } = useNetwork()
+	const { activeAddress } = useActiveAccounts()
+	const { unit } = getStakingChainData(network)
 
-  // the current local bond value
-  const [localBond, setLocalBond] = useState<string>(value)
+	// the current local bond value
+	const [localBond, setLocalBond] = useState<string>(value)
 
-  // reset value to default when changing account.
-  useEffect(() => {
-    setLocalBond(defaultValue ?? '0')
-  }, [activeAddress])
+	// reset value to default when changing account.
+	useEffect(() => {
+		setLocalBond(defaultValue ?? '0')
+	}, [activeAddress])
 
-  useEffect(() => {
-    if (!disableTxFeeUpdate) {
-      setLocalBond(value.toString())
-    }
-  }, [value])
+	useEffect(() => {
+		if (!disableTxFeeUpdate) {
+			setLocalBond(value.toString())
+		}
+	}, [value])
 
-  // handle change for bonding.
-  const handleChangeBond = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
-    if (val !== '' && new BigNumber(val).isNaN()) {
-      return
-    }
-    setLocalBond(val)
-    updateParentState(val)
-  }
+	// handle change for bonding.
+	const handleChangeBond = (e: ChangeEvent<HTMLInputElement>) => {
+		const val = e.target.value
+		if (val !== '' && new BigNumber(val).isNaN()) {
+			return
+		}
+		setLocalBond(val)
+		updateParentState(val)
+	}
 
-  // apply bond to parent setters.
-  const updateParentState = (val: string) => {
-    val = val || '0'
-    if (new BigNumber(val).isNaN()) {
-      return
-    }
-    for (const setter of setters) {
-      setter({
-        bond: new BigNumber(val),
-      })
-    }
-  }
+	// apply bond to parent setters.
+	const updateParentState = (val: string) => {
+		val = val || '0'
+		if (new BigNumber(val).isNaN()) {
+			return
+		}
+		for (const setter of setters) {
+			setter({
+				bond: new BigNumber(val),
+			})
+		}
+	}
 
-  // available funds as jsx.
-  const availableFundsJsx = (
-    <p>
-      {syncing ? '...' : `${freeToBond.toFormat()} ${unit} ${t('available')}`}
-    </p>
-  )
+	// available funds as jsx.
+	const availableFundsJsx = (
+		<p>
+			{syncing ? '...' : `${freeToBond.toFormat()} ${unit} ${t('available')}`}
+		</p>
+	)
 
-  return (
-    <InputWrapper>
-      <div className="inner">
-        <section style={{ opacity: disabled ? 0.5 : 1 }}>
-          <div className="input">
-            <div>
-              <input
-                type="text"
-                placeholder={`0 ${unit}`}
-                value={localBond}
-                onChange={(e) => {
-                  handleChangeBond(e)
-                }}
-                disabled={disabled}
-              />
-            </div>
-            <div>{availableFundsJsx}</div>
-          </div>
-        </section>
-        <section>
-          <ButtonSubmitInvert
-            text={t('max')}
-            disabled={disabled || syncing || freeToBond.isZero()}
-            onClick={() => {
-              setLocalBond(freeToBond.toString())
-              updateParentState(freeToBond.toString())
-            }}
-          />
-        </section>
-      </div>
-      <div className="availableOuter">{availableFundsJsx}</div>
-    </InputWrapper>
-  )
+	return (
+		<InputWrapper>
+			<div className="inner">
+				<section style={{ opacity: disabled ? 0.5 : 1 }}>
+					<div className="input">
+						<div>
+							<input
+								type="text"
+								placeholder={`0 ${unit}`}
+								value={localBond}
+								onChange={(e) => {
+									handleChangeBond(e)
+								}}
+								disabled={disabled}
+							/>
+						</div>
+						<div>{availableFundsJsx}</div>
+					</div>
+				</section>
+				<section>
+					<ButtonSubmitInvert
+						text={t('max')}
+						disabled={disabled || syncing || freeToBond.isZero()}
+						onClick={() => {
+							setLocalBond(freeToBond.toString())
+							updateParentState(freeToBond.toString())
+						}}
+					/>
+				</section>
+			</div>
+			<div className="availableOuter">{availableFundsJsx}</div>
+		</InputWrapper>
+	)
 }

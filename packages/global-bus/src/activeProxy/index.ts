@@ -10,15 +10,15 @@ export const activeProxy$ = _activeProxy.asObservable()
 export const getActiveProxy = () => _activeProxy.getValue()
 
 export const setActiveProxy = (
-  network: NetworkId,
-  proxy: ActiveProxy | null
+	network: NetworkId,
+	proxy: ActiveProxy | null,
 ) => {
-  setLocalActiveProxy(network, proxy)
-  _activeProxy.next(proxy)
+	setLocalActiveProxy(network, proxy)
+	_activeProxy.next(proxy)
 }
 
 export const resetActiveProxy = () => {
-  _activeProxy.next(null)
+	_activeProxy.next(null)
 }
 
 export * from './local'

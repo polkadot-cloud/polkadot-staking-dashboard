@@ -12,48 +12,48 @@ import { HeaderButton } from 'ui-core/list'
 import { Popover } from 'ui-core/popover'
 
 export const Remove = ({
-  address,
-  onRemove,
-  displayFor,
+	address,
+	onRemove,
+	displayFor,
 }: {
-  address: string
-  onRemove: () => void
-  displayFor: DisplayFor
+	address: string
+	onRemove: () => void
+	displayFor: DisplayFor
 }) => {
-  const { t } = useTranslation()
-  const { themeElementRef } = useTheme()
+	const { t } = useTranslation()
+	const { themeElementRef } = useTheme()
 
-  const [open, setOpen] = useState<boolean>(false)
+	const [open, setOpen] = useState<boolean>(false)
 
-  const controlKey = `selected_${address}`
+	const controlKey = `selected_${address}`
 
-  return (
-    <Popover
-      open={open}
-      key={controlKey}
-      portalContainer={themeElementRef.current || undefined}
-      onTriggerClick={() => setOpen(true)}
-      content={
-        <Confirm
-          text={t('removeFromNominees', { ns: 'app' })}
-          controlKey={controlKey}
-          onClose={() => setOpen(false)}
-          onRevert={() => {
-            onRemove()
-            setOpen(false)
-          }}
-        />
-      }
-    >
-      <HeaderButton outline={['modal', 'canvas'].includes(displayFor)} noMargin>
-        <span>
-          <FontAwesomeIcon
-            icon={faXmark}
-            transform="grow-4"
-            className={controlKey}
-          />
-        </span>
-      </HeaderButton>
-    </Popover>
-  )
+	return (
+		<Popover
+			open={open}
+			key={controlKey}
+			portalContainer={themeElementRef.current || undefined}
+			onTriggerClick={() => setOpen(true)}
+			content={
+				<Confirm
+					text={t('removeFromNominees', { ns: 'app' })}
+					controlKey={controlKey}
+					onClose={() => setOpen(false)}
+					onRevert={() => {
+						onRemove()
+						setOpen(false)
+					}}
+				/>
+			}
+		>
+			<HeaderButton outline={['modal', 'canvas'].includes(displayFor)} noMargin>
+				<span>
+					<FontAwesomeIcon
+						icon={faXmark}
+						transform="grow-4"
+						className={controlKey}
+					/>
+				</span>
+			</HeaderButton>
+		</Popover>
+	)
 }

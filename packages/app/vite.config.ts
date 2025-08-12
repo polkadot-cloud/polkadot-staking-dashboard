@@ -11,27 +11,27 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 // https://vitejs.dev/config/
 // - `BASE_URL`env variable is used in the codebase to refer to the supplied base.
 export default defineConfig({
-  plugins: [
-    eslint(),
-    react(),
-    svgr(),
-    tsconfigPaths(),
-    checker({
-      typescript: true,
-    }),
-  ],
-  build: {
-    outDir: 'build',
-  },
-  server: {
-    fs: {
-      strict: false,
-    },
-  },
-  optimizeDeps: {
-    include: ['react/jsx-runtime'],
-  },
-  worker: {
-    format: 'es',
-  },
+	plugins: [
+		eslint(),
+		react(),
+		svgr(),
+		tsconfigPaths(),
+		checker({
+			typescript: true,
+		}),
+	],
+	build: {
+		outDir: 'build',
+	},
+	server: {
+		fs: {
+			strict: false,
+		},
+	},
+	optimizeDeps: {
+		include: ['react/jsx-runtime'],
+	},
+	worker: {
+		format: 'es',
+	},
 })

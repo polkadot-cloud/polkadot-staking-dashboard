@@ -4,18 +4,18 @@
 import type { AccountId32 } from 'dedot/codecs'
 
 export interface FastUnstakeConfig {
-  head: FastUnstakeHead
-  counterForQueue: number
+	head: FastUnstakeHead
+	counterForQueue: number
 }
 
 export interface FastUnstakeHead {
-  stashes: [AccountId32, bigint][]
-  checked: number[]
+	stashes: [AccountId32, bigint][]
+	checked: number[]
 }
 
 export type FastUnstakeQueue =
-  | {
-      address: string
-      queue: bigint
-    }
-  | undefined
+	| {
+			address: string
+			queue: bigint
+	  }
+	| undefined

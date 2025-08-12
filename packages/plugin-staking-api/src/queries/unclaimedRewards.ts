@@ -22,16 +22,16 @@ const QUERY = gql`
 `
 
 export const useUnclaimedRewards = ({
-  network,
-  who,
-  fromEra,
+	network,
+	who,
+	fromEra,
 }: {
-  network: string
-  who: string
-  fromEra: number
+	network: string
+	who: string
+	fromEra: number
 }): UnclaimedRewardsResult => {
-  const { loading, error, data, refetch } = useQuery(QUERY, {
-    variables: { network, who, fromEra },
-  })
-  return { loading, error, data, refetch }
+	const { loading, error, data, refetch } = useQuery(QUERY, {
+		variables: { network, who, fromEra },
+	})
+	return { loading, error, data, refetch }
 }

@@ -6,18 +6,18 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Title = ({
-  children,
-  style,
-  fullWidth,
+	children,
+	style,
+	fullWidth,
 }: ComponentBase & {
-  fullWidth?: boolean
+	fullWidth?: boolean
 }) => {
-  const allClasses = classNames(classes.title, {
-    [classes.fullWidth]: !!fullWidth,
-  })
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	const allClasses = classNames(classes.title, {
+		[classes.fullWidth]: !!fullWidth,
+	})
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

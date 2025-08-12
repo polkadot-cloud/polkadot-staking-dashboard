@@ -5,22 +5,22 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const WebUrl = ({
-  url,
-  text,
-  style,
+	url,
+	text,
+	style,
 }: ComponentBase & {
-  url: string
-  text: string
+	url: string
+	text: string
 }) => (
-  <h4 className={classes.webUrl} style={style}>
-    <button
-      type="button"
-      onClick={(ev) => {
-        ev.stopPropagation()
-        window.open(url, '_blank')
-      }}
-    >
-      {text}
-    </button>
-  </h4>
+	<h4 className={classes.webUrl} style={style}>
+		<button
+			type="button"
+			onClick={(ev) => {
+				ev.stopPropagation()
+				window.open(url, '_blank')
+			}}
+		>
+			{text}
+		</button>
+	</h4>
 )

@@ -9,19 +9,19 @@ import type { Props } from './types'
 import { UnclaimedRewardsApi } from './UnclaimedRewardsApi'
 
 export const StakingApi = (props: Props) => {
-  const { isBonding } = useStaking()
-  const { setFastUnstakeStatus } = useFastUnstake()
+	const { isBonding } = useStaking()
+	const { setFastUnstakeStatus } = useFastUnstake()
 
-  useEffect(() => {
-    if (!isBonding) {
-      setFastUnstakeStatus(null)
-    }
-  }, [isBonding])
+	useEffect(() => {
+		if (!isBonding) {
+			setFastUnstakeStatus(null)
+		}
+	}, [isBonding])
 
-  return (
-    <>
-      <UnclaimedRewardsApi {...props} />
-      {isBonding && <FastUnstakeApi {...props} />}
-    </>
-  )
+	return (
+		<>
+			<UnclaimedRewardsApi {...props} />
+			{isBonding && <FastUnstakeApi {...props} />}
+		</>
+	)
 }

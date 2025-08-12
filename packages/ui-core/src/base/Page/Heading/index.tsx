@@ -9,7 +9,7 @@ import classes from './index.module.scss'
  * @summary Page heading container.
  */
 export const Heading = ({ children, style }: ComponentBase) => (
-  <div className={classes.heading} style={style}>
-    {children}
-  </div>
+	<div className={classes.heading} style={style}>
+		{children}
+	</div>
 )

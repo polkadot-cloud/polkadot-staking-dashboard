@@ -5,6 +5,6 @@ import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
 export const pendingRewards = async <T extends StakingChain>(
-  api: DedotClient<T>,
-  address: string
+	api: DedotClient<T>,
+	address: string,
 ) => await api.call.nominationPoolsApi.pendingRewards(address)

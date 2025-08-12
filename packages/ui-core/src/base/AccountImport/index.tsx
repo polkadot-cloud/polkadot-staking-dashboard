@@ -8,9 +8,9 @@ import { Item } from './Item'
 import { SubHeading } from './SubHeading'
 
 export const AccountImport = {
-  Inactive,
-  Empty,
-  Header,
-  Item,
-  SubHeading,
+	Inactive,
+	Empty,
+	Header,
+	Item,
+	SubHeading,
 }

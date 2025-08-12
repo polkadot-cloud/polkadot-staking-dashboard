@@ -4,15 +4,15 @@
 import type { HexString } from 'dedot/utils'
 
 export interface VaultPromptHandlers {
-  openPrompt: (
-    onComplete: (
-      status: 'complete' | 'cancelled',
-      result: HexString | null
-    ) => void,
-    toSign: Uint8Array
-  ) => void
-  closePrompt: () => void
-  setSubmitting: (submitting: boolean) => void
+	openPrompt: (
+		onComplete: (
+			status: 'complete' | 'cancelled',
+			result: HexString | null,
+		) => void,
+		toSign: Uint8Array,
+	) => void
+	closePrompt: () => void
+	setSubmitting: (submitting: boolean) => void
 }
 
 export type VaultSignStatus = 'complete' | 'cancelled'

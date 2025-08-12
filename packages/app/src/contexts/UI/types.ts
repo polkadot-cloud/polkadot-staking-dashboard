@@ -4,16 +4,16 @@
 import type { RefObject } from 'react'
 
 export interface UIContextInterface {
-  setSideMenu: (v: boolean) => void
-  setUserSideMenuMinimised: (v: boolean) => void
-  setContainerRefs: (
-    v: Record<string, RefObject<HTMLDivElement | null>>
-  ) => void
-  sideMenuOpen: boolean
-  userSideMenuMinimised: boolean
-  sideMenuMinimised: boolean
-  containerRefs: Record<string, RefObject<HTMLDivElement | null>>
-  isBraveBrowser: boolean
-  advancedMode: boolean
-  setAdvancedMode: (value: boolean) => void
+	setSideMenu: (v: boolean) => void
+	setUserSideMenuMinimised: (v: boolean) => void
+	setContainerRefs: (
+		v: Record<string, RefObject<HTMLDivElement | null>>,
+	) => void
+	sideMenuOpen: boolean
+	userSideMenuMinimised: boolean
+	sideMenuMinimised: boolean
+	containerRefs: Record<string, RefObject<HTMLDivElement | null>>
+	isBraveBrowser: boolean
+	advancedMode: boolean
+	setAdvancedMode: (value: boolean) => void
 }

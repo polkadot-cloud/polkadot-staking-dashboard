@@ -6,5 +6,5 @@ import type { EraRewardPoints } from 'types'
 import { defaultEraRewardPoints } from './default'
 
 export const _eraRewardPoints = new BehaviorSubject<EraRewardPoints>(
-  defaultEraRewardPoints
+	defaultEraRewardPoints,
 )

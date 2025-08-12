@@ -7,56 +7,56 @@ import { useEffect, useRef } from 'react'
 import { Wrapper } from './Wrappers'
 
 export const Menu = () => {
-  const {
-    open,
-    show,
-    inner,
-    closeMenu,
-    position: [x, y],
-    checkMenuPosition,
-  } = useMenu()
+	const {
+		open,
+		show,
+		inner,
+		closeMenu,
+		position: [x, y],
+		checkMenuPosition,
+	} = useMenu()
 
-  const menuRef = useRef<HTMLDivElement | null>(null)
+	const menuRef = useRef<HTMLDivElement | null>(null)
 
-  // Handler for closing the menu on window resize.
-  const resizeCallback = () => {
-    closeMenu()
-  }
+	// Handler for closing the menu on window resize.
+	const resizeCallback = () => {
+		closeMenu()
+	}
 
-  // Close the menu if clicked outside of its container.
-  useOutsideAlerter(menuRef, () => {
-    closeMenu()
-  })
+	// Close the menu if clicked outside of its container.
+	useOutsideAlerter(menuRef, () => {
+		closeMenu()
+	})
 
-  // Check position and show the menu if menu has been opened.
-  useEffect(() => {
-    if (open) {
-      checkMenuPosition(menuRef)
-    }
-  }, [open])
+	// Check position and show the menu if menu has been opened.
+	useEffect(() => {
+		if (open) {
+			checkMenuPosition(menuRef)
+		}
+	}, [open])
 
-  // Close the menu on window resize.
-  useEffect(() => {
-    window.addEventListener('resize', resizeCallback)
-    return () => {
-      window.removeEventListener('resize', resizeCallback)
-    }
-  }, [])
+	// Close the menu on window resize.
+	useEffect(() => {
+		window.addEventListener('resize', resizeCallback)
+		return () => {
+			window.removeEventListener('resize', resizeCallback)
+		}
+	}, [])
 
-  return (
-    open && (
-      <Wrapper
-        ref={menuRef}
-        style={{
-          position: 'absolute',
-          left: `${x}px`,
-          top: `${y}px`,
-          zIndex: 999,
-          opacity: show ? 1 : 0,
-        }}
-      >
-        {inner}
-      </Wrapper>
-    )
-  )
+	return (
+		open && (
+			<Wrapper
+				ref={menuRef}
+				style={{
+					position: 'absolute',
+					left: `${x}px`,
+					top: `${y}px`,
+					zIndex: 999,
+					opacity: show ? 1 : 0,
+				}}
+			>
+				{inner}
+			</Wrapper>
+		)
+	)
 }

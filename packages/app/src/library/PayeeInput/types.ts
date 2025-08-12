@@ -6,8 +6,8 @@ import type { Dispatch, SetStateAction } from 'react'
 import type { MaybeAddress } from 'types'
 
 export interface PayeeInputProps {
-  payee: PayeeConfig
-  account: MaybeAddress
-  setAccount: Dispatch<SetStateAction<MaybeAddress>>
-  handleChange: (a: MaybeAddress) => void
+	payee: PayeeConfig
+	account: MaybeAddress
+	setAccount: Dispatch<SetStateAction<MaybeAddress>>
+	handleChange: (a: MaybeAddress) => void
 }

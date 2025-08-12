@@ -5,56 +5,56 @@ import type { TimeLeftFormatted } from '@w3ux/types'
 import type { ReactNode } from 'react'
 
 export interface NumberProps {
-  label: string
-  value: number
-  decimals?: number
-  unit: string
-  helpKey?: string
+	label: string
+	value: number
+	decimals?: number
+	unit: string
+	helpKey?: string
 }
 
 export interface PieProps {
-  label: string
-  stat: {
-    value: string | number
-    unit: string | number
-    total?: string | number
-  }
-  pieValue: number
-  tooltip?: string
-  helpKey?: string
+	label: string
+	stat: {
+		value: string | number
+		unit: string | number
+		total?: string | number
+	}
+	pieValue: number
+	tooltip?: string
+	helpKey?: string
 }
 
 export interface TextProps {
-  primary?: boolean
-  label: string
-  value: string
-  helpKey?: string
+	primary?: boolean
+	label: string
+	value: string
+	helpKey?: string
 }
 
 export interface TickerProps {
-  primary?: boolean
-  label: string
-  value: string
-  helpKey?: string
-  direction?: 'up' | 'down'
-  unit: string
-  changePercent: string
+	primary?: boolean
+	label: string
+	value: string
+	helpKey?: string
+	direction?: 'up' | 'down'
+	unit: string
+	changePercent: string
 }
 
 export interface TimeleftProps {
-  label: string
-  timeleft: TimeLeftFormatted
-  graph: {
-    value1: number
-    value2: number
-  }
-  tooltip?: string
-  helpKey?: string
+	label: string
+	timeleft: TimeLeftFormatted
+	graph: {
+		value1: number
+		value2: number
+	}
+	tooltip?: string
+	helpKey?: string
 }
 
 export interface ButtonProps {
-  Icon: ReactNode
-  label: string
-  title: string
-  onClick: () => void
+	Icon: ReactNode
+	label: string
+	title: string
+	onClick: () => void
 }

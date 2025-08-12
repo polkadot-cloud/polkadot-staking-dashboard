@@ -12,31 +12,31 @@ import { Head, Main, Title } from 'ui-core/canvas'
 import { CloseCanvas } from 'ui-overlay'
 
 export const CreatePool = () => {
-  const { t } = useTranslation()
+	const { t } = useTranslation()
 
-  return (
-    <Main>
-      <Head>
-        <CloseCanvas />
-      </Head>
-      <Title>
-        <h1>{t('createAPool', { ns: 'pages' })}</h1>
-      </Title>
-      <CardWrapper className="canvas">
-        <PoolName section={1} />
-      </CardWrapper>
-      <CardWrapper className="canvas">
-        <Nominate bondFor="pool" section={2} />
-      </CardWrapper>
-      <CardWrapper className="canvas">
-        <PoolRoles section={3} />
-      </CardWrapper>
-      <CardWrapper className="canvas">
-        <Bond section={4} />
-      </CardWrapper>
-      <CardWrapper className="canvas">
-        <Summary section={5} />
-      </CardWrapper>
-    </Main>
-  )
+	return (
+		<Main>
+			<Head>
+				<CloseCanvas />
+			</Head>
+			<Title>
+				<h1>{t('createAPool', { ns: 'pages' })}</h1>
+			</Title>
+			<CardWrapper className="canvas">
+				<PoolName section={1} />
+			</CardWrapper>
+			<CardWrapper className="canvas">
+				<Nominate bondFor="pool" section={2} />
+			</CardWrapper>
+			<CardWrapper className="canvas">
+				<PoolRoles section={3} />
+			</CardWrapper>
+			<CardWrapper className="canvas">
+				<Bond section={4} />
+			</CardWrapper>
+			<CardWrapper className="canvas">
+				<Summary section={5} />
+			</CardWrapper>
+		</Main>
+	)
 }

@@ -12,34 +12,34 @@ import type { OverviewProps } from './types'
 import { ContentWrapper } from './Wrappers'
 
 export const Overview = forwardRef(
-  ({ setSection, setPayouts }: OverviewProps, ref: Ref<HTMLDivElement>) => {
-    const { t } = useTranslation('modals')
-    const { unclaimedRewards } = usePayouts()
+	({ setSection, setPayouts }: OverviewProps, ref: Ref<HTMLDivElement>) => {
+		const { t } = useTranslation('modals')
+		const { unclaimedRewards } = usePayouts()
 
-    return (
-      <ContentWrapper>
-        <Padding horizontalOnly ref={ref}>
-          {unclaimedRewards.entries.map(({ era, reward, validators }, i) =>
-            new BigNumber(reward).isZero() ? (
-              <Fragment key={`unclaimed_payout_${i}`} />
-            ) : (
-              <Item
-                key={`unclaimed_payout_${i}`}
-                era={String(era)}
-                validators={validators}
-                setPayouts={setPayouts}
-                setSection={setSection}
-              />
-            )
-          )}
-          <Notes withPadding>
-            <p>{t('claimsOnBehalf')}</p>
-            <p>{t('notToClaim')}</p>
-          </Notes>
-        </Padding>
-      </ContentWrapper>
-    )
-  }
+		return (
+			<ContentWrapper>
+				<Padding horizontalOnly ref={ref}>
+					{unclaimedRewards.entries.map(({ era, reward, validators }, i) =>
+						new BigNumber(reward).isZero() ? (
+							<Fragment key={`unclaimed_payout_${i}`} />
+						) : (
+							<Item
+								key={`unclaimed_payout_${i}`}
+								era={String(era)}
+								validators={validators}
+								setPayouts={setPayouts}
+								setSection={setSection}
+							/>
+						),
+					)}
+					<Notes withPadding>
+						<p>{t('claimsOnBehalf')}</p>
+						<p>{t('notToClaim')}</p>
+					</Notes>
+				</Padding>
+			</ContentWrapper>
+		)
+	},
 )
 
 Overview.displayName = 'Overview'

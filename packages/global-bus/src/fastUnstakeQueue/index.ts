@@ -7,11 +7,11 @@ import { _fastUnstakeQueue } from './private'
 export const fastUnstakeQueue$ = _fastUnstakeQueue.asObservable()
 
 export const resetFastUnstakeQueue = () => {
-  _fastUnstakeQueue.next(undefined)
+	_fastUnstakeQueue.next(undefined)
 }
 
 export const getFastUnstakeQueue = () => _fastUnstakeQueue.getValue()
 
 export const setFastUnstakeQueue = (value: FastUnstakeQueue) => {
-  _fastUnstakeQueue.next(value)
+	_fastUnstakeQueue.next(value)
 }

@@ -21,129 +21,129 @@ import { useOverlay } from 'ui-overlay'
 import { Wrapper } from './Wrapper'
 
 export const Nominations = ({
-  bondFor,
-  nominator,
+	bondFor,
+	nominator,
 }: {
-  bondFor: 'pool' | 'nominator'
-  nominator: MaybeAddress
+	bondFor: 'pool' | 'nominator'
+	nominator: MaybeAddress
 }) => {
-  const { t } = useTranslation('pages')
-  const {
-    activePool,
-    activePoolNominations,
-    isOwner: isPoolOwner,
-    isNominator: isPoolNominator,
-  } = useActivePool()
-  const { openHelp } = useHelp()
-  const {
-    modal: { openModal },
-    canvas: { openCanvas },
-  } = useOverlay()
-  const { isBonding } = useStaking()
-  const { syncing } = useSyncing(['era-stakers'])
-  const { getNominations } = useBalances()
-  const { isFastUnstaking } = useUnstaking()
-  const { formatWithPrefs } = useValidators()
-  const { activeAddress } = useActiveAccounts()
-  const { isReadOnlyAccount } = useImportedAccounts()
+	const { t } = useTranslation('pages')
+	const {
+		activePool,
+		activePoolNominations,
+		isOwner: isPoolOwner,
+		isNominator: isPoolNominator,
+	} = useActivePool()
+	const { openHelp } = useHelp()
+	const {
+		modal: { openModal },
+		canvas: { openCanvas },
+	} = useOverlay()
+	const { isBonding } = useStaking()
+	const { syncing } = useSyncing(['era-stakers'])
+	const { getNominations } = useBalances()
+	const { isFastUnstaking } = useUnstaking()
+	const { formatWithPrefs } = useValidators()
+	const { activeAddress } = useActiveAccounts()
+	const { isReadOnlyAccount } = useImportedAccounts()
 
-  // Determine if pool or nominator.
-  const isPool = bondFor === 'pool'
+	// Determine if pool or nominator.
+	const isPool = bondFor === 'pool'
 
-  // Derive nominations from `bondFor` type.
-  const nominated =
-    bondFor === 'nominator'
-      ? formatWithPrefs(getNominations(activeAddress))
-      : activePoolNominations
-        ? formatWithPrefs(activePoolNominations.targets)
-        : []
+	// Derive nominations from `bondFor` type.
+	const nominated =
+		bondFor === 'nominator'
+			? formatWithPrefs(getNominations(activeAddress))
+			: activePoolNominations
+				? formatWithPrefs(activePoolNominations.targets)
+				: []
 
-  // Determine if this nominator is actually nominating.
-  const isNominating = nominated?.length ?? false
+	// Determine if this nominator is actually nominating.
+	const isNominating = nominated?.length ?? false
 
-  // Determine whether this is a pool that is in Destroying state & not nominating.
-  const poolDestroying =
-    isPool && activePool?.bondedPool?.state === 'Destroying' && !isNominating
+	// Determine whether this is a pool that is in Destroying state & not nominating.
+	const poolDestroying =
+		isPool && activePool?.bondedPool?.state === 'Destroying' && !isNominating
 
-  // Determine whether to display buttons.
-  //
-  // If regular staking and nominating, or if pool and account is nominator or root, display stop
-  // button.
-  const displayBtns =
-    (!isPool && nominated.length) ||
-    (isPool && (isPoolNominator() || isPoolOwner()))
+	// Determine whether to display buttons.
+	//
+	// If regular staking and nominating, or if pool and account is nominator or root, display stop
+	// button.
+	const displayBtns =
+		(!isPool && nominated.length) ||
+		(isPool && (isPoolNominator() || isPoolOwner()))
 
-  // Determine whether buttons are disabled.
-  const btnsDisabled =
-    (!isPool && !isBonding) ||
-    (!isPool && syncing) ||
-    isReadOnlyAccount(activeAddress) ||
-    poolDestroying ||
-    isFastUnstaking
+	// Determine whether buttons are disabled.
+	const btnsDisabled =
+		(!isPool && !isBonding) ||
+		(!isPool && syncing) ||
+		isReadOnlyAccount(activeAddress) ||
+		poolDestroying ||
+		isFastUnstaking
 
-  return (
-    <Wrapper>
-      <CardHeader action margin>
-        <h3>
-          {isPool ? t('poolNominations') : t('nominations')}
-          <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
-        </h3>
-        {displayBtns && (
-          <ButtonRow>
-            <ButtonPrimary
-              text={t('stop')}
-              size="md"
-              iconLeft={faStopCircle}
-              iconTransform="grow-1"
-              disabled={btnsDisabled}
-              onClick={() =>
-                openModal({
-                  key: 'StopNominations',
-                  options: {
-                    nominations: [],
-                    bondFor,
-                  },
-                  size: 'sm',
-                })
-              }
-            />
-            <ButtonPrimary
-              text={t('manage')}
-              size="md"
-              iconLeft={faCog}
-              iconTransform="grow-1"
-              disabled={btnsDisabled}
-              marginLeft
-              onClick={() =>
-                openCanvas({
-                  key: 'ManageNominations',
-                  scroll: false,
-                  options: {
-                    bondFor,
-                    nominator,
-                    nominated,
-                  },
-                })
-              }
-            />
-          </ButtonRow>
-        )}
-      </CardHeader>
-      {!isPool && syncing ? (
-        <ListStatusHeader>{`${t('syncing')}...`}</ListStatusHeader>
-      ) : !nominator ? (
-        <ListStatusHeader>{t('notNominating')}.</ListStatusHeader>
-      ) : (nominated?.length || 0) > 0 ? (
-        <NominationList
-          bondFor={bondFor}
-          validators={nominated || []}
-          nominator={nominator}
-        />
-      ) : poolDestroying ? (
-        <ListStatusHeader>{t('poolDestroy')}</ListStatusHeader>
-      ) : (
-        <ListStatusHeader>{t('notNominating')}.</ListStatusHeader>
-      )}
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<CardHeader action margin>
+				<h3>
+					{isPool ? t('poolNominations') : t('nominations')}
+					<ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
+				</h3>
+				{displayBtns && (
+					<ButtonRow>
+						<ButtonPrimary
+							text={t('stop')}
+							size="md"
+							iconLeft={faStopCircle}
+							iconTransform="grow-1"
+							disabled={btnsDisabled}
+							onClick={() =>
+								openModal({
+									key: 'StopNominations',
+									options: {
+										nominations: [],
+										bondFor,
+									},
+									size: 'sm',
+								})
+							}
+						/>
+						<ButtonPrimary
+							text={t('manage')}
+							size="md"
+							iconLeft={faCog}
+							iconTransform="grow-1"
+							disabled={btnsDisabled}
+							marginLeft
+							onClick={() =>
+								openCanvas({
+									key: 'ManageNominations',
+									scroll: false,
+									options: {
+										bondFor,
+										nominator,
+										nominated,
+									},
+								})
+							}
+						/>
+					</ButtonRow>
+				)}
+			</CardHeader>
+			{!isPool && syncing ? (
+				<ListStatusHeader>{`${t('syncing')}...`}</ListStatusHeader>
+			) : !nominator ? (
+				<ListStatusHeader>{t('notNominating')}.</ListStatusHeader>
+			) : (nominated?.length || 0) > 0 ? (
+				<NominationList
+					bondFor={bondFor}
+					validators={nominated || []}
+					nominator={nominator}
+				/>
+			) : poolDestroying ? (
+				<ListStatusHeader>{t('poolDestroy')}</ListStatusHeader>
+			) : (
+				<ListStatusHeader>{t('notNominating')}.</ListStatusHeader>
+			)}
+		</Wrapper>
+	)
 }

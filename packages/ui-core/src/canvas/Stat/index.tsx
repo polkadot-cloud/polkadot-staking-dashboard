@@ -6,18 +6,18 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Stat = ({
-  children,
-  style,
-  withIcon,
+	children,
+	style,
+	withIcon,
 }: ComponentBase & {
-  withIcon?: boolean
+	withIcon?: boolean
 }) => {
-  const allClasses = classNames(classes.stat, {
-    [classes.withIcon]: !!withIcon,
-  })
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	const allClasses = classNames(classes.stat, {
+		[classes.withIcon]: !!withIcon,
+	})
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Warnings = ({ children, style }: ComponentBase) => (
-  <div className={classes.warnings} style={style}>
-    {children}
-  </div>
+	<div className={classes.warnings} style={style}>
+		{children}
+	</div>
 )

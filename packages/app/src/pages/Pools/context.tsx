@@ -7,33 +7,33 @@ import { createContext, useContext, useState } from 'react'
 import type { PoolsTabsContextInterface } from './types'
 
 export const PoolsTabsContext = createContext<PoolsTabsContextInterface>({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setActiveTab: (_tab: number) => {},
-  activeTab: 0,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	setActiveTab: (_tab: number) => {},
+	activeTab: 0,
 })
 
 export const usePoolsTabs = () => useContext(PoolsTabsContext)
 
 export const PoolsTabsProvider = ({ children }: { children: ReactNode }) => {
-  const tabFromUrl = extractUrlValue('t')
-  const initialActiveTab = [0, 1, 2, 3].includes(Number(tabFromUrl))
-    ? Number(tabFromUrl)
-    : 0
+	const tabFromUrl = extractUrlValue('t')
+	const initialActiveTab = [0, 1, 2, 3].includes(Number(tabFromUrl))
+		? Number(tabFromUrl)
+		: 0
 
-  const [activeTab, setActiveTabState] = useState<number>(initialActiveTab)
+	const [activeTab, setActiveTabState] = useState<number>(initialActiveTab)
 
-  const setActiveTab = (t: number) => {
-    setActiveTabState(t)
-  }
+	const setActiveTab = (t: number) => {
+		setActiveTabState(t)
+	}
 
-  return (
-    <PoolsTabsContext.Provider
-      value={{
-        activeTab,
-        setActiveTab,
-      }}
-    >
-      {children}
-    </PoolsTabsContext.Provider>
-  )
+	return (
+		<PoolsTabsContext.Provider
+			value={{
+				activeTab,
+				setActiveTab,
+			}}
+		>
+			{children}
+		</PoolsTabsContext.Provider>
+	)
 }

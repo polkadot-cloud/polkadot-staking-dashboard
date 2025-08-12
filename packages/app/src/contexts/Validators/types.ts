@@ -5,48 +5,48 @@ import type { Sync } from '@w3ux/types'
 import type { AnyJson, IdentityOf, Validator, ValidatorStatus } from 'types'
 
 export interface ValidatorsContextInterface {
-  fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>
-  injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[]
-  getValidators: () => Validator[]
-  validatorIdentities: Record<string, IdentityOf>
-  validatorSupers: Record<string, AnyJson>
-  avgCommission: number
-  sessionValidators: string[]
-  validatorsFetched: Sync
-  avgRewardRate: number
-  averageEraValidatorReward: AverageEraValidatorReward
-  formatWithPrefs: (addresses: string[]) => Validator[]
-  getValidatorTotalStake: (address: string) => bigint
-  getValidatorRank: (address: string) => number | undefined
-  getValidatorRankSegment: (address: string) => number
+	fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>
+	injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[]
+	getValidators: () => Validator[]
+	validatorIdentities: Record<string, IdentityOf>
+	validatorSupers: Record<string, AnyJson>
+	avgCommission: number
+	sessionValidators: string[]
+	validatorsFetched: Sync
+	avgRewardRate: number
+	averageEraValidatorReward: AverageEraValidatorReward
+	formatWithPrefs: (addresses: string[]) => Validator[]
+	getValidatorTotalStake: (address: string) => bigint
+	getValidatorRank: (address: string) => number | undefined
+	getValidatorRankSegment: (address: string) => number
 }
 
 export interface AverageEraValidatorReward {
-  days: number
-  reward: bigint
+	days: number
+	reward: bigint
 }
 export interface Validators {
-  status: Sync
-  validators: Validator[]
+	status: Sync
+	validators: Validator[]
 }
 
 export interface FavoriteValidatorsContextInterface {
-  addFavorite: (address: string) => void
-  removeFavorite: (address: string) => void
-  favorites: string[]
-  favoritesList: Validator[] | null
+	addFavorite: (address: string) => void
+	removeFavorite: (address: string) => void
+	favorites: string[]
+	favoritesList: Validator[] | null
 }
 
 export type ValidatorAddresses = {
-  address: string
+	address: string
 }[]
 
 export interface LocalValidatorEntriesData {
-  avgCommission: number
-  era: string
-  entries: Validator[]
+	avgCommission: number
+	era: string
+	entries: Validator[]
 }
 
 export type ValidatorListEntry = Validator & {
-  validatorStatus: ValidatorStatus
+	validatorStatus: ValidatorStatus
 }

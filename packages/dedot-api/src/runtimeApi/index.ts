@@ -6,7 +6,7 @@ import { pendingRewards } from './pendingRewards'
 import { pointsToBalance } from './pointsToBalance'
 
 export const runtimeApi = {
-  balanceToPoints,
-  pendingRewards,
-  pointsToBalance,
+	balanceToPoints,
+	pendingRewards,
+	pointsToBalance,
 }

@@ -22,89 +22,89 @@ import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
 export const ClaimCommission = ({
-  setSection,
-  onResize,
+	setSection,
+	onResize,
 }: {
-  setSection: Dispatch<SetStateAction<number>>
-  onResize: () => void
+	setSection: Dispatch<SetStateAction<number>>
+	onResize: () => void
 }) => {
-  const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { serviceApi } = useApi()
-  const { setModalStatus } = useOverlay().modal
-  const { activeAddress } = useActiveAccounts()
-  const { isOwner, activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
+	const { t } = useTranslation('modals')
+	const { network } = useNetwork()
+	const { serviceApi } = useApi()
+	const { setModalStatus } = useOverlay().modal
+	const { activeAddress } = useActiveAccounts()
+	const { isOwner, activePool } = useActivePool()
+	const { getSignerWarnings } = useSignerWarnings()
 
-  const { unit, units } = getStakingChainData(network)
-  const poolId = activePool?.id
-  const pendingCommission = new BigNumber(
-    activePool?.rewardPool?.totalCommissionPending || 0
-  )
+	const { unit, units } = getStakingChainData(network)
+	const poolId = activePool?.id
+	const pendingCommission = new BigNumber(
+		activePool?.rewardPool?.totalCommissionPending || 0,
+	)
 
-  // valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false)
+	// valid to submit transaction
+	const [valid, setValid] = useState<boolean>(false)
 
-  useEffect(() => {
-    setValid(isOwner() && pendingCommission.isGreaterThan(0))
-  }, [activePool, pendingCommission])
+	useEffect(() => {
+		setValid(isOwner() && pendingCommission.isGreaterThan(0))
+	}, [activePool, pendingCommission])
 
-  const getTx = () => {
-    if (!valid || poolId === undefined) {
-      return
-    }
-    return serviceApi.tx.poolClaimCommission(poolId)
-  }
+	const getTx = () => {
+		if (!valid || poolId === undefined) {
+			return
+		}
+		return serviceApi.tx.poolClaimCommission(poolId)
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: true,
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: true,
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+	})
 
-  const warnings = getSignerWarnings(
-    activeAddress,
-    false,
-    submitExtrinsic.proxySupported
-  )
+	const warnings = getSignerWarnings(
+		activeAddress,
+		false,
+		submitExtrinsic.proxySupported,
+	)
 
-  return (
-    <>
-      <Padding horizontalOnly>
-        {warnings.length > 0 ? (
-          <Warnings>
-            {warnings.map((text, i) => (
-              <Warning key={`warning${i}`} text={text} />
-            ))}
-          </Warnings>
-        ) : null}
-        <ActionItem
-          text={`${t('claim')} ${planckToUnitBn(
-            pendingCommission,
-            units
-          ).toString()} ${unit} `}
-        />
-        <Notes>
-          <p>{t('sentToCommissionPayee')}</p>
-        </Notes>
-      </Padding>
-      <SubmitTx
-        valid={valid}
-        buttons={[
-          <ButtonSubmitInvert
-            key="button_back"
-            text={t('back')}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-1"
-            onClick={() => setSection(0)}
-          />,
-        ]}
-        onResize={onResize}
-        {...submitExtrinsic}
-      />
-    </>
-  )
+	return (
+		<>
+			<Padding horizontalOnly>
+				{warnings.length > 0 ? (
+					<Warnings>
+						{warnings.map((text, i) => (
+							<Warning key={`warning${i}`} text={text} />
+						))}
+					</Warnings>
+				) : null}
+				<ActionItem
+					text={`${t('claim')} ${planckToUnitBn(
+						pendingCommission,
+						units,
+					).toString()} ${unit} `}
+				/>
+				<Notes>
+					<p>{t('sentToCommissionPayee')}</p>
+				</Notes>
+			</Padding>
+			<SubmitTx
+				valid={valid}
+				buttons={[
+					<ButtonSubmitInvert
+						key="button_back"
+						text={t('back')}
+						iconLeft={faChevronLeft}
+						iconTransform="shrink-1"
+						onClick={() => setSection(0)}
+					/>,
+				]}
+				onResize={onResize}
+				{...submitExtrinsic}
+			/>
+		</>
+	)
 }

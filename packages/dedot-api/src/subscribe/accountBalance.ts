@@ -8,37 +8,37 @@ import type { AccountBalance, ChainId } from 'types'
 import type { Chain } from '../types'
 
 export class AccountBalanceQuery<T extends Chain> {
-  #unsub: Unsub | undefined = undefined
+	#unsub: Unsub | undefined = undefined
 
-  constructor(
-    public api: DedotClient<T>,
-    public chainId: ChainId,
-    public address: string
-  ) {
-    this.api = api
-    this.subscribe()
-  }
+	constructor(
+		public api: DedotClient<T>,
+		public chainId: ChainId,
+		public address: string,
+	) {
+		this.api = api
+		this.subscribe()
+	}
 
-  async subscribe() {
-    this.#unsub = await this.api.query.system.account(
-      this.address,
-      async ({ nonce, data }) => {
-        const balances: AccountBalance = {
-          synced: true,
-          nonce,
-          balance: {
-            free: data.free,
-            reserved: data.reserved,
-            frozen: data.frozen,
-          },
-        }
-        setAccountBalance(this.chainId, this.address, balances)
-      }
-    )
-  }
+	async subscribe() {
+		this.#unsub = await this.api.query.system.account(
+			this.address,
+			async ({ nonce, data }) => {
+				const balances: AccountBalance = {
+					synced: true,
+					nonce,
+					balance: {
+						free: data.free,
+						reserved: data.reserved,
+						frozen: data.frozen,
+					},
+				}
+				setAccountBalance(this.chainId, this.address, balances)
+			},
+		)
+	}
 
-  unsubscribe() {
-    this.#unsub?.()
-    removeAccountBalance(this.chainId, this.address)
-  }
+	unsubscribe() {
+		this.#unsub?.()
+		removeAccountBalance(this.chainId, this.address)
+	}
 }

@@ -13,29 +13,29 @@ import { planckToUnitBn } from 'utils'
 import type { EraStatusProps } from '../types'
 
 export const EraStatus = ({ address, noMargin, status }: EraStatusProps) => {
-  const { t } = useTranslation('app')
-  const { syncing } = useSyncing()
-  const { network } = useNetwork()
-  const { getValidatorTotalStake } = useValidators()
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('app')
+	const { syncing } = useSyncing()
+	const { network } = useNetwork()
+	const { getValidatorTotalStake } = useValidators()
+	const { unit, units } = getStakingChainData(network)
 
-  // Fallback to `waiting` status if still syncing.
-  const validatorStatus = syncing ? 'waiting' : status
+	// Fallback to `waiting` status if still syncing.
+	const validatorStatus = syncing ? 'waiting' : status
 
-  return (
-    <ValidatorStatusWrapper $status={validatorStatus} $noMargin={noMargin}>
-      <h5>
-        {syncing
-          ? t('syncing')
-          : validatorStatus !== 'waiting'
-            ? `${t('listItemActive')} / ${planckToUnitBn(
-                new BigNumber(getValidatorTotalStake(address)),
-                units
-              )
-                .integerValue()
-                .toFormat()} ${unit}`
-            : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
-      </h5>
-    </ValidatorStatusWrapper>
-  )
+	return (
+		<ValidatorStatusWrapper $status={validatorStatus} $noMargin={noMargin}>
+			<h5>
+				{syncing
+					? t('syncing')
+					: validatorStatus !== 'waiting'
+						? `${t('listItemActive')} / ${planckToUnitBn(
+								new BigNumber(getValidatorTotalStake(address)),
+								units,
+							)
+								.integerValue()
+								.toFormat()} ${unit}`
+						: capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
+			</h5>
+		</ValidatorStatusWrapper>
+	)
 }

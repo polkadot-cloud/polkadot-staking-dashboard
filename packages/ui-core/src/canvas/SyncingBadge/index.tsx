@@ -6,20 +6,20 @@ import { Stat } from '../Stat'
 import classes from './index.module.scss'
 
 export const SyncingBadge = ({
-  percentPassed,
-  title,
-  style,
+	percentPassed,
+	title,
+	style,
 }: ComponentBase & {
-  percentPassed: string
-  title: string
-  continuous?: boolean
+	percentPassed: string
+	title: string
+	continuous?: boolean
 }) => (
-  <Stat>
-    {title}
-    <div
-      className={classes.loader}
-      style={{ ...style, marginRight: '1.25rem' }}
-    />
-    <span className="counter">{percentPassed}%</span>
-  </Stat>
+	<Stat>
+		{title}
+		<div
+			className={classes.loader}
+			style={{ ...style, marginRight: '1.25rem' }}
+		/>
+		<span className="counter">{percentPassed}%</span>
+	</Stat>
 )

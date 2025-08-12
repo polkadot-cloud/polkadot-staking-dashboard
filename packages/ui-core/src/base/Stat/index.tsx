@@ -10,14 +10,14 @@ import { Title } from './Title'
 import { Total } from './Total'
 
 export const Stat = {
-  Button,
-  Card,
-  Content,
-  Graphic,
-  Row,
-  Subtitle,
-  Title,
-  Total,
+	Button,
+	Card,
+	Content,
+	Graphic,
+	Row,
+	Subtitle,
+	Title,
+	Total,
 }
 
 export default Stat

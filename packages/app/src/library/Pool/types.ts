@@ -4,15 +4,15 @@
 import type { BondedPool, DisplayFor } from 'types'
 
 export interface PoolProps {
-  pool: BondedPool
+	pool: BondedPool
 }
 
 export interface RewardProps {
-  address: string
-  displayFor?: DisplayFor
+	address: string
+	displayFor?: DisplayFor
 }
 
 export interface RewardsGraphProps {
-  points: number[]
-  syncing: boolean
+	points: number[]
+	syncing: boolean
 }

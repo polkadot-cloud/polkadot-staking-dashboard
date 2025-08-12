@@ -7,20 +7,20 @@ import { _proxies } from './private'
 export const proxies$ = _proxies.asObservable()
 
 export const resetProxies = () => {
-  _proxies.next({})
+	_proxies.next({})
 }
 
 export const getProxies = (address: string) =>
-  _proxies.getValue()?.[address] || []
+	_proxies.getValue()?.[address] || []
 
 export const addProxies = (address: string, proxies: Proxies) => {
-  const next = { ..._proxies.getValue() }
-  next[address] = proxies
-  _proxies.next(next)
+	const next = { ..._proxies.getValue() }
+	next[address] = proxies
+	_proxies.next(next)
 }
 
 export const removeProxies = (address: string) => {
-  const next = { ..._proxies.getValue() }
-  delete next[address]
-  _proxies.next(next)
+	const next = { ..._proxies.getValue() }
+	delete next[address]
+	_proxies.next(next)
 }

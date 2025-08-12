@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-  networkConfig$,
-  setNetworkConfig,
-  setServiceInterface,
+	networkConfig$,
+	setNetworkConfig,
+	setServiceInterface,
 } from 'global-bus'
 import { getInitialNetworkConfig } from 'global-bus/util'
 import { pairwise, startWith } from 'rxjs'
@@ -17,42 +17,42 @@ let service: ServiceClass
 
 // Start service for the current network
 export const initDedotService = async () => {
-  // Populate network config with sanitized RPC endpoints
-  const config = await getInitialNetworkConfig()
-  setNetworkConfig(config.network, config.rpcEndpoints, config.providerType)
+	// Populate network config with sanitized RPC endpoints
+	const config = await getInitialNetworkConfig()
+	setNetworkConfig(config.network, config.rpcEndpoints, config.providerType)
 
-  // Subscribe to network config changes
-  networkConfig$
-    .pipe(startWith(config), pairwise())
-    .subscribe(async ([prev, cur]) => {
-      // Unsubscribe from previous service if on new network config, and clear stale global state
-      if (
-        prev.network !== cur.network ||
-        prev.providerType !== cur.providerType
-      ) {
-        await service?.unsubscribe()
-        onNetworkReset()
-      }
+	// Subscribe to network config changes
+	networkConfig$
+		.pipe(startWith(config), pairwise())
+		.subscribe(async ([prev, cur]) => {
+			// Unsubscribe from previous service if on new network config, and clear stale global state
+			if (
+				prev.network !== cur.network ||
+				prev.providerType !== cur.providerType
+			) {
+				await service?.unsubscribe()
+				onNetworkReset()
+			}
 
-      const { network, ...rest } = cur
-      // Type narrow services and apis
-      if (network === 'westend') {
-        const { Service, apis, ids } = await getDefaultService(network, rest)
-        service = new Service(cur, ids, ...apis)
-      }
-      if (network === 'kusama') {
-        const { Service, apis, ids } = await getDefaultService(network, rest)
-        service = new Service(cur, ids, ...apis)
-      }
-      if (network === 'polkadot') {
-        const { Service, apis, ids } = await getDefaultService(network, rest)
-        service = new Service(cur, ids, ...apis)
-      }
+			const { network, ...rest } = cur
+			// Type narrow services and apis
+			if (network === 'westend') {
+				const { Service, apis, ids } = await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis)
+			}
+			if (network === 'kusama') {
+				const { Service, apis, ids } = await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis)
+			}
+			if (network === 'polkadot') {
+				const { Service, apis, ids } = await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis)
+			}
 
-      // Expose service interface
-      setServiceInterface(service.interface)
+			// Expose service interface
+			setServiceInterface(service.interface)
 
-      // Start the service
-      await service.start()
-    })
+			// Start the service
+			await service.start()
+		})
 }

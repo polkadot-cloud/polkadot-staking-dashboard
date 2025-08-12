@@ -4,10 +4,10 @@
 import type { NominatorProgress } from './types'
 
 export const defaultNominatorProgress: NominatorProgress = {
-  payee: {
-    destination: null,
-    account: null,
-  },
-  nominations: [],
-  bond: '',
+	payee: {
+		destination: null,
+		account: null,
+	},
+	nominations: [],
+	bond: '',
 }

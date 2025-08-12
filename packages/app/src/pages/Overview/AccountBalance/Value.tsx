@@ -6,13 +6,13 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 import { formatFiatCurrency } from 'locales/util'
 
 export const Value = ({ totalBalance }: { totalBalance: BigNumber }) => {
-  const { price } = useTokenPrices()
+	const { price } = useTokenPrices()
 
-  // Convert balance to fiat value
-  const freeFiat = totalBalance.multipliedBy(
-    new BigNumber(price).decimalPlaces(2)
-  )
+	// Convert balance to fiat value
+	const freeFiat = totalBalance.multipliedBy(
+		new BigNumber(price).decimalPlaces(2),
+	)
 
-  // Use the enhanced currency formatting function
-  return <>{formatFiatCurrency(freeFiat.toNumber())}</>
+	// Use the enhanced currency formatting function
+	return <>{formatFiatCurrency(freeFiat.toNumber())}</>
 }

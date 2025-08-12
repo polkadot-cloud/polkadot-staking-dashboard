@@ -6,7 +6,7 @@ import { PolkadotService } from './polkadot'
 import { WestendService } from './westend'
 
 export const Services = {
-  polkadot: PolkadotService,
-  kusama: KusamaService,
-  westend: WestendService,
+	polkadot: PolkadotService,
+	kusama: KusamaService,
+	westend: WestendService,
 }

@@ -5,18 +5,18 @@ import type { AnyFunction, AnyJson, DisplayFor } from 'types'
 import type { SelectHandler } from '../types'
 
 export interface InlineControlsProps {
-  setters: AnyFunction[]
-  displayFor: DisplayFor
-  allowRevert: boolean
+	setters: AnyFunction[]
+	displayFor: DisplayFor
+	allowRevert: boolean
 }
 
 export interface ListControlsProps {
-  selectHandlers: Record<string, SelectHandler>
-  filterHandlers: AnyJson[]
-  displayFor: DisplayFor
+	selectHandlers: Record<string, SelectHandler>
+	filterHandlers: AnyJson[]
+	displayFor: DisplayFor
 }
 
 export interface MenuControlsProps {
-  setters: AnyFunction[]
-  allowRevert: boolean
+	setters: AnyFunction[]
+	allowRevert: boolean
 }

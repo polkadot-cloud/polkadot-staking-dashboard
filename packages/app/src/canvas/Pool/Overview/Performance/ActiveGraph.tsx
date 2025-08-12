@@ -11,55 +11,55 @@ import type { NetworkId } from 'types'
 import { PayoutLine } from 'ui-graphs'
 
 interface Props {
-  network: NetworkId
-  stash: string
-  fromEra: number
-  width: string | number
-  height: string | number
-  units: number
+	network: NetworkId
+	stash: string
+	fromEra: number
+	width: string | number
+	height: string | number
+	units: number
 }
 export const ActiveGraph = ({
-  network,
-  stash,
-  fromEra,
-  width,
-  height,
-  units,
+	network,
+	stash,
+	fromEra,
+	width,
+	height,
+	units,
 }: Props) => {
-  const { i18n, t } = useTranslation()
-  const { getThemeValue } = useThemeValues()
-  const { unit } = getStakingChainData(network)
-  const { data, loading, error } = useRewards({
-    network,
-    who: stash,
-    fromEra,
-  })
+	const { i18n, t } = useTranslation()
+	const { getThemeValue } = useThemeValues()
+	const { unit } = getStakingChainData(network)
+	const { data, loading, error } = useRewards({
+		network,
+		who: stash,
+		fromEra,
+	})
 
-  const list =
-    loading || error || data?.allRewards === undefined
-      ? []
-      : data.allRewards.map((reward) => ({
-          era: reward.era,
-          reward: planckToUnit(reward.reward, units),
-          start: reward.timestamp,
-        }))
+	const list =
+		loading || error || data?.allRewards === undefined
+			? []
+			: data.allRewards.map((reward) => ({
+					era: reward.era,
+					reward: planckToUnit(reward.reward, units),
+					start: reward.timestamp,
+				}))
 
-  const sorted = [...list].sort((a, b) => a.era - b.era)
+	const sorted = [...list].sort((a, b) => a.era - b.era)
 
-  return (
-    <PayoutLine
-      syncing={loading}
-      entries={sorted}
-      width={width}
-      height={height}
-      getThemeValue={getThemeValue}
-      unit={unit}
-      dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
-      labels={{
-        era: t('era', { ns: 'app' }),
-        reward: t('reward', { ns: 'modals' }),
-        payouts: t('payouts', { ns: 'app' }),
-      }}
-    />
-  )
+	return (
+		<PayoutLine
+			syncing={loading}
+			entries={sorted}
+			width={width}
+			height={height}
+			getThemeValue={getThemeValue}
+			unit={unit}
+			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
+			labels={{
+				era: t('era', { ns: 'app' }),
+				reward: t('reward', { ns: 'modals' }),
+				payouts: t('payouts', { ns: 'app' }),
+			}}
+		/>
+	)
 }

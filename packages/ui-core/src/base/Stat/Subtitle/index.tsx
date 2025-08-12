@@ -10,19 +10,19 @@ import classes from './index.module.scss'
  * @summary Used to house a subtitle for `StatCard`
  */
 export const Subtitle = ({
-  children,
-  style,
-  primary,
+	children,
+	style,
+	primary,
 }: ComponentBase & {
-  primary?: boolean
+	primary?: boolean
 }) => {
-  const allClasses = classNames(classes.subtitle, {
-    [classes.primary]: !!primary,
-  })
+	const allClasses = classNames(classes.subtitle, {
+		[classes.primary]: !!primary,
+	})
 
-  return (
-    <h4 className={allClasses} style={style}>
-      {children}
-    </h4>
-  )
+	return (
+		<h4 className={allClasses} style={style}>
+			{children}
+		</h4>
+	)
 }

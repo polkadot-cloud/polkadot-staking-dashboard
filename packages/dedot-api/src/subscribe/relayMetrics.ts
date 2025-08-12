@@ -8,38 +8,38 @@ import type { RelayMetrics } from 'types'
 import type { RelayChain } from '../types'
 
 export class RelayMetricsQuery<T extends RelayChain> {
-  relayMetrics: RelayMetrics = defaultRelayMetrics
+	relayMetrics: RelayMetrics = defaultRelayMetrics
 
-  #unsub: Unsub | undefined = undefined
+	#unsub: Unsub | undefined = undefined
 
-  constructor(public api: DedotClient<T>) {
-    this.api = api
-    this.subscribe()
-  }
+	constructor(public api: DedotClient<T>) {
+		this.api = api
+		this.subscribe()
+	}
 
-  async subscribe() {
-    this.#unsub = await this.api.queryMulti(
-      [
-        {
-          fn: this.api.query.auctions.auctionCounter,
-          args: [],
-        },
-        {
-          fn: this.api.query.paraSessionInfo.earliestStoredSession,
-          args: [],
-        },
-      ],
-      ([auctionCounter, earliestStoredSession]) => {
-        this.relayMetrics = {
-          auctionCounter,
-          earliestStoredSession,
-        }
-        setRelayMetrics(this.relayMetrics)
-      }
-    )
-  }
+	async subscribe() {
+		this.#unsub = await this.api.queryMulti(
+			[
+				{
+					fn: this.api.query.auctions.auctionCounter,
+					args: [],
+				},
+				{
+					fn: this.api.query.paraSessionInfo.earliestStoredSession,
+					args: [],
+				},
+			],
+			([auctionCounter, earliestStoredSession]) => {
+				this.relayMetrics = {
+					auctionCounter,
+					earliestStoredSession,
+				}
+				setRelayMetrics(this.relayMetrics)
+			},
+		)
+	}
 
-  unsubscribe() {
-    this.#unsub?.()
-  }
+	unsubscribe() {
+		this.#unsub?.()
+	}
 }

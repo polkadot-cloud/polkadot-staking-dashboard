@@ -10,25 +10,25 @@ import classes from './index.module.scss'
  * @summary Used to house a title for `Stat.Card`
  */
 export const Title = ({
-  children,
-  style,
-  primary,
-  text,
-  semibold,
+	children,
+	style,
+	primary,
+	text,
+	semibold,
 }: ComponentBase & {
-  primary?: boolean
-  text?: boolean
-  semibold?: boolean
+	primary?: boolean
+	text?: boolean
+	semibold?: boolean
 }) => {
-  const allClasses = classNames(classes.title, {
-    [classes.semibold]: !!semibold,
-    [classes.primary]: !!primary,
-    [classes.text]: !!text,
-  })
+	const allClasses = classNames(classes.title, {
+		[classes.semibold]: !!semibold,
+		[classes.primary]: !!primary,
+		[classes.text]: !!text,
+	})
 
-  return (
-    <h3 className={allClasses} style={style}>
-      {children}
-    </h3>
-  )
+	return (
+		<h3 className={allClasses} style={style}>
+			{children}
+		</h3>
+	)
 }

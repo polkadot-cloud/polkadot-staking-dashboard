@@ -13,75 +13,75 @@ import type { ButtonQuickActionProps } from 'ui-buttons/types'
 import { useOverlay } from 'ui-overlay'
 
 export const Disconnected = () => {
-  const { t } = useTranslation()
-  const { openModal } = useOverlay().modal
+	const { t } = useTranslation()
+	const { openModal } = useOverlay().modal
 
-  const actions: ButtonQuickActionProps[] = [
-    {
-      onClick: () => {
-        openModal({ key: 'Accounts' })
-      },
-      disabled: false,
-      Icon: () => <FontAwesomeIcon transform="grow-2" icon={faUser} />,
-      label: t('accounts', { ns: 'app' }),
-    },
-    {
-      onClick: () => {
-        openModal({
-          key: 'ImportAccounts',
-          size: 'sm',
-          options: { source: 'ledger' },
-        })
-      },
-      disabled: false,
-      Icon: () => (
-        <LedgerSquareSVG style={{ width: '1.5rem', height: '1.5rem' }} />
-      ),
-      label: 'Ledger',
-    },
-    {
-      onClick: () => {
-        openModal({
-          key: 'ImportAccounts',
-          size: 'sm',
-          options: { source: 'polkadot_vault' },
-        })
-      },
-      disabled: false,
-      Icon: () => (
-        <PolkadotVaultSVG
-          style={{
-            width: '1.5rem',
-            height: '1.5rem',
-            fill: 'var(--text-color-primary)',
-          }}
-        />
-      ),
-      label: 'Vault',
-    },
-    {
-      onClick: () => {
-        window.open(`mailto:${MailSupportAddress}`, '_blank')
-      },
-      disabled: false,
-      Icon: () => <FontAwesomeIcon transform="grow-2" icon={faEnvelope} />,
-      label: t('email', { ns: 'app' }),
-    },
-    {
-      onClick: () => {
-        window.open(DiscordSupportUrl, '_blank')
-      },
-      disabled: false,
-      Icon: () => <FontAwesomeIcon transform="grow-2" icon={faDiscord} />,
-      label: 'Discord',
-    },
-  ]
+	const actions: ButtonQuickActionProps[] = [
+		{
+			onClick: () => {
+				openModal({ key: 'Accounts' })
+			},
+			disabled: false,
+			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faUser} />,
+			label: t('accounts', { ns: 'app' }),
+		},
+		{
+			onClick: () => {
+				openModal({
+					key: 'ImportAccounts',
+					size: 'sm',
+					options: { source: 'ledger' },
+				})
+			},
+			disabled: false,
+			Icon: () => (
+				<LedgerSquareSVG style={{ width: '1.5rem', height: '1.5rem' }} />
+			),
+			label: 'Ledger',
+		},
+		{
+			onClick: () => {
+				openModal({
+					key: 'ImportAccounts',
+					size: 'sm',
+					options: { source: 'polkadot_vault' },
+				})
+			},
+			disabled: false,
+			Icon: () => (
+				<PolkadotVaultSVG
+					style={{
+						width: '1.5rem',
+						height: '1.5rem',
+						fill: 'var(--text-color-primary)',
+					}}
+				/>
+			),
+			label: 'Vault',
+		},
+		{
+			onClick: () => {
+				window.open(`mailto:${MailSupportAddress}`, '_blank')
+			},
+			disabled: false,
+			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faEnvelope} />,
+			label: t('email', { ns: 'app' }),
+		},
+		{
+			onClick: () => {
+				window.open(DiscordSupportUrl, '_blank')
+			},
+			disabled: false,
+			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faDiscord} />,
+			label: 'Discord',
+		},
+	]
 
-  return (
-    <QuickAction.Container>
-      {actions.map((action, i) => (
-        <QuickAction.Button key={`action-${i}`} {...action} />
-      ))}
-    </QuickAction.Container>
-  )
+	return (
+		<QuickAction.Container>
+			{actions.map((action, i) => (
+				<QuickAction.Button key={`action-${i}`} {...action} />
+			))}
+		</QuickAction.Container>
+	)
 }

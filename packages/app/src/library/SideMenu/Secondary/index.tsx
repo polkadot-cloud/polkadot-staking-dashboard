@@ -8,47 +8,47 @@ import { BulletWrapper } from '../Wrapper'
 import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers'
 
 export const Secondary = ({
-  bullet,
-  classes,
-  name,
-  icon,
-  minimised,
-  onClick,
+	bullet,
+	classes,
+	name,
+	icon,
+	minimised,
+	onClick,
 }: SecondaryProps) => {
-  const { Svg, size } = icon || {}
+	const { Svg, size } = icon || {}
 
-  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper
+	const StyledWrapper = minimised ? MinimisedWrapper : Wrapper
 
-  return (
-    <StyledWrapper
-      className={classes ? classes.join(' ') : undefined}
-      onClick={() => {
-        onClick()
-      }}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{
-        duration: 0.1,
-      }}
-    >
-      <IconWrapper
-        $minimised={minimised}
-        className="icon"
-        style={{ width: size, height: size }}
-      >
-        {Svg && <Svg width={size} height={size} />}
-      </IconWrapper>
+	return (
+		<StyledWrapper
+			className={classes ? classes.join(' ') : undefined}
+			onClick={() => {
+				onClick()
+			}}
+			whileHover={{ scale: 1.02 }}
+			whileTap={{ scale: 0.98 }}
+			transition={{
+				duration: 0.1,
+			}}
+		>
+			<IconWrapper
+				$minimised={minimised}
+				className="icon"
+				style={{ width: size, height: size }}
+			>
+				{Svg && <Svg width={size} height={size} />}
+			</IconWrapper>
 
-      {!minimised && (
-        <>
-          <div className="name">{name}</div>
-          {bullet && (
-            <BulletWrapper className={bullet}>
-              <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-            </BulletWrapper>
-          )}
-        </>
-      )}
-    </StyledWrapper>
-  )
+			{!minimised && (
+				<>
+					<div className="name">{name}</div>
+					{bullet && (
+						<BulletWrapper className={bullet}>
+							<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+						</BulletWrapper>
+					)}
+				</>
+			)}
+		</StyledWrapper>
+	)
 }

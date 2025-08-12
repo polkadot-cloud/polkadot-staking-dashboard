@@ -5,7 +5,7 @@ import { Close as Wrapper } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
 export const Close = () => {
-  const { setModalStatus } = useOverlay().modal
+	const { setModalStatus } = useOverlay().modal
 
-  return <Wrapper onClose={() => setModalStatus('closing')} />
+	return <Wrapper onClose={() => setModalStatus('closing')} />
 }

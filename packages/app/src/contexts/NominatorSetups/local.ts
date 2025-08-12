@@ -7,14 +7,14 @@ import type { NominatorSetups } from './types'
 
 // Get local nominator setups
 export const getLocalNominatorSetups = () =>
-  localStorageOrDefault(NominatorSetupsKey, {}, true) as NominatorSetups
+	localStorageOrDefault(NominatorSetupsKey, {}, true) as NominatorSetups
 
 // Either update local pool setups or remove if empty
 export const setLocalNominatorSetups = (setups: NominatorSetups) => {
-  const setupsStr = JSON.stringify(setups)
-  if (setupsStr === '{}') {
-    localStorage.removeItem(NominatorSetupsKey)
-  } else {
-    localStorage.setItem(NominatorSetupsKey, setupsStr)
-  }
+	const setupsStr = JSON.stringify(setups)
+	if (setupsStr === '{}') {
+		localStorage.removeItem(NominatorSetupsKey)
+	} else {
+		localStorage.setItem(NominatorSetupsKey, setupsStr)
+	}
 }

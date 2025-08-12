@@ -9,12 +9,12 @@ import { Root } from './Root'
 import { Row } from './Row'
 
 export const RewardGrid = {
-  Root,
-  Head,
-  Row,
-  Cell,
-  Cells,
-  Label,
+	Root,
+	Head,
+	Row,
+	Cell,
+	Cells,
+	Label,
 }
 
 export default RewardGrid

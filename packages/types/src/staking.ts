@@ -4,33 +4,33 @@
 import type { SpStakingPagedExposureMetadata } from 'dedot/chaintypes'
 
 export interface EraRewardPoints {
-  total: number
-  individual: Array<[string, number]>
+	total: number
+	individual: Array<[string, number]>
 }
 export type ErasStakersOverviewEntries = [
-  [number, string],
-  SpStakingPagedExposureMetadata,
+	[number, string],
+	SpStakingPagedExposureMetadata,
 ][]
 
 export type ErasStakersPagedEntries = [
-  [number, string, number],
-  {
-    pageTotal: bigint
-    others: {
-      who: string
-      value: bigint
-    }[]
-  },
+	[number, string, number],
+	{
+		pageTotal: bigint
+		others: {
+			who: string
+			value: bigint
+		}[]
+	},
 ][]
 
 export type RewardDestinaton =
-  | 'Staked'
-  | 'Stash'
-  | 'Controller'
-  | 'Account'
-  | 'None'
+	| 'Staked'
+	| 'Stash'
+	| 'Controller'
+	| 'Account'
+	| 'None'
 
 export interface UnlockChunk {
-  era: number
-  value: bigint
+	era: number
+	value: bigint
 }

@@ -8,17 +8,17 @@ import { useTranslation } from 'react-i18next'
 import { Padding, Support } from 'ui-core/modal'
 
 export const MailSupport = () => {
-  const { t } = useTranslation('modals')
-  return (
-    <>
-      <Title />
-      <Padding verticalOnly>
-        <Support>
-          <MailSVG />
-          <h4>{t('supportEmail')}</h4>
-          <h1>{MailSupportAddress}</h1>
-        </Support>
-      </Padding>
-    </>
-  )
+	const { t } = useTranslation('modals')
+	return (
+		<>
+			<Title />
+			<Padding verticalOnly>
+				<Support>
+					<MailSVG />
+					<h4>{t('supportEmail')}</h4>
+					<h1>{MailSupportAddress}</h1>
+				</Support>
+			</Padding>
+		</>
+	)
 }

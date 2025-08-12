@@ -5,6 +5,6 @@ import { Value } from './Value'
 import { WithFiat } from './WithFiat'
 
 export const Balance = {
-  Value,
-  WithFiat,
+	Value,
+	WithFiat,
 }

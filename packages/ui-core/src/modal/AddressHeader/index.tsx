@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const AddressHeader = ({ children, style }: ComponentBase) => (
-  <div className={classes.addressHeader} style={style}>
-    {children}
-  </div>
+	<div className={classes.addressHeader} style={style}>
+		{children}
+	</div>
 )

@@ -14,39 +14,39 @@ import type { NominateStatusBarProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
-  const { t } = useTranslation('app')
-  const { minCreateBond } = useApi().poolsConfig
-  const { network } = useNetwork()
-  const { syncing } = useSyncing(['initialization'])
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('app')
+	const { minCreateBond } = useApi().poolsConfig
+	const { network } = useNetwork()
+	const { syncing } = useSyncing(['initialization'])
+	const { unit, units } = getStakingChainData(network)
 
-  const minCreateBondUnit = new BigNumber(planckToUnit(minCreateBond, units))
-  const sectionClassName =
-    value.isGreaterThanOrEqualTo(minCreateBondUnit) && !syncing ? 'invert' : ''
+	const minCreateBondUnit = new BigNumber(planckToUnit(minCreateBond, units))
+	const sectionClassName =
+		value.isGreaterThanOrEqualTo(minCreateBondUnit) && !syncing ? 'invert' : ''
 
-  return (
-    <Wrapper>
-      <div className="bars">
-        <section className={sectionClassName}>
-          <h4>&nbsp;</h4>
-          <div className="bar">
-            <h5>0 {unit}</h5>
-          </div>
-        </section>
-        <section className={sectionClassName}>
-          <h4>
-            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
-            &nbsp;{t('createPool')}
-          </h4>
-          <div className="bar">
-            <h5>
-              {syncing
-                ? '...'
-                : `${minCreateBondUnit.decimalPlaces(3).toFormat()} ${unit}`}
-            </h5>
-          </div>
-        </section>
-      </div>
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<div className="bars">
+				<section className={sectionClassName}>
+					<h4>&nbsp;</h4>
+					<div className="bar">
+						<h5>0 {unit}</h5>
+					</div>
+				</section>
+				<section className={sectionClassName}>
+					<h4>
+						<FontAwesomeIcon icon={faFlag} transform="shrink-4" />
+						&nbsp;{t('createPool')}
+					</h4>
+					<div className="bar">
+						<h5>
+							{syncing
+								? '...'
+								: `${minCreateBondUnit.decimalPlaces(3).toFormat()} ${unit}`}
+						</h5>
+					</div>
+				</section>
+			</div>
+		</Wrapper>
+	)
 }

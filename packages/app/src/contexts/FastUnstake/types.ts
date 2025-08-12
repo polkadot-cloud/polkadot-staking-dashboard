@@ -5,10 +5,10 @@ import type { FastUnstakeResult } from 'plugin-staking-api/types'
 import type { FastUnstakeHead, FastUnstakeQueue } from 'types'
 
 export interface FastUnstakeContextInterface {
-  exposed: boolean
-  queueDeposit: FastUnstakeQueue
-  head: FastUnstakeHead | undefined
-  counterForQueue: number | undefined
-  fastUnstakeStatus: FastUnstakeResult | null
-  setFastUnstakeStatus: (status: FastUnstakeResult | null) => void
+	exposed: boolean
+	queueDeposit: FastUnstakeQueue
+	head: FastUnstakeHead | undefined
+	counterForQueue: number | undefined
+	fastUnstakeStatus: FastUnstakeResult | null
+	setFastUnstakeStatus: (status: FastUnstakeResult | null) => void
 }

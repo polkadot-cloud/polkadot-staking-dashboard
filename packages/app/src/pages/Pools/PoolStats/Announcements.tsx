@@ -15,89 +15,89 @@ import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
 export const Announcements = () => {
-  const { t } = useTranslation('pages')
-  const { network } = useNetwork()
-  const { getChainSpec } = useApi()
-  const { activePool } = useActivePool()
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { getChainSpec } = useApi()
+	const { activePool } = useActivePool()
 
-  const { unit, units } = getStakingChainData(network)
-  const { rewardAccountBalance } = activePool || {}
-  const { totalRewardsClaimed } = activePool?.rewardPool || {}
-  const { existentialDeposit } = getChainSpec(getStakingChain(network))
+	const { unit, units } = getStakingChainData(network)
+	const { rewardAccountBalance } = activePool || {}
+	const { totalRewardsClaimed } = activePool?.rewardPool || {}
+	const { existentialDeposit } = getChainSpec(getStakingChain(network))
 
-  // calculate the latest reward account balance
-  const rewardPoolBalance = BigNumber.max(
-    0,
-    new BigNumber(rewardAccountBalance || 0).minus(existentialDeposit)
-  )
-  const rewardBalance = planckToUnitBn(rewardPoolBalance, units)
+	// calculate the latest reward account balance
+	const rewardPoolBalance = BigNumber.max(
+		0,
+		new BigNumber(rewardAccountBalance || 0).minus(existentialDeposit),
+	)
+	const rewardBalance = planckToUnitBn(rewardPoolBalance, units)
 
-  // calculate total rewards claimed
-  const rewardsClaimed = planckToUnitBn(
-    totalRewardsClaimed ? new BigNumber(totalRewardsClaimed) : new BigNumber(0),
-    units
-  )
+	// calculate total rewards claimed
+	const rewardsClaimed = planckToUnitBn(
+		totalRewardsClaimed ? new BigNumber(totalRewardsClaimed) : new BigNumber(0),
+		units,
+	)
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.25,
-      },
-    },
-  }
+	const container = {
+		hidden: { opacity: 0 },
+		show: {
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.25,
+			},
+		},
+	}
 
-  const listItem = {
-    hidden: {
-      opacity: 0,
-    },
-    show: {
-      opacity: 1,
-    },
-  }
+	const listItem = {
+		hidden: {
+			opacity: 0,
+		},
+		show: {
+			opacity: 1,
+		},
+	}
 
-  const announcements = []
+	const announcements = []
 
-  announcements.push({
-    class: 'neutral',
-    title: `${rewardsClaimed.decimalPlaces(3).toFormat()} ${unit} ${t(
-      'beenClaimed'
-    )}`,
-    subtitle: `${t('beenClaimedBy', { unit })}`,
-  })
+	announcements.push({
+		class: 'neutral',
+		title: `${rewardsClaimed.decimalPlaces(3).toFormat()} ${unit} ${t(
+			'beenClaimed',
+		)}`,
+		subtitle: `${t('beenClaimedBy', { unit })}`,
+	})
 
-  announcements.push({
-    class: 'neutral',
-    title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
-      'outstandingReward'
-    )}`,
-    subtitle: `${t('availableToClaim', { unit })}`,
-  })
+	announcements.push({
+		class: 'neutral',
+		title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
+			'outstandingReward',
+		)}`,
+		subtitle: `${t('availableToClaim', { unit })}`,
+	})
 
-  return (
-    <motion.div
-      variants={container}
-      initial="hidden"
-      animate="show"
-      style={{ width: '100%' }}
-    >
-      {announcements.map((item, index) =>
-        item === null ? (
-          <AnnouncementLoader key={`announcement_${index}`} />
-        ) : (
-          <Item key={`announcement_${index}`} variants={listItem}>
-            <h4 className={item.class}>
-              <FontAwesomeIcon
-                icon={faBack}
-                style={{ marginRight: '0.6rem' }}
-              />
-              {item.title}
-            </h4>
-            <p>{item.subtitle}</p>
-          </Item>
-        )
-      )}
-    </motion.div>
-  )
+	return (
+		<motion.div
+			variants={container}
+			initial="hidden"
+			animate="show"
+			style={{ width: '100%' }}
+		>
+			{announcements.map((item, index) =>
+				item === null ? (
+					<AnnouncementLoader key={`announcement_${index}`} />
+				) : (
+					<Item key={`announcement_${index}`} variants={listItem}>
+						<h4 className={item.class}>
+							<FontAwesomeIcon
+								icon={faBack}
+								style={{ marginRight: '0.6rem' }}
+							/>
+							{item.title}
+						</h4>
+						<p>{item.subtitle}</p>
+					</Item>
+				),
+			)}
+		</motion.div>
+	)
 }

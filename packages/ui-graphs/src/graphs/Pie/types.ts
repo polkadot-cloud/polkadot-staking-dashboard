@@ -2,6 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface Props {
-  value: number
-  size?: string | number
+	value: number
+	size?: string | number
 }

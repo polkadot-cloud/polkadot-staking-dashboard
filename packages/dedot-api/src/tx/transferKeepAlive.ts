@@ -6,7 +6,7 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const transferKeepAlive = <T extends StakingChain>(
-  api: DedotClient<T>,
-  to: string,
-  value: bigint
+	api: DedotClient<T>,
+	to: string,
+	value: bigint,
 ) => asTx(api.tx.balances.transferKeepAlive(to, value))

@@ -6,46 +6,46 @@ import type { FormEvent, ReactNode } from 'react'
 import type { DisplayFor } from 'types'
 
 export interface PaginationWrapperProps {
-  $next: boolean
-  $prev: boolean
+	$next: boolean
+	$prev: boolean
 }
 
 export interface ListProps {
-  $flexBasisLarge: string
+	$flexBasisLarge: string
 }
 
 export interface PaginationProps {
-  page: number
-  total: number
-  disabled?: boolean
-  setter: (p: number) => void
+	page: number
+	total: number
+	disabled?: boolean
+	setter: (p: number) => void
 }
 
 export interface SearchInputProps {
-  value: string
-  handleChange: (e: FormEvent<HTMLInputElement>) => void
-  placeholder: string
-  secondary?: boolean
+	value: string
+	handleChange: (e: FormEvent<HTMLInputElement>) => void
+	placeholder: string
+	secondary?: boolean
 }
 
 export interface EraPointsHistoricalProps {
-  address: string
-  displayFor: DisplayFor
-  eraPoints: ValidatorEraPoints[]
+	address: string
+	displayFor: DisplayFor
+	eraPoints: ValidatorEraPoints[]
 }
 
 export interface EraPointsGraphInnerProps {
-  points: number[]
-  syncing: boolean
-  displayFor: DisplayFor
+	points: number[]
+	syncing: boolean
+	displayFor: DisplayFor
 }
 
 export interface CurrentEraPointsProps {
-  address: string
-  displayFor: DisplayFor
+	address: string
+	displayFor: DisplayFor
 }
 
 export interface IdentityDisplay {
-  node: ReactNode
-  data: Record<string, string> | null
+	node: ReactNode
+	data: Record<string, string> | null
 }

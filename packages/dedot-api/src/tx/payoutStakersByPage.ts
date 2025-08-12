@@ -6,8 +6,8 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const payoutStakersByPage = <T extends StakingChain>(
-  api: DedotClient<T>,
-  validator: string,
-  era: number,
-  page: number
+	api: DedotClient<T>,
+	validator: string,
+	era: number,
+	page: number,
 ) => asTx(api.tx.staking.payoutStakersByPage(validator, era, page))

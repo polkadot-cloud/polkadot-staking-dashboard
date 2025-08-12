@@ -8,35 +8,35 @@ import { PopoverTab } from 'ui-buttons'
 import type { RemoveSelectedProps } from '../GenerateNominations/types'
 
 export const Confirm = ({
-  text,
-  controlKey,
-  onRevert,
-  onClose,
+	text,
+	controlKey,
+	onRevert,
+	onClose,
 }: RemoveSelectedProps) => {
-  const { t } = useTranslation('app')
-  const popoverRef = useRef<HTMLDivElement>(null)
+	const { t } = useTranslation('app')
+	const popoverRef = useRef<HTMLDivElement>(null)
 
-  useOutsideAlerter(popoverRef, () => {
-    onClose()
-  }, [controlKey])
+	useOutsideAlerter(popoverRef, () => {
+		onClose()
+	}, [controlKey])
 
-  return (
-    <div ref={popoverRef}>
-      <h4
-        style={{
-          padding: '1rem',
-        }}
-      >
-        {text}
-      </h4>
-      <PopoverTab.Container position="bottom">
-        <PopoverTab.Button
-          style={{ color: 'var(--status-danger-color)' }}
-          text={t('cancel')}
-          onClick={() => onClose()}
-        />
-        <PopoverTab.Button text={t('confirm')} onClick={() => onRevert()} />
-      </PopoverTab.Container>
-    </div>
-  )
+	return (
+		<div ref={popoverRef}>
+			<h4
+				style={{
+					padding: '1rem',
+				}}
+			>
+				{text}
+			</h4>
+			<PopoverTab.Container position="bottom">
+				<PopoverTab.Button
+					style={{ color: 'var(--status-danger-color)' }}
+					text={t('cancel')}
+					onClick={() => onClose()}
+				/>
+				<PopoverTab.Button text={t('confirm')} onClick={() => onRevert()} />
+			</PopoverTab.Container>
+		</div>
+	)
 }

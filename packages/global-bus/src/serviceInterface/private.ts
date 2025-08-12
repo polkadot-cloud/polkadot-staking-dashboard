@@ -6,5 +6,5 @@ import type { ServiceInterface } from 'types'
 import { defaultServiceInterface } from './default'
 
 export const _serviceInterface = new BehaviorSubject<ServiceInterface>(
-  defaultServiceInterface
+	defaultServiceInterface,
 )

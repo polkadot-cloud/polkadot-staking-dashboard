@@ -7,41 +7,41 @@ import { DefinitionWrapper } from '../Wrappers'
 import type { DefinitionProps } from './types'
 
 export const Definition = ({ title, description }: DefinitionProps) => {
-  // Store whether the definition is open or not.
-  const [open, setOpen] = useState<boolean>(false)
+	// Store whether the definition is open or not.
+	const [open, setOpen] = useState<boolean>(false)
 
-  // Store the current height of the definition content.
-  const [height, setHeight] = useState<number>(0)
+	// Store the current height of the definition content.
+	const [height, setHeight] = useState<number>(0)
 
-  const contentRef: RefObject<HTMLDivElement | null> = useRef(null)
+	const contentRef: RefObject<HTMLDivElement | null> = useRef(null)
 
-  useEffect(() => {
-    const h = contentRef.current?.clientHeight || 0
-    setHeight(h)
-  }, [open])
+	useEffect(() => {
+		const h = contentRef.current?.clientHeight || 0
+		setHeight(h)
+	}, [open])
 
-  return (
-    <DefinitionWrapper>
-      <button onClick={() => setOpen(!open)} type="button">
-        <h2>
-          {title}
-          <span>{open ? '-' : '+'}</span>
-        </h2>
-      </button>
+	return (
+		<DefinitionWrapper>
+			<button onClick={() => setOpen(!open)} type="button">
+				<h2>
+					{title}
+					<span>{open ? '-' : '+'}</span>
+				</h2>
+			</button>
 
-      <div style={{ height }}>
-        <div className="content" ref={contentRef}>
-          {open && (
-            <>
-              {description.map((item, index: number) => (
-                <h4 key={`inner_def_${index}`} className="definition">
-                  {item}
-                </h4>
-              ))}
-            </>
-          )}
-        </div>
-      </div>
-    </DefinitionWrapper>
-  )
+			<div style={{ height }}>
+				<div className="content" ref={contentRef}>
+					{open && (
+						<>
+							{description.map((item, index: number) => (
+								<h4 key={`inner_def_${index}`} className="definition">
+									{item}
+								</h4>
+							))}
+						</>
+					)}
+				</div>
+			</div>
+		</DefinitionWrapper>
+	)
 }

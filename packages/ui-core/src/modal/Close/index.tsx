@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classes from './index.module.scss'
 
 export const Close = ({ onClose }: { onClose: () => void }) => (
-  <div className={classes.close}>
-    <button type="button" onClick={() => onClose()}>
-      <FontAwesomeIcon icon={faXmark} />
-    </button>
-  </div>
+	<div className={classes.close}>
+		<button type="button" onClick={() => onClose()}>
+			<FontAwesomeIcon icon={faXmark} />
+		</button>
+	</div>
 )

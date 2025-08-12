@@ -16,95 +16,95 @@ import { Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const StopNominations = () => {
-  const { t } = useTranslation('modals')
-  const { serviceApi } = useApi()
-  const { getNominations } = useBalances()
-  const { activeAddress } = useActiveAccounts()
-  const { getSignerWarnings } = useSignerWarnings()
-  const {
-    setModalStatus,
-    config: { options },
-  } = useOverlay().modal
-  const { activePoolNominations, isNominator, isOwner, activePool } =
-    useActivePool()
+	const { t } = useTranslation('modals')
+	const { serviceApi } = useApi()
+	const { getNominations } = useBalances()
+	const { activeAddress } = useActiveAccounts()
+	const { getSignerWarnings } = useSignerWarnings()
+	const {
+		setModalStatus,
+		config: { options },
+	} = useOverlay().modal
+	const { activePoolNominations, isNominator, isOwner, activePool } =
+		useActivePool()
 
-  const { bondFor } = options
-  const isPool = bondFor === 'pool'
-  const isStaking = bondFor === 'nominator'
+	const { bondFor } = options
+	const isPool = bondFor === 'pool'
+	const isStaking = bondFor === 'nominator'
 
-  const nominations = isPool
-    ? activePoolNominations?.targets || []
-    : getNominations(activeAddress)
+	const nominations = isPool
+		? activePoolNominations?.targets || []
+		: getNominations(activeAddress)
 
-  // valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false)
+	// valid to submit transaction
+	const [valid, setValid] = useState<boolean>(false)
 
-  // ensure selected key is valid
-  useEffect(() => {
-    setValid(nominations.length > 0)
-  }, [nominations])
+	// ensure selected key is valid
+	useEffect(() => {
+		setValid(nominations.length > 0)
+	}, [nominations])
 
-  // ensure roles are valid
-  let isValid = nominations.length > 0
-  if (isPool) {
-    isValid = (isNominator() || isOwner()) ?? false
-  }
+	// ensure roles are valid
+	let isValid = nominations.length > 0
+	if (isPool) {
+		isValid = (isNominator() || isOwner()) ?? false
+	}
 
-  const getTx = () => {
-    let tx: SubmittableExtrinsic | undefined
-    if (!valid) {
-      return
-    }
-    if (isPool) {
-      tx = serviceApi.tx.poolChill(activePool?.id || 0)
-    } else if (isStaking) {
-      tx = serviceApi.tx.stakingChill()
-    }
-    return tx
-  }
+	const getTx = () => {
+		let tx: SubmittableExtrinsic | undefined
+		if (!valid) {
+			return
+		}
+		if (isPool) {
+			tx = serviceApi.tx.poolChill(activePool?.id || 0)
+		} else if (isStaking) {
+			tx = serviceApi.tx.stakingChill()
+		}
+		return tx
+	}
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: valid,
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: valid,
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+	})
 
-  const warnings = getSignerWarnings(
-    activeAddress,
-    isStaking,
-    submitExtrinsic.proxySupported
-  )
+	const warnings = getSignerWarnings(
+		activeAddress,
+		isStaking,
+		submitExtrinsic.proxySupported,
+	)
 
-  if (!nominations.length) {
-    warnings.push(`${t('noNominationsSet')}`)
-  }
+	if (!nominations.length) {
+		warnings.push(`${t('noNominationsSet')}`)
+	}
 
-  useEffect(() => setValid(isValid), [isValid])
+	useEffect(() => setValid(isValid), [isValid])
 
-  return (
-    <>
-      <Close />
-      <Padding>
-        <Title>
-          {t('stop')} {t('allNominations')}
-        </Title>
-        {warnings.length ? (
-          <Warnings>
-            {warnings.map((text, i) => (
-              <Warning key={`warning_${i}`} text={text} />
-            ))}
-          </Warnings>
-        ) : null}
-        <p>{t('changeNomination')}</p>
-      </Padding>
-      <SubmitTx
-        requiresMigratedController={isStaking}
-        valid={valid}
-        {...submitExtrinsic}
-      />
-    </>
-  )
+	return (
+		<>
+			<Close />
+			<Padding>
+				<Title>
+					{t('stop')} {t('allNominations')}
+				</Title>
+				{warnings.length ? (
+					<Warnings>
+						{warnings.map((text, i) => (
+							<Warning key={`warning_${i}`} text={text} />
+						))}
+					</Warnings>
+				) : null}
+				<p>{t('changeNomination')}</p>
+			</Padding>
+			<SubmitTx
+				requiresMigratedController={isStaking}
+				valid={valid}
+				{...submitExtrinsic}
+			/>
+		</>
+	)
 }

@@ -6,5 +6,5 @@ import type { NetworkConfig } from 'types'
 import { defaultNetworkConfig } from './default'
 
 export const _networkConfig = new BehaviorSubject<NetworkConfig>(
-  defaultNetworkConfig
+	defaultNetworkConfig,
 )

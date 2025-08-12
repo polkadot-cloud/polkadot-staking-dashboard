@@ -8,34 +8,34 @@ import { _eraRewardPoints } from './private'
 export const eraRewardPoints$ = _eraRewardPoints.asObservable()
 
 export const resetEraRewardPoints = () => {
-  _eraRewardPoints.next(defaultEraRewardPoints)
+	_eraRewardPoints.next(defaultEraRewardPoints)
 }
 
 export const getEraRewardPoints = () => _eraRewardPoints.getValue()
 
 export const setEraRewardPoints = (value: EraRewardPoints) => {
-  _eraRewardPoints.next(value)
+	_eraRewardPoints.next(value)
 }
 
 export const getValidatorEraPoints = (address: string) => {
-  const addressEntry = getEraRewardPoints().individual.find(
-    (item) => item[0] === address
-  )
-  return addressEntry?.[1] || 0
+	const addressEntry = getEraRewardPoints().individual.find(
+		(item) => item[0] === address,
+	)
+	return addressEntry?.[1] || 0
 }
 
 export const getValidatorRanks = () => {
-  const sorted = getEraRewardPoints().individual.sort((a, b) => b[1] - a[1])
-  return sorted.map(([validator], index) => ({
-    validator,
-    rank: index + 1,
-  }))
+	const sorted = getEraRewardPoints().individual.sort((a, b) => b[1] - a[1])
+	return sorted.map(([validator], index) => ({
+		validator,
+		rank: index + 1,
+	}))
 }
 
 export const getValidatorRank = (address: string) => {
-  const ranked = getValidatorRanks()
-  const rank = ranked.find((r) => r.validator === address)
-  return rank?.rank || null
+	const ranked = getValidatorRanks()
+	const rank = ranked.find((r) => r.validator === address)
+	return rank?.rank || null
 }
 
 export * from './default'

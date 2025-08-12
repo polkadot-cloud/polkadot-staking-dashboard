@@ -4,7 +4,7 @@
 import type { ClaimPermission } from 'types'
 
 export interface ClaimPermissionInputProps {
-  current: ClaimPermission
-  onChange: (value: ClaimPermission) => void
-  disabled?: boolean
+	current: ClaimPermission
+	onChange: (value: ClaimPermission) => void
+	disabled?: boolean
 }

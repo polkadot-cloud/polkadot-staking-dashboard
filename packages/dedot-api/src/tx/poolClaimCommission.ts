@@ -6,6 +6,6 @@ import type { StakingChain } from '../types'
 import { asTx } from '../util'
 
 export const poolClaimCommission = <T extends StakingChain>(
-  api: DedotClient<T>,
-  poolId: number
+	api: DedotClient<T>,
+	poolId: number,
 ) => asTx(api.tx.nominationPools.claimCommission(poolId))

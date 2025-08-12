@@ -7,11 +7,11 @@ import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
 export const Head = ({ children, style }: ComponentBase) => {
-  const allClasses = classNames(commonClasses.row, classes.head)
+	const allClasses = classNames(commonClasses.row, classes.head)
 
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

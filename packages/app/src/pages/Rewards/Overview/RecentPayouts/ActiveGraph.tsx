@@ -11,61 +11,61 @@ import { useTranslation } from 'react-i18next'
 import { AveragePayoutLine, PayoutBar } from 'ui-graphs'
 
 type Props = Omit<
-  PayoutHistoryProps & {
-    nominating: boolean
-    inPool: boolean
-  },
-  'payoutsList' | 'setPayoutsList'
+	PayoutHistoryProps & {
+		nominating: boolean
+		inPool: boolean
+	},
+	'payoutsList' | 'setPayoutsList'
 >
 
 export const ActiveGraph = ({
-  nominating,
-  inPool,
-  payoutGraphData: { payouts, unclaimedPayouts, poolClaims },
-  loading,
+	nominating,
+	inPool,
+	payoutGraphData: { payouts, unclaimedPayouts, poolClaims },
+	loading,
 }: Props) => {
-  const { i18n, t } = useTranslation()
-  const { network } = useNetwork()
-  const { getThemeValue } = useThemeValues()
-  const { unit, units } = getStakingChainData(network)
+	const { i18n, t } = useTranslation()
+	const { network } = useNetwork()
+	const { getThemeValue } = useThemeValues()
+	const { unit, units } = getStakingChainData(network)
 
-  return (
-    <>
-      <PayoutBar
-        days={MaxPayoutDays}
-        height="165px"
-        data={{ payouts, unclaimedPayouts, poolClaims }}
-        nominating={nominating}
-        inPool={inPool}
-        syncing={loading}
-        getThemeValue={getThemeValue}
-        unit={unit}
-        units={units}
-        dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
-        labels={{
-          payout: t('payouts', { ns: 'app' }),
-          poolClaim: t('poolClaim', { ns: 'app' }),
-          unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
-          pending: t('pending', { ns: 'app' }),
-        }}
-      />
-      <div style={{ marginTop: '1rem' }}>
-        <AveragePayoutLine
-          days={MaxPayoutDays}
-          average={10}
-          height="65px"
-          data={{ payouts, unclaimedPayouts, poolClaims }}
-          nominating={nominating}
-          inPool={inPool}
-          getThemeValue={getThemeValue}
-          unit={unit}
-          units={units}
-          labels={{
-            payout: t('payouts', { ns: 'app' }),
-            dayAverage: t('dayAverage', { ns: 'app' }),
-          }}
-        />
-      </div>
-    </>
-  )
+	return (
+		<>
+			<PayoutBar
+				days={MaxPayoutDays}
+				height="165px"
+				data={{ payouts, unclaimedPayouts, poolClaims }}
+				nominating={nominating}
+				inPool={inPool}
+				syncing={loading}
+				getThemeValue={getThemeValue}
+				unit={unit}
+				units={units}
+				dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
+				labels={{
+					payout: t('payouts', { ns: 'app' }),
+					poolClaim: t('poolClaim', { ns: 'app' }),
+					unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
+					pending: t('pending', { ns: 'app' }),
+				}}
+			/>
+			<div style={{ marginTop: '1rem' }}>
+				<AveragePayoutLine
+					days={MaxPayoutDays}
+					average={10}
+					height="65px"
+					data={{ payouts, unclaimedPayouts, poolClaims }}
+					nominating={nominating}
+					inPool={inPool}
+					getThemeValue={getThemeValue}
+					unit={unit}
+					units={units}
+					labels={{
+						payout: t('payouts', { ns: 'app' }),
+						dayAverage: t('dayAverage', { ns: 'app' }),
+					}}
+				/>
+			</div>
+		</>
+	)
 }

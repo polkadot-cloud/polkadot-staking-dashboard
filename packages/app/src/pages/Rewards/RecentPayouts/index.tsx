@@ -8,19 +8,19 @@ import type { PageProps } from '../types'
 import { PayoutList } from './PayoutList'
 
 export const RecentPayouts = (props: PageProps) => {
-  const { payoutsList } = props
-  const { t } = useTranslation('pages')
+	const { payoutsList } = props
+	const { t } = useTranslation('pages')
 
-  return (
-    <Page.Row>
-      <CardWrapper>
-        <PayoutList
-          title={t('recentPayouts')}
-          payouts={payoutsList}
-          pagination
-          itemsPerPage={50}
-        />
-      </CardWrapper>
-    </Page.Row>
-  )
+	return (
+		<Page.Row>
+			<CardWrapper>
+				<PayoutList
+					title={t('recentPayouts')}
+					payouts={payoutsList}
+					pagination
+					itemsPerPage={50}
+				/>
+			</CardWrapper>
+		</Page.Row>
+	)
 }

@@ -6,14 +6,14 @@ import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
 export const ActivePoolCount = () => {
-  const { t } = useTranslation('pages')
-  const { counterForBondedPools } = useApi().poolsConfig
+	const { t } = useTranslation('pages')
+	const { counterForBondedPools } = useApi().poolsConfig
 
-  const params = {
-    label: t('activePools'),
-    value: counterForBondedPools,
-    unit: '',
-    helpKey: 'Active Pools',
-  }
-  return <Number {...params} />
+	const params = {
+		label: t('activePools'),
+		value: counterForBondedPools,
+		unit: '',
+		helpKey: 'Active Pools',
+	}
+	return <Number {...params} />
 }

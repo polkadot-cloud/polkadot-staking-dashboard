@@ -8,37 +8,37 @@ import type { EraRewardPoints } from 'types'
 import type { StakingChain } from '../types'
 
 export class EraRewardPointsQuery<T extends StakingChain> {
-  eraRewardPoints: EraRewardPoints = defaultEraRewardPoints
+	eraRewardPoints: EraRewardPoints = defaultEraRewardPoints
 
-  #unsub: Unsub | undefined = undefined
+	#unsub: Unsub | undefined = undefined
 
-  constructor(
-    public api: DedotClient<T>,
-    public era: number
-  ) {
-    this.api = api
-    this.subscribe()
-  }
+	constructor(
+		public api: DedotClient<T>,
+		public era: number,
+	) {
+		this.api = api
+		this.subscribe()
+	}
 
-  async subscribe() {
-    this.#unsub = await this.api.query.staking.erasRewardPoints(
-      this.era,
-      (result) => {
-        if (result) {
-          this.eraRewardPoints = {
-            total: result.total,
-            individual: result.individual.map(([account, num]) => [
-              account.address(this.api.consts.system.ss58Prefix),
-              num,
-            ]),
-          }
-          setEraRewardPoints(this.eraRewardPoints)
-        }
-      }
-    )
-  }
+	async subscribe() {
+		this.#unsub = await this.api.query.staking.erasRewardPoints(
+			this.era,
+			(result) => {
+				if (result) {
+					this.eraRewardPoints = {
+						total: result.total,
+						individual: result.individual.map(([account, num]) => [
+							account.address(this.api.consts.system.ss58Prefix),
+							num,
+						]),
+					}
+					setEraRewardPoints(this.eraRewardPoints)
+				}
+			},
+		)
+	}
 
-  unsubscribe() {
-    this.#unsub?.()
-  }
+	unsubscribe() {
+		this.#unsub?.()
+	}
 }

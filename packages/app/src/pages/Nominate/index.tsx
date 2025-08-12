@@ -11,42 +11,42 @@ import { NominationGeo } from './NominationGeo'
 import { Wrapper } from './Wrappers'
 
 export const Nominate = () => {
-  const { t } = useTranslation()
-  const { pluginEnabled } = usePlugins()
+	const { t } = useTranslation()
+	const { pluginEnabled } = usePlugins()
 
-  const [activeTab, setActiveTab] = useState<number>(0)
+	const [activeTab, setActiveTab] = useState<number>(0)
 
-  // Go back to the first tab if the Polkawatch plugin is disabled.
-  useEffect(() => {
-    if (!pluginEnabled('polkawatch')) {
-      setActiveTab(0)
-    }
-  }, [pluginEnabled('polkawatch')])
+	// Go back to the first tab if the Polkawatch plugin is disabled.
+	useEffect(() => {
+		if (!pluginEnabled('polkawatch')) {
+			setActiveTab(0)
+		}
+	}, [pluginEnabled('polkawatch')])
 
-  return (
-    <Wrapper>
-      <Page.Title title={t('nominate', { ns: 'pages' })}>
-        <PageTabs
-          tabs={
-            pluginEnabled('polkawatch')
-              ? [
-                  {
-                    title: t('overview', { ns: 'app' }),
-                    active: activeTab === 0,
-                    onClick: () => setActiveTab(0),
-                  },
-                  {
-                    title: t('decentralization', { ns: 'app' }),
-                    active: activeTab === 1,
-                    onClick: () => setActiveTab(1),
-                  },
-                ]
-              : undefined
-          }
-        />
-      </Page.Title>
-      {activeTab == 0 && <Active />}
-      {activeTab == 1 && <NominationGeo />}
-    </Wrapper>
-  )
+	return (
+		<Wrapper>
+			<Page.Title title={t('nominate', { ns: 'pages' })}>
+				<PageTabs
+					tabs={
+						pluginEnabled('polkawatch')
+							? [
+									{
+										title: t('overview', { ns: 'app' }),
+										active: activeTab === 0,
+										onClick: () => setActiveTab(0),
+									},
+									{
+										title: t('decentralization', { ns: 'app' }),
+										active: activeTab === 1,
+										onClick: () => setActiveTab(1),
+									},
+								]
+							: undefined
+					}
+				/>
+			</Page.Title>
+			{activeTab === 0 && <Active />}
+			{activeTab === 1 && <NominationGeo />}
+		</Wrapper>
+	)
 }

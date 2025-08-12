@@ -7,9 +7,9 @@ import type { StakingChain } from '../types'
 import { asTxs } from '../util'
 
 export const newNominator = <T extends StakingChain>(
-  api: DedotClient<T>,
-  bond: bigint,
-  payee: PalletStakingRewardDestination,
-  nominees: string[]
+	api: DedotClient<T>,
+	bond: bigint,
+	payee: PalletStakingRewardDestination,
+	nominees: string[],
 ) =>
-  asTxs([api.tx.staking.bond(bond, payee), api.tx.staking.nominate(nominees)])
+	asTxs([api.tx.staking.bond(bond, payee), api.tx.staking.nominate(nominees)])

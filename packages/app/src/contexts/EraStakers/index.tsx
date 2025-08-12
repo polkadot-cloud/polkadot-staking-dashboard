@@ -22,203 +22,203 @@ import { getLocalEraExposures, setLocalEraExposures } from './util'
 const worker = new Worker()
 
 export const [EraStakersContext, useEraStakers] =
-  createSafeContext<EraStakersContextInterface>()
+	createSafeContext<EraStakersContextInterface>()
 
 export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
-  const { network } = useNetwork()
-  const { pluginEnabled } = usePlugins()
-  const { activeAddress } = useActiveAccounts()
-  const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
-  const { units } = getStakingChainData(network)
+	const { network } = useNetwork()
+	const { pluginEnabled } = usePlugins()
+	const { activeAddress } = useActiveAccounts()
+	const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
+	const { units } = getStakingChainData(network)
 
-  // Store eras stakers in state
-  const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
-  const eraStakersRef = useRef(eraStakers)
+	// Store eras stakers in state
+	const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
+	const eraStakersRef = useRef(eraStakers)
 
-  // Store the total active nominators
-  const [activeNominatorsCount, setActiveNominatorsCount] = useState<number>(0)
+	// Store the total active nominators
+	const [activeNominatorsCount, setActiveNominatorsCount] = useState<number>(0)
 
-  // Store active validators
-  const [activeValidators, setActiveValidators] = useState<number>(0)
+	// Store active validators
+	const [activeValidators, setActiveValidators] = useState<number>(0)
 
-  worker.onmessage = (message: MessageEvent) => {
-    if (message) {
-      const { data }: { data: ProcessExposuresResponse } = message
-      const { task, networkName, era } = data
+	worker.onmessage = (message: MessageEvent) => {
+		if (message) {
+			const { data }: { data: ProcessExposuresResponse } = message
+			const { task, networkName, era } = data
 
-      // Ensure task matches, & era is still the same
-      if (
-        task !== 'processExposures' ||
-        networkName !== network ||
-        era !== activeEra.index.toString()
-      ) {
-        return
-      }
+			// Ensure task matches, & era is still the same
+			if (
+				task !== 'processExposures' ||
+				networkName !== network ||
+				era !== activeEra.index.toString()
+			) {
+				return
+			}
 
-      const { stakers, activeAccountOwnStake, who } = data
+			const { stakers, activeAccountOwnStake, who } = data
 
-      // Check if account hasn't changed since worker started
-      if (activeAddress === who) {
-        // Syncing current eraStakers is now complete
-        removeSyncing('era-stakers')
-        setStateWithRef(
-          {
-            ...eraStakersRef.current,
-            stakers,
-            activeAccountOwnStake,
-          },
-          setEraStakers,
-          eraStakersRef
-        )
-      }
-    }
-  }
+			// Check if account hasn't changed since worker started
+			if (activeAddress === who) {
+				// Syncing current eraStakers is now complete
+				removeSyncing('era-stakers')
+				setStateWithRef(
+					{
+						...eraStakersRef.current,
+						stakers,
+						activeAccountOwnStake,
+					},
+					setEraStakers,
+					eraStakersRef,
+				)
+			}
+		}
+	}
 
-  // Fetches erasStakers exposures for an era, and saves to `localStorage`
-  const fetchEraStakers = async (era: string) => {
-    if (!isReady || activeEra.index === 0) {
-      return []
-    }
-    // Fetch current era overviews
-    const overviews = await serviceApi.query.erasStakersOverviewEntries(
-      activeEra.index
-    )
-    // Commit active nominator count from overviews if staking API is disabled
-    if (!pluginEnabled('staking_api')) {
-      const totalNominators = overviews.reduce(
-        (prev, [, { nominatorCount }]) => prev + nominatorCount,
-        0
-      )
-      setActiveNominatorsCount(totalNominators)
-    }
+	// Fetches erasStakers exposures for an era, and saves to `localStorage`
+	const fetchEraStakers = async (era: string) => {
+		if (!isReady || activeEra.index === 0) {
+			return []
+		}
+		// Fetch current era overviews
+		const overviews = await serviceApi.query.erasStakersOverviewEntries(
+			activeEra.index,
+		)
+		// Commit active nominator count from overviews if staking API is disabled
+		if (!pluginEnabled('staking_api')) {
+			const totalNominators = overviews.reduce(
+				(prev, [, { nominatorCount }]) => prev + nominatorCount,
+				0,
+			)
+			setActiveNominatorsCount(totalNominators)
+		}
 
-    let exposures: Exposure[] = []
-    const localExposures = getLocalEraExposures(
-      network,
-      era,
-      activeEra.index.toString()
-    )
-    if (localExposures) {
-      exposures = localExposures
-    } else {
-      exposures = await getPagedErasStakers(era, overviews)
-    }
+		let exposures: Exposure[] = []
+		const localExposures = getLocalEraExposures(
+			network,
+			era,
+			activeEra.index.toString(),
+		)
+		if (localExposures) {
+			exposures = localExposures
+		} else {
+			exposures = await getPagedErasStakers(era, overviews)
+		}
 
-    // For resource limitation concerns, only store the current era in local storage
-    if (era === activeEra.index.toString()) {
-      setLocalEraExposures(network, era, exposures)
-    }
-    return exposures
-  }
+		// For resource limitation concerns, only store the current era in local storage
+		if (era === activeEra.index.toString()) {
+			setLocalEraExposures(network, era, exposures)
+		}
+		return exposures
+	}
 
-  // Fetches the active nominator set and metadata around it
-  const fetchActiveEraStakers = async () => {
-    if (!isReady || activeEra.index === 0) {
-      return
-    }
-    setSyncing('era-stakers')
+	// Fetches the active nominator set and metadata around it
+	const fetchActiveEraStakers = async () => {
+		if (!isReady || activeEra.index === 0) {
+			return
+		}
+		setSyncing('era-stakers')
 
-    const exposures = await fetchEraStakers(activeEra.index.toString())
+		const exposures = await fetchEraStakers(activeEra.index.toString())
 
-    setActiveValidators(exposures.length)
+		setActiveValidators(exposures.length)
 
-    // Worker to calculate stats
-    worker.postMessage({
-      era: activeEra.index.toString(),
-      networkName: network,
-      task: 'processExposures',
-      activeAccount: activeAddress,
-      units,
-      exposures,
-    })
-  }
+		// Worker to calculate stats
+		worker.postMessage({
+			era: activeEra.index.toString(),
+			networkName: network,
+			task: 'processExposures',
+			activeAccount: activeAddress,
+			units,
+			exposures,
+		})
+	}
 
-  // Fetch eras stakers from storage
-  const getPagedErasStakers = async (
-    era: string,
-    overviews: ErasStakersOverviewEntries
-  ) => {
-    const validators: Record<string, { own: bigint; total: bigint }> =
-      overviews.reduce(
-        (prev, [[, validator], { own, total }]) => ({
-          ...prev,
-          [validator]: { own, total },
-        }),
-        {}
-      )
+	// Fetch eras stakers from storage
+	const getPagedErasStakers = async (
+		era: string,
+		overviews: ErasStakersOverviewEntries,
+	) => {
+		const validators: Record<string, { own: bigint; total: bigint }> =
+			overviews.reduce(
+				(prev, [[, validator], { own, total }]) => ({
+					...prev,
+					[validator]: { own, total },
+				}),
+				{},
+			)
 
-    const validatorKeys = Object.keys(validators)
-    const pagedResults = await Promise.all(
-      validatorKeys.map((v) =>
-        serviceApi.query.erasStakersPagedEntries(Number(era), v)
-      )
-    )
+		const validatorKeys = Object.keys(validators)
+		const pagedResults = await Promise.all(
+			validatorKeys.map((v) =>
+				serviceApi.query.erasStakersPagedEntries(Number(era), v),
+			),
+		)
 
-    const result: Exposure[] = []
-    let i = 0
-    for (const pages of pagedResults) {
-      // NOTE: Only one page is fetched for each validator for now
-      const page = pages[0]
+		const result: Exposure[] = []
+		let i = 0
+		for (const pages of pagedResults) {
+			// NOTE: Only one page is fetched for each validator for now
+			const page = pages[0]
 
-      // NOTE: Some pages turn up as undefined - might be worth exploring further
-      if (!page) {
-        continue
-      }
+			// NOTE: Some pages turn up as undefined - might be worth exploring further
+			if (!page) {
+				continue
+			}
 
-      const [keyArgs, { others }] = page
+			const [keyArgs, { others }] = page
 
-      const validator = validatorKeys[i]
-      const { own, total } = validators[validator]
+			const validator = validatorKeys[i]
+			const { own, total } = validators[validator]
 
-      result.push({
-        keys: [keyArgs[0].toString(), validator],
-        val: {
-          total: total.toString(),
-          own: own.toString(),
-          others: others.map(({ who, value }) => ({
-            who,
-            value: value.toString(),
-          })),
-        },
-      })
-      i++
-    }
-    return result
-  }
+			result.push({
+				keys: [keyArgs[0].toString(), validator],
+				val: {
+					total: total.toString(),
+					own: own.toString(),
+					others: others.map(({ who, value }) => ({
+						who,
+						value: value.toString(),
+					})),
+				},
+			})
+			i++
+		}
+		return result
+	}
 
-  const handleEraTotalNominators = async () => {
-    const result = await fetchEraTotalNominators(network, activeEra.index)
-    setActiveNominatorsCount(result || 0)
-  }
+	const handleEraTotalNominators = async () => {
+		const result = await fetchEraTotalNominators(network, activeEra.index)
+		setActiveNominatorsCount(result || 0)
+	}
 
-  useEffectIgnoreInitial(() => {
-    if (getApiStatus(network) === 'connecting') {
-      setActiveValidators(0)
-      setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef)
-    }
-  }, [getApiStatus(network)])
+	useEffectIgnoreInitial(() => {
+		if (getApiStatus(network) === 'connecting') {
+			setActiveValidators(0)
+			setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef)
+		}
+	}, [getApiStatus(network)])
 
-  // Handle syncing with eraStakers
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      fetchActiveEraStakers()
-      // If staking API is enabled, fetch total nominators from it
-      if (pluginEnabled('staking_api') && activeEra.index > 0) {
-        handleEraTotalNominators()
-      }
-    }
-  }, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
+	// Handle syncing with eraStakers
+	useEffectIgnoreInitial(() => {
+		if (isReady) {
+			fetchActiveEraStakers()
+			// If staking API is enabled, fetch total nominators from it
+			if (pluginEnabled('staking_api') && activeEra.index > 0) {
+				handleEraTotalNominators()
+			}
+		}
+	}, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
 
-  return (
-    <EraStakersContext.Provider
-      value={{
-        eraStakers,
-        activeValidators,
-        activeNominatorsCount,
-        fetchEraStakers,
-      }}
-    >
-      {children}
-    </EraStakersContext.Provider>
-  )
+	return (
+		<EraStakersContext.Provider
+			value={{
+				eraStakers,
+				activeValidators,
+				activeNominatorsCount,
+				fetchEraStakers,
+			}}
+		>
+			{children}
+		</EraStakersContext.Provider>
+	)
 }

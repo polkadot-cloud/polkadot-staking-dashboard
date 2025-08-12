@@ -6,19 +6,19 @@ import type { ActiveAccountStaker } from 'contexts/Staking/types'
 import type { MaybeAddress, NetworkId } from 'types'
 
 export interface ProcessExposuresArgs {
-  task: string
-  networkName: NetworkId
-  era: string
-  activeAccount: MaybeAddress
-  units: number
-  exposures: Exposure[]
+	task: string
+	networkName: NetworkId
+	era: string
+	activeAccount: MaybeAddress
+	units: number
+	exposures: Exposure[]
 }
 
 export interface ProcessExposuresResponse {
-  task: string
-  networkName: NetworkId
-  era: string
-  stakers: Staker[]
-  activeAccountOwnStake: ActiveAccountStaker[]
-  who: MaybeAddress
+	task: string
+	networkName: NetworkId
+	era: string
+	stakers: Staker[]
+	activeAccountOwnStake: ActiveAccountStaker[]
+	who: MaybeAddress
 }

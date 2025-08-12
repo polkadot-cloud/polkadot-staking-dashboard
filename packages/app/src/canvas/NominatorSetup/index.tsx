@@ -13,35 +13,35 @@ import { Head, Main, Title } from 'ui-core/canvas'
 import { CloseCanvas } from 'ui-overlay'
 
 export const NominatorSetup = () => {
-  const { t } = useTranslation('pages')
-  const { activeAddress } = useActiveAccounts()
-  const { getNominatorSetup } = useNominatorSetups()
-  const { simple } = getNominatorSetup(activeAddress)
+	const { t } = useTranslation('pages')
+	const { activeAddress } = useActiveAccounts()
+	const { getNominatorSetup } = useNominatorSetups()
+	const { simple } = getNominatorSetup(activeAddress)
 
-  return (
-    <Main>
-      <Head>
-        <CloseCanvas />
-      </Head>
-      <Title>
-        <h1>{t('startNominating')}</h1>
-      </Title>
-      {!simple && (
-        <>
-          <CardWrapper className="canvas">
-            <Payee section={1} />
-          </CardWrapper>
-          <CardWrapper className="canvas">
-            <Nominate bondFor="nominator" section={2} />
-          </CardWrapper>
-          <CardWrapper className="canvas">
-            <Bond section={3} />
-          </CardWrapper>
-        </>
-      )}
-      <CardWrapper className="canvas">
-        <Summary section={4} simple={simple} />
-      </CardWrapper>
-    </Main>
-  )
+	return (
+		<Main>
+			<Head>
+				<CloseCanvas />
+			</Head>
+			<Title>
+				<h1>{t('startNominating')}</h1>
+			</Title>
+			{!simple && (
+				<>
+					<CardWrapper className="canvas">
+						<Payee section={1} />
+					</CardWrapper>
+					<CardWrapper className="canvas">
+						<Nominate bondFor="nominator" section={2} />
+					</CardWrapper>
+					<CardWrapper className="canvas">
+						<Bond section={3} />
+					</CardWrapper>
+				</>
+			)}
+			<CardWrapper className="canvas">
+				<Summary section={4} simple={simple} />
+			</CardWrapper>
+		</Main>
+	)
 }

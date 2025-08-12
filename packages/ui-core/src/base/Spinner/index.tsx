@@ -5,5 +5,5 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Spinner = ({ style }: ComponentBase) => (
-  <div className={classes.spinner} style={style} />
+	<div className={classes.spinner} style={style} />
 )

@@ -5,15 +5,15 @@ import type { ReactElement } from 'react'
 import type { DisplayFor } from 'types'
 
 export interface SignerProps {
-  label: string
-  name: string
-  notEnoughFunds: boolean
-  dangerMessage: string
+	label: string
+	name: string
+	notEnoughFunds: boolean
+	dangerMessage: string
 }
 
 export interface TxProps extends SignerProps {
-  margin?: boolean
-  SignerComponent: ReactElement
-  displayFor?: DisplayFor
-  transparent?: boolean
+	margin?: boolean
+	SignerComponent: ReactElement
+	displayFor?: DisplayFor
+	transparent?: boolean
 }

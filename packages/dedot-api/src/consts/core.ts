@@ -5,23 +5,23 @@ import type { DedotClient } from 'dedot'
 import type { RelayChain } from '../types'
 
 export class CoreConsts<T extends RelayChain> {
-  expectedBlockTime: bigint
-  epochDuration: bigint
+	expectedBlockTime: bigint
+	epochDuration: bigint
 
-  constructor(public api: DedotClient<T>) {
-    this.api = api
-    this.fetch()
-  }
+	constructor(public api: DedotClient<T>) {
+		this.api = api
+		this.fetch()
+	}
 
-  fetch() {
-    this.expectedBlockTime = this.api.consts.babe.expectedBlockTime
-    this.epochDuration = this.api.consts.babe.epochDuration
-  }
+	fetch() {
+		this.expectedBlockTime = this.api.consts.babe.expectedBlockTime
+		this.epochDuration = this.api.consts.babe.epochDuration
+	}
 
-  get() {
-    return {
-      expectedBlockTime: this.expectedBlockTime,
-      epochDuration: this.epochDuration,
-    }
-  }
+	get() {
+		return {
+			expectedBlockTime: this.expectedBlockTime,
+			epochDuration: this.epochDuration,
+		}
+	}
 }

@@ -6,5 +6,5 @@ import type { StakingMetrics } from 'types'
 import { defaultStakingMetrics } from './default'
 
 export const _stakingMetrics = new BehaviorSubject<StakingMetrics>(
-  defaultStakingMetrics
+	defaultStakingMetrics,
 )

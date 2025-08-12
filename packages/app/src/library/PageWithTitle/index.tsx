@@ -7,17 +7,17 @@ import type { PageItem } from 'types'
 import { Page } from 'ui-core/base'
 
 export const PageWithTitle = ({ page }: { page: PageItem }) => {
-  const { t } = useTranslation()
-  const { Entry, key } = page
+	const { t } = useTranslation()
+	const { Entry, key } = page
 
-  return (
-    <Page.Container>
-      <Helmet>
-        <title>{`${t('title', {
-          ns: 'app',
-        })} : ${t(key, { ns: 'app' })}`}</title>
-      </Helmet>
-      <Entry page={page} />
-    </Page.Container>
-  )
+	return (
+		<Page.Container>
+			<Helmet>
+				<title>{`${t('title', {
+					ns: 'app',
+				})} : ${t(key, { ns: 'app' })}`}</title>
+			</Helmet>
+			<Entry page={page} />
+		</Page.Container>
+	)
 }

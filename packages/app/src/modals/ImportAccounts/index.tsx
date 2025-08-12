@@ -7,17 +7,17 @@ import { Vault } from './Vault'
 import { WalletConnect } from './WalletConnect'
 
 export const ImportAccounts = () => {
-  const { config } = useOverlay().modal
-  const { source } = config.options
+	const { config } = useOverlay().modal
+	const { source } = config.options
 
-  switch (source) {
-    case 'polkadot_vault':
-      return <Vault />
-    case 'ledger':
-      return <Ledger />
-    case 'wallet_connect':
-      return <WalletConnect />
-    default:
-      return null
-  }
+	switch (source) {
+		case 'polkadot_vault':
+			return <Vault />
+		case 'ledger':
+			return <Ledger />
+		case 'wallet_connect':
+			return <WalletConnect />
+		default:
+			return null
+	}
 }

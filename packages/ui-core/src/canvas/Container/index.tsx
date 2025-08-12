@@ -9,13 +9,13 @@ import commonClasses from '../../common.module.scss'
 import classes from './index.module.scss'
 
 export const Container = ({
-  children,
-  ...rest
+	children,
+	...rest
 }: ComponentBase & AnimationProps) => {
-  const allClasses = classNames(commonClasses.fixedPosition, classes.container)
-  return (
-    <motion.div className={allClasses} {...rest}>
-      {children}
-    </motion.div>
-  )
+	const allClasses = classNames(commonClasses.fixedPosition, classes.container)
+	return (
+		<motion.div className={allClasses} {...rest}>
+			{children}
+		</motion.div>
+	)
 }

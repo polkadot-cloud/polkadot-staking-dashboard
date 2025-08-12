@@ -17,87 +17,87 @@ import { ButtonRow, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
 export const UnstakePrompts = () => {
-  const { t } = useTranslation('pages')
-  const { syncing } = useSyncing()
-  const { network } = useNetwork()
-  const { isBonding } = useStaking()
-  const { openModal } = useOverlay().modal
-  const { getThemeValue } = useThemeValues()
-  const { activeAddress } = useActiveAccounts()
-  const { balances } = useAccountBalances(activeAddress)
-  const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
-  const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
-    balances.nominator
+	const { t } = useTranslation('pages')
+	const { syncing } = useSyncing()
+	const { network } = useNetwork()
+	const { isBonding } = useStaking()
+	const { openModal } = useOverlay().modal
+	const { getThemeValue } = useThemeValues()
+	const { activeAddress } = useActiveAccounts()
+	const { balances } = useAccountBalances(activeAddress)
+	const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
+	const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
+		balances.nominator
 
-  const { unit } = getStakingChainData(network)
+	const { unit } = getStakingChainData(network)
 
-  // unstaking can withdraw
-  const canWithdrawUnlocks =
-    isUnstaking && active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
+	// unstaking can withdraw
+	const canWithdrawUnlocks =
+		isUnstaking && active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
-  return (
-    isBonding &&
-    (isUnstaking || isFastUnstaking) &&
-    !syncing && (
-      <Page.Row>
-        <CardWrapper
-          style={{
-            border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
-          }}
-        >
-          <div className="content">
-            <h3>
-              {t('unstakePromptInProgress', {
-                context: isFastUnstaking ? 'fast' : 'regular',
-              })}
-            </h3>
-            <h4>
-              {isFastUnstaking
-                ? t('unstakePromptInQueue')
-                : !canWithdrawUnlocks
-                  ? t('unstakePromptWaitingForUnlocks')
-                  : `${t('unstakePromptReadyToWithdraw')} ${t(
-                      'unstakePromptRevert',
-                      { unit }
-                    )}`}
-            </h4>
-            <ButtonRow yMargin>
-              {isFastUnstaking ? (
-                <ButtonPrimary
-                  marginRight
-                  iconLeft={faBolt}
-                  text={getFastUnstakeText()}
-                  onClick={() =>
-                    openModal({ key: 'ManageFastUnstake', size: 'sm' })
-                  }
-                />
-              ) : (
-                <ButtonPrimary
-                  iconLeft={faLockOpen}
-                  text={
-                    canWithdrawUnlocks
-                      ? t('unlocked')
-                      : String(totalUnlockChunks ?? 0)
-                  }
-                  disabled={false}
-                  onClick={() =>
-                    openModal({
-                      key: 'UnlockChunks',
-                      options: {
-                        bondFor: 'nominator',
-                        poolClosure: true,
-                        disableWindowResize: true,
-                        disableScroll: true,
-                      },
-                      size: 'sm',
-                    })
-                  }
-                />
-              )}
-            </ButtonRow>
-          </div>
-        </CardWrapper>
-      </Page.Row>
-    )
-  )
+	return (
+		isBonding &&
+		(isUnstaking || isFastUnstaking) &&
+		!syncing && (
+			<Page.Row>
+				<CardWrapper
+					style={{
+						border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
+					}}
+				>
+					<div className="content">
+						<h3>
+							{t('unstakePromptInProgress', {
+								context: isFastUnstaking ? 'fast' : 'regular',
+							})}
+						</h3>
+						<h4>
+							{isFastUnstaking
+								? t('unstakePromptInQueue')
+								: !canWithdrawUnlocks
+									? t('unstakePromptWaitingForUnlocks')
+									: `${t('unstakePromptReadyToWithdraw')} ${t(
+											'unstakePromptRevert',
+											{ unit },
+										)}`}
+						</h4>
+						<ButtonRow yMargin>
+							{isFastUnstaking ? (
+								<ButtonPrimary
+									marginRight
+									iconLeft={faBolt}
+									text={getFastUnstakeText()}
+									onClick={() =>
+										openModal({ key: 'ManageFastUnstake', size: 'sm' })
+									}
+								/>
+							) : (
+								<ButtonPrimary
+									iconLeft={faLockOpen}
+									text={
+										canWithdrawUnlocks
+											? t('unlocked')
+											: String(totalUnlockChunks ?? 0)
+									}
+									disabled={false}
+									onClick={() =>
+										openModal({
+											key: 'UnlockChunks',
+											options: {
+												bondFor: 'nominator',
+												poolClosure: true,
+												disableWindowResize: true,
+												disableScroll: true,
+											},
+											size: 'sm',
+										})
+									}
+								/>
+							)}
+						</ButtonRow>
+					</div>
+				</CardWrapper>
+			</Page.Row>
+		)
+	)
 }

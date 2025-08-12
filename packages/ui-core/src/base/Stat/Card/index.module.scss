@@ -39,7 +39,7 @@
     @media (max-width: 799px) {
       box-shadow: var(--card-shadow);
     }
-    > label {
+    > div {
       background: var(--background-invert);
       opacity: 0;
       position: absolute;
@@ -60,7 +60,7 @@
       }
     }
     &:hover {
-      label {
+      > div {
         opacity: 1;
       }
     }

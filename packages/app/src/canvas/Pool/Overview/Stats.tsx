@@ -14,59 +14,59 @@ import { planckToUnitBn } from 'utils'
 import type { OverviewSectionProps } from '../types'
 
 export const Stats = ({
-  bondedPool,
+	bondedPool,
 }: OverviewSectionProps & {
-  graphSyncing?: boolean
+	graphSyncing?: boolean
 }) => {
-  const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const { eraStakers } = useEraStakers()
-  const { isReady, serviceApi } = useApi()
+	const { t } = useTranslation('app')
+	const { network } = useNetwork()
+	const { eraStakers } = useEraStakers()
+	const { isReady, serviceApi } = useApi()
 
-  const { unit, units } = getStakingChainData(network)
-  const Token = getChainIcons(network).token
-  const isActive = eraStakers.stakers.find((staker) =>
-    staker.others.find((other) => other.who === bondedPool.addresses.stash)
-  )
+	const { unit, units } = getStakingChainData(network)
+	const Token = getChainIcons(network).token
+	const isActive = eraStakers.stakers.find((staker) =>
+		staker.others.find((other) => other.who === bondedPool.addresses.stash),
+	)
 
-  // Store the pool balance.
-  const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null)
+	// Store the pool balance.
+	const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null)
 
-  // Fetches the balance of the bonded pool.
-  const getPoolBalance = async () => {
-    const apiResult = await serviceApi.runtimeApi.pointsToBalance(
-      bondedPool.id,
-      BigInt(bondedPool.points)
-    )
-    const balance = new BigNumber(apiResult || 0)
+	// Fetches the balance of the bonded pool.
+	const getPoolBalance = async () => {
+		const apiResult = await serviceApi.runtimeApi.pointsToBalance(
+			bondedPool.id,
+			BigInt(bondedPool.points),
+		)
+		const balance = new BigNumber(apiResult || 0)
 
-    if (balance) {
-      setPoolBalance(new BigNumber(balance))
-    }
-  }
+		if (balance) {
+			setPoolBalance(new BigNumber(balance))
+		}
+	}
 
-  // Fetch the balance when pool or points change.
-  useEffect(() => {
-    if (isReady) {
-      getPoolBalance()
-    }
-  }, [bondedPool.id, bondedPool.points, isReady])
+	// Fetch the balance when pool or points change.
+	useEffect(() => {
+		if (isReady) {
+			getPoolBalance()
+		}
+	}, [bondedPool.id, bondedPool.points, isReady])
 
-  return (
-    <Subheading>
-      <h4>
-        {isActive && <Stat>{t('activelyNominating')}</Stat>}
-        <Stat withIcon>
-          <Token />
-          <span>
-            {!poolBalance
-              ? `...`
-              : `${planckToUnitBn(poolBalance, units)
-                  .decimalPlaces(3)
-                  .toFormat()} ${unit} ${t('bonded')}`}
-          </span>
-        </Stat>
-      </h4>
-    </Subheading>
-  )
+	return (
+		<Subheading>
+			<h4>
+				{isActive && <Stat>{t('activelyNominating')}</Stat>}
+				<Stat withIcon>
+					<Token />
+					<span>
+						{!poolBalance
+							? `...`
+							: `${planckToUnitBn(poolBalance, units)
+									.decimalPlaces(3)
+									.toFormat()} ${unit} ${t('bonded')}`}
+					</span>
+				</Stat>
+			</h4>
+		</Subheading>
+	)
 }

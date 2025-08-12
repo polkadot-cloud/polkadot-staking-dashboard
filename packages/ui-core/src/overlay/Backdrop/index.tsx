@@ -8,14 +8,14 @@ import type { BackdropProps } from '../types'
 import classes from './index.module.scss'
 
 export const Backdrop = ({ children, blur, ...rest }: BackdropProps) => {
-  const allClasses = classNames(commonClasses.fixedPosition, classes.backdrop)
-  return (
-    <motion.div
-      style={blur ? { backdropFilter: `blur(${blur})` } : undefined}
-      className={allClasses}
-      {...rest}
-    >
-      {children}
-    </motion.div>
-  )
+	const allClasses = classNames(commonClasses.fixedPosition, classes.backdrop)
+	return (
+		<motion.div
+			style={blur ? { backdropFilter: `blur(${blur})` } : undefined}
+			className={allClasses}
+			{...rest}
+		>
+			{children}
+		</motion.div>
+	)
 }

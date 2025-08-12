@@ -1,27 +1,29 @@
 {
-  "name": "dedot-api",
-  "version": "0.9.0",
-  "license": "GPL-3.0-only",
-  "type": "module",
-  "scripts": {
-    "clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules"
-  },
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "dependencies": {
-    "@dedot/chaintypes": "^0.123.0",
-    "@w3ux/observables-connect": "^0.10.7",
-    "@w3ux/utils": "^2.2.3",
-    "consts": "workspace:*",
-    "dedot": "^0.14.0",
-    "global-bus": "workspace:*",
-    "rxjs": "^7.8.2",
-    "smoldot": "^2.0.36",
-    "utils": "workspace:*"
-  },
-  "devDependencies": {
-    "@w3ux/types": "^2.4.1",
-    "types": "workspace:*"
-  }
+	"name": "dedot-api",
+	"version": "0.9.0",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"scripts": {
+		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
+		"check": "biome check .",
+		"lint": "biome check --write ."
+	},
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"@dedot/chaintypes": "^0.123.0",
+		"@w3ux/observables-connect": "^0.10.7",
+		"@w3ux/utils": "^2.2.3",
+		"consts": "workspace:*",
+		"dedot": "^0.14.0",
+		"global-bus": "workspace:*",
+		"rxjs": "^7.8.2",
+		"smoldot": "^2.0.36",
+		"utils": "workspace:*"
+	},
+	"devDependencies": {
+		"@w3ux/types": "^2.4.1",
+		"types": "workspace:*"
+	}
 }

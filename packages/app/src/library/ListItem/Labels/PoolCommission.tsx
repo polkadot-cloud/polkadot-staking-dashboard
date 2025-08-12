@@ -7,22 +7,22 @@ import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 
 export const PoolCommission = ({ commission }: { commission: string }) => {
-  const { t } = useTranslation('app')
-  const { setTooltipTextAndOpen } = useTooltip()
+	const { t } = useTranslation('app')
+	const { setTooltipTextAndOpen } = useTooltip()
 
-  const tooltipText = t('poolCommission')
+	const tooltipText = t('poolCommission')
 
-  if (!commission) {
-    return null
-  }
+	if (!commission) {
+		return null
+	}
 
-  return (
-    <Label>
-      <TooltipArea
-        text={tooltipText}
-        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-      />
-      {commission}
-    </Label>
-  )
+	return (
+		<Label>
+			<TooltipArea
+				text={tooltipText}
+				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+			/>
+			{commission}
+		</Label>
+	)
 }

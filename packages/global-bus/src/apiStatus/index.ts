@@ -7,22 +7,22 @@ import { _apiStatus } from './private'
 export const apiStatus$ = _apiStatus.asObservable()
 
 export const resetApiStatus = () => {
-  _apiStatus.next({})
+	_apiStatus.next({})
 }
 
 export const getApiStatus = (id: string) =>
-  _apiStatus.getValue()[id] || 'disconnected'
+	_apiStatus.getValue()[id] || 'disconnected'
 
 export const setApiStatus = (id: string, status: ApiStatus) => {
-  _apiStatus.next({
-    ..._apiStatus.getValue(),
-    [id]: status,
-  })
+	_apiStatus.next({
+		..._apiStatus.getValue(),
+		[id]: status,
+	})
 }
 
 export const setMultiApiStatus = (status: Record<string, ApiStatus>) => {
-  _apiStatus.next({
-    ..._apiStatus.getValue(),
-    ...status,
-  })
+	_apiStatus.next({
+		..._apiStatus.getValue(),
+		...status,
+	})
 }

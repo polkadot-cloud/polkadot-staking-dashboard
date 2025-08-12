@@ -8,18 +8,18 @@ import type { CheckboxProps } from '../types'
 import classes from './index.module.scss'
 
 export const Checkbox = ({ style, onClick, checked }: CheckboxProps) => {
-  const allClasses = classNames(classes.checkbox, {
-    [classes.checked]: checked,
-  })
+	const allClasses = classNames(classes.checkbox, {
+		[classes.checked]: checked,
+	})
 
-  return (
-    <button
-      type="button"
-      className={allClasses}
-      style={style}
-      onClick={() => onClick()}
-    >
-      {checked && <FontAwesomeIcon icon={faCheck} transform="shrink-2" />}
-    </button>
-  )
+	return (
+		<button
+			type="button"
+			className={allClasses}
+			style={style}
+			onClick={() => onClick()}
+		>
+			{checked && <FontAwesomeIcon icon={faCheck} transform="shrink-2" />}
+		</button>
+	)
 }

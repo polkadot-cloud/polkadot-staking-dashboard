@@ -15,78 +15,78 @@ import { Checkbox } from 'ui-core/list'
 import type { PromptProps } from '../types'
 
 export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
-  const { t } = useTranslation('modals')
-  const { favoritesList } = useFavoriteValidators()
+	const { t } = useTranslation('modals')
+	const { favoritesList } = useFavoriteValidators()
 
-  // Store the total number of selected favorites
-  const [selected, setSelected] = useState<Validator[]>([])
+	// Store the total number of selected favorites
+	const [selected, setSelected] = useState<Validator[]>([])
 
-  const addToSelected = (item: Validator) =>
-    setSelected([...selected].concat(item))
+	const addToSelected = (item: Validator) =>
+		setSelected([...selected].concat(item))
 
-  const removeFromSelected = (items: Validator[]) =>
-    setSelected([...selected].filter((item) => !items.includes(item)))
+	const removeFromSelected = (items: Validator[]) =>
+		setSelected([...selected].filter((item) => !items.includes(item)))
 
-  const remaining = MaxNominations - nominations.length - selected.length
-  const canAdd = remaining > 0
+	const remaining = MaxNominations - nominations.length - selected.length
+	const canAdd = remaining > 0
 
-  return (
-    <>
-      <Title title={t('nominateFavorites')} />
-      <div className="padded">
-        {remaining <= 0 ? (
-          <h4 className="subheading">
-            {t('moreFavoritesSurpassLimit', {
-              max: MaxNominations,
-            })}
-          </h4>
-        ) : (
-          <h4 className="subheading">
-            {t('addUpToFavorites', { count: remaining })}.
-          </h4>
-        )}
+	return (
+		<>
+			<Title title={t('nominateFavorites')} />
+			<div className="padded">
+				{remaining <= 0 ? (
+					<h4 className="subheading">
+						{t('moreFavoritesSurpassLimit', {
+							max: MaxNominations,
+						})}
+					</h4>
+				) : (
+					<h4 className="subheading">
+						{t('addUpToFavorites', { count: remaining })}.
+					</h4>
+				)}
 
-        {favoritesList?.map((favorite: Validator, i) => {
-          const inInitial = !!nominations.find(
-            ({ address }) => address === favorite.address
-          )
-          const isDisabled = selected.includes(favorite) || !canAdd || inInitial
+				{favoritesList?.map((favorite: Validator, i) => {
+					const inInitial = !!nominations.find(
+						({ address }) => address === favorite.address,
+					)
+					const isDisabled = selected.includes(favorite) || !canAdd || inInitial
 
-          return (
-            <PromptListItem
-              key={`favorite_${i}`}
-              className={isDisabled && inInitial ? 'inactive' : undefined}
-            >
-              <Checkbox
-                checked={inInitial || selected.includes(favorite)}
-                onClick={() => {
-                  if (selected.includes(favorite)) {
-                    removeFromSelected([favorite])
-                  } else {
-                    addToSelected(favorite)
-                  }
-                }}
-              />
-              <Identity key={`favorite_${i}`} address={favorite.address} />
-            </PromptListItem>
-          )
-        })}
-        <FooterWrapper>
-          <ButtonPrimary
-            text={t('addToNominations')}
-            onClick={() => {
-              callback(nominations.concat(selected))
-              emitNotification({
-                title: t('favoritesAddedTitle', { count: selected.length }),
-                subtitle: t('favoritesAddedSubtitle', {
-                  count: selected.length,
-                }),
-              })
-            }}
-            disabled={selected.length === 0}
-          />
-        </FooterWrapper>
-      </div>
-    </>
-  )
+					return (
+						<PromptListItem
+							key={`favorite_${i}`}
+							className={isDisabled && inInitial ? 'inactive' : undefined}
+						>
+							<Checkbox
+								checked={inInitial || selected.includes(favorite)}
+								onClick={() => {
+									if (selected.includes(favorite)) {
+										removeFromSelected([favorite])
+									} else {
+										addToSelected(favorite)
+									}
+								}}
+							/>
+							<Identity key={`favorite_${i}`} address={favorite.address} />
+						</PromptListItem>
+					)
+				})}
+				<FooterWrapper>
+					<ButtonPrimary
+						text={t('addToNominations')}
+						onClick={() => {
+							callback(nominations.concat(selected))
+							emitNotification({
+								title: t('favoritesAddedTitle', { count: selected.length }),
+								subtitle: t('favoritesAddedSubtitle', {
+									count: selected.length,
+								}),
+							})
+						}}
+						disabled={selected.length === 0}
+					/>
+				</FooterWrapper>
+			</div>
+		</>
+	)
 }

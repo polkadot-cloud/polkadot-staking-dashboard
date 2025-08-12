@@ -9,9 +9,9 @@ import type { Props } from './types'
 
 // Define pie animations per segment
 const Wrapper = styled.div<{
-  $inactivecolor: string
-  $activecolor: string
-  $piekeyframes: Keyframes
+	$inactivecolor: string
+	$activecolor: string
+	$piekeyframes: Keyframes
 }>`
   > svg {
     > circle {
@@ -32,28 +32,29 @@ const Wrapper = styled.div<{
 
 // Memoizing component to prevent animation restarts
 export const Pie = memo(({ value = 0, size = '2rem' }: Props) => {
-  const inactive = 100 - value
-  const activeColor = 'var(--accent-color-primary)'
-  const inactiveColor = 'var(--background-default)'
+	const inactive = 100 - value
+	const activeColor = 'var(--accent-color-primary)'
+	const inactiveColor = 'var(--background-default)'
 
-  // Define the keyframes for the pie
-  const pie1Keyframes = keyframes`
+	// Define the keyframes for the pie
+	const pie1Keyframes = keyframes`
     100% {
       stroke-dasharray: ${value}, ${inactive}, 0, 0;
       }
     `
-  return (
-    <Wrapper
-      $inactivecolor={inactiveColor}
-      $activecolor={activeColor}
-      $piekeyframes={pie1Keyframes}
-      className={classes.pie}
-      style={{ width: size, height: size }}
-    >
-      <svg viewBox="0 0 63.6619772368 63.6619772368">
-        <circle cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
-        <circle cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
-      </svg>
-    </Wrapper>
-  )
+	return (
+		<Wrapper
+			$inactivecolor={inactiveColor}
+			$activecolor={activeColor}
+			$piekeyframes={pie1Keyframes}
+			className={classes.pie}
+			style={{ width: size, height: size }}
+		>
+			<svg viewBox="0 0 63.6619772368 63.6619772368">
+				<title>Pie</title>
+				<circle cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+				<circle cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+			</svg>
+		</Wrapper>
+	)
 })

@@ -10,9 +10,9 @@ import classes from './index.module.scss'
  * @summary Used to house a Stat item within a `Stat.Row`.
  */
 export const Card = ({ children, style }: ComponentBase) => (
-  <div className={classes.card} style={style}>
-    {children}
-  </div>
+	<div className={classes.card} style={style}>
+		{children}
+	</div>
 )
 
 /**
@@ -20,11 +20,11 @@ export const Card = ({ children, style }: ComponentBase) => (
  * @summary Used to house a Stat item as a button within a `Stat.Row`.
  */
 export const Button = ({ children, style }: ComponentBase) => {
-  const allClasses = classNames(classes.card, classes.button)
+	const allClasses = classNames(classes.card, classes.button)
 
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }

@@ -7,29 +7,29 @@ import { PopoverTab } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 
 export const Pool = ({
-  poolId,
-  setOpen,
+	poolId,
+	setOpen,
 }: {
-  poolId: number
-  setOpen: Dispatch<SetStateAction<boolean>>
+	poolId: number
+	setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
-  const { t } = useTranslation('app')
-  const { openCanvas } = useOverlay().canvas
-  return (
-    <PopoverTab.Button
-      text={t('viewInvite')}
-      onClick={() => {
-        setOpen(false)
-        openCanvas({
-          key: 'Pool',
-          options: {
-            providedPool: {
-              id: poolId,
-            },
-          },
-          size: 'xl',
-        })
-      }}
-    />
-  )
+	const { t } = useTranslation('app')
+	const { openCanvas } = useOverlay().canvas
+	return (
+		<PopoverTab.Button
+			text={t('viewInvite')}
+			onClick={() => {
+				setOpen(false)
+				openCanvas({
+					key: 'Pool',
+					options: {
+						providedPool: {
+							id: poolId,
+						},
+					},
+					size: 'xl',
+				})
+			}}
+		/>
+	)
 }

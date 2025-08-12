@@ -5,28 +5,28 @@ import type { ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Header = ({
-  Logo,
-  title,
-  websiteText,
-  websiteUrl,
-  children,
+	Logo,
+	title,
+	websiteText,
+	websiteUrl,
+	children,
 }: {
-  Logo: ReactNode
-  title: string
-  websiteText: string
-  websiteUrl: string
-  children: ReactNode
+	Logo: ReactNode
+	title: string
+	websiteText: string
+	websiteUrl: string
+	children: ReactNode
 }) => (
-  <div className={classes.header}>
-    <div>{Logo}</div>
-    <div>
-      <h3>{title}</h3>
-      <h4>
-        <a href={websiteUrl} target="blank" rel="noreferrer">
-          {websiteText}
-        </a>
-      </h4>
-    </div>
-    <div>{children}</div>
-  </div>
+	<div className={classes.header}>
+		<div>{Logo}</div>
+		<div>
+			<h3>{title}</h3>
+			<h4>
+				<a href={websiteUrl} target="blank" rel="noreferrer">
+					{websiteText}
+				</a>
+			</h4>
+		</div>
+		<div>{children}</div>
+	</div>
 )

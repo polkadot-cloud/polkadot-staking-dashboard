@@ -11,60 +11,60 @@ import { Padding, RoleChange, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const ChangePoolRoles = () => {
-  const { t } = useTranslation('modals')
-  const { serviceApi } = useApi()
-  const { replacePoolRoles } = useBondedPools()
-  const { activeAddress } = useActiveAccounts()
-  const {
-    setModalStatus,
-    config: { options },
-  } = useOverlay().modal
-  const { id: poolId, roleEdits } = options
+	const { t } = useTranslation('modals')
+	const { serviceApi } = useApi()
+	const { replacePoolRoles } = useBondedPools()
+	const { activeAddress } = useActiveAccounts()
+	const {
+		setModalStatus,
+		config: { options },
+	} = useOverlay().modal
+	const { id: poolId, roleEdits } = options
 
-  const getTx = () =>
-    serviceApi.tx.poolUpdateRoles(poolId, {
-      root: roleEdits?.root?.newAddress || undefined,
-      nominator: roleEdits?.nominator?.newAddress || undefined,
-      bouncer: roleEdits?.bouncer?.newAddress || undefined,
-    })
+	const getTx = () =>
+		serviceApi.tx.poolUpdateRoles(poolId, {
+			root: roleEdits?.root?.newAddress || undefined,
+			nominator: roleEdits?.nominator?.newAddress || undefined,
+			bouncer: roleEdits?.bouncer?.newAddress || undefined,
+		})
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAddress,
-    shouldSubmit: true,
-    callbackSubmit: () => {
-      setModalStatus('closing')
-    },
-    callbackInBlock: () => {
-      // manually update bondedPools with new pool roles
-      replacePoolRoles(poolId, roleEdits)
-    },
-  })
+	const submitExtrinsic = useSubmitExtrinsic({
+		tx: getTx(),
+		from: activeAddress,
+		shouldSubmit: true,
+		callbackSubmit: () => {
+			setModalStatus('closing')
+		},
+		callbackInBlock: () => {
+			// manually update bondedPools with new pool roles
+			replacePoolRoles(poolId, roleEdits)
+		},
+	})
 
-  return (
-    <>
-      <Close />
-      <Padding>
-        <Title>{t('changePoolRoles')}</Title>
-        <Padding verticalOnly>
-          <RoleChange
-            roleName={t('root')}
-            oldAddress={roleEdits?.root?.oldAddress}
-            newAddress={roleEdits?.root?.newAddress}
-          />
-          <RoleChange
-            roleName={t('nominator')}
-            oldAddress={roleEdits?.nominator?.oldAddress}
-            newAddress={roleEdits?.nominator?.newAddress}
-          />
-          <RoleChange
-            roleName={t('bouncer')}
-            oldAddress={roleEdits?.bouncer?.oldAddress}
-            newAddress={roleEdits?.bouncer?.newAddress}
-          />
-        </Padding>
-      </Padding>
-      <SubmitTx {...submitExtrinsic} valid />
-    </>
-  )
+	return (
+		<>
+			<Close />
+			<Padding>
+				<Title>{t('changePoolRoles')}</Title>
+				<Padding verticalOnly>
+					<RoleChange
+						roleName={t('root')}
+						oldAddress={roleEdits?.root?.oldAddress}
+						newAddress={roleEdits?.root?.newAddress}
+					/>
+					<RoleChange
+						roleName={t('nominator')}
+						oldAddress={roleEdits?.nominator?.oldAddress}
+						newAddress={roleEdits?.nominator?.newAddress}
+					/>
+					<RoleChange
+						roleName={t('bouncer')}
+						oldAddress={roleEdits?.bouncer?.oldAddress}
+						newAddress={roleEdits?.bouncer?.newAddress}
+					/>
+				</Padding>
+			</Padding>
+			<SubmitTx {...submitExtrinsic} valid />
+		</>
+	)
 }

@@ -4,6 +4,6 @@
 import type { ComponentBase } from 'types'
 
 export type SideProps = ComponentBase & {
-  open: boolean
-  minimised: boolean
+	open: boolean
+	minimised: boolean
 }

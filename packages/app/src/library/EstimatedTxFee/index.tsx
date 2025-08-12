@@ -7,31 +7,31 @@ import { useNetwork } from 'contexts/Network'
 import { useTxMeta } from 'contexts/TxMeta'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
-import { Wrapper } from './Wrapper'
 import type { EstimatedTxFeeProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
-  const { t } = useTranslation('app')
-  const { network } = useNetwork()
-  const { getTxSubmission } = useTxMeta()
-  const { unit, units } = getStakingChainData(network)
+	const { t } = useTranslation('app')
+	const { network } = useNetwork()
+	const { getTxSubmission } = useTxMeta()
+	const { unit, units } = getStakingChainData(network)
 
-  const txSubmission = getTxSubmission(uid)
-  const fee = txSubmission?.fee || 0n
+	const txSubmission = getTxSubmission(uid)
+	const fee = txSubmission?.fee || 0n
 
-  const txFeesUnit = planckToUnitBn(new BigNumber(fee), units).toFormat()
+	const txFeesUnit = planckToUnitBn(new BigNumber(fee), units).toFormat()
 
-  return format === 'table' ? (
-    <>
-      <div>{t('estimatedFee')}:</div>
-      <div>{fee === 0n ? `...` : `${txFeesUnit} ${unit}`}</div>
-    </>
-  ) : (
-    <Wrapper>
-      <p>
-        <span>{t('estimatedFee')}:</span>
-        {fee === 0n ? `...` : `${txFeesUnit} ${unit}`}
-      </p>
-    </Wrapper>
-  )
+	return format === 'table' ? (
+		<>
+			<div>{t('estimatedFee')}:</div>
+			<div>{fee === 0n ? `...` : `${txFeesUnit} ${unit}`}</div>
+		</>
+	) : (
+		<Wrapper>
+			<p>
+				<span>{t('estimatedFee')}:</span>
+				{fee === 0n ? `...` : `${txFeesUnit} ${unit}`}
+			</p>
+		</Wrapper>
+	)
 }

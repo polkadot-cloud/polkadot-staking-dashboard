@@ -7,22 +7,22 @@ import type { MultiButtonContainerProps } from '../types'
 import classes from './index.module.scss'
 
 export const Container = ({
-  children,
-  style,
-  marginLeft,
-  marginRight,
-  marginX,
-  disabled,
+	children,
+	style,
+	marginLeft,
+	marginRight,
+	marginX,
+	disabled,
 }: MultiButtonContainerProps) => {
-  const allClasses = classNames(classes.multiButton, {
-    [classes.disabled]: !!disabled,
-    [commonClasses.btnSpacingLeft]: marginLeft,
-    [commonClasses.btnSpacingRight]: marginRight,
-    [commonClasses.btnMarginX]: marginX,
-  })
-  return (
-    <div className={allClasses} style={style}>
-      {children}
-    </div>
-  )
+	const allClasses = classNames(classes.multiButton, {
+		[classes.disabled]: !!disabled,
+		[commonClasses.btnSpacingLeft]: marginLeft,
+		[commonClasses.btnSpacingRight]: marginRight,
+		[commonClasses.btnMarginX]: marginX,
+	})
+	return (
+		<div className={allClasses} style={style}>
+			{children}
+		</div>
+	)
 }
