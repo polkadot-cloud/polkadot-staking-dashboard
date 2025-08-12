@@ -14,7 +14,7 @@ export const CallToActionWrapper = styled.div`
     flex: 1;
     display: flex;
     flex-direction: row;
-    flex-flow: row nowrap;
+    flex-flow: row nowrap !important;
     width: 100%;
     margin-top: 0.38rem;   
 
