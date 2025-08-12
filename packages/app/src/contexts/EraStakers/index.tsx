@@ -138,17 +138,16 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		era: string,
 		overviews: ErasStakersOverviewEntries,
 	) => {
-		const validators =
-			overviews.reduce(
-				(
-					prev: Record<string, { own: bigint; total: bigint }>,
-					[[, validator], { own, total }],
-				) => {
-					prev[validator] = { own, total }
-					return prev
-				},
-				{},
-			)
+		const validators = overviews.reduce(
+			(
+				prev: Record<string, { own: bigint; total: bigint }>,
+				[[, validator], { own, total }],
+			) => {
+				prev[validator] = { own, total }
+				return prev
+			},
+			{},
+		)
 
 		const validatorKeys = Object.keys(validators)
 		const pagedResults = await Promise.all(

@@ -10,15 +10,9 @@ updates:
       - dependency-name: 'qrcode-generator'
       - dependency-name: 'framer-motion'
     groups:
-      eslint:
-        patterns:
-          - 'eslint*'
-          - '@eslint/*'
-          - '@typescript-eslint/*'
-          - 'typescript-eslint'
-      prettier:
-        patterns:
-          - 'prettier*'
+      biome:
+            patterns:
+              - '@biomejs*'
       react:
         patterns:
           - 'react*'
@@ -29,7 +23,6 @@ updates:
       types:
         patterns:
           - '@types/*'
-
       utils-and-qrcode:
         patterns:
           - 'classnames'

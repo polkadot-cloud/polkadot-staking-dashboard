@@ -59,7 +59,7 @@ jobs:
           key: ${{ runner.os }}-vite-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - run: pnpm install
-      - run: pnpm lint:check
+      - run: pnpm check
       - run: pnpm build:verify
         working-directory: packages/app
       - run: pnpm test
