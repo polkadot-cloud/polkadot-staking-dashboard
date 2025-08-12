@@ -97,7 +97,7 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
 						if (child !== undefined) {
 							return (
 								<Fragment key={`select_${i}`}>
-									{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+									{/* biome-ignore lint/suspicious/noExplicitAny: <> */}
 									{cloneElement(child as ReactElement<any>, {
 										bodyRef: bodyRefs[i],
 										containerRef: containerRefs[i],

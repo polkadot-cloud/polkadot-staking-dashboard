@@ -166,14 +166,12 @@ export const PayoutListInner = ({
 											<div>
 												<div>
 													<h4 className={labelClass}>
-														<>
-															+
-															{planckToUnitBn(
-																new BigNumber(record.reward),
-																units,
-															).toString()}{' '}
-															{unit}
-														</>
+														+
+														{planckToUnitBn(
+															new BigNumber(record.reward),
+															units,
+														).toString()}{' '}
+														{unit}
 													</h4>
 												</div>
 												<div>

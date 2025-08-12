@@ -70,7 +70,7 @@ export const Html5QrCodePlugin = ({
 		try {
 			const devices = await Html5Qrcode.getCameras()
 
-			if (devices && devices.length) {
+			if (devices?.length) {
 				const cameraId = devices[0].id
 				await html5QrCodeRef.current.start(
 					cameraId,

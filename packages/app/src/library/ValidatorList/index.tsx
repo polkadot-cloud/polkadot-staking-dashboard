@@ -346,41 +346,37 @@ export const ValidatorListInner = ({
 				{BeforeListNode}
 				<MotionContainer>
 					{listItems.length ? (
-						<>
-							{listItems.map((validator, index) => (
-								<motion.div
-									key={`nomination_${index}`}
-									className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-									variants={{
-										hidden: {
-											y: 15,
-											opacity: 0,
-										},
-										show: {
-											y: 0,
-											opacity: 1,
-										},
-									}}
-								>
-									<Item
-										validator={validator}
-										nominator={nominator}
-										toggleFavorites={toggleFavorites}
-										bondFor={bondFor}
-										displayFor={displayFor}
-										eraPoints={
-											performances.find(
-												(entry) => entry.validator === validator.address,
-											)?.points || []
-										}
-										nominationStatus={
-											nominationStatus.current[validator.address]
-										}
-										onRemove={onRemove}
-									/>
-								</motion.div>
-							))}
-						</>
+						listItems.map((validator, index) => (
+							<motion.div
+								key={`nomination_${index}`}
+								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+								variants={{
+									hidden: {
+										y: 15,
+										opacity: 0,
+									},
+									show: {
+										y: 0,
+										opacity: 1,
+									},
+								}}
+							>
+								<Item
+									validator={validator}
+									nominator={nominator}
+									toggleFavorites={toggleFavorites}
+									bondFor={bondFor}
+									displayFor={displayFor}
+									eraPoints={
+										performances.find(
+											(entry) => entry.validator === validator.address,
+										)?.points || []
+									}
+									nominationStatus={nominationStatus.current[validator.address]}
+									onRemove={onRemove}
+								/>
+							</motion.div>
+						))
 					) : (
 						<h4 style={{ marginTop: '1rem' }}>
 							{isSearching

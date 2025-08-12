@@ -62,10 +62,7 @@ export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
 		<Wrapper className="modal">
 			<h2>{t('errorUnknown')}</h2>
 			<h4>
-				<button
-					type="button"
-					onClick={() => resetErrorBoundary && resetErrorBoundary()}
-				>
+				<button type="button" onClick={() => resetErrorBoundary?.()}>
 					{t('clickToReload')}
 				</button>
 			</h4>

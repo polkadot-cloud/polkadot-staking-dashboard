@@ -171,7 +171,7 @@ export const GenerateNominations = ({
 	}
 
 	if (pluginEnabled('staking_api')) {
-		filterHandlers['searchValidators'] = {
+		filterHandlers.searchValidators = {
 			title: 'Search Validators',
 			onClick: () => {
 				const updateList = (newNominations: Validator[]) => {
@@ -273,7 +273,7 @@ export const GenerateNominations = ({
 										displayFor={displayFor}
 									/>
 								}
-								onRemove={selectHandlers?.['removeSelected']?.popover.callback}
+								onRemove={selectHandlers?.removeSelected?.popover.callback}
 							/>
 						</div>
 					)}

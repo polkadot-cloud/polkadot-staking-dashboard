@@ -161,40 +161,36 @@ export const NominationList = ({
 			<List $flexBasisLarge={'33.33%'}>
 				<MotionContainer>
 					{validators.length ? (
-						<>
-							{validators.map((validator, index) => (
-								<motion.div
-									key={`nomination_${index}`}
-									className={`item col`}
-									variants={{
-										hidden: {
-											y: 15,
-											opacity: 0,
-										},
-										show: {
-											y: 0,
-											opacity: 1,
-										},
-									}}
-								>
-									<Item
-										validator={validator}
-										nominator={nominator}
-										toggleFavorites={toggleFavorites}
-										bondFor={bondFor}
-										displayFor={displayFor}
-										eraPoints={
-											performances.find(
-												(entry) => entry.validator === validator.address,
-											)?.points || []
-										}
-										nominationStatus={
-											nominationStatus.current[validator.address]
-										}
-									/>
-								</motion.div>
-							))}
-						</>
+						validators.map((validator, index) => (
+							<motion.div
+								key={`nomination_${index}`}
+								className={`item col`}
+								variants={{
+									hidden: {
+										y: 15,
+										opacity: 0,
+									},
+									show: {
+										y: 0,
+										opacity: 1,
+									},
+								}}
+							>
+								<Item
+									validator={validator}
+									nominator={nominator}
+									toggleFavorites={toggleFavorites}
+									bondFor={bondFor}
+									displayFor={displayFor}
+									eraPoints={
+										performances.find(
+											(entry) => entry.validator === validator.address,
+										)?.points || []
+									}
+									nominationStatus={nominationStatus.current[validator.address]}
+								/>
+							</motion.div>
+						))
 					) : (
 						<h4 style={{ marginTop: '1rem' }}>{t('noValidators')}</h4>
 					)}

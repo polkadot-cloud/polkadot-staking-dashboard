@@ -210,26 +210,24 @@ export const PoolList = ({
 				)}
 				<MotionContainer>
 					{poolsToDisplay.length ? (
-						<>
-							{poolsToDisplay.map((pool, index: number) => (
-								<motion.div
-									className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-									key={`nomination_${index}`}
-									variants={{
-										hidden: {
-											y: 15,
-											opacity: 0,
-										},
-										show: {
-											y: 0,
-											opacity: 1,
-										},
-									}}
-								>
-									<Pool pool={pool} />
-								</motion.div>
-							))}
-						</>
+						poolsToDisplay.map((pool, index: number) => (
+							<motion.div
+								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+								key={`nomination_${index}`}
+								variants={{
+									hidden: {
+										y: 15,
+										opacity: 0,
+									},
+									show: {
+										y: 0,
+										opacity: 1,
+									},
+								}}
+							>
+								<Pool pool={pool} />
+							</motion.div>
+						))
 					) : (
 						<ListStatusHeader>
 							{syncing ? `${t('syncingPoolList')}...` : t('noMatch')}

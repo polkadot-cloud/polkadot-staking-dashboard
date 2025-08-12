@@ -138,12 +138,15 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		era: string,
 		overviews: ErasStakersOverviewEntries,
 	) => {
-		const validators: Record<string, { own: bigint; total: bigint }> =
+		const validators =
 			overviews.reduce(
-				(prev, [[, validator], { own, total }]) => ({
-					...prev,
-					[validator]: { own, total },
-				}),
+				(
+					prev: Record<string, { own: bigint; total: bigint }>,
+					[[, validator], { own, total }],
+				) => {
+					prev[validator] = { own, total }
+					return prev
+				},
 				{},
 			)
 

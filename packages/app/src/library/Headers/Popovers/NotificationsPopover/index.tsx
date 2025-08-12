@@ -63,10 +63,7 @@ export const NotificationsPopover = ({
 					/>
 				) : poolId && !membership ? (
 					<Pool poolId={poolId} setOpen={setOpen} />
-				) : (
-					// eslint-disable-next-line react/jsx-no-useless-fragment
-					<>{/* TODO: Handle nominate invite */}</>
-				)}
+				) : null}
 				<PopoverTab.Button
 					status="danger"
 					text={t('dismiss')}

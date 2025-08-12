@@ -36,7 +36,7 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 	// Set invite data when the page loads
 	useEffect(() => {
 		const idFromUrl = extractUrlValue('id')
-		if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
+		if (extractUrlValue('i') === 'pool' && !Number.isNaN(Number(idFromUrl))) {
 			setLocalInviteConfig({
 				type: 'pool',
 				network,

@@ -31,15 +31,12 @@ export const Definition = ({ title, description }: DefinitionProps) => {
 
 			<div style={{ height }}>
 				<div className="content" ref={contentRef}>
-					{open && (
-						<>
-							{description.map((item, index: number) => (
-								<h4 key={`inner_def_${index}`} className="definition">
-									{item}
-								</h4>
-							))}
-						</>
-					)}
+					{open &&
+						description.map((item, index: number) => (
+							<h4 key={`inner_def_${index}`} className="definition">
+								{item}
+							</h4>
+						))}
 				</div>
 			</div>
 		</DefinitionWrapper>

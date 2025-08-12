@@ -18,11 +18,10 @@ export const ThemesProvider = ({ children }: { children: ReactNode }) => {
 
 	// Provide system theme if raw theme is not valid
 	if (!['light', 'dark'].includes(localThemeRaw)) {
-		const systemTheme =
-			window.matchMedia &&
-			window.matchMedia('(prefers-color-scheme: dark)').matches
-				? 'dark'
-				: 'light'
+		const systemTheme = window.matchMedia?.('(prefers-color-scheme: dark)')
+			.matches
+			? 'dark'
+			: 'light'
 
 		initialTheme = systemTheme
 		localStorage.setItem('theme', systemTheme)
