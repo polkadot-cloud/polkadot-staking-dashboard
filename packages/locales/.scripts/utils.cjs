@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 const fs = require('node:fs')
-const { join } = require('ndoe:path')
+const { join } = require('node:path')
 
 // Project locale directory.
 const localeDir = join(__dirname, '..', 'src', 'resources')

@@ -14,8 +14,7 @@ export const CallToActionWrapper = styled.div`
     flex: 1;
     display: flex;
     flex-direction: row;
-    margin-top: 0.38rem;
-
+    margin-top: 0.38rem;   
     @media (max-width: 650px) {
       flex-wrap: wrap;
     }
