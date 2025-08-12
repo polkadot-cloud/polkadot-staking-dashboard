@@ -27,6 +27,7 @@ for (const lng of languages) {
 
 			// format json object.
 			const formatted = await prettier.format(JSON.stringify(orderedJson), {
+				useTabs: true,
 				parser: 'json',
 			})
 
