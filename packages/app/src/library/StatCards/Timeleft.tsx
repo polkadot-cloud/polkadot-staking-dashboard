@@ -24,9 +24,9 @@ export const Timeleft = ({
 					<Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
 				</Stat.Graphic>
 				{tooltip && (
-					<div>
+					<label>
 						<h3>{tooltip}</h3>
-					</div>
+					</label>
 				)}
 				<Stat.Content>
 					<CountdownWrapper>
