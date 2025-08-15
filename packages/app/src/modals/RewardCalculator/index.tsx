@@ -1,13 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getChainIcons } from 'assets'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { useEnhancedRewardRate } from 'hooks/useEnhancedRewardRate'
 import { Balance } from 'library/Balance'
 import { Title } from 'library/Modal/Title'
 import type { ChangeEvent } from 'react'
@@ -27,6 +26,8 @@ export const RewardCalculator = () => {
 	const { config } = useOverlay().modal
 	const { avgCommission } = useValidators()
 	const { getAverageRewardRate } = useAverageRewardRate()
+	const { calculateAnnualRewardWithActualCommission, getActualCommissionRate } =
+		useEnhancedRewardRate()
 
 	const { unit } = getStakingChainData(network)
 	const Token = getChainIcons(network).token
@@ -35,26 +36,68 @@ export const RewardCalculator = () => {
 	// Store token amount to stake
 	const [stakeAmount, setStakeAmount] = useState<number>(DEFAULT_TOKEN_INPUT)
 
-	// Whether to show base or commission-adjusted rewards
-	const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
+	// Calculation mode: 'simple', 'enhanced', 'conservative'
+	const [calculationMode, setCalculationMode] = useState<
+		'simple' | 'enhanced' | 'conservative'
+	>('conservative')
 
-	const annualRewardBase = stakeAmount * (getAverageRewardRate() / 100) || 0
+	// Calculate rewards based on selected mode
+	const getRewardCalculations = () => {
+		const actualCommissionRate = getActualCommissionRate()
 
-	const annualRewardAfterCommission =
-		annualRewardBase * (1 - avgCommission / 100)
-	const monthlyRewardAfterCommission = annualRewardAfterCommission / 12
-	const dailyRewardAfterCommission = annualRewardAfterCommission / 365
+		switch (calculationMode) {
+			case 'simple': {
+				// Original simple calculation
+				const annualRewardBase =
+					stakeAmount * (getAverageRewardRate() / 100) || 0
+				const annualRewardAfterCommission =
+					annualRewardBase * (1 - avgCommission / 100)
+				return {
+					annual: annualRewardAfterCommission,
+					monthly: annualRewardAfterCommission / 12,
+					daily: annualRewardAfterCommission / 365,
+					commissionRate: avgCommission,
+					description: t('simpleCalculationDesc', { ns: 'pages' }),
+				}
+			}
+			case 'enhanced': {
+				// Enhanced with era points but optimistic
+				const enhancedRewards = calculateAnnualRewardWithActualCommission(
+					stakeAmount,
+					false,
+				)
+				return {
+					annual: enhancedRewards.afterCommission,
+					monthly: enhancedRewards.afterCommission / 12,
+					daily: enhancedRewards.afterCommission / 365,
+					commissionRate: actualCommissionRate,
+					description: t('enhancedCalculationDesc', { ns: 'pages' }),
+				}
+			}
+			case 'conservative':
+			default: {
+				// Enhanced with conservative adjustment (most accurate)
+				const enhancedRewards = calculateAnnualRewardWithActualCommission(
+					stakeAmount,
+					true,
+				)
+				return {
+					annual: enhancedRewards.afterCommission,
+					monthly: enhancedRewards.afterCommission / 12,
+					daily: enhancedRewards.afterCommission / 365,
+					commissionRate: actualCommissionRate,
+					description: t('conservativeCalculationDesc', { ns: 'pages' }),
+				}
+			}
+		}
+	}
 
-	const annualReward = showAdjusted
-		? annualRewardAfterCommission
-		: annualRewardBase
-
-	const monthlyReward = showAdjusted
-		? monthlyRewardAfterCommission
-		: annualRewardBase / 12
-	const dailyReward = showAdjusted
-		? dailyRewardAfterCommission
-		: annualRewardBase / 365
+	const calculations = getRewardCalculations()
+	const {
+		annual: annualReward,
+		monthly: monthlyReward,
+		daily: dailyReward,
+	} = calculations
 
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const isNumber = !isNaN(Number(e.target.value))
@@ -81,27 +124,93 @@ export const RewardCalculator = () => {
 						value={String(stakeAmount || 0)}
 						marginY
 					/>{' '}
-					<h3 style={{ padding: '0 0.5rem' }}>
-						<button
-							type="button"
-							onClick={() => setShowCommissionAdjusted(!showAdjusted)}
-						>
-							<FontAwesomeIcon
-								icon={showAdjusted ? faToggleOn : faToggleOff}
+					<div style={{ padding: '0.5rem' }}>
+						<h4 style={{ marginBottom: '0.75rem' }}>
+							{t('calculationMethod', { ns: 'pages' })}
+						</h4>
+						<div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+							<button
+								type="button"
+								onClick={() => setCalculationMode('simple')}
 								style={{
-									color: showAdjusted
-										? 'var(--accent-color-primary)'
-										: 'var(--text-color-tertiary)',
-									marginRight: '0.8rem',
+									padding: '0.5rem 1rem',
+									border: `2px solid ${calculationMode === 'simple' ? 'var(--accent-color-primary)' : 'var(--border-primary-color)'}`,
+									backgroundColor:
+										calculationMode === 'simple'
+											? 'var(--accent-color-primary)'
+											: 'transparent',
+									color:
+										calculationMode === 'simple'
+											? 'white'
+											: 'var(--text-color-primary)',
+									borderRadius: '0.5rem',
+									cursor: 'pointer',
+									fontSize: '0.9rem',
+									fontWeight: '500',
 								}}
-								transform={'grow-6'}
-							/>
-							{t('deductAvgCommissionOf', {
-								ns: 'pages',
-								commission: avgCommission,
-							})}
-						</button>
-					</h3>
+							>
+								{t('basicEstimate', { ns: 'pages' })}
+							</button>
+							<button
+								type="button"
+								onClick={() => setCalculationMode('enhanced')}
+								style={{
+									padding: '0.5rem 1rem',
+									border: `2px solid ${calculationMode === 'enhanced' ? 'var(--accent-color-primary)' : 'var(--border-primary-color)'}`,
+									backgroundColor:
+										calculationMode === 'enhanced'
+											? 'var(--accent-color-primary)'
+											: 'transparent',
+									color:
+										calculationMode === 'enhanced'
+											? 'white'
+											: 'var(--text-color-primary)',
+									borderRadius: '0.5rem',
+									cursor: 'pointer',
+									fontSize: '0.9rem',
+									fontWeight: '500',
+								}}
+							>
+								{t('detailedEstimate', { ns: 'pages' })}
+							</button>
+							<button
+								type="button"
+								onClick={() => setCalculationMode('conservative')}
+								style={{
+									padding: '0.5rem 1rem',
+									border: `2px solid ${calculationMode === 'conservative' ? 'var(--accent-color-primary)' : 'var(--border-primary-color)'}`,
+									backgroundColor:
+										calculationMode === 'conservative'
+											? 'var(--accent-color-primary)'
+											: 'transparent',
+									color:
+										calculationMode === 'conservative'
+											? 'white'
+											: 'var(--text-color-primary)',
+									borderRadius: '0.5rem',
+									cursor: 'pointer',
+									fontSize: '0.9rem',
+									fontWeight: '500',
+								}}
+							>
+								{t('realisticEstimate', { ns: 'pages' })}
+								<span style={{ fontSize: '0.75rem', opacity: 0.8 }}>
+									{' '}
+									{t('recommended', { ns: 'pages' })}
+								</span>
+							</button>
+						</div>
+						<p
+							style={{
+								fontSize: '0.85rem',
+								color: 'var(--text-color-secondary)',
+								marginTop: '0.75rem',
+								lineHeight: '1.4',
+							}}
+						>
+							{calculations.description}
+						</p>
+					</div>
 					<Separator lg />
 					<CardHeader>
 						<h4>
