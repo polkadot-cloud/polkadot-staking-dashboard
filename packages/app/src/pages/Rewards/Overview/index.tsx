@@ -1,11 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-	faCaretUp,
-	faToggleOff,
-	faToggleOn,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
@@ -20,6 +16,7 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { useEnhancedRewardRate } from 'hooks/useEnhancedRewardRate'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { formatFiatCurrency } from 'locales/util'
@@ -50,32 +47,77 @@ export const Overview = (props: PayoutHistoryProps) => {
 	const { activeAddress } = useActiveAccounts()
 	const { price: tokenPrice } = useTokenPrices()
 	const { getAverageRewardRate } = useAverageRewardRate()
+	const { calculateAnnualRewardWithActualCommission, getActualCommissionRate } =
+		useEnhancedRewardRate()
 	const { stakedBalance } = useAccountBalances(activeAddress)
 
 	const { unit } = getStakingChainData(network)
 	const Token = getChainIcons(network).token
 
-	// Whether to show base or commission-adjusted rewards
-	const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
+	// Calculation mode: 'simple', 'enhanced', 'conservative'
+	const [calculationMode, setCalculationMode] = useState<
+		'simple' | 'enhanced' | 'conservative'
+	>('conservative')
 
 	const currentStake = stakedBalance.toNumber()
-	const annualRewardBase = currentStake * (getAverageRewardRate() / 100) || 0
 
-	const annualRewardAfterCommission =
-		annualRewardBase * (1 - avgCommission / 100)
-	const monthlyRewardAfterCommission = annualRewardAfterCommission / 12
-	const dailyRewardAfterCommission = annualRewardAfterCommission / 365
+	// Calculate rewards based on selected mode
+	const getRewardCalculations = () => {
+		const actualCommissionRate = getActualCommissionRate()
 
-	const annualReward = showAdjusted
-		? annualRewardAfterCommission
-		: annualRewardBase
+		switch (calculationMode) {
+			case 'simple': {
+				// Original simple calculation
+				const annualRewardBase =
+					currentStake * (getAverageRewardRate() / 100) || 0
+				const annualRewardAfterCommission =
+					annualRewardBase * (1 - avgCommission / 100)
+				return {
+					annual: annualRewardAfterCommission,
+					monthly: annualRewardAfterCommission / 12,
+					daily: annualRewardAfterCommission / 365,
+					commissionRate: avgCommission,
+					description: t('simpleCalculationDesc'),
+				}
+			}
+			case 'enhanced': {
+				// Enhanced with era points but optimistic
+				const enhancedRewards = calculateAnnualRewardWithActualCommission(
+					currentStake,
+					false,
+				)
+				return {
+					annual: enhancedRewards.afterCommission,
+					monthly: enhancedRewards.afterCommission / 12,
+					daily: enhancedRewards.afterCommission / 365,
+					commissionRate: actualCommissionRate,
+					description: t('enhancedCalculationDesc'),
+				}
+			}
+			case 'conservative':
+			default: {
+				// Enhanced with conservative adjustment (most accurate)
+				const enhancedRewards = calculateAnnualRewardWithActualCommission(
+					currentStake,
+					true,
+				)
+				return {
+					annual: enhancedRewards.afterCommission,
+					monthly: enhancedRewards.afterCommission / 12,
+					daily: enhancedRewards.afterCommission / 365,
+					commissionRate: actualCommissionRate,
+					description: t('conservativeCalculationDesc'),
+				}
+			}
+		}
+	}
 
-	const monthlyReward = showAdjusted
-		? monthlyRewardAfterCommission
-		: annualRewardBase / 12
-	const dailyReward = showAdjusted
-		? dailyRewardAfterCommission
-		: annualRewardBase / 365
+	const calculations = getRewardCalculations()
+	const {
+		annual: annualReward,
+		monthly: monthlyReward,
+		daily: dailyReward,
+	} = calculations
 
 	// Format the currency with user's locale and currency preference
 	const formatLocalCurrency = (value: number) =>
@@ -130,28 +172,94 @@ export const Overview = (props: PayoutHistoryProps) => {
 							</h2>
 						</CardHeader>
 						<Separator />
-						<div style={{ padding: '0.5rem' }}>
-							<h3>
+						<div style={{ padding: '0.5rem 1rem' }}>
+							<h4 style={{ marginBottom: '0.75rem' }}>
+								{t('calculationMethod')}
+							</h4>
+							<div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
 								<button
 									type="button"
-									onClick={() => setShowCommissionAdjusted(!showAdjusted)}
-								>
-									<FontAwesomeIcon
-										icon={showAdjusted ? faToggleOn : faToggleOff}
-										style={{
-											color: showAdjusted
+									onClick={() => setCalculationMode('simple')}
+									style={{
+										padding: '0.5rem 1rem',
+										border: `2px solid ${calculationMode === 'simple' ? 'var(--accent-color-primary)' : 'var(--border-primary-color)'}`,
+										backgroundColor:
+											calculationMode === 'simple'
 												? 'var(--accent-color-primary)'
-												: 'var(--text-color-tertiary)',
-											marginRight: '0.8rem',
-										}}
-										transform={'grow-6'}
-									/>
-									{t('deductAvgCommissionOf', {
-										commission: avgCommission,
-									})}
+												: 'transparent',
+										color:
+											calculationMode === 'simple'
+												? 'white'
+												: 'var(--text-color-primary)',
+										borderRadius: '0.5rem',
+										cursor: 'pointer',
+										fontSize: '0.9rem',
+										fontWeight: '500',
+									}}
+								>
+									{t('basicEstimate')}
 								</button>
-							</h3>
+								<button
+									type="button"
+									onClick={() => setCalculationMode('enhanced')}
+									style={{
+										padding: '0.5rem 1rem',
+										border: `2px solid ${calculationMode === 'enhanced' ? 'var(--accent-color-primary)' : 'var(--border-primary-color)'}`,
+										backgroundColor:
+											calculationMode === 'enhanced'
+												? 'var(--accent-color-primary)'
+												: 'transparent',
+										color:
+											calculationMode === 'enhanced'
+												? 'white'
+												: 'var(--text-color-primary)',
+										borderRadius: '0.5rem',
+										cursor: 'pointer',
+										fontSize: '0.9rem',
+										fontWeight: '500',
+									}}
+								>
+									{t('detailedEstimate')}
+								</button>
+								<button
+									type="button"
+									onClick={() => setCalculationMode('conservative')}
+									style={{
+										padding: '0.5rem 1rem',
+										border: `2px solid ${calculationMode === 'conservative' ? 'var(--accent-color-primary)' : 'var(--border-primary-color)'}`,
+										backgroundColor:
+											calculationMode === 'conservative'
+												? 'var(--accent-color-primary)'
+												: 'transparent',
+										color:
+											calculationMode === 'conservative'
+												? 'white'
+												: 'var(--text-color-primary)',
+										borderRadius: '0.5rem',
+										cursor: 'pointer',
+										fontSize: '0.9rem',
+										fontWeight: '500',
+									}}
+								>
+									{t('realisticEstimate')}
+									<span style={{ fontSize: '0.75rem', opacity: 0.8 }}>
+										{' '}
+										{t('recommended')}
+									</span>
+								</button>
+							</div>
+							<p
+								style={{
+									fontSize: '0.85rem',
+									color: 'var(--text-color-secondary)',
+									marginTop: '0.75rem',
+									lineHeight: '1.4',
+								}}
+							>
+								{calculations.description}
+							</p>
 						</div>
+
 						<RewardGrid.Root>
 							<RewardGrid.Head>
 								<RewardGrid.Cells
