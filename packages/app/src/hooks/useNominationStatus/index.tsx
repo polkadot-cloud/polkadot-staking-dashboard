@@ -103,7 +103,6 @@ export const useNominationStatus = () => {
 				const validator = getValidators().find(
 					({ address }) => address === nominee,
 				)
-
 				if (validator) {
 					const others =
 						eraStakers.stakers.find(({ address }) => address === nominee)

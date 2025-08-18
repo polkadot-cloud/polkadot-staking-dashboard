@@ -228,3 +228,9 @@ export interface SearchValidatorsData {
 		superDisplay: string
 	}[]
 }
+
+export type IsActiveStakerResult = Query & {
+	data: {
+		active: boolean
+	}
+}
