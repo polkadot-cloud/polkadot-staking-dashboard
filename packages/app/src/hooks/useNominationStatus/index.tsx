@@ -22,11 +22,9 @@ export const useNominationStatus = () => {
 	const { eraStakers } = useEraStakers()
 	const { getNominations } = useBalances()
 	const { getValidators } = useValidators()
+	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
 	const { bondedPools, poolsNominations } = useBondedPools()
-	const { syncing, activePoolSynced, accountSynced } = useSyncing([
-		'era-stakers',
-	])
 
 	// Gets the nomination statuses of passed in nominations
 	const getNominationsStatusFromTargets = (
@@ -56,20 +54,6 @@ export const useNominationStatus = () => {
 			statuses[target] = 'active'
 		}
 		return statuses
-	}
-
-	// Utility to check if the nomination status is
-	//
-	// NOTE: Not currently being used, requires more logic for nominator status
-	const nominationStatusSyncing = (who: MaybeAddress, bondFor: BondFor) => {
-		if (!accountSynced(who)) {
-			return true
-		}
-		if (bondFor === 'pool') {
-			return !activePoolSynced(who)
-		} else {
-			return false
-		}
 	}
 
 	// Utility to get an account's nominees alongside their status.
@@ -194,7 +178,6 @@ export const useNominationStatus = () => {
 	return {
 		getNominationStatus,
 		getNominationSetStatus,
-		nominationStatusSyncing,
 		getNominationsStatusFromTargets,
 		getPoolNominationStatus,
 		getPoolNominationStatusCode,
