@@ -3,6 +3,7 @@
 
 import { useBalances } from 'contexts/Balances'
 import { useEraStakers } from 'contexts/EraStakers'
+import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
@@ -10,40 +11,56 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
 import type { BondFor, MaybeAddress, NominationStatus } from 'types'
-import { getNomineesByStatus, getPoolNominationStatusCode } from 'utils'
+import { filterNomineesByStatus, getPoolNominationStatusCode } from 'utils'
 
 export const useNominationStatus = () => {
 	const { t } = useTranslation()
-	const { isNominator } = useStaking()
+	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
 	const { getValidators } = useValidators()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
+	const { isNominator, activeStakerData } = useStaking()
 	const { bondedPools, poolsNominations } = useBondedPools()
 	const { getActiveValidator, getNominationsStatusFromEraStakers } =
 		useEraStakers()
 
 	// Utility to get an account's nominees alongside their status.
-	const getNominationSetStatus = (who: MaybeAddress, bondFor: BondFor) => {
+	const getNominationSetStatus = (
+		who: MaybeAddress,
+		bondFor: BondFor,
+	): Record<string, NominationStatus> => {
 		const nominations =
 			bondFor === 'nominator'
 				? getNominations(who)
 				: (activePoolNominations?.targets ?? [])
 
-		return getNominationsStatusFromEraStakers(who, nominations)
+		if (pluginEnabled('staking_api')) {
+			// convert statuses into record of string -> status
+			const statuses = activeStakerData?.statuses.reduce(
+				(acc: Record<string, NominationStatus>, { address, status }) => {
+					acc[address] = status as NominationStatus
+					return acc
+				},
+				{},
+			)
+			return statuses || {}
+		} else {
+			return getNominationsStatusFromEraStakers(who, nominations)
+		}
 	}
 
 	// Gets the status of the provided account's nominations, and whether they are earning reards
 	const getNominationStatus = (who: MaybeAddress, type: BondFor) => {
 		// Get the sets nominees from the provided account's targets.
 		const nominees = Object.entries(getNominationSetStatus(who, type))
-		const activeNominees = getNomineesByStatus(nominees, 'active')
+		const activeNominees = filterNomineesByStatus(nominees, 'active')
 
 		// Determine whether active nominees are earning rewards. This function exists once the
 		// eras stakers has synced.
 		let earningRewards = false
 		if (!syncing) {
-			getNomineesByStatus(nominees, 'active').every((nominee) => {
+			filterNomineesByStatus(nominees, 'active').every((nominee) => {
 				const validator = getValidators().find(
 					({ address }) => address === nominee,
 				)
@@ -81,8 +98,8 @@ export const useNominationStatus = () => {
 		return {
 			nominees: {
 				active: activeNominees,
-				inactive: getNomineesByStatus(nominees, 'inactive'),
-				waiting: getNomineesByStatus(nominees, 'waiting'),
+				inactive: filterNomineesByStatus(nominees, 'inactive'),
+				waiting: filterNomineesByStatus(nominees, 'waiting'),
 			},
 			earningRewards,
 			message: str,
