@@ -14,7 +14,6 @@ export const NominationStatus = () => {
 	const { getNominationStatus } = useNominationStatus()
 
 	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
-	// Determine whether to display fast unstake button or regular unstake button.
 
 	return (
 		<Stat

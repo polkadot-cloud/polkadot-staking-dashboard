@@ -22,7 +22,7 @@ export const useNominationStatus = () => {
 	const { bondedPools, poolsNominations } = useBondedPools()
 	const { getNominationsStatusFromEraStakers } = useEraStakers()
 
-	// Utility to get an account's nominees alongside their status.
+	// Utility to get an account's nominees alongside their status
 	const getNominationSetStatus = (
 		who: MaybeAddress,
 		bondFor: BondFor,
@@ -54,9 +54,18 @@ export const useNominationStatus = () => {
 		const activeNominees = filterNomineesByStatus(nominees, 'active')
 		const earningRewards = activeNominees.length > 0
 
-		// Determine the localised message to display based on the nomination status.
+		// Determine the localised message to display based on the nomination status
 		let message
-		if (!isNominator || syncing) {
+
+		const isSyncing =
+			(syncing && !pluginEnabled('staking_api')) ||
+			activeStakerData === undefined
+
+		const displayNotNominating = pluginEnabled('staking_api')
+			? activeStakerData?.active
+			: isNominator
+
+		if (!displayNotNominating || isSyncing) {
 			message = t('notNominating', { ns: 'pages' })
 		} else if (!nominees.length) {
 			message = t('noNominationsSet', { ns: 'pages' })
@@ -79,6 +88,7 @@ export const useNominationStatus = () => {
 			},
 			earningRewards,
 			message,
+			syncing: isSyncing,
 		}
 	}
 

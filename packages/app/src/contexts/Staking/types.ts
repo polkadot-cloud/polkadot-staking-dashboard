@@ -7,7 +7,7 @@ export interface StakingContextInterface {
 	isBonding: boolean
 	isNominating: boolean
 	isNominator: boolean
-	activeStakerData: ActiveStatusWithNominees | null
+	activeStakerData: ActiveStatusWithNominees | null | undefined
 }
 
 export interface ActiveAccountOwnStake {

@@ -22,8 +22,9 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 	const nominations = getNominations(activeAddress)
 
 	// Active staker data from Staking API
-	const [activeStakerData, setActiveStakerData] =
-		useState<ActiveStatusWithNominees | null>(null)
+	const [activeStakerData, setActiveStakerData] = useState<
+		ActiveStatusWithNominees | null | undefined
+	>(undefined)
 
 	// Helper function to determine whether the active account is bonding, or is yet to start
 	const isBonding = (getStakingLedger(activeAddress).ledger?.active || 0n) > 0n
@@ -42,12 +43,16 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
 	// Fetch active staker with nominees when nominating status or active address updates
 	useEffect(() => {
-		if (pluginEnabled('staking_api') && activeAddress && isNominating) {
+		if (
+			pluginEnabled('staking_api') &&
+			activeAddress &&
+			nominations.length > 0
+		) {
 			handleFetchStaker(activeAddress)
 		} else {
-			setActiveStakerData(null)
+			setActiveStakerData(undefined)
 		}
-	}, [isNominating, activeAddress, nominations])
+	}, [activeAddress, nominations])
 
 	return (
 		<StakingContext.Provider
