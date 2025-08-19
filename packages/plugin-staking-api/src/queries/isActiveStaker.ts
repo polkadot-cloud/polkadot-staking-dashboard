@@ -6,7 +6,7 @@ import { client } from '../Client'
 import type { IsActiveStakerResult } from '../types'
 
 const QUERY = gql`
-  query IsActiveStaker($network: String!, $address: Int!) {
+  query IsActiveStaker($network: String!, $address: String!) {
     IsActiveStaker(network: $network, address: $address) {
       active
     }
@@ -18,7 +18,7 @@ export const useIsActiveStaker = ({
 	address,
 }: {
 	network: string
-	address: number
+	address: string
 }): IsActiveStakerResult => {
 	const { loading, error, data, refetch } = useQuery(QUERY, {
 		variables: { network, address },
@@ -28,7 +28,7 @@ export const useIsActiveStaker = ({
 
 export const fetchIsActiveStaker = async (
 	network: string,
-	address: number,
+	address: string,
 ): Promise<boolean | null> => {
 	try {
 		const result = await client.query({
