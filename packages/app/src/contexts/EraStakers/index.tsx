@@ -215,7 +215,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
 
-	// Gets the nomination statuses of the provided targets
+	// Gets the nomination statuses of the provided nominator and targets
 	const getNominationsStatusFromEraStakers = (
 		who: MaybeAddress,
 		targets: string[],

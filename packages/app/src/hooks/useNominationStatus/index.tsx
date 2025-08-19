@@ -7,7 +7,6 @@ import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useStaking } from 'contexts/Staking'
-import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
 import type { BondFor, MaybeAddress, NominationStatus } from 'types'
@@ -17,13 +16,11 @@ export const useNominationStatus = () => {
 	const { t } = useTranslation()
 	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
-	const { getValidators } = useValidators()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
 	const { isNominator, activeStakerData } = useStaking()
 	const { bondedPools, poolsNominations } = useBondedPools()
-	const { getActiveValidator, getNominationsStatusFromEraStakers } =
-		useEraStakers()
+	const { getNominationsStatusFromEraStakers } = useEraStakers()
 
 	// Utility to get an account's nominees alongside their status.
 	const getNominationSetStatus = (
@@ -52,47 +49,26 @@ export const useNominationStatus = () => {
 
 	// Gets the status of the provided account's nominations, and whether they are earning reards
 	const getNominationStatus = (who: MaybeAddress, type: BondFor) => {
-		// Get the sets nominees from the provided account's targets.
+		// Get the sets nominees from the provided account's targets
 		const nominees = Object.entries(getNominationSetStatus(who, type))
 		const activeNominees = filterNomineesByStatus(nominees, 'active')
-
-		// Determine whether active nominees are earning rewards. This function exists once the
-		// eras stakers has synced.
-		let earningRewards = false
-		if (!syncing) {
-			filterNomineesByStatus(nominees, 'active').every((nominee) => {
-				const validator = getValidators().find(
-					({ address }) => address === nominee,
-				)
-				if (validator) {
-					const others = (nominee && getActiveValidator(nominee)?.others) || []
-
-					if (others.length) {
-						// If the provided account is a part of the validator's backers they are earning
-						// rewards.
-						earningRewards = true
-						return false
-					}
-				}
-				return true
-			})
-		}
+		const earningRewards = activeNominees.length > 0
 
 		// Determine the localised message to display based on the nomination status.
-		let str
+		let message
 		if (!isNominator || syncing) {
-			str = t('notNominating', { ns: 'pages' })
+			message = t('notNominating', { ns: 'pages' })
 		} else if (!nominees.length) {
-			str = t('noNominationsSet', { ns: 'pages' })
+			message = t('noNominationsSet', { ns: 'pages' })
 		} else if (activeNominees.length) {
-			str = t('nominatingAnd', { ns: 'pages' })
+			message = t('nominatingAnd', { ns: 'pages' })
 			if (earningRewards) {
-				str += ` ${t('earningRewards', { ns: 'pages' })}`
+				message += ` ${t('earningRewards', { ns: 'pages' })}`
 			} else {
-				str += ` ${t('notEarningRewards', { ns: 'pages' })}`
+				message += ` ${t('notEarningRewards', { ns: 'pages' })}`
 			}
 		} else {
-			str = t('waitingForActiveNominations', { ns: 'pages' })
+			message = t('waitingForActiveNominations', { ns: 'pages' })
 		}
 
 		return {
@@ -102,7 +78,7 @@ export const useNominationStatus = () => {
 				waiting: filterNomineesByStatus(nominees, 'waiting'),
 			},
 			earningRewards,
-			message: str,
+			message,
 		}
 	}
 

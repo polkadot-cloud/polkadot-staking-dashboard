@@ -7,4 +7,5 @@ import type { NominationStatus } from 'types'
 export const filterNomineesByStatus = (
 	nominees: [string, NominationStatus][],
 	status: string,
-) => nominees.map(([k, v]) => (v === status ? k : false)).filter((v) => !!v)
+): string[] =>
+	nominees.filter(([_, s]) => s === status).map(([address]) => address)
