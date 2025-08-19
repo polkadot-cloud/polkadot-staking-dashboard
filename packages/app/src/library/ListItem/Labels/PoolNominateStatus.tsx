@@ -4,18 +4,16 @@
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { useEraStakers } from 'contexts/EraStakers'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useNominationStatus } from 'hooks/useNominationStatus'
 import { PoolStatusWrapper } from 'library/ListItem/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
+import { getPoolNominationStatusCode } from 'utils'
 
 export const PoolNominateStatus = ({ pool }: { pool: BondedPool }) => {
 	const { t } = useTranslation('app')
-	const { eraStakers } = useEraStakers()
 	const { poolsNominations } = useBondedPools()
-	const { getNominationsStatusFromTargets, getPoolNominationStatusCode } =
-		useNominationStatus()
+	const { eraStakers, getNominationsStatusFromEraStakers } = useEraStakers()
 
 	const { addresses } = pool
 
@@ -32,7 +30,7 @@ export const PoolNominateStatus = ({ pool }: { pool: BondedPool }) => {
 	// as soon as the component displays. (upon tab change).
 	const handleNominationsStatus = () => {
 		setNominationsStatus(
-			getNominationsStatusFromTargets(addresses.stash, targets),
+			getNominationsStatusFromEraStakers(addresses.stash, targets),
 		)
 	}
 

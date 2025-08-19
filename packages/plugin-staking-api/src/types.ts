@@ -228,3 +228,31 @@ export interface SearchValidatorsData {
 		superDisplay: string
 	}[]
 }
+
+export type IsActiveStakerResult = Query & {
+	data: {
+		active: boolean
+	}
+}
+
+export type GetActiveStakerWithNomineesResult = Query & {
+	data: {
+		isActiveStaker: {
+			active: boolean
+		}
+		getNomineesStatus: {
+			statuses: {
+				address: string
+				status: string
+			}[]
+		}
+	}
+}
+
+export interface ActiveStatusWithNominees {
+	active: boolean
+	statuses: {
+		address: string
+		status: string
+	}[]
+}
