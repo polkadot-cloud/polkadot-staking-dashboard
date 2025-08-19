@@ -21,7 +21,8 @@ export const NominationStatus = ({
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const {
-		eraStakers: { activeAccountOwnStake, stakers },
+		getActiveValidator,
+		eraStakers: { activeAccountOwnStake },
 	} = useEraStakers()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { unit, units } = getStakingChainData(network)
@@ -36,7 +37,7 @@ export const NominationStatus = ({
 					)
 				: new BigNumber(0)
 	} else {
-		const staker = stakers?.find((s) => s.address === address)
+		const staker = getActiveValidator(address)
 		const exists = (staker?.others || []).find(({ who }) => who === nominator)
 		if (exists) {
 			stakedAmount = planckToUnitBn(new BigNumber(exists.value), units)

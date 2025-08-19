@@ -1,11 +1,19 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { MaybeAddress, NominationStatus } from 'types'
+
 export interface EraStakersContextInterface {
 	eraStakers: EraStakers
 	activeValidators: number
 	activeNominatorsCount: number
+	getNominationsStatusFromEraStakers: (
+		who: MaybeAddress,
+		targets: string[],
+	) => Record<string, NominationStatus>
 	fetchEraStakers: (era: string) => Promise<Exposure[]>
+	isNominatorActive: (who: string) => boolean
+	getActiveValidator: (who: string) => Staker | undefined
 }
 
 export interface ActiveAccountOwnStake {

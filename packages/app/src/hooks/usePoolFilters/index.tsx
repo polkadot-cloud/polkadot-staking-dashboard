@@ -1,17 +1,17 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEraStakers } from 'contexts/EraStakers'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useNominationStatus } from 'hooks/useNominationStatus'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
 import type { AnyFunction, AnyJson, BondedPool } from 'types'
+import { getPoolNominationStatusCode } from 'utils'
 
 export const usePoolFilters = () => {
 	const { t } = useTranslation('app')
 	const { poolsNominations } = useBondedPools()
-	const { getNominationsStatusFromTargets, getPoolNominationStatusCode } =
-		useNominationStatus()
+	const { getNominationsStatusFromEraStakers } = useEraStakers()
 
 	/*
 	 * Include active pools.
@@ -26,7 +26,7 @@ export const usePoolFilters = () => {
 			const nominations = poolsNominations[p.id]
 			const targets = nominations?.targets || []
 			const status = getPoolNominationStatusCode(
-				getNominationsStatusFromTargets(p.addresses.stash, targets),
+				getNominationsStatusFromEraStakers(p.addresses.stash, targets),
 			)
 			return status === 'active'
 		})
@@ -46,7 +46,7 @@ export const usePoolFilters = () => {
 			const nominations = poolsNominations[p.id]
 			const targets = nominations?.targets || []
 			const status = getPoolNominationStatusCode(
-				getNominationsStatusFromTargets(p.addresses.stash, targets),
+				getNominationsStatusFromEraStakers(p.addresses.stash, targets),
 			)
 			return status !== 'active'
 		})

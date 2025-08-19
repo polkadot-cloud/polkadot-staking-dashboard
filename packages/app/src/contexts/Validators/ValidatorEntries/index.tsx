@@ -46,12 +46,10 @@ export const [ValidatorsContext, useValidators] =
 	createSafeContext<ValidatorsContextInterface>()
 
 export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
-	const {
-		eraStakers: { stakers },
-	} = useEraStakers()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
+	const { getActiveValidator } = useEraStakers()
 	const { erasPerDay, maxSupportedDays } = useErasPerDay()
 	const { isReady, serviceApi, getConsts, getApiStatus } = useApi()
 
@@ -234,8 +232,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	): ValidatorListEntry[] => {
 		const injected: ValidatorListEntry[] =
 			entries.map((entry) => {
-				const inEra =
-					stakers.find(({ address }) => address === entry.address) || false
+				const inEra: boolean = !!getActiveValidator(entry.address)
 
 				let validatorStatus: ValidatorStatus = 'waiting'
 				if (inEra) {
@@ -256,7 +253,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 		if (!entry) {
 			return 0n
 		}
-		const inEra = stakers.find((staker) => staker.address === entry.address)
+		const inEra = getActiveValidator(entry.address)
 		if (!inEra) {
 			return 0n
 		}
