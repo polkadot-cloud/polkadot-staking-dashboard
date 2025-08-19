@@ -62,10 +62,10 @@ export const useNominationStatus = () => {
 			activeStakerData === undefined
 
 		const displayNotNominating = pluginEnabled('staking_api')
-			? activeStakerData?.active
-			: isNominator
+			? !activeStakerData?.active
+			: !isNominator
 
-		if (!displayNotNominating || isSyncing) {
+		if (displayNotNominating || isSyncing) {
 			message = t('notNominating', { ns: 'pages' })
 		} else if (!nominees.length) {
 			message = t('noNominationsSet', { ns: 'pages' })
