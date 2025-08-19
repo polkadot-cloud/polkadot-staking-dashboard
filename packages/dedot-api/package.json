@@ -12,7 +12,7 @@
 		".": "./src/index.ts"
 	},
 	"dependencies": {
-		"@dedot/chaintypes": "^0.135.0",
+		"@dedot/chaintypes": "^0.137.0",
 		"@w3ux/observables-connect": "^0.10.7",
 		"@w3ux/utils": "^2.2.3",
 		"consts": "workspace:*",
