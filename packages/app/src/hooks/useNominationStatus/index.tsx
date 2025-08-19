@@ -47,7 +47,7 @@ export const useNominationStatus = () => {
 		}
 	}
 
-	// Gets the status of the provided account's nominations, and whether they are earning reards
+	// Gets the status of the provided account's nominations, and whether they are earning rewards
 	const getNominationStatus = (who: MaybeAddress, type: BondFor) => {
 		// Get the sets nominees from the provided account's targets
 		const nominees = Object.entries(getNominationSetStatus(who, type))
