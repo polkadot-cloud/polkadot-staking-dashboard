@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { bnToU8a, concatU8a, encodeAddress, stringToU8a } from 'dedot/utils'
-import type { BondedPool } from 'types'
+import type { BondedPool, NominationStatus, NominationStatuses } from 'types'
 
 // Generates pool stash and reward accounts. Assumes `poolsPalletId` is synced
 export const createPoolAccounts = (
@@ -92,4 +92,24 @@ export const poolSearchFilter = (
 	return filteredList.filter(
 		(value, index, self) => index === self.findIndex((i) => i.id === value.id),
 	)
+}
+
+// Determine bonded pool's current nomination status
+export const getPoolNominationStatusCode = (
+	statuses: NominationStatuses | null,
+) => {
+	let status: NominationStatus = 'waiting'
+
+	if (statuses) {
+		for (const childStatus of Object.values(statuses)) {
+			if (childStatus === 'active') {
+				status = 'active'
+				break
+			}
+			if (childStatus === 'inactive') {
+				status = 'inactive'
+			}
+		}
+	}
+	return status
 }

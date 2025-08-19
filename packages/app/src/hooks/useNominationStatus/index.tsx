@@ -9,52 +9,19 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
-import type {
-	BondFor,
-	MaybeAddress,
-	NominationStatus,
-	NominationStatuses,
-} from 'types'
+import type { BondFor, MaybeAddress, NominationStatus } from 'types'
+import { getNomineesByStatus, getPoolNominationStatusCode } from 'utils'
 
 export const useNominationStatus = () => {
 	const { t } = useTranslation()
 	const { isNominator } = useStaking()
-	const { eraStakers } = useEraStakers()
 	const { getNominations } = useBalances()
 	const { getValidators } = useValidators()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
 	const { bondedPools, poolsNominations } = useBondedPools()
-
-	// Gets the nomination statuses of passed in nominations
-	const getNominationsStatusFromTargets = (
-		who: MaybeAddress,
-		fromTargets: string[],
-	) => {
-		const statuses: Record<string, NominationStatus> = {}
-
-		if (!fromTargets.length) {
-			return statuses
-		}
-
-		for (const target of fromTargets) {
-			const staker = eraStakers.stakers.find(
-				({ address }) => address === target,
-			)
-
-			if (staker === undefined) {
-				statuses[target] = 'waiting'
-				continue
-			}
-
-			if (!(staker.others ?? []).find((o) => o.who === who)) {
-				statuses[target] = 'inactive'
-				continue
-			}
-			statuses[target] = 'active'
-		}
-		return statuses
-	}
+	const { getActiveValidator, getNominationsStatusFromEraStakers } =
+		useEraStakers()
 
 	// Utility to get an account's nominees alongside their status.
 	const getNominationSetStatus = (who: MaybeAddress, bondFor: BondFor) => {
@@ -63,17 +30,10 @@ export const useNominationStatus = () => {
 				? getNominations(who)
 				: (activePoolNominations?.targets ?? [])
 
-		return getNominationsStatusFromTargets(who, nominations)
+		return getNominationsStatusFromEraStakers(who, nominations)
 	}
 
-	// Utility to get the nominees of a provided nomination status.
-	const getNomineesByStatus = (
-		nominees: [string, NominationStatus][],
-		status: string,
-	) => nominees.map(([k, v]) => (v === status ? k : false)).filter((v) => !!v)
-
-	// Utility to get the status of the provided account's nominations, and whether they are earning
-	// reards.
+	// Gets the status of the provided account's nominations, and whether they are earning reards
 	const getNominationStatus = (who: MaybeAddress, type: BondFor) => {
 		// Get the sets nominees from the provided account's targets.
 		const nominees = Object.entries(getNominationSetStatus(who, type))
@@ -88,9 +48,7 @@ export const useNominationStatus = () => {
 					({ address }) => address === nominee,
 				)
 				if (validator) {
-					const others =
-						eraStakers.stakers.find(({ address }) => address === nominee)
-							?.others || []
+					const others = (nominee && getActiveValidator(nominee)?.others) || []
 
 					if (others.length) {
 						// If the provided account is a part of the validator's backers they are earning
@@ -137,49 +95,25 @@ export const useNominationStatus = () => {
 		nomination: MaybeAddress,
 	): NominationStatus => {
 		const pool = bondedPools.find((p) => p.addresses.stash === nominator)
-
 		if (!pool) {
 			return 'waiting'
 		}
-
 		// get pool targets from nominations metadata
 		const nominations = poolsNominations[pool.id]
 		const targets = nominations ? nominations.targets : []
 		const target = targets.find((item) => item === nomination)
-
 		if (!target) {
 			return 'waiting'
 		}
-
-		const nominationStatus = getNominationsStatusFromTargets(nominator, [
+		const nominationStatus = getNominationsStatusFromEraStakers(nominator, [
 			target,
 		])
 		return getPoolNominationStatusCode(nominationStatus)
 	}
 
-	// Determine bonded pool's current nomination statuse
-	const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
-		let status: NominationStatus = 'waiting'
-
-		if (statuses) {
-			for (const childStatus of Object.values(statuses)) {
-				if (childStatus === 'active') {
-					status = 'active'
-					break
-				}
-				if (childStatus === 'inactive') {
-					status = 'inactive'
-				}
-			}
-		}
-		return status
-	}
-
 	return {
 		getNominationStatus,
 		getNominationSetStatus,
-		getNominationsStatusFromTargets,
 		getPoolNominationStatus,
-		getPoolNominationStatusCode,
 	}
 }

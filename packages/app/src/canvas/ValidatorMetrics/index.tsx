@@ -36,9 +36,6 @@ import { InactiveGraph as InactiveGraphRewards } from './Rewards/InactiveGraph'
 export const ValidatorMetrics = () => {
 	const { t } = useTranslation()
 	const {
-		eraStakers: { stakers },
-	} = useEraStakers()
-	const {
 		config: { options },
 	} = useOverlay().canvas
 	const { activeEra } = useApi()
@@ -46,6 +43,7 @@ export const ValidatorMetrics = () => {
 	const { containerRefs } = useUi()
 	const { pluginEnabled } = usePlugins()
 	const { getValidators } = useValidators()
+	const { getActiveValidator } = useEraStakers()
 	const { unit, units } = getStakingChainData(network)
 
 	const Token = getChainIcons(network).token
@@ -53,7 +51,7 @@ export const ValidatorMetrics = () => {
 	const identity = options!.identity
 
 	// is the validator in the active era
-	const validatorInEra = stakers.find((s) => s.address === validator) || null
+	const validatorInEra = getActiveValidator(validator)
 
 	let validatorOwnStake = new BigNumber(0)
 	let otherStake = new BigNumber(0)

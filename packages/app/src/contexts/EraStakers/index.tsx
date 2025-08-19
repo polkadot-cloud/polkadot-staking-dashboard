@@ -11,7 +11,11 @@ import { removeSyncing, setSyncing } from 'global-bus'
 import { fetchEraTotalNominators } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import type { ErasStakersOverviewEntries } from 'types'
+import type {
+	ErasStakersOverviewEntries,
+	MaybeAddress,
+	NominationStatus,
+} from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { useApi } from '../Api'
@@ -211,13 +215,54 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
 
+	// Gets the nomination statuses of the provided targets
+	const getNominationsStatusFromEraStakers = (
+		who: MaybeAddress,
+		targets: string[],
+	) => {
+		const statuses: Record<string, NominationStatus> = {}
+		if (!targets.length) {
+			return statuses
+		}
+		for (const target of targets) {
+			const staker = eraStakers.stakers.find(
+				({ address }) => address === target,
+			)
+			if (staker === undefined) {
+				statuses[target] = 'waiting'
+				continue
+			}
+			if (!(staker.others ?? []).find((o) => o.who === who)) {
+				statuses[target] = 'inactive'
+				continue
+			}
+			statuses[target] = 'active'
+		}
+		return statuses
+	}
+
+	// Checks whether an address is an active nominator
+	const isNominatorActive = (who: MaybeAddress) => {
+		return eraStakers.stakers.some((staker) =>
+			staker.others.find((other) => other.who === who),
+		)
+	}
+
+	// Checks whether an address is an active validator
+	const getActiveValidator = (who: MaybeAddress) => {
+		return eraStakers.stakers.find((s) => s.address === who)
+	}
+
 	return (
 		<EraStakersContext.Provider
 			value={{
 				eraStakers,
 				activeValidators,
 				activeNominatorsCount,
+				getNominationsStatusFromEraStakers,
 				fetchEraStakers,
+				isNominatorActive,
+				getActiveValidator,
 			}}
 		>
 			{children}

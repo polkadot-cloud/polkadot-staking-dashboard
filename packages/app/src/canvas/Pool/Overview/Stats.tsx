@@ -20,19 +20,17 @@ export const Stats = ({
 }) => {
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
-	const { eraStakers } = useEraStakers()
+	const { isNominatorActive } = useEraStakers()
 	const { isReady, serviceApi } = useApi()
 
-	const { unit, units } = getStakingChainData(network)
 	const Token = getChainIcons(network).token
-	const isActive = eraStakers.stakers.find((staker) =>
-		staker.others.find((other) => other.who === bondedPool.addresses.stash),
-	)
+	const { unit, units } = getStakingChainData(network)
+	const isActive = isNominatorActive(bondedPool.addresses.stash)
 
-	// Store the pool balance.
+	// Store the pool balance
 	const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null)
 
-	// Fetches the balance of the bonded pool.
+	// Fetches the balance of the bonded pool
 	const getPoolBalance = async () => {
 		const apiResult = await serviceApi.runtimeApi.pointsToBalance(
 			bondedPool.id,
@@ -45,7 +43,7 @@ export const Stats = ({
 		}
 	}
 
-	// Fetch the balance when pool or points change.
+	// Fetch the balance when pool or points change
 	useEffect(() => {
 		if (isReady) {
 			getPoolBalance()
