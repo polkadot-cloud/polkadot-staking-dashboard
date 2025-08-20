@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0-beta.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.1...app-v2.1.0-beta.1) (2025-08-20)
+
+
+### Features
+
+* Fast nomination status syncing ([#2937](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2937)) ([a1ddb08](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a1ddb08e4151961a917aa7c93942726b342e8a73))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+
 ## [2.0.0-beta.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.0...app-v2.0.0-beta.1) (2025-07-24)
 
 
