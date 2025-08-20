@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.3.0...consts-v1.4.0) (2025-08-20)
+
+
+### Features
+
+* Add OnFinality RPC Provider ([3c93aa2](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3c93aa2b9efc5129565f2f3cbc6a0ee8ff38f5a2))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.2.0...consts-v1.3.0) (2025-06-17)
 
 
