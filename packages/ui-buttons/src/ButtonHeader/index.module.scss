@@ -3,7 +3,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 @use 'styles/theme/_variables' as *;
 
-$header-button-width: 3.75rem;
+$header-button-width: 4rem;
 
 .btnHeader {
   transition: all var(--transition-duration);
@@ -15,7 +15,7 @@ $header-button-width: 3.75rem;
   position: relative;
 
   &:hover {
-    background: #e7e7e7; /* TODO: Replace with variable */
+    background: var(--button-hover-background);
   }
 
   > .active {

@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   height: 4rem;
   z-index: 10;
   width: 100%;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.4);
   backdrop-filter: blur(2px);
   border-bottom: 1px solid var(--border-primary-color);
 

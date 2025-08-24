@@ -36,8 +36,8 @@ export const Popover = ({
 			<RadixPopover.Portal container={portalContainer}>
 				<RadixPopover.Content
 					className={classes.Content}
-					sideOffset={4}
-					collisionPadding={15}
+					sideOffset={3}
+					collisionPadding={12}
 					onOpenAutoFocus={(event) => event.preventDefault()}
 					style={{ width }}
 				>

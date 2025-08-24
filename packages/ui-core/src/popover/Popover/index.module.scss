@@ -1,10 +1,12 @@
 /* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
+@use 'styles/theme/_variables' as *;
+
 .Content {
   background: var(--background-primary);
   box-shadow: var(--card-shadow);
-  border-radius: 1rem;
+  border-radius: $popover-border-radius;
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
