@@ -30,14 +30,6 @@
     }
   }
 
-
-  justify-content: flex-end;
-  align-items: center;
-  align-content: center;
-
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(2px);
-
   @media (min-width: calc($page-width-medium-threshold + 1px)) {
     padding-left: $side-menu-maximised-width;
     &.minimized {
