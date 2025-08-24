@@ -7,17 +7,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
-import { capitalizeFirstLetter } from '@w3ux/utils'
-import { getChainIcons } from 'assets'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import BookSVG from 'assets/icons/book.svg?react'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
 import LogoSVG from 'assets/icons/logo.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
-import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
-import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
 import { useRef } from 'react'
@@ -32,7 +28,6 @@ import { LogoWrapper, ToggleWrapper, Wrapper } from './Wrapper'
 export const SideMenu = () => {
 	const { t } = useTranslation('app')
 	const { openHelp } = useHelp()
-	const { getApiStatus } = useApi()
 	const {
 		setSideMenu,
 		sideMenuOpen,
@@ -41,9 +36,7 @@ export const SideMenu = () => {
 		userSideMenuMinimised,
 		setUserSideMenuMinimised,
 	}: UIContextInterface = useUi()
-	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
-	const chainIcons = getChainIcons(network)
 
 	// Listen to window resize to automatically hide the side menu on window resize.
 	useOnResize(() => {
@@ -57,13 +50,6 @@ export const SideMenu = () => {
 	useOutsideAlerter(ref, () => {
 		setSideMenu(false)
 	})
-
-	const apiStatusClass =
-		getApiStatus(network) === 'connecting'
-			? 'warning'
-			: ['connected', 'ready'].includes(getApiStatus(network))
-				? 'success'
-				: 'danger'
 
 	return (
 		<Page.Side open={sideMenuOpen} minimised={sideMenuMinimised}>
@@ -128,22 +114,7 @@ export const SideMenu = () => {
 						/>
 					</div>
 				</section>
-				<section>
-					{!sideMenuMinimised && (
-						<Heading title={t('network')} minimised={sideMenuMinimised} />
-					)}
-					<Secondary
-						classes={[apiStatusClass]}
-						name={capitalizeFirstLetter(network)}
-						onClick={() => openModal({ key: 'Networks' })}
-						icon={{
-							Svg: chainIcons.inline.svg,
-							size: chainIcons.inline.size,
-						}}
-						minimised={sideMenuMinimised}
-						bullet={apiStatusClass}
-					/>
-				</section>
+				<section></section>
 			</Wrapper>
 		</Page.Side>
 	)

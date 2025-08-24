@@ -63,9 +63,9 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   text-transform: uppercase;
 
   > img, > svg  {  
-    margin-left: ${(props) => (props.$minimised ? '0.5rem' : '0')};
-    width: ${(props) => (props.$minimised ? '2.5rem' : '2rem')};
-    height: ${(props) => (props.$minimised ? '2.5rem' : '2rem')};
+    margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
+    width: ${(props) => (props.$minimised ? '2.25rem' : '1.75em')};
+    height: ${(props) => (props.$minimised ? '2.25rem' : '1.75rem')};
   }
   > span {
     margin-top: 0.25rem;

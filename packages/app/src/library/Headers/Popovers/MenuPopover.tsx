@@ -10,15 +10,19 @@ import {
 	faToggleOff,
 	faToggleOn,
 	faUserPlus,
+	faWifi,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
+import { capitalizeFirstLetter } from '@w3ux/utils'
 import LanguageSVG from 'assets/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
+import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useCurrency } from 'contexts/Currency'
+import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
@@ -33,6 +37,7 @@ export const MenuPopover = ({
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
+	const { network } = useNetwork()
 	const { t } = useTranslation()
 	const { i18n } = useTranslation()
 	const { currency } = useCurrency()
@@ -44,6 +49,7 @@ export const MenuPopover = ({
 	const { activeAddress } = useActiveAccounts()
 	const { advancedMode, setAdvancedMode } = useUi()
 
+	const { name } = getRelayChainData(network)
 	const { membership } = getPoolMembership(activeAddress)
 	const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -56,22 +62,19 @@ export const MenuPopover = ({
 
 	return (
 		<div ref={popoverRef}>
-			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
+			<MenuItemButton
+				onClick={() => {
+					setOpen(false)
+					openModal({ key: 'Networks' })
+				}}
+			>
 				<div>
-					<FontAwesomeIcon icon={faSlidersH} transform="grow-2" />
+					<FontAwesomeIcon icon={faWifi} />
 				</div>
 				<div>
-					<h3>{t('advanced', { ns: 'app' })}</h3>
+					<h3>{t('network', { ns: 'app' })}</h3>
 					<div>
-						<FontAwesomeIcon
-							icon={advancedMode ? faToggleOn : faToggleOff}
-							color={
-								advancedMode
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
-							transform="grow-8"
-						/>
+						<h4>{capitalizeFirstLetter(name)}</h4>
 					</div>
 				</div>
 			</MenuItemButton>
@@ -113,6 +116,45 @@ export const MenuPopover = ({
 					</div>
 				</MenuItemButton>
 			)}
+			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
+				<div>
+					<FontAwesomeIcon icon={faSlidersH} transform="grow-2" />
+				</div>
+				<div>
+					<h3>{t('advanced', { ns: 'app' })}</h3>
+					<div>
+						<FontAwesomeIcon
+							icon={advancedMode ? faToggleOn : faToggleOff}
+							color={
+								advancedMode
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
+			<MenuItemButton onClick={() => toggleTheme()}>
+				<div>
+					<MoonOutlineSVG width="1.1em" height="1.1em" />
+				</div>
+				<div>
+					<h3>{t('darkMode', { ns: 'app' })}</h3>
+					<div>
+						<FontAwesomeIcon
+							icon={mode === 'dark' ? faToggleOn : faToggleOff}
+							color={
+								mode === 'dark'
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
+
 			<MenuItemButton
 				disabled={notStaking}
 				onClick={() => {
@@ -139,25 +181,6 @@ export const MenuPopover = ({
 				</div>
 				<div>
 					<h3>{t('plugins', { ns: 'modals' })}</h3>
-				</div>
-			</MenuItemButton>
-			<MenuItemButton onClick={() => toggleTheme()}>
-				<div>
-					<MoonOutlineSVG width="1.1em" height="1.1em" />
-				</div>
-				<div>
-					<h3>{t('darkMode', { ns: 'app' })}</h3>
-					<div>
-						<FontAwesomeIcon
-							icon={mode === 'dark' ? faToggleOn : faToggleOff}
-							color={
-								mode === 'dark'
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
-							transform="grow-8"
-						/>
-					</div>
 				</div>
 			</MenuItemButton>
 			<MenuItemButton
