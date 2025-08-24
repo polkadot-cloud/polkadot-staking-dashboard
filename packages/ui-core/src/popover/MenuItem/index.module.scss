@@ -1,12 +1,24 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+@use 'styles/theme/_variables' as *;
+
 .menuItem {
   border-bottom: 1px solid var(--border-primary-color);
-  padding: 1.65rem 1.25rem 1.25rem 1.5rem;
+  padding: 1.5rem 1.25rem 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   width: 100%;
+
+  &:first-child {
+    border-top-left-radius: $popover-border-radius;
+    border-top-right-radius: $popover-border-radius;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $popover-border-radius;
+    border-bottom-right-radius: $popover-border-radius;
+  }
 
   &:hover {
     background: var(--button-popover-tab-background);
