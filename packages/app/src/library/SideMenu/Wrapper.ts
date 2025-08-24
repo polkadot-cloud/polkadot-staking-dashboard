@@ -11,8 +11,6 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  background: none;
-  border-right: 1px solid var(--border-primary-color);
   padding: 0rem 1rem 0.5rem 1.25rem;
   overflow: auto;
   flex-grow: 1;
@@ -98,6 +96,10 @@ export const ToggleWrapper = styled.button`
   display: flex;
   align-items: center;
   z-index: 10;
+
+  @media(max-width: ${PageWidthMediumThreshold}px) {
+    display: none;
+  }
 
   > .label {
     background: var(--background-primary);
