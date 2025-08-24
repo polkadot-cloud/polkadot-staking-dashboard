@@ -448,6 +448,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.1
+      styles:
+        specifier: workspace:*
+        version: link:../styles
       ui-core:
         specifier: workspace:*
         version: link:../ui-core

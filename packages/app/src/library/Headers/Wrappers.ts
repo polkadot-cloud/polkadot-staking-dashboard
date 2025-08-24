@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
+  transition: all var(--transition-duration);
   position: fixed;
   top: 0px;
   right: 0px;
@@ -14,11 +15,12 @@ export const Wrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   align-content: center;
-  padding: 0 1.05rem;
-  transition: all var(--transition-duration);
-  margin: 0.6rem 0;
   height: 4rem;
-  z-index: 6;
+  z-index: 10;
+  width: 100%;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(2px);
+  border-bottom: 1px solid red;
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
     width: 100%;

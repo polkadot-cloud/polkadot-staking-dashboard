@@ -4,7 +4,7 @@
 import { faCog, faPlug } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
-import { InactiveButtonHeader } from 'ui-buttons'
+import { ButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { ConnectPopover } from './Popovers/ConnectPopover'
 import { MenuPopover } from './Popovers/MenuPopover'
@@ -29,11 +29,7 @@ export const Settings = ({
 				}}
 				width="350px"
 			>
-				<InactiveButtonHeader
-					className="header-connect"
-					marginLeft
-					icon={faPlug}
-				/>
+				<ButtonHeader className="header-connect" icon={faPlug} />
 			</Popover>
 			<Popover
 				open={openSettings}
@@ -43,11 +39,7 @@ export const Settings = ({
 					setOpenSettings(!openSettings)
 				}}
 			>
-				<InactiveButtonHeader
-					className="header-settings"
-					marginLeft
-					icon={faCog}
-				/>
+				<ButtonHeader className="header-settings" icon={faCog} />
 			</Popover>
 		</>
 	)

@@ -1,23 +1,21 @@
 /* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
+@use 'styles/theme/_variables' as *;
+
+$header-button-width: 3.75rem;
+
 .btnHeader {
-  background: var(--border-primary-color);
   transition: all var(--transition-duration);
-  border-radius: 4rem;
-  width: 3.25rem;
-  height: 3.25rem;
+  height: calc($header-height - 1px);
+  width: $header-button-width;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 
-  &.marginLeft {
-    margin-left: 0.8rem;
-  }
-
   &:hover {
-    background: var(--border-secondary-color);
+    background: #e7e7e7; /* TODO: Replace with variable */
   }
 
   > .active {
