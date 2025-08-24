@@ -113,11 +113,6 @@ export const ToggleWrapper = styled.button`
     border: 1px solid var(--border-primary-color);
   }
 `
-export const Separator = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
-  width: 100%;
-  margin: 1rem 1rem 0.5rem 0;
-`
 
 export const BulletWrapper = styled.div`
   color: var(--status-success-color);

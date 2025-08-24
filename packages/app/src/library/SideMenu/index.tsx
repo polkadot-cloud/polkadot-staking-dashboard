@@ -27,7 +27,7 @@ import { useOverlay } from 'ui-overlay'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
-import { LogoWrapper, Separator, ToggleWrapper, Wrapper } from './Wrapper'
+import { LogoWrapper, ToggleWrapper, Wrapper } from './Wrapper'
 
 export const SideMenu = () => {
 	const { t } = useTranslation('app')
@@ -80,7 +80,6 @@ export const SideMenu = () => {
 					</span>
 				</ToggleWrapper>
 			)}
-
 			<Wrapper ref={ref} $minimised={sideMenuMinimised}>
 				<section>
 					<LogoWrapper
@@ -95,21 +94,6 @@ export const SideMenu = () => {
 							</span>
 						)}
 					</LogoWrapper>
-					{!sideMenuMinimised && (
-						<Heading title={t('network')} minimised={sideMenuMinimised} />
-					)}
-					<Secondary
-						classes={[apiStatusClass]}
-						name={capitalizeFirstLetter(network)}
-						onClick={() => openModal({ key: 'Networks' })}
-						icon={{
-							Svg: chainIcons.inline.svg,
-							size: chainIcons.inline.size,
-						}}
-						minimised={sideMenuMinimised}
-						bullet={apiStatusClass}
-					/>
-					<Separator />
 					<Main />
 					<div className="inner">
 						<Heading title={t('support')} minimised={sideMenuMinimised} />
@@ -144,7 +128,22 @@ export const SideMenu = () => {
 						/>
 					</div>
 				</section>
-				<section>{/* Empty */}</section>
+				<section>
+					{!sideMenuMinimised && (
+						<Heading title={t('network')} minimised={sideMenuMinimised} />
+					)}
+					<Secondary
+						classes={[apiStatusClass]}
+						name={capitalizeFirstLetter(network)}
+						onClick={() => openModal({ key: 'Networks' })}
+						icon={{
+							Svg: chainIcons.inline.svg,
+							size: chainIcons.inline.size,
+						}}
+						minimised={sideMenuMinimised}
+						bullet={apiStatusClass}
+					/>
+				</section>
 			</Wrapper>
 		</Page.Side>
 	)
