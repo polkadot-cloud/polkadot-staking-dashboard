@@ -64,10 +64,10 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   position: relative;
   text-transform: uppercase;
 
-  > img, > svg  {   
-    margin-left: 0.4rem;
-    width: 2.5rem;
-    height: 2.5rem;
+  > img, > svg  {  
+    margin-left: ${(props) => (props.$minimised ? '0.5rem' : '0')};
+    width: ${(props) => (props.$minimised ? '2.5rem' : '2rem')};
+    height: ${(props) => (props.$minimised ? '2.5rem' : '2rem')};
   }
   > span {
     margin-top: 0.25rem;
@@ -79,7 +79,6 @@ export const LogoWrapper = styled.button<MinimisedProps>`
     .logo {
       width: auto;
       height: 1.45rem;
-      margin-left: 0.4rem;
     }
   }
 

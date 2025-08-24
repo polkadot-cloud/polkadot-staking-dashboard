@@ -11,7 +11,7 @@ export const Wrapper = styled(motion.div)`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin: 0.4rem 0.2rem 0.4rem 0;
+  margin: 0.5rem 0.2rem 0.5rem 0;
   padding: 0rem 0.5rem;
   position: relative;
 

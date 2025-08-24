@@ -92,7 +92,7 @@ export const Main = () => {
 			{pageConfig.categories.map(
 				({ id: categoryId, key: categoryKey }: PageCategory) => (
 					<div className="inner" key={`sidemenu_category_${categoryId}`}>
-						{categoryKey !== 'default' && (
+						{categoryKey !== 'default' && !sideMenuMinimised && (
 							<Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
 						)}
 						{pagesToDisplay.map(

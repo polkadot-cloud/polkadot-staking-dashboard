@@ -84,7 +84,11 @@ export const SideMenu = () => {
 
 			<Wrapper ref={ref} $minimised={sideMenuMinimised}>
 				<section>
-					<LogoWrapper $minimised={sideMenuMinimised}>
+					<LogoWrapper
+						$minimised={sideMenuMinimised}
+						type="button"
+						onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
+					>
 						<CloudSVG />
 						{!sideMenuMinimised && (
 							<span>
@@ -92,7 +96,9 @@ export const SideMenu = () => {
 							</span>
 						)}
 					</LogoWrapper>
-					<Heading title={t('network')} minimised={sideMenuMinimised} />
+					{!sideMenuMinimised && (
+						<Heading title={t('network')} minimised={sideMenuMinimised} />
+					)}
 					<Secondary
 						classes={[apiStatusClass]}
 						name={capitalizeFirstLetter(network)}
