@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   width: 100%;
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(2px);
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid var(--border-primary-color);
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
     width: 100%;
