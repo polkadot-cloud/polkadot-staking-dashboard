@@ -55,6 +55,7 @@ export const MinimisedWrapper = styled(motion.button)`
   padding: 0;
   margin: 0.6rem 0 1.15rem 0;
   min-height: 3.2rem;
+  height: 3.5rem;
   width: 100%;
 
   &.active {

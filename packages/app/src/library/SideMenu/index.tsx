@@ -11,6 +11,7 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import BookSVG from 'assets/icons/book.svg?react'
+import CloudSVG from 'assets/icons/cloud.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
 import LogoSVG from 'assets/icons/logo.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
@@ -27,7 +28,7 @@ import { AdvancedToggle } from './Advanced'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
-import { LogoWrapper, Separator, Wrapper } from './Wrapper'
+import { LogoWrapper, Separator, ToggleWrapper, Wrapper } from './Wrapper'
 
 export const SideMenu = () => {
 	const { t } = useTranslation('app')
@@ -67,34 +68,27 @@ export const SideMenu = () => {
 
 	return (
 		<Page.Side open={sideMenuOpen} minimised={sideMenuMinimised}>
+			{!sideMenuOpen && advancedMode && (
+				<ToggleWrapper
+					type="button"
+					onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
+				>
+					<span className="label">
+						<FontAwesomeIcon
+							icon={sideMenuMinimised ? faChevronRight : faChevronLeft}
+							transform="shrink-6"
+						/>
+					</span>
+				</ToggleWrapper>
+			)}
+
 			<Wrapper ref={ref} $minimised={sideMenuMinimised}>
 				<section>
-					<LogoWrapper
-						$minimised={sideMenuMinimised}
-						type="button"
-						onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
-					>
-						<img
-							src="/img/app.png"
-							alt="Polkadot Staking Dashboard"
-							style={{
-								width: '2.5rem',
-								height: '2.5rem',
-							}}
-						/>
+					<LogoWrapper $minimised={sideMenuMinimised}>
+						<CloudSVG />
 						{!sideMenuMinimised && (
 							<span>
 								<LogoSVG className="logo" />
-							</span>
-						)}
-						{!sideMenuOpen && advancedMode && (
-							<span className="toggle">
-								<span className="label">
-									<FontAwesomeIcon
-										icon={sideMenuMinimised ? faChevronRight : faChevronLeft}
-										transform="shrink-6"
-									/>
-								</span>
 							</span>
 						)}
 					</LogoWrapper>

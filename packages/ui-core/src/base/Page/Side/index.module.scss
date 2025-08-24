@@ -14,9 +14,8 @@
   flex: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
-
+  
   @media (max-width: $page-width-medium-threshold) {
     min-width: $side-menu-hidden-width;
     max-width: $side-menu-hidden-width;

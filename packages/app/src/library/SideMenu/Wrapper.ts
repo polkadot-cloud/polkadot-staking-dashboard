@@ -12,6 +12,7 @@ import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
   background: none;
+  border-right: 1px solid var(--border-primary-color);
   padding: 0rem 1rem 0.5rem 1.25rem;
   overflow: auto;
   flex-grow: 1;
@@ -63,24 +64,10 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   position: relative;
   text-transform: uppercase;
 
-  > .toggle {
-    position: absolute;
-    top: ${(props) => (props.$minimised ? '0.9rem' : '-0.1rem')};
-    right: ${(props) => (props.$minimised ? '-0.25rem' : '0')};
-    height: 100%;
-    display: flex;
-    align-items: center;
-
-    > .label {
-      background: var(--background-primary);
-      color: var(--text-color-secondary);
-      width: 1.5rem;
-      height: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-    }
+  > img, > svg  {   
+    margin-left: 0.4rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
   > span {
     margin-top: 0.25rem;
@@ -89,7 +76,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
     display: flex;
     align-items: center;
 
-      .logo {
+    .logo {
       width: auto;
       height: 1.45rem;
       margin-left: 0.4rem;
@@ -103,6 +90,28 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   }
 `
 
+export const ToggleWrapper = styled.button`
+  position: absolute;
+  top: 1.25rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  right: -0.75rem;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+
+  > .label {
+    background: var(--background-primary);
+    color: var(--text-color-secondary);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--border-primary-color);
+  }
+`
 export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
