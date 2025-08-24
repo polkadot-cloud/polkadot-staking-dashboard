@@ -6,6 +6,7 @@ import {
 	faDollarSign,
 	faExternalLinkAlt,
 	faPuzzlePiece,
+	faSlidersH,
 	faToggleOff,
 	faToggleOn,
 	faUserPlus,
@@ -21,6 +22,7 @@ import { useCurrency } from 'contexts/Currency'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
+import { useUi } from 'contexts/UI'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItemButton } from 'ui-core/popover'
@@ -40,6 +42,7 @@ export const MenuPopover = ({
 	const { openModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
 	const { activeAddress } = useActiveAccounts()
+	const { advancedMode, setAdvancedMode } = useUi()
 
 	const { membership } = getPoolMembership(activeAddress)
 	const popoverRef = useRef<HTMLDivElement>(null)
@@ -53,17 +56,17 @@ export const MenuPopover = ({
 
 	return (
 		<div ref={popoverRef}>
-			<MenuItemButton onClick={() => toggleTheme()}>
+			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
 				<div>
-					<MoonOutlineSVG width="1.1em" height="1.1em" />
+					<FontAwesomeIcon icon={faSlidersH} transform="grow-2" />
 				</div>
 				<div>
-					<h3>{t('darkMode', { ns: 'app' })}</h3>
+					<h3>{t('advanced', { ns: 'app' })}</h3>
 					<div>
 						<FontAwesomeIcon
-							icon={mode === 'dark' ? faToggleOn : faToggleOff}
+							icon={advancedMode ? faToggleOn : faToggleOff}
 							color={
-								mode === 'dark'
+								advancedMode
 									? 'var(--accent-color-primary)'
 									: 'var(--text-color-tertiary)'
 							}
@@ -136,6 +139,25 @@ export const MenuPopover = ({
 				</div>
 				<div>
 					<h3>{t('plugins', { ns: 'modals' })}</h3>
+				</div>
+			</MenuItemButton>
+			<MenuItemButton onClick={() => toggleTheme()}>
+				<div>
+					<MoonOutlineSVG width="1.1em" height="1.1em" />
+				</div>
+				<div>
+					<h3>{t('darkMode', { ns: 'app' })}</h3>
+					<div>
+						<FontAwesomeIcon
+							icon={mode === 'dark' ? faToggleOn : faToggleOff}
+							color={
+								mode === 'dark'
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
 				</div>
 			</MenuItemButton>
 			<MenuItemButton

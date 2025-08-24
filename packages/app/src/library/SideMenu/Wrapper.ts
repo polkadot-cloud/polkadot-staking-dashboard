@@ -169,21 +169,3 @@ export const BulletWrapper = styled.div`
     }
   }
 `
-export const AdvancedToggleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.15s;
-  margin-bottom: 1rem;
-  width: 100%;
-
-  > h4 {
-    padding: 0 0.75rem;
-  }
-
-  > .toggle {
-    font-size: 1.75rem;
-  }
-`
