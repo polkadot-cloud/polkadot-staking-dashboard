@@ -30,9 +30,6 @@ export const Item = styled.button`
   font-size: 1.05rem;
   transition: transform var(--transition-duration) ease-out;
 
-  &:hover {
-    transform: scale(1.03);
-  }
 
   .label {
     color: var(--accent-color-primary);
@@ -47,8 +44,13 @@ export const Item = styled.button`
     color: white;
     line-height: 2.2rem;
     .icon {
-      color: var(--text-color-secondary);
       cursor: pointer;
+      color: var(--text-color-primary);
+      transition: color var(--transition-duration);
+
+      &:hover {
+        color: var(--accent-color-primary);
+      }
     }
   }
 
