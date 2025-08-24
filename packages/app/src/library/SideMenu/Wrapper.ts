@@ -58,7 +58,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   align-items: center;
   width: 100%;
   height: 4rem;
-  padding: 0.4rem 0 0.4rem 0.4rem;
+  padding: 0rem 0 0.4rem 0.4rem;
   position: relative;
   text-transform: uppercase;
 
@@ -89,7 +89,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 
 export const ToggleWrapper = styled.button`
   position: absolute;
-  top: 1.25rem;
+  top: 1.05rem;
   width: 1.7rem;
   height: 1.7rem;
   right: -0.75rem;

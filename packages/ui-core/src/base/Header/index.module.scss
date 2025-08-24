@@ -18,11 +18,11 @@
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    align-content: center;
 
     &:first-child {
-      justify-content: start;
+      justify-content: flex-start;
       flex-grow: 1;
+      padding-left: 1rem;
     }
   
     &:last-child {

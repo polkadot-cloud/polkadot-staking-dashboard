@@ -13,8 +13,6 @@ export const MenuWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex-grow: 1;
-    padding-left: 1rem;
   }
 `
 

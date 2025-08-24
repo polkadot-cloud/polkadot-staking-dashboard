@@ -16,7 +16,7 @@ export const Headers = () => {
 	const [openConnect, setOpenConnect] = useState<boolean>(false)
 
 	return (
-		<Header className={sideMenuMinimised ? 'minimized' : ''}>
+		<Header minimized={sideMenuMinimised}>
 			<section>
 				<SideMenuToggle />
 			</section>
