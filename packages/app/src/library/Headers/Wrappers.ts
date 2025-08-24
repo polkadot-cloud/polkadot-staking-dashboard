@@ -5,42 +5,20 @@ import { PageWidthMediumThreshold } from 'consts'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
-  transition: all var(--transition-duration);
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
-  align-items: center;
-  align-content: center;
-  height: 4rem;
-  z-index: 10;
-  width: 100%;
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(2px);
-  border-bottom: 1px solid var(--border-primary-color);
+export const MenuWrapper = styled.div`
+  display: none;
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
-    width: 100%;
-  }
-
-  .menu {
-    display: none;
-    @media (max-width: ${PageWidthMediumThreshold}px) {
-      color: var(--text-color-secondary);
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      flex-grow: 1;
-    }
+    color: var(--text-color-secondary);
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    flex-grow: 1;
+    padding-left: 1rem;
   }
 `
 
 export const Item = styled.button`
-  background: var(--button-tab-background);
-  border: 1px solid var(--border-primary-color);
   flex-grow: 1;
   padding: 0.05rem 1rem;
   border-radius: 1.5rem;

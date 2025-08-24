@@ -4,13 +4,13 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUi } from 'contexts/UI'
-import { Item } from './Wrappers'
+import { Item, MenuWrapper } from './Wrappers'
 
 export const SideMenuToggle = () => {
 	const { setSideMenu, sideMenuOpen } = useUi()
 
 	return (
-		<div className="menu">
+		<MenuWrapper>
 			<Item
 				style={{ width: '50px', flex: 0 }}
 				onClick={() => {
@@ -18,9 +18,9 @@ export const SideMenuToggle = () => {
 				}}
 			>
 				<span>
-					<FontAwesomeIcon className="icon" icon={faBars} />
+					<FontAwesomeIcon className="icon" icon={faBars} transform="grow-2" />
 				</span>
 			</Item>
-		</div>
+		</MenuWrapper>
 	)
 }
