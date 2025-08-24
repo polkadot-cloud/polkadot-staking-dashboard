@@ -11,7 +11,6 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import BookSVG from 'assets/icons/book.svg?react'
-import CloudSVG from 'assets/icons/cloud.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
 import LogoSVG from 'assets/icons/logo.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
@@ -75,21 +74,18 @@ export const SideMenu = () => {
 						type="button"
 						onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
 					>
-						{sideMenuMinimised ? (
-							<CloudSVG style={{ maxHeight: '100%', width: '2rem' }} />
-						) : (
-							<>
-								<CloudSVG
-									style={{
-										maxHeight: '100%',
-										height: '100%',
-										width: '1.55rem',
-									}}
-								/>
-								<span>
-									<LogoSVG className="logo" />
-								</span>
-							</>
+						<img
+							src="/img/app.png"
+							alt="Polkadot Staking Dashboard"
+							style={{
+								width: '2.5rem',
+								height: '2.5rem',
+							}}
+						/>
+						{!sideMenuMinimised && (
+							<span>
+								<LogoSVG className="logo" />
+							</span>
 						)}
 						{!sideMenuOpen && advancedMode && (
 							<span className="toggle">

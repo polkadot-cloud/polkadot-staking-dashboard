@@ -11,9 +11,8 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  border-radius: ${(props) => (props.$minimised ? '0.7rem' : 0)};
   background: none;
-  padding: 0.5rem 1rem 0.5rem 1.25rem;
+  padding: 0rem 1rem 0.5rem 1.25rem;
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -28,9 +27,8 @@ export const Wrapper = styled.div<MinimisedProps>`
     width: ${SideMenuHiddenWidth}px;
   }
 
-  padding: ${(props) =>
-		props.$minimised ? `0.5rem 1rem 0.5rem 1rem` : `0rem 1rem 1rem 1rem`};
-  margin: 0.75rem 0;
+  padding: 0 1rem 1rem 1rem;
+  margin: 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -57,13 +55,11 @@ export const Wrapper = styled.div<MinimisedProps>`
 export const LogoWrapper = styled.button<MinimisedProps>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: ${(props) => (props.$minimised ? 'center' : 'flex-start')};
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 2.8rem;
-  padding: ${(props) => (props.$minimised ? '0' : '0.4rem 0 0.4rem 0.5rem')};
-  margin-top: ${(props) => (props.$minimised ? '0' : '0.6rem')};
-  margin-bottom: ${(props) => (props.$minimised ? '0.75rem' : '0.5rem')};
+  height: 4rem;
+  padding: 0.4rem 0 0.4rem 0.4rem;
   position: relative;
   text-transform: uppercase;
 
@@ -93,9 +89,10 @@ export const LogoWrapper = styled.button<MinimisedProps>`
     display: flex;
     align-items: center;
 
-    .logo {
+      .logo {
       width: auto;
-      height: ${(props) => (props.$minimised ? '2.15rem' : '1.45rem')};
+      height: 1.45rem;
+      margin-left: 0.4rem;
     }
   }
 
