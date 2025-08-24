@@ -10,12 +10,31 @@
   right: 0px;
   display: flex;
   flex-flow: row wrap;
+  height: $header-height;
+  z-index: 6;
+  width: 100%;
+
+  > section {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    align-content: center;
+
+    &:first-child {
+      justify-content: start;
+      flex-grow: 1;
+    }
+  
+    &:last-child {
+      justify-content: flex-end;
+    }
+  }
+
+
   justify-content: flex-end;
   align-items: center;
   align-content: center;
-  height: 4rem;
-  z-index: 10;
-  width: 100%;
+
   background: rgba(255,255,255,0.4);
   backdrop-filter: blur(2px);
 

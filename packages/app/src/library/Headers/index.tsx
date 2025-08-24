@@ -17,11 +17,15 @@ export const Headers = () => {
 
 	return (
 		<Header className={sideMenuMinimised ? 'minimized' : ''}>
-			<SideMenuToggle />
-			<Sync />
-			<Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
-			<Invite />
-			<Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
+			<section>
+				<SideMenuToggle />
+			</section>
+			<section>
+				<Sync />
+				<Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
+				<Invite />
+				<Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
+			</section>
 		</Header>
 	)
 }
