@@ -16,6 +16,7 @@ $header-button-width: 4rem;
 
   &:hover {
     background: var(--button-hover-background);
+    color: var(--accent-color-primary);
   }
 
   > .active {
