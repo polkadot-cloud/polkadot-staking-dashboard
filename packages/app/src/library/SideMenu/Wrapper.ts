@@ -58,7 +58,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   align-items: center;
   width: 100%;
   height: 4rem;
-  padding: 0rem 0 0.4rem 0.4rem;
+  padding: 0rem 0 0.4rem 0.2rem;
   position: relative;
   text-transform: uppercase;
 
