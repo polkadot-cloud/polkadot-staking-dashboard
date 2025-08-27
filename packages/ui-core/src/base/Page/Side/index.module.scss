@@ -4,35 +4,44 @@
 @use 'styles/theme/_variables' as *;
 
 .side {
-  /* maximised by default, or minimised otherwise. */
   min-width: $side-menu-maximised-width;
   max-width: $side-menu-maximised-width;
-  z-index: 7;
   position: sticky;
   top: 0;
+  z-index: 7;
   height: 100vh;
   flex: 0;
   display: flex;
   flex-direction: column;
   transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
-  
-  @media (max-width: $page-width-medium-threshold) {
-    min-width: $side-menu-hidden-width;
-    max-width: $side-menu-hidden-width;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
 
-  &.minimised {
-    @media (min-width: ($page-width-medium-threshold + 1px)) {
-      min-width: $side-menu-minimised-width;
-      max-width: $side-menu-minimised-width;
+  &.default {
+    @media (max-width: $page-width-medium-threshold) {
+      display: none;
+    }
+    &.minimised {
+      @media (min-width: ($page-width-medium-threshold + 1px)) {
+        min-width: $side-menu-minimised-width;
+        max-width: $side-menu-minimised-width;
+      }
     }
   }
-  &.hidden {
+
+  &.floating {
     @media (max-width: $page-width-medium-threshold) {
-      left: calc($side-menu-hidden-width * -1);
+      min-width: $side-menu-floating-width;
+      max-width: $side-menu-floating-width;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    @media (min-width: ($page-width-medium-threshold + 1px)) {
+      display: none;
+    }
+    &.hidden {
+      @media (max-width: $page-width-medium-threshold) {
+        left: calc($side-menu-floating-width * -1);
+      }
     }
   }
 }
