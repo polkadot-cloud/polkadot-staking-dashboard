@@ -70,8 +70,8 @@ importers:
         specifier: ^6.30.5
         version: 6.30.5
       '@lottiefiles/dotlottie-react':
-        specifier: ^0.14.0
-        version: 0.14.4(react@19.1.1)
+        specifier: ^0.15.1
+        version: 0.15.1(react@19.1.1)
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -1223,13 +1223,13 @@ packages:
   '@lit/reactive-element@2.1.1':
     resolution: {integrity: sha512-N+dm5PAYdQ8e6UlywyyrgI2t++wFGXfHx+dSJ1oBrg6FAxUj40jId++EaRm80MKX5JnlH1sBsyZ5h0bcZKemCg==}
 
-  '@lottiefiles/dotlottie-react@0.14.4':
-    resolution: {integrity: sha512-HFaA9ttniLMDapYxRhui+YFKAOs1h/z1ILQCLYHhfXGOvETtoWqJpuKdSKeEsDFD4BhFjZRgEfRlPiGOEFikUg==}
+  '@lottiefiles/dotlottie-react@0.15.1':
+    resolution: {integrity: sha512-rQvr+eU9BlLhX42XD6i5ob5WP8CFrryWmqH1zsGKGU+kpXIZerwtqXSsXg+NIC4g2wu2evXeHKhY7EqyJQtabQ==}
     peerDependencies:
       react: ^17 || ^18 || ^19
 
-  '@lottiefiles/dotlottie-web@0.49.0':
-    resolution: {integrity: sha512-SQ8sDrUrGMM24QWjs0n863SKobMSB9Plz8gbte9RYnLc4TfmQoWxjFgGBTlbGnh/aTQvtpxOxX2ueBohCsCaRQ==}
+  '@lottiefiles/dotlottie-web@0.50.1':
+    resolution: {integrity: sha512-iH7KuRkLWdIvjaS+/GHDaWAZtX73CFpNgA9JsOonRW0gnqPDlXZ1BM/o0BK2BwkHau1gqka0QNtmtK0s40rEdA==}
 
   '@metamask/eth-json-rpc-provider@1.0.1':
     resolution: {integrity: sha512-whiUMPlAOrVGmX8aKYVPvlKyG4CpQXiNNyt74vE1xb5sPvmx5oA7B/kOi/JdBvhGQq97U1/AVdXEdk2zkP8qyA==}
@@ -5843,12 +5843,12 @@ snapshots:
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.4.0
 
-  '@lottiefiles/dotlottie-react@0.14.4(react@19.1.1)':
+  '@lottiefiles/dotlottie-react@0.15.1(react@19.1.1)':
     dependencies:
-      '@lottiefiles/dotlottie-web': 0.49.0
+      '@lottiefiles/dotlottie-web': 0.50.1
       react: 19.1.1
 
-  '@lottiefiles/dotlottie-web@0.49.0': {}
+  '@lottiefiles/dotlottie-web@0.50.1': {}
 
   '@metamask/eth-json-rpc-provider@1.0.1':
     dependencies:
