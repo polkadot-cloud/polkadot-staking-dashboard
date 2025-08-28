@@ -18,6 +18,7 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import LanguageSVG from 'assets/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
+import { CompulsoryPluginsProduction, PluginsList } from 'consts/plugins'
 import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -54,6 +55,7 @@ export const MenuPopover = ({
 	const popoverRef = useRef<HTMLDivElement>(null)
 
 	const notStaking = !isNominator && !membership
+	const showPlugins = CompulsoryPluginsProduction.length < PluginsList.length
 
 	// Close the menu if clicked outside of its container
 	useOutsideAlerter(popoverRef, () => {
@@ -170,19 +172,21 @@ export const MenuPopover = ({
 					{notStaking && <div>{t('notStaking', { ns: 'app' })}</div>}
 				</div>
 			</MenuItemButton>
-			<MenuItemButton
-				onClick={() => {
-					setOpen(false)
-					openModal({ key: 'Plugins' })
-				}}
-			>
-				<div>
-					<FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
-				</div>
-				<div>
-					<h3>{t('plugins', { ns: 'modals' })}</h3>
-				</div>
-			</MenuItemButton>
+			{(showPlugins || !import.meta.env.PROD) && (
+				<MenuItemButton
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'Plugins' })
+					}}
+				>
+					<div>
+						<FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
+					</div>
+					<div>
+						<h3>{t('plugins', { ns: 'modals' })}</h3>
+					</div>
+				</MenuItemButton>
+			)}
 			<MenuItemButton
 				onClick={() => {
 					setOpen(false)
