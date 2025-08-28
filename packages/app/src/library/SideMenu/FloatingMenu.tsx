@@ -15,7 +15,6 @@ import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
 import { LogoWrapper, Wrapper } from './Wrapper'
@@ -51,7 +50,7 @@ export const FloatingtMenu = () => {
 					</LogoWrapper>
 					<Main />
 					<div className="inner">
-						<Heading title={t('support')} minimised={false} />
+						<Page.Side.Heading title={t('support')} minimised={false} />
 						<Secondary
 							onClick={() => {
 								openHelp(null)

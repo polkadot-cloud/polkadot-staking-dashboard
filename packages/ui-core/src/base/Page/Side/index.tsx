@@ -3,8 +3,10 @@
 
 import { Default } from './Default'
 import { Floating } from './Floating'
+import { Heading } from './Heading'
 
 export const Side = {
 	Default,
 	Floating,
+	Heading,
 }

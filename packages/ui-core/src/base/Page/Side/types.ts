@@ -15,3 +15,8 @@ export type FloatingMenuProps = ComponentBase & {
 	open: boolean
 	minimised: boolean
 }
+
+export interface HeadingProps {
+	title: string
+	minimised: boolean
+}

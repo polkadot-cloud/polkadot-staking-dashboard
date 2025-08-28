@@ -11,7 +11,6 @@ import type { UIContextInterface } from 'contexts/UI/types'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
 import { Secondary } from './Secondary'
@@ -44,7 +43,10 @@ export const DefaultMenu = () => {
 						<section>
 							<Main />
 							<div className="inner">
-								<Heading title={t('support')} minimised={sideMenuMinimised} />
+								<Page.Side.Heading
+									title={t('support')}
+									minimised={sideMenuMinimised}
+								/>
 								<Secondary
 									onClick={() => {
 										openHelp(null)

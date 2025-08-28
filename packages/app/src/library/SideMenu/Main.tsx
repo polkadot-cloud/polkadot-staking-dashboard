@@ -15,7 +15,7 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import type { PageCategory, PageItem, PagesConfigItems } from 'types'
-import { Heading } from './Heading/Heading'
+import { Page } from 'ui-core/base'
 import { Primary } from './Primary'
 
 export const Main = () => {
@@ -93,7 +93,10 @@ export const Main = () => {
 				({ id: categoryId, key: categoryKey }: PageCategory) => (
 					<div className="inner" key={`sidemenu_category_${categoryId}`}>
 						{categoryKey !== 'default' && !sideMenuMinimised && (
-							<Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
+							<Page.Side.Heading
+								title={t(categoryKey)}
+								minimised={sideMenuMinimised}
+							/>
 						)}
 						{pagesToDisplay.map(
 							({ category, hash, key, lottie, bullet }: PageItem) => (
