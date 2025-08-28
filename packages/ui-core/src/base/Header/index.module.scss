@@ -31,9 +31,9 @@
   }
 
   @media (min-width: calc($page-width-medium-threshold + 1px)) {
-    padding-left: $side-menu-maximised-width;
+    padding-left: $side-nav-maximised-width;
     &.minimized {
-      padding-left: $side-menu-minimised-width;
+      padding-left: $side-nav-minimised-width;
     }
   }
 }

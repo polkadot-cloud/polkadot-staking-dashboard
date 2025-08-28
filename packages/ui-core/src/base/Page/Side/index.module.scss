@@ -3,13 +3,27 @@
 
 @use 'styles/theme/_variables' as *;
 
-.side {
-  min-width: $side-menu-maximised-width;
-  max-width: $side-menu-maximised-width;
+.container {
+  display: flex;
+  border: 1px solid;
+  height: 100vh;
+}
+
+.advanced {
+  background: var(--accent-color-primary);
+  width: $side-advanced-width;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  min-width: $side-nav-maximised-width;
+  max-width: $side-nav-maximised-width;
   position: sticky;
   top: 0;
   z-index: 7;
-  height: 100vh;
+  height: inherit;
   flex: 0;
   display: flex;
   flex-direction: column;
@@ -21,8 +35,8 @@
     }
     &.minimised {
       @media (min-width: ($page-width-medium-threshold + 1px)) {
-        min-width: $side-menu-minimised-width;
-        max-width: $side-menu-minimised-width;
+        min-width: $side-nav-minimised-width;
+        max-width: $side-nav-minimised-width;
       }
     }
   }

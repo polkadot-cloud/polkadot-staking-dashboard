@@ -3,10 +3,15 @@
 
 import classNames from 'classnames'
 import classes from './index.module.scss'
-import type { SideProps } from './types'
+import type { FloatingMenuProps } from './types'
 
-export const Floating = ({ children, style, open, minimised }: SideProps) => {
-	const classses = classNames(classes.side, classes.floating, {
+export const Floating = ({
+	children,
+	style,
+	open,
+	minimised,
+}: FloatingMenuProps) => {
+	const classses = classNames(classes.nav, classes.floating, {
 		[classes.hidden]: !open,
 		[classes.minimised]: minimised,
 	})

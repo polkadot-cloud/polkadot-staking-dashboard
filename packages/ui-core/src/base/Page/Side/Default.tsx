@@ -6,19 +6,23 @@ import classes from './index.module.scss'
 import type { SideProps } from './types'
 
 export const Default = ({
-	children,
 	style,
 	open,
 	minimised,
+	nav,
+	advanced,
 }: SideProps) => {
-	const classses = classNames(classes.side, classes.default, {
+	const classses = classNames(classes.nav, classes.default, {
 		[classes.hidden]: !open,
 		[classes.minimised]: minimised,
 	})
 
 	return (
-		<div style={{ ...style }} className={classses}>
-			{children}
+		<div className={classes.container}>
+			{advanced && <div className={classes.advanced}>{advanced}</div>}
+			<div style={{ ...style }} className={classses}>
+				{nav}
+			</div>
 		</div>
 	)
 }
