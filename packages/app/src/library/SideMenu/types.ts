@@ -5,6 +5,7 @@ import type { FunctionComponent, SVGProps } from 'react'
 import type { BulletType } from 'types'
 
 export interface MinimisedProps {
+	$advancedMode?: boolean
 	$minimised?: boolean
 }
 

@@ -27,6 +27,8 @@ export const Wrapper = styled.div<MinimisedProps>`
   }
 
   padding: 0 1rem 1rem 1rem;
+  padding-top: ${(props) => (props.$advancedMode ? '0.4rem' : '0')};
+  padding-left: ${(props) => (props.$advancedMode ? '0.5rem' : '1rem')};
   margin: 0;
 
   &::-webkit-scrollbar {
