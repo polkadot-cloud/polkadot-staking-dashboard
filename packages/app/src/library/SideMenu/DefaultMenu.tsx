@@ -38,6 +38,8 @@ export const DefaultMenu = () => {
 	}: UIContextInterface = useUi()
 	const { openModal } = useOverlay().modal
 
+	console.log(sideMenuMinimised, userSideMenuMinimised)
+
 	return (
 		<Page.Side.Default
 			open={false}
@@ -53,7 +55,7 @@ export const DefaultMenu = () => {
 			}
 			nav={
 				<>
-					{advancedMode && (
+					{!advancedMode && (
 						<ToggleWrapper
 							type="button"
 							onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
