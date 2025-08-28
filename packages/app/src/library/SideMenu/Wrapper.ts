@@ -51,6 +51,20 @@ export const Wrapper = styled.div<MinimisedProps>`
   }
 `
 
+export const AdvancedLogoWrapper = styled.div`
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.75rem;
+
+  > svg path {
+    fill: white;
+    width: auto;
+    height: 100%;
+  }
+`
+
 export const LogoWrapper = styled.button<MinimisedProps>`
   display: flex;
   flex-flow: row wrap;

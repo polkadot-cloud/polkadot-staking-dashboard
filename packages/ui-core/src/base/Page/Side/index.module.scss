@@ -6,14 +6,18 @@
 .container {
   display: flex;
   height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 7;
 }
 
-.advanced {
+.bar {
   background: var(--accent-color-primary);
-  width: $side-advanced-width;
+  width: $side-bar-width;
   height: inherit;
   display: flex;
   flex-direction: column;
+  z-index: 7;
 
   @media (max-width: $page-width-medium-threshold) {
     display: none;
@@ -23,9 +27,6 @@
 .nav {
   min-width: $side-nav-maximised-width;
   max-width: $side-nav-maximised-width;
-  position: sticky;
-  top: 0;
-  z-index: 7;
   height: inherit;
   flex: 0;
   display: flex;
@@ -45,6 +46,11 @@
   }
 
   &.floating {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 7;
+
     @media (max-width: $page-width-medium-threshold) {
       min-width: $side-menu-floating-width;
       max-width: $side-menu-floating-width;

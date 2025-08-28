@@ -20,7 +20,12 @@ import { useOverlay } from 'ui-overlay'
 import { Heading } from './Heading/Heading'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
-import { LogoWrapper, ToggleWrapper, Wrapper } from './Wrapper'
+import {
+	AdvancedLogoWrapper,
+	LogoWrapper,
+	ToggleWrapper,
+	Wrapper,
+} from './Wrapper'
 
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
@@ -37,8 +42,14 @@ export const DefaultMenu = () => {
 		<Page.Side.Default
 			open={false}
 			minimised={sideMenuMinimised}
-			advanced={
-				!advancedMode ? undefined : <>{/* Advanced content goes here */}</>
+			bar={
+				!advancedMode ? undefined : (
+					<>
+						<AdvancedLogoWrapper>
+							<CloudSVG />
+						</AdvancedLogoWrapper>
+					</>
+				)
 			}
 			nav={
 				<>
