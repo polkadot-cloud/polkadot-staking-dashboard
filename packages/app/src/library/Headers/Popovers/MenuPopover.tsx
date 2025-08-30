@@ -3,13 +3,9 @@
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
-	faDollarSign,
 	faExternalLinkAlt,
-	faPuzzlePiece,
-	faSlidersH,
 	faToggleOff,
 	faToggleOn,
-	faUserPlus,
 	faWifi,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,8 +13,6 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
-import LanguageSVG from 'assets/icons/language.svg?react'
-import MoonOutlineSVG from 'assets/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
 import { CompulsoryPluginsProduction, PluginsList } from 'consts/plugins'
 import { getRelayChainData } from 'consts/util/chains'
@@ -89,9 +83,6 @@ export const MenuPopover = ({
 					}}
 				>
 					<div>
-						<LanguageSVG width="1.2em" height="1.2em" />
-					</div>
-					<div>
 						<h3>{t('language', { ns: 'app' })}</h3>
 					</div>
 					<div>
@@ -108,9 +99,6 @@ export const MenuPopover = ({
 					}}
 				>
 					<div>
-						<FontAwesomeIcon icon={faDollarSign} transform="shrink-2" />
-					</div>
-					<div>
 						<h3>{t('currency', { ns: 'app' })}</h3>
 					</div>
 					<div>
@@ -122,10 +110,9 @@ export const MenuPopover = ({
 			</MenuItem>
 			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
 				<div>
-					<FontAwesomeIcon icon={faSlidersH} transform="shrink-2" />
+					<h3>{t('advanced', { ns: 'app' })}</h3>
 				</div>
 				<div>
-					<h3>{t('advanced', { ns: 'app' })}</h3>
 					<div>
 						<FontAwesomeIcon
 							icon={advancedMode ? faToggleOn : faToggleOff}
@@ -141,10 +128,9 @@ export const MenuPopover = ({
 			</MenuItemButton>
 			<MenuItemButton onClick={() => toggleTheme()}>
 				<div>
-					<MoonOutlineSVG width="1em" height="1em" />
+					<h3>{t('darkMode', { ns: 'app' })}</h3>
 				</div>
 				<div>
-					<h3>{t('darkMode', { ns: 'app' })}</h3>
 					<div>
 						<FontAwesomeIcon
 							icon={mode === 'dark' ? faToggleOn : faToggleOff}
@@ -158,7 +144,6 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
-
 			<MenuItemButton
 				disabled={notStaking}
 				onClick={() => {
@@ -166,9 +151,6 @@ export const MenuPopover = ({
 					openModal({ key: 'Invite', size: 'sm' })
 				}}
 			>
-				<div>
-					<FontAwesomeIcon icon={faUserPlus} transform="grow-0" />
-				</div>
 				<div>
 					<h3>{t('share', { ns: 'app' })}</h3>
 					{notStaking && <div>{t('notStaking', { ns: 'app' })}</div>}
@@ -181,9 +163,6 @@ export const MenuPopover = ({
 						openModal({ key: 'Plugins' })
 					}}
 				>
-					<div>
-						<FontAwesomeIcon icon={faPuzzlePiece} transform="shrink-2" />
-					</div>
 					<div>
 						<h3>{t('plugins', { ns: 'modals' })}</h3>
 					</div>
