@@ -3,9 +3,10 @@
 
 @use 'styles/theme/_variables' as *;
 
+$button-padding: 1.35rem 0.95rem 1.1rem 0.95rem;
+
 .menuItem {
   border-bottom: 1px solid var(--border-primary-color);
-  padding: 1.5rem 1.25rem 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   width: 100%;
@@ -20,29 +21,52 @@
     border-bottom-right-radius: $popover-border-radius;
   }
 
-  &:hover {
-    background: var(--button-popover-tab-background);
-  }
+  &.button {
+    padding: $button-padding;
 
-  &.disabled {
-    cursor: default;
-    > div {
-      opacity: 0.4;
+    &:hover {
+      background: var(--button-popover-tab-background);
+    }
+
+    &.disabled {
+      cursor: default;
+      > div {
+        opacity: 0.4;
+      }
     }
   }
 
-  > div {
+  > button {
+    padding: $button-padding;
+    display: flex;
+    flex: 0 0 50%;
+    align-items: center;
+
+    &:nth-child(2) {
+      border-left: 1px solid var(--border-primary-color);
+    }
+    &:hover {
+      background: var(--button-popover-tab-background);
+    }
+    &:disabled {
+      background: none;
+      cursor: default;
+    }
+  }
+
+  > div, > button > div {
     display: flex;
     align-items: center;
 
     &:first-child {
       color: var(--text-color-tertiary);
-      margin-right: 1rem;
-      width: 1.5rem;
+      margin-right: 0.85rem;
       flex-direction: row;
       justify-content: center;
+      
       path {
         fill: var(--text-color-tertiary);
+        opacity: 0.75;
       }
     }
 
@@ -54,12 +78,16 @@
         flex-grow: 1;
         display: flex;
         justify-content: flex-end;
+
+        > h4 {
+          color: var(--text-color-tertiary);
+        }
       }
     }
 
     > h3 {
       color: var(--text-color-secondary);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       > svg {
         margin-left: 0.5rem;
       }

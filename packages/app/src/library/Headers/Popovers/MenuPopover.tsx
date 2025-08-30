@@ -24,13 +24,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MenuItemButton } from 'ui-core/popover'
+import { MenuItem, MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 
 export const MenuPopover = ({
@@ -43,7 +42,6 @@ export const MenuPopover = ({
 	const { i18n } = useTranslation()
 	const { currency } = useCurrency()
 	const { isNominator } = useStaking()
-	const { pluginEnabled } = usePlugins()
 	const { mode, toggleTheme } = useTheme()
 	const { openModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
@@ -71,7 +69,7 @@ export const MenuPopover = ({
 				}}
 			>
 				<div>
-					<FontAwesomeIcon icon={faWifi} />
+					<FontAwesomeIcon icon={faWifi} transform="shrink-2" />
 				</div>
 				<div>
 					<h3>{t('network', { ns: 'app' })}</h3>
@@ -80,33 +78,35 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
-			<MenuItemButton
-				onClick={() => {
-					setOpen(false)
-					openModal({ key: 'SelectLanguage', size: 'xs' })
-				}}
-			>
-				<div>
-					<LanguageSVG width="1.4em" height="1.4em" />
-				</div>
-				<div>
-					<h3>{t('language', { ns: 'app' })}</h3>
-				</div>
-				<div>
+			<MenuItem>
+				<button
+					type="button"
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'SelectLanguage', size: 'xs' })
+					}}
+				>
 					<div>
-						<h4>{i18n.language.toUpperCase()}</h4>
+						<LanguageSVG width="1.2em" height="1.2em" />
 					</div>
-				</div>
-			</MenuItemButton>
-			{pluginEnabled('staking_api') && (
-				<MenuItemButton
+					<div>
+						<h3>{t('language', { ns: 'app' })}</h3>
+					</div>
+					<div>
+						<div>
+							<h4>{i18n.language.toUpperCase()}</h4>
+						</div>
+					</div>
+				</button>
+				<button
+					type="button"
 					onClick={() => {
 						setOpen(false)
 						openModal({ key: 'SelectCurrency', size: 'xs' })
 					}}
 				>
 					<div>
-						<FontAwesomeIcon icon={faDollarSign} transform="grow-2" />
+						<FontAwesomeIcon icon={faDollarSign} transform="shrink-2" />
 					</div>
 					<div>
 						<h3>{t('currency', { ns: 'app' })}</h3>
@@ -116,11 +116,11 @@ export const MenuPopover = ({
 							<h4>{currency}</h4>
 						</div>
 					</div>
-				</MenuItemButton>
-			)}
+				</button>
+			</MenuItem>
 			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
 				<div>
-					<FontAwesomeIcon icon={faSlidersH} transform="grow-2" />
+					<FontAwesomeIcon icon={faSlidersH} transform="shrink-2" />
 				</div>
 				<div>
 					<h3>{t('advanced', { ns: 'app' })}</h3>
@@ -139,7 +139,7 @@ export const MenuPopover = ({
 			</MenuItemButton>
 			<MenuItemButton onClick={() => toggleTheme()}>
 				<div>
-					<MoonOutlineSVG width="1.1em" height="1.1em" />
+					<MoonOutlineSVG width="1em" height="1em" />
 				</div>
 				<div>
 					<h3>{t('darkMode', { ns: 'app' })}</h3>
@@ -180,7 +180,7 @@ export const MenuPopover = ({
 					}}
 				>
 					<div>
-						<FontAwesomeIcon icon={faPuzzlePiece} transform="grow-0" />
+						<FontAwesomeIcon icon={faPuzzlePiece} transform="shrink-2" />
 					</div>
 					<div>
 						<h3>{t('plugins', { ns: 'modals' })}</h3>
@@ -194,12 +194,12 @@ export const MenuPopover = ({
 				}}
 			>
 				<div>
-					<FontAwesomeIcon icon={faGithub} transform="grow-2" />
+					<FontAwesomeIcon icon={faGithub} transform="grow-0" />
 				</div>
 				<div>
 					<h3>
 						GitHub
-						<FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
+						<FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
 					</h3>
 				</div>
 			</MenuItemButton>
