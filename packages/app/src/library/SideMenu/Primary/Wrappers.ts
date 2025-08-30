@@ -1,10 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const Wrapper = styled(motion.div)`
+export const Wrapper = styled.div`
   border: none;
   height: 3.2rem;
   display: flex;
@@ -13,16 +12,16 @@ export const Wrapper = styled(motion.div)`
   margin: 0.5rem 0.2rem 0.5rem 0;
   padding: 0rem 0.5rem 0rem 0.75rem;
   position: relative;
+  transition: background 0.15s ease;
 
   &.minimised {
-    border: 1px solid rgba(255, 255, 255, 0);
     border-radius: 0.5rem;
     font-size: 1.1rem;
     justify-content: center;
     margin: 0.75rem 0rem;
     padding: 0rem;
     height: 3.4rem;
-    width: 100%;
+    width: calc(100% - 0.5rem);
 
     &.success,
     &.accent {
@@ -70,5 +69,14 @@ export const Wrapper = styled(motion.div)`
 
   &.inactive:hover {
     background: var(--highlight-secondary);
+  }
+
+  &.minimised {
+     &.active {
+      background: var(--highlight-solid);
+    }
+    &.inactive:hover {
+      background: var(--highlight-solid);
+    }
   }
 `

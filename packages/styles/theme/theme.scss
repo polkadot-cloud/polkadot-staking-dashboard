@@ -69,18 +69,14 @@ SPDX-License-Identifier: GPL-3.0-only */
   --text-color-secondary: #585858;
   --text-color-tertiary: #888;
   --text-color-invert: #fafafa;
-  --gradient-background: linear-gradient(
-    180deg,
-    #efeeee 0%,
-    #efeeee 100px,
-    #e6e6e6 80%,
-    #fbede8 100%
-  );
+  --body-background: #efeeee;
+  
   --gradient-side-menu: linear-gradient(
     180deg,
     rgb(244 242 242 / 93%) 0%,
     rgb(228 225 225 / 93%) 100%
   );
+  --highlight-solid: rgb(0 0 0 / 4%) 0%;
   --highlight-primary: rgb(224 222 222 / 75%);
   --highlight-secondary: linear-gradient(
     90deg,
@@ -152,17 +148,13 @@ SPDX-License-Identifier: GPL-3.0-only */
   --text-color-secondary: #938e94;
   --text-color-tertiary: #817d82;
   --text-color-invert: #0f0e0f;
-  --gradient-background: linear-gradient(
-    180deg,
-    rgb(36 32 36) 0%,
-    rgb(36 32 36) 100px,
-    rgb(32 28 32) 100%
-  );
+  --body-background:rgb(36 32 36) 0%;
   --gradient-side-menu: linear-gradient(
     180deg,
     rgb(48 41 48) 0%,
     rgb(30 27 30) 100%
   );
+  --highlight-solid: rgb(255 255 255 / 3%);
   --highlight-primary: rgb(255 255 255 / 8%);
   --highlight-secondary: linear-gradient(
     90deg,

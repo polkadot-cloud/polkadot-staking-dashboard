@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
+  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--background-canvas-card-secondary)' : 'none')};
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -25,8 +26,8 @@ export const Wrapper = styled.div<MinimisedProps>`
     width: ${SideMenuHiddenWidth}px;
   }
 
-  padding: 0 1rem 1rem 0;
-  padding-left: ${(props) => (props.$minimised ? '1rem' : '0')};
+  padding: 0 0.5rem 1rem 0;
+  padding-left: ${(props) => (props.$minimised ? '0.5rem' : '0')};
   margin: 0;
 
   &::-webkit-scrollbar {
@@ -58,10 +59,10 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   align-items: center;
   width: 100%;
   height: 4rem;
-  padding: 0 0 0.4rem 0;
+  padding: 0;
   position: relative;
   text-transform: uppercase;
-  margin-left: ${(props) => (props.$minimised ? '0.2rem' : '0.75rem')};
+  margin-left: ${(props) => (props.$minimised ? '0.75rem' : '0.75rem')};
 
   > img, > svg  {  
     margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
@@ -90,9 +91,9 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 
 export const ToggleWrapper = styled.button`
   position: absolute;
-  top: 1.05rem;
-  width: 1.7rem;
-  height: 1.7rem;
+  top: 0.9rem;
+  width: 1.8rem;
+  height: 1.8rem;
   right: -0.75rem;
   display: flex;
   align-items: center;
@@ -111,7 +112,6 @@ export const ToggleWrapper = styled.button`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: 1px solid var(--border-primary-color);
   }
 `
 

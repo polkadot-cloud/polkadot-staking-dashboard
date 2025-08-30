@@ -36,11 +36,6 @@ export const Primary = ({
 				className={`${active ? `active` : `inactive`}${
 					minimised ? ` minimised` : ``
 				}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
-				whileHover={{ scale: !advanced ? 1.02 : 1 }}
-				whileTap={{ scale: !advanced ? 0.98 : 1 }}
-				transition={{
-					duration: 0.1,
-				}}
 			>
 				<div className={`dotlottie${minimised ? ` minimised` : ``}`}>
 					{icon}
