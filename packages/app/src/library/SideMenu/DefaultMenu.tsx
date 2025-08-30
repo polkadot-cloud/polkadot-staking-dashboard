@@ -32,7 +32,7 @@ export const DefaultMenu = () => {
 						</BarLogoWrapper>
 						<BarIconsWrapper>
 							<section>
-								<button type="button" onClick={() => {}}>
+								<button type="button" onClick={() => {}} className="active">
 									<FontAwesomeIcon icon={faCoins} />
 								</button>
 							</section>
@@ -51,7 +51,19 @@ export const DefaultMenu = () => {
 				) : (
 					<Wrapper $minimised={sideMenuMinimised} $advancedMode={advancedMode}>
 						<section>
-							<Main />
+							<h3
+								style={{
+									color: 'var(--accent-color-primary)',
+									margin: '0.75rem 0.75rem 0.75rem 0.25rem',
+									paddingBottom: '0.78rem',
+									paddingLeft: '0.35rem',
+									borderBottom: '1px solid var(--accent-color-primary)',
+									fontFamily: 'InterSemiBold, sans-serif',
+								}}
+							>
+								{t('stake', { ns: 'app' })}
+							</h3>
+							<Main ignoreFirstCategory={true} />
 							<div className="inner">
 								<Page.Side.Heading
 									title={t('support')}

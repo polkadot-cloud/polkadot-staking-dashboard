@@ -18,7 +18,11 @@ import type { PageCategory, PageItem, PagesConfigItems } from 'types'
 import { Page } from 'ui-core/base'
 import { Primary } from './Primary'
 
-export const Main = () => {
+export const Main = ({
+	ignoreFirstCategory = false,
+}: {
+	ignoreFirstCategory?: boolean
+}) => {
 	const { t } = useTranslation('app')
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
@@ -90,14 +94,16 @@ export const Main = () => {
 	return (
 		<>
 			{pageConfig.categories.map(
-				({ id: categoryId, key: categoryKey }: PageCategory) => (
+				({ id: categoryId, key: categoryKey }: PageCategory, index) => (
 					<div className="inner" key={`sidemenu_category_${categoryId}`}>
-						{categoryKey !== 'default' && !sideMenuMinimised && (
-							<Page.Side.Heading
-								title={t(categoryKey)}
-								minimised={sideMenuMinimised}
-							/>
-						)}
+						{categoryKey !== 'default' &&
+							!sideMenuMinimised &&
+							!(ignoreFirstCategory && index === 1) && (
+								<Page.Side.Heading
+									title={t(categoryKey)}
+									minimised={sideMenuMinimised}
+								/>
+							)}
 						{pagesToDisplay.map(
 							({ category, hash, key, lottie, bullet }: PageItem) => (
 								<Fragment key={`sidemenu_page_${categoryId}_${key}`}>

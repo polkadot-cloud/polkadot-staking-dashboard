@@ -11,7 +11,6 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  padding: 0rem 1rem 0.5rem 1.25rem;
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -28,7 +27,7 @@ export const Wrapper = styled.div<MinimisedProps>`
 
   padding: 0 1rem 1rem 1rem;
   padding-top: ${(props) => (props.$advancedMode ? '0.4rem' : '0')};
-  padding-left: ${(props) => (props.$advancedMode ? '0.5rem' : '1rem')};
+  padding-left: ${(props) => (props.$advancedMode ? '0.25rem' : '1rem')};
   margin: 0;
 
   &::-webkit-scrollbar {
@@ -170,16 +169,20 @@ export const BulletWrapper = styled.div`
 `
 
 export const BarLogoWrapper = styled.div`
-  width: 100%;
-  height: 2.5rem;
+  width: calc(100% - 2rem);
   display: flex;
   justify-content: center;
-  margin-top: 0.75rem;
+  margin: 0.75rem auto 0 auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  height: 2.8rem;
 
-  > svg path {
-    fill: white;
-    width: auto;
-    height: 100%;
+  > svg {
+    height: 2.15rem;
+    path {
+      fill: white;
+      width: auto;
+      height: 100%;
+    }
   }
 `
 
@@ -199,13 +202,14 @@ export const BarIconsWrapper = styled.div`
       width: 100%;
       padding: 0.95rem 0;
       border-radius: 1.25rem;
+      transition: background 0.15s ease;
 
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
+      &:hover, &.active {
+        background: rgba(255, 255, 255, 0.15);
       }
       > svg {
         color: white;
-        height: 1.7rem;
+        height: 1.65rem;
         margin: 0 0.25rem;
       }
     }
