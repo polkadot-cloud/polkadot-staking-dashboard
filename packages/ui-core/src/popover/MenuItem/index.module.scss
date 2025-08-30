@@ -3,7 +3,7 @@
 
 @use 'styles/theme/_variables' as *;
 
-$button-padding: 1.35rem 0.95rem 1.1rem 0.95rem;
+$button-padding: 1.3rem 0.95rem 1.2rem 0.95rem;
 
 .menuItem {
   border-bottom: 1px solid var(--border-primary-color);
@@ -81,6 +81,9 @@ $button-padding: 1.35rem 0.95rem 1.1rem 0.95rem;
 
         > h4 {
           color: var(--text-color-tertiary);
+           path {
+            fill: var(--text-color-tertiary);
+          }
         }
       }
     }

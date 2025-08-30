@@ -15,6 +15,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
+import DiscordSVG from 'assets/brands/discord.svg?react'
+import EnvelopeSVG from 'assets/icons/envelope.svg?react'
 import LanguageSVG from 'assets/icons/language.svg?react'
 import MoonOutlineSVG from 'assets/icons/moon.svg?react'
 import { GitHubURl } from 'consts'
@@ -197,12 +199,46 @@ export const MenuPopover = ({
 					<FontAwesomeIcon icon={faGithub} transform="grow-0" />
 				</div>
 				<div>
-					<h3>
-						GitHub
-						<FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
-					</h3>
+					<h3>GitHub</h3>
+				</div>
+				<div>
+					<div>
+						<h4>
+							<FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-1" />
+						</h4>
+					</div>
 				</div>
 			</MenuItemButton>
+			<MenuItem>
+				<button
+					type="button"
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'DiscordSupport', size: 'sm' })
+					}}
+				>
+					<div>
+						<DiscordSVG width="1em" height="1.1em" />
+					</div>
+					<div>
+						<h3>Discord</h3>
+					</div>
+				</button>
+				<button
+					type="button"
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'MailSupport', size: 'sm' })
+					}}
+				>
+					<div>
+						<EnvelopeSVG width="1em" height="1em" />
+					</div>
+					<div>
+						<h3>{t('email', { ns: 'app' })}</h3>
+					</div>
+				</button>
+			</MenuItem>
 		</div>
 	)
 }
