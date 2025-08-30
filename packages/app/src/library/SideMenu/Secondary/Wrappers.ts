@@ -6,15 +6,13 @@ import styled from 'styled-components'
 import type { MinimisedProps } from '../types'
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
-  border: 1px solid var(--border-secondary-color);
-  border-radius: 0.8rem;
-  height: 3.3rem;
+  height: 3.4rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   position: relative;
   padding: 0rem 0.5rem;
-  margin: 0.8rem 0.2rem 1rem 0;
+  margin: 0.4rem 0 0 0;
   width: 100%;
 
   .name {
@@ -27,8 +25,8 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
     margin-left: 0.2rem;
   }
 
-  &.active {
-    background: var(--highlight-primary);
+  &.active, &:hover {
+    background: var(--highlight-secondary);
   }
   &.inactive:hover {
     background: var(--highlight-secondary);

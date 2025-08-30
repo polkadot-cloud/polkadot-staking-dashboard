@@ -6,13 +6,12 @@ import styled from 'styled-components'
 
 export const Wrapper = styled(motion.div)`
   border: none;
-  border-radius: 0.8rem;
   height: 3.2rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   margin: 0.5rem 0.2rem 0.5rem 0;
-  padding: 0rem 0.5rem;
+  padding: 0rem 0.5rem 0rem 0.75rem;
   position: relative;
 
   &.minimised {
@@ -22,7 +21,7 @@ export const Wrapper = styled(motion.div)`
     justify-content: center;
     margin: 0.75rem 0rem;
     padding: 0rem;
-    height: 3.5rem;
+    height: 3.4rem;
     width: 100%;
 
     &.success,
@@ -57,15 +56,12 @@ export const Wrapper = styled(motion.div)`
   }
 
   &.active {
-    background: var(--highlight-primary);
+    background: var(--highlight-secondary);
   }
 
   /* Advanced mode styles */
   &.advanced {
-    padding-left: 0.75rem;
     margin: 0 0 0.35rem 0;
-    border-radius: 0;
-    height: 3.4rem;
 
     &.active {
       background: var(--highlight-secondary);

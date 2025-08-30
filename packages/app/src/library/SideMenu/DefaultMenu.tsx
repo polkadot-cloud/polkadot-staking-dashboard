@@ -1,9 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCoins, faServer } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faCoins, faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import BookSVG from 'assets/icons/book.svg?react'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
@@ -11,8 +10,13 @@ import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
-import { Secondary } from './Secondary'
-import { BarIconsWrapper, BarLogoWrapper, Wrapper } from './Wrapper'
+import {
+	BarButton,
+	BarFooterWrapper,
+	BarIconsWrapper,
+	BarLogoWrapper,
+	Wrapper,
+} from './Wrapper'
 
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
@@ -31,16 +35,26 @@ export const DefaultMenu = () => {
 						</BarLogoWrapper>
 						<BarIconsWrapper>
 							<section>
-								<button type="button" onClick={() => {}} className="active">
+								<BarButton type="button" onClick={() => {}} className="active">
 									<FontAwesomeIcon icon={faCoins} />
-								</button>
+								</BarButton>
 							</section>
 							<section>
-								<button type="button" onClick={() => {}}>
+								<BarButton type="button" onClick={() => {}}>
 									<FontAwesomeIcon icon={faServer} />
-								</button>
+								</BarButton>
 							</section>
 						</BarIconsWrapper>
+						<BarFooterWrapper>
+							<BarButton
+								type="button"
+								onClick={() => {
+									openHelp(null)
+								}}
+							>
+								<FontAwesomeIcon icon={faBook} />
+							</BarButton>
+						</BarFooterWrapper>
 					</>
 				)
 			}
@@ -53,9 +67,9 @@ export const DefaultMenu = () => {
 							<h3
 								style={{
 									color: 'var(--accent-color-primary)',
-									margin: '0.75rem 0.75rem 0.75rem 0.25rem',
+									margin: '1.12rem 0.75rem 0.75rem 0.25rem',
 									paddingBottom: '0.78rem',
-									paddingLeft: '0.35rem',
+									paddingLeft: '0.55rem',
 									borderBottom: '1px solid var(--accent-color-primary)',
 									fontFamily: 'InterSemiBold, sans-serif',
 								}}
@@ -63,23 +77,6 @@ export const DefaultMenu = () => {
 								{t('stake', { ns: 'app' })}
 							</h3>
 							<Main ignoreFirstCategory={true} />
-							<div className="inner">
-								<Page.Side.Heading
-									title={t('support')}
-									minimised={sideMenuMinimised}
-								/>
-								<Secondary
-									onClick={() => {
-										openHelp(null)
-									}}
-									name={t('resources')}
-									minimised={sideMenuMinimised}
-									icon={{
-										Svg: BookSVG,
-										size: sideMenuMinimised ? '0.95em' : '0.8em',
-									}}
-								/>
-							</div>
 						</section>
 						<section></section>
 					</Wrapper>

@@ -25,9 +25,8 @@ export const Wrapper = styled.div<MinimisedProps>`
     width: ${SideMenuHiddenWidth}px;
   }
 
-  padding: 0 1rem 1rem 1rem;
-  padding-top: ${(props) => (props.$advancedMode ? '0.4rem' : '0')};
-  padding-left: ${(props) => (props.$advancedMode ? '0' : '1rem')};
+  padding: 0 1rem 1rem 0;
+  padding-left: ${(props) => (props.$minimised ? '1rem' : '0')};
   margin: 0;
 
   &::-webkit-scrollbar {
@@ -59,9 +58,10 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   align-items: center;
   width: 100%;
   height: 4rem;
-  padding: 0rem 0 0.4rem 0.2rem;
+  padding: 0 0 0.4rem 0;
   position: relative;
   text-transform: uppercase;
+  margin-left: ${(props) => (props.$minimised ? '0.2rem' : '0.75rem')};
 
   > img, > svg  {  
     margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
@@ -190,28 +190,39 @@ export const BarIconsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 1.5rem;
+  flex-grow: 1;
 
   > section {
     margin-bottom: 1rem;
     width: calc(100% - 1.6rem);
-
-    > button {
-      width: 100%;
-      padding: 0.95rem 0;
-      border-radius: 1.25rem;
-      transition: background 0.15s ease;
-
-      &:hover, &.active {
-        background: rgba(255, 255, 255, 0.15);
-      }
-      > svg {
-        color: white;
-        height: 1.65rem;
-        margin: 0 0.25rem;
-      }
-    }
   }
+`
+
+export const BarButton = styled.button`
+  width: 100%;
+  padding: 0.95rem 0;
+  border-radius: 1rem;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  &.active {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  > svg {
+    color: white;
+    height: 1.65rem;
+    margin: 0 0.25rem;
+  }
+`
+
+export const BarFooterWrapper = styled.div`
+  width: calc(100% - 1.6rem);
+  margin: 0 auto;
+  padding: 1rem 0;
 `
