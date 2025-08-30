@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faCoins, faServer } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BookSVG from 'assets/icons/book.svg?react'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useHelp } from 'contexts/Help'
@@ -11,7 +13,7 @@ import { Page } from 'ui-core/base'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
 import { Secondary } from './Secondary'
-import { AdvancedLogoWrapper, Wrapper } from './Wrapper'
+import { BarIconsWrapper, BarLogoWrapper, Wrapper } from './Wrapper'
 
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
@@ -25,9 +27,21 @@ export const DefaultMenu = () => {
 			bar={
 				!advancedMode ? undefined : (
 					<>
-						<AdvancedLogoWrapper>
+						<BarLogoWrapper>
 							<CloudSVG />
-						</AdvancedLogoWrapper>
+						</BarLogoWrapper>
+						<BarIconsWrapper>
+							<section>
+								<button type="button" onClick={() => {}}>
+									<FontAwesomeIcon icon={faCoins} />
+								</button>
+							</section>
+							<section>
+								<button type="button" onClick={() => {}}>
+									<FontAwesomeIcon icon={faServer} />
+								</button>
+							</section>
+						</BarIconsWrapper>
 					</>
 				)
 			}

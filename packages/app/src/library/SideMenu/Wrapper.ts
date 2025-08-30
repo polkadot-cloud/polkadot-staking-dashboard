@@ -53,20 +53,6 @@ export const Wrapper = styled.div<MinimisedProps>`
   }
 `
 
-export const AdvancedLogoWrapper = styled.div`
-  width: 100%;
-  height: 2.5rem;
-  display: flex;
-  justify-content: center;
-  margin-top: 0.75rem;
-
-  > svg path {
-    fill: white;
-    width: auto;
-    height: 100%;
-  }
-`
-
 export const LogoWrapper = styled.button<MinimisedProps>`
   display: flex;
   flex-flow: row wrap;
@@ -179,6 +165,49 @@ export const BulletWrapper = styled.div`
       position: absolute;
       right: -3px;
       top: -4px;
+    }
+  }
+`
+
+export const BarLogoWrapper = styled.div`
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.75rem;
+
+  > svg path {
+    fill: white;
+    width: auto;
+    height: 100%;
+  }
+`
+
+export const BarIconsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+
+  > section {
+    margin-bottom: 1rem;
+    width: calc(100% - 1.6rem);
+
+    > button {
+      width: 100%;
+      padding: 0.95rem 0;
+      border-radius: 1.25rem;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      > svg {
+        color: white;
+        height: 1.7rem;
+        margin: 0 0.25rem;
+      }
     }
   }
 `
