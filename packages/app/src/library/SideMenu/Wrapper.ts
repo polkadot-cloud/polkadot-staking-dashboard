@@ -27,7 +27,7 @@ export const Wrapper = styled.div<MinimisedProps>`
 
   padding: 0 1rem 1rem 1rem;
   padding-top: ${(props) => (props.$advancedMode ? '0.4rem' : '0')};
-  padding-left: ${(props) => (props.$advancedMode ? '0.25rem' : '1rem')};
+  padding-left: ${(props) => (props.$advancedMode ? '0' : '1rem')};
   margin: 0;
 
   &::-webkit-scrollbar {
@@ -47,7 +47,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       flex-grow: 1;
     }
     > .inner {
-      padding-left: ${(props) => (props.$minimised ? '0.1rem' : '0.25rem')};
+      padding-left: ${(props) => (props.$advancedMode ? '0' : props.$minimised ? '0.1rem' : '0.25rem')};
     }
   }
 `

@@ -60,9 +60,13 @@ export const Wrapper = styled(motion.div)`
     background: var(--highlight-primary);
   }
 
+  /* Advanced mode styles */
   &.advanced {
+    padding-left: 0.75rem;
+    margin: 0 0 0.35rem 0;
     border-radius: 0;
-    
+    height: 3.4rem;
+
     &.active {
       background: var(--highlight-secondary);
     }
