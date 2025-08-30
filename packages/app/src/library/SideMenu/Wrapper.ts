@@ -178,6 +178,7 @@ export const BarLogoWrapper = styled.div`
 
   > svg {
     height: 2.15rem;
+    
     path {
       fill: white;
       width: auto;
@@ -192,7 +193,7 @@ export const BarIconsWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 0.9rem;
   flex-grow: 1;
 
   > section {
