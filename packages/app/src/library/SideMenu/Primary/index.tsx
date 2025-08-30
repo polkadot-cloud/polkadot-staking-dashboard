@@ -17,6 +17,7 @@ export const Primary = ({
 	bullet,
 	minimised,
 	lottie,
+	advanced = false,
 }: PrimaryProps) => {
 	const { setSideMenu } = useUi()
 	const { icon, play } = useDotLottieButton(lottie as string)
@@ -34,7 +35,7 @@ export const Primary = ({
 			<Wrapper
 				className={`${active ? `active` : `inactive`}${
 					minimised ? ` minimised` : ``
-				}${bullet ? ` ${bullet}` : ``}`}
+				}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
 				whileHover={{ scale: 1.02 }}
 				whileTap={{ scale: 0.98 }}
 				transition={{

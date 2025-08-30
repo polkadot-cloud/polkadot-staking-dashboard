@@ -7,7 +7,6 @@ import BookSVG from 'assets/icons/book.svg?react'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
-import type { UIContextInterface } from 'contexts/UI/types'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { Main } from './Main'
@@ -18,7 +17,7 @@ import { BarIconsWrapper, BarLogoWrapper, Wrapper } from './Wrapper'
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
 	const { openHelp } = useHelp()
-	const { advancedMode, sideMenuMinimised }: UIContextInterface = useUi()
+	const { advancedMode, sideMenuMinimised } = useUi()
 
 	return (
 		<Page.Side.Default

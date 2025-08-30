@@ -115,6 +115,7 @@ export const Main = ({
 											lottie={lottie}
 											bullet={bullet}
 											minimised={sideMenuMinimised}
+											advanced={advancedMode}
 										/>
 									)}
 								</Fragment>

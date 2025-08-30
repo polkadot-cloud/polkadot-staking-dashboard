@@ -21,6 +21,7 @@ export interface PrimaryProps {
 	lottie: unknown // Lottie animation object
 	bullet?: BulletType
 	minimised: boolean
+	advanced?: boolean
 }
 
 export interface SecondaryProps {

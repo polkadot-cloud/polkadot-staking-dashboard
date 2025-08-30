@@ -59,6 +59,15 @@ export const Wrapper = styled(motion.div)`
   &.active {
     background: var(--highlight-primary);
   }
+
+  &.advanced {
+    border-radius: 0;
+    
+    &.active {
+      background: var(--highlight-secondary);
+    }
+  }
+
   &.inactive:hover {
     background: var(--highlight-secondary);
   }
