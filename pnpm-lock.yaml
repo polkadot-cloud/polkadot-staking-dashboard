@@ -69,9 +69,6 @@ importers:
       '@ledgerhq/hw-transport-webhid':
         specifier: ^6.30.5
         version: 6.30.5
-      '@lottiefiles/dotlottie-react':
-        specifier: ^0.14.0
-        version: 0.14.4(react@19.1.1)
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.4
@@ -411,6 +408,9 @@ importers:
 
   packages/types:
     dependencies:
+      '@fortawesome/fontawesome-svg-core':
+        specifier: ^6.7.2
+        version: 6.7.2
       dedot:
         specifier: ^0.15.0
         version: 0.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -1225,14 +1225,6 @@ packages:
 
   '@lit/reactive-element@2.1.1':
     resolution: {integrity: sha512-N+dm5PAYdQ8e6UlywyyrgI2t++wFGXfHx+dSJ1oBrg6FAxUj40jId++EaRm80MKX5JnlH1sBsyZ5h0bcZKemCg==}
-
-  '@lottiefiles/dotlottie-react@0.14.4':
-    resolution: {integrity: sha512-HFaA9ttniLMDapYxRhui+YFKAOs1h/z1ILQCLYHhfXGOvETtoWqJpuKdSKeEsDFD4BhFjZRgEfRlPiGOEFikUg==}
-    peerDependencies:
-      react: ^17 || ^18 || ^19
-
-  '@lottiefiles/dotlottie-web@0.49.0':
-    resolution: {integrity: sha512-SQ8sDrUrGMM24QWjs0n863SKobMSB9Plz8gbte9RYnLc4TfmQoWxjFgGBTlbGnh/aTQvtpxOxX2ueBohCsCaRQ==}
 
   '@metamask/eth-json-rpc-provider@1.0.1':
     resolution: {integrity: sha512-whiUMPlAOrVGmX8aKYVPvlKyG4CpQXiNNyt74vE1xb5sPvmx5oA7B/kOi/JdBvhGQq97U1/AVdXEdk2zkP8qyA==}
@@ -5830,13 +5822,6 @@ snapshots:
   '@lit/reactive-element@2.1.1':
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.4.0
-
-  '@lottiefiles/dotlottie-react@0.14.4(react@19.1.1)':
-    dependencies:
-      '@lottiefiles/dotlottie-web': 0.49.0
-      react: 19.1.1
-
-  '@lottiefiles/dotlottie-web@0.49.0': {}
 
   '@metamask/eth-json-rpc-provider@1.0.1':
     dependencies:

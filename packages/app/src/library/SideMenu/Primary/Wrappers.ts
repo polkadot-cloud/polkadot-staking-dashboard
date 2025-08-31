@@ -10,43 +10,52 @@ export const Wrapper = styled.div`
   flex-flow: row wrap;
   align-items: center;
   margin: 0.5rem 0.2rem 0.5rem 0;
-  padding: 0rem 0.5rem 0rem 0.75rem;
+  padding: 0rem 0.5rem 0rem 0.95rem;
   position: relative;
   transition: background 0.15s ease;
+
+  .icon {
+    color: var(--text-color-secondary);
+    margin-left: 0.25rem;
+    margin-right: 0.65rem;
+    transition: transform 0.2s ease;
+  }
 
   &.minimised {
     border-radius: 0.5rem;
     font-size: 1.1rem;
     justify-content: center;
-    margin: 0.75rem 0rem;
+    margin: 1rem 0rem;
     padding: 0rem;
     height: 3.4rem;
     width: calc(100% - 0.5rem);
 
     &.success,
     &.accent {
-      border: 1px solid var(--accent-color-primary);
+      border: 1.5px solid var(--accent-color-pending);
     }
     &.warning {
       border: 1px solid var(--accent-color-secondary);
     }
+
+    .icon {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 
-  .dotlottie {
-    color: var(--text-color-primary);
-    margin-left: 0.25rem;
-    margin-right: 0.5rem;
-    width: 1.2rem;
-    height: 1.2rem;
-    .fa-icon {
-      margin: 0 0.15rem;
-    }
-    &.minimised {
-      margin: 0;
-      width: 1.5rem;
-      height: 1.5rem;
+  &:hover {
+    .icon {
+      transform: scale(1.05);
     }
   }
+
+  &:active {
+    .icon {
+      transform: scale(0.92);
+    }
+  }
+  
   .name {
     font-family: InterSemiBold, sans-serif;
     margin: 0;

@@ -1,6 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import {
+	faChartSimple,
+	faHome,
+	faMagnifyingGlass,
+	faTableList,
+	faUserGear,
+	faUsers,
+} from '@fortawesome/free-solid-svg-icons'
 import { Nominate } from 'pages/Nominate'
 import { Operators } from 'pages/Operators'
 import { Overview } from 'pages/Overview'
@@ -34,7 +42,7 @@ export const PagesConfig: PagesConfigItems = [
 		uri: `${import.meta.env.BASE_URL}`,
 		hash: '/overview',
 		Entry: Overview,
-		lottie: 'globe',
+		faIcon: faHome,
 		advanced: false,
 	},
 	{
@@ -43,7 +51,7 @@ export const PagesConfig: PagesConfigItems = [
 		uri: `${import.meta.env.BASE_URL}pools`,
 		hash: '/pools',
 		Entry: Pools,
-		lottie: 'groups',
+		faIcon: faUsers,
 		advanced: false,
 	},
 	{
@@ -52,7 +60,7 @@ export const PagesConfig: PagesConfigItems = [
 		uri: `${import.meta.env.BASE_URL}nominate`,
 		hash: '/nominate',
 		Entry: Nominate,
-		lottie: 'trending',
+		faIcon: faUserGear,
 		advanced: false,
 	},
 	{
@@ -61,7 +69,7 @@ export const PagesConfig: PagesConfigItems = [
 		uri: `${import.meta.env.BASE_URL}rewards`,
 		hash: '/rewards',
 		Entry: Rewards,
-		lottie: 'analytics',
+		faIcon: faChartSimple,
 		advanced: false,
 	},
 	{
@@ -70,7 +78,7 @@ export const PagesConfig: PagesConfigItems = [
 		uri: `${import.meta.env.BASE_URL}validators`,
 		hash: '/validators',
 		Entry: Validators,
-		lottie: 'view',
+		faIcon: faMagnifyingGlass,
 		advanced: false,
 	},
 	{
@@ -79,7 +87,7 @@ export const PagesConfig: PagesConfigItems = [
 		uri: `${import.meta.env.BASE_URL}operators`,
 		hash: '/operators',
 		Entry: Operators,
-		lottie: 'label',
+		faIcon: faTableList,
 		advanced: false,
 	},
 ]

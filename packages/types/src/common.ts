@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { FC } from 'react'
 
 // biome-ignore lint/suspicious/noExplicitAny: <>
@@ -23,7 +24,7 @@ export interface PageItem {
 	uri: string
 	hash: string
 	Entry: FC<PageProps>
-	lottie: unknown
+	faIcon: IconProp
 	advanced: boolean
 	bullet?: BulletType
 }

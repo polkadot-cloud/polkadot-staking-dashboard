@@ -105,14 +105,14 @@ export const Main = ({
 								/>
 							)}
 						{pagesToDisplay.map(
-							({ category, hash, key, lottie, bullet }: PageItem) => (
+							({ category, hash, key, faIcon, bullet }: PageItem) => (
 								<Fragment key={`sidemenu_page_${categoryId}_${key}`}>
 									{category === categoryId && (
 										<Primary
 											name={t(key)}
 											to={hash}
 											active={hash === pathname}
-											lottie={lottie}
+											faIcon={faIcon}
 											bullet={bullet}
 											minimised={sideMenuMinimised}
 											advanced={advancedMode}

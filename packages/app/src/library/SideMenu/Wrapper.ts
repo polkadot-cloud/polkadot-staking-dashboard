@@ -47,7 +47,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       flex-grow: 1;
     }
     > .inner {
-      padding-left: ${(props) => (props.$advancedMode ? '0' : props.$minimised ? '0.1rem' : '0.25rem')};
+      padding-left: ${(props) => (props.$advancedMode ? '0' : props.$minimised ? '0.1rem' : '0')};
     }
   }
 `

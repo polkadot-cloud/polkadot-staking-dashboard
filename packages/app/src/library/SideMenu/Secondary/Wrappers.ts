@@ -1,17 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import type { MinimisedProps } from '../types'
 
-export const Wrapper = styled(motion.button)<MinimisedProps>`
+export const Wrapper = styled.button<MinimisedProps>`
   height: 3.4rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   position: relative;
-  padding: 0rem 0.5rem;
+  padding: 0rem 0.5rem 0 0.95rem;
   margin: 0.4rem 0 0 0;
   width: 100%;
 
@@ -42,7 +41,7 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   }
 `
 
-export const MinimisedWrapper = styled(motion.button)`
+export const MinimisedWrapper = styled.button`
   border: 1px solid var(--border-secondary-color);
   border-radius: 0.7rem;
   display: flex;
