@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PageCategories } from 'config/pages'
-import { getPagesConfig } from 'config/util'
+import {
+	getCategoryId,
+	getPagesConfig,
+	pageKeyExistsInCategory,
+} from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -15,14 +19,9 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import type { PageCategory, PageItem, PagesConfigItems } from 'types'
-import { Page } from 'ui-core/base'
 import { Primary } from './Primary'
 
-export const Main = ({
-	ignoreFirstCategory = false,
-}: {
-	ignoreFirstCategory?: boolean
-}) => {
+export const Main = () => {
 	const { t } = useTranslation('app')
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
@@ -31,8 +30,8 @@ export const Main = ({
 	const { isBonding } = useStaking()
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
-	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
+	const { sideMenuMinimised, advancedMode, activeSection } = useUi()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))
@@ -40,7 +39,17 @@ export const Main = ({
 		(nominee) => nominee.prefs.commission === 100,
 	)
 
-	const pages: PageItem[] = getPagesConfig(network, advancedMode)
+	const activeCategory = getCategoryId(activeSection)
+	const pages: PageItem[] = getPagesConfig(
+		network,
+		activeCategory,
+		advancedMode,
+	)
+
+	const pageChanged = activeCategory
+		? !pageKeyExistsInCategory(pathname, activeCategory)
+		: false
+
 	let i = 0
 	for (const { uri } of pages) {
 		const handleBullets = (): boolean => {
@@ -93,25 +102,17 @@ export const Main = ({
 
 	return (
 		<>
-			{pageConfig.categories.map(
-				({ id: categoryId, key: categoryKey }: PageCategory, index) => (
-					<div className="inner" key={`sidemenu_category_${categoryId}`}>
-						{categoryKey !== 'default' &&
-							!sideMenuMinimised &&
-							!(ignoreFirstCategory && index === 1) && (
-								<Page.Side.Heading
-									title={t(categoryKey)}
-									minimised={sideMenuMinimised}
-								/>
-							)}
-						{pagesToDisplay.map(
-							({ category, hash, key, faIcon, bullet }: PageItem) => (
+			{pageConfig.categories.map(({ id: categoryId }: PageCategory) => (
+				<div className="inner" key={`sidemenu_category_${categoryId}`}>
+					{pagesToDisplay.map(
+						({ category, hash, key, faIcon, bullet }: PageItem, index) => {
+							return (
 								<Fragment key={`sidemenu_page_${categoryId}_${key}`}>
 									{category === categoryId && (
 										<Primary
 											name={t(key)}
 											to={hash}
-											active={hash === pathname}
+											active={hash === pathname || (index === 0 && pageChanged)}
 											faIcon={faIcon}
 											bullet={bullet}
 											minimised={sideMenuMinimised}
@@ -119,11 +120,11 @@ export const Main = ({
 										/>
 									)}
 								</Fragment>
-							),
-						)}
-					</div>
-				),
-			)}
+							)
+						},
+					)}
+				</div>
+			))}
 		</>
 	)
 }

@@ -7,6 +7,7 @@ import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Main } from './Main'
@@ -21,6 +22,7 @@ import {
 
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
+	const navigate = useNavigate()
 	const { openHelp, status: helpStatus } = useHelp()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
@@ -47,6 +49,7 @@ export const DefaultMenu = () => {
 									type="button"
 									onClick={() => {
 										setActiveSection('stake')
+										navigate(`/overview`)
 									}}
 									className={
 										activeSection === 'stake' || activeSection === null
@@ -62,6 +65,7 @@ export const DefaultMenu = () => {
 									type="button"
 									onClick={() => {
 										setActiveSection('validators')
+										navigate(`/validators`)
 									}}
 									className={activeSection === 'validators' ? 'active' : ''}
 								>
@@ -98,9 +102,9 @@ export const DefaultMenu = () => {
 									fontFamily: 'InterSemiBold, sans-serif',
 								}}
 							>
-								{t('stake', { ns: 'app' })}
+								{t(activeSection || 'stake', { ns: 'app' })}
 							</h3>
-							<Main ignoreFirstCategory={true} />
+							<Main />
 						</section>
 						<section></section>
 					</Wrapper>
