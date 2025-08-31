@@ -24,7 +24,8 @@ export const DefaultMenu = () => {
 	const { openHelp, status: helpStatus } = useHelp()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
-	const { advancedMode, sideMenuMinimised } = useUi()
+	const { advancedMode, sideMenuMinimised, activeSection, setActiveSection } =
+		useUi()
 
 	const transparent =
 		modalStatus === 'open' || canvasStatus === 'open' || helpStatus === 'open'
@@ -42,12 +43,28 @@ export const DefaultMenu = () => {
 						</BarLogoWrapper>
 						<BarIconsWrapper>
 							<section>
-								<BarButton type="button" onClick={() => {}} className="active">
+								<BarButton
+									type="button"
+									onClick={() => {
+										setActiveSection('stake')
+									}}
+									className={
+										activeSection === 'stake' || activeSection === null
+											? 'active'
+											: ''
+									}
+								>
 									<FontAwesomeIcon icon={faCoins} />
 								</BarButton>
 							</section>
 							<section>
-								<BarButton type="button" onClick={() => {}}>
+								<BarButton
+									type="button"
+									onClick={() => {
+										setActiveSection('validators')
+									}}
+									className={activeSection === 'validators' ? 'active' : ''}
+								>
 									<FontAwesomeIcon icon={faServer} />
 								</BarButton>
 							</section>

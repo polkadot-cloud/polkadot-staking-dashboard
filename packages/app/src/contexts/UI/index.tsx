@@ -23,6 +23,9 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 		localStorageOrDefault(AdvancedModeKey, true, true) as boolean,
 	)
 
+	// The active side bar section
+	const [activeSection, setActiveSection] = useState<string | null>(null)
+
 	const setAdvancedMode = (value: boolean) => {
 		localStorage.setItem(AdvancedModeKey, String(value))
 		setAdvancedModeState(value)
@@ -97,6 +100,8 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 				userSideMenuMinimised,
 				advancedMode,
 				setAdvancedMode,
+				activeSection,
+				setActiveSection,
 			}}
 		>
 			{children}
