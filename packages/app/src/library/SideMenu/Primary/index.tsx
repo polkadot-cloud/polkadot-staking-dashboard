@@ -34,11 +34,13 @@ export const Primary = ({
 					minimised ? ` minimised` : ``
 				}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
 			>
-				<FontAwesomeIcon
-					icon={faIcon}
-					className="icon"
-					transform={minimised ? 'grow-2' : undefined}
-				/>
+				<span className="iconContainer">
+					<FontAwesomeIcon
+						icon={faIcon}
+						className="icon"
+						transform={minimised ? 'grow-2' : undefined}
+					/>
+				</span>
 				{!minimised && (
 					<>
 						<h4 className="name">{name}</h4>

@@ -14,6 +14,9 @@ export const Wrapper = styled.div`
   position: relative;
   transition: background 0.15s ease;
 
+  .iconContainer {
+    width: 2.1rem;
+  }
   .icon {
     color: var(--text-color-secondary);
     margin-left: 0.25rem;
