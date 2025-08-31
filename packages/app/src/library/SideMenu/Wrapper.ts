@@ -91,9 +91,9 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 
 export const ToggleWrapper = styled.button`
   position: absolute;
-  top: 0.9rem;
-  width: 1.7rem;
-  height: 1.7rem;
+  top: 1.5rem;
+  width: 1.3rem;
+  height: 1.3rem;
   right: -0.75rem;
   display: flex;
   align-items: center;
