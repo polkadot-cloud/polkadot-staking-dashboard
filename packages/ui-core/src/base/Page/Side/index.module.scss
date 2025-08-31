@@ -24,7 +24,7 @@
   }
 
   &.transparent {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 
@@ -50,9 +50,9 @@
   }
 
   &.transparent {
-    opacity: 0;
+    opacity: 0.2;
   }
-  
+
   &.floating {
     height: 100vh;
     position: sticky;
