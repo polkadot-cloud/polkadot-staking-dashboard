@@ -33,6 +33,10 @@ export const Wrapper = styled.div`
     height: 3.4rem;
     width: calc(100% - 0.5rem);
 
+    .iconContainer {
+      width: auto;
+    }
+
     &.success,
     &.accent {
       border: 1.5px solid var(--accent-color-pending);
