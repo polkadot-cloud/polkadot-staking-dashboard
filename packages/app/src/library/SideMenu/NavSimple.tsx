@@ -13,7 +13,7 @@ import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
 import { useTranslation } from 'react-i18next'
-import { Page } from 'ui-core/base'
+import { Separator } from 'ui-core/base'
 import { Main } from './Main'
 import { Secondary } from './Secondary'
 import { LogoWrapper, ToggleWrapper, Wrapper } from './Wrapper'
@@ -56,10 +56,7 @@ export const NavSimple = () => {
 					</LogoWrapper>
 					<Main />
 					<div className="inner">
-						<Page.Side.Heading
-							title={t('support')}
-							minimised={sideMenuMinimised}
-						/>
+						<Separator />
 						<Secondary
 							onClick={() => {
 								openHelp(null)
