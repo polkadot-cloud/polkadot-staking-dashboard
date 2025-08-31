@@ -9,6 +9,7 @@ export type SideProps = ComponentBase & {
 	minimised: boolean
 	nav: ReactNode
 	bar?: ReactNode
+	transparent?: boolean
 }
 
 export type FloatingMenuProps = ComponentBase & {

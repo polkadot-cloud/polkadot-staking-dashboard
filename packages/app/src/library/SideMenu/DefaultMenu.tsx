@@ -8,6 +8,7 @@ import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
 import {
@@ -20,13 +21,19 @@ import {
 
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
-	const { openHelp } = useHelp()
+	const { openHelp, status: helpStatus } = useHelp()
+	const { status: modalStatus } = useOverlay().modal
+	const { status: canvasStatus } = useOverlay().canvas
 	const { advancedMode, sideMenuMinimised } = useUi()
+
+	const transparent =
+		modalStatus === 'open' || canvasStatus === 'open' || helpStatus === 'open'
 
 	return (
 		<Page.Side.Default
 			open={false}
 			minimised={sideMenuMinimised}
+			transparent={transparent}
 			bar={
 				!advancedMode ? undefined : (
 					<>
