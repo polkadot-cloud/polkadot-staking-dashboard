@@ -48,6 +48,10 @@ export const Wrapper = styled.div<MinimisedProps>`
     }
     > .inner {
       padding-left: ${(props) => (props.$advancedMode ? '0' : props.$minimised ? '0.1rem' : '0')};
+
+      > button {
+        width: 100%;
+      }
     }
   }
 `

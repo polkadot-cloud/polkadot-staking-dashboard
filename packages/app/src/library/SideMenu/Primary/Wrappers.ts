@@ -17,6 +17,7 @@ export const Wrapper = styled.div`
   .iconContainer {
     width: 2.1rem;
   }
+  
   .icon {
     color: var(--text-color-secondary);
     margin-left: 0.25rem;

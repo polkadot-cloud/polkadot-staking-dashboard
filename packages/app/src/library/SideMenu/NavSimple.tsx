@@ -22,6 +22,7 @@ export const NavSimple = () => {
 	const { t } = useTranslation('app')
 	const { openHelp } = useHelp()
 	const {
+		advancedMode,
 		sideMenuMinimised,
 		userSideMenuMinimised,
 		setUserSideMenuMinimised,
@@ -55,16 +56,17 @@ export const NavSimple = () => {
 						)}
 					</LogoWrapper>
 					<Main />
+					<Separator />
 					<div className="inner">
-						<Separator />
 						<Primary
+							name={t('resources')}
 							to={() => {
 								openHelp(null)
 							}}
-							name={t('resources')}
-							minimised={sideMenuMinimised}
-							faIcon={faBook}
 							active={false}
+							faIcon={faBook}
+							minimised={sideMenuMinimised}
+							advanced={advancedMode}
 						/>
 					</div>
 				</section>
