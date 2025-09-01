@@ -67,6 +67,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   position: relative;
   text-transform: uppercase;
   margin-left: ${(props) => (props.$minimised ? '0.75rem' : '0.75rem')};
+ transition: transform 0.25s ease;
 
   > img, > svg  {  
     margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
@@ -87,9 +88,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   }
 
   &:hover {
-    > .toggle > .label {
-      color: var(--accent-color-primary);
-    }
+    transform: scale(1.02);
   }
 `
 
@@ -172,13 +171,18 @@ export const BulletWrapper = styled.div`
   }
 `
 
-export const BarLogoWrapper = styled.div`
+export const BarLogoWrapper = styled.button`
   width: calc(100% - 2rem);
   display: flex;
   justify-content: center;
   margin: 0.75rem auto 0 auto;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   height: 2.8rem;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 
   > svg {
     height: 2.15rem;
