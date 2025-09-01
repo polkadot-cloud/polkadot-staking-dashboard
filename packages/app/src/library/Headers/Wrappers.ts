@@ -18,7 +18,7 @@ export const MenuWrapper = styled.div`
 
 export const Item = styled.button`
   flex-grow: 1;
-  padding: 0.05rem 1rem;
+  padding: 0 1rem 0 0.5rem;
   border-radius: 1.5rem;
   box-shadow: none;
   display: flex;
