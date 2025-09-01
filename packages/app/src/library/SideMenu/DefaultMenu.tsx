@@ -5,10 +5,11 @@ import { faBook, faCoins, faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useHelp } from 'contexts/Help'
+import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { Page } from 'ui-core/base'
+import { Page, Tooltip } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
@@ -23,6 +24,7 @@ import {
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
 	const navigate = useNavigate()
+	const { themeElementRef } = useTheme()
 	const { openHelp, status: helpStatus } = useHelp()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
@@ -45,32 +47,48 @@ export const DefaultMenu = () => {
 						</BarLogoWrapper>
 						<BarIconsWrapper>
 							<section>
-								<BarButton
-									type="button"
-									onClick={() => {
-										setActiveSection('stake')
-										navigate(`/overview`)
-									}}
-									className={
-										activeSection === 'stake' || activeSection === null
-											? 'active'
-											: ''
-									}
+								<Tooltip
+									text={t('stake')}
+									side="right"
+									container={themeElementRef.current || undefined}
+									delayDuration={100}
+									fadeIn
 								>
-									<FontAwesomeIcon icon={faCoins} />
-								</BarButton>
+									<BarButton
+										type="button"
+										onClick={() => {
+											setActiveSection('stake')
+											navigate(`/overview`)
+										}}
+										className={
+											activeSection === 'stake' || activeSection === null
+												? 'active'
+												: ''
+										}
+									>
+										<FontAwesomeIcon icon={faCoins} />
+									</BarButton>
+								</Tooltip>
 							</section>
 							<section>
-								<BarButton
-									type="button"
-									onClick={() => {
-										setActiveSection('validators')
-										navigate(`/validators`)
-									}}
-									className={activeSection === 'validators' ? 'active' : ''}
+								<Tooltip
+									text={t('validators')}
+									side="right"
+									container={themeElementRef.current || undefined}
+									delayDuration={0}
+									fadeIn
 								>
-									<FontAwesomeIcon icon={faServer} />
-								</BarButton>
+									<BarButton
+										type="button"
+										onClick={() => {
+											setActiveSection('validators')
+											navigate(`/validators`)
+										}}
+										className={activeSection === 'validators' ? 'active' : ''}
+									>
+										<FontAwesomeIcon icon={faServer} />
+									</BarButton>
+								</Tooltip>
 							</section>
 						</BarIconsWrapper>
 						<BarFooterWrapper>
