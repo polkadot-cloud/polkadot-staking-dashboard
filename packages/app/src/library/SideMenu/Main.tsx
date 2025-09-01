@@ -15,9 +15,16 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import type { PageCategory, PageItem, PagesConfigItems } from 'types'
+import { Page } from 'ui-core/base'
 import { Primary } from './Primary'
 
-export const Main = ({ activeCategory }: { activeCategory: number | null }) => {
+export const Main = ({
+	activeCategory,
+	showHeaders = false,
+}: {
+	activeCategory: number | null
+	showHeaders?: boolean
+}) => {
 	const { t } = useTranslation('app')
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
@@ -99,29 +106,39 @@ export const Main = ({ activeCategory }: { activeCategory: number | null }) => {
 
 	return (
 		<>
-			{pageConfig.categories.map(({ id: categoryId }: PageCategory) => (
-				<div className="inner" key={`sidemenu_category_${categoryId}`}>
-					{pagesToDisplay.map(
-						({ category, hash, key, faIcon, bullet }: PageItem, index) => {
-							return (
-								<Fragment key={`sidemenu_page_${categoryId}_${key}`}>
-									{category === categoryId && (
-										<Primary
-											name={t(key)}
-											to={hash}
-											active={hash === pathname || (index === 0 && pageChanged)}
-											faIcon={faIcon}
-											bullet={bullet}
-											minimised={sideMenuMinimised}
-											advanced={advancedMode}
-										/>
-									)}
-								</Fragment>
-							)
-						},
-					)}
-				</div>
-			))}
+			{pageConfig.categories.map(
+				({ id: categoryId, key: categoryKey }: PageCategory) => (
+					<div className="inner" key={`sidemenu_category_${categoryId}`}>
+						{showHeaders && categoryKey !== 'default' && (
+							<Page.Side.Heading
+								title={t(categoryKey)}
+								minimised={sideMenuMinimised}
+							/>
+						)}
+						{pagesToDisplay.map(
+							({ category, hash, key, faIcon, bullet }: PageItem, index) => {
+								return (
+									<Fragment key={`sidemenu_page_${categoryId}_${key}`}>
+										{category === categoryId && (
+											<Primary
+												name={t(key)}
+												to={hash}
+												active={
+													hash === pathname || (index === 0 && pageChanged)
+												}
+												faIcon={faIcon}
+												bullet={bullet}
+												minimised={sideMenuMinimised}
+												advanced={advancedMode}
+											/>
+										)}
+									</Fragment>
+								)
+							},
+						)}
+					</div>
+				),
+			)}
 		</>
 	)
 }
