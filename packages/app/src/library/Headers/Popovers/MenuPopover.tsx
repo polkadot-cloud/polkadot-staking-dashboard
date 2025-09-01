@@ -3,7 +3,13 @@
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
+	faCog,
+	faDollarSign,
 	faExternalLinkAlt,
+	faGlobe,
+	faMoon,
+	faPuzzlePiece,
+	faShare,
 	faToggleOff,
 	faToggleOn,
 	faWifi,
@@ -83,6 +89,9 @@ export const MenuPopover = ({
 					}}
 				>
 					<div>
+						<FontAwesomeIcon icon={faGlobe} transform="shrink-2" />
+					</div>
+					<div>
 						<h3>{t('language', { ns: 'app' })}</h3>
 					</div>
 					<div>
@@ -99,6 +108,9 @@ export const MenuPopover = ({
 					}}
 				>
 					<div>
+						<FontAwesomeIcon icon={faDollarSign} transform="shrink-2" />
+					</div>
+					<div>
 						<h3>{t('currency', { ns: 'app' })}</h3>
 					</div>
 					<div>
@@ -109,6 +121,9 @@ export const MenuPopover = ({
 				</button>
 			</MenuItem>
 			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
+				<div>
+					<FontAwesomeIcon icon={faCog} transform="shrink-2" />
+				</div>
 				<div>
 					<h3>{t('advanced', { ns: 'app' })}</h3>
 				</div>
@@ -127,6 +142,9 @@ export const MenuPopover = ({
 				</div>
 			</MenuItemButton>
 			<MenuItemButton onClick={() => toggleTheme()}>
+				<div>
+					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
+				</div>
 				<div>
 					<h3>{t('darkMode', { ns: 'app' })}</h3>
 				</div>
@@ -152,6 +170,9 @@ export const MenuPopover = ({
 				}}
 			>
 				<div>
+					<FontAwesomeIcon icon={faShare} transform="shrink-2" />
+				</div>
+				<div>
 					<h3>{t('share', { ns: 'app' })}</h3>
 					{notStaking && <div>{t('notStaking', { ns: 'app' })}</div>}
 				</div>
@@ -163,6 +184,9 @@ export const MenuPopover = ({
 						openModal({ key: 'Plugins' })
 					}}
 				>
+					<div>
+						<FontAwesomeIcon icon={faPuzzlePiece} transform="shrink-2" />
+					</div>
 					<div>
 						<h3>{t('plugins', { ns: 'modals' })}</h3>
 					</div>
