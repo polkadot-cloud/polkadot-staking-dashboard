@@ -100,8 +100,6 @@ export const Main = ({
 		pages,
 	}
 
-	console.log(pageConfig.pages)
-
 	const pagesToDisplay: PagesConfigItems = Object.values(pageConfig.pages)
 
 	return (
