@@ -16,6 +16,6 @@ export interface UIContextInterface {
 	isBraveBrowser: boolean
 	advancedMode: boolean
 	setAdvancedMode: (value: boolean) => void
-	activeSection: string | null
-	setActiveSection: (value: string | null) => void
+	activeSection: string
+	setActiveSection: (value: string) => void
 }

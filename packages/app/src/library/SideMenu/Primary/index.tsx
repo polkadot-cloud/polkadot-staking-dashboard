@@ -20,38 +20,59 @@ export const Primary = ({
 }: PrimaryProps) => {
 	const { setSideMenu } = useUi()
 
-	return (
-		<Link
-			to={to}
-			onClick={() => {
-				if (!active) {
-					setSideMenu(false)
-				}
-			}}
+	const Inner = (
+		<Wrapper
+			className={`${active ? `active` : `inactive`}${
+				minimised ? ` minimised` : ``
+			}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
 		>
-			<Wrapper
-				className={`${active ? `active` : `inactive`}${
-					minimised ? ` minimised` : ``
-				}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
-			>
-				<span className="iconContainer">
-					<FontAwesomeIcon
-						icon={faIcon}
-						className="icon"
-						transform={minimised ? 'grow-2' : undefined}
-					/>
-				</span>
-				{!minimised && (
-					<>
-						<h4 className="name">{name}</h4>
-						{bullet && (
-							<BulletWrapper className={bullet}>
-								<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-							</BulletWrapper>
-						)}
-					</>
-				)}
-			</Wrapper>
-		</Link>
+			<span className="iconContainer">
+				<FontAwesomeIcon
+					icon={faIcon}
+					className="icon"
+					transform={minimised ? 'grow-2' : undefined}
+				/>
+			</span>
+			{!minimised && (
+				<>
+					<h4 className="name">{name}</h4>
+					{bullet && (
+						<BulletWrapper className={bullet}>
+							<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+						</BulletWrapper>
+					)}
+				</>
+			)}
+		</Wrapper>
 	)
+	if (typeof to === 'string') {
+		return (
+			<Link
+				to={to}
+				onClick={() => {
+					if (!active) {
+						setSideMenu(false)
+					}
+				}}
+			>
+				{Inner}
+			</Link>
+		)
+	}
+	if (typeof to === 'function') {
+		return (
+			<button
+				type="button"
+				onClick={() => {
+					to()
+					if (!active) {
+						setSideMenu(false)
+					}
+				}}
+			>
+				{Inner}
+			</button>
+		)
+	}
+	return null
 }

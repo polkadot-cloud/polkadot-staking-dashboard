@@ -18,7 +18,7 @@ export interface HeadingProps {
 export interface PrimaryProps {
 	name: string
 	active: boolean
-	to: string
+	to: string | (() => void)
 	faIcon: IconProp
 	bullet?: BulletType
 	minimised: boolean

@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faBook } from '@fortawesome/free-solid-svg-icons'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
-import BookSVG from 'assets/icons/book.svg?react'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import LogoSVG from 'assets/icons/logo.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
@@ -13,7 +13,7 @@ import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { Main } from './Main'
-import { Secondary } from './Secondary'
+import { Primary } from './Primary'
 import { LogoWrapper, Wrapper } from './Wrapper'
 
 export const FloatingtMenu = () => {
@@ -47,16 +47,14 @@ export const FloatingtMenu = () => {
 					<Main />
 					<div className="inner">
 						<Page.Side.Heading title={t('support')} minimised={false} />
-						<Secondary
-							onClick={() => {
+						<Primary
+							to={() => {
 								openHelp(null)
 							}}
 							name={t('resources')}
 							minimised={false}
-							icon={{
-								Svg: BookSVG,
-								size: '0.8em',
-							}}
+							faIcon={faBook}
+							active={false}
 						/>
 					</div>
 				</section>

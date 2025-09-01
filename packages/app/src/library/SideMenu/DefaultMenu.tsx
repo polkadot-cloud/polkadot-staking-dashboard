@@ -60,11 +60,7 @@ export const DefaultMenu = () => {
 											setActiveSection('stake')
 											navigate(`/overview`)
 										}}
-										className={
-											activeSection === 'stake' || activeSection === null
-												? 'active'
-												: ''
-										}
+										className={activeSection === 'stake' ? 'active' : ''}
 									>
 										<FontAwesomeIcon icon={faCoins} />
 									</BarButton>

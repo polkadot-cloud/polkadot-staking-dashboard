@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
+	faBook,
 	faChevronLeft,
 	faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import BookSVG from 'assets/icons/book.svg?react'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import LogoSVG from 'assets/icons/logo.svg?react'
 import { useHelp } from 'contexts/Help'
@@ -15,7 +15,7 @@ import type { UIContextInterface } from 'contexts/UI/types'
 import { useTranslation } from 'react-i18next'
 import { Separator } from 'ui-core/base'
 import { Main } from './Main'
-import { Secondary } from './Secondary'
+import { Primary } from './Primary'
 import { LogoWrapper, ToggleWrapper, Wrapper } from './Wrapper'
 
 export const NavSimple = () => {
@@ -57,16 +57,14 @@ export const NavSimple = () => {
 					<Main />
 					<div className="inner">
 						<Separator />
-						<Secondary
-							onClick={() => {
+						<Primary
+							to={() => {
 								openHelp(null)
 							}}
 							name={t('resources')}
 							minimised={sideMenuMinimised}
-							icon={{
-								Svg: BookSVG,
-								size: sideMenuMinimised ? '0.95em' : '0.8em',
-							}}
+							faIcon={faBook}
+							active={false}
 						/>
 					</div>
 				</section>

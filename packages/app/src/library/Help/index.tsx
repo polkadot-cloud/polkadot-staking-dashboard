@@ -1,8 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faBook } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { camelize } from '@w3ux/utils'
-import BookSVG from 'assets/icons/book.svg?react'
 import ForumSVG from 'assets/icons/forum.svg?react'
 import GlassesSVG from 'assets/icons/glasses.svg?react'
 import { HelpConfig } from 'config/help'
@@ -266,14 +267,8 @@ export const Help = () => {
 									onClick={() => setTab('resources')}
 									type="button"
 								>
-									<BookSVG
-										style={{
-											width: '1.1em',
-											height: '1.1em',
-											marginRight: '0.5em',
-											verticalAlign: 'middle',
-										}}
-									/>
+									<FontAwesomeIcon icon={faBook} />
+									&nbsp;
 									{t('modal.resources', { ns: 'help' })}
 								</TabButton>
 								<TabButton
@@ -285,7 +280,7 @@ export const Help = () => {
 										style={{
 											width: '1.1em',
 											height: '1.1em',
-											marginRight: '0.5em',
+											marginRight: '0.25em',
 											verticalAlign: 'middle',
 										}}
 									/>
@@ -300,7 +295,6 @@ export const Help = () => {
 										style={{
 											width: '1.1em',
 											height: '1.1em',
-											marginRight: '0.5em',
 											verticalAlign: 'middle',
 										}}
 									/>

@@ -24,7 +24,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 	)
 
 	// The active side bar section
-	const [activeSection, setActiveSection] = useState<string | null>(null)
+	const [activeSection, setActiveSection] = useState<string>('stake')
 
 	const setAdvancedMode = (value: boolean) => {
 		localStorage.setItem(AdvancedModeKey, String(value))
