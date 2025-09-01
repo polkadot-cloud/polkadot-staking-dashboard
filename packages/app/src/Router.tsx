@@ -89,13 +89,15 @@ const RouterInner = () => {
 							<Headers />
 							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
 								<Routes>
-									{getPagesConfig(network,null, advancedMode).map((page, i) => (
-										<Route
-											key={`main_interface_page_${i}`}
-											path={page.hash}
-											element={<PageWithTitle page={page} />}
-										/>
-									))}
+									{getPagesConfig(network, null, advancedMode).map(
+										(page, i) => (
+											<Route
+												key={`main_interface_page_${i}`}
+												path={page.hash}
+												element={<PageWithTitle page={page} />}
+											/>
+										),
+									)}
 									<Route
 										key="main_interface_navigate"
 										path="*"
