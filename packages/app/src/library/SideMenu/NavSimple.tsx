@@ -58,7 +58,7 @@ export const NavSimple = () => {
 							</span>
 						)}
 					</LogoWrapper>
-					<Main />
+					<Main activeCategory={null} />
 					<Separator />
 					<div className="inner">
 						<Primary

@@ -44,7 +44,7 @@ export const FloatingtMenu = () => {
 							<LogoSVG className="logo" />
 						</span>
 					</LogoWrapper>
-					<Main />
+					<Main activeCategory={null} />
 					<div className="inner">
 						<Page.Side.Heading title={t('support')} minimised={false} />
 						<Primary

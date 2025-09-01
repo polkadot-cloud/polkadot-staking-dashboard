@@ -4,6 +4,7 @@
 import { faBook, faCoins, faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
+import { getCategoryId } from 'config/util'
 import { PlatformUrl } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
@@ -124,7 +125,7 @@ export const DefaultMenu = () => {
 							>
 								{t(activeSection || 'stake', { ns: 'app' })}
 							</h3>
-							<Main />
+							<Main activeCategory={getCategoryId(activeSection)} />
 						</section>
 						<section></section>
 					</Wrapper>

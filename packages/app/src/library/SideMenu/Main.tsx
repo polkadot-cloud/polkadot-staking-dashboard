@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PageCategories } from 'config/pages'
-import {
-	getCategoryId,
-	getPagesConfig,
-	pageKeyExistsInCategory,
-} from 'config/util'
+import { getPagesConfig, pageKeyExistsInCategory } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -21,7 +17,7 @@ import { useLocation } from 'react-router-dom'
 import type { PageCategory, PageItem, PagesConfigItems } from 'types'
 import { Primary } from './Primary'
 
-export const Main = () => {
+export const Main = ({ activeCategory }: { activeCategory: number | null }) => {
 	const { t } = useTranslation('app')
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
@@ -30,8 +26,8 @@ export const Main = () => {
 	const { isBonding } = useStaking()
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
+	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
-	const { sideMenuMinimised, advancedMode, activeSection } = useUi()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))
@@ -39,7 +35,6 @@ export const Main = () => {
 		(nominee) => nominee.prefs.commission === 100,
 	)
 
-	const activeCategory = getCategoryId(activeSection)
 	const pages: PageItem[] = getPagesConfig(
 		network,
 		activeCategory,
@@ -97,6 +92,8 @@ export const Main = () => {
 		categories,
 		pages,
 	}
+
+	console.log(pageConfig.pages)
 
 	const pagesToDisplay: PagesConfigItems = Object.values(pageConfig.pages)
 
