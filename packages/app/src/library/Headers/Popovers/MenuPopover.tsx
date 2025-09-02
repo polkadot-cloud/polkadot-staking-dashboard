@@ -34,33 +34,6 @@ import { useTranslation } from 'react-i18next'
 import { MenuItem, MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 
-// Section Header component - matching ConnectPopover styling
-const SectionHeader = ({
-	title,
-	isFirst,
-}: {
-	title: string
-	isFirst?: boolean
-}) => (
-	<h4
-		style={{
-			background: 'var(--button-popover-tab-background)',
-			color: 'var(--text-color-tertiary)',
-			fontFamily: 'InterSemiBold, sans-serif',
-			overflow: 'hidden',
-			padding: '0 0.75rem',
-			lineHeight: '3rem',
-			margin: '0',
-			...(isFirst && {
-				borderTopLeftRadius: '0.75rem',
-				borderTopRightRadius: '0.75rem',
-			}),
-		}}
-	>
-		{title}
-	</h4>
-)
-
 export const MenuPopover = ({
 	setOpen,
 }: {
@@ -91,8 +64,6 @@ export const MenuPopover = ({
 
 	return (
 		<div ref={popoverRef}>
-			{/* CORE SETTINGS */}
-			<SectionHeader title={t('coreSettings', { ns: 'app' })} isFirst={true} />
 			<MenuItemButton
 				onClick={() => {
 					setOpen(false)
@@ -149,18 +120,12 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
-
-			{/* PREFERENCES */}
-			<SectionHeader title={t('preferences', { ns: 'app' })} />
 			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
 				<div>
 					<FontAwesomeIcon icon={faCog} transform="shrink-2" />
 				</div>
 				<div>
-					<h3>
-						{t('advanced', { ns: 'app' })} (
-						{t('additionalDataTools', { ns: 'app' })})
-					</h3>
+					<h3>{t('advanced', { ns: 'app' })}</h3>
 				</div>
 				<div>
 					<div>
@@ -197,24 +162,6 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
-			{(showPlugins || !import.meta.env.PROD) && (
-				<MenuItemButton
-					onClick={() => {
-						setOpen(false)
-						openModal({ key: 'Plugins' })
-					}}
-				>
-					<div>
-						<FontAwesomeIcon icon={faPuzzlePiece} transform="shrink-2" />
-					</div>
-					<div>
-						<h3>{t('plugins', { ns: 'modals' })}</h3>
-					</div>
-				</MenuItemButton>
-			)}
-
-			{/* SHARING & SUPPORT */}
-			<SectionHeader title={t('sharingAndSupport', { ns: 'app' })} />
 			<MenuItemButton
 				disabled={notStaking}
 				onClick={() => {
@@ -230,6 +177,21 @@ export const MenuPopover = ({
 					{notStaking && <div>{t('notStaking', { ns: 'app' })}</div>}
 				</div>
 			</MenuItemButton>
+			{(showPlugins || !import.meta.env.PROD) && (
+				<MenuItemButton
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'Plugins' })
+					}}
+				>
+					<div>
+						<FontAwesomeIcon icon={faPuzzlePiece} transform="shrink-2" />
+					</div>
+					<div>
+						<h3>{t('plugins', { ns: 'modals' })}</h3>
+					</div>
+				</MenuItemButton>
+			)}
 			<MenuItemButton
 				onClick={() => {
 					setOpen(false)
@@ -250,32 +212,36 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
-			<MenuItemButton
-				onClick={() => {
-					setOpen(false)
-					openModal({ key: 'DiscordSupport', size: 'sm' })
-				}}
-			>
-				<div>
-					<DiscordSVG width="1em" height="1.1em" />
-				</div>
-				<div>
-					<h3>Discord</h3>
-				</div>
-			</MenuItemButton>
-			<MenuItemButton
-				onClick={() => {
-					setOpen(false)
-					openModal({ key: 'MailSupport', size: 'sm' })
-				}}
-			>
-				<div>
-					<EnvelopeSVG width="1em" height="1em" />
-				</div>
-				<div>
-					<h3>{t('email', { ns: 'app' })}</h3>
-				</div>
-			</MenuItemButton>
+			<MenuItem>
+				<button
+					type="button"
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'DiscordSupport', size: 'sm' })
+					}}
+				>
+					<div>
+						<DiscordSVG width="1em" height="1.1em" />
+					</div>
+					<div>
+						<h3>Discord</h3>
+					</div>
+				</button>
+				<button
+					type="button"
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'MailSupport', size: 'sm' })
+					}}
+				>
+					<div>
+						<EnvelopeSVG width="1em" height="1em" />
+					</div>
+					<div>
+						<h3>{t('email', { ns: 'app' })}</h3>
+					</div>
+				</button>
+			</MenuItem>
 		</div>
 	)
 }
