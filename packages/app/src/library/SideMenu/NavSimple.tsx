@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
-import LogoSVG from 'assets/icons/logo.svg?react'
 import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
@@ -45,11 +44,7 @@ export const NavSimple = () => {
 				<section>
 					<LogoWrapper $minimised={sideMenuMinimised}>
 						<CloudSVG />
-						{!sideMenuMinimised && (
-							<span>
-								<LogoSVG className="logo" />
-							</span>
-						)}
+						{!sideMenuMinimised && <h3>Stake</h3>}
 					</LogoWrapper>
 					<Main activeCategory={null} />
 					<Separator />

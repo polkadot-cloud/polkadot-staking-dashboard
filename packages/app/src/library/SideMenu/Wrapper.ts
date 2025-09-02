@@ -62,29 +62,25 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 4rem;
-  padding: 0;
+  height: 3.5rem;
+  padding-top: 1rem;
   position: relative;
-  text-transform: uppercase;
   margin-left: ${(props) => (props.$minimised ? '0.75rem' : '0.75rem')};
- transition: transform 0.25s ease;
+  transition: transform 0.25s ease;
 
-  > img, > svg  {  
+  > svg  {  
     margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
     width: ${(props) => (props.$minimised ? '2.25rem' : '1.75em')};
     height: ${(props) => (props.$minimised ? '2.25rem' : '1.75rem')};
   }
-  > span {
-    margin-top: 0.25rem;
+
+  > h3 {
+    color: var(--accent-color-primary);
     margin-left: 0.75rem;
     background-clip: text;
     display: flex;
     align-items: center;
-
-    .logo {
-      width: auto;
-      height: 1.45rem;
-    }
+    font-size: 1.25rem;
   }
 
   &:hover {
@@ -94,7 +90,7 @@ export const LogoWrapper = styled.div<MinimisedProps>`
 
 export const ToggleWrapper = styled.button`
   position: absolute;
-  top: 1.5rem;
+  top: 1.7rem;
   width: 1.3rem;
   height: 1.3rem;
   right: -0.75rem;

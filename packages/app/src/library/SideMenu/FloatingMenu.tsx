@@ -4,7 +4,6 @@
 import { faBook } from '@fortawesome/free-solid-svg-icons'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
 import CloudSVG from 'assets/icons/cloud.svg?react'
-import LogoSVG from 'assets/icons/logo.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
@@ -40,9 +39,7 @@ export const FloatingtMenu = () => {
 				<section>
 					<LogoWrapper $minimised={false}>
 						<CloudSVG />
-						<span>
-							<LogoSVG className="logo" />
-						</span>
+						<h3>Stake</h3>
 					</LogoWrapper>
 					<Main activeCategory={null} showHeaders={true} />
 					<div className="inner">
