@@ -16,6 +16,7 @@ export const Tooltip = ({
 	handleOpenChange,
 	delayDuration = 200,
 	fadeIn = false,
+	inverted = false,
 }: {
 	children: ReactNode
 	container?: HTMLDivElement
@@ -26,9 +27,16 @@ export const Tooltip = ({
 	handleOpenChange?: (isOpen: boolean) => void
 	delayDuration?: number
 	fadeIn?: boolean
+	inverted?: boolean
 }) => {
 	const contentClasses = classNames(classes.Content, {
+		[classes.Inverted]: !!inverted,
 		[classes.FadeIn]: fadeIn,
+	})
+
+	const arrowClasses = classNames({
+		[classes.Arrow]: !inverted,
+		[classes.ArrowInverted]: !!inverted,
 	})
 
 	return (
@@ -63,7 +71,7 @@ export const Tooltip = ({
 					}}
 				>
 					{text}
-					<RadixTooltip.Arrow className={classes.Arrow} />
+					<RadixTooltip.Arrow className={arrowClasses} />
 				</RadixTooltip.Content>
 			</RadixTooltip.Portal>
 		</RadixTooltip.Root>
