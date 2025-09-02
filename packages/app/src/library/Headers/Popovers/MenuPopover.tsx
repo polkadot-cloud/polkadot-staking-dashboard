@@ -125,7 +125,7 @@ export const MenuPopover = ({
 					<FontAwesomeIcon icon={faCog} transform="shrink-2" />
 				</div>
 				<div>
-					<h3>{t('advanced', { ns: 'app' })}</h3>
+					<h3>{t('advancedMode', { ns: 'app' })}</h3>
 				</div>
 				<div>
 					<div>
