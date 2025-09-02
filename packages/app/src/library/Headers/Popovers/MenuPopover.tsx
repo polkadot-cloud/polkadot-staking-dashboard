@@ -141,27 +141,6 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
-			<MenuItemButton onClick={() => toggleTheme()}>
-				<div>
-					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
-				</div>
-				<div>
-					<h3>{t('darkMode', { ns: 'app' })}</h3>
-				</div>
-				<div>
-					<div>
-						<FontAwesomeIcon
-							icon={mode === 'dark' ? faToggleOn : faToggleOff}
-							color={
-								mode === 'dark'
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
-							transform="grow-8"
-						/>
-					</div>
-				</div>
-			</MenuItemButton>
 			<MenuItemButton
 				disabled={notStaking}
 				onClick={() => {
@@ -242,6 +221,27 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
+			<MenuItemButton onClick={() => toggleTheme()}>
+				<div>
+					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
+				</div>
+				<div>
+					<h3>{t('darkMode', { ns: 'app' })}</h3>
+				</div>
+				<div>
+					<div>
+						<FontAwesomeIcon
+							icon={mode === 'dark' ? faToggleOn : faToggleOff}
+							color={
+								mode === 'dark'
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
 		</div>
 	)
 }
