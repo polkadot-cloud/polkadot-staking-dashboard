@@ -3,7 +3,7 @@
 
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.span`
   border: none;
   height: 3.2rem;
   display: flex;
@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   transition: background 0.15s ease;
 
   .iconContainer {
-    width: 2.1rem;
+    width: 2.5rem;
   }
   
   .icon {

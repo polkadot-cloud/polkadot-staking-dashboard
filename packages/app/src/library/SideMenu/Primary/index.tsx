@@ -3,8 +3,11 @@
 
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
-import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { Tooltip } from 'ui-core/base'
 import type { PrimaryProps } from '../types'
 import { BulletWrapper } from '../Wrapper'
 import { Wrapper } from './Wrappers'
@@ -18,61 +21,63 @@ export const Primary = ({
 	faIcon,
 	advanced = false,
 }: PrimaryProps) => {
+	const { t } = useTranslation('app')
+	const navigate = useNavigate()
 	const { setSideMenu } = useUi()
+	const { themeElementRef } = useTheme()
 
 	const Inner = (
-		<Wrapper
-			className={`${active ? `active` : `inactive`}${
-				minimised ? ` minimised` : ``
-			}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
-		>
-			<span className="iconContainer">
-				<FontAwesomeIcon
-					icon={faIcon}
-					className="icon"
-					transform={minimised ? 'grow-2' : undefined}
-				/>
-			</span>
-			{!minimised && (
-				<>
-					<h4 className="name">{name}</h4>
-					{bullet && (
-						<BulletWrapper className={bullet}>
-							<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-						</BulletWrapper>
-					)}
-				</>
-			)}
-		</Wrapper>
-	)
-	if (typeof to === 'string') {
-		return (
-			<Link
-				to={to}
-				onClick={() => {
-					if (!active) {
-						setSideMenu(false)
-					}
-				}}
-			>
-				{Inner}
-			</Link>
-		)
-	}
-	if (typeof to === 'function') {
-		return (
-			<button
-				type="button"
-				onClick={() => {
+		<button
+			type="button"
+			onClick={() => {
+				if (typeof to === 'function') {
 					to()
-					if (!active) {
-						setSideMenu(false)
-					}
-				}}
+				} else {
+					navigate(to)
+				}
+				if (!active) {
+					setSideMenu(false)
+				}
+			}}
+		>
+			<Wrapper
+				className={`${active ? `active` : `inactive`}${
+					minimised ? ` minimised` : ``
+				}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
 			>
-				{Inner}
-			</button>
-		)
-	}
-	return null
+				<span className="iconContainer">
+					<FontAwesomeIcon
+						icon={faIcon}
+						className="icon"
+						transform={minimised ? 'grow-2' : undefined}
+					/>
+				</span>
+				{!minimised && (
+					<>
+						<h4 className="name">{name}</h4>
+						{bullet && (
+							<BulletWrapper className={bullet}>
+								<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+							</BulletWrapper>
+						)}
+					</>
+				)}
+			</Wrapper>
+		</button>
+	)
+
+	const InnerWithTooltip = (
+		<Tooltip
+			text={t(name)}
+			side="right"
+			container={themeElementRef.current || undefined}
+			delayDuration={0}
+			fadeIn
+			inverted
+		>
+			{Inner}
+		</Tooltip>
+	)
+
+	return minimised ? InnerWithTooltip : Inner
 }
