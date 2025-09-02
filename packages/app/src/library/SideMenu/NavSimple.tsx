@@ -9,7 +9,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import LogoSVG from 'assets/icons/logo.svg?react'
-import { PlatformUrl } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
@@ -44,13 +43,7 @@ export const NavSimple = () => {
 			</ToggleWrapper>
 			<Wrapper $minimised={sideMenuMinimised}>
 				<section>
-					<LogoWrapper
-						$minimised={sideMenuMinimised}
-						type="button"
-						onClick={() => {
-							window.open(PlatformUrl, '_blank', 'noopener,noreferrer')
-						}}
-					>
+					<LogoWrapper $minimised={sideMenuMinimised}>
 						<CloudSVG />
 						{!sideMenuMinimised && (
 							<span>

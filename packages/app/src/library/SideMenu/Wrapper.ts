@@ -56,7 +56,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   }
 `
 
-export const LogoWrapper = styled.button<MinimisedProps>`
+export const LogoWrapper = styled.div<MinimisedProps>`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -171,7 +171,7 @@ export const BulletWrapper = styled.div`
   }
 `
 
-export const BarLogoWrapper = styled.button`
+export const BarLogoWrapper = styled.div`
   width: calc(100% - 2rem);
   display: flex;
   justify-content: center;

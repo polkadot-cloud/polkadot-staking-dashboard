@@ -5,7 +5,6 @@ import { faBook, faCoins, faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { getCategoryId } from 'config/util'
-import { PlatformUrl } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
@@ -44,12 +43,7 @@ export const DefaultMenu = () => {
 			bar={
 				!advancedMode ? undefined : (
 					<>
-						<BarLogoWrapper
-							type="button"
-							onClick={() => {
-								window.open(PlatformUrl, '_blank', 'noopener,noreferrer')
-							}}
-						>
+						<BarLogoWrapper>
 							<CloudSVG />
 						</BarLogoWrapper>
 						<BarIconsWrapper>

@@ -38,7 +38,7 @@ export const FloatingtMenu = () => {
 		<Page.Side.Floating open={sideMenuOpen} minimised={false}>
 			<Wrapper ref={ref} $minimised={false}>
 				<section>
-					<LogoWrapper $minimised={false} type="button">
+					<LogoWrapper $minimised={false}>
 						<CloudSVG />
 						<span>
 							<LogoSVG className="logo" />
