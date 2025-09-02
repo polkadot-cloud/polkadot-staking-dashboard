@@ -143,6 +143,7 @@
 		},
 		"estimatedFee": "Estimated Fee",
 		"exclude": "Exclude",
+		"exitAdvancedMode": "Exit Advanced Mode",
 		"failed": "Failed",
 		"fastUnstake": "Fast Unstake",
 		"fastUnstakeExposed_one": "Exposed {{count}} Era Ago",

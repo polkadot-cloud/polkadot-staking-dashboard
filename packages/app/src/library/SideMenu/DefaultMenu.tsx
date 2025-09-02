@@ -1,7 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBook, faCoins, faServer } from '@fortawesome/free-solid-svg-icons'
+import {
+	faBook,
+	faCoins,
+	faRightFromBracket,
+	faServer,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { getCategoryId } from 'config/util'
@@ -10,7 +15,7 @@ import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { Page, Tooltip } from 'ui-core/base'
+import { Page, Separator, Tooltip } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
@@ -29,8 +34,13 @@ export const DefaultMenu = () => {
 	const { openHelp, status: helpStatus } = useHelp()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
-	const { advancedMode, sideMenuMinimised, activeSection, setActiveSection } =
-		useUi()
+	const {
+		advancedMode,
+		activeSection,
+		setAdvancedMode,
+		setActiveSection,
+		sideMenuMinimised,
+	} = useUi()
 
 	const transparent =
 		modalStatus === 'open' || canvasStatus === 'open' || helpStatus === 'open'
@@ -89,14 +99,39 @@ export const DefaultMenu = () => {
 							</section>
 						</BarIconsWrapper>
 						<BarFooterWrapper>
-							<BarButton
-								type="button"
-								onClick={() => {
-									openHelp(null)
-								}}
+							<Tooltip
+								text={t('resources')}
+								side="right"
+								container={themeElementRef.current || undefined}
+								delayDuration={0}
+								fadeIn
 							>
-								<FontAwesomeIcon icon={faBook} />
-							</BarButton>
+								<BarButton
+									type="button"
+									onClick={() => {
+										openHelp(null)
+									}}
+								>
+									<FontAwesomeIcon icon={faBook} />
+								</BarButton>
+							</Tooltip>
+							<Separator style={{ opacity: 0.25 }} />
+							<Tooltip
+								text={t('exitAdvancedMode')}
+								side="right"
+								container={themeElementRef.current || undefined}
+								delayDuration={0}
+								fadeIn
+							>
+								<BarButton
+									type="button"
+									onClick={() => {
+										setAdvancedMode(false)
+									}}
+								>
+									<FontAwesomeIcon icon={faRightFromBracket} />
+								</BarButton>
+							</Tooltip>
 						</BarFooterWrapper>
 					</>
 				)

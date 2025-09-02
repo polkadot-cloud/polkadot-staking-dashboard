@@ -143,6 +143,7 @@
 		},
 		"estimatedFee": "Tarifa estimada",
 		"exclude": "Excluir",
+		"exitAdvancedMode": "Salir del Modo Avanzado",
 		"failed": "Fallido",
 		"fastUnstake": "Desvinculación Rápida",
 		"fastUnstakeExposed_one": "Expuesto hace {{count}} era",

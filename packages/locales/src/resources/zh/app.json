@@ -143,6 +143,7 @@
 		},
 		"estimatedFee": "预计费用",
 		"exclude": "不含",
+		"exitAdvancedMode": "退出高级模式",
 		"failed": "失败",
 		"fastUnstake": "快速解除抵押",
 		"fastUnstakeExposed": "在 {{count}} Era前己被显示",
