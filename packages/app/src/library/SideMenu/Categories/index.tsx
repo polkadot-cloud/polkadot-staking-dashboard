@@ -1,5 +1,5 @@
-/* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
-SPDX-License-Identifier: GPL-3.0-only */
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { useOutsideAlerter } from '@w3ux/hooks'
 import classNames from 'classnames'
