@@ -6,7 +6,7 @@ import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
 import { AdvancedModeKey, PageWidthMediumThreshold } from 'consts'
 import type { ReactNode, RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import type { AnyJson } from 'types'
+import type { AnyJson, NavSection } from 'types'
 import type { UIContextInterface } from './types'
 
 export const [UIContext, useUi] = createSafeContext<UIContextInterface>()
@@ -24,7 +24,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 	)
 
 	// The active side bar section
-	const [activeSection, setActiveSection] = useState<string>('stake')
+	const [activeSection, setActiveSection] = useState<NavSection>('stake')
 
 	const setAdvancedMode = (value: boolean) => {
 		localStorage.setItem(AdvancedModeKey, String(value))

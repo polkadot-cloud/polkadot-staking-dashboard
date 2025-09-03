@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { RefObject } from 'react'
+import type { NavSection } from 'types'
 
 export interface UIContextInterface {
 	setSideMenu: (v: boolean) => void
@@ -16,6 +17,6 @@ export interface UIContextInterface {
 	isBraveBrowser: boolean
 	advancedMode: boolean
 	setAdvancedMode: (value: boolean) => void
-	activeSection: string
-	setActiveSection: (value: string) => void
+	activeSection: NavSection
+	setActiveSection: (value: NavSection) => void
 }

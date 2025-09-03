@@ -12,7 +12,7 @@ export type AnyFunction = any
 
 export interface PageCategory {
 	id: number
-	key: string
+	key: NavSection
 	advanced: boolean
 	defaultRoute: string
 }
@@ -41,3 +41,5 @@ interface PageProp {
 }
 
 export type BulletType = 'success' | 'accent' | 'warning' | 'danger'
+
+export type NavSection = 'stake' | 'validators'

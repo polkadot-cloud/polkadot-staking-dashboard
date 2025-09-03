@@ -113,7 +113,7 @@ export const Main = ({
 						key={`sidemenu_category_${categoryId}`}
 						style={{ opacity: hidden ? 0 : 1 }}
 					>
-						{showHeaders && categoryKey !== 'default' && (
+						{showHeaders && (
 							<Page.Side.Heading
 								title={t(categoryKey)}
 								minimised={sideMenuMinimised}

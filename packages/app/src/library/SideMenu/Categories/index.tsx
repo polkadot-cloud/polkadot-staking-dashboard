@@ -29,28 +29,26 @@ export const CategoriesPopover = ({
 	return (
 		<div ref={popoverRef}>
 			<div className={classes.Inner}>
-				{PageCategories.filter(({ key }) => key !== 'default').map(
-					(category) => {
-						const allClasses = classNames(classes.Button, {
-							[classes.active]: category.key === activeSection,
-						})
+				{PageCategories.map((category) => {
+					const allClasses = classNames(classes.Button, {
+						[classes.active]: category.key === activeSection,
+					})
 
-						return (
-							<button
-								type="button"
-								onClick={() => {
-									setOpen(false)
-									setActiveSection(category.key)
-									navigate(category.defaultRoute)
-								}}
-								className={allClasses}
-								key={category.id}
-							>
-								{t(category.key)}
-							</button>
-						)
-					},
-				)}
+					return (
+						<button
+							type="button"
+							onClick={() => {
+								setOpen(false)
+								setActiveSection(category.key)
+								navigate(category.defaultRoute)
+							}}
+							className={allClasses}
+							key={category.id}
+						>
+							{t(category.key)}
+						</button>
+					)
+				})}
 			</div>
 		</div>
 	)
