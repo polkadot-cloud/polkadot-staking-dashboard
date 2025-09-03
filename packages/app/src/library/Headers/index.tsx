@@ -13,6 +13,7 @@ import { Sync } from './Sync'
 export const Headers = () => {
 	const { sideMenuMinimised } = useUi()
 
+	// Whether the connect popover is open
 	const [openConnect, setOpenConnect] = useState<boolean>(false)
 
 	return (
