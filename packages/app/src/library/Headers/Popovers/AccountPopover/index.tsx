@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 import { Account } from './Account'
+import classes from './index.module.scss'
 
 export const AccountPopover = ({
 	setOpen,
@@ -41,14 +42,7 @@ export const AccountPopover = ({
 			: ''
 
 	return (
-		<div
-			ref={popoverRef}
-			style={{
-				paddingTop: '1.5rem',
-				background: 'var(--button-popover-tab-background)',
-				borderRadius: '0.75rem',
-			}}
-		>
+		<div ref={popoverRef} className={classes.popover}>
 			<Account address={activeAddress || ''} label={accountLabel} />
 			{activeProxy && activeProxyType && (
 				<Account
