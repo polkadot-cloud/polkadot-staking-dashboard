@@ -9,7 +9,7 @@ export const Wrapper = styled.span`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin: 0.5rem 0.2rem 0.5rem 0;
+  margin: 0.25rem 0.2rem 0.25rem 0;
   padding: 0rem 0.5rem 0rem 0.95rem;
   position: relative;
   transition: background 0.15s ease;

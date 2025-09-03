@@ -60,7 +60,7 @@
     z-index: 7;
 
     @media (max-width: $page-width-medium-threshold) {
-      min-width: $side-menu-floating-width;
+      width: 100%;
       max-width: $side-menu-floating-width;
       position: fixed;
       top: 0;

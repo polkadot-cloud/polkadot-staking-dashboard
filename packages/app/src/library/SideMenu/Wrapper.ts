@@ -23,7 +23,8 @@ export const Wrapper = styled.div<MinimisedProps>`
 			: `${SideMenuMaximisedWidth}px`};
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
-    width: ${SideMenuHiddenWidth}px;
+    width: 100%;
+    max-width: ${SideMenuHiddenWidth}px;
   }
 
   padding: 0 0.5rem 1rem 0;
@@ -100,6 +101,7 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   padding-top: 1rem;
   position: relative;
   margin-left: ${(props) => (props.$minimised ? '0.75rem' : '0.75rem')};
+  margin-bottom: ${(props) => (props.$advancedMode ? '0' : '0.5rem')};
   transition: transform 0.25s ease;
 
   > svg  {  
