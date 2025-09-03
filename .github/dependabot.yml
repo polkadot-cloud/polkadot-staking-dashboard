@@ -56,10 +56,6 @@ updates:
           - 'locales'
           - 'styles'
           - 'assets'
-      lottie:
-        patterns:
-          - '@dotlottie/*'
-          - '@lottiefiles/*'
       wagmi:
         patterns:
           - 'viem'

@@ -3,6 +3,7 @@
 
 // Global Constants
 export const DappName = 'Polkadot Cloud Staking'
+export const PlatformUrl = 'https://polkadot.cloud'
 export const ManualSigners = ['ledger', 'vault', 'wallet_connect']
 export const DiscordSupportUrl = 'https://discord.gg/QY7CSSJm3D'
 export const MailSupportAddress = 'staking@polkadot.cloud'
@@ -10,7 +11,7 @@ export const GitHubURl =
 	'https://github.com/polkadot-cloud/polkadot-staking-dashboard'
 
 // Element Thresholds
-export const SideMenuHiddenWidth = 195
+export const SideMenuHiddenWidth = 250
 export const SideMenuMaximisedWidth = 145
 export const SideMenuMinimisedWidth = 75
 export const SectionFullWidthThreshold = 1000

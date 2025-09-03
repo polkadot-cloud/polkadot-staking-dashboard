@@ -35,6 +35,7 @@ Las variables de URL actualmente compatibles son las siguientes:
 
 - **n**: Red predeterminada a la que conectarse al visitar la aplicación
 - **l**: Idioma a utilizar al visitar la aplicación
+- **m**: El modo a utilizar al visitar la aplicación (ya sea "simple" o "avanzado")
 - **a**: Cuenta a la que conectarse al visitar la aplicación (se ignora si la cuenta no está presente en las cuentas importadas del usuario)
 
 Como ejemplo, la siguiente URL cargará Kusama y utilizará la localización en chino:

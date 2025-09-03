@@ -11,9 +11,7 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  border-radius: ${(props) => (props.$minimised ? '0.7rem' : 0)};
-  background: none;
-  padding: 0.5rem 1rem 0.5rem 1.25rem;
+  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--background-canvas-card-secondary)' : 'none')};
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -25,12 +23,13 @@ export const Wrapper = styled.div<MinimisedProps>`
 			: `${SideMenuMaximisedWidth}px`};
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
-    width: ${SideMenuHiddenWidth}px;
+    width: 100%;
+    max-width: ${SideMenuHiddenWidth}px;
   }
 
-  padding: ${(props) =>
-		props.$minimised ? `0.5rem 1rem 0.5rem 1rem` : `0rem 1rem 1rem 1rem`};
-  margin: 0.75rem 0;
+  padding: 0 0.5rem 1rem 0;
+  padding-left: ${(props) => (props.$minimised ? '0.5rem' : '0')};
+  margin: 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -48,68 +47,107 @@ export const Wrapper = styled.div<MinimisedProps>`
     &:first-child {
       flex-grow: 1;
     }
+
+    > button {
+      width: 100%;
+      text-align: left;
+    }
+
     > .inner {
-      padding-left: ${(props) => (props.$minimised ? '0.1rem' : '0.25rem')};
+      padding-left: ${(props) => (props.$advancedMode ? '0' : props.$minimised ? '0.1rem' : '0')};
+      transition: opacity 0.15s;
+      > button {
+        width: 100%;
+      }
     }
   }
 `
 
-export const LogoWrapper = styled.button<MinimisedProps>`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: ${(props) => (props.$minimised ? 'center' : 'flex-start')};
-  align-items: center;
+export const CategoryHeader = styled.h3`
+  color: var(--accent-color-primary);
+  border-bottom: 1px solid var(--accent-color-primary);
+  font-family: InterSemiBold, sans-serif;
+  margin: 1.12rem 0.75rem 0.75rem 0.25rem;
+  padding-bottom: 0.78rem;
+  padding-left: 0.55rem;
   width: 100%;
-  height: 2.8rem;
-  padding: ${(props) => (props.$minimised ? '0' : '0.4rem 0 0.4rem 0.5rem')};
-  margin-top: ${(props) => (props.$minimised ? '0' : '0.6rem')};
-  margin-bottom: ${(props) => (props.$minimised ? '0.75rem' : '0.5rem')};
-  position: relative;
-  text-transform: uppercase;
+  display: flex;
+  transition: transform 0.2s;
 
-  > .toggle {
-    position: absolute;
-    top: ${(props) => (props.$minimised ? '0.9rem' : '-0.1rem')};
-    right: ${(props) => (props.$minimised ? '-0.25rem' : '0')};
-    height: 100%;
-    display: flex;
-    align-items: center;
 
-    > .label {
-      background: var(--background-primary);
-      color: var(--text-color-secondary);
-      width: 1.5rem;
-      height: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
+  &:hover {
+    transform: scale(1.02);
+  }
+  
+  > span {
+    &:first-child {
+      flex-grow: 1
+    }
+    &:first-child {
+      align-self: flex-end;
     }
   }
-  > span {
-    margin-top: 0.25rem;
+
+
+`
+
+export const LogoWrapper = styled.div<MinimisedProps>`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 3.5rem;
+  padding-top: 1rem;
+  position: relative;
+  margin-left: ${(props) => (props.$minimised ? '0.75rem' : '0.75rem')};
+  margin-bottom: ${(props) => (props.$advancedMode ? '0' : '0.5rem')};
+  transition: transform 0.25s ease;
+
+  > svg  {  
+    margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
+    width: ${(props) => (props.$minimised ? '2.25rem' : '1.75em')};
+    height: ${(props) => (props.$minimised ? '2.25rem' : '1.75rem')};
+  }
+
+  > h3 {
+    color: var(--accent-color-primary);
     margin-left: 0.75rem;
     background-clip: text;
     display: flex;
     align-items: center;
-
-    .logo {
-      width: auto;
-      height: ${(props) => (props.$minimised ? '2.15rem' : '1.45rem')};
-    }
+    font-size: 1.25rem;
   }
 
   &:hover {
-    > .toggle > .label {
-      color: var(--accent-color-primary);
-    }
+    transform: scale(1.02);
   }
 `
 
-export const Separator = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
-  width: 100%;
-  margin: 1rem 1rem 0.5rem 0;
+export const ToggleWrapper = styled.button`
+  position: absolute;
+  top: 1.7rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  right: -0.75rem;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+
+  @media(max-width: ${PageWidthMediumThreshold}px) {
+    display: none;
+  }
+
+  > .label {
+    background: var(--background-primary);
+    color: var(--text-color-secondary);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
 `
 
 export const BulletWrapper = styled.div`
@@ -164,21 +202,68 @@ export const BulletWrapper = styled.div`
     }
   }
 `
-export const AdvancedToggleWrapper = styled.div`
+
+export const BarLogoWrapper = styled.div`
+  width: calc(100% - 2rem);
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.15s;
-  margin-bottom: 1rem;
+  justify-content: center;
+  margin: 0.75rem auto 0 auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  height: 2.8rem;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  > svg {
+    height: 2.15rem;
+    
+    path {
+      fill: white;
+      width: auto;
+      height: 100%;
+    }
+  }
+`
+
+export const BarIconsWrapper = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 0.9rem;
+  flex-grow: 1;
 
-  > h4 {
-    padding: 0 0.75rem;
+  > section {
+    margin-bottom: 1rem;
+    width: calc(100% - 1.6rem);
+  }
+`
+
+export const BarButton = styled.button`
+  width: 100%;
+  padding: 0.95rem 0;
+  border-radius: 1rem;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  &.active {
+    background: rgba(255, 255, 255, 0.18);
   }
 
-  > .toggle {
-    font-size: 1.75rem;
+  > svg {
+    color: white;
+    height: 1.65rem;
+    margin: 0 0.25rem;
   }
+`
+
+export const BarFooterWrapper = styled.div`
+  width: calc(100% - 1.6rem);
+  margin: 0 auto;
+  padding: 1rem 0;
 `

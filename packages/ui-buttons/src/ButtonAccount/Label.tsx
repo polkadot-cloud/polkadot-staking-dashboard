@@ -35,6 +35,10 @@ export const Label = ({
 				? name || ellipsisFn(address)
 				: ellipsisFn(address)
 
+	const displayClasses = classNames(classes.display, {
+		[classes.minimize]: !!address,
+	})
+
 	return (
 		<div
 			className={`${className ? `${className} ` : ' '}${allClasses}`}
@@ -47,7 +51,7 @@ export const Label = ({
 					transform="grow-9"
 				/>
 			</span>
-			<span className={classes.display}>{accountDisplay}</span>
+			<span className={displayClasses}>{accountDisplay}</span>
 			{label && <span className={classes.label}>/ {label}</span>}
 			{readOnly && (
 				<FontAwesomeIcon icon={faGlasses} className={classes.icon} />

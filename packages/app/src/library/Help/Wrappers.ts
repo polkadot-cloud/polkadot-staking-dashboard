@@ -89,7 +89,7 @@ export const DefinitionWrapper = styled(motion.div)`
 `
 
 export const HelpTitle = styled.h1`
-  font-family: Poppins700, sans-serif;
+  font-family: Inter, sans-serif;
   margin: 1.75rem 0;
 `
 

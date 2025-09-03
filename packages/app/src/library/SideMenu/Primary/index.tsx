@@ -4,9 +4,11 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNetwork } from 'contexts/Network'
+import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
-import { useDotLottieButton } from 'hooks/useDotLottieButton'
-import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { Tooltip } from 'ui-core/base'
 import { registerSaEvent } from 'utils'
 import type { PrimaryProps } from '../types'
 import { BulletWrapper } from '../Wrapper'
@@ -18,47 +20,68 @@ export const Primary = ({
 	to,
 	bullet,
 	minimised,
-	lottie,
+	faIcon,
+	advanced = false,
 }: PrimaryProps) => {
-  const { setSideMenu } = useUi()
-  const { network } = useNetwork()
-  const { icon, play } = useDotLottieButton(lottie as string)
+	const { t } = useTranslation('app')
+	const navigate = useNavigate()
+	const { setSideMenu } = useUi()
+	const { network } = useNetwork()
+	const { themeElementRef } = useTheme()
 
-  return (
-    <Link
-      to={to}
-      onClick={() => {
-        if (!active) {
-          play()
-          setSideMenu(false)
-          registerSaEvent(`${network.toLowerCase()}_${name}_page_visit`)
-        }
-      }}
-    >
-      <Wrapper
-        className={`${active ? `active` : `inactive`}${
-          minimised ? ` minimised` : ``
-        }${bullet ? ` ${bullet}` : ``}`}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{
-          duration: 0.1,
-        }}
-      >
-        <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {icon}
-        </div>
-        {!minimised && (
-          <>
-            <h4 className="name">{name}</h4>
-            {bullet && (
-              <BulletWrapper className={bullet}>
-                <FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-              </BulletWrapper>
-            )}
-          </>
-        )}
-      </Wrapper>
-    </Link>
-  )
+	const Inner = (
+		<button
+			type="button"
+			onClick={() => {
+				registerSaEvent(`${network.toLowerCase()}_${name}_page_visit`)
+				if (typeof to === 'function') {
+					to()
+				} else {
+					navigate(to)
+				}
+				if (!active) {
+					setSideMenu(false)
+				}
+			}}
+		>
+			<Wrapper
+				className={`${active ? `active` : `inactive`}${
+					minimised ? ` minimised` : ``
+				}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
+			>
+				<span className="iconContainer">
+					<FontAwesomeIcon
+						icon={faIcon}
+						className="icon"
+						transform={minimised ? 'grow-2' : undefined}
+					/>
+				</span>
+				{!minimised && (
+					<>
+						<h4 className="name">{name}</h4>
+						{bullet && (
+							<BulletWrapper className={bullet}>
+								<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+							</BulletWrapper>
+						)}
+					</>
+				)}
+			</Wrapper>
+		</button>
+	)
+
+	const InnerWithTooltip = (
+		<Tooltip
+			text={t(name)}
+			side="right"
+			container={themeElementRef.current || undefined}
+			delayDuration={0}
+			fadeIn
+			inverted
+		>
+			{Inner}
+		</Tooltip>
+	)
+
+	return minimised ? InnerWithTooltip : Inner
 }
