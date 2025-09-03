@@ -1,8 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import { getEnabledNetworks } from 'consts/util'
@@ -73,12 +72,7 @@ export const Networks = () => {
 										{networkKey === key && (
 											<h4 className="selected">{t('selected')}</h4>
 										)}
-										<div>
-											<FontAwesomeIcon
-												transform="shrink-2"
-												icon={faChevronRight}
-											/>
-										</div>
+										<div></div>
 									</NetworkButton>
 								)
 							},

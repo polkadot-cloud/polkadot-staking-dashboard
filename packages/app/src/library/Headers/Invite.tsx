@@ -6,7 +6,7 @@ import { useInvites } from 'contexts/Invites'
 import { useTheme } from 'contexts/Themes'
 import { useSyncing } from 'hooks/useSyncing'
 import { useState } from 'react'
-import { InactiveButtonHeader } from 'ui-buttons'
+import { ButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { NotificationsPopover } from './Popovers/NotificationsPopover'
 
@@ -33,10 +33,9 @@ export const Invite = () => {
 			}}
 			width="350px"
 		>
-			<InactiveButtonHeader
+			<ButtonHeader
 				className="header-invite"
 				icon={faBell}
-				marginLeft
 				active
 				acknowledged={acknowledged}
 			/>

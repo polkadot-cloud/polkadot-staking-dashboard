@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { FC } from 'react'
 
 // biome-ignore lint/suspicious/noExplicitAny: <>
@@ -11,8 +12,9 @@ export type AnyFunction = any
 
 export interface PageCategory {
 	id: number
-	key: string
+	key: NavSection
 	advanced: boolean
+	defaultRoute: string
 }
 
 export type PageCategoryItems = PageCategory[]
@@ -23,7 +25,7 @@ export interface PageItem {
 	uri: string
 	hash: string
 	Entry: FC<PageProps>
-	lottie: unknown
+	faIcon: IconProp
 	advanced: boolean
 	bullet?: BulletType
 }
@@ -39,3 +41,5 @@ interface PageProp {
 }
 
 export type BulletType = 'success' | 'accent' | 'warning' | 'danger'
+
+export type NavSection = 'stake' | 'validators'

@@ -6,8 +6,9 @@ import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
 import { AdvancedModeKey, PageWidthMediumThreshold } from 'consts'
 import type { ReactNode, RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import type { AnyJson } from 'types'
+import type { AnyJson, NavSection } from 'types'
 import type { UIContextInterface } from './types'
+import { getInitialAdvancedMode } from './util'
 
 export const [UIContext, useUi] = createSafeContext<UIContextInterface>()
 
@@ -20,8 +21,11 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
 	// Get advanced mode state from local storage, default to false
 	const [advancedMode, setAdvancedModeState] = useState<boolean>(
-		localStorageOrDefault(AdvancedModeKey, true, true) as boolean,
+		getInitialAdvancedMode(),
 	)
+
+	// The active side bar section
+	const [activeSection, setActiveSection] = useState<NavSection>('stake')
 
 	const setAdvancedMode = (value: boolean) => {
 		localStorage.setItem(AdvancedModeKey, String(value))
@@ -91,12 +95,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 				setUserSideMenuMinimised,
 				setContainerRefs,
 				sideMenuOpen,
-				sideMenuMinimised: sideMenuMinimised && advancedMode,
+				sideMenuMinimised: sideMenuMinimised && !advancedMode,
 				containerRefs,
 				isBraveBrowser,
 				userSideMenuMinimised,
 				advancedMode,
 				setAdvancedMode,
+				activeSection,
+				setActiveSection,
 			}}
 		>
 			{children}

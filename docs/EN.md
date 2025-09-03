@@ -35,6 +35,7 @@ The currently supported URL variables are as follows:
 
 - **n**: Default network to connect to upon visiting the app
 - **l**: Language to use upon visiting the app
+- **m**: The mode to use upon visiting the app (either "simple" or "advanced")
 - **a**: The account to connect to upon visiting the app (ignored if the account is not present in the user's imported accounts)
 
 As an example, the following URL will load Kusama and use Chinese localisation:

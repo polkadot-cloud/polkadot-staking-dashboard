@@ -1,10 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { BulletType } from 'types'
 
 export interface MinimisedProps {
+	$advancedMode?: boolean
 	$minimised?: boolean
 }
 
@@ -16,10 +18,11 @@ export interface HeadingProps {
 export interface PrimaryProps {
 	name: string
 	active: boolean
-	to: string
-	lottie: unknown // Lottie animation object
+	to: string | (() => void)
+	faIcon: IconProp
 	bullet?: BulletType
 	minimised: boolean
+	advanced?: boolean
 }
 
 export interface SecondaryProps {

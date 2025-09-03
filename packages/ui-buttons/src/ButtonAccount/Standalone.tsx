@@ -22,7 +22,6 @@ export const Standalone = ({
 	const allClasses = classNames(classes.btnAccount, {
 		[classes.marginLeft]: marginLeft,
 	})
-	const arrowClasses = classNames(classes.arrow, classes.noBorder)
 
 	return (
 		<button
@@ -32,8 +31,8 @@ export const Standalone = ({
 			disabled={disabled}
 			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
 		>
-			{label}
-			<div className={arrowClasses}>
+			<span className={classes.display}>{label}</span>
+			<div className={classes.arrow}>
 				<FontAwesomeIcon icon={faChevronRight} transform="shrink-5" />
 			</div>
 		</button>

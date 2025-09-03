@@ -3,37 +3,97 @@
 
 @use 'styles/theme/_variables' as *;
 
-.side {
-  /* maximised by default, or minimised otherwise. */
-  min-width: $side-menu-maximised-width;
-  max-width: $side-menu-maximised-width;
-  z-index: 7;
+.container {
+  display: flex;
+  height: 100vh;
   position: sticky;
   top: 0;
-  height: 100vh;
+  z-index: 7;
+}
+
+.bar {
+  background: var(--accent-color-primary);
+  width: $side-bar-width;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  z-index: 7;
+
+  @media (max-width: $page-width-medium-threshold) {
+    display: none;
+  }
+
+  &.transparent {
+    opacity: 0.2;
+  }
+}
+
+.nav {
+  min-width: $side-nav-maximised-width;
+  max-width: $side-nav-maximised-width;
+  height: inherit;
   flex: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
 
-  @media (max-width: $page-width-medium-threshold) {
-    min-width: $side-menu-hidden-width;
-    max-width: $side-menu-hidden-width;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-
-  &.minimised {
-    @media (min-width: ($page-width-medium-threshold + 1px)) {
-      min-width: $side-menu-minimised-width;
-      max-width: $side-menu-minimised-width;
+  &.default {
+    @media (max-width: $page-width-medium-threshold) {
+      display: none;
+    }
+    &.minimised {
+      @media (min-width: ($page-width-medium-threshold + 1px)) {
+        min-width: $side-nav-minimised-width;
+        max-width: $side-nav-minimised-width;
+      }
     }
   }
-  &.hidden {
+
+  &.transparent {
+    opacity: 0.2;
+  }
+
+  &.floating {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 7;
+
     @media (max-width: $page-width-medium-threshold) {
-      left: calc($side-menu-hidden-width * -1);
+      width: 100%;
+      max-width: $side-menu-floating-width;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    @media (min-width: ($page-width-medium-threshold + 1px)) {
+      display: none;
+    }
+    &.hidden {
+      @media (max-width: $page-width-medium-threshold) {
+        left: calc($side-menu-floating-width * -1);
+      }
     }
   }
 }
+
+.heading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  opacity: 1;
+  align-items: center;
+
+  h5 {
+    color: var(--text-color-secondary);
+    margin: 1.1rem 0 0.75rem 0;
+    padding: 0 0.5rem;
+    opacity: 0.7;
+  }
+
+  &.minimised {
+    justify-content: center;
+    opacity: 0.5;
+  }
+}
+

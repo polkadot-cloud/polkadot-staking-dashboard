@@ -7,7 +7,11 @@ import type { Plugin } from 'types'
 //
 // NOTE: If you are forking the staking dashboard and do not wish to enforce a plugin in production,
 // you can remove it from this list
-export const CompulsoryPluginsProduction: Plugin[] = ['staking_api']
+export const CompulsoryPluginsProduction: Plugin[] = [
+	'staking_api',
+	'subscan',
+	'polkawatch',
+]
 
 export const PluginsList: Plugin[] = ['staking_api', 'subscan', 'polkawatch']
 

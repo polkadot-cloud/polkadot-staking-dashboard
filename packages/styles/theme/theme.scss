@@ -40,13 +40,13 @@ SPDX-License-Identifier: GPL-3.0-only */
   --border-primary-color: #e2e2e2;
   --border-secondary-color: #cfcccc;
   --button-primary-background: #efeeee;
-  --button-secondary-background: #e7e5e5;
+  --button-secondary-background: #f1f1f1;
   --button-tertiary-background: #ececec;
   --button-tab-background: #e4e2e2;
   --button-tab-canvas-background: #d9d9d9;
-  --button-hover-background: #e8e6e6;
+  --button-hover-background: #e9e9e9;
   --button-popover-tab-background: #f3f3f3;
-  --card-shadow-color: rgb(158 158 158 / 20%);
+  --card-shadow-color: rgba(27, 19, 19, 0.2);
   --card-deep-shadow-color: rgb(158 158 158 / 50%);
   --card-shadow-color-secondary: #e7e7e7;
   --accent-color-primary: var(--accent-color-primary-light);
@@ -69,23 +69,20 @@ SPDX-License-Identifier: GPL-3.0-only */
   --text-color-secondary: #585858;
   --text-color-tertiary: #888;
   --text-color-invert: #fafafa;
-  --gradient-background: linear-gradient(
-    180deg,
-    #efeeee 0%,
-    #efeeee 100px,
-    #e6e6e6 80%,
-    #fbede8 100%
-  );
+  --body-background: #efeeee;
+  
   --gradient-side-menu: linear-gradient(
     180deg,
     rgb(244 242 242 / 93%) 0%,
     rgb(228 225 225 / 93%) 100%
   );
+  --highlight-solid: rgb(0 0 0 / 4%) 0%;
   --highlight-primary: rgb(224 222 222 / 75%);
   --highlight-secondary: linear-gradient(
     90deg,
-    rgb(0 0 0 / 4%) 0%,
-    rgb(0 0 0 / 1%) 100%
+    rgb(0 0 0 / 6%) 0%,
+    rgb(0 0 0 / 1%) 95%,
+    rgb(0 0 0 / 0%) 100%
   );
   --grid-color-primary: #e3e3e3;
   --grid-color-secondary: #e8e8e8;
@@ -151,17 +148,13 @@ SPDX-License-Identifier: GPL-3.0-only */
   --text-color-secondary: #938e94;
   --text-color-tertiary: #817d82;
   --text-color-invert: #0f0e0f;
-  --gradient-background: linear-gradient(
-    180deg,
-    rgb(36 32 36) 0%,
-    rgb(36 32 36) 100px,
-    rgb(32 28 32) 100%
-  );
+  --body-background:rgb(36 32 36) 0%;
   --gradient-side-menu: linear-gradient(
     180deg,
     rgb(48 41 48) 0%,
     rgb(30 27 30) 100%
   );
+  --highlight-solid: rgb(255 255 255 / 3%);
   --highlight-primary: rgb(255 255 255 / 8%);
   --highlight-secondary: linear-gradient(
     90deg,

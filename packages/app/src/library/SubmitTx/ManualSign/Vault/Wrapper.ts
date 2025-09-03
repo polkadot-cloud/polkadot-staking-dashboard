@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
 
   .title {
     color: var(--accent-color-primary);
-    font-family: 'Poppins700';
+    font-family: Inter, sans-serif;
     margin-bottom: 1rem;
   }
 

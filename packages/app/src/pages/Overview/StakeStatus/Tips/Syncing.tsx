@@ -1,13 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useDotLottieButton } from 'hooks/useDotLottieButton'
+import { faRefresh } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers'
 
 export const Syncing = () => {
 	const { t } = useTranslation('tips')
-	const { icon } = useDotLottieButton('refresh', { autoLoop: true })
 
 	return (
 		<ItemsWrapper
@@ -27,9 +27,12 @@ export const Syncing = () => {
 							marginRight: '0.5rem',
 							width: '1.5rem',
 							height: '1.5rem',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
 						}}
 					>
-						{icon}
+						<FontAwesomeIcon icon={faRefresh} spin />
 					</section>
 					<section>
 						<div className="desc">

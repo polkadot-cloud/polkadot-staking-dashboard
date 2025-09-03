@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PageCategories } from 'config/pages'
-import { getPagesConfig } from 'config/util'
+import { getPagesConfig, pageKeyExistsInCategory } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -15,10 +15,18 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import type { PageCategory, PageItem, PagesConfigItems } from 'types'
-import { Heading } from './Heading/Heading'
+import { Page } from 'ui-core/base'
 import { Primary } from './Primary'
 
-export const Main = () => {
+export const Main = ({
+	activeCategory,
+	showHeaders = false,
+	hidden = false,
+}: {
+	activeCategory: number | null
+	showHeaders?: boolean
+	hidden?: boolean
+}) => {
 	const { t } = useTranslation('app')
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
@@ -36,7 +44,16 @@ export const Main = () => {
 		(nominee) => nominee.prefs.commission === 100,
 	)
 
-	const pages: PageItem[] = getPagesConfig(network, advancedMode)
+	const pages: PageItem[] = getPagesConfig(
+		network,
+		activeCategory,
+		advancedMode,
+	)
+
+	const pageChanged = activeCategory
+		? !pageKeyExistsInCategory(pathname, activeCategory)
+		: false
+
 	let i = 0
 	for (const { uri } of pages) {
 		const handleBullets = (): boolean => {
@@ -91,25 +108,37 @@ export const Main = () => {
 		<>
 			{pageConfig.categories.map(
 				({ id: categoryId, key: categoryKey }: PageCategory) => (
-					<div className="inner" key={`sidemenu_category_${categoryId}`}>
-						{categoryKey !== 'default' && (
-							<Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
+					<div
+						className="inner"
+						key={`sidemenu_category_${categoryId}`}
+						style={{ opacity: hidden ? 0 : 1 }}
+					>
+						{showHeaders && (
+							<Page.Side.Heading
+								title={t(categoryKey)}
+								minimised={sideMenuMinimised}
+							/>
 						)}
 						{pagesToDisplay.map(
-							({ category, hash, key, lottie, bullet }: PageItem) => (
-								<Fragment key={`sidemenu_page_${categoryId}_${key}`}>
-									{category === categoryId && (
-										<Primary
-											name={t(key)}
-											to={hash}
-											active={hash === pathname}
-											lottie={lottie}
-											bullet={bullet}
-											minimised={sideMenuMinimised}
-										/>
-									)}
-								</Fragment>
-							),
+							({ category, hash, key, faIcon, bullet }: PageItem, index) => {
+								return (
+									<Fragment key={`sidemenu_page_${categoryId}_${key}`}>
+										{category === categoryId && (
+											<Primary
+												name={t(key)}
+												to={hash}
+												active={
+													hash === pathname || (index === 0 && pageChanged)
+												}
+												faIcon={faIcon}
+												bullet={bullet}
+												minimised={sideMenuMinimised}
+												advanced={advancedMode}
+											/>
+										)}
+									</Fragment>
+								)
+							},
 						)}
 					</div>
 				),

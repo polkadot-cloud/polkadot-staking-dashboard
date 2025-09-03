@@ -1,47 +1,47 @@
 {
-  "name": "polkadot-staking-dashboard",
-  "version": "1.0.0",
-  "type": "module",
-  "license": "GPL-3.0-only",
-  "scripts": {
-    "clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo node_modules",
-    "dev": "cd packages/app && pnpm dev",
-    "check": "pnpm -r --if-present run check",
+	"name": "polkadot-staking-dashboard",
+	"version": "1.0.0",
+	"type": "module",
+	"license": "GPL-3.0-only",
+	"scripts": {
+		"clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo node_modules",
+		"dev": "cd packages/app && pnpm dev",
+		"check": "pnpm -r --if-present run check",
 		"lint": "pnpm -r --if-present run lint",
-    "test": "pnpm -r --if-present test"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.1.4",
-    "@types/chroma-js": "^3.1.1",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.5",
-    "@types/react-helmet": "^6.1.11",
-    "@vitejs/plugin-react-swc": "^3.10.0",
-    "@w3ux/types": "^2.4.1",
-    "globals": "^16.2.0",
-    "prettier": "^3.6.2",
-    "prettier-plugin-organize-imports": "^4.1.0",
-    "sass": "1.91.0",
-    "typescript": "^5.7.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "react-helmet-async>react": "19.1.0",
-      "use-sync-external-store>react": "19.1.0"
-    },
-    "ignoredBuiltDependencies": [
-      "unrs-resolver"
-    ],
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "bufferutil",
-      "esbuild",
-      "keccak",
-      "sharp",
-      "unrs-resolver",
-      "utf-8-validate"
-    ]
-  },
-  "packageManager": "pnpm@10.11.0"
+		"test": "pnpm -r --if-present test"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.1.4",
+		"@types/chroma-js": "^3.1.1",
+		"@types/react": "^19.1.10",
+		"@types/react-dom": "^19.1.5",
+		"@types/react-helmet": "^6.1.11",
+		"@vitejs/plugin-react-swc": "^3.10.0",
+		"@w3ux/types": "^2.4.1",
+		"globals": "^16.2.0",
+		"prettier": "^3.6.2",
+		"prettier-plugin-organize-imports": "^4.1.0",
+		"sass": "1.90.0",
+		"typescript": "^5.7.2"
+	},
+	"pnpm": {
+		"overrides": {
+			"react-helmet-async>react": "19.1.0",
+			"use-sync-external-store>react": "19.1.0"
+		},
+		"ignoredBuiltDependencies": [
+			"unrs-resolver"
+		],
+		"onlyBuiltDependencies": [
+			"@parcel/watcher",
+			"@swc/core",
+			"bufferutil",
+			"esbuild",
+			"keccak",
+			"sharp",
+			"unrs-resolver",
+			"utf-8-validate"
+		]
+	},
+	"packageManager": "pnpm@10.11.0"
 }
