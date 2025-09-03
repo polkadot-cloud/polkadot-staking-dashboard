@@ -13,14 +13,17 @@ export const getPagesConfig = (
 ) => {
 	const operatorsSupported = isOperatorsSupported(network)
 
+	// Filter out operators page if not supported on network
 	let pagesConfig = !operatorsSupported
 		? PagesConfig.filter((page) => page.key === 'operators')
 		: PagesConfig
 
+	// Filter by category if specified
 	if (category) {
 		pagesConfig = pagesConfig.filter((page) => page.category === category)
 	}
 
+	// Filter out advanced pages if not in advanced mode
 	if (!advancedMode) {
 		pagesConfig = pagesConfig.filter(({ advanced }) => !advanced)
 	}
@@ -39,6 +42,7 @@ export const pageKeyExistsInCategory = (
 ) => {
 	if (!pathname || category === null) return false
 
-	const categoryPages = PagesConfig.filter((page) => page.category === category)
-	return categoryPages.some((page) => page.hash === pathname)
+	return PagesConfig.filter((page) => page.category === category).some(
+		(page) => page.hash === pathname,
+	)
 }
