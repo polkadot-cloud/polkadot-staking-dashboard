@@ -28,9 +28,9 @@ export const CategoriesPopover = ({
 
 	return (
 		<div ref={popoverRef}>
-			<div className={classes.Inner}>
+			<div className={classes.inner}>
 				{PageCategories.map((category) => {
-					const allClasses = classNames(classes.Button, {
+					const allClasses = classNames(classes.button, {
 						[classes.active]: category.key === activeSection,
 					})
 
