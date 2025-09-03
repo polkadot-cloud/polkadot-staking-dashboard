@@ -52,16 +52,20 @@ export const FloatingtMenu = () => {
 							faIcon={faBook}
 							active={false}
 						/>
-						<Separator />
-						<Primary
-							to={() => {
-								setAdvancedMode(false)
-							}}
-							name={t('exitAdvancedMode')}
-							minimised={false}
-							faIcon={faRightFromBracket}
-							active={false}
-						/>
+						{advancedMode && (
+							<>
+								<Separator />
+								<Primary
+									to={() => {
+										setAdvancedMode(false)
+									}}
+									name={t('exitAdvancedMode')}
+									minimised={false}
+									faIcon={faRightFromBracket}
+									active={false}
+								/>
+							</>
+						)}
 					</div>
 				</section>
 				<section></section>
