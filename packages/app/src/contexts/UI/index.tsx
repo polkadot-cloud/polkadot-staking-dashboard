@@ -8,6 +8,7 @@ import type { ReactNode, RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { AnyJson, NavSection } from 'types'
 import type { UIContextInterface } from './types'
+import { getInitialAdvancedMode } from './util'
 
 export const [UIContext, useUi] = createSafeContext<UIContextInterface>()
 
@@ -20,7 +21,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
 	// Get advanced mode state from local storage, default to false
 	const [advancedMode, setAdvancedModeState] = useState<boolean>(
-		localStorageOrDefault(AdvancedModeKey, true, true) as boolean,
+		getInitialAdvancedMode(),
 	)
 
 	// The active side bar section
