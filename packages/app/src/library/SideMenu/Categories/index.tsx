@@ -7,6 +7,7 @@ import { PageCategories } from 'config/pages'
 import { useUi } from 'contexts/UI'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import classes from './index.module.scss'
 
 export const CategoriesPopover = ({
@@ -15,6 +16,7 @@ export const CategoriesPopover = ({
 	setOpen: Dispatch<SetStateAction<boolean>>
 }) => {
 	const { t } = useTranslation('app')
+	const navigate = useNavigate()
 	const { activeSection, setActiveSection } = useUi()
 
 	const popoverRef = useRef<HTMLDivElement>(null)
@@ -32,12 +34,14 @@ export const CategoriesPopover = ({
 						const allClasses = classNames(classes.Button, {
 							[classes.active]: category.key === activeSection,
 						})
+
 						return (
 							<button
 								type="button"
 								onClick={() => {
 									setOpen(false)
 									setActiveSection(category.key)
+									navigate(category.defaultRoute)
 								}}
 								className={allClasses}
 								key={category.id}

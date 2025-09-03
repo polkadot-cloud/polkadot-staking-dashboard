@@ -14,6 +14,7 @@ export interface PageCategory {
 	id: number
 	key: string
 	advanced: boolean
+	defaultRoute: string
 }
 
 export type PageCategoryItems = PageCategory[]

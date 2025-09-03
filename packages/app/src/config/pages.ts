@@ -19,19 +19,16 @@ import type { PageCategoryItems, PagesConfigItems } from 'types'
 
 export const PageCategories: PageCategoryItems = [
 	{
-		id: 1,
-		key: 'default',
-		advanced: false,
-	},
-	{
 		id: 2,
 		key: 'stake',
 		advanced: false,
+		defaultRoute: '/overview',
 	},
 	{
 		id: 3,
 		key: 'validators',
 		advanced: true,
+		defaultRoute: '/validators',
 	},
 ]
 
