@@ -17,7 +17,7 @@ import { LogoWrapper, Wrapper } from './Wrapper'
 export const FloatingtMenu = () => {
 	const { t } = useTranslation('app')
 	const { openHelp } = useHelp()
-	const { setSideMenu, sideMenuOpen, advancedMode } = useUi()
+	const { setSideMenu, sideMenuOpen, advancedMode, setAdvancedMode } = useUi()
 
 	// Listen to window resize to automatically hide the side menu on window resize.
 	useOnResize(() => {
@@ -55,7 +55,7 @@ export const FloatingtMenu = () => {
 						<Separator />
 						<Primary
 							to={() => {
-								openHelp(null)
+								setAdvancedMode(false)
 							}}
 							name={t('exitAdvancedMode')}
 							minimised={false}
