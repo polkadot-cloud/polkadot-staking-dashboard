@@ -46,14 +46,48 @@ export const Wrapper = styled.div<MinimisedProps>`
     &:first-child {
       flex-grow: 1;
     }
+
+    > button {
+      width: 100%;
+      text-align: left;
+    }
+
     > .inner {
       padding-left: ${(props) => (props.$advancedMode ? '0' : props.$minimised ? '0.1rem' : '0')};
-
+      transition: opacity 0.15s;
       > button {
         width: 100%;
       }
     }
   }
+`
+
+export const CategoryHeader = styled.h3`
+  color: var(--accent-color-primary);
+  border-bottom: 1px solid var(--accent-color-primary);
+  font-family: InterSemiBold, sans-serif;
+  margin: 1.12rem 0.75rem 0.75rem 0.25rem;
+  padding-bottom: 0.78rem;
+  padding-left: 0.55rem;
+  width: 100%;
+  display: flex;
+  transition: transform 0.2s;
+
+
+  &:hover {
+    transform: scale(1.02);
+  }
+  
+  > span {
+    &:first-child {
+      flex-grow: 1
+    }
+    &:first-child {
+      align-self: flex-end;
+    }
+  }
+
+
 `
 
 export const LogoWrapper = styled.div<MinimisedProps>`

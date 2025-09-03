@@ -21,9 +21,11 @@ import { Primary } from './Primary'
 export const Main = ({
 	activeCategory,
 	showHeaders = false,
+	hidden = false,
 }: {
 	activeCategory: number | null
 	showHeaders?: boolean
+	hidden?: boolean
 }) => {
 	const { t } = useTranslation('app')
 	const { syncing } = useSyncing()
@@ -106,7 +108,11 @@ export const Main = ({
 		<>
 			{pageConfig.categories.map(
 				({ id: categoryId, key: categoryKey }: PageCategory) => (
-					<div className="inner" key={`sidemenu_category_${categoryId}`}>
+					<div
+						className="inner"
+						key={`sidemenu_category_${categoryId}`}
+						style={{ opacity: hidden ? 0 : 1 }}
+					>
 						{showHeaders && categoryKey !== 'default' && (
 							<Page.Side.Heading
 								title={t(categoryKey)}

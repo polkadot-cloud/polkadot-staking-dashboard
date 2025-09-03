@@ -3,9 +3,11 @@
 
 import {
 	faBook,
+	faChevronDown,
 	faCoins,
 	faRightFromBracket,
 	faServer,
+	faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
@@ -13,10 +15,13 @@ import { getCategoryId } from 'config/util'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Page, Separator, Tooltip } from 'ui-core/base'
+import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
+import { CategoriesPopover } from './Categories'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
 import {
@@ -24,16 +29,12 @@ import {
 	BarFooterWrapper,
 	BarIconsWrapper,
 	BarLogoWrapper,
+	CategoryHeader,
 	Wrapper,
 } from './Wrapper'
 
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
-	const navigate = useNavigate()
-	const { themeElementRef } = useTheme()
-	const { openHelp, status: helpStatus } = useHelp()
-	const { status: modalStatus } = useOverlay().modal
-	const { status: canvasStatus } = useOverlay().canvas
 	const {
 		advancedMode,
 		activeSection,
@@ -41,6 +42,13 @@ export const DefaultMenu = () => {
 		setActiveSection,
 		sideMenuMinimised,
 	} = useUi()
+	const navigate = useNavigate()
+	const { themeElementRef } = useTheme()
+	const { openHelp, status: helpStatus } = useHelp()
+	const { status: modalStatus } = useOverlay().modal
+	const { status: canvasStatus } = useOverlay().canvas
+
+	const [openCategories, setOpenCategories] = useState<boolean>(false)
 
 	const transparent =
 		modalStatus === 'open' || canvasStatus === 'open' || helpStatus === 'open'
@@ -142,19 +150,33 @@ export const DefaultMenu = () => {
 				) : (
 					<Wrapper $minimised={sideMenuMinimised} $advancedMode={advancedMode}>
 						<section>
-							<h3
-								style={{
-									color: 'var(--accent-color-primary)',
-									margin: '1.12rem 0.75rem 0.75rem 0.25rem',
-									paddingBottom: '0.78rem',
-									paddingLeft: '0.55rem',
-									borderBottom: '1px solid var(--accent-color-primary)',
-									fontFamily: 'InterSemiBold, sans-serif',
+							<Popover
+								open={openCategories}
+								portalContainer={themeElementRef.current || undefined}
+								content={<CategoriesPopover setOpen={setOpenCategories} />}
+								onTriggerClick={() => {
+									setOpenCategories(!openCategories)
 								}}
+								width="145px"
+								align="start"
+								arrow={false}
+								sideOffset={0}
+								transparent
 							>
-								{t(activeSection || 'stake', { ns: 'app' })}
-							</h3>
-							<Main activeCategory={getCategoryId(activeSection)} />
+								<CategoryHeader className="menu-categories">
+									<span>{t(activeSection || 'stake', { ns: 'app' })}</span>
+									<span>
+										<FontAwesomeIcon
+											icon={openCategories ? faTimes : faChevronDown}
+											transform={openCategories ? 'shrink-2' : 'shrink-4'}
+										/>
+									</span>
+								</CategoryHeader>
+							</Popover>
+							<Main
+								activeCategory={getCategoryId(activeSection)}
+								hidden={openCategories}
+							/>
 						</section>
 						<section></section>
 					</Wrapper>
