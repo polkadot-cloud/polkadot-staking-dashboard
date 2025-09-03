@@ -11,12 +11,7 @@ export const SideMenuToggle = () => {
 
 	return (
 		<MenuWrapper>
-			<button
-				type="button"
-				onClick={() => {
-					setSideMenu(!sideMenuOpen)
-				}}
-			>
+			<button type="button" onClick={() => setSideMenu(!sideMenuOpen)}>
 				<FontAwesomeIcon icon={faBars} transform="grow-2" />
 			</button>
 		</MenuWrapper>
