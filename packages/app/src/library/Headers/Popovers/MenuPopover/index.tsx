@@ -33,6 +33,7 @@ import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem, MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
+import { DefaultButton } from './DefaultButton'
 
 export const MenuPopover = ({
 	setOpen,
@@ -141,56 +142,35 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
-			<MenuItemButton
+			<DefaultButton
+				text={t('share', { ns: 'app' })}
+				note={notStaking ? t('notStaking', { ns: 'app' }) : undefined}
 				disabled={notStaking}
+				iconLeft={faShare}
 				onClick={() => {
 					setOpen(false)
 					openModal({ key: 'Invite', size: 'sm' })
 				}}
-			>
-				<div>
-					<FontAwesomeIcon icon={faShare} transform="shrink-2" />
-				</div>
-				<div>
-					<h3>{t('share', { ns: 'app' })}</h3>
-					{notStaking && <div>{t('notStaking', { ns: 'app' })}</div>}
-				</div>
-			</MenuItemButton>
+			/>
 			{(showPlugins || !import.meta.env.PROD) && (
-				<MenuItemButton
+				<DefaultButton
+					text={t('plugins', { ns: 'modals' })}
+					iconLeft={faPuzzlePiece}
 					onClick={() => {
 						setOpen(false)
 						openModal({ key: 'Plugins' })
 					}}
-				>
-					<div>
-						<FontAwesomeIcon icon={faPuzzlePiece} transform="shrink-2" />
-					</div>
-					<div>
-						<h3>{t('plugins', { ns: 'modals' })}</h3>
-					</div>
-				</MenuItemButton>
+				/>
 			)}
-			<MenuItemButton
+			<DefaultButton
+				text="GitHub"
+				iconLeft={faGithub}
+				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
 					window.open(GitHubURl, '_blank')
 				}}
-			>
-				<div>
-					<FontAwesomeIcon icon={faGithub} transform="grow-0" />
-				</div>
-				<div>
-					<h3>GitHub</h3>
-				</div>
-				<div>
-					<div>
-						<h4>
-							<FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-1" />
-						</h4>
-					</div>
-				</div>
-			</MenuItemButton>
+			/>
 			<MenuItem>
 				<button
 					type="button"
