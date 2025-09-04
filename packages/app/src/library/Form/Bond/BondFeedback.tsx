@@ -88,7 +88,7 @@ export const BondFeedback = ({
 	// bond amount to minimum threshold.
 	const minBond =
 		bondFor === 'pool'
-			? bonding || isDepositor()
+			? isDepositor()
 				? minCreateBond
 				: minJoinBond
 			: minNominatorBond
