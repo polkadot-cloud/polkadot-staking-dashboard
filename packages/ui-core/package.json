@@ -19,8 +19,8 @@
 		"./types": "./src/types.ts"
 	},
 	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^6.7.2",
-		"@fortawesome/free-solid-svg-icons": "^6.7.2",
+		"@fortawesome/fontawesome-svg-core": "^7.0.1",
+		"@fortawesome/free-solid-svg-icons": "^7.0.1",
 		"@fortawesome/react-fontawesome": "^0.2.2",
 		"@w3ux/react-polkicon": "^3.2.7",
 		"@w3ux/utils": "2.2.3",
