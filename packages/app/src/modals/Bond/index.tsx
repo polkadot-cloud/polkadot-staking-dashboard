@@ -164,7 +164,7 @@ export const Bond = () => {
 					setters={[handleSetBond]}
 					parentErrors={warnings}
 					txFees={BigInt(largestTxFee.toString())}
-					bonding={isBonding}
+					bonding={bondFor === 'nominator' && isBonding}
 				/>
 				<p>{t('newlyBondedFunds')}</p>
 			</Padding>
