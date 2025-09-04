@@ -13,7 +13,8 @@ export const Wrapper = styled.span`
   padding: 0rem 0.5rem 0rem 0.95rem;
   position: relative;
   transition: background 0.15s ease;
-
+  cursor: pointer;
+  
   .iconContainer {
     width: 2.5rem;
   }
