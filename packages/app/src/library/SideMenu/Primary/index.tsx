@@ -27,42 +27,45 @@ export const Primary = ({
 	const { themeElementRef } = useTheme()
 
 	const Inner = (
-		<button
-			type="button"
-			onClick={() => {
-				if (typeof to === 'function') {
-					to()
-				} else {
-					navigate(to)
-				}
-				if (!active) {
-					setSideMenu(false)
-				}
-			}}
+		<Wrapper
+			className={`${active ? `active` : `inactive`}${
+				minimised ? ` minimised` : ``
+			}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
 		>
-			<Wrapper
-				className={`${active ? `active` : `inactive`}${
-					minimised ? ` minimised` : ``
-				}${bullet ? ` ${bullet}` : ``}${advanced ? ` advanced` : ``}`}
-			>
-				<span className="iconContainer">
-					<FontAwesomeIcon
-						icon={faIcon}
-						className="icon"
-						transform={minimised ? 'grow-2' : undefined}
-					/>
-				</span>
-				{!minimised && (
-					<>
-						<h4 className="name">{name}</h4>
-						{bullet && (
-							<BulletWrapper className={bullet}>
-								<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
-							</BulletWrapper>
-						)}
-					</>
-				)}
-			</Wrapper>
+			<span className="iconContainer">
+				<FontAwesomeIcon
+					icon={faIcon}
+					className="icon"
+					transform={minimised ? 'grow-2' : undefined}
+				/>
+			</span>
+			{!minimised && (
+				<>
+					<h4 className="name">{name}</h4>
+					{bullet && (
+						<BulletWrapper className={bullet}>
+							<FontAwesomeIcon icon={faCircle} transform="shrink-6" />
+						</BulletWrapper>
+					)}
+				</>
+			)}
+		</Wrapper>
+	)
+
+	const onNavigate = () => {
+		if (typeof to === 'function') {
+			to()
+		} else {
+			navigate(to)
+		}
+		if (!active) {
+			setSideMenu(false)
+		}
+	}
+
+	const InnerNoTooltip = (
+		<button type="button" onClick={onNavigate}>
+			{Inner}
 		</button>
 	)
 
@@ -71,6 +74,7 @@ export const Primary = ({
 			text={t(name)}
 			side="right"
 			container={themeElementRef.current || undefined}
+			onTriggerClick={onNavigate}
 			delayDuration={0}
 			fadeIn
 			inverted
@@ -79,5 +83,5 @@ export const Primary = ({
 		</Tooltip>
 	)
 
-	return minimised ? InnerWithTooltip : Inner
+	return minimised ? InnerWithTooltip : InnerNoTooltip
 }
