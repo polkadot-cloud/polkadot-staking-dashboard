@@ -39,6 +39,7 @@ export const AccountButton = ({
 
 	// Accumulate account data.
 	const meta = getAccount(address || '')
+	const name = meta?.name
 
 	const imported = !!meta
 	const connectTo = delegator || address || ''
@@ -106,7 +107,7 @@ export const AccountButton = ({
 									{proxyType} {t('proxy')}
 								</span>
 							)}
-							{meta?.name ?? ellipsisFn(address ?? '')}
+							{!name || name === '' ? ellipsisFn(address ?? '') : name}
 						</span>
 						{meta?.source === 'external' && (
 							<div
