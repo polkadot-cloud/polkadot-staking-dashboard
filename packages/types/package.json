@@ -13,7 +13,7 @@
 	},
 	"dependencies": {
 		"dedot": "^0.15.0",
-		"@fortawesome/fontawesome-svg-core": "^6.7.2"
+		"@fortawesome/fontawesome-svg-core": "^7.0.1"
 	},
 	"devDependencies": {
 		"@dedot/chaintypes": "^0.150.0",
