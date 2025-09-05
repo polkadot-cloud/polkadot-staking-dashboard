@@ -85,8 +85,8 @@ importers:
         specifier: ^2.3.4
         version: 2.3.4(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.6.10
-        version: 3.6.10(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.7.0
+        version: 3.7.0(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: 2.2.6
         version: 2.2.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -283,8 +283,8 @@ importers:
         specifier: ^0.145.0
         version: 0.145.0(dedot@0.15.2(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@w3ux/observables-connect':
-        specifier: ^0.10.7
-        version: 0.10.7(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.10.8
+        version: 0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -317,8 +317,8 @@ importers:
   packages/global-bus:
     dependencies:
       '@w3ux/observables-connect':
-        specifier: ^0.10.7
-        version: 0.10.7(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.10.8
+        version: 0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -1167,17 +1167,13 @@ packages:
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
 
-  '@humanfs/node@0.16.6':
-    resolution: {integrity: sha512-YuI2ZHQL78Q5HbhDiBA1X4LmYdXCKCMQIfw0pw7piHJwyREFebJUvrQN4cMssyES6x+vfUbx1CIpaQUKYdQZOw==}
+  '@humanfs/node@0.16.7':
+    resolution: {integrity: sha512-/zUx+yOsIrG4Y43Eh2peDeKCxlRt/gET6aHfaKpuq267qXdYDFViVHfMaLyygZOnl0kGWxFIgsBy8QFuTLUXEQ==}
     engines: {node: '>=18.18.0'}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
     engines: {node: '>=12.22'}
-
-  '@humanwhocodes/retry@0.3.1':
-    resolution: {integrity: sha512-JBxkERygn7Bv/GbN5Rv8Ul6LVknS+5Bp6RgDC/O8gEBU/yeH5Ui5C/OlWrTb6qct7LjjfT6Re2NxB0ln0yYybA==}
-    engines: {node: '>=18.18'}
 
   '@humanwhocodes/retry@0.4.3':
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
@@ -1302,6 +1298,12 @@ packages:
   '@metamask/utils@9.3.0':
     resolution: {integrity: sha512-w8CVbdkDrVXFJbfBSlDfafDR6BAkpDmv1bC1UJVCoVny5tW2RKAdn9i68Xf7asYT4TnUhl/hN4zfUiKQq9II4g==}
     engines: {node: '>=16.0.0'}
+
+  '@mimirdev/apps-inject@3.2.0':
+    resolution: {integrity: sha512-yKWFaZsUgxaPIU/xM8OFvWRsNld6x8iCeqbQbt/LyUsikLGlkrHOZl29MwMfSQiYAWrYNqwhFpCU07sS2DTOLQ==}
+
+  '@mimirdev/apps-sdk@3.1.0':
+    resolution: {integrity: sha512-EevWZhaaP9gKcIJeEbokAugx5X0sd8jRae1CX1Uzg5KsVxODjeLLaAE1D90Lj6//JE1NPaEq3QKi9PliSMLVNg==}
 
   '@motionone/animation@10.18.0':
     resolution: {integrity: sha512-9z2p5GFGCm0gBsZbi8rVMOAJCtw1WqBTIPw3ozk06gDvZInBPIsQcHgYogEJ4yuHJ+akuW8g1SEIOpTOvYs8hw==}
@@ -2645,13 +2647,13 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/observables-connect@0.10.7':
-    resolution: {integrity: sha512-2MsK/Ap1K+Qi+pfnHdTnneNo3R3n+Nm8iZwBIH/PVINIGTmRrych5qLzizK9dfUHfwYrq6jrF1JO7op3GNweyw==}
+  '@w3ux/observables-connect@0.10.8':
+    resolution: {integrity: sha512-Yn0IUvppljK4kuz5MGkxL/lasPSgj6t/ZKojsMf/z04xWyobGWgmAWPt3T9wx2exkIkQw0T9g1cF88Grw7GXvQ==}
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.6.10':
-    resolution: {integrity: sha512-1FyozhLzgDHkDIh3GATMCUZZKWn5l07SplNZl7NOuT8AWjE8CiT9Bv7G6fs8MP6X5F44AB5ncCUSsis/8sz7HQ==}
+  '@w3ux/react-connect-kit@3.7.0':
+    resolution: {integrity: sha512-z6pzclegybt12huK8jRe8KCdVf6tPPckxxnYjqSudrvYvZoxBLlKLSUVFR/nJ5GqnXJZjLKsZ5Z1/7CYJo2few==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -5788,16 +5790,13 @@ snapshots:
   '@humanfs/core@0.19.1':
     optional: true
 
-  '@humanfs/node@0.16.6':
+  '@humanfs/node@0.16.7':
     dependencies:
       '@humanfs/core': 0.19.1
-      '@humanwhocodes/retry': 0.3.1
+      '@humanwhocodes/retry': 0.4.3
     optional: true
 
   '@humanwhocodes/module-importer@1.0.1':
-    optional: true
-
-  '@humanwhocodes/retry@0.3.1':
     optional: true
 
   '@humanwhocodes/retry@0.4.3':
@@ -6038,6 +6037,14 @@ snapshots:
       uuid: 9.0.1
     transitivePeerDependencies:
       - supports-color
+
+  '@mimirdev/apps-inject@3.2.0':
+    dependencies:
+      '@mimirdev/apps-sdk': 3.1.0
+
+  '@mimirdev/apps-sdk@3.1.0':
+    dependencies:
+      eventemitter3: 5.0.1
 
   '@motionone/animation@10.18.0':
     dependencies:
@@ -7646,8 +7653,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/observables-connect@0.10.7(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/observables-connect@0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
+      '@mimirdev/apps-inject': 3.2.0
       '@w3ux/extension-assets': 2.2.5(react@19.1.1)
       '@w3ux/utils': 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rxjs: 7.8.2
@@ -7656,10 +7664,10 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.6.10(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.7.0(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/hooks': 2.3.4(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)
-      '@w3ux/observables-connect': 0.10.7(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+      '@w3ux/observables-connect': 0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils': 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
@@ -9015,7 +9023,7 @@ snapshots:
       '@eslint/eslintrc': 3.3.1
       '@eslint/js': 9.33.0
       '@eslint/plugin-kit': 0.3.5
-      '@humanfs/node': 0.16.6
+      '@humanfs/node': 0.16.7
       '@humanwhocodes/module-importer': 1.0.1
       '@humanwhocodes/retry': 0.4.3
       '@types/estree': 1.0.8
