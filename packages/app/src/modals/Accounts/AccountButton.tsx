@@ -82,8 +82,6 @@ export const AccountButton = ({
 		setModalStatus('closing')
 	}
 
-	console.log('name:', name, 'address: ', address)
-
 	return (
 		<AccountWrapper className={isActive ? 'active' : undefined}>
 			<div className={noBorder ? 'noBorder' : undefined}>
