@@ -23,6 +23,6 @@
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
-		"vite": "^6.3.5"
+		"vite": "^7.1.4"
 	}
 }
