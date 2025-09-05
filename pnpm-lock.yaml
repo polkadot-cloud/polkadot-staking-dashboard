@@ -76,7 +76,7 @@ importers:
         specifier: ^5.80.5
         version: 5.86.0(react@19.1.1)
       '@w3ux/extension-assets':
-        specifier: ^2.3.0
+        specifier: ^2.3.1
         version: 2.3.1(react@19.1.1)
       '@w3ux/factories':
         specifier: ^2.2.1
@@ -85,8 +85,8 @@ importers:
         specifier: ^2.3.4
         version: 2.3.4(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.7.1
-        version: 3.7.1(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.7.4
+        version: 3.7.4(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: 2.2.6
         version: 2.2.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -283,8 +283,8 @@ importers:
         specifier: ^0.150.0
         version: 0.150.0(dedot@0.15.2(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@w3ux/observables-connect':
-        specifier: ^0.10.8
-        version: 0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.11.2
+        version: 0.11.2(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -317,8 +317,8 @@ importers:
   packages/global-bus:
     dependencies:
       '@w3ux/observables-connect':
-        specifier: ^0.10.8
-        version: 0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.11.2
+        version: 0.11.2(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -2632,11 +2632,6 @@ packages:
   '@w3ux/crypto@1.2.1':
     resolution: {integrity: sha512-mnwC6ULIGN1sgrxs2asnLbAbtMMBs0MCXaYNaO0kJg67YGIr8lAWimhiiJ63nIAajyH0+08dntAGC0TyCplyvA==}
 
-  '@w3ux/extension-assets@2.2.5':
-    resolution: {integrity: sha512-sPocfDrAZWfmF8pnZIC6Chu07Nk/g5TCk+USMUEKTxD139SHaIxAaxtp2SQCaYHLsLmr8aqptgxIGdZpQvwj8A==}
-    peerDependencies:
-      react: ^19
-
   '@w3ux/extension-assets@2.3.1':
     resolution: {integrity: sha512-GLS8WH/n4rQDCzzJiKdx1KjoylwNZmG4UmQszuXDNBTPPfqkzPBcONGxEnH0Tg1jml9snlS5o1vMgoHmDehdeg==}
     peerDependencies:
@@ -2652,13 +2647,13 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/observables-connect@0.10.8':
-    resolution: {integrity: sha512-Yn0IUvppljK4kuz5MGkxL/lasPSgj6t/ZKojsMf/z04xWyobGWgmAWPt3T9wx2exkIkQw0T9g1cF88Grw7GXvQ==}
+  '@w3ux/observables-connect@0.11.2':
+    resolution: {integrity: sha512-bifU+EWL0kR9Uklk3cbhxJ1LNOwDTBh0JxvgVSb5o4NHoZH3fHtXC+Q7sjj6/eu7OkEDtohKkwUuSFfCPlXczg==}
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.7.1':
-    resolution: {integrity: sha512-4OZa6LmuZ46Vy4He/IGlq9qAIPqNFoIMgE60rQNnzggZ3ObFZEkyVaE8ixgE9zFX4r1+sLCE26XquR0hIWBgvA==}
+  '@w3ux/react-connect-kit@3.7.4':
+    resolution: {integrity: sha512-qvf3Zyiqpi+XT0VKWz1WUjVFJKWUkWxcMXdL15kjPxqcQ6nDmSEoJPmqALj3yzbCBvKUKqBP2kB/SaC2/DpNCQ==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -7641,10 +7636,6 @@ snapshots:
     dependencies:
       blakejs: 1.2.1
 
-  '@w3ux/extension-assets@2.2.5(react@19.1.1)':
-    dependencies:
-      react: 19.1.1
-
   '@w3ux/extension-assets@2.3.1(react@19.1.1)':
     dependencies:
       react: 19.1.1
@@ -7662,10 +7653,10 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/observables-connect@0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/observables-connect@0.11.2(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@mimirdev/apps-inject': 3.2.0
-      '@w3ux/extension-assets': 2.2.5(react@19.1.1)
+      '@w3ux/extension-assets': 2.3.1(react@19.1.1)
       '@w3ux/utils': 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rxjs: 7.8.2
     transitivePeerDependencies:
@@ -7673,10 +7664,10 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.7.1(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.7.4(bufferutil@4.0.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/hooks': 2.3.4(bufferutil@4.0.9)(react@19.1.1)(utf-8-validate@5.0.10)
-      '@w3ux/observables-connect': 0.10.8(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+      '@w3ux/observables-connect': 0.11.2(bufferutil@4.0.9)(react@19.1.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils': 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
