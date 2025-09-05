@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import extensions from '@w3ux/extension-assets'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
@@ -90,6 +91,17 @@ export const Wallets = ({
 					/>
 				</section>
 			))}
+			<h4>Multisig</h4>
+			<section>
+				<Extension
+					extension={{
+						id: 'mimir',
+						...extensions.mimir,
+					}}
+					last={true}
+					setOpen={setOpen}
+				/>
+			</section>
 			<h4>{t('developerTools', { ns: 'modals' })}</h4>
 			{devTools.map((extension, i) => (
 				<section key={`extension_item_${extension.id}`}>
