@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Proxy } from 'contexts/Proxies/types'
-import type { MaybeAddress, PoolMembership } from 'types'
+import type { PoolMembership } from 'types'
 
 export interface AccountButtonProps {
-	address: MaybeAddress
+	address: string
 	source: string
 	label?: string[]
 	asElement?: boolean

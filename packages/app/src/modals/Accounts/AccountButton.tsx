@@ -38,12 +38,12 @@ export const AccountButton = ({
 	const { unit, units } = getStakingChainData(network)
 
 	// Accumulate account data.
-	const meta = getAccount(address || '')
+	const meta = getAccount(address)
 	const name = meta?.name
 
 	const imported = !!meta
-	const connectTo = delegator || address || ''
-	const connectProxy = delegator ? address || null : ''
+	const connectTo = delegator || address
+	const connectProxy = delegator ? address : ''
 
 	// Determine account source icon.
 	const Icon =
@@ -82,6 +82,8 @@ export const AccountButton = ({
 		setModalStatus('closing')
 	}
 
+	console.log('name:', name, 'address: ', address)
+
 	return (
 		<AccountWrapper className={isActive ? 'active' : undefined}>
 			<div className={noBorder ? 'noBorder' : undefined}>
@@ -99,7 +101,7 @@ export const AccountButton = ({
 							</div>
 						)}
 						<div className="identicon" style={{ maxWidth: '1.9rem' }}>
-							<Polkicon address={address ?? ''} fontSize="1.9rem" />
+							<Polkicon address={address} fontSize="1.9rem" />
 						</div>
 						<span className="name">
 							{delegator && (
@@ -107,7 +109,7 @@ export const AccountButton = ({
 									{proxyType} {t('proxy')}
 								</span>
 							)}
-							{!name || name === '' ? ellipsisFn(address ?? '') : name}
+							{!name || name === '' ? ellipsisFn(address) : name}
 						</span>
 						{meta?.source === 'external' && (
 							<div
