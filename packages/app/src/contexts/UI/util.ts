@@ -40,7 +40,7 @@ export const getInitialActiveSection = (): NavSection => {
 		if (['stake', 'validators'].includes(localOrDefault)) {
 			return localOrDefault
 		}
-		return localOrDefault
+		return defaultActiveSection
 	} catch {
 		return defaultActiveSection
 	}
