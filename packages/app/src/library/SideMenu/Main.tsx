@@ -13,8 +13,13 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
-import type { PageCategory, PageItem, PagesConfigItems } from 'types'
+import { useLocation, useNavigate } from 'react-router-dom'
+import type {
+	NavSection,
+	PageCategory,
+	PageItem,
+	PagesConfigItems,
+} from 'types'
 import { Page } from 'ui-core/base'
 import { Primary } from './Primary'
 
@@ -22,12 +27,15 @@ export const Main = ({
 	activeCategory,
 	showHeaders = false,
 	hidden = false,
+	setLocalCategory,
 }: {
 	activeCategory: number | null
 	showHeaders?: boolean
 	hidden?: boolean
+	setLocalCategory?: (category: NavSection) => void
 }) => {
 	const { t } = useTranslation('app')
+	const navigate = useNavigate()
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
 	const { pathname } = useLocation()
@@ -126,7 +134,12 @@ export const Main = ({
 										{category === categoryId && (
 											<Primary
 												name={t(key)}
-												to={hash}
+												to={() => {
+													if (!activeCategory && !!setLocalCategory) {
+														setLocalCategory(categoryKey)
+													}
+													navigate(hash)
+												}}
 												active={
 													hash === pathname || (index === 0 && pageChanged)
 												}

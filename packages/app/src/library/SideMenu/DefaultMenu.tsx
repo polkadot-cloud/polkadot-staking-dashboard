@@ -15,8 +15,7 @@ import { getCategoryId } from 'config/util'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
-import { usePageFromHash } from 'hooks/usePageFromHash'
-import { useState } from 'react'
+import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import type { NavSection } from 'types'
@@ -35,19 +34,22 @@ import {
 	Wrapper,
 } from './Wrapper'
 
-export const DefaultMenu = () => {
+export const DefaultMenu = ({
+	localCategory,
+	setLocalCategory,
+}: {
+	localCategory: NavSection
+	setLocalCategory: Dispatch<SetStateAction<NavSection>>
+}) => {
 	const { t } = useTranslation('app')
 	const { advancedMode, setAdvancedMode, sideMenuMinimised } = useUi()
 	const navigate = useNavigate()
 	const { themeElementRef } = useTheme()
-	const { categoryKey } = usePageFromHash()
 	const { openHelp, status: helpStatus } = useHelp()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
 
 	const [openCategories, setOpenCategories] = useState<boolean>(false)
-
-	const [localCategory, setLocalCategory] = useState<NavSection>(categoryKey)
 
 	const transparent =
 		modalStatus === 'open' || canvasStatus === 'open' || helpStatus === 'open'
