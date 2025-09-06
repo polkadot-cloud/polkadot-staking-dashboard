@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.3.0...consts-v1.4.0) (2025-09-06)
+
+
+### Features
+
+* Add OnFinality RPC Provider ([3c93aa2](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3c93aa2b9efc5129565f2f3cbc6a0ee8ff38f5a2))
+* get/set local `activeSection` ([#2978](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2978)) ([0f9412d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0f9412de1a18f8e26a9845242c4bc789871d62a8))
+* nav section from url & hook ([1ed6860](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1ed6860ccbc0445fde9116817a58a9d5667bba51))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.2.0...consts-v1.3.0) (2025-06-17)
 
 
