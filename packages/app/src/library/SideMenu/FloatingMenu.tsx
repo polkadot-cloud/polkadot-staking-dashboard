@@ -7,14 +7,19 @@ import CloudSVG from 'assets/icons/cloud.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
-import { useRef } from 'react'
+import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { NavSection } from 'types'
 import { Page, Separator } from 'ui-core/base'
 import { Main } from './Main'
 import { Primary } from './Primary'
 import { LogoWrapper, Wrapper } from './Wrapper'
 
-export const FloatingtMenu = () => {
+export const FloatingtMenu = ({
+	setLocalCategory,
+}: {
+	setLocalCategory: Dispatch<SetStateAction<NavSection>>
+}) => {
 	const { t } = useTranslation('app')
 	const { openHelp } = useHelp()
 	const { setSideMenu, sideMenuOpen, advancedMode, setAdvancedMode } = useUi()
@@ -40,7 +45,11 @@ export const FloatingtMenu = () => {
 						<CloudSVG />
 						<h3>Stake</h3>
 					</LogoWrapper>
-					<Main activeCategory={null} showHeaders={true} />
+					<Main
+						activeCategory={null}
+						showHeaders={true}
+						setLocalCategory={advancedMode ? setLocalCategory : undefined}
+					/>
 					<div className="inner">
 						<Page.Side.Heading title={t('support')} minimised={false} />
 						<Primary
