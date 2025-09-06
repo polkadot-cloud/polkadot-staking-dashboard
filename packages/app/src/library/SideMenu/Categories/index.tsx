@@ -4,7 +4,7 @@
 import { useOutsideAlerter } from '@w3ux/hooks'
 import classNames from 'classnames'
 import { PageCategories } from 'config/pages'
-import { useUi } from 'contexts/UI'
+import { usePageFromHash } from 'hooks/usePageFromHash'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -17,7 +17,7 @@ export const CategoriesPopover = ({
 }) => {
 	const { t } = useTranslation('app')
 	const navigate = useNavigate()
-	const { activeSection, setActiveSection } = useUi()
+	const { categoryKey } = usePageFromHash()
 
 	const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -31,7 +31,7 @@ export const CategoriesPopover = ({
 			<div className={classes.inner}>
 				{PageCategories.map((category) => {
 					const allClasses = classNames(classes.button, {
-						[classes.active]: category.key === activeSection,
+						[classes.active]: category.key === categoryKey,
 					})
 
 					return (
@@ -39,7 +39,6 @@ export const CategoriesPopover = ({
 							type="button"
 							onClick={() => {
 								setOpen(false)
-								setActiveSection(category.key)
 								navigate(category.defaultRoute)
 							}}
 							className={allClasses}
