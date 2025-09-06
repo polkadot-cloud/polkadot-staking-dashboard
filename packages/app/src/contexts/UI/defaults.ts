@@ -3,3 +3,6 @@
 
 // By default, advanced mode is enabled
 export const defaultAdvancedMode = true
+
+// By default, active section is 'stake'
+export const defaultActiveSection = 'stake'

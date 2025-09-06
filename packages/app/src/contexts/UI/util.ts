@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
-import { AdvancedModeKey } from 'consts'
-import { defaultAdvancedMode } from './defaults'
+import { ActiveSectionKey, AdvancedModeKey } from 'consts'
+import type { NavSection } from 'types'
+import { defaultActiveSection, defaultAdvancedMode } from './defaults'
 
 // Get the initial advanced mode setting. Prioritises URL, then local storage, then default
 export const getInitialAdvancedMode = (): boolean => {
@@ -25,5 +26,22 @@ export const getInitialAdvancedMode = (): boolean => {
 		// If an error occurs, fall back to the default value
 		localStorage.setItem(AdvancedModeKey, String(defaultAdvancedMode))
 		return defaultAdvancedMode
+	}
+}
+
+// Get the initial active section
+export const getInitialActiveSection = (): NavSection => {
+	try {
+		const localOrDefault = localStorageOrDefault(
+			ActiveSectionKey,
+			'stake',
+		) as NavSection
+
+		if (['stake', 'validators'].includes(localOrDefault)) {
+			return localOrDefault
+		}
+		return localOrDefault
+	} catch {
+		return defaultActiveSection
 	}
 }
