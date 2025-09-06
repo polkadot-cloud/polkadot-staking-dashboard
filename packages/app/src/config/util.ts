@@ -46,3 +46,22 @@ export const pageKeyExistsInCategory = (
 		(page) => page.hash === pathname,
 	)
 }
+
+// Get the category for a given page
+export const getCategoryFromPage = (pathname: string | null) => {
+	if (!pathname) return getFirstPageCategory().key
+
+	const categoryId =
+		PagesConfig.find((page) => page.key === pathname)?.category ||
+		getFirstPageCategory().id
+
+	return (
+		PageCategories.find((category) => category.id === categoryId)?.key ||
+		getFirstPageCategory().key
+	)
+}
+
+// Gets the first page category
+export const getFirstPageCategory = () => {
+	return PageCategories[0]
+}

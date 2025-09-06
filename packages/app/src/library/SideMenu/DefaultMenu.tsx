@@ -15,6 +15,7 @@ import { getCategoryId } from 'config/util'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
+import { usePageFromHash } from 'hooks/usePageFromHash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -35,15 +36,10 @@ import {
 
 export const DefaultMenu = () => {
 	const { t } = useTranslation('app')
-	const {
-		advancedMode,
-		activeSection,
-		setAdvancedMode,
-		setActiveSection,
-		sideMenuMinimised,
-	} = useUi()
+	const { advancedMode, setAdvancedMode, sideMenuMinimised } = useUi()
 	const navigate = useNavigate()
 	const { themeElementRef } = useTheme()
+	const { categoryKey } = usePageFromHash()
 	const { openHelp, status: helpStatus } = useHelp()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
@@ -76,10 +72,9 @@ export const DefaultMenu = () => {
 									<BarButton
 										type="button"
 										onClick={() => {
-											setActiveSection('stake')
 											navigate(`/overview`)
 										}}
-										className={activeSection === 'stake' ? 'active' : ''}
+										className={categoryKey === 'stake' ? 'active' : ''}
 									>
 										<FontAwesomeIcon icon={faCoins} />
 									</BarButton>
@@ -96,10 +91,9 @@ export const DefaultMenu = () => {
 									<BarButton
 										type="button"
 										onClick={() => {
-											setActiveSection('validators')
 											navigate(`/validators`)
 										}}
-										className={activeSection === 'validators' ? 'active' : ''}
+										className={categoryKey === 'validators' ? 'active' : ''}
 									>
 										<FontAwesomeIcon icon={faServer} />
 									</BarButton>
@@ -164,7 +158,7 @@ export const DefaultMenu = () => {
 								transparent
 							>
 								<CategoryHeader className="menu-categories">
-									<span>{t(activeSection || 'stake', { ns: 'app' })}</span>
+									<span>{t(categoryKey, { ns: 'app' })}</span>
 									<span>
 										<FontAwesomeIcon
 											icon={openCategories ? faTimes : faChevronDown}
@@ -174,7 +168,7 @@ export const DefaultMenu = () => {
 								</CategoryHeader>
 							</Popover>
 							<Main
-								activeCategory={getCategoryId(activeSection)}
+								activeCategory={getCategoryId(categoryKey)}
 								hidden={openCategories}
 							/>
 						</section>
