@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.0-beta.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.1...app-v2.1.0-beta.1) (2025-09-06)
+
+
+### Features
+
+* Add Mimir connect option ([#2974](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2974)) ([708ba72](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/708ba727f248840069053d008ac72510f5dfe2b8))
+* Fast nomination status syncing ([#2937](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2937)) ([a1ddb08](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a1ddb08e4151961a917aa7c93942726b342e8a73))
+* floating menu switches categories ([e32ed67](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e32ed673c11f6f7d25d4e6f228c8771f228de38d))
+* get/set local `activeSection` ([#2978](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2978)) ([0f9412d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0f9412de1a18f8e26a9845242c4bc789871d62a8))
+* nav section from url & hook ([1ed6860](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1ed6860ccbc0445fde9116817a58a9d5667bba51))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+
+
+### Bug Fixes
+
+* Remove double button ([#2971](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2971)) ([60d433c](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/60d433c5e09c7f30ab2cc7eb5d89650d620c1478))
+
 ## [2.0.0-beta.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.0...app-v2.0.0-beta.1) (2025-07-24)
 
 
