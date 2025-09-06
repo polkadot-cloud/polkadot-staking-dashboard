@@ -19,6 +19,7 @@ import { usePageFromHash } from 'hooks/usePageFromHash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import type { NavSection } from 'types'
 import { Page, Separator, Tooltip } from 'ui-core/base'
 import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
@@ -46,6 +47,8 @@ export const DefaultMenu = () => {
 
 	const [openCategories, setOpenCategories] = useState<boolean>(false)
 
+	const [localCategory, setLocalCategory] = useState<NavSection>(categoryKey)
+
 	const transparent =
 		modalStatus === 'open' || canvasStatus === 'open' || helpStatus === 'open'
 
@@ -72,9 +75,10 @@ export const DefaultMenu = () => {
 									<BarButton
 										type="button"
 										onClick={() => {
+											setLocalCategory('stake')
 											navigate(`/overview`)
 										}}
-										className={categoryKey === 'stake' ? 'active' : ''}
+										className={localCategory === 'stake' ? 'active' : ''}
 									>
 										<FontAwesomeIcon icon={faCoins} />
 									</BarButton>
@@ -91,9 +95,10 @@ export const DefaultMenu = () => {
 									<BarButton
 										type="button"
 										onClick={() => {
+											setLocalCategory('validators')
 											navigate(`/validators`)
 										}}
-										className={categoryKey === 'validators' ? 'active' : ''}
+										className={localCategory === 'validators' ? 'active' : ''}
 									>
 										<FontAwesomeIcon icon={faServer} />
 									</BarButton>
@@ -147,7 +152,12 @@ export const DefaultMenu = () => {
 							<Popover
 								open={openCategories}
 								portalContainer={themeElementRef.current || undefined}
-								content={<CategoriesPopover setOpen={setOpenCategories} />}
+								content={
+									<CategoriesPopover
+										setOpen={setOpenCategories}
+										setLocalCategory={setLocalCategory}
+									/>
+								}
 								onTriggerClick={() => {
 									setOpenCategories(!openCategories)
 								}}
@@ -158,7 +168,7 @@ export const DefaultMenu = () => {
 								transparent
 							>
 								<CategoryHeader className="menu-categories">
-									<span>{t(categoryKey, { ns: 'app' })}</span>
+									<span>{t(localCategory, { ns: 'app' })}</span>
 									<span>
 										<FontAwesomeIcon
 											icon={openCategories ? faTimes : faChevronDown}
@@ -168,7 +178,7 @@ export const DefaultMenu = () => {
 								</CategoryHeader>
 							</Popover>
 							<Main
-								activeCategory={getCategoryId(categoryKey)}
+								activeCategory={getCategoryId(localCategory)}
 								hidden={openCategories}
 							/>
 						</section>
