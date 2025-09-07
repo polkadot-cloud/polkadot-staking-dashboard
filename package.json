@@ -8,10 +8,12 @@
 		"dev": "cd packages/app && pnpm dev",
 		"check": "pnpm -r --if-present run check",
 		"lint": "pnpm -r --if-present run lint",
-		"test": "pnpm -r --if-present test"
+		"test": "pnpm -r --if-present test",
+		"license:headers": "npx @kt3k/license-checker -q"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.1.4",
+		"@kt3k/license-checker": "3.2.2",
 		"@types/chroma-js": "^3.1.1",
 		"@types/react": "^19.1.10",
 		"@types/react-dom": "^19.1.5",
@@ -21,7 +23,7 @@
 		"globals": "^16.2.0",
 		"prettier": "^3.6.2",
 		"prettier-plugin-organize-imports": "^4.1.0",
-		"sass": "1.92.0",
+		"sass": "^1.92.0",
 		"typescript": "^5.7.2"
 	},
 	"pnpm": {
