@@ -60,7 +60,7 @@ jobs:
 
       - run: pnpm install
       - run: pnpm check
-      - run pnpm license:headers
+      - run: pnpm license:headers
       - run: pnpm build:verify
         working-directory: packages/app
       - run: pnpm test
