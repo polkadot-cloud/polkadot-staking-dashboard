@@ -19,8 +19,8 @@ export const NetworkList: Networks = {
 			rpc: {
 				'Automata 1RPC': 'wss://1rpc.io/dot',
 				Dwellir: 'wss://polkadot-rpc.dwellir.com',
-				'IBP-GeoDNS1': 'wss://rpc.ibp.network/polkadot',
-				'IBP-GeoDNS2': 'wss://rpc.dotters.network/polkadot',
+				IBP1: 'wss://rpc.ibp.network/polkadot',
+				IBP2: 'wss://rpc.dotters.network/polkadot',
 				LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
 				OnFinality: 'wss://polkadot.api.onfinality.io/public-ws',
 				Stakeworld: 'wss://dot-rpc.stakeworld.io',
@@ -46,8 +46,8 @@ export const NetworkList: Networks = {
 			rpc: {
 				'Automata 1RPC': 'wss://1rpc.io/ksm',
 				Dwellir: 'wss://kusama-rpc.dwellir.com',
-				'IBP-GeoDNS1': 'wss://rpc.ibp.network/kusama',
-				'IBP-GeoDNS2': 'wss://rpc.dotters.network/kusama',
+				IBP1: 'wss://rpc.ibp.network/kusama',
+				IBP2: 'wss://rpc.dotters.network/kusama',
 				LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
 				OnFinality: 'wss://kusama.api.onfinality.io/public-ws',
 				Stakeworld: 'wss://ksm-rpc.stakeworld.io',
@@ -72,8 +72,8 @@ export const NetworkList: Networks = {
 				await import('@substrate/connect-known-chains/westend2'),
 			rpc: {
 				Dwellir: 'wss://westend-rpc.dwellir.com',
-				'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
-				'IBP-GeoDNS2': 'wss://rpc.dotters.network/westend',
+				IBP1: 'wss://rpc.ibp.network/westend',
+				IBP2: 'wss://rpc.dotters.network/westend',
 				LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
 				OnFinality: 'wss://westend.api.onfinality.io/public-ws',
 				Stakeworld: 'wss://wnd-rpc.stakeworld.io',
@@ -153,7 +153,7 @@ export const SystemChainList: Record<string, SystemChain> = {
 			getLightClient: async () =>
 				await import('@substrate/connect-known-chains/polkadot_asset_hub'),
 			rpc: {
-				'Lucky Friday': 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
+				LuckyFriday: 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
 				Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
 				StakeWorld: 'wss://dot-rpc.stakeworld.io/assethub',
 				Dwellir: 'wss://asset-hub-polkadot-rpc.dwellir.com',
@@ -173,7 +173,7 @@ export const SystemChainList: Record<string, SystemChain> = {
 			getLightClient: async () =>
 				await import('@substrate/connect-known-chains/ksmcc3_asset_hub'),
 			rpc: {
-				'Lucky Friday': 'wss://rpc-asset-hub-kusama.luckyfriday.io',
+				LuckyFriday: 'wss://rpc-asset-hub-kusama.luckyfriday.io',
 				Parity: 'wss://kusama-asset-hub-rpc.polkadot.io',
 				IBP1: 'wss://sys.ibp.network/asset-hub-kusama',
 				IBP2: 'wss://asset-hub-kusama.dotters.network',
