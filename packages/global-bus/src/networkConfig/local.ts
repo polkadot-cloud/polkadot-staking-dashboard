@@ -7,7 +7,7 @@ import {
 	rpcEndpointKey,
 	rpcHealthCacheKey,
 } from 'consts'
-import type { RpcEndpointChainHealth } from 'plugin-staking-api/types'
+import type { RpcHealthLabels } from 'plugin-staking-api/types'
 import type { NetworkId, ProviderType, RpcEndpoints } from 'types'
 
 export const setLocalNetwork = (network: NetworkId) => {
@@ -28,13 +28,13 @@ export const setLocalProviderType = (providerType: ProviderType) => {
 // Cache structure for RPC health data
 interface RpcHealthCache {
 	timestamp: number
-	data: RpcEndpointChainHealth
+	data: RpcHealthLabels
 }
 
 // Set cached RPC health data with timestamp
 export const setLocalRpcHealthCache = (
 	network: NetworkId,
-	healthData: RpcEndpointChainHealth,
+	healthData: RpcHealthLabels,
 ) => {
 	const cache: RpcHealthCache = {
 		timestamp: Date.now(),
@@ -46,7 +46,7 @@ export const setLocalRpcHealthCache = (
 // Get cached RPC health data if it's within 1 hour
 export const getLocalRpcHealthCache = (
 	network: NetworkId,
-): RpcEndpointChainHealth | null => {
+): RpcHealthLabels | null => {
 	try {
 		const cached = localStorage.getItem(rpcHealthCacheKey(network))
 		if (!cached) {

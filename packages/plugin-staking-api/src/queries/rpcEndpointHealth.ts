@@ -9,7 +9,10 @@ const QUERY = gql`
   query RpcEndpointHealth($network: String!) {
     rpcEndpointHealth(network: $network) {
       chains {
-        endpoints
+        endpoints {
+          label
+          url
+        }
         chain
       }
     }

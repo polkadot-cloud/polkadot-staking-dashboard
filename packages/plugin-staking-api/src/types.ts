@@ -218,6 +218,13 @@ export interface RpcEndpointChainHealth {
 	}[]
 }
 
+export interface RpcHealthLabels {
+	chains: {
+		chain: string
+		endpoints: string[]
+	}[]
+}
+
 export type SearchValidatorsResult = Query & {
 	data: SearchValidatorsData
 }
