@@ -2,57 +2,50 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getChainRpcEndpoints } from 'consts/util/rpc'
-import type { RpcEndpointChainHealth } from 'plugin-staking-api/types'
+import type { RpcHealthLabels } from 'plugin-staking-api/types'
 import type { NetworkId, RpcEndpoints } from 'types'
 import { setLocalRpcEndpoints } from './local'
-import { getRpcEndpointFromKey } from './util'
 
 // Gets healthy endpoints for a given chain
 export const getChainHealthyEndpoints = (
 	chain: string,
-	health: RpcEndpointChainHealth | null,
+	health: RpcHealthLabels | null,
 ) => health?.chains?.find((c) => c.chain === chain)?.endpoints || []
 
 // Checks if the given chain endpoint is healthy
 export const endpointIsHealthy = (
-	endpoint: string,
-	healthyEndpoints: string[],
-): boolean => !!healthyEndpoints?.find((url) => url === endpoint)
+	key: string,
+	healthyList: string[],
+): boolean => !!healthyList?.find((label) => label === key)
 
 // Sanitizes endpoints, replacing any unhealthy endpoints with a healthy one, or a random default if
 // none are available
 export const sanitizeEndpoints = (
 	network: NetworkId,
 	endpoints: RpcEndpoints,
-	health: RpcEndpointChainHealth,
+	health: RpcHealthLabels,
 ): RpcEndpoints => {
 	const result: RpcEndpoints = {}
 
 	for (const [chain, rpcKey] of Object.entries(endpoints)) {
-		const endpoint = getRpcEndpointFromKey(chain, rpcKey)
-		const healthyEndpoints = getChainHealthyEndpoints(chain, health)
-		const healthyEndpointUrls = healthyEndpoints.map((e) => e.url)
-
-		const healthy = endpoint
-			? endpointIsHealthy(endpoint, healthyEndpointUrls)
-			: false
+		const healthyRpcs = getChainHealthyEndpoints(chain, health)
+		const healthy = endpointIsHealthy(rpcKey, healthyRpcs)
 
 		if (healthy) {
 			result[chain] = rpcKey
 			continue
 		}
 
-		// If not healthy, replace with a random healthy endpoint
-		if (healthyEndpoints.length > 0) {
-			const newEndpoint =
-				healthyEndpoints[Math.floor(healthyEndpoints.length * Math.random())]
+		// If not healthy, replace with a random healthy provider
+		if (healthyRpcs.length > 0) {
+			const newRpc = healthyRpcs[Math.floor(healthyRpcs.length * Math.random())]
 
 			// Get rpcKey from the new endpoint
 			const newEndpointKey = Object.keys(getChainRpcEndpoints(chain)).find(
-				(key) => getRpcEndpointFromKey(chain, key) === newEndpoint.url,
+				(key) => key === newRpc,
 			)
 			if (newEndpointKey) {
-				result[chain] = newEndpoint.url
+				result[chain] = newRpc
 				continue
 			}
 		}

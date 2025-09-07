@@ -8,13 +8,12 @@ import {
 } from '@w3ux/utils'
 import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList, SystemChainList } from 'consts/networks'
-import {
-	getChainRpcEndpoints,
-	getDefaultRpcEndpoints,
-	getEnabledNetworks,
-} from 'consts/util'
+import { getDefaultRpcEndpoints, getEnabledNetworks } from 'consts/util'
 import { fetchRpcEndpointHealth } from 'plugin-staking-api'
-import type { RpcEndpointChainHealth } from 'plugin-staking-api/types'
+import type {
+	RpcEndpointChainHealth,
+	RpcHealthLabels,
+} from 'plugin-staking-api/types'
 import type {
 	NetworkConfig,
 	NetworkId,
@@ -81,7 +80,8 @@ export const getInitialRpcEndpoints = async (
 	const fallback = getDefaultRpcEndpoints(network)
 
 	// If staking API is enabled, fetch health of RPC endpoints
-	let healthResult: RpcEndpointChainHealth = { chains: [] }
+	let healthResult: RpcHealthLabels = { chains: [] }
+
 	const stakingApiEnabled = pluginEnabled('staking_api')
 	if (stakingApiEnabled) {
 		// Try to get cached health data first
@@ -97,11 +97,17 @@ export const getInitialRpcEndpoints = async (
 				fetchRpcEndpointHealth(network),
 			)) as RpcEndpointChainHealth | undefined
 
-			healthResult = result || { chains: [] }
-
 			// Cache the fresh data if it was successfully fetched
 			if (result && result.chains.length > 0) {
-				setLocalRpcHealthCache(network, result)
+				// Format result to only include endpoint labels
+				const healthLabels: RpcHealthLabels = {
+					chains: result.chains.map((chain) => ({
+						...chain,
+						endpoints: chain.endpoints.map((endpoint) => endpoint.label),
+					})),
+				}
+				healthResult = healthLabels
+				setLocalRpcHealthCache(network, healthLabels)
 			}
 		}
 	}
@@ -137,13 +143,4 @@ export const getInitialNetworkConfig = async (): Promise<NetworkConfig> => {
 		rpcEndpoints,
 		providerType,
 	}
-}
-
-// Attempts to get an RPC endpoint from network list
-export const getRpcEndpointFromKey = (
-	chain: string,
-	key: string,
-): string | undefined => {
-	const endpoints = getChainRpcEndpoints(chain)
-	return endpoints?.[key]
 }
