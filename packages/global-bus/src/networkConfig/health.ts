@@ -31,9 +31,10 @@ export const sanitizeEndpoints = (
 	for (const [chain, rpcKey] of Object.entries(endpoints)) {
 		const endpoint = getRpcEndpointFromKey(chain, rpcKey)
 		const healthyEndpoints = getChainHealthyEndpoints(chain, health)
+		const healthyEndpointUrls = healthyEndpoints.map((e) => e.url)
 
 		const healthy = endpoint
-			? endpointIsHealthy(endpoint, healthyEndpoints)
+			? endpointIsHealthy(endpoint, healthyEndpointUrls)
 			: false
 
 		if (healthy) {
@@ -48,10 +49,10 @@ export const sanitizeEndpoints = (
 
 			// Get rpcKey from the new endpoint
 			const newEndpointKey = Object.keys(getChainRpcEndpoints(chain)).find(
-				(key) => getRpcEndpointFromKey(chain, key) === newEndpoint,
+				(key) => getRpcEndpointFromKey(chain, key) === newEndpoint.url,
 			)
 			if (newEndpointKey) {
-				result[chain] = newEndpoint
+				result[chain] = newEndpoint.url
 				continue
 			}
 		}
