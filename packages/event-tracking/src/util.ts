@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 // Utility to register a simple event with SA
-export const registerSaEvent = (e: string, a: unknown = {}) => {
+export const onSaEvent = (e: string, a: unknown = {}) => {
 	try {
 		// biome-ignore lint/suspicious/noExplicitAny: <need `sa_event` in `window`>
 		const w = window as any
