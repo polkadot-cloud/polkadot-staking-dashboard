@@ -21,3 +21,38 @@ export const onReturningUserEvent = (
 ) => {
 	registerSaEvent('returning_user', attributes)
 }
+
+// Record extension connected
+export const onExtensionConnectedEvent = (network: string, id: string) => {
+	registerSaEvent(`${network.toLowerCase()}_${id}_extension_connected`)
+}
+
+// Record page navigation
+export const onPageNavigationEvent = (network: string, name: string) => {
+	registerSaEvent(`${network.toLowerCase()}_${name}_page_visit`)
+}
+
+// New nominator button pressed
+export const onNewNominatorButtonPressedEvent = (network: string) => {
+	registerSaEvent(`${network.toLowerCase()}_nominate_setup_button_pressed`)
+}
+
+// Join pool button pressed
+export const onJoinPoolButtonPressedEvent = (network: string) => {
+	registerSaEvent(`${network.toLowerCase()}_pool_join_button_pressed`)
+}
+
+// Create pool button pressed
+export const onCreatePoolButtonPressedEvent = (network: string) => {
+	registerSaEvent(`${network.toLowerCase()}_pool_create_button_pressed`)
+}
+
+// Locale changed from URL
+export const onLocaleFromUrlEvent = (locale: string) => {
+	registerSaEvent(`locale_from_url_${locale}`)
+}
+
+// Locale changed from modal
+export const onLocaleFromModalEvent = (locale: string) => {
+	registerSaEvent(`locale_from_modal_${locale}`)
+}

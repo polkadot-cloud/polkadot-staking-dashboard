@@ -6,10 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
+import { onNewNominatorButtonPressedEvent } from 'event-tracking'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
@@ -22,6 +24,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { isReady } = useApi()
 	const navigate = useNavigate()
 	const { advancedMode } = useUi()
+	const { network } = useNetwork()
 	const { inPool } = useActivePool()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
@@ -53,6 +56,8 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 									<button
 										type="button"
 										onClick={() => {
+											onNewNominatorButtonPressedEvent(network)
+
 											if (advancedMode) {
 												openModal({
 													key: 'StartNominating',
