@@ -3,8 +3,6 @@
 
 import { onSaEvent } from './util'
 
-// TODO: (refactor): Clear on `main` and add to `gh-deploy`
-
 // Handle a conversion event based on a utm source
 export const onConversionEvent = (utmSource: string) => {
 	onSaEvent(`conversion_${utmSource}`)
