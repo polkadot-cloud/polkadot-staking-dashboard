@@ -3,8 +3,10 @@
 
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
+import { onPageNavigationEvent } from 'event-tracking'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Tooltip } from 'ui-core/base'
@@ -24,6 +26,7 @@ export const Primary = ({
 	const { t } = useTranslation('app')
 	const navigate = useNavigate()
 	const { setSideMenu } = useUi()
+	const { network } = useNetwork()
 	const { themeElementRef } = useTheme()
 
 	const Inner = (
@@ -53,6 +56,8 @@ export const Primary = ({
 	)
 
 	const onNavigate = () => {
+		onPageNavigationEvent(network, name)
+
 		if (typeof to === 'function') {
 			to()
 		} else {
