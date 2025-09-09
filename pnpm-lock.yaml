@@ -141,6 +141,9 @@ importers:
       dedot-api:
         specifier: workspace:*
         version: link:../dedot-api
+      event-tracking:
+        specifier: workspace:*
+        version: link:../event-tracking
       framer-motion:
         specifier: 12.12.1
         version: 12.12.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -316,6 +319,8 @@ importers:
       types:
         specifier: workspace:*
         version: link:../types
+
+  packages/event-tracking: {}
 
   packages/global-bus:
     dependencies:
