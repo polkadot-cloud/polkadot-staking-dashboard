@@ -11,6 +11,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
+import { getUnixTime } from 'date-fns'
+import {
+	onConversionEvent,
+	onNewUserEvent,
+	onReturningUserEvent,
+} from 'event-tracking'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { useAccountSwitchNavigation } from 'hooks/useAccountSwitchNavigation'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
@@ -36,7 +42,6 @@ import {
 	useNavigate,
 } from 'react-router-dom'
 import { Page } from 'ui-core/base'
-import { registerLastVisited, registerSaEvent } from 'utils'
 
 const RouterInner = () => {
 	const navigate = useNavigate()
@@ -46,17 +51,20 @@ const RouterInner = () => {
 	const { activeAddress } = useActiveAccounts()
 	const { setContainerRefs, advancedMode } = useUi()
 
-	// register landing source from URL
-	useEffect(() => {
-		const utmSource = extractUrlValue('utm_source', search)
-		if (utmSource) {
-			registerSaEvent(`conversion_${utmSource}`)
-		}
-		registerLastVisited(utmSource)
-	}, [])
-
 	// References to outer container
 	const mainInterfaceRef = useRef<HTMLDivElement>(null)
+
+	// Handle returning or new user
+	const handleVisit = (utmSource: string | null) => {
+		const attributes = utmSource ? { utmSource } : {}
+		if (!localStorage.getItem('last_visited')) {
+			onNewUserEvent(attributes)
+		} else {
+			onReturningUserEvent(attributes)
+		}
+		// Record last visited timestamp to local storage
+		localStorage.setItem('last_visited', String(getUnixTime(Date.now())))
+	}
 
 	// Scroll to top of the window on every page change or network change
 	useEffect(() => {
@@ -80,6 +88,15 @@ const RouterInner = () => {
 	useEffectIgnoreInitial(() => {
 		navigate(`/overview`)
 	}, [advancedMode])
+
+	// Handle landing source from URL
+	useEffect(() => {
+		const utmSource = extractUrlValue('utm_source', search)
+		if (utmSource) {
+			onConversionEvent(`conversion_${utmSource}`)
+		}
+		handleVisit(utmSource)
+	}, [])
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallbackApp}>

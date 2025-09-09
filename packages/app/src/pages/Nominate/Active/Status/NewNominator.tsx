@@ -11,20 +11,20 @@ import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
+import { onNewNominatorButtonPressedEvent } from 'event-tracking'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
-import { registerSaEvent } from 'utils'
 import type { NewNominatorProps } from '../types'
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { t } = useTranslation()
 	const { isReady } = useApi()
 	const navigate = useNavigate()
-	const { network } = useNetwork()
 	const { advancedMode } = useUi()
+	const { network } = useNetwork()
 	const { inPool } = useActivePool()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
@@ -56,9 +56,8 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 									<button
 										type="button"
 										onClick={() => {
-											registerSaEvent(
-												`${network.toLowerCase()}_nominate_setup_button_pressed`,
-											)
+											onNewNominatorButtonPressedEvent(network)
+
 											if (advancedMode) {
 												openModal({
 													key: 'StartNominating',

@@ -10,6 +10,9 @@ export const MailSupportAddress = 'staking@polkadot.cloud'
 export const GitHubURl =
 	'https://github.com/polkadot-cloud/polkadot-staking-dashboard'
 
+// Analytics
+export const SAEnabled = true
+
 // Element Thresholds
 export const SideMenuHiddenWidth = 250
 export const SideMenuMaximisedWidth = 145
@@ -17,7 +20,6 @@ export const SideMenuMinimisedWidth = 75
 export const SectionFullWidthThreshold = 1000
 export const PageWidthMediumThreshold = 1150
 export const SmallFontSizeMaxWidth = 600
-
 export const TipsThresholdSmall = 750
 export const TipsThresholdMedium = 1200
 

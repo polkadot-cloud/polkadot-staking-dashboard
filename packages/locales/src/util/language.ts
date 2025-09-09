@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
+import { onLocaleFromModalEvent, onLocaleFromUrlEvent } from 'event-tracking'
 import type { i18n } from 'i18next'
-import { registerSaEvent } from 'utils'
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '..'
 import type { LocaleJson, LocaleJsonValue } from '../types'
 
@@ -11,7 +11,7 @@ import type { LocaleJson, LocaleJsonValue } from '../types'
 export const getInitialLanguage = () => {
 	const urlLng = extractUrlValue('l')
 	if (Object.keys(locales).find((key) => key === urlLng) && urlLng) {
-		registerSaEvent(`locale_from_url_${urlLng}`)
+		onLocaleFromUrlEvent(urlLng)
 		localStorage.setItem('lng', urlLng)
 		return urlLng
 	}
@@ -66,7 +66,8 @@ export const getResources = (lng: string, i18n?: i18n) => {
 }
 
 export const changeLanguage = async (lng: string, i18next: i18n) => {
-	registerSaEvent(`locale_from_modal_${lng}`)
+	onLocaleFromModalEvent(lng)
+
 	// check whether resources exist and need to by dynamically loaded.
 	const { resources, dynamicLoad } = getResources(lng, i18next)
 	const r = resources?.[lng] || {}

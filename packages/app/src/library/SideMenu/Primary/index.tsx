@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
+import { onPageNavigationEvent } from 'event-tracking'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Tooltip } from 'ui-core/base'
-import { registerSaEvent } from 'utils'
 import type { PrimaryProps } from '../types'
 import { BulletWrapper } from '../Wrapper'
 import { Wrapper } from './Wrappers'
@@ -56,7 +56,8 @@ export const Primary = ({
 	)
 
 	const onNavigate = () => {
-		registerSaEvent(`${network.toLowerCase()}_${name}_page_visit`)
+		onPageNavigationEvent(network, name)
+
 		if (typeof to === 'function') {
 			to()
 		} else {
