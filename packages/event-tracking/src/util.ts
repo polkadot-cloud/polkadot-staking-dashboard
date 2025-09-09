@@ -1,8 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { SAEnabled } from 'consts'
+
 // Utility to register a simple event with SA
 export const onSaEvent = (e: string, a: unknown = {}) => {
+	if (!SAEnabled) return
 	try {
 		// biome-ignore lint/suspicious/noExplicitAny: <need `sa_event` in `window`>
 		const w = window as any

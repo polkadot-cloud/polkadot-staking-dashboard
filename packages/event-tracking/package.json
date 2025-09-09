@@ -10,5 +10,8 @@
 	},
 	"exports": {
 		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"consts": "workspace:*"
 	}
 }

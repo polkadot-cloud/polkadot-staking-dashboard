@@ -320,7 +320,11 @@ importers:
         specifier: workspace:*
         version: link:../types
 
-  packages/event-tracking: {}
+  packages/event-tracking:
+    dependencies:
+      consts:
+        specifier: workspace:*
+        version: link:../consts
 
   packages/global-bus:
     dependencies:
