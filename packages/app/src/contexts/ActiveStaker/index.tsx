@@ -22,14 +22,14 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 	const nominations = getNominations(activeAddress)
 
 	// Active staker data from Staking API
-	const [activeStakerData, setActiveStakerData] = useState<
+	const [activeNominatorData, setActiveNominatorData] = useState<
 		ActiveStatusWithNominees | null | undefined
 	>(undefined)
 
 	// Handle fetching of active staker with nominees
 	const handleFetchStaker = async (who: string) => {
 		const result = await fetchGetStakerWithNominees(network, who, nominations)
-		setActiveStakerData(result)
+		setActiveNominatorData(result)
 	}
 
 	// Fetch active staker with nominees when nominating status or active address updates
@@ -41,14 +41,14 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 		) {
 			handleFetchStaker(activeAddress)
 		} else {
-			setActiveStakerData(undefined)
+			setActiveNominatorData(undefined)
 		}
 	}, [activeAddress, nominations])
 
 	return (
 		<ActiveStakerContext.Provider
 			value={{
-				activeStakerData,
+				activeNominatorData,
 			}}
 		>
 			{children}

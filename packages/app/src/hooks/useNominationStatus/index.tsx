@@ -18,7 +18,7 @@ export const useNominationStatus = () => {
 	const { isNominator } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
-	const { activeStakerData } = useActiveStaker()
+	const { activeNominatorData } = useActiveStaker()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
 	const { bondedPools, poolsNominations } = useBondedPools()
@@ -31,7 +31,7 @@ export const useNominationStatus = () => {
 	): Record<string, NominationStatus> => {
 		if (pluginEnabled('staking_api') && bondFor === 'nominator') {
 			// convert statuses into record of string -> status
-			const statuses = activeStakerData?.statuses.reduce(
+			const statuses = activeNominatorData?.statuses.reduce(
 				(acc: Record<string, NominationStatus>, { address, status }) => {
 					acc[address] = status as NominationStatus
 					return acc
@@ -60,10 +60,10 @@ export const useNominationStatus = () => {
 
 		const isSyncing =
 			(syncing && !pluginEnabled('staking_api')) ||
-			activeStakerData === undefined
+			activeNominatorData === undefined
 
 		const displayNotNominating = pluginEnabled('staking_api')
-			? !activeStakerData?.active
+			? !activeNominatorData?.active
 			: !isNominator
 
 		if (displayNotNominating || isSyncing) {
