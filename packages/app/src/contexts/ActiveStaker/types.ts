@@ -4,5 +4,5 @@
 import type { ActiveStatusWithNominees } from 'plugin-staking-api/types'
 
 export interface ActiveStakerContextInterface {
-	activeStakerData: ActiveStatusWithNominees | null | undefined
+	activeNominatorData: ActiveStatusWithNominees | null | undefined
 }
