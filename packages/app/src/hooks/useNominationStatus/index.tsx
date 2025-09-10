@@ -18,20 +18,23 @@ export const useNominationStatus = () => {
 	const { isNominator } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
-	const { activeNominatorData } = useActiveStaker()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
 	const { bondedPools, poolsNominations } = useBondedPools()
 	const { getNominationsStatusFromEraStakers } = useEraStakers()
+	const { activeNominatorData, activePoolData } = useActiveStaker()
 
 	// Utility to get an account's nominees alongside their status
 	const getNominationSetStatus = (
 		who: MaybeAddress,
 		bondFor: BondFor,
 	): Record<string, NominationStatus> => {
-		if (pluginEnabled('staking_api') && bondFor === 'nominator') {
+		if (pluginEnabled('staking_api')) {
+			const activeStatus =
+				bondFor === 'nominator' ? activeNominatorData : activePoolData
+
 			// convert statuses into record of string -> status
-			const statuses = activeNominatorData?.statuses.reduce(
+			const statuses = activeStatus?.statuses.reduce(
 				(acc: Record<string, NominationStatus>, { address, status }) => {
 					acc[address] = status as NominationStatus
 					return acc
@@ -40,11 +43,12 @@ export const useNominationStatus = () => {
 			)
 			return statuses || {}
 		} else {
-			const nominations =
+			return getNominationsStatusFromEraStakers(
+				who,
 				bondFor === 'nominator'
 					? getNominations(who)
-					: (activePoolNominations?.targets ?? [])
-			return getNominationsStatusFromEraStakers(who, nominations)
+					: (activePoolNominations?.targets ?? []),
+			)
 		}
 	}
 
