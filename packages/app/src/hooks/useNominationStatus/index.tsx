@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveStaker } from 'contexts/ActiveStaker'
 import { useBalances } from 'contexts/Balances'
 import { useEraStakers } from 'contexts/EraStakers'
 import { usePlugins } from 'contexts/Plugins'
@@ -14,11 +15,12 @@ import { filterNomineesByStatus, getPoolNominationStatusCode } from 'utils'
 
 export const useNominationStatus = () => {
 	const { t } = useTranslation()
+	const { isNominator } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
+	const { activeStakerData } = useActiveStaker()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
-	const { isNominator, activeStakerData } = useStaking()
 	const { bondedPools, poolsNominations } = useBondedPools()
 	const { getNominationsStatusFromEraStakers } = useEraStakers()
 
@@ -27,12 +29,7 @@ export const useNominationStatus = () => {
 		who: MaybeAddress,
 		bondFor: BondFor,
 	): Record<string, NominationStatus> => {
-		const nominations =
-			bondFor === 'nominator'
-				? getNominations(who)
-				: (activePoolNominations?.targets ?? [])
-
-		if (pluginEnabled('staking_api')) {
+		if (pluginEnabled('staking_api') && bondFor === 'nominator') {
 			// convert statuses into record of string -> status
 			const statuses = activeStakerData?.statuses.reduce(
 				(acc: Record<string, NominationStatus>, { address, status }) => {
@@ -43,6 +40,10 @@ export const useNominationStatus = () => {
 			)
 			return statuses || {}
 		} else {
+			const nominations =
+				bondFor === 'nominator'
+					? getNominations(who)
+					: (activePoolNominations?.targets ?? [])
 			return getNominationsStatusFromEraStakers(who, nominations)
 		}
 	}
