@@ -10,6 +10,7 @@ import {
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
+import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
@@ -89,6 +90,7 @@ export const Providers = () => {
 			PayoutsProvider,
 			PoolSetupsProvider,
 			NominatorSetupsProvider,
+			ActiveStakerProvider,
 			MenuProvider,
 			TooltipProvider,
 			TxMetaProvider,
