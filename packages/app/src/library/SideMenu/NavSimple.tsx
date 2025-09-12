@@ -50,6 +50,7 @@ export const NavSimple = () => {
 					<Separator />
 					<div className="inner">
 						<Primary
+							pageKey="resources"
 							name={t('resources')}
 							to={() => {
 								openHelp(null)
