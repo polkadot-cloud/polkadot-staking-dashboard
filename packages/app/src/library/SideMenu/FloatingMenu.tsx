@@ -53,10 +53,11 @@ export const FloatingtMenu = ({
 					<div className="inner">
 						<Page.Side.Heading title={t('support')} minimised={false} />
 						<Primary
+							pageKey="resources"
+							name={t('resources')}
 							to={() => {
 								openHelp(null)
 							}}
-							name={t('resources')}
 							minimised={false}
 							faIcon={faBook}
 							active={false}
