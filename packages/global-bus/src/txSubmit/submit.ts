@@ -4,10 +4,10 @@
 import type { SubmittableExtrinsic } from 'dedot'
 import type { ExtrinsicSignatureV4 } from 'dedot/codecs'
 import type { InjectedSigner, TxStatus } from 'dedot/types'
+import { onTransactionSubmittedEvent } from 'event-tracking'
 import type { TxStatusHandlers } from 'types'
 import { getErrorKeyFromMessage } from './error'
 import { deleteTx, setUidPending, setUidSubmitted, subs } from './index'
-import { onTransactionSubmittedEvent } from 'event-tracking'
 
 export const addSignAndSend = async (
 	network: string,
