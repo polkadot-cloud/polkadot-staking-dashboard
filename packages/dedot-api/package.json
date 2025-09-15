@@ -19,7 +19,7 @@
 		"dedot": "^0.15.0",
 		"global-bus": "workspace:*",
 		"rxjs": "^7.8.2",
-		"smoldot": "^2.0.38",
+		"smoldot": "^2.0.39",
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
