@@ -54,3 +54,11 @@ export const onLocaleFromUrlEvent = (locale: string) => {
 export const onLocaleFromModalEvent = (locale: string) => {
 	onSaEvent(`locale_from_modal_${locale}`)
 }
+
+// Transaction submitted
+export const onTransactionSubmittedEvent = (
+	network: string,
+	txLabel: string,
+) => {
+	onSaEvent(`${network.toLowerCase()}_tx_submitted_${txLabel}`)
+}

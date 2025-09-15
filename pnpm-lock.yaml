@@ -340,6 +340,9 @@ importers:
       dedot:
         specifier: ^0.15.0
         version: 0.15.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      event-tracking:
+        specifier: workspace:*
+        version: link:../event-tracking
       plugin-staking-api:
         specifier: workspace:*
         version: link:../plugin-staking-api
