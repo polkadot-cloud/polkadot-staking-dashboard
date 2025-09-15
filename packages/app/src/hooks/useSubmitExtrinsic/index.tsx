@@ -245,7 +245,7 @@ export const useSubmitExtrinsic = ({
 				onError('technical', 'invalid_signer')
 				return
 			}
-			addSend(uid, tx, encodedSig, handlers)
+			addSend(network, uid, tx, encodedSig, handlers)
 		} else {
 			// Extension signer
 			//
@@ -256,6 +256,7 @@ export const useSubmitExtrinsic = ({
 				return
 			}
 			addSignAndSend(
+				network,
 				uid,
 				from,
 				tx,
