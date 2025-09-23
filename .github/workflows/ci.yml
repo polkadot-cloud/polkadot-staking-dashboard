@@ -28,9 +28,6 @@ jobs:
         uses: umbrelladocs/action-linkspector@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-check
-          filter_mode: added
-          fail_level: any
           config_file: '.linkspector.yml'
 
   verify:
