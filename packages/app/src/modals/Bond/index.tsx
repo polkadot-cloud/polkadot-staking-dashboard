@@ -36,7 +36,9 @@ export const Bond = () => {
 	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { balances } = useAccountBalances(activeAddress)
-	const { getPendingPoolRewards, feeReserve } = useBalances()
+	const { getPendingPoolRewards, feeReserve, getPoolMembership } = useBalances()
+
+	const { membership } = getPoolMembership(activeAddress)
 	const { unit, units } = getStakingChainData(network)
 
 	const { bondFor } = options
@@ -164,7 +166,10 @@ export const Bond = () => {
 					setters={[handleSetBond]}
 					parentErrors={warnings}
 					txFees={BigInt(largestTxFee.toString())}
-					bonding={isBonding}
+					bonding={
+						(bondFor === 'nominator' && isBonding) ||
+						(bondFor === 'pool' && !!membership)
+					}
 				/>
 				<p>{t('newlyBondedFunds')}</p>
 			</Padding>

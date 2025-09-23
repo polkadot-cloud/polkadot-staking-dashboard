@@ -20,7 +20,7 @@ export const MenuItemButton = ({
 	onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void
 	disabled?: boolean
 }) => {
-	const allClasses = classNames(classes.menuItem, {
+	const allClasses = classNames(classes.menuItem, classes.button, {
 		[classes.disabled]: disabled,
 	})
 	return (

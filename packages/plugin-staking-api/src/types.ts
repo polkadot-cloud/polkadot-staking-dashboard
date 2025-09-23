@@ -211,6 +211,16 @@ export type RpcEndpointHealthResult = Query & {
 export interface RpcEndpointChainHealth {
 	chains: {
 		chain: string
+		endpoints: {
+			label: string
+			url: string
+		}[]
+	}[]
+}
+
+export interface RpcHealthLabels {
+	chains: {
+		chain: string
 		endpoints: string[]
 	}[]
 }

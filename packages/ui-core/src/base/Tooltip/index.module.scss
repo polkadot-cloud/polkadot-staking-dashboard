@@ -19,8 +19,22 @@
   z-index: 99;
 }
 
+
+.Inverted {
+  background: var(--background-primary);
+  color: var(--text-color-secondary);
+}
+
+.FadeIn {
+	transform-origin: var(--radix-tooltip-content-transform-origin);
+	animation: scaleIn 0.1s ease-out;
+}
+
 .Arrow {
   fill: var(--background-invert);
+}
+.ArrowInverted {
+  fill: var(--background-primary);
 }
 
 @keyframes slideDownAndFade {
@@ -32,4 +46,15 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes scaleIn {
+	from {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
