@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveStaker } from 'contexts/ActiveStaker'
 import { useBalances } from 'contexts/Balances'
 import { useEraStakers } from 'contexts/EraStakers'
 import { usePlugins } from 'contexts/Plugins'
@@ -14,27 +15,26 @@ import { filterNomineesByStatus, getPoolNominationStatusCode } from 'utils'
 
 export const useNominationStatus = () => {
 	const { t } = useTranslation()
+	const { isNominator } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { activePoolNominations } = useActivePool()
-	const { isNominator, activeStakerData } = useStaking()
 	const { bondedPools, poolsNominations } = useBondedPools()
 	const { getNominationsStatusFromEraStakers } = useEraStakers()
+	const { activeNominatorData, activePoolData } = useActiveStaker()
 
 	// Utility to get an account's nominees alongside their status
 	const getNominationSetStatus = (
 		who: MaybeAddress,
 		bondFor: BondFor,
 	): Record<string, NominationStatus> => {
-		const nominations =
-			bondFor === 'nominator'
-				? getNominations(who)
-				: (activePoolNominations?.targets ?? [])
-
 		if (pluginEnabled('staking_api')) {
+			const activeStatus =
+				bondFor === 'nominator' ? activeNominatorData : activePoolData
+
 			// convert statuses into record of string -> status
-			const statuses = activeStakerData?.statuses.reduce(
+			const statuses = activeStatus?.statuses.reduce(
 				(acc: Record<string, NominationStatus>, { address, status }) => {
 					acc[address] = status as NominationStatus
 					return acc
@@ -43,7 +43,12 @@ export const useNominationStatus = () => {
 			)
 			return statuses || {}
 		} else {
-			return getNominationsStatusFromEraStakers(who, nominations)
+			return getNominationsStatusFromEraStakers(
+				who,
+				bondFor === 'nominator'
+					? getNominations(who)
+					: (activePoolNominations?.targets ?? []),
+			)
 		}
 	}
 
@@ -59,10 +64,10 @@ export const useNominationStatus = () => {
 
 		const isSyncing =
 			(syncing && !pluginEnabled('staking_api')) ||
-			activeStakerData === undefined
+			activeNominatorData === undefined
 
 		const displayNotNominating = pluginEnabled('staking_api')
-			? !activeStakerData?.active
+			? !activeNominatorData?.active
 			: !isNominator
 
 		if (displayNotNominating || isSyncing) {

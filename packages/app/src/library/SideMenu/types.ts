@@ -16,6 +16,7 @@ export interface HeadingProps {
 }
 
 export interface PrimaryProps {
+	pageKey?: string
 	name: string
 	active: boolean
 	to: string | (() => void)

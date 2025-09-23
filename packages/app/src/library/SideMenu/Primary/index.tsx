@@ -15,6 +15,7 @@ import { BulletWrapper } from '../Wrapper'
 import { Wrapper } from './Wrappers'
 
 export const Primary = ({
+	pageKey,
 	name,
 	active,
 	to,
@@ -56,7 +57,9 @@ export const Primary = ({
 	)
 
 	const onNavigate = () => {
-		onPageNavigationEvent(network, name)
+		if (pageKey) {
+			onPageNavigationEvent(network, pageKey)
+		}
 
 		if (typeof to === 'function') {
 			to()

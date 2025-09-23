@@ -133,6 +133,7 @@ export const Main = ({
 									<Fragment key={`sidemenu_page_${categoryId}_${key}`}>
 										{category === categoryId && (
 											<Primary
+												pageKey={key}
 												name={t(key)}
 												to={() => {
 													if (!activeCategory && !!setLocalCategory) {
