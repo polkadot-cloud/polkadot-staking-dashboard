@@ -17,8 +17,6 @@ jobs:
       - name: Check License Lines
         uses: kt3k/license_checker@v1.0.6
 
-  # NOTE: replace `markdown-link-check` with <https://github.com/UmbrellaDocs/linkspector> when
-  # Github Action is available.
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
@@ -27,12 +25,13 @@ jobs:
         with:
           version: 10.11.0
       - name: Check Markdown Links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        uses: umbrelladocs/action-linkspector@v1
         with:
-          base-branch: main
-          use-quiet-mode: 'yes'
-          check-modified-files-only: 'yes'
-          config-file: 'check-markdown-links-config.json'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check
+          filter_mode: added
+          fail_level: any
+          config_file: '.linkspector.yml'
 
   verify:
     runs-on: ubuntu-latest

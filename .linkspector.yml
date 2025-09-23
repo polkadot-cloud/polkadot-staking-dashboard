@@ -1,0 +1,34 @@
+# Linkspector configuration file
+# Default directories to scan for markdown files
+dirs:
+  - .
+
+# Use .gitignore rules to exclude files
+useGitIgnore: true
+
+# Only check files modified in the current PR/commit (handled by GitHub Action filter_mode)
+modifiedFilesOnly: false
+
+# Ignore patterns - URLs to skip during link checking
+ignorePatterns:
+  - pattern: "^https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v"
+
+# HTTP headers for specific URLs that require them
+httpHeaders:
+  - url:
+      - "https://github.com/"
+      - "https://guides.github.com/"
+      - "https://help.github.com/"
+      - "https://docs.github.com/"
+    headers:
+      Accept-Encoding: "zstd, br, gzip, deflate"
+
+# Status codes that should be considered as "alive" links
+aliveStatusCodes:
+  - 200
+  - 201
+  - 202
+  - 204
+
+# Follow redirects by default
+followRedirects: true
