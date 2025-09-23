@@ -25,7 +25,7 @@ PR标题示例:
 
 我们使用[Release Please](https://github.com/googleapis/release-please)自动化生成各软件包的更新日志和版本发布.
 
-该工具是由Google维护的GitHub Action，可自动生成CHANGELOG、创建GitHub版本发布及版本号更新. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
+该工具是由Google维护的GitHub Action，可自动生成CHANGELOG、创建GitHub版本发布及版本号更新. [Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)
 
 ## URL参数
 
@@ -48,8 +48,8 @@ PR标题示例:
 
 ## 演示
 
-- 29/06/2023: [[视频] Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
-- 30/06/2022: [[视频] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
+- 29/06/2023: [视频] [Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
+- 30/06/2022: [视频] [Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
 
 ## 仓库迁移记录
 

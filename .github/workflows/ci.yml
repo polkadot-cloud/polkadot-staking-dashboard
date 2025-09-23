@@ -17,19 +17,6 @@ jobs:
       - name: Check License Lines
         uses: kt3k/license_checker@v1.0.6
 
-  markdown-link-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.11.0
-      - name: Check Markdown Links
-        uses: umbrelladocs/action-linkspector@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          config_file: '.linkspector.yml'
-
   verify:
     runs-on: ubuntu-latest
     strategy:

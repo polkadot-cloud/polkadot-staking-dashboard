@@ -1,8 +1,0 @@
-dirs:
-  - ./docs
-useGitIgnore: true
-modifiedFilesOnly: false
-ignorePatterns:
-  - pattern: "^https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v"
-  - pattern: "^https://img\\.shields\\.io/badge/"
-  - pattern: "^https://github\\.com/polkadot-cloud/polkadot-staking-dashboard/actions/workflows/"

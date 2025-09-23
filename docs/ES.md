@@ -25,7 +25,7 @@ Si deseas saber más sobre la especificación de Conventional Commits, visita el
 
 [Release Please](https://github.com/googleapis/release-please) se utiliza para automatizar la generación de registros de cambios y lanzamientos de cada paquete.
 
-Release Please es una acción de GitHub mantenida por Google que automatiza la generación de CHANGELOG, la creación de lanzamientos de GitHub y los cambios de versión.[[Documentación de GitHub](https://github.com/googleapis/release-please), [Acción](https://github.com/marketplace/actions/release-please-action)]
+Release Please es una acción de GitHub mantenida por Google que automatiza la generación de CHANGELOG, la creación de lanzamientos de GitHub y los cambios de versión. [Documentación de GitHub](https://github.com/googleapis/release-please), [Acción](https://github.com/marketplace/actions/release-please-action)
 
 ## Variables de URL
 
@@ -49,8 +49,8 @@ Para añadir un operador de validador, envía un PR a [@w3ux/w3ux-library](https
 
 ## Presentaciones
 
-- 29/06/2023: [[Video] Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
-- 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
+- 29/06/2023: [Video] [Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
+- 30/06/2022: [Video] [Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
 
 ## Historial de Transferencia del Repositorio
 
