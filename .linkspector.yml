@@ -12,6 +12,8 @@ modifiedFilesOnly: false
 # Ignore patterns - URLs to skip during link checking
 ignorePatterns:
   - pattern: "^https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v"
+  - pattern: "^https://img\\.shields\\.io/badge/"
+  - pattern: "^https://github\\.com/polkadot-cloud/polkadot-staking-dashboard/actions/workflows/"
 
 # HTTP headers for specific URLs that require them
 httpHeaders:
