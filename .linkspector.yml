@@ -1,7 +1,7 @@
 # Linkspector configuration file
 # Default directories to scan for markdown files
 dirs:
-  - .
+  - ./docs
 
 # Use .gitignore rules to exclude files
 useGitIgnore: true
