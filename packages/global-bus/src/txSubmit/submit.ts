@@ -4,11 +4,13 @@
 import type { SubmittableExtrinsic } from 'dedot'
 import type { ExtrinsicSignatureV4 } from 'dedot/codecs'
 import type { InjectedSigner, TxStatus } from 'dedot/types'
+import { onTransactionSubmittedEvent } from 'event-tracking'
 import type { TxStatusHandlers } from 'types'
 import { getErrorKeyFromMessage } from './error'
 import { deleteTx, setUidPending, setUidSubmitted, subs } from './index'
 
 export const addSignAndSend = async (
+	network: string,
 	uid: number,
 	from: string,
 	tx: SubmittableExtrinsic,
@@ -18,6 +20,9 @@ export const addSignAndSend = async (
 ) => {
 	const { onError, ...onRest } = txStatusHandlers
 	try {
+		// Transaction submitted - register tx event
+		onTransactionSubmittedEvent(network, getTxLabel(tx))
+
 		subs[uid] = await tx.signAndSend(
 			from,
 			{ signer, nonce },
@@ -32,6 +37,7 @@ export const addSignAndSend = async (
 }
 
 export const addSend = async (
+	network: string,
 	uid: number,
 	tx: SubmittableExtrinsic,
 	// biome-ignore lint/suspicious/noExplicitAny: <>
@@ -40,6 +46,9 @@ export const addSend = async (
 ) => {
 	tx.attachSignature(signature)
 	try {
+		// Transaction submitted - register tx event
+		onTransactionSubmittedEvent(network, getTxLabel(tx))
+
 		subs[uid] = await tx.send(async ({ status }) => {
 			handleResult(uid, status, onRest)
 		})
@@ -102,4 +111,8 @@ export const handleError = (
 		const technicalDetails = getErrorKeyFromMessage(errorMessage)
 		onError('technical', technicalDetails)
 	}
+}
+
+export const getTxLabel = (tx: SubmittableExtrinsic): string => {
+	return `${tx.call.pallet}.${tx.call.palletCall.name}`
 }
