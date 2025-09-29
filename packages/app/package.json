@@ -68,7 +68,7 @@
 		"ui-overlay": "workspace:*",
 		"usehooks-ts": "^3.0.2",
 		"utils": "workspace:*",
-		"viem": "^2.33.0",
+		"viem": "^2.37.9",
 		"wagmi": "^2.16.6",
 		"xxhash-wasm": "^1.0.2"
 	},
