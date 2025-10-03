@@ -13,16 +13,12 @@ import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useFastUnstake } from 'contexts/FastUnstake'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useAccountBalances } from 'hooks/useAccountBalances'
-import { useNominationStatus } from 'hooks/useNominationStatus'
-import { useSyncing } from 'hooks/useSyncing'
+import { useBondActions } from 'hooks/useBondActions'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { useTranslation } from 'react-i18next'
@@ -32,23 +28,15 @@ import { useOverlay } from 'ui-overlay'
 
 export const ManageBond = () => {
 	const { t } = useTranslation('pages')
-	const {
-		isReady,
-		stakingMetrics: { erasToCheckPerBlock },
-	} = useApi()
 	const { network } = useNetwork()
 	const { openHelp } = useHelp()
-	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
-	const { isFastUnstaking } = useUnstaking()
 	const { activeAddress } = useActiveAccounts()
 	const { getFastUnstakeText } = useUnstaking()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { getNominationStatus } = useNominationStatus()
-	const { exposed, fastUnstakeStatus } = useFastUnstake()
 	const { balances } = useAccountBalances(activeAddress)
-	const { syncing } = useSyncing(['initialization', 'era-stakers'])
+	const { canBond, canUnbond, canUnstake, canFastUnstake } = useBondActions()
 
 	const { ledger } = getStakingLedger(activeAddress)
 	const { units } = getStakingChainData(network)
@@ -56,28 +44,12 @@ export const ManageBond = () => {
 	const active = ledger?.active || 0n
 
 	const { totalUnlocking, totalUnlocked } = balances.nominator
-	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
-
-	// Determine whether fast unstake is available
-	const fastUnstakeEligible =
-		erasToCheckPerBlock > 0 &&
-		!nominationStatus.nominees.active.length &&
-		fastUnstakeStatus?.status === 'NOT_EXPOSED' &&
-		!exposed
-
-	// Whether unstake buttons should be disabled
-	const unstakeDisabled =
-		!isReady || !isBonding || syncing || (syncing && !isBonding)
-
-	// Whether the bond buttons should be disabled
-	const bondDisabled =
-		unstakeDisabled || isFastUnstaking || isReadOnlyAccount(activeAddress)
 
 	// The available unstake buttons to display. If fast unstaking is available the fast unstake
 	// button will be displayed. Otherwise show the normal unstake button. If the account is
 	// read-only, no buttons will be displayed.
 	const unstakeButtons = !isReadOnlyAccount(activeAddress) ? (
-		fastUnstakeEligible && !unstakeDisabled ? (
+		canFastUnstake ? (
 			<ButtonPrimary
 				size="md"
 				text={getFastUnstakeText()}
@@ -91,7 +63,7 @@ export const ManageBond = () => {
 				size="md"
 				text={t('unstake')}
 				iconLeft={faSignOutAlt}
-				disabled={unstakeDisabled}
+				disabled={!canUnstake}
 				onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
 			/>
 		)
@@ -115,10 +87,10 @@ export const ManageBond = () => {
 					/>
 				</h2>
 				<ButtonRow>
-					<MultiButton.Container marginRight disabled={bondDisabled}>
+					<MultiButton.Container marginRight disabled={!canBond && !canUnbond}>
 						<MultiButton.Button
 							size="md"
-							disabled={bondDisabled}
+							disabled={!canBond}
 							marginRight
 							onClick={() =>
 								openModal({
@@ -133,7 +105,7 @@ export const ManageBond = () => {
 						<span />
 						<MultiButton.Button
 							size="md"
-							disabled={bondDisabled}
+							disabled={!canUnbond}
 							marginRight
 							onClick={() =>
 								openModal({
