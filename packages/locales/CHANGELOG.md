@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.4.0...locales-v1.5.0) (2025-10-03)
+
+
+### Features
+
+* Init `event-tracking` package ([#2987](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2987)) ([98150d8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/98150d89f12406e00ee0c17d7136f74276edd8a5))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.3.0...locales-v1.4.0) (2025-07-24)
 
 
