@@ -49,7 +49,7 @@ export const useBondActions = (): UseBondActions => {
 		canUnstake &&
 		erasToCheckPerBlock > 0 &&
 		!nominationStatus.nominees.active.length &&
-		fastUnstakeStatus !== null &&
+		fastUnstakeStatus?.status === 'NOT_EXPOSED' &&
 		!exposed
 
 	return {
