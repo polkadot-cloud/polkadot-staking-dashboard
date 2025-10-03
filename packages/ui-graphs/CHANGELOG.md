@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-graphs-v1.2.0...ui-graphs-v1.3.0) (2025-10-03)
+
+
+### Features
+
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-graphs-v1.1.0...ui-graphs-v1.2.0) (2025-06-17)
 
 
