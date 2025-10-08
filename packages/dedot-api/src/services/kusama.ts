@@ -106,8 +106,8 @@ export class KusamaService
 						nominees,
 						roles,
 					),
-				fastUnstakeDeregister: () => tx.fastUnstakeDeregister(this.apiHub),
-				fastUnstakeRegister: () => tx.fastUnstakeRegister(this.apiHub),
+				fastUnstakeDeregister: () => tx.fastUnstakeDeregister(this.apiRelay),
+				fastUnstakeRegister: () => tx.fastUnstakeRegister(this.apiRelay),
 				joinPool: (poolId, bond, claimPermission) =>
 					tx.joinPool(this.apiHub, poolId, bond, claimPermission),
 				newNominator: (bond, payee, nominees) =>
