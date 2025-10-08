@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import { DisabledPluginsPerNetwork } from 'consts/plugins'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -20,19 +21,25 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
 	const { isReady, activeEra } = useApi()
 	const { activeAddress } = useActiveAccounts()
 
+	const { activePlugins } = getAvailablePlugins()
+
 	// Store the currently active plugins
-	const [plugins, setPluginsState] = useState<Plugin[]>(getAvailablePlugins())
+	const [plugins, setPluginsState] = useState<Plugin[]>(activePlugins)
 
 	// Toggle a plugin
 	const togglePlugin = (key: Plugin) => {
-		let newPlugins = [...plugins]
-		const found = newPlugins.find((p) => p === key)
-		if (found) {
-			newPlugins = newPlugins.filter((p) => p !== key)
+		let { allPlugins } = getAvailablePlugins()
+
+		if (allPlugins.find((p) => p === key)) {
+			allPlugins = allPlugins.filter((p) => p !== key)
 		} else {
-			newPlugins.push(key)
+			allPlugins.push(key)
 		}
-		setPlugins(newPlugins)
+
+		// Filter disabled plugins for this network
+		const disabledPlugins = DisabledPluginsPerNetwork[network] || []
+		const activePlugins = allPlugins.filter((p) => !disabledPlugins.includes(p))
+		setPlugins(allPlugins, activePlugins)
 	}
 
 	// Check if a plugin is currently enabled
@@ -54,6 +61,13 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
 			sub.unsubscribe()
 		}
 	}, [])
+
+	// On network change, update available plugins
+	useEffect(() => {
+		const { allPlugins, activePlugins } = getAvailablePlugins()
+		setPlugins(allPlugins, activePlugins)
+		Subscan.network = network
+	}, [network])
 
 	return (
 		<PluginsContext.Provider

@@ -2,12 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault } from '@w3ux/utils'
-import { CompulsoryPluginsProduction, PluginsList } from 'consts/plugins'
-import type { Plugin } from 'types'
+import { NetworkKey } from 'consts'
+import { DefaultNetwork } from 'consts/networks'
+import {
+	CompulsoryPluginsProduction,
+	DisabledPluginsPerNetwork,
+	PluginsList,
+} from 'consts/plugins'
+import { isValidNetwork } from 'consts/util/networks'
+import type { NetworkId, Plugin } from 'types'
 
 // Get initial plugins from local storage
 export const getAvailablePlugins = () => {
-	const localPlugins = localStorageOrDefault(
+	const allPlugins = localStorageOrDefault(
 		'plugins',
 		PluginsList,
 		true,
@@ -15,10 +22,28 @@ export const getAvailablePlugins = () => {
 	// In production, add compulsory plugins to `localPlugins` if they do not exist
 	if (import.meta.env.PROD) {
 		CompulsoryPluginsProduction.forEach((plugin) => {
-			if (!localPlugins.includes(plugin)) {
-				localPlugins.push(plugin)
+			if (!allPlugins.includes(plugin)) {
+				allPlugins.push(plugin)
 			}
 		})
 	}
-	return localPlugins
+
+	const rawLocalNetwork = localStorage.getItem(NetworkKey)
+	const localNetwork =
+		rawLocalNetwork && isValidNetwork(rawLocalNetwork as NetworkId)
+			? (rawLocalNetwork as NetworkId)
+			: DefaultNetwork
+
+	const networkDisabledPlugins = DisabledPluginsPerNetwork[localNetwork] || []
+
+	// Filter out disabled plugins for this network
+	const activePlugins: Plugin[] = [...allPlugins]
+	networkDisabledPlugins.forEach((plugin) => {
+		const index = activePlugins.indexOf(plugin)
+		if (index > -1) {
+			activePlugins.splice(index, 1)
+		}
+	})
+
+	return { allPlugins, activePlugins }
 }
