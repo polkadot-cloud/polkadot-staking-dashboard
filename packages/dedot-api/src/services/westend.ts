@@ -16,6 +16,7 @@ import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
+import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
 
@@ -51,6 +52,7 @@ export class WestendService
 
 		// For Westend, fast unstake happens on the asset hub chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiHub)
+		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiHub)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {

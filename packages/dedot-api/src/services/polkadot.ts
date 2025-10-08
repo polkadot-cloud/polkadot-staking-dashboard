@@ -16,6 +16,7 @@ import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
+import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
 
@@ -51,6 +52,7 @@ export class PolkadotService
 
 		// For Polkadot, fast unstake happens on the relay chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
+		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {

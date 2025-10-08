@@ -5,9 +5,9 @@ import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import { defaultFastUnstakeConfig, setFastUnstakeConfig } from 'global-bus'
 import type { FastUnstakeConfig } from 'types'
-import type { StakingChain } from '../types'
+import type { FastUnstakeChain } from '../types'
 
-export class FastUnstakeConfigQuery<T extends StakingChain> {
+export class FastUnstakeConfigQuery<T extends FastUnstakeChain> {
 	config: FastUnstakeConfig = defaultFastUnstakeConfig
 
 	#unsub: Unsub | undefined = undefined

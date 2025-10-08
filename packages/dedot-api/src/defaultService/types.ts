@@ -79,7 +79,7 @@ export abstract class DefaultServiceClass<
 	abstract poolsConfig: PoolsConfigQuery<StakingApi>
 	abstract stakingMetrics: StakingMetricsQuery<StakingApi>
 	abstract eraRewardPoints: EraRewardPointsQuery<StakingApi>
-	abstract fastUnstakeConfig: FastUnstakeConfigQuery<StakingApi>
+	abstract fastUnstakeConfig: FastUnstakeConfigQuery<FastUnstakeApi>
 	abstract fastUnstakeQueue: FastUnstakeQueueQuery<FastUnstakeApi>
 
 	subActiveAddress: Subscription

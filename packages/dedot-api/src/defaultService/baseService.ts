@@ -22,7 +22,7 @@ import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
-import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
+import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type {
@@ -64,7 +64,7 @@ export class BaseService<
 	activeEra: ActiveEraQuery<StakingApi>
 	relayMetrics: RelayMetricsQuery<RelayApi>
 	poolsConfig: PoolsConfigQuery<StakingApi>
-	fastUnstakeConfig: FastUnstakeConfigQuery<StakingApi>
+	fastUnstakeConfig: FastUnstakeConfigQuery<FastUnstakeApi>
 
 	// Subscription manager
 	subscriptionManager: SubscriptionManager<
@@ -140,7 +140,6 @@ export class BaseService<
 		this.activeEra = new ActiveEraQuery(this.stakingApi)
 		this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
 		this.poolsConfig = new PoolsConfigQuery(this.stakingApi)
-		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.stakingApi)
 
 		// Initialize subscription manager
 		this.subscriptionManager = new SubscriptionManager(
