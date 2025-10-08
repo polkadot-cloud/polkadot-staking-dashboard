@@ -38,12 +38,9 @@ export const getAvailablePlugins = () => {
 
 	// Filter out disabled plugins for this network
 	const activePlugins: Plugin[] = [...allPlugins]
-	networkDisabledPlugins.forEach((plugin) => {
-		const index = activePlugins.indexOf(plugin)
-		if (index > -1) {
-			activePlugins.splice(index, 1)
-		}
-	})
+	const activePlugins: Plugin[] = allPlugins.filter(
+		(plugin) => !networkDisabledPlugins.includes(plugin)
+	)
 
 	return { allPlugins, activePlugins }
 }
