@@ -31,6 +31,7 @@ import type {
 	ActivePools,
 	AssetHubChain,
 	BondedAccounts,
+	FastUnstakeChain,
 	PeopleChain,
 	PoolMemberships,
 	Proxies,
@@ -54,6 +55,7 @@ export class SubscriptionManager<
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
+	FastUnstakeApi extends FastUnstakeChain,
 > {
 	subActiveAddress: Subscription
 	subImportedAccounts: Subscription
@@ -75,13 +77,14 @@ export class SubscriptionManager<
 	// Query objects that may need to be recreated
 	stakingMetrics: StakingMetricsQuery<StakingApi>
 	eraRewardPoints: EraRewardPointsQuery<StakingApi>
-	fastUnstakeQueue: FastUnstakeQueueQuery<StakingApi>
+	fastUnstakeQueue: FastUnstakeQueueQuery<FastUnstakeApi>
 
 	constructor(
 		private apiRelay: DedotClient<RelayApi>,
 		private apiPeople: DedotClient<PeopleApi>,
 		private apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
+		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
 		private ids: [NetworkId, SystemChainId, SystemChainId],
 		private stakingConsts: { poolsPalletId: Uint8Array },
 		private serviceInterface: ServiceInterface,
@@ -94,7 +97,7 @@ export class SubscriptionManager<
 			if (activeAddress) {
 				this.fastUnstakeQueue?.unsubscribe()
 				this.fastUnstakeQueue = new FastUnstakeQueueQuery(
-					this.stakingApi,
+					this.fastUnstakeApi,
 					activeAddress,
 				)
 			}

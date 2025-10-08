@@ -71,7 +71,8 @@ export class BaseService<
 		RelayApi,
 		PeopleApi,
 		HubApi,
-		StakingApi
+		StakingApi,
+		FastUnstakeApi
 	>
 
 	constructor(
@@ -81,6 +82,7 @@ export class BaseService<
 		public apiPeople: DedotClient<PeopleApi>,
 		public apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
+		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
 	) {
 		this.apiStatus = {
 			relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
@@ -146,6 +148,7 @@ export class BaseService<
 			this.apiPeople,
 			this.apiHub,
 			this.stakingApi,
+			this.fastUnstakeApi,
 			this.ids,
 			{ poolsPalletId: this.stakingConsts.poolsPalletId },
 			serviceInterface,

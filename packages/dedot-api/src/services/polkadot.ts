@@ -46,8 +46,8 @@ export class PolkadotService
 		public apiPeople: DedotClient<PolkadotPeopleApi>,
 		public apiHub: DedotClient<PolkadotAssetHubApi>,
 	) {
-		// For Polkadot, staking happens on the relay chain
-		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay)
+		// For Polkadot, staking happens on the relay chain, and fast unstake on the relay chain
+		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay, apiRelay)
 
 		// For Polkadot, fast unstake happens on the relay chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)

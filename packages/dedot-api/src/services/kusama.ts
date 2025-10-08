@@ -46,8 +46,8 @@ export class KusamaService
 		public apiPeople: DedotClient<KusamaPeopleApi>,
 		public apiHub: DedotClient<KusamaAssetHubApi>,
 	) {
-		// For Kusama, staking happens on the relay chain
-		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub)
+		// For Kusama, staking happens on the hub chain, and fast unstake on the relay chain
+		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub, apiRelay)
 
 		// For Kusama, fast unstake happens on the relay chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)

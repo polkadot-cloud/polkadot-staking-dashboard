@@ -46,8 +46,8 @@ export class WestendService
 		public apiPeople: DedotClient<WestendPeopleApi>,
 		public apiHub: DedotClient<WestendAssetHubApi>,
 	) {
-		// For Westend, staking happens on asset hub
-		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub)
+		// For Westend, staking happens on the hub chain, and fast unstake on the hub chain
+		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub, apiHub)
 
 		// For Westend, fast unstake happens on the asset hub chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiHub)
