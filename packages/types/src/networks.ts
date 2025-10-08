@@ -83,7 +83,6 @@ export interface PoolsConfig {
 
 export interface StakingMetrics {
 	totalIssuance: bigint
-	erasToCheckPerBlock: number
 	minimumActiveStake: bigint
 	counterForValidators: number
 	maxValidatorsCount: number | undefined

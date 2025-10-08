@@ -8,6 +8,7 @@ import type { FastUnstakeConfig } from 'types'
 import type { FastUnstakeChain } from '../types'
 
 export class FastUnstakeConfigQuery<T extends FastUnstakeChain> {
+	erasToCheckPerBlock: number = 0
 	config: FastUnstakeConfig = defaultFastUnstakeConfig
 
 	#unsub: Unsub | undefined = undefined
@@ -21,6 +22,10 @@ export class FastUnstakeConfigQuery<T extends FastUnstakeChain> {
 		this.#unsub = await this.api.queryMulti(
 			[
 				{
+					fn: this.api.query.fastUnstake.erasToCheckPerBlock,
+					args: [],
+				},
+				{
 					fn: this.api.query.fastUnstake.head,
 					args: [],
 				},
@@ -29,17 +34,17 @@ export class FastUnstakeConfigQuery<T extends FastUnstakeChain> {
 					args: [],
 				},
 			],
-			([head, counterForQueue]) => {
+			([erasToCheckPerBlock, head, counterForQueue]) => {
 				const stashes = head?.stashes || []
 				const checked = head?.checked || []
-				const config = {
+				this.config = {
+					erasToCheckPerBlock,
 					head: {
 						stashes,
 						checked,
 					},
 					counterForQueue,
 				}
-				this.config = config
 				setFastUnstakeConfig(this.config)
 			},
 		)

@@ -26,22 +26,21 @@ import { Close, useOverlay } from 'ui-overlay'
 export const ManageFastUnstake = () => {
 	const { t } = useTranslation('modals')
 	const {
-		getConsts,
-		activeEra,
-		serviceApi,
-		stakingMetrics: { erasToCheckPerBlock },
-	} = useApi()
+		exposed,
+		queueDeposit,
+		counterForQueue,
+		fastUnstakeStatus,
+		erasToCheckPerBlock,
+	} = useFastUnstake()
 	const { network } = useNetwork()
 	const { feeReserve } = useBalances()
 	const { getTxSubmission } = useTxMeta()
 	const { isFastUnstaking } = useUnstaking()
 	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { setModalResize, setModalStatus } = useOverlay().modal
+	const { getConsts, activeEra, serviceApi } = useApi()
 	const { balances } = useAccountBalances(activeAddress)
-	const { counterForQueue, queueDeposit, fastUnstakeStatus, exposed } =
-		useFastUnstake()
-
+	const { setModalResize, setModalStatus } = useOverlay().modal
 	const { unit, units } = getStakingChainData(network)
 	const { bondDuration, fastUnstakeDeposit } = getConsts(network)
 	const { nominator, transferableBalance } = balances

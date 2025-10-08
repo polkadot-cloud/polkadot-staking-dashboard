@@ -5,7 +5,6 @@ import type { StakingMetrics } from 'types'
 
 export const defaultStakingMetrics: StakingMetrics = {
 	totalIssuance: 0n,
-	erasToCheckPerBlock: 0,
 	minimumActiveStake: 0n,
 	counterForValidators: 0,
 	maxValidatorsCount: undefined,
