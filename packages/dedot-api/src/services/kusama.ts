@@ -11,6 +11,7 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
+import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
@@ -23,14 +24,16 @@ export class KusamaService
 		KusamaApi,
 		KusamaPeopleApi,
 		KusamaAssetHubApi,
-		KusamaAssetHubApi
+		KusamaAssetHubApi,
+		KusamaApi
 	>
 	implements
 		DefaultServiceClass<
 			KusamaApi,
 			KusamaPeopleApi,
 			KusamaAssetHubApi,
-			KusamaAssetHubApi
+			KusamaAssetHubApi,
+			KusamaApi
 		>
 {
 	// Service interface
@@ -45,6 +48,9 @@ export class KusamaService
 	) {
 		// For Kusama, staking happens on the relay chain
 		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub)
+
+		// For Kusama, fast unstake happens on the relay chain
+		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {

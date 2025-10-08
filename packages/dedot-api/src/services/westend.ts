@@ -11,6 +11,7 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
+import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
@@ -23,12 +24,14 @@ export class WestendService
 		WestendApi,
 		WestendPeopleApi,
 		WestendAssetHubApi,
+		WestendAssetHubApi,
 		WestendAssetHubApi
 	>
 	implements
 		DefaultServiceClass<
 			WestendApi,
 			WestendPeopleApi,
+			WestendAssetHubApi,
 			WestendAssetHubApi,
 			WestendAssetHubApi
 		>
@@ -45,6 +48,9 @@ export class WestendService
 	) {
 		// For Westend, staking happens on asset hub
 		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub)
+
+		// For Westend, fast unstake happens on the asset hub chain
+		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiHub)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {

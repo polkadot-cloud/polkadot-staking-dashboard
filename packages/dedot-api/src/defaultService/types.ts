@@ -10,6 +10,7 @@ import type {
 	SystemChainId,
 } from 'types'
 import type { CoreConsts } from '../consts/core'
+import type { FastUnstakeConsts } from '../consts/fastUnstake'
 import type { StakingConsts } from '../consts/staking'
 import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
@@ -26,6 +27,7 @@ import type {
 	ActivePools,
 	AssetHubChain,
 	BondedAccounts,
+	FastUnstakeChain,
 	PeopleChain,
 	PoolMemberships,
 	Proxies,
@@ -43,6 +45,7 @@ export abstract class DefaultServiceClass<
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
+	FastUnstakeApi extends FastUnstakeChain,
 > extends ServiceClass {
 	constructor(
 		public networkConfig: NetworkConfig,
@@ -68,6 +71,8 @@ export abstract class DefaultServiceClass<
 
 	abstract coreConsts: CoreConsts<RelayApi>
 	abstract stakingConsts: StakingConsts<StakingApi>
+	abstract fastUnstakeConsts: FastUnstakeConsts<FastUnstakeApi>
+
 	abstract blockNumber: BlockNumberQuery<RelayApi>
 	abstract activeEra: ActiveEraQuery<StakingApi>
 	abstract relayMetrics: RelayMetricsQuery<RelayApi>

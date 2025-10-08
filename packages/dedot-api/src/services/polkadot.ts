@@ -11,6 +11,7 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
+import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
@@ -23,6 +24,7 @@ export class PolkadotService
 		PolkadotApi,
 		PolkadotPeopleApi,
 		PolkadotAssetHubApi,
+		PolkadotApi,
 		PolkadotApi
 	>
 	implements
@@ -30,6 +32,7 @@ export class PolkadotService
 			PolkadotApi,
 			PolkadotPeopleApi,
 			PolkadotAssetHubApi,
+			PolkadotApi,
 			PolkadotApi
 		>
 {
@@ -45,6 +48,9 @@ export class PolkadotService
 	) {
 		// For Polkadot, staking happens on the relay chain
 		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay)
+
+		// For Polkadot, fast unstake happens on the relay chain
+		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {
