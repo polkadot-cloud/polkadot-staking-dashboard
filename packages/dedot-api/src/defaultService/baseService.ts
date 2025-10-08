@@ -16,6 +16,7 @@ import type {
 	SystemChainId,
 } from 'types'
 import { CoreConsts } from '../consts/core'
+import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { StakingConsts } from '../consts/staking'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
@@ -54,6 +55,7 @@ export class BaseService<
 	// Constants
 	coreConsts: CoreConsts<RelayApi>
 	stakingConsts: StakingConsts<StakingApi>
+	fastUnstakeConsts: FastUnstakeConsts<StakingApi>
 
 	// Query objects
 	blockNumber: BlockNumberQuery<RelayApi>
@@ -106,6 +108,7 @@ export class BaseService<
 		// Initialize constants
 		this.coreConsts = new CoreConsts(this.apiRelay)
 		this.stakingConsts = new StakingConsts(this.stakingApi)
+		this.fastUnstakeConsts = new FastUnstakeConsts(this.stakingApi)
 
 		// Set default sync status
 		setSyncingMulti(defaultSyncStatus)
@@ -126,6 +129,7 @@ export class BaseService<
 		setConsts(this.ids[0], {
 			...this.coreConsts.get(),
 			...this.stakingConsts.get(),
+			...this.fastUnstakeConsts.get(),
 		})
 
 		// Initialize query objects
