@@ -21,25 +21,26 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
 	const { isReady, activeEra } = useApi()
 	const { activeAddress } = useActiveAccounts()
 
-	const { activePlugins } = getAvailablePlugins()
+	const { allPlugins, activePlugins } = getAvailablePlugins()
 
 	// Store the currently active plugins
 	const [plugins, setPluginsState] = useState<Plugin[]>(activePlugins)
 
 	// Toggle a plugin
 	const togglePlugin = (key: Plugin) => {
-		let { allPlugins } = getAvailablePlugins()
-
-		if (allPlugins.find((p) => p === key)) {
-			allPlugins = allPlugins.filter((p) => p !== key)
+		let newAllPlugins = [...allPlugins]
+		if (newAllPlugins.find((p) => p === key)) {
+			newAllPlugins = newAllPlugins.filter((p) => p !== key)
 		} else {
-			allPlugins.push(key)
+			newAllPlugins.push(key)
 		}
 
 		// Filter disabled plugins for this network
 		const disabledPlugins = DisabledPluginsPerNetwork[network] || []
-		const activePlugins = allPlugins.filter((p) => !disabledPlugins.includes(p))
-		setPlugins(allPlugins, activePlugins)
+		const newActivePlugins = newAllPlugins.filter(
+			(p) => !disabledPlugins.includes(p),
+		)
+		setPlugins(newAllPlugins, newActivePlugins)
 	}
 
 	// Check if a plugin is currently enabled
