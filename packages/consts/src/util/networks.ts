@@ -21,3 +21,7 @@ export const getEnabledNetworks = (): Networks =>
 // Checks if a network is enabled
 export const isNetworkEnabled = (network: NetworkId) =>
 	Object.keys(getEnabledNetworks()).includes(network)
+
+// Checks if a network is valid key of `NetworkList`
+export const isValidNetwork = (network: string): network is NetworkId =>
+	Object.keys(NetworkList).includes(network)

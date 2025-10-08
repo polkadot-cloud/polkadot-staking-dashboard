@@ -20,7 +20,10 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
 import { GitHubURl } from 'consts'
-import { CompulsoryPluginsProduction, PluginsList } from 'consts/plugins'
+import {
+	CompulsoryPluginsProduction,
+	DisabledPluginsPerNetwork,
+} from 'consts/plugins'
 import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -55,8 +58,16 @@ export const MenuPopover = ({
 	const { membership } = getPoolMembership(activeAddress)
 	const popoverRef = useRef<HTMLDivElement>(null)
 
+	const forceDisabledPlugins = DisabledPluginsPerNetwork[network] || []
+	const forcePluginsProduction = import.meta.env.PROD
+		? CompulsoryPluginsProduction.filter(
+				(p) => !forceDisabledPlugins.includes(p),
+			)
+		: CompulsoryPluginsProduction
+
+	const pluginsAvailable = forcePluginsProduction.length > 0
+
 	const notStaking = !isNominator && !membership
-	const showPlugins = CompulsoryPluginsProduction.length < PluginsList.length
 
 	// Close the menu if clicked outside of its container
 	useOutsideAlerter(popoverRef, () => {
@@ -152,7 +163,7 @@ export const MenuPopover = ({
 					openModal({ key: 'Invite', size: 'sm' })
 				}}
 			/>
-			{(showPlugins || !import.meta.env.PROD) && (
+			{(pluginsAvailable || !import.meta.env.PROD) && (
 				<DefaultButton
 					text={t('plugins', { ns: 'modals' })}
 					iconLeft={faPuzzlePiece}

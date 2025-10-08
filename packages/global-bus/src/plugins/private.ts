@@ -5,4 +5,5 @@ import { BehaviorSubject } from 'rxjs'
 import type { Plugin } from 'types'
 import { getAvailablePlugins } from './local'
 
-export const _plugins = new BehaviorSubject<Plugin[]>(getAvailablePlugins())
+const { activePlugins } = getAvailablePlugins()
+export const _plugins = new BehaviorSubject<Plugin[]>(activePlugins)
