@@ -12,8 +12,8 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"dedot": "^0.18.1",
-		"@fortawesome/fontawesome-svg-core": "^6.7.2"
+		"@fortawesome/fontawesome-svg-core": "^6.7.2",
+		"dedot": "^0.18.2"
 	},
 	"devDependencies": {
 		"@dedot/chaintypes": "^0.161.0",
