@@ -21,19 +21,19 @@ import { createPool } from '../tx/createPool'
 
 export class PolkadotService
 	extends BaseService<
-		PolkadotApi,
-		PolkadotPeopleApi,
-		PolkadotAssetHubApi,
-		PolkadotApi,
-		PolkadotApi
+		PolkadotApi, // Relay Chain
+		PolkadotPeopleApi, // People Chain
+		PolkadotAssetHubApi, // Asset Hub Chain
+		PolkadotApi, // Chain for staking
+		PolkadotApi // Chain for fast unstake
 	>
 	implements
 		DefaultServiceClass<
-			PolkadotApi,
-			PolkadotPeopleApi,
-			PolkadotAssetHubApi,
-			PolkadotApi,
-			PolkadotApi
+			PolkadotApi, // Relay Chain
+			PolkadotPeopleApi, // People Chain
+			PolkadotAssetHubApi, // Asset Hub Chain
+			PolkadotApi, // Chain for staking
+			PolkadotApi // Chain for fast unstake
 		>
 {
 	// Service interface

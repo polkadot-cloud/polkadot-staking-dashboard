@@ -21,19 +21,19 @@ import { createPool } from '../tx/createPool'
 
 export class WestendService
 	extends BaseService<
-		WestendApi,
-		WestendPeopleApi,
-		WestendAssetHubApi,
-		WestendAssetHubApi,
-		WestendAssetHubApi
+		WestendApi, // Relay Chain
+		WestendPeopleApi, // People Chain
+		WestendAssetHubApi, // Asset Hub Chain
+		WestendAssetHubApi, // Chain for staking
+		WestendAssetHubApi // Chain for fast unstake
 	>
 	implements
 		DefaultServiceClass<
-			WestendApi,
-			WestendPeopleApi,
-			WestendAssetHubApi,
-			WestendAssetHubApi,
-			WestendAssetHubApi
+			WestendApi, // Relay Chain
+			WestendPeopleApi, // People Chain
+			WestendAssetHubApi, // Asset Hub Chain
+			WestendAssetHubApi, // Chain for staking
+			WestendAssetHubApi // Chain for fast unstake
 		>
 {
 	// Service interface

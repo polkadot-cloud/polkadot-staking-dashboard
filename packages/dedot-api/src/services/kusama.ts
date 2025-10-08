@@ -21,19 +21,19 @@ import { createPool } from '../tx/createPool'
 
 export class KusamaService
 	extends BaseService<
-		KusamaApi,
-		KusamaPeopleApi,
-		KusamaAssetHubApi,
-		KusamaAssetHubApi,
-		KusamaApi
+		KusamaApi, // Relay Chain
+		KusamaPeopleApi, // People Chain
+		KusamaAssetHubApi, // Asset Hub Chain
+		KusamaAssetHubApi, // Chain for staking
+		KusamaApi // Chain for fast unstake
 	>
 	implements
 		DefaultServiceClass<
-			KusamaApi,
-			KusamaPeopleApi,
-			KusamaAssetHubApi,
-			KusamaAssetHubApi,
-			KusamaApi
+			KusamaApi, // Relay Chain
+			KusamaPeopleApi, // People Chain
+			KusamaAssetHubApi, // Asset Hub Chain
+			KusamaAssetHubApi, // Chain for staking
+			KusamaApi // Chain for fast unstake
 		>
 {
 	// Service interface
