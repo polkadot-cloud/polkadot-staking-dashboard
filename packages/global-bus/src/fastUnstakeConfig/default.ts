@@ -4,6 +4,7 @@
 import type { FastUnstakeConfig } from 'types'
 
 export const defaultFastUnstakeConfig: FastUnstakeConfig = {
+	erasToCheckPerBlock: 0,
 	head: {
 		stashes: [],
 		checked: [],

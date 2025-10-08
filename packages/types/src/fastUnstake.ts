@@ -4,6 +4,7 @@
 import type { AccountId32 } from 'dedot/codecs'
 
 export interface FastUnstakeConfig {
+	erasToCheckPerBlock: number
 	head: FastUnstakeHead
 	counterForQueue: number
 }

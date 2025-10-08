@@ -16,16 +16,18 @@ import type {
 	SystemChainId,
 } from 'types'
 import { CoreConsts } from '../consts/core'
+import type { FastUnstakeConsts } from '../consts/fastUnstake'
 import { StakingConsts } from '../consts/staking'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
-import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
+import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type {
 	AssetHubChain,
+	FastUnstakeChain,
 	PeopleChain,
 	RelayChain,
 	StakingChain,
@@ -38,6 +40,7 @@ export class BaseService<
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
+	FastUnstakeApi extends FastUnstakeChain,
 > {
 	// Chain specs
 	relayChainSpec: ChainSpecs<RelayApi>
@@ -54,20 +57,22 @@ export class BaseService<
 	// Constants
 	coreConsts: CoreConsts<RelayApi>
 	stakingConsts: StakingConsts<StakingApi>
+	fastUnstakeConsts: FastUnstakeConsts<FastUnstakeApi>
 
 	// Query objects
 	blockNumber: BlockNumberQuery<RelayApi>
 	activeEra: ActiveEraQuery<StakingApi>
 	relayMetrics: RelayMetricsQuery<RelayApi>
 	poolsConfig: PoolsConfigQuery<StakingApi>
-	fastUnstakeConfig: FastUnstakeConfigQuery<StakingApi>
+	fastUnstakeConfig: FastUnstakeConfigQuery<FastUnstakeApi>
 
 	// Subscription manager
 	subscriptionManager: SubscriptionManager<
 		RelayApi,
 		PeopleApi,
 		HubApi,
-		StakingApi
+		StakingApi,
+		FastUnstakeApi
 	>
 
 	constructor(
@@ -77,6 +82,7 @@ export class BaseService<
 		public apiPeople: DedotClient<PeopleApi>,
 		public apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
+		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
 	) {
 		this.apiStatus = {
 			relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
@@ -126,6 +132,7 @@ export class BaseService<
 		setConsts(this.ids[0], {
 			...this.coreConsts.get(),
 			...this.stakingConsts.get(),
+			...this.fastUnstakeConsts.get(),
 		})
 
 		// Initialize query objects
@@ -133,7 +140,6 @@ export class BaseService<
 		this.activeEra = new ActiveEraQuery(this.stakingApi)
 		this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
 		this.poolsConfig = new PoolsConfigQuery(this.stakingApi)
-		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.stakingApi)
 
 		// Initialize subscription manager
 		this.subscriptionManager = new SubscriptionManager(
@@ -141,6 +147,7 @@ export class BaseService<
 			this.apiPeople,
 			this.apiHub,
 			this.stakingApi,
+			this.fastUnstakeApi,
 			this.ids,
 			{ poolsPalletId: this.stakingConsts.poolsPalletId },
 			serviceInterface,

@@ -12,13 +12,11 @@ import { useUnstaking } from 'hooks/useUnstaking'
 import type { UseBondActions } from './types'
 
 export const useBondActions = (): UseBondActions => {
-	const {
-		isReady,
-		stakingMetrics: { erasToCheckPerBlock },
-	} = useApi()
+	const { isReady } = useApi()
 	const { isBonding } = useStaking()
 	const { isFastUnstaking } = useUnstaking()
 	const { activeAddress } = useActiveAccounts()
+	const { erasToCheckPerBlock } = useFastUnstake()
 	const { syncing, accountSynced } = useSyncing([
 		'initialization',
 		'era-stakers',
