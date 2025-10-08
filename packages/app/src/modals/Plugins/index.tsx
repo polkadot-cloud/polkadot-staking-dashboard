@@ -1,7 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { CompulsoryPluginsProduction, PluginsList } from 'consts/plugins'
+import {
+	CompulsoryPluginsProduction,
+	DisabledPluginsPerNetwork,
+	PluginsList,
+} from 'consts/plugins'
+import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
@@ -9,8 +14,11 @@ import { ButtonModal } from 'ui-buttons'
 import { ButtonList, Padding } from 'ui-core/modal'
 
 export const Plugins = () => {
+	const { network } = useNetwork()
 	const { plugins, togglePlugin } = usePlugins()
 	const { t } = useTranslation()
+
+	const disabledPlugins = DisabledPluginsPerNetwork[network] || []
 
 	return (
 		<>
@@ -31,6 +39,7 @@ export const Plugins = () => {
 							<ButtonModal
 								key={plugin}
 								label={'toggle'}
+								disabled={disabledPlugins.includes(plugin)}
 								selected={plugins.includes(plugin)}
 								text={t(`plugin.${plugin}`, { ns: 'app' })}
 								onClick={() => togglePlugin(plugin)}

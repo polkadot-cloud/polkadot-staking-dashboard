@@ -6,11 +6,9 @@ import { _plugins } from './private'
 
 export const plugins$ = _plugins.asObservable()
 
-export const getPlugins = () => _plugins.getValue()
-
-export const setPlugins = (plugins: Plugin[]) => {
-	localStorage.setItem('plugins', JSON.stringify(plugins))
-	_plugins.next(plugins)
+export const setPlugins = (allPlugins: Plugin[], activePlugins: Plugin[]) => {
+	localStorage.setItem('plugins', JSON.stringify(allPlugins))
+	_plugins.next(activePlugins)
 }
 
 export const pluginEnabled = (key: Plugin) => _plugins.getValue().includes(key)
