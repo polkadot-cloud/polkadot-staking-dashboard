@@ -4,9 +4,9 @@
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import { setFastUnstakeQueue } from 'global-bus'
-import type { StakingChain } from '../types'
+import type { FastUnstakeChain } from '../types'
 
-export class FastUnstakeQueueQuery<T extends StakingChain> {
+export class FastUnstakeQueueQuery<T extends FastUnstakeChain> {
 	queue: bigint = 0n
 
 	#unsub: Unsub | undefined = undefined

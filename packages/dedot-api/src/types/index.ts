@@ -43,7 +43,10 @@ export type AssetHubChain =
 	| WestendAssetHubApi
 
 // Chains that are used for staking and nomination pools
-export type StakingChain = PolkadotApi | KusamaApi | WestendAssetHubApi
+export type StakingChain = PolkadotApi | KusamaAssetHubApi | WestendAssetHubApi
+
+// Chains that are used for fast unstake
+export type FastUnstakeChain = PolkadotApi | KusamaApi | WestendAssetHubApi
 
 // Mapping of service types for each network
 export interface ServiceType {
@@ -54,9 +57,14 @@ export interface ServiceType {
 
 // Mapping of the required chains for each service
 export type Service = {
-	polkadot: [PolkadotApi, PolkadotPeopleApi, PolkadotAssetHubApi]
-	kusama: [KusamaApi, KusamaPeopleApi, KusamaAssetHubApi]
-	westend: [WestendApi, WestendPeopleApi, WestendAssetHubApi]
+	polkadot: [PolkadotApi, PolkadotPeopleApi, PolkadotAssetHubApi, PolkadotApi]
+	kusama: [KusamaApi, KusamaPeopleApi, KusamaAssetHubApi, KusamaApi]
+	westend: [
+		WestendApi,
+		WestendPeopleApi,
+		WestendAssetHubApi,
+		WestendAssetHubApi,
+	]
 }
 
 // Generic service class that all services must implement

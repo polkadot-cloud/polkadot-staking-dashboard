@@ -28,10 +28,6 @@ export class StakingMetricsQuery<T extends StakingChain> {
 					args: [],
 				},
 				{
-					fn: this.api.query.fastUnstake.erasToCheckPerBlock,
-					args: [],
-				},
-				{
 					fn: this.api.query.staking.minimumActiveStake,
 					args: [],
 				},
@@ -70,7 +66,6 @@ export class StakingMetricsQuery<T extends StakingChain> {
 			],
 			([
 				totalIssuance,
-				erasToCheckPerBlock,
 				minimumActiveStake,
 				counterForValidators,
 				maxValidatorsCount,
@@ -83,7 +78,6 @@ export class StakingMetricsQuery<T extends StakingChain> {
 			]) => {
 				this.stakingMetrics = {
 					totalIssuance,
-					erasToCheckPerBlock,
 					minimumActiveStake,
 					counterForValidators,
 					maxValidatorsCount,

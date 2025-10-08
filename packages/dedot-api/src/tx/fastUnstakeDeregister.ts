@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
-import type { StakingChain } from '../types'
+import type { FastUnstakeChain } from '../types'
 import { asTx } from '../util'
 
-export const fastUnstakeDeregister = <T extends StakingChain>(
+export const fastUnstakeDeregister = <T extends FastUnstakeChain>(
 	api: DedotClient<T>,
 ) => asTx(api.tx.fastUnstake.deregister())

@@ -6,6 +6,7 @@ import type { FastUnstakeHead, FastUnstakeQueue } from 'types'
 
 export interface FastUnstakeContextInterface {
 	exposed: boolean
+	erasToCheckPerBlock: number
 	queueDeposit: FastUnstakeQueue
 	head: FastUnstakeHead | undefined
 	counterForQueue: number | undefined

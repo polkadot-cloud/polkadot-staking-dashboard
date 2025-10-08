@@ -20,6 +20,9 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 	const [fastUnstakeStatus, setFastUnstakeStatus] =
 		useState<FastUnstakeResult | null>(null)
 
+	// Store fastUnstake eras to check per block
+	const [erasToCheckPerBlock, setErasToCheckPerBlock] = useState<number>(0)
+
 	// Store fastUnstake queue deposit for user
 	const [queueDeposit, setQueueDeposit] = useState<FastUnstakeQueue>()
 
@@ -39,6 +42,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 		const subFastUnstakeConfig = fastUnstakeConfig$.subscribe((result) => {
 			setHead(result.head)
 			setCounterForQueue(result.counterForQueue)
+			setErasToCheckPerBlock(result.erasToCheckPerBlock)
 		})
 		const subFastUnstakeQueue = fastUnstakeQueue$.subscribe((result) => {
 			setQueueDeposit(result)
@@ -56,6 +60,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 				exposed:
 					!!fastUnstakeStatus?.lastExposed &&
 					fastUnstakeStatus?.status === 'EXPOSED',
+				erasToCheckPerBlock,
 				queueDeposit,
 				head,
 				counterForQueue,

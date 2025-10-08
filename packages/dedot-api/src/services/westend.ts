@@ -11,26 +11,30 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
+import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
+import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
 
 export class WestendService
 	extends BaseService<
-		WestendApi,
-		WestendPeopleApi,
-		WestendAssetHubApi,
-		WestendAssetHubApi
+		WestendApi, // Relay Chain
+		WestendPeopleApi, // People Chain
+		WestendAssetHubApi, // Asset Hub Chain
+		WestendAssetHubApi, // Chain for staking
+		WestendAssetHubApi // Chain for fast unstake
 	>
 	implements
 		DefaultServiceClass<
-			WestendApi,
-			WestendPeopleApi,
-			WestendAssetHubApi,
-			WestendAssetHubApi
+			WestendApi, // Relay Chain
+			WestendPeopleApi, // People Chain
+			WestendAssetHubApi, // Asset Hub Chain
+			WestendAssetHubApi, // Chain for staking
+			WestendAssetHubApi // Chain for fast unstake
 		>
 {
 	// Service interface
@@ -43,8 +47,12 @@ export class WestendService
 		public apiPeople: DedotClient<WestendPeopleApi>,
 		public apiHub: DedotClient<WestendAssetHubApi>,
 	) {
-		// For Westend, staking happens on asset hub
-		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub)
+		// For Westend, staking happens on the hub chain, and fast unstake on the hub chain
+		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub, apiHub)
+
+		// For Westend, fast unstake happens on the asset hub chain
+		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiHub)
+		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiHub)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {
