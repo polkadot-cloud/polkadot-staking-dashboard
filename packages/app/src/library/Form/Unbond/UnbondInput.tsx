@@ -87,8 +87,6 @@ export const UnbondInput = ({
 						</div>
 						<div>{maxBondedJsx}</div>
 					</div>
-				</section>
-				<section>
 					<ButtonSubmitInvert
 						text={t('max')}
 						disabled={disabled}
@@ -96,6 +94,7 @@ export const UnbondInput = ({
 							setLocalBond(unbondToMinUnit.toString())
 							updateParentState(unbondToMinUnit)
 						}}
+						marginLeft
 					/>
 				</section>
 			</div>

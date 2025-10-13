@@ -46,12 +46,11 @@ export const InputWrapper = styled.div`
     padding: 0;
 
     > section {
-      &:first-child {
-        flex: 1;
-      }
-      &:last-child {
-        padding: 0 0.25rem 0 1.25rem;
-      }
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
       .input {
         border: 1px solid var(--border-primary-color);
         padding: 1rem;
@@ -59,8 +58,7 @@ export const InputWrapper = styled.div`
         display: flex;
         flex-flow: row wrap;
         align-items: center;
-        width: 100%;
-        max-width: 100%;
+        flex: 1;
 
         > div {
           &:first-child {
@@ -113,5 +111,6 @@ export const InputWrapper = styled.div`
     color: var(--text-color-secondary);
     opacity: 0.5;
     padding: 0 0.5rem;
+    margin-top: 0;
   }
 `
