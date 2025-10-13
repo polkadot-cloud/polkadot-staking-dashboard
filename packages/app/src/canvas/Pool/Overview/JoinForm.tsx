@@ -103,7 +103,7 @@ export const JoinForm = ({
 			(pool) => Number(pool.id) !== Number(bondedPool.id),
 		)
 		const newCandidate =
-			filteredPools[(filteredPools.length * Math.random()) << 0]?.id
+			filteredPools[Math.floor(Math.random() * filteredPools.length)]?.id
 		setSelectedPoolId(newCandidate)
 	}
 
