@@ -29,7 +29,7 @@ export const RowWrapper = styled.div`
 export const InputWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
 
   h3 {
     color: var(--text-color-secondary);
@@ -66,12 +66,14 @@ export const InputWrapper = styled.div`
           &:first-child {
             flex-grow: 1;
           }
+
           &:last-child {
             color: var(--text-color-secondary);
             padding-left: 0.5rem;
             justify-content: flex-end;
             opacity: 0.5;
             position: relative;
+            max-width: 50%;
 
             @media (max-width: ${SmallFontSizeMaxWidth}px) {
               display: none;

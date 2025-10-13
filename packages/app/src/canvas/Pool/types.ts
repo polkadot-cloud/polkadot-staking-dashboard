@@ -7,12 +7,9 @@ import type { BondedPool, IdentityOf, SuperIdentity } from 'types'
 export interface HeaderProps {
 	activeTab: number
 	bondedPool: BondedPool
-	poolCandidates: BondedPool[]
 	metadata: string
 	autoSelected: boolean
 	setActiveTab: (tab: number) => void
-	setSelectedPoolId: Dispatch<SetStateAction<number>>
-	providedPoolId: number
 }
 
 export interface NominationsProps {
@@ -23,6 +20,9 @@ export interface NominationsProps {
 export interface OverviewSectionProps {
 	bondedPool: BondedPool
 	roleIdentities: RoleIdentities
+	poolCandidates: BondedPool[]
+	setSelectedPoolId: Dispatch<SetStateAction<number>>
+	providedPoolId: number
 }
 
 export type RoleIdentities = {
