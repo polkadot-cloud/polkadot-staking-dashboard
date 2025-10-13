@@ -148,15 +148,18 @@ export const Pool = () => {
 					<Header
 						activeTab={activeTab}
 						setActiveTab={setActiveTab}
-						setSelectedPoolId={setSelectedPoolId}
 						bondedPool={bondedPool}
 						metadata={poolsMetaData[selectedPoolId]}
 						autoSelected={!providedPoolId}
-						poolCandidates={shuffledCandidates}
-						providedPoolId={providedPoolId}
 					/>
 					{activeTab === 0 && (
-						<Overview bondedPool={bondedPool} roleIdentities={roleIdentities} />
+						<Overview
+							bondedPool={bondedPool}
+							roleIdentities={roleIdentities}
+							setSelectedPoolId={setSelectedPoolId}
+							poolCandidates={shuffledCandidates}
+							providedPoolId={providedPoolId}
+						/>
 					)}
 					{activeTab === 1 && (
 						<Nominations

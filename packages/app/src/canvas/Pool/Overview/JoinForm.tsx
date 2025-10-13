@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
@@ -18,14 +19,24 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput'
 import { SubmitTx } from 'library/SubmitTx'
-import { useState } from 'react'
+import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { ClaimPermission } from 'types'
+import type { BondedPool, ClaimPermission } from 'types'
+import { ButtonPrimaryInvert } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 import type { OverviewSectionProps } from '../types'
 import { JoinFormWrapper } from '../Wrappers'
 
-export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
+export const JoinForm = ({
+	bondedPool,
+	providedPoolId,
+	poolCandidates,
+	setSelectedPoolId,
+}: OverviewSectionProps & {
+	providedPoolId: number
+	poolCandidates: BondedPool[]
+	setSelectedPoolId: Dispatch<SetStateAction<number>>
+}) => {
 	const { t } = useTranslation()
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
@@ -85,6 +96,17 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 		return txs.length === 1 ? txs[0] : newBatchCall(txs, activeAddress)
 	}
 
+	// Randomly select a new pool to display
+	const handleChooseNewPool = () => {
+		// Remove current pool from filtered so it is not selected again
+		const filteredPools = poolCandidates.filter(
+			(pool) => Number(pool.id) !== Number(bondedPool.id),
+		)
+		const newCandidate =
+			filteredPools[(filteredPools.length * Math.random()) << 0]?.id
+		setSelectedPoolId(newCandidate)
+	}
+
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
 		from: activeAddress,
@@ -111,7 +133,16 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
 	return (
 		<JoinFormWrapper>
-			<h2>{t('joinPool', { ns: 'pages' })}</h2>
+			<div className="head">
+				<h2>{t('joinPool', { ns: 'pages' })}</h2>
+				{providedPoolId === null && (
+					<ButtonPrimaryInvert
+						text={t('chooseAnotherPool', { ns: 'app' })}
+						iconLeft={faArrowsRotate}
+						onClick={() => handleChooseNewPool()}
+					/>
+				)}
+			</div>
 			<h4>
 				{t('bond', { ns: 'app' })} {unit}
 			</h4>

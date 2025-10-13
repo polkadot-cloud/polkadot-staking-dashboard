@@ -11,6 +11,20 @@ export const JoinFormWrapper = styled.div`
   padding: 1.5rem;
   width: 100%;
 
+  .head {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    > h2 {
+      color: var(--text-color-secondary);
+      margin: 0.25rem 0;
+      width: auto;
+    }
+  }
+
   @media (max-width: 1000px) {
     margin-top: 1rem;
   }
@@ -27,11 +41,6 @@ export const JoinFormWrapper = styled.div`
       color: var(--text-color-secondary);
       font-family: Inter, sans-serif;
     }
-  }
-
-  > h2 {
-    color: var(--text-color-secondary);
-    margin: 0.25rem 0;
   }
 
   > h4 {
