@@ -16,7 +16,7 @@
 	"dependencies": {
 		"@w3ux/utils": "^2.2.3",
 		"bignumber.js": "^9.3.1",
-		"chart.js": "^4.4.9",
+		"chart.js": "^4.5.1",
 		"consts": "workspace:*",
 		"chroma-js": "^3.1.1",
 		"date-fns": "^4.1.0",
