@@ -12,11 +12,11 @@
 		".": "./src/index.ts"
 	},
 	"dependencies": {
-		"@dedot/chaintypes": "^0.161.0",
+		"@dedot/chaintypes": "^0.163.0",
 		"@w3ux/observables-connect": "^0.11.3",
 		"@w3ux/utils": "^2.2.3",
 		"consts": "workspace:*",
-		"dedot": "^0.18.2",
+		"dedot": "^0.18.3",
 		"global-bus": "workspace:*",
 		"rxjs": "^7.8.2",
 		"smoldot": "^2.0.38",
