@@ -88,8 +88,6 @@ export const BondInput = ({
 						</div>
 						<div>{availableFundsJsx}</div>
 					</div>
-				</section>
-				<section>
 					<ButtonSubmitInvert
 						text={t('max')}
 						disabled={disabled || syncing || freeToBond.isZero()}
@@ -97,6 +95,7 @@ export const BondInput = ({
 							setLocalBond(freeToBond.toString())
 							updateParentState(freeToBond.toString())
 						}}
+						marginLeft
 					/>
 				</section>
 			</div>
