@@ -30,17 +30,19 @@ export const useBondActions = (): UseBondActions => {
 	const isLoading = !isReady || syncing || !isAccountSynced
 	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
-	// Basic requirements: account must exist, not be read-only, and not be syncing
-	const basicRequirements = activeAddress && !isReadOnly && !isLoading
+	// Basic requirements: account must exist, not be read-only, not be syncing, and must already be
+	// actively bonding (e.g. nominator setup complete).
+	const basicRequirements =
+		activeAddress && !isReadOnly && !isLoading && isBonding
 
 	// Bond actions require basic requirements and bonding capability
 	const canBond = Boolean(basicRequirements && !isFastUnstaking)
 
 	// Unbond actions require basic requirements and active bonding
-	const canUnbond = Boolean(basicRequirements && isBonding && !isFastUnstaking)
+	const canUnbond = Boolean(basicRequirements && !isFastUnstaking)
 
 	// Unstake actions require basic requirements and active bonding
-	const canUnstake = Boolean(basicRequirements && isBonding)
+	const canUnstake = Boolean(basicRequirements)
 
 	// Whether the user can fast unstake
 	const canFastUnstake =
