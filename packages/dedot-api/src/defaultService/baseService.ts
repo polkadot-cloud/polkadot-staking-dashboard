@@ -146,7 +146,7 @@ export class BaseService<
 		)
 
 		// Initialize identity manager
-		this.identityManager = new IdentityManager(this.providerPeople)
+		this.identityManager = new IdentityManager(this.providerPeople, this.ids[0])
 
 		// Set up the active era subscription
 		this.subscriptionManager.setActiveEraSubscription(this.activeEra.activeEra$)
