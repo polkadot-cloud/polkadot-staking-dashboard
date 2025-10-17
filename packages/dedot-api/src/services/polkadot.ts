@@ -4,7 +4,12 @@
 import type { PolkadotAssetHubApi } from '@dedot/chaintypes'
 import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
-import { type DedotClient, ExtraSignedExtension } from 'dedot'
+import {
+	type DedotClient,
+	ExtraSignedExtension,
+	type SmoldotProvider,
+	type WsProvider,
+} from 'dedot'
 import type {
 	NetworkConfig,
 	NetworkId,
@@ -44,11 +49,19 @@ export class PolkadotService
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
 		public apiRelay: DedotClient<PolkadotApi>,
-		public apiPeople: DedotClient<PolkadotPeopleApi>,
 		public apiHub: DedotClient<PolkadotAssetHubApi>,
+		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		// For Polkadot, staking happens on the relay chain, and fast unstake on the relay chain
-		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiRelay, apiRelay)
+		super(
+			networkConfig,
+			ids,
+			apiRelay,
+			apiHub,
+			apiRelay,
+			apiRelay,
+			providerPeople,
+		)
 
 		// For Polkadot, fast unstake happens on the relay chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
@@ -67,8 +80,6 @@ export class PolkadotService
 					await query.erasStakersOverviewEntries(this.apiRelay, era),
 				erasStakersPagedEntries: async (era, validator) =>
 					await query.erasStakersPagedEntries(this.apiRelay, era, validator),
-				identityOfMulti: async (addresses) =>
-					await query.identityOfMulti(this.apiPeople, addresses),
 				nominatorsMulti: async (addresses) =>
 					await query.nominatorsMulti(this.apiRelay, addresses),
 				poolMembersMulti: async (addresses) =>
@@ -78,12 +89,10 @@ export class PolkadotService
 				proxies: async (address) => await query.proxies(this.apiRelay, address),
 				sessionValidators: async () =>
 					await query.sessionValidators(this.apiRelay),
+				identityOfMulti: async (addresses) =>
+					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>
-					await query.superOfMulti(
-						this.apiPeople,
-						addresses,
-						this.apiPeople.consts.system.ss58Prefix,
-					),
+					await this.identityManager.superOfMulti(addresses),
 				validatorEntries: async () =>
 					await query.validatorEntries(this.apiRelay),
 				validatorsMulti: async (addresses) =>
@@ -167,20 +176,21 @@ export class PolkadotService
 					signerAddress,
 					payloadOptions = undefined,
 				) =>
-					new ExtraSignedExtension(this.getApi(specName), {
+					new ExtraSignedExtension(this.getLiveApi(specName), {
 						signerAddress,
 						payloadOptions,
 					}),
 				metadata: async (specName) =>
-					await this.getApi(specName).call.metadata.metadataAtVersion(15),
+					await this.getLiveApi(specName).call.metadata.metadataAtVersion(15),
 			},
 			spec: {
-				ss58: (specName) => this.getApi(specName).consts.system.ss58Prefix,
+				ss58: (specName) => this.getLiveApi(specName).consts.system.ss58Prefix,
 			},
 			codec: {
 				$Signature: (specName) =>
-					this.getApi(specName).registry.findCodec(
-						this.getApi(specName).registry.metadata.extrinsic.signatureTypeId,
+					this.getLiveApi(specName).registry.findCodec(
+						this.getLiveApi(specName).registry.metadata.extrinsic
+							.signatureTypeId,
 					),
 			},
 		}

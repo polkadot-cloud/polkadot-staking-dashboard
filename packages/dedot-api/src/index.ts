@@ -37,16 +37,25 @@ export const initDedotService = async () => {
 			const { network, ...rest } = cur
 			// Type narrow services and apis
 			if (network === 'westend') {
-				const { Service, apis, ids } = await getDefaultService(network, rest)
-				service = new Service(cur, ids, ...apis)
+				const { Service, apis, ids, providerPeople } = await getDefaultService(
+					network,
+					rest,
+				)
+				service = new Service(cur, ids, ...apis, providerPeople)
 			}
 			if (network === 'kusama') {
-				const { Service, apis, ids } = await getDefaultService(network, rest)
-				service = new Service(cur, ids, ...apis)
+				const { Service, apis, ids, providerPeople } = await getDefaultService(
+					network,
+					rest,
+				)
+				service = new Service(cur, ids, ...apis, providerPeople)
 			}
 			if (network === 'polkadot') {
-				const { Service, apis, ids } = await getDefaultService(network, rest)
-				service = new Service(cur, ids, ...apis)
+				const { Service, apis, ids, providerPeople } = await getDefaultService(
+					network,
+					rest,
+				)
+				service = new Service(cur, ids, ...apis, providerPeople)
 			}
 
 			// Expose service interface

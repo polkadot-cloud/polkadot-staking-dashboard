@@ -116,8 +116,8 @@ export const EraPointsLine = ({
 				},
 				callbacks: {
 					title: () => [],
-					label: (context: { parsed: { y: number } }) =>
-						`${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${labels.eraPoints}`,
+					label: (context: { parsed: { y: number | null } }) =>
+						`${new BigNumber(context.parsed.y ?? 0).decimalPlaces(0).toFormat()} ${labels.eraPoints}`,
 				},
 				intersect: false,
 				interaction: {

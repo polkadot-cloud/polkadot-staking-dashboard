@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DedotClient } from 'dedot'
+import type { DedotClient, SmoldotProvider, WsProvider } from 'dedot'
 import {
 	defaultSyncStatus,
 	removeSyncing,
@@ -32,6 +32,7 @@ import type {
 	RelayChain,
 	StakingChain,
 } from '../types'
+import { IdentityManager } from './identityManager'
 import { SubscriptionManager } from './subscriptionManager'
 
 // Base service utility that handles common initialization and management
@@ -42,15 +43,13 @@ export class BaseService<
 	StakingApi extends StakingChain,
 	FastUnstakeApi extends FastUnstakeChain,
 > {
-	// Chain specs
+	// Chain specs of live apis
 	relayChainSpec: ChainSpecs<RelayApi>
-	peopleChainSpec: ChainSpecs<PeopleApi>
 	hubChainSpec: ChainSpecs<HubApi>
 
-	// API status
+	// API status of live apis
 	apiStatus: {
 		relay: ApiStatus<RelayApi>
-		people: ApiStatus<PeopleApi>
 		hub: ApiStatus<HubApi>
 	}
 
@@ -75,28 +74,28 @@ export class BaseService<
 		FastUnstakeApi
 	>
 
+	// Identity manager
+	identityManager: IdentityManager<PeopleApi>
+
 	constructor(
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
 		public apiRelay: DedotClient<RelayApi>,
-		public apiPeople: DedotClient<PeopleApi>,
 		public apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
 		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
+		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		this.apiStatus = {
 			relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
-			people: new ApiStatus(this.apiPeople, ids[1], networkConfig),
 			hub: new ApiStatus(this.apiHub, ids[2], networkConfig),
 		}
 	}
 
-	// Standard getApi implementation used by all services
-	getApi = (id: string) => {
+	// Standard getLiveApi implementation used by all services
+	getLiveApi = (id: string) => {
 		if (id === this.ids[0]) {
 			return this.apiRelay
-		} else if (id === this.ids[1]) {
-			return this.apiPeople
 		} else {
 			return this.apiHub
 		}
@@ -106,7 +105,6 @@ export class BaseService<
 	async start(serviceInterface: ServiceInterface) {
 		// Initialize chain specs
 		this.relayChainSpec = new ChainSpecs(this.apiRelay)
-		this.peopleChainSpec = new ChainSpecs(this.apiPeople)
 		this.hubChainSpec = new ChainSpecs(this.apiHub)
 
 		// Initialize constants
@@ -117,16 +115,11 @@ export class BaseService<
 		setSyncingMulti(defaultSyncStatus)
 
 		// Fetch chain specs
-		await Promise.all([
-			this.relayChainSpec.fetch(),
-			this.peopleChainSpec.fetch(),
-			this.hubChainSpec.fetch(),
-		])
+		await Promise.all([this.relayChainSpec.fetch(), this.hubChainSpec.fetch()])
 
 		// Set multi-chain specs and constants
 		setMultiChainSpecs({
 			[this.ids[0]]: this.relayChainSpec.get(),
-			[this.ids[1]]: this.peopleChainSpec.get(),
 			[this.ids[2]]: this.hubChainSpec.get(),
 		})
 		setConsts(this.ids[0], {
@@ -144,7 +137,6 @@ export class BaseService<
 		// Initialize subscription manager
 		this.subscriptionManager = new SubscriptionManager(
 			this.apiRelay,
-			this.apiPeople,
 			this.apiHub,
 			this.stakingApi,
 			this.fastUnstakeApi,
@@ -152,6 +144,9 @@ export class BaseService<
 			{ poolsPalletId: this.stakingConsts.poolsPalletId },
 			serviceInterface,
 		)
+
+		// Initialize identity manager
+		this.identityManager = new IdentityManager(this.providerPeople, this.ids[0])
 
 		// Set up the active era subscription
 		this.subscriptionManager.setActiveEraSubscription(this.activeEra.activeEra$)
@@ -175,7 +170,9 @@ export class BaseService<
 		try {
 			await Promise.all([
 				this.apiRelay.disconnect(),
-				this.apiPeople.disconnect(),
+				this.identityManager.api
+					? this.identityManager.api.disconnect()
+					: Promise.resolve(),
 				this.apiHub.disconnect(),
 			])
 		} catch {

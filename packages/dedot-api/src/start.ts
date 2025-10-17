@@ -58,25 +58,25 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 
 	setMultiApiStatus({
 		[network]: 'connecting',
-		[peopleChainId]: 'connecting',
+		[peopleChainId]: 'disconnected',
 		[hubChainId]: 'connecting',
 	})
 
-	const [apiRelay, apiPeople, apiHub] = await Promise.all([
+	const [apiRelay, apiHub, providerPeople] = await Promise.all([
 		DedotClient.new<Service[T][0]>(relayProvider),
-		DedotClient.new<Service[T][1]>(peopleProvider),
 		DedotClient.new<Service[T][2]>(hubProvider),
+		peopleProvider,
 	])
 
 	setMultiApiStatus({
 		[network]: 'ready',
-		[peopleChainId]: 'ready',
 		[hubChainId]: 'ready',
 	})
 
 	return {
 		Service: Services[network],
-		apis: [apiRelay, apiPeople, apiHub],
+		apis: [apiRelay, apiHub],
 		ids,
+		providerPeople,
 	}
 }
