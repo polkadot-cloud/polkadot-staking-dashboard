@@ -62,9 +62,8 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 		[hubChainId]: 'connecting',
 	})
 
-	const [apiRelay, apiPeople, apiHub, providerPeople] = await Promise.all([
+	const [apiRelay, apiHub, providerPeople] = await Promise.all([
 		DedotClient.new<Service[T][0]>(relayProvider),
-		DedotClient.new<Service[T][1]>(peopleProvider),
 		DedotClient.new<Service[T][2]>(hubProvider),
 		peopleProvider,
 	])
@@ -77,7 +76,7 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 
 	return {
 		Service: Services[network],
-		apis: [apiRelay, apiPeople, apiHub],
+		apis: [apiRelay, apiHub],
 		ids,
 		providerPeople,
 	}

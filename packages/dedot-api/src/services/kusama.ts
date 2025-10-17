@@ -49,7 +49,6 @@ export class KusamaService
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
 		public apiRelay: DedotClient<KusamaApi>,
-		public apiPeople: DedotClient<KusamaPeopleApi>,
 		public apiHub: DedotClient<KusamaAssetHubApi>,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
@@ -58,7 +57,6 @@ export class KusamaService
 			networkConfig,
 			ids,
 			apiRelay,
-			apiPeople,
 			apiHub,
 			apiHub,
 			apiRelay,

@@ -81,7 +81,6 @@ export class BaseService<
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
 		public apiRelay: DedotClient<RelayApi>,
-		public apiPeople: DedotClient<PeopleApi>,
 		public apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
 		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
@@ -171,7 +170,7 @@ export class BaseService<
 		try {
 			await Promise.all([
 				this.apiRelay.disconnect(),
-				this.apiPeople.disconnect(),
+				this.identityManager.api.disconnect(),
 				this.apiHub.disconnect(),
 			])
 		} catch {

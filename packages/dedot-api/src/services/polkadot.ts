@@ -49,7 +49,6 @@ export class PolkadotService
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
 		public apiRelay: DedotClient<PolkadotApi>,
-		public apiPeople: DedotClient<PolkadotPeopleApi>,
 		public apiHub: DedotClient<PolkadotAssetHubApi>,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
@@ -58,7 +57,6 @@ export class PolkadotService
 			networkConfig,
 			ids,
 			apiRelay,
-			apiPeople,
 			apiHub,
 			apiRelay,
 			apiRelay,

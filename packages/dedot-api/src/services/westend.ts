@@ -49,21 +49,11 @@ export class WestendService
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
 		public apiRelay: DedotClient<WestendApi>,
-		public apiPeople: DedotClient<WestendPeopleApi>,
 		public apiHub: DedotClient<WestendAssetHubApi>,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		// For Westend, staking happens on the hub chain, and fast unstake on the hub chain
-		super(
-			networkConfig,
-			ids,
-			apiRelay,
-			apiPeople,
-			apiHub,
-			apiHub,
-			apiHub,
-			providerPeople,
-		)
+		super(networkConfig, ids, apiRelay, apiHub, apiHub, apiHub, providerPeople)
 
 		// For Westend, fast unstake happens on the asset hub chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiHub)

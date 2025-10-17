@@ -50,7 +50,6 @@ export abstract class DefaultServiceClass<
 	constructor(
 		public networkConfig: NetworkConfig,
 		public apiRelay: DedotClient<RelayApi>,
-		public apiPeople: DedotClient<PeopleApi>,
 		public apiHub: DedotClient<HubApi>,
 	) {
 		super()
@@ -98,11 +97,7 @@ export abstract class DefaultServiceClass<
 // Default interface a default service factory returns
 export type DefaultService<T extends keyof ServiceType> = {
 	Service: ServiceType[T]
-	apis: [
-		DedotClient<Service[T][0]>,
-		DedotClient<Service[T][1]>,
-		DedotClient<Service[T][2]>,
-	]
+	apis: [DedotClient<Service[T][0]>, DedotClient<Service[T][2]>]
 	ids: [NetworkId, SystemChainId, SystemChainId]
 	providerPeople: WsProvider | SmoldotProvider
 }
