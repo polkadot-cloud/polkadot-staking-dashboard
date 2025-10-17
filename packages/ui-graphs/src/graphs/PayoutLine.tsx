@@ -114,8 +114,8 @@ export const PayoutLine = ({
 				},
 				callbacks: {
 					title: () => [],
-					label: (context: { parsed: { y: number } }) =>
-						`${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
+					label: (context: { parsed: { y: number | null } }) =>
+						`${new BigNumber(context.parsed.y ?? 0).toFormat()} ${unit}`,
 				},
 				intersect: false,
 				interaction: {

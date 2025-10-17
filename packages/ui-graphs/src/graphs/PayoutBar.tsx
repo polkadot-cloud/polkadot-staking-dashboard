@@ -165,7 +165,7 @@ export const PayoutBar = ({
 					title: () => [],
 					label: ({ dataset, parsed }: TooltipItem<'bar'>) =>
 						`${dataset.order === 3 ? `${labels.pending}: ` : ''}${new BigNumber(
-							parsed.y,
+							parsed?.y ?? 0,
 						)
 							.decimalPlaces(units)
 							.toFormat()} ${unit}`,
