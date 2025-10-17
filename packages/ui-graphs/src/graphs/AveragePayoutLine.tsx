@@ -127,7 +127,7 @@ export const AveragePayoutLine = ({
 				callbacks: {
 					title: () => [],
 					label: ({ parsed }: TooltipItem<'line'>) =>
-						` ${new BigNumber(parsed.y)
+						` ${new BigNumber(parsed?.y ?? 0)
 							.decimalPlaces(units)
 							.toFormat()} ${unit}`,
 				},

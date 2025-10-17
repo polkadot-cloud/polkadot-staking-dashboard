@@ -1,12 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DedotClient } from 'dedot'
+import type { DedotClient, SmoldotProvider, WsProvider } from 'dedot'
 import type { Subscription } from 'rxjs'
 import type {
+	IdentityOf,
 	NetworkConfig,
 	NetworkId,
 	ServiceInterface,
+	SuperOf,
 	SystemChainId,
 } from 'types'
 import type { CoreConsts } from '../consts/core'
@@ -50,7 +52,6 @@ export abstract class DefaultServiceClass<
 	constructor(
 		public networkConfig: NetworkConfig,
 		public apiRelay: DedotClient<RelayApi>,
-		public apiPeople: DedotClient<PeopleApi>,
 		public apiHub: DedotClient<HubApi>,
 	) {
 		super()
@@ -58,15 +59,13 @@ export abstract class DefaultServiceClass<
 	abstract ids: [NetworkId, SystemChainId, SystemChainId]
 	abstract apiStatus: {
 		relay: ApiStatus<RelayApi>
-		people: ApiStatus<PeopleApi>
 		hub: ApiStatus<HubApi>
 	}
-	abstract getApi: (
+	abstract getLiveApi: (
 		id: string,
 	) => DedotClient<RelayApi> | DedotClient<PeopleApi> | DedotClient<HubApi>
 
 	abstract relayChainSpec: ChainSpecs<RelayApi>
-	abstract peopleChainSpec: ChainSpecs<PeopleApi>
 	abstract hubChainSpec: ChainSpecs<HubApi>
 
 	abstract coreConsts: CoreConsts<RelayApi>
@@ -100,12 +99,9 @@ export abstract class DefaultServiceClass<
 // Default interface a default service factory returns
 export type DefaultService<T extends keyof ServiceType> = {
 	Service: ServiceType[T]
-	apis: [
-		DedotClient<Service[T][0]>,
-		DedotClient<Service[T][1]>,
-		DedotClient<Service[T][2]>,
-	]
+	apis: [DedotClient<Service[T][0]>, DedotClient<Service[T][2]>]
 	ids: [NetworkId, SystemChainId, SystemChainId]
+	providerPeople: WsProvider | SmoldotProvider
 }
 
 // Account balances record
@@ -118,3 +114,20 @@ export type AccountBalances<
 	people: Record<string, AccountBalanceQuery<PeopleApi>>
 	hub: Record<string, AccountBalanceQuery<HubApi>>
 }
+
+// Identity manager queue interface for pending queries
+export interface IdentityQueueItem {
+	type: 'identityOfMulti'
+	addresses: string[]
+	resolve: (result: IdentityOf[]) => void
+	reject: (error: unknown) => void
+}
+
+export interface SuperQueueItem {
+	type: 'superOfMulti'
+	addresses: string[]
+	resolve: (result: SuperOf[]) => void
+	reject: (error: unknown) => void
+}
+
+export type QueueItem = IdentityQueueItem | SuperQueueItem
