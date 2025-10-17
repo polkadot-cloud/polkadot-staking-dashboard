@@ -58,7 +58,7 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 
 	setMultiApiStatus({
 		[network]: 'connecting',
-		[peopleChainId]: 'connecting',
+		[peopleChainId]: 'disconnected',
 		[hubChainId]: 'connecting',
 	})
 
@@ -70,7 +70,6 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 
 	setMultiApiStatus({
 		[network]: 'ready',
-		[peopleChainId]: 'ready',
 		[hubChainId]: 'ready',
 	})
 
