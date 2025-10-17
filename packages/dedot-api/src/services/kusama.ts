@@ -4,7 +4,12 @@
 import type { KusamaAssetHubApi } from '@dedot/chaintypes'
 import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
-import { type DedotClient, ExtraSignedExtension } from 'dedot'
+import {
+	type DedotClient,
+	ExtraSignedExtension,
+	type SmoldotProvider,
+	type WsProvider,
+} from 'dedot'
 import type {
 	NetworkConfig,
 	NetworkId,
@@ -46,9 +51,19 @@ export class KusamaService
 		public apiRelay: DedotClient<KusamaApi>,
 		public apiPeople: DedotClient<KusamaPeopleApi>,
 		public apiHub: DedotClient<KusamaAssetHubApi>,
+		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		// For Kusama, staking happens on the hub chain, and fast unstake on the relay chain
-		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub, apiRelay)
+		super(
+			networkConfig,
+			ids,
+			apiRelay,
+			apiPeople,
+			apiHub,
+			apiHub,
+			apiRelay,
+			providerPeople,
+		)
 
 		// For Kusama, fast unstake happens on the relay chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
@@ -67,8 +82,6 @@ export class KusamaService
 					await query.erasStakersOverviewEntries(this.apiHub, era),
 				erasStakersPagedEntries: async (era, validator) =>
 					await query.erasStakersPagedEntries(this.apiHub, era, validator),
-				identityOfMulti: async (addresses) =>
-					await query.identityOfMulti(this.apiPeople, addresses),
 				nominatorsMulti: async (addresses) =>
 					await query.nominatorsMulti(this.apiHub, addresses),
 				poolMembersMulti: async (addresses) =>
@@ -78,12 +91,10 @@ export class KusamaService
 				proxies: async (address) => await query.proxies(this.apiHub, address),
 				sessionValidators: async () =>
 					await query.sessionValidators(this.apiHub),
+				identityOfMulti: async (addresses) =>
+					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>
-					await query.superOfMulti(
-						this.apiPeople,
-						addresses,
-						this.apiPeople.consts.system.ss58Prefix,
-					),
+					await this.identityManager.superOfMulti(addresses),
 				validatorEntries: async () => await query.validatorEntries(this.apiHub),
 				validatorsMulti: async (addresses) =>
 					await query.validatorsMulti(this.apiHub, addresses),

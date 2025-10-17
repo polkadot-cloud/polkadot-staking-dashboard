@@ -4,7 +4,12 @@
 import type { WestendAssetHubApi } from '@dedot/chaintypes'
 import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
-import { type DedotClient, ExtraSignedExtension } from 'dedot'
+import {
+	type DedotClient,
+	ExtraSignedExtension,
+	type SmoldotProvider,
+	type WsProvider,
+} from 'dedot'
 import type {
 	NetworkConfig,
 	NetworkId,
@@ -46,9 +51,19 @@ export class WestendService
 		public apiRelay: DedotClient<WestendApi>,
 		public apiPeople: DedotClient<WestendPeopleApi>,
 		public apiHub: DedotClient<WestendAssetHubApi>,
+		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		// For Westend, staking happens on the hub chain, and fast unstake on the hub chain
-		super(networkConfig, ids, apiRelay, apiPeople, apiHub, apiHub, apiHub)
+		super(
+			networkConfig,
+			ids,
+			apiRelay,
+			apiPeople,
+			apiHub,
+			apiHub,
+			apiHub,
+			providerPeople,
+		)
 
 		// For Westend, fast unstake happens on the asset hub chain
 		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiHub)
@@ -67,8 +82,6 @@ export class WestendService
 					await query.erasStakersOverviewEntries(this.apiHub, era),
 				erasStakersPagedEntries: async (era, validator) =>
 					await query.erasStakersPagedEntries(this.apiHub, era, validator),
-				identityOfMulti: async (addresses) =>
-					await query.identityOfMulti(this.apiPeople, addresses),
 				nominatorsMulti: async (addresses) =>
 					await query.nominatorsMulti(this.apiHub, addresses),
 				poolMembersMulti: async (addresses) =>
@@ -78,12 +91,10 @@ export class WestendService
 				proxies: async (address) => await query.proxies(this.apiHub, address),
 				sessionValidators: async () =>
 					await query.sessionValidators(this.apiHub),
+				identityOfMulti: async (addresses) =>
+					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>
-					await query.superOfMulti(
-						this.apiPeople,
-						addresses,
-						this.apiPeople.consts.system.ss58Prefix,
-					),
+					await this.identityManager.superOfMulti(addresses),
 				validatorEntries: async () => await query.validatorEntries(this.apiHub),
 				validatorsMulti: async (addresses) =>
 					await query.validatorsMulti(this.apiHub, addresses),

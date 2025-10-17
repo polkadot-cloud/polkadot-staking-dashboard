@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DedotClient } from 'dedot'
+import type { DedotClient, SmoldotProvider, WsProvider } from 'dedot'
 import type { Subscription } from 'rxjs'
 import type {
 	NetworkConfig,
@@ -58,7 +58,6 @@ export abstract class DefaultServiceClass<
 	abstract ids: [NetworkId, SystemChainId, SystemChainId]
 	abstract apiStatus: {
 		relay: ApiStatus<RelayApi>
-		people: ApiStatus<PeopleApi>
 		hub: ApiStatus<HubApi>
 	}
 	abstract getApi: (
@@ -66,7 +65,6 @@ export abstract class DefaultServiceClass<
 	) => DedotClient<RelayApi> | DedotClient<PeopleApi> | DedotClient<HubApi>
 
 	abstract relayChainSpec: ChainSpecs<RelayApi>
-	abstract peopleChainSpec: ChainSpecs<PeopleApi>
 	abstract hubChainSpec: ChainSpecs<HubApi>
 
 	abstract coreConsts: CoreConsts<RelayApi>
@@ -106,6 +104,7 @@ export type DefaultService<T extends keyof ServiceType> = {
 		DedotClient<Service[T][2]>,
 	]
 	ids: [NetworkId, SystemChainId, SystemChainId]
+	providerPeople: WsProvider | SmoldotProvider
 }
 
 // Account balances record
