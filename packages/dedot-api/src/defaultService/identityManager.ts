@@ -7,23 +7,7 @@ import { getApiStatus, setApiStatus } from 'global-bus'
 import type { IdentityOf, NetworkId, SuperOf, SystemChainId } from 'types'
 import { query } from '../query'
 import type { PeopleChain } from '../types'
-
-// Queue item interface for pending operations
-interface IdentityQueueItem {
-	type: 'identityOfMulti'
-	addresses: string[]
-	resolve: (result: IdentityOf[]) => void
-	reject: (error: unknown) => void
-}
-
-interface SuperQueueItem {
-	type: 'superOfMulti'
-	addresses: string[]
-	resolve: (result: SuperOf[]) => void
-	reject: (error: unknown) => void
-}
-
-type QueueItem = IdentityQueueItem | SuperQueueItem
+import type { QueueItem } from './types'
 
 // Manages lazy identity connection and people chain interactions
 export class IdentityManager<PeopleApi extends PeopleChain> {
