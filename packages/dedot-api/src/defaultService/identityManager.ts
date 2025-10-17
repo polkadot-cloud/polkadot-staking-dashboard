@@ -20,7 +20,6 @@ export class IdentityManager<PeopleApi extends PeopleChain> {
 		public provider: WsProvider | SmoldotProvider,
 		public network: NetworkId,
 	) {
-		this.provider = provider
 	}
 
 	identityOfMulti = async (addresses: string[]): Promise<IdentityOf[]> => {
