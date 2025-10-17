@@ -11,7 +11,7 @@ import type { QueueItem } from './types'
 
 // Manages lazy identity connection and people chain interactions
 export class IdentityManager<PeopleApi extends PeopleChain> {
-	api: DedotClient<PeopleApi>
+	api?: DedotClient<PeopleApi>
 	private queue: QueueItem[] = []
 	private isProcessingQueue = false
 	private isConnecting = false
