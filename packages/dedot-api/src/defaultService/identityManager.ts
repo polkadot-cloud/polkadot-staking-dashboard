@@ -10,8 +10,14 @@ export class IdentityManager<PeopleApi extends PeopleChain> {
 	provider: WsProvider | SmoldotProvider
 	api: DedotClient<PeopleApi>
 
-	constructor(provider: WsProvider | SmoldotProvider) {
+	constructor(
+		provider: WsProvider | SmoldotProvider,
+		api?: DedotClient<PeopleApi>,
+	) {
 		this.provider = provider
+		if (api) {
+			this.api = api
+		}
 	}
 
 	identityOfMulti = async (addresses: string[]) => {
