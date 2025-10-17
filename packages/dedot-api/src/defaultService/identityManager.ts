@@ -12,14 +12,15 @@ import type { QueueItem } from './types'
 // Manages lazy identity connection and people chain interactions
 export class IdentityManager<PeopleApi extends PeopleChain> {
 	api?: DedotClient<PeopleApi>
+	public provider: WsProvider | SmoldotProvider
+	public network: NetworkId
 	private queue: QueueItem[] = []
 	private isProcessingQueue = false
 	private isConnecting = false
 
-	constructor(
-		public provider: WsProvider | SmoldotProvider,
-		public network: NetworkId,
-	) {
+	constructor(provider: WsProvider | SmoldotProvider, network: NetworkId) {
+		this.provider = provider
+		this.network = network
 	}
 
 	identityOfMulti = async (addresses: string[]): Promise<IdentityOf[]> => {
