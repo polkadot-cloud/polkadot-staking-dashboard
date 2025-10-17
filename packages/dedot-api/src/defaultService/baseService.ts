@@ -170,7 +170,9 @@ export class BaseService<
 		try {
 			await Promise.all([
 				this.apiRelay.disconnect(),
-				this.identityManager.api ? this.identityManager.api.disconnect() : Promise.resolve(),
+				this.identityManager.api
+					? this.identityManager.api.disconnect()
+					: Promise.resolve(),
 				this.apiHub.disconnect(),
 			])
 		} catch {
