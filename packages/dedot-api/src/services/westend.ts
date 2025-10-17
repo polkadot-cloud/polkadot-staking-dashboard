@@ -177,20 +177,21 @@ export class WestendService
 					signerAddress,
 					payloadOptions = undefined,
 				) =>
-					new ExtraSignedExtension(this.getApi(specName), {
+					new ExtraSignedExtension(this.getLiveApi(specName), {
 						signerAddress,
 						payloadOptions,
 					}),
 				metadata: async (specName) =>
-					await this.getApi(specName).call.metadata.metadataAtVersion(15),
+					await this.getLiveApi(specName).call.metadata.metadataAtVersion(15),
 			},
 			spec: {
-				ss58: (specName) => this.getApi(specName).consts.system.ss58Prefix,
+				ss58: (specName) => this.getLiveApi(specName).consts.system.ss58Prefix,
 			},
 			codec: {
 				$Signature: (specName) =>
-					this.getApi(specName).registry.findCodec(
-						this.getApi(specName).registry.metadata.extrinsic.signatureTypeId,
+					this.getLiveApi(specName).registry.findCodec(
+						this.getLiveApi(specName).registry.metadata.extrinsic
+							.signatureTypeId,
 					),
 			},
 		}

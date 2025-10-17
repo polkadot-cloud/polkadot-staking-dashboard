@@ -93,13 +93,10 @@ export class BaseService<
 		}
 	}
 
-	// Standard getApi implementation used by all services
-	getApi = (id: string) => {
+	// Standard getLiveApi implementation used by all services
+	getLiveApi = (id: string) => {
 		if (id === this.ids[0]) {
 			return this.apiRelay
-		} else if (id === this.ids[1]) {
-			// TODO: This should return from identityManager
-			return this.apiPeople
 		} else {
 			return this.apiHub
 		}

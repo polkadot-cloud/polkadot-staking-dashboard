@@ -60,7 +60,7 @@ export abstract class DefaultServiceClass<
 		relay: ApiStatus<RelayApi>
 		hub: ApiStatus<HubApi>
 	}
-	abstract getApi: (
+	abstract getLiveApi: (
 		id: string,
 	) => DedotClient<RelayApi> | DedotClient<PeopleApi> | DedotClient<HubApi>
 
