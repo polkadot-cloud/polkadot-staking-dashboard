@@ -81,7 +81,6 @@ export class SubscriptionManager<
 
 	constructor(
 		private apiRelay: DedotClient<RelayApi>,
-		private apiPeople: DedotClient<PeopleApi>,
 		private apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
 		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
@@ -131,8 +130,6 @@ export class SubscriptionManager<
 			added.forEach((account) => {
 				this.subAccountBalances.relay[getAccountKey(this.ids[0], account)] =
 					new AccountBalanceQuery(this.apiRelay, this.ids[0], account.address)
-				this.subAccountBalances.people[getAccountKey(this.ids[1], account)] =
-					new AccountBalanceQuery(this.apiPeople, this.ids[1], account.address)
 				this.subAccountBalances.hub[getAccountKey(this.ids[2], account)] =
 					new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 

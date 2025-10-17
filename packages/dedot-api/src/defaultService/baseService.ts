@@ -141,7 +141,6 @@ export class BaseService<
 		// Initialize subscription manager
 		this.subscriptionManager = new SubscriptionManager(
 			this.apiRelay,
-			this.apiPeople,
 			this.apiHub,
 			this.stakingApi,
 			this.fastUnstakeApi,
