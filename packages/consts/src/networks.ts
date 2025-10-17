@@ -60,8 +60,8 @@ export const NetworkList: Networks = {
 		meta: {
 			hubChain: 'statemine',
 			peopleChain: 'people-kusama',
-			stakingChain: 'kusama',
-			subscanBalanceChainId: 'kusama',
+			stakingChain: 'statemine',
+			subscanBalanceChainId: 'assethub-kusama',
 			supportOperators: true,
 		},
 	},
