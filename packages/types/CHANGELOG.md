@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.3.0...types-v1.4.0) (2025-10-17)
+
+
+### Features
+
+* **refactor:** Kusama asset hub migration ([#3025](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3025)) ([da04a75](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/da04a75b3c4745a9849fa09983657dbda7e4a82e))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.2.0...types-v1.3.0) (2025-06-17)
 
 
