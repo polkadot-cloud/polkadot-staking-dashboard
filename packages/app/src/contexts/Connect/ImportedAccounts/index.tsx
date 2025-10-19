@@ -55,8 +55,8 @@ export const ImportedAccountsProvider = ({
 
 	const stringifiedAccountsKey = shallowAccountStringify(allAccounts)
 
-	// Gets an account from `allAccounts`
-	// Requires activeAccount (with address and source) to get the specific account-source combination
+	// Gets an account from `allAccounts`. Requires activeAccount (with address and source) to get the
+	// specific account-source combination
 	//
 	// Caches the function when imported accounts update
 	const getAccount = useCallback(
@@ -90,8 +90,8 @@ export const ImportedAccountsProvider = ({
 		[stringifiedAccountsKey],
 	)
 
-	// Checks whether an account can sign transactions
-	// Requires activeAccount (with address and source) to check the specific account-source combination
+	// Checks whether an account can sign transactions. Requires activeAccount (with address and
+	// source) to check the specific account-source combination
 	//
 	// Caches the function when imported accounts update
 	const accountHasSigner = useCallback(
@@ -110,11 +110,8 @@ export const ImportedAccountsProvider = ({
 		[stringifiedAccountsKey],
 	)
 
-	// Checks whether an account needs manual signing
-	// Requires activeAccount (with address and source) to check the specific account-source combination
-	//
-	// This is the case for accounts imported from hardware wallets, transactions of which cannot be
-	// automatically signed by a provided `signer` as is the case with web extensions
+	// Checks whether an account needs manual signing. Requires activeAccount (with address and
+	// source) to check the specific account-source combination
 	//
 	// Caches the function when imported accounts update
 	const requiresManualSign = useCallback(
