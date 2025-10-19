@@ -7,7 +7,7 @@ export interface ImportedAccountsContextInterface {
 	accounts: ImportedAccount[]
 	getAccount: (address: MaybeAddress, source?: string) => ImportedAccount | null
 	isReadOnlyAccount: (address: MaybeAddress) => boolean
-	accountHasSigner: (address: MaybeAddress) => boolean
-	requiresManualSign: (address: MaybeAddress) => boolean
+	accountHasSigner: (address: MaybeAddress, source?: string) => boolean
+	requiresManualSign: (address: MaybeAddress, source?: string) => boolean
 	stringifiedAccountsKey: string
 }

@@ -21,6 +21,7 @@ export const WalletConnect = ({
 	submitText,
 	buttons,
 	submitAddress,
+	submitSource,
 	displayFor,
 	notEnoughFunds,
 }: SubmitProps & {
@@ -38,7 +39,8 @@ export const WalletConnect = ({
 	const from = txSubmission?.from || null
 
 	// The state under which submission is disabled.
-	const disabled = !valid || !accountHasSigner(submitAddress) || notEnoughFunds
+	const disabled =
+		!valid || !accountHasSigner(submitAddress, submitSource) || notEnoughFunds
 
 	// Format submit button based on whether signature currently exists or submission is ongoing.
 	let buttonOnClick: () => void

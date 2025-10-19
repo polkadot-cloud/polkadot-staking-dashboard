@@ -48,36 +48,43 @@ export const Accounts = () => {
 		}
 
 		// Check if nominating
+		// Now also checks source to allow same address from multiple sources
 		if (
 			!!ledger &&
-			nominating.find((a) => a.address === address) === undefined
+			nominating.find((a) => a.address === address && a.source === source) ===
+				undefined
 		) {
 			isNominating = true
 		}
 
 		// Check if in pool
+		// Now also checks source to allow same address from multiple sources
 		if (membership) {
-			if (!inPool.find((n) => n.address === address)) {
+			if (!inPool.find((n) => n.address === address && n.source === source)) {
 				isInPool = true
 			}
 		}
 
 		// If not doing anything, add address to `notStaking`
+		// Now also checks source to allow same address from multiple sources
 		if (
 			!isNominating &&
 			!membership &&
-			!notStaking.find((n) => n.address === address)
+			!notStaking.find((n) => n.address === address && n.source === source)
 		) {
 			notStaking.push({ address, source, delegates })
 			continue
 		}
 
 		// If both nominating and in pool, add to this list.
+		// Now also checks source to allow same address from multiple sources
 		if (
 			isNominating &&
 			isInPool &&
 			membership &&
-			!nominatingAndPool.find((n) => n.address === address)
+			!nominatingAndPool.find(
+				(n) => n.address === address && n.source === source,
+			)
 		) {
 			nominatingAndPool.push({
 				...membership,

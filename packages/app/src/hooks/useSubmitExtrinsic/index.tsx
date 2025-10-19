@@ -154,7 +154,7 @@ export const useSubmitExtrinsic = ({
 			onError,
 		}
 
-		if (requiresManualSign(from)) {
+		if (requiresManualSign(from, accountSource)) {
 			const networkInfo = {
 				decimals: units,
 				tokenSymbol: unit,

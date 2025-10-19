@@ -9,7 +9,7 @@ import type { MaybeAddress } from 'types'
 
 export const useSignerWarnings = () => {
 	const { t } = useTranslation('modals')
-	const { activeProxy } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { accountHasSigner } = useImportedAccounts()
 	const { signerAvailable } = useSignerAvailable()
 
@@ -19,6 +19,12 @@ export const useSignerWarnings = () => {
 		proxySupported = false,
 	) => {
 		const warnings = []
+
+		// Determine source based on whether account matches activeAccount
+		let accountSource: string | undefined
+		if (activeAccount && account === activeAccount.address) {
+			accountSource = activeAccount.source
+		}
 
 		if (controller) {
 			switch (signerAvailable(account, proxySupported)) {
@@ -33,8 +39,9 @@ export const useSignerWarnings = () => {
 			}
 		} else if (
 			!(
-				accountHasSigner(account) ||
-				(accountHasSigner(activeProxy?.address || null) && proxySupported)
+				accountHasSigner(account, accountSource) ||
+				(accountHasSigner(activeProxy?.address || null, activeProxy?.source) &&
+					proxySupported)
 			)
 		) {
 			warnings.push(`${t('readOnlyCannotSign')}`)

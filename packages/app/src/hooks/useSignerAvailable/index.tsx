@@ -7,18 +7,27 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import type { MaybeAddress } from 'types'
 
 export const useSignerAvailable = () => {
-	const { activeProxy } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getStakingLedger } = useBalances()
 	const { accountHasSigner } = useImportedAccounts()
 
 	const signerAvailable = (who: MaybeAddress, proxySupported: boolean) => {
 		const { controllerUnmigrated } = getStakingLedger(who)
 
+		// Determine source based on whether who matches activeAccount or activeProxy
+		let whoSource: string | undefined
+		if (activeAccount && who === activeAccount.address) {
+			whoSource = activeAccount.source
+		} else if (activeProxy && who === activeProxy.address) {
+			whoSource = activeProxy.source
+		}
+
 		if (controllerUnmigrated) {
 			return 'controller_not_migrated'
 		} else if (
-			(!proxySupported || !accountHasSigner(activeProxy?.address || null)) &&
-			!accountHasSigner(who)
+			(!proxySupported ||
+				!accountHasSigner(activeProxy?.address || null, activeProxy?.source)) &&
+			!accountHasSigner(who, whoSource)
 		) {
 			return 'read_only'
 		}

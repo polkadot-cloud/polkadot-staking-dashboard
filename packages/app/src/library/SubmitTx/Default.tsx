@@ -18,6 +18,7 @@ export const Default = ({
 	submitText,
 	buttons,
 	submitAddress,
+	submitSource,
 	displayFor,
 	notEnoughFunds,
 }: SubmitProps & {
@@ -28,7 +29,10 @@ export const Default = ({
 	const { accountHasSigner } = useImportedAccounts()
 
 	const disabled =
-		submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
+		submitted ||
+		!valid ||
+		!accountHasSigner(submitAddress, submitSource) ||
+		notEnoughFunds
 
 	return (
 		<>

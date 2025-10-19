@@ -85,28 +85,56 @@ export const ImportedAccountsProvider = ({
 	)
 
 	// Checks whether an account can sign transactions
+	// Optionally accepts a source parameter to check a specific account-source combination
+	// If source is not provided, checks if ANY account with that address can sign (backward compatible)
 	//
 	// Caches the function when imported accounts update
 	const accountHasSigner = useCallback(
-		(address: MaybeAddress) =>
-			allAccounts.find(
-				(account) =>
-					account.address === address && account.source !== 'external',
-			) !== undefined,
+		(address: MaybeAddress, source?: string) => {
+			if (source) {
+				const account = allAccounts.find(
+					(acc) =>
+						acc.address === address &&
+						acc.source === source &&
+						acc.source !== 'external',
+				)
+				return account !== undefined
+			}
+			return (
+				allAccounts.find(
+					(account) =>
+						account.address === address && account.source !== 'external',
+				) !== undefined
+			)
+		},
 		[stringifiedAccountsKey],
 	)
 
 	// Checks whether an account needs manual signing
+	// Optionally accepts a source parameter to check a specific account-source combination
+	// If source is not provided, checks if ANY account with that address needs manual signing (backward compatible)
 	//
 	// This is the case for accounts imported from hardware wallets, transactions of which cannot be
 	// automatically signed by a provided `signer` as is the case with web extensions
 	//
 	// Caches the function when imported accounts update
 	const requiresManualSign = useCallback(
-		(address: MaybeAddress) =>
-			allAccounts.find(
-				(a) => a.address === address && ManualSigners.includes(a.source),
-			) !== undefined,
+		(address: MaybeAddress, source?: string) => {
+			if (source) {
+				const account = allAccounts.find(
+					(acc) =>
+						acc.address === address &&
+						acc.source === source &&
+						ManualSigners.includes(acc.source),
+				)
+				return account !== undefined
+			}
+			return (
+				allAccounts.find(
+					(a) => a.address === address && ManualSigners.includes(a.source),
+				) !== undefined
+			)
+		},
 		[stringifiedAccountsKey],
 	)
 

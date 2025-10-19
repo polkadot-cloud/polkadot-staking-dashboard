@@ -58,7 +58,7 @@ export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
 						? t('proxy', { ns: 'app' })
 						: undefined
 				}
-				readOnly={!accountHasSigner(activeAddress)}
+				readOnly={!accountHasSigner(activeAddress, activeAccount?.source)}
 				open={open}
 			/>
 		</Popover>

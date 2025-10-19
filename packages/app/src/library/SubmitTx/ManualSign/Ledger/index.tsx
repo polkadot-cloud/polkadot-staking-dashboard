@@ -26,6 +26,7 @@ export const Ledger = ({
 	submitText,
 	buttons,
 	submitAddress,
+	submitSource,
 	displayFor,
 	notEnoughFunds,
 }: SubmitProps & {
@@ -76,7 +77,7 @@ export const Ledger = ({
 
 	// The state under which submission is disabled.
 	const disabled =
-		!accountHasSigner(submitAddress) ||
+		!accountHasSigner(submitAddress, submitSource) ||
 		!valid ||
 		submitted ||
 		notEnoughFunds ||

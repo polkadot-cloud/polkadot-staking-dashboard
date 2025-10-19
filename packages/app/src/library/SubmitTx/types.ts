@@ -23,6 +23,7 @@ export interface SubmitProps {
 	valid: boolean
 	submitText?: string
 	submitAddress: MaybeAddress
+	submitSource?: string
 	displayFor?: DisplayFor
 }
 

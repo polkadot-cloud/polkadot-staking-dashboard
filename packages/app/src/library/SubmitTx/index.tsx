@@ -76,6 +76,14 @@ export const SubmitTx = ({
 				: t('submit', { ns: 'modals' })
 		}`
 
+	// Determine source based on whether from matches activeAccount or activeProxy
+	let fromSource: string | undefined
+	if (activeAccount && from === activeAccount.address) {
+		fromSource = activeAccount.source
+	} else if (activeProxy && from === activeProxy.address) {
+		fromSource = activeProxy.source
+	}
+
 	// Set resize on submit footer UI height changes
 	useEffect(() => {
 		setModalResize()
@@ -94,7 +102,7 @@ export const SubmitTx = ({
 			dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
 			transparent={transparent}
 			SignerComponent={
-				requiresManualSign(from) ? (
+				requiresManualSign(from, fromSource) ? (
 					<ManualSign
 						uid={uid}
 						onSubmit={onSubmit}
@@ -103,6 +111,7 @@ export const SubmitTx = ({
 						submitText={submitText}
 						buttons={buttons}
 						submitAddress={submitAddress}
+						submitSource={fromSource}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>
@@ -115,6 +124,7 @@ export const SubmitTx = ({
 						submitText={submitText}
 						buttons={buttons}
 						submitAddress={submitAddress}
+						submitSource={fromSource}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>
