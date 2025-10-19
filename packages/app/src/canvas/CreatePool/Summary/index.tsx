@@ -34,8 +34,8 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const { closeCanvas } = useOverlay().canvas
 	const { accountHasSigner } = useImportedAccounts()
 	const { getPoolSetup, removePoolSetup } = usePoolSetups()
-	const { activeAddress, activeProxy } = useActiveAccounts()
 	const { queryBondedPool, addToBondedPools } = useBondedPools()
+	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 
 	const poolId = lastPoolId + 1
@@ -92,8 +92,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 			/>
 			<MotionContainer thisSection={section} activeSection={setup.section}>
 				{!(
-					accountHasSigner(activeAddress) ||
-					accountHasSigner(activeProxy?.address || null)
+					accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
 				) && <Warning text={t('readOnly')} />}
 				<SummaryWrapper>
 					<section>

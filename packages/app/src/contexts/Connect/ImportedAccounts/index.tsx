@@ -9,7 +9,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useCallback } from 'react'
-import type { ExternalAccount, ImportedAccount, MaybeAddress } from 'types'
+import type {
+	ActiveAccount,
+	ExternalAccount,
+	ImportedAccount,
+	MaybeAddress,
+} from 'types'
 import { useOtherAccounts } from '../OtherAccounts'
 import { getActiveAccountLocal } from '../Utils'
 import type { ImportedAccountsContextInterface } from './types'
