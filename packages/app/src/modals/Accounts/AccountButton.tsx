@@ -33,12 +33,18 @@ export const AccountButton = ({
 	const { network } = useNetwork()
 	const { getAccount } = useImportedAccounts()
 	const { setModalStatus } = useOverlay().modal
-	const { activeProxy, activeAddress, setActiveAccount, activeProxyType } =
-		useActiveAccounts()
+	const {
+		activeAccount,
+		activeProxy,
+		activeAddress,
+		setActiveAccount,
+		activeProxyType,
+	} = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 
 	// Accumulate account data.
-	const meta = getAccount(address)
+	// Pass source to ensure we get the correct account when same address exists from multiple sources
+	const meta = getAccount(address, source)
 	const name = meta?.name
 
 	const imported = !!meta
@@ -56,9 +62,11 @@ export const AccountButton = ({
 					: ExtensionIcons[meta?.source || ''] || undefined
 
 	// Determine if this account is active (active account or proxy).
+	// Now also checks source to support multi-source accounts
 	const isActive =
 		(connectTo === activeAddress &&
 			address === activeAddress &&
+			source === activeAccount?.source &&
 			!activeProxy) ||
 		(connectProxy === activeProxy?.address &&
 			proxyType === activeProxyType &&
@@ -69,7 +77,8 @@ export const AccountButton = ({
 		if (!imported) {
 			return
 		}
-		const account = getAccount(connectTo)
+		// Pass source to getAccount to ensure we get the correct account-source combination
+		const account = getAccount(connectTo, source)
 		setActiveAccount(
 			account ? { address: account.address, source: account.source } : null,
 		)

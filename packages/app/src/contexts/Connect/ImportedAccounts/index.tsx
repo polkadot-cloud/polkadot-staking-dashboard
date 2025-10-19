@@ -51,11 +51,21 @@ export const ImportedAccountsProvider = ({
 	const stringifiedAccountsKey = shallowAccountStringify(allAccounts)
 
 	// Gets an account from `allAccounts`
+	// Optionally accepts a source parameter to get a specific account-source combination
+	// If source is not provided, returns the first account with matching address (backward compatible)
 	//
 	// Caches the function when imported accounts update
 	const getAccount = useCallback(
-		(who: MaybeAddress) =>
-			allAccounts.find(({ address }) => address === who) || null,
+		(who: MaybeAddress, source?: string) => {
+			if (source) {
+				return (
+					allAccounts.find(
+						({ address, source: s }) => address === who && s === source,
+					) || null
+				)
+			}
+			return allAccounts.find(({ address }) => address === who) || null
+		},
 		[stringifiedAccountsKey],
 	)
 
@@ -101,9 +111,13 @@ export const ImportedAccountsProvider = ({
 	)
 
 	// Re-sync the active account on network change
+	// Now checks for both address and source to support multi-source accounts
 	useEffectIgnoreInitial(() => {
 		const localActiveAccount = getActiveAccountLocal(network, ss58)
-		if (getAccount(localActiveAccount?.address || null) !== null) {
+		if (
+			localActiveAccount &&
+			getAccount(localActiveAccount.address, localActiveAccount.source) !== null
+		) {
 			setActiveAccount(localActiveAccount, false)
 		} else {
 			setActiveAccount(null, false)

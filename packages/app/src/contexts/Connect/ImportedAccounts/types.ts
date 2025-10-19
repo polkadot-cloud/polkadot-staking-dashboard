@@ -5,7 +5,7 @@ import type { ImportedAccount, MaybeAddress } from 'types'
 
 export interface ImportedAccountsContextInterface {
 	accounts: ImportedAccount[]
-	getAccount: (address: MaybeAddress) => ImportedAccount | null
+	getAccount: (address: MaybeAddress, source?: string) => ImportedAccount | null
 	isReadOnlyAccount: (address: MaybeAddress) => boolean
 	accountHasSigner: (address: MaybeAddress) => boolean
 	requiresManualSign: (address: MaybeAddress) => boolean
