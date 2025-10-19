@@ -88,28 +88,21 @@ export const OtherAccountsProvider = ({
 	}
 
 	// Checks `localStorage` for previously added accounts from the provided source, and adds them to
-	// `accounts` state. if local active account is present, it will also be assigned as active.
-	// For non-external accounts, accounts with the same address but different sources are allowed.
+	// `accounts` state. if local active account is present, it will also be assigned as active. For
+	// non-external accounts, accounts with the same address but different sources are allowed.
 	// External accounts are still prevented from being duplicated.
 	const importLocalOtherAccounts = <T extends HardwareAccountSource | string>(
 		source: T,
-		getter: (s: T, n: NetworkId) => ImportedAccount[],
+		getter: (source: T, network: NetworkId) => ImportedAccount[],
 	) => {
-		// Get accounts from provided `getter` function. The resulting array of accounts must contain an
-		// `address` field
+		// Get accounts from provided `getter` function
 		let localAccounts = getter(source, network)
 
 		if (localAccounts.length) {
-			const activeAccountInSet =
-				localAccounts.find(
-					({ address }) =>
-						address === getActiveAccountLocal(network, ss58)?.address,
-				) ?? null
-
-			// For external accounts, prevent duplicates by address only (regardless of source)
-			// For other accounts (hardware wallets), allow same address with different sources
+			// For external accounts, prevent duplicates by address only (regardless of source). For other
+			// accounts (hardware wallets), allow same address with different sources
 			if (source === 'external') {
-				// remove external accounts that are already imported from any source
+				// Remove external accounts that are already imported from any source
 				localAccounts = localAccounts.filter(
 					(l) =>
 						extensionAccounts.find(({ address }) => address === l.address) ===
@@ -133,11 +126,17 @@ export const OtherAccountsProvider = ({
 				)
 			}
 
-			// set active account for networkData
-			if (activeAccountInSet) {
+			const activeAccountFound =
+				localAccounts.find(
+					({ address }) =>
+						address === getActiveAccountLocal(network, ss58)?.address,
+				) ?? null
+
+			// If active account found, set to state
+			if (activeAccountFound) {
 				setActiveAccount({
-					address: activeAccountInSet.address,
-					source: activeAccountInSet.source,
+					address: activeAccountFound.address,
+					source: activeAccountFound.source,
 				})
 			}
 
