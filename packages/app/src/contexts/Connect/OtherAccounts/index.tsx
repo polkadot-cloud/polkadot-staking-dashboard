@@ -67,15 +67,15 @@ export const OtherAccountsProvider = ({
 			)
 			// If the currently active account is being forgotten, disconnect
 			if (
-				// Active account is present...
+				// Active account is present
 				activeAccount &&
-				// Active account is being forgotten...
+				// Active account is being forgotten
 				forget.find(
 					({ address, source }) =>
 						address === activeAccount.address &&
 						source === activeAccount.source,
 				) !== undefined &&
-				// No other account exists with same address and source...
+				// No other account exists with same address and source
 				otherAccountsRef.current.find(
 					({ address, source }) =>
 						address === activeAccount.address &&
