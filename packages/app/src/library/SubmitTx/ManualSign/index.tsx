@@ -1,9 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useTxMeta } from 'contexts/TxMeta'
 import type { ReactNode } from 'react'
 import type { SubmitProps } from '../types'
 import { Ledger } from './Ledger'
@@ -17,21 +15,10 @@ export const ManualSign = (
 		notEnoughFunds: boolean
 	},
 ) => {
-	const { getTxSubmission } = useTxMeta()
 	const { getAccount } = useImportedAccounts()
-	const { activeAccount, activeProxy } = useActiveAccounts()
-	const from = getTxSubmission(props.uid)?.from || null
 
-	// Determine activeAccount based on whether from matches activeAccount or activeProxy
-	let fromActiveAccount = activeAccount
-	if (activeProxy && from === activeProxy.address) {
-		fromActiveAccount = {
-			address: activeProxy.address,
-			source: activeProxy.source,
-		}
-	}
-
-	const accountMeta = getAccount(fromActiveAccount)
+	// Use the submitAccount from props which already has address and source
+	const accountMeta = getAccount(props.submitAccount)
 	const source = accountMeta?.source
 
 	// Determine which signing method to use. NOTE: Falls back to `ledger` on all other sources to

@@ -71,6 +71,17 @@ export const useSubmitExtrinsic = ({
 	// Store the uid for this transaction.
 	const [uid, setUid] = useState<number>(0)
 
+	// Determine the submitAccount based on whether from matches activeAccount or activeProxy
+	let submitAccount: ActiveAccount = null
+	if (activeAccount && from === activeAccount.address) {
+		submitAccount = activeAccount
+	} else if (activeProxy && from === activeProxy.address) {
+		submitAccount = {
+			address: activeProxy.address,
+			source: activeProxy.source,
+		}
+	}
+
 	// If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
 	// already wrapped, update `from` address and return
 
@@ -111,18 +122,7 @@ export const useSubmitExtrinsic = ({
 		if (from === null) {
 			return
 		}
-		// Get the account using activeAccount if from matches activeAccount address
-		// or using activeProxy if from matches activeProxy address
-		let fromActiveAccount: ActiveAccount = null
-		if (activeAccount && from === activeAccount.address) {
-			fromActiveAccount = activeAccount
-		} else if (activeProxy && from === activeProxy.address) {
-			fromActiveAccount = {
-				address: activeProxy.address,
-				source: activeProxy.source,
-			}
-		}
-		const account = getAccount(fromActiveAccount)
+		const account = getAccount(submitAccount)
 		if (account === null || !shouldSubmit) {
 			return
 		}
@@ -158,7 +158,7 @@ export const useSubmitExtrinsic = ({
 			onError,
 		}
 
-		if (requiresManualSign(fromActiveAccount)) {
+		if (requiresManualSign(submitAccount)) {
 			const networkInfo = {
 				decimals: units,
 				tokenSymbol: unit,
@@ -405,7 +405,7 @@ export const useSubmitExtrinsic = ({
 		txInitiated: !!tx,
 		uid,
 		onSubmit,
-		submitAddress: from,
+		submitAccount,
 		proxySupported,
 	}
 }

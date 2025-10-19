@@ -10,7 +10,6 @@ export type SubmitTxProps = SubmitProps & {
 	buttons?: ReactNode[]
 	requiresMigratedController?: boolean
 	proxySupported: boolean
-	submitAddress?: MaybeAddress
 	noMargin?: boolean
 	onResize?: () => void
 	transparent?: boolean
@@ -22,8 +21,7 @@ export interface SubmitProps {
 	onSubmit: () => void
 	valid: boolean
 	submitText?: string
-	submitAddress: MaybeAddress
-	submitActiveAccount: ActiveAccount
+	submitAccount: ActiveAccount
 	displayFor?: DisplayFor
 }
 

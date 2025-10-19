@@ -10,7 +10,6 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { ActiveAccount } from 'types'
 import { useOverlay } from 'ui-overlay'
 import { Default } from './Default'
 import { ManualSign } from './ManualSign'
@@ -21,7 +20,7 @@ export const SubmitTx = ({
 	onSubmit,
 	submitText,
 	buttons = [],
-	submitAddress,
+	submitAccount,
 	valid = false,
 	noMargin = false,
 	proxySupported,
@@ -77,17 +76,6 @@ export const SubmitTx = ({
 				: t('submit', { ns: 'modals' })
 		}`
 
-	// Determine the activeAccount based on whether from matches activeAccount or activeProxy
-	let fromActiveAccount: ActiveAccount = null
-	if (activeAccount && from === activeAccount.address) {
-		fromActiveAccount = activeAccount
-	} else if (activeProxy && from === activeProxy.address) {
-		fromActiveAccount = {
-			address: activeProxy.address,
-			source: activeProxy.source,
-		}
-	}
-
 	// Set resize on submit footer UI height changes
 	useEffect(() => {
 		setModalResize()
@@ -106,7 +94,7 @@ export const SubmitTx = ({
 			dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
 			transparent={transparent}
 			SignerComponent={
-				requiresManualSign(fromActiveAccount) ? (
+				requiresManualSign(submitAccount) ? (
 					<ManualSign
 						uid={uid}
 						onSubmit={onSubmit}
@@ -114,8 +102,7 @@ export const SubmitTx = ({
 						valid={valid}
 						submitText={submitText}
 						buttons={buttons}
-						submitAddress={submitAddress}
-						submitActiveAccount={fromActiveAccount}
+						submitAccount={submitAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>
@@ -127,8 +114,7 @@ export const SubmitTx = ({
 						valid={valid}
 						submitText={submitText}
 						buttons={buttons}
-						submitAddress={submitAddress}
-						submitActiveAccount={fromActiveAccount}
+						submitAccount={submitAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>
