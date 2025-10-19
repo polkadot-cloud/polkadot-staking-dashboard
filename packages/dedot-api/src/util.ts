@@ -5,7 +5,7 @@ import { formatAccountSs58 } from '@w3ux/utils'
 import type { SubmittableExtrinsic } from 'dedot'
 import type { Bonded, ChainId, ImportedAccount } from 'types'
 
-// Gets added and removed accounts by comparing two lists of accounts
+// Gets added, removed and remaining accounts by comparing two lists of accounts
 export const diffImportedAccounts = (
 	prev: ImportedAccount[],
 	cur: ImportedAccount[],
@@ -24,7 +24,14 @@ export const diffImportedAccounts = (
 		.filter((k) => !curMap.has(k))
 		.map((k) => prevMap.get(k)!)
 
-	return { added, removed }
+	const remaining = cur.filter(
+		(v) =>
+			!added.some(
+				({ address, source }) => address === v.address && source === v.source,
+			),
+	)
+
+	return { added, removed, remaining }
 }
 
 // Gets added and removed pool ids by comparing two lists of pool ids
