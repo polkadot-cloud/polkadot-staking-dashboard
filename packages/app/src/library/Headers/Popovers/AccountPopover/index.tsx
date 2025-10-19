@@ -38,7 +38,7 @@ export const AccountPopover = ({
 		setOpen(false)
 	}, ['header-account'])
 
-	const account = getAccount(activeAddress, activeAccount?.source)
+	const account = getAccount(activeAccount)
 	const name = account?.name || ''
 
 	const accountLabel =

@@ -10,6 +10,7 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ActiveAccount } from 'types'
 import { useOverlay } from 'ui-overlay'
 import { Default } from './Default'
 import { ManualSign } from './ManualSign'
@@ -34,7 +35,7 @@ export const SubmitTx = ({
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
 	const { setModalResize } = useOverlay().modal
-	const { activeAccount, activeAddress, activeProxy } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 
 	const { unit } = getStakingChainData(network)
@@ -48,22 +49,22 @@ export const SubmitTx = ({
 	} = useAccountBalances(from)
 	const notEnoughFunds = transferableBalance - fee < 0n && fee > 0n
 
-	// Default to active account, using source to get the correct account
+	// Default to active account, using activeAccount to get the correct account
 	let signingOpts = {
 		label: t('signer', { ns: 'app' }),
-		who: getAccount(activeAddress, activeAccount?.source),
+		who: getAccount(activeAccount),
 	}
 
 	if (txInitiated) {
 		if (activeProxy && proxySupported) {
 			signingOpts = {
 				label: t('signedByProxy', { ns: 'app' }),
-				who: getAccount(activeProxy.address, activeProxy.source),
+				who: getAccount(activeProxy),
 			}
 		} else if (!(activeProxy && proxySupported) && requiresMigratedController) {
 			signingOpts = {
 				label: t('signedByController', { ns: 'app' }),
-				who: getAccount(activeAddress, activeAccount?.source),
+				who: getAccount(activeAccount),
 			}
 		}
 	}
@@ -76,12 +77,15 @@ export const SubmitTx = ({
 				: t('submit', { ns: 'modals' })
 		}`
 
-	// Determine source based on whether from matches activeAccount or activeProxy
-	let fromSource: string | undefined
+	// Determine the activeAccount based on whether from matches activeAccount or activeProxy
+	let fromActiveAccount: ActiveAccount = null
 	if (activeAccount && from === activeAccount.address) {
-		fromSource = activeAccount.source
+		fromActiveAccount = activeAccount
 	} else if (activeProxy && from === activeProxy.address) {
-		fromSource = activeProxy.source
+		fromActiveAccount = {
+			address: activeProxy.address,
+			source: activeProxy.source,
+		}
 	}
 
 	// Set resize on submit footer UI height changes
@@ -102,7 +106,7 @@ export const SubmitTx = ({
 			dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
 			transparent={transparent}
 			SignerComponent={
-				requiresManualSign(from, fromSource) ? (
+				requiresManualSign(fromActiveAccount) ? (
 					<ManualSign
 						uid={uid}
 						onSubmit={onSubmit}
@@ -111,7 +115,7 @@ export const SubmitTx = ({
 						submitText={submitText}
 						buttons={buttons}
 						submitAddress={submitAddress}
-						submitSource={fromSource}
+						submitActiveAccount={fromActiveAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>
@@ -124,7 +128,7 @@ export const SubmitTx = ({
 						submitText={submitText}
 						buttons={buttons}
 						submitAddress={submitAddress}
-						submitSource={fromSource}
+						submitActiveAccount={fromActiveAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>

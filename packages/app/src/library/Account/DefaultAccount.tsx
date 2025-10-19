@@ -18,14 +18,14 @@ const DefaultAccount = ({
 	className,
 }: AccountProps) => {
 	const { t } = useTranslation('app')
-	const { getAccount } = useImportedAccounts()
+	const { accounts } = useImportedAccounts()
 
 	// Determine account display text. Title takes precedence over value.
 	const text: string | null =
 		value === null
 			? null
 			: value !== ''
-				? getAccount(value)?.name || ellipsisFn(value)
+				? accounts.find((a) => a.address === value)?.name || ellipsisFn(value)
 				: ellipsisFn(value)
 
 	return (

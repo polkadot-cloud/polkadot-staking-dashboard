@@ -4,7 +4,7 @@
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types'
 import type { ReactNode } from 'react'
-import type { DisplayFor, MaybeAddress } from 'types'
+import type { ActiveAccount, DisplayFor, MaybeAddress } from 'types'
 
 export type SubmitTxProps = SubmitProps & {
 	buttons?: ReactNode[]
@@ -23,7 +23,7 @@ export interface SubmitProps {
 	valid: boolean
 	submitText?: string
 	submitAddress: MaybeAddress
-	submitSource?: string
+	submitActiveAccount: ActiveAccount
 	displayFor?: DisplayFor
 }
 

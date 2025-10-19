@@ -52,13 +52,9 @@ export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
 		>
 			<ButtonAccount.Label
 				className="header-account"
-				activeAccount={getAccount(activeAddress, activeAccount?.source)}
-				label={
-					getAccount(activeProxy?.address || null, activeProxy?.source)
-						? t('proxy', { ns: 'app' })
-						: undefined
-				}
-				readOnly={!accountHasSigner(activeAddress, activeAccount?.source)}
+				activeAccount={getAccount(activeAccount)}
+				label={getAccount(activeProxy) ? t('proxy', { ns: 'app' }) : undefined}
+				readOnly={!accountHasSigner(activeAccount)}
 				open={open}
 			/>
 		</Popover>

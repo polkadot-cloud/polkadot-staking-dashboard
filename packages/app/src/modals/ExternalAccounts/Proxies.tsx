@@ -26,7 +26,7 @@ import {
 export const Proxies = () => {
 	const { t } = useTranslation('modals')
 	const { openHelp } = useHelp()
-	const { accounts, getAccount } = useImportedAccounts()
+	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
 	const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies()
 
@@ -93,11 +93,15 @@ export const Proxies = () => {
 																<span>
 																	{proxyType} {t('proxy')}
 																</span>
-																{getAccount(delegate)?.name || delegate}
+																{accounts.find((a) => a.address === delegate)
+																	?.name || delegate}
 															</h4>
 															<h4 className="subtitle">
 																{t('for', {
-																	who: getAccount(delegator)?.name || delegator,
+																	who:
+																		accounts.find(
+																			(a) => a.address === delegator,
+																		)?.name || delegator,
 																})}
 															</h4>
 														</div>

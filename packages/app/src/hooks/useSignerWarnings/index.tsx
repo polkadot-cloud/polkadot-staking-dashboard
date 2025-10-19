@@ -20,10 +20,12 @@ export const useSignerWarnings = () => {
 	) => {
 		const warnings = []
 
-		// Determine source based on whether account matches activeAccount
-		let accountSource: string | undefined
-		if (activeAccount && account === activeAccount.address) {
-			accountSource = activeAccount.source
+		// Determine activeAccount based on whether account matches activeAccount
+		let accountActiveAccount = activeAccount
+		if (activeAccount && account !== activeAccount.address) {
+			// If account doesn't match activeAccount, we can't determine the source
+			// This is a fallback case that shouldn't normally happen
+			accountActiveAccount = null
 		}
 
 		if (controller) {
@@ -39,9 +41,8 @@ export const useSignerWarnings = () => {
 			}
 		} else if (
 			!(
-				accountHasSigner(account, accountSource) ||
-				(accountHasSigner(activeProxy?.address || null, activeProxy?.source) &&
-					proxySupported)
+				accountHasSigner(accountActiveAccount) ||
+				(accountHasSigner(activeProxy) && proxySupported)
 			)
 		) {
 			warnings.push(`${t('readOnlyCannotSign')}`)

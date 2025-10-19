@@ -22,15 +22,16 @@ export const ManualSign = (
 	const { activeAccount, activeProxy } = useActiveAccounts()
 	const from = getTxSubmission(props.uid)?.from || null
 
-	// Determine source based on whether from matches activeAccount or activeProxy
-	let accountSource: string | undefined
-	if (activeAccount && from === activeAccount.address) {
-		accountSource = activeAccount.source
-	} else if (activeProxy && from === activeProxy.address) {
-		accountSource = activeProxy.source
+	// Determine activeAccount based on whether from matches activeAccount or activeProxy
+	let fromActiveAccount = activeAccount
+	if (activeProxy && from === activeProxy.address) {
+		fromActiveAccount = {
+			address: activeProxy.address,
+			source: activeProxy.source,
+		}
 	}
 
-	const accountMeta = getAccount(from, accountSource)
+	const accountMeta = getAccount(fromActiveAccount)
 	const source = accountMeta?.source
 
 	// Determine which signing method to use. NOTE: Falls back to `ledger` on all other sources to

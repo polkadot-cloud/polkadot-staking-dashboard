@@ -43,8 +43,8 @@ export const AccountButton = ({
 	const { unit, units } = getStakingChainData(network)
 
 	// Accumulate account data.
-	// Pass source to ensure we get the correct account when same address exists from multiple sources
-	const meta = getAccount(address, source)
+	// Pass activeAccount to get the correct account when same address exists from multiple sources
+	const meta = getAccount({ address, source })
 	const name = meta?.name
 
 	const imported = !!meta
@@ -77,8 +77,8 @@ export const AccountButton = ({
 		if (!imported) {
 			return
 		}
-		// Pass source to getAccount to ensure we get the correct account-source combination
-		const account = getAccount(connectTo, source)
+		// Pass activeAccount to getAccount to ensure we get the correct account-source combination
+		const account = getAccount({ address: connectTo, source })
 		setActiveAccount(
 			account ? { address: account.address, source: account.source } : null,
 		)

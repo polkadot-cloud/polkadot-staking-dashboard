@@ -14,20 +14,20 @@ export const useSignerAvailable = () => {
 	const signerAvailable = (who: MaybeAddress, proxySupported: boolean) => {
 		const { controllerUnmigrated } = getStakingLedger(who)
 
-		// Determine source based on whether who matches activeAccount or activeProxy
-		let whoSource: string | undefined
-		if (activeAccount && who === activeAccount.address) {
-			whoSource = activeAccount.source
-		} else if (activeProxy && who === activeProxy.address) {
-			whoSource = activeProxy.source
+		// Determine activeAccount based on whether who matches activeAccount or activeProxy
+		let whoActiveAccount = activeAccount
+		if (activeProxy && who === activeProxy.address) {
+			whoActiveAccount = {
+				address: activeProxy.address,
+				source: activeProxy.source,
+			}
 		}
 
 		if (controllerUnmigrated) {
 			return 'controller_not_migrated'
 		} else if (
-			(!proxySupported ||
-				!accountHasSigner(activeProxy?.address || null, activeProxy?.source)) &&
-			!accountHasSigner(who, whoSource)
+			(!proxySupported || !accountHasSigner(activeProxy)) &&
+			!accountHasSigner(whoActiveAccount)
 		) {
 			return 'read_only'
 		}

@@ -39,6 +39,7 @@ import type {
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ActiveAccount } from 'types'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
 
 export const useSubmitExtrinsic = ({
@@ -110,15 +111,18 @@ export const useSubmitExtrinsic = ({
 		if (from === null) {
 			return
 		}
-		// Get the account, using source from activeAccount if from matches activeAccount address
-		// or from activeProxy if from matches activeProxy address
-		let accountSource: string | undefined
+		// Get the account using activeAccount if from matches activeAccount address
+		// or using activeProxy if from matches activeProxy address
+		let fromActiveAccount: ActiveAccount = null
 		if (activeAccount && from === activeAccount.address) {
-			accountSource = activeAccount.source
+			fromActiveAccount = activeAccount
 		} else if (activeProxy && from === activeProxy.address) {
-			accountSource = activeProxy.source
+			fromActiveAccount = {
+				address: activeProxy.address,
+				source: activeProxy.source,
+			}
 		}
-		const account = getAccount(from, accountSource)
+		const account = getAccount(fromActiveAccount)
 		if (account === null || !shouldSubmit) {
 			return
 		}
@@ -154,7 +158,7 @@ export const useSubmitExtrinsic = ({
 			onError,
 		}
 
-		if (requiresManualSign(from, accountSource)) {
+		if (requiresManualSign(fromActiveAccount)) {
 			const networkInfo = {
 				decimals: units,
 				tokenSymbol: unit,
