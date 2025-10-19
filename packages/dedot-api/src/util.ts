@@ -61,9 +61,9 @@ export const diffBonded = (prev: Bonded[], cur: Bonded[]) => {
 	return { added, removed }
 }
 
-// Gets the account record key for a specific chain and account
-export const getAccountKey = (chain: ChainId, account: ImportedAccount) =>
-	`${chain}:${account.source}:${account.address}`
+// Gets the account record key for a specific chain and account address
+export const getAccountKey = (chain: ChainId, address: string) =>
+	`${chain}:${address}`
 
 // Gets type-safe keys from an object
 export const keysOf = <T extends Record<string, unknown>>(obj: T) =>

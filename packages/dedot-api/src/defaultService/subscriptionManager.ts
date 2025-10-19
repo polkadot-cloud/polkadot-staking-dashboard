@@ -112,40 +112,39 @@ export class SubscriptionManager<
 
 			removed.forEach((account) => {
 				const address = account.address
-				this.ids.forEach((id, i) => {
-					this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
-						getAccountKey(id, account)
-					]?.unsubscribe()
 
-					const addressFound = formattedCur.find(
-						(c) => c.address === account.address,
-					)
-					// Only unsubscribe from address subscriptions if no other imported account with same
-					// address exists
-					if (!addressFound) {
-						this.subBonded[address]?.unsubscribe()
-						this.subProxies?.[address]?.unsubscribe()
-						this.subPoolMemberships?.[address]?.unsubscribe()
-					}
-				})
+				// Only unsubscribe from address subscriptions if no other imported account with same
+				// address exists
+				const addressFound = formattedCur.find(
+					(c) => c.address === account.address,
+				)
+				if (!addressFound) {
+					this.ids.forEach((id, i) => {
+						this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
+							getAccountKey(id, address)
+						]?.unsubscribe()
+					})
+					this.subBonded[address]?.unsubscribe()
+					this.subProxies?.[address]?.unsubscribe()
+					this.subPoolMemberships?.[address]?.unsubscribe()
+				}
 			})
 
 			const addedAddresses: string[] = []
 			added.forEach((account) => {
 				const address = account.address
 
-				this.subAccountBalances.relay[getAccountKey(this.ids[0], account)] =
-					new AccountBalanceQuery(this.apiRelay, this.ids[0], address)
-				this.subAccountBalances.hub[getAccountKey(this.ids[2], account)] =
-					new AccountBalanceQuery(this.apiHub, this.ids[2], address)
-
+				// Only subscribe to address subscriptions if no other occurrence of the address exists
 				const addressAlreadyAdded = addedAddresses.some((a) => a === address)
 				const addressAlreadyPresent = remaining.some(
 					(a) => a?.address === address,
 				)
-
-				// Only subscribe to address subscriptions if no other occurrence of the address exists
 				if (!addressAlreadyAdded && !addressAlreadyPresent) {
+					this.subAccountBalances.relay[getAccountKey(this.ids[0], address)] =
+						new AccountBalanceQuery(this.apiRelay, this.ids[0], address)
+					this.subAccountBalances.hub[getAccountKey(this.ids[2], address)] =
+						new AccountBalanceQuery(this.apiHub, this.ids[2], address)
+
 					this.subBonded[address] = new BondedQuery(this.stakingApi, address)
 					this.subPoolMemberships[address] = new PoolMembershipQuery(
 						this.stakingApi,
