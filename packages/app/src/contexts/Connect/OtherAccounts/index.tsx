@@ -31,7 +31,7 @@ export const OtherAccountsProvider = ({
 	const { network } = useNetwork()
 	const { gettingExtensions } = useExtensions()
 	const { getHardwareAccounts } = useHardwareAccounts()
-	const { setActiveAccount } = useActiveAccounts()
+	const { setActiveAccount, activeAccount } = useActiveAccounts()
 	const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
 	const { ss58 } = getStakingChainData(network)
@@ -52,8 +52,8 @@ export const OtherAccountsProvider = ({
 	// Handle forgetting of an imported other account
 	const forgetOtherAccounts = (forget: ImportedAccount[]) => {
 		if (forget.length) {
-			// Remove forgotten accounts from context state
-			// Compare by both address and source to allow same address from different sources
+			// Remove forgotten accounts from context state. Compare by both address and source to allow
+			// same address from different sources to remain
 			setStateWithRef(
 				[...otherAccountsRef.current].filter(
 					(a) =>
@@ -66,20 +66,16 @@ export const OtherAccountsProvider = ({
 				otherAccountsRef,
 			)
 			// If the currently active account is being forgotten, disconnect
-			// Only disconnect if no other account with the same address exists
-			const activeAccount = getActiveAccountLocal(network, ss58)
 			if (
+				// Active account is present...
 				activeAccount &&
+				// Active account is being forgotten...
 				forget.find(
 					({ address, source }) =>
 						address === activeAccount.address &&
 						source === activeAccount.source,
 				) !== undefined &&
-				extensionAccounts.find(
-					({ address, source }) =>
-						address === activeAccount.address &&
-						source === activeAccount.source,
-				) === undefined &&
+				// No other account exists with same address and source...
 				otherAccountsRef.current.find(
 					({ address, source }) =>
 						address === activeAccount.address &&
