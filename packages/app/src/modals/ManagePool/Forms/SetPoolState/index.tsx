@@ -31,9 +31,9 @@ export const SetPoolState = ({
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { setModalStatus } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { isOwner, isBouncer, activePool } = useActivePool()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { updateBondedPools, getBondedPool } = useBondedPools()
 
 	const poolId = activePool?.id
@@ -127,7 +127,7 @@ export const SetPoolState = ({
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

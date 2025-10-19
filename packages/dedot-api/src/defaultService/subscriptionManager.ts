@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { reconnectSync$ } from '@w3ux/observables-connect'
-import { formatAccountSs58 } from '@w3ux/utils'
 import type { DedotClient } from 'dedot'
 import {
 	activeAddress$,
@@ -105,46 +104,55 @@ export class SubscriptionManager<
 		// Imported accounts subscription - manages account balances and related subscriptions
 		this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
 			const ss58 = this.apiRelay.consts.system.ss58Prefix
-			const { added, removed } = diffImportedAccounts(
+			const formattedCur = formatAccountAddresses(cur.flat(), ss58)
+			const { added, removed, remaining } = diffImportedAccounts(
 				prev.flat(),
-				formatAccountAddresses(cur.flat(), ss58),
+				formattedCur,
 			)
 
 			removed.forEach((account) => {
-				const address = formatAccountSs58(
-					account.address,
-					this.apiRelay.consts.system.ss58Prefix,
+				const address = account.address
+
+				// Only unsubscribe from address subscriptions if no other imported account with same
+				// address exists
+				const addressFound = formattedCur.find(
+					(c) => c.address === account.address,
 				)
-				if (address) {
+				if (!addressFound) {
 					this.ids.forEach((id, i) => {
 						this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
-							getAccountKey(id, account)
+							getAccountKey(id, address)
 						]?.unsubscribe()
-						this.subBonded[address]?.unsubscribe()
-						this.subProxies?.[address]?.unsubscribe()
-						this.subPoolMemberships?.[address]?.unsubscribe()
 					})
+					this.subBonded[address]?.unsubscribe()
+					this.subProxies?.[address]?.unsubscribe()
+					this.subPoolMemberships?.[address]?.unsubscribe()
 				}
 			})
 
+			const addedAddresses: string[] = []
 			added.forEach((account) => {
-				this.subAccountBalances.relay[getAccountKey(this.ids[0], account)] =
-					new AccountBalanceQuery(this.apiRelay, this.ids[0], account.address)
-				this.subAccountBalances.hub[getAccountKey(this.ids[2], account)] =
-					new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
+				const address = account.address
 
-				this.subBonded[account.address] = new BondedQuery(
-					this.stakingApi,
-					account.address,
+				// Only subscribe to address subscriptions if no other occurrence of the address exists
+				const addressAlreadyAdded = addedAddresses.some((a) => a === address)
+				const addressAlreadyPresent = remaining.some(
+					(a) => a?.address === address,
 				)
-				this.subPoolMemberships[account.address] = new PoolMembershipQuery(
-					this.stakingApi,
-					account.address,
-				)
-				this.subProxies[account.address] = new ProxiesQuery(
-					this.stakingApi,
-					account.address,
-				)
+				if (!addressAlreadyAdded && !addressAlreadyPresent) {
+					this.subAccountBalances.relay[getAccountKey(this.ids[0], address)] =
+						new AccountBalanceQuery(this.apiRelay, this.ids[0], address)
+					this.subAccountBalances.hub[getAccountKey(this.ids[2], address)] =
+						new AccountBalanceQuery(this.apiHub, this.ids[2], address)
+
+					this.subBonded[address] = new BondedQuery(this.stakingApi, address)
+					this.subPoolMemberships[address] = new PoolMembershipQuery(
+						this.stakingApi,
+						address,
+					)
+					this.subProxies[address] = new ProxiesQuery(this.stakingApi, address)
+				}
+				addedAddresses.push(address)
 			})
 		})
 

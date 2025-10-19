@@ -11,7 +11,11 @@ export interface OtherAccountsContextInterface {
 		account: ImportedAccount,
 		type: ExternalAccountImportType,
 	) => void
-	renameOtherAccount: (address: MaybeAddress, newName: string) => void
+	renameOtherAccount: (
+		address: MaybeAddress,
+		source: string,
+		newName: string,
+	) => void
 	importLocalOtherAccounts: <T extends HardwareAccountSource | string>(
 		source: T,
 		getter: (source: T, network: NetworkId) => ImportedAccount[],

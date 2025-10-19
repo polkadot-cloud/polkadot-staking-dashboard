@@ -32,10 +32,10 @@ export const SetClaimPermission = ({
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { getPoolMembership } = useBalances()
-	const { activeAddress } = useActiveAccounts()
 	const { setModalStatus } = useOverlay().modal
 	const { isOwner, isMember } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const { membership } = getPoolMembership(activeAddress)
 
@@ -76,7 +76,7 @@ export const SetClaimPermission = ({
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

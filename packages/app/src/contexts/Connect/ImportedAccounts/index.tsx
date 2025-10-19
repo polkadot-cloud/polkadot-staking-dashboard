@@ -9,7 +9,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useCallback } from 'react'
-import type { ExternalAccount, ImportedAccount, MaybeAddress } from 'types'
+import type {
+	ActiveAccount,
+	ExternalAccount,
+	ImportedAccount,
+	MaybeAddress,
+} from 'types'
 import { useOtherAccounts } from '../OtherAccounts'
 import { getActiveAccountLocal } from '../Utils'
 import type { ImportedAccountsContextInterface } from './types'
@@ -50,12 +55,23 @@ export const ImportedAccountsProvider = ({
 
 	const stringifiedAccountsKey = shallowAccountStringify(allAccounts)
 
-	// Gets an account from `allAccounts`
+	// Gets an account from `allAccounts`. Requires activeAccount (with address and source) to get the
+	// specific account-source combination
 	//
 	// Caches the function when imported accounts update
 	const getAccount = useCallback(
-		(who: MaybeAddress) =>
-			allAccounts.find(({ address }) => address === who) || null,
+		(activeAccount: ActiveAccount) => {
+			if (!activeAccount) {
+				return null
+			}
+			return (
+				allAccounts.find(
+					({ address, source }) =>
+						address === activeAccount.address &&
+						source === activeAccount.source,
+				) || null
+			)
+		},
 		[stringifiedAccountsKey],
 	)
 
@@ -74,36 +90,51 @@ export const ImportedAccountsProvider = ({
 		[stringifiedAccountsKey],
 	)
 
-	// Checks whether an account can sign transactions
+	// Checks whether an account can sign transactions. Requires activeAccount (with address and
+	// source) to check the specific account-source combination
 	//
 	// Caches the function when imported accounts update
 	const accountHasSigner = useCallback(
-		(address: MaybeAddress) =>
-			allAccounts.find(
-				(account) =>
-					account.address === address && account.source !== 'external',
-			) !== undefined,
+		(activeAccount: ActiveAccount) => {
+			if (!activeAccount) {
+				return false
+			}
+			const account = allAccounts.find(
+				(acc) =>
+					acc.address === activeAccount.address &&
+					acc.source === activeAccount.source &&
+					acc.source !== 'external',
+			)
+			return account !== undefined
+		},
 		[stringifiedAccountsKey],
 	)
 
-	// Checks whether an account needs manual signing
-	//
-	// This is the case for accounts imported from hardware wallets, transactions of which cannot be
-	// automatically signed by a provided `signer` as is the case with web extensions
+	// Checks whether an account needs manual signing. Requires activeAccount (with address and
+	// source) to check the specific account-source combination
 	//
 	// Caches the function when imported accounts update
 	const requiresManualSign = useCallback(
-		(address: MaybeAddress) =>
-			allAccounts.find(
-				(a) => a.address === address && ManualSigners.includes(a.source),
-			) !== undefined,
+		(activeAccount: ActiveAccount) => {
+			if (!activeAccount) {
+				return false
+			}
+			const account = allAccounts.find(
+				(acc) =>
+					acc.address === activeAccount.address &&
+					acc.source === activeAccount.source &&
+					ManualSigners.includes(acc.source),
+			)
+			return account !== undefined
+		},
 		[stringifiedAccountsKey],
 	)
 
 	// Re-sync the active account on network change
+	// Now checks for both address and source to support multi-source accounts
 	useEffectIgnoreInitial(() => {
 		const localActiveAccount = getActiveAccountLocal(network, ss58)
-		if (getAccount(localActiveAccount?.address || null) !== null) {
+		if (localActiveAccount && getAccount(localActiveAccount) !== null) {
 			setActiveAccount(localActiveAccount, false)
 		} else {
 			setActiveAccount(null, false)

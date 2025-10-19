@@ -20,7 +20,7 @@ export const SubmitTx = ({
 	onSubmit,
 	submitText,
 	buttons = [],
-	submitAddress,
+	submitAccount,
 	valid = false,
 	noMargin = false,
 	proxySupported,
@@ -34,7 +34,7 @@ export const SubmitTx = ({
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
 	const { setModalResize } = useOverlay().modal
-	const { activeAddress, activeProxy } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 
 	const { unit } = getStakingChainData(network)
@@ -48,22 +48,22 @@ export const SubmitTx = ({
 	} = useAccountBalances(from)
 	const notEnoughFunds = transferableBalance - fee < 0n && fee > 0n
 
-	// Default to active account
+	// Default to active account, using activeAccount to get the correct account
 	let signingOpts = {
 		label: t('signer', { ns: 'app' }),
-		who: getAccount(activeAddress),
+		who: getAccount(activeAccount),
 	}
 
 	if (txInitiated) {
 		if (activeProxy && proxySupported) {
 			signingOpts = {
 				label: t('signedByProxy', { ns: 'app' }),
-				who: getAccount(activeProxy.address),
+				who: getAccount(activeProxy),
 			}
 		} else if (!(activeProxy && proxySupported) && requiresMigratedController) {
 			signingOpts = {
 				label: t('signedByController', { ns: 'app' }),
-				who: getAccount(activeAddress),
+				who: getAccount(activeAccount),
 			}
 		}
 	}
@@ -94,7 +94,7 @@ export const SubmitTx = ({
 			dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
 			transparent={transparent}
 			SignerComponent={
-				requiresManualSign(from) ? (
+				requiresManualSign(submitAccount) ? (
 					<ManualSign
 						uid={uid}
 						onSubmit={onSubmit}
@@ -102,7 +102,7 @@ export const SubmitTx = ({
 						valid={valid}
 						submitText={submitText}
 						buttons={buttons}
-						submitAddress={submitAddress}
+						submitAccount={submitAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>
@@ -114,7 +114,7 @@ export const SubmitTx = ({
 						valid={valid}
 						submitText={submitText}
 						buttons={buttons}
-						submitAddress={submitAddress}
+						submitAccount={submitAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
 					/>

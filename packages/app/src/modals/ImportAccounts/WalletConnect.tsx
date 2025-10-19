@@ -55,7 +55,7 @@ export const WalletConnect = () => {
 
 	// Handle renaming an address
 	const handleRename = (address: string, newName: string) => {
-		renameOtherAccount(address, newName)
+		renameOtherAccount(address, source, newName)
 		renameHardwareAccount(source, network, address, newName)
 	}
 

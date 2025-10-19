@@ -33,8 +33,8 @@ export const Bond = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
-	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPendingPoolRewards, feeReserve, getPoolMembership } = useBalances()
 
@@ -127,7 +127,7 @@ export const Bond = () => {
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

@@ -4,20 +4,21 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import type { MaybeAddress } from 'types'
+import type { ActiveAccount } from 'types'
 
 export const useSignerAvailable = () => {
-	const { activeProxy } = useActiveAccounts()
 	const { getStakingLedger } = useBalances()
 	const { accountHasSigner } = useImportedAccounts()
+	const { activeProxy } = useActiveAccounts()
 
-	const signerAvailable = (who: MaybeAddress, proxySupported: boolean) => {
-		const { controllerUnmigrated } = getStakingLedger(who)
+	const signerAvailable = (who: ActiveAccount, proxySupported: boolean) => {
+		const { controllerUnmigrated } = getStakingLedger(who?.address || null)
 
 		if (controllerUnmigrated) {
 			return 'controller_not_migrated'
-		} else if (
-			(!proxySupported || !accountHasSigner(activeProxy?.address || null)) &&
+		}
+		if (
+			(!proxySupported || !accountHasSigner(activeProxy)) &&
 			!accountHasSigner(who)
 		) {
 			return 'read_only'

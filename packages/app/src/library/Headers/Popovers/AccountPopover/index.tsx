@@ -23,8 +23,13 @@ export const AccountPopover = ({
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
 	const { getAccount } = useImportedAccounts()
-	const { activeAddress, activeProxy, activeProxyType, setActiveAccount } =
-		useActiveAccounts()
+	const {
+		activeAccount,
+		activeAddress,
+		activeProxy,
+		activeProxyType,
+		setActiveAccount,
+	} = useActiveAccounts()
 
 	const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -33,7 +38,7 @@ export const AccountPopover = ({
 		setOpen(false)
 	}, ['header-account'])
 
-	const account = getAccount(activeAddress)
+	const account = getAccount(activeAccount)
 	const name = account?.name || ''
 
 	const accountLabel =

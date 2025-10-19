@@ -50,14 +50,15 @@ export const Accounts = () => {
 		// Check if nominating
 		if (
 			!!ledger &&
-			nominating.find((a) => a.address === address) === undefined
+			nominating.find((a) => a.address === address && a.source === source) ===
+				undefined
 		) {
 			isNominating = true
 		}
 
 		// Check if in pool
 		if (membership) {
-			if (!inPool.find((n) => n.address === address)) {
+			if (!inPool.find((n) => n.address === address && n.source === source)) {
 				isInPool = true
 			}
 		}
@@ -66,18 +67,20 @@ export const Accounts = () => {
 		if (
 			!isNominating &&
 			!membership &&
-			!notStaking.find((n) => n.address === address)
+			!notStaking.find((n) => n.address === address && n.source === source)
 		) {
 			notStaking.push({ address, source, delegates })
 			continue
 		}
 
-		// If both nominating and in pool, add to this list.
+		// If both nominating and in pool, add to this list
 		if (
 			isNominating &&
 			isInPool &&
 			membership &&
-			!nominatingAndPool.find((n) => n.address === address)
+			!nominatingAndPool.find(
+				(n) => n.address === address && n.source === source,
+			)
 		) {
 			nominatingAndPool.push({
 				...membership,

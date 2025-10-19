@@ -43,9 +43,9 @@ export const Forms = forwardRef(
 		const { network } = useNetwork()
 		const { activePool } = useActivePool()
 		const { getConsts, serviceApi } = useApi()
-		const { activeAddress } = useActiveAccounts()
 		const { removeFromBondedPools } = useBondedPools()
 		const { getSignerWarnings } = useSignerWarnings()
+		const { activeAddress, activeAccount } = useActiveAccounts()
 		const { removeFavorite: removeFavoritePool } = useFavoritePools()
 
 		const { unit, units } = getStakingChainData(network)
@@ -96,7 +96,7 @@ export const Forms = forwardRef(
 
 		const value = unlock?.value || 0n
 		const warnings = getSignerWarnings(
-			activeAddress,
+			activeAccount,
 			isStaking,
 			submitExtrinsic.proxySupported,
 		)

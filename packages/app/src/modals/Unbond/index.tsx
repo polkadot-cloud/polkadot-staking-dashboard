@@ -30,10 +30,10 @@ export const Unbond = () => {
 	const { t } = useTranslation('modals')
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
-	const { activeAddress } = useActiveAccounts()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getPendingPoolRewards } = useBalances()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isDepositor, activePool } = useActivePool()
 	const {
@@ -138,7 +138,7 @@ export const Unbond = () => {
 
 	// accumulate warnings.
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		isStaking,
 		submitExtrinsic.proxySupported,
 	)
