@@ -30,10 +30,10 @@ export const RenamePool = ({
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { setModalStatus } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { bondedPools, poolsMetaData } = useBondedPools()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const poolId = activePool?.id
 
@@ -79,7 +79,7 @@ export const RenamePool = ({
 	}
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

@@ -30,7 +30,7 @@ export const ClaimReward = () => {
 	const { network } = useNetwork()
 	const { activePool } = useActivePool()
 	const { getPendingPoolRewards } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 
 	const { claimType } = options
@@ -69,7 +69,7 @@ export const ClaimReward = () => {
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

@@ -5,28 +5,20 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useSignerAvailable } from 'hooks/useSignerAvailable'
 import { useTranslation } from 'react-i18next'
-import type { MaybeAddress } from 'types'
+import type { ActiveAccount } from 'types'
 
 export const useSignerWarnings = () => {
 	const { t } = useTranslation('modals')
-	const { activeAccount, activeProxy } = useActiveAccounts()
+	const { activeProxy } = useActiveAccounts()
 	const { accountHasSigner } = useImportedAccounts()
 	const { signerAvailable } = useSignerAvailable()
 
 	const getSignerWarnings = (
-		account: MaybeAddress,
+		account: ActiveAccount,
 		controller = false,
 		proxySupported = false,
 	) => {
 		const warnings = []
-
-		// Determine activeAccount based on whether account matches activeAccount
-		let accountActiveAccount = activeAccount
-		if (activeAccount && account !== activeAccount.address) {
-			// If account doesn't match activeAccount, we can't determine the source
-			// This is a fallback case that shouldn't normally happen
-			accountActiveAccount = null
-		}
 
 		if (controller) {
 			switch (signerAvailable(account, proxySupported)) {
@@ -41,7 +33,7 @@ export const useSignerWarnings = () => {
 			}
 		} else if (
 			!(
-				accountHasSigner(accountActiveAccount) ||
+				accountHasSigner(account) ||
 				(accountHasSigner(activeProxy) && proxySupported)
 			)
 		) {

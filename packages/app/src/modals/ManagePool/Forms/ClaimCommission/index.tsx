@@ -32,9 +32,9 @@ export const ClaimCommission = ({
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { setModalStatus } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const { unit, units } = getStakingChainData(network)
 	const poolId = activePool?.id
@@ -66,7 +66,7 @@ export const ClaimCommission = ({
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

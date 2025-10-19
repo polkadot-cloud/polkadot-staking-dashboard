@@ -19,8 +19,8 @@ export const StopNominations = () => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { getNominations } = useBalances()
-	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const {
 		setModalStatus,
 		config: { options },
@@ -73,7 +73,7 @@ export const StopNominations = () => {
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		isStaking,
 		submitExtrinsic.proxySupported,
 	)

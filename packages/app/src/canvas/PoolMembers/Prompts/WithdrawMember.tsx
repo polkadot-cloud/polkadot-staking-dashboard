@@ -35,9 +35,9 @@ export const WithdrawMember = ({
 	const { serviceApi } = useApi()
 	const { closePrompt } = usePrompt()
 	const { getConsts, activeEra } = useApi()
-	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { unit, units } = getStakingChainData(network)
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { historyDepth } = getConsts(network)
 	const { unbondingEras, points } = member
 
@@ -74,7 +74,7 @@ export const WithdrawMember = ({
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

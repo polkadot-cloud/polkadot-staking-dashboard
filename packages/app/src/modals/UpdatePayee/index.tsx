@@ -28,9 +28,9 @@ export const UpdatePayee = () => {
 	const { serviceApi } = useApi()
 	const { getStakingLedger } = useBalances()
 	const { getPayeeItems } = usePayeeConfig()
-	const { activeAddress } = useActiveAccounts()
 	const { setModalStatus } = useOverlay().modal
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const payee = getStakingLedger(activeAddress).payee
 
@@ -115,7 +115,7 @@ export const UpdatePayee = () => {
 	}, [])
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		true,
 		submitExtrinsic.proxySupported,
 	)
