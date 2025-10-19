@@ -88,8 +88,8 @@ importers:
         specifier: ^2.3.4
         version: 2.3.4(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10)
       '@w3ux/react-connect-kit':
-        specifier: ^3.7.5
-        version: 3.7.5(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^3.8.0
+        version: 3.8.0(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/react-odometer':
         specifier: 2.2.6
         version: 2.2.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -289,8 +289,8 @@ importers:
         specifier: ^0.166.0
         version: 0.166.0(dedot@0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
       '@w3ux/observables-connect':
-        specifier: ^0.11.3
-        version: 0.11.3(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.12.0
+        version: 0.12.0(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -329,8 +329,8 @@ importers:
   packages/global-bus:
     dependencies:
       '@w3ux/observables-connect':
-        specifier: ^0.11.3
-        version: 0.11.3(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+        specifier: ^0.12.0
+        version: 0.12.0(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: ^2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -1088,8 +1088,8 @@ packages:
     resolution: {integrity: sha512-CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
 
-  '@eslint/config-array@0.21.0':
-    resolution: {integrity: sha512-ENIdc4iLu0d93HeYirvKmrzshzofPw6VkZRKQGe9Nv46ZnWUzcF1xV01dcvEg/1wXUR61OmmlSfyeyO7EvjLxQ==}
+  '@eslint/config-array@0.21.1':
+    resolution: {integrity: sha512-aw1gNayWpdI/jSYVgzN5pL0cfzU02GT3NBpeT/DXbx1/1x7ZKxFPd9bwrzygx/qiwIQiJ1sw/zD8qY/kRvlGHA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/config-helpers@0.3.1':
@@ -1108,8 +1108,8 @@ packages:
     resolution: {integrity: sha512-5K1/mKhWaMfreBGJTwval43JJmkip0RmM+3+IuqupeSKNC/Th2Kc7ucaq5ovTSra/OOKB9c58CGSz3QMVbWt0A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/object-schema@2.1.6':
-    resolution: {integrity: sha512-RBMg5FRL0I0gs51M/guSAj5/e14VQ4tpZnQNWwuDT66P14I43ItmPfIZRhO9fUVIPOAQXU47atlywZ/czoqFPA==}
+  '@eslint/object-schema@2.1.7':
+    resolution: {integrity: sha512-VtAOaymWVfZcmZbp6E2mympDIHvyjXs/12LqWYjVw6qjrfF+VK+fyG33kChz3nnK+SU5/NeHOqrTEHS8sXO3OA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/plugin-kit@0.3.5':
@@ -1500,6 +1500,10 @@ packages:
 
   '@polkadot/types-support@16.4.8':
     resolution: {integrity: sha512-rXv4S4QJK3ge5pkiSo83PWNl/SBxibAhvJrV4Myg5vXE/x6iDtd+gOxdz00C2MATaZaSNCsdI78WlK+00jDtCQ==}
+    engines: {node: '>=18'}
+
+  '@polkadot/types-support@16.4.9':
+    resolution: {integrity: sha512-NiSGYEVeyXo/8a/O5kIEZDpHE6zrcZtFeyrWLIPtjbIV0PfuJzl1Bc0i8rGZWcn/ZdZjnSYg++l33sTb2GaJOQ==}
     engines: {node: '>=18'}
 
   '@polkadot/util@13.5.7':
@@ -2650,13 +2654,13 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/observables-connect@0.11.3':
-    resolution: {integrity: sha512-MU2JAwiwUZKzx1scucjVTrYUsUA5y0Xw4SPQl7dAs/Ib4z4WmwklGp/Aiv66JRRd8iGj6LcuJ5vZlQHsGWCByQ==}
+  '@w3ux/observables-connect@0.12.0':
+    resolution: {integrity: sha512-wbJDYIUCSufPoVoBXPdrDsDT2lchr+YIfitew1l9dfn+nOciyT+s7wu6ZFNqh85UKjqki5QPvu9k8xnDVTCsPA==}
     peerDependencies:
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@3.7.5':
-    resolution: {integrity: sha512-cdXnuBxEl481KvGVD2LiChL/U7uaGE3iU8nKRA8G3TjNc1b+Utfz6mmvcUFGFwzKWN+RcgzMkMUcnGL9coEexw==}
+  '@w3ux/react-connect-kit@3.8.0':
+    resolution: {integrity: sha512-xvy4i0lpC2PJBrhWTkkJEBoP/LG2l9V+Ecw0IYQB3AZXpGQu3mBvo5XJsAG1+Q2xkYHF47tF2etHPQNsrvRAwQ==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -5564,7 +5568,7 @@ snapshots:
       '@dedot/codecs': 0.13.2
       '@dedot/codegen': 0.13.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@polkadot-api/wasm-executor': 0.1.2
-      '@polkadot/types-support': 16.4.8
+      '@polkadot/types-support': 16.4.9
       ora: 8.2.0
       yargs: 17.7.2
     transitivePeerDependencies:
@@ -5895,9 +5899,9 @@ snapshots:
   '@eslint-community/regexpp@4.12.1':
     optional: true
 
-  '@eslint/config-array@0.21.0':
+  '@eslint/config-array@0.21.1':
     dependencies:
-      '@eslint/object-schema': 2.1.6
+      '@eslint/object-schema': 2.1.7
       debug: 4.4.3
       minimatch: 3.1.2
     transitivePeerDependencies:
@@ -5930,7 +5934,7 @@ snapshots:
   '@eslint/js@9.33.0':
     optional: true
 
-  '@eslint/object-schema@2.1.6':
+  '@eslint/object-schema@2.1.7':
     optional: true
 
   '@eslint/plugin-kit@0.3.5':
@@ -6430,6 +6434,11 @@ snapshots:
   '@polkadot-api/wasm-executor@0.1.2': {}
 
   '@polkadot/types-support@16.4.8':
+    dependencies:
+      '@polkadot/util': 13.5.7
+      tslib: 2.8.1
+
+  '@polkadot/types-support@16.4.9':
     dependencies:
       '@polkadot/util': 13.5.7
       tslib: 2.8.1
@@ -7864,7 +7873,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@w3ux/observables-connect@0.11.3(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/observables-connect@0.12.0(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@mimirdev/apps-inject': 3.2.0
       '@w3ux/extension-assets': 2.3.1(react@19.2.0)
@@ -7875,10 +7884,10 @@ snapshots:
       - react
       - utf-8-validate
 
-  '@w3ux/react-connect-kit@3.7.5(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
+  '@w3ux/react-connect-kit@3.8.0(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/hooks': 2.3.4(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10)
-      '@w3ux/observables-connect': 0.11.3(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
+      '@w3ux/observables-connect': 0.12.0(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
       '@w3ux/utils': 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
@@ -9295,7 +9304,7 @@ snapshots:
     dependencies:
       '@eslint-community/eslint-utils': 4.9.0(eslint@9.33.0)
       '@eslint-community/regexpp': 4.12.1
-      '@eslint/config-array': 0.21.0
+      '@eslint/config-array': 0.21.1
       '@eslint/config-helpers': 0.3.1
       '@eslint/core': 0.15.2
       '@eslint/eslintrc': 3.3.1
@@ -10050,7 +10059,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.1.1(typescript@5.9.3)(zod@3.22.4)
+      abitype: 1.1.1(typescript@5.9.3)(zod@4.1.12)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.9.3
@@ -10926,7 +10935,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.1.0(typescript@5.9.3)(zod@3.22.4)
+      abitype: 1.1.0(typescript@5.9.3)(zod@4.1.12)
       isows: 1.0.7(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       ox: 0.9.6(typescript@5.9.3)
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)

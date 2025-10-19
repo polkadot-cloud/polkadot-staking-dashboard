@@ -121,7 +121,7 @@ export const useSubmitExtrinsic = ({
 		if (!tx || getUid(uid)?.submitted) {
 			return
 		}
-		if (from === null) {
+		if (from === null || !submitAccount) {
 			return
 		}
 		const account = getAccount(submitAccount)
@@ -264,7 +264,9 @@ export const useSubmitExtrinsic = ({
 			// Extension signer
 			//
 			// Get the signer for this account and submit the transaction
-			signer = getExtensionAccount(from)?.signer as InjectedSigner | undefined
+			signer = getExtensionAccount(from, submitAccount.source)?.signer as
+				| InjectedSigner
+				| undefined
 			if (!signer) {
 				onError('technical', 'missing_signer')
 				return
