@@ -43,7 +43,6 @@ export const AccountButton = ({
 	const { unit, units } = getStakingChainData(network)
 
 	// Accumulate account data.
-	// Pass activeAccount to get the correct account when same address exists from multiple sources
 	const meta = getAccount({ address, source })
 	const name = meta?.name
 
@@ -61,23 +60,26 @@ export const AccountButton = ({
 					? WalletConnectSVG
 					: ExtensionIcons[meta?.source || ''] || undefined
 
-	// Determine if this account is active (active account or proxy).
-	// Now also checks source to support multi-source accounts
-	const isActive =
-		(connectTo === activeAddress &&
-			address === activeAddress &&
-			source === activeAccount?.source &&
-			!activeProxy) ||
-		(connectProxy === activeProxy?.address &&
-			proxyType === activeProxyType &&
-			activeProxy.address)
+	// Determine if this account is active (active account or proxy)
+	const isActiveAccount =
+		connectTo === activeAddress &&
+		address === activeAddress &&
+		source === activeAccount?.source &&
+		!activeProxy
 
-	// Handle account click. Handles both active account and active proxy.
+	const isActiveProxy =
+		!!activeProxy?.address &&
+		connectProxy === activeProxy.address &&
+		proxyType === activeProxyType
+
+	const isActive = isActiveAccount || isActiveProxy
+
+	// Handle account click. Handles both active account and active proxy
 	const handleClick = () => {
 		if (!imported) {
 			return
 		}
-		// Pass activeAccount to getAccount to ensure we get the correct account-source combination
+
 		const account = getAccount({ address: connectTo, source })
 		setActiveAccount(
 			account ? { address: account.address, source: account.source } : null,
