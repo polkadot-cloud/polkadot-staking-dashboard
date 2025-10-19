@@ -120,9 +120,18 @@ export class SubscriptionManager<
 						this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
 							getAccountKey(id, account)
 						]?.unsubscribe()
-						this.subBonded[address]?.unsubscribe()
-						this.subProxies?.[address]?.unsubscribe()
-						this.subPoolMemberships?.[address]?.unsubscribe()
+
+						const addressFound = formatAccountAddresses(cur.flat(), ss58).find(
+							(c) => c.address === account.address,
+						)
+
+						// Only unsubscribe from address subscriptions if no other imported account with same
+						// address exists
+						if (!addressFound) {
+							this.subBonded[address]?.unsubscribe()
+							this.subProxies?.[address]?.unsubscribe()
+							this.subPoolMemberships?.[address]?.unsubscribe()
+						}
 					})
 				}
 			})
@@ -133,18 +142,26 @@ export class SubscriptionManager<
 				this.subAccountBalances.hub[getAccountKey(this.ids[2], account)] =
 					new AccountBalanceQuery(this.apiHub, this.ids[2], account.address)
 
-				this.subBonded[account.address] = new BondedQuery(
-					this.stakingApi,
-					account.address,
-				)
-				this.subPoolMemberships[account.address] = new PoolMembershipQuery(
-					this.stakingApi,
-					account.address,
-				)
-				this.subProxies[account.address] = new ProxiesQuery(
-					this.stakingApi,
-					account.address,
-				)
+				const addressOccurrences = formatAccountAddresses(
+					cur.flat(),
+					ss58,
+				).filter((c) => c.address === account.address).length
+
+				// Only subscribe to address subscriptions if no other occurrence of the address exists
+				if (addressOccurrences === 1) {
+					this.subBonded[account.address] = new BondedQuery(
+						this.stakingApi,
+						account.address,
+					)
+					this.subPoolMemberships[account.address] = new PoolMembershipQuery(
+						this.stakingApi,
+						account.address,
+					)
+					this.subProxies[account.address] = new ProxiesQuery(
+						this.stakingApi,
+						account.address,
+					)
+				}
 			})
 		})
 
