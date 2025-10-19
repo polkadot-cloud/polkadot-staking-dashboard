@@ -16,8 +16,6 @@ export const ManualSign = (
 	},
 ) => {
 	const { getAccount } = useImportedAccounts()
-
-	// Use the submitAccount from props which already has address and source
 	const accountMeta = getAccount(props.submitAccount)
 	const source = accountMeta?.source
 
