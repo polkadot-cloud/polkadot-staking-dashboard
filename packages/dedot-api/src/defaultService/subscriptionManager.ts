@@ -112,14 +112,16 @@ export class SubscriptionManager<
 
 			removed.forEach((account) => {
 				const address = account.address
+				const addressFound = formattedCur.find(
+					(c) => c.address === account.address,
+				)
+
 				this.ids.forEach((id, i) => {
+					// Only remove balance data if no other imported account with same address exists
 					this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
 						getAccountKey(id, account)
-					]?.unsubscribe()
+					]?.unsubscribe(!addressFound)
 
-					const addressFound = formattedCur.find(
-						(c) => c.address === account.address,
-					)
 					// Only unsubscribe from address subscriptions if no other imported account with same
 					// address exists
 					if (!addressFound) {
