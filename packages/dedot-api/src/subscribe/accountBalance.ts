@@ -37,8 +37,10 @@ export class AccountBalanceQuery<T extends Chain> {
 		)
 	}
 
-	unsubscribe() {
+	unsubscribe(removeBalance = true) {
 		this.#unsub?.()
-		removeAccountBalance(this.chainId, this.address)
+		if (removeBalance) {
+			removeAccountBalance(this.chainId, this.address)
+		}
 	}
 }
