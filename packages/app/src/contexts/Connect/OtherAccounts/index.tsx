@@ -31,7 +31,7 @@ export const OtherAccountsProvider = ({
 	const { network } = useNetwork()
 	const { gettingExtensions } = useExtensions()
 	const { getHardwareAccounts } = useHardwareAccounts()
-	const { activeAddress, setActiveAccount } = useActiveAccounts()
+	const { setActiveAccount, activeAccount } = useActiveAccounts()
 	const { extensionsSynced, getExtensionAccounts } = useExtensionAccounts()
 
 	const { ss58 } = getStakingChainData(network)
@@ -52,21 +52,35 @@ export const OtherAccountsProvider = ({
 	// Handle forgetting of an imported other account
 	const forgetOtherAccounts = (forget: ImportedAccount[]) => {
 		if (forget.length) {
-			// Remove forgotten accounts from context state
+			// Remove forgotten accounts from context state. Compare by both address and source to allow
+			// same address from different sources to remain
 			setStateWithRef(
 				[...otherAccountsRef.current].filter(
 					(a) =>
-						forget.find(({ address }) => address === a.address) === undefined,
+						forget.find(
+							({ address, source }) =>
+								address === a.address && source === a.source,
+						) === undefined,
 				),
 				setOtherAccounts,
 				otherAccountsRef,
 			)
-			// If the currently active account is being forgotten, and it is not present in extension
-			// accounts, disconnect
+			// If the currently active account is being forgotten, disconnect
 			if (
-				forget.find(({ address }) => address === activeAddress) !== undefined &&
-				extensionAccounts.find(({ address }) => address === activeAddress) ===
-					undefined
+				// Active account is present
+				activeAccount &&
+				// Active account is being forgotten
+				forget.find(
+					({ address, source }) =>
+						address === activeAccount.address &&
+						source === activeAccount.source,
+				) !== undefined &&
+				// No other account exists with same address and source
+				otherAccountsRef.current.find(
+					({ address, source }) =>
+						address === activeAccount.address &&
+						source === activeAccount.source,
+				) === undefined
 			) {
 				setActiveAccount(null)
 			}
@@ -74,53 +88,55 @@ export const OtherAccountsProvider = ({
 	}
 
 	// Checks `localStorage` for previously added accounts from the provided source, and adds them to
-	// `accounts` state. if local active account is present, it will also be assigned as active.
-	// Accounts are ignored if they are already imported through an extension
+	// `accounts` state. if local active account is present, it will also be assigned as active. For
+	// non-external accounts, accounts with the same address but different sources are allowed.
+	// External accounts are still prevented from being duplicated.
 	const importLocalOtherAccounts = <T extends HardwareAccountSource | string>(
 		source: T,
-		getter: (s: T, n: NetworkId) => ImportedAccount[],
+		getter: (source: T, network: NetworkId) => ImportedAccount[],
 	) => {
-		// Get accounts from provided `getter` function. The resulting array of accounts must contain an
-		// `address` field
+		// Get accounts from provided `getter` function
 		let localAccounts = getter(source, network)
 
 		if (localAccounts.length) {
-			const activeAccountInSet =
+			// For external accounts, prevent duplicates by address only (regardless of source). For other
+			// accounts (hardware wallets), allow same address with different sources
+			if (source === 'external') {
+				// Remove external accounts that are already imported from any source
+				localAccounts = localAccounts.filter(
+					(l) =>
+						extensionAccounts.find(({ address }) => address === l.address) ===
+							undefined &&
+						otherAccountsRef.current.find(
+							({ address }) => address === l.address,
+						) === undefined,
+				)
+			} else {
+				// For hardware accounts, only remove if the same address AND source combination exists
+				localAccounts = localAccounts.filter(
+					(l) =>
+						extensionAccounts.find(
+							({ address, source: s }) =>
+								address === l.address && s === l.source,
+						) === undefined &&
+						otherAccountsRef.current.find(
+							({ address, source: s }) =>
+								address === l.address && s === l.source,
+						) === undefined,
+				)
+			}
+
+			const activeAccountFound =
 				localAccounts.find(
 					({ address }) =>
 						address === getActiveAccountLocal(network, ss58)?.address,
 				) ?? null
 
-			// remove accounts that are already imported via web extension
-			const alreadyInExtension = localAccounts.filter(
-				(l) =>
-					extensionAccounts.find(({ address }) => address === l.address) !==
-					undefined,
-			)
-
-			if (alreadyInExtension.length) {
-				forgetOtherAccounts(alreadyInExtension)
-			}
-
-			localAccounts = localAccounts.filter(
-				(l) =>
-					extensionAccounts.find(({ address }) => address === l.address) ===
-					undefined,
-			)
-
-			// remove already-imported accounts
-			localAccounts = localAccounts.filter(
-				(l) =>
-					otherAccountsRef.current.find(
-						({ address }) => address === l.address,
-					) === undefined,
-			)
-
-			// set active account for networkData
-			if (activeAccountInSet) {
+			// If active account found, set to state
+			if (activeAccountFound) {
 				setActiveAccount({
-					address: activeAccountInSet.address,
-					source: activeAccountInSet.source,
+					address: activeAccountFound.address,
+					source: activeAccountFound.source,
 				})
 			}
 
@@ -130,10 +146,15 @@ export const OtherAccountsProvider = ({
 	}
 
 	// Renames an other account
-	const renameOtherAccount = (address: MaybeAddress, newName: string) => {
+	// Now requires source to identify the specific account when same address exists from multiple sources
+	const renameOtherAccount = (
+		address: MaybeAddress,
+		source: string,
+		newName: string,
+	) => {
 		setStateWithRef(
 			[...otherAccountsRef.current].map((a) =>
-				a.address !== address
+				a.address !== address || a.source !== source
 					? a
 					: {
 							...a,
@@ -155,10 +176,13 @@ export const OtherAccountsProvider = ({
 	}
 
 	// Replace other account with new entry
+	// Compare by both address and source to target the specific account
 	const replaceOtherAccount = (account: ImportedAccount) => {
 		setStateWithRef(
 			[...otherAccountsRef.current].map((item) =>
-				item.address !== account.address ? item : account,
+				item.address !== account.address || item.source !== account.source
+					? item
+					: account,
 			),
 			setOtherAccounts,
 			otherAccountsRef,

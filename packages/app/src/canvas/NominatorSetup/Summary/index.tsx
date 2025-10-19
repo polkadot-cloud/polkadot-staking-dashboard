@@ -41,8 +41,8 @@ export const Summary = ({
 	const { getPayeeItems } = usePayeeConfig()
 	const { closeCanvas } = useOverlay().canvas
 	const { accountHasSigner } = useImportedAccounts()
-	const { activeAddress, activeProxy } = useActiveAccounts()
 	const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
+	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 
 	const setup = getNominatorSetup(activeAddress)
@@ -115,8 +115,7 @@ export const Summary = ({
 			)}
 			<MotionContainer thisSection={section} activeSection={setup.section}>
 				{!(
-					accountHasSigner(activeAddress) ||
-					accountHasSigner(activeProxy?.address || null)
+					accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
 				) && <Warning text={t('readOnly')} />}
 				<SummaryWrapper style={{ marginTop: simple ? '0' : '1rem' }}>
 					<section>

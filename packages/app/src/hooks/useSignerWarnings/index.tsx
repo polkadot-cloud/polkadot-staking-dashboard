@@ -5,7 +5,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useSignerAvailable } from 'hooks/useSignerAvailable'
 import { useTranslation } from 'react-i18next'
-import type { MaybeAddress } from 'types'
+import type { ActiveAccount } from 'types'
 
 export const useSignerWarnings = () => {
 	const { t } = useTranslation('modals')
@@ -14,7 +14,7 @@ export const useSignerWarnings = () => {
 	const { signerAvailable } = useSignerAvailable()
 
 	const getSignerWarnings = (
-		account: MaybeAddress,
+		account: ActiveAccount,
 		controller = false,
 		proxySupported = false,
 	) => {
@@ -34,7 +34,7 @@ export const useSignerWarnings = () => {
 		} else if (
 			!(
 				accountHasSigner(account) ||
-				(accountHasSigner(activeProxy?.address || null) && proxySupported)
+				(accountHasSigner(activeProxy) && proxySupported)
 			)
 		) {
 			warnings.push(`${t('readOnlyCannotSign')}`)

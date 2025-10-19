@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useProxies } from 'contexts/Proxies'
@@ -26,7 +27,7 @@ import {
 export const Proxies = () => {
 	const { t } = useTranslation('modals')
 	const { openHelp } = useHelp()
-	const { accounts, getAccount } = useImportedAccounts()
+	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
 	const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies()
 
@@ -93,12 +94,12 @@ export const Proxies = () => {
 																<span>
 																	{proxyType} {t('proxy')}
 																</span>
-																{getAccount(delegate)?.name || delegate}
+																{accounts.find((a) => a.address === delegate)
+																	?.name || delegate}
 															</h4>
 															<h4 className="subtitle">
-																{t('for', {
-																	who: getAccount(delegator)?.name || delegator,
-																})}
+																{t('for')}{' '}
+																<span>{ellipsisFn(delegator, 7)}</span>
 															</h4>
 														</div>
 													</div>

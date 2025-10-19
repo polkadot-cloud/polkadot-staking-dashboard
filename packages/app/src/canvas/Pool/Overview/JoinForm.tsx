@@ -46,8 +46,8 @@ export const JoinForm = ({
 	} = useOverlay().canvas
 	const { newBatchCall } = useBatchCall()
 	const { setPoolSetup } = usePoolSetups()
-	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const {
 		balances: {
 			pool: { totalPossibleBond },
@@ -126,7 +126,7 @@ export const JoinForm = ({
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

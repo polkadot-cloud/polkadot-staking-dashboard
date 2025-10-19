@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { SubmittableExtrinsic } from 'dedot'
-import type { MaybeAddress } from 'types'
+import type { ActiveAccount, MaybeAddress } from 'types'
 
 export interface UseSubmitExtrinsicProps {
 	tx: SubmittableExtrinsic | undefined
@@ -18,5 +18,5 @@ export interface UseSubmitExtrinsic {
 	uid: number
 	onSubmit: () => void
 	proxySupported: boolean
-	submitAddress: MaybeAddress
+	submitAccount: ActiveAccount
 }

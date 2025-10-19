@@ -34,10 +34,10 @@ export const UnbondMember = ({
 	const { network } = useNetwork()
 	const { closePrompt } = usePrompt()
 	const { getConsts, serviceApi } = useApi()
-	const { activeAddress } = useActiveAccounts()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { unit, units } = getStakingChainData(network)
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const { points } = member
 	const { bondDuration } = getConsts(network)
@@ -72,7 +72,7 @@ export const UnbondMember = ({
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

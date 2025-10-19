@@ -29,9 +29,9 @@ export const BalanceChart = () => {
 	const { currency } = useCurrency()
 	const { feeReserve } = useBalances()
 	const { openModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
 	const { syncing } = useSyncing(['initialization'])
 	const { accountHasSigner } = useImportedAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { unit, units } = getStakingChainData(network)
 	const Token = getChainIcons(network).token
@@ -222,7 +222,7 @@ export const BalanceChart = () => {
 										disabled={
 											!activeAddress ||
 											syncing ||
-											!accountHasSigner(activeAddress)
+											!accountHasSigner(activeAccount)
 										}
 									/>
 								}

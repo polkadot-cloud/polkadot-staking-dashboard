@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useTxMeta } from 'contexts/TxMeta'
 import type { ReactNode } from 'react'
 import type { SubmitProps } from '../types'
 import { Ledger } from './Ledger'
@@ -16,11 +15,8 @@ export const ManualSign = (
 		notEnoughFunds: boolean
 	},
 ) => {
-	const { getTxSubmission } = useTxMeta()
 	const { getAccount } = useImportedAccounts()
-	const from = getTxSubmission(props.uid)?.from || null
-
-	const accountMeta = getAccount(from)
+	const accountMeta = getAccount(props.submitAccount)
 	const source = accountMeta?.source
 
 	// Determine which signing method to use. NOTE: Falls back to `ledger` on all other sources to

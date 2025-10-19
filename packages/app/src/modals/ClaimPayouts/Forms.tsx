@@ -35,7 +35,7 @@ export const Forms = forwardRef(
 		const { serviceApi } = useApi()
 		const { newBatchCall } = useBatchCall()
 		const { setModalStatus } = useOverlay().modal
-		const { activeAddress } = useActiveAccounts()
+		const { activeAddress, activeAccount } = useActiveAccounts()
 		const { getSignerWarnings } = useSignerWarnings()
 		const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 		const { unit, units } = getStakingChainData(network)
@@ -119,7 +119,7 @@ export const Forms = forwardRef(
 		})
 
 		const warnings = getSignerWarnings(
-			activeAddress,
+			activeAccount,
 			false,
 			submitExtrinsic.proxySupported,
 		)

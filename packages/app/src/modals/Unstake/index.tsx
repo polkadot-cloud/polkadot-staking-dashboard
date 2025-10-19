@@ -30,9 +30,9 @@ export const Unstake = () => {
 	const { newBatchCall } = useBatchCall()
 	const { getNominations } = useBalances()
 	const { getConsts, serviceApi } = useApi()
-	const { activeAddress } = useActiveAccounts()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { setModalStatus, setModalResize } = useOverlay().modal
 
@@ -97,7 +97,7 @@ export const Unstake = () => {
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		true,
 		submitExtrinsic.proxySupported,
 	)

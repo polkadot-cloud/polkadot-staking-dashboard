@@ -19,7 +19,7 @@ export const Vault = ({
 	valid,
 	submitText,
 	buttons,
-	submitAddress,
+	submitAccount,
 	displayFor,
 	notEnoughFunds,
 }: SubmitProps & {
@@ -33,7 +33,7 @@ export const Vault = ({
 
 	// The state under which submission is disabled.
 	const disabled =
-		submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
+		submitted || !valid || !accountHasSigner(submitAccount) || notEnoughFunds
 
 	// Format submit button based on whether signature currently exists or submission is ongoing.
 	let buttonText: string

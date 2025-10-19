@@ -10,7 +10,6 @@ import { DelegatesWrapper } from './Wrapper'
 
 export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
 	const { accounts } = useImportedAccounts()
-	const { getAccount } = useImportedAccounts()
 
 	// Filter delegates that are external or not imported. Default to empty array if there are no
 	// delegates for this address.
@@ -18,7 +17,8 @@ export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
 		({ delegate, proxyType }) =>
 			accounts.find(({ address }) => address === delegate) !== undefined &&
 			isSupportedProxy(proxyType) &&
-			getAccount(delegate || null)?.source !== 'external',
+			accounts.find(({ address }) => address === delegate)?.source !==
+				'external',
 	) || []) as ProxyDelegateWithBalance[]
 
 	return delegatesList.length ? (

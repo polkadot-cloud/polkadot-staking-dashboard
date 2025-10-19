@@ -38,7 +38,7 @@ export const LeavePool = ({
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { setModalStatus } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPoolMembership, getPendingPoolRewards } = useBalances()
@@ -80,7 +80,7 @@ export const LeavePool = ({
 	})
 
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

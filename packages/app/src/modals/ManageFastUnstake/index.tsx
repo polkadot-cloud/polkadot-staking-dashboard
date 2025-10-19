@@ -36,9 +36,9 @@ export const ManageFastUnstake = () => {
 	const { feeReserve } = useBalances()
 	const { getTxSubmission } = useTxMeta()
 	const { isFastUnstaking } = useUnstaking()
-	const { activeAddress } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { getConsts, activeEra, serviceApi } = useApi()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { setModalResize, setModalStatus } = useOverlay().modal
 	const { unit, units } = getStakingChainData(network)
@@ -100,7 +100,7 @@ export const ManageFastUnstake = () => {
 
 	// warnings
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		true,
 		submitExtrinsic.proxySupported,
 	)

@@ -51,10 +51,10 @@ export const ManageCommission = ({
 		isUpdated,
 	} = usePoolCommission()
 	const { newBatchCall } = useBatchCall()
-	const { activeAddress } = useActiveAccounts()
 	const { setModalStatus } = useOverlay().modal
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getBondedPool, updateBondedPools } = useBondedPools()
 
 	const poolId = activePool?.id || 0
@@ -217,7 +217,7 @@ export const ManageCommission = ({
 
 	// Get transaction signer warnings.
 	const warnings = getSignerWarnings(
-		activeAddress,
+		activeAccount,
 		false,
 		submitExtrinsic.proxySupported,
 	)

@@ -33,12 +33,17 @@ export const AccountButton = ({
 	const { network } = useNetwork()
 	const { getAccount } = useImportedAccounts()
 	const { setModalStatus } = useOverlay().modal
-	const { activeProxy, activeAddress, setActiveAccount, activeProxyType } =
-		useActiveAccounts()
+	const {
+		activeAccount,
+		activeProxy,
+		activeAddress,
+		setActiveAccount,
+		activeProxyType,
+	} = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 
 	// Accumulate account data.
-	const meta = getAccount(address)
+	const meta = getAccount({ address, source })
 	const name = meta?.name
 
 	const imported = !!meta
@@ -55,21 +60,27 @@ export const AccountButton = ({
 					? WalletConnectSVG
 					: ExtensionIcons[meta?.source || ''] || undefined
 
-	// Determine if this account is active (active account or proxy).
-	const isActive =
-		(connectTo === activeAddress &&
-			address === activeAddress &&
-			!activeProxy) ||
-		(connectProxy === activeProxy?.address &&
-			proxyType === activeProxyType &&
-			activeProxy.address)
+	// Determine if this account is active (active account or proxy)
+	const isActiveAccount =
+		connectTo === activeAddress &&
+		address === activeAddress &&
+		source === activeAccount?.source &&
+		!activeProxy
 
-	// Handle account click. Handles both active account and active proxy.
+	const isActiveProxy =
+		!!activeProxy?.address &&
+		connectProxy === activeProxy.address &&
+		proxyType === activeProxyType
+
+	const isActive = isActiveAccount || isActiveProxy
+
+	// Handle account click. Handles both active account and active proxy
 	const handleClick = () => {
 		if (!imported) {
 			return
 		}
-		const account = getAccount(connectTo)
+
+		const account = getAccount({ address: connectTo, source })
 		setActiveAccount(
 			account ? { address: account.address, source: account.source } : null,
 		)

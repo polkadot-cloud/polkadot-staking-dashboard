@@ -29,8 +29,8 @@ export const UpdateReserve = () => {
 	const { network } = useNetwork()
 	const { openHelp } = useHelp()
 	const { setModalStatus } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
 	const { accountHasSigner } = useImportedAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { feeReserve, setFeeReserveBalance } = useBalances()
 	const { balances } = useAccountBalances(activeAddress)
 
@@ -130,7 +130,7 @@ export const UpdateReserve = () => {
 					<ButtonPrimaryInvert
 						text={t('done')}
 						onClick={() => setModalStatus('closing')}
-						disabled={!accountHasSigner(activeAddress)}
+						disabled={!accountHasSigner(activeAccount)}
 					/>
 				</div>
 			</SliderWrapper>
