@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useProxies } from 'contexts/Proxies'
@@ -97,12 +98,8 @@ export const Proxies = () => {
 																	?.name || delegate}
 															</h4>
 															<h4 className="subtitle">
-																{t('for', {
-																	who:
-																		accounts.find(
-																			(a) => a.address === delegator,
-																		)?.name || delegator,
-																})}
+																{t('for')}{' '}
+																<span>{ellipsisFn(delegator, 7)}</span>
 															</h4>
 														</div>
 													</div>
