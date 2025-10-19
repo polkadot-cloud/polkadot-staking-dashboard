@@ -56,47 +56,49 @@ export const useSubmitExtrinsic = ({
 	const { getTxSubmission } = useTxMeta()
 	const { signWcTx } = useWalletConnect()
 	const { getAccountBalance } = useBalances()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { extensionsStatus } = useExtensions()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
 	const { handleResetLedgerTask } = useLedgerHardware()
 	const { getExtensionAccount } = useExtensionAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
-	const { unit, units } = getStakingChainData(network)
 	const {
 		balances: { transferableBalance },
 	} = useAccountBalances(from)
+	const { unit, units } = getStakingChainData(network)
 
-	// Store the uid for this transaction.
+	// Store the uid for this transaction
 	const [uid, setUid] = useState<number>(0)
 
-	// Determine the submitAccount based on whether from matches activeAccount or activeProxy
+	// If the `from` address matches the active account, use that as the submit account
 	let submitAccount: ActiveAccount = null
 	if (activeAccount && from === activeAccount.address) {
 		submitAccount = activeAccount
-	} else if (activeProxy && from === activeProxy.address) {
-		submitAccount = {
-			address: activeProxy.address,
-			source: activeProxy.source,
-		}
 	}
 
 	// If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
-	// already wrapped, update `from` address and return
-
+	// already wrapped, update `from` and address and `submitAccount` to the proxy account
 	let proxySupported = false
 	if (tx) {
 		proxySupported = isProxySupported(tx, from)
 		if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
 			if (activeProxy) {
 				from = activeProxy.address
+				submitAccount = {
+					address: activeProxy.address,
+					source: activeProxy.source,
+				}
 			}
 		} else {
 			if (activeProxy && proxySupported) {
 				// Update submit address to active proxy account
 				const real = from
 				from = activeProxy.address
+				submitAccount = {
+					address: activeProxy.address,
+					source: activeProxy.source,
+				}
 
 				// Check not a batch transactions
 				if (
