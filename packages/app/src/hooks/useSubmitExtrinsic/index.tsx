@@ -55,7 +55,7 @@ export const useSubmitExtrinsic = ({
 	const { getTxSubmission } = useTxMeta()
 	const { signWcTx } = useWalletConnect()
 	const { getAccountBalance } = useBalances()
-	const { activeProxy } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { extensionsStatus } = useExtensions()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
@@ -110,7 +110,15 @@ export const useSubmitExtrinsic = ({
 		if (from === null) {
 			return
 		}
-		const account = getAccount(from)
+		// Get the account, using source from activeAccount if from matches activeAccount address
+		// or from activeProxy if from matches activeProxy address
+		let accountSource: string | undefined
+		if (activeAccount && from === activeAccount.address) {
+			accountSource = activeAccount.source
+		} else if (activeProxy && from === activeProxy.address) {
+			accountSource = activeProxy.source
+		}
+		const account = getAccount(from, accountSource)
 		if (account === null || !shouldSubmit) {
 			return
 		}

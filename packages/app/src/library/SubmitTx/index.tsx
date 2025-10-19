@@ -34,7 +34,7 @@ export const SubmitTx = ({
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
 	const { setModalResize } = useOverlay().modal
-	const { activeAddress, activeProxy } = useActiveAccounts()
+	const { activeAccount, activeAddress, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 
 	const { unit } = getStakingChainData(network)
@@ -48,22 +48,22 @@ export const SubmitTx = ({
 	} = useAccountBalances(from)
 	const notEnoughFunds = transferableBalance - fee < 0n && fee > 0n
 
-	// Default to active account
+	// Default to active account, using source to get the correct account
 	let signingOpts = {
 		label: t('signer', { ns: 'app' }),
-		who: getAccount(activeAddress),
+		who: getAccount(activeAddress, activeAccount?.source),
 	}
 
 	if (txInitiated) {
 		if (activeProxy && proxySupported) {
 			signingOpts = {
 				label: t('signedByProxy', { ns: 'app' }),
-				who: getAccount(activeProxy.address),
+				who: getAccount(activeProxy.address, activeProxy.source),
 			}
 		} else if (!(activeProxy && proxySupported) && requiresMigratedController) {
 			signingOpts = {
 				label: t('signedByController', { ns: 'app' }),
-				who: getAccount(activeAddress),
+				who: getAccount(activeAddress, activeAccount?.source),
 			}
 		}
 	}
