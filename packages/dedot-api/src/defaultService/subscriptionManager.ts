@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { reconnectSync$ } from '@w3ux/observables-connect'
-import { formatAccountSs58 } from '@w3ux/utils'
 import type { DedotClient } from 'dedot'
 import {
 	activeAddress$,
