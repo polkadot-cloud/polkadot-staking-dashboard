@@ -286,8 +286,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.166.0
-        version: 0.166.0(dedot@0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
+        specifier: ^0.168.0
+        version: 0.168.0(dedot@0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
       '@w3ux/observables-connect':
         specifier: ^0.12.0
         version: 0.12.0(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
@@ -434,8 +434,8 @@ importers:
         version: 0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.166.0
-        version: 0.166.0(dedot@0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
+        specifier: ^0.168.0
+        version: 0.168.0(dedot@0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -801,8 +801,8 @@ packages:
     resolution: {integrity: sha512-JfBv4bVAkQ/k/lexNCdCfszG3i+hmpLIgQ4wizCxS2mK9lvvfqPYMdSsHgDm3G/hvjxXSLRVRF8jbLeIwwk8EQ==}
     engines: {node: '>=18'}
 
-  '@dedot/chaintypes@0.166.0':
-    resolution: {integrity: sha512-kGXE51cJLwERz5oADlXunqsu7Ogqmr/1amaFB73MgNX4KMykXTHsRR3n/eotoJPNUBYthXCqKlKSxPXQmt7q4Q==}
+  '@dedot/chaintypes@0.168.0':
+    resolution: {integrity: sha512-3in0UBGtzOTjIZ6gC2DF0MRiiByQ1/2Ib59bs9Ndu2OIZ4goUQweElNKrcFh+GQmqjkG5oIQ2Ff2l7QZSUnT/g==}
     peerDependencies:
       dedot: '>=0.16.0'
 
@@ -2728,6 +2728,7 @@ packages:
 
   '@walletconnect/ethereum-provider@2.21.1':
     resolution: {integrity: sha512-SSlIG6QEVxClgl1s0LMk4xr2wg4eT3Zn/Hb81IocyqNSGfXpjtawWxKxiC5/9Z95f1INyBD6MctJbL/R1oBwIw==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/events@1.0.1':
     resolution: {integrity: sha512-NPTqaoi0oPBVNuLv7qPaJazmGHs5JGyO8eEAk5VGKmJzDR7AHzD4k6ilox5kxk1iwiOnFopBOOMLs86Oa76HpQ==}
@@ -2785,9 +2786,11 @@ packages:
 
   '@walletconnect/sign-client@2.21.0':
     resolution: {integrity: sha512-z7h+PeLa5Au2R591d/8ZlziE0stJvdzP9jNFzFolf2RG/OiXulgFKum8PrIyXy+Rg2q95U9nRVUF9fWcn78yBA==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/sign-client@2.21.1':
     resolution: {integrity: sha512-QaXzmPsMnKGV6tc4UcdnQVNOz4zyXgarvdIQibJ4L3EmLat73r5ZVl4c0cCOcoaV7rgM9Wbphgu5E/7jNcd3Zg==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/sign-client@2.22.4':
     resolution: {integrity: sha512-la+sol0KL33Fyx5DRlupHREIv8wA6W33bRfuLAfLm8pINRTT06j9rz0IHIqJihiALebFxVZNYzJnF65PhV0q3g==}
@@ -2806,9 +2809,11 @@ packages:
 
   '@walletconnect/universal-provider@2.21.0':
     resolution: {integrity: sha512-mtUQvewt+X0VBQay/xOJBvxsB3Xsm1lTwFjZ6WUwSOTR1X+FNb71hSApnV5kbsdDIpYPXeQUbGt2se1n5E5UBg==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/universal-provider@2.21.1':
     resolution: {integrity: sha512-Wjx9G8gUHVMnYfxtasC9poGm8QMiPCpXpbbLFT+iPoQskDDly8BwueWnqKs4Mx2SdIAWAwuXeZ5ojk5qQOxJJg==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/universal-provider@2.22.4':
     resolution: {integrity: sha512-TF2RNX13qxa0rrBAhVDs5+C2G8CHX7L0PH5hF2uyQHdGyxZ3pFbXf8rxmeW1yKlB76FSbW80XXNrUes6eK/xHg==}
@@ -5558,7 +5563,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/chaintypes@0.166.0(dedot@0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))':
+  '@dedot/chaintypes@0.168.0(dedot@0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))':
     dependencies:
       dedot: 0.18.3(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
 
@@ -6274,7 +6279,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
       '@types/debug': 4.1.12
-      debug: 4.4.3
+      debug: 4.3.4
       pony-cause: 2.1.11
       semver: 7.7.3
       uuid: 9.0.1
@@ -10059,7 +10064,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.1.1(typescript@5.9.3)(zod@4.1.12)
+      abitype: 1.1.1(typescript@5.9.3)(zod@3.22.4)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.9.3
@@ -10935,7 +10940,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.1.0(typescript@5.9.3)(zod@4.1.12)
+      abitype: 1.1.0(typescript@5.9.3)(zod@3.22.4)
       isows: 1.0.7(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       ox: 0.9.6(typescript@5.9.3)
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
