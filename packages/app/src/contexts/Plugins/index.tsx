@@ -28,19 +28,14 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
 
 	// Toggle a plugin
 	const togglePlugin = (key: Plugin) => {
-		let newAllPlugins = [...allPlugins]
-		if (newAllPlugins.find((p) => p === key)) {
-			newAllPlugins = newAllPlugins.filter((p) => p !== key)
-		} else {
-			newAllPlugins.push(key)
-		}
+		const nextAll = allPlugins.includes(key)
+			? allPlugins.filter((p) => p !== key)
+			: [...allPlugins, key]
 
-		// Filter disabled plugins for this network
-		const disabledPlugins = DisabledPluginsPerNetwork[network] || []
-		const newActivePlugins = newAllPlugins.filter(
-			(p) => !disabledPlugins.includes(p),
-		)
-		setPlugins(newAllPlugins, newActivePlugins)
+		const disabledPlugins = new Set(DisabledPluginsPerNetwork[network] ?? [])
+		const nextActive = nextAll.filter((p) => !disabledPlugins.has(p))
+
+		setPlugins(nextAll, nextActive)
 	}
 
 	// Check if a plugin is currently enabled
