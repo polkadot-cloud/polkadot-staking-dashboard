@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.1.2...app-v2.2.0) (2025-10-21)
+
+
+### Features
+
+* Add Mimir connect option ([#2974](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2974)) ([708ba72](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/708ba727f248840069053d008ac72510f5dfe2b8))
+* Fast nomination status syncing ([#2937](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2937)) ([a1ddb08](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a1ddb08e4151961a917aa7c93942726b342e8a73))
+* **fix:** Misc UI fixes ([#3028](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3028)) ([31828b4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/31828b4a01dbd072afa495430b752f4f365cd3b9))
+* floating menu switches categories ([e32ed67](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e32ed673c11f6f7d25d4e6f228c8771f228de38d))
+* Force disable plugins per network, disable Staking API on Kusama, Westend ([#3026](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3026)) ([00ae973](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/00ae9737fa0d759ebafe0599590ed25fb7fe9c32))
+* get/set local `activeSection` ([#2978](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2978)) ([0f9412d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0f9412de1a18f8e26a9845242c4bc789871d62a8))
+* Init `event-tracking` package ([#2987](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2987)) ([98150d8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/98150d89f12406e00ee0c17d7136f74276edd8a5))
+* nav section from url & hook ([1ed6860](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1ed6860ccbc0445fde9116817a58a9d5667bba51))
+* **refactor:** Introduce `useBondActions` hook, tidy up bond logic ([#3012](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3012)) ([024d54a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/024d54ada60a4a144882b13abc5d7f8dc4dcfcc8))
+* **refactor:** Kusama asset hub migration ([#3025](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3025)) ([da04a75](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/da04a75b3c4745a9849fa09983657dbda7e4a82e))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* Support multi-source same account import ([#3043](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3043)) ([8cb1b16](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8cb1b1685f013957b335a6a4b5bdf088fce87ada))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+
+
+### Bug Fixes
+
+* `pageKey` on navigation event ([6bf9000](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6bf9000cbad721fc1fa895eeb19e1452f7921613))
+* Remove double button ([#2971](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2971)) ([60d433c](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/60d433c5e09c7f30ab2cc7eb5d89650d620c1478))
+
 ## [2.0.0-beta.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.0.0-beta.0...app-v2.0.0-beta.1) (2025-07-24)
 
 
