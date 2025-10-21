@@ -32,7 +32,6 @@ import type {
 	PoolsConfig,
 	ProviderType,
 	RelayMetrics,
-	RpcEndpoints,
 	ServiceInterface,
 	StakingMetrics,
 } from 'types'
@@ -45,8 +44,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 	const [providerType, setProviderType] = useState<ProviderType>(
 		getInitialProviderType(),
 	)
-	// RPC endpoints for active chains
-	const [, setRpcEndpoints] = useState<RpcEndpoints>(getRpcEndpoints())
 	// Store Api connection status for active chains
 	const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
 
@@ -104,7 +101,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 	// Subscribe to global bus
 	useEffect(() => {
 		const subNetwork = networkConfig$.subscribe((result) => {
-			setRpcEndpoints(result.rpcEndpoints)
 			setProviderType(result.providerType)
 		})
 		const subApiStatus = apiStatus$.subscribe((result) => {
