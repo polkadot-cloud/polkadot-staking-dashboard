@@ -22,6 +22,11 @@
 				"noStaticOnlyClass": "off"
 			},
 			"correctness": {
+				"noUnusedImports": {
+					"level": "warn",
+					"fix": "safe",
+					"options": {}
+				},
 				"useExhaustiveDependencies": "off",
 				"useJsxKeyInIterable": "off"
 			},
