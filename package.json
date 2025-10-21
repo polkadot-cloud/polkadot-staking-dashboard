@@ -18,7 +18,7 @@
 		"@types/react": "^19.1.10",
 		"@types/react-dom": "^19.1.5",
 		"@types/react-helmet": "^6.1.11",
-		"@vitejs/plugin-react-swc": "^3.10.0",
+		"@vitejs/plugin-react-swc": "^4.1.0",
 		"@w3ux/types": "^2.4.1",
 		"globals": "^16.2.0",
 		"prettier": "^3.6.2",
