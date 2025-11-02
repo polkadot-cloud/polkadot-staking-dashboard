@@ -39,7 +39,7 @@ export const NotificationsPopover = ({
 	// Close the menu if clicked outside of its container
 	useOutsideAlerter(popoverRef, () => {
 		setOpen(false)
-	}, ['header-invite'])
+	}, ['header-notifications'])
 
 	return (
 		<div ref={popoverRef} style={{ paddingTop: '1.5rem' }}>
