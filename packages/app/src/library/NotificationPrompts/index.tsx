@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { AnimatePresence, motion } from 'framer-motion'
 import { notifications$ } from 'global-bus'
+import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import type { NotificationItem } from 'types'
 import { Wrapper } from './Wrapper'

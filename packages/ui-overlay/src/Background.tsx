@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion'
+import { useAnimationControls } from 'motion/react'
 import { useEffect } from 'react'
 import type { CanvasStatus } from 'types'
 import { Backdrop } from 'ui-core/overlay'
@@ -12,7 +12,7 @@ export const Background = ({
 }: {
 	externalOverlayStatus?: CanvasStatus
 }) => {
-	const controls = useAnimation()
+	const controls = useAnimationControls()
 	const {
 		modal: { status: modalStatus },
 		canvas: { status: canvasStatus },

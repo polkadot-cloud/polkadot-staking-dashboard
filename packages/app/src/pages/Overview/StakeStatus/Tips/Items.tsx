@@ -4,8 +4,8 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePrompt } from 'contexts/Prompt'
-import { useAnimationControls } from 'framer-motion'
 import { Tip } from 'library/Tips/Tip'
+import { useAnimationControls } from 'motion/react'
 import { useEffect, useState } from 'react'
 import type { TipDisplayWithControls, TipItemsProps } from './types'
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers'
@@ -85,7 +85,7 @@ const Item = ({
 			transition={{
 				delay: index * 0.2,
 				duration: 0.7,
-				type: 'spring',
+				type: 'spring' as const,
 				bounce: 0.35,
 			}}
 			variants={{

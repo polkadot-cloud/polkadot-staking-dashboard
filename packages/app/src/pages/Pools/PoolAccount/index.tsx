@@ -3,9 +3,9 @@
 
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
-import { motion } from 'framer-motion'
 import { ButtonCopy } from 'library/ButtonCopy'
 import { getIdentityDisplay } from 'library/List/Utils'
+import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import type { PoolAccountProps } from '../types'
 import { Wrapper } from './Wrapper'

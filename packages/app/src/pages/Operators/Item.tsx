@@ -46,7 +46,7 @@ export const Item = ({ item, actionable, network }: ItemProps) => {
 			y: 0,
 			transition: {
 				duration: 0.4,
-				type: 'spring',
+				type: 'spring' as const,
 				bounce: 0.2,
 			},
 		},

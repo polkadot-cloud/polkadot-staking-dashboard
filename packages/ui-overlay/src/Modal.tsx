@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion'
+import { useAnimationControls } from 'motion/react'
 import type { FC } from 'react'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -30,7 +30,7 @@ export const Modal = ({
 			setModalHeightRef,
 		},
 	} = useOverlay()
-	const controls = useAnimation()
+	const controls = useAnimationControls()
 	const { status: canvasStatus } = useOverlay().canvas
 
 	const modalRef = useRef<HTMLDivElement | null>(null)

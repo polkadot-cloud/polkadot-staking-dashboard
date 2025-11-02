@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { RewardsByValidationNode } from '@polkawatch/ddp-client'
-import { motion } from 'framer-motion'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { RewardShare } from 'library/ListItem/Labels/RewardShare'
 import { Wrapper } from 'library/ListItem/Wrappers'
+import { motion } from 'motion/react'
 import { LabelRow, Separator } from 'ui-core/list'
 
 export const Node = ({

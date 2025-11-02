@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion'
+import { useAnimationControls } from 'motion/react'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -14,7 +14,7 @@ export const Canvas = ({
 	externalOverlayStatus,
 	fallback: Fallback,
 }: CanvasProps) => {
-	const controls = useAnimation()
+	const controls = useAnimationControls()
 	const {
 		setOpenOverlayInstances,
 		activeOverlayInstance,

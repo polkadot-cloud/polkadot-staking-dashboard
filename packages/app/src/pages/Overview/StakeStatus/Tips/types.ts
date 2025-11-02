@@ -1,7 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnimationControls } from 'framer-motion'
+import type { useAnimationControls } from 'motion/react'
+
+type AnimationControls = ReturnType<typeof useAnimationControls>
 
 export interface PageToggleProps {
 	start: number

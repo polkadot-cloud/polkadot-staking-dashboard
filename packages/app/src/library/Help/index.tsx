@@ -17,10 +17,10 @@ import type {
 } from 'contexts/Help/types'
 import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
-import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { SearchInput } from 'library/List/SearchInput'
 import { DefaultLocale } from 'locales'
+import { useAnimationControls } from 'motion/react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
@@ -33,7 +33,7 @@ import { HelpSubtitle, HelpTitle, TabBar, TabButton } from './Wrappers'
 
 export const Help = () => {
 	const { t, i18n } = useTranslation()
-	const controls = useAnimation()
+	const controls = useAnimationControls()
 	const { advancedMode } = useUi()
 	const { network } = useNetwork()
 	const { fillVariables } = useFillVariables()
