@@ -20,10 +20,10 @@
 		"date-fns": "^4.1.0",
 		"event-tracking": "workspace:*",
 		"i18next": "^25.4.2",
-		"react-i18next": "^16.1.2",
+		"react-i18next": "^16.2.1",
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
-		"vite": "^7.1.11"
+		"vite": "^7.1.12"
 	}
 }

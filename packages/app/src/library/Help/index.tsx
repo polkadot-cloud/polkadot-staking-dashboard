@@ -17,10 +17,10 @@ import type {
 } from 'contexts/Help/types'
 import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
-import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { SearchInput } from 'library/List/SearchInput'
 import { DefaultLocale } from 'locales'
+import { useAnimate } from 'motion/react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
@@ -33,7 +33,7 @@ import { HelpSubtitle, HelpTitle, TabBar, TabButton } from './Wrappers'
 
 export const Help = () => {
 	const { t, i18n } = useTranslation()
-	const controls = useAnimation()
+	const [scope, animate] = useAnimate()
 	const { advancedMode } = useUi()
 	const { network } = useNetwork()
 	const { fillVariables } = useFillVariables()
@@ -53,13 +53,13 @@ export const Help = () => {
 	const [searchTerm, setSearchTerm] = useState<string>('')
 
 	const onFadeIn = useCallback(async () => {
-		await controls.start('visible')
-	}, [])
+		await animate(scope.current, { opacity: 1 }, { duration: 0.15 })
+	}, [animate, scope])
 
 	const onFadeOut = useCallback(async () => {
-		await controls.start('hidden')
+		await animate(scope.current, { opacity: 0 }, { duration: 0.15 })
 		setStatus('closed')
-	}, [])
+	}, [animate, scope])
 
 	// control canvas fade.
 	useEffect(() => {
@@ -231,13 +231,8 @@ export const Help = () => {
 		)
 		return (
 			<Container
+				ref={scope}
 				initial={{ opacity: 0, scale: 1.05 }}
-				animate={controls}
-				transition={{ duration: 0.2 }}
-				variants={{
-					hidden: { opacity: 0, scale: 1.05 },
-					visible: { opacity: 1, scale: 1 },
-				}}
 				style={{ zIndex: 20 }}
 			>
 				<Scroll ref={scrollRef}>
@@ -478,23 +473,10 @@ export const Help = () => {
 
 	return (
 		<Container
+			ref={scope}
 			initial={{
 				opacity: 0,
 				scale: 1.05,
-			}}
-			animate={controls}
-			transition={{
-				duration: 0.2,
-			}}
-			variants={{
-				hidden: {
-					opacity: 0,
-					scale: 1.05,
-				},
-				visible: {
-					opacity: 1,
-					scale: 1,
-				},
 			}}
 			style={{
 				zIndex: 20,

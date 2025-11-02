@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import type { LargerFilterItemProps } from './types'
 import { LargeItemWrapper } from './Wrappers'
 
