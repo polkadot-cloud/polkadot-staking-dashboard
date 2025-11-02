@@ -54,12 +54,12 @@ export const Help = () => {
 
 	const onFadeIn = useCallback(async () => {
 		await animate(scope.current, { opacity: 1 }, { duration: 0.15 })
-	}, [])
+	}, [animate, scope])
 
 	const onFadeOut = useCallback(async () => {
 		await animate(scope.current, { opacity: 0 }, { duration: 0.15 })
 		setStatus('closed')
-	}, [])
+	}, [animate, scope])
 
 	// control canvas fade.
 	useEffect(() => {
