@@ -36,8 +36,18 @@ export const useValidatorEraPoints = ({
 	fromEra: number
 	depth?: number
 }): ValidatorEraPointsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	type ValidatorEraPointsData = {
+		validatorEraPoints: Array<{
+			era: number
+			points: string
+			start: number
+		}>
+	}
+	const { loading, error, data, refetch } = useQuery<
+		ValidatorEraPointsData,
+		{ network: string; validator: string; fromEra: number; depth?: number }
+	>(QUERY, {
 		variables: { network, validator, fromEra, depth },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }

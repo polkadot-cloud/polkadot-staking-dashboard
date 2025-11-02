@@ -27,7 +27,7 @@ export const useEraTotalNominators = ({
 	>(QUERY, {
 		variables: { network, era },
 	})
-	return { loading, error, data: data as { totalNominators: number }, refetch }
+	return { loading, error, data: { totalNominators: data?.eraTotalNominators?.totalNominators ?? 0 }, refetch }
 }
 
 export const fetchEraTotalNominators = async (
@@ -42,7 +42,7 @@ export const fetchEraTotalNominators = async (
 			query: QUERY,
 			variables: { network, era },
 		})
-		return result.data.eraTotalNominators.totalNominators as number
+		return result.data?.eraTotalNominators?.totalNominators ?? null
 	} catch {
 		return null
 	}

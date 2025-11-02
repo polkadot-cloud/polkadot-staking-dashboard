@@ -26,21 +26,33 @@ export const useValidatorStats = ({
 }: {
 	network: string
 }): ValidatorStatsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	const { loading, error, data, refetch } = useQuery<
+		{ validatorStats: ValidatorStatsData },
+		{ network: string }
+	>(QUERY, {
 		variables: { network },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data?.validatorStats!, refetch }
 }
 
 export const fetchValidatorStats = async (
 	network: string,
 ): Promise<ValidatorStatsData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<
+			{ validatorStats: ValidatorStatsData },
+			{ network: string }
+		>({
 			query: QUERY,
 			variables: { network },
 		})
-		return result.data.validatorStats
+		return result.data?.validatorStats ?? {
+			averageRewardRate: {
+				rate: 0,
+			},
+			averageValidatorCommission: 0,
+			activeValidatorRanks: [],
+		}
 	} catch {
 		return {
 			averageRewardRate: {

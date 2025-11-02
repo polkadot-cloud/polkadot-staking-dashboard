@@ -27,7 +27,7 @@ export const useIsActiveStaker = ({
 	>(QUERY, {
 		variables: { network, address },
 	})
-	return { loading, error, data: data as { active: boolean }, refetch }
+	return { loading, error, data: { active: data?.IsActiveStaker?.active ?? false }, refetch }
 }
 
 export const fetchIsActiveStaker = async (
@@ -42,7 +42,7 @@ export const fetchIsActiveStaker = async (
 			query: QUERY,
 			variables: { network, address },
 		})
-		return result.data.IsActiveStaker.active as boolean
+		return result.data?.IsActiveStaker?.active ?? false
 	} catch {
 		return null
 	}

@@ -40,7 +40,7 @@ export const usePoolRewards = ({
 	>(QUERY, {
 		variables: { network, who, from },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }
 
 export const fetchPoolRewards = async (
@@ -64,7 +64,7 @@ export const fetchPoolRewards = async (
 			query: QUERY,
 			variables: { network, who, from },
 		})
-		return result.data.poolRewards
+		return result.data?.poolRewards ?? null
 	} catch {
 		return null
 	}

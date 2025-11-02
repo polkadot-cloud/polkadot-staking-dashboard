@@ -43,10 +43,23 @@ export const useValidatorEraPointsBatch = ({
 	fromEra: number
 	depth?: number
 }): ValidatorEraPointsBatchResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	type ValidatorEraPointsBatchData = {
+		validatorEraPointsBatch: Array<{
+			validator: string
+			points: Array<{
+				era: number
+				points: string
+				start: number
+			}>
+		}>
+	}
+	const { loading, error, data, refetch } = useQuery<
+		ValidatorEraPointsBatchData,
+		{ network: string; validators: string[]; fromEra: number; depth?: number }
+	>(QUERY, {
 		variables: { network, validators, fromEra, depth },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }
 
 export const fetchValidatorEraPointsBatch = async (
@@ -56,11 +69,24 @@ export const fetchValidatorEraPointsBatch = async (
 	depth?: number,
 ): Promise<{ validatorEraPointsBatch: ValidatorEraPointsBatch[] }> => {
 	try {
-		const result = await client.query({
+		type ValidatorEraPointsBatchData = {
+			validatorEraPointsBatch: Array<{
+				validator: string
+				points: Array<{
+					era: number
+					points: string
+					start: number
+				}>
+			}>
+		}
+		const result = await client.query<
+			ValidatorEraPointsBatchData,
+			{ network: string; validators: string[]; fromEra: number; depth?: number }
+		>({
 			query: QUERY,
 			variables: { network, validators, fromEra, depth },
 		})
-		return result.data
+		return result.data ?? { validatorEraPointsBatch: [] }
 	} catch {
 		return {
 			validatorEraPointsBatch: [],

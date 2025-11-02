@@ -41,7 +41,7 @@ export const useNominatorRewardTrend = ({
 	>(QUERY, {
 		variables: { network, who, eras },
 	})
-	return { loading, error, data: data as { rewardTrend: RewardTrend }, refetch }
+	return { loading, error, data: { rewardTrend: data?.nominatorRewardTrend! }, refetch }
 }
 
 export const fetchNominatorRewardTrend = async (
@@ -64,7 +64,7 @@ export const fetchNominatorRewardTrend = async (
 			query: QUERY,
 			variables: { network, who, eras },
 		})
-		return result.data.nominatorRewardTrend
+		return result.data?.nominatorRewardTrend ?? null
 	} catch {
 		return null
 	}

@@ -34,7 +34,7 @@ export const useSearchValidators = ({
 	>(QUERY, {
 		variables: { network, searchTerm },
 	})
-	return { loading, error, data: data as SearchValidatorsData, refetch }
+	return { loading, error, data: data?.searchValidators!, refetch }
 }
 
 export const fetchSearchValidators = async (
@@ -49,7 +49,7 @@ export const fetchSearchValidators = async (
 			query: QUERY,
 			variables: { network, searchTerm },
 		})
-		return result.data.searchValidators
+		return result.data?.searchValidators ?? null
 	} catch {
 		return null
 	}

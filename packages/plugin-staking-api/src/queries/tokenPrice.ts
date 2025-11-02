@@ -26,7 +26,7 @@ export const useTokenPrice = ({
 	>(QUERY, {
 		variables: { ticker },
 	})
-	return { loading, error, data: data?.tokenPrice ?? null, refetch }
+	return { loading, error, data: data?.tokenPrice ? { tokenPrice: data.tokenPrice } : null, refetch }
 }
 
 export const fetchTokenPrice = async (
@@ -40,7 +40,7 @@ export const fetchTokenPrice = async (
 			query: QUERY,
 			variables: { ticker },
 		})
-		return result.data.tokenPrice
+		return result.data?.tokenPrice ?? null
 	} catch {
 		return null
 	}

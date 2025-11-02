@@ -44,7 +44,7 @@ export const useRewards = ({
 	>(QUERY, {
 		variables: { network, who, fromEra },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }
 
 export const fetchRewards = async (
@@ -70,7 +70,7 @@ export const fetchRewards = async (
 			query: QUERY,
 			variables: { network, who, fromEra },
 		})
-		return result.data.allRewards
+		return result.data?.allRewards ?? null
 	} catch {
 		return null
 	}

@@ -41,7 +41,7 @@ export const usePoolRewardTrend = ({
 	>(QUERY, {
 		variables: { network, who, duration },
 	})
-	return { loading, error, data: data as { rewardTrend: RewardTrend }, refetch }
+	return { loading, error, data: { rewardTrend: data?.poolRewardTrend! }, refetch }
 }
 
 export const fetchPoolRewardTrend = async (
@@ -64,7 +64,7 @@ export const fetchPoolRewardTrend = async (
 			query: QUERY,
 			variables: { network, who, duration },
 		})
-		return result.data.poolRewardTrend
+		return result.data?.poolRewardTrend ?? null
 	} catch {
 		return null
 	}

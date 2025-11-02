@@ -31,7 +31,7 @@ export const useRpcEndpointHealth = ({
 	>(QUERY, {
 		variables: { network },
 	})
-	return { loading, error, data: data as RpcEndpointChainHealth, refetch }
+	return { loading, error, data: data?.rpcEndpointHealth!, refetch }
 }
 
 export const fetchRpcEndpointHealth = async (
@@ -45,7 +45,7 @@ export const fetchRpcEndpointHealth = async (
 			query: QUERY,
 			variables: { network },
 		})
-		return result.data.rpcEndpointHealth
+		return result.data?.rpcEndpointHealth ?? { chains: [] }
 	} catch {
 		return {
 			chains: [],

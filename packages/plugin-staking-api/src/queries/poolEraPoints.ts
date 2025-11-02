@@ -45,5 +45,5 @@ export const usePoolEraPoints = ({
 	>(QUERY, {
 		variables: { network, poolId, fromEra, depth },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }

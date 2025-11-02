@@ -31,8 +31,25 @@ export const useUnclaimedRewards = ({
 	who: string
 	fromEra: number
 }): UnclaimedRewardsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	type UnclaimedRewardsData = {
+		unclaimedRewards: {
+			total: string
+			entries: Array<{
+				era: number
+				reward: string
+				validators: Array<{
+					page: number | null
+					reward: string
+					validator: string
+				}>
+			}>
+		}
+	}
+	const { loading, error, data, refetch } = useQuery<
+		UnclaimedRewardsData,
+		{ network: string; who: string; fromEra: number }
+	>(QUERY, {
 		variables: { network, who, fromEra },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }

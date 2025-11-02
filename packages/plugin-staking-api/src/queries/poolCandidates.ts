@@ -23,7 +23,7 @@ export const usePoolCandidates = ({
 	>(QUERY, {
 		variables: { network },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }
 
 export const fetchPoolCandidates = async (
@@ -38,7 +38,7 @@ export const fetchPoolCandidates = async (
 			variables: { network },
 		})
 
-		return result.data
+		return result.data ?? { poolCandidates: [] }
 	} catch {
 		return {
 			poolCandidates: [],

@@ -43,7 +43,7 @@ export const useGetStakerWithNominees = ({
 	>(QUERY, {
 		variables: { network, who, addresses },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data!, refetch }
 }
 
 export const fetchGetStakerWithNominees = async (
@@ -64,6 +64,8 @@ export const fetchGetStakerWithNominees = async (
 			query: QUERY,
 			variables: { network, who, addresses },
 		})
+
+		if (!result.data) return null
 
 		return {
 			active: result.data.isActiveStaker.active,
