@@ -72,7 +72,7 @@ export const ManagePool = () => {
 				animate={section === 0 ? 'home' : 'next'}
 				transition={{
 					duration: 0.5,
-					type: 'spring',
+					type: 'spring' as const,
 					bounce: 0.1,
 				}}
 				variants={{

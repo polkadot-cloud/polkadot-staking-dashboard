@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion'
+import { useAnimate } from 'motion/react'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -14,7 +14,7 @@ export const Canvas = ({
 	externalOverlayStatus,
 	fallback: Fallback,
 }: CanvasProps) => {
-	const controls = useAnimation()
+	const [scope, animate] = useAnimate()
 	const {
 		setOpenOverlayInstances,
 		activeOverlayInstance,
@@ -28,7 +28,7 @@ export const Canvas = ({
 	} = useOverlay()
 
 	const onIn = async () => {
-		await controls.start('visible')
+		await animate(scope.current, { opacity: 1 }, { duration: 0.15 })
 	}
 
 	const onOut = async (closing: boolean) => {
@@ -36,7 +36,7 @@ export const Canvas = ({
 			setOpenOverlayInstances('dec', 'canvas')
 			setActiveOverlayInstance(modalStatus === 'open' ? 'modal' : null)
 		}
-		await controls.start('hidden')
+		await animate(scope.current, { opacity: 0 }, { duration: 0.15 })
 
 		if (closing) {
 			setCanvasStatus('closed')
@@ -71,20 +71,9 @@ export const Canvas = ({
 
 	return status === 'closed' ? null : (
 		<Container
+			ref={scope}
 			initial={{
 				opacity: 0,
-			}}
-			animate={controls}
-			transition={{
-				duration: 0.15,
-			}}
-			variants={{
-				hidden: {
-					opacity: 0,
-				},
-				visible: {
-					opacity: 1,
-				},
 			}}
 		>
 			<Scroll>

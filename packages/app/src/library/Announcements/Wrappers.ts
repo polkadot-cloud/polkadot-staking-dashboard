@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SmallFontSizeMaxWidth } from 'consts'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`

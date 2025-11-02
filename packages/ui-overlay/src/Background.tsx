@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion'
+import { useAnimate } from 'motion/react'
 import { useEffect } from 'react'
 import type { CanvasStatus } from 'types'
 import { Backdrop } from 'ui-core/overlay'
@@ -12,7 +12,7 @@ export const Background = ({
 }: {
 	externalOverlayStatus?: CanvasStatus
 }) => {
-	const controls = useAnimation()
+	const [scope, animate] = useAnimate()
 	const {
 		modal: { status: modalStatus },
 		canvas: { status: canvasStatus },
@@ -23,9 +23,11 @@ export const Background = ({
 		openOverlayInstances++
 	}
 
-	const onIn = async () => await controls.start('visible')
+	const onIn = async () =>
+		await animate(scope.current, { opacity: 1 }, { duration: 0.15 })
 
-	const onOut = async () => await controls.start('hidden')
+	const onOut = async () =>
+		await animate(scope.current, { opacity: 0 }, { duration: 0.15 })
 
 	useEffect(() => {
 		if (openOverlayInstances > 0) {
@@ -40,6 +42,7 @@ export const Background = ({
 		canvasStatus === 'closed' &&
 		externalOverlayStatus === 'closed' ? null : (
 		<Backdrop
+			ref={scope}
 			blur={
 				externalOverlayStatus === 'open' || canvasStatus === 'open'
 					? '1.4rem'
@@ -47,18 +50,6 @@ export const Background = ({
 			}
 			initial={{
 				opacity: 0,
-			}}
-			animate={controls}
-			transition={{
-				duration: 0.15,
-			}}
-			variants={{
-				hidden: {
-					opacity: 0,
-				},
-				visible: {
-					opacity: 1,
-				},
 			}}
 		/>
 	)
