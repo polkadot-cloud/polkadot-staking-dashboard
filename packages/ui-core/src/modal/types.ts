@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnimationProps } from 'framer-motion'
+import type { HTMLMotionProps } from 'motion/react'
 import type { ComponentBase } from 'types'
 
-export type BaseWithAnimation = ComponentBase & AnimationProps
+export type BaseWithAnimation = ComponentBase & HTMLMotionProps<'div'>
 
 export type CardProps = ComponentBase & {
 	dimmed?: boolean

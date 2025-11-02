@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 
 export const Status = () => {

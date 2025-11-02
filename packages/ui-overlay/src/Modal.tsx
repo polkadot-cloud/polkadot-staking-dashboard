@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion'
+import { useAnimate } from 'motion/react'
 import type { FC } from 'react'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -30,7 +30,7 @@ export const Modal = ({
 			setModalHeightRef,
 		},
 	} = useOverlay()
-	const controls = useAnimation()
+	const [scope, animate] = useAnimate()
 	const { status: canvasStatus } = useOverlay().canvas
 
 	const modalRef = useRef<HTMLDivElement | null>(null)
@@ -49,12 +49,14 @@ export const Modal = ({
 	const onOutClose = async () => {
 		setOpenOverlayInstances('dec', 'modal')
 		setActiveOverlayInstance(null)
-		await controls.start('out')
+		await animate(scope.current, { opacity: 0, scale: 0.9 }, { duration: 0.2 })
 		setModalStatus('closed')
 	}
-	const onIn = async () => await controls.start('in')
+	const onIn = async () =>
+		await animate(scope.current, { opacity: 1, scale: 1 }, { duration: 0.2 })
 
-	const onOut = async () => await controls.start('out')
+	const onOut = async () =>
+		await animate(scope.current, { opacity: 0, scale: 0.9 }, { duration: 0.2 })
 
 	const windowResize = () => {
 		if (!options?.disableWindowResize) {
@@ -129,23 +131,10 @@ export const Modal = ({
 
 	return status === 'closed' ? null : status !== 'replacing' ? (
 		<Container
+			ref={scope}
 			initial={{
 				opacity: 0,
 				scale: 0.9,
-			}}
-			animate={controls}
-			transition={{
-				duration: 0.2,
-			}}
-			variants={{
-				in: {
-					opacity: 1,
-					scale: 1,
-				},
-				out: {
-					opacity: 0,
-					scale: 0.9,
-				},
 			}}
 			style={{ opacity: status === 'opening' ? 0 : 1 }}
 			onClose={() => setModalStatus('closing')}
