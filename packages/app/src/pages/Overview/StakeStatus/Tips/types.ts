@@ -1,10 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { useAnimationControls } from 'motion/react'
-
-type AnimationControls = ReturnType<typeof useAnimationControls>
-
 export interface PageToggleProps {
 	start: number
 	end: number
@@ -27,10 +23,4 @@ export interface TipDisplay {
 	s: number
 	title: string
 	subtitle: string
-}
-
-export type TipDisplayWithControls = TipDisplay & {
-	controls: AnimationControls
-	index: number
-	initial: boolean
 }

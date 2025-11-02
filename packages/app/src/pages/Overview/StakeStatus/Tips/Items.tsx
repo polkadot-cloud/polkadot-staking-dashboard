@@ -5,13 +5,13 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePrompt } from 'contexts/Prompt'
 import { Tip } from 'library/Tips/Tip'
-import { useAnimationControls } from 'motion/react'
+import { useAnimate } from 'motion/react'
 import { useEffect, useState } from 'react'
-import type { TipDisplayWithControls, TipItemsProps } from './types'
+import type { TipDisplay, TipItemsProps } from './types'
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers'
 
 export const Items = ({ items, page }: TipItemsProps) => {
-	const controls = useAnimationControls()
+	const [scope, animate] = useAnimate()
 
 	// stores whether this is the initial display of tips
 	const [initial, setInitial] = useState<boolean>(true)
@@ -23,30 +23,20 @@ export const Items = ({ items, page }: TipItemsProps) => {
 
 	const doControls = async (transition: boolean) => {
 		if (transition) {
-			controls.set('hidden')
-			controls.start('show')
+			await animate(scope.current, { opacity: 0 }, { duration: 0 })
+			await animate(scope.current, { opacity: 1 }, { duration: 0.3 })
 		} else {
-			controls.set('show')
+			await animate(scope.current, { opacity: 1 }, { duration: 0 })
 		}
 	}
 
 	return (
-		<ItemsWrapper
-			initial="hidden"
-			animate={controls}
-			variants={{
-				hidden: { opacity: 0 },
-				show: {
-					opacity: 1,
-				},
-			}}
-		>
+		<ItemsWrapper ref={scope} initial={{ opacity: 0 }}>
 			{items.map((item, index: number) => (
 				<Item
 					key={`tip_${index}_${page}`}
 					index={index}
 					{...item}
-					controls={controls}
 					initial={initial}
 				/>
 			))}
@@ -59,11 +49,11 @@ const Item = ({
 	subtitle,
 	description,
 	index,
-	controls,
 	initial,
 	page,
-}: TipDisplayWithControls) => {
+}: TipDisplay & { index: number; initial: boolean }) => {
 	const { openPromptWith } = usePrompt()
+	const [scope, animate] = useAnimate()
 	const [isStopped, setIsStopped] = useState<boolean>(true)
 
 	useEffect(() => {
@@ -74,29 +64,35 @@ const Item = ({
 				if (isStopped) {
 					setIsStopped(false)
 				}
+				// Animate the item in with spring transition
+				animate(
+					scope.current,
+					{ y: 0, opacity: 1 },
+					{
+						delay: index * 0.2,
+						duration: 0.7,
+						type: 'spring' as const,
+						bounce: 0.35,
+					},
+				)
 			}, delay)
+		} else {
+			// Immediate animation without delay for non-initial renders
+			animate(
+				scope.current,
+				{ y: 0, opacity: 1 },
+				{
+					delay: index * 0.2,
+					duration: 0.7,
+					type: 'spring' as const,
+					bounce: 0.35,
+				},
+			)
 		}
-	}, [])
+	}, [initial, index])
 
 	return (
-		<ItemWrapper
-			animate={controls}
-			custom={index}
-			transition={{
-				delay: index * 0.2,
-				duration: 0.7,
-				type: 'spring' as const,
-				bounce: 0.35,
-			}}
-			variants={{
-				hidden: {
-					y: 15,
-				},
-				show: {
-					y: 0,
-				},
-			}}
-		>
+		<ItemWrapper ref={scope} initial={{ y: 15, opacity: 0 }}>
 			<ItemInnerWrapper>
 				<section />
 				<section>
