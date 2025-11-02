@@ -40,6 +40,7 @@ export const Auth = () => {
 		>
 			<ButtonAccount.Standalone
 				label={t('myAccount')}
+				iconLeft={faUser}
 				iconRight={faChevronDown}
 				className="header-auth"
 			/>
