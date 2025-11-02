@@ -3,7 +3,7 @@
 
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useCallback } from 'react'
 import { ItemWrapper } from '../Wrappers'
 import type { ExternalProps } from './types'
@@ -21,7 +21,7 @@ export const External = ({ width, title, url, website }: ExternalProps) => {
 				whileTap={{ scale: 0.99 }}
 				transition={{
 					duration: 0.5,
-					type: 'spring',
+					type: 'spring' as const,
 					bounce: 0.4,
 				}}
 				onClick={handleClick}

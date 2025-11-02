@@ -17,7 +17,7 @@
 	},
 	"devDependencies": {
 		"types": "workspace:*",
-		"vite": "^7.1.11",
+		"vite": "^7.1.12",
 		"vite-plugin-svgr": "^4.3.0"
 	}
 }

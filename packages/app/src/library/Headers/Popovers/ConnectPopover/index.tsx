@@ -4,7 +4,7 @@
 import extensions from '@w3ux/extension-assets'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
