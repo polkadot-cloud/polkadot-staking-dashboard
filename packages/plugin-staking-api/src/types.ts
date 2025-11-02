@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type {
-	ApolloError,
-	ApolloQueryResult,
+	ErrorLike,
 	OperationVariables,
-} from '@apollo/client'
+} from '@apollo/client/core'
+import type { ApolloClient } from '@apollo/client/core'
 
 export interface TokenPrice {
 	price: number
@@ -18,10 +18,10 @@ export type TokenPriceResult = {
 
 interface Query {
 	loading: boolean
-	error: ApolloError | undefined
+	error: ErrorLike | undefined
 	refetch: (
 		variables?: Partial<OperationVariables> | undefined,
-	) => Promise<ApolloQueryResult<unknown>>
+	) => Promise<ApolloClient.QueryResult<unknown>>
 }
 
 export type UseTokenPriceResult = Query & {

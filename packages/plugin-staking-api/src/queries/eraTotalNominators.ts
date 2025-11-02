@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client/core'
+import { useQuery } from '@apollo/client/react'
 import { client } from '../Client'
 import type { EraTotalNominatorsResult } from '../types'
 
@@ -20,10 +21,13 @@ export const useEraTotalNominators = ({
 	network: string
 	era: number
 }): EraTotalNominatorsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	const { loading, error, data, refetch } = useQuery<
+		{ eraTotalNominators: { totalNominators: number } },
+		{ network: string; era: number }
+	>(QUERY, {
 		variables: { network, era },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data as { totalNominators: number }, refetch }
 }
 
 export const fetchEraTotalNominators = async (
@@ -31,7 +35,10 @@ export const fetchEraTotalNominators = async (
 	era: number,
 ): Promise<number | null> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<
+			{ eraTotalNominators: { totalNominators: number } },
+			{ network: string; era: number }
+		>({
 			query: QUERY,
 			variables: { network, era },
 		})

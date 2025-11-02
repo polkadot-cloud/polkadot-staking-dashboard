@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client/core'
+import { useQuery } from '@apollo/client/react'
 import { client } from '../Client'
 import type { RewardTrendResult } from '../types'
 
@@ -27,10 +28,20 @@ export const usePoolRewardTrend = ({
 	who: string
 	duration: number
 }): RewardTrendResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	type PoolRewardTrendData = {
+		poolRewardTrend: {
+			reward: string
+			previous: string
+			change: { percent: string; value: string }
+		}
+	}
+	const { loading, error, data, refetch } = useQuery<
+		PoolRewardTrendData,
+		{ network: string; who: string; duration: number }
+	>(QUERY, {
 		variables: { network, who, duration },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data as { rewardTrend: RewardTrend }, refetch }
 }
 
 export const fetchPoolRewardTrend = async (
@@ -39,7 +50,17 @@ export const fetchPoolRewardTrend = async (
 	duration: number,
 ) => {
 	try {
-		const result = await client.query({
+		type PoolRewardTrendData = {
+			poolRewardTrend: {
+				reward: string
+				previous: string
+				change: { percent: string; value: string }
+			}
+		}
+		const result = await client.query<
+			PoolRewardTrendData,
+			{ network: string; who: string; duration: number }
+		>({
 			query: QUERY,
 			variables: { network, who, duration },
 		})

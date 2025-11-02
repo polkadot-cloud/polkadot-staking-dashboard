@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client/core'
+import { useQuery } from '@apollo/client/react'
 import { client } from '../Client'
 import type { AllRewardsResult } from '../types'
 
@@ -27,7 +28,20 @@ export const useRewards = ({
 	who: string
 	fromEra: number
 }): AllRewardsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	type AllRewardsData = {
+		allRewards: Array<{
+			era: number
+			reward: string
+			claimed: boolean
+			timestamp: number
+			validator: string
+			type: string
+		}>
+	}
+	const { loading, error, data, refetch } = useQuery<
+		AllRewardsData,
+		{ network: string; who: string; fromEra: number }
+	>(QUERY, {
 		variables: { network, who, fromEra },
 	})
 	return { loading, error, data, refetch }
@@ -39,7 +53,20 @@ export const fetchRewards = async (
 	fromEra: number,
 ) => {
 	try {
-		const result = await client.query({
+		type AllRewardsData = {
+			allRewards: Array<{
+				era: number
+				reward: string
+				claimed: boolean
+				timestamp: number
+				validator: string
+				type: string
+			}>
+		}
+		const result = await client.query<
+			AllRewardsData,
+			{ network: string; who: string; fromEra: number }
+		>({
 			query: QUERY,
 			variables: { network, who, fromEra },
 		})

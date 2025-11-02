@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client/core'
+import { useQuery } from '@apollo/client/react'
 import { client } from '../Client'
 import type { RpcEndpointChainHealth, RpcEndpointHealthResult } from '../types'
 
@@ -24,17 +25,23 @@ export const useRpcEndpointHealth = ({
 }: {
 	network: string
 }): RpcEndpointHealthResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+	const { loading, error, data, refetch } = useQuery<
+		{ rpcEndpointHealth: RpcEndpointChainHealth },
+		{ network: string }
+	>(QUERY, {
 		variables: { network },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data as RpcEndpointChainHealth, refetch }
 }
 
 export const fetchRpcEndpointHealth = async (
 	network: string,
 ): Promise<RpcEndpointChainHealth> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<
+			{ rpcEndpointHealth: RpcEndpointChainHealth },
+			{ network: string }
+		>({
 			query: QUERY,
 			variables: { network },
 		})
