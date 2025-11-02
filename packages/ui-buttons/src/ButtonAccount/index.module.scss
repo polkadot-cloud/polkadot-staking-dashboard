@@ -8,10 +8,19 @@ SPDX-License-Identifier: GPL-3.0-only */
   transition: all var(--transition-duration);
   height: calc($header-height - 1px);
   display: flex;
+  position: relative;
   align-items: center;
   padding: 0 1rem 0 1rem;
   font-size: 1.2rem;
 
+  > .separator {
+    border-left: 1px solid var(--border-secondary-color);
+    position: absolute;
+    top: 20%;
+    left: 0;
+    width: 1px;
+    height: 60%;
+  }
   &.marginLeft {
     margin-left: 0.8rem;
   }

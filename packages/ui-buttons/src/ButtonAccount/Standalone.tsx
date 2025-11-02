@@ -18,6 +18,7 @@ export const Standalone = ({
 	onMouseOver,
 	onMouseMove,
 	onMouseOut,
+	hasSeparator,
 	disabled,
 }: ButtonAccountStandaloneProps) => {
 	const allClasses = classNames(classes.btnAccount, {
@@ -32,6 +33,7 @@ export const Standalone = ({
 			disabled={disabled}
 			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
 		>
+			{hasSeparator && <span className={classes.separator} />}
 			{iconLeft && (
 				<span className={classes.notSignedIn}>
 					<FontAwesomeIcon icon={iconLeft} transform="shrink-2" />

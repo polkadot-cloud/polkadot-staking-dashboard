@@ -15,14 +15,21 @@ export const Auth = () => {
 	const { themeElementRef } = useTheme()
 	// const { openModal } = useOverlay().modal
 
-	const SIGNED_IN = true
+	const SIGNED_IN = false
 
 	const [open, setOpen] = useState<boolean>(false)
+
+	const style = {
+		paddingRight: '1.5rem',
+		paddingLeft: '1.25rem',
+	}
 
 	return !SIGNED_IN ? (
 		<ButtonAccount.Standalone
 			label={t('signIn')}
 			iconLeft={faUser}
+			style={style}
+			hasSeparator
 			onClick={() => {
 				setOpen(!open)
 				// TODO: open SignIn modal
@@ -42,6 +49,8 @@ export const Auth = () => {
 				label={t('myAccount')}
 				iconLeft={faUser}
 				iconRight={faChevronDown}
+				style={style}
+				hasSeparator
 				className="header-auth"
 			/>
 		</Popover>

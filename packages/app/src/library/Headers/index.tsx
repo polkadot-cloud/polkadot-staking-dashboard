@@ -25,9 +25,9 @@ export const Headers = () => {
 			<section>
 				<Sync />
 				<Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
-				<Auth />
 				<Invite />
 				<Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
+				<Auth />
 			</section>
 		</Header>
 	)

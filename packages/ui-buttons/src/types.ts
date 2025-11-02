@@ -207,6 +207,7 @@ export type ButtonAccountStandaloneProps = ComponentBaseWithClassName &
 		iconRight?: IconDefinition
 		marginLeft?: boolean
 		marginRight?: boolean
+		hasSeparator?: boolean
 		marginX?: boolean
 		disabled?: boolean
 	}
