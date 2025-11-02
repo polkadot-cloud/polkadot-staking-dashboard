@@ -5,6 +5,7 @@ import { useUi } from 'contexts/UI'
 import { useState } from 'react'
 import { Header } from 'ui-core/base'
 import { Account } from './Account'
+import { Auth } from './Auth'
 import { Invite } from './Invite'
 import { Settings } from './Settings'
 import { SideMenuToggle } from './SideMenuToggle'
@@ -24,6 +25,7 @@ export const Headers = () => {
 			<section>
 				<Sync />
 				<Account openConnect={openConnect} setOpenConnect={setOpenConnect} />
+				<Auth />
 				<Invite />
 				<Settings openConnect={openConnect} setOpenConnect={setOpenConnect} />
 			</section>
