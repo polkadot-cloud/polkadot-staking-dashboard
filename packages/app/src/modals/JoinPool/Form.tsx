@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Polkicon } from '@w3ux/react-polkicon'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
@@ -20,10 +21,17 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
+import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
-import { JoinFormWrapper } from './Wrappers'
+import { HeaderWrapper, JoinFormWrapper } from './Wrappers'
 
-export const Form = ({ bondedPool }: { bondedPool: BondedPool }) => {
+export const Form = ({
+	bondedPool,
+	metadata,
+}: {
+	bondedPool: BondedPool
+	metadata: string
+}) => {
 	const { t } = useTranslation()
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
@@ -103,32 +111,43 @@ export const Form = ({ bondedPool }: { bondedPool: BondedPool }) => {
 	)
 
 	return (
-		<JoinFormWrapper>
-			<div className="head">
-				<h2>{t('joinPool', { ns: 'pages' })}</h2>
-			</div>
-			<h4>
-				{t('bond', { ns: 'app' })} {unit}
-			</h4>
-			<div className="input">
-				<div>
-					<BondFeedback
-						joiningPool
-						displayFirstWarningOnly
-						syncing={largestTxFee.isZero()}
-						bondFor={'pool'}
-						listenIsValid={(valid, errors) => {
-							setBondValid(valid)
-							setFeedbackErrors(errors)
-						}}
-						defaultBond={null}
-						setters={[handleSetBond]}
-						parentErrors={warnings}
-						txFees={BigInt(largestTxFee.toString())}
-						bonding={false}
-					/>
-				</div>
-			</div>
+		<>
+			<Padding>
+				<JoinFormWrapper>
+					<HeaderWrapper>
+						<Polkicon
+							address={bondedPool?.addresses.stash || ''}
+							background="transparent"
+							fontSize="4rem"
+						/>
+						<div className="content">
+							<h2>{metadata}</h2>
+						</div>
+					</HeaderWrapper>
+					<h4>
+						{t('bond', { ns: 'app' })} {unit}
+					</h4>
+					<div className="input">
+						<div>
+							<BondFeedback
+								joiningPool
+								displayFirstWarningOnly
+								syncing={largestTxFee.isZero()}
+								bondFor={'pool'}
+								listenIsValid={(valid, errors) => {
+									setBondValid(valid)
+									setFeedbackErrors(errors)
+								}}
+								defaultBond={null}
+								setters={[handleSetBond]}
+								parentErrors={warnings}
+								txFees={BigInt(largestTxFee.toString())}
+								bonding={false}
+							/>
+						</div>
+					</div>
+				</JoinFormWrapper>
+			</Padding>
 			<div className="submit">
 				<SubmitTx
 					displayFor="card"
@@ -138,6 +157,6 @@ export const Form = ({ bondedPool }: { bondedPool: BondedPool }) => {
 					noMargin
 				/>
 			</div>
-		</JoinFormWrapper>
+		</>
 	)
 }

@@ -3,6 +3,7 @@
 
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useState } from 'react'
+import { Close } from 'ui-overlay'
 import { Form } from './Form'
 
 // TODO: Abstract this for multi network, fallback to random pool participant (staking API)
@@ -18,9 +19,12 @@ export const JoinPool = () => {
 	)
 
 	const metadata = poolsMetaData[selectedPoolId]
-	console.debug('JoinPool metadata:', metadata)
-
 	const bondedPool = bondedPools.find((pool) => pool.id === selectedPoolId)!
 
-	return <Form bondedPool={bondedPool} />
+	return (
+		<>
+			<Close />
+			<Form bondedPool={bondedPool} metadata={metadata} />
+		</>
+	)
 }

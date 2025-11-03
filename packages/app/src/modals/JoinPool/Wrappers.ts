@@ -3,27 +3,23 @@
 
 import styled from 'styled-components'
 
-export const JoinFormWrapper = styled.div`
-  background: var(--background-canvas-card);
-  border: 0.75px solid var(--border-primary-color);
-  box-shadow: var(--card-shadow);
-  border-radius: 1.5rem;
-  padding: 1.5rem;
+export const HeaderWrapper = styled.div`
   width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
 
-  .head {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-
-    > h2 {
-      color: var(--text-color-secondary);
-      margin: 0.25rem 0;
-      width: auto;
-    }
+  > .content {
+    flex-grow: 1;
+    margin-top: 0.75rem;
   }
+`
+
+export const JoinFormWrapper = styled.div`
+  width: 100%;
 
   @media (max-width: 1000px) {
     margin-top: 1rem;
@@ -44,8 +40,9 @@ export const JoinFormWrapper = styled.div`
   }
 
   > h4 {
-    margin: 1.5rem 0 0.5rem 0;
     color: var(--text-color-tertiary);
+    margin: 1.75rem 0 0.0 0;
+    padding-left: 0.4rem;
 
     &.underline {
       border-bottom: 1px solid var(--border-primary-color);
@@ -55,7 +52,6 @@ export const JoinFormWrapper = styled.div`
   }
 
   > .input {
-    border-bottom: 1px solid var(--border-primary-color);
     padding: 0 0.25rem;
     display: flex;
     align-items: flex-end;
@@ -76,9 +72,5 @@ export const JoinFormWrapper = styled.div`
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
     display: flex;
-  }
-
-  > .submit {
-    margin-top: 2.5rem;
   }
 `
