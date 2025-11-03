@@ -3,4 +3,4 @@
 
 // Pool IDs for known pools on Polkadot and Kusama networks
 export const PolkadotKnownPoolIds: number[] = [15, 19]
-export const KusamaKKnownPoolIds: number[] = [223]
+export const KusamaKnownPoolIds: number[] = [223]
