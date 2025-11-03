@@ -57,7 +57,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 					<CallToActionLoader />
 				) : (
 					<>
-						<section className={advancedMode ? 'fixedWith' : undefined}>
+						<section className={advancedMode ? 'fixedWidth' : undefined}>
 							<div className="buttons">
 								<div
 									className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${!joinButtonDisabled ? ` pulse` : ``}`}
