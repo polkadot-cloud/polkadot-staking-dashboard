@@ -39,20 +39,7 @@ export const CallToActionWrapper = styled.div`
 
       &:nth-child(1) {
         flex-grow: 1;
-        @media (min-width: 651px) {
-          &.fixedWidth {
-            border-right: 1px solid var(--border-primary-color);
-            flex-grow: 0;
-            flex-basis: 70%;
-          }
-        }
-        @media (max-width: 650px) {
-          &.fixedWidth {
-            flex-basis: 100%;
-          }
-        }
       }
-
       &:nth-child(2) {
         flex: 1;
         @media (min-width: 651px) {
