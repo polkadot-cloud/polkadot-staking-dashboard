@@ -16,11 +16,18 @@ export const JoinPool = () => {
 
 	// The selected bonded pool id
 	const [selectedPoolId] = useState<number>(
-		poolIds[Math.floor(Math.random() * poolIds.length)],
+		poolIds.length > 0
+			? poolIds[Math.floor(Math.random() * poolIds.length)]
+			: // Fallback to any bonded pool if no known pool ids are given
+				bondedPools[Math.floor(Math.random() * bondedPools.length)]?.id || 1,
 	)
 
 	const metadata = poolsMetaData[selectedPoolId]
-	const bondedPool = bondedPools.find((pool) => pool.id === selectedPoolId)!
+	const bondedPool = bondedPools.find((pool) => pool.id === selectedPoolId)
+
+	if (!bondedPool) {
+		return null
+	}
 
 	return (
 		<>
