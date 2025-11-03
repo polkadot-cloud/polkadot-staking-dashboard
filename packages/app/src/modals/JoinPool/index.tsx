@@ -1,17 +1,18 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getNetworkKnownPoolIds } from 'consts/util/pools'
+import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useState } from 'react'
 import { Close } from 'ui-overlay'
 import { Form } from './Form'
 
-// TODO: Abstract this for multi network, fallback to random pool participant (staking API)
-const poolIds: number[] = [15, 19]
-
-// TODO: Sync selected pool data from Staking API
 export const JoinPool = () => {
+	const { network } = useNetwork()
 	const { poolsMetaData, bondedPools } = useBondedPools()
+
+	const poolIds = getNetworkKnownPoolIds(network)
 
 	// The selected bonded pool id
 	const [selectedPoolId] = useState<number>(
