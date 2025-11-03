@@ -130,17 +130,15 @@ export const ManageCommission = ({
 		}
 		const txs: (SubmittableExtrinsic | undefined)[] = []
 		if (commissionUpdated) {
-			const commissionPerbill = commission * PerbillMultiplier
 			txs.push(
 				serviceApi.tx.poolSetCommission(
 					poolId,
-					currentCommissionSet ? [commissionPerbill, payee] : undefined,
+					currentCommissionSet ? [commission, payee] : undefined,
 				),
 			)
 		}
 		if (isUpdated('max_commission') && getEnabled('max_commission')) {
-			const maxPerbill = maxCommission * PerbillMultiplier
-			txs.push(serviceApi.tx.poolSetCommissionMax(poolId, maxPerbill))
+			txs.push(serviceApi.tx.poolSetCommissionMax(poolId, maxCommission))
 		}
 		if (isUpdated('change_rate') && getEnabled('change_rate')) {
 			const maxIncreasePerbill = changeRate.maxIncrease * PerbillMultiplier
