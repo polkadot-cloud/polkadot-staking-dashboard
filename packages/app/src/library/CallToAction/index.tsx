@@ -14,7 +14,7 @@ export const CallToActionWrapper = styled.div`
     flex: 1;
     display: flex;
     flex-direction: row;
-    flex-flow: row nowrap !important;
+    flex-flow: row wrap;
     width: 100%;
     margin-top: 0.38rem;   
 
@@ -39,26 +39,9 @@ export const CallToActionWrapper = styled.div`
 
       &:nth-child(1) {
         flex-grow: 1;
-        @media (min-width: 651px) {
-          border-right: 1px solid var(--border-primary-color);
-          padding-right: 1rem;
-
-          &.fixedWidth {
-            flex-grow: 0;
-            flex-basis: 70%;
-          }
-        }
-
-        @media (max-width: 650px) {
-          &.fixedWidth {
-            flex-basis: 100%;
-          }
-        }
       }
-
       &:nth-child(2) {
         flex: 1;
-
         @media (min-width: 651px) {
           padding-left: 1rem;
         }

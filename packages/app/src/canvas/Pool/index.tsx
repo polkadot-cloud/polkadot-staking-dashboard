@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getNetworkKnownPoolIds } from 'consts/util/pools'
 import { useApi } from 'contexts/Api'
 import { useInvites } from 'contexts/Invites'
 import { useNetwork } from 'contexts/Network'
@@ -103,6 +104,22 @@ export const Pool = () => {
 		if (!providedPoolId) {
 			getPoolCandidates().then((candidates) => {
 				setPoolCandidates(candidates)
+				const knownPoolIds = getNetworkKnownPoolIds(network)
+
+				// If known pools exist, select one at random
+				const filteredCandidates = candidates.filter((id) =>
+					knownPoolIds.includes(id),
+				)
+				if (filteredCandidates.length > 0) {
+					setSelectedPoolId(
+						filteredCandidates[
+							(filteredCandidates.length * Math.random()) << 0
+						],
+					)
+					return
+				}
+
+				// Otherwise, select any candidate at random
 				setSelectedPoolId(candidates[(candidates.length * Math.random()) << 0])
 			})
 		}

@@ -175,15 +175,13 @@ export const ManageCommission = ({
 						...pool,
 						commission: {
 							...pool.commission,
-							current: currentCommissionSet
-								? [commission * PerbillMultiplier, payee]
-								: undefined,
+							current: currentCommissionSet ? [commission, payee] : undefined,
 							max: isUpdated('max_commission')
-								? maxCommission * PerbillMultiplier
+								? maxCommission
 								: pool.commission?.max || undefined,
 							changeRate: isUpdated('change_rate')
 								? {
-										maxIncrease: changeRate.maxIncrease * PerbillMultiplier,
+										maxIncrease: changeRate.maxIncrease,
 										minDelay: changeRate.minDelay,
 									}
 								: pool.commission?.changeRate || undefined,

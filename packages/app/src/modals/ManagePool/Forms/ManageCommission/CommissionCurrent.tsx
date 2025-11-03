@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PerbillMultiplier } from 'consts'
+import { useApi } from 'contexts/Api'
 import { AccountInput } from 'library/AccountInput'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'modals/ManagePool/Wrappers'
@@ -17,7 +18,7 @@ export const CommissionCurrent = ({
 	commissionAboveGlobal: boolean
 	commissionAboveMaxIncrease: boolean
 }) => {
-	const { t } = useTranslation('modals')
+	const { t } = useTranslation()
 	const {
 		getEnabled,
 		getInitial,
@@ -27,12 +28,14 @@ export const CommissionCurrent = ({
 		setMaxCommission,
 		isUpdated,
 	} = usePoolCommission()
+	const { globalMaxCommission } = useApi().poolsConfig
 
 	// Get the current commission, payee and max commission values.
 	const commission = getCurrent('commission')
 	const payee = getCurrent('payee')
 	const maxCommission = getCurrent('max_commission')
 	const commissionUnit = commission / PerbillMultiplier
+	const globalMaxCommissionUnit = globalMaxCommission / PerbillMultiplier
 
 	// Determine the commission feedback to display.
 	const commissionFeedback = (() => {
@@ -41,24 +44,24 @@ export const CommissionCurrent = ({
 		}
 		if (commissionAboveMaxIncrease) {
 			return {
-				text: t('beyondMaxIncrease'),
+				text: t('beyondMaxIncrease', { ns: 'modals' }),
 				label: 'danger',
 			}
 		}
 		if (commissionAboveGlobal) {
 			return {
-				text: t('aboveGlobalMax'),
+				text: t('aboveGlobalMax', { ns: 'modals' }),
 				label: 'danger',
 			}
 		}
 		if (commissionAboveMax) {
 			return {
-				text: t('aboveMax'),
+				text: t('aboveMax', { ns: 'modals' }),
 				label: 'danger',
 			}
 		}
 		return {
-			text: t('updated'),
+			text: t('updated', { ns: 'modals' }),
 			label: 'neutral',
 		}
 	})()
@@ -69,13 +72,15 @@ export const CommissionCurrent = ({
 				<div>
 					<h2>{commissionUnit}% </h2>
 					<h5 className={commissionFeedback?.label || 'neutral'}>
-						{!!commissionFeedback && commissionFeedback.text}
+						{!!commissionFeedback && commissionFeedback.text} /{' '}
+						{globalMaxCommissionUnit}% {t('max', { ns: 'app' })}
 					</h5>
 				</div>
 
 				<StyledSlider
+					max={globalMaxCommissionUnit}
 					value={commissionUnit}
-					step={0.1}
+					step={0.05}
 					onChange={(val) => {
 						if (typeof val === 'number') {
 							val = Number(val.toFixed(2))
@@ -95,8 +100,8 @@ export const CommissionCurrent = ({
 			</SliderWrapper>
 
 			<AccountInput
-				defaultLabel={t('inputPayeeAccount')}
-				successLabel={t('payeeAdded')}
+				defaultLabel={t('inputPayeeAccount', { ns: 'modals' })}
+				successLabel={t('payeeAdded', { ns: 'modals' })}
 				locked={payee !== null}
 				successCallback={async (input) => {
 					setPayee(input)
