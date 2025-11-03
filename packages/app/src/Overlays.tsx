@@ -19,6 +19,7 @@ import { DiscordSupport } from 'modals/DiscordSupport'
 import { ExternalAccounts } from 'modals/ExternalAccounts'
 import { ImportAccounts } from 'modals/ImportAccounts'
 import { Invite } from 'modals/Invite'
+import { JoinPool } from 'modals/JoinPool'
 import { LeavePool } from 'modals/LeavePool'
 import { MailSupport } from 'modals/MailSupport'
 import { ManageFastUnstake } from 'modals/ManageFastUnstake'
@@ -55,6 +56,7 @@ export const Overlays = () => {
 				ClaimReward,
 				Accounts,
 				DiscordSupport,
+				JoinPool,
 				LeavePool,
 				MailSupport,
 				ImportAccounts,
