@@ -40,10 +40,10 @@ export const CallToActionWrapper = styled.div`
       &:nth-child(1) {
         flex-grow: 1;
         @media (min-width: 651px) {
-          border-right: 1px solid var(--border-primary-color);
           padding-right: 1rem;
 
           &.fixedWidth {
+            border-right: 1px solid var(--border-primary-color);
             flex-grow: 0;
             flex-basis: 70%;
           }
