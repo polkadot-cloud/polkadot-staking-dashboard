@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
@@ -54,6 +56,11 @@ export const Stats = ({
 		<Subheading>
 			<h4>
 				{isActive && <Stat>{t('activelyNominating')}</Stat>}
+				<Stat>
+					<FontAwesomeIcon icon={faUsers} transform="shrink-5" />{' '}
+					{bondedPool.memberCounter}{' '}
+					{t('member', { count: bondedPool.memberCounter })}
+				</Stat>
 				<Stat withIcon>
 					<Token />
 					<span>

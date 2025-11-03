@@ -27,10 +27,17 @@ export const NotStaking = () => {
 	const actions: ButtonQuickActionProps[] = [
 		{
 			onClick: () => {
-				openCanvas({
-					key: 'Pool',
-					size: 'xl',
-				})
+				if (!advancedMode) {
+					// On simple mode, open Join Pool modal
+					openModal({ key: 'JoinPool', size: 'xs' })
+				} else {
+					// On advanced mode, open Pool canvas
+					openCanvas({
+						key: 'Pool',
+						options: {},
+						size: 'xl',
+					})
+				}
 			},
 			disabled: false,
 			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faUsers} />,
