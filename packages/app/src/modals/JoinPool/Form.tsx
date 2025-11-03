@@ -16,11 +16,10 @@ import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
-import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput'
 import { SubmitTx } from 'library/SubmitTx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { BondedPool, ClaimPermission } from 'types'
+import type { BondedPool } from 'types'
 import { useOverlay } from 'ui-overlay'
 import { JoinFormWrapper } from './Wrappers'
 
@@ -45,11 +44,6 @@ export const Form = ({ bondedPool }: { bondedPool: BondedPool }) => {
 	const { unit, units } = getStakingChainData(network)
 	const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
-	// Pool claim permission value.
-	const [claimPermission, setClaimPermission] = useState<ClaimPermission>(
-		defaultClaimPermission,
-	)
-
 	// Bond amount to join pool with.
 	const [bond, setBond] = useState<{ bond: string }>({
 		bond: planckToUnit(totalPossibleBond, units),
@@ -70,13 +64,13 @@ export const Form = ({ bondedPool }: { bondedPool: BondedPool }) => {
 	const formValid = bondValid && feedbackErrors.length === 0
 
 	const getTx = () => {
-		if (!claimPermission || !formValid) {
+		if (!formValid) {
 			return
 		}
 		const txs = serviceApi.tx.joinPool(
 			bondedPool.id,
 			unitToPlanck(!bondValid ? 0 : bond.bond, units),
-			claimPermission,
+			defaultClaimPermission,
 		)
 		if (!txs || (txs && !txs.length)) {
 			return
@@ -135,13 +129,6 @@ export const Form = ({ bondedPool }: { bondedPool: BondedPool }) => {
 					/>
 				</div>
 			</div>
-			<h4 className="underline">{t('claimSetting', { ns: 'app' })}</h4>
-			<ClaimPermissionInput
-				current={claimPermission}
-				onChange={(val: ClaimPermission) => {
-					setClaimPermission(val)
-				}}
-			/>
 			<div className="submit">
 				<SubmitTx
 					displayFor="card"
