@@ -16,6 +16,24 @@ export const HeaderWrapper = styled.div`
     flex-grow: 1;
     margin-top: 0.75rem;
   }
+
+  > .labels {
+    width: 100%;
+    margin-top: 0.8rem;
+    display: flex;
+    flex-direction: row wrap;
+    align-items: center;
+    justify-content: center;
+
+
+    > span {
+      color: var(--text-color-tertiary);
+      border: 1px solid var(--border-primary-color);
+      border-radius: 0.45rem;
+      padding: 0.35rem 0.75rem;
+      margin: 0.25rem;
+    }
+  }
 `
 
 export const JoinFormWrapper = styled.div`

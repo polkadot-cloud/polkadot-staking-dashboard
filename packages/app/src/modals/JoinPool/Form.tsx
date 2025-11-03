@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon'
-import { planckToUnit, unitToPlanck } from '@w3ux/utils'
-import type BigNumber from 'bignumber.js'
+import { capitalizeFirstLetter, planckToUnit, unitToPlanck } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { PerbillMultiplier } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -18,11 +19,12 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { SubmitTx } from 'library/SubmitTx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
+import { planckToUnitBn } from 'utils'
 import { HeaderWrapper, JoinFormWrapper } from './Wrappers'
 
 export const Form = ({
@@ -33,13 +35,14 @@ export const Form = ({
 	metadata: string
 }) => {
 	const { t } = useTranslation()
-	const { serviceApi } = useApi()
-	const { network } = useNetwork()
 	const {
-		closeCanvas,
+		setModalStatus,
+		setModalResize,
 		config: { options },
-	} = useOverlay().canvas
+	} = useOverlay().modal
+	const { network } = useNetwork()
 	const { newBatchCall } = useBatchCall()
+	const { serviceApi, isReady } = useApi()
 	const { setPoolSetup } = usePoolSetups()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccounts()
@@ -62,6 +65,9 @@ export const Form = ({
 
 	// feedback errors to trigger modal resize
 	const [feedbackErrors, setFeedbackErrors] = useState<string[]>([])
+
+	// Store the pool balance
+	const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null)
 
 	// Handler to set bond on input change.
 	const handleSetBond = (value: { bond: BigNumber }) => {
@@ -91,7 +97,7 @@ export const Form = ({
 		from: activeAddress,
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
-			closeCanvas()
+			setModalStatus('closing')
 			// Optional callback function on join success.
 			const onJoinCallback = options?.onJoinCallback
 			if (typeof onJoinCallback === 'function') {
@@ -110,6 +116,39 @@ export const Form = ({
 		submitExtrinsic.proxySupported,
 	)
 
+	const poolCommission = bondedPool?.commission?.current?.[0]
+
+	// Fetches the balance of the bonded pool
+	const getPoolBalance = async () => {
+		const apiResult = await serviceApi.runtimeApi.pointsToBalance(
+			bondedPool.id,
+			BigInt(bondedPool.points),
+		)
+		const balance = new BigNumber(apiResult || 0)
+		if (balance) {
+			setPoolBalance(new BigNumber(balance))
+		}
+	}
+
+	// modal resize on form update
+	useEffect(
+		() => setModalResize(),
+		[
+			bond,
+			bondValid,
+			feedbackErrors.length,
+			warnings.length,
+			poolBalance?.toString(),
+		],
+	)
+
+	// Fetch the balance when pool or points change
+	useEffect(() => {
+		if (isReady) {
+			getPoolBalance()
+		}
+	}, [bondedPool.id, bondedPool.points, isReady])
+
 	return (
 		<>
 			<Padding>
@@ -122,6 +161,25 @@ export const Form = ({
 						/>
 						<div className="content">
 							<h2>{metadata}</h2>
+						</div>
+						<div className="labels">
+							{poolCommission && (
+								<span>
+									{poolCommission / PerbillMultiplier}%{' '}
+									{t('commission', { ns: 'modals' })}
+								</span>
+							)}
+							<span>
+								{bondedPool.memberCounter}{' '}
+								{t('member', { count: bondedPool.memberCounter, ns: 'app' })}
+							</span>
+							<span>
+								{!poolBalance
+									? `...`
+									: `${planckToUnitBn(poolBalance, units)
+											.decimalPlaces(0)
+											.toFormat()} ${unit} ${capitalizeFirstLetter(t('bonded'))}`}
+							</span>
 						</div>
 					</HeaderWrapper>
 					<h4>
