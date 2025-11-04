@@ -43,62 +43,57 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 
 	return (
 		<CallToActionWrapper>
-			<div className="inner">
-				{syncing ? (
-					<CallToActionLoader />
-				) : (
-					<>
-						<section className="standalone">
-							<div className="buttons">
-								<div
-									className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ` pulse`}`}
-								>
-									<button
-										type="button"
-										onClick={() => {
-											onNewNominatorButtonPressedEvent(network)
+			{syncing ? (
+				<CallToActionLoader />
+			) : (
+				<>
+					<section className="standalone">
+						<div className="buttons">
+							<div
+								className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ` pulse`}`}
+							>
+								<button
+									type="button"
+									onClick={() => {
+										onNewNominatorButtonPressedEvent(network)
 
-											if (advancedMode) {
-												openModal({
-													key: 'StartNominating',
-													options: {},
-													size: 'lg',
-												})
-											} else {
-												// Set optimal nominator setup here, ready for canvas to display summary
-												setNominatorSetup(generateOptimalSetup(), true, 4)
-												openCanvas({
-													key: 'NominatorSetup',
-													options: {
-														simple: true,
-													},
-													size: 'xl',
-												})
-											}
-										}}
-										disabled={nominateButtonDisabled}
-									>
-										{t('startNominating', { ns: 'pages' })}
-									</button>
-								</div>
+										if (advancedMode) {
+											openModal({
+												key: 'StartNominating',
+												options: {},
+												size: 'lg',
+											})
+										} else {
+											// Set optimal nominator setup here, ready for canvas to display summary
+											setNominatorSetup(generateOptimalSetup(), true, 4)
+											openCanvas({
+												key: 'NominatorSetup',
+												options: {
+													simple: true,
+												},
+												size: 'xl',
+											})
+										}
+									}}
+									disabled={nominateButtonDisabled}
+								>
+									{t('startNominating', { ns: 'pages' })}
+								</button>
 							</div>
-						</section>
-						<section>
-							<div className="buttons">
-								<div className={`button secondary standalone`}>
-									<button type="button" onClick={() => navigate('/validators')}>
-										{t('browseValidators', { ns: 'app' })}
-										<FontAwesomeIcon
-											icon={faChevronRight}
-											transform="shrink-4"
-										/>
-									</button>
-								</div>
+						</div>
+					</section>
+					<section>
+						<div className="buttons">
+							<div className={`button secondary standalone`}>
+								<button type="button" onClick={() => navigate('/validators')}>
+									{t('browseValidators', { ns: 'app' })}
+									<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
+								</button>
 							</div>
-						</section>
-					</>
-				)}
-			</div>
+						</div>
+					</section>
+				</>
+			)}
 		</CallToActionWrapper>
 	)
 }
