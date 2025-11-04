@@ -23,11 +23,19 @@ export const Background = ({
 		openOverlayInstances++
 	}
 
-	const onIn = async () =>
+	const onIn = async () => {
+		if (!scope.current) {
+			return
+		}
 		await animate(scope.current, { opacity: 1 }, { duration: 0.15 })
+	}
 
-	const onOut = async () =>
+	const onOut = async () => {
+		if (!scope.current) {
+			return
+		}
 		await animate(scope.current, { opacity: 0 }, { duration: 0.15 })
+	}
 
 	useEffect(() => {
 		if (openOverlayInstances > 0) {
