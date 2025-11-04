@@ -34,7 +34,7 @@ export const NetworkList: Networks = {
 			hubChain: 'statemint',
 			peopleChain: 'people-polkadot',
 			stakingChain: 'statemint',
-			subscanBalanceChainId: 'polkadot',
+			subscanBalanceChainId: 'assethub-polkadot',
 			supportOperators: true,
 		},
 	},
