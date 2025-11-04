@@ -33,7 +33,7 @@ export const NetworkList: Networks = {
 		meta: {
 			hubChain: 'statemint',
 			peopleChain: 'people-polkadot',
-			stakingChain: 'polkadot',
+			stakingChain: 'statemint',
 			subscanBalanceChainId: 'polkadot',
 			supportOperators: true,
 		},
