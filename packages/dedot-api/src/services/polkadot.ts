@@ -88,7 +88,7 @@ export class PolkadotService
 					await query.poolMetadataMulti(this.apiHub, poolIds),
 				proxies: async (address) => await query.proxies(this.apiHub, address),
 				sessionValidators: async () =>
-					await query.sessionValidators(this.apiHub),
+					await query.sessionValidators(this.apiRelay),
 				identityOfMulti: async (addresses) =>
 					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>
