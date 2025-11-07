@@ -118,7 +118,7 @@ export const NotificationsPopover = ({
 							<PopoverTab.Container position="bottom">
 								{n.actions.map((action, index) => (
 									<PopoverTab.Button
-										key={`n_action_${index}`}
+										key={`${n.title}_${action.text}`}
 										text={action.text}
 										onClick={() => action.onClick()}
 										disabled={action.disabled}
