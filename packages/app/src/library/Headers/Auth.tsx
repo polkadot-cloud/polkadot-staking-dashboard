@@ -8,12 +8,13 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonAccount } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
+import { useOverlay } from 'ui-overlay'
 import { AuthPopover } from './Popovers/AuthPopover'
 
 export const Auth = () => {
 	const { t } = useTranslation('app')
 	const { themeElementRef } = useTheme()
-	// const { openModal } = useOverlay().modal
+	const { openModal } = useOverlay().modal
 
 	const SIGNED_IN = false
 
@@ -31,9 +32,7 @@ export const Auth = () => {
 			style={style}
 			hasSeparator
 			onClick={() => {
-				setOpen(!open)
-				// TODO: open SignIn modal
-				// openModal({ key: 'Accounts' })
+				openModal({ key: 'SignIn', size: 'sm' })
 			}}
 		/>
 	) : (
