@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -10,7 +12,7 @@ import { useStaking } from 'contexts/Staking'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
-import { Padding } from 'ui-core/popover'
+import { Heading, List, Padding } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 
 export const NotificationsPopover = ({
@@ -89,27 +91,37 @@ export const NotificationsPopover = ({
 	}
 
 	return (
-		<div ref={popoverRef} style={{ paddingTop: '1.5rem' }}>
+		<div ref={popoverRef}>
 			<Padding>
-				<h4>
-					{notifications.length}{' '}
+				<Heading
+					style={{
+						borderBottom: notifications.length
+							? 'none'
+							: '1px solid var(--border-primary-color)',
+					}}
+				>
 					{t('notification', { count: notifications.length })}
-				</h4>
-				{notifications.map((n) => (
-					<>
-						<h3 style={{ margin: '0.75rem 0 1.5rem 0' }}>{n.title}</h3>
-						<PopoverTab.Container position="bottom" yMargin>
-							{n.actions.map((action, index) => (
-								<PopoverTab.Button
-									key={`n_action_${index}`}
-									text={action.text}
-									onClick={() => action.onClick()}
-									disabled={action.disabled}
-								/>
-							))}
-						</PopoverTab.Container>
-					</>
-				))}
+				</Heading>
+				<List>
+					{notifications.map((n) => (
+						<div>
+							<h3>
+								<FontAwesomeIcon icon={faPaperPlane} />
+								{n.title}
+							</h3>
+							<PopoverTab.Container position="bottom">
+								{n.actions.map((action, index) => (
+									<PopoverTab.Button
+										key={`n_action_${index}`}
+										text={action.text}
+										onClick={() => action.onClick()}
+										disabled={action.disabled}
+									/>
+								))}
+							</PopoverTab.Container>
+						</div>
+					))}
+				</List>
 			</Padding>
 		</div>
 	)

@@ -2,5 +2,15 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 .padding {
-  padding: 0 1.4rem;
+  padding: 1.4rem;
+
+  &.vOnly {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.hOnly {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
