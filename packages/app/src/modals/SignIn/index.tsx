@@ -15,8 +15,8 @@ import { ContentWrapper } from './Wrappers'
 
 export const SignIn = () => {
 	const { t } = useTranslation('modals')
+	const { setModalResize } = useOverlay().modal
 	const { accounts, accountHasSigner } = useImportedAccounts()
-	const { setModalStatus, setModalResize } = useOverlay().modal
 	const { authChallenge, loading, error } = useAuthChallenge()
 
 	// Filter accounts to only show those with signers
@@ -86,9 +86,6 @@ export const SignIn = () => {
 
 		console.log('Sign in with account:', selectedAccount.address)
 		console.log('Challenge data:', challengeData)
-
-		// For now, just close the modal
-		setModalStatus('closing')
 	}
 
 	const canSignIn =
