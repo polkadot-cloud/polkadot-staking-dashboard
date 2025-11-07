@@ -3,7 +3,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 @use 'styles/theme/_variables' as *;
 
-$header-button-width: 4rem;
+$header-button-width: 3.5rem;
 
 .btnHeader {
   transition: all var(--transition-duration);

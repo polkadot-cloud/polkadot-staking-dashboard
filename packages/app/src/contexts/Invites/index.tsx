@@ -25,7 +25,7 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 	)
 
 	// Whether the invite has been acknowledged
-	const [acknowledged, setAcknowledged] = useState<boolean>(true)
+	const [acknowledged, setAcknowledged] = useState<boolean>(false)
 
 	// Function to dismiss the invite notification
 	const dismissInvite = () => {
