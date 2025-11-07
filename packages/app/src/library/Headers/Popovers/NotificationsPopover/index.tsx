@@ -91,7 +91,13 @@ export const NotificationsPopover = ({
 	}
 
 	return (
-		<div ref={popoverRef}>
+		<div
+			ref={popoverRef}
+			style={{
+				background: 'var(--button-popover-tab-background)',
+				borderRadius: '0.75rem',
+			}}
+		>
 			<Padding>
 				<Heading
 					style={{
