@@ -101,24 +101,25 @@ export const NotificationsPopover = ({
 			<Padding>
 				<Heading
 					style={{
-						borderBottom: notifications.length
-							? 'none'
-							: '1px solid var(--border-primary-color)',
+						borderBottom:
+							notifications.length > 0
+								? 'none'
+								: '1px solid var(--border-primary-color)',
 					}}
 				>
 					{t('notification', { count: notifications.length })}
 				</Heading>
 				<List>
-					{notifications.map((n) => (
-						<div>
+					{notifications.map((n, index) => (
+						<div key={`notification_${index}`}>
 							<h3>
 								<FontAwesomeIcon icon={faPaperPlane} />
 								{n.title}
 							</h3>
 							<PopoverTab.Container position="bottom">
-								{n.actions.map((action, index) => (
+								{n.actions.map((action) => (
 									<PopoverTab.Button
-										key={`n_action_${index}`}
+										key={`${n.title}_${action.text}`}
 										text={action.text}
 										onClick={() => action.onClick()}
 										disabled={action.disabled}
