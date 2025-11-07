@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
-import type { StakingChain } from '../types'
+import type { RelayChain } from '../types'
 
-export const sessionValidators = async <T extends StakingChain>(
+export const sessionValidators = async <T extends RelayChain>(
 	api: DedotClient<T>,
 ) => {
 	const result = await api.query.session.validators()

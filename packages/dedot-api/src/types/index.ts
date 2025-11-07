@@ -43,7 +43,10 @@ export type AssetHubChain =
 	| WestendAssetHubApi
 
 // Chains that are used for staking and nomination pools
-export type StakingChain = PolkadotApi | KusamaAssetHubApi | WestendAssetHubApi
+export type StakingChain =
+	| PolkadotAssetHubApi
+	| KusamaAssetHubApi
+	| WestendAssetHubApi
 
 // Chains that are used for fast unstake
 export type FastUnstakeChain = PolkadotApi | KusamaApi | WestendAssetHubApi

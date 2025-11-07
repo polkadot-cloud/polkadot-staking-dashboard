@@ -73,7 +73,7 @@ export const UpdateReserve = () => {
 				<p>{t('reserveText', { unit })}</p>
 				<div>
 					<StyledSlider
-						classNaame="no-padding"
+						className="no-padding"
 						min={0}
 						max={maxReserve.toNumber()}
 						value={sliderReserve}
