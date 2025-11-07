@@ -191,6 +191,8 @@
 		"manualSelectionSubtitle": "Añade validadores desde cero.",
 		"manual_selection": "Selección manual",
 		"max": "Máximo",
+		"member_one": "Miembro",
+		"member_other": "Miembros",
 		"methods": "Métodos",
 		"metrics": "Métricas",
 		"migrateController": "Controlador de migración",

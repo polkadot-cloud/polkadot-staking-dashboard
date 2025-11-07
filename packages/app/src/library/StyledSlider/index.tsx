@@ -11,9 +11,9 @@ export const StyledSlider = ({
 	onChange,
 	min,
 	max,
-	classNaame,
+	className,
 }: StyledSliderProps) => (
-	<Wrapper className={classNaame}>
+	<Wrapper className={className}>
 		<Slider
 			min={min}
 			max={max}

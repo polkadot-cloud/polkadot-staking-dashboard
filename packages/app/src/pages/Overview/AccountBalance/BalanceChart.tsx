@@ -205,7 +205,7 @@ export const BalanceChart = () => {
 								label=""
 								button={
 									<ButtonTertiary
-										text={t('reserveBalance')}
+										text={t('reserved')}
 										onClick={() =>
 											openModal({ key: 'UpdateReserve', size: 'sm' })
 										}

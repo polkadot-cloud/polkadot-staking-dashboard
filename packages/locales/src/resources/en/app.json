@@ -191,6 +191,8 @@
 		"manualSelectionSubtitle": "Add validators from scratch.",
 		"manual_selection": "Manual Selection",
 		"max": "Max",
+		"member_one": "Member",
+		"member_other": "Members",
 		"methods": "Methods",
 		"metrics": "Metrics",
 		"migrateController": "Migrate Controller",
