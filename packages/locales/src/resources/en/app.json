@@ -228,7 +228,7 @@
 		"notValidAddress": "Not a valid address",
 		"notification_zero": "No Notifications",
 		"notification_one": "{{count}} Notification",
-		"notification_other": "{{count}}Notifications",
+		"notification_other": "{{count}} Notifications",
 		"offline": "Connection appears to be offline",
 		"operators": "Operators",
 		"optimalSelection": "Optimal Selection",
