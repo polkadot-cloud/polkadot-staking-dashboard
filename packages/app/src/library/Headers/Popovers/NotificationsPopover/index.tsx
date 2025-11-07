@@ -101,7 +101,7 @@ export const NotificationsPopover = ({
 			<Padding>
 				<Heading
 					style={{
-						borderBottom: notifications.length
+						borderBottom: notifications.length > 0
 							? 'none'
 							: '1px solid var(--border-primary-color)',
 					}}
