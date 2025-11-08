@@ -27,7 +27,7 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 
 	// Whether the invite has been acknowledged
 	const [acknowledged, setAcknowledgedState] = useState<boolean>(
-		getLocalInviteConfig()?.acknowledged || false,
+		getLocalInviteConfig()?.acknowledged || true,
 	)
 
 	// Setter for acknowledged state that also updates local storage
