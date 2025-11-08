@@ -21,9 +21,9 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 
 	// State for tracking invite status
-	const [inviteConfig, setInviteConfig] = useState<
-		Omit<InviteConfig, 'acknowledged'> | undefined
-	>(getLocalInviteConfig())
+	const [inviteConfig, setInviteConfig] = useState<InviteConfig | undefined>(
+		getLocalInviteConfig(),
+	)
 
 	// Whether the invite has been acknowledged
 	const [acknowledged, setAcknowledgedState] = useState<boolean>(

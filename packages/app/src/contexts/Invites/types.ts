@@ -5,7 +5,7 @@ export interface InvitesContextInterface {
 	dismissInvite: () => void
 	acknowledged: boolean
 	setAcknowledged: (acknowledged: boolean) => void
-	inviteConfig: Omit<InviteConfig, 'acknowledged'> | undefined
+	inviteConfig: InviteConfig | undefined
 }
 
 export type InviteType = 'pool' | 'validator'
