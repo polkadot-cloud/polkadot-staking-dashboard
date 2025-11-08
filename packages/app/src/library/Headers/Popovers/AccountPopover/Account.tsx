@@ -12,7 +12,7 @@ export const Account = ({
 	address: string
 	label: string
 }) => (
-	<Padding>
+	<Padding hOnly>
 		<Polkicon address={address} fontSize="3.5rem" />
 		<Stat.Label>{label}</Stat.Label>
 		<Stat.Value>

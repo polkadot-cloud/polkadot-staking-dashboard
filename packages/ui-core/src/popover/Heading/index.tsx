@@ -5,29 +5,20 @@ import classNames from 'classnames'
 import type { CSSProperties, ReactNode } from 'react'
 import classes from './index.module.scss'
 
-export const Padding = ({
-	flex,
+export const Heading = ({
 	children,
-	vOnly,
-	hOnly,
 	style,
+	border,
 }: {
-	flex?: boolean
 	children: ReactNode
-	vOnly?: boolean
-	hOnly?: boolean
 	style?: CSSProperties
+	border?: boolean
 }) => {
-	const allClasses = classNames(classes.padding, {
-		[classes.vOnly]: !!vOnly,
-		[classes.hOnly]: !!hOnly,
+	const allClasses = classNames(classes.heading, {
+		[classes.border]: border,
 	})
-
 	return (
-		<div
-			className={allClasses}
-			style={{ ...style, display: flex ? 'flex' : 'block' }}
-		>
+		<div className={allClasses} style={{ ...style }}>
 			{children}
 		</div>
 	)

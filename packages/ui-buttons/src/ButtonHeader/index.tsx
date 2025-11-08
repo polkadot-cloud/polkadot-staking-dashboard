@@ -18,6 +18,7 @@ export const ButtonHeader = ({
 	const activeClasses = classNames(classes.active, {
 		[classes.pulse]: !acknowledged,
 	})
+
 	return (
 		<div
 			className={`${className ? `${className} ` : ``}${allClasses}`}
