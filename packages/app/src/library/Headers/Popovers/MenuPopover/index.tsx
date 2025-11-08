@@ -20,10 +20,6 @@ import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
 import { GitHubURl } from 'consts'
-import {
-	CompulsoryPluginsProduction,
-	DisabledPluginsPerNetwork,
-} from 'consts/plugins'
 import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -57,15 +53,6 @@ export const MenuPopover = ({
 	const { name } = getRelayChainData(network)
 	const { membership } = getPoolMembership(activeAddress)
 	const popoverRef = useRef<HTMLDivElement>(null)
-
-	const forceDisabledPlugins = DisabledPluginsPerNetwork[network] || []
-	const forcePluginsProduction = import.meta.env.PROD
-		? CompulsoryPluginsProduction.filter(
-				(p) => !forceDisabledPlugins.includes(p),
-			)
-		: CompulsoryPluginsProduction
-
-	const pluginsAvailable = forcePluginsProduction.length > 0
 
 	const notStaking = !isNominator && !membership
 
@@ -163,7 +150,7 @@ export const MenuPopover = ({
 					openModal({ key: 'Invite', size: 'sm' })
 				}}
 			/>
-			{(pluginsAvailable || !import.meta.env.PROD) && (
+			{!import.meta.env.PROD && (
 				<DefaultButton
 					text={t('plugins', { ns: 'modals' })}
 					iconLeft={faPuzzlePiece}
