@@ -81,11 +81,11 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const openModal = ({ key, size = 'lg', options = {} }: ModalConfig) => {
-		document.body.classList.add('disable-body-scroll')
 		if (canvasStatus !== 'closed') {
 			return
 		}
 
+		document.body.classList.add('disable-body-scroll')
 		setModalConfig({ key, size, options })
 		setModalStatus('opening')
 		if (!options?.replacing) {
