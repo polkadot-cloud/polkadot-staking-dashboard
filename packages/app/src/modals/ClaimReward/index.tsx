@@ -22,7 +22,7 @@ import { Close, useOverlay } from 'ui-overlay'
 export const ClaimReward = () => {
 	const { t } = useTranslation('modals')
 	const {
-		setModalStatus,
+		closeModal,
 		config: { options },
 		setModalResize,
 	} = useOverlay().modal
@@ -64,7 +64,7 @@ export const ClaimReward = () => {
 		from: activeAddress,
 		shouldSubmit: valid,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 
