@@ -1,6 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faGlasses } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
+import { ExtensionIcons } from '@w3ux/extension-assets/util'
+import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
@@ -113,6 +119,17 @@ export const AccountDropdown = ({
 	// Display value for the input field
 	const inputValue = isInputFocused ? searchTerm : selectedAccount?.name || ''
 
+	// Determine selected account source icon
+	const SelectedIcon = selectedAccount
+		? selectedAccount.source === 'ledger'
+			? LedgerSVG
+			: selectedAccount.source === 'vault'
+				? PolkadotVaultSVG
+				: selectedAccount.source === 'wallet_connect'
+					? WalletConnectSVG
+					: ExtensionIcons[selectedAccount.source] || undefined
+		: undefined
+
 	return (
 		<>
 			<DropdownWrapper ref={dropdownRef}>
@@ -155,6 +172,17 @@ export const AccountDropdown = ({
 									{ellipsisFn(selectedAccount.address)}
 								</span>
 							</div>
+							{SelectedIcon !== undefined ? (
+								<span className="selected-account-icon">
+									<SelectedIcon />
+								</span>
+							) : selectedAccount.source === 'external' ? (
+								<FontAwesomeIcon
+									icon={faGlasses}
+									className="selected-account-icon"
+									style={{ opacity: 0.7 }}
+								/>
+							) : null}
 						</div>
 					) : (
 						<span>Select an account</span>
@@ -171,34 +199,59 @@ export const AccountDropdown = ({
 						<SimpleBar style={{ maxHeight: '300px' }}>
 							<div className="accounts-list">
 								{filteredAccounts.length > 0 ? (
-									filteredAccounts.map((account) => (
-										<div
-											key={`${account.address}-${account.source}`}
-											className={`account-item ${
-												selectedAccount?.address === account.address &&
-												selectedAccount?.source === account.source
-													? 'selected'
-													: ''
-											}`}
-											onClick={() => handleSelect(account)}
-											onKeyDown={(e) => {
-												if (e.key === 'Enter' || e.key === ' ') {
-													handleSelect(account)
-												}
-											}}
-										>
-											<Polkicon address={account.address} fontSize="2.25rem" />
-											<div className="account-details">
-												<span className="account-name">
-													{account.name || 'Unknown'}
-												</span>
-												<span className="account-address">
-													{ellipsisFn(account.address)}
-												</span>
+									filteredAccounts.map((account) => {
+										// Determine account source icon
+										const Icon =
+											account.source === 'ledger'
+												? LedgerSVG
+												: account.source === 'vault'
+													? PolkadotVaultSVG
+													: account.source === 'wallet_connect'
+														? WalletConnectSVG
+														: ExtensionIcons[account.source] || undefined
+
+										return (
+											<div
+												key={`${account.address}-${account.source}`}
+												className={`account-item ${
+													selectedAccount?.address === account.address &&
+													selectedAccount?.source === account.source
+														? 'selected'
+														: ''
+												}`}
+												onClick={() => handleSelect(account)}
+												onKeyDown={(e) => {
+													if (e.key === 'Enter' || e.key === ' ') {
+														handleSelect(account)
+													}
+												}}
+											>
+												<Polkicon
+													address={account.address}
+													fontSize="2.25rem"
+												/>
+												<div className="account-details">
+													<span className="account-name">
+														{account.name || 'Unknown'}
+													</span>
+													<span className="account-address">
+														{ellipsisFn(account.address)}
+													</span>
+												</div>
+												{Icon !== undefined ? (
+													<span className="account-source-icon">
+														<Icon />
+													</span>
+												) : account.source === 'external' ? (
+													<FontAwesomeIcon
+														icon={faGlasses}
+														className="account-source-icon"
+														style={{ opacity: 0.7 }}
+													/>
+												) : null}
 											</div>
-											<span className="account-source">{account.source}</span>
-										</div>
-									))
+										)
+									})
 								) : (
 									<div className="no-results">No accounts found</div>
 								)}

@@ -74,8 +74,22 @@ export const DropdownButton = styled.button`
   }
 
   .account-address {
-    font-size: 0.85rem;
-    color: var(--text-color-secondary);
+    font-size: 1rem;
+    color: var(--text-color-tertiary);
+  }
+
+  .selected-account-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 `
 
@@ -97,7 +111,7 @@ export const DropdownMenu = styled.div`
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.9rem;
+    padding: 1rem 1.25rem;
     cursor: pointer;
     transition: background 0.15s;
 
@@ -123,17 +137,21 @@ export const DropdownMenu = styled.div`
     }
 
     .account-address {
-      color: var(--text-color-secondary);
+      color: var(--text-color-tertiary);
       font-size: 1rem;
     }
 
-    .account-source {
-      font-size: 0.75rem;
-      color: var(--text-color-secondary);
-      background: var(--background-floating-card);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.375rem;
-      text-transform: capitalize;
+    .account-source-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
