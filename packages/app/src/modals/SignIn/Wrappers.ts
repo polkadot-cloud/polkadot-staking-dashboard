@@ -35,7 +35,7 @@ export const DropdownWrapper = styled.div`
 
 export const DropdownButton = styled.button`
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   background: var(--background-floating-card);
   border: 1px solid var(--border-primary-color);
   border-radius: 0.75rem;
@@ -60,47 +60,44 @@ export const DropdownButton = styled.button`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.25rem;
     flex: 1;
   }
 
   .account-name {
-    font-weight: 600;
     color: var(--text-color-primary);
+    font-family: InterSemiBold, sans-serif;
+    font-size: 1.2rem;
     flex: 1;
     width: 100%;
+    padding: 0;
+    margin-bottom: 0.5rem;
   }
 
   .account-address {
     font-size: 0.85rem;
     color: var(--text-color-secondary);
-    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
-      'Courier New', monospace;
   }
 `
 
 export const DropdownMenu = styled.div`
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
-  background: var(--button-popover-tab-background);
+  background: var(--background-primary);
   border: 1px solid var(--border-primary-color);
-  border-radius: 0.75rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   z-index: 101;
   overflow: hidden;
 
   .accounts-list {
-    max-height: 300px;
-    overflow-y: auto;
   }
 
   .account-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem;
+    padding: 0.9rem;
     cursor: pointer;
     transition: background 0.15s;
 
@@ -115,20 +112,19 @@ export const DropdownMenu = styled.div`
     .account-details {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.5rem;
       flex: 1;
     }
 
     .account-name {
-      font-weight: 500;
       color: var(--text-color-primary);
+      font-family: InterSemiBold, sans-serif;
+      font-size: 1.1rem;
     }
 
     .account-address {
-      font-size: 0.85rem;
       color: var(--text-color-secondary);
-      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
-        'Courier New', monospace;
+      font-size: 1rem;
     }
 
     .account-source {

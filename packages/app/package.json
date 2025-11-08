@@ -60,6 +60,8 @@
 		"react-i18next": "^16.2.4",
 		"react-router-dom": "^7.6.0",
 		"rxjs": "^7.8.2",
+		"simplebar": "6.3.2",
+		"simplebar-react": "3.3.2",
 		"styled-components": "^6.1.18",
 		"styles": "workspace:*",
 		"ui-buttons": "workspace:*",
