@@ -15,7 +15,7 @@ import { ContentWrapper, TaskInnerWrapper } from './Wrappers'
 export const Tasks = forwardRef(
 	({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {
 		const { t } = useTranslation('modals')
-		const { setModalStatus } = useOverlay().modal
+		const { closeModal } = useOverlay().modal
 		const { openCanvas } = useOverlay().canvas
 		const { globalMaxCommission } = useApi().poolsConfig
 		const { activePool, isOwner, isBouncer } = useActivePool()
@@ -37,7 +37,7 @@ export const Tasks = forwardRef(
 						)}
 						<ButtonOption
 							onClick={() => {
-								setModalStatus('closing')
+								closeModal()
 								openCanvas({
 									key: 'Pool',
 									options: {

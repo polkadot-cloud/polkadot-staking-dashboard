@@ -75,7 +75,13 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 		setStateWithRef(newStatus, setModalStatusState, modalStatusRef)
 	}
 
+	const closeModal = () => {
+		document.body.classList.remove('disable-body-scroll')
+		setModalStatus('closing')
+	}
+
 	const openModal = ({ key, size = 'lg', options = {} }: ModalConfig) => {
+		document.body.classList.add('disable-body-scroll')
 		if (canvasStatus !== 'closed') {
 			return
 		}
@@ -222,6 +228,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 					modalMaxHeight,
 					modalResizeCounter,
 					openModal,
+					closeModal,
 					replaceModal,
 					setModalHeight,
 					setModalResize,

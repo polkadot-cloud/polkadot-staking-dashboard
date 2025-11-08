@@ -36,7 +36,7 @@ export const Form = ({
 }) => {
 	const { t } = useTranslation()
 	const {
-		setModalStatus,
+		closeModal,
 		setModalResize,
 		config: { options },
 	} = useOverlay().modal
@@ -97,7 +97,7 @@ export const Form = ({
 		from: activeAddress,
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 			// Optional callback function on join success.
 			const onJoinCallback = options?.onJoinCallback
 			if (typeof onJoinCallback === 'function') {

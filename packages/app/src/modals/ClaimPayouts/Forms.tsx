@@ -34,7 +34,7 @@ export const Forms = forwardRef(
 		const { network } = useNetwork()
 		const { serviceApi } = useApi()
 		const { newBatchCall } = useBatchCall()
-		const { setModalStatus } = useOverlay().modal
+		const { closeModal } = useOverlay().modal
 		const { activeAddress, activeAccount } = useActiveAccounts()
 		const { getSignerWarnings } = useSignerWarnings()
 		const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
@@ -94,7 +94,7 @@ export const Forms = forwardRef(
 			from: activeAddress,
 			shouldSubmit: valid,
 			callbackSubmit: () => {
-				setModalStatus('closing')
+				closeModal()
 			},
 			callbackInBlock: () => {
 				if (payouts && activeAddress) {

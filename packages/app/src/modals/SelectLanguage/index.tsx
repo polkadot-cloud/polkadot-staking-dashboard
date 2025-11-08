@@ -11,7 +11,7 @@ import { useOverlay } from 'ui-overlay'
 
 export const SelectLanguage = () => {
 	const { i18n, t } = useTranslation('modals')
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 
 	return (
 		<>
@@ -24,7 +24,7 @@ export const SelectLanguage = () => {
 							selected={i18n.resolvedLanguage === code}
 							onClick={() => {
 								changeLanguage(code, i18n)
-								setModalStatus('closing')
+								closeModal()
 							}}
 							text={label}
 							label={i18n.resolvedLanguage === code ? t('selected') : undefined}

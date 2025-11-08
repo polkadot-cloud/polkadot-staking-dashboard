@@ -30,7 +30,7 @@ export const SetPoolState = ({
 }) => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { getSignerWarnings } = useSignerWarnings()
 	const { isOwner, isBouncer, activePool } = useActivePool()
 	const { activeAddress, activeAccount } = useActiveAccounts()
@@ -105,7 +105,7 @@ export const SetPoolState = ({
 		from: activeAddress,
 		shouldSubmit: true,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 		callbackInBlock: () => {
 			// reflect updated state in `bondedPools` list.
