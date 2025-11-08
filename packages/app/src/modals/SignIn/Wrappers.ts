@@ -61,11 +61,14 @@ export const DropdownButton = styled.button`
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
+    flex: 1;
   }
 
   .account-name {
     font-weight: 600;
     color: var(--text-color-primary);
+    flex: 1;
+    width: 100%;
   }
 
   .account-address {
@@ -74,7 +77,6 @@ export const DropdownButton = styled.button`
     font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
       'Courier New', monospace;
   }
-
 `
 
 export const DropdownMenu = styled.div`
@@ -88,30 +90,6 @@ export const DropdownMenu = styled.div`
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   z-index: 101;
   overflow: hidden;
-
-  .search-container {
-    padding: 0.75rem;
-    border-bottom: 1px solid var(--border-primary-color);
-
-    input {
-      width: 100%;
-      padding: 0.5rem 0.75rem;
-      background: var(--background-default);
-      border: 1px solid var(--border-primary-color);
-      border-radius: 0.5rem;
-      color: var(--text-color-primary);
-      font-size: 0.9rem;
-
-      &:focus {
-        outline: none;
-        border-color: var(--accent-color-primary);
-      }
-
-      &::placeholder {
-        color: var(--text-color-secondary);
-      }
-    }
-  }
 
   .accounts-list {
     max-height: 300px;
