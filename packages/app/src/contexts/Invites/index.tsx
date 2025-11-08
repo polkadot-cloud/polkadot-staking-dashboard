@@ -53,7 +53,7 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 				},
 			}
 			setInviteConfig(invite)
-			setAcknowledged(true)
+			setAcknowledged(false)
 		}
 	}, [])
 
