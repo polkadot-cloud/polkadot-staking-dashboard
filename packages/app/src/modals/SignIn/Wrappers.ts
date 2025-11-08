@@ -30,11 +30,7 @@ export const ContentWrapper = styled.div`
 export const DropdownWrapper = styled.div`
   position: relative;
   width: 100%;
-`
-
-export const DropdownSpacer = styled.div<{ height: number }>`
-  height: ${(props) => props.height}px;
-  transition: height 0.2s ease;
+  display: flex;
 `
 
 export const DropdownButton = styled.button`
@@ -79,14 +75,6 @@ export const DropdownButton = styled.button`
       'Courier New', monospace;
   }
 
-  .chevron {
-    color: var(--text-color-secondary);
-    transition: transform 0.2s;
-
-    &.open {
-      transform: rotate(180deg);
-    }
-  }
 `
 
 export const DropdownMenu = styled.div`
@@ -94,7 +82,7 @@ export const DropdownMenu = styled.div`
   top: calc(100% + 0.5rem);
   left: 0;
   right: 0;
-  background: var(--background-floating-card);
+  background: var(--button-popover-tab-background);
   border: 1px solid var(--border-primary-color);
   border-radius: 0.75rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
