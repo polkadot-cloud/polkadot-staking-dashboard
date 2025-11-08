@@ -9,13 +9,12 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
 import { CustomHeader, Padding, Warnings } from 'ui-core/modal'
-import { Close, useOverlay } from 'ui-overlay'
+import { Close } from 'ui-overlay'
 import { AccountDropdown } from './AccountDropdown'
 import { ContentWrapper } from './Wrappers'
 
 export const SignIn = () => {
 	const { t } = useTranslation('modals')
-	const { setModalResize } = useOverlay().modal
 	const { accounts, accountHasSigner } = useImportedAccounts()
 	const { authChallenge, loading, error } = useAuthChallenge()
 
@@ -66,11 +65,6 @@ export const SignIn = () => {
 			})
 		}
 	}, [selectedAccount?.address])
-
-	// Resize modal when dropdown opens/closes
-	useEffect(() => {
-		setModalResize()
-	})
 
 	const handleSignIn = async () => {
 		if (!selectedAccount || !challengeData) {
