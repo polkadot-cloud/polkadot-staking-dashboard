@@ -13,7 +13,7 @@ import { SearchInput } from './Wrapper'
 
 export const SelectCurrency = () => {
 	const { t } = useTranslation('modals')
-	const { setModalStatus, setModalResize } = useOverlay().modal
+	const { closeModal, setModalResize } = useOverlay().modal
 	const { currency, setCurrency } = useCurrency()
 
 	// Search term state
@@ -22,7 +22,7 @@ export const SelectCurrency = () => {
 	// Handle currency selection
 	const handleSelect = (c: string) => {
 		setCurrency(c)
-		setModalStatus('closing')
+		closeModal()
 	}
 
 	// Handle search input change

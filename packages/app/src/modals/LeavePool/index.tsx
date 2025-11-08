@@ -37,7 +37,7 @@ export const LeavePool = ({
 	const { activePool } = useActivePool()
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { balances } = useAccountBalances(activeAddress)
@@ -75,7 +75,7 @@ export const LeavePool = ({
 		from: activeAddress,
 		shouldSubmit: paramsValid,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

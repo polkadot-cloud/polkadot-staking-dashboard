@@ -32,7 +32,7 @@ export const AccountButton = ({
 	const { t } = useTranslation('modals')
 	const { network } = useNetwork()
 	const { getAccount } = useImportedAccounts()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const {
 		activeAccount,
 		activeProxy,
@@ -90,7 +90,7 @@ export const AccountButton = ({
 				? { address: connectProxy, source, proxyType }
 				: null,
 		)
-		setModalStatus('closing')
+		closeModal()
 	}
 
 	return (

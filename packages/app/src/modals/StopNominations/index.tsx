@@ -22,7 +22,7 @@ export const StopNominations = () => {
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccounts()
 	const {
-		setModalStatus,
+		closeModal,
 		config: { options },
 	} = useOverlay().modal
 	const { activePoolNominations, isNominator, isOwner, activePool } =
@@ -68,7 +68,7 @@ export const StopNominations = () => {
 		from: activeAddress,
 		shouldSubmit: valid,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

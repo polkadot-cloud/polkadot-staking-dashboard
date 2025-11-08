@@ -28,7 +28,7 @@ export const UpdatePayee = () => {
 	const { serviceApi } = useApi()
 	const { getStakingLedger } = useBalances()
 	const { getPayeeItems } = usePayeeConfig()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccounts()
 
@@ -90,7 +90,7 @@ export const UpdatePayee = () => {
 		from: activeAddress,
 		shouldSubmit: isComplete(),
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

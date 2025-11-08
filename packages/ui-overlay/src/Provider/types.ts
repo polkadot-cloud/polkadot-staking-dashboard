@@ -35,6 +35,7 @@ export interface OverlayContextInterface {
 		modalResizeCounter: number
 		modalMaxHeight: number
 		openModal: (config: ModalConfig) => void
+		closeModal: () => void
 		replaceModal: (config: ModalConfig) => void
 		setModalHeight: (height: number) => void
 		setModalResize: () => void

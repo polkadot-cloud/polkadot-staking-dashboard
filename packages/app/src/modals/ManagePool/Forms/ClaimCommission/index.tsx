@@ -31,7 +31,7 @@ export const ClaimCommission = ({
 	const { t } = useTranslation('modals')
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccounts()
@@ -61,7 +61,7 @@ export const ClaimCommission = ({
 		from: activeAddress,
 		shouldSubmit: true,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

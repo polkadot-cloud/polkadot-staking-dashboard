@@ -34,7 +34,7 @@ export const Unstake = () => {
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
-	const { setModalStatus, setModalResize } = useOverlay().modal
+	const { closeModal, setModalResize } = useOverlay().modal
 
 	const { bondDuration } = getConsts(network)
 	const { unit, units } = getStakingChainData(network)
@@ -92,7 +92,7 @@ export const Unstake = () => {
 		from: activeAddress,
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

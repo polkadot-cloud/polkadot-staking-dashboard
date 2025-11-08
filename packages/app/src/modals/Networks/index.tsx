@@ -31,7 +31,7 @@ export const Networks = () => {
 	const { openPromptWith } = usePrompt()
 	const { network, switchNetwork } = useNetwork()
 	const { providerType, getRpcEndpoint } = useApi()
-	const { setModalStatus, setModalResize } = useOverlay().modal
+	const { closeModal, setModalResize } = useOverlay().modal
 	const networkKey = network
 
 	const isLightClient = providerType === 'sc'
@@ -61,7 +61,7 @@ export const Networks = () => {
 										onClick={() => {
 											if (networkKey !== key) {
 												switchNetwork(key as NetworkId)
-												setModalStatus('closing')
+												closeModal()
 											}
 										}}
 									>
@@ -88,7 +88,7 @@ export const Networks = () => {
 								onClick={() => {
 									setProviderType('sc')
 									switchNetwork(networkKey as NetworkId)
-									setModalStatus('closing')
+									closeModal()
 								}}
 							>
 								<h3>{t('lightClient')}</h3>
@@ -103,7 +103,7 @@ export const Networks = () => {
 								onClick={() => {
 									setProviderType('ws')
 									switchNetwork(networkKey as NetworkId)
-									setModalStatus('closing')
+									closeModal()
 								}}
 							>
 								<h3>RPC</h3>
