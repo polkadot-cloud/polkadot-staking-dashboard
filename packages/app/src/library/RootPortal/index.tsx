@@ -5,9 +5,21 @@
 import { type ReactNode, useLayoutEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-type Props = { children: ReactNode; targetId?: string }
+type Props = {
+	children: ReactNode
+	targetId?: string
+	width?: number
+	top?: number
+	left?: number
+}
 
-export function RootPortal({ children, targetId = 'root' }: Props) {
+export function RootPortal({
+	children,
+	targetId = 'portal-root',
+	width,
+	top,
+	left,
+}: Props) {
 	const [mounted, setMounted] = useState(false)
 
 	// Lazily create a host element for this portal instance
@@ -26,13 +38,22 @@ export function RootPortal({ children, targetId = 'root' }: Props) {
 		// Style hook: ensure it can float above modals
 		hostEl.style.position = 'absolute'
 		hostEl.style.zIndex = '99999'
+		if (width) {
+			hostEl.style.width = `${width}px`
+		}
+		if (top !== undefined) {
+			hostEl.style.top = `${top}px`
+		}
+		if (left !== undefined) {
+			hostEl.style.left = `${left}px`
+		}
 
 		target.appendChild(hostEl)
 		setMounted(true)
 		return () => {
 			target.removeChild(hostEl)
 		}
-	}, [hostEl, targetId])
+	}, [hostEl, targetId, width, top, left])
 
 	if (!mounted || !hostEl) return null
 	return createPortal(children, hostEl)
