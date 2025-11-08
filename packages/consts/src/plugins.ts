@@ -20,8 +20,6 @@ export const CompulsoryPluginsProduction: Plugin[] = [
 // NOTE: If you are forking the staking dashboard and do not wish to enforce a plugin to be
 // disabled, you can remove it from this list
 export const DisabledPluginsPerNetwork: Partial<Record<NetworkId, Plugin[]>> = {
-	// NOTE: During Kusama asset hub migration, disable the staking API until it is fixed
-	kusama: ['staking_api'],
 	// NOTE: Westend is not supported by the staking API plugin
 	westend: ['staking_api'],
 }
