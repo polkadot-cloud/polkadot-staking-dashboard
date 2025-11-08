@@ -13,12 +13,13 @@ export type InviteType = 'pool' | 'validator'
 export interface InviteConfig {
 	type: InviteType
 	network: string
-	invite: PoolInvite | NominatorInvite
+	invite: PoolInvite
+}
+
+export type LocalInviteConfig = InviteConfig & {
+	acknowledged: boolean
 }
 
 export type PoolInvite = {
 	poolId: number
-}
-export type NominatorInvite = {
-	validators: string
 }

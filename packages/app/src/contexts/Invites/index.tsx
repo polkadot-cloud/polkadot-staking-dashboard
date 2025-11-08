@@ -6,6 +6,7 @@ import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import {
+	acknowledgeLocalInvite,
 	getLocalInviteConfig,
 	removeLocalInviteConfig,
 	setLocalInviteConfig,
@@ -25,7 +26,15 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 	)
 
 	// Whether the invite has been acknowledged
-	const [acknowledged, setAcknowledged] = useState<boolean>(false)
+	const [acknowledged, setAcknowledgedState] = useState<boolean>(
+		getLocalInviteConfig()?.acknowledged || true,
+	)
+
+	// Setter for acknowledged state that also updates local storage
+	const setAcknowledged = (ack: boolean) => {
+		acknowledgeLocalInvite(ack)
+		setAcknowledgedState(ack)
+	}
 
 	// Function to dismiss the invite notification
 	const dismissInvite = () => {
@@ -37,13 +46,6 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		const idFromUrl = extractUrlValue('id')
 		if (extractUrlValue('i') === 'pool' && !isNaN(Number(idFromUrl))) {
-			setLocalInviteConfig({
-				type: 'pool',
-				network,
-				invite: {
-					poolId: Number(idFromUrl),
-				},
-			})
 			const type: InviteType = 'pool'
 			const invite = {
 				type,
@@ -52,8 +54,12 @@ export const InvitesProvider = ({ children }: { children: ReactNode }) => {
 					poolId: Number(idFromUrl),
 				},
 			}
+			setLocalInviteConfig({
+				...invite,
+				acknowledged: false,
+			})
 			setInviteConfig(invite)
-			setAcknowledged(true)
+			setAcknowledged(false)
 		}
 	}, [])
 
