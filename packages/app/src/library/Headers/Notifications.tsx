@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { faBell } from '@fortawesome/free-regular-svg-icons'
 import { useInvites } from 'contexts/Invites'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
