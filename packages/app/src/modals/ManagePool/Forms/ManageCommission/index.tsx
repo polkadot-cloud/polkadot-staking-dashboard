@@ -51,7 +51,7 @@ export const ManageCommission = ({
 		isUpdated,
 	} = usePoolCommission()
 	const { newBatchCall } = useBatchCall()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccounts()
@@ -165,7 +165,7 @@ export const ManageCommission = ({
 		from: activeAddress,
 		shouldSubmit: true,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 		callbackInBlock: () => {
 			const pool = getBondedPool(poolId)

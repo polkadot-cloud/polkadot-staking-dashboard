@@ -22,6 +22,7 @@ export const Modal = ({
 			config: { key, size, options },
 			status,
 			modalHeight,
+			closeModal,
 			modalResizeCounter,
 			setModalRef,
 			modalMaxHeight,
@@ -145,7 +146,7 @@ export const Modal = ({
 				scale: 0.9,
 			}}
 			style={{ opacity: status === 'opening' ? 0 : 1 }}
-			onClose={() => setModalStatus('closing')}
+			onClose={() => closeModal()}
 		>
 			<Scroll
 				ref={heightRef}

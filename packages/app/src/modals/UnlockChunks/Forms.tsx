@@ -37,7 +37,7 @@ export const Forms = forwardRef(
 	) => {
 		const { t } = useTranslation('modals')
 		const {
-			setModalStatus,
+			closeModal,
 			config: { options },
 		} = useOverlay().modal
 		const { network } = useNetwork()
@@ -83,7 +83,7 @@ export const Forms = forwardRef(
 			from: activeAddress,
 			shouldSubmit: valid,
 			callbackSubmit: () => {
-				setModalStatus('closing')
+				closeModal()
 			},
 			callbackInBlock: () => {
 				// if pool is being closed, remove from static lists

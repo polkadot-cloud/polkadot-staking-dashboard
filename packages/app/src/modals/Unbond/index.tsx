@@ -41,7 +41,7 @@ export const Unbond = () => {
 		stakingMetrics: { minNominatorBond: minNominatorBondBigInt },
 	} = useApi()
 	const {
-		setModalStatus,
+		closeModal,
 		setModalResize,
 		config: { options },
 	} = useOverlay().modal
@@ -124,7 +124,7 @@ export const Unbond = () => {
 		from: activeAddress,
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

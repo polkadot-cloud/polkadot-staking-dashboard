@@ -17,7 +17,7 @@ export const BalanceTest = () => {
 	const { network } = useNetwork()
 	const { newBatchCall } = useBatchCall()
 	const { activeAddress } = useActiveAccounts()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { units } = getStakingChainData(network)
 
 	const getTx = () => {
@@ -44,7 +44,7 @@ export const BalanceTest = () => {
 		from: activeAddress,
 		shouldSubmit: true,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

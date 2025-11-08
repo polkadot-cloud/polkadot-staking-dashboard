@@ -16,7 +16,7 @@ export const ChangePoolRoles = () => {
 	const { replacePoolRoles } = useBondedPools()
 	const { activeAddress } = useActiveAccounts()
 	const {
-		setModalStatus,
+		closeModal,
 		config: { options },
 	} = useOverlay().modal
 	const { id: poolId, roleEdits } = options
@@ -33,7 +33,7 @@ export const ChangePoolRoles = () => {
 		from: activeAddress,
 		shouldSubmit: true,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 		callbackInBlock: () => {
 			// manually update bondedPools with new pool roles

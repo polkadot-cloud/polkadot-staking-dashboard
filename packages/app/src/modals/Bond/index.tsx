@@ -26,7 +26,7 @@ import { planckToUnitBn } from 'utils'
 export const Bond = () => {
 	const { t } = useTranslation('modals')
 	const {
-		setModalStatus,
+		closeModal,
 		config: { options },
 		setModalResize,
 	} = useOverlay().modal
@@ -122,7 +122,7 @@ export const Bond = () => {
 		from: activeAddress,
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

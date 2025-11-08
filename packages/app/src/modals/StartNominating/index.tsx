@@ -14,7 +14,7 @@ import { ItemsWrapper, ItemWrapper } from './Wrappers'
 export const StartNominating = () => {
 	const { t } = useTranslation()
 	const { openCanvas } = useOverlay().canvas
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { setNominatorSetup, removeNominatorSetup, generateOptimalSetup } =
 		useNominatorSetups()
@@ -27,7 +27,7 @@ export const StartNominating = () => {
 					<ItemWrapper
 						type="button"
 						onClick={() => {
-							setModalStatus('closing')
+							closeModal()
 							// Set optimal nominator setup here, ready for canvas to display summary
 							setNominatorSetup(generateOptimalSetup(), true, 4)
 							openCanvas({
@@ -46,7 +46,7 @@ export const StartNominating = () => {
 					<ItemWrapper
 						type="button"
 						onClick={() => {
-							setModalStatus('closing')
+							closeModal()
 							removeNominatorSetup(activeAddress)
 							openCanvas({
 								key: 'NominatorSetup',
