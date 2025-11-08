@@ -82,7 +82,6 @@ export const NotificationsPopover = ({
 					text: t('dismiss'),
 					onClick: () => {
 						dismissInvite()
-						setOpen(false)
 					},
 					disabled: false,
 				},
@@ -99,14 +98,7 @@ export const NotificationsPopover = ({
 			}}
 		>
 			<Padding>
-				<Heading
-					style={{
-						borderBottom:
-							notifications.length > 0
-								? 'none'
-								: '1px solid var(--border-primary-color)',
-					}}
-				>
+				<Heading border={notifications.length === 0}>
 					{t('notification', { count: notifications.length })}
 				</Heading>
 				<List>

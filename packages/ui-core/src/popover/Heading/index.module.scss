@@ -3,7 +3,11 @@
 
 .heading {
   color: var(--text-color-secondary);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 1.6rem;
   padding-bottom: 1rem;
+
+  &.border {
+    border-bottom: 1px solid var(--border-primary-color);
+  }
 }

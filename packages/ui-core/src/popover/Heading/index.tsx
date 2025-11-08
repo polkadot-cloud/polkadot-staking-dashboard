@@ -1,17 +1,25 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import classNames from 'classnames'
 import type { CSSProperties, ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Heading = ({
 	children,
 	style,
+	border,
 }: {
 	children: ReactNode
 	style?: CSSProperties
-}) => (
-	<div className={classes.heading} style={{ ...style }}>
-		{children}
-	</div>
-)
+	border?: boolean
+}) => {
+	const allClasses = classNames(classes.heading, {
+		[classes.border]: border,
+	})
+	return (
+		<div className={allClasses} style={{ ...style }}>
+			{children}
+		</div>
+	)
+}
