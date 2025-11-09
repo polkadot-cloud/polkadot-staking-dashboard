@@ -3,6 +3,7 @@
 
 import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
 import type {
+	PalletBalancesAccountData,
 	PalletNominationPoolsPoolMember,
 	PalletNominationPoolsPoolState,
 	PalletStakingRewardDestination,
@@ -22,6 +23,9 @@ import type {
 
 export interface ServiceInterface {
 	query: {
+		accountBalance: {
+			hub: (address: string) => Promise<PalletBalancesAccountData | undefined>
+		}
 		erasValidatorRewardMulti: (
 			eras: number[],
 		) => Promise<(bigint | undefined)[]>

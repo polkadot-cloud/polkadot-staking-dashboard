@@ -61,7 +61,7 @@ export const AccountPopover = ({
 					text={t('switchAccount', { ns: 'app' })}
 					onClick={() => {
 						setOpen(false)
-						openModal({ key: 'Accounts' })
+						openModal({ key: 'BalanceTest' })
 					}}
 				/>
 				<PopoverTab.Button

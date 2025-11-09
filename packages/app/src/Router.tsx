@@ -105,7 +105,7 @@ const RouterInner = () => {
 					<StakingApi who={activeAddress} network={network} />
 				)}
 				<NotificationPrompts />
-				<Page.Body>
+				<Page.Body id="portal-root">
 					<Help />
 					<Overlays />
 					<Menu />
