@@ -19,6 +19,13 @@
   &:hover {
     border-color: var(--accent-color-pending);
   }
+
+  &.disabled {
+    cursor: default;
+    &:hover {
+      border-color: var(--border-secondary-color);
+    }
+  }
 }
 
 .input {
@@ -29,8 +36,8 @@
   width: 100%;
   padding: 0;
 
-  &:focus {
-    &.enabled {
+  &.enabled {
+    &:focus {
       min-height: 4.75rem;
       max-height: 4.75rem;
     }

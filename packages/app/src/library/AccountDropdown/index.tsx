@@ -14,7 +14,7 @@ import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { RootPortal } from 'library/RootPortal'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
@@ -33,6 +33,11 @@ export const AccountDropdown = ({
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { units, unit } = getStakingChainData(network)
+
+	// Generate unique ID for this component instance
+	const instanceId = useId()
+	const containerClass = `selected-account-${instanceId}`
+	const dropdownClass = `account-input-dropdown-${instanceId}`
 
 	// Manage internal state for selected account
 	const [selectedAccount, setSelectedAccount] =
@@ -189,7 +194,7 @@ export const AccountDropdown = ({
 		setIsOpen(false)
 		setSearchTerm('')
 		setIsInputFocused(false)
-	}, ['selected-account', 'account-input-dropdown'])
+	}, [containerClass, dropdownClass])
 
 	// Display value for the input field
 	const inputValue = isInputFocused ? searchTerm : selectedAccount?.name || ''
@@ -208,7 +213,7 @@ export const AccountDropdown = ({
 	return (
 		<>
 			<AccountInput.Container
-				className="selected-account"
+				className={containerClass}
 				ref={dropdownRef}
 				onClick={() => {
 					if (!isInputFocused && !disabled) {
@@ -216,6 +221,7 @@ export const AccountDropdown = ({
 						inputRef.current?.focus()
 					}
 				}}
+				disabled={disabled}
 			>
 				<span
 					style={{
@@ -238,16 +244,19 @@ export const AccountDropdown = ({
 						}
 						value={inputValue}
 						onChange={(e) => {
+							if (disabled) return
 							setSearchTerm(e.target.value)
 							if (!isOpen) {
 								handleOpenDropdown()
 							}
 						}}
 						onFocus={() => {
+							if (disabled) return
 							setIsInputFocused(true)
 							handleOpenDropdown()
 						}}
 						onBlur={() => {
+							if (disabled) return
 							// Small delay to allow click events to fire
 							setTimeout(() => {
 								setIsInputFocused(false)
@@ -286,10 +295,7 @@ export const AccountDropdown = ({
 					top={dropdownPosition.top}
 					left={dropdownPosition.left}
 				>
-					<AccountInput.ListContainer
-						ref={menuRef}
-						className="account-input-dropdown"
-					>
+					<AccountInput.ListContainer ref={menuRef} className={dropdownClass}>
 						<SimpleBar style={{ maxHeight: '300px' }}>
 							{filteredAccounts.map((account) => {
 								// Determine account source icon

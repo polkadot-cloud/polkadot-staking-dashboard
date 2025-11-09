@@ -18,12 +18,16 @@ const Container = forwardRef<
 	HTMLButtonElement,
 	ComponentBaseWithClassName & {
 		onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+		disabled?: boolean
 	}
->(({ children, style, className, onClick }, ref) => {
+>(({ children, style, className, onClick, disabled }, ref) => {
+	const allClasses = classNames(classes.container, className, {
+		[classes.disabled]: !!disabled,
+	})
 	return (
 		<button
 			type="button"
-			className={classNames(classes.container, className)}
+			className={allClasses}
 			style={style}
 			ref={ref}
 			onClick={onClick}
@@ -68,7 +72,6 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 				onFocus={onFocus}
 				onBlur={onBlur}
 				maxLength={30}
-				disabled={!!disabled}
 			/>
 		)
 	},

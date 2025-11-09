@@ -74,6 +74,7 @@ export const BalanceTest = () => {
 					initialAccount={getAccount(activeAccount)}
 					accounts={accountsWithSigners}
 					onSelect={setFromAccount}
+					disabled
 				/>
 
 				<h4 style={{ marginTop: '1rem' }}>To:</h4>
