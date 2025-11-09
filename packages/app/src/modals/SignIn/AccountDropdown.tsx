@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, planckToUnit } from '@w3ux/utils'
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useNetwork } from 'contexts/Network'
@@ -21,7 +20,6 @@ import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
 import { AccountInput } from 'ui-core/input'
 import type { AccountDropdownProps } from './types'
-import { DropdownMenu } from './Wrappers'
 
 export const AccountDropdown = ({
 	accounts,
@@ -223,7 +221,7 @@ export const AccountDropdown = ({
 					top={dropdownPosition.top}
 					left={dropdownPosition.left}
 				>
-					<DropdownMenu ref={menuRef} className="account-dropdown-menu">
+					<AccountInput.ListContainer ref={menuRef}>
 						<SimpleBar style={{ maxHeight: '300px' }}>
 							<div className="accounts-list">
 								{filteredAccounts.length > 0 ? (
@@ -239,14 +237,13 @@ export const AccountDropdown = ({
 														: ExtensionIcons[account.source] || undefined
 
 										return (
-											<div
-												key={`${account.address}-${account.source}`}
-												className={`account-item ${
+											<AccountInput.ListItem
+												account={account}
+												isSelected={
 													selectedAccount?.address === account.address &&
 													selectedAccount?.source === account.source
-														? 'selected'
-														: ''
-												}`}
+												}
+												key={`${account.address}-${account.source}`}
 												onClick={() => handleSelect(account)}
 												onKeyDown={(e) => {
 													if (e.key === 'Enter' || e.key === ' ') {
@@ -259,34 +256,29 @@ export const AccountDropdown = ({
 													fontSize="2.25rem"
 													background="transparent"
 												/>
-												<div className="account-details">
-													<span className="account-name">
-														{account.name || 'Unknown'}
-													</span>
-													<span className="account-address">
-														{ellipsisFn(account.address)}
-													</span>
-												</div>
+												<AccountInput.InnerLeft>
+													<AccountInput.ListName
+														name={account.name || 'Unknown'}
+													/>
+													<AccountInput.Address address={account.address} />
+												</AccountInput.InnerLeft>
 												{Icon !== undefined ? (
-													<span className="account-source-icon">
-														<Icon />
-													</span>
-												) : account.source === 'external' ? (
-													<FontAwesomeIcon
-														icon={faGlasses}
-														className="account-source-icon"
-														style={{ opacity: 0.7 }}
+													<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
+												) : selectedAccount?.source === 'external' ? (
+													<AccountInput.SourceIcon
+														faIcon={faGlasses}
+														size="sm"
 													/>
 												) : null}
-											</div>
+											</AccountInput.ListItem>
 										)
 									})
 								) : (
-									<div className="no-results">No accounts found</div>
+									<h3>No Accounts Found</h3>
 								)}
 							</div>
 						</SimpleBar>
-					</DropdownMenu>
+					</AccountInput.ListContainer>
 				</RootPortal>
 			)}
 		</>

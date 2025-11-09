@@ -17,7 +17,7 @@
   width: 100%;
 
   &:hover {
-    border-color: var(--accent-color-primary);
+    border-color: var(--accent-color-pending);
   }
 }
 
@@ -49,6 +49,11 @@
   width: 1.25rem;
   height: 1.25rem;
   margin-top: 0.5rem;
+
+  &.sm {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
   
   svg {
     width: 100%;
@@ -79,4 +84,38 @@
 .balance {
   color: var(--text-color-secondary);
   font-size: 0.95rem;
+}
+
+.listContainer {
+  background: var(--background-primary);
+  border: 1px solid var(--border-primary-color);
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  z-index: 101;
+  overflow: hidden;
+}
+
+.listItem {
+  background: var(--background-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--background-default);
+  }
+
+  &.selected {
+    background: var(--background-default);
+  }
+}
+
+.listName {
+  color: var(--text-color-primary);
+  font-family: InterSemiBold, sans-serif;
+  font-size: 1.1rem
 }

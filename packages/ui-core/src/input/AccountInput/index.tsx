@@ -4,8 +4,9 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
+import classNames from 'classnames'
 import { type FunctionComponent, forwardRef, type SVGProps } from 'react'
-import type { ComponentBase } from 'types'
+import type { ComponentBase, ImportedAccount } from 'types'
 import type { AccountInputProps } from '../types'
 import classes from './index.module.scss'
 
@@ -73,20 +74,25 @@ const Address = ({ address, style }: ComponentBase & { address: string }) => {
 const SourceIcon = ({
 	SvgIcon,
 	faIcon,
+	size = 'lg',
 }: {
 	SvgIcon?: FunctionComponent<SVGProps<SVGSVGElement>>
 	faIcon?: IconDefinition
+	size?: 'sm' | 'lg'
 }) => {
+	const allClasses = classNames(classes.sourceIcon, {
+		[classes.sm]: size === 'sm',
+	})
 	if (SvgIcon) {
 		return (
-			<span className={classes.sourceIcon}>
+			<span className={allClasses}>
 				<SvgIcon />
 			</span>
 		)
 	}
 	if (faIcon) {
 		return (
-			<span className={classes.sourceIcon}>
+			<span className={allClasses}>
 				<FontAwesomeIcon icon={faIcon} />
 			</span>
 		)
@@ -108,6 +114,51 @@ const Balance = ({
 	)
 }
 
+const ListContainer = forwardRef<HTMLDivElement, ComponentBase>(
+	({ children, style }, ref) => {
+		return (
+			<div className={classes.listContainer} style={style} ref={ref}>
+				{children}
+			</div>
+		)
+	},
+)
+
+const ListItem = ({
+	account,
+	isSelected,
+	onClick,
+	onKeyDown,
+	children,
+}: ComponentBase & {
+	account: ImportedAccount
+	isSelected: boolean
+	onClick: (account: ImportedAccount) => void
+	onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void
+}) => {
+	const allClasses = classNames(classes.listItem, {
+		[classes.selected]: isSelected,
+	})
+	return (
+		<div
+			key={`${account.address}-${account.source}`}
+			className={allClasses}
+			onClick={() => onClick(account)}
+			onKeyDown={(ev) => onKeyDown(ev)}
+		>
+			{children}
+		</div>
+	)
+}
+
+const ListName = ({ name, style }: ComponentBase & { name: string }) => {
+	return (
+		<div className={classes.listName} style={style}>
+			{name}
+		</div>
+	)
+}
+
 export const AccountInput = {
 	Container,
 	InnerLeft,
@@ -116,4 +167,7 @@ export const AccountInput = {
 	Address,
 	SourceIcon,
 	Balance,
+	ListContainer,
+	ListItem,
+	ListName,
 }
