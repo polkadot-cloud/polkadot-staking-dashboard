@@ -137,7 +137,7 @@ export const AccountDropdown = ({
 	// Notify parent when dropdown state changes
 	useEffect(() => {
 		onOpenChange?.(isOpen)
-	}, [isOpen, onOpenChange, accounts])
+	}, [isOpen, accounts.map((acc) => acc.address).join(',')])
 
 	useEffect(() => {
 		handleFetchBalance(selectedAddress)
