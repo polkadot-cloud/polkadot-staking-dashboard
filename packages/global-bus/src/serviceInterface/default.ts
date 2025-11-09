@@ -5,6 +5,9 @@ import type { ServiceInterface } from 'types'
 
 export const defaultServiceInterface: ServiceInterface = {
 	query: {
+		accountBalance: {
+			hub: async () => undefined,
+		},
 		erasValidatorRewardMulti: async () => [],
 		bondedPool: async () => undefined,
 		bondedPoolEntries: async () => [],
