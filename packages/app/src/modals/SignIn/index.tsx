@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { AccountDropdown } from 'library/AccountDropdown'
 import { Warning } from 'library/Form/Warning'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import { useAuthChallenge } from 'plugin-staking-api'
@@ -10,7 +11,6 @@ import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
 import { CustomHeader, Padding, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { AccountDropdown } from './AccountDropdown'
 import { ContentWrapper } from './Wrappers'
 
 export const SignIn = () => {
