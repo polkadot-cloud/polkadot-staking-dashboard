@@ -24,7 +24,7 @@ import type { AccountDropdownProps } from './types'
 
 export const AccountDropdown = ({
 	accounts,
-	selectedAccount,
+	initialAccount,
 	onSelect,
 	onOpenChange,
 }: AccountDropdownProps) => {
@@ -32,6 +32,16 @@ export const AccountDropdown = ({
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { units, unit } = getStakingChainData(network)
+
+	// Manage internal state for selected account
+	const [selectedAccount, setSelectedAccount] =
+		useState<ImportedAccount | null>(
+			initialAccount !== undefined
+				? initialAccount
+				: accounts.length > 0
+					? accounts[0]
+					: null,
+		)
 
 	// The currently selected address of this input
 	const selectedAddress = selectedAccount?.address || ''
@@ -127,6 +137,17 @@ export const AccountDropdown = ({
 		handleFetchBalance(selectedAddress)
 	}, [selectedAddress])
 
+	// Sync internal state when accounts change
+	useEffect(() => {
+		if (
+			initialAccount === undefined &&
+			!selectedAccount &&
+			accounts.length > 0
+		) {
+			setSelectedAccount(accounts[0])
+		}
+	}, [accounts, selectedAccount, initialAccount])
+
 	// Filter accounts based on search term
 	let filteredAccounts = accounts.filter(
 		(account) =>
@@ -152,7 +173,10 @@ export const AccountDropdown = ({
 
 	// Handle account selection
 	const handleSelect = (account: ImportedAccount) => {
-		onSelect(account)
+		setSelectedAccount(account)
+		// Call callback
+		onSelect?.(account)
+
 		setIsOpen(false)
 		setSearchTerm('')
 		setIsInputFocused(false)

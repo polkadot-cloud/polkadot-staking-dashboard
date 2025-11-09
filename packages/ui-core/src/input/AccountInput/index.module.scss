@@ -32,6 +32,7 @@
   &:focus {
     padding: 0;
     min-height: 4.75rem;
+    max-height: 4.75rem;
   }
 
   &::placeholder {

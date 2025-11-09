@@ -25,9 +25,7 @@ export const SignIn = () => {
 	)
 
 	const [selectedAccount, setSelectedAccount] =
-		useState<ImportedAccount | null>(
-			accountsWithSigners.length > 0 ? accountsWithSigners[0] : null,
-		)
+		useState<ImportedAccount | null>(null)
 
 	const [challengeData, setChallengeData] = useState<{
 		challengeId: string
@@ -110,7 +108,6 @@ export const SignIn = () => {
 						<h4>{t('selectMasterAccount')}</h4>
 						<AccountDropdown
 							accounts={accountsWithSigners}
-							selectedAccount={selectedAccount}
 							onSelect={setSelectedAccount}
 							onOpenChange={() => {
 								setModalResize()
