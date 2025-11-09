@@ -171,10 +171,8 @@ export const AccountDropdown = ({
 								/>
 							</span>
 							<div className="account-details">
-								<input
+								<AccountInput.Input
 									ref={inputRef}
-									type="text"
-									className="account-name"
 									placeholder={
 										selectedAccount?.name || 'Search by address or name...'
 									}
@@ -201,24 +199,24 @@ export const AccountDropdown = ({
 								)}
 							</div>
 							{!isInputFocused && (
-								<div className="account-right">
+								<AccountInput.InnerRight>
 									<div>
-										<h4>
-											{t('free', { ns: 'modals' })}:{' '}
-											{new BigNumber(
+										<AccountInput.Balance
+											label={t('free', { ns: 'modals' })}
+											value={new BigNumber(
 												planckToUnit(transferableBalance || 0n, units),
 											)
 												.decimalPlaces(3)
-												.toFormat()}{' '}
-											{unit}
-										</h4>
+												.toFormat()}
+											unit={unit}
+										/>
 									</div>
 									{SelectedIcon !== undefined ? (
 										<AccountInput.SourceIcon SvgIcon={SelectedIcon} />
 									) : selectedAccount.source === 'external' ? (
 										<AccountInput.SourceIcon faIcon={faGlasses} />
 									) : null}
-								</div>
+								</AccountInput.InnerRight>
 							)}
 						</div>
 					) : (

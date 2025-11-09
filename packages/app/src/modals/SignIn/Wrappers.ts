@@ -57,37 +57,6 @@ export const DropdownButton = styled.button`
     align-items: flex-start;
     flex: 1;
   }
-
-  .account-name {
-    color: var(--text-color-primary);
-    font-family: InterSemiBold, sans-serif;
-    font-size: 1.2rem;
-    flex: 1;
-    width: 100%;
-    padding: 0;
-
-    &:focus {
-      padding: 0;
-      min-height: 4.75rem;
-    }
-
-    &::placeholder {
-      opacity: 0.65;
-    }
-  }
-
-  .account-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-left: 0.5rem;
-
-    h4 {
-      color: var(--text-color-secondary);
-      font-size: 0.95rem;
-    }
-  }
 `
 
 export const DropdownMenu = styled.div`

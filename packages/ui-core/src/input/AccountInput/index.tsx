@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import { type FunctionComponent, forwardRef, type SVGProps } from 'react'
 import type { ComponentBase } from 'types'
+import type { AccountInputProps } from '../types'
 import classes from './index.module.scss'
 
 const Container = forwardRef<HTMLDivElement, ComponentBase>(
@@ -14,6 +15,24 @@ const Container = forwardRef<HTMLDivElement, ComponentBase>(
 			<div className={classes.container} style={style} ref={ref}>
 				{children}
 			</div>
+		)
+	},
+)
+
+const Input = forwardRef<HTMLInputElement, AccountInputProps>(
+	({ style, placeholder, value, onChange, onFocus, onBlur }, ref) => {
+		return (
+			<input
+				type="text"
+				value={value}
+				className={classes.input}
+				style={style}
+				ref={ref}
+				placeholder={placeholder}
+				onChange={onChange}
+				onFocus={onFocus}
+				onBlur={onBlur}
+			/>
 		)
 	},
 )
@@ -51,8 +70,32 @@ const SourceIcon = ({
 	return null
 }
 
+const InnerRight = ({ children, style }: ComponentBase) => {
+	return (
+		<div className={classes.innerRight} style={style}>
+			{children}
+		</div>
+	)
+}
+
+const Balance = ({
+	style,
+	label,
+	value,
+	unit,
+}: ComponentBase & { label: string; value: string; unit: string }) => {
+	return (
+		<h4 className={classes.balance} style={style}>
+			{label}: {value} {unit}
+		</h4>
+	)
+}
+
 export const AccountInput = {
 	Container,
+	Input,
 	Address,
 	SourceIcon,
+	InnerRight,
+	Balance,
 }
