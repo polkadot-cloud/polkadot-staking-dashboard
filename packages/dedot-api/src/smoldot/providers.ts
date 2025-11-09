@@ -5,6 +5,7 @@ import { SmoldotProvider } from 'dedot'
 import type { Client } from 'dedot/smoldot'
 import { startWithWorker } from 'dedot/smoldot/with-worker'
 import type { Network, SystemChain } from 'types'
+import type { RelayChainSetup } from './types'
 
 // Instantiate smoldot from worker
 const initSmWorker = () => {
@@ -14,13 +15,6 @@ const initSmWorker = () => {
 		}),
 	)
 	return client
-}
-
-// Result type for relay chain setup
-type RelayChainSetup = {
-	provider: SmoldotProvider
-	client: Client
-	relayChain: Awaited<ReturnType<Client['addChain']>>
 }
 
 // Instantiate a new relay chain smoldot provider and return the setup for reuse
