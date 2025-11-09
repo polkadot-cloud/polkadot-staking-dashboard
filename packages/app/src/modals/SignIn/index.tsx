@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { Warning } from 'library/Form/Warning'
@@ -9,9 +10,9 @@ import { useAuthChallenge } from 'plugin-staking-api'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
-import { CustomHeader, Padding, Warnings } from 'ui-core/modal'
+import { Padding, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
-import { ContentWrapper } from './Wrappers'
+import { ContentWrapper, TitleWrapper } from './Wrappers'
 
 export const SignIn = () => {
 	const { t } = useTranslation('modals')
@@ -91,12 +92,6 @@ export const SignIn = () => {
 		<>
 			<Close />
 			<Padding>
-				<CustomHeader>
-					<div>
-						<h1>{t('signIn')}</h1>
-					</div>
-				</CustomHeader>
-
 				{accountsWithSigners.length === 0 && (
 					<Warnings>
 						<Warning text={t('noActiveAccountWithSigner')} />
@@ -104,30 +99,43 @@ export const SignIn = () => {
 				)}
 
 				<ContentWrapper>
-					<div className="account-selection">
-						<h4>{t('selectMasterAccount')}</h4>
-						<AccountDropdown
-							accounts={accountsWithSigners}
-							onSelect={setSelectedAccount}
-							onOpenChange={() => {
-								setModalResize()
-							}}
-						/>
+					<div
+						style={{
+							width: '100%',
+							height: '4rem',
+							display: 'flex',
+							justifyContent: 'center',
+						}}
+					>
+						<CloudSVG />
 					</div>
-
+					<TitleWrapper>Cloud {t('signIn')}</TitleWrapper>
 					{error && (
 						<Warnings>
 							<Warning text={t('failedToFetchChallenge')} />
 						</Warnings>
 					)}
-
-					<div className="submit-section">
-						<ButtonSubmitLarge
-							disabled={!canSignIn}
-							onSubmit={() => handleSignIn()}
-							submitText={t('signIn')}
-							pulse={!!canSignIn}
+					<div className="account-selection">
+						<h4>{t('masterAccount')}</h4>
+						<AccountDropdown
+							accounts={accountsWithSigners}
+							onSelect={setSelectedAccount}
+							onOpenChange={() => setModalResize()}
 						/>
+
+						<p style={{ textAlign: 'center' }}>
+							Sign in to Polkadot Cloud with your master account. Your master
+							account can be used every time you sign in to sync your dashboard
+							state across devices.
+						</p>
+						<div className="submit-section">
+							<ButtonSubmitLarge
+								disabled={!canSignIn}
+								onSubmit={() => handleSignIn()}
+								submitText={t('signIn')}
+								pulse={!!canSignIn}
+							/>
+						</div>
 					</div>
 				</ContentWrapper>
 			</Padding>

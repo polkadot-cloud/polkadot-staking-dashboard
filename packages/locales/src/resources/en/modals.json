@@ -269,7 +269,7 @@
 		"searchCurrency": "Search",
 		"selectCurrency": "Select Currency",
 		"selectLanguage": "Select Language",
-		"selectMasterAccount": "Select Master Account",
+		"masterAccount": "Master Account",
 		"selectNetwork": "Select Network",
 		"selectRpcProvider": "Select an RPC provider to change the {{network}} node Cloud Staking connects to.",
 		"selected": "Selected",

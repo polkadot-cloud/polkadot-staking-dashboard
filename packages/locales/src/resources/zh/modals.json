@@ -257,7 +257,7 @@
 		"searchCurrency": "搜索",
 		"selectCurrency": "选择币种",
 		"selectLanguage": "选择语言",
-		"selectMasterAccount": "选择主账户",
+		"masterAccount": "主理人账户",
 		"selectNetwork": "网络选择",
 		"selectRpcProvider": "可选择任意一个RPC服务端来更改Cloud Staking连接的{{network}}节点",
 		"selected": "己选",
