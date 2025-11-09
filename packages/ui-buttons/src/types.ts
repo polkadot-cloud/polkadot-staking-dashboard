@@ -210,6 +210,7 @@ export type ButtonAccountStandaloneProps = ComponentBaseWithClassName &
 		hasSeparator?: boolean
 		marginX?: boolean
 		disabled?: boolean
+		noHoverBackground?: boolean
 	}
 
 export type ButtonModalProps = ComponentBaseWithClassName &

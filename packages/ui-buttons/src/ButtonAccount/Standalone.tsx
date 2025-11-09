@@ -20,9 +20,11 @@ export const Standalone = ({
 	onMouseOut,
 	hasSeparator,
 	disabled,
+	noHoverBackground,
 }: ButtonAccountStandaloneProps) => {
 	const allClasses = classNames(classes.btnAccount, {
 		[classes.marginLeft]: marginLeft,
+		[classes.noHoverBackground]: noHoverBackground,
 	})
 
 	return (

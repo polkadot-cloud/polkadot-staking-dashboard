@@ -87,6 +87,9 @@ SPDX-License-Identifier: GPL-3.0-only */
     background: var(--button-hover-background);
     color: var(--accent-color-primary);
     
+    &.noHoverBackground {
+      background: none;
+    }
     > .arrow {
       svg {
         opacity: 1;

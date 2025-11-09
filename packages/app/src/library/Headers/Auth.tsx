@@ -30,10 +30,9 @@ export const Auth = () => {
 			label={t('signIn')}
 			iconLeft={faUser}
 			style={style}
+			onClick={() => openModal({ key: 'SignIn', size: 'sm' })}
 			hasSeparator
-			onClick={() => {
-				openModal({ key: 'SignIn', size: 'sm' })
-			}}
+			noHoverBackground
 		/>
 	) : (
 		<Popover
@@ -49,8 +48,9 @@ export const Auth = () => {
 				iconLeft={faUser}
 				iconRight={faChevronDown}
 				style={style}
-				hasSeparator
 				className="header-auth"
+				hasSeparator
+				noHoverBackground
 			/>
 		</Popover>
 	)
