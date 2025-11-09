@@ -266,6 +266,9 @@ importers:
 
   packages/consts:
     dependencies:
+      '@dedot/chain-specs':
+        specifier: ^0.0.2
+        version: 0.0.2
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -791,6 +794,9 @@ packages:
   '@dedot/api@0.18.5':
     resolution: {integrity: sha512-S/B/mvOM/VDnOk14TDakFRBR6TFA+b3h8gz2vue8WL0NVDWPoIFVyZPmwj7KGeE4KKYjSXB8rQNDk+CJtv/gFA==}
     engines: {node: '>=18'}
+
+  '@dedot/chain-specs@0.0.2':
+    resolution: {integrity: sha512-OBgzSsZqFREhsvsop/XHGY4yIpBRj+UJOb/tFOMvUwIbdR2CuGR95HIvXw3x8l0aOGxMP7Udf+zPM3dg6MRkRA==}
 
   '@dedot/chaintypes@0.176.0':
     resolution: {integrity: sha512-mVNsyrsbjjC4gxP3oTTsg0cVQzFNdVJy68dHhrQ3mTipmPoqtui9iyuQ8lwfJkLrH7XpzUBgtr9V2uP6ezjfnA==}
@@ -5659,6 +5665,8 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  '@dedot/chain-specs@0.0.2': {}
+
   '@dedot/chaintypes@0.176.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))':
     dependencies:
       dedot: 0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
@@ -10437,7 +10445,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.1.0(typescript@5.9.3)(zod@4.1.12)
+      abitype: 1.1.0(typescript@5.9.3)(zod@3.22.4)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.9.3
@@ -11288,7 +11296,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.1.0(typescript@5.9.3)(zod@4.1.12)
+      abitype: 1.1.0(typescript@5.9.3)(zod@3.22.4)
       isows: 1.0.7(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       ox: 0.9.6(typescript@5.9.3)
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
