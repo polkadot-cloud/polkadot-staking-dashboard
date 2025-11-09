@@ -62,6 +62,7 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 				onChange={onChange}
 				onFocus={onFocus}
 				onBlur={onBlur}
+				maxLength={30}
 			/>
 		)
 	},
