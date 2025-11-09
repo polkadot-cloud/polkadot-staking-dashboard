@@ -27,6 +27,7 @@ export const AccountDropdown = ({
 	initialAccount,
 	onSelect,
 	onOpenChange,
+	disabled = false,
 }: AccountDropdownProps) => {
 	const { t } = useTranslation()
 	const { serviceApi } = useApi()
@@ -74,7 +75,7 @@ export const AccountDropdown = ({
 
 	// Handle opening of dropdown if there are accounts to choose from
 	const handleOpenDropdown = () => {
-		if (accounts.length > 0) {
+		if (accounts.length > 0 && !disabled) {
 			setIsOpen(true)
 		}
 	}
@@ -210,7 +211,7 @@ export const AccountDropdown = ({
 				className="selected-account"
 				ref={dropdownRef}
 				onClick={() => {
-					if (!isInputFocused) {
+					if (!isInputFocused && !disabled) {
 						handleOpenDropdown()
 						inputRef.current?.focus()
 					}
@@ -231,6 +232,7 @@ export const AccountDropdown = ({
 				<AccountInput.InnerLeft>
 					<AccountInput.Input
 						ref={inputRef}
+						disabled={disabled}
 						placeholder={
 							selectedAccount?.name || t('searchAddress', { ns: 'app' })
 						}

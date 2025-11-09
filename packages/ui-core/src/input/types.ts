@@ -23,4 +23,5 @@ export type AccountInputProps = ComponentBase & {
 	onChange: ChangeEventHandler<HTMLInputElement>
 	onFocus: FocusEventHandler<HTMLInputElement>
 	onBlur: FocusEventHandler<HTMLInputElement>
+	disabled?: boolean
 }

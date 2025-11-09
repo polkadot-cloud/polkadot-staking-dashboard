@@ -8,4 +8,5 @@ export interface AccountDropdownProps {
 	initialAccount?: ImportedAccount | null
 	onSelect?: (account: ImportedAccount | null) => void
 	onOpenChange?: (isOpen: boolean) => void
+	disabled?: boolean
 }

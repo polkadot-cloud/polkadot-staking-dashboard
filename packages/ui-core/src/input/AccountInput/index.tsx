@@ -50,12 +50,17 @@ const InnerRight = ({ children, style }: ComponentBase) => {
 }
 
 const Input = forwardRef<HTMLInputElement, AccountInputProps>(
-	({ style, placeholder, value, onChange, onFocus, onBlur }, ref) => {
+	({ style, placeholder, value, onChange, onFocus, onBlur, disabled }, ref) => {
+		const allClasses = classNames(classes.input, {
+			[classes.disabled]: !!disabled,
+			[classes.enabled]: !disabled,
+		})
+
 		return (
 			<input
 				type="text"
 				value={value}
-				className={classes.input}
+				className={allClasses}
 				style={style}
 				ref={ref}
 				placeholder={placeholder}
@@ -63,6 +68,7 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 				onFocus={onFocus}
 				onBlur={onBlur}
 				maxLength={30}
+				disabled={!!disabled}
 			/>
 		)
 	},
