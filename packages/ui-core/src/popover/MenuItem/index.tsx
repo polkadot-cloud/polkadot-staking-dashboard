@@ -3,6 +3,7 @@
 
 import classNames from 'classnames'
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react'
+import type { ComponentBaseWithClassName } from 'types'
 import classes from './index.module.scss'
 
 export const MenuItem = ({ children }: { children: ReactNode }) => {
@@ -13,9 +14,10 @@ export const MenuItem = ({ children }: { children: ReactNode }) => {
 
 export const MenuItemButton = ({
 	children,
+	style,
 	onClick,
 	disabled,
-}: {
+}: ComponentBaseWithClassName & {
 	children: ReactNode
 	onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void
 	disabled?: boolean
@@ -29,6 +31,7 @@ export const MenuItemButton = ({
 			onClick={(e) => onClick(e)}
 			className={allClasses}
 			disabled={disabled}
+			style={style}
 		>
 			{children}
 		</button>

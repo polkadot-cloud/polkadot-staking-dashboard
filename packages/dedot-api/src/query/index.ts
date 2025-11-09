@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { accountBalance } from './accountBalance'
 import { bondedPool } from './bondedPool'
 import { bondedPoolEntries } from './bondedPoolEntries'
 import { erasStakersOverviewEntries } from './erasStakersOverviewEntries'
@@ -17,6 +18,7 @@ import { validatorEntries } from './validatorEntries'
 import { validatorsMulti } from './validatorsMulti'
 
 export const query = {
+	accountBalance,
 	bondedPool,
 	bondedPoolEntries,
 	erasStakersOverviewEntries,

@@ -8,8 +8,14 @@ import classes from './index.module.scss'
  * @name Body
  * @summary An element that houses Side and Main.
  */
-export const Body = ({ children, style }: ComponentBase) => (
-	<div className={classes.body} style={style}>
+export const Body = ({
+	children,
+	style,
+	id,
+}: ComponentBase & {
+	id?: string
+}) => (
+	<div className={classes.body} style={style} id={id}>
 		{children}
 	</div>
 )
