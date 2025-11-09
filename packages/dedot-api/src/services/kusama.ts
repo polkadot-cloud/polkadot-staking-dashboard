@@ -70,6 +70,10 @@ export class KusamaService
 		// Initialize service interface with network-specific routing
 		this.interface = {
 			query: {
+				accountBalance: {
+					hub: async (address) =>
+						await query.accountBalance(this.apiHub, address),
+				},
 				erasValidatorRewardMulti: async (eras) =>
 					await query.erasValidatorRewardMulti(this.apiHub, eras),
 				bondedPool: async (poolId) =>
