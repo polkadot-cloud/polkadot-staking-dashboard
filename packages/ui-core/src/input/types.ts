@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ChangeEvent } from 'react'
+import type { ChangeEvent, ChangeEventHandler, FocusEventHandler } from 'react'
+import type { ComponentBase } from 'types'
 
 export interface TokenInputProps {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -14,4 +15,13 @@ export interface TokenInputProps {
 
 export interface SwitchProps {
 	checked: boolean
+}
+
+export type AccountInputProps = ComponentBase & {
+	placeholder: string
+	value: string
+	onChange: ChangeEventHandler<HTMLInputElement>
+	onFocus: FocusEventHandler<HTMLInputElement>
+	onBlur: FocusEventHandler<HTMLInputElement>
+	disabled?: boolean
 }

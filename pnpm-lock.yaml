@@ -192,6 +192,9 @@ importers:
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
+      simplebar-react:
+        specifier: 3.3.2
+        version: 3.3.2(react@19.2.0)
       styled-components:
         specifier: ^6.1.18
         version: 6.1.19(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
