@@ -94,8 +94,8 @@ importers:
         specifier: 2.2.6
         version: 2.2.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.7
-        version: 3.2.7(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(utf-8-validate@5.0.10)
+        specifier: ^3.2.11
+        version: 3.2.11(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12)
       '@w3ux/utils':
         specifier: ^2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -272,6 +272,9 @@ importers:
 
   packages/consts:
     dependencies:
+      '@dedot/chain-specs':
+        specifier: ^0.0.2
+        version: 0.0.2
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -461,8 +464,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.7
-        version: 3.2.7(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(utf-8-validate@5.0.10)
+        specifier: ^3.2.11
+        version: 3.2.11(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: 2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -498,8 +501,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.0)
       '@w3ux/react-polkicon':
-        specifier: ^3.2.7
-        version: 3.2.7(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(utf-8-validate@5.0.10)
+        specifier: ^3.2.11
+        version: 3.2.11(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@w3ux/utils':
         specifier: 2.2.3
         version: 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -797,6 +800,9 @@ packages:
   '@dedot/api@0.18.5':
     resolution: {integrity: sha512-S/B/mvOM/VDnOk14TDakFRBR6TFA+b3h8gz2vue8WL0NVDWPoIFVyZPmwj7KGeE4KKYjSXB8rQNDk+CJtv/gFA==}
     engines: {node: '>=18'}
+
+  '@dedot/chain-specs@0.0.2':
+    resolution: {integrity: sha512-OBgzSsZqFREhsvsop/XHGY4yIpBRj+UJOb/tFOMvUwIbdR2CuGR95HIvXw3x8l0aOGxMP7Udf+zPM3dg6MRkRA==}
 
   '@dedot/chaintypes@0.176.0':
     resolution: {integrity: sha512-mVNsyrsbjjC4gxP3oTTsg0cVQzFNdVJy68dHhrQ3mTipmPoqtui9iyuQ8lwfJkLrH7XpzUBgtr9V2uP6ezjfnA==}
@@ -2914,8 +2920,8 @@ packages:
       react: ^19.1.0
       react-dom: ^19.1.0
 
-  '@w3ux/react-polkicon@3.2.7':
-    resolution: {integrity: sha512-9oXdaxTZCSREc6JDN5IcVgIJ0NjmuN4dCql4hWGPsmHS0XWtnYSRTLtVhD5ledwtPgZ6umUEDGjXBMeECrpVHg==}
+  '@w3ux/react-polkicon@3.2.11':
+    resolution: {integrity: sha512-8W3cWu0Ika4TvYFoaGxXiG/LhHJ8pM6Vbt+oNKZrrXuWZu7xNcNRacu+ISfrkpnIAk+6SUIhycmdWdGHqXHydQ==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -5665,6 +5671,8 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  '@dedot/chain-specs@0.0.2': {}
+
   '@dedot/chaintypes@0.176.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))':
     dependencies:
       dedot: 0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
@@ -8083,7 +8091,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.4
       '@noble/curves': 1.9.7
-      '@noble/hashes': 1.4.0
+      '@noble/hashes': 1.8.0
       '@solana/buffer-layout': 4.0.1
       '@solana/codecs-numbers': 2.3.0(typescript@5.9.3)
       agentkeepalive: 4.6.0
@@ -8253,7 +8261,7 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 12.20.55
+      '@types/node': 24.9.2
 
   '@types/debug@4.1.12':
     dependencies:
@@ -8293,7 +8301,7 @@ snapshots:
 
   '@types/ws@7.4.7':
     dependencies:
-      '@types/node': 12.20.55
+      '@types/node': 24.9.2
 
   '@types/ws@8.18.1':
     dependencies:
@@ -8395,16 +8403,31 @@ snapshots:
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
 
-  '@w3ux/react-polkicon@3.2.7(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(utf-8-validate@5.0.10)':
+  '@w3ux/react-polkicon@3.2.11(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@w3ux/crypto': 1.2.1
       '@w3ux/utils': 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      dedot: 0.13.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      dedot: 0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
     transitivePeerDependencies:
       - bufferutil
+      - typescript
       - utf-8-validate
+      - zod
+
+  '@w3ux/react-polkicon@3.2.11(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12)':
+    dependencies:
+      '@w3ux/crypto': 1.2.1
+      '@w3ux/utils': 2.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      dedot: 0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12)
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
+      - zod
 
   '@w3ux/types@2.4.1': {}
 
@@ -10365,8 +10388,8 @@ snapshots:
   ox@0.6.7(typescript@5.9.3)(zod@4.1.12):
     dependencies:
       '@adraffy/ens-normalize': 1.11.1
-      '@noble/curves': 1.8.1
-      '@noble/hashes': 1.7.1
+      '@noble/curves': 1.9.7
+      '@noble/hashes': 1.8.0
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
       abitype: 1.0.8(typescript@5.9.3)(zod@4.1.12)
