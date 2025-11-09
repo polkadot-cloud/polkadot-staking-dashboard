@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SmoldotProvider } from 'dedot'
+import type { Client } from 'dedot/smoldot'
 import { startWithWorker } from 'dedot/smoldot/with-worker'
 import type { Network, SystemChain } from 'types'
 
@@ -15,27 +16,39 @@ const initSmWorker = () => {
 	return client
 }
 
-// Instantiate a new relay chain smoldot provider
-export const newRelayChainSmProvider = async (networkData: Network) => {
-	const client = initSmWorker()
-	const { chainSpec } = await networkData.endpoints.getLightClient()
-	const chain = await client.addChain({ chainSpec })
-	return new SmoldotProvider(chain)
+// Result type for relay chain setup
+type RelayChainSetup = {
+	provider: SmoldotProvider
+	client: Client
+	relayChain: Awaited<ReturnType<Client['addChain']>>
 }
 
-// Instantiate a new system chain smoldot provider
-export const newSystemChainSmProvider = async (
+// Instantiate a new relay chain smoldot provider and return the setup for reuse
+export const newRelayChainSmProvider = async (
 	networkData: Network,
-	systemChainData: SystemChain,
-) => {
+): Promise<RelayChainSetup> => {
 	const client = initSmWorker()
 	const { chainSpec } = await networkData.endpoints.getLightClient()
+	const relayChain = await client.addChain({ chainSpec })
+	return {
+		provider: new SmoldotProvider(relayChain),
+		client,
+		relayChain,
+	}
+}
+
+// Instantiate a new system chain smoldot provider using an existing relay chain
+export const newSystemChainSmProvider = async (
+	client: Client,
+	relayChain: Awaited<ReturnType<Client['addChain']>>,
+	systemChainData: SystemChain,
+) => {
 	const { chainSpec: paraChainSpec } =
 		await systemChainData.endpoints.getLightClient()
 
 	const chain = await client.addChain({
 		chainSpec: paraChainSpec,
-		potentialRelayChains: [await client.addChain({ chainSpec })],
+		potentialRelayChains: [relayChain],
 	})
 	return new SmoldotProvider(chain)
 }
