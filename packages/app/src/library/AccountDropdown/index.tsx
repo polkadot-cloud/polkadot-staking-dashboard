@@ -11,14 +11,15 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { useAccountBalances } from 'hooks/useAccountBalances'
 import { RootPortal } from 'library/RootPortal'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
 import { AccountInput } from 'ui-core/input'
+import { getTransferrableBalance } from 'utils'
 import type { AccountDropdownProps } from './types'
 
 export const AccountDropdown = ({
@@ -28,15 +29,15 @@ export const AccountDropdown = ({
 	onOpenChange,
 }: AccountDropdownProps) => {
 	const { t } = useTranslation()
+	const { serviceApi } = useApi()
 	const { network } = useNetwork()
-
-	// TODO: If the account is not imported, asynchronously fetch its balance and then use
-	// `getTransferrableBalance` to calculate free balance here
-	const {
-		balances: { transferableBalance },
-	} = useAccountBalances(selectedAccount?.address || '')
-
 	const { units, unit } = getStakingChainData(network)
+
+	// The currently selected address of this input
+	const selectedAddress = selectedAccount?.address || ''
+
+	// Fetch account balance asynchronously
+	const [transferableBalance, setTransferableBalance] = useState<bigint>(0n)
 
 	// Whether the dropdown is open
 	const [isOpen, setIsOpen] = useState(false)
@@ -53,6 +54,13 @@ export const AccountDropdown = ({
 		left: number
 		width: number
 	} | null>(null)
+
+	const handleFetchBalance = async (address: string) => {
+		if (!address) return
+		const result = await serviceApi.query.accountBalance.hub(address)
+		const balance = getTransferrableBalance(result?.free || 0n, 0n)
+		setTransferableBalance(balance)
+	}
 
 	// Handle opening of dropdown if there are accounts to choose from
 	const handleOpenDropdown = () => {
@@ -114,6 +122,10 @@ export const AccountDropdown = ({
 	useEffect(() => {
 		onOpenChange?.(isOpen)
 	}, [isOpen, onOpenChange, accounts])
+
+	useEffect(() => {
+		handleFetchBalance(selectedAddress)
+	}, [selectedAddress])
 
 	// Filter accounts based on search term
 	const filteredAccounts = accounts.filter(
