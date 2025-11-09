@@ -8,7 +8,7 @@ import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { planckToUnit } from '@w3ux/utils'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useNetwork } from 'contexts/Network'
@@ -50,6 +50,13 @@ export const AccountDropdown = ({
 		left: number
 		width: number
 	} | null>(null)
+
+	// Handle opening of dropdown if there are accounts to choose from
+	const handleOpenDropdown = () => {
+		if (accounts.length > 0) {
+			setIsOpen(true)
+		}
+	}
 
 	const dropdownRef = useRef<HTMLButtonElement>(null)
 	const menuRef = useRef<HTMLDivElement>(null)
@@ -103,7 +110,7 @@ export const AccountDropdown = ({
 	// Notify parent when dropdown state changes
 	useEffect(() => {
 		onOpenChange?.(isOpen)
-	}, [isOpen, onOpenChange])
+	}, [isOpen, onOpenChange, accounts])
 
 	// Filter accounts based on search term
 	const filteredAccounts = accounts.filter(
@@ -149,14 +156,14 @@ export const AccountDropdown = ({
 				ref={dropdownRef}
 				onClick={() => {
 					if (!isInputFocused) {
-						setIsOpen(true)
+						handleOpenDropdown()
 						inputRef.current?.focus()
 					}
 				}}
 			>
 				<span
 					style={{
-						opacity: isInputFocused ? 0.25 : 1,
+						opacity: isInputFocused || !selectedAccount ? 0.25 : 1,
 						transition: 'opacity 0.15s',
 					}}
 				>
@@ -170,18 +177,18 @@ export const AccountDropdown = ({
 					<AccountInput.Input
 						ref={inputRef}
 						placeholder={
-							selectedAccount?.name || 'Search by address or name...'
+							selectedAccount?.name || t('searchAddress', { ns: 'app' })
 						}
 						value={inputValue}
 						onChange={(e) => {
 							setSearchTerm(e.target.value)
 							if (!isOpen) {
-								setIsOpen(true)
+								handleOpenDropdown()
 							}
 						}}
 						onFocus={() => {
 							setIsInputFocused(true)
-							setIsOpen(true)
+							handleOpenDropdown()
 						}}
 						onBlur={() => {
 							// Small delay to allow click events to fire
@@ -190,11 +197,11 @@ export const AccountDropdown = ({
 							}, 150)
 						}}
 					/>
-					{!isInputFocused && (
+					{!isInputFocused && selectedAccount && (
 						<AccountInput.Address address={selectedAccount?.address || ''} />
 					)}
 				</AccountInput.InnerLeft>
-				{!isInputFocused && (
+				{!isInputFocused && selectedAccount && (
 					<AccountInput.InnerRight>
 						<div>
 							<AccountInput.Balance
@@ -227,55 +234,58 @@ export const AccountDropdown = ({
 						className="account-input-dropdown"
 					>
 						<SimpleBar style={{ maxHeight: '300px' }}>
-							{filteredAccounts.length > 0 ? (
-								filteredAccounts.map((account) => {
-									// Determine account source icon
-									const Icon =
-										account.source === 'ledger'
-											? LedgerSVG
-											: account.source === 'vault'
-												? PolkadotVaultSVG
-												: account.source === 'wallet_connect'
-													? WalletConnectSVG
-													: ExtensionIcons[account.source] || undefined
+							{filteredAccounts.length > 0
+								? filteredAccounts.map((account) => {
+										// Determine account source icon
+										const Icon =
+											account.source === 'ledger'
+												? LedgerSVG
+												: account.source === 'vault'
+													? PolkadotVaultSVG
+													: account.source === 'wallet_connect'
+														? WalletConnectSVG
+														: ExtensionIcons[account.source] || undefined
 
-									return (
-										<AccountInput.ListItem
-											account={account}
-											isSelected={
-												selectedAccount?.address === account.address &&
-												selectedAccount?.source === account.source
-											}
-											key={`${account.address}-${account.source}`}
-											onClick={handleSelect}
-											onKeyDown={(e) => {
-												if (e.key === 'Enter' || e.key === ' ') {
-													handleSelect(account)
+										return (
+											<AccountInput.ListItem
+												account={account}
+												isSelected={
+													selectedAccount?.address === account.address &&
+													selectedAccount?.source === account.source
 												}
-											}}
-										>
-											<Polkicon
-												address={account.address}
-												fontSize="2.25rem"
-												background="transparent"
-											/>
-											<AccountInput.InnerLeft>
-												<AccountInput.ListName
-													name={account.name || 'Unknown'}
+												key={`${account.address}-${account.source}`}
+												onClick={handleSelect}
+												onKeyDown={(e) => {
+													if (e.key === 'Enter' || e.key === ' ') {
+														handleSelect(account)
+													}
+												}}
+											>
+												<Polkicon
+													address={account.address}
+													fontSize="2.25rem"
+													background="transparent"
 												/>
-												<AccountInput.Address address={account.address} />
-											</AccountInput.InnerLeft>
-											{Icon !== undefined ? (
-												<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
-											) : selectedAccount?.source === 'external' ? (
-												<AccountInput.SourceIcon faIcon={faGlasses} size="sm" />
-											) : null}
-										</AccountInput.ListItem>
-									)
-								})
-							) : (
-								<h3>No Accounts Found</h3>
-							)}
+												<AccountInput.InnerLeft>
+													<AccountInput.ListName
+														name={
+															account.name || ellipsisFn(account.address, 6)
+														}
+													/>
+													<AccountInput.Address address={account.address} />
+												</AccountInput.InnerLeft>
+												{Icon !== undefined ? (
+													<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
+												) : selectedAccount?.source === 'external' ? (
+													<AccountInput.SourceIcon
+														faIcon={faGlasses}
+														size="sm"
+													/>
+												) : null}
+											</AccountInput.ListItem>
+										)
+									})
+								: null}
 						</SimpleBar>
 					</AccountInput.ListContainer>
 				</RootPortal>

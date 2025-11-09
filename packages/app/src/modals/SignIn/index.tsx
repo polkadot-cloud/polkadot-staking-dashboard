@@ -9,12 +9,13 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
 import { CustomHeader, Padding, Warnings } from 'ui-core/modal'
-import { Close } from 'ui-overlay'
+import { Close, useOverlay } from 'ui-overlay'
 import { AccountDropdown } from './AccountDropdown'
 import { ContentWrapper } from './Wrappers'
 
 export const SignIn = () => {
 	const { t } = useTranslation('modals')
+	const { setModalResize } = useOverlay().modal
 	const { accounts, accountHasSigner } = useImportedAccounts()
 	const { authChallenge, loading, error } = useAuthChallenge()
 
@@ -98,37 +99,40 @@ export const SignIn = () => {
 					</div>
 				</CustomHeader>
 
-				{accountsWithSigners.length === 0 ? (
+				{accountsWithSigners.length === 0 && (
 					<Warnings>
 						<Warning text={t('noActiveAccountWithSigner')} />
 					</Warnings>
-				) : (
-					<ContentWrapper>
-						<div className="account-selection">
-							<h4>{t('selectMasterAccount')}</h4>
-							<AccountDropdown
-								accounts={accountsWithSigners}
-								selectedAccount={selectedAccount}
-								onSelect={setSelectedAccount}
-							/>
-						</div>
-
-						{error && (
-							<Warnings>
-								<Warning text={t('failedToFetchChallenge')} />
-							</Warnings>
-						)}
-
-						<div className="submit-section">
-							<ButtonSubmitLarge
-								disabled={!canSignIn}
-								onSubmit={() => handleSignIn()}
-								submitText={t('signIn')}
-								pulse={!!canSignIn}
-							/>
-						</div>
-					</ContentWrapper>
 				)}
+
+				<ContentWrapper>
+					<div className="account-selection">
+						<h4>{t('selectMasterAccount')}</h4>
+						<AccountDropdown
+							accounts={accountsWithSigners}
+							selectedAccount={selectedAccount}
+							onSelect={setSelectedAccount}
+							onOpenChange={() => {
+								setModalResize()
+							}}
+						/>
+					</div>
+
+					{error && (
+						<Warnings>
+							<Warning text={t('failedToFetchChallenge')} />
+						</Warnings>
+					)}
+
+					<div className="submit-section">
+						<ButtonSubmitLarge
+							disabled={!canSignIn}
+							onSubmit={() => handleSignIn()}
+							submitText={t('signIn')}
+							pulse={!!canSignIn}
+						/>
+					</div>
+				</ContentWrapper>
 			</Padding>
 		</>
 	)
