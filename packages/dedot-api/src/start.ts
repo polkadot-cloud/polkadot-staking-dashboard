@@ -41,20 +41,37 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 		SystemChainId,
 	]
 
-	const relayProvider =
-		providerType === 'ws'
-			? new WsProvider(relayData.endpoints.rpc[rpcEndpoints[network]])
-			: await newRelayChainSmProvider(relayData)
+	let relayProvider
+	let peopleProvider
+	let hubProvider
 
-	const peopleProvider =
-		providerType === 'ws'
-			? new WsProvider(peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]])
-			: await newSystemChainSmProvider(relayData, peopleData)
+	if (providerType === 'ws') {
+		relayProvider = new WsProvider(
+			relayData.endpoints.rpc[rpcEndpoints[network]],
+		)
+		peopleProvider = new WsProvider(
+			peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]],
+		)
+		hubProvider = new WsProvider(
+			hubData.endpoints.rpc[rpcEndpoints[hubChainId]],
+		)
+	} else {
+		// Initialize relay chain first and reuse it for system chains
+		const relaySetup = await newRelayChainSmProvider(relayData)
+		relayProvider = relaySetup.provider
 
-	const hubProvider =
-		providerType === 'ws'
-			? new WsProvider(hubData.endpoints.rpc[rpcEndpoints[hubChainId]])
-			: await newSystemChainSmProvider(relayData, hubData)
+		// Reuse the relay chain client and chain instance for system chains
+		peopleProvider = await newSystemChainSmProvider(
+			relaySetup.client,
+			relaySetup.relayChain,
+			peopleData,
+		)
+		hubProvider = await newSystemChainSmProvider(
+			relaySetup.client,
+			relaySetup.relayChain,
+			hubData,
+		)
+	}
 
 	setMultiApiStatus({
 		[network]: 'connecting',
