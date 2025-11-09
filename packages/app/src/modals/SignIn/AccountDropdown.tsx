@@ -19,8 +19,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
+import { AccountInput } from 'ui-core/input'
 import type { AccountDropdownProps } from './types'
-import { DropdownButton, DropdownMenu, DropdownWrapper } from './Wrappers'
+import { DropdownButton, DropdownMenu } from './Wrappers'
 
 export const AccountDropdown = ({
 	accounts,
@@ -145,7 +146,7 @@ export const AccountDropdown = ({
 
 	return (
 		<>
-			<DropdownWrapper ref={dropdownRef}>
+			<AccountInput.Container ref={dropdownRef}>
 				<DropdownButton
 					className="account-input"
 					onClick={() => {
@@ -232,7 +233,8 @@ export const AccountDropdown = ({
 						<span>Select an account</span>
 					)}
 				</DropdownButton>
-			</DropdownWrapper>
+			</AccountInput.Container>
+
 			{isOpen && dropdownPosition && (
 				<RootPortal
 					width={dropdownPosition.width}

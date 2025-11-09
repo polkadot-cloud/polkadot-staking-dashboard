@@ -27,12 +27,6 @@ export const ContentWrapper = styled.div`
   }
 `
 
-export const DropdownWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  display: flex;
-`
-
 export const DropdownButton = styled.button`
   width: 100%;
   padding: 0 .8rem;
