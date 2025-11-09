@@ -8,7 +8,7 @@ import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, planckToUnit } from '@w3ux/utils'
+import { ellipsisFn, isValidAddress, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
@@ -128,11 +128,27 @@ export const AccountDropdown = ({
 	}, [selectedAddress])
 
 	// Filter accounts based on search term
-	const filteredAccounts = accounts.filter(
+	let filteredAccounts = accounts.filter(
 		(account) =>
 			account.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			account.name?.toLowerCase().includes(searchTerm.toLowerCase()),
 	)
+
+	// If search term is a valid address and not already in accounts, add it as a temporary entry
+	const validAddress = isValidAddress(searchTerm)
+	if (
+		validAddress &&
+		!accounts.some((account) => account.address === searchTerm)
+	) {
+		filteredAccounts = [
+			{
+				address: searchTerm,
+				name: searchTerm,
+				source: 'external',
+			} as ImportedAccount,
+			...filteredAccounts,
+		]
+	}
 
 	// Handle account selection
 	const handleSelect = (account: ImportedAccount) => {
@@ -196,8 +212,6 @@ export const AccountDropdown = ({
 						}
 						value={inputValue}
 						onChange={(e) => {
-							// TODO: If a valid address is returned from the current value, add it to the dropdown
-							// menu and open it for selection
 							setSearchTerm(e.target.value)
 							if (!isOpen) {
 								handleOpenDropdown()
