@@ -336,7 +336,7 @@ export const AccountDropdown = ({
 										</AccountInput.InnerLeft>
 										{Icon !== undefined ? (
 											<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
-										) : selectedAccount?.source === 'external' ? (
+										) : account.source === 'external' ? (
 											<AccountInput.SourceIcon faIcon={faGlasses} size="sm" />
 										) : null}
 									</AccountInput.ListItem>
