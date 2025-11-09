@@ -6,20 +6,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
 import { type FunctionComponent, forwardRef, type SVGProps } from 'react'
-import type { ComponentBase, ImportedAccount } from 'types'
+import type {
+	ComponentBase,
+	ComponentBaseWithClassName,
+	ImportedAccount,
+} from 'types'
 import type { AccountInputProps } from '../types'
 import classes from './index.module.scss'
 
 const Container = forwardRef<
 	HTMLButtonElement,
-	ComponentBase & {
+	ComponentBaseWithClassName & {
 		onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 	}
->(({ children, style, onClick }, ref) => {
+>(({ children, style, className, onClick }, ref) => {
 	return (
 		<button
 			type="button"
-			className={classes.container}
+			className={classNames(classes.container, className)}
 			style={style}
 			ref={ref}
 			onClick={onClick}
@@ -114,10 +118,14 @@ const Balance = ({
 	)
 }
 
-const ListContainer = forwardRef<HTMLDivElement, ComponentBase>(
-	({ children, style }, ref) => {
+const ListContainer = forwardRef<HTMLDivElement, ComponentBaseWithClassName>(
+	({ children, style, className }, ref) => {
 		return (
-			<div className={classes.listContainer} style={style} ref={ref}>
+			<div
+				className={classNames(classes.listContainer, className)}
+				style={style}
+				ref={ref}
+			>
 				{children}
 			</div>
 		)

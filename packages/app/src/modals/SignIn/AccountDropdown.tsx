@@ -126,7 +126,7 @@ export const AccountDropdown = ({
 		setIsOpen(false)
 		setSearchTerm('')
 		setIsInputFocused(false)
-	}, ['selected-account', 'account-dropdown-menu', 'account-input'])
+	}, ['selected-account', 'account-input-dropdown'])
 
 	// Display value for the input field
 	const inputValue = isInputFocused ? searchTerm : selectedAccount?.name || ''
@@ -145,6 +145,7 @@ export const AccountDropdown = ({
 	return (
 		<>
 			<AccountInput.Container
+				className="selected-account"
 				ref={dropdownRef}
 				onClick={() => {
 					if (!isInputFocused) {
@@ -221,62 +222,60 @@ export const AccountDropdown = ({
 					top={dropdownPosition.top}
 					left={dropdownPosition.left}
 				>
-					<AccountInput.ListContainer ref={menuRef}>
+					<AccountInput.ListContainer
+						ref={menuRef}
+						className="account-input-dropdown"
+					>
 						<SimpleBar style={{ maxHeight: '300px' }}>
-							<div className="accounts-list">
-								{filteredAccounts.length > 0 ? (
-									filteredAccounts.map((account) => {
-										// Determine account source icon
-										const Icon =
-											account.source === 'ledger'
-												? LedgerSVG
-												: account.source === 'vault'
-													? PolkadotVaultSVG
-													: account.source === 'wallet_connect'
-														? WalletConnectSVG
-														: ExtensionIcons[account.source] || undefined
+							{filteredAccounts.length > 0 ? (
+								filteredAccounts.map((account) => {
+									// Determine account source icon
+									const Icon =
+										account.source === 'ledger'
+											? LedgerSVG
+											: account.source === 'vault'
+												? PolkadotVaultSVG
+												: account.source === 'wallet_connect'
+													? WalletConnectSVG
+													: ExtensionIcons[account.source] || undefined
 
-										return (
-											<AccountInput.ListItem
-												account={account}
-												isSelected={
-													selectedAccount?.address === account.address &&
-													selectedAccount?.source === account.source
+									return (
+										<AccountInput.ListItem
+											account={account}
+											isSelected={
+												selectedAccount?.address === account.address &&
+												selectedAccount?.source === account.source
+											}
+											key={`${account.address}-${account.source}`}
+											onClick={handleSelect}
+											onKeyDown={(e) => {
+												if (e.key === 'Enter' || e.key === ' ') {
+													handleSelect(account)
 												}
-												key={`${account.address}-${account.source}`}
-												onClick={() => handleSelect(account)}
-												onKeyDown={(e) => {
-													if (e.key === 'Enter' || e.key === ' ') {
-														handleSelect(account)
-													}
-												}}
-											>
-												<Polkicon
-													address={account.address}
-													fontSize="2.25rem"
-													background="transparent"
+											}}
+										>
+											<Polkicon
+												address={account.address}
+												fontSize="2.25rem"
+												background="transparent"
+											/>
+											<AccountInput.InnerLeft>
+												<AccountInput.ListName
+													name={account.name || 'Unknown'}
 												/>
-												<AccountInput.InnerLeft>
-													<AccountInput.ListName
-														name={account.name || 'Unknown'}
-													/>
-													<AccountInput.Address address={account.address} />
-												</AccountInput.InnerLeft>
-												{Icon !== undefined ? (
-													<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
-												) : selectedAccount?.source === 'external' ? (
-													<AccountInput.SourceIcon
-														faIcon={faGlasses}
-														size="sm"
-													/>
-												) : null}
-											</AccountInput.ListItem>
-										)
-									})
-								) : (
-									<h3>No Accounts Found</h3>
-								)}
-							</div>
+												<AccountInput.Address address={account.address} />
+											</AccountInput.InnerLeft>
+											{Icon !== undefined ? (
+												<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
+											) : selectedAccount?.source === 'external' ? (
+												<AccountInput.SourceIcon faIcon={faGlasses} size="sm" />
+											) : null}
+										</AccountInput.ListItem>
+									)
+								})
+							) : (
+								<h3>No Accounts Found</h3>
+							)}
 						</SimpleBar>
 					</AccountInput.ListContainer>
 				</RootPortal>
