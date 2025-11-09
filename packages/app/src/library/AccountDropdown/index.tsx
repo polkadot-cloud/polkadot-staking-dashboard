@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faGlasses } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faGlasses } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
@@ -280,11 +281,24 @@ export const AccountDropdown = ({
 								unit={unit}
 							/>
 						</div>
-						{SelectedIcon !== undefined ? (
-							<AccountInput.SourceIcon SvgIcon={SelectedIcon} />
-						) : selectedAccount?.source === 'external' ? (
-							<AccountInput.SourceIcon faIcon={faGlasses} />
-						) : null}
+						<div>
+							{SelectedIcon !== undefined ? (
+								<AccountInput.SourceIcon SvgIcon={SelectedIcon} />
+							) : selectedAccount?.source === 'external' ? (
+								<AccountInput.SourceIcon faIcon={faGlasses} />
+							) : null}
+
+							{!disabled && (
+								<FontAwesomeIcon
+									icon={faChevronDown}
+									style={{
+										marginLeft: 'auto',
+										opacity: 0.5,
+										fontSize: '1rem',
+									}}
+								/>
+							)}
+						</div>
 					</AccountInput.InnerRight>
 				)}
 			</AccountInput.Container>
@@ -335,9 +349,9 @@ export const AccountDropdown = ({
 											<AccountInput.Address address={account.address} />
 										</AccountInput.InnerLeft>
 										{Icon !== undefined ? (
-											<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
+											<AccountInput.SourceIcon SvgIcon={Icon} />
 										) : account.source === 'external' ? (
-											<AccountInput.SourceIcon faIcon={faGlasses} size="sm" />
+											<AccountInput.SourceIcon faIcon={faGlasses} />
 										) : null}
 									</AccountInput.ListItem>
 								)
