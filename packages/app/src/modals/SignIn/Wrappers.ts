@@ -6,7 +6,7 @@ import styled from 'styled-components'
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.7rem;
   margin-top: 1.5rem;
   padding: 0 0.5rem;
 
