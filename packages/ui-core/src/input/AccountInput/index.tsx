@@ -9,15 +9,40 @@ import type { ComponentBase } from 'types'
 import type { AccountInputProps } from '../types'
 import classes from './index.module.scss'
 
-const Container = forwardRef<HTMLDivElement, ComponentBase>(
-	({ children, style }, ref) => {
-		return (
-			<div className={classes.container} style={style} ref={ref}>
-				{children}
-			</div>
-		)
-	},
-)
+const Container = forwardRef<
+	HTMLButtonElement,
+	ComponentBase & {
+		onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+	}
+>(({ children, style, onClick }, ref) => {
+	return (
+		<button
+			type="button"
+			className={classes.container}
+			style={style}
+			ref={ref}
+			onClick={onClick}
+		>
+			{children}
+		</button>
+	)
+})
+
+const InnerLeft = ({ children, style }: ComponentBase) => {
+	return (
+		<div className={classes.innerLeft} style={style}>
+			{children}
+		</div>
+	)
+}
+
+const InnerRight = ({ children, style }: ComponentBase) => {
+	return (
+		<div className={classes.innerRight} style={style}>
+			{children}
+		</div>
+	)
+}
 
 const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 	({ style, placeholder, value, onChange, onFocus, onBlur }, ref) => {
@@ -70,14 +95,6 @@ const SourceIcon = ({
 	return null
 }
 
-const InnerRight = ({ children, style }: ComponentBase) => {
-	return (
-		<div className={classes.innerRight} style={style}>
-			{children}
-		</div>
-	)
-}
-
 const Balance = ({
 	style,
 	label,
@@ -93,9 +110,10 @@ const Balance = ({
 
 export const AccountInput = {
 	Container,
+	InnerLeft,
+	InnerRight,
 	Input,
 	Address,
 	SourceIcon,
-	InnerRight,
 	Balance,
 }

@@ -21,7 +21,7 @@ import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
 import { AccountInput } from 'ui-core/input'
 import type { AccountDropdownProps } from './types'
-import { DropdownButton, DropdownMenu } from './Wrappers'
+import { DropdownMenu } from './Wrappers'
 
 export const AccountDropdown = ({
 	accounts,
@@ -53,7 +53,7 @@ export const AccountDropdown = ({
 		width: number
 	} | null>(null)
 
-	const dropdownRef = useRef<HTMLDivElement>(null)
+	const dropdownRef = useRef<HTMLButtonElement>(null)
 	const menuRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
 
@@ -146,83 +146,75 @@ export const AccountDropdown = ({
 
 	return (
 		<>
-			<AccountInput.Container ref={dropdownRef}>
-				<DropdownButton
-					className="account-input"
-					onClick={() => {
-						if (!isInputFocused) {
-							setIsOpen(true)
-							inputRef.current?.focus()
-						}
+			<AccountInput.Container
+				ref={dropdownRef}
+				onClick={() => {
+					if (!isInputFocused) {
+						setIsOpen(true)
+						inputRef.current?.focus()
+					}
+				}}
+			>
+				<span
+					style={{
+						opacity: isInputFocused ? 0.25 : 1,
+						transition: 'opacity 0.15s',
 					}}
 				>
-					{selectedAccount ? (
-						<div className="selected-account">
-							<span
-								style={{
-									opacity: isInputFocused ? 0.25 : 1,
-									transition: 'opacity 0.15s',
-								}}
-							>
-								<Polkicon
-									address={selectedAccount.address}
-									fontSize="3rem"
-									background="transparent"
-								/>
-							</span>
-							<div className="account-details">
-								<AccountInput.Input
-									ref={inputRef}
-									placeholder={
-										selectedAccount?.name || 'Search by address or name...'
-									}
-									value={inputValue}
-									onChange={(e) => {
-										setSearchTerm(e.target.value)
-										if (!isOpen) {
-											setIsOpen(true)
-										}
-									}}
-									onFocus={() => {
-										setIsInputFocused(true)
-										setIsOpen(true)
-									}}
-									onBlur={() => {
-										// Small delay to allow click events to fire
-										setTimeout(() => {
-											setIsInputFocused(false)
-										}, 150)
-									}}
-								/>
-								{!isInputFocused && (
-									<AccountInput.Address address={selectedAccount.address} />
-								)}
-							</div>
-							{!isInputFocused && (
-								<AccountInput.InnerRight>
-									<div>
-										<AccountInput.Balance
-											label={t('free', { ns: 'modals' })}
-											value={new BigNumber(
-												planckToUnit(transferableBalance || 0n, units),
-											)
-												.decimalPlaces(3)
-												.toFormat()}
-											unit={unit}
-										/>
-									</div>
-									{SelectedIcon !== undefined ? (
-										<AccountInput.SourceIcon SvgIcon={SelectedIcon} />
-									) : selectedAccount.source === 'external' ? (
-										<AccountInput.SourceIcon faIcon={faGlasses} />
-									) : null}
-								</AccountInput.InnerRight>
-							)}
-						</div>
-					) : (
-						<span>Select an account</span>
+					<Polkicon
+						address={selectedAccount?.address || ''}
+						fontSize="3rem"
+						background="transparent"
+					/>
+				</span>
+				<AccountInput.InnerLeft>
+					<AccountInput.Input
+						ref={inputRef}
+						placeholder={
+							selectedAccount?.name || 'Search by address or name...'
+						}
+						value={inputValue}
+						onChange={(e) => {
+							setSearchTerm(e.target.value)
+							if (!isOpen) {
+								setIsOpen(true)
+							}
+						}}
+						onFocus={() => {
+							setIsInputFocused(true)
+							setIsOpen(true)
+						}}
+						onBlur={() => {
+							// Small delay to allow click events to fire
+							setTimeout(() => {
+								setIsInputFocused(false)
+							}, 150)
+						}}
+					/>
+					{!isInputFocused && (
+						<AccountInput.Address address={selectedAccount?.address || ''} />
 					)}
-				</DropdownButton>
+				</AccountInput.InnerLeft>
+				{!isInputFocused && (
+					<AccountInput.InnerRight>
+						<div>
+							<AccountInput.Balance
+								label={t('free', { ns: 'modals' })}
+								value={new BigNumber(
+									planckToUnit(transferableBalance || 0n, units),
+								)
+									.decimalPlaces(3)
+									.toFormat()}
+								unit={unit}
+							/>
+						</div>
+						{SelectedIcon !== undefined ? (
+							<AccountInput.SourceIcon SvgIcon={SelectedIcon} />
+						) : selectedAccount?.source === 'external' ? (
+							<AccountInput.SourceIcon faIcon={faGlasses} />
+						) : null}
+					</AccountInput.InnerRight>
+				)}
 			</AccountInput.Container>
 
 			{isOpen && dropdownPosition && (

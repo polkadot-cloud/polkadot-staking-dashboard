@@ -27,38 +27,6 @@ export const ContentWrapper = styled.div`
   }
 `
 
-export const DropdownButton = styled.button`
-  width: 100%;
-  padding: 0 .8rem;
-  height: 4.75rem;
-  background: var(--background-floating-card);
-  border: 1px solid var(--border-primary-color);
-  border-radius: 0.75rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.15s;
-
-  &:hover {
-    border-color: var(--accent-color-primary);
-  }
-
-  .selected-account {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex: 1;
-  }
-
-  .account-details {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-  }
-`
-
 export const DropdownMenu = styled.div`
   background: var(--background-primary);
   border: 1px solid var(--border-primary-color);
