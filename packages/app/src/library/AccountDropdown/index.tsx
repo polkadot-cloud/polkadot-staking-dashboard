@@ -278,7 +278,7 @@ export const AccountDropdown = ({
 				)}
 			</AccountInput.Container>
 
-			{isOpen && dropdownPosition && (
+			{isOpen && dropdownPosition && filteredAccounts.length > 0 && (
 				<RootPortal
 					width={dropdownPosition.width}
 					top={dropdownPosition.top}
@@ -289,58 +289,51 @@ export const AccountDropdown = ({
 						className="account-input-dropdown"
 					>
 						<SimpleBar style={{ maxHeight: '300px' }}>
-							{filteredAccounts.length > 0
-								? filteredAccounts.map((account) => {
-										// Determine account source icon
-										const Icon =
-											account.source === 'ledger'
-												? LedgerSVG
-												: account.source === 'vault'
-													? PolkadotVaultSVG
-													: account.source === 'wallet_connect'
-														? WalletConnectSVG
-														: ExtensionIcons[account.source] || undefined
+							{filteredAccounts.map((account) => {
+								// Determine account source icon
+								const Icon =
+									account.source === 'ledger'
+										? LedgerSVG
+										: account.source === 'vault'
+											? PolkadotVaultSVG
+											: account.source === 'wallet_connect'
+												? WalletConnectSVG
+												: ExtensionIcons[account.source] || undefined
 
-										return (
-											<AccountInput.ListItem
-												account={account}
-												isSelected={
-													selectedAccount?.address === account.address &&
-													selectedAccount?.source === account.source
-												}
-												key={`${account.address}-${account.source}`}
-												onClick={handleSelect}
-												onKeyDown={(e) => {
-													if (e.key === 'Enter' || e.key === ' ') {
-														handleSelect(account)
-													}
-												}}
-											>
-												<Polkicon
-													address={account.address}
-													fontSize="2.25rem"
-													background="transparent"
-												/>
-												<AccountInput.InnerLeft>
-													<AccountInput.ListName
-														name={
-															account.name || ellipsisFn(account.address, 6)
-														}
-													/>
-													<AccountInput.Address address={account.address} />
-												</AccountInput.InnerLeft>
-												{Icon !== undefined ? (
-													<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
-												) : selectedAccount?.source === 'external' ? (
-													<AccountInput.SourceIcon
-														faIcon={faGlasses}
-														size="sm"
-													/>
-												) : null}
-											</AccountInput.ListItem>
-										)
-									})
-								: null}
+								return (
+									<AccountInput.ListItem
+										account={account}
+										isSelected={
+											selectedAccount?.address === account.address &&
+											selectedAccount?.source === account.source
+										}
+										key={`${account.address}-${account.source}`}
+										onClick={handleSelect}
+										onKeyDown={(e) => {
+											if (e.key === 'Enter' || e.key === ' ') {
+												handleSelect(account)
+											}
+										}}
+									>
+										<Polkicon
+											address={account.address}
+											fontSize="2.25rem"
+											background="transparent"
+										/>
+										<AccountInput.InnerLeft>
+											<AccountInput.ListName
+												name={account.name || ellipsisFn(account.address, 6)}
+											/>
+											<AccountInput.Address address={account.address} />
+										</AccountInput.InnerLeft>
+										{Icon !== undefined ? (
+											<AccountInput.SourceIcon SvgIcon={Icon} size="sm" />
+										) : selectedAccount?.source === 'external' ? (
+											<AccountInput.SourceIcon faIcon={faGlasses} size="sm" />
+										) : null}
+									</AccountInput.ListItem>
+								)
+							})}
 						</SimpleBar>
 					</AccountInput.ListContainer>
 				</RootPortal>
