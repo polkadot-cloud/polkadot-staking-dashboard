@@ -29,6 +29,9 @@ export const AccountDropdown = ({
 }: AccountDropdownProps) => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
+
+	// TODO: If the account is not imported, asynchronously fetch its balance and then use
+	// `getTransferrableBalance` to calculate free balance here
 	const {
 		balances: { transferableBalance },
 	} = useAccountBalances(selectedAccount?.address || '')
@@ -181,6 +184,8 @@ export const AccountDropdown = ({
 						}
 						value={inputValue}
 						onChange={(e) => {
+							// TODO: If a valid address is returned from the current value, add it to the dropdown
+							// menu and open it for selection
 							setSearchTerm(e.target.value)
 							if (!isOpen) {
 								handleOpenDropdown()
