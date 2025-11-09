@@ -9,9 +9,14 @@ import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn } from '@w3ux/utils'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { getStakingChainData } from 'consts/util/chains'
+import { useNetwork } from 'contexts/Network'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { RootPortal } from 'library/RootPortal'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
 import type { AccountDropdownProps } from './types'
@@ -23,6 +28,14 @@ export const AccountDropdown = ({
 	onSelect,
 	onOpenChange,
 }: AccountDropdownProps) => {
+	const { t } = useTranslation()
+	const { network } = useNetwork()
+	const {
+		balances: { transferableBalance },
+	} = useAccountBalances(selectedAccount?.address || '')
+
+	const { units, unit } = getStakingChainData(network)
+
 	// Whether the dropdown is open
 	const [isOpen, setIsOpen] = useState(false)
 
@@ -114,7 +127,7 @@ export const AccountDropdown = ({
 		setIsOpen(false)
 		setSearchTerm('')
 		setIsInputFocused(false)
-	}, ['selected-account', 'account-dropdown-menu'])
+	}, ['selected-account', 'account-dropdown-menu', 'account-input'])
 
 	// Display value for the input field
 	const inputValue = isInputFocused ? searchTerm : selectedAccount?.name || ''
@@ -134,8 +147,9 @@ export const AccountDropdown = ({
 		<>
 			<DropdownWrapper ref={dropdownRef}>
 				<DropdownButton
+					className="account-input"
 					onClick={() => {
-						if (!isOpen) {
+						if (!isInputFocused) {
 							setIsOpen(true)
 							inputRef.current?.focus()
 						}
@@ -143,13 +157,26 @@ export const AccountDropdown = ({
 				>
 					{selectedAccount ? (
 						<div className="selected-account">
-							<Polkicon address={selectedAccount.address} fontSize="3rem" />
+							<span
+								style={{
+									opacity: isInputFocused ? 0.25 : 1,
+									transition: 'opacity 0.15s',
+								}}
+							>
+								<Polkicon
+									address={selectedAccount.address}
+									fontSize="3rem"
+									background="transparent"
+								/>
+							</span>
 							<div className="account-details">
 								<input
 									ref={inputRef}
 									type="text"
 									className="account-name"
-									placeholder="Search by address or name..."
+									placeholder={
+										selectedAccount?.name || 'Search by address or name...'
+									}
 									value={inputValue}
 									onChange={(e) => {
 										setSearchTerm(e.target.value)
@@ -168,21 +195,38 @@ export const AccountDropdown = ({
 										}, 150)
 									}}
 								/>
-								<span className="account-address">
-									{ellipsisFn(selectedAccount.address)}
-								</span>
+								{!isInputFocused && (
+									<span className="account-address">
+										{ellipsisFn(selectedAccount.address)}
+									</span>
+								)}
 							</div>
-							{SelectedIcon !== undefined ? (
-								<span className="selected-account-icon">
-									<SelectedIcon />
-								</span>
-							) : selectedAccount.source === 'external' ? (
-								<FontAwesomeIcon
-									icon={faGlasses}
-									className="selected-account-icon"
-									style={{ opacity: 0.7 }}
-								/>
-							) : null}
+							{!isInputFocused && (
+								<div className="account-right">
+									<div>
+										<h4>
+											{t('free', { ns: 'modals' })}:{' '}
+											{new BigNumber(
+												planckToUnit(transferableBalance || 0n, units),
+											)
+												.decimalPlaces(3)
+												.toFormat()}{' '}
+											{unit}
+										</h4>
+									</div>
+									{SelectedIcon !== undefined ? (
+										<span className="icon">
+											<SelectedIcon />
+										</span>
+									) : selectedAccount.source === 'external' ? (
+										<FontAwesomeIcon
+											icon={faGlasses}
+											className="icon"
+											style={{ opacity: 0.7 }}
+										/>
+									) : null}
+								</div>
+							)}
 						</div>
 					) : (
 						<span>Select an account</span>
@@ -229,6 +273,7 @@ export const AccountDropdown = ({
 												<Polkicon
 													address={account.address}
 													fontSize="2.25rem"
+													background="transparent"
 												/>
 												<div className="account-details">
 													<span className="account-name">

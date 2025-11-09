@@ -35,7 +35,8 @@ export const DropdownWrapper = styled.div`
 
 export const DropdownButton = styled.button`
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0 .8rem;
+  height: 4.75rem;
   background: var(--background-floating-card);
   border: 1px solid var(--border-primary-color);
   border-radius: 0.75rem;
@@ -70,25 +71,43 @@ export const DropdownButton = styled.button`
     flex: 1;
     width: 100%;
     padding: 0;
-    margin-bottom: 0.5rem;
+
+    &:focus {
+      padding: 0;
+      min-height: 4.75rem;
+    }
+
+    &::placeholder {
+      opacity: 0.65;
+    }
   }
 
   .account-address {
-    font-size: 1rem;
     color: var(--text-color-tertiary);
+    margin-top: 0.5rem;
+    font-size: 1rem;
   }
 
-  .selected-account-icon {
-    width: 1.25rem;
-    height: 1.25rem;
+  .account-right {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
     margin-left: 0.5rem;
 
-    svg {
-      width: 100%;
-      height: 100%;
+    h4 {
+      color: var(--text-color-secondary);
+      font-size: 0.95rem;
+    }
+    > .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-top: 0.5rem;
+      
+      svg {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 `
