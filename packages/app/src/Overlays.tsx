@@ -10,7 +10,6 @@ import { ValidatorMetrics } from 'canvas/ValidatorMetrics'
 import { useHelp } from 'contexts/Help'
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
 import { Accounts } from 'modals/Accounts'
-import { BalanceTest } from 'modals/BalanceTest'
 import { Bio } from 'modals/Bio'
 import { Bond } from 'modals/Bond'
 import { ChangePoolRoles } from 'modals/ChangePoolRoles'
@@ -47,7 +46,6 @@ export const Overlays = () => {
 			fallback={ErrorFallbackModal}
 			externalOverlayStatus={status}
 			modals={{
-				BalanceTest,
 				Bio,
 				Bond,
 				ExternalAccounts,
