@@ -76,12 +76,6 @@ export const DropdownButton = styled.button`
     }
   }
 
-  .account-address {
-    color: var(--text-color-tertiary);
-    margin-top: 0.5rem;
-    font-size: 1rem;
-  }
-
   .account-right {
     display: flex;
     flex-direction: column;
@@ -92,16 +86,6 @@ export const DropdownButton = styled.button`
     h4 {
       color: var(--text-color-secondary);
       font-size: 0.95rem;
-    }
-    > .icon {
-      width: 1.25rem;
-      height: 1.25rem;
-      margin-top: 0.5rem;
-      
-      svg {
-        width: 100%;
-        height: 100%;
-      }
     }
   }
 `

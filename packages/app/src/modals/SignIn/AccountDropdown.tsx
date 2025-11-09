@@ -197,9 +197,7 @@ export const AccountDropdown = ({
 									}}
 								/>
 								{!isInputFocused && (
-									<span className="account-address">
-										{ellipsisFn(selectedAccount.address)}
-									</span>
+									<AccountInput.Address address={selectedAccount.address} />
 								)}
 							</div>
 							{!isInputFocused && (
@@ -216,15 +214,9 @@ export const AccountDropdown = ({
 										</h4>
 									</div>
 									{SelectedIcon !== undefined ? (
-										<span className="icon">
-											<SelectedIcon />
-										</span>
+										<AccountInput.SourceIcon SvgIcon={SelectedIcon} />
 									) : selectedAccount.source === 'external' ? (
-										<FontAwesomeIcon
-											icon={faGlasses}
-											className="icon"
-											style={{ opacity: 0.7 }}
-										/>
+										<AccountInput.SourceIcon faIcon={faGlasses} />
 									) : null}
 								</div>
 							)}
