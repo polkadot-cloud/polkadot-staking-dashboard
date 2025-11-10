@@ -70,7 +70,7 @@
 		"usehooks-ts": "^3.0.2",
 		"utils": "workspace:*",
 		"viem": "^2.38.4",
-		"wagmi": "^2.19.0",
+		"wagmi": "^2.19.3",
 		"xxhash-wasm": "^1.0.2"
 	},
 	"devDependencies": {
