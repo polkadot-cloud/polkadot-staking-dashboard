@@ -4,7 +4,12 @@
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, isValidAddress, planckToUnit } from '@w3ux/utils'
+import {
+	ellipsisFn,
+	formatAccountSs58,
+	isValidAddress,
+	planckToUnit,
+} from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
@@ -24,12 +29,14 @@ export const AccountDropdown = ({
 	initialAccount,
 	onSelect,
 	onOpenChange,
+	label,
+	placeholder,
 	disabled = false,
 }: AccountDropdownProps) => {
 	const { t } = useTranslation()
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
-	const { units, unit } = getStakingChainData(network)
+	const { units, unit, ss58 } = getStakingChainData(network)
 
 	// Generate unique ID for this component instance
 	const instanceId = useId()
@@ -75,13 +82,6 @@ export const AccountDropdown = ({
 		setTransferableBalance(balance)
 	}
 
-	// Handle opening of dropdown if there are accounts to choose from
-	const handleOpenDropdown = () => {
-		if (accounts.length > 0 && !disabled) {
-			setIsOpen(true)
-		}
-	}
-
 	const dropdownRef = useRef<HTMLDivElement>(null)
 	const menuRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -91,7 +91,7 @@ export const AccountDropdown = ({
 		if (isOpen && dropdownRef.current) {
 			const rect = dropdownRef.current.getBoundingClientRect()
 			setDropdownPosition({
-				top: rect.bottom + window.scrollY + 4, // 4px gap below button
+				top: rect.bottom + window.scrollY,
 				left: rect.left + window.scrollX,
 				width: rect.width,
 			})
@@ -151,6 +151,21 @@ export const AccountDropdown = ({
 		}
 	}, [accounts, selectedAccount, initialAccount])
 
+	// Helper function to check if there will be any filtered accounts for a given search term
+	const hasFilteredAccounts = (term: string): boolean => {
+		// Check if any accounts match the search term
+		const hasMatchingAccounts = accounts.some(
+			(account) =>
+				account.address.toLowerCase().includes(term.toLowerCase()) ||
+				account.name?.toLowerCase().includes(term.toLowerCase()),
+		)
+		// Check if the term is a valid address (which would be added to the list)
+		if (isValidAddress(term)) {
+			return true
+		}
+		return hasMatchingAccounts
+	}
+
 	// Filter accounts based on search term
 	let filteredAccounts = accounts.filter(
 		(account) =>
@@ -160,15 +175,28 @@ export const AccountDropdown = ({
 
 	// If search term is a valid address and not already in accounts, add it as a temporary entry
 	const validAddress = isValidAddress(searchTerm)
-	if (validAddress && !accounts.some(({ address }) => address === searchTerm)) {
-		filteredAccounts = [
-			{
-				address: searchTerm,
-				name: searchTerm,
-				source: 'external',
-			} as ImportedAccount,
-			...filteredAccounts,
-		]
+	if (validAddress) {
+		const formattedAddress = formatAccountSs58(searchTerm, ss58)
+		if (
+			formattedAddress !== null &&
+			!accounts.some(({ address }) => address === formattedAddress)
+		) {
+			filteredAccounts = [
+				{
+					address: formattedAddress,
+					name: formattedAddress,
+					source: 'external',
+				},
+				...filteredAccounts,
+			]
+		}
+	}
+
+	// Handle opening of dropdown if there are accounts to choose from
+	const handleOpenDropdown = (term = searchTerm) => {
+		if (hasFilteredAccounts(term) && !disabled) {
+			setIsOpen(true)
+		}
 	}
 
 	// Handle account selection
@@ -198,10 +226,12 @@ export const AccountDropdown = ({
 
 	return (
 		<>
+			{label && <AccountInput.Label label={label} />}
 			<AccountInput.Container
 				className={containerClass}
 				ref={dropdownRef}
 				disabled={disabled}
+				listOpen={isOpen}
 			>
 				{!isInputFocused && !disabled && (
 					<AccountInput.InactiveButton
@@ -219,7 +249,7 @@ export const AccountDropdown = ({
 				>
 					<Polkicon
 						address={selectedAccount?.address || ''}
-						fontSize="3rem"
+						fontSize="2.75rem"
 						background="transparent"
 					/>
 				</span>
@@ -228,14 +258,17 @@ export const AccountDropdown = ({
 						ref={inputRef}
 						disabled={disabled}
 						placeholder={
-							selectedAccount?.name || t('searchAddress', { ns: 'app' })
+							selectedAccount?.name ||
+							placeholder ||
+							t('searchAddress', { ns: 'app' })
 						}
 						value={inputValue}
 						onChange={(e) => {
 							if (disabled) return
-							setSearchTerm(e.target.value)
+							const newSearchTerm = e.target.value
+							setSearchTerm(newSearchTerm)
 							if (!isOpen) {
-								handleOpenDropdown()
+								handleOpenDropdown(newSearchTerm)
 							}
 						}}
 						onFocus={() => {

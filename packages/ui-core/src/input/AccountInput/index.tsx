@@ -17,16 +17,14 @@ import classes from './index.module.scss'
 
 const Container = forwardRef<
 	HTMLDivElement,
-	ComponentBaseWithClassName & {
-		onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
-		disabled?: boolean
-	}
->(({ children, style, className, onClick, disabled }, ref) => {
+	ComponentBaseWithClassName & { disabled?: boolean; listOpen: boolean }
+>(({ children, style, className, disabled, listOpen }, ref) => {
 	const allClasses = classNames(classes.container, className, {
 		[classes.disabled]: !!disabled,
+		[classes.listOpen]: listOpen,
 	})
 	return (
-		<div className={allClasses} style={style} ref={ref} onClick={onClick}>
+		<div className={allClasses} style={style} ref={ref}>
 			{children}
 		</div>
 	)
@@ -199,6 +197,18 @@ const InactiveButton = ({
 	)
 }
 
+const Label = ({
+	style,
+	label,
+}: ComponentBase & {
+	label: string
+}) => {
+	return (
+		<h4 className={classes.label} style={style}>
+			{label}
+		</h4>
+	)
+}
 export const AccountInput = {
 	Container,
 	InnerLeft,
@@ -212,4 +222,5 @@ export const AccountInput = {
 	ListName,
 	Chevron,
 	InactiveButton,
+	Label,
 }
