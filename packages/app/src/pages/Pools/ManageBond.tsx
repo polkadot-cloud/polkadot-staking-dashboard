@@ -24,7 +24,7 @@ export const ManageBond = () => {
 	const { t } = useTranslation('pages')
 
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { syncing } = useSyncing(['active-pools'])
@@ -53,7 +53,11 @@ export const ManageBond = () => {
 			<CardHeader>
 				<h4>
 					{t('bondedFunds')}
-					<ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
+					<ButtonHelp
+						marginLeft
+						definition="Bonded in Pool"
+						openHelp={openHelpTooltip}
+					/>
 				</h4>
 				<h2>
 					<Token />

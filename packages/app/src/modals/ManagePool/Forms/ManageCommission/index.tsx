@@ -36,7 +36,7 @@ export const ManageCommission = ({
 	onResize: () => void
 }) => {
 	const { t } = useTranslation('modals')
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const {
 		serviceApi,
 		poolsConfig: { globalMaxCommission },
@@ -261,7 +261,10 @@ export const ManageCommission = ({
 				<ActionItem
 					text={t('commissionRate')}
 					inlineButton={
-						<ButtonHelp onClick={() => openHelp('Pool Commission Rate')} />
+						<ButtonHelp
+							definition="Pool Commission Rate"
+							openHelp={openHelpTooltip}
+						/>
 					}
 				/>
 				<CommissionCurrent {...commissionCurrentMeta} />
@@ -276,7 +279,10 @@ export const ManageCommission = ({
 					onToggle={(val) => setEnabled('max_commission', val)}
 					disabled={!!hasValue('max_commission')}
 					inlineButton={
-						<ButtonHelp onClick={() => openHelp('Pool Max Commission')} />
+						<ButtonHelp
+							definition="Pool Max Commission"
+							openHelp={openHelpTooltip}
+						/>
 					}
 				/>
 				<MaxCommission {...maxCommissionMeta} />
@@ -292,7 +298,8 @@ export const ManageCommission = ({
 					disabled={!!hasValue('change_rate')}
 					inlineButton={
 						<ButtonHelp
-							onClick={() => openHelp('Pool Commission Change Rate')}
+							definition="Pool Commission Change Rate"
+							openHelp={openHelpTooltip}
 						/>
 					}
 				/>

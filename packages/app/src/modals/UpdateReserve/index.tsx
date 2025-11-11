@@ -27,7 +27,7 @@ import { planckToUnitBn } from 'utils'
 export const UpdateReserve = () => {
 	const { t } = useTranslation('modals')
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { closeModal } = useOverlay().modal
 	const { accountHasSigner } = useImportedAccounts()
 	const { activeAddress, activeAccount } = useActiveAccounts()
@@ -100,9 +100,8 @@ export const UpdateReserve = () => {
 								<>
 									{t('none')}
 									<ButtonHelp
-										onClick={() =>
-											openHelp('Reserve Balance For Existential Deposit')
-										}
+										definition="Reserve Balance For Existential Deposit"
+										openHelp={openHelpTooltip}
 										style={{ marginLeft: '0.65rem' }}
 									/>
 								</>

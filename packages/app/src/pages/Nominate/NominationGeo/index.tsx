@@ -26,12 +26,12 @@ import { GraphsWrapper } from './Wrappers'
 
 export const NominationGeo = () => {
 	const { t } = useTranslation()
-	const { openHelp } = useHelp()
 	const { network } = useNetwork()
+	const { openHelpTooltip } = useHelp()
 	const { isNominating } = useStaking()
 	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
 	const { getThemeValue } = useThemeValues()
+	const { activeAddress } = useActiveAccounts()
 
 	const enabled = pluginEnabled('polkawatch')
 
@@ -122,7 +122,8 @@ export const NominationGeo = () => {
 							{t('payoutDistribution', { ns: 'pages' })}
 							<ButtonHelp
 								marginLeft
-								onClick={() => openHelp('Nomination Payout Distribution')}
+								definition="Nomination Payout Distribution"
+								openHelp={openHelpTooltip}
 							/>
 						</h4>
 						<h2>{t('byRegionCountryNetwork', { ns: 'pages' })}</h2>

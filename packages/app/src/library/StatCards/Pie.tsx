@@ -11,7 +11,7 @@ import type { PieProps } from './types'
 
 export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
 	const showTotal = !!stat?.total
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	return (
 		<Stat.Card>
@@ -39,7 +39,11 @@ export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
 					<Stat.Subtitle>
 						{label}{' '}
 						{helpKey !== undefined ? (
-							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							<ButtonHelp
+								marginLeft
+								definition={helpKey}
+								openHelp={openHelpTooltip}
+							/>
 						) : null}
 					</Stat.Subtitle>
 				</Stat.Content>

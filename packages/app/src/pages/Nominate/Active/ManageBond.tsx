@@ -29,7 +29,7 @@ import { useOverlay } from 'ui-overlay'
 export const ManageBond = () => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
 	const { activeAddress } = useActiveAccounts()
@@ -74,7 +74,11 @@ export const ManageBond = () => {
 			<CardHeader>
 				<h4>
 					{t('bondedFunds')}
-					<ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
+					<ButtonHelp
+						marginLeft
+						definition="Bonding"
+						openHelp={openHelpTooltip}
+					/>
 				</h4>
 				<h2>
 					<Token />

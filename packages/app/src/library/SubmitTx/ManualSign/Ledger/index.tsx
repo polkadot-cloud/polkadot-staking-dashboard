@@ -46,7 +46,7 @@ export const Ledger = ({
 		transportResponse,
 		runtimesInconsistent,
 	} = useLedgerHardware()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { setModalResize } = useOverlay().modal
 	const { accountHasSigner } = useImportedAccounts()
 
@@ -118,9 +118,8 @@ export const Ledger = ({
 						<p className="prompt">
 							{t('ledgerAppOutOfDate')}
 							<ButtonHelp
-								onClick={() =>
-									openHelp('Ledger App Not on Latest Runtime Version')
-								}
+								definition="Ledger App Not on Latest Runtime Version"
+								openHelp={openHelpTooltip}
 							/>
 						</p>
 					</div>
@@ -141,11 +140,8 @@ export const Ledger = ({
 							{feedback?.helpKey && (
 								<ButtonHelp
 									marginLeft
-									onClick={() => {
-										if (feedback?.helpKey) {
-											openHelp(feedback.helpKey)
-										}
-									}}
+									definition={feedback?.helpKey}
+									openHelp={openHelpTooltip}
 								/>
 							)}
 						</p>

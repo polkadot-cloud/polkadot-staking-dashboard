@@ -31,8 +31,8 @@ export const Roles = ({
 }: RolesProps) => {
 	const { t } = useTranslation('pages')
 	const { isReady } = useApi()
-	const { openHelp } = useHelp()
 	const { network } = useNetwork()
+	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
@@ -147,7 +147,11 @@ export const Roles = ({
 				{!inline && (
 					<h3>
 						{t('roles')}
-						<ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
+						<ButtonHelp
+							marginLeft
+							definition="Pool Roles"
+							openHelp={openHelpTooltip}
+						/>
 					</h3>
 				)}
 

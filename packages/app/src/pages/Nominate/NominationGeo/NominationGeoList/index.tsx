@@ -15,7 +15,7 @@ import { Node } from './Node'
 
 export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { isNominating } = useStaking()
 	const { activeAddress } = useActiveAccounts()
 
@@ -37,7 +37,8 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
 								{title}
 								<ButtonHelp
 									marginLeft
-									onClick={() => openHelp('Geolocation of Each Nomination')}
+									definition="Geolocation of Each Nomination"
+									openHelp={openHelpTooltip}
 								/>
 							</h3>
 						</CardHeader>

@@ -15,7 +15,7 @@ export const Number = ({
 	helpKey,
 	decimals,
 }: NumberProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	return (
 		<Stat.Card>
@@ -32,7 +32,11 @@ export const Number = ({
 					<Stat.Subtitle>
 						{label}
 						{helpKey !== undefined ? (
-							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							<ButtonHelp
+								marginLeft
+								definition={helpKey}
+								openHelp={openHelpTooltip}
+							/>
 						) : null}
 					</Stat.Subtitle>
 				</Stat.Content>

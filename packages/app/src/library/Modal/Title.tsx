@@ -28,7 +28,7 @@ export const Title = ({
 	Svg,
 	style,
 }: TitleProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	const graphic = Svg ? (
 		<Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -46,7 +46,11 @@ export const Title = ({
 						<Wrapper>
 							{title}
 							{helpKey ? (
-								<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+								<ButtonHelp
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
 							) : null}
 						</Wrapper>
 					)}

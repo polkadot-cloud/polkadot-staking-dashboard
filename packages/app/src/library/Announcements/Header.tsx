@@ -7,7 +7,7 @@ import type { HeaderProps } from './types'
 import { HeaderWrapper } from './Wrappers'
 
 export const Header = ({ items }: HeaderProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	return (
 		<HeaderWrapper>
@@ -27,7 +27,11 @@ export const Header = ({ items }: HeaderProps) => {
 						<h4>
 							{label}
 							{!!helpKey && (
-								<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+								<ButtonHelp
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
 							)}
 						</h4>
 					</div>

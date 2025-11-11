@@ -92,8 +92,8 @@ export const Stat = ({
 				{helpKey !== undefined ? (
 					<ButtonHelp
 						definition={helpKey}
-						marginLeft
 						openHelp={openHelpTooltip}
+						marginLeft
 					/>
 				) : null}
 			</h4>

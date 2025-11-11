@@ -14,6 +14,7 @@ import { useOverlay } from 'ui-overlay'
 
 export const ManagePool = () => {
 	const { t } = useTranslation()
+	const { openHelpTooltip } = useHelp()
 	const { openCanvas } = useOverlay().canvas
 	const { formatWithPrefs } = useValidators()
 	const { isOwner, isNominator, activePoolNominations, activePool } =
@@ -26,7 +27,6 @@ export const ManagePool = () => {
 	const isNominating = !!activePoolNominations?.targets?.length
 	const nominator = activePool?.addresses?.stash ?? null
 	const { state } = activePool?.bondedPool || {}
-	const { openHelp } = useHelp()
 
 	const canNominate = isOwner() || isNominator()
 
@@ -40,7 +40,8 @@ export const ManagePool = () => {
 								{t('nominations', { ns: 'pages' })}
 								<ButtonHelp
 									marginLeft
-									onClick={() => openHelp('Nominations')}
+									definition="Nominations"
+									openHelp={openHelpTooltip}
 								/>
 							</h3>
 							<ButtonRow>

@@ -26,7 +26,7 @@ import { Declare } from './Declare'
 
 export const Proxies = () => {
 	const { t } = useTranslation('modals')
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
 	const { formatProxiesToDelegates } = useProxies()
@@ -54,7 +54,11 @@ export const Proxies = () => {
 					<div>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
 						<h3>{t('proxyAccounts')}</h3>
-						<ButtonHelp marginLeft onClick={() => openHelp('Proxy Accounts')} />
+						<ButtonHelp
+							marginLeft
+							definition="Proxy Accounts"
+							openHelp={openHelpTooltip}
+						/>
 					</div>
 					<div>
 						<ButtonMonoInvert

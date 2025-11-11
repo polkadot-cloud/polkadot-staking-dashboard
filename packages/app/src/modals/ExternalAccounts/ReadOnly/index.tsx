@@ -27,7 +27,7 @@ import { Add } from './Add'
 
 export const ReadOnly = () => {
 	const { t } = useTranslation('modals')
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
 	const { forgetOtherAccounts } = useOtherAccounts()
@@ -69,7 +69,8 @@ export const ReadOnly = () => {
 						<h3>{t('readOnlyAccounts')}</h3>
 						<ButtonHelp
 							marginLeft
-							onClick={() => openHelp('Read Only Accounts')}
+							definition="Read Only Accounts"
+							openHelp={openHelpTooltip}
 						/>
 					</div>
 					<div>

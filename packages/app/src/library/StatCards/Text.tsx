@@ -7,7 +7,7 @@ import { Stat } from 'ui-core/base'
 import type { TextProps } from './types'
 
 export const Text = ({ label, value, helpKey, primary }: TextProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	return (
 		<Stat.Card>
@@ -17,7 +17,11 @@ export const Text = ({ label, value, helpKey, primary }: TextProps) => {
 					<Stat.Subtitle>
 						{label}
 						{helpKey !== undefined ? (
-							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							<ButtonHelp
+								marginLeft
+								definition={helpKey}
+								openHelp={openHelpTooltip}
+							/>
 						) : null}
 					</Stat.Subtitle>
 				</Stat.Content>

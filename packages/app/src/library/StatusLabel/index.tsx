@@ -20,11 +20,11 @@ export const StatusLabel = ({
 	topOffset = '40%',
 	status = 'sync_or_setup',
 }: StatusLabelProps) => {
-	const { openHelp } = useHelp()
 	const { syncing } = useSyncing()
 	const { plugins } = usePlugins()
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
+	const { openHelpTooltip } = useHelp()
 
 	// syncing or not staking
 	if (status === 'sync_or_setup') {
@@ -50,7 +50,8 @@ export const StatusLabel = ({
 						<span>
 							<ButtonHelp
 								marginLeft
-								onClick={() => openHelp(helpKey)}
+								definition={helpKey}
+								openHelp={openHelpTooltip}
 								background="secondary"
 							/>
 						</span>

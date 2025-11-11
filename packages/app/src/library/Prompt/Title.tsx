@@ -20,7 +20,7 @@ interface TitleProps {
 
 export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
 	const { closePrompt } = usePrompt()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	const graphic = Svg ? (
 		<Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -34,7 +34,9 @@ export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
 				{graphic}
 				<h2>
 					{title}
-					{helpKey ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
+					{helpKey ? (
+						<ButtonHelp definition={helpKey} openHelp={openHelpTooltip} />
+					) : null}
 				</h2>
 			</div>
 			{!hideDone ? (

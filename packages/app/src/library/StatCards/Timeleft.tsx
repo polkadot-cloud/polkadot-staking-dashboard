@@ -15,7 +15,7 @@ export const Timeleft = ({
 	tooltip,
 	helpKey,
 }: TimeleftProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	return (
 		<Stat.Card>
@@ -35,7 +35,11 @@ export const Timeleft = ({
 					<Stat.Subtitle>
 						{label}{' '}
 						{helpKey !== undefined ? (
-							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							<ButtonHelp
+								marginLeft
+								definition={helpKey}
+								openHelp={openHelpTooltip}
+							/>
 						) : null}
 					</Stat.Subtitle>
 				</Stat.Content>

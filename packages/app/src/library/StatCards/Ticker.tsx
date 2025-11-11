@@ -18,7 +18,7 @@ export const Ticker = ({
 	unit,
 	changePercent,
 }: TickerProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	const tickerColor =
 		direction === 'up'
@@ -53,7 +53,11 @@ export const Ticker = ({
 					<Stat.Subtitle>
 						{label}
 						{helpKey !== undefined ? (
-							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							<ButtonHelp
+								marginLeft
+								definition={helpKey}
+								openHelp={openHelpTooltip}
+							/>
 						) : null}
 					</Stat.Subtitle>
 				</Stat.Content>

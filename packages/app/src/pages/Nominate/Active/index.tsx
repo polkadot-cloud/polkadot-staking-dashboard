@@ -27,9 +27,9 @@ import { UnstakePrompts } from './UnstakePrompts'
 
 export const Active = () => {
 	const { t } = useTranslation()
-	const { openHelp } = useHelp()
 	const { syncing } = useSyncing()
 	const { isBonding } = useStaking()
+	const { openHelpTooltip } = useHelp()
 	const { getNominations } = useBalances()
 	const { openCanvas } = useOverlay().canvas
 	const { isFastUnstaking } = useUnstaking()
@@ -72,7 +72,8 @@ export const Active = () => {
 										{t('nominate', { ns: 'pages' })}
 										<ButtonHelp
 											marginLeft
-											onClick={() => openHelp('Nominations')}
+											definition="Nominations"
+											openHelp={openHelpTooltip}
 										/>
 									</h3>
 									<div>

@@ -34,17 +34,17 @@ export const Nominations = ({
 		isOwner: isPoolOwner,
 		isNominator: isPoolNominator,
 	} = useActivePool()
-	const { openHelp } = useHelp()
 	const {
 		modal: { openModal },
 		canvas: { openCanvas },
 	} = useOverlay()
 	const { isBonding } = useStaking()
-	const { syncing } = useSyncing(['era-stakers'])
+	const { openHelpTooltip } = useHelp()
 	const { getNominations } = useBalances()
 	const { isFastUnstaking } = useUnstaking()
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
+	const { syncing } = useSyncing(['era-stakers'])
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	// Determine if pool or nominator.
@@ -86,7 +86,11 @@ export const Nominations = ({
 			<CardHeader action margin>
 				<h3>
 					{isPool ? t('poolNominations') : t('nominations')}
-					<ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
+					<ButtonHelp
+						marginLeft
+						definition="Nominations"
+						openHelp={openHelpTooltip}
+					/>
 				</h3>
 				{displayBtns && (
 					<ButtonRow>
