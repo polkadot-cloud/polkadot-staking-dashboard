@@ -19,4 +19,5 @@ export const HelpNoDocs = [
 	'selfStake',
 	'totalPayoutsAnalysed',
 	'validatorRewardHistory',
+	'yourBalance',
 ]
