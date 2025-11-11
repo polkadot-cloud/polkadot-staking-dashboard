@@ -91,7 +91,7 @@ export const AccountDropdown = ({
 		if (isOpen && dropdownRef.current) {
 			const rect = dropdownRef.current.getBoundingClientRect()
 			setDropdownPosition({
-				top: rect.bottom + window.scrollY + 4, // 4px gap below button
+				top: rect.bottom + window.scrollY,
 				left: rect.left + window.scrollX,
 				width: rect.width,
 			})
@@ -231,6 +231,7 @@ export const AccountDropdown = ({
 				className={containerClass}
 				ref={dropdownRef}
 				disabled={disabled}
+				listOpen={isOpen}
 			>
 				{!isInputFocused && !disabled && (
 					<AccountInput.InactiveButton
@@ -248,7 +249,7 @@ export const AccountDropdown = ({
 				>
 					<Polkicon
 						address={selectedAccount?.address || ''}
-						fontSize="3rem"
+						fontSize="2.75rem"
 						background="transparent"
 					/>
 				</span>

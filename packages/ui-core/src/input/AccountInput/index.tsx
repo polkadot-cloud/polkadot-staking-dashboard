@@ -17,10 +17,11 @@ import classes from './index.module.scss'
 
 const Container = forwardRef<
 	HTMLDivElement,
-	ComponentBaseWithClassName & { disabled?: boolean }
->(({ children, style, className, disabled }, ref) => {
+	ComponentBaseWithClassName & { disabled?: boolean; listOpen: boolean }
+>(({ children, style, className, disabled, listOpen }, ref) => {
 	const allClasses = classNames(classes.container, className, {
 		[classes.disabled]: !!disabled,
+		[classes.listOpen]: listOpen,
 	})
 	return (
 		<div className={allClasses} style={style} ref={ref}>
