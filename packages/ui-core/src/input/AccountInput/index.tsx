@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
@@ -15,9 +16,9 @@ import type { AccountInputProps } from '../types'
 import classes from './index.module.scss'
 
 const Container = forwardRef<
-	HTMLButtonElement,
+	HTMLDivElement,
 	ComponentBaseWithClassName & {
-		onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+		onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 		disabled?: boolean
 	}
 >(({ children, style, className, onClick, disabled }, ref) => {
@@ -25,15 +26,9 @@ const Container = forwardRef<
 		[classes.disabled]: !!disabled,
 	})
 	return (
-		<button
-			type="button"
-			className={allClasses}
-			style={style}
-			ref={ref}
-			onClick={onClick}
-		>
+		<div className={allClasses} style={style} ref={ref} onClick={onClick}>
 			{children}
-		</button>
+		</div>
 	)
 })
 
@@ -63,6 +58,7 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 		return (
 			<input
 				type="text"
+				name="account-search"
 				value={value}
 				className={allClasses}
 				style={style}
@@ -71,7 +67,10 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 				onChange={onChange}
 				onFocus={onFocus}
 				onBlur={onBlur}
+				autoComplete="off"
+				autoCorrect="off"
 				maxLength={60}
+				disabled={disabled}
 			/>
 		)
 	},
@@ -88,25 +87,20 @@ const Address = ({ address, style }: ComponentBase & { address: string }) => {
 const SourceIcon = ({
 	SvgIcon,
 	faIcon,
-	size = 'lg',
 }: {
 	SvgIcon?: FunctionComponent<SVGProps<SVGSVGElement>>
 	faIcon?: IconDefinition
-	size?: 'sm' | 'lg'
 }) => {
-	const allClasses = classNames(classes.sourceIcon, {
-		[classes.sm]: size === 'sm',
-	})
 	if (SvgIcon) {
 		return (
-			<span className={allClasses}>
+			<span className={classes.sourceIcon}>
 				<SvgIcon />
 			</span>
 		)
 	}
 	if (faIcon) {
 		return (
-			<span className={allClasses}>
+			<span className={classes.sourceIcon}>
 				<FontAwesomeIcon icon={faIcon} />
 			</span>
 		)
@@ -135,6 +129,8 @@ const ListContainer = forwardRef<HTMLDivElement, ComponentBaseWithClassName>(
 				className={classNames(classes.listContainer, className)}
 				style={style}
 				ref={ref}
+				role="listbox"
+				aria-label="Account selection"
 			>
 				{children}
 			</div>
@@ -159,10 +155,12 @@ const ListItem = ({
 	})
 	return (
 		<div
-			key={`${account.address}-${account.source}`}
 			className={allClasses}
 			onClick={() => onClick(account)}
 			onKeyDown={(ev) => onKeyDown(ev)}
+			role="option"
+			tabIndex={0}
+			aria-selected={isSelected}
 		>
 			{children}
 		</div>
@@ -177,6 +175,30 @@ const ListName = ({ name, style }: ComponentBase & { name: string }) => {
 	)
 }
 
+const Chevron = () => {
+	return <FontAwesomeIcon icon={faChevronDown} className={classes.chevron} />
+}
+
+const InactiveButton = ({
+	children,
+	style,
+	onClick,
+}: ComponentBase & {
+	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+}) => {
+	return (
+		<button
+			type="button"
+			className={classes.btnInactive}
+			onClick={(ev) => onClick(ev)}
+			style={style}
+			aria-label="Open"
+		>
+			{children}
+		</button>
+	)
+}
+
 export const AccountInput = {
 	Container,
 	InnerLeft,
@@ -188,4 +210,6 @@ export const AccountInput = {
 	ListContainer,
 	ListItem,
 	ListName,
+	Chevron,
+	InactiveButton,
 }
