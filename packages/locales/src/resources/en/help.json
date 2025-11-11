@@ -416,30 +416,6 @@
 					"Unlike your staked balance, your bonded pool balance is held and locked in the pool itself."
 				]
 			]
-		},
-		"externals": {
-			"bondMore": "Bond More Tokens to Your Existing Stake",
-			"changeAccount": "Changing your Controller Account",
-			"changeDestination": "Changing Your Payout Destination",
-			"changeNominations": "Changing Your Nominations",
-			"chooseValidators": "How do I Know Which Validators to Choose?",
-			"claimRewards": "Claiming Nomination Pool Rewards",
-			"connectAccounts": "How to Connect Your Accounts",
-			"createPools": "Creating Nomination Pools",
-			"howToUse": "How to Use the Polkadot Cloud Staking: Overview",
-			"polkawatchAnalytics": "Decentralization Analytics by Polkawatch: Introduction",
-			"rebonding": "Rebonding",
-			"stakeDot": "Staking your DOT",
-			"unbondingTokens": "Unbonding Your Tokens"
-		},
-		"modal": {
-			"articles": "Articles",
-			"close": "Close",
-			"definitions": "Definitions",
-			"noArticles": "No articles available.",
-			"noResultsFound": "No results found",
-			"resources": "Resources",
-			"showingFoundOfTotal": "Showing {{found}} of {{total}} Resources"
 		}
 	}
 }

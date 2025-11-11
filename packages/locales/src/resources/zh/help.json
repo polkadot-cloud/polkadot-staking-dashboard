@@ -427,30 +427,6 @@
 					"和抵押的金额不同, 质押的池金额是被持有并锁定在提名池中."
 				]
 			]
-		},
-		"externals": {
-			"bondMore": "质押更多代币到现有的抵押",
-			"changeAccount": "更改您的Controller账号",
-			"changeDestination": "更改奖励钱包地址",
-			"changeNominations": "更改您的提名",
-			"chooseValidators": "如何选择验证人?",
-			"claimRewards": "申领提名池奖励",
-			"connectAccounts": "如何连接您的帐户",
-			"createPools": "创建提名池",
-			"howToUse": "Cloud Staking:概述",
-			"polkawatchAnalytics": "Polkawatch的去中心化分析: 介绍",
-			"rebonding": "解除质押中",
-			"stakeDot": "抵押您的DOT",
-			"unbondingTokens": "解除您的质押"
-		},
-		"modal": {
-			"articles": "文章",
-			"close": "关闭",
-			"definitions": "定义",
-			"noArticles": "暂无相关文章。",
-			"noResultsFound": "未找到结果",
-			"resources": "资源",
-			"showingFoundOfTotal": "显示 {{found}} 个资源，共 {{total}} 个"
 		}
 	}
 }

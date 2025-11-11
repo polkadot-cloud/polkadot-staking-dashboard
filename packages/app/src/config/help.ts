@@ -24,23 +24,6 @@ export const HelpConfig: HelpItems = [
 			'Proxy Accounts',
 			'Reserve Balance For Existential Deposit',
 		],
-		external: [
-			[
-				'connectAccounts',
-				'https://support.polkadot.network/support/solutions/articles/65000182121-how-to-use-the-staking-dashboard-connecting-your-account',
-				'polkadot.network',
-			],
-			[
-				'howToUse',
-				'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
-				'polkadot.network',
-			],
-			[
-				'stakeDot',
-				'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
-				'polkadot.network',
-			],
-		],
 	},
 	{
 		key: 'nominate',
@@ -52,38 +35,6 @@ export const HelpConfig: HelpItems = [
 			'Nominating',
 			'Nominations',
 			'Inactive Nominations',
-		],
-		external: [
-			[
-				'changeDestination',
-				'https://support.polkadot.network/support/solutions/articles/65000182220-how-to-use-the-staking-dashboard-changing-reward-destination',
-				'polkadot.network',
-			],
-			[
-				'bondMore',
-				'https://support.polkadot.network/support/solutions/articles/65000182207-how-to-use-the-staking-dashboard-bond-more-tokens-to-your-existing-stake',
-				'polkadot.network',
-			],
-			[
-				'unbondingTokens',
-				'https://support.polkadot.network/support/solutions/articles/65000182201-how-to-use-the-staking-dashboard-unbonding-your-tokens',
-				'polkadot.network',
-			],
-			[
-				'rebonding',
-				'https://support.polkadot.network/support/solutions/articles/65000182221-how-to-use-the-staking-dashboard-rebonding',
-				'polkadot.network',
-			],
-			[
-				'changeAccount',
-				'https://support.polkadot.network/support/solutions/articles/65000182218-how-to-use-the-staking-dashboard-changing-your-controller-account',
-				'polkadot.network',
-			],
-			[
-				'changeNominations',
-				'https://support.polkadot.network/support/solutions/articles/65000182518-how-to-use-the-staking-dashboard-changing-your-nominations',
-				'polkadot.network',
-			],
 		],
 	},
 	{
@@ -102,18 +53,6 @@ export const HelpConfig: HelpItems = [
 			'Pool Commission Change Rate',
 			'Pool Reward History',
 		],
-		external: [
-			[
-				'createPools',
-				'https://support.polkadot.network/support/solutions/articles/65000182388-how-to-use-the-staking-dashboard-creating-nomination-pools',
-				'polkadot.network',
-			],
-			[
-				'claimRewards',
-				'https://support.polkadot.network/support/solutions/articles/65000182399-how-to-use-staking-dashboard-claiming-nomination-pool-rewards',
-				'polkadot.network',
-			],
-		],
 	},
 	{
 		key: 'decentralization',
@@ -122,13 +61,6 @@ export const HelpConfig: HelpItems = [
 			'Geolocation of Each Nomination',
 			'Nomination Payout Distribution',
 			'Total Payouts Analysed',
-		],
-		external: [
-			[
-				'polkawatchAnalytics',
-				'https://blog.polkawatch.app/introducing-polkawatch/',
-				'polkawatch.app',
-			],
 		],
 	},
 	{
@@ -147,23 +79,14 @@ export const HelpConfig: HelpItems = [
 			'Rewards By Country And Network',
 			'Validator Reward History',
 		],
-		external: [
-			[
-				'chooseValidators',
-				'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
-				'polkadot.network',
-			],
-		],
 	},
 	{
 		key: 'payouts',
 		definitions: ['Payout', 'Last Era Payout', 'Payout History'],
-		external: [],
 	},
 	{
 		key: 'community',
 		definitions: [],
-		external: [],
 	},
 	{
 		key: 'ledger',
@@ -175,6 +98,5 @@ export const HelpConfig: HelpItems = [
 			'Ledger App Not on Latest Runtime Version',
 			'Wrong Transaction',
 		],
-		external: [],
 	},
 ]

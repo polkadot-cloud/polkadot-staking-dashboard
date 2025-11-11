@@ -9,11 +9,7 @@ export type HelpItems = HelpItem[]
 export interface HelpItem {
 	key?: string
 	definitions?: string[]
-	external?: ExternalItems
 }
-
-export type ExternalItems = ExternalItem[]
-export type ExternalItem = [string, string, string]
 
 export interface DefinitionWithKeys {
 	title: string

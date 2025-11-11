@@ -418,30 +418,6 @@
 					"A diferencia de tu balance en stake, tu balance vinculado en el pool se mantiene y está comprometido en el pool mismo."
 				]
 			]
-		},
-		"externals": {
-			"bondMore": "Vincular Más Tokens a Tu Stake Existente",
-			"changeAccount": "Cambiar tu Cuenta Controladora",
-			"changeDestination": "Cambiar Tu Destino de Pago",
-			"changeNominations": "Cambiar Tus Nominaciones",
-			"chooseValidators": "¿Cómo Sé Qué Validadores Elegir?",
-			"claimRewards": "Reclamar Recompensas del Pool de Nominación",
-			"connectAccounts": "Cómo Conectar Tus Cuentas",
-			"createPools": "Crear Pools de Nominación",
-			"howToUse": "Cómo Usar el Cloud Staking: Overview",
-			"polkawatchAnalytics": "Análisis de Descentralización por Polkawatch: Introducción",
-			"rebonding": "Revincular",
-			"stakeDot": "Hacer Stake con tus DOT",
-			"unbondingTokens": "Desvincular Tus Tokens"
-		},
-		"modal": {
-			"articles": "Artículos",
-			"close": "Cerrar",
-			"definitions": "Definiciones",
-			"noArticles": "No hay artículos disponibles.",
-			"noResultsFound": "No se encontraron resultados",
-			"resources": "Recursos",
-			"showingFoundOfTotal": "Mostrando {{found}} de {{total}} Recursos"
 		}
 	}
 }
