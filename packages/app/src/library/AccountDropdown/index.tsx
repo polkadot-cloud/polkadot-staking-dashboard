@@ -4,7 +4,12 @@
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, isValidAddress, planckToUnit } from '@w3ux/utils'
+import {
+	ellipsisFn,
+	formatAccountSs58,
+	isValidAddress,
+	planckToUnit,
+} from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
@@ -30,7 +35,7 @@ export const AccountDropdown = ({
 	const { t } = useTranslation()
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
-	const { units, unit } = getStakingChainData(network)
+	const { units, unit, ss58 } = getStakingChainData(network)
 
 	// Generate unique ID for this component instance
 	const instanceId = useId()
@@ -161,15 +166,18 @@ export const AccountDropdown = ({
 
 	// If search term is a valid address and not already in accounts, add it as a temporary entry
 	const validAddress = isValidAddress(searchTerm)
-	if (validAddress && !accounts.some(({ address }) => address === searchTerm)) {
-		filteredAccounts = [
-			{
-				address: searchTerm,
-				name: searchTerm,
-				source: 'external',
-			} as ImportedAccount,
-			...filteredAccounts,
-		]
+	if (validAddress) {
+		const formattedAddress = formatAccountSs58(searchTerm, ss58)
+		if (!accounts.some(({ address }) => address === formattedAddress)) {
+			filteredAccounts = [
+				{
+					address: formattedAddress,
+					name: formattedAddress,
+					source: 'external',
+				} as ImportedAccount,
+				...filteredAccounts,
+			]
+		}
 	}
 
 	// Handle account selection
