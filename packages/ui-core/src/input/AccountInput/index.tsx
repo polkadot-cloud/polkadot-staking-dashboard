@@ -17,16 +17,13 @@ import classes from './index.module.scss'
 
 const Container = forwardRef<
 	HTMLDivElement,
-	ComponentBaseWithClassName & {
-		onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
-		disabled?: boolean
-	}
->(({ children, style, className, onClick, disabled }, ref) => {
+	ComponentBaseWithClassName & { disabled?: boolean }
+>(({ children, style, className, disabled }, ref) => {
 	const allClasses = classNames(classes.container, className, {
 		[classes.disabled]: !!disabled,
 	})
 	return (
-		<div className={allClasses} style={style} ref={ref} onClick={onClick}>
+		<div className={allClasses} style={style} ref={ref}>
 			{children}
 		</div>
 	)
