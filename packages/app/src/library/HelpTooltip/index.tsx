@@ -66,7 +66,7 @@ export const HelpTooltip = () => {
 
 	const { title, description } = fillVariables(
 		{
-			title: t(`definitions.${localeKey}.0`),
+			title: t(`definitions.${localeKey}.0`, { ns: 'help' }),
 			description: i18n.getResource(
 				i18n.resolvedLanguage ?? DefaultLocale,
 				'help',
@@ -99,7 +99,7 @@ export const HelpTooltip = () => {
 					)}
 					{!HelpNoDocs.includes(tooltipDefinition) ? (
 						<ButtonSecondary
-							text="Read More on Staking Docs"
+							text={t('readMoreOnStakingDocs', { ns: 'app' })}
 							iconRight={faArrowUpRightFromSquare}
 							iconTransform="shrink-2"
 							onClick={() => {
