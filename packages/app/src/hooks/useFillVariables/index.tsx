@@ -30,7 +30,7 @@ export const useFillVariables = () => {
 	const { unit, units } = getStakingChainData(network)
 
 	const fillVariables = (d: AnyJson, keys: string[]) => {
-		const fields: AnyJson = Object.entries(d).filter(([k]) => keys.includes(k))
+		const fields = Object.entries(d).filter(([k]) => keys.includes(k))
 		const transformed = Object.entries(fields).map(
 			([, [key, val]]: AnyJson) => {
 				const varsToValues = [

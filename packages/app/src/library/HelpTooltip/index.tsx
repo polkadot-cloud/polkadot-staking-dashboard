@@ -1,9 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import {
+	faArrowUpRightFromSquare,
+	faXmark,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { camelize } from '@w3ux/utils'
+import { HelpNoDocs } from 'config/help'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useFillVariables } from 'hooks/useFillVariables'
@@ -11,6 +15,8 @@ import { DefaultLocale } from 'locales'
 import { Popover } from 'radix-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ButtonSecondary } from 'ui-buttons'
+import { kebabize } from 'utils'
 import { CloseButton, PopoverContent } from './Wrapper'
 
 export const HelpTooltip = () => {
@@ -56,6 +62,8 @@ export const HelpTooltip = () => {
 	}
 
 	const localeKey = camelize(tooltipDefinition)
+	const docsKey = kebabize(tooltipDefinition)
+
 	const { title, description } = fillVariables(
 		{
 			title: t(`definitions.${localeKey}.0`),
@@ -89,6 +97,23 @@ export const HelpTooltip = () => {
 					) : (
 						<p>{description}</p>
 					)}
+					{!HelpNoDocs.includes(tooltipDefinition) ? (
+						<ButtonSecondary
+							text="Read More on Staking Docs"
+							iconRight={faArrowUpRightFromSquare}
+							iconTransform="shrink-2"
+							onClick={() => {
+								window.open(
+									`https://docs.staking.polkadot.cloud/#/${i18n.language}/glossary?a=${docsKey}`,
+									'_blank',
+								)
+							}}
+							style={{
+								color: 'var(--accent-color-primary)',
+							}}
+							size="md"
+						/>
+					) : null}
 				</PopoverContent>
 			</Popover.Portal>
 		</Popover.Root>

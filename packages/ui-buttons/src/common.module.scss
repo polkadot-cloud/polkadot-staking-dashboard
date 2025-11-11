@@ -69,6 +69,8 @@
 }
 
 .btnActiveTransforms {
+  transition: transform var(--transition-duration);
+
   &:hover {
     transform: scale(1.02);
   }
