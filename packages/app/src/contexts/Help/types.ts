@@ -4,24 +4,6 @@
 import type { MaybeString } from '@w3ux/types'
 import type { ReactNode } from 'react'
 
-export type HelpItems = HelpItem[]
-
-export interface HelpItem {
-	key?: string
-	definitions?: string[]
-}
-
-export interface DefinitionWithKeys {
-	title: string
-	description: string[]
-}
-
-export interface ExternalWithKeys {
-	title: string
-	url: string
-	website?: string
-}
-
 export interface HelpContextInterface {
 	openHelpTooltip: (
 		definition: MaybeString,
@@ -42,5 +24,3 @@ export interface HelpContextState {
 export interface HelpContextProps {
 	children: ReactNode
 }
-
-export type HelpConfig = Record<string, string | string[]>
