@@ -82,7 +82,7 @@ export const AccountDropdown = ({
 		}
 	}
 
-	const dropdownRef = useRef<HTMLButtonElement>(null)
+	const dropdownRef = useRef<HTMLDivElement>(null)
 	const menuRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
 
@@ -201,14 +201,16 @@ export const AccountDropdown = ({
 			<AccountInput.Container
 				className={containerClass}
 				ref={dropdownRef}
-				onClick={() => {
-					if (!isInputFocused && !disabled) {
-						handleOpenDropdown()
-						inputRef.current?.focus()
-					}
-				}}
 				disabled={disabled}
 			>
+				{!isInputFocused && !disabled && (
+					<AccountInput.InactiveButton
+						onClick={() => {
+							handleOpenDropdown()
+							inputRef.current?.focus()
+						}}
+					/>
+				)}
 				<span
 					style={{
 						opacity: isInputFocused || !selectedAccount ? 0.25 : 1,

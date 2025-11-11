@@ -137,3 +137,15 @@
   opacity: 0.5;
   font-size: 1rem;
 }
+
+.btnInactive {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 101;
+}

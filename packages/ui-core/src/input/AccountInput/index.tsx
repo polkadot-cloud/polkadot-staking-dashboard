@@ -16,9 +16,9 @@ import type { AccountInputProps } from '../types'
 import classes from './index.module.scss'
 
 const Container = forwardRef<
-	HTMLButtonElement,
+	HTMLDivElement,
 	ComponentBaseWithClassName & {
-		onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+		onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 		disabled?: boolean
 	}
 >(({ children, style, className, onClick, disabled }, ref) => {
@@ -26,15 +26,9 @@ const Container = forwardRef<
 		[classes.disabled]: !!disabled,
 	})
 	return (
-		<button
-			type="button"
-			className={allClasses}
-			style={style}
-			ref={ref}
-			onClick={onClick}
-		>
+		<div className={allClasses} style={style} ref={ref} onClick={onClick}>
 			{children}
-		</button>
+		</div>
 	)
 })
 
@@ -72,6 +66,7 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 				onChange={onChange}
 				onFocus={onFocus}
 				onBlur={onBlur}
+				autoComplete="off"
 				maxLength={60}
 			/>
 		)
@@ -177,6 +172,25 @@ const Chevron = () => {
 	return <FontAwesomeIcon icon={faChevronDown} className={classes.chevron} />
 }
 
+const InactiveButton = ({
+	children,
+	style,
+	onClick,
+}: ComponentBase & {
+	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+}) => {
+	return (
+		<button
+			type="button"
+			className={classes.btnInactive}
+			onClick={(ev) => onClick(ev)}
+			style={style}
+		>
+			{children}
+		</button>
+	)
+}
+
 export const AccountInput = {
 	Container,
 	InnerLeft,
@@ -189,4 +203,5 @@ export const AccountInput = {
 	ListItem,
 	ListName,
 	Chevron,
+	InactiveButton,
 }
