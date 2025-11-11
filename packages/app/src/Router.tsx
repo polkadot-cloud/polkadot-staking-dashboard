@@ -22,6 +22,7 @@ import { useAccountSwitchNavigation } from 'hooks/useAccountSwitchNavigation'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
 import { Help } from 'library/Help'
+import { HelpTooltip } from 'library/HelpTooltip'
 import { MainFooter } from 'library/MainFooter'
 import { Menu } from 'library/Menu'
 import { NotificationPrompts } from 'library/NotificationPrompts'
@@ -107,6 +108,7 @@ const RouterInner = () => {
 				<NotificationPrompts />
 				<Page.Body id="portal-root">
 					<Help />
+					<HelpTooltip />
 					<Overlays />
 					<Menu />
 					<Tooltip />

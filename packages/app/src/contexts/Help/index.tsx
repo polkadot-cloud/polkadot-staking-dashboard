@@ -17,6 +17,10 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
 	const [state, setState] = useState<HelpContextState>({
 		status: 'closed',
 		definition: null,
+		// New tooltip state
+		isTooltipOpen: false,
+		tooltipDefinition: null,
+		tooltipAnchor: null,
 	})
 
 	// When fade out completes, reset active definition
@@ -58,6 +62,28 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
 		})
 	}
 
+	// New tooltip-based help functions
+	const openHelpTooltip = (
+		definition: MaybeString,
+		anchor: HTMLButtonElement | null,
+	) => {
+		setState({
+			...state,
+			isTooltipOpen: true,
+			tooltipDefinition: definition,
+			tooltipAnchor: anchor,
+		})
+	}
+
+	const closeHelpTooltip = () => {
+		setState({
+			...state,
+			isTooltipOpen: false,
+			tooltipDefinition: null,
+			tooltipAnchor: null,
+		})
+	}
+
 	return (
 		<HelpContext.Provider
 			value={{
@@ -67,6 +93,12 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
 				setDefinition,
 				status: state.status,
 				definition: state.definition,
+				// New tooltip API
+				openHelpTooltip,
+				closeHelpTooltip,
+				isTooltipOpen: state.isTooltipOpen,
+				tooltipDefinition: state.tooltipDefinition,
+				tooltipAnchor: state.tooltipAnchor,
 			}}
 		>
 			{children}

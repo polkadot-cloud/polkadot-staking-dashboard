@@ -35,11 +35,24 @@ export interface HelpContextInterface {
 	setDefinition: (d: MaybeString) => void
 	status: HelpStatus
 	definition: MaybeString
+	// New tooltip-based help system
+	openHelpTooltip: (
+		definition: MaybeString,
+		anchor: HTMLButtonElement | null,
+	) => void
+	closeHelpTooltip: () => void
+	isTooltipOpen: boolean
+	tooltipDefinition: MaybeString
+	tooltipAnchor: HTMLElement | null
 }
 
 export interface HelpContextState {
 	status: HelpStatus
 	definition: MaybeString
+	// New tooltip state
+	isTooltipOpen: boolean
+	tooltipDefinition: MaybeString
+	tooltipAnchor: HTMLElement | null
 }
 
 export interface HelpContextProps {

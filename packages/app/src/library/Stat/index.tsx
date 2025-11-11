@@ -29,7 +29,7 @@ export const Stat = ({
 	buttonType = 'primary',
 }: StatProps) => {
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	const Token = getChainIcons(network).token
 	const containerRef = useRef<HTMLDivElement | null>(null)
@@ -90,7 +90,11 @@ export const Stat = ({
 			<h4>
 				{label}
 				{helpKey !== undefined ? (
-					<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+					<ButtonHelp
+						definition={helpKey}
+						marginLeft
+						openHelp={openHelpTooltip}
+					/>
 				) : null}
 			</h4>
 			<div className={`content${buttons ? ' withButtons' : ''}`}>
