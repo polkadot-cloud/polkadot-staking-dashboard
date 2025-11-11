@@ -58,6 +58,7 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 		return (
 			<input
 				type="text"
+				name="account-search"
 				value={value}
 				className={allClasses}
 				style={style}
@@ -67,7 +68,9 @@ const Input = forwardRef<HTMLInputElement, AccountInputProps>(
 				onFocus={onFocus}
 				onBlur={onBlur}
 				autoComplete="off"
+				autoCorrect="off"
 				maxLength={60}
+				disabled={disabled}
 			/>
 		)
 	},
@@ -126,6 +129,8 @@ const ListContainer = forwardRef<HTMLDivElement, ComponentBaseWithClassName>(
 				className={classNames(classes.listContainer, className)}
 				style={style}
 				ref={ref}
+				role="listbox"
+				aria-label="Account selection"
 			>
 				{children}
 			</div>
@@ -150,10 +155,12 @@ const ListItem = ({
 	})
 	return (
 		<div
-			key={`${account.address}-${account.source}`}
 			className={allClasses}
 			onClick={() => onClick(account)}
 			onKeyDown={(ev) => onKeyDown(ev)}
+			role="option"
+			tabIndex={0}
+			aria-selected={isSelected}
 		>
 			{children}
 		</div>
@@ -185,6 +192,7 @@ const InactiveButton = ({
 			className={classes.btnInactive}
 			onClick={(ev) => onClick(ev)}
 			style={style}
+			aria-label="Open"
 		>
 			{children}
 		</button>
