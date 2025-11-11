@@ -31,6 +31,7 @@ export const Declare = () => {
 		<Padding verticalOnly>
 			<AccountDropdown
 				accounts={[]}
+				placeholder={t('inputAddress')}
 				label={t('delegatorAddress')}
 				initialAccount={selectedAccount}
 				onSelect={(account) => {

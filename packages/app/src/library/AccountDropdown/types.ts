@@ -9,5 +9,6 @@ export interface AccountDropdownProps {
 	onSelect?: (account: ImportedAccount | null) => void
 	onOpenChange?: (isOpen: boolean) => void
 	label?: string
+	placeholder?: string
 	disabled?: boolean
 }

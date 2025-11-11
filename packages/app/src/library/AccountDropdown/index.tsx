@@ -30,6 +30,7 @@ export const AccountDropdown = ({
 	onSelect,
 	onOpenChange,
 	label,
+	placeholder,
 	disabled = false,
 }: AccountDropdownProps) => {
 	const { t } = useTranslation()
@@ -253,7 +254,9 @@ export const AccountDropdown = ({
 						ref={inputRef}
 						disabled={disabled}
 						placeholder={
-							selectedAccount?.name || t('searchAddress', { ns: 'app' })
+							selectedAccount?.name ||
+							placeholder ||
+							t('searchAddress', { ns: 'app' })
 						}
 						value={inputValue}
 						onChange={(e) => {
