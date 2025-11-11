@@ -26,16 +26,7 @@ export interface ExternalWithKeys {
 	website?: string
 }
 
-export type HelpStatus = 'closed' | 'open' | 'closing'
-
 export interface HelpContextInterface {
-	openHelp: (d: MaybeString) => void
-	closeHelp: () => void
-	setStatus: (s: HelpStatus) => void
-	setDefinition: (d: MaybeString) => void
-	status: HelpStatus
-	definition: MaybeString
-	// New tooltip-based help system
 	openHelpTooltip: (
 		definition: MaybeString,
 		anchor: HTMLButtonElement | null,
@@ -47,9 +38,6 @@ export interface HelpContextInterface {
 }
 
 export interface HelpContextState {
-	status: HelpStatus
-	definition: MaybeString
-	// New tooltip state
 	isTooltipOpen: boolean
 	tooltipDefinition: MaybeString
 	tooltipAnchor: HTMLElement | null
