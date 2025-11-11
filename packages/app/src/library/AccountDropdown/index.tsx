@@ -1,12 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronDown, faGlasses } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import { ExtensionIcons } from '@w3ux/extension-assets/util'
-import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
+import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn, isValidAddress, planckToUnit } from '@w3ux/utils'
@@ -22,6 +17,7 @@ import type { ImportedAccount } from 'types'
 import { AccountInput } from 'ui-core/input'
 import { getTransferrableBalance } from 'utils'
 import type { AccountDropdownProps } from './types'
+import { getAccountSourceIcon } from './util'
 
 export const AccountDropdown = ({
 	accounts,
@@ -164,10 +160,7 @@ export const AccountDropdown = ({
 
 	// If search term is a valid address and not already in accounts, add it as a temporary entry
 	const validAddress = isValidAddress(searchTerm)
-	if (
-		validAddress &&
-		!accounts.some((account) => account.address === searchTerm)
-	) {
+	if (validAddress && !accounts.some(({ address }) => address === searchTerm)) {
 		filteredAccounts = [
 			{
 				address: searchTerm,
@@ -201,15 +194,7 @@ export const AccountDropdown = ({
 	const inputValue = isInputFocused ? searchTerm : selectedAccount?.name || ''
 
 	// Determine selected account source icon
-	const SelectedIcon = selectedAccount
-		? selectedAccount.source === 'ledger'
-			? LedgerSVG
-			: selectedAccount.source === 'vault'
-				? PolkadotVaultSVG
-				: selectedAccount.source === 'wallet_connect'
-					? WalletConnectSVG
-					: ExtensionIcons[selectedAccount.source] || undefined
-		: undefined
+	const SelectedSourceIcon = getAccountSourceIcon(selectedAccount?.source)
 
 	return (
 		<>
@@ -282,22 +267,13 @@ export const AccountDropdown = ({
 							/>
 						</div>
 						<div>
-							{SelectedIcon !== undefined ? (
-								<AccountInput.SourceIcon SvgIcon={SelectedIcon} />
+							{SelectedSourceIcon !== undefined ? (
+								<AccountInput.SourceIcon SvgIcon={SelectedSourceIcon} />
 							) : selectedAccount?.source === 'external' ? (
 								<AccountInput.SourceIcon faIcon={faGlasses} />
 							) : null}
 
-							{!disabled && (
-								<FontAwesomeIcon
-									icon={faChevronDown}
-									style={{
-										marginLeft: 'auto',
-										opacity: 0.5,
-										fontSize: '1rem',
-									}}
-								/>
-							)}
+							{!disabled && <AccountInput.Chevron />}
 						</div>
 					</AccountInput.InnerRight>
 				)}
@@ -312,15 +288,7 @@ export const AccountDropdown = ({
 					<AccountInput.ListContainer ref={menuRef} className={dropdownClass}>
 						<SimpleBar style={{ maxHeight: '300px' }}>
 							{filteredAccounts.map((account) => {
-								// Determine account source icon
-								const Icon =
-									account.source === 'ledger'
-										? LedgerSVG
-										: account.source === 'vault'
-											? PolkadotVaultSVG
-											: account.source === 'wallet_connect'
-												? WalletConnectSVG
-												: ExtensionIcons[account.source] || undefined
+								const SourceIcon = getAccountSourceIcon(account?.source)
 
 								return (
 									<AccountInput.ListItem
@@ -348,8 +316,8 @@ export const AccountDropdown = ({
 											/>
 											<AccountInput.Address address={account.address} />
 										</AccountInput.InnerLeft>
-										{Icon !== undefined ? (
-											<AccountInput.SourceIcon SvgIcon={Icon} />
+										{SourceIcon !== undefined ? (
+											<AccountInput.SourceIcon SvgIcon={SourceIcon} />
 										) : account.source === 'external' ? (
 											<AccountInput.SourceIcon faIcon={faGlasses} />
 										) : null}

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
@@ -172,6 +173,10 @@ const ListName = ({ name, style }: ComponentBase & { name: string }) => {
 	)
 }
 
+const Chevron = () => {
+	return <FontAwesomeIcon icon={faChevronDown} className={classes.chevron} />
+}
+
 export const AccountInput = {
 	Container,
 	InnerLeft,
@@ -183,4 +188,5 @@ export const AccountInput = {
 	ListContainer,
 	ListItem,
 	ListName,
+	Chevron,
 }
