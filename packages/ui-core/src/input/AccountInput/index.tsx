@@ -199,6 +199,18 @@ const InactiveButton = ({
 	)
 }
 
+const Label = ({
+	style,
+	label,
+}: ComponentBase & {
+	label: string
+}) => {
+	return (
+		<h4 className={classes.label} style={style}>
+			{label}
+		</h4>
+	)
+}
 export const AccountInput = {
 	Container,
 	InnerLeft,
@@ -212,4 +224,5 @@ export const AccountInput = {
 	ListName,
 	Chevron,
 	InactiveButton,
+	Label,
 }

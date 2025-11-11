@@ -24,6 +24,7 @@ export const AccountDropdown = ({
 	initialAccount,
 	onSelect,
 	onOpenChange,
+	label,
 	disabled = false,
 }: AccountDropdownProps) => {
 	const { t } = useTranslation()
@@ -198,6 +199,7 @@ export const AccountDropdown = ({
 
 	return (
 		<>
+			{label && <AccountInput.Label label={label} />}
 			<AccountInput.Container
 				className={containerClass}
 				ref={dropdownRef}
