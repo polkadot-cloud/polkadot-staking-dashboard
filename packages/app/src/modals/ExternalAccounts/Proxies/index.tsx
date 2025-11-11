@@ -12,7 +12,6 @@ import { ellipsisFn } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useProxies } from 'contexts/Proxies'
-import { AccountInput } from 'library/AccountInput'
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
@@ -22,14 +21,15 @@ import {
 	ActionWithButton,
 	ManualAccount,
 	ManualAccountsWrapper,
-} from './Wrappers'
+} from '../Wrappers'
+import { Declare } from './Declare'
 
 export const Proxies = () => {
 	const { t } = useTranslation('modals')
 	const { openHelp } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
-	const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies()
+	const { formatProxiesToDelegates } = useProxies()
 
 	const [inputOpen, setInputOpen] = useState<boolean>(false)
 
@@ -68,16 +68,7 @@ export const Proxies = () => {
 				</ActionWithButton>
 				<ManualAccountsWrapper>
 					<div className="content">
-						{inputOpen && (
-							<AccountInput
-								resetOnSuccess
-								defaultLabel={t('inputDelegatorAddress')}
-								successCallback={async (delegator) => {
-									const result = await handleDeclareDelegate(delegator)
-									return result
-								}}
-							/>
-						)}
+						{inputOpen && <Declare />}
 						{Object.entries(importedDelegates).length ? (
 							<div className="accounts">
 								{Object.entries(importedDelegates).map(
