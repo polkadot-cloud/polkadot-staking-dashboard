@@ -177,7 +177,10 @@ export const AccountDropdown = ({
 	const validAddress = isValidAddress(searchTerm)
 	if (validAddress) {
 		const formattedAddress = formatAccountSs58(searchTerm, ss58)
-		if (!accounts.some(({ address }) => address === formattedAddress)) {
+		if (
+			formattedAddress !== null &&
+			!accounts.some(({ address }) => address === formattedAddress)
+		) {
 			filteredAccounts = [
 				{
 					address: formattedAddress,
