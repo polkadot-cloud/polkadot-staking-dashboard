@@ -186,7 +186,7 @@ export const AccountDropdown = ({
 					address: formattedAddress,
 					name: formattedAddress,
 					source: 'external',
-				} as ImportedAccount,
+				},
 				...filteredAccounts,
 			]
 		}
