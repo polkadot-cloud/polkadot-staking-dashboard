@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { camelize } from '@w3ux/utils'
 import { HelpNoDocs } from 'config/help'
+import { StakingDocsUrl } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useFillVariables } from 'hooks/useFillVariables'
@@ -104,7 +105,7 @@ export const HelpTooltip = () => {
 							iconTransform="shrink-2"
 							onClick={() => {
 								window.open(
-									`https://docs.staking.polkadot.cloud/#/${i18n.language}/glossary?a=${docsKey}`,
+									`${StakingDocsUrl}/#/${i18n.language}/glossary?a=${docsKey}`,
 									'_blank',
 								)
 							}}

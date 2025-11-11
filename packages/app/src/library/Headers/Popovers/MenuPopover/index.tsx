@@ -3,6 +3,7 @@
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
+	faBookOpen,
 	faCog,
 	faDollarSign,
 	faExternalLinkAlt,
@@ -19,7 +20,7 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
-import { GitHubURl } from 'consts'
+import { GitHubURl, StakingDocsUrl } from 'consts'
 import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -199,6 +200,15 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
+			<DefaultButton
+				text="Documentation"
+				iconLeft={faBookOpen}
+				iconRight={faExternalLinkAlt}
+				onClick={() => {
+					setOpen(false)
+					window.open(`${StakingDocsUrl}/#/${i18n.language}`, '_blank')
+				}}
+			/>
 			<MenuItemButton onClick={() => toggleTheme()}>
 				<div>
 					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
