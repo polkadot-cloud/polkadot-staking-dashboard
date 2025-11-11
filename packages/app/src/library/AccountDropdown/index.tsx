@@ -91,7 +91,7 @@ export const AccountDropdown = ({
 		if (isOpen && dropdownRef.current) {
 			const rect = dropdownRef.current.getBoundingClientRect()
 			setDropdownPosition({
-				top: rect.bottom + window.scrollY,
+				top: rect.bottom + window.scrollY - 1,
 				left: rect.left + window.scrollX,
 				width: rect.width,
 			})
