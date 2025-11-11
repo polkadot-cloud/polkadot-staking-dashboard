@@ -1,20 +1,28 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+$container-border-radius: 1.25rem;
+
 .container {
   background: var(--background-floating-card);
   border: 1px solid var(--border-primary-color);
   position: relative;
-  padding: 0 .8rem;
-  height: 4.75rem;
-  border-radius: 0.75rem;
+  padding: 0 0.95rem;
+  height: 4.95rem;
+  border-radius: $container-border-radius;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all 0.15s;
+  transition: border 0.15s;
   gap: 0.75rem;
   width: 100%;
+
+  &.listOpen {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+  }
 
   &:hover {
     border-color: var(--accent-color-pending);
@@ -60,18 +68,12 @@
 }
 
 .sourceIcon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-top: 0.5rem;
-
-  &.sm {
-    width: 1.15rem;
-    height: 1.15rem;
-  }
+  margin-top: 0.25rem;
+  margin-right: 0.5rem;
   
-  svg {
-    width: 100%;
-    height: 100%;
+  > svg {
+    width: 1.3rem;
+    height: 1.3rem;
   }
 }
 
@@ -86,12 +88,16 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: space-between;
   padding-left: 0.5rem;
 
   h4 {
     color: var(--text-color-secondary);
     font-size: 0.95rem;
+  }
+
+  > div:nth-child(2) {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -103,10 +109,8 @@
 .listContainer {
   background: var(--button-popover-tab-background);
   border: 1px solid var(--border-primary-color);
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-  border-bottom-left-radius: 0.75rem;
-  border-bottom-right-radius: 0.75rem;
+  border-bottom-left-radius: $container-border-radius;
+  border-bottom-right-radius: $container-border-radius;
   z-index: 101;
   overflow: hidden;
 }
@@ -132,4 +136,28 @@
   color: var(--text-color-primary);
   font-family: InterSemiBold, sans-serif;
   font-size: 1.1rem;
+}
+
+.chevron {
+  margin-left: auto;
+  opacity: 0.5;
+  font-size: 1rem;
+}
+
+.btnInactive {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.label {
+  color: var(--text-color-secondary);
+  font-size: 1rem;
+  padding-bottom: 0.45rem;
 }
