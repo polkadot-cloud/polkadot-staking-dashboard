@@ -61,16 +61,6 @@
 					"The minimum to earn rewards statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era. This value is also the minimum amount required to receive rewards."
 				]
 			],
-			"commission": [
-				"Commission",
-				[
-					"Validators can take a percentage of the rewards they earn. This chunk is called their commission.",
-					"Nominating validators with low commissions mean you will receive a larger share of the rewards they generate.",
-					"Many validators will have a commission rate of 100%, meaning you will receive no rewards by nominating these validators.",
-					"Examples of such validators include those operating on behalf of exchanges, where nominating and reward distribution is done centrally on the exchange in question.",
-					"A validator can update their commission rates as and when they please, and such changes will have an impact on your profitability. Be sure to monitor your nominations on this dashboard to keep updated on their commission rates."
-				]
-			],
 			"decentralizationAnalyticsPeriod": [
 				"Decentralization Analytics Period",
 				[
@@ -115,14 +105,6 @@
 				"Inactive Nominations",
 				[
 					"Nominations that are in the active validator set for the current era, but bonded funds have not been assigned to these nominations."
-				]
-			],
-			"inflation": [
-				"Inflation",
-				[
-					"{NETWORK_UNIT} is inflationary; there is no maximum number of {NETWORK_UNIT}.",
-					"Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury.",
-					"The Latest Inflation Rate to Stakers figure represents how much of the inflation is accounted to stakers. The remaining inflation is diverted to the treasury."
 				]
 			],
 			"lastEraPayout": [

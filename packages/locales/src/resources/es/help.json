@@ -61,16 +61,6 @@
 					"TLa estadística mínima para ganar recompensas es la cantidad mínima de {NETWORK_UNIT} que está siendo vinculada por un nominador para la era actual. Este valor es también la cantidad mínima requerida para recibir recompensas."
 				]
 			],
-			"commission": [
-				"Comisión",
-				[
-					"Los validadores pueden tomar un porcentaje de las recompensas que ganan. Esta porción se llama su comisión.",
-					"Nominar validadores con comisiones bajas significa que recibirás una mayor parte de las recompensas que generan.",
-					"Muchos validadores tendrán una tasa de comisión del 100%, lo que significa que no recibirás recompensas al nominar a estos validadores.",
-					"Ejemplos de tales validadores incluyen aquellos que operan en nombre de exchanges, donde la nominación y la distribución de recompensas se realiza de manera centralizada en el exchange en cuestión.",
-					"Un validador puede actualizar sus tasas de comisión cuando lo desee, y tales cambios tendrán un impacto en tu rentabilidad. Asegúrate de monitorear tus nominaciones en este panel para mantenerte actualizado sobre sus tasas de comisión."
-				]
-			],
 			"decentralizationAnalyticsPeriod": [
 				"Período de Análisis de Descentralización",
 				[
@@ -117,14 +107,6 @@
 				"Nominaciones Inactivas",
 				[
 					"Nominaciones que están en el conjunto de validadores activos para la era actual, pero los fondos vinculados no han sido asignados a estas nominaciones."
-				]
-			],
-			"inflation": [
-				"Inflación",
-				[
-					"{NETWORK_UNIT} es inflacionario; no hay un número máximo de {NETWORK_UNIT}.",
-					"La inflación está diseñada para ser aproximadamente 10% anual, con las recompensas del validador siendo una función de la cantidad en stake y el resto yendo a la tesorería.",
-					"La cifra de la Última Tasa de Inflación para Stakers representa cuánto de la inflación se contabiliza para los stakers. La inflación restante se desvía a la tesorería."
 				]
 			],
 			"lastEraPayout": [
