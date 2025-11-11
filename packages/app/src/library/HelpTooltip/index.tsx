@@ -64,7 +64,6 @@ export const HelpTooltip = () => {
 
 	const localeKey = camelize(tooltipDefinition)
 	const docsKey = kebabize(tooltipDefinition)
-
 	const { title, description } = fillVariables(
 		{
 			title: t(`definitions.${localeKey}.0`, { ns: 'help' }),
@@ -98,7 +97,7 @@ export const HelpTooltip = () => {
 					) : (
 						<p>{description}</p>
 					)}
-					{!HelpNoDocs.includes(tooltipDefinition) ? (
+					{!HelpNoDocs.includes(localeKey) ? (
 						<ButtonSecondary
 							text={t('readMoreOnStakingDocs', { ns: 'app' })}
 							iconRight={faArrowUpRightFromSquare}
