@@ -140,7 +140,7 @@
 		"importedAccount_zero": "{{count}} 个己导入帐户",
 		"inPool": "提名池中",
 		"inputAddress": "输入地址",
-		"inputDelegatorAddress": "输入委托人地址",
+		"delegatorAddress": "委托人地址",
 		"inputPayeeAccount": "输入收款人账户",
 		"invalidAddress": "无效地址",
 		"joinPool": "加入池",

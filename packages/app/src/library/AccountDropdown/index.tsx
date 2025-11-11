@@ -81,13 +81,6 @@ export const AccountDropdown = ({
 		setTransferableBalance(balance)
 	}
 
-	// Handle opening of dropdown if there are accounts to choose from
-	const handleOpenDropdown = () => {
-		if (accounts.length > 0 && !disabled) {
-			setIsOpen(true)
-		}
-	}
-
 	const dropdownRef = useRef<HTMLDivElement>(null)
 	const menuRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -157,6 +150,21 @@ export const AccountDropdown = ({
 		}
 	}, [accounts, selectedAccount, initialAccount])
 
+	// Helper function to check if there will be any filtered accounts for a given search term
+	const hasFilteredAccounts = (term: string): boolean => {
+		// Check if any accounts match the search term
+		const hasMatchingAccounts = accounts.some(
+			(account) =>
+				account.address.toLowerCase().includes(term.toLowerCase()) ||
+				account.name?.toLowerCase().includes(term.toLowerCase()),
+		)
+		// Check if the term is a valid address (which would be added to the list)
+		if (isValidAddress(term)) {
+			return true
+		}
+		return hasMatchingAccounts
+	}
+
 	// Filter accounts based on search term
 	let filteredAccounts = accounts.filter(
 		(account) =>
@@ -177,6 +185,13 @@ export const AccountDropdown = ({
 				} as ImportedAccount,
 				...filteredAccounts,
 			]
+		}
+	}
+
+	// Handle opening of dropdown if there are accounts to choose from
+	const handleOpenDropdown = (term = searchTerm) => {
+		if (hasFilteredAccounts(term) && !disabled) {
+			setIsOpen(true)
 		}
 	}
 
@@ -243,9 +258,10 @@ export const AccountDropdown = ({
 						value={inputValue}
 						onChange={(e) => {
 							if (disabled) return
-							setSearchTerm(e.target.value)
+							const newSearchTerm = e.target.value
+							setSearchTerm(newSearchTerm)
 							if (!isOpen) {
-								handleOpenDropdown()
+								handleOpenDropdown(newSearchTerm)
 							}
 						}}
 						onFocus={() => {

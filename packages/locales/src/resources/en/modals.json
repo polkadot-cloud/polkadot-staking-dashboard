@@ -149,7 +149,7 @@
 		"importedAccount_zero": "No Imported Accounts",
 		"inPool": "In Pool",
 		"inputAddress": "Input Address",
-		"inputDelegatorAddress": "Input Delegator Address",
+		"delegatorAddress": "Delegator Address",
 		"inputPayeeAccount": "Input Payee Account",
 		"invalidAddress": "Invalid Address",
 		"joinPool": "Join Pool",
