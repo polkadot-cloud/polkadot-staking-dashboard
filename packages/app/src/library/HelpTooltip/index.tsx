@@ -32,6 +32,25 @@ export const HelpTooltip = () => {
 		}
 	}, [tooltipAnchor, isTooltipOpen])
 
+	// Close tooltip on scroll or resize
+	useEffect(() => {
+		if (!isTooltipOpen) {
+			return
+		}
+
+		const handleScrollOrResize = () => {
+			closeHelpTooltip()
+		}
+
+		window.addEventListener('scroll', handleScrollOrResize, true)
+		window.addEventListener('resize', handleScrollOrResize)
+
+		return () => {
+			window.removeEventListener('scroll', handleScrollOrResize, true)
+			window.removeEventListener('resize', handleScrollOrResize)
+		}
+	}, [isTooltipOpen, closeHelpTooltip])
+
 	if (!isTooltipOpen || !tooltipDefinition || !tooltipAnchor) {
 		return null
 	}
