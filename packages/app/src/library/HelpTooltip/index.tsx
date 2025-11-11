@@ -108,6 +108,7 @@ export const HelpTooltip = () => {
 									`${StakingDocsUrl}/#/${i18n.language}/glossary?a=${docsKey}`,
 									'_blank',
 								)
+								closeHelpTooltip()
 							}}
 							style={{
 								color: 'var(--accent-color-primary)',
