@@ -142,6 +142,48 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
+			<MenuItemButton onClick={() => setShowHelp(!showHelp)}>
+				<div>
+					<FontAwesomeIcon icon={faInfo} transform="shrink-1" />
+				</div>
+				<div>
+					<h3>{t('helpPrompts', { ns: 'app' })}</h3>
+				</div>
+				<div>
+					<div>
+						<FontAwesomeIcon
+							icon={showHelp ? faToggleOn : faToggleOff}
+							color={
+								showHelp
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
+			<MenuItemButton onClick={() => toggleTheme()}>
+				<div>
+					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
+				</div>
+				<div>
+					<h3>{t('darkMode', { ns: 'app' })}</h3>
+				</div>
+				<div>
+					<div>
+						<FontAwesomeIcon
+							icon={mode === 'dark' ? faToggleOn : faToggleOff}
+							color={
+								mode === 'dark'
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
 			<DefaultButton
 				text={t('share', { ns: 'app' })}
 				note={notStaking ? t('notStaking', { ns: 'app' }) : undefined}
@@ -192,48 +234,6 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
-			<MenuItemButton onClick={() => setShowHelp(!showHelp)}>
-				<div>
-					<FontAwesomeIcon icon={faInfo} transform="shrink-1" />
-				</div>
-				<div>
-					<h3>{t('helpPrompts', { ns: 'app' })}</h3>
-				</div>
-				<div>
-					<div>
-						<FontAwesomeIcon
-							icon={showHelp ? faToggleOn : faToggleOff}
-							color={
-								showHelp
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
-							transform="grow-8"
-						/>
-					</div>
-				</div>
-			</MenuItemButton>
-			<MenuItemButton onClick={() => toggleTheme()}>
-				<div>
-					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
-				</div>
-				<div>
-					<h3>{t('darkMode', { ns: 'app' })}</h3>
-				</div>
-				<div>
-					<div>
-						<FontAwesomeIcon
-							icon={mode === 'dark' ? faToggleOn : faToggleOff}
-							color={
-								mode === 'dark'
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
-							transform="grow-8"
-						/>
-					</div>
-				</div>
-			</MenuItemButton>
 			<DefaultButton
 				text={t('documentation', { ns: 'app' })}
 				iconLeft={faBookOpen}
