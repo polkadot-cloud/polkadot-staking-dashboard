@@ -5,6 +5,7 @@ import type {
 	IconDefinition,
 	IconProp,
 } from '@fortawesome/fontawesome-svg-core'
+import type { MaybeString } from '@w3ux/types'
 import type { FunctionComponent, MouseEvent, SVGProps } from 'react'
 import type {
 	ComponentBase,
@@ -75,6 +76,11 @@ export type ButtonHelpProps = ComponentBaseWithClassName &
 	ButtonCommonProps & {
 		background?: 'primary' | 'secondary' | 'none'
 		outline?: boolean
+		openHelp?: (
+			definition: MaybeString,
+			anchor: HTMLButtonElement | null,
+		) => void
+		definition?: string
 	}
 
 export type ButtonMonoProps = ComponentBaseWithClassName &

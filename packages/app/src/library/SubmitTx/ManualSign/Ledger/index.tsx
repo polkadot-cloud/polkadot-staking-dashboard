@@ -9,11 +9,11 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import type { LedgerResponse } from 'contexts/LedgerHardware/types'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import type { ReactNode } from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 import type { SubmitProps } from '../../types'
 import { Submit } from './Submit'
@@ -46,7 +46,7 @@ export const Ledger = ({
 		transportResponse,
 		runtimesInconsistent,
 	} = useLedgerHardware()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { setModalResize } = useOverlay().modal
 	const { accountHasSigner } = useImportedAccounts()
 
@@ -117,10 +117,9 @@ export const Ledger = ({
 					<div>
 						<p className="prompt">
 							{t('ledgerAppOutOfDate')}
-							<ButtonHelp
-								onClick={() =>
-									openHelp('Ledger App Not on Latest Runtime Version')
-								}
+							<ButtonHelpTooltip
+								definition="Ledger App Not on Latest Runtime Version"
+								openHelp={openHelpTooltip}
 							/>
 						</p>
 					</div>
@@ -139,13 +138,10 @@ export const Ledger = ({
 									? t('ledgerConnectAndConfirm')
 									: `${t('deviceVerified')}. ${t('submitTransaction')}`}
 							{feedback?.helpKey && (
-								<ButtonHelp
+								<ButtonHelpTooltip
 									marginLeft
-									onClick={() => {
-										if (feedback?.helpKey) {
-											openHelp(feedback.helpKey)
-										}
-									}}
+									definition={feedback?.helpKey}
+									openHelp={openHelpTooltip}
 								/>
 							)}
 						</p>
