@@ -18,6 +18,7 @@ export const Popover = ({
 	transparent = false,
 	arrow = true,
 	sideOffset = 3,
+	triggerWidth,
 }: {
 	children: ReactNode
 	content: ReactNode
@@ -30,6 +31,7 @@ export const Popover = ({
 	arrow?: boolean
 	transparent?: boolean
 	sideOffset?: number
+	triggerWidth?: number | string
 }) => {
 	width = width || '310px'
 
@@ -39,7 +41,10 @@ export const Popover = ({
 
 	return (
 		<RadixPopover.Root open={open}>
-			<RadixPopover.Trigger onClick={onTriggerClick}>
+			<RadixPopover.Trigger
+				onClick={onTriggerClick}
+				style={{ width: triggerWidth }}
+			>
 				{children}
 			</RadixPopover.Trigger>
 			<RadixPopover.Portal container={portalContainer}>

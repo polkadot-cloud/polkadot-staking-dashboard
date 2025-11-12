@@ -209,10 +209,14 @@ export type ButtonAccountLabelProps = ComponentBaseWithClassName & {
 export type ButtonAccountStandaloneProps = ComponentBaseWithClassName &
 	OnMouseHandlersProps & {
 		label: string
+		iconLeft?: IconDefinition
+		iconRight?: IconDefinition
 		marginLeft?: boolean
 		marginRight?: boolean
+		hasSeparator?: boolean
 		marginX?: boolean
 		disabled?: boolean
+		noHoverBackground?: boolean
 	}
 
 export type ButtonModalProps = ComponentBaseWithClassName &
