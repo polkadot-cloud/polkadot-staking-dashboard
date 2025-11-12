@@ -176,7 +176,9 @@
 			],
 			"nominationStatus": [
 				"Estado de Nominación",
-				["El estado de tus nominaciones de un vistazo."]
+				[
+					"Tanto si participas activamente nominando candidatos y obteniendo recompensas como si no"
+				]
 			],
 			"nominations": [
 				"Nominaciones",

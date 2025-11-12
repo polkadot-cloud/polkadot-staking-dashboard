@@ -174,7 +174,7 @@
 			],
 			"nominationStatus": [
 				"Nomination Status",
-				["The status of your nominations at a glance."]
+				["Whether you are actively nominating and earning rewards or not."]
 			],
 			"nominations": [
 				"Nominations",

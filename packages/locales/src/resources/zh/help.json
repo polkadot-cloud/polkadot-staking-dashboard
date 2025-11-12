@@ -159,7 +159,7 @@
 					"与个人提名不同, 使用提名池只需要少量{NETWORK_UNIT},提名池就会代表您管理提名人选."
 				]
 			],
-			"nominationStatus": ["提名状态", ["当前的抵押状态."]],
+			"nominationStatus": ["提名状态", ["无论你是否积极提名并获得奖励."]],
 			"nominations": [
 				"提名",
 				["提名指选择验证人. 在{NETWORK_NAME}里最高提名数为 {MAX_NOMINATIONS}."]
