@@ -142,27 +142,6 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
-			<MenuItemButton onClick={() => setShowHelp(!showHelp)}>
-				<div>
-					<FontAwesomeIcon icon={faInfo} transform="shrink-1" />
-				</div>
-				<div>
-					<h3>{t('helpPrompts', { ns: 'app' })}</h3>
-				</div>
-				<div>
-					<div>
-						<FontAwesomeIcon
-							icon={showHelp ? faToggleOn : faToggleOff}
-							color={
-								showHelp
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
-							transform="grow-8"
-						/>
-					</div>
-				</div>
-			</MenuItemButton>
 			<MenuItemButton onClick={() => toggleTheme()}>
 				<div>
 					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
@@ -176,6 +155,27 @@ export const MenuPopover = ({
 							icon={mode === 'dark' ? faToggleOn : faToggleOff}
 							color={
 								mode === 'dark'
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
+			<MenuItemButton onClick={() => setShowHelp(!showHelp)}>
+				<div>
+					<FontAwesomeIcon icon={faInfo} transform="shrink-1" />
+				</div>
+				<div>
+					<h3>{t('helpPrompts', { ns: 'app' })}</h3>
+				</div>
+				<div>
+					<div>
+						<FontAwesomeIcon
+							icon={showHelp ? faToggleOn : faToggleOff}
+							color={
+								showHelp
 									? 'var(--accent-color-primary)'
 									: 'var(--text-color-tertiary)'
 							}
