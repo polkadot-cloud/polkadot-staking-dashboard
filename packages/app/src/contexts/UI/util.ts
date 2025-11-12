@@ -41,6 +41,6 @@ export const getInitialShowHelp = (): boolean => {
 	} catch {
 		// If an error occurs, fall back to the default value
 		localStorage.setItem(ShowHelpKey, String(defaultShowHelp))
-		return defaultAdvancedMode
+		return defaultShowHelp
 	}
 }
