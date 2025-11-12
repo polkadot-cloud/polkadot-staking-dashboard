@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 export const PopoverContent = styled(Popover.Content)`
 	background: var(--background-primary);
-	border: 1px solid var(--border-secondary-color);
+	border: 1px solid var(--border-primary-color);
 	border-radius: 1.25rem;
 	padding: 1.25rem 1.5rem;
 	max-width: 450px;
