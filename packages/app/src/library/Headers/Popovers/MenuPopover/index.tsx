@@ -3,10 +3,12 @@
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
+	faBookOpen,
 	faCog,
 	faDollarSign,
 	faExternalLinkAlt,
 	faGlobe,
+	faInfo,
 	faMoon,
 	faPuzzlePiece,
 	faShare,
@@ -19,7 +21,7 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
-import { GitHubURl } from 'consts'
+import { GitHubURl, StakingDocsUrl } from 'consts'
 import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -48,7 +50,7 @@ export const MenuPopover = ({
 	const { openModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
 	const { activeAddress } = useActiveAccounts()
-	const { advancedMode, setAdvancedMode } = useUi()
+	const { advancedMode, setAdvancedMode, showHelp, setShowHelp } = useUi()
 
 	const { name } = getRelayChainData(network)
 	const { membership } = getPoolMembership(activeAddress)
@@ -140,6 +142,48 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
+			<MenuItemButton onClick={() => toggleTheme()}>
+				<div>
+					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
+				</div>
+				<div>
+					<h3>{t('darkMode', { ns: 'app' })}</h3>
+				</div>
+				<div>
+					<div>
+						<FontAwesomeIcon
+							icon={mode === 'dark' ? faToggleOn : faToggleOff}
+							color={
+								mode === 'dark'
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
+			<MenuItemButton onClick={() => setShowHelp(!showHelp)}>
+				<div>
+					<FontAwesomeIcon icon={faInfo} transform="shrink-1" />
+				</div>
+				<div>
+					<h3>{t('helpPrompts', { ns: 'app' })}</h3>
+				</div>
+				<div>
+					<div>
+						<FontAwesomeIcon
+							icon={showHelp ? faToggleOn : faToggleOff}
+							color={
+								showHelp
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
 			<DefaultButton
 				text={t('share', { ns: 'app' })}
 				note={notStaking ? t('notStaking', { ns: 'app' }) : undefined}
@@ -160,15 +204,6 @@ export const MenuPopover = ({
 					}}
 				/>
 			)}
-			<DefaultButton
-				text="GitHub"
-				iconLeft={faGithub}
-				iconRight={faExternalLinkAlt}
-				onClick={() => {
-					setOpen(false)
-					window.open(GitHubURl, '_blank')
-				}}
-			/>
 			<MenuItem>
 				<button
 					type="button"
@@ -199,27 +234,24 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
-			<MenuItemButton onClick={() => toggleTheme()}>
-				<div>
-					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
-				</div>
-				<div>
-					<h3>{t('darkMode', { ns: 'app' })}</h3>
-				</div>
-				<div>
-					<div>
-						<FontAwesomeIcon
-							icon={mode === 'dark' ? faToggleOn : faToggleOff}
-							color={
-								mode === 'dark'
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
-							transform="grow-8"
-						/>
-					</div>
-				</div>
-			</MenuItemButton>
+			<DefaultButton
+				text={t('documentation', { ns: 'app' })}
+				iconLeft={faBookOpen}
+				iconRight={faExternalLinkAlt}
+				onClick={() => {
+					setOpen(false)
+					window.open(`${StakingDocsUrl}/#/${i18n.language}`, '_blank')
+				}}
+			/>
+			<DefaultButton
+				text="GitHub"
+				iconLeft={faGithub}
+				iconRight={faExternalLinkAlt}
+				onClick={() => {
+					setOpen(false)
+					window.open(GitHubURl, '_blank')
+				}}
+			/>
 		</div>
 	)
 }

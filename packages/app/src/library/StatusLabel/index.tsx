@@ -8,7 +8,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
-import { ButtonHelp } from 'ui-buttons'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { StatusLabelProps } from './types'
 import { Wrapper } from './Wrapper'
 
@@ -20,11 +20,11 @@ export const StatusLabel = ({
 	topOffset = '40%',
 	status = 'sync_or_setup',
 }: StatusLabelProps) => {
-	const { openHelp } = useHelp()
 	const { syncing } = useSyncing()
 	const { plugins } = usePlugins()
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
+	const { openHelpTooltip } = useHelp()
 
 	// syncing or not staking
 	if (status === 'sync_or_setup') {
@@ -48,9 +48,10 @@ export const StatusLabel = ({
 					{title}
 					{helpKey ? (
 						<span>
-							<ButtonHelp
+							<ButtonHelpTooltip
 								marginLeft
-								onClick={() => openHelp(helpKey)}
+								definition={helpKey}
+								openHelp={openHelpTooltip}
 								background="secondary"
 							/>
 						</span>

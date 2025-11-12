@@ -12,13 +12,14 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Title } from 'library/Modal/Title'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'modals/ManagePool/Wrappers'
 import 'rc-slider/assets/index.css'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonPrimaryInvert } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
@@ -27,7 +28,7 @@ import { planckToUnitBn } from 'utils'
 export const UpdateReserve = () => {
 	const { t } = useTranslation('modals')
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { closeModal } = useOverlay().modal
 	const { accountHasSigner } = useImportedAccounts()
 	const { activeAddress, activeAccount } = useActiveAccounts()
@@ -99,10 +100,9 @@ export const UpdateReserve = () => {
 							{minReserve.isZero() ? (
 								<>
 									{t('none')}
-									<ButtonHelp
-										onClick={() =>
-											openHelp('Reserve Balance For Existential Deposit')
-										}
+									<ButtonHelpTooltip
+										definition="Reserve Balance For Existential Deposit"
+										openHelp={openHelpTooltip}
 										style={{ marginLeft: '0.65rem' }}
 									/>
 								</>

@@ -5,8 +5,8 @@ import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
 import { usePrompt } from 'contexts/Prompt'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { FunctionComponent, SVGProps } from 'react'
-import { ButtonHelp } from 'ui-buttons'
 import { Close } from 'ui-core/modal'
 import { TitleWrapper } from './Wrappers'
 
@@ -20,7 +20,7 @@ interface TitleProps {
 
 export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
 	const { closePrompt } = usePrompt()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	const graphic = Svg ? (
 		<Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -34,7 +34,12 @@ export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
 				{graphic}
 				<h2>
 					{title}
-					{helpKey ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
+					{helpKey ? (
+						<ButtonHelpTooltip
+							definition={helpKey}
+							openHelp={openHelpTooltip}
+						/>
+					) : null}
 				</h2>
 			</div>
 			{!hideDone ? (

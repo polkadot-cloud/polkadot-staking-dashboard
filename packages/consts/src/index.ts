@@ -9,6 +9,7 @@ export const DiscordSupportUrl = 'https://discord.gg/QY7CSSJm3D'
 export const MailSupportAddress = 'staking@polkadot.cloud'
 export const GitHubURl =
 	'https://github.com/polkadot-cloud/polkadot-staking-dashboard'
+export const StakingDocsUrl = 'https://docs.staking.polkadot.cloud'
 
 // Analytics
 export const SAEnabled = true
@@ -40,6 +41,7 @@ export const ProviderTypeKey = 'providerType'
 export const PoolSetupsKey = 'poolSetups'
 export const NominatorSetupsKey = 'nominatorSetups'
 export const AdvancedModeKey = 'advancedMode'
+export const ShowHelpKey = 'showHelp'
 export const ActiveProxiesKey = 'activeProxies'
 
 export const rpcEndpointKey = (network: string) => `${network}RpcEndpoints`
