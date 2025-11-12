@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Countdown } from 'library/Countdown'
-import { ButtonHelp } from 'ui-buttons'
 import { Countdown as CountdownWrapper, Stat } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
 import type { TimeleftProps } from './types'
@@ -15,7 +15,7 @@ export const Timeleft = ({
 	tooltip,
 	helpKey,
 }: TimeleftProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	return (
 		<Stat.Card>
@@ -35,7 +35,11 @@ export const Timeleft = ({
 					<Stat.Subtitle>
 						{label}{' '}
 						{helpKey !== undefined ? (
-							<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+							<ButtonHelpTooltip
+								marginLeft
+								definition={helpKey}
+								openHelp={openHelpTooltip}
+							/>
 						) : null}
 					</Stat.Subtitle>
 				</Stat.Content>

@@ -15,8 +15,9 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { BondedChart } from 'library/BarChart/BondedChart'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
+import { ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
@@ -24,7 +25,7 @@ export const ManageBond = () => {
 	const { t } = useTranslation('pages')
 
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { syncing } = useSyncing(['active-pools'])
@@ -53,7 +54,11 @@ export const ManageBond = () => {
 			<CardHeader>
 				<h4>
 					{t('bondedFunds')}
-					<ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
+					<ButtonHelpTooltip
+						marginLeft
+						definition="Bonded in Pool"
+						openHelp={openHelpTooltip}
+					/>
 				</h4>
 				<h2>
 					<Token />

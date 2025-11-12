@@ -8,8 +8,9 @@ import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useLayoutEffect, useRef } from 'react'
-import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
+import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import type {
 	StatAddress,
 	StatButtonProps,
@@ -29,7 +30,7 @@ export const Stat = ({
 	buttonType = 'primary',
 }: StatProps) => {
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	const Token = getChainIcons(network).token
 	const containerRef = useRef<HTMLDivElement | null>(null)
@@ -90,7 +91,11 @@ export const Stat = ({
 			<h4>
 				{label}
 				{helpKey !== undefined ? (
-					<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+					<ButtonHelpTooltip
+						definition={helpKey}
+						openHelp={openHelpTooltip}
+						marginLeft
+					/>
 				) : null}
 			</h4>
 			<div className={`content${buttons ? ' withButtons' : ''}`}>

@@ -6,16 +6,17 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
-import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonPrimaryInvert } from 'ui-buttons'
 import { CardHeader, Separator } from 'ui-core/base'
 import type { NomninationGeoListProps } from '../types'
 import { Node } from './Node'
 
 export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
 	const { network } = useNetwork()
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { isNominating } = useStaking()
 	const { activeAddress } = useActiveAccounts()
 
@@ -35,9 +36,10 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
 						<CardHeader action margin>
 							<h3>
 								{title}
-								<ButtonHelp
+								<ButtonHelpTooltip
 									marginLeft
-									onClick={() => openHelp('Geolocation of Each Nomination')}
+									definition="Geolocation of Each Nomination"
+									openHelp={openHelpTooltip}
 								/>
 							</h3>
 						</CardHeader>

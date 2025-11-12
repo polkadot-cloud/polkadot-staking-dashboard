@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-	faBook,
 	faChevronDown,
 	faCoins,
 	faRightFromBracket,
@@ -12,7 +11,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { getCategoryId } from 'config/util'
-import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import { type Dispatch, type SetStateAction, useState } from 'react'
@@ -45,14 +43,12 @@ export const DefaultMenu = ({
 	const { advancedMode, setAdvancedMode, sideMenuMinimised } = useUi()
 	const navigate = useNavigate()
 	const { themeElementRef } = useTheme()
-	const { openHelp, status: helpStatus } = useHelp()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
 
 	const [openCategories, setOpenCategories] = useState<boolean>(false)
 
-	const transparent =
-		modalStatus === 'open' || canvasStatus === 'open' || helpStatus === 'open'
+	const transparent = modalStatus === 'open' || canvasStatus === 'open'
 
 	return (
 		<Page.Side.Default
@@ -108,22 +104,6 @@ export const DefaultMenu = ({
 							</section>
 						</BarIconsWrapper>
 						<BarFooterWrapper>
-							<Tooltip
-								text={t('resources')}
-								side="right"
-								container={themeElementRef.current || undefined}
-								delayDuration={0}
-								fadeIn
-							>
-								<BarButton
-									type="button"
-									onClick={() => {
-										openHelp(null)
-									}}
-								>
-									<FontAwesomeIcon icon={faBook} />
-								</BarButton>
-							</Tooltip>
 							<Separator style={{ opacity: 0.25 }} />
 							<Tooltip
 								text={t('exitAdvancedMode')}

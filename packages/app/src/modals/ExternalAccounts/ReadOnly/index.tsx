@@ -12,10 +12,11 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useHelp } from 'contexts/Help'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ExternalAccount } from 'types'
-import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
+import { ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import {
@@ -27,7 +28,7 @@ import { Add } from './Add'
 
 export const ReadOnly = () => {
 	const { t } = useTranslation('modals')
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
 	const { forgetOtherAccounts } = useOtherAccounts()
@@ -67,9 +68,10 @@ export const ReadOnly = () => {
 					<div>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
 						<h3>{t('readOnlyAccounts')}</h3>
-						<ButtonHelp
+						<ButtonHelpTooltip
 							marginLeft
-							onClick={() => openHelp('Read Only Accounts')}
+							definition="Read Only Accounts"
+							openHelp={openHelpTooltip}
 						/>
 					</div>
 					<div>

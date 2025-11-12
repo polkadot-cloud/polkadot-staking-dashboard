@@ -12,9 +12,10 @@ import { ellipsisFn } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useProxies } from 'contexts/Proxies'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
+import { ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import {
@@ -26,7 +27,7 @@ import { Declare } from './Declare'
 
 export const Proxies = () => {
 	const { t } = useTranslation('modals')
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
 	const { formatProxiesToDelegates } = useProxies()
@@ -54,7 +55,11 @@ export const Proxies = () => {
 					<div>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
 						<h3>{t('proxyAccounts')}</h3>
-						<ButtonHelp marginLeft onClick={() => openHelp('Proxy Accounts')} />
+						<ButtonHelpTooltip
+							marginLeft
+							definition="Proxy Accounts"
+							openHelp={openHelpTooltip}
+						/>
 					</div>
 					<div>
 						<ButtonMonoInvert

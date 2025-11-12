@@ -3,6 +3,7 @@
 
 import classNames from 'classnames'
 import type { JSX } from 'react'
+import React from 'react'
 import commonClasses from '../common.module.scss'
 import type { ButtonHelpProps } from '../types'
 import { onMouseHandlers } from '../util'
@@ -31,7 +32,11 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
 		onMouseOut,
 		outline = false,
 		background = 'primary',
+		openHelp,
+		definition,
 	} = props
+
+	const btnRef = React.useRef<HTMLButtonElement>(null)
 
 	const buttonClasses = classNames(
 		commonClasses.btnCore,
@@ -49,13 +54,28 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
 		className,
 	)
 
+	const onClickHander = (e: React.MouseEvent<HTMLButtonElement>) => {
+		if (onClick) {
+			onClick(e)
+		}
+		if (openHelp) {
+			openHelp(definition || '', btnRef.current)
+		}
+	}
+
 	return (
 		<button
+			ref={btnRef}
 			className={buttonClasses}
 			style={style}
 			type="button"
 			disabled={disabled}
-			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
+			{...onMouseHandlers({
+				onClick: onClickHander,
+				onMouseOver,
+				onMouseMove,
+				onMouseOut,
+			})}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

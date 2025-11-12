@@ -10,11 +10,11 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
 import { GeoDonut, GraphWrapper } from 'ui-graphs'
 import { NominationGeoList } from './NominationGeoList'
@@ -26,12 +26,12 @@ import { GraphsWrapper } from './Wrappers'
 
 export const NominationGeo = () => {
 	const { t } = useTranslation()
-	const { openHelp } = useHelp()
 	const { network } = useNetwork()
+	const { openHelpTooltip } = useHelp()
 	const { isNominating } = useStaking()
 	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
 	const { getThemeValue } = useThemeValues()
+	const { activeAddress } = useActiveAccounts()
 
 	const enabled = pluginEnabled('polkawatch')
 
@@ -120,9 +120,10 @@ export const NominationGeo = () => {
 					<CardHeader>
 						<h4>
 							{t('payoutDistribution', { ns: 'pages' })}
-							<ButtonHelp
+							<ButtonHelpTooltip
 								marginLeft
-								onClick={() => openHelp('Nomination Payout Distribution')}
+								definition="Nomination Payout Distribution"
+								openHelp={openHelpTooltip}
 							/>
 						</h4>
 						<h2>{t('byRegionCountryNetwork', { ns: 'pages' })}</h2>

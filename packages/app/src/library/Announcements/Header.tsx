@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
-import { ButtonHelp, ButtonTertiary } from 'ui-buttons'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
+import { ButtonTertiary } from 'ui-buttons'
 import type { HeaderProps } from './types'
 import { HeaderWrapper } from './Wrappers'
 
 export const Header = ({ items }: HeaderProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	return (
 		<HeaderWrapper>
@@ -27,7 +28,11 @@ export const Header = ({ items }: HeaderProps) => {
 						<h4>
 							{label}
 							{!!helpKey && (
-								<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+								<ButtonHelpTooltip
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
 							)}
 						</h4>
 					</div>
