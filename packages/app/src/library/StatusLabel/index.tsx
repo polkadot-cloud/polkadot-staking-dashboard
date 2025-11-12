@@ -8,7 +8,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
-import { ButtonHelp } from 'ui-buttons'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { StatusLabelProps } from './types'
 import { Wrapper } from './Wrapper'
 
@@ -48,7 +48,7 @@ export const StatusLabel = ({
 					{title}
 					{helpKey ? (
 						<span>
-							<ButtonHelp
+							<ButtonHelpTooltip
 								marginLeft
 								definition={helpKey}
 								openHelp={openHelpTooltip}

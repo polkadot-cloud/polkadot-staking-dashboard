@@ -5,10 +5,11 @@ import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonPrimary } from 'ui-buttons'
 import { ButtonRow, CardHeader, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
@@ -38,7 +39,7 @@ export const ManagePool = () => {
 						<CardHeader action margin>
 							<h3>
 								{t('nominations', { ns: 'pages' })}
-								<ButtonHelp
+								<ButtonHelpTooltip
 									marginLeft
 									definition="Nominations"
 									openHelp={openHelpTooltip}

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Countdown } from 'library/Countdown'
-import { ButtonHelp } from 'ui-buttons'
 import { Countdown as CountdownWrapper, Stat } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
 import type { TimeleftProps } from './types'
@@ -35,7 +35,7 @@ export const Timeleft = ({
 					<Stat.Subtitle>
 						{label}{' '}
 						{helpKey !== undefined ? (
-							<ButtonHelp
+							<ButtonHelpTooltip
 								marginLeft
 								definition={helpKey}
 								openHelp={openHelpTooltip}

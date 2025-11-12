@@ -11,11 +11,12 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { ListStatusHeader } from 'library/List'
 import { NominationList } from 'library/NominationList'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonPrimary } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Wrapper } from './Wrapper'
@@ -86,7 +87,7 @@ export const Nominations = ({
 			<CardHeader action margin>
 				<h3>
 					{isPool ? t('poolNominations') : t('nominations')}
-					<ButtonHelp
+					<ButtonHelpTooltip
 						marginLeft
 						definition="Nominations"
 						openHelp={openHelpTooltip}

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
-import { AdvancedModeKey } from 'consts'
-import { defaultAdvancedMode } from './defaults'
+import { AdvancedModeKey, ShowHelpKey } from 'consts'
+import { defaultAdvancedMode, defaultShowHelp } from './defaults'
 
 // Get the initial advanced mode setting. Prioritises URL, then local storage, then default
 export const getInitialAdvancedMode = (): boolean => {
@@ -24,6 +24,23 @@ export const getInitialAdvancedMode = (): boolean => {
 	} catch {
 		// If an error occurs, fall back to the default value
 		localStorage.setItem(AdvancedModeKey, String(defaultAdvancedMode))
+		return defaultAdvancedMode
+	}
+}
+
+// Get the initial show help setting
+export const getInitialShowHelp = (): boolean => {
+	try {
+		const localOrDefault = localStorageOrDefault(
+			ShowHelpKey,
+			true,
+			defaultShowHelp,
+		) as boolean
+
+		return localOrDefault
+	} catch {
+		// If an error occurs, fall back to the default value
+		localStorage.setItem(ShowHelpKey, String(defaultShowHelp))
 		return defaultAdvancedMode
 	}
 }

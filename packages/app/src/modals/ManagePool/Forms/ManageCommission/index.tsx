@@ -16,9 +16,10 @@ import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import 'rc-slider/assets/index.css'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonSubmitInvert } from 'ui-buttons'
+import { ButtonSubmitInvert } from 'ui-buttons'
 import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ChangeRate } from './ChangeRate'
@@ -261,7 +262,7 @@ export const ManageCommission = ({
 				<ActionItem
 					text={t('commissionRate')}
 					inlineButton={
-						<ButtonHelp
+						<ButtonHelpTooltip
 							definition="Pool Commission Rate"
 							openHelp={openHelpTooltip}
 						/>
@@ -279,7 +280,7 @@ export const ManageCommission = ({
 					onToggle={(val) => setEnabled('max_commission', val)}
 					disabled={!!hasValue('max_commission')}
 					inlineButton={
-						<ButtonHelp
+						<ButtonHelpTooltip
 							definition="Pool Max Commission"
 							openHelp={openHelpTooltip}
 						/>
@@ -297,7 +298,7 @@ export const ManageCommission = ({
 					onToggle={(val) => setEnabled('change_rate', val)}
 					disabled={!!hasValue('change_rate')}
 					inlineButton={
-						<ButtonHelp
+						<ButtonHelpTooltip
 							definition="Pool Commission Change Rate"
 							openHelp={openHelpTooltip}
 						/>

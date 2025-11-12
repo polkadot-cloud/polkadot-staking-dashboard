@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
-import { ButtonHelp } from 'ui-buttons'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { LegendItemProps } from './types'
 
 export const LegendItem = ({
@@ -17,7 +17,7 @@ export const LegendItem = ({
 		<h4>
 			{dataClass ? <span className={dataClass} /> : null} {label}
 			{helpKey ? (
-				<ButtonHelp
+				<ButtonHelpTooltip
 					marginLeft
 					definition={helpKey}
 					openHelp={openHelpTooltip}

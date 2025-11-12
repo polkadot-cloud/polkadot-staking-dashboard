@@ -1,0 +1,16 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { useUi } from 'contexts/UI'
+import { ButtonHelp as Wrapper } from 'ui-buttons'
+import type { ButtonHelpProps } from 'ui-buttons/types'
+
+export const ButtonHelpTooltip = (props: ButtonHelpProps) => {
+	const { showHelp } = useUi()
+
+	if (!showHelp) {
+		return null
+	}
+
+	return <Wrapper {...props} />
+}

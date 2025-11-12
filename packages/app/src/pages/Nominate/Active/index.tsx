@@ -9,12 +9,13 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { Nominations } from 'library/Nominations'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
@@ -70,7 +71,7 @@ export const Active = () => {
 								<CardHeader action margin>
 									<h3>
 										{t('nominate', { ns: 'pages' })}
-										<ButtonHelp
+										<ButtonHelpTooltip
 											marginLeft
 											definition="Nominations"
 											openHelp={openHelpTooltip}

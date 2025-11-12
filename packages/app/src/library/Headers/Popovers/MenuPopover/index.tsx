@@ -8,6 +8,7 @@ import {
 	faDollarSign,
 	faExternalLinkAlt,
 	faGlobe,
+	faInfo,
 	faMoon,
 	faPuzzlePiece,
 	faShare,
@@ -49,7 +50,7 @@ export const MenuPopover = ({
 	const { openModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
 	const { activeAddress } = useActiveAccounts()
-	const { advancedMode, setAdvancedMode } = useUi()
+	const { advancedMode, setAdvancedMode, showHelp, setShowHelp } = useUi()
 
 	const { name } = getRelayChainData(network)
 	const { membership } = getPoolMembership(activeAddress)
@@ -161,15 +162,6 @@ export const MenuPopover = ({
 					}}
 				/>
 			)}
-			<DefaultButton
-				text="GitHub"
-				iconLeft={faGithub}
-				iconRight={faExternalLinkAlt}
-				onClick={() => {
-					setOpen(false)
-					window.open(GitHubURl, '_blank')
-				}}
-			/>
 			<MenuItem>
 				<button
 					type="button"
@@ -200,15 +192,27 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
-			<DefaultButton
-				text="Documentation"
-				iconLeft={faBookOpen}
-				iconRight={faExternalLinkAlt}
-				onClick={() => {
-					setOpen(false)
-					window.open(`${StakingDocsUrl}/#/${i18n.language}`, '_blank')
-				}}
-			/>
+			<MenuItemButton onClick={() => setShowHelp(!showHelp)}>
+				<div>
+					<FontAwesomeIcon icon={faInfo} transform="shrink-1" />
+				</div>
+				<div>
+					<h3>{t('helpPrompts', { ns: 'app' })}</h3>
+				</div>
+				<div>
+					<div>
+						<FontAwesomeIcon
+							icon={showHelp ? faToggleOn : faToggleOff}
+							color={
+								showHelp
+									? 'var(--accent-color-primary)'
+									: 'var(--text-color-tertiary)'
+							}
+							transform="grow-8"
+						/>
+					</div>
+				</div>
+			</MenuItemButton>
 			<MenuItemButton onClick={() => toggleTheme()}>
 				<div>
 					<FontAwesomeIcon icon={faMoon} transform="shrink-2" />
@@ -230,6 +234,24 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
+			<DefaultButton
+				text={t('documentation', { ns: 'app' })}
+				iconLeft={faBookOpen}
+				iconRight={faExternalLinkAlt}
+				onClick={() => {
+					setOpen(false)
+					window.open(`${StakingDocsUrl}/#/${i18n.language}`, '_blank')
+				}}
+			/>
+			<DefaultButton
+				text="GitHub"
+				iconLeft={faGithub}
+				iconRight={faExternalLinkAlt}
+				onClick={() => {
+					setOpen(false)
+					window.open(GitHubURl, '_blank')
+				}}
+			/>
 		</div>
 	)
 }

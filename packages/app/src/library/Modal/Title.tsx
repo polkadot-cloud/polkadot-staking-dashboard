@@ -4,9 +4,9 @@
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { CSSProperties } from 'styled-components'
-import { ButtonHelp } from 'ui-buttons'
 import { Title as Wrapper } from 'ui-core/modal'
 import { Close } from 'ui-overlay'
 import { TitleWrapper } from './Wrappers'
@@ -46,7 +46,7 @@ export const Title = ({
 						<Wrapper>
 							{title}
 							{helpKey ? (
-								<ButtonHelp
+								<ButtonHelpTooltip
 									marginLeft
 									definition={helpKey}
 									openHelp={openHelpTooltip}

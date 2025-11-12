@@ -10,11 +10,11 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
 import { GeoDonut, GraphWrapper } from 'ui-graphs'
 import { NominationGeoList } from './NominationGeoList'
@@ -120,7 +120,7 @@ export const NominationGeo = () => {
 					<CardHeader>
 						<h4>
 							{t('payoutDistribution', { ns: 'pages' })}
-							<ButtonHelp
+							<ButtonHelpTooltip
 								marginLeft
 								definition="Nomination Payout Distribution"
 								openHelp={openHelpTooltip}

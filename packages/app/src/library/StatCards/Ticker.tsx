@@ -5,7 +5,7 @@ import { faArrowUpRightDots } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
 import { useHelp } from 'contexts/Help'
-import { ButtonHelp } from 'ui-buttons'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Stat } from 'ui-core/base'
 import type { TickerProps } from './types'
 
@@ -53,7 +53,7 @@ export const Ticker = ({
 					<Stat.Subtitle>
 						{label}
 						{helpKey !== undefined ? (
-							<ButtonHelp
+							<ButtonHelpTooltip
 								marginLeft
 								definition={helpKey}
 								openHelp={openHelpTooltip}

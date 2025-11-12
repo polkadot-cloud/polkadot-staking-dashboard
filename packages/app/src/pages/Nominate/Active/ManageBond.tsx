@@ -21,8 +21,9 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBondActions } from 'hooks/useBondActions'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { BondedChart } from 'library/BarChart/BondedChart'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary, MultiButton } from 'ui-buttons'
+import { ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
@@ -74,7 +75,7 @@ export const ManageBond = () => {
 			<CardHeader>
 				<h4>
 					{t('bondedFunds')}
-					<ButtonHelp
+					<ButtonHelpTooltip
 						marginLeft
 						definition="Bonding"
 						openHelp={openHelpTooltip}

@@ -3,3 +3,6 @@
 
 // By default, advanced mode is enabled
 export const defaultAdvancedMode = true
+
+// By default, show help is enabled
+export const defaultShowHelp = true
