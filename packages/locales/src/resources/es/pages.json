@@ -53,6 +53,7 @@
 		"deductAvgCommissionOf": "Deducir la comisión promedio de {{commission}}%",
 		"deductedFromBond": "Deducido de la Vinculación",
 		"depositor": "Depositante",
+		"depositorOfPool": "Depositante del Pool",
 		"destroyPool": "Destruir Pool",
 		"destroying": "Destruyendo",
 		"earningRewards": "Ganando Recompensas",

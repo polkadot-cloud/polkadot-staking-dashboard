@@ -53,6 +53,7 @@
 		"deductAvgCommissionOf": "Deduct average commission of {{commission}}%",
 		"deductedFromBond": "Deducted from bond",
 		"depositor": "Depositor",
+		"depositorOfPool": "Depositor of Pool",
 		"destroyPool": "Destroy Pool",
 		"destroying": "Destroying",
 		"earningRewards": "Earning Rewards",
