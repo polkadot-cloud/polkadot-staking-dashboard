@@ -270,8 +270,8 @@ importers:
   packages/consts:
     dependencies:
       '@dedot/chain-specs':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.1.0
+        version: 0.1.0
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -292,8 +292,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.181.0
-        version: 0.181.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
+        specifier: ^0.182.0
+        version: 0.182.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
       '@w3ux/observables-connect':
         specifier: ^0.12.0
         version: 0.12.0(bufferutil@4.0.9)(react@19.2.0)(rxjs@7.8.2)(utf-8-validate@5.0.10)
@@ -440,8 +440,8 @@ importers:
         version: 0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.181.0
-        version: 0.181.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
+        specifier: ^0.182.0
+        version: 0.182.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -798,11 +798,11 @@ packages:
     resolution: {integrity: sha512-S/B/mvOM/VDnOk14TDakFRBR6TFA+b3h8gz2vue8WL0NVDWPoIFVyZPmwj7KGeE4KKYjSXB8rQNDk+CJtv/gFA==}
     engines: {node: '>=18'}
 
-  '@dedot/chain-specs@0.0.2':
-    resolution: {integrity: sha512-OBgzSsZqFREhsvsop/XHGY4yIpBRj+UJOb/tFOMvUwIbdR2CuGR95HIvXw3x8l0aOGxMP7Udf+zPM3dg6MRkRA==}
+  '@dedot/chain-specs@0.1.0':
+    resolution: {integrity: sha512-5lLtxpkgX6YWfc/8rO6ok8gTA1h2tSHnbQFKc1Ckni75UFHlZW/brFsEMVYaUkDqc3IN/dxBOcoKERTUuq4slQ==}
 
-  '@dedot/chaintypes@0.181.0':
-    resolution: {integrity: sha512-83sAYqZNmWmXWX7tfYPd1dp1Hm0/NR/MSHKbbCx0I1smoA0pyJa6AxoDyg/mcab31G3eoqmmsAud7Gf+TdnPKw==}
+  '@dedot/chaintypes@0.182.0':
+    resolution: {integrity: sha512-nQSVaHg9pHEsIgTJgjmJboxVt+OoLTni6igP0P6wdM3lLERxsH8eqkI5GV2nfhMv/y9qqAvv48wJH+uPuJhdUw==}
     peerDependencies:
       dedot: '>=0.16.0'
 
@@ -5677,9 +5677,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/chain-specs@0.0.2': {}
+  '@dedot/chain-specs@0.1.0': {}
 
-  '@dedot/chaintypes@0.181.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))':
+  '@dedot/chaintypes@0.182.0(dedot@0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10))':
     dependencies:
       dedot: 0.18.5(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
 
