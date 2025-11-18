@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.4.0...locales-v1.5.0) (2025-11-18)
+
+
+### Features
+
+* Init `event-tracking` package ([#2987](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2987)) ([98150d8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/98150d89f12406e00ee0c17d7136f74276edd8a5))
+* Invites -&gt; notifications UI ([#3071](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3071)) ([a0ae3be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a0ae3bef1e07db9ba6d93c29a596bc070d163336))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** Migrate `framer-motion` -&gt; `motion` ([#3062](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3062)) ([e6ebb39](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e6ebb397387c796df5644ad60d358a070b8790d9))
+* Simple mode pool joining + pool joining amendments ([#3066](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3066)) ([86b36d3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/86b36d3d290082fa0abc4abf5ce9d941fc4dbabb))
+* Support multi-source same account import ([#3043](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3043)) ([8cb1b16](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8cb1b1685f013957b335a6a4b5bdf088fce87ada))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+* **ux:** Help tooltip, resources to docs ([#3087](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3087)) ([0a66b31](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0a66b31427fc50e9a8eed4f1d3414ed4b6eab4ec))
+* **ux:** Use account dropdown component ([#3086](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3086)) ([a11b9cd](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a11b9cde0fbb19c2e181b34475f92c76b78d6d82))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.3.0...locales-v1.4.0) (2025-07-24)
 
 

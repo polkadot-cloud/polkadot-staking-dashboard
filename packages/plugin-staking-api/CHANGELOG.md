@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.4.0...plugin-staking-api-v1.5.0) (2025-11-18)
+
+
+### Features
+
+* Fast nomination status syncing ([#2937](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2937)) ([a1ddb08](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a1ddb08e4151961a917aa7c93942726b342e8a73))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.3.0...plugin-staking-api-v1.4.0) (2025-07-24)
 
 
