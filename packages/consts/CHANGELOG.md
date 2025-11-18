@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.3.0...consts-v1.4.0) (2025-11-18)
+
+
+### Features
+
+* Add OnFinality RPC Provider ([3c93aa2](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3c93aa2b9efc5129565f2f3cbc6a0ee8ff38f5a2))
+* Force disable plugins per network, disable Staking API on Kusama, Westend ([#3026](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3026)) ([00ae973](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/00ae9737fa0d759ebafe0599590ed25fb7fe9c32))
+* get/set local `activeSection` ([#2978](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2978)) ([0f9412d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0f9412de1a18f8e26a9845242c4bc789871d62a8))
+* Init `event-tracking` package ([#2987](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2987)) ([98150d8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/98150d89f12406e00ee0c17d7136f74276edd8a5))
+* nav section from url & hook ([1ed6860](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1ed6860ccbc0445fde9116817a58a9d5667bba51))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** Migrate `framer-motion` -&gt; `motion` ([#3062](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3062)) ([e6ebb39](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e6ebb397387c796df5644ad60d358a070b8790d9))
+* Simple mode pool joining + pool joining amendments ([#3066](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3066)) ([86b36d3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/86b36d3d290082fa0abc4abf5ce9d941fc4dbabb))
+* Use `@dedot/chain-types`, unify singular smoldot instance ([#3073](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3073)) ([89185a6](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/89185a6bf331986df09ca17485883ecc80f67dc8))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+* **ux:** Help tooltip, resources to docs ([#3087](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3087)) ([0a66b31](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0a66b31427fc50e9a8eed4f1d3414ed4b6eab4ec))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.2.0...consts-v1.3.0) (2025-06-17)
 
 
