@@ -30,13 +30,20 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
 	const tooltipText = `${Math.ceil(30 / erasPerDay)} ${t('dayPoolPerformance')}`
 
 	return (
-		<Graph syncing={syncing} canvas={displayFor === 'canvas'}>
+		<Graph
+			syncing={syncing}
+			canvas={displayFor === 'canvas'}
+			Inner={
+				<>
+					<TooltipArea
+						text={tooltipText}
+						onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+					/>
+					<RewardsGraph points={prefilledPoints} syncing={empty} />
+				</>
+			}
+		>
 			{syncing && <div className="preload" />}
-			<TooltipArea
-				text={tooltipText}
-				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-			/>
-			<RewardsGraph points={prefilledPoints} syncing={empty} />
 		</Graph>
 	)
 }
