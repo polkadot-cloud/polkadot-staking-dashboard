@@ -68,7 +68,7 @@ export const UpdateReserve = () => {
 			<Title
 				title={t('reserveBalance')}
 				helpKey="Reserve Balance"
-				style={{ padding: '0.5rem 0 0 0' }}
+				paddingTop="0.5rem"
 			/>
 			<SliderWrapper style={{ marginTop: '1rem' }}>
 				<p>{t('reserveText', { unit })}</p>
