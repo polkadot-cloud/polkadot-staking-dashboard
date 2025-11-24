@@ -11,6 +11,7 @@ import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { Metrics } from 'library/ListItem/Buttons/Metrics'
 import { Remove } from 'library/ListItem/Buttons/Remove'
+import { APY } from 'library/ListItem/Labels/APY'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import type { Validator } from 'types'
@@ -91,6 +92,7 @@ export const Item = ({
 					</div>
 					<div>
 						<LabelRow inline>
+							<APY address={address} />
 							<Quartile address={address} />
 							<Blocked prefs={prefs} />
 							<Commission commission={commission} />

@@ -5,6 +5,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
+import { APY } from 'library/ListItem/Labels/APY'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
@@ -76,6 +77,7 @@ export const Item = ({
 					</div>
 					<div>
 						<LabelRow inline>
+							<APY address={address} />
 							<Quartile address={address} />
 							<Blocked prefs={prefs} />
 							<Commission commission={commission} />
