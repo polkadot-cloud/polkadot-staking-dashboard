@@ -3,50 +3,6 @@
 
 import styled from 'styled-components'
 
-export const TitleWrapper = styled.div<{ $fixed: boolean }>`
-  padding: ${(props) =>
-		props.$fixed ? '0.6rem 1rem 0rem 1rem' : '2rem 1rem 0 1rem'};
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  width: 100%;
-  min-height: 3rem;
-
-  > div {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    padding: 0 0.5rem;
-
-    button {
-      padding: 0;
-    }
-
-    path {
-      fill: var(--text-color-primary);
-    }
-
-    &:first-child {
-      flex-grow: 1;
-
-      > h2 {
-        display: flex;
-        align-items: center;
-        font-family: Inter, sans-serif;
-        font-size: 1.5rem;
-        margin: 0;
-
-        > button {
-          margin-left: 0.85rem;
-        }
-      }
-      > svg {
-        margin-right: 0.9rem;
-      }
-    }
-  }
-`
-
 export const StatsWrapper = styled.div`
   width: 100%;
   display: flex;
