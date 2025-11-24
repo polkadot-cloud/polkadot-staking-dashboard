@@ -14,7 +14,7 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"@dedot/chain-specs": "^0.1.0",
+		"@dedot/chain-specs": "^0.2.0",
 		"@polkawatch/ddp-client": "^3.0.1",
 		"@substrate/connect-known-chains": "^1.10.2",
 		"assets": "workspace:*"
