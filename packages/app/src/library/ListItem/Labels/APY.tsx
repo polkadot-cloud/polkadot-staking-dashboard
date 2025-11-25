@@ -1,17 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import BigNumber from 'bignumber.js'
 import { useTooltip } from 'contexts/Tooltip'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
 
-export const APY = ({ address }: { address: string }) => {
+export const APY = ({ rate }: { rate?: number }) => {
 	const { t } = useTranslation()
 	const { setTooltipTextAndOpen } = useTooltip()
-
-	// TODO: Get real APY data derived from address
-	console.debug(address)
 
 	const tooltipText = `${t('averageRewardRate', {
 		ns: 'pages',
@@ -24,7 +22,7 @@ export const APY = ({ address }: { address: string }) => {
 				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
 				style={{ cursor: 'default' }}
 			/>
-			9.84%{' '}
+			{new BigNumber(rate || 0).decimalPlaces(2).toString()}%
 			<span
 				style={{
 					fontSize: '0.85em',

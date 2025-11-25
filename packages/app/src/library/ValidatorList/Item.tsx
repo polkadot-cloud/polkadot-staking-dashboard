@@ -30,6 +30,7 @@ export const Item = ({
 	displayFor,
 	eraPoints,
 	onRemove,
+	rate,
 }: ItemProps) => {
 	const { pluginEnabled } = usePlugins()
 	const { selectable, selected } = useList()
@@ -92,7 +93,7 @@ export const Item = ({
 					</div>
 					<div>
 						<LabelRow inline>
-							<APY address={address} />
+							<APY rate={rate} />
 							<Quartile address={address} />
 							<Blocked prefs={prefs} />
 							<Commission commission={commission} />

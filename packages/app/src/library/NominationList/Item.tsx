@@ -77,7 +77,7 @@ export const Item = ({
 					</div>
 					<div>
 						<LabelRow inline>
-							<APY address={address} />
+							<APY />
 							<Quartile address={address} />
 							<Blocked prefs={prefs} />
 							<Commission commission={commission} />
