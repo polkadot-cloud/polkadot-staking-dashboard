@@ -4,7 +4,7 @@
 import { planckToUnit } from '@w3ux/utils'
 
 /**
- * Calculate the reward rate for a validator in a specific era
+ * Calculate the reward rate for a validator in a specific era, before commission
  *
  * @param erasPerDay - Number of eras per day for the network
  * @param validatorTotalStake - Total stake (own + nominated) for the validator in the era (in planck)
