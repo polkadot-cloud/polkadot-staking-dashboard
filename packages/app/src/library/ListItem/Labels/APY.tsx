@@ -27,11 +27,9 @@ export const APY = ({ address }: { address: string }) => {
 			9.84%{' '}
 			<span
 				style={{
-					fontFamily: 'Inter, sans-serif',
-					fontSize: '0.9em',
+					fontSize: '0.85em',
 					marginLeft: '0.15rem',
 					marginBottom: '0.15rem',
-					opacity: 0.7,
 				}}
 			>
 				APY
