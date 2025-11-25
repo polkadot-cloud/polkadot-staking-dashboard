@@ -11,6 +11,10 @@ export const APY = ({ rate }: { rate?: number }) => {
 	const { t } = useTranslation()
 	const { setTooltipTextAndOpen } = useTooltip()
 
+	if (!rate) {
+		return null
+	}
+
 	const tooltipText = `${t('averageRewardRate', {
 		ns: 'pages',
 	})}`
