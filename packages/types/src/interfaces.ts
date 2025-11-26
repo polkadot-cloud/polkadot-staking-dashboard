@@ -26,6 +26,7 @@ export interface ServiceInterface {
 		accountBalance: {
 			hub: (address: string) => Promise<PalletBalancesAccountData | undefined>
 		}
+		erasValidatorReward: (era: number) => Promise<bigint | undefined>
 		erasValidatorRewardMulti: (
 			eras: number[],
 		) => Promise<(bigint | undefined)[]>
