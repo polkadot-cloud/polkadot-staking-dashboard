@@ -139,8 +139,6 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		}
 
 		setActiveValidators(exposures.length)
-
-		// Worker to calculate stats
 		worker.postMessage({
 			era: activeEra.index.toString(),
 			networkName: network,
