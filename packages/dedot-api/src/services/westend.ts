@@ -66,6 +66,8 @@ export class WestendService
 					hub: async (address) =>
 						await query.accountBalance(this.apiHub, address),
 				},
+				erasRewardPoints: async (era) =>
+					await query.erasRewardPoints(this.apiHub, era),
 				erasValidatorReward: async (era) =>
 					await query.erasValidatorReward(this.apiHub, era),
 				erasValidatorRewardMulti: async (eras) =>

@@ -9,7 +9,7 @@ import type {
 	PalletStakingRewardDestination,
 	PalletStakingValidatorPrefs,
 } from 'dedot/chaintypes'
-import type { BytesLike } from 'dedot/codecs'
+import type { AccountId32, BytesLike } from 'dedot/codecs'
 import type { Shape } from 'dedot/shape'
 import type { PayloadOptions } from 'dedot/types'
 import type { HexString } from 'dedot/utils'
@@ -26,6 +26,11 @@ export interface ServiceInterface {
 		accountBalance: {
 			hub: (address: string) => Promise<PalletBalancesAccountData | undefined>
 		}
+		erasRewardPoints: (
+			era: number,
+		) => Promise<
+			{ total: number; individual: [AccountId32, number][] } | undefined
+		>
 		erasValidatorReward: (era: number) => Promise<bigint | undefined>
 		erasValidatorRewardMulti: (
 			eras: number[],
