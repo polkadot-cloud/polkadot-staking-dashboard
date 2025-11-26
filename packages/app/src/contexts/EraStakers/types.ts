@@ -14,6 +14,9 @@ export interface EraStakersContextInterface {
 	fetchEraStakers: (era: string) => Promise<Exposure[]>
 	isNominatorActive: (who: string) => boolean
 	getActiveValidator: (who: string) => Staker | undefined
+	prevEraRewardPoints:
+		| { total: number; individual: [string, number][] }
+		| undefined
 }
 
 export interface ActiveAccountOwnStake {

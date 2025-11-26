@@ -33,7 +33,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 	const { pluginEnabled } = usePlugins()
 	const { activeAddress } = useActiveAccounts()
 	const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
-	const { units } = getStakingChainData(network)
+	const { units, ss58 } = getStakingChainData(network)
 
 	// Store eras stakers in state
 	const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
@@ -41,6 +41,11 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 
 	// Store the total active nominators
 	const [activeNominatorsCount, setActiveNominatorsCount] = useState<number>(0)
+
+	// Store the previous era's reward points
+	const [prevEraRewardPoints, setPrevEraRewardPoints] = useState<
+		{ total: number; individual: [string, number][] } | undefined
+	>(undefined)
 
 	// Store active validators
 	const [activeValidators, setActiveValidators] = useState<number>(0)
@@ -192,28 +197,25 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		return result
 	}
 
+	// Fetches and sets the total active nominators for the current era
 	const handleEraTotalNominators = async () => {
 		const result = await fetchEraTotalNominators(network, activeEra.index)
 		setActiveNominatorsCount(result || 0)
 	}
 
-	useEffectIgnoreInitial(() => {
-		if (getApiStatus(network) === 'connecting') {
-			setActiveValidators(0)
-			setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef)
+	// Fetches and sets the previous era's reward points
+	const fetchPrevEraRewardPoints = async () => {
+		const result = await serviceApi.query.erasRewardPoints(activeEra.index - 1)
+		if (result) {
+			setPrevEraRewardPoints({
+				total: result.total,
+				individual: result.individual.map(([who, points]) => [
+					who.address(ss58),
+					points,
+				]),
+			})
 		}
-	}, [getApiStatus(network)])
-
-	// Handle syncing with eraStakers
-	useEffectIgnoreInitial(() => {
-		if (isReady) {
-			fetchActiveEraStakers()
-			// If staking API is enabled, fetch total nominators from it
-			if (pluginEnabled('staking_api') && activeEra.index > 0) {
-				handleEraTotalNominators()
-			}
-		}
-	}, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
+	}
 
 	// Gets the nomination statuses of the provided nominator and targets
 	const getNominationsStatusFromEraStakers = (
@@ -253,6 +255,33 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		return eraStakers.stakers.find((s) => s.address === who)
 	}
 
+	useEffectIgnoreInitial(() => {
+		if (getApiStatus(network) === 'connecting') {
+			setActiveValidators(0)
+			setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef)
+		}
+	}, [getApiStatus(network)])
+
+	// Handle syncing with eraStakers
+	useEffectIgnoreInitial(() => {
+		if (isReady) {
+			fetchActiveEraStakers()
+			if (pluginEnabled('staking_api')) {
+				// If era has been fetched, fetch total nominators
+				if (activeEra.index > 0) {
+					handleEraTotalNominators()
+				}
+			} else {
+				if (activeEra.index > 0) {
+					// Fetch previous era reward points
+					if (!prevEraRewardPoints) {
+						fetchPrevEraRewardPoints()
+					}
+				}
+			}
+		}
+	}, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
+
 	return (
 		<EraStakersContext.Provider
 			value={{
@@ -263,6 +292,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 				fetchEraStakers,
 				isNominatorActive,
 				getActiveValidator,
+				prevEraRewardPoints,
 			}}
 		>
 			{children}
