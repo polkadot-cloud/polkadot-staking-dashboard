@@ -5,6 +5,7 @@ import { accountBalance } from './accountBalance'
 import { bondedPool } from './bondedPool'
 import { bondedPoolEntries } from './bondedPoolEntries'
 import { erasRewardPoints } from './erasRewardPoints'
+import { erasStakersOverview } from './erasStakersOverview'
 import { erasStakersOverviewEntries } from './erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from './erasStakersPagedEntries'
 import { erasValidatorReward } from './erasValidatorReward'
@@ -25,6 +26,7 @@ export const query = {
 	bondedPoolEntries,
 	erasStakersOverviewEntries,
 	erasStakersPagedEntries,
+	erasStakersOverview,
 	erasRewardPoints,
 	erasValidatorReward,
 	erasValidatorRewardMulti,

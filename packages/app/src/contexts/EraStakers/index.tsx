@@ -43,9 +43,13 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 	const [activeNominatorsCount, setActiveNominatorsCount] = useState<number>(0)
 
 	// Store the previous era's reward points
-	const [prevEraRewardPoints, setPrevEraRewardPoints] = useState<
-		{ total: number; individual: [string, number][] } | undefined
-	>(undefined)
+	const [prevEraReward, setPrevEraReward] = useState<{
+		points: { total: number; individual: [string, number][] } | undefined
+		payout: bigint | undefined
+	}>({
+		points: undefined,
+		payout: undefined,
+	})
 
 	// Store active validators
 	const [activeValidators, setActiveValidators] = useState<number>(0)
@@ -212,14 +216,26 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 
 	// Fetches and sets the previous era's reward points
 	const fetchPrevEraRewardPoints = async () => {
-		const result = await serviceApi.query.erasRewardPoints(activeEra.index - 1)
-		if (result) {
-			setPrevEraRewardPoints({
-				total: result.total,
-				individual: result.individual.map(([who, points]) => [
-					who.address(ss58),
-					points,
-				]),
+		const prevEra = activeEra.index - 1
+		if (prevEra < 0) {
+			return
+		}
+
+		const [rewardPoints, totalPayout] = await Promise.all([
+			serviceApi.query.erasRewardPoints(prevEra),
+			serviceApi.query.erasValidatorReward(prevEra),
+		])
+
+		if (rewardPoints && totalPayout) {
+			setPrevEraReward({
+				points: {
+					total: rewardPoints.total,
+					individual: rewardPoints.individual.map(([who, points]) => [
+						who.address(ss58),
+						points,
+					]),
+				},
+				payout: totalPayout,
 			})
 		}
 	}
@@ -281,7 +297,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 			} else {
 				if (activeEra.index > 0) {
 					// Fetch previous era reward points
-					if (!prevEraRewardPoints) {
+					if (!prevEraReward) {
 						fetchPrevEraRewardPoints()
 					}
 				}
@@ -298,7 +314,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 				getNominationsStatusFromEraStakers,
 				isNominatorActive,
 				getActiveValidator,
-				prevEraRewardPoints,
+				prevEraReward,
 			}}
 		>
 			{children}

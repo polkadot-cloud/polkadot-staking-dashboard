@@ -8,6 +8,7 @@ import type {
 	PalletNominationPoolsPoolState,
 	PalletStakingRewardDestination,
 	PalletStakingValidatorPrefs,
+	SpStakingPagedExposureMetadata,
 } from 'dedot/chaintypes'
 import type { AccountId32, BytesLike } from 'dedot/codecs'
 import type { Shape } from 'dedot/shape'
@@ -26,6 +27,10 @@ export interface ServiceInterface {
 		accountBalance: {
 			hub: (address: string) => Promise<PalletBalancesAccountData | undefined>
 		}
+		erasStakersOverview: (
+			era: number,
+			address: string,
+		) => Promise<SpStakingPagedExposureMetadata | undefined>
 		erasRewardPoints: (
 			era: number,
 		) => Promise<
