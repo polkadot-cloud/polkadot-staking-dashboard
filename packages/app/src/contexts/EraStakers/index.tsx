@@ -86,19 +86,23 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 	// Fetches erasStakers exposures for an era, and saves to `localStorage`
 	const fetchEraStakers = async (era: string) => {
 		if (!isReady || activeEra.index === 0) {
-			return []
+			return {
+				exposures: [],
+				totalNominators: undefined,
+			}
 		}
 		// Fetch current era overviews
 		const overviews = await serviceApi.query.erasStakersOverviewEntries(
 			activeEra.index,
 		)
-		// Commit active nominator count from overviews if staking API is disabled
+
+		// Calculate active nominator count from overviews if staking API is disabled
+		let totalNominators: number | undefined
 		if (!pluginEnabled('staking_api')) {
-			const totalNominators = overviews.reduce(
+			totalNominators = overviews.reduce(
 				(prev, [, { nominatorCount }]) => prev + nominatorCount,
 				0,
 			)
-			setActiveNominatorsCount(totalNominators)
 		}
 
 		let exposures: Exposure[] = []
@@ -117,7 +121,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		if (era === activeEra.index.toString()) {
 			setLocalEraExposures(network, era, exposures)
 		}
-		return exposures
+		return { exposures, totalNominators }
 	}
 
 	// Fetches the active nominator set and metadata around it
@@ -127,7 +131,12 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		}
 		setSyncing('era-stakers')
 
-		const exposures = await fetchEraStakers(activeEra.index.toString())
+		const { exposures, totalNominators } = await fetchEraStakers(
+			activeEra.index.toString(),
+		)
+		if (totalNominators !== undefined) {
+			setActiveNominatorsCount(totalNominators)
+		}
 
 		setActiveValidators(exposures.length)
 
@@ -289,7 +298,6 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 				activeValidators,
 				activeNominatorsCount,
 				getNominationsStatusFromEraStakers,
-				fetchEraStakers,
 				isNominatorActive,
 				getActiveValidator,
 				prevEraRewardPoints,
