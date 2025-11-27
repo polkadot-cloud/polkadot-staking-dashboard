@@ -317,7 +317,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		isReady,
 		activeEra.index,
 		pluginEnabled('staking_api'),
-		prevEraReward.payout,
+		prevEraReward.era,
 	])
 
 	return (
