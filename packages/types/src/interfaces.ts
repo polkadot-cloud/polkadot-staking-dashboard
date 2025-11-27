@@ -34,7 +34,7 @@ export interface ServiceInterface {
 		erasRewardPoints: (
 			era: number,
 		) => Promise<
-			{ total: number; individual: [AccountId32, number][] } | undefined
+			{ total: number; individual: [string, number][] } | undefined
 		>
 		erasValidatorReward: (era: number) => Promise<bigint | undefined>
 		erasValidatorRewardMulti: (
