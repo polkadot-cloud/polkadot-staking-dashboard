@@ -47,6 +47,12 @@ export const Item = ({
 		selected: isSelected,
 	})
 
+	// Rate after commission
+	const rateAfterCommission =
+		rate !== undefined && commission !== null
+			? rate * (1 - commission / 100)
+			: rate
+
 	return (
 		<Wrapper>
 			<div className={innerClasses}>
@@ -93,7 +99,7 @@ export const Item = ({
 					</div>
 					<div>
 						<LabelRow inline>
-							<APY rate={rate} />
+							<APY rate={rateAfterCommission} />
 							<Quartile address={address} />
 							<Blocked prefs={prefs} />
 							<Commission commission={commission} />

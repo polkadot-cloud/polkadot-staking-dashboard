@@ -220,12 +220,10 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		if (prevEra < 0) {
 			return
 		}
-
 		const [rewardPoints, totalPayout] = await Promise.all([
 			serviceApi.query.erasRewardPoints(prevEra),
 			serviceApi.query.erasValidatorReward(prevEra),
 		])
-
 		if (rewardPoints && totalPayout) {
 			setPrevEraReward({
 				points: {
@@ -297,13 +295,19 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 			} else {
 				if (activeEra.index > 0) {
 					// Fetch previous era reward points
-					if (!prevEraReward) {
+					if (!prevEraReward.payout) {
 						fetchPrevEraRewardPoints()
 					}
 				}
 			}
 		}
-	}, [isReady, activeEra.index, pluginEnabled('staking_api'), activeAddress])
+	}, [
+		isReady,
+		activeEra.index,
+		pluginEnabled('staking_api'),
+		activeAddress,
+		prevEraReward.payout,
+	])
 
 	return (
 		<EraStakersContext.Provider

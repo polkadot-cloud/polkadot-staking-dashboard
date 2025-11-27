@@ -27,6 +27,7 @@ export const Item = ({
 	displayFor,
 	nominationStatus,
 	eraPoints,
+	rate,
 }: ItemProps) => {
 	const { pluginEnabled } = usePlugins()
 	const { validatorIdentities, validatorSupers } = useValidators()
@@ -35,6 +36,12 @@ export const Item = ({
 
 	// Whether buttons should be styled as outline.
 	const outline = displayFor === 'canvas'
+
+	// Rate after commission
+	const rateAfterCommission =
+		rate !== undefined && commission !== null
+			? rate * (1 - commission / 100)
+			: rate
 
 	return (
 		<Wrapper>
@@ -77,7 +84,7 @@ export const Item = ({
 					</div>
 					<div>
 						<LabelRow inline>
-							<APY />
+							<APY rate={rateAfterCommission} />
 							<Quartile address={address} />
 							<Blocked prefs={prefs} />
 							<Commission commission={commission} />

@@ -30,4 +30,5 @@ export interface ItemProps {
 	toggleFavorites?: boolean
 	nominationStatus?: NominationStatus
 	eraPoints: ValidatorEraPoints[]
+	rate?: number
 }

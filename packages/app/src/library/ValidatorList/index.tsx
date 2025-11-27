@@ -379,7 +379,7 @@ export const ValidatorListInner = ({
 											(entry) => entry.validator === validator.address,
 										)?.points || []
 									}
-									rate={rates[validator.address]}
+									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
 									onRemove={onRemove}
 								/>
