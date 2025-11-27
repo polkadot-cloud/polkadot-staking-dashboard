@@ -25,7 +25,9 @@ export const useValidatorRewardRateBatch = (
 	const { pluginEnabled } = usePlugins()
 	const { prevEraReward } = useEraStakers()
 	const { activeEra, serviceApi, isReady } = useApi()
+
 	const { units } = getStakingChainData(network)
+	const isStakingApiEnabled = pluginEnabled('staking_api')
 
 	// Store average reward rates, keyed by address
 	const [rates, setRates] = useState<Record<string, Record<string, number>>>({})
@@ -96,20 +98,20 @@ export const useValidatorRewardRateBatch = (
 
 	// Fetch average reward rates from staking api when enabled
 	useEffect(() => {
-		if (pluginEnabled('staking_api')) {
+		if (isStakingApiEnabled) {
 			getAvgRewardRates(pageKey)
 		}
-	}, [pageKey, pluginEnabled('staking_api'), activeEra.index])
+	}, [pageKey, isStakingApiEnabled, activeEra.index])
 
 	// Fetch average reward rates from previous era when staking api is disabled
 	useEffect(() => {
-		if (!pluginEnabled('staking_api')) {
+		if (!isStakingApiEnabled) {
 			getPrevEraAvgRewardRates(pageKey)
 		}
 	}, [
 		isReady,
 		pageKey,
-		pluginEnabled('staking_api'),
+		isStakingApiEnabled,
 		prevEraReward?.points?.total,
 		activeEra.index,
 	])

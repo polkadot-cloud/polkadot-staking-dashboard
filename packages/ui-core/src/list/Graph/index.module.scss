@@ -10,6 +10,10 @@
   max-width: 13.5rem;
   position: relative;
 
+   &.canvas {
+    border: 1px solid var(--grid-color-secondary);
+  }
+
   .inner {
     display: flex;
     align-items: center;
@@ -17,10 +21,6 @@
     padding: 0.15rem 0;
     height: 3.2rem;
     width: 100%;
-
-    &.canvas {
-      border: 1px solid var(--grid-color-secondary);
-    }
 
     svg {
       width: 100%;

@@ -53,6 +53,8 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		payout: undefined,
 	})
 
+	const prevRewardSyncing = useRef<boolean>(false)
+
 	// Store active validators
 	const [activeValidators, setActiveValidators] = useState<number>(0)
 
@@ -222,6 +224,9 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		if (prevEra < 0) {
 			return
 		}
+
+		prevRewardSyncing.current = true
+
 		const [rewardPoints, totalPayout] = await Promise.all([
 			serviceApi.query.erasRewardPoints(prevEra),
 			serviceApi.query.erasValidatorReward(prevEra),
@@ -239,6 +244,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 				era: prevEra,
 			})
 		}
+		prevRewardSyncing.current = false
 	}
 
 	// Gets the nomination statuses of the provided nominator and targets
@@ -298,7 +304,10 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 			} else {
 				if (activeEra.index > 0) {
 					// Fetch previous era reward points
-					if (prevEraReward.era !== activeEra.index - 1) {
+					if (
+						prevEraReward.era !== activeEra.index - 1 &&
+						prevRewardSyncing.current === false
+					) {
 						fetchPrevEraRewardPoints()
 					}
 				}
