@@ -49,19 +49,31 @@ export const useValidatorRewardRateBatch = (
 			serviceApi.query.erasStakersOverview(prevEra, address),
 		)
 		const stakersOverviewResults = await Promise.all(stakersOverviewPromises)
-		const newRates: Record<string, number> = {}
-		for (let i = 0; i < addresses.length; i++) {
-			const address = addresses[i]
-			const totalStake = stakersOverviewResults[i]?.total || 0n
 
-			let rate = 0
+		// Calculate total rewards in parallel
+		const totalRewardPromises = addresses.map((address, i) => {
+			const totalStake = stakersOverviewResults[i]?.total || 0n
 			if (totalStake > 0n) {
-				const totalReward = await calculateValidatorEraTotalReward(
+				return calculateValidatorEraTotalReward(
 					prevEra,
 					address,
 					serviceApi,
 					prevEraReward.points,
 				)
+			}
+			return Promise.resolve(0n)
+		})
+		const totalRewardResults = await Promise.all(totalRewardPromises)
+
+		// Calculate rates
+		const newRates: Record<string, number> = {}
+		for (let i = 0; i < addresses.length; i++) {
+			const address = addresses[i]
+			const totalStake = stakersOverviewResults[i]?.total || 0n
+			const totalReward = totalRewardResults[i]
+
+			let rate = 0
+			if (totalStake > 0n && totalReward > 0n) {
 				rate = calculateValidatorEraRewardRate(
 					erasPerDay,
 					totalStake,

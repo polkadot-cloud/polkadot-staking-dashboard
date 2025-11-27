@@ -39,8 +39,10 @@ export const Item = ({
 
 	// Rate after commission
 	const rateAfterCommission =
-		typeof rate === 'number' && !isNaN(rate) &&
-		typeof commission === 'number' && !isNaN(commission)
+		typeof rate === 'number' &&
+		!isNaN(rate) &&
+		typeof commission === 'number' &&
+		!isNaN(commission)
 			? rate * (1 - commission / 100)
 			: undefined
 

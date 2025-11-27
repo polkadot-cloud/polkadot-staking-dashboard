@@ -49,8 +49,10 @@ export const Item = ({
 
 	// Rate after commission
 	const rateAfterCommission =
-		typeof rate === 'number' && Number.isFinite(rate) &&
-		typeof commission === 'number' && Number.isFinite(commission)
+		typeof rate === 'number' &&
+		Number.isFinite(rate) &&
+		typeof commission === 'number' &&
+		Number.isFinite(commission)
 			? rate * (1 - commission / 100)
 			: undefined
 
