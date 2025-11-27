@@ -7,6 +7,7 @@ import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { fetchValidatorAvgRewardRateBatch } from 'plugin-staking-api'
 import { useEffect, useState } from 'react'
 import {
 	calculateValidatorEraRewardRate,
@@ -76,17 +77,40 @@ export const useValidatorRewardRateBatch = (
 	}
 
 	// Fetch average reward rates from staking api
-	const getAvgRewardRates = () => {
-		// TODO: Implement
+	const getAvgRewardRates = async (key: string) => {
+		if (activeEra.index === 0) {
+			return
+		}
+		const results = await fetchValidatorAvgRewardRateBatch(
+			network,
+			addresses,
+			Math.max(activeEra.index - 1, 0),
+			erasPerDay,
+		)
+
+		// Update rates if key still matches current page key
+		if (key === pageKey) {
+			const newRates: Record<string, number> = {}
+			for (const { validator, rate } of results.validatorAvgRewardRateBatch) {
+				newRates[validator] = rate
+			}
+			setRates({
+				...rates,
+				[key]: newRates,
+			})
+		}
 	}
 
-	// Fetch performance queries when validator list changes
+	// Fetch average reward rates from staking api when enabled
 	useEffect(() => {
 		if (pluginEnabled('staking_api')) {
-			// Get validator avg reward rates from staking api
-			getAvgRewardRates()
-		} else {
-			// Get validator avg reward rates from the previous era only
+			getAvgRewardRates(pageKey)
+		}
+	}, [pageKey, pluginEnabled('staking_api'), activeEra.index])
+
+	// Fetch average reward rates from previous era when staking api is disabled
+	useEffect(() => {
+		if (!pluginEnabled('staking_api')) {
 			getPrevEraAvgRewardRates(pageKey)
 		}
 	}, [
