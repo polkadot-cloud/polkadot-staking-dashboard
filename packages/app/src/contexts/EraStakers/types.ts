@@ -14,6 +14,7 @@ export interface EraStakersContextInterface {
 	isNominatorActive: (who: string) => boolean
 	getActiveValidator: (who: string) => Staker | undefined
 	prevEraReward: {
+		era: number
 		points: { total: number; individual: [string, number][] } | undefined
 		payout: bigint | undefined
 	}
