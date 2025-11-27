@@ -99,7 +99,7 @@ export const useValidatorRewardRateBatch = (
 		if (pluginEnabled('staking_api')) {
 			getAvgRewardRates(pageKey)
 		}
-	}, [addresses, pageKey, pluginEnabled('staking_api'), activeEra.index])
+	}, [pageKey, pluginEnabled('staking_api'), activeEra.index])
 
 	// Fetch average reward rates from previous era when staking api is disabled
 	useEffect(() => {
@@ -108,7 +108,6 @@ export const useValidatorRewardRateBatch = (
 		}
 	}, [
 		isReady,
-		addresses,
 		pageKey,
 		pluginEnabled('staking_api'),
 		prevEraReward?.points?.total,
