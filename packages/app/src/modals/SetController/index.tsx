@@ -20,7 +20,7 @@ export const SetController = () => {
 	const { isBonding } = useStaking()
 	const { getStakingLedger } = useBalances()
 	const { activeAddress } = useActiveAccounts()
-	const { setModalStatus } = useOverlay().modal
+	const { closeModal } = useOverlay().modal
 	const { syncing, accountSynced } = useSyncing()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
@@ -44,7 +44,7 @@ export const SetController = () => {
 		from: activeAddress,
 		shouldSubmit: true,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

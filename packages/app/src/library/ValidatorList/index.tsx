@@ -13,12 +13,13 @@ import { usePlugins } from 'contexts/Plugins'
 import { useThemeValues } from 'contexts/ThemeValues'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { motion } from 'framer-motion'
 import { useSyncing } from 'hooks/useSyncing'
+import { useValidatorRewardRateBatch } from 'hooks/useValidatorRewardRateBatch'
 import { FilterHeaderWrapper, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
+import { motion } from 'motion/react'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
@@ -174,6 +175,12 @@ export const ValidatorListInner = ({
 			setModalResize()
 		}
 	}
+
+	// Get validator reward rates
+	const { rates } = useValidatorRewardRateBatch(
+		listItems.map(({ address }) => address),
+		pageKey,
+	)
 
 	const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
 		const newValue = e.currentTarget.value
@@ -372,6 +379,7 @@ export const ValidatorListInner = ({
 											(entry) => entry.validator === validator.address,
 										)?.points || []
 									}
+									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
 									onRemove={onRemove}
 								/>

@@ -62,6 +62,16 @@ export class WestendService
 		// Initialize service interface with network-specific routing
 		this.interface = {
 			query: {
+				accountBalance: {
+					hub: async (address) =>
+						await query.accountBalance(this.apiHub, address),
+				},
+				erasStakersOverview: async (era, address) =>
+					await query.erasStakersOverview(this.apiHub, era, address),
+				erasRewardPoints: async (era) =>
+					await query.erasRewardPoints(this.apiHub, era),
+				erasValidatorReward: async (era) =>
+					await query.erasValidatorReward(this.apiHub, era),
 				erasValidatorRewardMulti: async (eras) =>
 					await query.erasValidatorRewardMulti(this.apiHub, eras),
 				bondedPool: async (poolId) =>
@@ -80,7 +90,7 @@ export class WestendService
 					await query.poolMetadataMulti(this.apiHub, poolIds),
 				proxies: async (address) => await query.proxies(this.apiHub, address),
 				sessionValidators: async () =>
-					await query.sessionValidators(this.apiHub),
+					await query.sessionValidators(this.apiRelay),
 				identityOfMulti: async (addresses) =>
 					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>

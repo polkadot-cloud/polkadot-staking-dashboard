@@ -1,11 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBook, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { PageWidthMediumThreshold } from 'consts'
-import { useHelp } from 'contexts/Help'
 import { useUi } from 'contexts/UI'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +20,6 @@ export const FloatingtMenu = ({
 	setLocalCategory: Dispatch<SetStateAction<NavSection>>
 }) => {
 	const { t } = useTranslation('app')
-	const { openHelp } = useHelp()
 	const { setSideMenu, sideMenuOpen, advancedMode, setAdvancedMode } = useUi()
 
 	// Listen to window resize to automatically hide the side menu on window resize.
@@ -52,16 +50,6 @@ export const FloatingtMenu = ({
 					/>
 					<div className="inner">
 						<Page.Side.Heading title={t('support')} minimised={false} />
-						<Primary
-							pageKey="resources"
-							name={t('resources')}
-							to={() => {
-								openHelp(null)
-							}}
-							minimised={false}
-							faIcon={faBook}
-							active={false}
-						/>
 						{advancedMode && (
 							<>
 								<Separator />

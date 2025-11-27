@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import type { ContentProps } from '../types'
 import classes from './index.module.scss'
 

@@ -40,7 +40,7 @@ export const ManageFastUnstake = () => {
 	const { getConsts, activeEra, serviceApi } = useApi()
 	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
-	const { setModalResize, setModalStatus } = useOverlay().modal
+	const { setModalResize, closeModal } = useOverlay().modal
 	const { unit, units } = getStakingChainData(network)
 	const { bondDuration, fastUnstakeDeposit } = getConsts(network)
 	const { nominator, transferableBalance } = balances
@@ -92,7 +92,7 @@ export const ManageFastUnstake = () => {
 		from: activeAddress,
 		shouldSubmit: valid,
 		callbackInBlock: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

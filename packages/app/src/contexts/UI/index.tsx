@@ -3,12 +3,12 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils'
-import { AdvancedModeKey, PageWidthMediumThreshold } from 'consts'
+import { AdvancedModeKey, PageWidthMediumThreshold, ShowHelpKey } from 'consts'
 import type { ReactNode, RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { AnyJson } from 'types'
 import type { UIContextInterface } from './types'
-import { getInitialAdvancedMode } from './util'
+import { getInitialAdvancedMode, getInitialShowHelp } from './util'
 
 export const [UIContext, useUi] = createSafeContext<UIContextInterface>()
 
@@ -27,6 +27,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 	const setAdvancedMode = (value: boolean) => {
 		localStorage.setItem(AdvancedModeKey, String(value))
 		setAdvancedModeState(value)
+	}
+
+	// Get show help state, default to true
+	const [showHelp, setShowHelpState] = useState<boolean>(getInitialShowHelp())
+
+	const setShowHelp = (value: boolean) => {
+		localStorage.setItem(ShowHelpKey, String(value))
+		setShowHelpState(value)
 	}
 
 	// Store references for main app containers
@@ -98,6 +106,8 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 				userSideMenuMinimised,
 				advancedMode,
 				setAdvancedMode,
+				showHelp,
+				setShowHelp,
 			}}
 		>
 			{children}

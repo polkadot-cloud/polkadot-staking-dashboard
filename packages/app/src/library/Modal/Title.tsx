@@ -4,12 +4,10 @@
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { FunctionComponent, SVGProps } from 'react'
-import type { CSSProperties } from 'styled-components'
-import { ButtonHelp } from 'ui-buttons'
-import { Title as Wrapper } from 'ui-core/modal'
+import { Header, Title as Wrapper } from 'ui-core/modal'
 import { Close } from 'ui-overlay'
-import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {
 	title?: string
@@ -17,7 +15,8 @@ interface TitleProps {
 	Svg?: FunctionComponent<SVGProps<unknown>>
 	fixed?: boolean
 	helpKey?: string
-	style?: CSSProperties
+	paddingTop?: string
+	paddingLeft?: string
 }
 
 export const Title = ({
@@ -26,9 +25,10 @@ export const Title = ({
 	icon,
 	fixed,
 	Svg,
-	style,
+	paddingTop,
+	paddingLeft,
 }: TitleProps) => {
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 
 	const graphic = Svg ? (
 		<Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -36,22 +36,31 @@ export const Title = ({
 		<FontAwesomeIcon transform="grow-3" icon={icon} />
 	) : null
 
+	const style = {
+		paddingLeft,
+		paddingTop,
+	}
+
 	return (
 		<>
 			<Close />
-			<TitleWrapper $fixed={fixed || false} style={{ ...style }}>
+			<Header fixed={fixed} style={style}>
 				<div>
 					{graphic}
 					{title && (
 						<Wrapper>
 							{title}
 							{helpKey ? (
-								<ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+								<ButtonHelpTooltip
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
 							) : null}
 						</Wrapper>
 					)}
 				</div>
-			</TitleWrapper>
+			</Header>
 		</>
 	)
 }

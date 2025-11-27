@@ -1,22 +1,34 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import classNames from 'classnames'
 import type { CSSProperties, ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Padding = ({
 	flex,
 	children,
+	vOnly,
+	hOnly,
 	style,
 }: {
 	flex?: boolean
 	children: ReactNode
+	vOnly?: boolean
+	hOnly?: boolean
 	style?: CSSProperties
-}) => (
-	<div
-		className={classes.padding}
-		style={{ ...style, display: flex ? 'flex' : 'block' }}
-	>
-		{children}
-	</div>
-)
+}) => {
+	const allClasses = classNames(classes.padding, {
+		[classes.vOnly]: !!vOnly,
+		[classes.hOnly]: !!hOnly,
+	})
+
+	return (
+		<div
+			className={allClasses}
+			style={{ ...style, display: flex ? 'flex' : 'block' }}
+		>
+			{children}
+		</div>
+	)
+}

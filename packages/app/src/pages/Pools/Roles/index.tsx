@@ -13,9 +13,10 @@ import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSyncing } from 'hooks/useSyncing'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { RolesWrapper } from '../ManagePool/Wrappers'
@@ -31,8 +32,8 @@ export const Roles = ({
 }: RolesProps) => {
 	const { t } = useTranslation('pages')
 	const { isReady } = useApi()
-	const { openHelp } = useHelp()
 	const { network } = useNetwork()
+	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
@@ -147,7 +148,11 @@ export const Roles = ({
 				{!inline && (
 					<h3>
 						{t('roles')}
-						<ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
+						<ButtonHelpTooltip
+							marginLeft
+							definition="Pool Roles"
+							openHelp={openHelpTooltip}
+						/>
 					</h3>
 				)}
 

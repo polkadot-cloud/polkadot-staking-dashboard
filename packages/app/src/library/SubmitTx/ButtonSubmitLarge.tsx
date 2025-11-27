@@ -15,28 +15,22 @@ export const ButtonSubmitLarge = ({
 	pulse,
 }: ButtonSubmitLargeProps) => (
 	<CallToActionWrapper>
-		<div>
-			<section className="standalone">
-				<div className="buttons">
-					<div
-						className={`button primary standalone${appendOrEmpty(disabled, 'disabled')}${appendOrEmpty(pulse, 'pulse')}`}
-					>
-						<button
-							type="button"
-							onClick={() => onSubmit()}
-							disabled={disabled}
-						>
-							{icon && (
-								<FontAwesomeIcon
-									icon={icon}
-									transform={iconTransform || undefined}
-								/>
-							)}
-							{submitText}
-						</button>
-					</div>
+		<section className="standalone">
+			<div className="buttons">
+				<div
+					className={`button primary standalone${appendOrEmpty(disabled, 'disabled')}${appendOrEmpty(pulse, 'pulse')}`}
+				>
+					<button type="button" onClick={() => onSubmit()} disabled={disabled}>
+						{icon && (
+							<FontAwesomeIcon
+								icon={icon}
+								transform={iconTransform || undefined}
+							/>
+						)}
+						{submitText}
+					</button>
 				</div>
-			</section>
-		</div>
+			</div>
+		</section>
 	</CallToActionWrapper>
 )

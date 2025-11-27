@@ -67,7 +67,12 @@ export const ExternalAccountsProvider = ({
 		}
 
 		// Add account to global bus
-		addExternalAccountBus(network, newEntry, newEntry.addedBy === 'system')
+		if (!exists || toSystem) {
+			addExternalAccountBus(network, newEntry, newEntry.addedBy === 'system')
+		} else {
+			// Account already exists and does not need to be updated
+			return null
+		}
 
 		return {
 			type: importType,

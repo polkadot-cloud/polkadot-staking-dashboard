@@ -4,23 +4,16 @@
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 import { useInvites } from 'contexts/Invites'
 import { useTheme } from 'contexts/Themes'
-import { useSyncing } from 'hooks/useSyncing'
 import { useState } from 'react'
 import { ButtonHeader } from 'ui-buttons'
 import { Popover } from 'ui-core/popover'
 import { NotificationsPopover } from './Popovers/NotificationsPopover'
 
-export const Invite = () => {
+export const Notifications = () => {
 	const { themeElementRef } = useTheme()
-	const { syncing } = useSyncing(['initialization', 'bonded-pools'])
-	const { inviteConfig, acknowledged, setAcknowledged } = useInvites()
+	const { acknowledged, setAcknowledged } = useInvites()
 
 	const [open, setOpen] = useState<boolean>(false)
-
-	// Don't render if no active invite
-	if (!inviteConfig || syncing) {
-		return null
-	}
 
 	return (
 		<Popover
@@ -34,9 +27,9 @@ export const Invite = () => {
 			width="350px"
 		>
 			<ButtonHeader
-				className="header-invite"
+				className="header-notifications"
 				icon={faBell}
-				active
+				active={!acknowledged}
 				acknowledged={acknowledged}
 			/>
 		</Popover>

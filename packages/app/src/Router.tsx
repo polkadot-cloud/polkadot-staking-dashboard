@@ -21,7 +21,7 @@ import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { useAccountSwitchNavigation } from 'hooks/useAccountSwitchNavigation'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
-import { Help } from 'library/Help'
+import { HelpTooltip } from 'library/HelpTooltip'
 import { MainFooter } from 'library/MainFooter'
 import { Menu } from 'library/Menu'
 import { NotificationPrompts } from 'library/NotificationPrompts'
@@ -105,8 +105,8 @@ const RouterInner = () => {
 					<StakingApi who={activeAddress} network={network} />
 				)}
 				<NotificationPrompts />
-				<Page.Body>
-					<Help />
+				<Page.Body id="portal-root">
+					<HelpTooltip />
 					<Overlays />
 					<Menu />
 					<Tooltip />

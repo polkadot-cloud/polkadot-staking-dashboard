@@ -53,6 +53,7 @@
 		"deductAvgCommissionOf": "扣除平均佣金{{commission}}",
 		"deductedFromBond": "从质押里扣除",
 		"depositor": "存款人",
+		"depositorOfPool": "提名池存款人",
 		"destroyPool": "销毁提名池",
 		"destroying": "销毁中",
 		"earningRewards": "挣取收益中",

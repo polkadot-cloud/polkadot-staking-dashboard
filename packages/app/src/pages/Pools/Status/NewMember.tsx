@@ -5,6 +5,7 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
+import { useUi } from 'contexts/UI'
 import {
 	onCreatePoolButtonPressedEvent,
 	onJoinPoolButtonPressedEvent,
@@ -20,8 +21,10 @@ import { useStatusButtons } from './useStatusButtons'
 export const NewMember = ({ syncing }: NewMemberProps) => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
+	const { advancedMode } = useUi()
 	const { isBonding } = useStaking()
 	const { setActiveTab } = usePoolsTabs()
+	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
 	const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
 
@@ -31,36 +34,45 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 	// Disable opening the canvas if data is not ready.
 	const joinButtonDisabled = getJoinDisabled() || isBonding
 
+	// Handle join pool button press
+	const handleOnJoinPool = () => {
+		if (!advancedMode) {
+			// On simple mode, open Join Pool modal
+			openModal({ key: 'JoinPool', size: 'xs' })
+		} else {
+			// On advanced mode, open Pool canvas
+			onJoinPoolButtonPressedEvent(network)
+			openCanvas({
+				key: 'Pool',
+				options: {},
+				size: 'xl',
+			})
+		}
+	}
+
 	return (
 		<CallToActionWrapper>
-			<div>
-				{syncing ? (
-					<CallToActionLoader />
-				) : (
-					<>
-						<section className="fixedWidth">
-							<div className="buttons">
-								<div
-									className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${!joinButtonDisabled ? ` pulse` : ``}`}
+			{syncing ? (
+				<CallToActionLoader />
+			) : (
+				<>
+					<section>
+						<div className="buttons">
+							<div
+								className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${!joinButtonDisabled ? ` pulse` : ``}`}
+							>
+								<button
+									type="button"
+									onClick={handleOnJoinPool}
+									disabled={joinButtonDisabled}
 								>
-									<button
-										type="button"
-										onClick={() => {
-											onJoinPoolButtonPressedEvent(network)
-											openCanvas({
-												key: 'Pool',
-												options: {},
-												size: 'xl',
-											})
-										}}
-										disabled={joinButtonDisabled}
-									>
-										{t('joinPool', { ns: 'pages' })}
-										<FontAwesomeIcon icon={faUserPlus} />
-									</button>
-								</div>
+									{t('joinPool', { ns: 'pages' })}
+									<FontAwesomeIcon icon={faUserPlus} />
+								</button>
 							</div>
-						</section>
+						</div>
+					</section>
+					{advancedMode && (
 						<section>
 							<div className="buttons">
 								<div
@@ -88,9 +100,9 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 								</div>
 							</div>
 						</section>
-					</>
-				)}
-			</div>
+					)}
+				</>
+			)}
 		</CallToActionWrapper>
 	)
 }

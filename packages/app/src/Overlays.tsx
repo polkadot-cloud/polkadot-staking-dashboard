@@ -7,7 +7,6 @@ import { NominatorSetup } from 'canvas/NominatorSetup'
 import { Pool } from 'canvas/Pool'
 import { PoolMembers } from 'canvas/PoolMembers'
 import { ValidatorMetrics } from 'canvas/ValidatorMetrics'
-import { useHelp } from 'contexts/Help'
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
 import { Accounts } from 'modals/Accounts'
 import { Bio } from 'modals/Bio'
@@ -19,6 +18,7 @@ import { DiscordSupport } from 'modals/DiscordSupport'
 import { ExternalAccounts } from 'modals/ExternalAccounts'
 import { ImportAccounts } from 'modals/ImportAccounts'
 import { Invite } from 'modals/Invite'
+import { JoinPool } from 'modals/JoinPool'
 import { LeavePool } from 'modals/LeavePool'
 import { MailSupport } from 'modals/MailSupport'
 import { ManageFastUnstake } from 'modals/ManageFastUnstake'
@@ -39,11 +39,10 @@ import { UpdateReserve } from 'modals/UpdateReserve'
 import { Overlay } from 'ui-overlay'
 
 export const Overlays = () => {
-	const { status } = useHelp()
 	return (
 		<Overlay
 			fallback={ErrorFallbackModal}
-			externalOverlayStatus={status}
+			externalOverlayStatus="closed"
 			modals={{
 				Bio,
 				Bond,
@@ -55,6 +54,7 @@ export const Overlays = () => {
 				ClaimReward,
 				Accounts,
 				DiscordSupport,
+				JoinPool,
 				LeavePool,
 				MailSupport,
 				ImportAccounts,

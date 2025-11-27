@@ -31,8 +31,8 @@ export const SetClaimPermission = ({
 }) => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
+	const { closeModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
-	const { setModalStatus } = useOverlay().modal
 	const { isOwner, isMember } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccounts()
@@ -71,7 +71,7 @@ export const SetClaimPermission = ({
 		from: activeAddress,
 		shouldSubmit: true,
 		callbackSubmit: () => {
-			setModalStatus('closing')
+			closeModal()
 		},
 	})
 

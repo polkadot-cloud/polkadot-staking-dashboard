@@ -12,26 +12,27 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useHelp } from 'contexts/Help'
-import { AccountInput } from 'library/AccountInput'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ExternalAccount } from 'types'
-import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
+import { ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import {
 	ActionWithButton,
 	ManualAccount,
 	ManualAccountsWrapper,
-} from './Wrappers'
+} from '../Wrappers'
+import { Add } from './Add'
 
 export const ReadOnly = () => {
 	const { t } = useTranslation('modals')
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
-	const { addExternalAccount, forgetExternalAccounts } = useExternalAccounts()
-	const { forgetOtherAccounts, addOrReplaceOtherAccount } = useOtherAccounts()
+	const { forgetOtherAccounts } = useOtherAccounts()
+	const { forgetExternalAccounts } = useExternalAccounts()
 
 	const [inputOpen, setInputOpen] = useState<boolean>(false)
 
@@ -67,9 +68,10 @@ export const ReadOnly = () => {
 					<div>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
 						<h3>{t('readOnlyAccounts')}</h3>
-						<ButtonHelp
+						<ButtonHelpTooltip
 							marginLeft
-							onClick={() => openHelp('Read Only Accounts')}
+							definition="Read Only Accounts"
+							openHelp={openHelpTooltip}
 						/>
 					</div>
 					<div>
@@ -84,20 +86,7 @@ export const ReadOnly = () => {
 				</ActionWithButton>
 				<ManualAccountsWrapper>
 					<div className="content">
-						{inputOpen && (
-							<AccountInput
-								resetOnSuccess
-								defaultLabel={t('inputAddress')}
-								successCallback={async (value: string) => {
-									const result = addExternalAccount(value, 'user')
-									if (result) {
-										addOrReplaceOtherAccount(result.account, result.type)
-									}
-
-									return true
-								}}
-							/>
-						)}
+						{inputOpen && <Add />}
 						{externalAccounts.length ? (
 							<div className="accounts">
 								{externalAccounts.map((a, i) => (

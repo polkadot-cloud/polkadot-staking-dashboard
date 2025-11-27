@@ -7,11 +7,12 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { motion } from 'framer-motion'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
+import { useValidatorRewardRateBatch } from 'hooks/useValidatorRewardRateBatch'
 import { List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
+import { motion } from 'motion/react'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
@@ -111,7 +112,13 @@ export const NominationList = ({
 		}
 	}
 
-	// Handle list bootstrapping.
+	// Get validator reward rates
+	const { rates } = useValidatorRewardRateBatch(
+		validators.map(({ address }) => address),
+		pageKey,
+	)
+
+	// Handle list bootstrapping
 	const setupValidatorList = () => {
 		setValidators(prepareInitialValidators())
 		setFetched(true)
@@ -187,6 +194,7 @@ export const NominationList = ({
 											(entry) => entry.validator === validator.address,
 										)?.points || []
 									}
+									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
 								/>
 							</motion.div>

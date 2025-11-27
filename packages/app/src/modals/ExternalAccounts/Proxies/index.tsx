@@ -12,24 +12,25 @@ import { ellipsisFn } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useProxies } from 'contexts/Proxies'
-import { AccountInput } from 'library/AccountInput'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
+import { ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import {
 	ActionWithButton,
 	ManualAccount,
 	ManualAccountsWrapper,
-} from './Wrappers'
+} from '../Wrappers'
+import { Declare } from './Declare'
 
 export const Proxies = () => {
 	const { t } = useTranslation('modals')
-	const { openHelp } = useHelp()
+	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
-	const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies()
+	const { formatProxiesToDelegates } = useProxies()
 
 	const [inputOpen, setInputOpen] = useState<boolean>(false)
 
@@ -54,7 +55,11 @@ export const Proxies = () => {
 					<div>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
 						<h3>{t('proxyAccounts')}</h3>
-						<ButtonHelp marginLeft onClick={() => openHelp('Proxy Accounts')} />
+						<ButtonHelpTooltip
+							marginLeft
+							definition="Proxy Accounts"
+							openHelp={openHelpTooltip}
+						/>
 					</div>
 					<div>
 						<ButtonMonoInvert
@@ -68,16 +73,7 @@ export const Proxies = () => {
 				</ActionWithButton>
 				<ManualAccountsWrapper>
 					<div className="content">
-						{inputOpen && (
-							<AccountInput
-								resetOnSuccess
-								defaultLabel={t('inputDelegatorAddress')}
-								successCallback={async (delegator) => {
-									const result = await handleDeclareDelegate(delegator)
-									return result
-								}}
-							/>
-						)}
+						{inputOpen && <Declare />}
 						{Object.entries(importedDelegates).length ? (
 							<div className="accounts">
 								{Object.entries(importedDelegates).map(

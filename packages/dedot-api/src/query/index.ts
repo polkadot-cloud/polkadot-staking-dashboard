@@ -1,10 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { accountBalance } from './accountBalance'
 import { bondedPool } from './bondedPool'
 import { bondedPoolEntries } from './bondedPoolEntries'
+import { erasRewardPoints } from './erasRewardPoints'
+import { erasStakersOverview } from './erasStakersOverview'
 import { erasStakersOverviewEntries } from './erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from './erasStakersPagedEntries'
+import { erasValidatorReward } from './erasValidatorReward'
 import { erasValidatorRewardMulti } from './erasValidatorRewardMulti'
 import { identityOfMulti } from './identityOfMulti'
 import { nominatorsMulti } from './nominatorsMulti'
@@ -17,10 +21,14 @@ import { validatorEntries } from './validatorEntries'
 import { validatorsMulti } from './validatorsMulti'
 
 export const query = {
+	accountBalance,
 	bondedPool,
 	bondedPoolEntries,
 	erasStakersOverviewEntries,
 	erasStakersPagedEntries,
+	erasStakersOverview,
+	erasRewardPoints,
+	erasValidatorReward,
 	erasValidatorRewardMulti,
 	identityOfMulti,
 	nominatorsMulti,

@@ -11,11 +11,12 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { ListStatusHeader } from 'library/List'
 import { NominationList } from 'library/NominationList'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonPrimary } from 'ui-buttons'
 import { ButtonRow, CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Wrapper } from './Wrapper'
@@ -34,17 +35,17 @@ export const Nominations = ({
 		isOwner: isPoolOwner,
 		isNominator: isPoolNominator,
 	} = useActivePool()
-	const { openHelp } = useHelp()
 	const {
 		modal: { openModal },
 		canvas: { openCanvas },
 	} = useOverlay()
 	const { isBonding } = useStaking()
-	const { syncing } = useSyncing(['era-stakers'])
+	const { openHelpTooltip } = useHelp()
 	const { getNominations } = useBalances()
 	const { isFastUnstaking } = useUnstaking()
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
+	const { syncing } = useSyncing(['era-stakers'])
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	// Determine if pool or nominator.
@@ -86,7 +87,11 @@ export const Nominations = ({
 			<CardHeader action margin>
 				<h3>
 					{isPool ? t('poolNominations') : t('nominations')}
-					<ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
+					<ButtonHelpTooltip
+						marginLeft
+						definition="Nominations"
+						openHelp={openHelpTooltip}
+					/>
 				</h3>
 				{displayBtns && (
 					<ButtonRow>

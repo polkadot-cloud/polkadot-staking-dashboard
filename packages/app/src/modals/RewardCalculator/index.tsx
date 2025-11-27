@@ -68,7 +68,7 @@ export const RewardCalculator = () => {
 		<div style={{ padding: '0 0.5rem' }}>
 			<Title
 				title={t('rewardCalculator', { ns: 'pages' })}
-				style={{ paddingLeft: '0.5rem' }}
+				paddingLeft="0.5rem"
 			/>
 			<Padding horizontalOnly>
 				<ContentWrapper>
