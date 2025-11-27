@@ -5,6 +5,7 @@ import type { ComponentBase } from 'types'
 
 export type GraphProps = ComponentBase & {
 	syncing: boolean
+	Inner: React.ReactNode
 	canvas?: boolean
 }
 

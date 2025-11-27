@@ -5,20 +5,27 @@
   border: 1px solid var(--grid-color-primary);
   border-radius: 0.4rem;
   display: flex;
-  align-items: center;
-  position: relative;
-  padding: 0.15rem 0;
-  height: 3.2rem;
+  flex-direction: column;
   width: 100%;
   max-width: 13.5rem;
+  position: relative;
 
-  &.canvas {
+   &.canvas {
     border: 1px solid var(--grid-color-secondary);
   }
 
-  > svg {
-    max-width: 100%;
-    max-height: 100%;
+  .inner {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.15rem 0;
+    height: 3.2rem;
+    width: 100%;
+
+    svg {
+      width: 100%;
+      max-height: 100%;
+    }
   }
 
   > .preload {
