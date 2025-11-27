@@ -8,6 +8,9 @@ export const defaultServiceInterface: ServiceInterface = {
 		accountBalance: {
 			hub: async () => undefined,
 		},
+		erasStakersOverview: async () => undefined,
+		erasRewardPoints: async () => undefined,
+		erasValidatorReward: async () => BigInt(0),
 		erasValidatorRewardMulti: async () => [],
 		bondedPool: async () => undefined,
 		bondedPoolEntries: async () => [],

@@ -9,6 +9,7 @@ import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
+import { useValidatorRewardRateBatch } from 'hooks/useValidatorRewardRateBatch'
 import { List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { motion } from 'motion/react'
@@ -111,7 +112,13 @@ export const NominationList = ({
 		}
 	}
 
-	// Handle list bootstrapping.
+	// Get validator reward rates
+	const { rates } = useValidatorRewardRateBatch(
+		validators.map(({ address }) => address),
+		pageKey,
+	)
+
+	// Handle list bootstrapping
 	const setupValidatorList = () => {
 		setValidators(prepareInitialValidators())
 		setFetched(true)
@@ -187,6 +194,7 @@ export const NominationList = ({
 											(entry) => entry.validator === validator.address,
 										)?.points || []
 									}
+									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
 								/>
 							</motion.div>

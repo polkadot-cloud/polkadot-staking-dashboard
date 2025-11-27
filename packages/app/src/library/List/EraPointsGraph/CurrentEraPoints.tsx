@@ -29,7 +29,7 @@ export const CurrentEraPoints = ({
 
 	// Get an era high value from era individuals data
 	const getEraHigh = (individual: [string, number][]) =>
-		Object.values(individual).sort((a, b) => b[1] - a[1])[0][1] || 0
+		Object.values(individual).sort((a, b) => b[1] - a[1])[0]?.[1] || 0
 
 	// Store era reward points for the current address
 	const [eraPoints, setEraPoints] = useState<BigNumber>(
@@ -70,16 +70,22 @@ export const CurrentEraPoints = ({
 	}, [])
 
 	return (
-		<Graph syncing={syncing} canvas={displayFor === 'canvas'}>
-			<TooltipArea
-				text={tooltipText}
-				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-			/>
-			<Inner
-				points={Array(7).fill(normalisedPoint)}
-				syncing={syncing}
-				displayFor={displayFor}
-			/>
-		</Graph>
+		<Graph
+			syncing={syncing}
+			canvas={displayFor === 'canvas'}
+			Inner={
+				<>
+					<TooltipArea
+						text={tooltipText}
+						onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+					/>
+					<Inner
+						points={Array(7).fill(normalisedPoint)}
+						syncing={syncing}
+						displayFor={displayFor}
+					/>
+				</>
+			}
+		></Graph>
 	)
 }

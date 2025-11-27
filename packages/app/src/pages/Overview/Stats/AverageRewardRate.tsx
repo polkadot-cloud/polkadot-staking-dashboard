@@ -12,7 +12,7 @@ export const AverageRewardRate = () => {
 
 	const params = {
 		label: `${t('averageRewardRate')}`,
-		value: `${new BigNumber(getAverageRewardRate()).decimalPlaces(2).toFormat()}%`,
+		value: `${new BigNumber(getAverageRewardRate()).decimalPlaces(2).toFormat()}% APY`,
 		helpKey: 'Average Reward Rate',
 
 		primary: true,

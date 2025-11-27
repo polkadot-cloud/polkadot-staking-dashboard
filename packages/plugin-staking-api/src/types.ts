@@ -155,6 +155,17 @@ export interface ValidatorEraPointsBatch {
 	points: ValidatorEraPoints[]
 }
 
+export type ValidatorAvgRewardRateBatchResult = Query & {
+	data: {
+		validatorAvgRewardRateBatch: ValidatorAvgRewardRateBatch[]
+	}
+}
+
+export interface ValidatorAvgRewardRateBatch {
+	validator: string
+	rate: number
+}
+
 export interface PoolReward {
 	reward: string
 	timestamp: number
