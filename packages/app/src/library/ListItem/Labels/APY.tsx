@@ -26,7 +26,7 @@ export const APY = ({ rate }: { rate?: number }) => {
 				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
 				style={{ cursor: 'default' }}
 			/>
-			{new BigNumber(rate || 0).decimalPlaces(2).toString()}%
+			{new BigNumber(rate).decimalPlaces(2).toString()}%
 			<span
 				style={{
 					fontSize: '0.85em',

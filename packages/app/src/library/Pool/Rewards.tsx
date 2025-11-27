@@ -42,9 +42,7 @@ export const Rewards = ({ displayFor = 'default' }: RewardProps) => {
 					<RewardsGraph points={prefilledPoints} syncing={empty} />
 				</>
 			}
-		>
-			{syncing && <div className="preload" />}
-		</Graph>
+		></Graph>
 	)
 }
 

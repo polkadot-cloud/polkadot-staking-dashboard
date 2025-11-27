@@ -55,8 +55,6 @@ export const HistoricalEraPoints = ({
 					/>
 				</>
 			}
-		>
-			{syncing && <div className="preload" />}
-		</Graph>
+		></Graph>
 	)
 }

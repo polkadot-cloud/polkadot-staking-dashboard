@@ -44,9 +44,11 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 
 	// Store the previous era's reward points
 	const [prevEraReward, setPrevEraReward] = useState<{
+		era: number
 		points: { total: number; individual: [string, number][] } | undefined
 		payout: bigint | undefined
 	}>({
+		era: 0,
 		points: undefined,
 		payout: undefined,
 	})
@@ -234,6 +236,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 					]),
 				},
 				payout: totalPayout,
+				era: prevEra,
 			})
 		}
 	}
@@ -295,7 +298,7 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 			} else {
 				if (activeEra.index > 0) {
 					// Fetch previous era reward points
-					if (!prevEraReward.payout) {
+					if (prevEraReward.era !== activeEra.index - 1) {
 						fetchPrevEraRewardPoints()
 					}
 				}

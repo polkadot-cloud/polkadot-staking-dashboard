@@ -86,8 +86,6 @@ export const CurrentEraPoints = ({
 					/>
 				</>
 			}
-		>
-			{syncing && <div className="preload" />}
-		</Graph>
+		></Graph>
 	)
 }

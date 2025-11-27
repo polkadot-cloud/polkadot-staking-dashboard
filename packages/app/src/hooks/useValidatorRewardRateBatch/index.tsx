@@ -11,7 +11,7 @@ import { fetchValidatorAvgRewardRateBatch } from 'plugin-staking-api'
 import { useEffect, useState } from 'react'
 import {
 	calculateValidatorEraRewardRate,
-	calculteValidatorEraTotalReward,
+	calculateValidatorEraTotalReward,
 } from 'utils'
 
 // Calculates validator reward rates in a batch. If Staking API is enabled, rates are fetched from
@@ -54,7 +54,7 @@ export const useValidatorRewardRateBatch = (
 
 			let rate = 0
 			if (totalStake > 0n) {
-				const totalReward = await calculteValidatorEraTotalReward(
+				const totalReward = await calculateValidatorEraTotalReward(
 					prevEra,
 					address,
 					serviceApi,
@@ -69,11 +69,7 @@ export const useValidatorRewardRateBatch = (
 			}
 			newRates[address] = rate
 		}
-
-		setRates({
-			...rates,
-			[key]: newRates,
-		})
+		setRates((prevRates) => ({ ...prevRates, [key]: newRates }))
 	}
 
 	// Fetch average reward rates from staking api
@@ -94,10 +90,7 @@ export const useValidatorRewardRateBatch = (
 			for (const { validator, rate } of results.validatorAvgRewardRateBatch) {
 				newRates[validator] = rate
 			}
-			setRates({
-				...rates,
-				[key]: newRates,
-			})
+			setRates((prevRates) => ({ ...prevRates, [key]: newRates }))
 		}
 	}
 
@@ -106,7 +99,7 @@ export const useValidatorRewardRateBatch = (
 		if (pluginEnabled('staking_api')) {
 			getAvgRewardRates(pageKey)
 		}
-	}, [pageKey, pluginEnabled('staking_api'), activeEra.index])
+	}, [addresses, pageKey, pluginEnabled('staking_api'), activeEra.index])
 
 	// Fetch average reward rates from previous era when staking api is disabled
 	useEffect(() => {
@@ -115,6 +108,7 @@ export const useValidatorRewardRateBatch = (
 		}
 	}, [
 		isReady,
+		addresses,
 		pageKey,
 		pluginEnabled('staking_api'),
 		prevEraReward?.points?.total,

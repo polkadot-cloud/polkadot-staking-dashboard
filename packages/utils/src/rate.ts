@@ -4,15 +4,7 @@
 import { planckToUnit } from '@w3ux/utils'
 import type { ServiceInterface } from 'types'
 
-/**
- * Calculate the reward rate for a validator in a specific era, before commission
- *
- * @param erasPerDay - Number of eras per day for the network
- * @param validatorTotalStake - Total stake (own + nominated) for the validator in the era (in planck)
- * @param validatorReward - Total reward earned by the validator in the era (in planck)
- * @param decimals - Token decimals for the chain
- * @returns Object containing the annualized reward rate as a percentage
- */
+// Calculate the reward rate for a validator in a specific era, before commission
 export const calculateValidatorEraRewardRate = (
 	erasPerDay: number,
 	validatorTotalStake: bigint,
@@ -39,7 +31,7 @@ export const calculateValidatorEraRewardRate = (
 }
 
 // Calculate the total reward earned by a validator in a specific era
-export const calculteValidatorEraTotalReward = async (
+export const calculateValidatorEraTotalReward = async (
 	era: number,
 	validator: string,
 	serviceApi: ServiceInterface,
