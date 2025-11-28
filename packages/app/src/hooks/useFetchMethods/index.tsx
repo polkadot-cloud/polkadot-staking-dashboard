@@ -8,6 +8,10 @@ import { useValidatorFilters } from 'hooks/useValidatorFilters'
 import type { AddNominationsType } from 'library/GenerateNominations/types'
 import type { Validator } from 'types'
 
+// Helper function to get a random item from an array
+const getRandomItem = <T,>(items: T[]): T | null =>
+	shuffle(items).slice(0, 1)[0] || null
+
 export const useFetchMethods = () => {
 	const { favoritesList } = useFavoriteValidators()
 	const { applyFilter, applyOrder } = useValidatorFilters()
@@ -179,7 +183,7 @@ export const useFetchMethods = () => {
 		const all: Validator[] = available(nominations).activeValidators
 
 		// take one validator
-		const validator = shuffle(all).slice(0, 1)[0] || null
+		const validator = getRandomItem(all)
 		if (validator) {
 			nominations.push(validator)
 		}
@@ -190,7 +194,7 @@ export const useFetchMethods = () => {
 		const all: Validator[] = available(nominations).highPerformance
 
 		// take one validator
-		const validator = shuffle(all).slice(0, 1)[0] || null
+		const validator = getRandomItem(all)
 		if (validator) {
 			nominations.push(validator)
 		}
@@ -201,7 +205,7 @@ export const useFetchMethods = () => {
 		const all: Validator[] = available(nominations).randomValidators
 
 		// take one validator
-		const validator = shuffle(all).slice(0, 1)[0] || null
+		const validator = getRandomItem(all)
 		if (validator) {
 			nominations.push(validator)
 		}
