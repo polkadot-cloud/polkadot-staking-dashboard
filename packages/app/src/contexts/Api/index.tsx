@@ -46,6 +46,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 	)
 	// Store the auto RPC setting
 	const [autoRpc, setAutoRpc] = useState<boolean>(getInitialAutoRpc())
+
 	// Store Api connection status for active chains
 	const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
 
