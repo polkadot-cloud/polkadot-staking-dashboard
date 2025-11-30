@@ -9,8 +9,7 @@ import type { AddNominationsType } from 'library/GenerateNominations/types'
 import type { Validator } from 'types'
 
 // Helper function to get a random item from an array
-const getRandomItem = <T,>(items: T[]): T | null =>
-	shuffle(items)[0] || null
+const getRandomItem = <T,>(items: T[]): T | null => shuffle(items)[0] || null
 
 export const useFetchMethods = () => {
 	const { favoritesList } = useFavoriteValidators()
