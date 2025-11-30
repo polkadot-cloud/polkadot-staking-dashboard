@@ -11,8 +11,8 @@ export const getInitialAdvancedMode = (): boolean => {
 		const urlMode = extractUrlValue('m')
 		const localOrDefault = localStorageOrDefault(
 			AdvancedModeKey,
-			true,
 			defaultAdvancedMode,
+			true,
 		) as boolean
 
 		if (urlMode && ['simple', 'advanced'].includes(urlMode)) {
@@ -33,8 +33,8 @@ export const getInitialShowHelp = (): boolean => {
 	try {
 		const localOrDefault = localStorageOrDefault(
 			ShowHelpKey,
-			true,
 			defaultShowHelp,
+			true,
 		) as boolean
 
 		return localOrDefault
