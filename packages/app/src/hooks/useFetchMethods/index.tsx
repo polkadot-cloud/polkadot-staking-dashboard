@@ -10,7 +10,7 @@ import type { Validator } from 'types'
 
 // Helper function to get a random item from an array
 const getRandomItem = <T,>(items: T[]): T | null =>
-	shuffle(items).slice(0, 1)[0] || null
+	shuffle(items)[0] || null
 
 export const useFetchMethods = () => {
 	const { favoritesList } = useFavoriteValidators()
