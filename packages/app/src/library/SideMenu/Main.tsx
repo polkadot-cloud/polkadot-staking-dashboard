@@ -40,7 +40,7 @@ export const Main = ({
 	const { network } = useNetwork()
 	const { pathname } = useLocation()
 	const { inPool } = useActivePool()
-	const { isBonding } = useStaking()
+	const { isBonding, isNominating } = useStaking()
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
 	const { sideMenuMinimised, advancedMode } = useUi()
@@ -52,10 +52,14 @@ export const Main = ({
 		(nominee) => nominee.prefs.commission === 100,
 	)
 
+	// Staking state for pages config filtering
+	const stakingState = { inPool, isNominating }
+
 	const pages: PageItem[] = getPagesConfig(
 		network,
 		activeCategory,
 		advancedMode,
+		stakingState,
 	)
 
 	const pageChanged = activeCategory
@@ -87,6 +91,12 @@ export const Main = ({
 			}
 			if (uri === `${import.meta.env.BASE_URL}pools`) {
 				if (inPool) {
+					pages[i].bullet = 'accent'
+					return true
+				}
+			}
+			if (uri === `${import.meta.env.BASE_URL}stake`) {
+				if (inPool || isBonding) {
 					pages[i].bullet = 'accent'
 					return true
 				}

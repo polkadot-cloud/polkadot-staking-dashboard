@@ -10,6 +10,8 @@ import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { getUnixTime } from 'date-fns'
 import {
@@ -50,6 +52,8 @@ const RouterInner = () => {
 	const { pathname, search } = useLocation()
 	const { activeAddress } = useActiveAccounts()
 	const { setContainerRefs, advancedMode } = useUi()
+	const { inPool } = useActivePool()
+	const { isNominating } = useStaking()
 
 	// References to outer container
 	const mainInterfaceRef = useRef<HTMLDivElement>(null)
@@ -98,6 +102,9 @@ const RouterInner = () => {
 		handleVisit(utmSource)
 	}, [])
 
+	// Staking state for pages config filtering
+	const stakingState = { inPool, isNominating }
+
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallbackApp}>
 			<ApolloProvider client={client}>
@@ -117,15 +124,18 @@ const RouterInner = () => {
 							<Headers />
 							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
 								<Routes>
-									{getPagesConfig(network, null, advancedMode).map(
-										(page, i) => (
-											<Route
-												key={`main_interface_page_${i}`}
-												path={page.hash}
-												element={<PageWithTitle page={page} />}
-											/>
-										),
-									)}
+									{getPagesConfig(
+										network,
+										null,
+										advancedMode,
+										stakingState,
+									).map((page, i) => (
+										<Route
+											key={`main_interface_page_${i}`}
+											path={page.hash}
+											element={<PageWithTitle page={page} />}
+										/>
+									))}
 									<Route
 										key="main_interface_navigate"
 										path="*"

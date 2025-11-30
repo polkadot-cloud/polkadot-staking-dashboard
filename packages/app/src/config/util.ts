@@ -5,11 +5,18 @@ import { isOperatorsSupported } from 'consts/util'
 import type { NetworkId } from 'types'
 import { PageCategories, PagesConfig } from './pages'
 
+// Staking state configuration for Simple mode page filtering
+export interface StakingState {
+	inPool: boolean
+	isNominating: boolean
+}
+
 // Get pages config, and remove operators page if it is not supported
 export const getPagesConfig = (
 	network: NetworkId,
 	category: number | null,
 	advancedMode: boolean,
+	stakingState?: StakingState,
 ) => {
 	const operatorsSupported = isOperatorsSupported(network)
 
@@ -27,6 +34,27 @@ export const getPagesConfig = (
 	if (!advancedMode) {
 		pagesConfig = pagesConfig.filter(({ advanced }) => !advanced)
 	}
+
+	// In Simple mode, handle Stake vs Pools/Nominate pages
+	if (!advancedMode) {
+		const { inPool = false, isNominating = false } = stakingState || {}
+
+		// If user is both in a pool AND nominating, show both separate pages (no Stake page)
+		// Otherwise, show the unified Stake page and hide separate Pools/Nominate pages
+		if (inPool && isNominating) {
+			// User is both in pool and nominating - show separate pages
+			pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
+		} else {
+			// Show unified Stake page, hide separate Pools and Nominate pages
+			pagesConfig = pagesConfig.filter(
+				(page) => page.key !== 'pools' && page.key !== 'nominate',
+			)
+		}
+	} else {
+		// In Advanced mode, always hide the unified Stake page and show separate pages
+		pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
+	}
+
 	return pagesConfig
 }
 

@@ -3,6 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
+import { useUi } from 'contexts/UI'
 import { useSyncing } from 'hooks/useSyncing'
 import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -10,6 +11,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 export const useAccountSwitchNavigation = () => {
 	const navigate = useNavigate()
 	const { pathname } = useLocation()
+	const { advancedMode } = useUi()
 	const { activeAccount } = useActiveAccounts()
 	const { getPoolMembership, getStakingLedger, getNominations } = useBalances()
 	const { accountSynced } = useSyncing()
@@ -57,6 +59,26 @@ export const useAccountSwitchNavigation = () => {
 		const accountInPool = isInPool()
 		const accountNominating = isNominating()
 
+		// In Simple mode, handle navigation between stake and pools/nominate pages
+		if (!advancedMode) {
+			// If on stake page and account is both in pool AND nominating, redirect to pools
+			// (since separate pages would be shown for users who are both pooling and nominating)
+			if (pathname === '/stake' && accountInPool && accountNominating) {
+				navigate('/pools')
+				return
+			}
+
+			// If on pools or nominate page (separate pages only shown when both pooling and nominating)
+			// and account is no longer in that state, redirect to stake page
+			if (
+				(pathname === '/pools' || pathname === '/nominate') &&
+				!(accountInPool && accountNominating)
+			) {
+				navigate('/stake')
+				return
+			}
+		}
+
 		// Only redirect if we're on the relevant pages and the account state is clear
 		if (pathname === '/pools' && accountNominating && !accountInPool) {
 			// On pools page, switching to nominating account -> go to nominate page
@@ -74,6 +96,7 @@ export const useAccountSwitchNavigation = () => {
 		pathname,
 		navigate,
 		accountSynced,
+		advancedMode,
 		getPoolMembership,
 		getStakingLedger,
 		getNominations,
