@@ -28,7 +28,6 @@
 		"amountWillBeWithdrawn": "{{bond}} {{unit}} serán retirados.",
 		"approveTransactionLedger": "Aprobar transacción en Ledger",
 		"autoRpc": "Auto RPC",
-		"autoRpcTooltip": "Cambiar automáticamente entre proveedores RPC para mejorar la fiabilidad",
 		"available": "Disponible",
 		"back": "Atrás",
 		"beingDestroyed": "Este Pool está siendo Destruido.",
