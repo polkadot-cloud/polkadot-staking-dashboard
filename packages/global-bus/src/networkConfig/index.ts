@@ -3,6 +3,7 @@
 
 import type { NetworkId, ProviderType, RpcEndpoints } from 'types'
 import {
+	setLocalAutoRpc,
 	setLocalNetwork,
 	setLocalProviderType,
 	setLocalRpcEndpoints,
@@ -17,14 +18,17 @@ export const setNetworkConfig = (
 	network: NetworkId,
 	rpcEndpoints: RpcEndpoints,
 	providerType: ProviderType,
+	autoRpc: boolean,
 ) => {
 	setLocalNetwork(network)
 	setLocalRpcEndpoints(network, rpcEndpoints)
 	setLocalProviderType(providerType)
+	setLocalAutoRpc(autoRpc)
 	_networkConfig.next({
 		network,
 		rpcEndpoints,
 		providerType,
+		autoRpc,
 	})
 }
 
@@ -58,6 +62,16 @@ export const setProviderType = (providerType: ProviderType) => {
 	_networkConfig.next({
 		...getNetworkConfig(),
 		providerType,
+	})
+}
+
+export const getAutoRpc = () => getNetworkConfig().autoRpc
+
+export const setAutoRpc = (autoRpc: boolean) => {
+	setLocalAutoRpc(autoRpc)
+	_networkConfig.next({
+		...getNetworkConfig(),
+		autoRpc,
 	})
 }
 

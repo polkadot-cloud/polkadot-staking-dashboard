@@ -44,9 +44,9 @@ export const SubmitTx = ({
 	const submitted = txSubmission?.submitted || false
 
 	const {
-		balances: { transferableBalance },
+		balances: { balanceTxFees },
 	} = useAccountBalances(from)
-	const notEnoughFunds = transferableBalance - fee < 0n && fee > 0n
+	const notEnoughFunds = balanceTxFees - fee < 0n && fee > 0n
 
 	// Default to active account, using activeAccount to get the correct account
 	let signingOpts = {

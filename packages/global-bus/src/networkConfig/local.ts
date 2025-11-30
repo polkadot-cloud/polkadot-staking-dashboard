@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
+	AutoRpcKey,
 	NetworkKey,
 	ProviderTypeKey,
 	rpcEndpointKey,
@@ -23,6 +24,10 @@ export const setLocalRpcEndpoints = (
 
 export const setLocalProviderType = (providerType: ProviderType) => {
 	localStorage.setItem(ProviderTypeKey, providerType)
+}
+
+export const setLocalAutoRpc = (autoRpc: boolean) => {
+	localStorage.setItem(AutoRpcKey, String(autoRpc))
 }
 
 // Cache structure for RPC health data
