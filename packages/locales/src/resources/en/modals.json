@@ -27,6 +27,7 @@
 		"amountWillBeUnbonded": "{{bond}} {{unit}} will be unbonded.",
 		"amountWillBeWithdrawn": "{{bond}} {{unit}} will be withdrawn.",
 		"approveTransactionLedger": "Approve transaction on Ledger",
+		"autoRpc": "Auto RPC",
 		"available": "Available",
 		"back": "Back",
 		"beingDestroyed": "This pool is being destroyed.",

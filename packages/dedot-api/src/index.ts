@@ -19,7 +19,12 @@ let service: ServiceClass
 export const initDedotService = async () => {
 	// Populate network config with sanitized RPC endpoints
 	const config = await getInitialNetworkConfig()
-	setNetworkConfig(config.network, config.rpcEndpoints, config.providerType)
+	setNetworkConfig(
+		config.network,
+		config.rpcEndpoints,
+		config.providerType,
+		config.autoRpc,
+	)
 
 	// Subscribe to network config changes
 	networkConfig$
@@ -28,7 +33,8 @@ export const initDedotService = async () => {
 			// Unsubscribe from previous service if on new network config, and clear stale global state
 			if (
 				prev.network !== cur.network ||
-				prev.providerType !== cur.providerType
+				prev.providerType !== cur.providerType ||
+				prev.autoRpc !== cur.autoRpc
 			) {
 				await service?.unsubscribe()
 				onNetworkReset()

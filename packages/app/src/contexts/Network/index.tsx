@@ -5,6 +5,7 @@ import { createSafeContext } from '@w3ux/hooks'
 import { varToUrlHash } from '@w3ux/utils'
 import { isNetworkEnabled } from 'consts/util'
 import {
+	getAutoRpc,
 	getNetwork,
 	getProviderType,
 	networkConfig$,
@@ -30,6 +31,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
 				name,
 				await getInitialRpcEndpoints(name),
 				getProviderType(),
+				getAutoRpc(),
 			)
 			varToUrlHash('n', name, false)
 		}

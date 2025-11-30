@@ -26,7 +26,7 @@ import type { Service } from './types'
 // Determines service class and apis for a network
 export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 	network: T,
-	{ rpcEndpoints, providerType }: Omit<NetworkConfig, 'network'>,
+	{ rpcEndpoints, providerType, autoRpc }: Omit<NetworkConfig, 'network'>,
 ): Promise<DefaultService<T>> => {
 	const peopleChainId = getPeopleChainId(network) as SystemChainId
 	const hubChainId = getHubChainId(network) as SystemChainId
@@ -46,15 +46,23 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 	let hubProvider
 
 	if (providerType === 'ws') {
-		relayProvider = new WsProvider(
-			relayData.endpoints.rpc[rpcEndpoints[network]],
-		)
-		peopleProvider = new WsProvider(
-			peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]],
-		)
-		hubProvider = new WsProvider(
-			hubData.endpoints.rpc[rpcEndpoints[hubChainId]],
-		)
+		// When autoRpc is enabled, use all RPC endpoints for automatic failover. Otherwise, use the
+		// specific selected endpoint
+		if (autoRpc) {
+			relayProvider = new WsProvider(Object.values(relayData.endpoints.rpc))
+			peopleProvider = new WsProvider(Object.values(peopleData.endpoints.rpc))
+			hubProvider = new WsProvider(Object.values(hubData.endpoints.rpc))
+		} else {
+			relayProvider = new WsProvider(
+				relayData.endpoints.rpc[rpcEndpoints[network]],
+			)
+			peopleProvider = new WsProvider(
+				peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]],
+			)
+			hubProvider = new WsProvider(
+				hubData.endpoints.rpc[rpcEndpoints[hubChainId]],
+			)
+		}
 	} else {
 		// Initialize relay chain first and reuse it for system chains
 		const relaySetup = await newRelayChainSmProvider(relayData)
