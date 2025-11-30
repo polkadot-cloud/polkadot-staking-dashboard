@@ -231,6 +231,8 @@
 		"poolNominations": "Pool Nominations",
 		"provider": "Provider",
 		"providerType": "Connection Type",
+		"autoRpc": "Auto",
+		"autoRpcTooltip": "Automatically switch between RPC providers for improved reliability",
 		"proxies": "Proxies",
 		"proxy": "Proxy",
 		"proxyAccounts": "Proxy Accounts",

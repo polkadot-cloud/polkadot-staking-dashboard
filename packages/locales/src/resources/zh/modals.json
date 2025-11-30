@@ -219,6 +219,8 @@
 		"poolNominations": "池的提名",
 		"provider": "服务端",
 		"providerType": "连接类型",
+		"autoRpc": "自动",
+		"autoRpcTooltip": "自动切换RPC提供者以提高可靠性",
 		"proxies": "代理",
 		"proxy": "代理账户",
 		"proxyAccounts": "代理帐户",

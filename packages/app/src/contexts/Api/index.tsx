@@ -21,7 +21,7 @@ import {
 	serviceInterface$,
 	stakingMetrics$,
 } from 'global-bus'
-import { getInitialProviderType } from 'global-bus/util'
+import { getInitialAutoRpc, getInitialProviderType } from 'global-bus/util'
 import { useEffect, useRef, useState } from 'react'
 import type {
 	ApiStatus,
@@ -44,6 +44,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 	const [providerType, setProviderType] = useState<ProviderType>(
 		getInitialProviderType(),
 	)
+	// Store the auto RPC setting
+	const [autoRpc, setAutoRpc] = useState<boolean>(getInitialAutoRpc())
 	// Store Api connection status for active chains
 	const [apiStatus, setApiStatus] = useState<Record<string, ApiStatus>>({})
 
@@ -102,6 +104,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 	useEffect(() => {
 		const subNetwork = networkConfig$.subscribe((result) => {
 			setProviderType(result.providerType)
+			setAutoRpc(result.autoRpc)
 		})
 		const subApiStatus = apiStatus$.subscribe((result) => {
 			setApiStatus(result)
@@ -146,6 +149,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 				getApiStatus,
 				getChainSpec,
 				providerType,
+				autoRpc,
 				getRpcEndpoint,
 				isReady: getApiStatus(network) === 'ready',
 				getConsts,

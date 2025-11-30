@@ -6,7 +6,7 @@ import {
 	localStorageOrDefault,
 	withTimeout,
 } from '@w3ux/utils'
-import { NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
+import { AutoRpcKey, NetworkKey, ProviderTypeKey, rpcEndpointKey } from 'consts'
 import { DefaultNetwork, NetworkList, SystemChainList } from 'consts/networks'
 import { getDefaultRpcEndpoints, getEnabledNetworks } from 'consts/util'
 import { fetchRpcEndpointHealth } from 'plugin-staking-api'
@@ -134,13 +134,24 @@ export const getInitialProviderType = (): ProviderType => {
 	return 'ws'
 }
 
+export const getInitialAutoRpc = (): boolean => {
+	const result = localStorage.getItem(AutoRpcKey)
+	// Default to true if not set
+	if (result === null) {
+		return true
+	}
+	return result === 'true'
+}
+
 export const getInitialNetworkConfig = async (): Promise<NetworkConfig> => {
 	const network = getInitialNetwork()
 	const rpcEndpoints = await getInitialRpcEndpoints(network)
 	const providerType = getInitialProviderType()
+	const autoRpc = getInitialAutoRpc()
 	return {
 		network,
 		rpcEndpoints,
 		providerType,
+		autoRpc,
 	}
 }
