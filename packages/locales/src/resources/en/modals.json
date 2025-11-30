@@ -27,7 +27,7 @@
 		"amountWillBeUnbonded": "{{bond}} {{unit}} will be unbonded.",
 		"amountWillBeWithdrawn": "{{bond}} {{unit}} will be withdrawn.",
 		"approveTransactionLedger": "Approve transaction on Ledger",
-		"autoRpc": "Auto",
+		"autoRpc": "Auto RPC",
 		"autoRpcTooltip": "Automatically switch between RPC providers for improved reliability",
 		"available": "Available",
 		"back": "Back",

@@ -123,15 +123,17 @@ export const Networks = () => {
 								/>
 								<p style={{ marginLeft: '0.5rem' }}>{t('autoRpc')}</p>
 							</div>
-							<div className="provider">
-								<p>{t('provider')}:</p>
-								<ButtonTertiary
-									text={autoRpc ? t('autoRpc') : getRpcEndpoint(network)}
-									onClick={() => openPromptWith(<ProvidersPrompt />)}
-									marginLeft
-									disabled={autoRpc}
-								/>
-							</div>
+							{!autoRpc && (
+								<div className="provider">
+									<p>{t('provider')}:</p>
+									<ButtonTertiary
+										text={getRpcEndpoint(network)}
+										onClick={() => openPromptWith(<ProvidersPrompt />)}
+										marginLeft
+										disabled={autoRpc}
+									/>
+								</div>
+							)}
 						</div>
 					</ConnectionsWrapper>
 				</ContentWrapper>

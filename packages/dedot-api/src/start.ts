@@ -46,8 +46,8 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 	let hubProvider
 
 	if (providerType === 'ws') {
-		// When autoRpc is enabled, use all RPC endpoints for automatic failover
-		// Otherwise, use the specific selected endpoint
+		// When autoRpc is enabled, use all RPC endpoints for automatic failover. Otherwise, use the
+		// specific selected endpoint
 		if (autoRpc) {
 			relayProvider = new WsProvider(Object.values(relayData.endpoints.rpc))
 			peopleProvider = new WsProvider(Object.values(peopleData.endpoints.rpc))

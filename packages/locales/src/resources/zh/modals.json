@@ -24,7 +24,7 @@
 		"amountWillBeUnbonded": "{{bond}} {{unit}} 将被解绑",
 		"amountWillBeWithdrawn": "{{bond}} {{unit}} 将被取出",
 		"approveTransactionLedger": "在Ledger上批准交易",
-		"autoRpc": "自动",
+		"autoRpc": "自动RPC",
 		"autoRpcTooltip": "自动切换RPC提供者以提高可靠性",
 		"available": "可用",
 		"back": "返回",
