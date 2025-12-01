@@ -5,18 +5,15 @@ import { isOperatorsSupported } from 'consts/util'
 import type { NetworkId } from 'types'
 import { PageCategories, PagesConfig } from './pages'
 
-// Staking state configuration for Simple mode page filtering
-export interface StakingState {
-	inPool: boolean
-	isNominating: boolean
-}
-
 // Get pages config, and remove operators page if it is not supported
 export const getPagesConfig = (
 	network: NetworkId,
 	category: number | null,
 	advancedMode: boolean,
-	stakingState?: StakingState,
+	stakingState?: {
+		inPool: boolean
+		isNominating: boolean
+	},
 ) => {
 	const operatorsSupported = isOperatorsSupported(network)
 
