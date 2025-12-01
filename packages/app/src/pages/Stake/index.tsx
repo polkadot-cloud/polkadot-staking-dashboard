@@ -3,13 +3,13 @@
 
 import { CardWrapper } from 'library/Card/Wrappers'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
+import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
+import { NextRewards } from 'pages/Overview/Stats/NextRewards'
 import { ManageBond } from 'pages/Pools/ManageBond'
+import { MinJoinBond } from 'pages/Pools/Stats/MinJoinBond'
 import { Status } from 'pages/Pools/Status'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
-import { AverageRewardRate } from './Stats/AverageRewardRate'
-import { MinJoinBond } from './Stats/MinJoinBond'
-import { NextRewards } from './Stats/NextRewards'
 
 export const Stake = () => {
 	const { t } = useTranslation('pages')
