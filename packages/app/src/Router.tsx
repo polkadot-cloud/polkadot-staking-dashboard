@@ -102,9 +102,6 @@ const RouterInner = () => {
 		handleVisit(utmSource)
 	}, [])
 
-	// Staking state for pages config filtering
-	const stakingState = { inPool, isBonding }
-
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallbackApp}>
 			<ApolloProvider client={client}>
@@ -124,12 +121,10 @@ const RouterInner = () => {
 							<Headers />
 							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
 								<Routes>
-									{getPagesConfig(
-										network,
-										null,
-										advancedMode,
-										stakingState,
-									).map((page, i) => (
+									{getPagesConfig(network, null, advancedMode, {
+										inPool,
+										isBonding,
+									}).map((page, i) => (
 										<Route
 											key={`main_interface_page_${i}`}
 											path={page.hash}
