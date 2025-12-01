@@ -61,8 +61,8 @@ export const useAccountSwitchNavigation = () => {
 
 		// In Simple mode, handle navigation between stake and pools/nominate pages
 		if (!advancedMode) {
-			// If on stake page and account is both in pool AND nominating, redirect to pools
-			// (since separate pages would be shown for users who are both pooling and nominating)
+			// If on stake page and account is both in pool AND nominating, redirect to pools (since
+			// separate pages would be shown for users who are both pooling and nominating)
 			if (pathname === '/stake' && accountInPool && accountNominating) {
 				navigate('/pools')
 				return
@@ -83,6 +83,7 @@ export const useAccountSwitchNavigation = () => {
 		if (pathname === '/pools' && accountNominating && !accountInPool) {
 			// On pools page, switching to nominating account -> go to nominate page
 			navigate('/nominate')
+			return
 		} else if (
 			pathname === '/nominate' &&
 			accountInPool &&
@@ -90,6 +91,7 @@ export const useAccountSwitchNavigation = () => {
 		) {
 			// On nominate page, switching to pool member account -> go to pools page
 			navigate('/pools')
+			return
 		}
 	}, [
 		activeAccount,
