@@ -39,13 +39,11 @@ export const getPagesConfig = (
 	if (!advancedMode) {
 		const { inPool = false, isNominating = false } = stakingState || {}
 
-		// If user is both in a pool AND nominating, show both separate pages (no Stake page)
-		// Otherwise, show the unified Stake page and hide separate Pools/Nominate pages
+		// If user is both in a pool AND nominating, show both separate pages (no Stake page) Otherwise,
+		// show the unified Stake page and hide separate Pools/Nominate pages
 		if (inPool && isNominating) {
-			// User is both in pool and nominating - show separate pages
 			pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
 		} else {
-			// Show unified Stake page, hide separate Pools and Nominate pages
 			pagesConfig = pagesConfig.filter(
 				(page) => page.key !== 'pools' && page.key !== 'nominate',
 			)
