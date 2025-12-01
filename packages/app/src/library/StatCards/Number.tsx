@@ -14,9 +14,13 @@ export const Number = ({
 	unit,
 	helpKey,
 	decimals,
+	isPreloading = false,
 }: NumberProps) => {
 	const { openHelpTooltip } = useHelp()
 
+	if (isPreloading) {
+		return <Stat.Loading />
+	}
 	return (
 		<Stat.Card>
 			<div>

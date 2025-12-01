@@ -10,6 +10,7 @@ export interface NumberProps {
 	decimals?: number
 	unit: string
 	helpKey?: string
+	isPreloading?: boolean
 }
 
 export interface PieProps {
