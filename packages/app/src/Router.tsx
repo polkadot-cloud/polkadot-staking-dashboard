@@ -48,12 +48,12 @@ import { Page } from 'ui-core/base'
 const RouterInner = () => {
 	const navigate = useNavigate()
 	const { network } = useNetwork()
+	const { inPool } = useActivePool()
+	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { pathname, search } = useLocation()
 	const { activeAddress } = useActiveAccounts()
 	const { setContainerRefs, advancedMode } = useUi()
-	const { inPool } = useActivePool()
-	const { isNominating } = useStaking()
 
 	// References to outer container
 	const mainInterfaceRef = useRef<HTMLDivElement>(null)
@@ -103,7 +103,7 @@ const RouterInner = () => {
 	}, [])
 
 	// Staking state for pages config filtering
-	const stakingState = { inPool, isNominating }
+	const stakingState = { inPool, isBonding }
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallbackApp}>

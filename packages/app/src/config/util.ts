@@ -12,7 +12,7 @@ export const getPagesConfig = (
 	advancedMode: boolean,
 	stakingState?: {
 		inPool: boolean
-		isNominating: boolean
+		isBonding: boolean
 	},
 ) => {
 	const operatorsSupported = isOperatorsSupported(network)
@@ -34,11 +34,11 @@ export const getPagesConfig = (
 
 	// In Simple mode, handle Stake vs Pools/Nominate pages
 	if (!advancedMode) {
-		const { inPool = false, isNominating = false } = stakingState || {}
+		const { inPool = false, isBonding = false } = stakingState || {}
 
-		// If user is both in a pool AND nominating, show both separate pages (no Stake page) Otherwise,
+		// If user is both in a pool AND bonding, show both separate pages (no Stake page) Otherwise,
 		// show the unified Stake page and hide separate Pools/Nominate pages
-		if (inPool && isNominating) {
+		if (inPool && isBonding) {
 			pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
 		} else {
 			pagesConfig = pagesConfig.filter(
