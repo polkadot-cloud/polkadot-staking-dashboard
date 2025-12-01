@@ -3,27 +3,20 @@
 
 import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { PageTabs } from 'library/PageTabs'
 import { PoolList } from 'library/PoolList'
-import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
-import { ClosurePrompts } from './ClosurePrompts'
 import { PoolsTabsProvider, usePoolsTabs } from './context'
 import { PoolFavorites } from './Favorites'
-import { ManageBond } from './ManageBond'
-import { ManagePool } from './ManagePool'
-import { PoolStats } from './PoolStats'
-import { Roles } from './Roles'
+import { PoolOverview } from './Overview'
 import { ActivePoolCount } from './Stats/ActivePoolCount'
 import { MinCreateBond } from './Stats/MinCreateBond'
 import { MinJoinBond } from './Stats/MinJoinBond'
-import { Status } from './Status'
 
 export const PoolsInner = () => {
 	const { t } = useTranslation('pages')
@@ -31,9 +24,6 @@ export const PoolsInner = () => {
 	const { favorites } = useFavoritePools()
 	const { bondedPools } = useBondedPools()
 	const { activeTab, setActiveTab } = usePoolsTabs()
-	const { getPoolRoles, activePool } = useActivePool()
-
-	const ROW_HEIGHT = 220
 
 	// Go back to tab 0 on network change.
 	useEffect(() => {
@@ -71,31 +61,7 @@ export const PoolsInner = () => {
 						<MinJoinBond />
 						<MinCreateBond />
 					</Stat.Row>
-					<ClosurePrompts />
-					<WithdrawPrompt bondFor="pool" />
-					<Page.Row>
-						<Page.RowSection secondary vLast>
-							<CardWrapper height={ROW_HEIGHT}>
-								<ManageBond />
-							</CardWrapper>
-						</Page.RowSection>
-						<Page.RowSection hLast>
-							<Status height={ROW_HEIGHT} />
-						</Page.RowSection>
-					</Page.Row>
-					{activePool !== undefined && (
-						<>
-							<ManagePool />
-							<Page.Row>
-								<CardWrapper>
-									<Roles defaultRoles={getPoolRoles()} />
-								</CardWrapper>
-							</Page.Row>
-							<Page.Row>
-								<PoolStats />
-							</Page.Row>
-						</>
-					)}
+					<PoolOverview />
 				</>
 			)}
 			{activeTab === 1 && (
