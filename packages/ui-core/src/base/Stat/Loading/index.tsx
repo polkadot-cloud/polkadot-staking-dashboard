@@ -12,9 +12,9 @@ export const Loading = () => {
 				<Content>
 					<Loader
 						style={{
-							height: '1.75rem',
+							height: '1rem',
 							width: '45%',
-							marginBottom: '0.5rem',
+							marginBottom: '0.6rem',
 							opacity: 0.4,
 						}}
 					/>
