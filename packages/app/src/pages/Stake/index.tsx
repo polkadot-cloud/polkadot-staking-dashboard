@@ -1,7 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useStaking } from 'contexts/Staking'
+import { useSyncing } from 'hooks/useSyncing'
 import { Active } from 'pages/Nominate/Active'
 import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
 import { NextRewards } from 'pages/Overview/Stats/NextRewards'
@@ -13,15 +15,25 @@ import { Page, Stat } from 'ui-core/base'
 export const Stake = () => {
 	const { t } = useTranslation('pages')
 	const { isBonding } = useStaking()
+	const { activeAddress } = useActiveAccounts()
+	const { syncing, accountSynced } = useSyncing([
+		'initialization',
+		'era-stakers',
+	])
+
+	let isPreloading = true
+	if (activeAddress) {
+		isPreloading = syncing || !accountSynced(activeAddress)
+	}
 
 	return (
 		<>
 			<Page.Title title={t('stake')} />
 			{!isBonding && (
 				<Stat.Row>
-					<AverageRewardRate />
-					<MinJoinBond />
-					<NextRewards />
+					<AverageRewardRate isPreloading={isPreloading} />
+					<MinJoinBond isPreloading={isPreloading} />
+					<NextRewards isPreloading={isPreloading} />
 				</Stat.Row>
 			)}
 			{isBonding ? <Active /> : <PoolOverview />}
