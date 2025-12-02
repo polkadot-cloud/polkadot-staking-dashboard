@@ -1,8 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -87,7 +85,6 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 							<div className={`button secondary standalone`}>
 								<button type="button" onClick={() => navigate('/validators')}>
 									{t('browseValidators', { ns: 'app' })}
-									<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
 								</button>
 							</div>
 						</div>
