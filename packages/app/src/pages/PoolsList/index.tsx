@@ -11,8 +11,8 @@ import { PoolList } from 'library/PoolList'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
-import { PoolFavorites } from './Favorites'
 import { PoolsTabsProvider, usePoolsTabs } from './context'
+import { PoolFavorites } from './Favorites'
 
 const PoolsListInner = () => {
 	const { t } = useTranslation('pages')
