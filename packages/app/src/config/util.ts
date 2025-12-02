@@ -42,7 +42,7 @@ export const getPagesConfig = (
 			pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
 		} else {
 			pagesConfig = pagesConfig.filter(
-				(page) => page.key !== 'pools' && page.key !== 'nominate',
+				(page) => page.key !== 'pool' && page.key !== 'nominate',
 			)
 		}
 	} else {

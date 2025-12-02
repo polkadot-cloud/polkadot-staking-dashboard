@@ -59,19 +59,19 @@ export const useAccountSwitchNavigation = () => {
 		const accountInPool = isInPool()
 		const accountNominating = isNominating()
 
-		// In Simple mode, handle navigation between stake and pools/nominate pages
+		// In Simple mode, handle navigation between stake and pool/nominate pages
 		if (!advancedMode) {
-			// If on stake page and account is both in pool AND nominating, redirect to pools (since
+			// If on stake page and account is both in pool AND nominating, redirect to pool (since
 			// separate pages would be shown for users who are both pooling and nominating)
 			if (pathname === '/stake' && accountInPool && accountNominating) {
-				navigate('/pools')
+				navigate('/pool')
 				return
 			}
 
-			// If on pools or nominate page (separate pages only shown when both pooling and nominating)
+			// If on pool or nominate page (separate pages only shown when both pooling and nominating)
 			// and account is no longer in that state, redirect to stake page
 			if (
-				(pathname === '/pools' || pathname === '/nominate') &&
+				(pathname === '/pool' || pathname === '/nominate') &&
 				!(accountInPool && accountNominating)
 			) {
 				navigate('/stake')
@@ -80,8 +80,8 @@ export const useAccountSwitchNavigation = () => {
 		}
 
 		// Only redirect if we're on the relevant pages and the account state is clear
-		if (pathname === '/pools' && accountNominating && !accountInPool) {
-			// On pools page, switching to nominating account -> go to nominate page
+		if (pathname === '/pool' && accountNominating && !accountInPool) {
+			// On pool page, switching to nominating account -> go to nominate page
 			navigate('/nominate')
 			return
 		} else if (
@@ -89,9 +89,8 @@ export const useAccountSwitchNavigation = () => {
 			accountInPool &&
 			!accountNominating
 		) {
-			// On nominate page, switching to pool member account -> go to pools page
-			navigate('/pools')
-			return
+			// On nominate page, switching to pool member account -> go to pool page
+			navigate('/pool')
 		}
 	}, [
 		activeAccount,
