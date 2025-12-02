@@ -1,9 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
 
-export const LoaderWrapper = styled.div`
+.loader {
   background: var(--shimmer-foreground);
   background-image: linear-gradient(
     to right,
@@ -33,4 +32,4 @@ export const LoaderWrapper = styled.div`
       background-position: 200% 0;
     }
   }
-`
+}
