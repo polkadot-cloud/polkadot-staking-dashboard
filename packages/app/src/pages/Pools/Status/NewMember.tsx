@@ -13,17 +13,17 @@ import {
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
-import { usePoolsTabs } from '../context'
 import type { NewMemberProps } from './types'
 import { useStatusButtons } from './useStatusButtons'
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const { network } = useNetwork()
 	const { advancedMode } = useUi()
 	const { isBonding } = useStaking()
-	const { setActiveTab } = usePoolsTabs()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
 	const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
@@ -94,7 +94,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 									</button>
 								</div>
 								<div className={`button standalone secondary`}>
-									<button type="button" onClick={() => setActiveTab(1)}>
+									<button type="button" onClick={() => navigate('/pools')}>
 										{t('browsePools', { ns: 'pages' })}
 									</button>
 								</div>
