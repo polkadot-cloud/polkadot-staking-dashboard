@@ -6,9 +6,17 @@ import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Stat } from 'ui-core/base'
 import type { TextProps } from './types'
 
-export const Text = ({ label, value, helpKey, primary }: TextProps) => {
+export const Text = ({
+	label,
+	value,
+	helpKey,
+	primary,
+	isPreloading,
+}: TextProps) => {
 	const { openHelpTooltip } = useHelp()
-
+	if (isPreloading) {
+		return <Stat.Loading />
+	}
 	return (
 		<Stat.Card>
 			<div>

@@ -9,10 +9,19 @@ import { Stat } from 'ui-core/base'
 import { Pie as PieGraph } from 'ui-graphs'
 import type { PieProps } from './types'
 
-export const Pie = ({ label, stat, pieValue, tooltip, helpKey }: PieProps) => {
+export const Pie = ({
+	label,
+	stat,
+	pieValue,
+	tooltip,
+	helpKey,
+	isPreloading,
+}: PieProps) => {
 	const showTotal = !!stat?.total
 	const { openHelpTooltip } = useHelp()
-
+	if (isPreloading) {
+		return <Stat.Loading />
+	}
 	return (
 		<Stat.Card>
 			<div>

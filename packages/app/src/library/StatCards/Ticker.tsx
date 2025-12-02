@@ -17,9 +17,9 @@ export const Ticker = ({
 	primary,
 	unit,
 	changePercent,
+	isPreloading,
 }: TickerProps) => {
 	const { openHelpTooltip } = useHelp()
-
 	const tickerColor =
 		direction === 'up'
 			? 'var(--status-success-color)'
@@ -27,6 +27,9 @@ export const Ticker = ({
 				? 'var(--status-danger-color)'
 				: 'var(--text-color-secondary)'
 
+	if (isPreloading) {
+		return <Stat.Loading />
+	}
 	return (
 		<Stat.Card>
 			<div>

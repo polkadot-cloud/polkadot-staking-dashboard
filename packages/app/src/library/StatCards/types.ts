@@ -14,6 +14,7 @@ export interface NumberProps {
 }
 
 export interface PieProps {
+	isPreloading?: boolean
 	label: string
 	stat: {
 		value: string | number
@@ -26,6 +27,7 @@ export interface PieProps {
 }
 
 export interface TextProps {
+	isPreloading?: boolean
 	primary?: boolean
 	label: string
 	value: string
@@ -33,6 +35,7 @@ export interface TextProps {
 }
 
 export interface TickerProps {
+	isPreloading?: boolean
 	primary?: boolean
 	label: string
 	value: string
@@ -43,6 +46,7 @@ export interface TickerProps {
 }
 
 export interface TimeleftProps {
+	isPreloading?: boolean
 	label: string
 	timeleft: TimeLeftFormatted
 	graph: {
@@ -54,6 +58,7 @@ export interface TimeleftProps {
 }
 
 export interface ButtonProps {
+	isPreloading?: boolean
 	Icon: ReactNode
 	label: string
 	title: string

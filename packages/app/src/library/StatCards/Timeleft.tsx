@@ -14,9 +14,12 @@ export const Timeleft = ({
 	graph,
 	tooltip,
 	helpKey,
+	isPreloading,
 }: TimeleftProps) => {
 	const { openHelpTooltip } = useHelp()
-
+	if (isPreloading) {
+		return <Stat.Loading />
+	}
 	return (
 		<Stat.Card>
 			<div>

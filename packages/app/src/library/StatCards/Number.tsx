@@ -17,7 +17,6 @@ export const Number = ({
 	isPreloading = false,
 }: NumberProps) => {
 	const { openHelpTooltip } = useHelp()
-
 	if (isPreloading) {
 		return <Stat.Loading />
 	}
