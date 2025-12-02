@@ -56,5 +56,6 @@ export const getActivePageForCategory = (category: NavSection): string => {
 
 	// Fall back to default route if stored page doesn't exist
 	const categoryConfig = PageCategories.find((cat) => cat.key === category)
-	return storedPage || categoryConfig?.defaultRoute || '/overview'
+	const defaultFallback = PageCategories[0]?.defaultRoute || '/overview'
+	return storedPage || categoryConfig?.defaultRoute || defaultFallback
 }
