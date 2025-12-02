@@ -4,6 +4,7 @@
 import {
 	faChevronDown,
 	faCoins,
+	faPeopleLine,
 	faRightFromBracket,
 	faServer,
 	faTimes,
@@ -99,6 +100,26 @@ export const DefaultMenu = ({
 										className={localCategory === 'validators' ? 'active' : ''}
 									>
 										<FontAwesomeIcon icon={faServer} />
+									</BarButton>
+								</Tooltip>
+							</section>
+							<section>
+								<Tooltip
+									text={t('pools')}
+									side="right"
+									container={themeElementRef.current || undefined}
+									delayDuration={0}
+									fadeIn
+								>
+									<BarButton
+										type="button"
+										onClick={() => {
+											setLocalCategory('pools')
+											navigate(`/pools`)
+										}}
+										className={localCategory === 'pools' ? 'active' : ''}
+									>
+										<FontAwesomeIcon icon={faPeopleLine} transform="grow-3" />
 									</BarButton>
 								</Tooltip>
 							</section>
