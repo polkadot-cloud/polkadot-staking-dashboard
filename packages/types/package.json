@@ -13,10 +13,10 @@
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^7.1.0",
-		"dedot": "^0.18.5"
+		"dedot": "^0.18.7"
 	},
 	"devDependencies": {
-		"@dedot/chaintypes": "^0.185.0",
+		"@dedot/chaintypes": "^0.190.0",
 		"bignumber.js": "^9.3.1"
 	}
 }
