@@ -14,6 +14,7 @@ import CloudSVG from 'assets/icons/cloud.svg?react'
 import { getCategoryId } from 'config/util'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
+import { getActivePageForCategory } from 'hooks/useActivePages'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -51,6 +52,12 @@ export const DefaultMenu = ({
 
 	const transparent = modalStatus === 'open' || canvasStatus === 'open'
 
+	// Navigate to the last active page for a category
+	const navigateToCategory = (category: NavSection) => {
+		setLocalCategory(category)
+		navigate(getActivePageForCategory(category))
+	}
+
 	return (
 		<Page.Side.Default
 			open={false}
@@ -74,8 +81,7 @@ export const DefaultMenu = ({
 									<BarButton
 										type="button"
 										onClick={() => {
-											setLocalCategory('stake')
-											navigate(`/overview`)
+											navigateToCategory('stake')
 										}}
 										className={localCategory === 'stake' ? 'active' : ''}
 									>
@@ -94,8 +100,7 @@ export const DefaultMenu = ({
 									<BarButton
 										type="button"
 										onClick={() => {
-											setLocalCategory('validators')
-											navigate(`/validators`)
+											navigateToCategory('validators')
 										}}
 										className={localCategory === 'validators' ? 'active' : ''}
 									>
@@ -114,8 +119,7 @@ export const DefaultMenu = ({
 									<BarButton
 										type="button"
 										onClick={() => {
-											setLocalCategory('pools')
-											navigate(`/pools`)
+											navigateToCategory('pools')
 										}}
 										className={localCategory === 'pools' ? 'active' : ''}
 									>

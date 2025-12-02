@@ -4,6 +4,7 @@
 import { useOutsideAlerter } from '@w3ux/hooks'
 import classNames from 'classnames'
 import { PageCategories } from 'config/pages'
+import { getActivePageForCategory } from 'hooks/useActivePages'
 import { usePageFromHash } from 'hooks/usePageFromHash'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -43,7 +44,7 @@ export const CategoriesPopover = ({
 							onClick={() => {
 								setOpen(false)
 								setLocalCategory(category.key)
-								navigate(category.defaultRoute)
+								navigate(getActivePageForCategory(category.key))
 							}}
 							className={allClasses}
 							key={category.id}
