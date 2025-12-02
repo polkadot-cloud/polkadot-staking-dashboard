@@ -12,7 +12,7 @@ import { PoolStats } from './PoolStats'
 import { Roles } from './Roles'
 import { Status } from './Status'
 
-export const PoolOverview = () => {
+export const PoolOverview = ({ isPreloading }: { isPreloading?: boolean }) => {
 	const { getPoolRoles, activePool } = useActivePool()
 	const ROW_HEIGHT = 220
 
@@ -23,11 +23,11 @@ export const PoolOverview = () => {
 			<Page.Row>
 				<Page.RowSection secondary vLast>
 					<CardWrapper height={ROW_HEIGHT}>
-						<ManageBond />
+						<ManageBond isPreloading={isPreloading} />
 					</CardWrapper>
 				</Page.RowSection>
 				<Page.RowSection hLast>
-					<Status height={ROW_HEIGHT} />
+					<Status height={ROW_HEIGHT} isPreloading={isPreloading} />
 				</Page.RowSection>
 			</Page.Row>
 			{activePool !== undefined && (

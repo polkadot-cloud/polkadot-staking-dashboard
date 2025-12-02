@@ -11,7 +11,6 @@ export const StatusPreloader = ({ height }: { height: number }) => {
 				height: '1.5rem',
 				width: '30%',
 				marginBottom: '1rem',
-				opacity: 0.4,
 			}}
 		/>
 	)
@@ -20,7 +19,6 @@ export const StatusPreloader = ({ height }: { height: number }) => {
 			style={{
 				height: '2.25rem',
 				width: '60%',
-				opacity: 0.4,
 			}}
 		/>
 	)

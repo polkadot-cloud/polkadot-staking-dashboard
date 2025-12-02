@@ -15,14 +15,12 @@ export const Loading = () => {
 							height: '1.75rem',
 							width: '45%',
 							marginBottom: '0.6rem',
-							opacity: 0.4,
 						}}
 					/>
 					<Loader
 						style={{
 							height: '1rem',
 							width: '75%',
-							opacity: 0.4,
 						}}
 					/>
 				</Content>

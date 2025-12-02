@@ -24,6 +24,8 @@ export const Stake = () => {
 	let isPreloading = true
 	if (activeAddress) {
 		isPreloading = syncing || !accountSynced(activeAddress)
+	} else {
+		isPreloading = syncing
 	}
 
 	return (
@@ -36,7 +38,7 @@ export const Stake = () => {
 					<NextRewards isPreloading={isPreloading} />
 				</Stat.Row>
 			)}
-			{isBonding ? <Active /> : <PoolOverview />}
+			{isBonding ? <Active /> : <PoolOverview isPreloading={isPreloading} />}
 		</>
 	)
 }

@@ -9,7 +9,6 @@ export const CallToActionLoader = () => (
 			width: '100%',
 			height: '3.75rem',
 			borderRadius: '2rem',
-			opacity: 0.4,
 		}}
 	/>
 )

@@ -3,6 +3,7 @@
 
 export interface StatusProps {
 	height: number
+	isPreloading?: boolean
 }
 
 export interface MembershipStatusProps {

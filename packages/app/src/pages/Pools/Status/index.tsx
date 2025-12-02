@@ -6,6 +6,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { StatusPreloader } from 'library/StatusPreloader'
 import { Separator } from 'ui-core/base'
 import { MembershipStatus } from './MembershipStatus'
 import { NewMember } from './NewMember'
@@ -13,13 +14,17 @@ import { PoolStatus } from './PoolStatus'
 import { RewardsStatus } from './RewardsStatus'
 import type { StatusProps } from './types'
 
-export const Status = ({ height }: StatusProps) => {
+export const Status = ({ height, isPreloading }: StatusProps) => {
 	const { getPoolStatusSynced } = useSyncing()
 	const { activeAddress } = useActiveAccounts()
 	const { activePool, inPool } = useActivePool()
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	const syncing = !getPoolStatusSynced()
+
+	if (isPreloading) {
+		return <StatusPreloader height={height} />
+	}
 
 	return (
 		<CardWrapper
