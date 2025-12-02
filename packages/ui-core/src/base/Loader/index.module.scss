@@ -8,7 +8,7 @@
     to right,
     var(--shimmer-foreground) 0%,
     var(--shimmer-background) 20%,
-    var(--shimmer-foreground) 40%,
+    var(--shimmer-foreground) 70%,
     var(--shimmer-foreground) 100%
   );
   background-repeat: no-repeat;
@@ -20,7 +20,7 @@
   animation-timing-function: linear;
 
   opacity: 0.1;
-  border-radius: 0.75rem;
+  border-radius: 1.5rem;
   display: inline-block;
   position: relative;
 
@@ -29,7 +29,7 @@
       background-position: 0px 0;
     }
     100% {
-      background-position: 200% 0;
+      background-position: 290% 0;
     }
   }
 }
