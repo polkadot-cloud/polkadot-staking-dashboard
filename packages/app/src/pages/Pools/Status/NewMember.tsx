@@ -51,7 +51,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 	}
 
 	return (
-		<CallToActionWrapper style={{ marginTop: '1.45rem' }}>
+		<CallToActionWrapper style={{ marginTop: '1rem' }}>
 			{syncing ? (
 				<CallToActionLoader />
 			) : (
