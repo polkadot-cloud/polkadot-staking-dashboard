@@ -9,12 +9,13 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
-import { setProviderType } from 'global-bus'
+import { setAutoRpc, setProviderType } from 'global-bus'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
 import { ButtonTertiary } from 'ui-buttons'
+import { Checkbox } from 'ui-core/list'
 import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ProvidersPrompt } from './ProvidersPrompt'
@@ -30,7 +31,7 @@ export const Networks = () => {
 	const { isBraveBrowser } = useUi()
 	const { openPromptWith } = usePrompt()
 	const { network, switchNetwork } = useNetwork()
-	const { providerType, getRpcEndpoint } = useApi()
+	const { providerType, autoRpc, getRpcEndpoint } = useApi()
 	const { closeModal, setModalResize } = useOverlay().modal
 	const networkKey = network
 
@@ -112,13 +113,27 @@ export const Networks = () => {
 								)}
 							</ConnectionButton>
 							<div className="provider">
-								<p>{t('provider')}:</p>
-								<ButtonTertiary
-									text={getRpcEndpoint(network)}
-									onClick={() => openPromptWith(<ProvidersPrompt />)}
-									marginLeft
+								<Checkbox
+									checked={autoRpc}
+									onClick={() => {
+										setAutoRpc(!autoRpc)
+										switchNetwork(networkKey as NetworkId)
+										closeModal()
+									}}
 								/>
+								<p style={{ marginLeft: '0.5rem' }}>{t('autoRpc')}</p>
 							</div>
+							{!autoRpc && (
+								<div className="provider">
+									<p>{t('provider')}:</p>
+									<ButtonTertiary
+										text={getRpcEndpoint(network)}
+										onClick={() => openPromptWith(<ProvidersPrompt />)}
+										marginLeft
+										disabled={autoRpc}
+									/>
+								</div>
+							)}
 						</div>
 					</ConnectionsWrapper>
 				</ContentWrapper>

@@ -14,13 +14,13 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"@dedot/chain-specs": "^0.2.0",
+		"@dedot/chain-specs": "^0.4.0",
 		"@polkawatch/ddp-client": "^3.0.1",
 		"@substrate/connect-known-chains": "^1.10.2",
 		"assets": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*",
-		"vite": "^7.2.4"
+		"vite": "^7.2.6"
 	}
 }

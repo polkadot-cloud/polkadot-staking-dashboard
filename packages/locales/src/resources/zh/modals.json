@@ -24,6 +24,7 @@
 		"amountWillBeUnbonded": "{{bond}} {{unit}} 将被解绑",
 		"amountWillBeWithdrawn": "{{bond}} {{unit}} 将被取出",
 		"approveTransactionLedger": "在Ledger上批准交易",
+		"autoRpc": "自动RPC",
 		"available": "可用",
 		"back": "返回",
 		"beingDestroyed": "正在销毁此池。",

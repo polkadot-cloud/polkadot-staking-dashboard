@@ -38,11 +38,13 @@ export const FiatCurrencyKey = 'currency'
 export const NetworkKey = 'network'
 export const ExternalAccountsKey = 'external_accounts'
 export const ProviderTypeKey = 'providerType'
+export const AutoRpcKey = 'autoRpc'
 export const PoolSetupsKey = 'poolSetups'
 export const NominatorSetupsKey = 'nominatorSetups'
 export const AdvancedModeKey = 'advancedMode'
 export const ShowHelpKey = 'showHelp'
 export const ActiveProxiesKey = 'activeProxies'
+export const ActivePagesKey = 'activePages'
 
 export const rpcEndpointKey = (network: string) => `${network}RpcEndpoints`
 export const rpcHealthCacheKey = (network: string) => `${network}RpcHealth`

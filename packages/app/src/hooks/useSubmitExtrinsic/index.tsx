@@ -64,7 +64,7 @@ export const useSubmitExtrinsic = ({
 	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 	const {
-		balances: { transferableBalance },
+		balances: { balanceTxFees },
 	} = useAccountBalances(from)
 	const { unit, units } = getStakingChainData(network)
 
@@ -348,7 +348,7 @@ export const useSubmitExtrinsic = ({
 		}
 
 		const txFee = getTxSubmission(uid)?.fee || 0n
-		const hasInsufficientFunds = transferableBalance < txFee
+		const hasInsufficientFunds = balanceTxFees < txFee
 
 		let title = t('cancelled')
 		let subtitle = t('transactionCancelled')
