@@ -5,9 +5,7 @@ import { localStorageOrDefault } from '@w3ux/utils'
 import { PageCategories, PagesConfig } from 'config/pages'
 import { ActivePagesKey } from 'consts'
 import type { NavSection } from 'types'
-
-// Type for storing active pages per category
-export type ActivePagesRecord = Partial<Record<NavSection, string>>
+import type { ActivePagesRecord } from './types'
 
 // Default active pages (using default routes from PageCategories)
 const getDefaultActivePages = (): ActivePagesRecord => {
