@@ -15,7 +15,7 @@ import { MotionContainer } from 'library/List/MotionContainer'
 import { motion } from 'motion/react'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
 import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NominationStatus } from 'types'
 import { useOverlay } from 'ui-overlay'
@@ -101,8 +101,9 @@ export const NominationList = ({
 	)
 
 	// A unique key for the current page of items
-	const pageKey = JSON.stringify(
-		validators.map(({ address }, i) => `${i}${address}`),
+	const pageKey = useMemo(
+		() => JSON.stringify(validators.map(({ address }, i) => `${i}${address}`)),
+		[validators],
 	)
 
 	// If in modal, handle resize

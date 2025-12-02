@@ -176,11 +176,14 @@ export const ValidatorListInner = ({
 		}
 	}
 
-	// Get validator reward rates
-	const { rates } = useValidatorRewardRateBatch(
-		listItems.map(({ address }) => address),
-		pageKey,
+	// Memoize address array to prevent unnecessary hook calls
+	const validatorAddresses = useMemo(
+		() => listItems.map(({ address }) => address),
+		[listItems],
 	)
+
+	// Get validator reward rates
+	const { rates } = useValidatorRewardRateBatch(validatorAddresses, pageKey)
 
 	const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
 		const newValue = e.currentTarget.value

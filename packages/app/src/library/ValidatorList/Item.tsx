@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { memo } from 'react'
 import classNames from 'classnames'
 import { useList } from 'contexts/List'
 import { usePlugins } from 'contexts/Plugins'
@@ -24,7 +25,7 @@ import { EraStatus } from '../ListItem/Labels/EraStatus'
 import { Identity } from '../ListItem/Labels/Identity'
 import type { ItemProps } from './types'
 
-export const Item = ({
+const ItemComponent = ({
 	validator,
 	toggleFavorites,
 	displayFor,
@@ -114,3 +115,5 @@ export const Item = ({
 		</Wrapper>
 	)
 }
+
+export const Item = memo(ItemComponent)
