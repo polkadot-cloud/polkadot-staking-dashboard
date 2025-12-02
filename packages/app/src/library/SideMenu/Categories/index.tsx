@@ -9,15 +9,12 @@ import { usePageFromHash } from 'hooks/usePageFromHash'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import type { NavSection } from 'types'
 import classes from './index.module.scss'
 
 export const CategoriesPopover = ({
 	setOpen,
-	setLocalCategory,
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
-	setLocalCategory: Dispatch<SetStateAction<NavSection>>
 }) => {
 	const { t } = useTranslation('app')
 	const navigate = useNavigate()
@@ -43,7 +40,6 @@ export const CategoriesPopover = ({
 							type="button"
 							onClick={() => {
 								setOpen(false)
-								setLocalCategory(category.key)
 								navigate(getActivePageForCategory(category.key))
 							}}
 							className={allClasses}

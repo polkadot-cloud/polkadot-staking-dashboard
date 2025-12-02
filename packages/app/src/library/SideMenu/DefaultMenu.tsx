@@ -15,7 +15,7 @@ import { getCategoryId } from 'config/util'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import { getActivePageForCategory } from 'hooks/useActivePages'
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import type { NavSection } from 'types'
@@ -36,10 +36,8 @@ import {
 
 export const DefaultMenu = ({
 	localCategory,
-	setLocalCategory,
 }: {
 	localCategory: NavSection
-	setLocalCategory: Dispatch<SetStateAction<NavSection>>
 }) => {
 	const { t } = useTranslation('app')
 	const { advancedMode, setAdvancedMode, sideMenuMinimised } = useUi()
@@ -54,7 +52,6 @@ export const DefaultMenu = ({
 
 	// Navigate to the last active page for a category
 	const navigateToCategory = (category: NavSection) => {
-		setLocalCategory(category)
 		navigate(getActivePageForCategory(category))
 	}
 
@@ -159,12 +156,7 @@ export const DefaultMenu = ({
 							<Popover
 								open={openCategories}
 								portalContainer={themeElementRef.current || undefined}
-								content={
-									<CategoriesPopover
-										setOpen={setOpenCategories}
-										setLocalCategory={setLocalCategory}
-									/>
-								}
+								content={<CategoriesPopover setOpen={setOpenCategories} />}
 								onTriggerClick={() => {
 									setOpenCategories(!openCategories)
 								}}

@@ -34,10 +34,7 @@ export const SideMenu = () => {
 
 	return (
 		<>
-			<DefaultMenu
-				localCategory={localCategory}
-				setLocalCategory={setLocalCategory}
-			/>
+			<DefaultMenu localCategory={localCategory} />
 			<FloatingtMenu setLocalCategory={setLocalCategory} />
 		</>
 	)
