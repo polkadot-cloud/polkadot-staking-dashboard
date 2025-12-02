@@ -43,7 +43,7 @@ export const FavoriteValidatorsProvider = ({
 
 	// Adds a favorite validator
 	const addFavorite = (address: string) => {
-		const newFavorites = Object.assign(favorites)
+		const newFavorites = [...favorites]
 		if (!newFavorites.includes(address)) {
 			newFavorites.push(address)
 		}
@@ -54,7 +54,7 @@ export const FavoriteValidatorsProvider = ({
 
 	// Removes a favorite validator if they exist
 	const removeFavorite = (address: string) => {
-		const newFavorites = Object.assign(favorites).filter(
+		const newFavorites = [...favorites].filter(
 			(validator: string) => validator !== address,
 		)
 		localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites))
