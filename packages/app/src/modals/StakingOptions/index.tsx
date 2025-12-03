@@ -76,7 +76,6 @@ export const StakingOptions = () => {
 							type="button"
 							onClick={() => {
 								closeModal()
-								removeNominatorSetup(activeAddress)
 								openCanvas({
 									key: 'CreatePool',
 									options: {},
