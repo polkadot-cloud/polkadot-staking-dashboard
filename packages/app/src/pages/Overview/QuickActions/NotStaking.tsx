@@ -44,7 +44,7 @@ export const NotStaking = () => {
 		{
 			onClick: () => {
 				openModal({
-					key: 'StartNominating',
+					key: 'StakingOptions',
 					options: {},
 					size: 'xs',
 				})

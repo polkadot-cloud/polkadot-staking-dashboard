@@ -11,7 +11,7 @@ import { Padding } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import { ItemsWrapper, ItemWrapper } from './Wrappers'
 
-export const StartNominating = () => {
+export const StakingOptions = () => {
 	const { t } = useTranslation()
 	const { openCanvas } = useOverlay().canvas
 	const { closeModal, config } = useOverlay().modal

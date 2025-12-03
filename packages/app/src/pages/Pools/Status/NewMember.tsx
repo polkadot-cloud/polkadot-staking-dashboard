@@ -109,7 +109,7 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 										type="button"
 										onClick={() =>
 											openModal({
-												key: 'StartNominating',
+												key: 'StakingOptions',
 												size: 'xs',
 												options: { context: 'simple_other_options' },
 											})

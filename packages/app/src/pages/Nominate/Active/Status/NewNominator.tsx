@@ -50,7 +50,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 									onClick={() => {
 										onNewNominatorButtonPressedEvent(network)
 										openModal({
-											key: 'StartNominating',
+											key: 'StakingOptions',
 											options: {},
 											size: 'xs',
 										})

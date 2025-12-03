@@ -29,7 +29,7 @@ import { RewardCalculator } from 'modals/RewardCalculator'
 import { SelectCurrency } from 'modals/SelectCurrency'
 import { SelectLanguage } from 'modals/SelectLanguage'
 import { SetController } from 'modals/SetController'
-import { StartNominating } from 'modals/StartNominating'
+import { StakingOptions } from 'modals/StakingOptions'
 import { StopNominations } from 'modals/StopNominations'
 import { Unbond } from 'modals/Unbond'
 import { UnlockChunks } from 'modals/UnlockChunks'
@@ -65,7 +65,7 @@ export const Overlays = () => {
 				RewardCalculator,
 				SelectCurrency,
 				SetController,
-				StartNominating,
+				StakingOptions,
 				Plugins,
 				UnlockChunks,
 				Unstake,
