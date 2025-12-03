@@ -92,7 +92,7 @@ export const Main = ({
 					return true
 				}
 			}
-			if (uri === `${import.meta.env.BASE_URL}manage`) {
+			if (uri === `${import.meta.env.BASE_URL}stake`) {
 				if (inPool || isBonding) {
 					pages[i].bullet = 'accent'
 					return true
