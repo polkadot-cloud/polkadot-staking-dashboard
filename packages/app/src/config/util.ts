@@ -32,7 +32,7 @@ export const getPagesConfig = (
 		pagesConfig = pagesConfig.filter(({ advanced }) => !advanced)
 	}
 
-	// In Simple mode, handle Manage vs Pool/Nominate pages
+	// In Simple mode, handle active staking pages
 	if (!advancedMode) {
 		const { inPool = false, isBonding = false } = stakingState || {}
 
