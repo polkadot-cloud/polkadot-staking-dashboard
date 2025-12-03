@@ -20,12 +20,12 @@ export const StakingOptions = () => {
 		useNominatorSetups()
 
 	// Display options either for a nominator, or for a simple mode other options
-	const contexts = ['advanced_nominator', 'simple_other_options']
+	const contexts = ['nominator_only', 'simple_other_options']
 	const context = config.options?.context || contexts[0]
 
 	// Set title based on context
 	const title =
-		context === 'advanced_nominator'
+		context === 'nominator_only'
 			? t('startNominating', { ns: 'pages' })
 			: t('stakingOptions', { ns: 'app' })
 
