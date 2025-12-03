@@ -72,7 +72,7 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 							</div>
 						</div>
 					</section>
-					{advancedMode && (
+					{advancedMode && !showOtherOptions && (
 						<section>
 							<div className="buttons">
 								<div
