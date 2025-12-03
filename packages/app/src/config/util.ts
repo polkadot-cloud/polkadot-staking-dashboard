@@ -19,7 +19,7 @@ export const getPagesConfig = (
 
 	// Filter out operators page if not supported on network
 	let pagesConfig = !operatorsSupported
-		? PagesConfig.filter((page) => page.key === 'operators')
+		? PagesConfig.filter((page) => page.key !== 'operators')
 		: PagesConfig
 
 	// Filter by category if specified
@@ -39,7 +39,7 @@ export const getPagesConfig = (
 		// If user is both in a pool AND bonding, show both separate pages (no Stake page) Otherwise,
 		// show the unified Stake page and hide separate Pools/Nominate pages
 		if (inPool && isBonding) {
-			pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
+			pagesConfig = pagesConfig.filter((page) => page.key !== 'manage')
 		} else {
 			pagesConfig = pagesConfig.filter(
 				(page) => page.key !== 'pool' && page.key !== 'nominate',
@@ -47,7 +47,7 @@ export const getPagesConfig = (
 		}
 	} else {
 		// In Advanced mode, always hide the unified Stake page and show separate pages
-		pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
+		pagesConfig = pagesConfig.filter((page) => page.key !== 'manage')
 	}
 
 	return pagesConfig
