@@ -32,12 +32,12 @@ export const getPagesConfig = (
 		pagesConfig = pagesConfig.filter(({ advanced }) => !advanced)
 	}
 
-	// In Simple mode, handle Stake vs Pools/Nominate pages
+	// In Simple mode, handle Manage vs Pool/Nominate pages
 	if (!advancedMode) {
 		const { inPool = false, isBonding = false } = stakingState || {}
 
-		// If user is both in a pool AND bonding, show both separate pages (no Stake page) Otherwise,
-		// show the unified Stake page and hide separate Pools/Nominate pages
+		// If user is both in a pool AND bonding, show both separate pages (no Manage page)
+		// Otherwise, show the unified Manage page and hide separate Pool/Nominate pages
 		if (inPool && isBonding) {
 			pagesConfig = pagesConfig.filter((page) => page.key !== 'manage')
 		} else {
@@ -46,7 +46,7 @@ export const getPagesConfig = (
 			)
 		}
 	} else {
-		// In Advanced mode, always hide the unified Stake page and show separate pages
+		// In Advanced mode, always hide the unified Manage page and show separate pages
 		pagesConfig = pagesConfig.filter((page) => page.key !== 'manage')
 	}
 
