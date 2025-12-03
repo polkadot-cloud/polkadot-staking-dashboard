@@ -12,7 +12,7 @@ import { MinJoinBond } from 'pages/Pools/Stats/MinJoinBond'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 
-export const Stake = () => {
+export const Manage = () => {
 	const { t } = useTranslation('pages')
 	const { isBonding } = useStaking()
 	const { activeAddress } = useActiveAccounts()

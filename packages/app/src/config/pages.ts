@@ -9,13 +9,13 @@ import {
 	faUserGear,
 	faUsers,
 } from '@fortawesome/free-solid-svg-icons'
+import { Manage } from 'pages/Manage'
 import { Nominate } from 'pages/Nominate'
 import { Operators } from 'pages/Operators'
 import { Overview } from 'pages/Overview'
 import { Pools } from 'pages/Pools'
 import { PoolsList } from 'pages/PoolsList'
 import { Rewards } from 'pages/Rewards'
-import { Stake } from 'pages/Stake'
 import { Validators } from 'pages/Validators'
 import type { PageCategoryItems, PagesConfigItems } from 'types'
 
@@ -55,7 +55,7 @@ export const PagesConfig: PagesConfigItems = [
 		key: 'manage',
 		uri: `${import.meta.env.BASE_URL}manage`,
 		hash: '/manage',
-		Entry: Stake,
+		Entry: Manage,
 		faIcon: faUserGear,
 		advanced: false,
 	},
