@@ -10,7 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
-import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useUi } from 'contexts/UI'
 import { useTranslation } from 'react-i18next'
 import { QuickAction } from 'ui-buttons'
@@ -22,7 +21,6 @@ export const NotStaking = () => {
 	const { t } = useTranslation('pages')
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
-	const { setNominatorSetup, generateOptimalSetup } = useNominatorSetups()
 
 	const actions: ButtonQuickActionProps[] = [
 		{
@@ -45,23 +43,11 @@ export const NotStaking = () => {
 		},
 		{
 			onClick: () => {
-				if (!advancedMode) {
-					// Set optimal nominator setup here, ready for canvas to display summary
-					setNominatorSetup(generateOptimalSetup(), true, 4)
-					openCanvas({
-						key: 'NominatorSetup',
-						options: {
-							simple: true,
-						},
-						size: 'xl',
-					})
-				} else {
-					openModal({
-						key: 'StartNominating',
-						options: {},
-						size: 'xs',
-					})
-				}
+				openModal({
+					key: 'StartNominating',
+					options: {},
+					size: 'xs',
+				})
 			},
 			disabled: false,
 			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faChartLine} />,
