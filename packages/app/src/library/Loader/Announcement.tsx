@@ -4,5 +4,5 @@
 import { Loader } from 'ui-core/base'
 
 export const Announcement = () => (
-	<Loader style={{ width: '100%', height: 55, margin: '0.5rem 0' }} />
+	<Loader style={{ width: '100%', height: 55, margin: '0.35rem 0' }} />
 )
