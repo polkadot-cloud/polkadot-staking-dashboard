@@ -27,7 +27,7 @@ export const ItemWrapper = styled.button`
   }
 
   > svg {
-    margin: 1rem 0;
+    margin: 0 0 1rem 0;
   }
 
   > h2 {

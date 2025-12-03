@@ -108,7 +108,11 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 									<button
 										type="button"
 										onClick={() =>
-											openModal({ key: 'StartNominating', size: 'xs' })
+											openModal({
+												key: 'StartNominating',
+												size: 'xs',
+												options: { context: 'simple_other_options' },
+											})
 										}
 									>
 										{t('otherOptions', { ns: 'app' })}
