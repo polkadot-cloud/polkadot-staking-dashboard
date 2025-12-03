@@ -30,7 +30,7 @@ export const Stake = () => {
 
 	return (
 		<>
-			<Page.Title title={t('stake')} />
+			<Page.Title title={t('manage')} />
 			{!isBonding && (
 				<Stat.Row>
 					<AverageRewardRate isPreloading={isPreloading} />

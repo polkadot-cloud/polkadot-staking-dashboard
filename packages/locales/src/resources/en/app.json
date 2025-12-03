@@ -314,6 +314,7 @@
 		"signer": "Signer",
 		"signing": "Signing",
 		"stake": "Stake",
+		"manage": "Manage",
 		"stakingOptions": "Other Staking Options",
 		"startAgain": "Start Again",
 		"submitTransaction": "Ready to submit transaction.",

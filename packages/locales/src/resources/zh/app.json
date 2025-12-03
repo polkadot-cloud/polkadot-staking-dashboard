@@ -310,6 +310,7 @@
 		"signer": "签名账户",
 		"signing": "签署中",
 		"stake": "抵押",
+		"manage": "管理",
 		"stakingOptions": "其他质押选项",
 		"startAgain": "重新开始",
 		"submitTransaction": "准备提交交易",

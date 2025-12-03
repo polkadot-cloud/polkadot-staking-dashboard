@@ -3,7 +3,6 @@
 
 import {
 	faChartSimple,
-	faCoins,
 	faHome,
 	faMagnifyingGlass,
 	faTableList,
@@ -53,11 +52,11 @@ export const PagesConfig: PagesConfigItems = [
 	},
 	{
 		category: 2,
-		key: 'stake',
-		uri: `${import.meta.env.BASE_URL}stake`,
-		hash: '/stake',
+		key: 'manage',
+		uri: `${import.meta.env.BASE_URL}manage`,
+		hash: '/manage',
 		Entry: Stake,
-		faIcon: faCoins,
+		faIcon: faUserGear,
 		advanced: false,
 	},
 	{

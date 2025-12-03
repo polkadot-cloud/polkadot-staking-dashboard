@@ -63,7 +63,7 @@ export const useAccountSwitchNavigation = () => {
 		if (!advancedMode) {
 			// If on stake page and account is both in pool AND nominating, redirect to pool (since
 			// separate pages would be shown for users who are both pooling and nominating)
-			if (pathname === '/stake' && accountInPool && accountNominating) {
+			if (pathname === '/manage' && accountInPool && accountNominating) {
 				navigate('/pool')
 				return
 			}
@@ -74,7 +74,7 @@ export const useAccountSwitchNavigation = () => {
 				(pathname === '/pool' || pathname === '/nominate') &&
 				!(accountInPool && accountNominating)
 			) {
-				navigate('/stake')
+				navigate('/manage')
 				return
 			}
 		}
