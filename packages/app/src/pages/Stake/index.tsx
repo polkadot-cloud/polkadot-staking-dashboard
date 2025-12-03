@@ -12,7 +12,7 @@ import { MinJoinBond } from 'pages/Pools/Stats/MinJoinBond'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 
-export const Manage = () => {
+export const Stake = () => {
 	const { t } = useTranslation('pages')
 	const { isBonding } = useStaking()
 	const { activeAddress } = useActiveAccounts()
@@ -30,7 +30,7 @@ export const Manage = () => {
 
 	return (
 		<>
-			<Page.Title title={t('manage')} />
+			<Page.Title title={t('stake')} />
 			{!isBonding && (
 				<Stat.Row>
 					<AverageRewardRate isPreloading={isPreloading} />
