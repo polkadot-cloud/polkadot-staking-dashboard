@@ -3,8 +3,8 @@
 
 import {
 	faChartSimple,
+	faCoins,
 	faHome,
-	faLineChart,
 	faMagnifyingGlass,
 	faTableList,
 	faUserGear,
@@ -57,7 +57,7 @@ export const PagesConfig: PagesConfigItems = [
 		uri: `${import.meta.env.BASE_URL}stake`,
 		hash: '/stake',
 		Entry: Stake,
-		faIcon: faLineChart,
+		faIcon: faCoins,
 		advanced: false,
 	},
 	{
