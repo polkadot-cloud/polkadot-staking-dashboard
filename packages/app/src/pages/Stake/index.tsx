@@ -38,7 +38,11 @@ export const Stake = () => {
 					<NextRewards isPreloading={isPreloading} />
 				</Stat.Row>
 			)}
-			{isBonding ? <Active /> : <PoolOverview isPreloading={isPreloading} />}
+			{isBonding ? (
+				<Active />
+			) : (
+				<PoolOverview isPreloading={isPreloading} showOtherOptions={true} />
+			)}
 		</>
 	)
 }

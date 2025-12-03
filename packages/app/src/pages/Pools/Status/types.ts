@@ -4,6 +4,7 @@
 export interface StatusProps {
 	height: number
 	isPreloading?: boolean
+	showOtherOptions?: boolean
 }
 
 export interface MembershipStatusProps {
@@ -13,4 +14,5 @@ export interface MembershipStatusProps {
 
 export interface NewMemberProps {
 	syncing: boolean
+	showOtherOptions?: boolean
 }

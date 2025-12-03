@@ -18,7 +18,7 @@ import { useOverlay } from 'ui-overlay'
 import type { NewMemberProps } from './types'
 import { useStatusButtons } from './useStatusButtons'
 
-export const NewMember = ({ syncing }: NewMemberProps) => {
+export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const { network } = useNetwork()
@@ -96,6 +96,22 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 								<div className={`button standalone secondary`}>
 									<button type="button" onClick={() => navigate('/pools')}>
 										{t('browsePools', { ns: 'pages' })}
+									</button>
+								</div>
+							</div>
+						</section>
+					)}
+					{showOtherOptions && (
+						<section>
+							<div className="buttons">
+								<div className={`button standalone secondary`}>
+									<button
+										type="button"
+										onClick={() =>
+											openModal({ key: 'StartNominating', size: 'xs' })
+										}
+									>
+										{t('otherOptions', { ns: 'app' })}
 									</button>
 								</div>
 							</div>

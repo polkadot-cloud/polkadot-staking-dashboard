@@ -14,7 +14,11 @@ import { PoolStatus } from './PoolStatus'
 import { RewardsStatus } from './RewardsStatus'
 import type { StatusProps } from './types'
 
-export const Status = ({ height, isPreloading }: StatusProps) => {
+export const Status = ({
+	height,
+	isPreloading,
+	showOtherOptions,
+}: StatusProps) => {
 	const { getPoolStatusSynced } = useSyncing()
 	const { activeAddress } = useActiveAccounts()
 	const { activePool, inPool } = useActivePool()
@@ -34,18 +38,14 @@ export const Status = ({ height, isPreloading }: StatusProps) => {
 			<MembershipStatus />
 			<Separator />
 			<RewardsStatus dimmed={inPool === null} />
-			{!syncing ? (
-				activePool && inPool ? (
-					<>
-						<Separator />
-						<PoolStatus />
-					</>
-				) : (
-					!inPool &&
-					!isReadOnlyAccount(activeAddress) && <NewMember syncing={syncing} />
-				)
-			) : (
-				<NewMember syncing={syncing} />
+			{!syncing && activePool && inPool && (
+				<>
+					<Separator />
+					<PoolStatus />
+				</>
+			)}
+			{(syncing || (!inPool && !isReadOnlyAccount(activeAddress))) && (
+				<NewMember syncing={syncing} showOtherOptions={showOtherOptions} />
 			)}
 		</CardWrapper>
 	)
