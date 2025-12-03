@@ -59,7 +59,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 											openModal({
 												key: 'StartNominating',
 												options: {},
-												size: 'lg',
+												size: 'xs',
 											})
 										} else {
 											// Set optimal nominator setup here, ready for canvas to display summary

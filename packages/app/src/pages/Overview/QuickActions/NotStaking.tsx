@@ -59,7 +59,7 @@ export const NotStaking = () => {
 					openModal({
 						key: 'StartNominating',
 						options: {},
-						size: 'lg',
+						size: 'xs',
 					})
 				}
 			},
