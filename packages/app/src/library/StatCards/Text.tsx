@@ -5,6 +5,7 @@ import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Stat } from 'ui-core/base'
 import type { TextProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const Text = ({
 	label,
@@ -14,26 +15,25 @@ export const Text = ({
 	isPreloading,
 }: TextProps) => {
 	const { openHelpTooltip } = useHelp()
-	if (isPreloading) {
-		return <Stat.Loading />
-	}
 	return (
-		<Stat.Card>
-			<div>
-				<Stat.Content>
-					<Stat.Title primary={primary}>{value}</Stat.Title>
-					<Stat.Subtitle>
-						{label}
-						{helpKey !== undefined ? (
-							<ButtonHelpTooltip
-								marginLeft
-								definition={helpKey}
-								openHelp={openHelpTooltip}
-							/>
-						) : null}
-					</Stat.Subtitle>
-				</Stat.Content>
-			</div>
-		</Stat.Card>
+		<Wrapper isPreloading={isPreloading}>
+			<Stat.Card>
+				<div>
+					<Stat.Content>
+						<Stat.Title primary={primary}>{value}</Stat.Title>
+						<Stat.Subtitle>
+							{label}
+							{helpKey !== undefined ? (
+								<ButtonHelpTooltip
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
+							) : null}
+						</Stat.Subtitle>
+					</Stat.Content>
+				</div>
+			</Stat.Card>
+		</Wrapper>
 	)
 }

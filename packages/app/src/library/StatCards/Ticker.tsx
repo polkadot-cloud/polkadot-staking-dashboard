@@ -8,6 +8,7 @@ import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Stat } from 'ui-core/base'
 import type { TickerProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const Ticker = ({
 	label,
@@ -27,44 +28,43 @@ export const Ticker = ({
 				? 'var(--status-danger-color)'
 				: 'var(--text-color-secondary)'
 
-	if (isPreloading) {
-		return <Stat.Loading />
-	}
 	return (
-		<Stat.Card>
-			<div>
-				<Stat.Graphic>
-					<FontAwesomeIcon
-						icon={faArrowUpRightDots}
-						transform="grow-8"
-						color="var(--accent-color-primary)"
-					/>
-				</Stat.Graphic>
-				<Stat.Content>
-					<Stat.Title primary={primary}>
-						<Odometer value={value} />
-						{unit}
-						<label
-							style={{
-								color: tickerColor,
-							}}
-						>
-							{direction === 'up' && '+'}
-							{changePercent}%
-						</label>
-					</Stat.Title>
-					<Stat.Subtitle>
-						{label}
-						{helpKey !== undefined ? (
-							<ButtonHelpTooltip
-								marginLeft
-								definition={helpKey}
-								openHelp={openHelpTooltip}
-							/>
-						) : null}
-					</Stat.Subtitle>
-				</Stat.Content>
-			</div>
-		</Stat.Card>
+		<Wrapper isPreloading={isPreloading}>
+			<Stat.Card>
+				<div>
+					<Stat.Graphic>
+						<FontAwesomeIcon
+							icon={faArrowUpRightDots}
+							transform="grow-8"
+							color="var(--accent-color-primary)"
+						/>
+					</Stat.Graphic>
+					<Stat.Content>
+						<Stat.Title primary={primary}>
+							<Odometer value={value} />
+							{unit}
+							<label
+								style={{
+									color: tickerColor,
+								}}
+							>
+								{direction === 'up' && '+'}
+								{changePercent}%
+							</label>
+						</Stat.Title>
+						<Stat.Subtitle>
+							{label}
+							{helpKey !== undefined ? (
+								<ButtonHelpTooltip
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
+							) : null}
+						</Stat.Subtitle>
+					</Stat.Content>
+				</div>
+			</Stat.Card>
+		</Wrapper>
 	)
 }

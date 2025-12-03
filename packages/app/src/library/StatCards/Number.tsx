@@ -7,6 +7,7 @@ import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Stat } from 'ui-core/base'
 import type { NumberProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const Number = ({
 	label,
@@ -17,33 +18,32 @@ export const Number = ({
 	isPreloading = false,
 }: NumberProps) => {
 	const { openHelpTooltip } = useHelp()
-	if (isPreloading) {
-		return <Stat.Loading />
-	}
 	return (
-		<Stat.Card>
-			<div>
-				<Stat.Content>
-					<Stat.Title>
-						<Odometer
-							value={new BigNumber(value)
-								.decimalPlaces(decimals || 0)
-								.toFormat()}
-						/>
-						{unit || null}
-					</Stat.Title>
-					<Stat.Subtitle>
-						{label}
-						{helpKey !== undefined ? (
-							<ButtonHelpTooltip
-								marginLeft
-								definition={helpKey}
-								openHelp={openHelpTooltip}
+		<Wrapper isPreloading={isPreloading}>
+			<Stat.Card>
+				<div>
+					<Stat.Content>
+						<Stat.Title>
+							<Odometer
+								value={new BigNumber(value)
+									.decimalPlaces(decimals || 0)
+									.toFormat()}
 							/>
-						) : null}
-					</Stat.Subtitle>
-				</Stat.Content>
-			</div>
-		</Stat.Card>
+							{unit || null}
+						</Stat.Title>
+						<Stat.Subtitle>
+							{label}
+							{helpKey !== undefined ? (
+								<ButtonHelpTooltip
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
+							) : null}
+						</Stat.Subtitle>
+					</Stat.Content>
+				</div>
+			</Stat.Card>
+		</Wrapper>
 	)
 }
