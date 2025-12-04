@@ -45,7 +45,7 @@ export const NotStaking = () => {
 			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faUsers} />,
 			label: t('joinPool'),
 		},
-		...(hasEnoughToNominate
+		...(hasEnoughToNominate || advancedMode
 			? [
 					{
 						onClick: () => {
