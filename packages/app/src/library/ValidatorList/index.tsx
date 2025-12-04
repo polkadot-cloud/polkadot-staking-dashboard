@@ -21,7 +21,10 @@ import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
 import { motion } from 'motion/react'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
-import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
+import type {
+	ValidatorEraPoints,
+	ValidatorEraPointsBatch,
+} from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,6 +35,9 @@ import { FilterBadges } from './Filters/FilterBadges'
 import { FilterHeaders } from './Filters/FilterHeaders'
 import { Item } from './Item'
 import type { ValidatorListProps } from './types'
+
+// Constant empty array to ensure stable reference for React.memo optimization
+const EMPTY_ERA_POINTS: ValidatorEraPoints[] = []
 
 export const ValidatorListInner = ({
 	// Default list values.
@@ -386,7 +392,9 @@ export const ValidatorListInner = ({
 									toggleFavorites={toggleFavorites}
 									bondFor={bondFor}
 									displayFor={displayFor}
-									eraPoints={performanceMap[validator.address] || []}
+									eraPoints={
+										performanceMap[validator.address] ?? EMPTY_ERA_POINTS
+									}
 									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
 									onRemove={onRemove}
