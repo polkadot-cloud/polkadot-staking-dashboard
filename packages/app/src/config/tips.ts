@@ -45,12 +45,7 @@ export const TipsConfigSimple: TipConfig[] = [
 	{
 		id: 'reviewingPayouts',
 		s: 8,
-		page: 'payouts',
-	},
-	{
-		id: 'understandingValidatorPerformance',
-		s: 8,
-		page: 'validators',
+		page: 'rewards',
 	},
 ]
 
@@ -96,7 +91,7 @@ export const TipsConfigAdvanced: TipConfig[] = [
 	{
 		id: 'reviewingPayouts',
 		s: 8,
-		page: 'payouts',
+		page: 'rewards',
 	},
 	{
 		id: 'understandingValidatorPerformance',
