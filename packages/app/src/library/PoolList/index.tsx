@@ -59,7 +59,7 @@ export const PoolList = ({
 
 	// Carry out filter of pool list.
 	const filterPoolList = () => {
-		let filteredPools = Object.assign(poolsDefault)
+		let filteredPools = [...poolsDefault]
 		filteredPools = applyFilter(includes, excludes, filteredPools)
 		if (searchTerm) {
 			filteredPools = poolSearchFilter(filteredPools, searchTerm)
@@ -99,7 +99,7 @@ export const PoolList = ({
 	const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
 		const newValue = e.currentTarget.value
 
-		let filteredPools: BondedPool[] = Object.assign(poolsDefault)
+		let filteredPools: BondedPool[] = [...poolsDefault]
 		filteredPools = applyFilter(includes, excludes, filteredPools)
 		filteredPools = poolSearchFilter(filteredPools, newValue)
 

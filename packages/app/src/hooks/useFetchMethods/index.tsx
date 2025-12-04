@@ -66,7 +66,7 @@ export const useFetchMethods = () => {
 	}
 
 	const fetchLowCommission = () => {
-		let filtered = Object.assign(getValidators())
+		let filtered = [...getValidators()]
 
 		// filter validators to find active candidates
 		filtered = applyFilter(
@@ -95,8 +95,8 @@ export const useFetchMethods = () => {
 	}
 
 	const fetchOptimal = () => {
-		let active = Object.assign(getValidators())
-		let waiting = Object.assign(getValidators())
+		let active = [...getValidators()]
+		let waiting = [...getValidators()]
 
 		// filter validators to find waiting candidates
 		waiting = applyFilter(
@@ -136,7 +136,7 @@ export const useFetchMethods = () => {
 	}
 
 	const available = (nominations: Validator[]) => {
-		const all = Object.assign(getValidators())
+		const all = [...getValidators()]
 
 		const parachainActive =
 			applyFilter(

@@ -147,7 +147,7 @@ export const ValidatorListInner = ({
 
 	// handle filter / order update
 	const handleValidatorsFilterUpdate = (
-		filteredValidators = Object.assign(validatorsDefault),
+		filteredValidators = [...validatorsDefault],
 	) => {
 		if (allowFilters) {
 			if (order !== 'default') {
@@ -197,7 +197,7 @@ export const ValidatorListInner = ({
 	const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
 		const newValue = e.currentTarget.value
 
-		let filteredValidators = Object.assign(validatorsDefault)
+		let filteredValidators = [...validatorsDefault]
 		if (order !== 'default') {
 			filteredValidators = applyOrder(order, filteredValidators)
 		}
