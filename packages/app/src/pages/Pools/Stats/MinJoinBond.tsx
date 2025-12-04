@@ -8,7 +8,7 @@ import { useNetwork } from 'contexts/Network'
 import { Number } from 'library/StatCards/Number'
 import { useTranslation } from 'react-i18next'
 
-export const MinJoinBond = () => {
+export const MinJoinBond = ({ isPreloading }: { isPreloading?: boolean }) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { minJoinBond } = useApi().poolsConfig
@@ -19,6 +19,7 @@ export const MinJoinBond = () => {
 		decimals: 3,
 		unit: ` ${unit}`,
 		helpKey: 'Minimum To Join Pool',
+		isPreloading,
 	}
 	return <Number {...params} />
 }

@@ -38,7 +38,6 @@ export const CallToActionWrapper = styled.div`
       flex-grow: 1;
     }
     &:nth-child(2) {
-      flex: 1;
       @media (min-width: 651px) {
         padding-left: 1rem;
       }

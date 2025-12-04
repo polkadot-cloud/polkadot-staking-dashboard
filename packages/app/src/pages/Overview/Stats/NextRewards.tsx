@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatTimeleft } from 'utils'
 
-export const NextRewards = () => {
+export const NextRewards = ({ isPreloading }: { isPreloading?: boolean }) => {
 	const { t, i18n } = useTranslation('pages')
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
@@ -40,6 +40,7 @@ export const NextRewards = () => {
 			value2: activeEra.index === 0 ? 100 : timeleftResult.percentRemaining,
 		},
 		tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
+		isPreloading,
 	}
 	return <Timeleft {...params} />
 }

@@ -6,7 +6,11 @@ import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Text } from 'library/StatCards/Text'
 import { useTranslation } from 'react-i18next'
 
-export const AverageRewardRate = () => {
+export const AverageRewardRate = ({
+	isPreloading,
+}: {
+	isPreloading?: boolean
+}) => {
 	const { t } = useTranslation('pages')
 	const { getAverageRewardRate } = useAverageRewardRate()
 
@@ -16,6 +20,7 @@ export const AverageRewardRate = () => {
 		helpKey: 'Average Reward Rate',
 
 		primary: true,
+		isPreloading,
 	}
 
 	return <Text {...params} />

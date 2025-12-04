@@ -10,6 +10,8 @@ import { getPagesConfig } from 'config/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { getUnixTime } from 'date-fns'
 import {
@@ -46,6 +48,8 @@ import { Page } from 'ui-core/base'
 const RouterInner = () => {
 	const navigate = useNavigate()
 	const { network } = useNetwork()
+	const { inPool } = useActivePool()
+	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { pathname, search } = useLocation()
 	const { activeAddress } = useActiveAccounts()
@@ -117,15 +121,16 @@ const RouterInner = () => {
 							<Headers />
 							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
 								<Routes>
-									{getPagesConfig(network, null, advancedMode).map(
-										(page, i) => (
-											<Route
-												key={`main_interface_page_${i}`}
-												path={page.hash}
-												element={<PageWithTitle page={page} />}
-											/>
-										),
-									)}
+									{getPagesConfig(network, null, advancedMode, {
+										inPool,
+										isBonding,
+									}).map((page, i) => (
+										<Route
+											key={`main_interface_page_${i}`}
+											path={page.hash}
+											element={<PageWithTitle page={page} />}
+										/>
+									))}
 									<Route
 										key="main_interface_navigate"
 										path="*"
