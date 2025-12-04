@@ -211,7 +211,7 @@ export const GenerateNominations = ({
 				setMethod('manual')
 			}
 		}
-	}, [activeAddress, defaultNominations, defaultNominationsCount])
+	}, [activeAddress, nominationsString, defaultNominationsString, defaultNominationsCount])
 
 	// Refetch if fetching is triggered
 	useEffect(() => {
