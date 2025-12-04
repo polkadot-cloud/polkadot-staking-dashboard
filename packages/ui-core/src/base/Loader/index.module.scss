@@ -1,15 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
 
-export const LoaderWrapper = styled.div`
+.loader {
   background: var(--shimmer-foreground);
   background-image: linear-gradient(
     to right,
     var(--shimmer-foreground) 0%,
     var(--shimmer-background) 20%,
-    var(--shimmer-foreground) 40%,
+    var(--shimmer-foreground) 70%,
     var(--shimmer-foreground) 100%
   );
   background-repeat: no-repeat;
@@ -20,8 +19,8 @@ export const LoaderWrapper = styled.div`
   animation-name: shimmer-loader;
   animation-timing-function: linear;
 
-  opacity: 0.1;
-  border-radius: 0.75rem;
+  opacity: 0.4;
+  border-radius: 1.5rem;
   display: inline-block;
   position: relative;
 
@@ -30,7 +29,7 @@ export const LoaderWrapper = styled.div`
       background-position: 0px 0;
     }
     100% {
-      background-position: 200% 0;
+      background-position: 290% 0;
     }
   }
-`
+}

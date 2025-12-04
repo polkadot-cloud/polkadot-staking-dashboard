@@ -4,6 +4,7 @@
 import { Button, Card } from './Card'
 import { Content } from './Content'
 import { Graphic } from './Graphic'
+import { Loading } from './Loading'
 import { Row } from './Row'
 import { Subtitle } from './Subtitle'
 import { Title } from './Title'
@@ -18,6 +19,7 @@ export const Stat = {
 	Subtitle,
 	Title,
 	Total,
+	Loading,
 }
 
 export default Stat

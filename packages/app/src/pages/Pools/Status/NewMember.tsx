@@ -18,7 +18,7 @@ import { useOverlay } from 'ui-overlay'
 import type { NewMemberProps } from './types'
 import { useStatusButtons } from './useStatusButtons'
 
-export const NewMember = ({ syncing }: NewMemberProps) => {
+export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const { network } = useNetwork()
@@ -51,7 +51,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 	}
 
 	return (
-		<CallToActionWrapper>
+		<CallToActionWrapper style={{ marginTop: '1rem' }}>
 			{syncing ? (
 				<CallToActionLoader />
 			) : (
@@ -72,7 +72,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 							</div>
 						</div>
 					</section>
-					{advancedMode && (
+					{advancedMode && !showOtherOptions && (
 						<section>
 							<div className="buttons">
 								<div
@@ -96,6 +96,26 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 								<div className={`button standalone secondary`}>
 									<button type="button" onClick={() => navigate('/pools')}>
 										{t('browsePools', { ns: 'pages' })}
+									</button>
+								</div>
+							</div>
+						</section>
+					)}
+					{showOtherOptions && (
+						<section>
+							<div className="buttons">
+								<div className={`button standalone secondary`}>
+									<button
+										type="button"
+										onClick={() =>
+											openModal({
+												key: 'StakingOptions',
+												size: 'xs',
+												options: { context: 'simple_other_options' },
+											})
+										}
+									>
+										{t('otherOptions', { ns: 'app' })}
 									</button>
 								</div>
 							</div>

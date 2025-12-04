@@ -7,7 +7,49 @@ interface TipConfig {
 	page?: string
 }
 
-export const TipsConfig: TipConfig[] = [
+export const TipsConfigSimple: TipConfig[] = [
+	{
+		id: 'connectExtensions',
+		s: 1,
+	},
+	{
+		id: 'recommendedNominator',
+		s: 2,
+		page: 'stake',
+	},
+	{
+		id: 'recommendedJoinPool',
+		s: 3,
+		page: 'stake',
+	},
+	{
+		id: 'managingNominations',
+		s: 5,
+		page: 'stake',
+	},
+	{
+		id: 'monitoringPool',
+		s: 6,
+		page: 'stake',
+	},
+	{
+		id: 'joinAnotherPool',
+		s: 6,
+		page: 'stake',
+	},
+	{
+		id: 'keepPoolNominating',
+		s: 7,
+		page: 'stake',
+	},
+	{
+		id: 'reviewingPayouts',
+		s: 8,
+		page: 'rewards',
+	},
+]
+
+export const TipsConfigAdvanced: TipConfig[] = [
 	{
 		id: 'connectExtensions',
 		s: 1,
@@ -49,7 +91,7 @@ export const TipsConfig: TipConfig[] = [
 	{
 		id: 'reviewingPayouts',
 		s: 8,
-		page: 'payouts',
+		page: 'rewards',
 	},
 	{
 		id: 'understandingValidatorPerformance',

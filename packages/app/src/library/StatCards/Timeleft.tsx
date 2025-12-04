@@ -7,6 +7,7 @@ import { Countdown } from 'library/Countdown'
 import { Countdown as CountdownWrapper, Stat } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
 import type { TimeleftProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const Timeleft = ({
 	label,
@@ -14,36 +15,38 @@ export const Timeleft = ({
 	graph,
 	tooltip,
 	helpKey,
+	isPreloading,
 }: TimeleftProps) => {
 	const { openHelpTooltip } = useHelp()
-
 	return (
-		<Stat.Card>
-			<div>
-				<Stat.Graphic>
-					<Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
-				</Stat.Graphic>
-				{tooltip && (
-					<label>
-						<h3>{tooltip}</h3>
-					</label>
-				)}
-				<Stat.Content>
-					<CountdownWrapper>
-						<Countdown timeleft={timeleft} />
-					</CountdownWrapper>
-					<Stat.Subtitle>
-						{label}{' '}
-						{helpKey !== undefined ? (
-							<ButtonHelpTooltip
-								marginLeft
-								definition={helpKey}
-								openHelp={openHelpTooltip}
-							/>
-						) : null}
-					</Stat.Subtitle>
-				</Stat.Content>
-			</div>
-		</Stat.Card>
+		<Wrapper isPreloading={isPreloading}>
+			<Stat.Card>
+				<div>
+					<Stat.Graphic>
+						<Pie value={Number(graph.value1.toFixed(1))} size="3.2rem" />
+					</Stat.Graphic>
+					{tooltip && (
+						<label>
+							<h3>{tooltip}</h3>
+						</label>
+					)}
+					<Stat.Content>
+						<CountdownWrapper>
+							<Countdown timeleft={timeleft} />
+						</CountdownWrapper>
+						<Stat.Subtitle>
+							{label}{' '}
+							{helpKey !== undefined ? (
+								<ButtonHelpTooltip
+									marginLeft
+									definition={helpKey}
+									openHelp={openHelpTooltip}
+								/>
+							) : null}
+						</Stat.Subtitle>
+					</Stat.Content>
+				</div>
+			</Stat.Card>
+		</Wrapper>
 	)
 }
