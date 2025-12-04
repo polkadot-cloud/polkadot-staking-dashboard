@@ -7,10 +7,7 @@ export const ItemsWrapper = styled.div`
   display: flex;
   width: 100%;
   margin-bottom: 1rem;
-
-  @media (max-width: 800px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `
 
 export const ItemWrapper = styled.button`
@@ -30,7 +27,7 @@ export const ItemWrapper = styled.button`
   }
 
   > svg {
-    margin: 1rem 0;
+    margin: 0 0 1rem 0;
   }
 
   > h2 {
