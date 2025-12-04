@@ -214,8 +214,7 @@ export const GenerateNominations = ({
 	}, [
 		activeAddress,
 		defaultNominations,
-		nominationsString,
-		defaultNominationsString,
+		defaultNominationsCount,
 	])
 
 	// Refetch if fetching is triggered
