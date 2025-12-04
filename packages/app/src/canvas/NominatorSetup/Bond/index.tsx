@@ -1,11 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getStakingChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useTxMeta } from 'contexts/TxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
@@ -26,13 +23,11 @@ export const Bond = ({
 	handleBondValid?: (valid: boolean) => void
 }) => {
 	const { t } = useTranslation('pages')
-	const { network } = useNetwork()
 	const { getTxSubmissionByTag } = useTxMeta()
 	const { activeAddress } = useActiveAccounts()
 	const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 	const setup = getNominatorSetup(activeAddress)
 	const { progress } = setup
-	const { units } = getStakingChainData(network)
 
 	const txSubmission = getTxSubmissionByTag('nominatorSetup')
 	const fee = txSubmission?.fee || 0n
@@ -87,8 +82,6 @@ export const Bond = ({
 		}
 	}, [setup.section])
 
-	console.log(bond.bond)
-
 	return (
 		<>
 			<Header
@@ -110,9 +103,7 @@ export const Bond = ({
 					txFees={fee}
 					maxWidth
 				/>
-				<NominateStatusBar
-					value={new BigNumber(planckToUnit(bond.bond, units))}
-				/>
+				<NominateStatusBar value={new BigNumber(bond.bond)} />
 				{!inline && <Footer complete={bondValid} bondFor="nominator" />}
 			</MotionContainer>
 		</>
