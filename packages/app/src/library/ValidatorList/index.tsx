@@ -130,6 +130,15 @@ export const ValidatorListInner = ({
 		[],
 	)
 
+	// Create a memoized map of validator addresses to era points for stable references
+	const performanceMap = useMemo(
+		() =>
+			Object.fromEntries(
+				performances.map((entry) => [entry.validator, entry.points]),
+			),
+		[performances],
+	)
+
 	// Pagination
 	const pageLength: number = itemsPerPage || validators.length
 	const totalPages = Math.ceil(validators.length / pageLength)
@@ -377,11 +386,7 @@ export const ValidatorListInner = ({
 									toggleFavorites={toggleFavorites}
 									bondFor={bondFor}
 									displayFor={displayFor}
-									eraPoints={
-										performances.find(
-											(entry) => entry.validator === validator.address,
-										)?.points || []
-									}
+									eraPoints={performanceMap[validator.address] || []}
 									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
 									onRemove={onRemove}
