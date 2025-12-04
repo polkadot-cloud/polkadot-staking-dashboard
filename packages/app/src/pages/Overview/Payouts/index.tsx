@@ -52,13 +52,13 @@ export const Payouts = () => {
 
   // Memoize date formatting to avoid unnecessary recalculations
   const { formatFrom, formatTo, formatOpts } = useMemo(() => {
+    const now = new Date()
     if (lastReward === undefined) {
-      const now = new Date()
       return { formatFrom: now, formatTo: now, formatOpts: {} }
     }
     return {
-      formatFrom: fromUnixTime(lastReward.timestamp ?? getUnixTime(new Date())),
-      formatTo: new Date(),
+      formatFrom: fromUnixTime(lastReward.timestamp ?? getUnixTime(now)),
+      formatTo: now,
       formatOpts: {
         addSuffix: true,
         locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
