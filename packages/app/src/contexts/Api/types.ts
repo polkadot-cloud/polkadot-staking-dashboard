@@ -28,6 +28,7 @@ export interface APIContextInterface {
 	getConsts: (chain: ChainId) => ChainConsts
 	isReady: boolean
 	providerType: ProviderType
+	autoRpc: boolean
 	relayMetrics: RelayMetrics
 	activeEra: ActiveEra
 	poolsConfig: PoolsConfig

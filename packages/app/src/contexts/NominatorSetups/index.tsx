@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getStakingChainData } from 'consts/util'
+import { getStakingChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -134,7 +134,7 @@ export const NominatorSetupsProvider = ({
 			return 0
 		}
 		const { progress } = getNominatorSetup(address)
-		const bond = new BigNumber(unitToPlanck(progress?.bond || '0', units))
+		const bond = new BigNumber(progress?.bond || '0')
 
 		const p = 33
 		let percentage = 0
@@ -164,7 +164,7 @@ export const NominatorSetupsProvider = ({
 				account: null,
 			},
 			nominations: fetch('Optimal Selection'),
-			bond: totalPossibleBond.toString(),
+			bond: planckToUnit(totalPossibleBond, units),
 		}
 		return setup
 	}

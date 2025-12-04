@@ -1,16 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
-import { useUi } from 'contexts/UI'
 import { onNewNominatorButtonPressedEvent } from 'event-tracking'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
@@ -23,15 +19,12 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { t } = useTranslation()
 	const { isReady } = useApi()
 	const navigate = useNavigate()
-	const { advancedMode } = useUi()
 	const { network } = useNetwork()
 	const { inPool } = useActivePool()
 	const { openModal } = useOverlay().modal
-	const { openCanvas } = useOverlay().canvas
 	const { activeAddress } = useActiveAccounts()
 	const { isBonding, isNominating } = useStaking()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { generateOptimalSetup, setNominatorSetup } = useNominatorSetups()
 
 	const nominateButtonDisabled =
 		!isReady ||
@@ -56,24 +49,11 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 									type="button"
 									onClick={() => {
 										onNewNominatorButtonPressedEvent(network)
-
-										if (advancedMode) {
-											openModal({
-												key: 'StartNominating',
-												options: {},
-												size: 'lg',
-											})
-										} else {
-											// Set optimal nominator setup here, ready for canvas to display summary
-											setNominatorSetup(generateOptimalSetup(), true, 4)
-											openCanvas({
-												key: 'NominatorSetup',
-												options: {
-													simple: true,
-												},
-												size: 'xl',
-											})
-										}
+										openModal({
+											key: 'StakingOptions',
+											options: {},
+											size: 'xs',
+										})
 									}}
 									disabled={nominateButtonDisabled}
 								>
@@ -87,7 +67,6 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 							<div className={`button secondary standalone`}>
 								<button type="button" onClick={() => navigate('/validators')}>
 									{t('browseValidators', { ns: 'app' })}
-									<FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
 								</button>
 							</div>
 						</div>

@@ -234,6 +234,7 @@
 		"optimalSelectionSubtitle": "选择表现最佳且定期活跃的验证人",
 		"order": "顺序",
 		"orderValidators": "验证人排序",
+		"otherOptions": "其他选项",
 		"overview": "总览",
 		"page": "{{page}} / {{total}}",
 		"payee": {
@@ -312,6 +313,7 @@
 		"signer": "签名账户",
 		"signing": "签署中",
 		"stake": "抵押",
+		"stakingOptions": "其他质押选项",
 		"startAgain": "重新开始",
 		"submitTransaction": "准备提交交易",
 		"support": "支持",

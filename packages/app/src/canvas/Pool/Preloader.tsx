@@ -14,7 +14,7 @@ import { CloseCanvas } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
 export const Preloader = () => {
-	const { t } = useTranslation('pages')
+	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { bondedPools } = useBondedPools()
 	const {
@@ -36,9 +36,10 @@ export const Preloader = () => {
 				<CloseCanvas />
 			</Head>
 			<Title>
-				<h1>{t('pools')}</h1>
+				<h1>{t('pool', { ns: 'app' })}</h1>
 				<h3>
 					{t('joinPoolHeading', {
+						ns: 'pages',
 						totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
 						totalPoolPoints: totalPoolPointsUnit,
 						unit,

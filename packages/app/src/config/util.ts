@@ -10,12 +10,16 @@ export const getPagesConfig = (
 	network: NetworkId,
 	category: number | null,
 	advancedMode: boolean,
+	stakingState?: {
+		inPool: boolean
+		isBonding: boolean
+	},
 ) => {
 	const operatorsSupported = isOperatorsSupported(network)
 
 	// Filter out operators page if not supported on network
 	let pagesConfig = !operatorsSupported
-		? PagesConfig.filter((page) => page.key === 'operators')
+		? PagesConfig.filter((page) => page.key !== 'operators')
 		: PagesConfig
 
 	// Filter by category if specified
@@ -27,6 +31,25 @@ export const getPagesConfig = (
 	if (!advancedMode) {
 		pagesConfig = pagesConfig.filter(({ advanced }) => !advanced)
 	}
+
+	// In Simple mode, handle active staking pages
+	if (!advancedMode) {
+		const { inPool = false, isBonding = false } = stakingState || {}
+
+		// If user is both in a pool AND bonding, show both pages. Otherwise, show the unified page and
+		// hide separate pages
+		if (inPool && isBonding) {
+			pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
+		} else {
+			pagesConfig = pagesConfig.filter(
+				(page) => page.key !== 'pool' && page.key !== 'nominate',
+			)
+		}
+	} else {
+		// In Advanced mode, always hide the unified  page and show separate pages
+		pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
+	}
+
 	return pagesConfig
 }
 

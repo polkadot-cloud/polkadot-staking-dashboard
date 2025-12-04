@@ -11,6 +11,7 @@ import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { Metrics } from 'library/ListItem/Buttons/Metrics'
 import { Remove } from 'library/ListItem/Buttons/Remove'
+import { APY } from 'library/ListItem/Labels/APY'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import type { Validator } from 'types'
@@ -29,6 +30,7 @@ export const Item = ({
 	displayFor,
 	eraPoints,
 	onRemove,
+	rate,
 }: ItemProps) => {
 	const { pluginEnabled } = usePlugins()
 	const { selectable, selected } = useList()
@@ -44,6 +46,15 @@ export const Item = ({
 		[displayFor]: true,
 		selected: isSelected,
 	})
+
+	// Rate after commission
+	const rateAfterCommission =
+		typeof rate === 'number' &&
+		Number.isFinite(rate) &&
+		typeof commission === 'number' &&
+		Number.isFinite(commission)
+			? rate * (1 - commission / 100)
+			: undefined
 
 	return (
 		<Wrapper>
@@ -91,6 +102,7 @@ export const Item = ({
 					</div>
 					<div>
 						<LabelRow inline>
+							<APY rate={rateAfterCommission} />
 							<Quartile address={address} />
 							<Blocked prefs={prefs} />
 							<Commission commission={commission} />

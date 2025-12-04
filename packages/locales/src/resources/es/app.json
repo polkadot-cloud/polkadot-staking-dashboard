@@ -238,6 +238,7 @@
 		"optimalSelectionSubtitle": "Selecciona validadores de alto rendimiento y regularmente activos.",
 		"order": "Ordenar",
 		"orderValidators": "Ordenar Validadores",
+		"otherOptions": "Otras Opciones",
 		"overview": "Resumen",
 		"page": "Página {{page}} de {{total}}",
 		"payee": {
@@ -316,6 +317,7 @@
 		"signer": "Firmante",
 		"signing": "Firmando",
 		"stake": "Stakear",
+		"stakingOptions": "Otras Opciones de Staking",
 		"startAgain": "Comenzar de nuevo",
 		"submitTransaction": "Listo para enviar la Transacción.",
 		"support": "Soporte",

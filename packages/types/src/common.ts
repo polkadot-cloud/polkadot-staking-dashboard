@@ -42,4 +42,4 @@ interface PageProp {
 
 export type BulletType = 'success' | 'accent' | 'warning' | 'danger'
 
-export type NavSection = 'stake' | 'validators'
+export type NavSection = 'stake' | 'validators' | 'pools'

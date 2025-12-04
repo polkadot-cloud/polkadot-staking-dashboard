@@ -30,7 +30,7 @@ import { SelectCurrency } from 'modals/SelectCurrency'
 import { SelectLanguage } from 'modals/SelectLanguage'
 import { SetController } from 'modals/SetController'
 import { SignIn } from 'modals/SignIn'
-import { StartNominating } from 'modals/StartNominating'
+import { StakingOptions } from 'modals/StakingOptions'
 import { StopNominations } from 'modals/StopNominations'
 import { Unbond } from 'modals/Unbond'
 import { UnlockChunks } from 'modals/UnlockChunks'
@@ -67,7 +67,7 @@ export const Overlays = () => {
 				SelectCurrency,
 				SetController,
 				SignIn,
-				StartNominating,
+				StakingOptions,
 				Plugins,
 				UnlockChunks,
 				Unstake,

@@ -13,17 +13,17 @@ import {
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
-import { usePoolsTabs } from '../context'
 import type { NewMemberProps } from './types'
 import { useStatusButtons } from './useStatusButtons'
 
-export const NewMember = ({ syncing }: NewMemberProps) => {
+export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const { network } = useNetwork()
 	const { advancedMode } = useUi()
 	const { isBonding } = useStaking()
-	const { setActiveTab } = usePoolsTabs()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
 	const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
@@ -51,7 +51,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 	}
 
 	return (
-		<CallToActionWrapper>
+		<CallToActionWrapper style={{ marginTop: '1rem' }}>
 			{syncing ? (
 				<CallToActionLoader />
 			) : (
@@ -72,7 +72,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 							</div>
 						</div>
 					</section>
-					{advancedMode && (
+					{advancedMode && !showOtherOptions && (
 						<section>
 							<div className="buttons">
 								<div
@@ -94,8 +94,28 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 									</button>
 								</div>
 								<div className={`button standalone secondary`}>
-									<button type="button" onClick={() => setActiveTab(1)}>
+									<button type="button" onClick={() => navigate('/pools')}>
 										{t('browsePools', { ns: 'pages' })}
+									</button>
+								</div>
+							</div>
+						</section>
+					)}
+					{showOtherOptions && (
+						<section>
+							<div className="buttons">
+								<div className={`button standalone secondary`}>
+									<button
+										type="button"
+										onClick={() =>
+											openModal({
+												key: 'StakingOptions',
+												size: 'xs',
+												options: { context: 'simple_other_options' },
+											})
+										}
+									>
+										{t('otherOptions', { ns: 'app' })}
 									</button>
 								</div>
 							</div>

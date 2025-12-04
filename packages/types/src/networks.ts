@@ -98,6 +98,7 @@ export interface NetworkConfig {
 	network: NetworkId
 	rpcEndpoints: Record<string, string>
 	providerType: ProviderType
+	autoRpc: boolean
 }
 
 export interface Network {

@@ -3,6 +3,7 @@
 
 import {
 	faChartSimple,
+	faCoins,
 	faHome,
 	faMagnifyingGlass,
 	faTableList,
@@ -13,7 +14,9 @@ import { Nominate } from 'pages/Nominate'
 import { Operators } from 'pages/Operators'
 import { Overview } from 'pages/Overview'
 import { Pools } from 'pages/Pools'
+import { PoolsList } from 'pages/PoolsList'
 import { Rewards } from 'pages/Rewards'
+import { Stake } from 'pages/Stake'
 import { Validators } from 'pages/Validators'
 import type { PageCategoryItems, PagesConfigItems } from 'types'
 
@@ -30,6 +33,12 @@ export const PageCategories: PageCategoryItems = [
 		advanced: true,
 		defaultRoute: '/validators',
 	},
+	{
+		id: 4,
+		key: 'pools',
+		advanced: true,
+		defaultRoute: '/pools',
+	},
 ]
 
 export const PagesConfig: PagesConfigItems = [
@@ -44,9 +53,18 @@ export const PagesConfig: PagesConfigItems = [
 	},
 	{
 		category: 2,
-		key: 'pools',
-		uri: `${import.meta.env.BASE_URL}pools`,
-		hash: '/pools',
+		key: 'stake',
+		uri: `${import.meta.env.BASE_URL}stake`,
+		hash: '/stake',
+		Entry: Stake,
+		faIcon: faCoins,
+		advanced: false,
+	},
+	{
+		category: 2,
+		key: 'pool',
+		uri: `${import.meta.env.BASE_URL}pool`,
+		hash: '/pool',
 		Entry: Pools,
 		faIcon: faUsers,
 		advanced: false,
@@ -76,7 +94,7 @@ export const PagesConfig: PagesConfigItems = [
 		hash: '/validators',
 		Entry: Validators,
 		faIcon: faMagnifyingGlass,
-		advanced: false,
+		advanced: true,
 	},
 	{
 		category: 3,
@@ -85,6 +103,15 @@ export const PagesConfig: PagesConfigItems = [
 		hash: '/operators',
 		Entry: Operators,
 		faIcon: faTableList,
-		advanced: false,
+		advanced: true,
+	},
+	{
+		category: 4,
+		key: 'pools',
+		uri: `${import.meta.env.BASE_URL}pools`,
+		hash: '/pools',
+		Entry: PoolsList,
+		faIcon: faMagnifyingGlass,
+		advanced: true,
 	},
 ]

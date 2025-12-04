@@ -56,6 +56,7 @@ export const Main = ({
 		network,
 		activeCategory,
 		advancedMode,
+		{ inPool, isBonding },
 	)
 
 	const pageChanged = activeCategory
@@ -85,8 +86,14 @@ export const Main = ({
 					return true
 				}
 			}
-			if (uri === `${import.meta.env.BASE_URL}pools`) {
+			if (uri === `${import.meta.env.BASE_URL}pool`) {
 				if (inPool) {
+					pages[i].bullet = 'accent'
+					return true
+				}
+			}
+			if (uri === `${import.meta.env.BASE_URL}stake`) {
+				if (inPool || isBonding) {
 					pages[i].bullet = 'accent'
 					return true
 				}

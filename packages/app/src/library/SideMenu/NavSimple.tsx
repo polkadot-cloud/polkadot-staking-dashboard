@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
-import { Separator } from 'ui-core/base'
 import { Main } from './Main'
 import { LogoWrapper, ToggleWrapper, Wrapper } from './Wrapper'
 
@@ -40,7 +39,6 @@ export const NavSimple = () => {
 						{!sideMenuMinimised && <h3>Stake</h3>}
 					</LogoWrapper>
 					<Main activeCategory={null} />
-					<Separator />
 				</section>
 				<section></section>
 			</Wrapper>

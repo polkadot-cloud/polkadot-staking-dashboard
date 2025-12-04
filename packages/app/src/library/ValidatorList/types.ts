@@ -51,6 +51,7 @@ export interface ItemProps {
 	toggleFavorites?: boolean
 	nominationStatus?: NominationStatus
 	eraPoints: ValidatorEraPoints[]
+	rate?: number
 	onRemove?: (params: {
 		selected: Validator[]
 		resetSelection?: () => void

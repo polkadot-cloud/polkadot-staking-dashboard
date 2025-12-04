@@ -4,8 +4,11 @@
 import { accountBalance } from './accountBalance'
 import { bondedPool } from './bondedPool'
 import { bondedPoolEntries } from './bondedPoolEntries'
+import { erasRewardPoints } from './erasRewardPoints'
+import { erasStakersOverview } from './erasStakersOverview'
 import { erasStakersOverviewEntries } from './erasStakersOverviewEntries'
 import { erasStakersPagedEntries } from './erasStakersPagedEntries'
+import { erasValidatorReward } from './erasValidatorReward'
 import { erasValidatorRewardMulti } from './erasValidatorRewardMulti'
 import { identityOfMulti } from './identityOfMulti'
 import { nominatorsMulti } from './nominatorsMulti'
@@ -23,6 +26,9 @@ export const query = {
 	bondedPoolEntries,
 	erasStakersOverviewEntries,
 	erasStakersPagedEntries,
+	erasStakersOverview,
+	erasRewardPoints,
+	erasValidatorReward,
 	erasValidatorRewardMulti,
 	identityOfMulti,
 	nominatorsMulti,

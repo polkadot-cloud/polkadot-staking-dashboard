@@ -16,10 +16,10 @@ export const useStatusButtons = () => {
 		isReady,
 		poolsConfig: { maxPools },
 	} = useApi()
-	const { isOwner } = useActivePool()
 	const { bondedPools } = useBondedPools()
 	const { getPoolMembership } = useBalances()
 	const { activeAddress } = useActiveAccounts()
+	const { isOwner, isDepositor } = useActivePool()
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	const { balances } = useAccountBalances(activeAddress)
@@ -46,6 +46,8 @@ export const useStatusButtons = () => {
 
 	if (!membership) {
 		label = t('membership')
+	} else if (isDepositor()) {
+		label = `${t('depositorOfPool')} ${membership.poolId}`
 	} else if (isOwner()) {
 		label = `${t('ownerOfPool')} ${membership.poolId}`
 	} else if (active > 0n) {

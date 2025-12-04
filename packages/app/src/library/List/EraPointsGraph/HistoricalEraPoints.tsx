@@ -39,16 +39,22 @@ export const HistoricalEraPoints = ({
 	})
 
 	return (
-		<Graph syncing={syncing} canvas={displayFor === 'canvas'}>
-			<TooltipArea
-				text={tooltipText}
-				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-			/>
-			<Inner
-				points={prefilledPoints}
-				syncing={syncing}
-				displayFor={displayFor}
-			/>
-		</Graph>
+		<Graph
+			syncing={syncing}
+			canvas={displayFor === 'canvas'}
+			Inner={
+				<>
+					<TooltipArea
+						text={tooltipText}
+						onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+					/>
+					<Inner
+						points={prefilledPoints}
+						syncing={syncing}
+						displayFor={displayFor}
+					/>
+				</>
+			}
+		></Graph>
 	)
 }

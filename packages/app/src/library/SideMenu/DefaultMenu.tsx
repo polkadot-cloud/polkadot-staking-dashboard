@@ -4,6 +4,7 @@
 import {
 	faChevronDown,
 	faCoins,
+	faPeopleLine,
 	faRightFromBracket,
 	faServer,
 	faTimes,
@@ -13,7 +14,8 @@ import CloudSVG from 'assets/icons/cloud.svg?react'
 import { getCategoryId } from 'config/util'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { getActivePageForCategory } from 'hooks/useActivePages'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import type { NavSection } from 'types'
@@ -34,10 +36,8 @@ import {
 
 export const DefaultMenu = ({
 	localCategory,
-	setLocalCategory,
 }: {
 	localCategory: NavSection
-	setLocalCategory: Dispatch<SetStateAction<NavSection>>
 }) => {
 	const { t } = useTranslation('app')
 	const { advancedMode, setAdvancedMode, sideMenuMinimised } = useUi()
@@ -49,6 +49,11 @@ export const DefaultMenu = ({
 	const [openCategories, setOpenCategories] = useState<boolean>(false)
 
 	const transparent = modalStatus === 'open' || canvasStatus === 'open'
+
+	// Navigate to the last active page for a category
+	const navigateToCategory = (category: NavSection) => {
+		navigate(getActivePageForCategory(category))
+	}
 
 	return (
 		<Page.Side.Default
@@ -73,8 +78,7 @@ export const DefaultMenu = ({
 									<BarButton
 										type="button"
 										onClick={() => {
-											setLocalCategory('stake')
-											navigate(`/overview`)
+											navigateToCategory('stake')
 										}}
 										className={localCategory === 'stake' ? 'active' : ''}
 									>
@@ -93,12 +97,30 @@ export const DefaultMenu = ({
 									<BarButton
 										type="button"
 										onClick={() => {
-											setLocalCategory('validators')
-											navigate(`/validators`)
+											navigateToCategory('validators')
 										}}
 										className={localCategory === 'validators' ? 'active' : ''}
 									>
 										<FontAwesomeIcon icon={faServer} />
+									</BarButton>
+								</Tooltip>
+							</section>
+							<section>
+								<Tooltip
+									text={t('pools')}
+									side="right"
+									container={themeElementRef.current || undefined}
+									delayDuration={0}
+									fadeIn
+								>
+									<BarButton
+										type="button"
+										onClick={() => {
+											navigateToCategory('pools')
+										}}
+										className={localCategory === 'pools' ? 'active' : ''}
+									>
+										<FontAwesomeIcon icon={faPeopleLine} transform="grow-3" />
 									</BarButton>
 								</Tooltip>
 							</section>
@@ -134,12 +156,7 @@ export const DefaultMenu = ({
 							<Popover
 								open={openCategories}
 								portalContainer={themeElementRef.current || undefined}
-								content={
-									<CategoriesPopover
-										setOpen={setOpenCategories}
-										setLocalCategory={setLocalCategory}
-									/>
-								}
+								content={<CategoriesPopover setOpen={setOpenCategories} />}
 								onTriggerClick={() => {
 									setOpenCategories(!openCategories)
 								}}
