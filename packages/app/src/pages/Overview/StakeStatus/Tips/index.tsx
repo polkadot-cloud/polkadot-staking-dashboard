@@ -6,8 +6,6 @@ import { setStateWithRef } from '@w3ux/utils'
 import { TipsConfigAdvanced, TipsConfigSimple } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
@@ -27,20 +25,14 @@ import { TipsWrapper } from './Wrappers'
 export const Tips = () => {
 	const { i18n, t } = useTranslation()
 	const { network } = useNetwork()
-	const {
-		stakingMetrics: { minNominatorBond },
-	} = useApi()
 	const { advancedMode } = useUi()
 	const { inPool } = useActivePool()
 	const { isOwner } = useActivePool()
-	const { feeReserve } = useBalances()
 	const { isNominating } = useStaking()
 	const { activeAddress } = useActiveAccounts()
 	const { fillVariables } = useFillVariables()
 	const { syncing } = useSyncing(['initialization'])
-	const {
-		balances: { freeBalance },
-	} = useAccountBalances(activeAddress)
+	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
 	// multiple tips per row is currently turned off.
 	const multiTipsPerRow = false
@@ -104,7 +96,7 @@ export const Tips = () => {
 	if (!activeAddress) {
 		segments.push(1)
 	} else if (!isNominating && !inPool) {
-		if (freeBalance - feeReserve > minNominatorBond) {
+		if (hasEnoughToNominate) {
 			segments.push(2)
 		} else {
 			segments.push(3)

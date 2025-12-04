@@ -10,7 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useUi } from 'contexts/UI'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useTranslation } from 'react-i18next'
 import { QuickAction } from 'ui-buttons'
 import type { ButtonQuickActionProps } from 'ui-buttons/types'
@@ -21,6 +23,8 @@ export const NotStaking = () => {
 	const { t } = useTranslation('pages')
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
+	const { activeAddress } = useActiveAccounts()
+	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
 	const actions: ButtonQuickActionProps[] = [
 		{
@@ -41,18 +45,24 @@ export const NotStaking = () => {
 			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faUsers} />,
 			label: t('joinPool'),
 		},
-		{
-			onClick: () => {
-				openModal({
-					key: 'StakingOptions',
-					options: {},
-					size: 'xs',
-				})
-			},
-			disabled: false,
-			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faChartLine} />,
-			label: t('startNominating'),
-		},
+		...(hasEnoughToNominate
+			? [
+					{
+						onClick: () => {
+							openModal({
+								key: 'StakingOptions',
+								options: {},
+								size: 'xs',
+							})
+						},
+						disabled: false,
+						Icon: () => (
+							<FontAwesomeIcon transform="grow-1" icon={faChartLine} />
+						),
+						label: t('startNominating'),
+					},
+				]
+			: []),
 		{
 			onClick: () => {
 				window.open(`mailto:${MailSupportAddress}`, '_blank')
