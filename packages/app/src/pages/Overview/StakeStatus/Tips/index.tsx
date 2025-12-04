@@ -3,7 +3,7 @@
 
 import { useOnResize } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { TipsConfig } from 'config/tips'
+import { TipsConfigAdvanced, TipsConfigSimple } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -11,6 +11,7 @@ import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
+import { useUi } from 'contexts/UI'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { useSyncing } from 'hooks/useSyncing'
@@ -29,6 +30,7 @@ export const Tips = () => {
 	const {
 		stakingMetrics: { minNominatorBond },
 	} = useApi()
+	const { advancedMode } = useUi()
 	const { inPool } = useActivePool()
 	const { isOwner } = useActivePool()
 	const { feeReserve } = useBalances()
@@ -123,7 +125,8 @@ export const Tips = () => {
 	}
 
 	// filter tips relevant to connected account.
-	let items = TipsConfig.filter((i) => segments.includes(i.s))
+	const tipsConfig = advancedMode ? TipsConfigAdvanced : TipsConfigSimple
+	let items = tipsConfig.filter((i) => segments.includes(i.s))
 
 	items = items.map((item) => {
 		const { id } = item
@@ -169,14 +172,16 @@ export const Tips = () => {
 					/>
 				)}
 			</div>
-			<PageToggle
-				start={start}
-				end={end}
-				page={page}
-				itemsPerPage={itemsPerPage}
-				totalItems={items.length}
-				setPageHandler={setPageHandler}
-			/>
+			{items.length > 1 && (
+				<PageToggle
+					start={start}
+					end={end}
+					page={page}
+					itemsPerPage={itemsPerPage}
+					totalItems={items.length}
+					setPageHandler={setPageHandler}
+				/>
+			)}
 		</TipsWrapper>
 	)
 }
