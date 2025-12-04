@@ -15,20 +15,6 @@ import type { RewardResult, RewardResults } from 'plugin-staking-api/types'
 import { daysPassed } from 'utils'
 import type { RewardRecord } from '../types'
 
-// Cache for current date to avoid repeated Date object creation
-let cachedCurrentDate: Date | null = null
-let cacheTimestamp = 0
-const CACHE_DURATION = 60000 // 1 minute cache
-
-const getCurrentDate = (): Date => {
-  const now = Date.now()
-  if (!cachedCurrentDate || now - cacheTimestamp > CACHE_DURATION) {
-    cachedCurrentDate = new Date()
-    cacheTimestamp = now
-  }
-  return cachedCurrentDate
-}
-
 /**
  * Normalize payout timestamps to start of day
  */
@@ -129,9 +115,7 @@ export const filterAndSortRewards = (payouts: RewardResults) => {
     .filter((p) => Number(p.reward) > 0)
     .sort((a, b) => b.timestamp - a.timestamp)
 
-  const fromTimestamp = getUnixTime(
-    subDays(getCurrentDate(), MaximumPayoutDays)
-  )
+  const fromTimestamp = getUnixTime(subDays(new Date(), MaximumPayoutDays))
   return list.filter(({ timestamp }) => timestamp >= fromTimestamp)
 }
 

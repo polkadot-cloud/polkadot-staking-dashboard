@@ -6,11 +6,11 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { getUnixTime } from 'date-fns'
+import { getUnixTime, startOfToday, subDays } from 'date-fns'
 import { PageTabs } from 'library/PageTabs'
 import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { filterAndSortRewards } from 'ui-graphs/util'
@@ -42,13 +42,8 @@ export const Rewards = () => {
     poolClaims: [],
   })
 
-  // Memoize fromDate to avoid creating new Date objects repeatedly
-  const fromDate = useMemo(() => {
-    const date = new Date()
-    date.setDate(date.getDate() - MaxPayoutDays)
-    date.setHours(0, 0, 0, 0)
-    return date
-  }, [])
+  // Calculate fromDate - no memoization needed as date-fns functions are lightweight
+  const fromDate = subDays(startOfToday(), MaxPayoutDays)
 
   // Payouts list props to pass to each tab
   const pageProps = {

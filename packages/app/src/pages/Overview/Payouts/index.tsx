@@ -50,20 +50,20 @@ export const Payouts = () => {
   })
   const { width, height, minHeight } = formatSize(size, 260)
 
-  // Memoize date objects to avoid creating new Date objects on every render
+  // Memoize date formatting to avoid unnecessary recalculations
   const { formatFrom, formatTo, formatOpts } = useMemo(() => {
-    let fromDate = new Date()
-    let toDate = new Date()
-    let opts = {}
-    if (lastReward !== undefined) {
-      fromDate = fromUnixTime(lastReward.timestamp ?? getUnixTime(new Date()))
-      toDate = new Date()
-      opts = {
+    if (lastReward === undefined) {
+      const now = new Date()
+      return { formatFrom: now, formatTo: now, formatOpts: {} }
+    }
+    return {
+      formatFrom: fromUnixTime(lastReward.timestamp ?? getUnixTime(new Date())),
+      formatTo: new Date(),
+      formatOpts: {
         addSuffix: true,
         locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
-      }
+      },
     }
-    return { formatFrom: fromDate, formatTo: toDate, formatOpts: opts }
   }, [lastReward, i18n.resolvedLanguage])
 
   const lastRewardUnit = planckToUnitBn(
