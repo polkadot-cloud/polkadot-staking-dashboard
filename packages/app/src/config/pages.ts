@@ -3,6 +3,7 @@
 
 import {
 	faChartSimple,
+	faCoins,
 	faHome,
 	faMagnifyingGlass,
 	faTableList,
@@ -15,6 +16,7 @@ import { Overview } from 'pages/Overview'
 import { Pools } from 'pages/Pools'
 import { PoolsList } from 'pages/PoolsList'
 import { Rewards } from 'pages/Rewards'
+import { Stake } from 'pages/Stake'
 import { Validators } from 'pages/Validators'
 import type { PageCategoryItems, PagesConfigItems } from 'types'
 
@@ -47,6 +49,15 @@ export const PagesConfig: PagesConfigItems = [
 		hash: '/overview',
 		Entry: Overview,
 		faIcon: faHome,
+		advanced: false,
+	},
+	{
+		category: 2,
+		key: 'stake',
+		uri: `${import.meta.env.BASE_URL}stake`,
+		hash: '/stake',
+		Entry: Stake,
+		faIcon: faCoins,
 		advanced: false,
 	},
 	{

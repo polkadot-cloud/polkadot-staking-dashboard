@@ -237,6 +237,7 @@
 		"optimalSelectionSubtitle": "Selects top performing and regularly active validators.",
 		"order": "Order",
 		"orderValidators": "Order Validators",
+		"otherOptions": "Other Options",
 		"overview": "Overview",
 		"page": "Page {{page}} of {{total}}",
 		"payee": {
@@ -313,6 +314,7 @@
 		"signer": "Signer",
 		"signing": "Signing",
 		"stake": "Stake",
+		"stakingOptions": "Other Staking Options",
 		"startAgain": "Start Again",
 		"submitTransaction": "Ready to submit transaction.",
 		"support": "Support",

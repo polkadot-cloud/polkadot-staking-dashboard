@@ -19,7 +19,7 @@ export const useFillVariables = () => {
 	const {
 		getConsts,
 		getChainSpec,
-		stakingMetrics: { minimumActiveStake },
+		stakingMetrics: { minimumActiveStake, minNominatorBond },
 		poolsConfig: { minJoinBond, minCreateBond },
 	} = useApi()
 	const { network } = useNetwork()
@@ -28,6 +28,12 @@ export const useFillVariables = () => {
 	const { existentialDeposit } = getChainSpec(getStakingChain(network))
 	const { name } = getRelayChainData(network)
 	const { unit, units } = getStakingChainData(network)
+	const minToEarnRewards = new BigNumber(
+		planckToUnit(
+			BigNumber.max(minNominatorBond, minimumActiveStake).toString(),
+			units,
+		),
+	)
 
 	const fillVariables = (d: AnyJson, keys: string[]) => {
 		// biome-ignore lint/suspicious/noExplicitAny: <>
@@ -41,12 +47,7 @@ export const useFillVariables = () => {
 				['{NETWORK_NAME}', capitalizeFirstLetter(name)],
 				['{MAX_EXPOSURE_PAGE_SIZE}', maxExposurePageSize.toString()],
 				['{MAX_NOMINATIONS}', MaxNominations],
-				[
-					'{MIN_ACTIVE_STAKE}',
-					new BigNumber(planckToUnit(minimumActiveStake, units))
-						.decimalPlaces(3)
-						.toFormat(),
-				],
+				['{MIN_ACTIVE_STAKE}', minToEarnRewards.decimalPlaces(3).toFormat()],
 				[
 					'{MIN_POOL_JOIN_BOND}',
 					new BigNumber(planckToUnit(minJoinBond, units))
