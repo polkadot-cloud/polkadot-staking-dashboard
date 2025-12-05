@@ -71,8 +71,8 @@ export const Bond = () => {
 	const [feedbackErrors, setFeedbackErrors] = useState<string[]>([])
 
 	// handler to set bond as a string
-	const handleSetBond = (newBond: { bond: BigNumber }) => {
-		setBond({ bond: newBond.bond.toString() })
+	const handleSetBond = ({ value }: { value: BigNumber }) => {
+		setBond({ bond: value.toString() })
 	}
 
 	// bond minus tx fees.
@@ -134,7 +134,7 @@ export const Bond = () => {
 
 	// update bond value on task change.
 	useEffect(() => {
-		handleSetBond({ bond: freeToBond })
+		handleSetBond({ value: freeToBond })
 	}, [freeToBond.toString()])
 
 	// modal resize on form update

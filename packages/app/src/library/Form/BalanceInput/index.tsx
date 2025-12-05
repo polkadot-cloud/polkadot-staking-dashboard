@@ -58,7 +58,7 @@ export const BalanceInput = ({
 		}
 		for (const setter of setters) {
 			setter({
-				bond: new BigNumber(val),
+				value: new BigNumber(val),
 			})
 		}
 	}

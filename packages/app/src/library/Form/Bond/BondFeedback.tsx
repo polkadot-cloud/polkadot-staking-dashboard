@@ -65,8 +65,8 @@ export const BondFeedback = ({
 	})
 
 	// handler to set bond as a string
-	const handleSetBond = (newBond: { bond: BigNumber }) => {
-		setBond({ bond: newBond.bond.toString() })
+	const handleSetBond = ({ value }: { value: BigNumber }) => {
+		setBond({ bond: value.toString() })
 	}
 
 	// current bond planck value
