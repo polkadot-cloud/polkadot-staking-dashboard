@@ -334,6 +334,7 @@
 		"transactionInBlock": "交易已入块",
 		"transactionInitiated": "交易已发起",
 		"transactionSuccessful": "交易成功",
+		"transfer": "转账",
 		"unbond": "解除质押",
 		"unbondAmount": "解除金额超过质押余额",
 		"unbonding": "正在解除质押",

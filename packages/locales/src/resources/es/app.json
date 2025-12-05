@@ -344,6 +344,7 @@
 		"transactionInBlock": "Transacción en bloque",
 		"transactionInitiated": "Transacción iniciada.",
 		"transactionSuccessful": "Transacción exitosa",
+		"transfer": "Transferir",
 		"unbond": "Desvincular",
 		"unbondAmount": "El monto desvinculado supera tu saldo vinculado.",
 		"unbonding": "Desvinculando",
