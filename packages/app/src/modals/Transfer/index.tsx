@@ -76,7 +76,6 @@ export const Transfer = () => {
 						accounts={accountsWithSigners}
 						onSelect={setFromAccount}
 						label="From"
-						disabled
 					/>
 					<Separator transparent />
 					<AccountDropdown
