@@ -22,16 +22,6 @@ export interface BondFeedbackProps {
 	displayFirstWarningOnly?: boolean
 }
 
-export interface BondInputProps {
-	maxAvailable: BigNumber
-	value: string
-	defaultValue: string
-	syncing?: boolean
-	setters: BondSetter[]
-	disabled: boolean
-	disableTxFeeUpdate?: boolean
-}
-
 export interface UnbondFeedbackProps {
 	setters: BondSetter[]
 	bondFor: BondFor

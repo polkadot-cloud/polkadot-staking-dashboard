@@ -11,7 +11,7 @@ import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { AccountDropdown } from 'library/AccountDropdown'
-import { BondInput } from 'library/Form/Bond/BondInput'
+import { BalanceInput } from 'library/Form/BalanceInput'
 import { SubmitTx } from 'library/SubmitTx'
 import { useState } from 'react'
 import type { ImportedAccount } from 'types'
@@ -86,7 +86,7 @@ export const Transfer = () => {
 						label="To"
 					/>
 					<Separator transparent />
-					<BondInput
+					<BalanceInput
 						value={String(0)}
 						defaultValue={'0'}
 						syncing={false}

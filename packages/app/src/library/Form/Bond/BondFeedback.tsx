@@ -11,9 +11,9 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { BalanceInput } from '../BalanceInput'
 import type { BondFeedbackProps } from '../types'
 import { Warning } from '../Warning'
-import { BondInput } from './BondInput'
 
 export const BondFeedback = ({
 	bondFor,
@@ -184,7 +184,7 @@ export const BondFeedback = ({
 					maxWidth: maxWidth ? '500px' : '100%',
 				}}
 			>
-				<BondInput
+				<BalanceInput
 					value={String(bond.bond)}
 					defaultValue={defaultBondStr}
 					syncing={syncing}

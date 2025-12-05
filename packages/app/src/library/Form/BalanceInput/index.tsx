@@ -9,10 +9,10 @@ import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
-import type { BondInputProps } from '../types'
 import { InputWrapper } from '../Wrappers'
+import type { BalanceInputProps } from './types'
 
-export const BondInput = ({
+export const BalanceInput = ({
 	setters = [],
 	disabled,
 	defaultValue,
@@ -20,7 +20,7 @@ export const BondInput = ({
 	disableTxFeeUpdate = false,
 	value = '0',
 	syncing = false,
-}: BondInputProps) => {
+}: BalanceInputProps) => {
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const { activeAddress } = useActiveAccounts()
@@ -29,7 +29,7 @@ export const BondInput = ({
 	// the current local token value
 	const [localValue, setLocalValue] = useState<string>(value)
 
-	// reset value to default when changing account.
+	// reset value to default when changing account
 	useEffect(() => {
 		setLocalValue(defaultValue ?? '0')
 	}, [activeAddress])
@@ -63,7 +63,7 @@ export const BondInput = ({
 		}
 	}
 
-	// available funds as jsx.
+	// available funds as jsx
 	const availableFundsJsx = (
 		<p>
 			{syncing ? '...' : `${maxAvailable.toFormat()} ${unit} ${t('available')}`}
