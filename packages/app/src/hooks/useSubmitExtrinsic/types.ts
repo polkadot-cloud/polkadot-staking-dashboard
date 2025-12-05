@@ -24,4 +24,5 @@ export interface UseSubmitExtrinsic {
 	onSubmit: () => void
 	proxySupported: boolean
 	submitAccount: ActiveAccount
+	proxyAccount: ActiveProxy | null
 }

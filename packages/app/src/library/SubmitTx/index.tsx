@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useTxMeta } from 'contexts/TxMeta'
@@ -21,6 +20,7 @@ export const SubmitTx = ({
 	submitText,
 	buttons = [],
 	submitAccount,
+	proxyAccount,
 	valid = false,
 	noMargin = false,
 	proxySupported,
@@ -34,7 +34,6 @@ export const SubmitTx = ({
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
 	const { setModalResize } = useOverlay().modal
-	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 
 	const { unit } = getStakingChainData(network)
@@ -51,19 +50,22 @@ export const SubmitTx = ({
 	// Default to active account, using activeAccount to get the correct account
 	let signingOpts = {
 		label: t('signer', { ns: 'app' }),
-		who: getAccount(activeAccount),
+		who: getAccount(submitAccount),
 	}
 
 	if (txInitiated) {
-		if (activeProxy && proxySupported) {
+		if (proxyAccount && proxySupported) {
 			signingOpts = {
 				label: t('signedByProxy', { ns: 'app' }),
-				who: getAccount(activeProxy),
+				who: getAccount(proxyAccount),
 			}
-		} else if (!(activeProxy && proxySupported) && requiresMigratedController) {
+		} else if (
+			!(proxyAccount && proxySupported) &&
+			requiresMigratedController
+		) {
 			signingOpts = {
 				label: t('signedByController', { ns: 'app' }),
-				who: getAccount(activeAccount),
+				who: getAccount(submitAccount),
 			}
 		}
 	}
