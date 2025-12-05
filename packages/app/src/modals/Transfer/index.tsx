@@ -1,13 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { BondInput } from 'library/Form/Bond/BondInput'
@@ -22,8 +23,12 @@ export const Transfer = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { closeModal } = useOverlay().modal
+	const { activeAddress } = useActiveAccounts()
 	const { activeAccount } = useActiveAccounts()
 	const { accounts, accountHasSigner, getAccount } = useImportedAccounts()
+	const {
+		balances: { transferableBalance },
+	} = useAccountBalances(activeAddress)
 
 	// Filter accounts to only show those with signers
 	const accountsWithSigners = accounts.filter((account) =>
@@ -86,8 +91,10 @@ export const Transfer = () => {
 						defaultValue={'0'}
 						syncing={false}
 						disabled={false}
-						setters={[]}
-						freeToBond={new BigNumber(0)}
+						setters={[]} /* TODO: Add setter to update amount */
+						maxAvailable={
+							new BigNumber(planckToUnit(transferableBalance, units))
+						}
 						disableTxFeeUpdate={false}
 					/>
 				</Padding>
