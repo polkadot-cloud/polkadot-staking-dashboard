@@ -84,15 +84,15 @@ export const Unbond = () => {
 	const [bondValid, setBondValid] = useState<boolean>(false)
 
 	// handler to set bond as a string
-	const handleSetBond = async (newBond: { bond: BigNumber }) => {
+	const handleSetBond = async ({ value }: { value: BigNumber }) => {
 		if (isPooling && activePool) {
 			const balancePoints = await serviceApi.runtimeApi.balanceToPoints(
 				activePool.id,
-				unitToPlanck(newBond.bond.toString(), units),
+				unitToPlanck(value.toString(), units),
 			)
 			setPoints(balancePoints)
 		}
-		setBond({ bond: newBond.bond.toString() })
+		setBond({ bond: value.toString() })
 	}
 
 	// feedback errors to trigger modal resize
@@ -168,7 +168,7 @@ export const Unbond = () => {
 
 	// Update bond value on task change
 	useEffect(() => {
-		handleSetBond({ bond: unbondToMin })
+		handleSetBond({ value: unbondToMin })
 	}, [freeToUnbond.toString()])
 
 	// Modal resize on form update.
