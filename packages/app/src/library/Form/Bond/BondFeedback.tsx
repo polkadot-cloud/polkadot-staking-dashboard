@@ -190,7 +190,7 @@ export const BondFeedback = ({
 					syncing={syncing}
 					disabled={bondDisabled}
 					setters={setters}
-					freeToBond={new BigNumber(planckToUnit(freeToBond, units))}
+					maxAvailable={new BigNumber(planckToUnit(freeToBond, units))}
 					disableTxFeeUpdate={disableTxFeeUpdate}
 				/>
 			</div>

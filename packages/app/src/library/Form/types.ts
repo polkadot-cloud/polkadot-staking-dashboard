@@ -23,7 +23,7 @@ export interface BondFeedbackProps {
 }
 
 export interface BondInputProps {
-	freeToBond: BigNumber
+	maxAvailable: BigNumber
 	value: string
 	defaultValue: string
 	syncing?: boolean

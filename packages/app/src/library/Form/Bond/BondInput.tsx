@@ -16,7 +16,7 @@ export const BondInput = ({
 	setters = [],
 	disabled,
 	defaultValue,
-	freeToBond,
+	maxAvailable,
 	disableTxFeeUpdate = false,
 	value = '0',
 	syncing = false,
@@ -26,31 +26,31 @@ export const BondInput = ({
 	const { activeAddress } = useActiveAccounts()
 	const { unit } = getStakingChainData(network)
 
-	// the current local bond value
-	const [localBond, setLocalBond] = useState<string>(value)
+	// the current local token value
+	const [localValue, setLocalValue] = useState<string>(value)
 
 	// reset value to default when changing account.
 	useEffect(() => {
-		setLocalBond(defaultValue ?? '0')
+		setLocalValue(defaultValue ?? '0')
 	}, [activeAddress])
 
 	useEffect(() => {
 		if (!disableTxFeeUpdate) {
-			setLocalBond(value.toString())
+			setLocalValue(value.toString())
 		}
 	}, [value])
 
-	// handle change for bonding.
-	const handleChangeBond = (e: ChangeEvent<HTMLInputElement>) => {
+	// handle value change
+	const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
 		const val = e.target.value
 		if (val !== '' && new BigNumber(val).isNaN()) {
 			return
 		}
-		setLocalBond(val)
+		setLocalValue(val)
 		updateParentState(val)
 	}
 
-	// apply bond to parent setters.
+	// apply value to parent setters
 	const updateParentState = (val: string) => {
 		val = val || '0'
 		if (new BigNumber(val).isNaN()) {
@@ -66,7 +66,7 @@ export const BondInput = ({
 	// available funds as jsx.
 	const availableFundsJsx = (
 		<p>
-			{syncing ? '...' : `${freeToBond.toFormat()} ${unit} ${t('available')}`}
+			{syncing ? '...' : `${maxAvailable.toFormat()} ${unit} ${t('available')}`}
 		</p>
 	)
 
@@ -79,9 +79,9 @@ export const BondInput = ({
 							<input
 								type="text"
 								placeholder={`0 ${unit}`}
-								value={localBond}
+								value={localValue}
 								onChange={(e) => {
-									handleChangeBond(e)
+									handleChangeValue(e)
 								}}
 								disabled={disabled}
 							/>
@@ -90,10 +90,10 @@ export const BondInput = ({
 					</div>
 					<ButtonSubmitInvert
 						text={t('max')}
-						disabled={disabled || syncing || freeToBond.isZero()}
+						disabled={disabled || syncing || maxAvailable.isZero()}
 						onClick={() => {
-							setLocalBond(freeToBond.toString())
-							updateParentState(freeToBond.toString())
+							setLocalValue(maxAvailable.toString())
+							updateParentState(maxAvailable.toString())
 						}}
 						marginLeft
 					/>
