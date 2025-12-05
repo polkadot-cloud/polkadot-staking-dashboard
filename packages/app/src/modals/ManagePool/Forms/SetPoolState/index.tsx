@@ -9,6 +9,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -31,9 +32,9 @@ export const SetPoolState = ({
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
+	const { activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { isOwner, isBouncer, activePool } = useActivePool()
-	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { updateBondedPools, getBondedPool } = useBondedPools()
 
 	const poolId = activePool?.id
@@ -102,7 +103,7 @@ export const SetPoolState = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

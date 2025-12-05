@@ -11,6 +11,7 @@ import { AccountId32 } from 'dedot/codecs'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { Title } from 'library/Modal/Title'
 import { PayeeInput } from 'library/PayeeInput'
@@ -87,7 +88,7 @@ export const UpdatePayee = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: isComplete(),
 		callbackSubmit: () => {
 			closeModal()

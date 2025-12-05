@@ -5,6 +5,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { SubmitTx } from 'library/SubmitTx'
 import { useTranslation } from 'react-i18next'
 import { Padding, RoleChange, Title } from 'ui-core/modal'
@@ -14,7 +15,7 @@ export const ChangePoolRoles = () => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { replacePoolRoles } = useBondedPools()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAccount } = useActiveAccounts()
 	const {
 		closeModal,
 		config: { options },
@@ -30,7 +31,7 @@ export const ChangePoolRoles = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

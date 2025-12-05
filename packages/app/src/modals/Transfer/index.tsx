@@ -10,6 +10,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { BalanceInput } from 'library/Form/BalanceInput'
 import { SubmitTx } from 'library/SubmitTx'
@@ -23,8 +24,7 @@ export const Transfer = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { closeModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { accounts, accountHasSigner, getAccount } = useImportedAccounts()
 	const {
 		balances: { transferableBalance },
@@ -57,7 +57,7 @@ export const Transfer = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: fromAccount?.address || '',
+		from: formatFromProp(fromAccount),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

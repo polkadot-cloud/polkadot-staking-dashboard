@@ -14,6 +14,7 @@ import { usePoolSetups } from 'contexts/PoolSetups'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
@@ -65,7 +66,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const submitExtrinsic = useSubmitExtrinsic({
 		tag: 'createPool',
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: true,
 		callbackInBlock: async () => {
 			// Close canvas.

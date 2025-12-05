@@ -14,6 +14,7 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -119,7 +120,7 @@ export const Bond = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(bondAfterTxFees),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()

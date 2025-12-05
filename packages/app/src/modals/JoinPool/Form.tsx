@@ -17,6 +17,7 @@ import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
@@ -94,7 +95,7 @@ export const Form = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()

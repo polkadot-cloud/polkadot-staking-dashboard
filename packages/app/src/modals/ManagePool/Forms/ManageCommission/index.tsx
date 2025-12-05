@@ -16,6 +16,7 @@ import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import 'rc-slider/assets/index.css'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -163,7 +164,7 @@ export const ManageCommission = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

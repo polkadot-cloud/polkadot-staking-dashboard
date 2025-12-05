@@ -10,6 +10,7 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -32,9 +33,9 @@ export const ClaimCommission = ({
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
+	const { activeAccount } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const { unit, units } = getStakingChainData(network)
 	const poolId = activePool?.id
@@ -58,7 +59,7 @@ export const ClaimCommission = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

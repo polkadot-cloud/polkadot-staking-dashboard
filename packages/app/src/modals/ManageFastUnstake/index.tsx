@@ -14,6 +14,7 @@ import type { SubmittableExtrinsic } from 'dedot'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { useUnstaking } from 'hooks/useUnstaking'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
@@ -89,7 +90,7 @@ export const ManageFastUnstake = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: valid,
 		callbackInBlock: () => {
 			closeModal()

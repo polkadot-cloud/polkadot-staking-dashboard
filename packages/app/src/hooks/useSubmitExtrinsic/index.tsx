@@ -56,35 +56,43 @@ export const useSubmitExtrinsic = ({
 	const { getTxSubmission } = useTxMeta()
 	const { signWcTx } = useWalletConnect()
 	const { getAccountBalance } = useBalances()
+	const { activeProxy } = useActiveAccounts()
 	const { extensionsStatus } = useExtensions()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
 	const { handleResetLedgerTask } = useLedgerHardware()
 	const { getExtensionAccount } = useExtensionAccounts()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
+	const { address: fromAddress, source } = from
 	const {
 		balances: { balanceTxFees },
-	} = useAccountBalances(from)
+	} = useAccountBalances(fromAddress)
 	const { unit, units } = getStakingChainData(network)
 
 	// Store the uid for this transaction
 	const [uid, setUid] = useState<number>(0)
 
-	// If the `from` address matches the active account, use that as the submit account
-	let submitAccount: ActiveAccount = null
-	if (activeAccount && from === activeAccount.address) {
-		submitAccount = activeAccount
-	}
+	// Get the imported account for the `from` address
+	const fromAccount =
+		fromAddress && source
+			? getAccount({
+					address: fromAddress,
+					source: source,
+				})
+			: null
+
+	// Use fromAccount as the submit account if it exists
+	let submitAccount: ActiveAccount = fromAccount
+		? { address: fromAccount.address, source: fromAccount.source }
+		: null
 
 	// If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
-	// already wrapped, update `from` and address and `submitAccount` to the proxy account
+	// already wrapped, update submitAccount to the proxy account
 	let proxySupported = false
 	if (tx) {
-		proxySupported = isProxySupported(tx, from)
+		proxySupported = isProxySupported(tx, fromAddress)
 		if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
 			if (activeProxy) {
-				from = activeProxy.address
 				submitAccount = {
 					address: activeProxy.address,
 					source: activeProxy.source,
@@ -93,14 +101,13 @@ export const useSubmitExtrinsic = ({
 		} else {
 			if (activeProxy && proxySupported) {
 				// Update submit address to active proxy account
-				const real = from
-				from = activeProxy.address
+				const real = fromAddress
 				submitAccount = {
 					address: activeProxy.address,
 					source: activeProxy.source,
 				}
 
-				// Check not a batch transactions
+				// Check not a batch transaction
 				if (
 					real &&
 					!(tx.call.pallet === 'Utility' && tx.call.palletCall.name === 'Batch')
@@ -121,7 +128,7 @@ export const useSubmitExtrinsic = ({
 		if (!tx || getUid(uid)?.submitted) {
 			return
 		}
-		if (from === null || !submitAccount) {
+		if (!submitAccount) {
 			return
 		}
 		const account = getAccount(submitAccount)
@@ -179,7 +186,7 @@ export const useSubmitExtrinsic = ({
 				const metadata = await serviceApi.signer.metadata(specName)
 				const result = await signLedgerPayload(
 					specName,
-					from,
+					submitAccount.address,
 					serviceApi.signer.extraSignedExtension,
 					tx,
 					metadata || '0x',
@@ -188,7 +195,7 @@ export const useSubmitExtrinsic = ({
 				)
 				if (result) {
 					encodedSig = {
-						address: from,
+						address: submitAccount.address,
 						signature: $Signature.tryDecode(result.signature),
 						extra: result.data,
 					}
@@ -196,7 +203,10 @@ export const useSubmitExtrinsic = ({
 			}
 
 			if (source === 'vault') {
-				const extra = serviceApi.signer.extraSignedExtension(specName, from)
+				const extra = serviceApi.signer.extraSignedExtension(
+					specName,
+					submitAccount.address,
+				)
 				if (!extra) {
 					onError('technical', 'missing_signer')
 					return
@@ -217,7 +227,7 @@ export const useSubmitExtrinsic = ({
 					) => {
 						openPromptWith(
 							<SignPrompt
-								submitAddress={from}
+								submitAddress={submitAccount.address}
 								onComplete={onComplete}
 								toSign={toSign}
 							/>,
@@ -230,14 +240,17 @@ export const useSubmitExtrinsic = ({
 				}).sign(prefixedPayload)
 
 				encodedSig = {
-					address: from,
+					address: submitAccount.address,
 					signature: $Signature.tryDecode(result),
 					extra: extra.data,
 				}
 			}
 
 			if (source === 'wallet_connect') {
-				const extra = serviceApi.signer.extraSignedExtension(specName, from)
+				const extra = serviceApi.signer.extraSignedExtension(
+					specName,
+					submitAccount.address,
+				)
 				if (!extra) {
 					onError('technical', 'missing_signer')
 					return
@@ -247,7 +260,7 @@ export const useSubmitExtrinsic = ({
 				const result = (await signWcTx(payload)).signature
 
 				encodedSig = {
-					address: from,
+					address: submitAccount.address,
 					signature: $Signature.tryDecode(result),
 					extra: extra.data,
 				}
@@ -264,9 +277,8 @@ export const useSubmitExtrinsic = ({
 			// Extension signer
 			//
 			// Get the signer for this account and submit the transaction
-			signer = getExtensionAccount(from, submitAccount.source)?.signer as
-				| InjectedSigner
-				| undefined
+			signer = getExtensionAccount(submitAccount.address, submitAccount.source)
+				?.signer as InjectedSigner | undefined
 			if (!signer) {
 				onError('technical', 'missing_signer')
 				return
@@ -274,10 +286,11 @@ export const useSubmitExtrinsic = ({
 			addSignAndSend(
 				network,
 				uid,
-				from,
+				submitAccount.address,
 				tx,
 				signer as InjectedSigner,
-				getAccountBalance(from).nonce + pendingTxCount(from),
+				getAccountBalance(submitAccount.address).nonce +
+					pendingTxCount(submitAccount.address),
 				handlers,
 			)
 		}
@@ -287,7 +300,7 @@ export const useSubmitExtrinsic = ({
 	useEffect(() => {
 		// Add a new uid for this transaction
 		if (uid === 0) {
-			const newUid = addUid({ from, tag })
+			const newUid = addUid({ from: submitAccount?.address || null, tag })
 			setUid(newUid)
 		}
 	}, [])
@@ -394,8 +407,8 @@ export const useSubmitExtrinsic = ({
 
 	// Re-fetch tx fee if tx changes
 	const fetchTxFee = async () => {
-		if (tx && from) {
-			const { partialFee } = await tx.paymentInfo(from)
+		if (tx && submitAccount?.address) {
+			const { partialFee } = await tx.paymentInfo(submitAccount.address)
 			updateFee(uid, partialFee)
 		}
 	}

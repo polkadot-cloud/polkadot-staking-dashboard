@@ -16,6 +16,7 @@ import { AccountId32 } from 'dedot/codecs'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
@@ -89,7 +90,7 @@ export const Summary = ({
 	const submitExtrinsic = useSubmitExtrinsic({
 		tag: 'nominatorSetup',
 		tx: getTxs(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: true,
 		callbackInBlock: () => {
 			// Close the canvas after the extrinsic is included in a block

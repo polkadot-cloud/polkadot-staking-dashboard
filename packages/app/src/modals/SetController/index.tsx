@@ -7,6 +7,7 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useStaking } from 'contexts/Staking'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { useSyncing } from 'hooks/useSyncing'
 import { ActionItem } from 'library/ActionItem'
 import { SubmitTx } from 'library/SubmitTx'
@@ -19,10 +20,10 @@ export const SetController = () => {
 	const { serviceApi } = useApi()
 	const { isBonding } = useStaking()
 	const { getStakingLedger } = useBalances()
-	const { activeAddress } = useActiveAccounts()
 	const { closeModal } = useOverlay().modal
 	const { syncing, accountSynced } = useSyncing()
 	const { isReadOnlyAccount } = useImportedAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
 	const canDeprecateController =
@@ -41,7 +42,7 @@ export const SetController = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()
