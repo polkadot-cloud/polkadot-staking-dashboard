@@ -421,6 +421,7 @@ export const useSubmitExtrinsic = ({
 		uid,
 		onSubmit,
 		submitAccount,
+		proxyAccount: proxy,
 		proxySupported,
 	}
 }
