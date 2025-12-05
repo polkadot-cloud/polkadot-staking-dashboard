@@ -15,12 +15,14 @@ import { AccountDropdown } from 'library/AccountDropdown'
 import { BalanceInput } from 'library/Form/BalanceInput'
 import { SubmitTx } from 'library/SubmitTx'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
 import { Separator } from 'ui-core/base'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
 export const Transfer = () => {
+	const { t } = useTranslation()
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { closeModal } = useOverlay().modal
@@ -69,21 +71,21 @@ export const Transfer = () => {
 		<>
 			<Close />
 			<Padding>
-				<Title>Transfer</Title>
+				<Title>{t('transfer', { ns: 'app' })}</Title>
 
 				<Padding>
 					<AccountDropdown
 						initialAccount={getAccount(activeAccount)}
 						accounts={accountsWithSigners}
 						onSelect={setFromAccount}
-						label="From"
+						label={t('from', { ns: 'app' })}
 					/>
 					<Separator transparent />
 					<AccountDropdown
 						initialAccount={accounts[0]}
 						accounts={accountsWithSigners}
 						onSelect={setToAccount}
-						label="To"
+						label={t('to', { ns: 'app' })}
 					/>
 					<Separator transparent />
 					<BalanceInput

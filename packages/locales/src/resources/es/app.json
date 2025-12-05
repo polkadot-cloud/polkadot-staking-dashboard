@@ -158,6 +158,7 @@
 		"filterValidators": "Filtrar Validadores",
 		"finalized": "Finalizado",
 		"free": "Libre",
+		"from": "De",
 		"fromFavorites": "Desde Favoritos",
 		"fromFavoritesSubtitle": "Obtén un conjunto de tus validadores favoritos.",
 		"goTo": "Ir a",
@@ -337,6 +338,7 @@
 			"second_other": "segundos"
 		},
 		"title": "Polkadot Cloud Staking",
+		"to": "A",
 		"tooSmall": "El monto vinculado es demasiado pequeño.",
 		"top": "Top",
 		"transactionCancelled": "La transacción fue cancelada",
