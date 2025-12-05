@@ -24,11 +24,8 @@ export const Transfer = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { closeModal } = useOverlay().modal
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccounts()
 	const { accounts, accountHasSigner, getAccount } = useImportedAccounts()
-	const {
-		balances: { transferableBalance },
-	} = useAccountBalances(activeAddress)
 
 	// Filter accounts to only show those with signers
 	const accountsWithSigners = accounts.filter((account) =>
@@ -42,6 +39,10 @@ export const Transfer = () => {
 	const [toAccount, setToAccount] = useState<ImportedAccount | null>(
 		accounts[0],
 	)
+
+	const {
+		balances: { transferableBalance },
+	} = useAccountBalances(fromAccount?.address || null)
 
 	const { units } = getStakingChainData(network)
 	const amount = 0.1
