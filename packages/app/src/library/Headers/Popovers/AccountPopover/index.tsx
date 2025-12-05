@@ -71,7 +71,7 @@ export const AccountPopover = ({
 					<FontAwesomeIcon icon={faPaperPlane} transform="shrink-2" />
 				</div>
 				<div>
-					<h3>{t('transfer', { ns: 'app' })}</h3>
+					<h3>{t('send', { ns: 'app' })}</h3>
 					<div>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-3" />
 					</div>

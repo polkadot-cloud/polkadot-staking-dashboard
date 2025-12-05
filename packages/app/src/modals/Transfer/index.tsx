@@ -71,7 +71,7 @@ export const Transfer = () => {
 		<>
 			<Close />
 			<Padding>
-				<Title>{t('transfer', { ns: 'app' })}</Title>
+				<Title>{t('send', { ns: 'app' })}</Title>
 
 				<Padding>
 					<AccountDropdown
