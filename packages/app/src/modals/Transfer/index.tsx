@@ -2,24 +2,25 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useBatchCall } from 'hooks/useBatchCall'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { AccountDropdown } from 'library/AccountDropdown'
+import { BondInput } from 'library/Form/Bond/BondInput'
 import { SubmitTx } from 'library/SubmitTx'
 import { useState } from 'react'
 import type { ImportedAccount } from 'types'
+import { Separator } from 'ui-core/base'
 import { Padding, Title } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 
-export const BalanceTest = () => {
+export const Transfer = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
-	const { newBatchCall } = useBatchCall()
 	const { closeModal } = useOverlay().modal
 	const { activeAccount } = useActiveAccounts()
 	const { accounts, accountHasSigner, getAccount } = useImportedAccounts()
@@ -37,7 +38,7 @@ export const BalanceTest = () => {
 		accounts[0],
 	)
 
-	const { units, unit } = getStakingChainData(network)
+	const { units } = getStakingChainData(network)
 	const amount = 0.1
 	const amountPlanck = unitToPlanck(amount, units)
 
@@ -45,13 +46,8 @@ export const BalanceTest = () => {
 		if (!fromAccount || !toAccount) {
 			return
 		}
-		const txs = [
-			serviceApi.tx.transferKeepAlive(toAccount.address, amountPlanck),
-			serviceApi.tx.transferKeepAlive(toAccount.address, amountPlanck),
-		].filter((tx) => tx !== undefined)
-
-		const batch = newBatchCall(txs, fromAccount.address)
-		return batch
+		const tx = serviceApi.tx.transferKeepAlive(toAccount.address, amountPlanck)
+		return tx
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({
@@ -67,27 +63,34 @@ export const BalanceTest = () => {
 		<>
 			<Close />
 			<Padding>
-				<Title>Balance Test</Title>
+				<Title>Transfer</Title>
 
-				<h4 style={{ marginTop: '1rem' }}>From:</h4>
-				<AccountDropdown
-					initialAccount={getAccount(activeAccount)}
-					accounts={accountsWithSigners}
-					onSelect={setFromAccount}
-					disabled
-				/>
-
-				<h4 style={{ marginTop: '1rem' }}>To:</h4>
-				<AccountDropdown
-					initialAccount={accounts[0]}
-					accounts={accountsWithSigners}
-					onSelect={setToAccount}
-				/>
-
-				<h4 style={{ marginTop: '1rem' }}>Amount:</h4>
-				<h2>
-					{amount} {unit} x 2
-				</h2>
+				<Padding>
+					<AccountDropdown
+						initialAccount={getAccount(activeAccount)}
+						accounts={accountsWithSigners}
+						onSelect={setFromAccount}
+						label="From"
+						disabled
+					/>
+					<Separator transparent />
+					<AccountDropdown
+						initialAccount={accounts[0]}
+						accounts={accountsWithSigners}
+						onSelect={setToAccount}
+						label="To"
+					/>
+					<Separator transparent />
+					<BondInput
+						value={String(0)}
+						defaultValue={'0'}
+						syncing={false}
+						disabled={false}
+						setters={[]}
+						freeToBond={new BigNumber(0)}
+						disableTxFeeUpdate={false}
+					/>
+				</Padding>
 			</Padding>
 			<SubmitTx valid {...submitExtrinsic} />
 		</>

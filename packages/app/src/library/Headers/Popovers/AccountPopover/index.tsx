@@ -1,6 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { ellipsisFn } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -10,6 +13,7 @@ import { setActiveProxy } from 'global-bus'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
+import { MenuItemButton } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
 import { Account } from './Account'
 import classes from './index.module.scss'
@@ -56,7 +60,24 @@ export const AccountPopover = ({
 				/>
 			)}
 
-			<PopoverTab.Container position="bottom" yMargin>
+			<MenuItemButton
+				style={{ border: 'none' }}
+				onClick={() => {
+					setOpen(false)
+					openModal({ key: 'Transfer', size: 'sm' })
+				}}
+			>
+				<div>
+					<FontAwesomeIcon icon={faPaperPlane} transform="shrink-2" />
+				</div>
+				<div>
+					<h3>Transfer</h3>
+					<div>
+						<FontAwesomeIcon icon={faChevronRight} transform="shrink-3" />
+					</div>
+				</div>
+			</MenuItemButton>
+			<PopoverTab.Container position="bottom">
 				<PopoverTab.Button
 					text={t('switchAccount', { ns: 'app' })}
 					onClick={() => {

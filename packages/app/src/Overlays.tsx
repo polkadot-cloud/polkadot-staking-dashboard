@@ -31,6 +31,7 @@ import { SelectLanguage } from 'modals/SelectLanguage'
 import { SetController } from 'modals/SetController'
 import { StakingOptions } from 'modals/StakingOptions'
 import { StopNominations } from 'modals/StopNominations'
+import { Transfer } from 'modals/Transfer'
 import { Unbond } from 'modals/Unbond'
 import { UnlockChunks } from 'modals/UnlockChunks'
 import { Unstake } from 'modals/Unstake'
@@ -66,6 +67,7 @@ export const Overlays = () => {
 				SelectCurrency,
 				SetController,
 				StakingOptions,
+				Transfer,
 				Plugins,
 				UnlockChunks,
 				Unstake,
