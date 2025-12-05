@@ -36,7 +36,7 @@ export const SetClaimPermission = ({
 	const { getPoolMembership } = useBalances()
 	const { isOwner, isMember } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { membership } = getPoolMembership(activeAddress)
 
@@ -69,7 +69,7 @@ export const SetClaimPermission = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

@@ -6,7 +6,6 @@ import type { HardwareAccount } from '@w3ux/types'
 import { DappName, ManualSigners } from 'consts'
 import { TxErrorKeyMap } from 'consts/tx'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -56,14 +55,13 @@ export const useSubmitExtrinsic = ({
 	const { getTxSubmission } = useTxMeta()
 	const { signWcTx } = useWalletConnect()
 	const { getAccountBalance } = useBalances()
-	const { activeProxy } = useActiveAccounts()
 	const { extensionsStatus } = useExtensions()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
 	const { handleResetLedgerTask } = useLedgerHardware()
 	const { getExtensionAccount } = useExtensionAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
-	const { address: fromAddress, source } = from
+	const { address: fromAddress, source, proxy } = from
 	const {
 		balances: { balanceTxFees },
 	} = useAccountBalances(fromAddress)
@@ -92,19 +90,19 @@ export const useSubmitExtrinsic = ({
 	if (tx) {
 		proxySupported = isProxySupported(tx, fromAddress)
 		if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
-			if (activeProxy) {
+			if (proxy) {
 				submitAccount = {
-					address: activeProxy.address,
-					source: activeProxy.source,
+					address: proxy.address,
+					source: proxy.source,
 				}
 			}
 		} else {
-			if (activeProxy && proxySupported) {
+			if (proxy && proxySupported) {
 				// Update submit address to active proxy account
 				const real = fromAddress
 				submitAccount = {
-					address: activeProxy.address,
-					source: activeProxy.source,
+					address: proxy.address,
+					source: proxy.source,
 				}
 
 				// Check not a batch transaction

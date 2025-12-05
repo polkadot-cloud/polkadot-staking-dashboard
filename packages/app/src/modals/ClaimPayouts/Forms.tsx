@@ -37,7 +37,7 @@ export const Forms = forwardRef(
 		const { newBatchCall } = useBatchCall()
 		const { closeModal } = useOverlay().modal
 		const { getSignerWarnings } = useSignerWarnings()
-		const { activeAddress, activeAccount } = useActiveAccounts()
+		const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 		const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 		const { unit, units } = getStakingChainData(network)
 
@@ -92,7 +92,7 @@ export const Forms = forwardRef(
 
 		const submitExtrinsic = useSubmitExtrinsic({
 			tx: getTx(),
-			from: formatFromProp(activeAccount),
+			from: formatFromProp(activeAccount, activeProxy),
 			shouldSubmit: valid,
 			callbackSubmit: () => {
 				closeModal()

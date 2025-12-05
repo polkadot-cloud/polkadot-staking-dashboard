@@ -15,7 +15,7 @@ export const ChangePoolRoles = () => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { replacePoolRoles } = useBondedPools()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const {
 		closeModal,
 		config: { options },
@@ -31,7 +31,7 @@ export const ChangePoolRoles = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

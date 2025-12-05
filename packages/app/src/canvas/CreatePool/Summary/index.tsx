@@ -66,7 +66,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const submitExtrinsic = useSubmitExtrinsic({
 		tag: 'createPool',
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackInBlock: async () => {
 			// Close canvas.

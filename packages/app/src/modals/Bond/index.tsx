@@ -35,7 +35,7 @@ export const Bond = () => {
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPendingPoolRewards, feeReserve, getPoolMembership } = useBalances()
 
@@ -120,7 +120,7 @@ export const Bond = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(bondAfterTxFees),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()

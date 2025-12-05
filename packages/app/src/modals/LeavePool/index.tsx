@@ -39,7 +39,7 @@ export const LeavePool = ({
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { closeModal } = useOverlay().modal
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPoolMembership, getPendingPoolRewards } = useBalances()
@@ -73,7 +73,7 @@ export const LeavePool = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: paramsValid,
 		callbackSubmit: () => {
 			closeModal()

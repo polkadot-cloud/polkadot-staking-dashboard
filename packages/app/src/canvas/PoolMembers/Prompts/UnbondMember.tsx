@@ -38,7 +38,7 @@ export const UnbondMember = ({
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { unit, units } = getStakingChainData(network)
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { points } = member
 	const { bondDuration } = getConsts(network)
@@ -65,7 +65,7 @@ export const UnbondMember = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: paramsValid,
 		callbackSubmit: () => {
 			closePrompt()

@@ -56,8 +56,8 @@ export const ManageCommission = ({
 	const { closeModal } = useOverlay().modal
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getBondedPool, updateBondedPools } = useBondedPools()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const poolId = activePool?.id || 0
 	const bondedPool = getBondedPool(poolId)
@@ -164,7 +164,7 @@ export const ManageCommission = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

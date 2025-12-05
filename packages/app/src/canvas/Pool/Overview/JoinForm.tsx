@@ -48,7 +48,7 @@ export const JoinForm = ({
 	const { newBatchCall } = useBatchCall()
 	const { setPoolSetup } = usePoolSetups()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const {
 		balances: {
 			pool: { totalPossibleBond },
@@ -110,7 +110,7 @@ export const JoinForm = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeCanvas()

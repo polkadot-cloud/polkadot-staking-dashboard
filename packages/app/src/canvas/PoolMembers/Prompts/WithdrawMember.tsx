@@ -36,8 +36,8 @@ export const WithdrawMember = ({
 	const { serviceApi } = useApi()
 	const { closePrompt } = usePrompt()
 	const { getConsts, activeEra } = useApi()
-	const { activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 	const { historyDepth } = getConsts(network)
 	const { unbondingEras, points } = member
@@ -65,7 +65,7 @@ export const WithdrawMember = ({
 	}
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: valid,
 		callbackSubmit: () => {
 			// Remove the pool member from member list

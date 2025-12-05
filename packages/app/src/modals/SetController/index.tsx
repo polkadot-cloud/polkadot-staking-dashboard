@@ -23,7 +23,7 @@ export const SetController = () => {
 	const { closeModal } = useOverlay().modal
 	const { syncing, accountSynced } = useSyncing()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
 	const canDeprecateController =
@@ -42,7 +42,7 @@ export const SetController = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

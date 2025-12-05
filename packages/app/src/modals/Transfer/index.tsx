@@ -57,7 +57,7 @@ export const Transfer = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(fromAccount),
+		from: formatFromProp(fromAccount, null), // NOTE: No proxy for transfers - not yet supported
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

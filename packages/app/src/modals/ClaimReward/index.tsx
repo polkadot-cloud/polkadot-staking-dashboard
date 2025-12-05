@@ -31,8 +31,8 @@ export const ClaimReward = () => {
 	const { network } = useNetwork()
 	const { activePool } = useActivePool()
 	const { getPendingPoolRewards } = useBalances()
-	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { claimType } = options
 	const { unit, units } = getStakingChainData(network)
@@ -62,7 +62,7 @@ export const ClaimReward = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: valid,
 		callbackSubmit: () => {
 			closeModal()

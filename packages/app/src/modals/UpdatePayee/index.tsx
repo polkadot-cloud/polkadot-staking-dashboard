@@ -31,7 +31,7 @@ export const UpdatePayee = () => {
 	const { getPayeeItems } = usePayeeConfig()
 	const { closeModal } = useOverlay().modal
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const payee = getStakingLedger(activeAddress).payee
 
@@ -88,7 +88,7 @@ export const UpdatePayee = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: isComplete(),
 		callbackSubmit: () => {
 			closeModal()

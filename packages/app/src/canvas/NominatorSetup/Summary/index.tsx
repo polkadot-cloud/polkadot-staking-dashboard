@@ -90,7 +90,7 @@ export const Summary = ({
 	const submitExtrinsic = useSubmitExtrinsic({
 		tag: 'nominatorSetup',
 		tx: getTxs(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackInBlock: () => {
 			// Close the canvas after the extrinsic is included in a block

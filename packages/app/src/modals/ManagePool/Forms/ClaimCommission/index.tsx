@@ -33,9 +33,9 @@ export const ClaimCommission = ({
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
-	const { activeAccount } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 
 	const { unit, units } = getStakingChainData(network)
 	const poolId = activePool?.id
@@ -59,7 +59,7 @@ export const ClaimCommission = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

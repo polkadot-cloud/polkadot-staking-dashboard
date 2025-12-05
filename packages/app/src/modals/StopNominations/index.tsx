@@ -18,16 +18,16 @@ import { Close, useOverlay } from 'ui-overlay'
 
 export const StopNominations = () => {
 	const { t } = useTranslation('modals')
-	const { serviceApi } = useApi()
-	const { getNominations } = useBalances()
-	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
 	const {
 		closeModal,
 		config: { options },
 	} = useOverlay().modal
+	const { serviceApi } = useApi()
+	const { getNominations } = useBalances()
+	const { getSignerWarnings } = useSignerWarnings()
 	const { activePoolNominations, isNominator, isOwner, activePool } =
 		useActivePool()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { bondFor } = options
 	const isPool = bondFor === 'pool'
@@ -66,7 +66,7 @@ export const StopNominations = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: valid,
 		callbackSubmit: () => {
 			closeModal()

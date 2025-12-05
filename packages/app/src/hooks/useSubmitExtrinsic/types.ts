@@ -3,7 +3,7 @@
 
 import type { MaybeString } from '@w3ux/types'
 import type { SubmittableExtrinsic } from 'dedot'
-import type { ActiveAccount } from 'types'
+import type { ActiveAccount, ActiveProxy } from 'types'
 
 export interface UseSubmitExtrinsicProps {
 	tx: SubmittableExtrinsic | undefined
@@ -11,6 +11,7 @@ export interface UseSubmitExtrinsicProps {
 	from: {
 		address: MaybeString
 		source: MaybeString
+		proxy: ActiveProxy | null
 	}
 	shouldSubmit: boolean
 	callbackSubmit?: () => void

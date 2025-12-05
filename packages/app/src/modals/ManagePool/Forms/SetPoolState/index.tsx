@@ -32,8 +32,8 @@ export const SetPoolState = ({
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
-	const { activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { isOwner, isBouncer, activePool } = useActivePool()
 	const { updateBondedPools, getBondedPool } = useBondedPools()
 
@@ -103,7 +103,7 @@ export const SetPoolState = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

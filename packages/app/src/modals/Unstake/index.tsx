@@ -33,10 +33,10 @@ export const Unstake = () => {
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
-	const { balances } = useAccountBalances(activeAddress)
 	const { closeModal, setModalResize } = useOverlay().modal
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
+	const { balances } = useAccountBalances(activeAddress)
 	const { bondDuration } = getConsts(network)
 	const { unit, units } = getStakingChainData(network)
 	const nominations = getNominations(activeAddress)
@@ -90,7 +90,7 @@ export const Unstake = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()

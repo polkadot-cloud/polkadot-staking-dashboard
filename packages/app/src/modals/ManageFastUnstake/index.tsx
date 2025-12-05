@@ -39,9 +39,10 @@ export const ManageFastUnstake = () => {
 	const { isFastUnstaking } = useUnstaking()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { getConsts, activeEra, serviceApi } = useApi()
-	const { activeAddress, activeAccount } = useActiveAccounts()
-	const { balances } = useAccountBalances(activeAddress)
 	const { setModalResize, closeModal } = useOverlay().modal
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+
+	const { balances } = useAccountBalances(activeAddress)
 	const { unit, units } = getStakingChainData(network)
 	const { bondDuration, fastUnstakeDeposit } = getConsts(network)
 	const { nominator, transferableBalance } = balances
@@ -90,7 +91,7 @@ export const ManageFastUnstake = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: valid,
 		callbackInBlock: () => {
 			closeModal()

@@ -31,10 +31,10 @@ export const RenamePool = ({
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
-	const { activeAccount } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { bondedPools, poolsMetaData } = useBondedPools()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 
 	const poolId = activePool?.id
 
@@ -67,7 +67,7 @@ export const RenamePool = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(activeAccount),
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()
