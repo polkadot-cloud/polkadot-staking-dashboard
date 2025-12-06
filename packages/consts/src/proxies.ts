@@ -28,8 +28,6 @@ export const SupportedProxies: Record<string, string[]> = {
 		'NominationPools.SetMetadata',
 		'NominationPools.SetState',
 		'NominationPools.WithdrawUnbonded',
-		'FastUnstake.RegisterFastUnstake',
-		'FastUnstake.Deregister',
 	],
 }
 

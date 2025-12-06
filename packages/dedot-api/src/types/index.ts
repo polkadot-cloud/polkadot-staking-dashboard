@@ -48,9 +48,6 @@ export type StakingChain =
 	| KusamaAssetHubApi
 	| WestendAssetHubApi
 
-// Chains that are used for fast unstake
-export type FastUnstakeChain = PolkadotApi | KusamaApi | WestendAssetHubApi
-
 // Mapping of service types for each network
 export interface ServiceType {
 	polkadot: typeof PolkadotService

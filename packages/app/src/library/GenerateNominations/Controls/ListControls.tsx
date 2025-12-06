@@ -3,7 +3,6 @@
 
 import { useList } from 'contexts/List'
 import { useTheme } from 'contexts/Themes'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { SelectableWrapper } from 'library/List'
 import { useState } from 'react'
 import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
@@ -16,7 +15,6 @@ export const ListControls = ({
 }: ListControlsProps) => {
 	const provider = useList()
 	const { themeElementRef } = useTheme()
-	const { isFastUnstaking } = useUnstaking()
 
 	// Get selected items
 	const { selected, resetSelected } = provider
@@ -59,7 +57,7 @@ export const ListControls = ({
 				<ButtonMonoInvert
 					text={a.title}
 					key={`a_all_${i}`}
-					disabled={isFastUnstaking || (a?.isDisabled ? a.isDisabled() : false)}
+					disabled={a?.isDisabled ? a.isDisabled() : false}
 					onClick={() => a.onClick(provider)}
 					iconLeft={a.icon ? a.icon : undefined}
 					marginRight

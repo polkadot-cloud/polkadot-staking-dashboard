@@ -21,7 +21,6 @@ import { Invite } from 'modals/Invite'
 import { JoinPool } from 'modals/JoinPool'
 import { LeavePool } from 'modals/LeavePool'
 import { MailSupport } from 'modals/MailSupport'
-import { ManageFastUnstake } from 'modals/ManageFastUnstake'
 import { ManagePool } from 'modals/ManagePool'
 import { Networks } from 'modals/Networks'
 import { Plugins } from 'modals/Plugins'
@@ -61,7 +60,6 @@ export const Overlays = () => {
 				ImportAccounts,
 				Invite,
 				ManagePool,
-				ManageFastUnstake,
 				Networks,
 				RewardCalculator,
 				SelectCurrency,
