@@ -32,7 +32,7 @@ export const onPageNavigationEvent = (network: string, name: string) => {
 
 // Record tab navigation
 export const onTabVisitEvent = (pageKey: string, tabKey: string) => {
-	onSaEvent(`${pageKey}_${tabKey}_tab_visit`)
+	onSaEvent(`${pageKey.toLowerCase()}_${tabKey.toLowerCase()}_tab_visit`)
 }
 
 // New nominator button pressed
