@@ -88,7 +88,7 @@ export const useSubmitExtrinsic = ({
 	// already wrapped, update submitAccount to the proxy account
 	let proxySupported = false
 	if (tx) {
-		proxySupported = isProxySupported(tx, fromAddress)
+		proxySupported = isProxySupported(tx, fromAddress, proxy)
 		if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
 			if (proxy) {
 				submitAccount = {

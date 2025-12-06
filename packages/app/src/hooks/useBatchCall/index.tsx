@@ -19,7 +19,11 @@ export const useBatchCall = () => {
 		from = from || ''
 		const batchTx = serviceApi.tx.batch(txs)
 		// If the active proxy supports this call, wrap each batch call in a proxy call
-		if (activeProxy && batchTx && isProxySupported(batchTx, from)) {
+		if (
+			activeProxy &&
+			batchTx &&
+			isProxySupported(batchTx, from, activeProxy)
+		) {
 			return serviceApi.tx.batch(
 				txs
 					.map((tx) => serviceApi.tx.proxy(from, tx))
