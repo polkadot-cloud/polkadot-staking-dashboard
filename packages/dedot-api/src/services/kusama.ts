@@ -48,7 +48,6 @@ export class KusamaService
 		public apiHub: DedotClient<KusamaAssetHubApi>,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
-		// For Kusama, staking happens on the hub chain, and fast unstake on the relay chain
 		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
 
 		// Initialize service interface with network-specific routing
