@@ -11,7 +11,7 @@ import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySwitcher } from 'hooks/useProxySwitcher'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
+import { filterNonProxy, formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { BalanceInput } from 'library/Form/BalanceInput'
 import { SubmitTx } from 'library/SubmitTx'
@@ -73,11 +73,17 @@ export const Transfer = () => {
 	const proxySwitcher = useProxySwitcher(
 		fromAccount?.address || null,
 		activeProxy,
+		fromAccount
+			? { address: fromAccount.address, source: fromAccount.source }
+			: null,
 	)
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(fromAccount, proxySwitcher.currentProxy),
+		from: formatFromProp(
+			fromAccount,
+			filterNonProxy(proxySwitcher.currentProxy),
+		),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

@@ -5,11 +5,12 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
 import { useEffect, useState } from 'react'
 import type { ActiveProxy, MaybeAddress } from 'types'
-import type { UseProxySwitcher } from './types'
+import type { SignerOption, UseProxySwitcher } from './types'
 
 export const useProxySwitcher = (
 	delegatorAddress: MaybeAddress,
 	initialProxy: ActiveProxy | null,
+	fromAccount: { address: string; source: string } | null,
 ): UseProxySwitcher => {
 	const { getDelegates } = useProxies()
 	const { accounts } = useImportedAccounts()
@@ -20,7 +21,7 @@ export const useProxySwitcher = (
 
 	// Expand delegates by finding all imported accounts for each delegate address. The same address
 	// may be imported from multiple sources
-	const delegates = proxyDelegates.flatMap(({ delegate, proxyType }) => {
+	const proxyAccounts = proxyDelegates.flatMap(({ delegate, proxyType }) => {
 		const matchingAccounts = accounts.filter((acc) => acc.address === delegate)
 		return matchingAccounts.map((account) => ({
 			address: account.address,
@@ -29,8 +30,20 @@ export const useProxySwitcher = (
 		}))
 	})
 
+	// Include fromAccount as first option (non-proxy), followed by proxy accounts
+	const delegates = fromAccount
+		? [
+				{
+					address: fromAccount.address,
+					source: fromAccount.source,
+					proxyType: null, // null indicates this is not a proxy
+				},
+				...proxyAccounts,
+			]
+		: proxyAccounts
+
 	// Current proxy account - only state we need
-	const [currentProxy, setCurrentProxy] = useState<ActiveProxy | null>(
+	const [currentProxy, setCurrentProxy] = useState<SignerOption | null>(
 		initialProxy || (delegates.length > 0 ? delegates[0] : null),
 	)
 
@@ -80,7 +93,7 @@ export const useProxySwitcher = (
 		delegates,
 		currentIndex,
 		hasMultipleDelegates: delegates.length > 1,
-		nextProxy,
-		previousProxy,
+		onNextProxy: nextProxy,
+		onPreviousProxy: previousProxy,
 	}
 }

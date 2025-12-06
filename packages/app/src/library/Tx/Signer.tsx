@@ -28,18 +28,21 @@ export const Signer = (props: SignerProps) => {
 	const { t } = useTranslation()
 	const { getAccount } = useImportedAccounts()
 
+	// Check if current proxy is actually a proxy (has proxyType) or just the from account
+	const isUsingProxy = proxyAccount?.proxyType
+
 	// Determine signing options
 	let signingOpts = {
 		label: t('signer', { ns: 'app' }),
 		who: getAccount(submitAccount),
 	}
 
-	if (proxyAccount && proxySupported) {
+	if (isUsingProxy && proxySupported) {
 		signingOpts = {
 			label: t('signedByProxy', { ns: 'app' }),
 			who: getAccount(proxyAccount),
 		}
-	} else if (!(proxyAccount && proxySupported) && requiresMigratedController) {
+	} else if (!isUsingProxy && requiresMigratedController) {
 		signingOpts = {
 			label: t('signedByController', { ns: 'app' }),
 			who: getAccount(submitAccount),
@@ -53,7 +56,7 @@ export const Signer = (props: SignerProps) => {
 				{signingOpts.label}
 			</span>
 			{signingOpts.who?.name || ''}
-			{hasMultipleDelegates && proxyAccount && proxySupported && (
+			{hasMultipleDelegates && (
 				<span className="proxy-switcher">
 					<button type="button" onClick={onPreviousProxy}>
 						<FontAwesomeIcon icon={faChevronLeft} transform="shrink-2" />
