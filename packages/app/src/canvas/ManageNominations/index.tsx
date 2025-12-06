@@ -11,6 +11,7 @@ import {
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { GenerateNominations } from 'library/GenerateNominations'
 import { InlineControls } from 'library/GenerateNominations/Controls/InlineControls'
 import { MenuControls } from 'library/GenerateNominations/Controls/MenuControls'
@@ -35,8 +36,8 @@ export const Inner = () => {
 	} = useOverlay().canvas
 	const { serviceApi } = useApi()
 	const { activePool } = useActivePool()
-	const { activeAddress } = useActiveAccounts()
 	const { updatePoolNominations } = useBondedPools()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { defaultNominations, nominations, setNominations, method } =
 		useManageNominations()
 
@@ -84,7 +85,7 @@ export const Inner = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: valid,
 		callbackSubmit: () => {
 			closeCanvas()

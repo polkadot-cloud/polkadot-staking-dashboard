@@ -9,11 +9,13 @@ import {
 	faCircleXmark,
 	faCoins,
 	faMinus,
+	faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { usePayouts } from 'contexts/Payouts'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
 import { QuickAction } from 'ui-buttons'
@@ -23,6 +25,7 @@ import { useOverlay } from 'ui-overlay'
 export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
 	const { t } = useTranslation('pages')
 	const { openModal } = useOverlay().modal
+	const { isDepositor } = useActivePool()
 	const { unclaimedRewards } = usePayouts()
 	const { activeAddress } = useActiveAccounts()
 	const { getPendingPoolRewards } = useBalances()
@@ -30,6 +33,19 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
 	const pendingRewards = getPendingPoolRewards(activeAddress)
 
 	const actions: ButtonQuickActionProps[] = []
+
+	actions.push({
+		onClick: () => {
+			openModal({
+				key: 'Transfer',
+				options: {},
+				size: 'sm',
+			})
+		},
+		disabled: false,
+		Icon: () => <FontAwesomeIcon transform="grow-1" icon={faPaperPlane} />,
+		label: t('send'),
+	})
 
 	if (bondFor === 'pool') {
 		actions.push(
@@ -132,17 +148,19 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
 			],
 		)
 	} else {
-		actions.push({
-			onClick: () => {
-				openModal({
-					key: 'LeavePool',
-					size: 'sm',
-				})
-			},
-			disabled: false,
-			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCircleXmark} />,
-			label: t('stop', { ns: 'pages' }),
-		})
+		if (!isDepositor()) {
+			actions.push({
+				onClick: () => {
+					openModal({
+						key: 'LeavePool',
+						size: 'sm',
+					})
+				},
+				disabled: false,
+				Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCircleXmark} />,
+				label: t('stop', { ns: 'pages' }),
+			})
+		}
 	}
 
 	return (

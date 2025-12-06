@@ -155,6 +155,7 @@
 		"filterValidators": "Filter Validators",
 		"finalized": "Finalized",
 		"free": "Free",
+		"from": "From",
 		"fromFavorites": "From Favorites",
 		"fromFavoritesSubtitle": "Gets a set of your favorite validators.",
 		"goTo": "Go To",
@@ -302,6 +303,7 @@
 		"searchAddress": "Search Address or Identity",
 		"select": "Select",
 		"selectAccount": "Select Account",
+		"send": "Send",
 		"share": "Share",
 		"sign": "Sign",
 		"signPolkadotVault": "Sign From Polkadot Vault",
@@ -333,6 +335,7 @@
 			"second_other": "seconds"
 		},
 		"title": "Polkadot Cloud Staking",
+		"to": "To",
 		"tooSmall": "Bond amount is too small.",
 		"top": "Top",
 		"transactionCancelled": "Transaction was cancelled",

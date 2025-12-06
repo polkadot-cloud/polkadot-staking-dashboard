@@ -4,11 +4,11 @@
 import type BigNumber from 'bignumber.js'
 import type { BondFor, ClaimPermission } from 'types'
 
-export type BondSetter = ({ bond }: { bond: BigNumber }) => void
+export type ValueSetter = ({ value }: { value: BigNumber }) => void
 
 export interface BondFeedbackProps {
 	syncing?: boolean
-	setters: BondSetter[]
+	setters: ValueSetter[]
 	bondFor: BondFor
 	defaultBond: string | null
 	bonding?: boolean
@@ -22,18 +22,8 @@ export interface BondFeedbackProps {
 	displayFirstWarningOnly?: boolean
 }
 
-export interface BondInputProps {
-	freeToBond: BigNumber
-	value: string
-	defaultValue: string
-	syncing?: boolean
-	setters: BondSetter[]
-	disabled: boolean
-	disableTxFeeUpdate?: boolean
-}
-
 export interface UnbondFeedbackProps {
-	setters: BondSetter[]
+	setters: ValueSetter[]
 	bondFor: BondFor
 	defaultBond?: number
 	inSetup?: boolean
@@ -49,7 +39,7 @@ export interface UnbondInputProps {
 	unbondToMin: BigNumber
 	defaultValue: string
 	disabled: boolean
-	setters: BondSetter[]
+	setters: ValueSetter[]
 	value: string
 }
 

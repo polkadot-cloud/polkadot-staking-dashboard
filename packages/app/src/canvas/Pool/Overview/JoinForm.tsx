@@ -16,6 +16,7 @@ import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput'
 import { SubmitTx } from 'library/SubmitTx'
@@ -47,7 +48,7 @@ export const JoinForm = ({
 	const { newBatchCall } = useBatchCall()
 	const { setPoolSetup } = usePoolSetups()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const {
 		balances: {
 			pool: { totalPossibleBond },
@@ -74,8 +75,8 @@ export const JoinForm = ({
 	const [feedbackErrors, setFeedbackErrors] = useState<string[]>([])
 
 	// Handler to set bond on input change.
-	const handleSetBond = (value: { bond: BigNumber }) => {
-		setBond({ bond: value.bond.toString() })
+	const handleSetBond = ({ value }: { value: BigNumber }) => {
+		setBond({ bond: value.toString() })
 	}
 
 	// Whether the form is ready to submit.
@@ -109,7 +110,7 @@ export const JoinForm = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeCanvas()

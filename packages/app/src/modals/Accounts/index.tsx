@@ -40,13 +40,6 @@ export const Accounts = () => {
 		let isInPool = false
 		const delegates = getDelegates(address)
 
-		// Inject transferrable balance into delegates list.
-		if (delegates?.delegates) {
-			delegates.delegates = delegates?.delegates.map((d) => ({
-				...d,
-			}))
-		}
-
 		// Check if nominating
 		if (
 			!!ledger &&

@@ -6,6 +6,7 @@ import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import {
 	faChartLine,
 	faEnvelope,
+	faPaperPlane,
 	faUsers,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -27,6 +28,18 @@ export const NotStaking = () => {
 	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
 	const actions: ButtonQuickActionProps[] = [
+		{
+			onClick: () => {
+				openModal({
+					key: 'Transfer',
+					options: {},
+					size: 'sm',
+				})
+			},
+			disabled: false,
+			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faPaperPlane} />,
+			label: t('send'),
+		},
 		{
 			onClick: () => {
 				if (!advancedMode) {

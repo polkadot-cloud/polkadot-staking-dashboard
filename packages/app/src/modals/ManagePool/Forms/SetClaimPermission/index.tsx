@@ -9,6 +9,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { defaultClaimPermission } from 'global-bus'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -35,7 +36,7 @@ export const SetClaimPermission = ({
 	const { getPoolMembership } = useBalances()
 	const { isOwner, isMember } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { membership } = getPoolMembership(activeAddress)
 
@@ -68,7 +69,7 @@ export const SetClaimPermission = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

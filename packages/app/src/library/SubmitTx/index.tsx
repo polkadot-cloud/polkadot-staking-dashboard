@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useTxMeta } from 'contexts/TxMeta'
@@ -15,60 +14,39 @@ import { Default } from './Default'
 import { ManualSign } from './ManualSign'
 import type { SubmitTxProps } from './types'
 
-export const SubmitTx = ({
-	uid,
-	onSubmit,
-	submitText,
-	buttons = [],
-	submitAccount,
-	valid = false,
-	noMargin = false,
-	proxySupported,
-	displayFor = 'default',
-	requiresMigratedController = false,
-	onResize,
-	transparent,
-	txInitiated,
-}: SubmitTxProps) => {
+export const SubmitTx = (props: SubmitTxProps) => {
+	const {
+		uid,
+		onSubmit,
+		submitText,
+		buttons = [],
+		submitAccount,
+		valid = false,
+		noMargin = false,
+		displayFor = 'default',
+		requiresMigratedController = false,
+		onResize,
+		transparent,
+	} = props
+
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
 	const { setModalResize } = useOverlay().modal
-	const { activeAccount, activeProxy } = useActiveAccounts()
-	const { getAccount, requiresManualSign } = useImportedAccounts()
+	const { requiresManualSign } = useImportedAccounts()
 
 	const { unit } = getStakingChainData(network)
 	const txSubmission = getTxSubmission(uid)
 	const from = txSubmission?.from || null
 	const fee = txSubmission?.fee || 0n
 	const submitted = txSubmission?.submitted || false
-
 	const {
 		balances: { balanceTxFees },
 	} = useAccountBalances(from)
 	const notEnoughFunds = balanceTxFees - fee < 0n && fee > 0n
 
-	// Default to active account, using activeAccount to get the correct account
-	let signingOpts = {
-		label: t('signer', { ns: 'app' }),
-		who: getAccount(activeAccount),
-	}
-
-	if (txInitiated) {
-		if (activeProxy && proxySupported) {
-			signingOpts = {
-				label: t('signedByProxy', { ns: 'app' }),
-				who: getAccount(activeProxy),
-			}
-		} else if (!(activeProxy && proxySupported) && requiresMigratedController) {
-			signingOpts = {
-				label: t('signedByController', { ns: 'app' }),
-				who: getAccount(activeAccount),
-			}
-		}
-	}
-
-	submitText =
+	// Determine submit button text
+	const activeSubmitText =
 		submitText ||
 		`${
 			submitted
@@ -86,13 +64,10 @@ export const SubmitTx = ({
 
 	return (
 		<Tx
-			displayFor={displayFor}
-			margin={!noMargin}
-			label={signingOpts.label}
-			name={signingOpts.who?.name || ''}
+			{...props}
 			notEnoughFunds={notEnoughFunds}
 			dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
-			transparent={transparent}
+			margin={!noMargin}
 			SignerComponent={
 				requiresManualSign(submitAccount) ? (
 					<ManualSign
@@ -100,7 +75,7 @@ export const SubmitTx = ({
 						onSubmit={onSubmit}
 						submitted={submitted}
 						valid={valid}
-						submitText={submitText}
+						submitText={activeSubmitText}
 						buttons={buttons}
 						submitAccount={submitAccount}
 						displayFor={displayFor}
@@ -112,7 +87,7 @@ export const SubmitTx = ({
 						onSubmit={onSubmit}
 						submitted={submitted}
 						valid={valid}
-						submitText={submitText}
+						submitText={activeSubmitText}
 						buttons={buttons}
 						submitAccount={submitAccount}
 						displayFor={displayFor}
@@ -120,6 +95,8 @@ export const SubmitTx = ({
 					/>
 				)
 			}
+			displayFor={displayFor}
+			transparent={transparent}
 		/>
 	)
 }

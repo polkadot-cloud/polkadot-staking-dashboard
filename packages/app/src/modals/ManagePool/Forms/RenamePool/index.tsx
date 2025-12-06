@@ -9,6 +9,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { stringToU8a } from 'dedot/utils'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import type { Dispatch, FormEvent, SetStateAction } from 'react'
@@ -33,7 +34,7 @@ export const RenamePool = ({
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { bondedPools, poolsMetaData } = useBondedPools()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 
 	const poolId = activePool?.id
 
@@ -66,7 +67,7 @@ export const RenamePool = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()

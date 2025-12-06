@@ -3,15 +3,13 @@
 
 import { UnsupportedIfUniqueController } from 'consts/proxies'
 import { isSupportedProxyCall } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useProxies } from 'contexts/Proxies'
 import type { SubmittableExtrinsic } from 'dedot'
-import type { MaybeAddress } from 'types'
+import type { ActiveProxy, MaybeAddress } from 'types'
 
 export const useProxySupported = () => {
 	const { getProxyDelegate } = useProxies()
-	const { activeProxy } = useActiveAccounts()
 	const { getStakingLedger } = useBalances()
 
 	// Check if the controller account of sender is unmigrated
@@ -24,11 +22,9 @@ export const useProxySupported = () => {
 	const isProxySupported = (
 		tx: SubmittableExtrinsic | undefined,
 		delegator: MaybeAddress,
+		proxy: ActiveProxy | null,
 	) => {
-		const proxyDelegate = getProxyDelegate(
-			delegator,
-			activeProxy?.address || null,
-		)
+		const proxyDelegate = getProxyDelegate(delegator, proxy?.address || null)
 		if (!tx || !proxyDelegate) {
 			return false
 		}

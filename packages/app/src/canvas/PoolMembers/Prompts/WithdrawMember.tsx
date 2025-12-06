@@ -12,6 +12,7 @@ import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { Title } from 'library/Prompt/Title'
 import { SubmitTx } from 'library/SubmitTx'
@@ -36,8 +37,8 @@ export const WithdrawMember = ({
 	const { closePrompt } = usePrompt()
 	const { getConsts, activeEra } = useApi()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
-	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { historyDepth } = getConsts(network)
 	const { unbondingEras, points } = member
 
@@ -64,7 +65,7 @@ export const WithdrawMember = ({
 	}
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: valid,
 		callbackSubmit: () => {
 			// Remove the pool member from member list

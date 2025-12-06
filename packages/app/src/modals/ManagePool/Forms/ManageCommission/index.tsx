@@ -16,6 +16,7 @@ import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import 'rc-slider/assets/index.css'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -55,8 +56,8 @@ export const ManageCommission = ({
 	const { closeModal } = useOverlay().modal
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getBondedPool, updateBondedPools } = useBondedPools()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const poolId = activePool?.id || 0
 	const bondedPool = getBondedPool(poolId)
@@ -163,7 +164,7 @@ export const ManageCommission = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()
