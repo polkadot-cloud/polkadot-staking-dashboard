@@ -8,7 +8,6 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useStaking } from 'contexts/Staking'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSyncing } from 'hooks/useSyncing'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
@@ -19,7 +18,6 @@ export const PayoutDestinationStatus = () => {
 	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
-	const { isFastUnstaking } = useUnstaking()
 	const { getPayeeItems } = usePayeeConfig()
 	const { activeAddress } = useActiveAccounts()
 	const { isReadOnlyAccount } = useImportedAccounts()
@@ -59,7 +57,7 @@ export const PayoutDestinationStatus = () => {
 							{
 								title: t('update'),
 								icon: faGear,
-								disabled: syncing || !isBonding || isFastUnstaking,
+								disabled: syncing || !isBonding,
 								onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
 							},
 						]

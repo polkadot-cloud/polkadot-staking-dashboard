@@ -13,8 +13,6 @@ import {
 	resetChainSpecs,
 	resetConsts,
 	resetEraRewardPoints,
-	resetFastUnstakeConfig,
-	resetFastUnstakeQueue,
 	resetPoolMemberships,
 	resetPoolsConfig,
 	resetProxies,
@@ -37,8 +35,6 @@ export const onNetworkReset = () => {
 
 	resetBlockNumber()
 	resetActiveEra()
-	resetFastUnstakeConfig()
-	resetFastUnstakeQueue()
 	resetEraRewardPoints()
 
 	resetApiStatus()

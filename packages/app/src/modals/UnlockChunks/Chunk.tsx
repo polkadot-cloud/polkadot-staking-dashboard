@@ -9,7 +9,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { fromUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { Countdown } from 'library/Countdown'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,7 +22,6 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
-	const { isFastUnstaking } = useUnstaking()
 	const { activeAddress } = useActiveAccounts()
 	const { erasToSeconds } = useErasToTimeLeft()
 
@@ -69,7 +67,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 						<div>
 							<ButtonSubmit
 								text={t('rebond')}
-								disabled={isFastUnstaking}
+								disabled={false}
 								onClick={() => onRebond(chunk)}
 							/>
 						</div>
