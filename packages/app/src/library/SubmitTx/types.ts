@@ -11,16 +11,23 @@ import type {
 	MaybeAddress,
 } from 'types'
 
-export type SubmitTxProps = SubmitProps & {
-	buttons?: ReactNode[]
-	requiresMigratedController?: boolean
-	proxySupported: boolean
-	noMargin?: boolean
-	onResize?: () => void
-	transparent?: boolean
-	txInitiated: boolean
-	proxyAccount: ActiveProxy | null
+export interface ProxySwitcherProps {
+	onPreviousProxy?: () => void
+	onNextProxy?: () => void
+	hasMultipleDelegates?: boolean
 }
+
+export type SubmitTxProps = SubmitProps &
+	ProxySwitcherProps & {
+		buttons?: ReactNode[]
+		requiresMigratedController?: boolean
+		proxySupported: boolean
+		noMargin?: boolean
+		onResize?: () => void
+		transparent?: boolean
+		txInitiated: boolean
+		proxyAccount: ActiveProxy | null
+	}
 
 export interface SubmitProps {
 	uid: number

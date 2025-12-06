@@ -9,6 +9,7 @@ import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useProxySwitcher } from 'hooks/useProxySwitcher'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { AccountDropdown } from 'library/AccountDropdown'
@@ -26,7 +27,7 @@ export const Transfer = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { closeModal } = useOverlay().modal
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { accounts, accountHasSigner, getAccount } = useImportedAccounts()
 
 	// Filter accounts to only show those with signers
@@ -68,9 +69,15 @@ export const Transfer = () => {
 		return tx
 	}
 
+	// Initialize proxy switcher hook, allowing switching between proxies if available
+	const proxySwitcher = useProxySwitcher(
+		fromAccount?.address || null,
+		activeProxy,
+	)
+
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: formatFromProp(fromAccount, null), // NOTE: No proxy for transfers - not yet supported
+		from: formatFromProp(fromAccount, proxySwitcher.currentProxy),
 		shouldSubmit: true,
 		callbackSubmit: () => {
 			closeModal()
@@ -125,7 +132,7 @@ export const Transfer = () => {
 					/>
 				</Padding>
 			</Padding>
-			<SubmitTx valid={valid} {...submitExtrinsic} />
+			<SubmitTx valid={valid} {...submitExtrinsic} {...proxySwitcher} />
 		</>
 	)
 }

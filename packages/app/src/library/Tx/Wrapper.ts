@@ -140,4 +140,28 @@ export const SignerWrapper = styled.p`
       margin-right: 0.3rem;
     }
   }
+
+  .proxy-switcher {
+    display: flex;
+    align-items: center;
+    margin-left: 0.75rem;
+    gap: 0.4rem;
+
+    button {
+      background: var(--background-primary);
+      border-radius: 0.5rem;
+      color: var(--text-color-secondary);
+      padding: 0.1rem 0.4rem;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+
+      &:hover {
+        color: var(--accent-color-primary);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
+  }
 `
