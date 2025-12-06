@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { usePlugins } from 'contexts/Plugins'
+import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,12 +34,18 @@ export const Nominate = () => {
 									{
 										title: t('overview', { ns: 'app' }),
 										active: activeTab === 0,
-										onClick: () => setActiveTab(0),
+										onClick: () => {
+											onTabVisitEvent('nominate', 'overview')
+											setActiveTab(0)
+										},
 									},
 									{
 										title: t('decentralization', { ns: 'app' }),
 										active: activeTab === 1,
-										onClick: () => setActiveTab(1),
+										onClick: () => {
+											onTabVisitEvent('nominate', 'decentralization')
+											setActiveTab(1)
+										},
 									},
 								]
 							: undefined
