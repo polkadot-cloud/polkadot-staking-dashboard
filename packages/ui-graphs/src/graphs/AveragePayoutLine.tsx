@@ -48,8 +48,8 @@ export const AveragePayoutLine = ({
 	const staking = nominating || inPool
 	const inPoolOnly = !nominating && inPool
 
-	// Memoize current date, updating daily when the day changes
-	const fromDate = useMemo(() => new Date(), [new Date().toDateString()])
+	// Memoize current date for the component's lifetime
+	const fromDate = useMemo(() => new Date(), [])
 
 	const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
 		fromDate,
