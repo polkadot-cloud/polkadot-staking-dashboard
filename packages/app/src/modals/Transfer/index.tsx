@@ -14,7 +14,7 @@ import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { BalanceInput } from 'library/Form/BalanceInput'
 import { SubmitTx } from 'library/SubmitTx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
 import { Separator } from 'ui-core/base'
@@ -34,26 +34,36 @@ export const Transfer = () => {
 		accountHasSigner({ address: account.address, source: account.source }),
 	)
 
-	// State for selected accounts
+	// From account
 	const [fromAccount, setFromAccount] = useState<ImportedAccount | null>(
 		getAccount(activeAccount),
 	)
+
+	// To account
 	const [toAccount, setToAccount] = useState<ImportedAccount | null>(
 		accounts[0],
 	)
+
+	// Amount to transfer
+	const [amount, setAmountState] = useState<BigNumber>(new BigNumber(0))
 
 	const {
 		balances: { transferableBalance },
 	} = useAccountBalances(fromAccount?.address || null)
 
 	const { units } = getStakingChainData(network)
-	const amount = 0.1
-	const amountPlanck = unitToPlanck(amount, units)
+
+	const valid =
+		amount.gt(0) &&
+		toAccount !== null &&
+		fromAccount !== null &&
+		fromAccount.address !== toAccount.address
 
 	const getTx = () => {
-		if (!fromAccount || !toAccount) {
+		if (!fromAccount || !toAccount || amount.lte(0)) {
 			return
 		}
+		const amountPlanck = unitToPlanck(amount.toString(), units)
 		const tx = serviceApi.tx.transferKeepAlive(toAccount.address, amountPlanck)
 		return tx
 	}
@@ -66,6 +76,20 @@ export const Transfer = () => {
 			closeModal()
 		},
 	})
+
+	const setAmount = ({ value }: { value: BigNumber }) => {
+		setAmountState(value)
+	}
+
+	// Reset amount on from address change
+	useEffect(() => {
+		// If from address max balance is less than current amount, set amount to max
+		const maxBalance = new BigNumber(planckToUnit(transferableBalance, units))
+		if (amount.gt(maxBalance)) {
+			setAmountState(maxBalance)
+			return
+		}
+	}, [fromAccount])
 
 	return (
 		<>
@@ -89,11 +113,11 @@ export const Transfer = () => {
 					/>
 					<Separator transparent />
 					<BalanceInput
-						value={String(0)}
+						value={String(amount)}
 						defaultValue={'0'}
 						syncing={false}
 						disabled={false}
-						setters={[]} /* TODO: Add setter to update amount */
+						setters={[setAmount]}
 						maxAvailable={
 							new BigNumber(planckToUnit(transferableBalance, units))
 						}
@@ -101,7 +125,7 @@ export const Transfer = () => {
 					/>
 				</Padding>
 			</Padding>
-			<SubmitTx valid {...submitExtrinsic} />
+			<SubmitTx valid={valid} {...submitExtrinsic} />
 		</>
 	)
 }
