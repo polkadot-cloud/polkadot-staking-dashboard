@@ -10,7 +10,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { ListStatusHeader } from 'library/List'
 import { NominationList } from 'library/NominationList'
@@ -42,7 +41,6 @@ export const Nominations = ({
 	const { isBonding } = useStaking()
 	const { openHelpTooltip } = useHelp()
 	const { getNominations } = useBalances()
-	const { isFastUnstaking } = useUnstaking()
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
 	const { syncing } = useSyncing(['era-stakers'])
@@ -79,8 +77,7 @@ export const Nominations = ({
 		(!isPool && !isBonding) ||
 		(!isPool && syncing) ||
 		isReadOnlyAccount(activeAddress) ||
-		poolDestroying ||
-		isFastUnstaking
+		poolDestroying
 
 	return (
 		<Wrapper>

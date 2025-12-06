@@ -16,12 +16,10 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
-import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
-import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
 
@@ -30,16 +28,14 @@ export class PolkadotService
 		PolkadotApi, // Relay Chain
 		PolkadotPeopleApi, // People Chain
 		PolkadotAssetHubApi, // Asset Hub Chain
-		PolkadotAssetHubApi, // Chain for staking
-		PolkadotApi // Chain for fast unstake
+		PolkadotAssetHubApi // Chain for staking
 	>
 	implements
 		DefaultServiceClass<
 			PolkadotApi, // Relay Chain
 			PolkadotPeopleApi, // People Chain
 			PolkadotAssetHubApi, // Asset Hub Chain
-			PolkadotAssetHubApi, // Chain for staking
-			PolkadotApi // Chain for fast unstake
+			PolkadotAssetHubApi // Chain for staking
 		>
 {
 	// Service interface
@@ -53,19 +49,7 @@ export class PolkadotService
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		// For Polkadot, staking happens on the relay chain, and fast unstake on the relay chain
-		super(
-			networkConfig,
-			ids,
-			apiRelay,
-			apiHub,
-			apiHub,
-			apiRelay,
-			providerPeople,
-		)
-
-		// For Polkadot, fast unstake happens on the relay chain
-		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
-		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
+		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {
@@ -127,8 +111,6 @@ export class PolkadotService
 						nominees,
 						roles,
 					),
-				fastUnstakeDeregister: () => tx.fastUnstakeDeregister(this.apiRelay),
-				fastUnstakeRegister: () => tx.fastUnstakeRegister(this.apiRelay),
 				joinPool: (poolId, bond, claimPermission) =>
 					tx.joinPool(this.apiHub, poolId, bond, claimPermission),
 				newNominator: (bond, payee, nominees) =>

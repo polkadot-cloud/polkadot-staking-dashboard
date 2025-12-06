@@ -16,12 +16,10 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
-import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
-import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
 
@@ -30,16 +28,14 @@ export class KusamaService
 		KusamaApi, // Relay Chain
 		KusamaPeopleApi, // People Chain
 		KusamaAssetHubApi, // Asset Hub Chain
-		KusamaAssetHubApi, // Chain for staking
-		KusamaApi // Chain for fast unstake
+		KusamaAssetHubApi // Chain for staking
 	>
 	implements
 		DefaultServiceClass<
 			KusamaApi, // Relay Chain
 			KusamaPeopleApi, // People Chain
 			KusamaAssetHubApi, // Asset Hub Chain
-			KusamaAssetHubApi, // Chain for staking
-			KusamaApi // Chain for fast unstake
+			KusamaAssetHubApi // Chain for staking
 		>
 {
 	// Service interface
@@ -53,19 +49,7 @@ export class KusamaService
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		// For Kusama, staking happens on the hub chain, and fast unstake on the relay chain
-		super(
-			networkConfig,
-			ids,
-			apiRelay,
-			apiHub,
-			apiHub,
-			apiRelay,
-			providerPeople,
-		)
-
-		// For Kusama, fast unstake happens on the relay chain
-		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
-		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
+		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {
@@ -127,8 +111,6 @@ export class KusamaService
 						nominees,
 						roles,
 					),
-				fastUnstakeDeregister: () => tx.fastUnstakeDeregister(this.apiRelay),
-				fastUnstakeRegister: () => tx.fastUnstakeRegister(this.apiRelay),
 				joinPool: (poolId, bond, claimPermission) =>
 					tx.joinPool(this.apiHub, poolId, bond, claimPermission),
 				newNominator: (bond, payee, nominees) =>

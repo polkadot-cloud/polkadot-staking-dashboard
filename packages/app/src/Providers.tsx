@@ -18,7 +18,6 @@ import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
-import { FastUnstakeProvider } from 'contexts/FastUnstake'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
 import { InvitesProvider } from 'contexts/Invites'
@@ -86,7 +85,6 @@ export const Providers = () => {
 			ActivePoolProvider,
 			ValidatorsProvider,
 			FavoriteValidatorsProvider,
-			FastUnstakeProvider,
 			PayoutsProvider,
 			PoolSetupsProvider,
 			NominatorSetupsProvider,

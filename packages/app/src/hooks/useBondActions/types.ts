@@ -5,5 +5,4 @@ export interface UseBondActions {
 	canBond: boolean
 	canUnbond: boolean
 	canUnstake: boolean
-	canFastUnstake: boolean
 }

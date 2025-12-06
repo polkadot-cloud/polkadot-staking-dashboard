@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -21,11 +21,11 @@ export const UnstakePrompts = () => {
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
+	const { isUnstaking } = useUnstaking()
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
 	const { activeAddress } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
-	const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking()
 	const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
 		balances.nominator
 
@@ -37,7 +37,7 @@ export const UnstakePrompts = () => {
 
 	return (
 		isBonding &&
-		(isUnstaking || isFastUnstaking) &&
+		isUnstaking &&
 		!syncing && (
 			<Page.Row>
 				<CardWrapper
@@ -46,54 +46,37 @@ export const UnstakePrompts = () => {
 					}}
 				>
 					<div className="content">
-						<h3>
-							{t('unstakePromptInProgress', {
-								context: isFastUnstaking ? 'fast' : 'regular',
-							})}
-						</h3>
+						<h3>{t('unstakePromptInProgress')}</h3>
 						<h4>
-							{isFastUnstaking
-								? t('unstakePromptInQueue')
-								: !canWithdrawUnlocks
-									? t('unstakePromptWaitingForUnlocks')
-									: `${t('unstakePromptReadyToWithdraw')} ${t(
-											'unstakePromptRevert',
-											{ unit },
-										)}`}
+							{!canWithdrawUnlocks
+								? t('unstakePromptWaitingForUnlocks')
+								: `${t('unstakePromptReadyToWithdraw')} ${t(
+										'unstakePromptRevert',
+										{ unit },
+									)}`}
 						</h4>
 						<ButtonRow yMargin>
-							{isFastUnstaking ? (
-								<ButtonPrimary
-									marginRight
-									iconLeft={faBolt}
-									text={getFastUnstakeText()}
-									onClick={() =>
-										openModal({ key: 'ManageFastUnstake', size: 'sm' })
-									}
-								/>
-							) : (
-								<ButtonPrimary
-									iconLeft={faLockOpen}
-									text={
-										canWithdrawUnlocks
-											? t('unlocked')
-											: String(totalUnlockChunks ?? 0)
-									}
-									disabled={false}
-									onClick={() =>
-										openModal({
-											key: 'UnlockChunks',
-											options: {
-												bondFor: 'nominator',
-												poolClosure: true,
-												disableWindowResize: true,
-												disableScroll: true,
-											},
-											size: 'sm',
-										})
-									}
-								/>
-							)}
+							<ButtonPrimary
+								iconLeft={faLockOpen}
+								text={
+									canWithdrawUnlocks
+										? t('unlocked')
+										: String(totalUnlockChunks ?? 0)
+								}
+								disabled={false}
+								onClick={() =>
+									openModal({
+										key: 'UnlockChunks',
+										options: {
+											bondFor: 'nominator',
+											poolClosure: true,
+											disableWindowResize: true,
+											disableScroll: true,
+										},
+										size: 'sm',
+									})
+								}
+							/>
 						</ButtonRow>
 					</div>
 				</CardWrapper>

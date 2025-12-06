@@ -10,7 +10,6 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers'
 import { StaticNote } from 'modals/Utils/StaticNote'
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react'
@@ -40,7 +39,6 @@ export const Overview = forwardRef(
 		const { network } = useNetwork()
 		const { getConsts, activeEra } = useApi()
 		const { bondDuration } = getConsts(network)
-		const { isFastUnstaking } = useUnstaking()
 		const { erasToSeconds } = useErasToTimeLeft()
 
 		const { unit, units } = getStakingChainData(network)
@@ -121,7 +119,7 @@ export const Overview = forwardRef(
 					{withdrawAvailable > 0 && (
 						<div style={{ margin: '1rem 0 0.5rem 0' }}>
 							<ButtonSubmit
-								disabled={isFastUnstaking}
+								disabled={false}
 								text={t('withdrawUnlocked')}
 								onClick={() => {
 									setTask('withdraw')

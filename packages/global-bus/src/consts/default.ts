@@ -10,6 +10,5 @@ export const defaultConsts: ChainConsts = {
 	historyDepth: 0,
 	expectedBlockTime: 0n,
 	epochDuration: 0n,
-	fastUnstakeDeposit: 0n,
 	poolsPalletId: new Uint8Array([0]),
 }
