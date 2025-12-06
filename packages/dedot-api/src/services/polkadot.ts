@@ -48,7 +48,6 @@ export class PolkadotService
 		public apiHub: DedotClient<PolkadotAssetHubApi>,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
-		// For Polkadot, staking happens on the relay chain, and fast unstake on the relay chain
 		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
 
 		// Initialize service interface with network-specific routing
