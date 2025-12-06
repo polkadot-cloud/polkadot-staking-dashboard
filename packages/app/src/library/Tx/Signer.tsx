@@ -53,8 +53,7 @@ export const Signer = (props: SignerProps) => {
 				{signingOpts.label}
 			</span>
 			{signingOpts.who?.name || ''}
-			{hasMultipleDelegates && proxyAccount && (
-				// proxySupported &&
+			{hasMultipleDelegates && proxyAccount && proxySupported && (
 				<span className="proxy-switcher">
 					<button type="button" onClick={onPreviousProxy}>
 						<FontAwesomeIcon icon={faChevronLeft} transform="shrink-2" />
