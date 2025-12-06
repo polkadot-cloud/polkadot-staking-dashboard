@@ -13,6 +13,7 @@ import {
 	Title,
 	Tooltip,
 } from 'chart.js'
+import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import type { AveragePayoutLineProps } from '../types'
 import {
@@ -47,8 +48,8 @@ export const AveragePayoutLine = ({
 	const staking = nominating || inPool
 	const inPoolOnly = !nominating && inPool
 
-	// Define the most recent date that we will show on the graph
-	const fromDate = new Date()
+	// Memoize current date for the component's lifetime
+	const fromDate = useMemo(() => new Date(), [])
 
 	const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
 		fromDate,
