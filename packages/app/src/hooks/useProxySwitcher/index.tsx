@@ -9,7 +9,7 @@ import type { SignerOption, UseProxySwitcher } from './types'
 
 export const useProxySwitcher = (
 	delegatorAddress: MaybeAddress,
-	initialProxy: ActiveProxy | null,
+	initialSigner: ActiveProxy | null,
 	fromAccount: { address: string; source: string } | null,
 ): UseProxySwitcher => {
 	const { getDelegates } = useProxies()
@@ -31,7 +31,7 @@ export const useProxySwitcher = (
 	})
 
 	// Include fromAccount as first option (non-proxy), followed by proxy accounts
-	const delegates = fromAccount
+	const allSigners = fromAccount
 		? [
 				{
 					address: fromAccount.address,
@@ -43,57 +43,55 @@ export const useProxySwitcher = (
 		: proxyAccounts
 
 	// Current proxy account - only state we need
-	const [currentProxy, setCurrentProxy] = useState<SignerOption | null>(
-		initialProxy || (delegates.length > 0 ? delegates[0] : null),
+	const [currentSigner, setCurrentSigner] = useState<SignerOption | null>(
+		initialSigner || (allSigners.length > 0 ? allSigners[0] : null),
 	)
 
 	// Derive current index from currentProxy and delegates
-	const currentIndex = currentProxy
-		? delegates.findIndex(
+	const currentIndex = currentSigner
+		? allSigners.findIndex(
 				(d) =>
-					d.address === currentProxy.address &&
-					d.source === currentProxy.source,
+					d.address === currentSigner.address &&
+					d.source === currentSigner.source,
 			)
 		: -1
 
 	// Switch to next delegate
-	const nextProxy = () => {
-		if (delegates.length <= 1) {
+	const nextSigner = () => {
+		if (allSigners.length <= 1) {
 			return
 		}
 		const validIndex = currentIndex >= 0 ? currentIndex : 0
-		const nextIndex = (validIndex + 1) % delegates.length
-		setCurrentProxy(delegates[nextIndex])
+		const nextIndex = (validIndex + 1) % allSigners.length
+		setCurrentSigner(allSigners[nextIndex])
 	}
 
 	// Switch to previous delegate
-	const previousProxy = () => {
-		if (delegates.length <= 1) {
+	const previousSigner = () => {
+		if (allSigners.length <= 1) {
 			return
 		}
 		const validIndex = currentIndex >= 0 ? currentIndex : 0
-		const prevIndex = (validIndex - 1 + delegates.length) % delegates.length
-		setCurrentProxy(delegates[prevIndex])
+		const prevIndex = (validIndex - 1 + allSigners.length) % allSigners.length
+		setCurrentSigner(allSigners[prevIndex])
 	}
 
 	// Update current proxy if delegates change and current proxy is no longer valid
 	useEffect(() => {
-		if (delegates.length === 0) {
-			setCurrentProxy(null)
+		if (allSigners.length === 0) {
+			setCurrentSigner(null)
 			return
 		}
 		// If current proxy is not in the delegates list, reset to first delegate
 		if (currentIndex === -1) {
-			setCurrentProxy(delegates[0])
+			setCurrentSigner(allSigners[0])
 		}
-	}, [delegates.length, currentIndex])
+	}, [allSigners.length, currentIndex])
 
 	return {
-		currentProxy,
-		delegates,
-		currentIndex,
-		hasMultipleDelegates: delegates.length > 1,
-		onNextProxy: nextProxy,
-		onPreviousProxy: previousProxy,
+		currentSigner,
+		hasMultipleSigners: allSigners.length > 1,
+		onNextSigner: nextSigner,
+		onPreviousSigner: previousSigner,
 	}
 }

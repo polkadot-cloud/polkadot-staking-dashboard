@@ -21,9 +21,9 @@ export const Signer = (props: SignerProps) => {
 		proxySupported,
 		requiresMigratedController,
 		submitAccount,
-		onPreviousProxy,
-		onNextProxy,
-		hasMultipleDelegates,
+		onPreviousSigner,
+		onNextSigner,
+		hasMultipleSigners,
 		valid,
 	} = props
 	const { t } = useTranslation()
@@ -57,12 +57,12 @@ export const Signer = (props: SignerProps) => {
 				{signingOpts.label}
 			</span>
 			{signingOpts.who?.name || ''}
-			{hasMultipleDelegates && (
+			{hasMultipleSigners && (
 				<span className="proxy-switcher">
-					<button type="button" onClick={onPreviousProxy} disabled={!valid}>
+					<button type="button" onClick={onPreviousSigner} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronLeft} transform="shrink-2" />
 					</button>
-					<button type="button" onClick={onNextProxy} disabled={!valid}>
+					<button type="button" onClick={onNextSigner} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
 					</button>
 				</span>

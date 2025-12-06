@@ -8,10 +8,8 @@ export type SignerOption = {
 }
 
 export interface UseProxySwitcher {
-	currentProxy: SignerOption | null
-	delegates: SignerOption[]
-	currentIndex: number
-	hasMultipleDelegates: boolean
-	onNextProxy: () => void
-	onPreviousProxy: () => void
+	currentSigner: SignerOption | null
+	hasMultipleSigners: boolean
+	onNextSigner: () => void
+	onPreviousSigner: () => void
 }

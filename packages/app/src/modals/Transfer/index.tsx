@@ -82,7 +82,7 @@ export const Transfer = () => {
 		tx: getTx(),
 		from: formatFromProp(
 			fromAccount,
-			filterNonProxy(proxySwitcher.currentProxy),
+			filterNonProxy(proxySwitcher.currentSigner),
 		),
 		shouldSubmit: true,
 		callbackSubmit: () => {

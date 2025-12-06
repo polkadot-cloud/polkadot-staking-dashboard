@@ -12,9 +12,9 @@ import type {
 } from 'types'
 
 export interface ProxySwitcherProps {
-	onPreviousProxy?: () => void
-	onNextProxy?: () => void
-	hasMultipleDelegates?: boolean
+	onPreviousSigner?: () => void
+	onNextSigner?: () => void
+	hasMultipleSigners?: boolean
 }
 
 export type SubmitTxProps = SubmitProps &
