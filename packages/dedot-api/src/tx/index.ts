@@ -3,8 +3,6 @@
 
 import { batch } from './batch'
 import { createPool } from './createPool'
-import { fastUnstakeDeregister } from './fastUnstakeDeregister'
-import { fastUnstakeRegister } from './fastUnstakeRegister'
 import { joinPool } from './joinPool'
 import { newNominator } from './newNominator'
 import { payoutStakersByPage } from './payoutStakersByPage'
@@ -36,8 +34,6 @@ import { transferKeepAlive } from './transferKeepAlive'
 export const tx = {
 	batch,
 	createPool,
-	fastUnstakeDeregister,
-	fastUnstakeRegister,
 	joinPool,
 	newNominator,
 	payoutStakersByPage,

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-	faBolt,
 	faMinus,
 	faPlus,
 	faSignOutAlt,
@@ -19,7 +18,6 @@ import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBondActions } from 'hooks/useBondActions'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useTranslation } from 'react-i18next'
@@ -34,10 +32,9 @@ export const ManageBond = () => {
 	const { openModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
 	const { activeAddress } = useActiveAccounts()
-	const { getFastUnstakeText } = useUnstaking()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { balances } = useAccountBalances(activeAddress)
-	const { canBond, canUnbond, canUnstake, canFastUnstake } = useBondActions()
+	const { canBond, canUnbond, canUnstake } = useBondActions()
 
 	const { ledger } = getStakingLedger(activeAddress)
 	const { units } = getStakingChainData(network)
@@ -46,28 +43,16 @@ export const ManageBond = () => {
 
 	const { totalUnlocking, totalUnlocked } = balances.nominator
 
-	// The available unstake buttons to display. If fast unstaking is available the fast unstake
-	// button will be displayed. Otherwise show the normal unstake button. If the account is
-	// read-only, no buttons will be displayed.
+	// The available unstake button to display. If the account is read-only, no buttons will be
+	// displayed
 	const unstakeButtons = !isReadOnlyAccount(activeAddress) ? (
-		canFastUnstake ? (
-			<ButtonPrimary
-				size="md"
-				text={getFastUnstakeText()}
-				iconLeft={faBolt}
-				onClick={() => {
-					openModal({ key: 'ManageFastUnstake', size: 'sm' })
-				}}
-			/>
-		) : (
-			<ButtonPrimary
-				size="md"
-				text={t('unstake')}
-				iconLeft={faSignOutAlt}
-				disabled={!canUnstake}
-				onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
-			/>
-		)
+		<ButtonPrimary
+			size="md"
+			text={t('unstake')}
+			iconLeft={faSignOutAlt}
+			disabled={!canUnstake}
+			onClick={() => openModal({ key: 'Unstake', size: 'sm' })}
+		/>
 	) : null
 
 	return (

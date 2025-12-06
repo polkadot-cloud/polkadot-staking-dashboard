@@ -78,8 +78,6 @@ export interface ServiceInterface {
 			nominees: string[],
 			roles: PoolRoles | null,
 		) => SubmittableExtrinsic[] | undefined
-		fastUnstakeDeregister: () => SubmittableExtrinsic | undefined
-		fastUnstakeRegister: () => SubmittableExtrinsic | undefined
 		joinPool: (
 			poolId: number,
 			bond: bigint,

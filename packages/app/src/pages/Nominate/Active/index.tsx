@@ -8,12 +8,10 @@ import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { Nominations } from 'library/Nominations'
-import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
@@ -33,7 +31,6 @@ export const Active = () => {
 	const { openHelpTooltip } = useHelp()
 	const { getNominations } = useBalances()
 	const { openCanvas } = useOverlay().canvas
-	const { isFastUnstaking } = useUnstaking()
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
 
@@ -48,8 +45,6 @@ export const Active = () => {
 				<MinimumActiveStake />
 			</Stat.Row>
 			<CommissionPrompt />
-
-			{!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}
 			<UnstakePrompts />
 			<Page.Row>
 				<Page.RowSection secondary vLast>
@@ -83,7 +78,7 @@ export const Active = () => {
 											iconLeft={faChevronCircleRight}
 											iconTransform="grow-1"
 											text={`${t('nominate', { ns: 'pages' })}`}
-											disabled={syncing || isFastUnstaking}
+											disabled={syncing}
 											onClick={() =>
 												openCanvas({
 													key: 'ManageNominations',

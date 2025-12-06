@@ -16,12 +16,10 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
-import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
-import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
 
@@ -30,16 +28,14 @@ export class WestendService
 		WestendApi, // Relay Chain
 		WestendPeopleApi, // People Chain
 		WestendAssetHubApi, // Asset Hub Chain
-		WestendAssetHubApi, // Chain for staking
-		WestendAssetHubApi // Chain for fast unstake
+		WestendAssetHubApi // Chain for staking
 	>
 	implements
 		DefaultServiceClass<
 			WestendApi, // Relay Chain
 			WestendPeopleApi, // People Chain
 			WestendAssetHubApi, // Asset Hub Chain
-			WestendAssetHubApi, // Chain for staking
-			WestendAssetHubApi // Chain for fast unstake
+			WestendAssetHubApi // Chain for staking
 		>
 {
 	// Service interface
@@ -52,12 +48,8 @@ export class WestendService
 		public apiHub: DedotClient<WestendAssetHubApi>,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
-		// For Westend, staking happens on the hub chain, and fast unstake on the hub chain
-		super(networkConfig, ids, apiRelay, apiHub, apiHub, apiHub, providerPeople)
-
-		// For Westend, fast unstake happens on the asset hub chain
-		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiHub)
-		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiHub)
+		// For Westend, staking happens on the hub chain
+		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {
@@ -119,8 +111,6 @@ export class WestendService
 						nominees,
 						roles,
 					),
-				fastUnstakeDeregister: () => tx.fastUnstakeDeregister(this.apiHub),
-				fastUnstakeRegister: () => tx.fastUnstakeRegister(this.apiHub),
 				joinPool: (poolId, bond, claimPermission) =>
 					tx.joinPool(this.apiHub, poolId, bond, claimPermission),
 				newNominator: (bond, payee, nominees) =>

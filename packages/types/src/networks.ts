@@ -59,7 +59,6 @@ export interface ChainConsts {
 	historyDepth: number
 	epochDuration: bigint
 	expectedBlockTime: bigint
-	fastUnstakeDeposit: bigint
 	poolsPalletId: Uint8Array
 }
 

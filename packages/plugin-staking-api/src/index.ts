@@ -4,7 +4,6 @@
 import { ApolloProvider } from '@apollo/client'
 
 export * from './Client'
-export * from './queries/canFastUnstake'
 export * from './queries/eraTotalNominators'
 export * from './queries/getStakerWithNominees'
 export * from './queries/isActiveStaker'
