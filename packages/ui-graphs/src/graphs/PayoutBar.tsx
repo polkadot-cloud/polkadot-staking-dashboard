@@ -48,7 +48,7 @@ export const PayoutBar = ({
 	const staking = nominating || inPool
 
 	// Memoize current date, updating daily when the day changes
-	const currentDate = useMemo(() => new Date(), [new Date().toDateString()])
+	const currentDate = useMemo(() => new Date(), [])
 
 	// Get formatted rewards data
 	const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
