@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
+import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,12 +31,18 @@ export const ValidatorsInner = () => {
 						{
 							title: t('allValidators'),
 							active: activeTab === 0,
-							onClick: () => setActiveTab(0),
+							onClick: () => {
+								onTabVisitEvent('validators', 'all_validators')
+								setActiveTab(0)
+							},
 						},
 						{
 							title: t('favorites'),
 							active: activeTab === 1,
-							onClick: () => setActiveTab(1),
+							onClick: () => {
+								onTabVisitEvent('validators', 'favorites')
+								setActiveTab(1)
+							},
 							badge: String(favorites.length),
 						},
 					]}

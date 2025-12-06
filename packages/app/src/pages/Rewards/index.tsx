@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { getUnixTime } from 'date-fns'
+import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
 import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
@@ -107,12 +108,18 @@ export const Rewards = () => {
 						{
 							title: t('overview', { ns: 'app' }),
 							active: activeTab === 0,
-							onClick: () => setActiveTab(0),
+							onClick: () => {
+								onTabVisitEvent('rewards', 'overview')
+								setActiveTab(0)
+							},
 						},
 						{
 							title: t('recentPayouts', { ns: 'pages' }),
 							active: activeTab === 1,
-							onClick: () => setActiveTab(1),
+							onClick: () => {
+								onTabVisitEvent('rewards', 'recent_payouts')
+								setActiveTab(1)
+							},
 						},
 					]}
 				/>
