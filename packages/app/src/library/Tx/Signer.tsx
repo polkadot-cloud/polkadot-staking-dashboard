@@ -24,6 +24,7 @@ export const Signer = (props: SignerProps) => {
 		onPreviousProxy,
 		onNextProxy,
 		hasMultipleDelegates,
+		valid,
 	} = props
 	const { t } = useTranslation()
 	const { getAccount } = useImportedAccounts()
@@ -58,10 +59,10 @@ export const Signer = (props: SignerProps) => {
 			{signingOpts.who?.name || ''}
 			{hasMultipleDelegates && (
 				<span className="proxy-switcher">
-					<button type="button" onClick={onPreviousProxy}>
+					<button type="button" onClick={onPreviousProxy} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronLeft} transform="shrink-2" />
 					</button>
-					<button type="button" onClick={onNextProxy}>
+					<button type="button" onClick={onNextProxy} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
 					</button>
 				</span>
