@@ -9,6 +9,7 @@ import {
 	faCircleXmark,
 	faCoins,
 	faMinus,
+	faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -30,6 +31,19 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
 	const pendingRewards = getPendingPoolRewards(activeAddress)
 
 	const actions: ButtonQuickActionProps[] = []
+
+	actions.push({
+		onClick: () => {
+			openModal({
+				key: 'Transfer',
+				options: {},
+				size: 'sm',
+			})
+		},
+		disabled: false,
+		Icon: () => <FontAwesomeIcon transform="grow-1" icon={faPaperPlane} />,
+		label: t('send'),
+	})
 
 	if (bondFor === 'pool') {
 		actions.push(
