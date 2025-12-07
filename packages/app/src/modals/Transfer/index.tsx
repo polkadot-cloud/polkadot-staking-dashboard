@@ -119,7 +119,7 @@ export const Transfer = () => {
 					/>
 					<Separator transparent />
 					<AccountDropdown
-						initialAccount={accounts[0]}
+						initialAccount={accounts?.[0] || null}
 						accounts={accountsWithSigners}
 						onSelect={setToAccount}
 						label={t('to', { ns: 'app' })}
