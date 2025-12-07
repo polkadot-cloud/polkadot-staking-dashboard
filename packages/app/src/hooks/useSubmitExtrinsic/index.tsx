@@ -87,8 +87,8 @@ export const useSubmitExtrinsic = ({
 	// If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
 	// already wrapped, update submitAccount to the proxy account
 	let proxySupported = false
-	if (tx) {
-		proxySupported = isProxySupported(tx, fromAddress, proxy)
+	if (tx && submitAccount) {
+		proxySupported = isProxySupported(tx, submitAccount.address, proxy)
 		if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
 			if (proxy) {
 				submitAccount = {
@@ -99,7 +99,7 @@ export const useSubmitExtrinsic = ({
 		} else {
 			if (proxy && proxySupported) {
 				// Update submit address to active proxy account
-				const real = fromAddress
+				const real = submitAccount.address
 				submitAccount = {
 					address: proxy.address,
 					source: proxy.source,
@@ -294,15 +294,6 @@ export const useSubmitExtrinsic = ({
 		}
 	}
 
-	// Initialise tx submission
-	useEffect(() => {
-		// Add a new uid for this transaction
-		if (uid === 0) {
-			const newUid = addUid({ from: submitAccount?.address || null, tag })
-			setUid(newUid)
-		}
-	}, [])
-
 	const onReady = () => {
 		emitNotification({
 			title: t('pending'),
@@ -410,11 +401,21 @@ export const useSubmitExtrinsic = ({
 			updateFee(uid, partialFee)
 		}
 	}
+
+	// Initialise tx submission
+	useEffect(() => {
+		// Add a new uid for this transaction
+		if (uid === 0) {
+			const newUid = addUid({ from: submitAccount?.address || null, tag })
+			setUid(newUid)
+		}
+	}, [])
+
 	useEffect(() => {
 		if (uid > 0) {
 			fetchTxFee()
 		}
-	}, [uid, JSON.stringify(tx?.toHex())])
+	}, [JSON.stringify(submitAccount), uid, JSON.stringify(tx?.toHex())])
 
 	return {
 		txInitiated: !!tx,
