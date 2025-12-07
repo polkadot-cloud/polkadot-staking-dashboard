@@ -102,7 +102,7 @@ export const Transfer = () => {
 			setAmountState(maxBalance)
 			return
 		}
-	}, [fromAccount, transferableBalance])
+	}, [amount, fromAccount, transferableBalance])
 
 	return (
 		<>
