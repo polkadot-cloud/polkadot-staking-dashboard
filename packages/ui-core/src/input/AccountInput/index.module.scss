@@ -30,9 +30,6 @@ $container-border-radius: 1.25rem;
   &.disabled {
     border: none;
     cursor: default;
-    &:hover {
-      border-color: var(--border-secondary-color);
-    }
   }
 }
 
