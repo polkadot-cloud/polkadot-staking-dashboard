@@ -29,12 +29,16 @@ export const UnstakePrompts = () => {
 
 	const { unit } = getStakingChainData(network)
 
+	// Is unlocking
+	const isUnlocking = totalUnlockChunks > 0
+
 	// unstaking can withdraw
 	const canWithdrawUnlocks =
 		active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
 	return (
 		isBonding &&
+		isUnlocking &&
 		!syncing && (
 			<Page.Row>
 				<CardWrapper
