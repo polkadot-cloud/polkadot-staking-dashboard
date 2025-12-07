@@ -9,7 +9,6 @@ import { useStaking } from 'contexts/Staking'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
@@ -21,7 +20,6 @@ export const UnstakePrompts = () => {
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
-	const { isUnstaking } = useUnstaking()
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
 	const { activeAddress } = useActiveAccounts()
@@ -33,11 +31,10 @@ export const UnstakePrompts = () => {
 
 	// unstaking can withdraw
 	const canWithdrawUnlocks =
-		isUnstaking && active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
+		active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
 	return (
 		isBonding &&
-		isUnstaking &&
 		!syncing && (
 			<Page.Row>
 				<CardWrapper
