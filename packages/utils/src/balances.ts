@@ -62,7 +62,6 @@ export const nominatorBalances = (
 		total: 0n,
 	}
 	const unlocking = stakingLedger.ledger?.unlocking || []
-
 	const { totalUnlocking, totalUnlocked } = getUnlocking(unlocking, currentEra)
 	const totalPossibleBond = total + transferableBalance
 

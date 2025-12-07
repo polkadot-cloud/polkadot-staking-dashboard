@@ -155,6 +155,7 @@
 		"filterValidators": "过滤验证人",
 		"finalized": "交易已确认",
 		"free": "己解锁",
+		"from": "从",
 		"fromFavorites": "来自收藏夹",
 		"fromFavoritesSubtitle": "获取一组您喜欢的验证人",
 		"goTo": "查看",
@@ -299,6 +300,7 @@
 		"searchAddress": "搜索地址或身份",
 		"select": "选择",
 		"selectAccount": "选择账户",
+		"send": "发送",
 		"share": "分享",
 		"sign": "签署",
 		"signPolkadotVault": "请在Polkadot Vault上签名",
@@ -324,6 +326,7 @@
 			"second": "秒"
 		},
 		"title": "Polkadot抵押平台",
+		"to": "到",
 		"tooSmall": "质押金额太少",
 		"top": "首",
 		"transactionCancelled": "交易已取消",

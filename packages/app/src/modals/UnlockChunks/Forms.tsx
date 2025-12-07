@@ -13,6 +13,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -45,8 +46,8 @@ export const Forms = forwardRef(
 		const { getConsts, serviceApi } = useApi()
 		const { removeFromBondedPools } = useBondedPools()
 		const { getSignerWarnings } = useSignerWarnings()
-		const { activeAddress, activeAccount } = useActiveAccounts()
 		const { removeFavorite: removeFavoritePool } = useFavoritePools()
+		const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 		const { unit, units } = getStakingChainData(network)
 		const { bondFor, poolClosure } = options || {}
@@ -80,7 +81,7 @@ export const Forms = forwardRef(
 
 		const submitExtrinsic = useSubmitExtrinsic({
 			tx: getTx(),
-			from: activeAddress,
+			from: formatFromProp(activeAccount, activeProxy),
 			shouldSubmit: valid,
 			callbackSubmit: () => {
 				closeModal()

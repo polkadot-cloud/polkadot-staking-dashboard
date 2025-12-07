@@ -32,7 +32,8 @@ export const addSignAndSend = async (
 		)
 	} catch (e) {
 		handleError(String(e), onError)
-		deleteTx(uid)
+		setUidSubmitted(uid, false)
+		setUidPending(uid, false)
 	}
 }
 
@@ -54,7 +55,8 @@ export const addSend = async (
 		})
 	} catch (e) {
 		handleError(String(e), onError)
-		deleteTx(uid)
+		setUidSubmitted(uid, false)
+		setUidPending(uid, false)
 	}
 }
 
