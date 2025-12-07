@@ -118,6 +118,7 @@ export const SignIn = () => {
 					<div className="account-selection">
 						<h4>{t('masterAccount')}</h4>
 						<AccountDropdown
+							initialAccount={accountsWithSigners?.[0] || null}
 							accounts={accountsWithSigners}
 							onSelect={setSelectedAccount}
 							onOpenChange={() => setModalResize()}
