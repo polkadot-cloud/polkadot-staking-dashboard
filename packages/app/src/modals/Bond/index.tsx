@@ -14,6 +14,7 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -34,7 +35,7 @@ export const Bond = () => {
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPendingPoolRewards, feeReserve, getPoolMembership } = useBalances()
 
@@ -71,8 +72,8 @@ export const Bond = () => {
 	const [feedbackErrors, setFeedbackErrors] = useState<string[]>([])
 
 	// handler to set bond as a string
-	const handleSetBond = (newBond: { bond: BigNumber }) => {
-		setBond({ bond: newBond.bond.toString() })
+	const handleSetBond = ({ value }: { value: BigNumber }) => {
+		setBond({ bond: value.toString() })
 	}
 
 	// bond minus tx fees.
@@ -119,7 +120,7 @@ export const Bond = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(bondAfterTxFees),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()
@@ -134,7 +135,7 @@ export const Bond = () => {
 
 	// update bond value on task change.
 	useEffect(() => {
-		handleSetBond({ bond: freeToBond })
+		handleSetBond({ value: freeToBond })
 	}, [freeToBond.toString()])
 
 	// modal resize on form update

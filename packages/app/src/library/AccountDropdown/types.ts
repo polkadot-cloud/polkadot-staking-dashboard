@@ -5,7 +5,7 @@ import type { ImportedAccount } from 'types'
 
 export interface AccountDropdownProps {
 	accounts: ImportedAccount[]
-	initialAccount?: ImportedAccount | null
+	initialAccount: ImportedAccount | null
 	onSelect?: (account: ImportedAccount | null) => void
 	onOpenChange?: (isOpen: boolean) => void
 	label?: string
