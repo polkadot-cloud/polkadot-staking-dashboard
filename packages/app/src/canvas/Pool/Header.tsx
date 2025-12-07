@@ -3,6 +3,7 @@
 
 import { Polkicon } from '@w3ux/react-polkicon'
 import { PerbillMultiplier } from 'consts'
+import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
@@ -75,12 +76,18 @@ export const Header = ({
 					{
 						title: t('overview', { ns: 'pages' }),
 						active: activeTab === 0,
-						onClick: () => setActiveTab(0),
+						onClick: () => {
+							onTabVisitEvent('pool_canvas', 'overview')
+							setActiveTab(0)
+						},
 					},
 					{
 						title: t('nominations', { ns: 'pages' }),
 						active: activeTab === 1,
-						onClick: () => setActiveTab(1),
+						onClick: () => {
+							onTabVisitEvent('pool_canvas', 'nominations')
+							setActiveTab(1)
+						},
 					},
 				]}
 				tabClassName="canvas"

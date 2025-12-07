@@ -12,7 +12,6 @@ import type {
 	SystemChainId,
 } from 'types'
 import type { CoreConsts } from '../consts/core'
-import type { FastUnstakeConsts } from '../consts/fastUnstake'
 import type { StakingConsts } from '../consts/staking'
 import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
@@ -20,8 +19,6 @@ import type { AccountBalanceQuery } from '../subscribe/accountBalance'
 import type { ActiveEraQuery } from '../subscribe/activeEra'
 import type { BlockNumberQuery } from '../subscribe/blockNumber'
 import type { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
-import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
-import type { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import type { PoolsConfigQuery } from '../subscribe/poolsConfig'
 import type { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type { StakingMetricsQuery } from '../subscribe/stakingMetrics'
@@ -29,7 +26,6 @@ import type {
 	ActivePools,
 	AssetHubChain,
 	BondedAccounts,
-	FastUnstakeChain,
 	PeopleChain,
 	PoolMemberships,
 	Proxies,
@@ -47,7 +43,6 @@ export abstract class DefaultServiceClass<
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
-	FastUnstakeApi extends FastUnstakeChain,
 > extends ServiceClass {
 	constructor(
 		public networkConfig: NetworkConfig,
@@ -70,7 +65,6 @@ export abstract class DefaultServiceClass<
 
 	abstract coreConsts: CoreConsts<RelayApi>
 	abstract stakingConsts: StakingConsts<StakingApi>
-	abstract fastUnstakeConsts: FastUnstakeConsts<FastUnstakeApi>
 
 	abstract blockNumber: BlockNumberQuery<RelayApi>
 	abstract activeEra: ActiveEraQuery<StakingApi>
@@ -78,8 +72,6 @@ export abstract class DefaultServiceClass<
 	abstract poolsConfig: PoolsConfigQuery<StakingApi>
 	abstract stakingMetrics: StakingMetricsQuery<StakingApi>
 	abstract eraRewardPoints: EraRewardPointsQuery<StakingApi>
-	abstract fastUnstakeConfig: FastUnstakeConfigQuery<FastUnstakeApi>
-	abstract fastUnstakeQueue: FastUnstakeQueueQuery<FastUnstakeApi>
 
 	subActiveAddress: Subscription
 	subImportedAccounts: Subscription

@@ -17,7 +17,7 @@ import { Balance } from 'library/Balance'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import type { RewardResult } from 'plugin-staking-api/types'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
 import { GraphWrapper } from 'ui-graphs'
@@ -50,17 +50,21 @@ export const Payouts = () => {
 	})
 	const { width, height, minHeight } = formatSize(size, 260)
 
-	let formatFrom = new Date()
-	let formatTo = new Date()
-	let formatOpts = {}
-	if (lastReward !== undefined) {
-		formatFrom = fromUnixTime(lastReward.timestamp ?? getUnixTime(new Date()))
-		formatTo = new Date()
-		formatOpts = {
-			addSuffix: true,
-			locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+	// Memoize date formatting to avoid unnecessary recalculations
+	const { formatFrom, formatTo, formatOpts } = useMemo(() => {
+		const now = new Date()
+		if (lastReward === undefined) {
+			return { formatFrom: now, formatTo: now, formatOpts: {} }
 		}
-	}
+		return {
+			formatFrom: fromUnixTime(lastReward.timestamp ?? getUnixTime(now)),
+			formatTo: now,
+			formatOpts: {
+				addSuffix: true,
+				locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+			},
+		}
+	}, [lastReward, i18n.resolvedLanguage])
 
 	const lastRewardUnit = planckToUnitBn(
 		new BigNumber(lastReward?.reward || 0),

@@ -120,6 +120,13 @@ export const Tips = () => {
 	const tipsConfig = advancedMode ? TipsConfigAdvanced : TipsConfigSimple
 	let items = tipsConfig.filter((i) => segments.includes(i.s))
 
+	// If user is both nominating and in a pool, and in simple mode, filter out tips that redirect to
+	// 'stake' page as the stake page will not be accessible (pool and nominate pages will be
+	// accessible instead)
+	if (isNominating && inPool && !advancedMode) {
+		items = items.filter((i) => i.page !== 'stake')
+	}
+
 	items = items.map((item) => {
 		const { id } = item
 

@@ -28,7 +28,7 @@ export const FavoritePoolsProvider = ({
 
 	// Adds a favorite validator
 	const addFavorite = (address: string) => {
-		const newFavorites = Object.assign(favorites)
+		const newFavorites = [...favorites]
 		if (!newFavorites.includes(address)) {
 			newFavorites.push(address)
 		}
@@ -42,7 +42,7 @@ export const FavoritePoolsProvider = ({
 
 	// Removes a favorite pool if they exist
 	const removeFavorite = (address: string) => {
-		const newFavorites = Object.assign(favorites).filter(
+		const newFavorites = [...favorites].filter(
 			(validator: string) => validator !== address,
 		)
 		localStorage.setItem(

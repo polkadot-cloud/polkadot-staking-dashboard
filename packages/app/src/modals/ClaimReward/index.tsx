@@ -11,6 +11,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -30,8 +31,8 @@ export const ClaimReward = () => {
 	const { network } = useNetwork()
 	const { activePool } = useActivePool()
 	const { getPendingPoolRewards } = useBalances()
-	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { claimType } = options
 	const { unit, units } = getStakingChainData(network)
@@ -61,7 +62,7 @@ export const ClaimReward = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: valid,
 		callbackSubmit: () => {
 			closeModal()

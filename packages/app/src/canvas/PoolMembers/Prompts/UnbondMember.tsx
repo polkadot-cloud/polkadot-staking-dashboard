@@ -14,6 +14,7 @@ import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { Title } from 'library/Prompt/Title'
 import { SubmitTx } from 'library/SubmitTx'
@@ -37,7 +38,7 @@ export const UnbondMember = ({
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { unit, units } = getStakingChainData(network)
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { points } = member
 	const { bondDuration } = getConsts(network)
@@ -64,7 +65,7 @@ export const UnbondMember = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: paramsValid,
 		callbackSubmit: () => {
 			closePrompt()

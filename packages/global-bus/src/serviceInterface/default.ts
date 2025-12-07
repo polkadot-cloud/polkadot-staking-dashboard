@@ -34,8 +34,6 @@ export const defaultServiceInterface: ServiceInterface = {
 	tx: {
 		batch: () => undefined,
 		createPool: () => undefined,
-		fastUnstakeDeregister: () => undefined,
-		fastUnstakeRegister: () => undefined,
 		joinPool: () => undefined,
 		newNominator: () => undefined,
 		payoutStakersByPage: () => undefined,

@@ -8,7 +8,6 @@ import {
 	faUserEdit,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useUnstaking } from 'hooks/useUnstaking'
 import { SelectItems } from 'library/SelectItems'
 import { SelectItem } from 'library/SelectItems/Item'
 import type { Dispatch, SetStateAction } from 'react'
@@ -25,7 +24,6 @@ export const Methods = ({
 	setFetching: Dispatch<SetStateAction<boolean>>
 }) => {
 	const { t } = useTranslation('app')
-	const { isFastUnstaking } = useUnstaking()
 
 	// accumulate generation methods
 	const methods = [
@@ -80,7 +78,7 @@ export const Methods = ({
 					icon={<FontAwesomeIcon icon={m.icon} />}
 					selected={false}
 					onClick={m.onClick}
-					disabled={isFastUnstaking}
+					disabled={false}
 					includeToggle={false}
 					grow={false}
 					hoverBorder

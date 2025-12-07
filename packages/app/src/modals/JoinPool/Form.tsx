@@ -17,6 +17,7 @@ import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
@@ -45,7 +46,7 @@ export const Form = ({
 	const { serviceApi, isReady } = useApi()
 	const { setPoolSetup } = usePoolSetups()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const {
 		balances: {
 			pool: { totalPossibleBond },
@@ -70,8 +71,8 @@ export const Form = ({
 	const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null)
 
 	// Handler to set bond on input change.
-	const handleSetBond = (value: { bond: BigNumber }) => {
-		setBond({ bond: value.bond.toString() })
+	const handleSetBond = ({ value }: { value: BigNumber }) => {
+		setBond({ bond: value.toString() })
 	}
 
 	// Whether the form is ready to submit.
@@ -89,12 +90,14 @@ export const Form = ({
 		if (!txs || (txs && !txs.length)) {
 			return
 		}
-		return txs.length === 1 ? txs[0] : newBatchCall(txs, activeAddress)
+		return txs.length === 1
+			? txs[0]
+			: newBatchCall(txs, activeAddress, activeProxy)
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()
