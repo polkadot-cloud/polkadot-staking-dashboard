@@ -42,7 +42,7 @@ export const Transfer = () => {
 
 	// To account
 	const [toAccount, setToAccount] = useState<ImportedAccount | null>(
-		accounts[0],
+		accounts?.[0] || null,
 	)
 
 	// Amount to transfer
@@ -102,7 +102,7 @@ export const Transfer = () => {
 			setAmountState(maxBalance)
 			return
 		}
-	}, [fromAccount])
+	}, [fromAccount, transferableBalance])
 
 	return (
 		<>

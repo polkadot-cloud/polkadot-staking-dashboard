@@ -42,6 +42,9 @@ export const useProxySwitcher = (
 			]
 		: proxyAccounts
 
+	// Stringify signers to ensure proper comparison
+	const stringifiedSigners = allSigners.map((s) => `${s.address}-${s.source}`)
+
 	// Current proxy account - only state we need
 	const [currentSigner, setCurrentSigner] = useState<SignerOption | null>(
 		initialSigner || (allSigners.length > 0 ? allSigners[0] : null),
@@ -86,7 +89,7 @@ export const useProxySwitcher = (
 		if (currentIndex === -1) {
 			setCurrentSigner(allSigners[0])
 		}
-	}, [allSigners.length, currentIndex])
+	}, [stringifiedSigners, currentIndex])
 
 	return {
 		currentSigner,
