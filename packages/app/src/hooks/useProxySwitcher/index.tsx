@@ -3,7 +3,7 @@
 
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ActiveProxy, MaybeAddress } from 'types'
 import type { SignerOption, UseProxySwitcher } from './types'
 
@@ -43,7 +43,10 @@ export const useProxySwitcher = (
 		: proxyAccounts
 
 	// Stringify signers to ensure proper comparison
-	const stringifiedSigners = allSigners.map((s) => `${s.address}-${s.source}`)
+	const stringifiedSigners = useMemo(
+		() => allSigners.map((s) => `${s.address}-${s.source}`),
+		[allSigners],
+	)
 
 	// Current proxy account - only state we need
 	const [currentSigner, setCurrentSigner] = useState<SignerOption | null>(
