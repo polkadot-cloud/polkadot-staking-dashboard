@@ -60,7 +60,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 		if (!tx) {
 			return
 		}
-		return newBatchCall(tx, activeAddress)
+		return newBatchCall(tx, activeAddress, activeProxy)
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({

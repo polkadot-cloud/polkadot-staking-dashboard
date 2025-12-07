@@ -87,7 +87,7 @@ export const Forms = forwardRef(
 			}
 			return calls.length === 1
 				? calls.pop()
-				: newBatchCall(calls, activeAddress)
+				: newBatchCall(calls, activeAddress, activeProxy)
 		}
 
 		const submitExtrinsic = useSubmitExtrinsic({

@@ -51,7 +51,6 @@ export const Summary = ({
 	const { bond, nominations, payee } = progress
 
 	// Track whether bond is valid
-	// TODO: Update depending on bond amount and min to earn rewards
 	const [bondValid, setBondValid] = useState<boolean>(true)
 
 	const getTxs = () => {
@@ -84,7 +83,7 @@ export const Summary = ({
 		if (!tx) {
 			return
 		}
-		return newBatchCall(tx, activeAddress)
+		return newBatchCall(tx, activeAddress, activeProxy)
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({

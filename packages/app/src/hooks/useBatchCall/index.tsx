@@ -1,20 +1,19 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useProxySupported } from 'hooks/useProxySupported'
-import type { MaybeAddress } from 'types'
+import type { ActiveProxy, MaybeAddress } from 'types'
 
 export const useBatchCall = () => {
 	const { serviceApi } = useApi()
-	const { activeProxy } = useActiveAccounts()
 	const { isProxySupported } = useProxySupported()
 
 	const newBatchCall = (
 		txs: SubmittableExtrinsic[],
 		from: MaybeAddress,
+		activeProxy: ActiveProxy | null,
 	): SubmittableExtrinsic | undefined => {
 		from = from || ''
 		const batchTx = serviceApi.tx.batch(txs)

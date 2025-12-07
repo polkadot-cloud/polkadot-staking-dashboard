@@ -159,7 +159,7 @@ export const ManageCommission = ({
 		if (filteredTxs.length === 1) {
 			return filteredTxs[0]
 		}
-		return newBatchCall(filteredTxs, activeAddress)
+		return newBatchCall(filteredTxs, activeAddress, activeProxy)
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({

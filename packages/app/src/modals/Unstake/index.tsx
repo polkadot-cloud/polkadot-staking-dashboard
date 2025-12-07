@@ -85,7 +85,7 @@ export const Unstake = () => {
 			serviceApi.tx.stakingUnbond(bondToSubmit),
 		].filter((tx) => tx !== undefined)
 
-		return newBatchCall(txs, activeAddress)
+		return newBatchCall(txs, activeAddress, activeProxy)
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({
