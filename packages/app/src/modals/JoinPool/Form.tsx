@@ -90,7 +90,9 @@ export const Form = ({
 		if (!txs || (txs && !txs.length)) {
 			return
 		}
-		return txs.length === 1 ? txs[0] : newBatchCall(txs, activeAddress, activeProxy)
+		return txs.length === 1
+			? txs[0]
+			: newBatchCall(txs, activeAddress, activeProxy)
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({
