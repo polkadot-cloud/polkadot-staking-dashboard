@@ -16,14 +16,14 @@ export const formatFromProp = (
 	}
 }
 
-// Filters out non-proxy options from a proxy switcher's currentProxy.
+// Filters out non-proxy signers from a proxy switcher's current signer
 export const filterNonProxy = (
 	currentProxy: SignerOption | null,
 ): ActiveProxy | null => {
 	if (!currentProxy) {
 		return null
 	}
-	// If proxyType is null or undefined, this is not a valid active proxy
+	// If proxyType is null or undefined, this signer is not a proxy
 	if (currentProxy.proxyType === null || currentProxy.proxyType === undefined) {
 		return null
 	}
