@@ -22,7 +22,7 @@
 		"date-fns": "^4.1.0",
 		"locales": "workspace:*",
 		"plugin-staking-api": "workspace:*",
-		"react": "^19.1.0",
+		"react": "^19.2.1",
 		"react-chartjs-2": "^5.3.1",
 		"styled-components": "^6.1.19",
 		"ui-core": "workspace:*",
