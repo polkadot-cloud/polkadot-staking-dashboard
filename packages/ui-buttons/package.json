@@ -20,7 +20,7 @@
 		"@w3ux/react-polkicon": "^3.2.11",
 		"@w3ux/utils": "2.2.3",
 		"classnames": "^2.5.1",
-		"react": "^19.1.0",
+		"react": "^19.2.1",
 		"styles": "workspace:*",
 		"ui-core": "workspace:*"
 	},
