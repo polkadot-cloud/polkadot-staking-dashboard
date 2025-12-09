@@ -292,8 +292,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.196.0
-        version: 0.196.0(dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12))
+        specifier: ^0.197.0
+        version: 0.197.0(dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12))
       '@w3ux/observables-connect':
         specifier: ^0.12.0
         version: 0.12.0(bufferutil@4.0.9)(react@19.2.1)(rxjs@7.8.2)(utf-8-validate@5.0.10)
@@ -440,8 +440,8 @@ importers:
         version: 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.196.0
-        version: 0.196.0(dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12))
+        specifier: ^0.197.0
+        version: 0.197.0(dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -805,8 +805,8 @@ packages:
   '@dedot/chain-specs@0.5.0':
     resolution: {integrity: sha512-CWPWbwWWU9ZxS8gh+bMO8aCvtH8hbflCPUW+O+saZSqhLS8QuZO0xJjqt1WS40K+BHshdyROIRXP7k6u3mTVvA==}
 
-  '@dedot/chaintypes@0.196.0':
-    resolution: {integrity: sha512-KWXLd7iHnw8F7p+qXZRHHLlixPdhmoMWgpPLi2KYWC9WzKJJr97Hhzfx0f1h7GCVFvVJzdNX21tnQzn2fDlQuw==}
+  '@dedot/chaintypes@0.197.0':
+    resolution: {integrity: sha512-wUb6zJ4+KHDa12pcEDi8V7+oFbiHM/CivxtG3Pka5FYD2BzsybuKaI/2e+YLnY7d99H4LPaZtahBEq+92BzvSg==}
     peerDependencies:
       dedot: '>=1.0.1'
 
@@ -5824,7 +5824,7 @@ snapshots:
 
   '@dedot/chain-specs@0.5.0': {}
 
-  '@dedot/chaintypes@0.196.0(dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12))':
+  '@dedot/chaintypes@0.197.0(dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12))':
     dependencies:
       dedot: 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12)
 
@@ -5960,6 +5960,24 @@ snapshots:
       '@dedot/shape': 0.18.8
       '@dedot/types': 0.18.8
       '@dedot/utils': 0.18.8
+      handlebars: 4.7.8
+      prettier: 3.7.4
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
+      - zod
+
+  '@dedot/codegen@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+    dependencies:
+      '@dedot/api': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 1.0.1
+      '@dedot/contracts': 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/providers': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 1.0.1
+      '@dedot/shape': 1.0.1
+      '@dedot/types': 1.0.1
+      '@dedot/utils': 1.0.1
       handlebars: 4.7.8
       prettier: 3.7.4
     transitivePeerDependencies:
@@ -10009,6 +10027,26 @@ snapshots:
       '@dedot/smoldot': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/types': 0.18.8
       '@dedot/utils': 0.18.8
+      smoldot: 2.0.40(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
+      - zod
+
+  dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76):
+    dependencies:
+      '@dedot/api': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/cli': 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/codecs': 1.0.1
+      '@dedot/contracts': 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/merkleized-metadata': 1.0.1
+      '@dedot/providers': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 1.0.1
+      '@dedot/shape': 1.0.1
+      '@dedot/smoldot': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/types': 1.0.1
+      '@dedot/utils': 1.0.1
       smoldot: 2.0.40(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
