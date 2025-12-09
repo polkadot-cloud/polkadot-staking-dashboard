@@ -40,11 +40,11 @@ importers:
         specifier: ^16.2.0
         version: 16.5.0
       prettier:
-        specifier: ^3.7.3
-        version: 3.7.3
+        specifier: ^3.7.4
+        version: 3.7.4
       prettier-plugin-organize-imports:
         specifier: ^4.1.0
-        version: 4.3.0(prettier@3.7.3)(typescript@5.9.3)
+        version: 4.3.0(prettier@3.7.4)(typescript@5.9.3)
       sass:
         specifier: ^1.94.2
         version: 1.94.2
@@ -4461,11 +4461,6 @@ packages:
       vue-tsc:
         optional: true
 
-  prettier@3.7.3:
-    resolution: {integrity: sha512-QgODejq9K3OzoBbuyobZlUhznP5SKwPqp+6Q6xw6o8gnhr4O85L2U915iM2IDcfF2NPXVaM9zlo9tdwipnYwzg==}
-    engines: {node: '>=14'}
-    hasBin: true
-
   prettier@3.7.4:
     resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
     engines: {node: '>=14'}
@@ -5932,7 +5927,7 @@ snapshots:
       '@dedot/types': 0.13.2
       '@dedot/utils': 0.13.2
       handlebars: 4.7.8
-      prettier: 3.7.3
+      prettier: 3.7.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -5948,7 +5943,7 @@ snapshots:
       '@dedot/types': 0.18.8
       '@dedot/utils': 0.18.8
       handlebars: 4.7.8
-      prettier: 3.7.3
+      prettier: 3.7.4
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -5966,7 +5961,25 @@ snapshots:
       '@dedot/types': 0.18.8
       '@dedot/utils': 0.18.8
       handlebars: 4.7.8
-      prettier: 3.7.3
+      prettier: 3.7.4
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
+      - zod
+
+  '@dedot/codegen@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+    dependencies:
+      '@dedot/api': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/codecs': 1.0.1
+      '@dedot/contracts': 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/providers': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 1.0.1
+      '@dedot/shape': 1.0.1
+      '@dedot/types': 1.0.1
+      '@dedot/utils': 1.0.1
+      handlebars: 4.7.8
+      prettier: 3.7.4
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -10043,6 +10056,26 @@ snapshots:
       - utf-8-validate
       - zod
 
+  dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76):
+    dependencies:
+      '@dedot/api': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/cli': 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/codecs': 1.0.1
+      '@dedot/contracts': 1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/merkleized-metadata': 1.0.1
+      '@dedot/providers': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/runtime-specs': 1.0.1
+      '@dedot/shape': 1.0.1
+      '@dedot/smoldot': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@dedot/types': 1.0.1
+      '@dedot/utils': 1.0.1
+      smoldot: 2.0.40(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
+      - zod
+
   dedot@1.0.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12):
     dependencies:
       '@dedot/api': 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -11025,12 +11058,10 @@ snapshots:
 
   preact@10.28.0: {}
 
-  prettier-plugin-organize-imports@4.3.0(prettier@3.7.3)(typescript@5.9.3):
+  prettier-plugin-organize-imports@4.3.0(prettier@3.7.4)(typescript@5.9.3):
     dependencies:
-      prettier: 3.7.3
+      prettier: 3.7.4
       typescript: 5.9.3
-
-  prettier@3.7.3: {}
 
   prettier@3.7.4: {}
 
