@@ -21,9 +21,9 @@
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"@w3ux/types": "^2.4.1",
 		"globals": "^16.2.0",
-		"prettier": "^3.7.3",
+		"prettier": "^3.7.4",
 		"prettier-plugin-organize-imports": "^4.1.0",
-		"sass": "^1.94.2",
+		"sass": "^1.95.0",
 		"typescript": "^5.7.2"
 	},
 	"pnpm": {
@@ -45,5 +45,5 @@
 			"utf-8-validate"
 		]
 	},
-	"packageManager": "pnpm@10.24.0"
+	"packageManager": "pnpm@10.25.0"
 }
