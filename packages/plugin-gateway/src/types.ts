@@ -15,8 +15,8 @@ export interface AuthChallengeResult {
 	message: AuthMessage
 }
 
-export interface AuthChallengeResponse {
-	authChallenge: AuthChallengeResult
+export type AuthChallengeResponse = AuthResponse & {
+	data: AuthChallengeResult
 }
 
 export interface AuthResponseResult {
@@ -24,11 +24,15 @@ export interface AuthResponseResult {
 	expireAt: number | null
 }
 
-export interface AuthResponseResponse {
-	authResponse: AuthResponseResult
+export type AuthResponseResponse = AuthResponse & {
+	data: AuthResponseResult
 }
 
 export interface ErrorResponse {
-	error: string
-	message?: string
+	status: 'error'
+	message: string
+}
+
+export interface AuthResponse {
+	status: 'success' | 'error'
 }

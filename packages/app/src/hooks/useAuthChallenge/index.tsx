@@ -14,14 +14,14 @@ export const useAuthChallenge = (address: string | null) => {
 		try {
 			setLoading(true)
 			setError(false)
-
 			const result = await fetchAuthChallenge(addr)
 
-			if (result?.authChallenge) {
-				setData(result.authChallenge)
-			} else {
+			const status = result?.status
+			if (!result || status !== 'success') {
 				setError(true)
 			}
+
+			setData(result?.data || null)
 		} catch (error) {
 			console.error(error)
 			setError(true)

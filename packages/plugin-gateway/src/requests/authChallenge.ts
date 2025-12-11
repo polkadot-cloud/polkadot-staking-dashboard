@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { GATEWAY_API_ENDPOINT } from '../config'
-import type {
-	AuthChallengeResponse,
-	AuthChallengeResult,
-	ErrorResponse,
-} from '../types'
+import type { AuthChallengeResponse, ErrorResponse } from '../types'
 
 /**
  * Fetches an authentication challenge for the given address.
@@ -15,7 +11,7 @@ import type {
  */
 export const fetchAuthChallenge = async (
 	address: string,
-): Promise<{ authChallenge: AuthChallengeResult } | null> => {
+): Promise<AuthChallengeResponse | null> => {
 	try {
 		const response = await fetch(`${GATEWAY_API_ENDPOINT}/challenge`, {
 			method: 'POST',
@@ -29,14 +25,12 @@ export const fetchAuthChallenge = async (
 			const errorData = (await response.json()) as ErrorResponse
 			console.error(
 				`Auth challenge failed: ${response.status}`,
-				errorData.message || errorData.error,
+				errorData.message || errorData.message,
 			)
 			return null
 		}
 
 		const data = (await response.json()) as AuthChallengeResponse
-		console.log(data)
-
 		return data
 	} catch {
 		return null

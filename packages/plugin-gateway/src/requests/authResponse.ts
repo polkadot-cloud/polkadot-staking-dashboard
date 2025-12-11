@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { GATEWAY_API_ENDPOINT } from '../config'
-import type {
-	AuthResponseResponse,
-	AuthResponseResult,
-	ErrorResponse,
-} from '../types'
+import type { AuthResponseResponse, ErrorResponse } from '../types'
 
 /**
  * Submits an authentication response with the signed challenge.
@@ -19,9 +15,9 @@ export const fetchAuthResponse = async (
 	address: string,
 	challengeId: string,
 	signature: string,
-): Promise<{ authResponse: AuthResponseResult } | null> => {
+): Promise<AuthResponseResponse | null> => {
 	try {
-		const response = await fetch(`${GATEWAY_API_ENDPOINT}/auth/response`, {
+		const response = await fetch(`${GATEWAY_API_ENDPOINT}/response`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -33,7 +29,7 @@ export const fetchAuthResponse = async (
 			const errorData = (await response.json()) as ErrorResponse
 			console.error(
 				`Auth response failed: ${response.status}`,
-				errorData.message || errorData.error,
+				errorData.message || errorData.message,
 			)
 			return null
 		}
