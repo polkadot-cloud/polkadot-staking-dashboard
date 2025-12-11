@@ -4,8 +4,6 @@
 import { ApolloProvider } from '@apollo/client'
 
 export * from './Client'
-export * from './queries/authChallenge'
-export * from './queries/authRequest'
 export * from './queries/eraTotalNominators'
 export * from './queries/getStakerWithNominees'
 export * from './queries/isActiveStaker'

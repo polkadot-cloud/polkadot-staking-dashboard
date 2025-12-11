@@ -6,7 +6,6 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { Warning } from 'library/Form/Warning'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
-import { useAuthChallenge } from 'plugin-staking-api'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
@@ -18,7 +17,6 @@ export const SignIn = () => {
 	const { t } = useTranslation('modals')
 	const { setModalResize } = useOverlay().modal
 	const { accounts, accountHasSigner } = useImportedAccounts()
-	const { authChallenge, loading, error } = useAuthChallenge()
 
 	// Filter accounts to only show those with signers
 	const accountsWithSigners = accounts.filter((account) =>
