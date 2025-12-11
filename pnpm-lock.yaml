@@ -162,6 +162,9 @@ importers:
       motion:
         specifier: 12.23.24
         version: 12.23.24(@emotion/is-prop-valid@1.2.2)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      plugin-gateway:
+        specifier: workspace:*
+        version: link:../plugin-gateway
       plugin-staking-api:
         specifier: workspace:*
         version: link:../plugin-staking-api
@@ -399,6 +402,8 @@ importers:
       vite:
         specifier: ^7.2.7
         version: 7.2.7(@types/node@24.10.2)(sass@1.95.0)
+
+  packages/plugin-gateway: {}
 
   packages/plugin-staking-api:
     dependencies:
@@ -5734,11 +5739,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/cli@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@dedot/cli@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.18.8
-      '@dedot/codegen': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/codegen': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@dedot/wasm': 0.1.0
       '@polkadot/types-support': 16.4.9
       ora: 8.2.0
@@ -5749,11 +5754,11 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@dedot/cli@0.18.8(typescript@5.9.3)':
+  '@dedot/cli@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.18.8
-      '@dedot/codegen': 0.18.8(typescript@5.9.3)
+      '@dedot/codegen': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@dedot/wasm': 0.1.0
       '@polkadot/types-support': 16.4.9
       ora: 8.2.0
@@ -5825,11 +5830,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/codegen@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@dedot/codegen@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.18.8
-      '@dedot/contracts': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/contracts': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@dedot/providers': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/runtime-specs': 0.18.8
       '@dedot/shape': 0.18.8
@@ -5843,11 +5848,11 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@dedot/codegen@0.18.8(typescript@5.9.3)':
+  '@dedot/codegen@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.18.8
-      '@dedot/contracts': 0.18.8(typescript@5.9.3)
+      '@dedot/contracts': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@dedot/providers': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/runtime-specs': 0.18.8
       '@dedot/shape': 0.18.8
@@ -5908,7 +5913,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/contracts@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@dedot/contracts@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.18.8
@@ -5921,7 +5926,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@dedot/contracts@0.18.8(typescript@5.9.3)':
+  '@dedot/contracts@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.18.8
@@ -6499,7 +6504,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
       '@types/debug': 4.1.12
-      debug: 4.3.4
+      debug: 4.4.3
       pony-cause: 2.1.11
       semver: 7.7.3
       uuid: 9.0.1
@@ -6514,7 +6519,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
       '@types/debug': 4.1.12
-      debug: 4.3.4
+      debug: 4.4.3
       pony-cause: 2.1.11
       semver: 7.7.3
       uuid: 9.0.1
@@ -8361,7 +8366,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.4
       '@noble/curves': 1.9.7
-      '@noble/hashes': 1.4.0
+      '@noble/hashes': 1.8.0
       '@solana/buffer-layout': 4.0.1
       '@solana/codecs-numbers': 2.3.0(typescript@5.9.3)
       agentkeepalive: 4.6.0
@@ -9879,12 +9884,12 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  dedot@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76):
+  dedot@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10):
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/cli': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/cli': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@dedot/codecs': 0.18.8
-      '@dedot/contracts': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@dedot/contracts': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@dedot/merkleized-metadata': 0.18.8
       '@dedot/providers': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/runtime-specs': 0.18.8
@@ -9899,12 +9904,12 @@ snapshots:
       - utf-8-validate
       - zod
 
-  dedot@0.18.8(typescript@5.9.3):
+  dedot@0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76):
     dependencies:
       '@dedot/api': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@dedot/cli': 0.18.8(typescript@5.9.3)
+      '@dedot/cli': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@dedot/codecs': 0.18.8
-      '@dedot/contracts': 0.18.8(typescript@5.9.3)
+      '@dedot/contracts': 0.18.8(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@dedot/merkleized-metadata': 0.18.8
       '@dedot/providers': 0.18.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dedot/runtime-specs': 0.18.8
@@ -10429,7 +10434,7 @@ snapshots:
     dependencies:
       ws: 8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  isows@1.0.7(ws@8.18.3):
+  isows@1.0.7(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)):
     dependencies:
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
@@ -11618,7 +11623,7 @@ snapshots:
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
       abitype: 1.1.0(typescript@5.9.3)(zod@3.22.4)
-      isows: 1.0.7(ws@8.18.3)
+      isows: 1.0.7(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       ox: 0.9.6(typescript@5.9.3)(zod@3.22.4)
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     optionalDependencies:
@@ -11635,7 +11640,7 @@ snapshots:
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
       abitype: 1.1.0(typescript@5.9.3)(zod@3.25.76)
-      isows: 1.0.7(ws@8.18.3)
+      isows: 1.0.7(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       ox: 0.9.6(typescript@5.9.3)(zod@3.25.76)
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     optionalDependencies:

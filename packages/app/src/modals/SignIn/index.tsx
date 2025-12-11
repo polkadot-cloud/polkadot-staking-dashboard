@@ -3,10 +3,11 @@
 
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useAuthChallenge } from 'hooks/useAuthChallenge'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { Warning } from 'library/Form/Warning'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
 import { Padding, Warnings } from 'ui-core/modal'
@@ -23,46 +24,16 @@ export const SignIn = () => {
 		accountHasSigner({ address: account.address, source: account.source }),
 	)
 
+	const initialAccount = accountsWithSigners?.[0] || null
+
 	const [selectedAccount, setSelectedAccount] =
-		useState<ImportedAccount | null>(null)
+		useState<ImportedAccount | null>(initialAccount)
 
-	const [challengeData, setChallengeData] = useState<{
-		challengeId: string
-		message: {
-			who: string
-			url: string
-			version: number
-			nonce: number
-			issuedAt: number
-			expireAt: number
-		}
-	} | null>(null)
-
-	// Call authChallenge when modal opens with the first account
-	useEffect(() => {
-		if (selectedAccount) {
-			authChallenge({
-				variables: { address: selectedAccount.address },
-			}).then((result: { data?: { authChallenge: typeof challengeData } }) => {
-				if (result.data?.authChallenge) {
-					setChallengeData(result.data.authChallenge)
-				}
-			})
-		}
-	}, [])
-
-	// Refetch challenge when account changes
-	useEffect(() => {
-		if (selectedAccount) {
-			authChallenge({
-				variables: { address: selectedAccount.address },
-			}).then((result: { data?: { authChallenge: typeof challengeData } }) => {
-				if (result.data?.authChallenge) {
-					setChallengeData(result.data.authChallenge)
-				}
-			})
-		}
-	}, [selectedAccount?.address])
+	const {
+		data: challengeData,
+		loading,
+		error,
+	} = useAuthChallenge(selectedAccount?.address || null)
 
 	const handleSignIn = async () => {
 		if (!selectedAccount || !challengeData) {
@@ -75,9 +46,6 @@ export const SignIn = () => {
 		// 2. Signing the challenge message
 		// 3. Calling authResponse with the signature
 		// 4. Handling the session result
-
-		console.log('Sign in with account:', selectedAccount.address)
-		console.log('Challenge data:', challengeData)
 	}
 
 	const canSignIn =
@@ -116,7 +84,7 @@ export const SignIn = () => {
 					<div className="account-selection">
 						<h4>{t('masterAccount')}</h4>
 						<AccountDropdown
-							initialAccount={accountsWithSigners?.[0] || null}
+							initialAccount={initialAccount}
 							accounts={accountsWithSigners}
 							onSelect={setSelectedAccount}
 							onOpenChange={() => setModalResize()}

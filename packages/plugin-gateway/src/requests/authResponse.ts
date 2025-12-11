@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getGatewayEndpoint } from '../config'
+import { GATEWAY_API_ENDPOINT } from '../config'
 import type {
 	AuthResponseResponse,
 	AuthResponseResult,
@@ -21,7 +21,7 @@ export const fetchAuthResponse = async (
 	signature: string,
 ): Promise<{ authResponse: AuthResponseResult } | null> => {
 	try {
-		const response = await fetch(`${getGatewayEndpoint()}/auth/response`, {
+		const response = await fetch(`${GATEWAY_API_ENDPOINT}/auth/response`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
