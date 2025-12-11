@@ -17,7 +17,7 @@ export const fetchAuthChallenge = async (
 	address: string,
 ): Promise<{ authChallenge: AuthChallengeResult } | null> => {
 	try {
-		const response = await fetch(`${GATEWAY_API_ENDPOINT}/auth/challenge`, {
+		const response = await fetch(`${GATEWAY_API_ENDPOINT}/challenge`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -35,9 +35,10 @@ export const fetchAuthChallenge = async (
 		}
 
 		const data = (await response.json()) as AuthChallengeResponse
+		console.log(data)
+
 		return data
-	} catch (error) {
-		console.error('Failed to fetch auth challenge:', error)
+	} catch {
 		return null
 	}
 }

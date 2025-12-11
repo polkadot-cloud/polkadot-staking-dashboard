@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import CloudSVG from 'assets/icons/cloud.svg?react'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useAuthChallenge } from 'hooks/useAuthChallenge'
@@ -53,6 +54,10 @@ export const SignIn = () => {
 		challengeData &&
 		!loading &&
 		accountsWithSigners.length > 0
+
+	useEffectIgnoreInitial(() => {
+		setModalResize()
+	}, [challengeData, error])
 
 	return (
 		<>
