@@ -1,0 +1,43 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { getGatewayEndpoint } from '../config'
+import type {
+	AuthChallengeResponse,
+	AuthChallengeResult,
+	ErrorResponse,
+} from '../types'
+
+/**
+ * Fetches an authentication challenge for the given address.
+ * @param address - The wallet address to request a challenge for
+ * @returns Promise resolving to the challenge data or null on error
+ */
+export const fetchAuthChallenge = async (
+	address: string,
+): Promise<{ authChallenge: AuthChallengeResult } | null> => {
+	try {
+		const response = await fetch(`${getGatewayEndpoint()}/auth/challenge`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ address }),
+		})
+
+		if (!response.ok) {
+			const errorData = (await response.json()) as ErrorResponse
+			console.error(
+				`Auth challenge failed: ${response.status}`,
+				errorData.message || errorData.error,
+			)
+			return null
+		}
+
+		const data = (await response.json()) as AuthChallengeResponse
+		return data
+	} catch (error) {
+		console.error('Failed to fetch auth challenge:', error)
+		return null
+	}
+}
