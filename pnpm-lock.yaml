@@ -100,8 +100,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0(typescript@5.9.3)(zod@3.22.4)
       '@w3ux/validator-assets':
-        specifier: ^1.2.1
-        version: 1.2.1(react@19.2.3)
+        specifier: ^1.2.3
+        version: 1.2.3(react@19.2.3)
       '@walletconnect/ethereum-provider':
         specifier: ~2.21.1
         version: 2.21.10(@types/react@19.2.7)(react@19.2.3)(typescript@5.9.3)(zod@3.22.4)
@@ -2426,8 +2426,8 @@ packages:
   '@w3ux/utils@2.3.0':
     resolution: {integrity: sha512-2Prd6l0DD5XF9vWEBbKfy/oTrf7ke4fhRhOpNVVNSfef+eJ5ItbncpWMDWAIJKEbTEmvX0ZzwXWFxQmlg6hWXQ==}
 
-  '@w3ux/validator-assets@1.2.1':
-    resolution: {integrity: sha512-8Bv0tB6ycO5uPjX5+vMll1oSH/qbypNqrr7tjOyzgPdKlfpNvYsNwK292Wcv5PQQ5NSuN5bMsgij0cROwMYX4Q==}
+  '@w3ux/validator-assets@1.2.3':
+    resolution: {integrity: sha512-vLY76GlEOuB4NDY4/+YbhoTbuBvpwoDOfhiFRiZ3iFw/tpKM+Huj5WfWLVsFDvcsKz/tHEte+pkjgCt9BLAgsA==}
     peerDependencies:
       react: ^19.1.0
 
@@ -6499,7 +6499,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@w3ux/validator-assets@1.2.1(react@19.2.3)':
+  '@w3ux/validator-assets@1.2.3(react@19.2.3)':
     dependencies:
       react: 19.2.3
 
