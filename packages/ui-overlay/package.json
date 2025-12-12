@@ -16,7 +16,7 @@
 		"@fortawesome/fontawesome-svg-core": "^7.1.0",
 		"@fortawesome/free-solid-svg-icons": "^7.1.0",
 		"@w3ux/hooks": "^2.4.0",
-		"@w3ux/utils": "2.2.3",
+		"@w3ux/utils": "2.3.0",
 		"motion": "12.23.24",
 		"react": "^19.2.1",
 		"react-error-boundary": "^6.0.0",
