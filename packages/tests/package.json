@@ -10,7 +10,7 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"@w3ux/utils": "^2.2.3",
+		"@w3ux/utils": "^2.3.0",
 		"date-fns": "^4.1.0",
 		"ui-graphs": "workspace:*",
 		"utils": "workspace:*"
