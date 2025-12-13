@@ -72,7 +72,7 @@ export const NotStaking = () => {
 						Icon: () => (
 							<FontAwesomeIcon transform="grow-1" icon={faChartLine} />
 						),
-						label: t('startNominating'),
+						label: t('nominate'),
 					},
 				]
 			: []),
