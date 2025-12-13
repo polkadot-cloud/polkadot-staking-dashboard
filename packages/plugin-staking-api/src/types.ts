@@ -174,6 +174,23 @@ export type PoolCandidatesResult = Query & {
 	}
 }
 
+export type PoolMembersResult = Query & {
+	data: {
+		poolMembers: PoolMembersData
+	}
+}
+
+export interface PoolMembersData {
+	poolId: number
+	totalMembers: number
+	members: PoolMember[]
+}
+
+export interface PoolMember {
+	poolId: number
+	address: string
+}
+
 export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
 
 export type RewardResult = NominatorReward | PoolReward
