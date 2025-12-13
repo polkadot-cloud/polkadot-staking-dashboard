@@ -1,11 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { type AppKit, createAppKit } from '@reown/appkit/core'
+import { defineChain } from '@reown/appkit/networks'
 import { createSafeContext } from '@w3ux/hooks'
-import { WalletConnectModal } from '@walletconnect/modal'
-import UniversalProvider from '@walletconnect/universal-provider'
+import { UniversalProvider } from '@walletconnect/universal-provider'
 import { getSdkError } from '@walletconnect/utils'
-import { getStakingChain } from 'consts/util'
+import { getStakingChain, getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
@@ -31,13 +32,16 @@ export const WalletConnectProvider = ({
 }) => {
 	const { network } = useNetwork()
 	const { isReady, getChainSpec } = useApi()
-	const { genesisHash } = getChainSpec(getStakingChain(network))
+
+	const chainSpec = getChainSpec(getStakingChain(network))
+	const { genesisHash } = chainSpec
+	const { unit, units, name, endpoints } = getStakingChainData(network)
 
 	// The WalletConnect provider
-	const wcProvider = useRef<UniversalProvider | null>(null)
+	const wcProvider = useRef<InstanceType<typeof UniversalProvider> | null>(null)
 
 	// The WalletConnect modal handler
-	const wcModal = useRef<WalletConnectModal | null>(null)
+	const wcModal = useRef<AppKit | null>(null)
 
 	// Track whether pairing has been initiated
 	const pairingInitiated = useRef<boolean>(false)
@@ -71,11 +75,39 @@ export const WalletConnectProvider = ({
 			relayUrl: 'wss://relay.walletconnect.com',
 		})
 
-		const modal = new WalletConnectModal({
-			projectId: wcProjectId,
+		const polkadot = defineChain({
+			id: genesisHash.substring(2).substring(0, 32),
+			name: name,
+			nativeCurrency: { name: name, symbol: unit, decimals: units },
+			rpcUrls: {
+				default: {
+					http: [],
+					wss: endpoints.rpc[0],
+				},
+			},
+			blockExplorers: {
+				default: {
+					name: `Subscan`,
+					url: `https://${network}.subscan.io/`,
+				},
+			},
+			chainNamespace: 'polkadot',
+			caipNetworkId: `polkadot:${genesisHash.substring(2).substring(0, 32)}`,
 		})
 
+		const modal = createAppKit({
+			projectId: wcProjectId,
+			networks: [polkadot],
+			// biome-ignore lint/suspicious/noExplicitAny: <version mismatch>
+			universalProvider: provider as any,
+			manualWCControl: true,
+		})
 		wcProvider.current = provider
+
+		// listen to display_uri event and feed modal with uri
+		provider.on('display_uri', (uri: string) => {
+			modal.open({ uri })
+		})
 
 		// Subscribe to session delete
 		wcProvider.current.on('session_delete', () => {
@@ -188,16 +220,22 @@ export const WalletConnectProvider = ({
 	// Initiate a new Wallet Connect session, if not already wcInitialized
 	const initializeWcSession =
 		async (): Promise<WalletConnectSession | null> => {
-			if (wcInitialized) {
-				let wcSession
-				if (wcProvider.current?.session) {
-					wcSession = wcProvider.current.session
-				} else {
-					wcSession = await initializeNewSession()
-				}
+			try {
+				if (wcInitialized) {
+					let wcSession
+					if (wcProvider.current?.session) {
+						wcSession = wcProvider.current.session
+					} else {
+						wcSession = await initializeNewSession()
+					}
 
-				setWcSessionActive(true)
-				return wcSession
+					setWcSessionActive(true)
+					return wcSession
+				}
+			} catch {
+				// Close modal on error
+				wcModal.current?.close()
+				setWcSessionActive(false)
 			}
 			return null
 		}
@@ -210,14 +248,14 @@ export const WalletConnectProvider = ({
 
 		// Summon Wallet Connect modal that presents QR Code
 		if (wcMeta?.uri) {
-			wcModal.current!.openModal({ uri: wcMeta.uri })
+			wcModal.current?.open({ uri: wcMeta.uri })
 		}
 
 		// Get session from approval
 		const newWcSession = await wcMeta?.approval()
 
 		// Close modal on approval completion
-		wcModal.current!.closeModal()
+		wcModal.current?.close()
 
 		// Update session data in provider
 		if (wcProvider.current) {
@@ -310,10 +348,10 @@ export const WalletConnectProvider = ({
 
 	// On initial render, initiate the WalletConnect provider
 	useEffect(() => {
-		if (!wcProvider.current) {
+		if (!wcProvider.current && isReady && genesisHash !== '0x') {
 			initProvider()
 		}
-	}, [])
+	}, [isReady, genesisHash])
 
 	// Initially, all active chains (in all tabs) must be connected and ready for the initial provider
 	// connection
