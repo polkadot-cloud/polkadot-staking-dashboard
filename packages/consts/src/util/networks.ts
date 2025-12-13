@@ -25,3 +25,7 @@ export const isNetworkEnabled = (network: NetworkId) =>
 // Checks if a network is valid key of `NetworkList`
 export const isValidNetwork = (network: string): network is NetworkId =>
 	Object.keys(NetworkList).includes(network)
+
+// Get subscan balance chain id by network
+export const getSubscanBalanceChainId = (network: NetworkId) =>
+	NetworkList[network].meta.subscanBalanceChainId
