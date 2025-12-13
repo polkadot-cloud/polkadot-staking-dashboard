@@ -3,7 +3,7 @@
 
 import type { NetworkId, Plugin } from 'types'
 
-export const PluginsList: Plugin[] = ['staking_api', 'subscan', 'polkawatch']
+export const PluginsList: Plugin[] = ['staking_api', 'polkawatch']
 
 // Force plugins to be enabled in production environment
 //
@@ -11,7 +11,6 @@ export const PluginsList: Plugin[] = ['staking_api', 'subscan', 'polkawatch']
 // you can remove it from this list
 export const CompulsoryPluginsProduction: Plugin[] = [
 	'staking_api',
-	'subscan',
 	'polkawatch',
 ]
 

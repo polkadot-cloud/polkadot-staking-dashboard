@@ -269,8 +269,7 @@
 		"permissionlessClaimingTurnedOff": "Permissionless claiming is turned off.",
 		"plugin": {
 			"polkawatch": "Polkawatch",
-			"staking_api": "Staking API",
-			"subscan": "Subscan"
+			"staking_api": "Staking API"
 		},
 		"points": "Points",
 		"pool": "Pool",
