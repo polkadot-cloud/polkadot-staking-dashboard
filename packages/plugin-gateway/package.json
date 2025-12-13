@@ -1,0 +1,15 @@
+{
+	"name": "plugin-gateway",
+	"version": "1.0.0",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"scripts": {
+		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
+		"check": "biome check .",
+		"lint": "biome check --write ."
+	},
+	"exports": {
+		".": "./src/index.ts",
+		"./types": "./src/types.ts"
+	}
+}

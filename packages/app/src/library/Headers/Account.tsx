@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTheme } from 'contexts/Themes'
@@ -26,6 +27,7 @@ export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
 	return !activeAddress ? (
 		<ButtonAccount.Standalone
 			label={totalImportedAccounts ? t('selectAccount') : t('connectAccounts')}
+			iconRight={faChevronRight}
 			onClick={() => {
 				if (!totalImportedAccounts) {
 					setOpenConnect(true)
