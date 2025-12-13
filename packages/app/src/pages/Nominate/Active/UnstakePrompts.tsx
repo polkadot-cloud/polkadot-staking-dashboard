@@ -5,7 +5,6 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
@@ -19,7 +18,6 @@ export const UnstakePrompts = () => {
 	const { t } = useTranslation('pages')
 	const { syncing } = useSyncing()
 	const { network } = useNetwork()
-	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
 	const { activeAddress } = useActiveAccounts()
@@ -37,7 +35,6 @@ export const UnstakePrompts = () => {
 		active === 0n && totalUnlocking === 0n && totalUnlocked > 0n
 
 	return (
-		isBonding &&
 		isUnlocking &&
 		!syncing && (
 			<Page.Row>
