@@ -13,8 +13,8 @@
 	},
 	"dependencies": {
 		"@dedot/chaintypes": "^0.197.0",
-		"@w3ux/observables-connect": "^0.12.0",
-		"@w3ux/utils": "^2.2.3",
+		"@w3ux/observables-connect": "^1.0.1",
+		"@w3ux/utils": "^2.3.0",
 		"consts": "workspace:*",
 		"dedot": "^1.0.2",
 		"global-bus": "workspace:*",

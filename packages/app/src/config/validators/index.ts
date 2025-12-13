@@ -1,5 +1,5 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+/* @license Copyright 2024 w3ux authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
 
 export type ValidatorSupportedChains = 'polkadot' | 'kusama' | 'westend'
 
@@ -73,6 +73,19 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 				'Cad3MXUdmKLPyosPJ67ZhkQh7CjKjBFvb4hyjuNwnfaAGG5',
 				'Hcbo6hyfVgExCKrjmJic9bg4gLWgYy6HLrjcXUYy2VgLG7a',
 			],
+		},
+	},
+	{
+		name: 'Bladenodes',
+		icon: 'Bladenodes',
+		bio: 'Validating since April 2020, I bring almost six years of hands‑on operational experience as an independent bare‑metal validator operator in the Polkadot and Kusama ecosystems. I provide secure, non‑custodial staking through dedicated bare‑metal servers in geographically diverse, professionally managed data centers, with 24/7 monitoring, rigorous security practices, and a strong focus on decentralization, reliability, and minimal downtime risk. I maintain a clean slashing record and consistently high availability, and I’m passionate about the Polkadot community, actively supporting on‑chain governance. My goal is to offer transparent, reliable staking that nominators can trust for the long term. Join me on this decentralized journey.',
+		email: 'info@bladenodes.com',
+		validators: {
+			polkadot: [
+				'13J6LkvsEtdZpvRwUMVNbag26md9ycmGe5PM8UnEokhL6Tgk',
+				'1qNhYLFbBi1tFyvYfSRRBP3Ce5cjS1xKMTMVNr8gJZvNTXM',
+			],
+			kusama: ['CpYNXnYC1mPPRSXMHvm9EUuhEqHjvj6kCN4kshqMdEpPYSF'],
 		},
 	},
 	{
@@ -182,10 +195,16 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 		email: 'info@deigenvektor.io',
 		website: 'https://deigenvektor.io',
 		validators: {
-			polkadot: ['1guBaaUmYpYPmsNmooQApqFmpmRHeaipb1CxoncMuiaqXGh'],
+			polkadot: [
+				'1guBaaUmYpYPmsNmooQApqFmpmRHeaipb1CxoncMuiaqXGh',
+				'16UpmQgoFroRH1i4Gi1wVZmomXxSZc8gqkGQG2czD1yJHoEu',
+			],
 			kusama: [
 				'Dd93SeZZD6F8z68q7VNi2GdT8u1cgU5f2mTifA1f5v5A5km',
 				'F2WyUUFXLYnBg6acv7t2KFzH6D7CyNcvC4mRCwUdsHTUB4t',
+				'DNBrjMnPyjEeBsDUkyeWJ9ba6eVdaFHixUPM2MGgms4xcyK',
+				'J74NYK6912dg3Za2T5Rz4apEnKUX4AaGLgurogCq1FQUSX3',
+				'EovMGEb2zrXpC3ZMs7kyEUbfUnYMBN4FaFpd5aLwEdvr5AG',
 			],
 		},
 	},
@@ -324,18 +343,6 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 		},
 	},
 	{
-		name: 'METASPAN',
-		icon: 'Metaspan',
-		bio: 'End-to-end blockchain solutions, building on Polkadot and Kusama.',
-		email: 'hello@metaspan.com',
-		x: '@metaspan_io',
-		website: 'https://metaspan.com/',
-		validators: {
-			polkadot: ['16ce9zrmiuAtdi9qv1tuiQ1RC1xR6y6NgnBcRtMoQeAobqpZ'],
-			kusama: ['HyLisujX7Cr6D7xzb6qadFdedLt8hmArB6ZVGJ6xsCUHqmx'],
-		},
-	},
-	{
 		name: 'G-dot Tech',
 		icon: 'Gdot',
 		bio: 'G-dot Tech is providing professional staking services on well-maintained bare metal machines with locations across Europe. Our goal is to contribute to the decentralization of Polkadot and Kusama by staying independent with a small share among the active validators. Feel free to reach out any time if you have questions.',
@@ -362,6 +369,28 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 				'EiMA69PZWju1jmisAU3ubN4wJQgBexnFXZpWb7aMtftP5rV',
 				'J6HHWeSmt5PjoDCRzVvB5oJnQMMvCM5iNBd5W42S8L3BbVK',
 				'EffRLTpaDPBa6G6UUhXCVdn2SNyeMxPJttucrtppEjnHkST',
+			],
+		},
+	},
+	{
+		name: 'INTERWEB',
+		icon: 'Interweb',
+		bio: 'End-to-end blockchain solutions, building on Polkadot and Kusama.',
+		email: 'hello@interweb-it.com',
+		x: '@interweb_it',
+		website: 'https://interweb-it.com/',
+		validators: {
+			polkadot: [
+				'16ce9zrmiuAtdi9qv1tuiQ1RC1xR6y6NgnBcRtMoQeAobqpZ',
+				'12WUg5s5hxBh9GZVVpqyZvbBravHhJSc548K9k1E2mjWPBbb',
+			],
+			kusama: [
+				'HyLisujX7Cr6D7xzb6qadFdedLt8hmArB6ZVGJ6xsCUHqmx',
+				'FAR296Aqh9i8W5bi7BS7a8Bkhbw5LX5xCXP22c1Jvc2tM5v',
+				'JKhBBSWkr8BJKh5eFBtRux4hsDq4sAxvvmMU426qUA9aqEQ',
+				'H2LjzjkgpyUiNeazaBxVNjTujzUEgCJKGJ5VykHsj3JD5rx',
+				'F5212cNTxkoLQV9k3v74hLvdu76GebcxXDEhUR7gR9xMaDn',
+				'HTxMhXZtbmYy2DfHM4FyRVonuhrJtVK9rUVxnhWnJyG8Mhh',
 			],
 		},
 	},
@@ -760,6 +789,29 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 		},
 	},
 	{
+		name: 'ValidOrange',
+		icon: 'ValidOrange',
+		bio: 'We are a US-based validator operator with nodes worldwide. With extensive experience in providing reliable infrastructure services, we continually monitor our servers and improve our processes to ensure stable, consistent service.',
+		email: 'info@validorange.net',
+		x: '@ValidOrangeDOT',
+		website: 'https://www.validorange.net',
+		validators: {
+			polkadot: [
+				'13rG5oK2qskxP27mjUEyn1YbrmzpCV6fbBVcnBUd8Y7sQX6Z',
+				'12WRpiUFDZ1GjksnpmBL3EzT2jz2TZ7QHhUTqoubhYPQ7PAZ',
+			],
+			kusama: [
+				'J47U9wGuwzccFPoz8bnMTKJt7WGpPp8ZNgvtXFDL9PHwpCt',
+				'DiSdjgV1fEu2i5wzxerBuuAWpypUQjAbt8WgLYWMZT4PGHj',
+				'EV6LtNrgjcPRYEoCnjbpVjzgLmkc77sttwoQycHsDFzBBnN',
+				'D35frFH9mo7dV6vKroMEXi3Xpi8B6bwPzsQ6uqfGFJfrcru',
+				'GszzgW1Z5nszEzWnDWtHSQrNPPZaf3L8o2HHayciCDohX46',
+				'Fd4YQQPy6w6F6pf5phhkUWq27qCDy3QscFsoC8zARLyBYca',
+				'F5gM8QxL5gNTLF8r7hEdz2jwZKaQmbXNtVcFC9ZJPtg98ot',
+			],
+		},
+	},
+	{
 		name: 'WOJDOT ʕ •ᴥ•ʔ',
 		icon: 'Wojdot',
 		bio: 'Independent Polkadot Validator. We run our service on bare metal machines via a cloud service with the ability to spin up validator nodes in different regions within a matter of minutes.',
@@ -831,12 +883,17 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 		email: 't@helixstreet.io',
 		website: 'https://helixstreet.io',
 		validators: {
-			polkadot: ['1HMQVknF2rGz2vBegqA9jU4NhZKQtW7nZTDQykgeSm8FgPa'],
+			polkadot: [
+				'1HMQVknF2rGz2vBegqA9jU4NhZKQtW7nZTDQykgeSm8FgPa',
+				'16WzVw5JDCXLiA3t5D4LL15S2sqSBtCsjVNXkwLCVxGdeQGj',
+			],
 			kusama: [
 				'J6K1vA6ynGo2GrotGpP5ocHKr82JFTv7NUnzJcoRfTcCn8T',
 				'F3EJS4BsGsxjvigBcgte4ZfYUhpcizMQizQ5TxkR5ts378r',
 				'DGvPFG7dHMWryfHQD2XBQ4WX1nM5KnyHmsLSj2k7DaBRhUD',
 				'CrfvUqb1cbjJ9j7TkbCuXzuffquXFmAASZUeM3Ha9x6pXjX',
+				'HR3EBGE3KimuXEGRmsf6xD8oC7xKdoAiSZizEubogFhaPMb',
+				'EyPp5yimu5tw2XM78UUAkbByDL1wHdz6T25iqTaySmZ3CdW',
 			],
 		},
 	},
@@ -845,6 +902,7 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 		icon: 'Saxemberg',
 		bio: 'We offer validation and collation services to our nominators on Polkadot ecosystem. Active on-chain governance participants.',
 		email: 'hello@saxemberg.com',
+		x: '@saxemberg',
 		website: 'https://saxemberg.com',
 		validators: {
 			polkadot: [
@@ -857,8 +915,6 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 				'Cu2z7dVVdzFyDVTjUPm7feV9RFQ8QiG3yLGsVEj5NohFXk7',
 				'Dfg9gbTwG6aghwLYTfYoV4dXyhCRBLbRyFwENADHmg4zfDF',
 				'GL7MYnpQr7jgJqK8wSRUQuob1TvTY7uRJP6LUNeUyvMUhQR',
-				'GAGaWf9wiFGidsQdcLfHRrndVsfTRx9SKfMNJFekk7ue2zL',
-				'EAZLkHboA6P5ZnKASbKB2EdnSzRFHr2FrbxRRtyWyrHhVQ3',
 			],
 		},
 	},

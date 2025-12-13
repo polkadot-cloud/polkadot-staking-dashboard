@@ -35,7 +35,7 @@
 			"unrs-resolver"
 		],
 		"onlyBuiltDependencies": [
-			"@parcel/watcher",
+			"@reown/appkit",
 			"@swc/core",
 			"bufferutil",
 			"esbuild",

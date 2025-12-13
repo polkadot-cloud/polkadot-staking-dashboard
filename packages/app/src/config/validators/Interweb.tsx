@@ -1,4 +1,4 @@
-const Metaspan = () => (
+const Interweb = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 		<path fill="#fff" d="M0 0h512v512H0z" />
 		<path
@@ -16,4 +16,4 @@ const Metaspan = () => (
 	</svg>
 )
 
-export default Metaspan
+export default Interweb
