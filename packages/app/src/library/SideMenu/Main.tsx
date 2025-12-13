@@ -10,6 +10,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -46,6 +47,8 @@ export const Main = ({
 	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
+	const { balances } = useAccountBalances(activeAddress)
+	const { totalUnlockChunks } = balances.nominator
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))
 	const fullCommissionNominees = nominated.filter(
@@ -74,7 +77,7 @@ export const Main = ({
 				}
 			}
 			if (uri === `${import.meta.env.BASE_URL}nominate`) {
-				if (isBonding) {
+				if (isBonding || totalUnlockChunks > 0) {
 					pages[i].bullet = 'accent'
 					return true
 				}
