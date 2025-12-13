@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -21,17 +20,16 @@ export const MembersListInner = ({
 	itemsPerPage,
 }: MembersListProps) => {
 	const { t } = useTranslation('pages')
-	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccounts()
-	const { activePool } = useActivePool()
 	const {
 		meta,
 		fetchPoolMemberData,
 		fetchedPoolMembersApi,
 		setFetchedPoolMembersApi,
 	} = usePoolMembers()
+	const { network } = useNetwork()
+	const { activePool } = useActivePool()
 
-	// current page.
+	// current page
 	const [page, setPage] = useState<number>(1)
 
 	// pagination
@@ -42,15 +40,13 @@ export const MembersListInner = ({
 	// handle validator list bootstrapping
 	const fetchingMemberList = useRef<boolean>(false)
 
-	const setupMembersList = async () => {
+	const syncMemberList = async () => {
 		const poolId = activePool?.id || 0
 
 		if (poolId > 0 && !fetchingMemberList.current) {
 			fetchingMemberList.current = true
-
 			// Calculate offset based on page number (1-indexed)
 			const offset = (page - 1) * itemsPerPage
-
 			const result = await fetchPoolMembers(
 				network,
 				poolId,
@@ -74,7 +70,7 @@ export const MembersListInner = ({
 	// Refetch list when page changes.
 	useEffect(() => {
 		setFetchedPoolMembersApi('unsynced')
-	}, [page, activeAddress])
+	}, [page])
 
 	// Refetch list when network changes.
 	useEffect(() => {
@@ -84,10 +80,9 @@ export const MembersListInner = ({
 
 	// Configure list when network is ready to fetch.
 	useEffect(() => {
-		if (fetchedPoolMembersApi === 'unsynced') {
-			setupMembersList()
-		}
-	}, [fetchedPoolMembersApi, activePool])
+		setFetchedPoolMembersApi('unsynced')
+		syncMemberList()
+	}, [activePool, page])
 
 	return (
 		<ListWrapper>
