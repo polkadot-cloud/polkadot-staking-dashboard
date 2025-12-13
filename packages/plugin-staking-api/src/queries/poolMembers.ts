@@ -13,6 +13,11 @@ const QUERY = gql`
       members {
         poolId
         address
+				points
+				unbondingEras {
+					era
+					amount
+				}
       }
     }
   }

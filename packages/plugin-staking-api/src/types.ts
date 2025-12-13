@@ -189,6 +189,11 @@ export interface PoolMembersData {
 export interface PoolMember {
 	poolId: number
 	address: string
+	points: bigint
+	unbondingEras: {
+		era: number
+		amount: string
+	}[]
 }
 
 export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
