@@ -40,7 +40,7 @@ export const UnstakePrompts = () => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
+						border: `1px solid ${getThemeValue('--accent-color-primary')}`,
 					}}
 				>
 					<div className="content">
