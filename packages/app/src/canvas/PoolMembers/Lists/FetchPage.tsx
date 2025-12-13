@@ -41,25 +41,27 @@ export const MembersListInner = ({
 	const fetchingMemberList = useRef<boolean>(false)
 
 	const syncMemberList = async () => {
-		const poolId = activePool?.id || 0
-
-		if (poolId > 0 && !fetchingMemberList.current) {
-			fetchingMemberList.current = true
-			// Calculate offset based on page number (1-indexed)
-			const offset = (page - 1) * itemsPerPage
-			const result = await fetchPoolMembers(
-				network,
-				poolId,
-				itemsPerPage,
-				offset,
-			)
-
-			fetchingMemberList.current = false
-
-			if (result?.members) {
-				fetchPoolMemberData(result.members.map(({ address }) => address))
+		try {
+			const poolId = activePool?.id || 0
+			if (poolId > 0 && !fetchingMemberList.current) {
+				fetchingMemberList.current = true
+				// Calculate offset based on page number (1-indexed)
+				const offset = (page - 1) * itemsPerPage
+				const result = await fetchPoolMembers(
+					network,
+					poolId,
+					itemsPerPage,
+					offset,
+				)
+				fetchingMemberList.current = false
+				if (result?.members) {
+					fetchPoolMemberData(result.members.map(({ address }) => address))
+				}
+				setFetchedPoolMembersApi('synced')
 			}
-			setFetchedPoolMembersApi('synced')
+		} catch {
+			fetchingMemberList.current = false
+			setFetchedPoolMembersApi('unsynced')
 		}
 	}
 
@@ -67,18 +69,7 @@ export const MembersListInner = ({
 	const members = meta.poolMembers.filter((m) => m !== undefined)
 	const listMembers = members.slice(pageStart).slice(0, itemsPerPage)
 
-	// Refetch list when page changes.
-	useEffect(() => {
-		setFetchedPoolMembersApi('unsynced')
-	}, [page])
-
-	// Refetch list when network changes.
-	useEffect(() => {
-		setFetchedPoolMembersApi('unsynced')
-		setPage(1)
-	}, [network])
-
-	// Configure list when network is ready to fetch.
+	// Configure list when network is ready to fetch
 	useEffect(() => {
 		setFetchedPoolMembersApi('unsynced')
 		syncMemberList()

@@ -6,21 +6,21 @@ import { client } from '../Client'
 import type { PoolMembersData, PoolMembersResult } from '../types'
 
 const QUERY = gql`
-  query PoolMembers($network: String!, $poolId: Int!, $limit: Int, $offset: Int) {
-    poolMembers(network: $network, poolId: $poolId, limit: $limit, offset: $offset) {
-      poolId
-      totalMembers
-      members {
-        poolId
-        address
+	query PoolMembers($network: String!, $poolId: Int!, $limit: Int, $offset: Int) {
+		poolMembers(network: $network, poolId: $poolId, limit: $limit, offset: $offset) {
+			poolId
+			totalMembers
+			members {
+      	poolId
+				address
 				points
 				unbondingEras {
 					era
 					amount
 				}
-      }
-    }
-  }
+			}
+		}
+	}
 `
 
 export const usePoolMembers = ({
