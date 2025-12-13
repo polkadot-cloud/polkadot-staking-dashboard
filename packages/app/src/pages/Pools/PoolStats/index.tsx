@@ -67,7 +67,7 @@ export const PoolStats = () => {
 		{
 			label: t('poolMembers'),
 			value: `${memberCounter}`,
-			button: pluginEnabled('subscan')
+			button: pluginEnabled('staking_api')
 				? {
 						text: t('browseMembers'),
 						onClick: () => {

@@ -4,16 +4,14 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePoolMembers } from 'contexts/Pools/PoolMembers'
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
-import { Subscan } from 'library/Subscan'
+import { fetchPoolMembers } from 'plugin-staking-api'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { PoolMember } from 'types'
 import { Member } from './Member'
 import type { MembersListProps } from './types'
 
@@ -24,7 +22,6 @@ export const MembersListInner = ({
 }: MembersListProps) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
-	const { pluginEnabled } = usePlugins()
 	const { activeAddress } = useActiveAccounts()
 	const { activePool } = useActivePool()
 	const {
@@ -51,14 +48,21 @@ export const MembersListInner = ({
 		if (poolId > 0 && !fetchingMemberList.current) {
 			fetchingMemberList.current = true
 
-			const newMembers = (await Subscan.handleFetchPoolMembers(
+			// Calculate offset based on page number (1-indexed)
+			const offset = (page - 1) * itemsPerPage
+
+			const result = await fetchPoolMembers(
+				network,
 				poolId,
-				page,
 				itemsPerPage,
-			)) as PoolMember[]
+				offset,
+			)
 
 			fetchingMemberList.current = false
-			fetchPoolMemberData(newMembers.map(({ who }) => who))
+
+			if (result?.members) {
+				fetchPoolMemberData(result.members.map(({ address }) => address))
+			}
 			setFetchedPoolMembersApi('synced')
 		}
 	}
@@ -69,10 +73,8 @@ export const MembersListInner = ({
 
 	// Refetch list when page changes.
 	useEffect(() => {
-		if (pluginEnabled('subscan')) {
-			setFetchedPoolMembersApi('unsynced')
-		}
-	}, [page, activeAddress, pluginEnabled('subscan')])
+		setFetchedPoolMembersApi('unsynced')
+	}, [page, activeAddress])
 
 	// Refetch list when network changes.
 	useEffect(() => {
