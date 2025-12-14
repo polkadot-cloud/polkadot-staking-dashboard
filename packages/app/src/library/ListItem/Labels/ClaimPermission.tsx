@@ -5,8 +5,8 @@ import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import {
 	faArrowDown,
+	faArrowsDownToLine,
 	faPlus,
-	faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTooltip } from 'contexts/Tooltip'
@@ -38,7 +38,7 @@ export const ClaimPermission = ({
 			break
 	}
 
-	let Icon: IconProp = faPlusCircle
+	let Icon: IconProp = faArrowsDownToLine
 	switch (claimPermission) {
 		case 'Permissioned':
 			Icon = faSquare
