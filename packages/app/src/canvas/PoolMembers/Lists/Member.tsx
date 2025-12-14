@@ -132,9 +132,7 @@ export const Member = ({ member }: MemberProps) => {
 					<div className="row bottom">
 						<PoolMemberBonded member={member} />
 						<LabelRow>
-							<Label>
-								<ClaimPermission claimPermission={member.claimPermission} />
-							</Label>
+							<ClaimPermission claimPermission={member.claimPermission} />
 						</LabelRow>
 					</div>
 				</div>
