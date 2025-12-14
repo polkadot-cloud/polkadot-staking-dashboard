@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useApi } from 'contexts/Api'
 import { useMenu } from 'contexts/Menu'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded'
@@ -20,8 +19,9 @@ import type { AnyJson } from 'types'
 import { HeaderButtonRow, Separator } from 'ui-core/list'
 import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
+import type { MemberProps } from './types'
 
-export const Member = ({ member }: { member: FetchedPoolMember }) => {
+export const Member = ({ member }: MemberProps) => {
 	const { t } = useTranslation()
 	const { activeEra } = useApi()
 	const { openMenu, open } = useMenu()
