@@ -21,6 +21,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 	const [poolMemberData, setPoolMemberData] = useState<FetchedPoolMembers>({
 		poolMembers: [],
 		addresses: [],
+		claimPermissions: [],
 	})
 
 	// Update poolMembersApi fetched status
@@ -35,21 +36,28 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 		setPoolMemberData({
 			poolMembers: [],
 			addresses: [],
+			claimPermissions: [],
 		})
-		const result = {
+
+		const [poolMembers, claimPermissions] = await Promise.all([
+			serviceApi.query.poolMembersMulti(addresses),
+			serviceApi.query.claimPermissionsMulti(addresses),
+		])
+
+		const result: FetchedPoolMembers = {
 			addresses,
-			poolMembers: (await serviceApi.query.poolMembersMulti(addresses)).map(
-				(member, i) => {
-					if (!member) {
-						return undefined
-					}
-					return {
-						...member,
-						address: addresses[i],
-					}
-				},
-			),
+			poolMembers: poolMembers.map((member, i) => {
+				if (!member) {
+					return undefined
+				}
+				return {
+					...member,
+					address: addresses[i],
+				}
+			}),
+			claimPermissions,
 		}
+
 		setPoolMemberData(result)
 	}
 

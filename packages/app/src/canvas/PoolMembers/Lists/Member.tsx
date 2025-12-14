@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useApi } from 'contexts/Api'
 import { useMenu } from 'contexts/Menu'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
+import { ClaimPermission } from 'library/ListItem/Labels/ClaimPermission'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded'
 import { Wrapper } from 'library/ListItem/Wrappers'
@@ -17,11 +17,12 @@ import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyJson } from 'types'
-import { HeaderButtonRow, Separator } from 'ui-core/list'
+import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
+import type { MemberProps } from './types'
 
-export const Member = ({ member }: { member: FetchedPoolMember }) => {
+export const Member = ({ member }: MemberProps) => {
 	const { t } = useTranslation()
 	const { activeEra } = useApi()
 	const { openMenu, open } = useMenu()
@@ -130,6 +131,9 @@ export const Member = ({ member }: { member: FetchedPoolMember }) => {
 					<Separator />
 					<div className="row bottom">
 						<PoolMemberBonded member={member} />
+						<LabelRow>
+							<ClaimPermission claimPermission={member.claimPermission} />
+						</LabelRow>
 					</div>
 				</div>
 			</Wrapper>

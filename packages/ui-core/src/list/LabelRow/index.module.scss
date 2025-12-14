@@ -8,6 +8,8 @@
   flex-grow: 1;
   overflow: hidden;
   padding-left: 0.25rem;
+  height: inherit;
+  
   &.inline {
     margin-bottom: 0.9rem;
   }

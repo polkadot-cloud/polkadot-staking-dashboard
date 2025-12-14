@@ -265,12 +265,13 @@
 		"pending": "Pending",
 		"performance": "Performance",
 		"permissioned": "Permissioned",
+		"permissionedClaimPermission": "Permissioned Claiming: Only member can claim rewards",
 		"permissionedSubtitle": "Only you can claim rewards.",
+		"permissionlessClaimPermission": "Permissionless Claiming: Anyone can claim rewards for this member",
 		"permissionlessClaimingTurnedOff": "Permissionless claiming is turned off.",
-		"plugin": {
-			"polkawatch": "Polkawatch",
-			"staking_api": "Staking API"
-		},
+		"permissionlessCompound": "Permissionless Compounding: Anyone can compound rewards for this member",
+		"permissionlessWithdraw": "Permissionless Withdrawing: Anyone can withdraw rewards for this member",
+		"plugin": { "polkawatch": "Polkawatch", "staking_api": "Staking API" },
 		"points": "Points",
 		"pool": "Pool",
 		"poolClaim": "Pool Claim",

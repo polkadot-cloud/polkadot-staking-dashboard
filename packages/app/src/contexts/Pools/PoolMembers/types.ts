@@ -2,7 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Sync } from '@w3ux/types'
-import type { PalletNominationPoolsPoolMember } from 'dedot/chaintypes'
+import type {
+	PalletNominationPoolsClaimPermission,
+	PalletNominationPoolsPoolMember,
+} from 'dedot/chaintypes'
 
 export interface PoolMemberContext {
 	fetchPoolMemberData: (addresses: string[]) => void
@@ -14,6 +17,7 @@ export interface PoolMemberContext {
 export interface FetchedPoolMembers {
 	poolMembers: (FetchedPoolMember | undefined)[]
 	addresses: string[]
+	claimPermissions: (PalletNominationPoolsClaimPermission | undefined)[]
 }
 
 export type FetchedPoolMember = PalletNominationPoolsPoolMember & {

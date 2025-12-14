@@ -57,6 +57,8 @@ export class PolkadotService
 					hub: async (address) =>
 						await query.accountBalance(this.apiHub, address),
 				},
+				claimPermissionsMulti: async (addresses) =>
+					await query.claimPermissionsMulti(this.apiHub, addresses),
 				erasStakersOverview: async (era, address) =>
 					await query.erasStakersOverview(this.apiHub, era, address),
 				erasRewardPoints: async (era) =>
