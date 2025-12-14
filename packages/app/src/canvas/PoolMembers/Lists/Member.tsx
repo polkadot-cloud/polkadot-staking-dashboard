@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api'
 import { useMenu } from 'contexts/Menu'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePrompt } from 'contexts/Prompt'
+import { ClaimPermission } from 'library/ListItem/Labels/ClaimPermission'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded'
 import { Wrapper } from 'library/ListItem/Wrappers'
@@ -16,7 +17,7 @@ import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyJson } from 'types'
-import { HeaderButtonRow, Separator } from 'ui-core/list'
+import { HeaderButtonRow, Label, LabelRow, Separator } from 'ui-core/list'
 import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
 import type { MemberProps } from './types'
@@ -130,6 +131,11 @@ export const Member = ({ member }: MemberProps) => {
 					<Separator />
 					<div className="row bottom">
 						<PoolMemberBonded member={member} />
+						<LabelRow>
+							<Label>
+								<ClaimPermission claimPermission={member.claimPermission} />
+							</Label>
+						</LabelRow>
 					</div>
 				</div>
 			</Wrapper>
