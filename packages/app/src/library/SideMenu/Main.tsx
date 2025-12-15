@@ -47,7 +47,7 @@ export const Main = ({
 	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
-	const { balances } = useAccountBalances(activeAddress)
+	const { balances, nominatorBalance } = useAccountBalances(activeAddress)
 	const { totalUnlockChunks } = balances.nominator
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))
@@ -96,7 +96,7 @@ export const Main = ({
 				}
 			}
 			if (uri === `${import.meta.env.BASE_URL}stake`) {
-				if (inPool || isBonding) {
+				if (inPool || nominatorBalance.isGreaterThan(0)) {
 					pages[i].bullet = 'accent'
 					return true
 				}
