@@ -1,10 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { withTimeout } from '@w3ux/utils'
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import { addActivePool, removeActivePool } from 'global-bus'
-import type { ActivePool, ServiceInterface } from 'types'
+import type { ActivePool, IdentityOf, ServiceInterface, SuperOf } from 'types'
 import {
 	createPoolAccounts,
 	formatIdentities,
@@ -61,10 +62,14 @@ export class ActivePoolQuery<T extends StakingChain> {
 						role.address(this.api.consts.system.ss58Prefix),
 					)
 
-					const [identities, supers] = await Promise.all([
-						this.serviceInterface.query.identityOfMulti(roleAddresses),
-						this.serviceInterface.query.superOfMulti(roleAddresses),
-					])
+					// NODE: Ideally be added to a queue for the people chain to fetch asynchronously
+					const identities = (await withTimeout(
+						500,
+						Promise.all([
+							this.serviceInterface.query.identityOfMulti(roleAddresses),
+							this.serviceInterface.query.superOfMulti(roleAddresses),
+						]),
+					)) as [IdentityOf[], SuperOf[]]
 
 					const activePool: ActivePool = {
 						id: this.poolId,
@@ -87,8 +92,11 @@ export class ActivePoolQuery<T extends StakingChain> {
 								),
 							},
 							roleIdentities: {
-								identities: formatIdentities(roleAddresses, identities),
-								supers: formatSuperIdentities(supers),
+								identities: formatIdentities(
+									roleAddresses,
+									identities?.[0] || [],
+								),
+								supers: formatSuperIdentities(identities?.[1] || []),
 							},
 							state: bondedPool.state,
 						},
