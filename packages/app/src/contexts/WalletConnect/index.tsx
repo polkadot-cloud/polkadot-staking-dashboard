@@ -147,7 +147,7 @@ export const WalletConnectProvider = ({
 			polkadot: {
 				methods: ['polkadot_signTransaction', 'polkadot_signMessage'],
 				chains: caips,
-				events: ['chainChanged", "accountsChanged'],
+				events: ['chainChanged', 'accountsChanged'],
 			},
 		}
 
@@ -210,7 +210,7 @@ export const WalletConnectProvider = ({
 						chains: caips,
 						accounts: [],
 						methods: ['polkadot_signTransaction', 'polkadot_signMessage'],
-						events: ['chainChanged", "accountsChanged'],
+						events: ['chainChanged', 'accountsChanged'],
 					},
 				},
 			})
