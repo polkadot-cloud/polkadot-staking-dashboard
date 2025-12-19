@@ -262,12 +262,13 @@
 		"pending": "待定中",
 		"performance": "表现",
 		"permissioned": "已获许可",
+		"permissionedClaimPermission": "需许可申领：仅成员可申领奖励",
 		"permissionedSubtitle": "仅本人可申领奖励",
+		"permissionlessClaimPermission": "无需许可申领：任何人均可为该成员申领奖励",
 		"permissionlessClaimingTurnedOff": "己许可申领己关闭",
-		"plugin": {
-			"polkawatch": "Polkawatch",
-			"staking_api": "Staking API"
-		},
+		"permissionlessCompound": "无需许可复投：任何人均可为该成员复投奖励",
+		"permissionlessWithdraw": "无需许可提取：任何人均可为该成员提取奖励",
+		"plugin": { "polkawatch": "Polkawatch", "staking_api": "Staking API" },
 		"points": "点数",
 		"pool": "提名池",
 		"poolClaim": "提名池申领",

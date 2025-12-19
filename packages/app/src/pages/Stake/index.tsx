@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useStaking } from 'contexts/Staking'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { Active } from 'pages/Nominate/Active'
 import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
@@ -14,8 +14,8 @@ import { Page, Stat } from 'ui-core/base'
 
 export const Stake = () => {
 	const { t } = useTranslation('pages')
-	const { isBonding } = useStaking()
 	const { activeAddress } = useActiveAccounts()
+	const { nominatorBalance } = useAccountBalances(activeAddress)
 	const { syncing, accountSynced } = useSyncing([
 		'initialization',
 		'era-stakers',
@@ -28,17 +28,19 @@ export const Stake = () => {
 		isPreloading = syncing
 	}
 
+	const nominating = nominatorBalance.isGreaterThan(0)
+
 	return (
 		<>
 			<Page.Title title={t('stake')} />
-			{!isBonding && (
+			{!nominating && (
 				<Stat.Row>
 					<AverageRewardRate isPreloading={isPreloading} />
 					<MinJoinBond isPreloading={isPreloading} />
 					<NextRewards isPreloading={isPreloading} />
 				</Stat.Row>
 			)}
-			{isBonding ? (
+			{nominating ? (
 				<Active />
 			) : (
 				<PoolOverview isPreloading={isPreloading} showOtherOptions={true} />

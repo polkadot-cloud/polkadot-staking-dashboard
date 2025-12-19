@@ -65,8 +65,20 @@ export const MembersListInner = ({
 		}
 	}
 
-	// get throttled subset or entire list
-	const members = meta.poolMembers.filter((m) => m !== undefined)
+	// Merge member data with claim permissions to have all member data in one object
+	const members = meta.poolMembers
+		.map((member, index) => {
+			if (!member) {
+				return undefined
+			}
+			return {
+				...member,
+				claimPermission: meta.claimPermissions[index],
+			}
+		})
+		.filter((m) => m !== undefined)
+
+	// Get paginated subset of members
 	const listMembers = members.slice(pageStart).slice(0, itemsPerPage)
 
 	// Configure list when network is ready to fetch
