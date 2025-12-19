@@ -64,7 +64,7 @@ export class ActivePoolQuery<T extends StakingChain> {
 
 					// NODE: Ideally be added to a queue for the people chain to fetch asynchronously
 					const identities = (await withTimeout(
-						500,
+						1000,
 						Promise.all([
 							this.serviceInterface.query.identityOfMulti(roleAddresses),
 							this.serviceInterface.query.superOfMulti(roleAddresses),
