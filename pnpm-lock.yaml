@@ -273,8 +273,8 @@ importers:
   packages/consts:
     dependencies:
       '@dedot/chain-specs':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.6.0
+        version: 0.6.0
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -785,8 +785,8 @@ packages:
     resolution: {integrity: sha512-jzRHIL3CCIQHe0JkZ1FD66MXgktzwBeR2qdqXkqSZrwsXKSqV7Z+7r64KWt10wdaBRFeeV+t4/4v1rqKtoZlkA==}
     engines: {node: '>=18'}
 
-  '@dedot/chain-specs@0.5.0':
-    resolution: {integrity: sha512-CWPWbwWWU9ZxS8gh+bMO8aCvtH8hbflCPUW+O+saZSqhLS8QuZO0xJjqt1WS40K+BHshdyROIRXP7k6u3mTVvA==}
+  '@dedot/chain-specs@0.6.0':
+    resolution: {integrity: sha512-ydak9NZbnbDlw/BJY5TOADwMXSR8WtAm5TYaHhgwewOWks1ebMBoT7UIhRYd+zhc1A5LYaRPfh5yBa+Rmu1Vxw==}
 
   '@dedot/chaintypes@0.201.0':
     resolution: {integrity: sha512-zTowfMgxRqIDiuoDrYYdTbmhYXyB0kr8wG708uLS2vr5Ruz8lQMahBrp08vwOqtOT6/obXsR4Ag9FXC/pv5Q+g==}
@@ -4465,7 +4465,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/chain-specs@0.5.0': {}
+  '@dedot/chain-specs@0.6.0': {}
 
   '@dedot/chaintypes@0.201.0(dedot@1.0.2(typescript@5.9.3))':
     dependencies:
