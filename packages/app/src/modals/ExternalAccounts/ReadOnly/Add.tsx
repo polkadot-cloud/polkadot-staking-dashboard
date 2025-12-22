@@ -36,7 +36,7 @@ export const Add = () => {
 			<AccountDropdown
 				accounts={[]}
 				placeholder={t('inputAddress')}
-				label={t('address')}
+				label={t('address', { ns: 'app' })}
 				initialAccount={selectedAccount}
 				onSelect={(account) => {
 					setSelectedAccount(account)
