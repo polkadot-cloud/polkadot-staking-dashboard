@@ -70,8 +70,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.3)
       '@ledgerhq/hw-transport-webhid':
-        specifier: ^6.30.9
-        version: 6.30.9
+        specifier: ^6.30.10
+        version: 6.30.10
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -1089,14 +1089,20 @@ packages:
   '@ledgerhq/devices@8.7.0':
     resolution: {integrity: sha512-3pSOULPUhClk2oOxa6UnoyXW8+05FK7r6cpq2WiTey4kyIUjmIraO7AX9lhz9IU73dGVtBMdU+NCPPO2RYJaTQ==}
 
-  '@ledgerhq/errors@6.27.0':
-    resolution: {integrity: sha512-EE2hATONHdNP3YWFe3rZwwpSEzI5oN+q/xTjOulnjHZo84TLjungegEJ54A/Pzld0woulkkeVA27FbW5SAO1aA==}
+  '@ledgerhq/devices@8.7.1':
+    resolution: {integrity: sha512-xUtqLp4t7PhVKkMG/mCrSzxGQ25JA06UAIxxq07EwuJKyWaey1gSdvqr0TvbTw/fsJNya4FIBYTrUkjH9XpdBQ==}
 
-  '@ledgerhq/hw-transport-webhid@6.30.9':
-    resolution: {integrity: sha512-5if/V1NyOr4JuEX+NB/bxaE92TptpgX+r1mGmzDHG6Gs9/fX/HhKe1GVwwU5C7LvTFrdTgMzEs2aIkpoMM60Ag==}
+  '@ledgerhq/errors@6.27.1':
+    resolution: {integrity: sha512-Q6nXkg63kSjxa8DDBtjSGAuiOP/jQVQM/0f+0R/ovilQKuxMIxEMXPfonvhQ2AIP4bqKOzGV1c9Iqnow22w/Zg==}
+
+  '@ledgerhq/hw-transport-webhid@6.30.10':
+    resolution: {integrity: sha512-vPTHhgCNeymlqjcK3VlMCAzEqUC5o6+NTFq2V6ywbKBkT7Wl8jUR2y+Kfba41Pg+DXTUZ4BzgMM6tNNx48ioiA==}
 
   '@ledgerhq/hw-transport@6.31.13':
     resolution: {integrity: sha512-MrJRDk74wY980ofiFPRpTHQBbRw1wDuKbdag1zqlO1xtJglymwwY03K2kvBNvkm1RTSCPUp/nAoNG+WThZuuew==}
+
+  '@ledgerhq/hw-transport@6.31.14':
+    resolution: {integrity: sha512-aTKItTLDCN2aoZv6nX6weMslgzT0mI8Hp2FEt2iTomQ6V5r1/BRDRbz2WB1989dZsgBajPRuUWhTZ/Bt6tiijw==}
 
   '@ledgerhq/hw-transport@6.31.9':
     resolution: {integrity: sha512-HqB2Whl2qbrzyvs9gC/GmLhIy8RO4CWzjqHS4k0bPWDZRqKa8m6H32vjrbXGO//pUL1Mlu87UwvxvLyuICdjwg==}
@@ -4726,38 +4732,52 @@ snapshots:
 
   '@ledgerhq/devices@8.5.0':
     dependencies:
-      '@ledgerhq/errors': 6.27.0
+      '@ledgerhq/errors': 6.27.1
       '@ledgerhq/logs': 6.13.0
       rxjs: 7.8.2
       semver: 7.7.3
 
   '@ledgerhq/devices@8.7.0':
     dependencies:
-      '@ledgerhq/errors': 6.27.0
+      '@ledgerhq/errors': 6.27.1
       '@ledgerhq/logs': 6.13.0
       rxjs: 7.8.2
       semver: 7.7.3
 
-  '@ledgerhq/errors@6.27.0': {}
-
-  '@ledgerhq/hw-transport-webhid@6.30.9':
+  '@ledgerhq/devices@8.7.1':
     dependencies:
-      '@ledgerhq/devices': 8.7.0
-      '@ledgerhq/errors': 6.27.0
-      '@ledgerhq/hw-transport': 6.31.13
+      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/logs': 6.13.0
+      rxjs: 7.8.2
+      semver: 7.7.3
+
+  '@ledgerhq/errors@6.27.1': {}
+
+  '@ledgerhq/hw-transport-webhid@6.30.10':
+    dependencies:
+      '@ledgerhq/devices': 8.7.1
+      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/hw-transport': 6.31.14
       '@ledgerhq/logs': 6.13.0
 
   '@ledgerhq/hw-transport@6.31.13':
     dependencies:
       '@ledgerhq/devices': 8.7.0
-      '@ledgerhq/errors': 6.27.0
+      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/logs': 6.13.0
+      events: 3.3.0
+
+  '@ledgerhq/hw-transport@6.31.14':
+    dependencies:
+      '@ledgerhq/devices': 8.7.1
+      '@ledgerhq/errors': 6.27.1
       '@ledgerhq/logs': 6.13.0
       events: 3.3.0
 
   '@ledgerhq/hw-transport@6.31.9':
     dependencies:
       '@ledgerhq/devices': 8.5.0
-      '@ledgerhq/errors': 6.27.0
+      '@ledgerhq/errors': 6.27.1
       '@ledgerhq/logs': 6.13.0
       events: 3.3.0
 
