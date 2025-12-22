@@ -4,15 +4,19 @@
 import type { TimeLeftFormatted } from '@w3ux/types'
 import type { ReactNode } from 'react'
 
-export interface NumberProps {
+export interface CardCommon {
+	isPreloading?: boolean
+	helpKey?: string
+}
+
+export interface NumberProps extends CardCommon {
 	label: string
 	value: number
 	decimals?: number
 	unit: string
-	helpKey?: string
 }
 
-export interface PieProps {
+export interface PieProps extends CardCommon {
 	label: string
 	stat: {
 		value: string | number
@@ -21,27 +25,24 @@ export interface PieProps {
 	}
 	pieValue: number
 	tooltip?: string
-	helpKey?: string
 }
 
-export interface TextProps {
+export interface TextProps extends CardCommon {
 	primary?: boolean
 	label: string
 	value: string
-	helpKey?: string
 }
 
-export interface TickerProps {
+export interface TickerProps extends CardCommon {
 	primary?: boolean
 	label: string
 	value: string
-	helpKey?: string
 	direction?: 'up' | 'down'
 	unit: string
 	changePercent: string
 }
 
-export interface TimeleftProps {
+export interface TimeleftProps extends CardCommon {
 	label: string
 	timeleft: TimeLeftFormatted
 	graph: {
@@ -49,10 +50,9 @@ export interface TimeleftProps {
 		value2: number
 	}
 	tooltip?: string
-	helpKey?: string
 }
 
-export interface ButtonProps {
+export interface ButtonProps extends CardCommon {
 	Icon: ReactNode
 	label: string
 	title: string

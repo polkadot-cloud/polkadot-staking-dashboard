@@ -8,12 +8,12 @@ jobs:
   merge:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: gh-deploy
       - uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.25.0
 
       - uses: actions/setup-node@v6
         with:
@@ -32,12 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: merge
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: gh-deploy
       - uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.25.0
 
       - uses: actions/setup-node@v6
         with:

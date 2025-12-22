@@ -16,8 +16,7 @@ export const Sync = () => {
 	const { getValidators } = useValidators()
 	const { bondedPools } = useBondedPools()
 
-	// Keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
-	// member sync if Subscan is enabled
+	// Keep syncing if on pools page and still fetching bonded pools or pool members
 	const onPoolsSyncing = () => {
 		if (pageFromUri(pathname, 'overview') === 'pools') {
 			if (!bondedPools.length) {

@@ -3,14 +3,13 @@
 
 import { useOnResize } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { TipsConfig } from 'config/tips'
+import { TipsConfigAdvanced, TipsConfigSimple } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
+import { useUi } from 'contexts/UI'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { useSyncing } from 'hooks/useSyncing'
@@ -26,19 +25,14 @@ import { TipsWrapper } from './Wrappers'
 export const Tips = () => {
 	const { i18n, t } = useTranslation()
 	const { network } = useNetwork()
-	const {
-		stakingMetrics: { minNominatorBond },
-	} = useApi()
+	const { advancedMode } = useUi()
 	const { inPool } = useActivePool()
 	const { isOwner } = useActivePool()
-	const { feeReserve } = useBalances()
 	const { isNominating } = useStaking()
 	const { activeAddress } = useActiveAccounts()
 	const { fillVariables } = useFillVariables()
 	const { syncing } = useSyncing(['initialization'])
-	const {
-		balances: { freeBalance },
-	} = useAccountBalances(activeAddress)
+	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
 	// multiple tips per row is currently turned off.
 	const multiTipsPerRow = false
@@ -102,7 +96,7 @@ export const Tips = () => {
 	if (!activeAddress) {
 		segments.push(1)
 	} else if (!isNominating && !inPool) {
-		if (freeBalance - feeReserve > minNominatorBond) {
+		if (hasEnoughToNominate) {
 			segments.push(2)
 		} else {
 			segments.push(3)
@@ -123,7 +117,15 @@ export const Tips = () => {
 	}
 
 	// filter tips relevant to connected account.
-	let items = TipsConfig.filter((i) => segments.includes(i.s))
+	const tipsConfig = advancedMode ? TipsConfigAdvanced : TipsConfigSimple
+	let items = tipsConfig.filter((i) => segments.includes(i.s))
+
+	// If user is both nominating and in a pool, and in simple mode, filter out tips that redirect to
+	// 'stake' page as the stake page will not be accessible (pool and nominate pages will be
+	// accessible instead)
+	if (isNominating && inPool && !advancedMode) {
+		items = items.filter((i) => i.page !== 'stake')
+	}
 
 	items = items.map((item) => {
 		const { id } = item
@@ -169,14 +171,16 @@ export const Tips = () => {
 					/>
 				)}
 			</div>
-			<PageToggle
-				start={start}
-				end={end}
-				page={page}
-				itemsPerPage={itemsPerPage}
-				totalItems={items.length}
-				setPageHandler={setPageHandler}
-			/>
+			{items.length > 1 && (
+				<PageToggle
+					start={start}
+					end={end}
+					page={page}
+					itemsPerPage={itemsPerPage}
+					totalItems={items.length}
+					setPageHandler={setPageHandler}
+				/>
+			)}
 		</TipsWrapper>
 	)
 }

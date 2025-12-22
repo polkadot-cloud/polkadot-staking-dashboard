@@ -15,15 +15,15 @@
 		"validate": "node ./.scripts/localeValidate.cjs"
 	},
 	"dependencies": {
-		"@w3ux/utils": "2.2.3",
+		"@w3ux/utils": "2.3.0",
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
 		"event-tracking": "workspace:*",
-		"i18next": "^25.7.1",
-		"react-i18next": "^16.3.5",
+		"i18next": "^25.7.3",
+		"react-i18next": "^16.4.0",
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
-		"vite": "^7.2.6"
+		"vite": "^7.2.7"
 	}
 }

@@ -4,6 +4,7 @@
 import { accountBalance } from './accountBalance'
 import { bondedPool } from './bondedPool'
 import { bondedPoolEntries } from './bondedPoolEntries'
+import { claimPermissionsMulti } from './claimPermissionsMulti'
 import { erasRewardPoints } from './erasRewardPoints'
 import { erasStakersOverview } from './erasStakersOverview'
 import { erasStakersOverviewEntries } from './erasStakersOverviewEntries'
@@ -24,6 +25,7 @@ export const query = {
 	accountBalance,
 	bondedPool,
 	bondedPoolEntries,
+	claimPermissionsMulti,
 	erasStakersOverviewEntries,
 	erasStakersPagedEntries,
 	erasStakersOverview,

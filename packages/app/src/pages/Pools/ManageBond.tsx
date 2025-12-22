@@ -18,17 +18,17 @@ import { BondedChart } from 'library/BarChart/BondedChart'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, MultiButton } from 'ui-buttons'
-import { ButtonRow, CardHeader } from 'ui-core/base'
+import { ButtonRow, CardHeader, Loader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 
-export const ManageBond = () => {
+export const ManageBond = ({ isPreloading }: { isPreloading?: boolean }) => {
 	const { t } = useTranslation('pages')
 
 	const { network } = useNetwork()
 	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
-	const { syncing } = useSyncing(['active-pools'])
+	const { syncing } = useSyncing(['active-pools', 'era-stakers'])
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isBonding, isMember, activePool, isDepositor } = useActivePool()
@@ -70,46 +70,50 @@ export const ManageBond = () => {
 						zeroDecimals={2}
 					/>
 				</h2>
-				<ButtonRow>
-					<MultiButton.Container marginRight disabled={bondDisabled}>
-						<MultiButton.Button
-							size="md"
-							disabled={bondDisabled}
-							marginRight
-							onClick={() =>
-								openModal({
-									key: 'Bond',
-									options: { bondFor: 'pool' },
-									size: 'sm',
-								})
-							}
-							iconLeft={faPlus}
-							text=""
-						/>
-						<MultiButton.Button
-							size="md"
-							disabled={bondDisabled}
-							marginRight
-							onClick={() =>
-								openModal({
-									key: 'Unbond',
-									options: { bondFor: 'pool' },
-									size: 'sm',
-								})
-							}
-							iconLeft={faMinus}
-							text=""
-						/>
-					</MultiButton.Container>
-					{canLeavePool && (
-						<ButtonPrimary
-							size="md"
-							text={t('unstake')}
-							iconLeft={faSignOut}
-							onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
-						/>
-					)}
-				</ButtonRow>
+				{isPreloading ? (
+					<Loader style={{ height: '2.5rem', width: '10rem' }} />
+				) : (
+					<ButtonRow>
+						<MultiButton.Container marginRight disabled={bondDisabled}>
+							<MultiButton.Button
+								size="md"
+								disabled={bondDisabled}
+								marginRight
+								onClick={() =>
+									openModal({
+										key: 'Bond',
+										options: { bondFor: 'pool' },
+										size: 'sm',
+									})
+								}
+								iconLeft={faPlus}
+								text=""
+							/>
+							<MultiButton.Button
+								size="md"
+								disabled={bondDisabled}
+								marginRight
+								onClick={() =>
+									openModal({
+										key: 'Unbond',
+										options: { bondFor: 'pool' },
+										size: 'sm',
+									})
+								}
+								iconLeft={faMinus}
+								text=""
+							/>
+						</MultiButton.Container>
+						{canLeavePool && (
+							<ButtonPrimary
+								size="md"
+								text={t('unstake')}
+								iconLeft={faSignOut}
+								onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
+							/>
+						)}
+					</ButtonRow>
+				)}
 			</CardHeader>
 			<BondedChart
 				active={new BigNumber(planckToUnit(active, units))}

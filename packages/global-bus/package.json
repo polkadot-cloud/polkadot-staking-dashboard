@@ -13,10 +13,10 @@
 		"./util": "./src/util.ts"
 	},
 	"dependencies": {
-		"@w3ux/observables-connect": "^0.12.0",
-		"@w3ux/utils": "^2.2.3",
+		"@w3ux/observables-connect": "^1.0.1",
+		"@w3ux/utils": "^2.3.0",
 		"consts": "workspace:*",
-		"dedot": "^0.18.7",
+		"dedot": "^1.0.2",
 		"event-tracking": "workspace:*",
 		"plugin-staking-api": "workspace:*",
 		"rxjs": "^7.8.2"
@@ -24,6 +24,6 @@
 	"devDependencies": {
 		"@w3ux/types": "^2.4.1",
 		"types": "workspace:*",
-		"vite": "^7.2.6"
+		"vite": "^7.2.7"
 	}
 }

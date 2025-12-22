@@ -8,4 +8,4 @@ import { defaultSyncStatus } from './default'
 export const _syncStatus = new BehaviorSubject<SyncId[]>(defaultSyncStatus)
 
 // Track active timeouts for each sync ID
-export const _syncTimeouts = new Map<SyncId, NodeJS.Timeout>()
+export const _syncTimeouts = new Map<SyncId, ReturnType<typeof setTimeout>>()

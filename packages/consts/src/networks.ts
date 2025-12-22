@@ -104,8 +104,12 @@ export const SystemChainList: Record<string, SystemChain> = {
 			getLightClient: async () =>
 				await import('@dedot/chain-specs/polkadot_people'),
 			rpc: {
+				PolkadotPeople: 'wss://polkadot-people-rpc.polkadot.io',
+				LuckyFriday: 'wss://rpc-people-polkadot.luckyfriday.io',
+				RadiumBlock: 'wss://people-polkadot.public.curie.radiumblock.co/ws',
 				IBP1: 'wss://sys.ibp.network/people-polkadot',
 				IBP2: 'wss://people-polkadot.dotters.network',
+				'Sys Dotters': 'wss://sys.dotters.network/people-polkadot',
 			},
 		},
 		relayChain: 'polkadot',
@@ -120,8 +124,11 @@ export const SystemChainList: Record<string, SystemChain> = {
 			getLightClient: async () =>
 				await import('@dedot/chain-specs/ksmcc3_people'),
 			rpc: {
+				Parity: 'wss://kusama-people-rpc.polkadot.io',
+				Stakeworld: 'wss://ksm-rpc.stakeworld.io/people',
 				IBP1: 'wss://sys.ibp.network/people-kusama',
 				IBP2: 'wss://people-kusama.dotters.network',
+				LuckyFriday: 'wss://rpc-people-kusama.luckyfriday.io',
 			},
 		},
 		relayChain: 'kusama',

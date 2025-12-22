@@ -18,9 +18,9 @@ export const useAccountBalances = (address: MaybeString) => {
 		getAccountBalance,
 		getEdReserved,
 	} = useBalances()
-	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { feeReserve } = useBalances()
+	const { activeEra, stakingMetrics } = useApi()
 	const { units } = getStakingChainData(network)
 
 	// Calculates various balances for an account pertaining to free balance, nominating and pools.
@@ -72,8 +72,35 @@ export const useAccountBalances = (address: MaybeString) => {
 				: new BigNumber(0)
 	}
 
+	// Check if user has enough balance to nominate (including locked balance that can be used for
+	// staking)
+	const hasEnoughToNominate = (): boolean => {
+		const allBalances = getBalances()
+		const { minNominatorBond } = stakingMetrics
+		return (
+			allBalances.freeBalance - feeReserve + allBalances.lockedBalance >
+			minNominatorBond
+		)
+	}
+
+	// Check if the user has a nominating balance
+	const getNominatorBalance = () => {
+		const allTransferOptions = getBalances()
+
+		// Total funds nominating
+		const nominating = planckToUnit(
+			allTransferOptions.nominator.active +
+				allTransferOptions.nominator.totalUnlocking +
+				allTransferOptions.nominator.totalUnlocked,
+			units,
+		)
+		return new BigNumber(nominating)
+	}
+
 	return {
 		balances: getBalances(),
 		stakedBalance: getStakedBalance(),
+		nominatorBalance: getNominatorBalance(),
+		hasEnoughToNominate: hasEnoughToNominate(),
 	}
 }

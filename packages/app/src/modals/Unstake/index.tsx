@@ -14,6 +14,7 @@ import { useBatchCall } from 'hooks/useBatchCall'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -32,10 +33,10 @@ export const Unstake = () => {
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
-	const { balances } = useAccountBalances(activeAddress)
 	const { closeModal, setModalResize } = useOverlay().modal
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
+	const { balances } = useAccountBalances(activeAddress)
 	const { bondDuration } = getConsts(network)
 	const { unit, units } = getStakingChainData(network)
 	const nominations = getNominations(activeAddress)
@@ -84,12 +85,12 @@ export const Unstake = () => {
 			serviceApi.tx.stakingUnbond(bondToSubmit),
 		].filter((tx) => tx !== undefined)
 
-		return newBatchCall(txs, activeAddress)
+		return newBatchCall(txs, activeAddress, activeProxy)
 	}
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()

@@ -5,6 +5,7 @@ import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
+import { onTabVisitEvent } from 'event-tracking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { PageTabs } from 'library/PageTabs'
 import { PoolList } from 'library/PoolList'
@@ -34,12 +35,18 @@ const PoolsListInner = () => {
 						{
 							title: t('overview'),
 							active: activeTab === 0,
-							onClick: () => setActiveTab(0),
+							onClick: () => {
+								onTabVisitEvent('pools_list', 'overview')
+								setActiveTab(0)
+							},
 						},
 						{
 							title: t('favorites'),
 							active: activeTab === 1,
-							onClick: () => setActiveTab(1),
+							onClick: () => {
+								onTabVisitEvent('pools_list', 'favorites')
+								setActiveTab(1)
+							},
 							badge: String(favorites.length),
 						},
 					]}

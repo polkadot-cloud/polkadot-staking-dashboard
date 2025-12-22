@@ -73,23 +73,6 @@ export type EraTotalNominatorsResult = Query & {
 	}
 }
 
-export type FastUnstakeStatus =
-	| 'UNSUPPORTED_CHAIN'
-	| 'NOT_PROCESSED'
-	| 'NOT_EXPOSED'
-	| 'EXPOSED'
-
-export interface FastUnstakeResult {
-	status: FastUnstakeStatus
-	lastExposed?: number
-}
-
-export type CanFastUnstakeResult = Query & {
-	data: {
-		canFastUnstake: FastUnstakeResult
-	}
-}
-
 export type RewardTrendResult = Query & {
 	data: {
 		rewardTrend: RewardTrend
@@ -189,6 +172,28 @@ export type PoolCandidatesResult = Query & {
 	data: {
 		poolCandidates: number[]
 	}
+}
+
+export type PoolMembersResult = Query & {
+	data: {
+		poolMembers: PoolMembersData
+	}
+}
+
+export interface PoolMembersData {
+	poolId: number
+	totalMembers: number
+	members: PoolMember[]
+}
+
+export interface PoolMember {
+	poolId: number
+	address: string
+	points: bigint
+	unbondingEras: {
+		era: number
+		amount: string
+	}[]
 }
 
 export type PayoutsAndClaims = (NominatorReward | PoolReward)[]

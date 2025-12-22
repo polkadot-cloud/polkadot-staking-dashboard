@@ -12,7 +12,7 @@
 		"license:headers": "npx @kt3k/license-checker -q"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.8",
+		"@biomejs/biome": "^2.3.9",
 		"@kt3k/license-checker": "3.2.2",
 		"@types/chroma-js": "^3.1.2",
 		"@types/react": "^19.2.7",
@@ -21,9 +21,9 @@
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"@w3ux/types": "^2.4.1",
 		"globals": "^16.2.0",
-		"prettier": "^3.7.3",
+		"prettier": "^3.7.4",
 		"prettier-plugin-organize-imports": "^4.1.0",
-		"sass": "^1.94.2",
+		"sass": "^1.95.0",
 		"typescript": "^5.7.2"
 	},
 	"pnpm": {
@@ -35,7 +35,7 @@
 			"unrs-resolver"
 		],
 		"onlyBuiltDependencies": [
-			"@parcel/watcher",
+			"@reown/appkit",
 			"@swc/core",
 			"bufferutil",
 			"esbuild",
@@ -45,5 +45,5 @@
 			"utf-8-validate"
 		]
 	},
-	"packageManager": "pnpm@10.18.3"
+	"packageManager": "pnpm@10.25.0"
 }
