@@ -85,10 +85,8 @@ export type PoolRewardResults = Query & {
 	}
 }
 
-export type EraTotalNominatorsResult = Query & {
-	data: {
-		totalNominators: number
-	}
+export type EraTotalNominatorsData = {
+	totalNominators: number
 }
 
 export type RewardTrendResult = Query & {
