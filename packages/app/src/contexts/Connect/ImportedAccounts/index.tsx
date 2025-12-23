@@ -52,7 +52,7 @@ export const ImportedAccountsProvider = ({
 		.concat(getHardwareAccounts('vault', network))
 		.concat(getHardwareAccounts('wallet_connect', network))
 
-	// Get the imported extenral accounts for the current network
+	// Get the imported external accounts for the current network
 	const externalAccounts: ExternalAccount[] = getExternalAccounts(network)
 
 	// Combine all imported accounts
