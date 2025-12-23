@@ -4,6 +4,7 @@
 import type { AccountAddedBy, ExternalAccount } from 'types'
 
 export interface ExternalAccountsContextInterface {
+	getExternalAccounts: (network: string) => ExternalAccount[]
 	addExternalAccount: (
 		address: string,
 		addedBy: AccountAddedBy,
