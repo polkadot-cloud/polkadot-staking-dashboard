@@ -1,13 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type {
-	ValidatorEraPointsBatch,
-	ValidatorEraPointsBatchResult,
-} from '../types'
+import type { ValidatorEraPointsBatch } from '../types'
 
 const QUERY = gql`
   query ValidatorEraPointsBatch(
@@ -31,23 +27,6 @@ const QUERY = gql`
     }
   }
 `
-
-export const useValidatorEraPointsBatch = ({
-	network,
-	validators,
-	fromEra,
-	depth,
-}: {
-	network: string
-	validators: string[]
-	fromEra: number
-	depth?: number
-}): ValidatorEraPointsBatchResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, validators, fromEra, depth },
-	})
-	return { loading, error, data, refetch }
-}
 
 export const fetchValidatorEraPointsBatch = async (
 	network: string,

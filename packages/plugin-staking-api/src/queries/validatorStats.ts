@@ -1,10 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { ValidatorStatsData, ValidatorStatsResult } from '../types'
+import type { ValidatorStatsData } from '../types'
 
 const QUERY = gql`
   query ValidatorStats($network: String!) {
@@ -20,17 +19,6 @@ const QUERY = gql`
     }
   }
 `
-
-export const useValidatorStats = ({
-	network,
-}: {
-	network: string
-}): ValidatorStatsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network },
-	})
-	return { loading, error, data, refetch }
-}
 
 export const fetchValidatorStats = async (
 	network: string,

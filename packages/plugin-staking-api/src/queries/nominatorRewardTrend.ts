@@ -1,10 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { RewardTrendResult } from '../types'
 
 const QUERY = gql`
   query NominatorRewardTrend($network: String!, $who: String!, $eras: Int!) {
@@ -18,21 +16,6 @@ const QUERY = gql`
     }
   }
 `
-
-export const useNominatorRewardTrend = ({
-	network,
-	who,
-	eras,
-}: {
-	network: string
-	who: string
-	eras: number
-}): RewardTrendResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, who, eras },
-	})
-	return { loading, error, data, refetch }
-}
 
 export const fetchNominatorRewardTrend = async (
 	network: string,

@@ -1,10 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { IsActiveStakerResult } from '../types'
 
 const QUERY = gql`
   query IsActiveStaker($network: String!, $address: String!) {
@@ -13,19 +11,6 @@ const QUERY = gql`
     }
   }
 `
-
-export const useIsActiveStaker = ({
-	network,
-	address,
-}: {
-	network: string
-	address: string
-}): IsActiveStakerResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, address },
-	})
-	return { loading, error, data, refetch }
-}
 
 export const fetchIsActiveStaker = async (
 	network: string,
