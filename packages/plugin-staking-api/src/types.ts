@@ -178,10 +178,8 @@ export interface PoolEraPoints {
 	start: number
 }
 
-export type PoolCandidatesResult = Query & {
-	data: {
-		poolCandidates: number[]
-	}
+export type PoolCandidatesData = {
+	poolCandidates: number[]
 }
 
 export type PoolMembersResult = Query & {

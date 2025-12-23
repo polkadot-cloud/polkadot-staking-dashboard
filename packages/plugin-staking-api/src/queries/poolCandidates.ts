@@ -3,6 +3,7 @@
 
 import { gql } from '@apollo/client'
 import { client } from '../Client'
+import type { PoolCandidatesData } from '../types'
 
 const QUERY = gql`
   query PoolCandidates($network: String!) {
@@ -10,19 +11,20 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: PoolCandidatesData = {
+	poolCandidates: [],
+}
+
 export const fetchPoolCandidates = async (
 	network: string,
-): Promise<{ poolCandidates: number[] }> => {
+): Promise<PoolCandidatesData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<PoolCandidatesData>({
 			query: QUERY,
 			variables: { network },
 		})
-
-		return result.data
+		return result?.data || DEFAULT
 	} catch {
-		return {
-			poolCandidates: [],
-		}
+		return DEFAULT
 	}
 }
