@@ -1,10 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { PoolMembersData, PoolMembersResult } from '../types'
+import type { PoolMembersData } from '../types'
 
 const QUERY = gql`
 	query PoolMembers($network: String!, $poolId: Int!, $limit: Int, $offset: Int) {
@@ -24,21 +23,12 @@ const QUERY = gql`
 	}
 `
 
-export const usePoolMembers = ({
-	network,
-	poolId,
-	limit,
-	offset,
-}: {
-	network: string
-	poolId: number
-	limit?: number
-	offset?: number
-}): PoolMembersResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, poolId, limit, offset },
-	})
-	return { loading, error, data, refetch }
+const DEFAULT: PoolMembersData = {
+	poolMembers: {
+		poolId: 0,
+		totalMembers: 0,
+		members: [],
+	},
 }
 
 export const fetchPoolMembers = async (
@@ -46,14 +36,14 @@ export const fetchPoolMembers = async (
 	poolId: number,
 	limit?: number,
 	offset?: number,
-): Promise<PoolMembersData | null> => {
+): Promise<PoolMembersData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<PoolMembersData>({
 			query: QUERY,
 			variables: { network, poolId, limit, offset },
 		})
-		return result.data.poolMembers
+		return result?.data || DEFAULT
 	} catch {
-		return null
+		return DEFAULT
 	}
 }

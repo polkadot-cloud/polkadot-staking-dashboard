@@ -180,13 +180,11 @@ export type PoolCandidatesData = {
 	poolCandidates: number[]
 }
 
-export type PoolMembersResult = Query & {
-	data: {
-		poolMembers: PoolMembersData
-	}
+export type PoolMembersData = {
+	poolMembers: PoolMembers
 }
 
-export interface PoolMembersData {
+export interface PoolMembers {
 	poolId: number
 	totalMembers: number
 	members: PoolMember[]
