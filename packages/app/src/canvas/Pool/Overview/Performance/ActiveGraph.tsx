@@ -29,16 +29,20 @@ export const ActiveGraph = ({
 	const { i18n, t } = useTranslation()
 	const { getThemeValue } = useThemeValues()
 	const { unit } = getStakingChainData(network)
-	const { data, loading, error } = useRewards({
+	const {
+		data: { allRewards },
+		loading,
+		error,
+	} = useRewards({
 		network,
 		who: stash,
 		fromEra,
 	})
 
 	const list =
-		loading || error || data?.allRewards === undefined
+		loading || error
 			? []
-			: data.allRewards.map((reward) => ({
+			: allRewards.map((reward) => ({
 					era: reward.era,
 					reward: planckToUnit(reward.reward, units),
 					start: reward.timestamp,

@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { EraTotalNominatorsResult } from '../types'
+import type { EraTotalNominatorsData } from '../types'
 
 const QUERY = gql`
   query EraTotalNominators($network: String!, $era: Int!) {
@@ -13,30 +13,23 @@ const QUERY = gql`
   }
 `
 
-export const useEraTotalNominators = ({
-	network,
-	era,
-}: {
-	network: string
-	era: number
-}): EraTotalNominatorsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, era },
-	})
-	return { loading, error, data, refetch }
+const DEFAULT: EraTotalNominatorsData = {
+	eraTotalNominators: {
+		totalNominators: 0,
+	},
 }
 
 export const fetchEraTotalNominators = async (
 	network: string,
 	era: number,
-): Promise<number | null> => {
+): Promise<EraTotalNominatorsData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<EraTotalNominatorsData>({
 			query: QUERY,
 			variables: { network, era },
 		})
-		return result.data.eraTotalNominators.totalNominators as number
+		return result?.data || DEFAULT
 	} catch {
-		return null
+		return DEFAULT
 	}
 }

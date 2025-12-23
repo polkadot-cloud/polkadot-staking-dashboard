@@ -47,15 +47,15 @@ export const MembersListInner = ({
 				fetchingMemberList.current = true
 				// Calculate offset based on page number (1-indexed)
 				const offset = (page - 1) * itemsPerPage
-				const result = await fetchPoolMembers(
+				const { poolMembers } = await fetchPoolMembers(
 					network,
 					poolId,
 					itemsPerPage,
 					offset,
 				)
 				fetchingMemberList.current = false
-				if (result?.members) {
-					fetchPoolMemberData(result.members.map(({ address }) => address))
+				if (poolMembers.members.length > 0) {
+					fetchPoolMemberData(poolMembers.members.map(({ address }) => address))
 				}
 				setFetchedPoolMembersApi('synced')
 			}
@@ -65,8 +65,20 @@ export const MembersListInner = ({
 		}
 	}
 
-	// get throttled subset or entire list
-	const members = meta.poolMembers.filter((m) => m !== undefined)
+	// Merge member data with claim permissions to have all member data in one object
+	const members = meta.poolMembers
+		.map((member, index) => {
+			if (!member) {
+				return undefined
+			}
+			return {
+				...member,
+				claimPermission: meta.claimPermissions[index],
+			}
+		})
+		.filter((m) => m !== undefined)
+
+	// Get paginated subset of members
 	const listMembers = members.slice(pageStart).slice(0, itemsPerPage)
 
 	// Configure list when network is ready to fetch

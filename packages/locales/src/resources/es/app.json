@@ -266,12 +266,13 @@
 		"pending": "Pendiente",
 		"performance": "Rendimiento",
 		"permissioned": "Con permiso",
+		"permissionedClaimPermission": "Reclamación con permiso: Solo el miembro puede reclamar recompensas",
 		"permissionedSubtitle": "Solo tú puedes reclamar recompensas.",
+		"permissionlessClaimPermission": "Reclamación sin permisos: Cualquiera puede reclamar recompensas para este miembro",
 		"permissionlessClaimingTurnedOff": "La reclamación sin permisos está desactivada.",
-		"plugin": {
-			"polkawatch": "Polkawatch",
-			"staking_api": "Staking API"
-		},
+		"permissionlessCompound": "Composición sin permisos: Cualquiera puede componer recompensas para este miembro",
+		"permissionlessWithdraw": "Retiro sin permisos: Cualquiera puede retirar recompensas para este miembro",
+		"plugin": { "polkawatch": "Polkawatch", "staking_api": "Staking API" },
 		"points": "Puntos",
 		"pool": "Pool",
 		"poolClaim": "Reclamación del Pool",

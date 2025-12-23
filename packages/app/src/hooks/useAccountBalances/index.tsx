@@ -83,9 +83,24 @@ export const useAccountBalances = (address: MaybeString) => {
 		)
 	}
 
+	// Check if the user has a nominating balance
+	const getNominatorBalance = () => {
+		const allTransferOptions = getBalances()
+
+		// Total funds nominating
+		const nominating = planckToUnit(
+			allTransferOptions.nominator.active +
+				allTransferOptions.nominator.totalUnlocking +
+				allTransferOptions.nominator.totalUnlocked,
+			units,
+		)
+		return new BigNumber(nominating)
+	}
+
 	return {
 		balances: getBalances(),
 		stakedBalance: getStakedBalance(),
+		nominatorBalance: getNominatorBalance(),
 		hasEnoughToNominate: hasEnoughToNominate(),
 	}
 }

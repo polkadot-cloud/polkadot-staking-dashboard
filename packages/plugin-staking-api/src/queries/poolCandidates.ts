@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { PoolCandidatesResult } from '../types'
+import type { PoolCandidatesData } from '../types'
 
 const QUERY = gql`
   query PoolCandidates($network: String!) {
@@ -11,30 +11,20 @@ const QUERY = gql`
   }
 `
 
-export const usePoolCandidates = ({
-	network,
-}: {
-	network: string
-}): PoolCandidatesResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network },
-	})
-	return { loading, error, data, refetch }
+const DEFAULT: PoolCandidatesData = {
+	poolCandidates: [],
 }
 
 export const fetchPoolCandidates = async (
 	network: string,
-): Promise<{ poolCandidates: number[] }> => {
+): Promise<PoolCandidatesData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<PoolCandidatesData>({
 			query: QUERY,
 			variables: { network },
 		})
-
-		return result.data
+		return result?.data || DEFAULT
 	} catch {
-		return {
-			poolCandidates: [],
-		}
+		return DEFAULT
 	}
 }
