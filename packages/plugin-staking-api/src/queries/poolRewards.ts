@@ -46,7 +46,7 @@ export const fetchPoolRewards = async (
 			query: QUERY,
 			variables: { network, who, from },
 		})
-		return result.data || DEFAULT
+		return result?.data || DEFAULT
 	} catch {
 		return DEFAULT
 	}
