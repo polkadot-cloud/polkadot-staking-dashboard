@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useExtensionAccounts } from '@w3ux/react-connect-kit'
+import {
+	useExtensionAccounts,
+	useHardwareAccounts,
+} from '@w3ux/react-connect-kit'
+import type { ExtensionAccount, HardwareAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -15,7 +19,7 @@ import type {
 	ImportedAccount,
 	MaybeAddress,
 } from 'types'
-import { useOtherAccounts } from '../OtherAccounts'
+import { useExternalAccounts } from '../ExternalAccounts'
 import { getActiveAccountLocal } from '../Utils'
 import type { ImportedAccountsContextInterface } from './types'
 
@@ -28,14 +32,31 @@ export const ImportedAccountsProvider = ({
 	children: ReactNode
 }) => {
 	const { network } = useNetwork()
-	const { otherAccounts } = useOtherAccounts()
 	const { setActiveAccount } = useActiveAccounts()
+	const { getExternalAccounts } = useExternalAccounts()
+	const { getHardwareAccounts } = useHardwareAccounts()
 	const { getExtensionAccounts } = useExtensionAccounts()
 
 	const { ss58 } = getStakingChainData(network)
+
 	// Get the imported extension accounts formatted with the current network's ss58 prefix
-	const extensionAccounts = getExtensionAccounts(ss58)
-	const allAccounts = extensionAccounts.concat(otherAccounts)
+	const extensionAccounts: ExtensionAccount[] = getExtensionAccounts(ss58)
+
+	// Get the imported hardware accounts for the current network
+	const hardwareAccounts: HardwareAccount[] = getHardwareAccounts(
+		'ledger',
+		network,
+	)
+		.concat(getHardwareAccounts('vault', network))
+		.concat(getHardwareAccounts('wallet_connect', network))
+
+	// Get the imported extenral accounts for the current network
+	const externalAccounts: ExternalAccount[] = getExternalAccounts(network)
+
+	// Combine all imported accounts
+	const allAccounts: ImportedAccount[] = extensionAccounts
+		.concat(hardwareAccounts)
+		.concat(externalAccounts)
 
 	// Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`
 	const shallowAccountStringify = (accounts: ImportedAccount[]) => {
