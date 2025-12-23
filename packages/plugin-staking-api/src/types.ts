@@ -222,8 +222,8 @@ export interface ValidatorStatsData {
 	averageValidatorCommission: number
 }
 
-export type RpcEndpointHealthResult = Query & {
-	data: RpcEndpointChainHealth
+export type RpcEndpointHealthData = {
+	rpcEndpointHealth: RpcEndpointChainHealth
 }
 
 export interface RpcEndpointChainHealth {

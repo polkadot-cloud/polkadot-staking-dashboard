@@ -3,7 +3,7 @@
 
 import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { RpcEndpointChainHealth } from '../types'
+import type { RpcEndpointHealthData } from '../types'
 
 const QUERY = gql`
   query RpcEndpointHealth($network: String!) {
@@ -19,18 +19,22 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: RpcEndpointHealthData = {
+	rpcEndpointHealth: {
+		chains: [],
+	},
+}
+
 export const fetchRpcEndpointHealth = async (
 	network: string,
-): Promise<RpcEndpointChainHealth> => {
+): Promise<RpcEndpointHealthData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<RpcEndpointHealthData>({
 			query: QUERY,
 			variables: { network },
 		})
-		return result.data.rpcEndpointHealth
+		return result?.data || DEFAULT
 	} catch {
-		return {
-			chains: [],
-		}
+		return DEFAULT
 	}
 }
