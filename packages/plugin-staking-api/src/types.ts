@@ -166,10 +166,8 @@ export interface PoolReward {
 	poolId: number
 }
 
-export type PoolEraPointsResult = Query & {
-	data: {
-		poolEraPoints: PoolEraPoints[]
-	}
+export type PoolEraPointsData = {
+	poolEraPoints: PoolEraPoints[]
 }
 
 export interface PoolEraPoints {
