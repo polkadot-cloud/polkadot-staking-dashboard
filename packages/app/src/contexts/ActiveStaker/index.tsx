@@ -27,12 +27,12 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 
 	// Active nominator data from Staking API
 	const [activeNominatorData, setActiveNominatorData] = useState<
-		ActiveStatusWithNominees | null | undefined
+		ActiveStatusWithNominees | undefined
 	>(undefined)
 
 	// Active pool data from Staking API
 	const [activePoolData, setActivePoolData] = useState<
-		ActiveStatusWithNominees | null | undefined
+		ActiveStatusWithNominees | undefined
 	>(undefined)
 
 	// Handle fetching of active nominator status

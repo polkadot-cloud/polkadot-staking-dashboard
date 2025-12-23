@@ -11,7 +11,7 @@ import { DefaultNetwork, NetworkList, SystemChainList } from 'consts/networks'
 import { getDefaultRpcEndpoints, getEnabledNetworks } from 'consts/util'
 import { fetchRpcEndpointHealth } from 'plugin-staking-api'
 import type {
-	RpcEndpointChainHealth,
+	RpcEndpointHealthData,
 	RpcHealthLabels,
 } from 'plugin-staking-api/types'
 import type {
@@ -95,13 +95,13 @@ export const getInitialRpcEndpoints = async (
 			const result = (await withTimeout(
 				2000,
 				fetchRpcEndpointHealth(network),
-			)) as RpcEndpointChainHealth | undefined
+			)) as RpcEndpointHealthData | undefined
 
 			// Cache the fresh data if it was successfully fetched
-			if (result && result.chains.length > 0) {
+			if (result && result.rpcEndpointHealth.chains.length > 0) {
 				// Format result to only include endpoint labels
 				const healthLabels: RpcHealthLabels = {
-					chains: result.chains.map((chain) => ({
+					chains: result.rpcEndpointHealth.chains.map((chain) => ({
 						...chain,
 						endpoints: chain.endpoints.map((endpoint) => endpoint.label),
 					})),

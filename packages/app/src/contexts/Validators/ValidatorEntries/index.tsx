@@ -302,10 +302,12 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const getValidatorStats = async (): Promise<void> => {
-		const result = await fetchValidatorStats(network)
-		setActiveValidatorRanks(result.activeValidatorRanks)
-		setAvgCommission(Number(result.averageValidatorCommission.toFixed(2)))
-		setAvgRewardRate(result.averageRewardRate.rate)
+		const { validatorStats } = await fetchValidatorStats(network)
+		setActiveValidatorRanks(validatorStats.activeValidatorRanks)
+		setAvgCommission(
+			Number(validatorStats.averageValidatorCommission.toFixed(2)),
+		)
+		setAvgRewardRate(validatorStats.averageRewardRate.rate)
 	}
 
 	const getValidatorRank = (validator: string): number | undefined => {

@@ -30,11 +30,7 @@ export const ActiveGraph = ({
 		fromEra,
 	})
 
-	const list =
-		loading || error || data?.validatorEraPoints === undefined
-			? []
-			: data.validatorEraPoints
-
+	const list = loading || error ? [] : data.validatorEraPoints
 	const sorted = [...list].sort((a, b) => a.era - b.era)
 
 	return (

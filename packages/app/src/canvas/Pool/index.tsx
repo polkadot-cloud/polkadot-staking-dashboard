@@ -56,8 +56,8 @@ export const Pool = () => {
 	// pools
 	const getPoolCandidates = async () => {
 		if (pluginEnabled('staking_api')) {
-			const result = await fetchPoolCandidates(network)
-			return result?.poolCandidates || []
+			const { poolCandidates } = await fetchPoolCandidates(network)
+			return poolCandidates
 		} else {
 			return bondedPools
 				.filter(({ state }) => state === 'Open')

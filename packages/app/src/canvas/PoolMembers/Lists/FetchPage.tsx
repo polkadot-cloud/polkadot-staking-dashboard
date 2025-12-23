@@ -47,15 +47,15 @@ export const MembersListInner = ({
 				fetchingMemberList.current = true
 				// Calculate offset based on page number (1-indexed)
 				const offset = (page - 1) * itemsPerPage
-				const result = await fetchPoolMembers(
+				const { poolMembers } = await fetchPoolMembers(
 					network,
 					poolId,
 					itemsPerPage,
 					offset,
 				)
 				fetchingMemberList.current = false
-				if (result?.members) {
-					fetchPoolMemberData(result.members.map(({ address }) => address))
+				if (poolMembers.members.length > 0) {
+					fetchPoolMemberData(poolMembers.members.map(({ address }) => address))
 				}
 				setFetchedPoolMembersApi('synced')
 			}

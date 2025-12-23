@@ -34,7 +34,7 @@ export const ActiveGraph = ({
 	const { units, unit } = getStakingChainData(network)
 
 	const list =
-		loading || error || data?.validatorRewards === undefined
+		loading || error
 			? []
 			: data.validatorRewards.map((reward) => ({
 					era: reward.era,

@@ -1,13 +1,15 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 
 const STAKING_API_ENDPOINT = 'https://api.staking.polkadot.cloud'
 
 const client = new ApolloClient({
-	uri: STAKING_API_ENDPOINT,
 	cache: new InMemoryCache(),
+	link: new HttpLink({
+		uri: STAKING_API_ENDPOINT,
+	}),
 })
 
 export { client }

@@ -2,36 +2,34 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type {
-	ApolloError,
-	ApolloQueryResult,
+	ApolloClient,
+	ErrorLike,
 	OperationVariables,
 } from '@apollo/client'
+
+interface Query<T> {
+	loading: boolean
+	error: ErrorLike | undefined
+	refetch: (
+		variables?: Partial<OperationVariables> | undefined,
+	) => Promise<ApolloClient.QueryResult<T>>
+}
+
+export interface QueryReturn<T> extends Query<T> {
+	data: T
+}
+
+export interface TokenPriceData {
+	tokenPrice: TokenPrice
+}
 
 export interface TokenPrice {
 	price: number
 	change: number
 }
 
-export type TokenPriceResult = {
-	tokenPrice: TokenPrice
-} | null
-
-interface Query {
-	loading: boolean
-	error: ApolloError | undefined
-	refetch: (
-		variables?: Partial<OperationVariables> | undefined,
-	) => Promise<ApolloQueryResult<unknown>>
-}
-
-export type UseTokenPriceResult = Query & {
-	data: TokenPriceResult
-}
-
-export type AllRewardsResult = Query & {
-	data: {
-		allRewards: NominatorReward[]
-	}
+export interface AllRewardsData {
+	allRewards: NominatorReward[]
 }
 
 export interface NominatorReward {
@@ -43,16 +41,12 @@ export interface NominatorReward {
 	type: string
 }
 
-export type UnclaimedRewardsResult = Query & {
-	data: {
-		unclaimedRewards: UnclaimedRewards
-	}
+export interface UnclaimedRewardsData {
+	unclaimedRewards: UnclaimedRewards
 }
 
-export type ValidatorRewardsResult = Query & {
-	data: {
-		validatorRewards: ValidatorReward[]
-	}
+export interface ValidatorRewardsData {
+	validatorRewards: ValidatorReward[]
 }
 
 export interface ValidatorReward {
@@ -61,22 +55,18 @@ export interface ValidatorReward {
 	start: number
 }
 
-export type PoolRewardResults = Query & {
-	data: {
-		poolRewards: PoolReward[]
-	}
+export interface PoolRewardData {
+	poolRewards: PoolReward[]
 }
 
-export type EraTotalNominatorsResult = Query & {
-	data: {
+export interface EraTotalNominatorsData {
+	eraTotalNominators: {
 		totalNominators: number
 	}
 }
 
-export type RewardTrendResult = Query & {
-	data: {
-		rewardTrend: RewardTrend
-	}
+export interface RewardTrendData {
+	rewardTrend: RewardTrend
 }
 
 export interface RewardTrend {
@@ -88,10 +78,8 @@ export interface RewardTrend {
 	}
 }
 
-export type ActiveValidatorRanksResult = Query & {
-	data: {
-		activeValidatorRanks: ActiveValidatorRank[]
-	}
+export interface ActiveValidatorRanksData {
+	activeValidatorRanks: ActiveValidatorRank[]
 }
 
 export interface ActiveValidatorRank {
@@ -99,16 +87,8 @@ export interface ActiveValidatorRank {
 	rank: number
 }
 
-export type ValidatorEraPointsResult = Query & {
-	data: {
-		validatorEraPoints: ValidatorEraPoints[]
-	}
-}
-
-export type ValidatorEraPointsBatchResult = Query & {
-	data: {
-		validatorEraPointsBatch: ValidatorEraPointsBatch[]
-	}
+export interface ValidatorEraPointsData {
+	validatorEraPoints: ValidatorEraPoints[]
 }
 
 export interface UnclaimedRewards {
@@ -133,15 +113,17 @@ export interface ValidatorEraPoints {
 	start: number
 }
 
+export interface ValidatorEraPointsBatchData {
+	validatorEraPointsBatch: ValidatorEraPointsBatch[]
+}
+
 export interface ValidatorEraPointsBatch {
 	validator: string
 	points: ValidatorEraPoints[]
 }
 
-export type ValidatorAvgRewardRateBatchResult = Query & {
-	data: {
-		validatorAvgRewardRateBatch: ValidatorAvgRewardRateBatch[]
-	}
+export interface ValidatorAvgRewardRateBatchData {
+	validatorAvgRewardRateBatch: ValidatorAvgRewardRateBatch[]
 }
 
 export interface ValidatorAvgRewardRateBatch {
@@ -156,10 +138,8 @@ export interface PoolReward {
 	poolId: number
 }
 
-export type PoolEraPointsResult = Query & {
-	data: {
-		poolEraPoints: PoolEraPoints[]
-	}
+export interface PoolEraPointsData {
+	poolEraPoints: PoolEraPoints[]
 }
 
 export interface PoolEraPoints {
@@ -168,19 +148,15 @@ export interface PoolEraPoints {
 	start: number
 }
 
-export type PoolCandidatesResult = Query & {
-	data: {
-		poolCandidates: number[]
-	}
-}
-
-export type PoolMembersResult = Query & {
-	data: {
-		poolMembers: PoolMembersData
-	}
+export interface PoolCandidatesData {
+	poolCandidates: number[]
 }
 
 export interface PoolMembersData {
+	poolMembers: PoolMembers
+}
+
+export interface PoolMembers {
 	poolId: number
 	totalMembers: number
 	members: PoolMember[]
@@ -196,32 +172,30 @@ export interface PoolMember {
 	}[]
 }
 
-export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
+export interface PayoutsAndClaims extends Array<NominatorReward | PoolReward> {}
 
 export type RewardResult = NominatorReward | PoolReward
-export type RewardResults = RewardResult[]
+export interface RewardResults extends Array<RewardResult> {}
 
 export interface AverageRewardRateResult {
 	rate: number
 }
 
-export type ValidatorRanksResult = {
-	validator: string
-	rank: number
-}[]
-
-export type ValidatorStatsResult = Query & {
-	data: ValidatorStatsData
-}
+export interface ValidatorRanksResult
+	extends Array<{ validator: string; rank: number }> {}
 
 export interface ValidatorStatsData {
+	validatorStats: ValidatorStats
+}
+
+export interface ValidatorStats {
 	averageRewardRate: AverageRewardRateResult
 	activeValidatorRanks: ValidatorRanksResult
 	averageValidatorCommission: number
 }
 
-export type RpcEndpointHealthResult = Query & {
-	data: RpcEndpointChainHealth
+export interface RpcEndpointHealthData {
+	rpcEndpointHealth: RpcEndpointChainHealth
 }
 
 export interface RpcEndpointChainHealth {
@@ -241,10 +215,11 @@ export interface RpcHealthLabels {
 	}[]
 }
 
-export type SearchValidatorsResult = Query & {
-	data: SearchValidatorsData
-}
 export interface SearchValidatorsData {
+	searchValidators: SearchValidators
+}
+
+export interface SearchValidators {
 	total: number
 	validators: {
 		address: string
@@ -255,26 +230,17 @@ export interface SearchValidatorsData {
 	}[]
 }
 
-export type IsActiveStakerResult = Query & {
-	data: {
+export interface GetActiveStakerWithNomineesData {
+	isActiveStaker: {
 		active: boolean
 	}
-}
-
-export type GetActiveStakerWithNomineesResult = Query & {
-	data: {
-		isActiveStaker: {
-			active: boolean
-		}
-		getNomineesStatus: {
-			statuses: {
-				address: string
-				status: string
-			}[]
-		}
+	getNomineesStatus: {
+		statuses: {
+			address: string
+			status: string
+		}[]
 	}
 }
-
 export interface ActiveStatusWithNominees {
 	active: boolean
 	statuses: {
