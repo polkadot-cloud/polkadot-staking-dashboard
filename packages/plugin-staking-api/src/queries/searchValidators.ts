@@ -20,17 +20,24 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: SearchValidatorsData = {
+	searchValidators: {
+		total: 0,
+		validators: [],
+	},
+}
+
 export const fetchSearchValidators = async (
 	network: string,
 	searchTerm: string,
-): Promise<SearchValidatorsData | null> => {
+): Promise<SearchValidatorsData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<SearchValidatorsData>({
 			query: QUERY,
 			variables: { network, searchTerm },
 		})
-		return result.data.searchValidators
+		return result?.data || DEFAULT
 	} catch {
-		return null
+		return DEFAULT
 	}
 }

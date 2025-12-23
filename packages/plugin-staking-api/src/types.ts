@@ -243,10 +243,11 @@ export interface RpcHealthLabels {
 	}[]
 }
 
-export type SearchValidatorsResult = Query & {
-	data: SearchValidatorsData
+export type SearchValidatorsData = {
+	searchValidators: SearchValidators
 }
-export interface SearchValidatorsData {
+
+export interface SearchValidators {
 	total: number
 	validators: {
 		address: string
