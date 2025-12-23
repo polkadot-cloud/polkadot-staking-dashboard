@@ -46,10 +46,8 @@ export type UseTokenPriceResult = Query & {
 	data: TokenPriceResult
 }
 
-export type AllRewardsResult = Query & {
-	data: {
-		allRewards: NominatorReward[]
-	}
+export type AllRewardsData = {
+	allRewards: NominatorReward[]
 }
 
 export interface NominatorReward {

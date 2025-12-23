@@ -57,7 +57,7 @@ export const ActiveGraph = ({
 		from: getUnixTime(fromDate),
 	})
 
-	const nominatorRewards = nominatorRewardData?.allRewards ?? []
+	const nominatorRewards = nominatorRewardData?.allRewards
 	const payouts =
 		nominatorRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
 	const unclaimedPayouts =
