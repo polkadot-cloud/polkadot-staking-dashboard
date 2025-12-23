@@ -2,10 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type {
-	ApolloError,
-	ApolloQueryResult,
+	ApolloClient,
+	ErrorLike,
+	ObservableQuery,
 	OperationVariables,
 } from '@apollo/client'
+
+import type { ApolloError } from '@apollo/client/v4-migration'
 
 export interface TokenPrice {
 	price: number
@@ -16,12 +19,27 @@ export type TokenPriceResult = {
 	tokenPrice: TokenPrice
 } | null
 
+// TODO: Remove once all queries are migrated to v4 Apollo Client
 interface Query {
 	loading: boolean
 	error: ApolloError | undefined
 	refetch: (
 		variables?: Partial<OperationVariables> | undefined,
-	) => Promise<ApolloQueryResult<unknown>>
+	) => Promise<ObservableQuery.Result<unknown>>
+}
+
+// NOTE: New Query type to use with v4 Apollo Client
+interface QueryNew<TData> {
+	loading: boolean
+	error: ErrorLike | undefined
+	refetch: (
+		variables?: Partial<OperationVariables> | undefined,
+	) => Promise<ApolloClient.QueryResult<TData>>
+}
+
+// NOTE: QueryReturn type to use with v4 Apollo Client
+export type QueryReturn<T> = QueryNew<T> & {
+	data: T
 }
 
 export type UseTokenPriceResult = Query & {
@@ -88,10 +106,8 @@ export interface RewardTrend {
 	}
 }
 
-export type ActiveValidatorRanksResult = Query & {
-	data: {
-		activeValidatorRanks: ActiveValidatorRank[]
-	}
+export type ActiveValidatorRanksData = {
+	activeValidatorRanks: ActiveValidatorRank[]
 }
 
 export interface ActiveValidatorRank {

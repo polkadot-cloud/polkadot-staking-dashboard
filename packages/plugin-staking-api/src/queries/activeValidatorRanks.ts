@@ -1,9 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/client/react'
 import { client } from '../Client'
-import type { ActiveValidatorRank, ActiveValidatorRanksResult } from '../types'
+import type { ActiveValidatorRanksData, QueryReturn } from '../types'
 
 const QUERY = gql`
   query ActiveValidatorRanks($network: String!) {
@@ -14,29 +15,40 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: ActiveValidatorRanksData = {
+	activeValidatorRanks: [],
+}
+
 export const useActiveValidatorRanks = ({
 	network,
 }: {
 	network: string
-}): ActiveValidatorRanksResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network },
-	})
-	return { loading, error, data, refetch }
+}): QueryReturn<ActiveValidatorRanksData> => {
+	const { loading, error, data, refetch } = useQuery<ActiveValidatorRanksData>(
+		QUERY,
+		{
+			variables: { network },
+		},
+	)
+
+	return {
+		loading,
+		error,
+		data: data || DEFAULT,
+		refetch,
+	}
 }
 
 export const fetchActiveValidatorRanks = async (
 	network: string,
-): Promise<{ activeValidatorRanks: ActiveValidatorRank[] }> => {
+): Promise<ActiveValidatorRanksData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<ActiveValidatorRanksData>({
 			query: QUERY,
 			variables: { network },
 		})
-		return result.data
+		return result?.data || DEFAULT
 	} catch {
-		return {
-			activeValidatorRanks: [],
-		}
+		return DEFAULT
 	}
 }
