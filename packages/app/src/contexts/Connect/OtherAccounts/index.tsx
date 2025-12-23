@@ -47,7 +47,7 @@ export const OtherAccountsProvider = ({
 	const otherAccountsRef = useRef(otherAccounts)
 
 	// Store whether all accounts have been synced
-	const [accountsInitialised, setAccountsInitialised] = useState<boolean>(false)
+	const [, setAccountsInitialised] = useState<boolean>(false)
 
 	// Handle forgetting of an imported other account
 	const forgetOtherAccounts = (forget: ImportedAccount[]) => {
@@ -239,7 +239,6 @@ export const OtherAccountsProvider = ({
 				renameOtherAccount,
 				importLocalOtherAccounts,
 				forgetOtherAccounts,
-				accountsInitialised,
 			}}
 		>
 			{children}

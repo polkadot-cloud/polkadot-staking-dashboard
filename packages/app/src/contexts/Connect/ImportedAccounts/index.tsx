@@ -12,7 +12,7 @@ import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import type {
 	ActiveAccount,
 	ExternalAccount,
@@ -32,12 +32,14 @@ export const ImportedAccountsProvider = ({
 	children: ReactNode
 }) => {
 	const { network } = useNetwork()
-	const { setActiveAccount } = useActiveAccounts()
 	const { getExternalAccounts } = useExternalAccounts()
 	const { getHardwareAccounts } = useHardwareAccounts()
-	const { getExtensionAccounts } = useExtensionAccounts()
-
+	const { setActiveAccount, activeAccount } = useActiveAccounts()
+	const { getExtensionAccounts, extensionsSynced } = useExtensionAccounts()
 	const { ss58 } = getStakingChainData(network)
+
+	// Whether active account import checks have been completed
+	const [accountsInitialised, setAccountsInitialised] = useState<boolean>(false)
 
 	// Get the imported extension accounts formatted with the current network's ss58 prefix
 	const extensionAccounts: ExtensionAccount[] = getExtensionAccounts(ss58)
@@ -162,6 +164,28 @@ export const ImportedAccountsProvider = ({
 		}
 	}, [network, stringifiedAccountsKey])
 
+	// Once extensions are fully initialised, fetch accounts from other sources and re-sync active
+	// account
+	useEffectIgnoreInitial(() => {
+		if (extensionsSynced === 'synced' && !accountsInitialised) {
+			setAccountsInitialised(true)
+
+			// If active account is not yet set, check if it has been imported in other accounts
+			if (!activeAccount) {
+				const activeAccountFound = allAccounts.find(
+					({ address }) =>
+						address === getActiveAccountLocal(network, ss58)?.address,
+				)
+				if (activeAccountFound) {
+					setActiveAccount({
+						address: activeAccountFound.address,
+						source: activeAccountFound.source,
+					})
+				}
+			}
+		}
+	}, [network, extensionsSynced])
+
 	return (
 		<ImportedAccountsContext.Provider
 			value={{
@@ -171,6 +195,7 @@ export const ImportedAccountsProvider = ({
 				accountHasSigner,
 				requiresManualSign,
 				stringifiedAccountsKey,
+				accountsInitialised,
 			}}
 		>
 			{children}

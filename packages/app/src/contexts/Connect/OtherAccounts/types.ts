@@ -21,5 +21,4 @@ export interface OtherAccountsContextInterface {
 		getter: (source: T, network: NetworkId) => ImportedAccount[],
 	) => void
 	forgetOtherAccounts: (accounts: ImportedAccount[]) => void
-	accountsInitialised: boolean
 }
