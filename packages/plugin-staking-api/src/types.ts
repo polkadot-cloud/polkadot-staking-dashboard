@@ -275,17 +275,15 @@ export type IsActiveStakerResult = Query & {
 	}
 }
 
-export type GetActiveStakerWithNomineesResult = Query & {
-	data: {
-		isActiveStaker: {
-			active: boolean
-		}
-		getNomineesStatus: {
-			statuses: {
-				address: string
-				status: string
-			}[]
-		}
+export type GetActiveStakerWithNomineesData = {
+	isActiveStaker: {
+		active: boolean
+	}
+	getNomineesStatus: {
+		statuses: {
+			address: string
+			status: string
+		}[]
 	}
 }
 

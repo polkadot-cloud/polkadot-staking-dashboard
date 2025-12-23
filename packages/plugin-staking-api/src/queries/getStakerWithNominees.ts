@@ -1,12 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
 import { client } from '../Client'
 import type {
 	ActiveStatusWithNominees,
-	GetActiveStakerWithNomineesResult,
+	GetActiveStakerWithNomineesData,
 } from '../types'
 
 const QUERY = gql`
@@ -23,37 +22,31 @@ const QUERY = gql`
 }
 `
 
-export const useGetStakerWithNominees = ({
-	network,
-	who,
-	addresses,
-}: {
-	network: string
-	who: string
-	addresses: string[]
-}): GetActiveStakerWithNomineesResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, who, addresses },
-	})
-	return { loading, error, data, refetch }
+const DEFAULT: ActiveStatusWithNominees = {
+	active: false,
+	statuses: [],
 }
 
 export const fetchGetStakerWithNominees = async (
 	network: string,
 	who: string,
 	addresses: string[],
-): Promise<ActiveStatusWithNominees | null> => {
+): Promise<ActiveStatusWithNominees> => {
 	try {
-		const result = (await client.query({
+		const result = await client.query<GetActiveStakerWithNomineesData>({
 			query: QUERY,
 			variables: { network, who, addresses },
-		})) as unknown as GetActiveStakerWithNomineesResult
-
-		return {
-			active: result.data.isActiveStaker.active,
-			statuses: result.data.getNomineesStatus.statuses,
-		}
+		})
+		return result?.data
+			? {
+					active: result.data.isActiveStaker.active,
+					statuses: result.data.getNomineesStatus.statuses,
+				}
+			: {
+					active: false,
+					statuses: [],
+				}
 	} catch {
-		return null
+		return DEFAULT
 	}
 }
