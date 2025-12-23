@@ -87,10 +87,8 @@ export type EraTotalNominatorsData = {
 	totalNominators: number
 }
 
-export type RewardTrendResult = Query & {
-	data: {
-		rewardTrend: RewardTrend
-	}
+export type RewardTrendData = {
+	rewardTrend: RewardTrend
 }
 
 export interface RewardTrend {

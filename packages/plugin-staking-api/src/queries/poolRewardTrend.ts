@@ -3,6 +3,7 @@
 
 import { gql } from '@apollo/client'
 import { client } from '../Client'
+import type { RewardTrendData } from '../types'
 
 const QUERY = gql`
   query PoolRewardTrend($network: String!, $who: String!, $duration: Int!) {
@@ -17,18 +18,29 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: RewardTrendData = {
+	rewardTrend: {
+		reward: '0',
+		previous: '0',
+		change: {
+			percent: '0',
+			value: '0',
+		},
+	},
+}
+
 export const fetchPoolRewardTrend = async (
 	network: string,
 	who: string,
 	duration: number,
-) => {
+): Promise<RewardTrendData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<RewardTrendData>({
 			query: QUERY,
 			variables: { network, who, duration },
 		})
-		return result.data.poolRewardTrend
+		return result?.data || DEFAULT
 	} catch {
-		return null
+		return DEFAULT
 	}
 }
