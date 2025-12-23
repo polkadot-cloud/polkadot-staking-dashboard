@@ -14,6 +14,7 @@ import { Remove } from 'library/ListItem/Buttons/Remove'
 import { APY } from 'library/ListItem/Labels/APY'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
+import { memo } from 'react'
 import type { Validator } from 'types'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
 import { FavoriteValidator } from '../ListItem/Buttons/FavoriteValidator'
@@ -24,7 +25,7 @@ import { EraStatus } from '../ListItem/Labels/EraStatus'
 import { Identity } from '../ListItem/Labels/Identity'
 import type { ItemProps } from './types'
 
-export const Item = ({
+const ItemComponent = ({
 	validator,
 	toggleFavorites,
 	displayFor,
@@ -114,3 +115,5 @@ export const Item = ({
 		</Wrapper>
 	)
 }
+
+export const Item = memo(ItemComponent)
