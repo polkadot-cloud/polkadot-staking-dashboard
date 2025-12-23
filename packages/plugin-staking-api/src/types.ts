@@ -79,10 +79,8 @@ export interface ValidatorReward {
 	start: number
 }
 
-export type PoolRewardResults = Query & {
-	data: {
-		poolRewards: PoolReward[]
-	}
+export type PoolRewardData = {
+	poolRewards: PoolReward[]
 }
 
 export type EraTotalNominatorsData = {

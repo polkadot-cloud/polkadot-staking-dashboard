@@ -53,7 +53,7 @@ export const Rewards = () => {
 	const getPayoutData = async () => {
 		const fromDate = subDays(startOfToday(), MaxPayoutDays)
 
-		const [allRewards, poolRewards] = await Promise.all([
+		const [allRewards, { poolRewards }] = await Promise.all([
 			fetchRewards(
 				network,
 				activeAddress || '',

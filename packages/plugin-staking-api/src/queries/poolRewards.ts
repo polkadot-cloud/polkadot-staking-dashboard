@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/client/react'
 import { client } from '../Client'
-import type { PoolRewardResults } from '../types'
+import type { PoolRewardData, QueryReturn } from '../types'
 
 const QUERY = gql`
   query PoolRewards($network: String!, $who: String!, $from: Int!) {
@@ -17,6 +17,10 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: PoolRewardData = {
+	poolRewards: [],
+}
+
 export const usePoolRewards = ({
 	network,
 	who,
@@ -25,25 +29,25 @@ export const usePoolRewards = ({
 	network: string
 	who: string
 	from: number
-}): PoolRewardResults => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
+}): QueryReturn<PoolRewardData> => {
+	const { loading, error, data, refetch } = useQuery<PoolRewardData>(QUERY, {
 		variables: { network, who, from },
 	})
-	return { loading, error, data, refetch }
+	return { loading, error, data: data || DEFAULT, refetch }
 }
 
 export const fetchPoolRewards = async (
 	network: string,
 	who: string,
 	from: number,
-) => {
+): Promise<PoolRewardData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<PoolRewardData>({
 			query: QUERY,
 			variables: { network, who, from },
 		})
-		return result.data.poolRewards
+		return result.data || DEFAULT
 	} catch {
-		return null
+		return DEFAULT
 	}
 }
