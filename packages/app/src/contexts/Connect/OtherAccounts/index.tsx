@@ -240,7 +240,6 @@ export const OtherAccountsProvider = ({
 				importLocalOtherAccounts,
 				forgetOtherAccounts,
 				accountsInitialised,
-				otherAccounts,
 			}}
 		>
 			{children}

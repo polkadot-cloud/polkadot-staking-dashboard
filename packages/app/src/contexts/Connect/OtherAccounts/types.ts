@@ -22,5 +22,4 @@ export interface OtherAccountsContextInterface {
 	) => void
 	forgetOtherAccounts: (accounts: ImportedAccount[]) => void
 	accountsInitialised: boolean
-	otherAccounts: ImportedAccount[]
 }
