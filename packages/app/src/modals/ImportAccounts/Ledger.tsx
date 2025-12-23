@@ -9,7 +9,6 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import type {
 	LedgerAddress,
@@ -30,7 +29,6 @@ export const Ledger = () => {
 		removeHardwareAccount,
 		renameHardwareAccount,
 		hardwareAccountExists,
-		getHardwareAccount,
 		getHardwareAccounts,
 	} = useHardwareAccounts()
 	const {
@@ -44,8 +42,6 @@ export const Ledger = () => {
 		handleResetLedgerTask,
 	} = useLedgerHardware()
 	const { setModalResize } = useOverlay().modal
-	const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
-		useOtherAccounts()
 	const { ss58 } = getStakingChainData(network)
 	const source: HardwareAccountSource = 'ledger'
 
@@ -61,19 +57,12 @@ export const Ledger = () => {
 
 	// Handle renaming a ledger address
 	const handleRename = (address: string, newName: string) => {
-		renameOtherAccount(address, source, newName)
 		renameHardwareAccount(source, network, address, newName)
 	}
 
 	// Handle removing a ledger address
 	const handleRemove = (address: string) => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
-			// Remove from `other` accounts state
-			const existingOther = getHardwareAccount(source, network, address)
-			if (existingOther) {
-				forgetOtherAccounts([existingOther])
-			}
-
 			// Remove ledger account from state
 			removeHardwareAccount(source, network, address)
 			// Remove ledger account from state
@@ -119,29 +108,22 @@ export const Ledger = () => {
 				setAddresses,
 				addressesRef,
 			)
-			const account = addHardwareAccount(
+			addHardwareAccount(
 				source,
 				network,
 				newAddress[0].address,
 				options.accountIndex,
 			)
-
-			if (account) {
-				addOtherAccounts([account])
-			}
 			resetStatusCode()
 		}
 	}
 
 	// Resets ledger accounts
 	const resetLedgerAccounts = () => {
-		// Remove imported Ledger accounts.
-		const accountsToRemove = [...getHardwareAccounts(source, network)]
 		addressesRef.current.forEach((account) => {
 			removeHardwareAccount(source, network, account.address)
 		})
 		setStateWithRef([], setAddresses, addressesRef)
-		forgetOtherAccounts(accountsToRemove)
 	}
 
 	// Get last saved ledger feedback
