@@ -30,10 +30,10 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
 		useState<TokenPricesContextInterface>(defaultTokenPrice)
 
 	const getTokenPrice = async () => {
-		const result = await fetchTokenPrice(
+		const { tokenPrice } = await fetchTokenPrice(
 			`${unit}${currency}${currency === 'USD' ? 'T' : ''}`,
 		)
-		setTokenPrice(result || defaultTokenPrice)
+		setTokenPrice(tokenPrice || defaultTokenPrice)
 	}
 
 	useEffect(() => {

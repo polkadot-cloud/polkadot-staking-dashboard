@@ -49,16 +49,15 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 			setIsSearching(true)
 			try {
 				const result = await fetchSearchValidators(network, term)
-				if (result) {
-					const transformedValidators: Validator[] = result.validators.map(
-						(validator) => ({
+				if (result.searchValidators.validators.length > 0) {
+					const transformedValidators: Validator[] =
+						result.searchValidators.validators.map((validator) => ({
 							address: validator.address,
 							prefs: {
 								commission: validator.commission,
 								blocked: validator.blocked,
 							},
-						}),
-					)
+						}))
 					setSearchResults(transformedValidators)
 				} else {
 					setSearchResults([])
