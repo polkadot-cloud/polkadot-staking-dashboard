@@ -1,10 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
+import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { TokenPrice, UseTokenPriceResult } from '../types'
+import type { TokenPriceData } from '../types'
 
 const QUERY = gql`
   query TokenPrice($ticker: String!) {
@@ -15,28 +14,24 @@ const QUERY = gql`
   }
 `
 
-export const useTokenPrice = ({
-	ticker,
-}: {
-	ticker: string
-}): UseTokenPriceResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { ticker },
-	})
-	return { loading, error, data, refetch }
+const DEFAULT: TokenPriceData = {
+	tokenPrice: {
+		price: 0,
+		change: 0,
+	},
 }
 
 export const fetchTokenPrice = async (
 	ticker: string,
-): Promise<TokenPrice | null> => {
+): Promise<TokenPriceData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<TokenPriceData>({
 			query: QUERY,
 			variables: { ticker },
 		})
-		return result.data.tokenPrice
+		return result?.data || DEFAULT
 	} catch {
-		return null
+		return DEFAULT
 	}
 }
 

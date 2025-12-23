@@ -10,15 +10,6 @@ import type {
 
 import type { ApolloError } from '@apollo/client/v4-migration'
 
-export interface TokenPrice {
-	price: number
-	change: number
-}
-
-export type TokenPriceResult = {
-	tokenPrice: TokenPrice
-} | null
-
 // TODO: Remove once all queries are migrated to v4 Apollo Client
 interface Query {
 	loading: boolean
@@ -42,8 +33,13 @@ export type QueryReturn<T> = QueryNew<T> & {
 	data: T
 }
 
-export type UseTokenPriceResult = Query & {
-	data: TokenPriceResult
+export type TokenPriceData = {
+	tokenPrice: TokenPrice
+}
+
+export interface TokenPrice {
+	price: number
+	change: number
 }
 
 export type AllRewardsData = {
