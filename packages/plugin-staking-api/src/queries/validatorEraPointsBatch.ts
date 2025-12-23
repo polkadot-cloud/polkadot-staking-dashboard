@@ -3,7 +3,7 @@
 
 import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { ValidatorEraPointsBatch } from '../types'
+import type { ValidatorEraPointsBatchData } from '../types'
 
 const QUERY = gql`
   query ValidatorEraPointsBatch(
@@ -28,21 +28,23 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: ValidatorEraPointsBatchData = {
+	validatorEraPointsBatch: [],
+}
+
 export const fetchValidatorEraPointsBatch = async (
 	network: string,
 	validators: string[],
 	fromEra: number,
 	depth?: number,
-): Promise<{ validatorEraPointsBatch: ValidatorEraPointsBatch[] }> => {
+): Promise<ValidatorEraPointsBatchData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<ValidatorEraPointsBatchData>({
 			query: QUERY,
 			variables: { network, validators, fromEra, depth },
 		})
-		return result.data
+		return result?.data || DEFAULT
 	} catch {
-		return {
-			validatorEraPointsBatch: [],
-		}
+		return DEFAULT
 	}
 }

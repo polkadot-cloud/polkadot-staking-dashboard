@@ -53,7 +53,7 @@ export const Rewards = () => {
 	const getPayoutData = async () => {
 		const fromDate = subDays(startOfToday(), MaxPayoutDays)
 
-		const [allRewards, { poolRewards }] = await Promise.all([
+		const [{ allRewards }, { poolRewards }] = await Promise.all([
 			fetchRewards(
 				network,
 				activeAddress || '',
@@ -64,8 +64,10 @@ export const Rewards = () => {
 
 		const payouts =
 			allRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
+
 		const unclaimedPayouts =
 			allRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
+
 		const poolClaims = poolRewards ?? []
 
 		// Filter zero rewards and order via timestamp, most recent first

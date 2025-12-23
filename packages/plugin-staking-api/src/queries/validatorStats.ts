@@ -19,23 +19,26 @@ const QUERY = gql`
     }
   }
 `
+const DEFAULT: ValidatorStatsData = {
+	validatorStats: {
+		averageRewardRate: {
+			rate: 0,
+		},
+		averageValidatorCommission: 0,
+		activeValidatorRanks: [],
+	},
+}
 
 export const fetchValidatorStats = async (
 	network: string,
 ): Promise<ValidatorStatsData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<ValidatorStatsData>({
 			query: QUERY,
 			variables: { network },
 		})
-		return result.data.validatorStats
+		return result?.data || DEFAULT
 	} catch {
-		return {
-			averageRewardRate: {
-				rate: 0,
-			},
-			averageValidatorCommission: 0,
-			activeValidatorRanks: [],
-		}
+		return DEFAULT
 	}
 }

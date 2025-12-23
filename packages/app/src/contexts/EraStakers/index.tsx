@@ -214,11 +214,11 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 
 	// Fetches and sets the total active nominators for the current era
 	const handleEraTotalNominators = async () => {
-		const { totalNominators } = await fetchEraTotalNominators(
+		const { eraTotalNominators } = await fetchEraTotalNominators(
 			network,
 			activeEra.index,
 		)
-		setActiveNominatorsCount(totalNominators)
+		setActiveNominatorsCount(eraTotalNominators.totalNominators)
 	}
 
 	// Fetches and sets the previous era's reward points

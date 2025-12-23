@@ -55,16 +55,12 @@ export interface NominatorReward {
 	type: string
 }
 
-export type UnclaimedRewardsResult = Query & {
-	data: {
-		unclaimedRewards: UnclaimedRewards
-	}
+export type UnclaimedRewardsData = {
+	unclaimedRewards: UnclaimedRewards
 }
 
-export type ValidatorRewardsResult = Query & {
-	data: {
-		validatorRewards: ValidatorReward[]
-	}
+export type ValidatorRewardsData = {
+	validatorRewards: ValidatorReward[]
 }
 
 export interface ValidatorReward {
@@ -78,7 +74,9 @@ export type PoolRewardData = {
 }
 
 export type EraTotalNominatorsData = {
-	totalNominators: number
+	eraTotalNominators: {
+		totalNominators: number
+	}
 }
 
 export type RewardTrendData = {
@@ -103,10 +101,8 @@ export interface ActiveValidatorRank {
 	rank: number
 }
 
-export type ValidatorEraPointsResult = Query & {
-	data: {
-		validatorEraPoints: ValidatorEraPoints[]
-	}
+export type ValidatorEraPointsData = {
+	validatorEraPoints: ValidatorEraPoints[]
 }
 
 export type ValidatorEraPointsBatchResult = Query & {
@@ -137,15 +133,17 @@ export interface ValidatorEraPoints {
 	start: number
 }
 
+export type ValidatorEraPointsBatchData = {
+	validatorEraPointsBatch: ValidatorEraPointsBatch[]
+}
+
 export interface ValidatorEraPointsBatch {
 	validator: string
 	points: ValidatorEraPoints[]
 }
 
-export type ValidatorAvgRewardRateBatchResult = Query & {
-	data: {
-		validatorAvgRewardRateBatch: ValidatorAvgRewardRateBatch[]
-	}
+export type ValidatorAvgRewardRateBatchData = {
+	validatorAvgRewardRateBatch: ValidatorAvgRewardRateBatch[]
 }
 
 export interface ValidatorAvgRewardRateBatch {
@@ -208,11 +206,11 @@ export type ValidatorRanksResult = {
 	rank: number
 }[]
 
-export type ValidatorStatsResult = Query & {
-	data: ValidatorStatsData
+export type ValidatorStatsData = {
+	validatorStats: ValidatorStats
 }
 
-export interface ValidatorStatsData {
+export interface ValidatorStats {
 	averageRewardRate: AverageRewardRateResult
 	activeValidatorRanks: ValidatorRanksResult
 	averageValidatorCommission: number

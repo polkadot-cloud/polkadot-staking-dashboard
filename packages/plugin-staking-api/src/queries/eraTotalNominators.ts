@@ -14,7 +14,9 @@ const QUERY = gql`
 `
 
 const DEFAULT: EraTotalNominatorsData = {
-	totalNominators: 0,
+	eraTotalNominators: {
+		totalNominators: 0,
+	},
 }
 
 export const fetchEraTotalNominators = async (

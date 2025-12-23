@@ -3,7 +3,7 @@
 
 import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { ValidatorAvgRewardRateBatch } from '../types'
+import type { ValidatorAvgRewardRateBatchData } from '../types'
 
 const QUERY = gql`
   query ValidatorAvgRewardRateBatch(
@@ -23,22 +23,23 @@ const QUERY = gql`
     }
   }
 `
+const DEFAULT: ValidatorAvgRewardRateBatchData = {
+	validatorAvgRewardRateBatch: [],
+}
 
 export const fetchValidatorAvgRewardRateBatch = async (
 	chain: string,
 	validators: string[],
 	fromEra: number,
 	depth?: number,
-): Promise<{ validatorAvgRewardRateBatch: ValidatorAvgRewardRateBatch[] }> => {
+): Promise<ValidatorAvgRewardRateBatchData> => {
 	try {
-		const result = await client.query({
+		const result = await client.query<ValidatorAvgRewardRateBatchData>({
 			query: QUERY,
 			variables: { chain, validators, fromEra, depth },
 		})
-		return result.data
+		return result?.data || DEFAULT
 	} catch {
-		return {
-			validatorAvgRewardRateBatch: [],
-		}
+		return DEFAULT
 	}
 }

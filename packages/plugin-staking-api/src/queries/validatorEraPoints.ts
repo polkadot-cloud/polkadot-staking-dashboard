@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client/react";
-import type { ValidatorEraPointsResult } from '../types'
+import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/client/react'
+import type { QueryReturn, ValidatorEraPointsData } from '../types'
 
 const QUERY = gql`
   query ValidatorEraPoints(
@@ -24,6 +24,9 @@ const QUERY = gql`
     }
   }
 `
+const DEFAULT: ValidatorEraPointsData = {
+	validatorEraPoints: [],
+}
 
 export const useValidatorEraPoints = ({
 	network,
@@ -35,9 +38,12 @@ export const useValidatorEraPoints = ({
 	validator: string
 	fromEra: number
 	depth?: number
-}): ValidatorEraPointsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, validator, fromEra, depth },
-	})
-	return { loading, error, data, refetch }
+}): QueryReturn<ValidatorEraPointsData> => {
+	const { loading, error, data, refetch } = useQuery<ValidatorEraPointsData>(
+		QUERY,
+		{
+			variables: { network, validator, fromEra, depth },
+		},
+	)
+	return { loading, error, data: data || DEFAULT, refetch }
 }
