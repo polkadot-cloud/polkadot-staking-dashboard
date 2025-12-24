@@ -63,9 +63,7 @@ export const Ledger = () => {
 	// Handle removing a ledger address
 	const handleRemove = (address: string) => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
-			// Remove ledger account from state
 			removeHardwareAccount(source, network, address)
-			// Remove ledger account from state
 			setStateWithRef(
 				[...addressesRef.current.filter((a) => a.address !== address)],
 				setAddresses,

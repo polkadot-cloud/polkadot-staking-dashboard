@@ -44,8 +44,8 @@ export const ReadOnly = () => {
 		({ addedBy }) => addedBy === 'user',
 	)
 
-	const handleForgetExternalAccount = (account: ExternalAccount) => {
-		// forget the account from state only if it has not replaced by a `system` external account.
+	// Forget the account from state only if it has not been replaced by a `system` external account
+	const handleForgetUserAccount = (account: ExternalAccount) => {
 		if (account.addedBy === 'user') {
 			forgetExternalAccounts([account])
 		}
@@ -96,7 +96,7 @@ export const ReadOnly = () => {
 										</div>
 										<ButtonSecondary
 											text={t('forget')}
-											onClick={() => handleForgetExternalAccount(a)}
+											onClick={() => handleForgetUserAccount(a)}
 										/>
 									</ManualAccount>
 								))}

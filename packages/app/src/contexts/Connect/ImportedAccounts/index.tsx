@@ -165,7 +165,7 @@ export const ImportedAccountsProvider = ({
 	}, [network, stringifiedAccountsKey])
 
 	// Once extensions are fully initialised, fetch accounts from other sources and re-sync active
-	// account
+	// account. Only runs once per app load
 	useEffectIgnoreInitial(() => {
 		if (extensionsSynced === 'synced' && !accountsInitialised) {
 			setAccountsInitialised(true)
@@ -184,7 +184,7 @@ export const ImportedAccountsProvider = ({
 				}
 			}
 		}
-	}, [network, extensionsSynced])
+	}, [extensionsSynced])
 
 	return (
 		<ImportedAccountsContext.Provider
