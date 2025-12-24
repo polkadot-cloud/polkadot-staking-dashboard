@@ -123,7 +123,7 @@ export const Vault = () => {
 					<QrReader
 						network={network}
 						ss58={ss58}
-						onSuccess={() => setImportActive(false)}
+						onSuccess={(_account) => setImportActive(false)}
 					/>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<ButtonSubmitInvert
