@@ -4,7 +4,6 @@
 import { extractUrlValue } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { emitNotification } from 'global-bus'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 export const useAccountFromUrl = () => {
 	const { t } = useTranslation('app')
 	const { accounts } = useImportedAccounts()
-	const { accountsInitialised } = useOtherAccounts()
+	const { accountsInitialised } = useImportedAccounts()
 	const { activeAddress, setActiveAccount } = useActiveAccounts()
 
 	// Set active account if url var present and accounts initialised

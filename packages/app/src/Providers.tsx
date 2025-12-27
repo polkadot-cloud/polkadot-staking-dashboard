@@ -15,7 +15,6 @@ import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
-import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
@@ -68,7 +67,6 @@ export const Providers = () => {
 			],
 			HardwareAccountsProvider,
 			ExternalAccountsProvider,
-			OtherAccountsProvider,
 			ImportedAccountsProvider,
 			WalletConnectProvider,
 			ProxiesProvider,

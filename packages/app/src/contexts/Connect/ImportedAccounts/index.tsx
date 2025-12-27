@@ -2,20 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useExtensionAccounts } from '@w3ux/react-connect-kit'
+import {
+	useExtensionAccounts,
+	useHardwareAccounts,
+} from '@w3ux/react-connect-kit'
+import type { ExtensionAccount, HardwareAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import type {
 	ActiveAccount,
 	ExternalAccount,
 	ImportedAccount,
 	MaybeAddress,
 } from 'types'
-import { useOtherAccounts } from '../OtherAccounts'
+import { useExternalAccounts } from '../ExternalAccounts'
 import { getActiveAccountLocal } from '../Utils'
 import type { ImportedAccountsContextInterface } from './types'
 
@@ -28,14 +32,33 @@ export const ImportedAccountsProvider = ({
 	children: ReactNode
 }) => {
 	const { network } = useNetwork()
-	const { otherAccounts } = useOtherAccounts()
-	const { setActiveAccount } = useActiveAccounts()
-	const { getExtensionAccounts } = useExtensionAccounts()
-
+	const { getExternalAccounts } = useExternalAccounts()
+	const { getHardwareAccounts } = useHardwareAccounts()
+	const { setActiveAccount, activeAccount } = useActiveAccounts()
+	const { getExtensionAccounts, extensionsSynced } = useExtensionAccounts()
 	const { ss58 } = getStakingChainData(network)
+
+	// Whether active account import checks have been completed
+	const [accountsInitialised, setAccountsInitialised] = useState<boolean>(false)
+
 	// Get the imported extension accounts formatted with the current network's ss58 prefix
-	const extensionAccounts = getExtensionAccounts(ss58)
-	const allAccounts = extensionAccounts.concat(otherAccounts)
+	const extensionAccounts: ExtensionAccount[] = getExtensionAccounts(ss58)
+
+	// Get the imported hardware accounts for the current network
+	const hardwareAccounts: HardwareAccount[] = getHardwareAccounts(
+		'ledger',
+		network,
+	)
+		.concat(getHardwareAccounts('vault', network))
+		.concat(getHardwareAccounts('wallet_connect', network))
+
+	// Get the imported external accounts for the current network
+	const externalAccounts: ExternalAccount[] = getExternalAccounts(network)
+
+	// Combine all imported accounts
+	const allAccounts: ImportedAccount[] = extensionAccounts
+		.concat(hardwareAccounts)
+		.concat(externalAccounts)
 
 	// Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`
 	const shallowAccountStringify = (accounts: ImportedAccount[]) => {
@@ -141,6 +164,28 @@ export const ImportedAccountsProvider = ({
 		}
 	}, [network, stringifiedAccountsKey])
 
+	// Once extensions are fully initialised, fetch accounts from other sources and re-sync active
+	// account. Only runs once per app load
+	useEffectIgnoreInitial(() => {
+		if (extensionsSynced === 'synced' && !accountsInitialised) {
+			setAccountsInitialised(true)
+
+			// If active account is not yet set, check if it has been imported in other accounts
+			if (!activeAccount) {
+				const activeAccountFound = allAccounts.find(
+					({ address }) =>
+						address === getActiveAccountLocal(network, ss58)?.address,
+				)
+				if (activeAccountFound) {
+					setActiveAccount({
+						address: activeAccountFound.address,
+						source: activeAccountFound.source,
+					})
+				}
+			}
+		}
+	}, [extensionsSynced])
+
 	return (
 		<ImportedAccountsContext.Provider
 			value={{
@@ -150,6 +195,7 @@ export const ImportedAccountsProvider = ({
 				accountHasSigner,
 				requiresManualSign,
 				stringifiedAccountsKey,
+				accountsInitialised,
 			}}
 		>
 			{children}

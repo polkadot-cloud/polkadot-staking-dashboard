@@ -18,10 +18,10 @@ export const UnclaimedRewardsApi = ({ who, network }: Props) => {
 
 	// Update unclaimed rewards on total change
 	useEffect(() => {
-		if (!loading && !error && data?.unclaimedRewards) {
-			setUnclaimedRewards(data?.unclaimedRewards)
+		if (!loading && !error) {
+			setUnclaimedRewards(data.unclaimedRewards)
 		}
-	}, [data?.unclaimedRewards.total])
+	}, [data.unclaimedRewards.total])
 
 	return null
 }

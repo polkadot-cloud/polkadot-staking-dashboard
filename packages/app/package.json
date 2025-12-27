@@ -19,7 +19,7 @@
 		"@fortawesome/free-regular-svg-icons": "^7.1.0",
 		"@fortawesome/free-solid-svg-icons": "^7.1.0",
 		"@fortawesome/react-fontawesome": "^3.1.1",
-		"@ledgerhq/hw-transport-webhid": "^6.30.9",
+		"@ledgerhq/hw-transport-webhid": "^6.30.10",
 		"@polkawatch/ddp-client": "^3.0.1",
 		"@reown/appkit": "^1.8.15",
 		"@tanstack/react-query": "^5.90.12",
@@ -59,7 +59,7 @@
 		"react-error-boundary": "^6.0.0",
 		"react-helmet-async": "^2.0.5",
 		"react-i18next": "^16.4.0",
-		"react-router-dom": "^7.10.1",
+		"react-router-dom": "^7.11.0",
 		"rxjs": "^7.8.2",
 		"simplebar-react": "3.3.2",
 		"styled-components": "^6.1.19",
@@ -70,17 +70,17 @@
 		"ui-overlay": "workspace:*",
 		"usehooks-ts": "^3.0.2",
 		"utils": "workspace:*",
-		"viem": "^2.42.1",
+		"viem": "^2.43.3",
 		"wagmi": "^3.1.0",
 		"xxhash-wasm": "^1.0.2"
 	},
 	"devDependencies": {
 		"types": "workspace:*",
 		"typescript": "^5.8.2",
-		"vite": "^7.2.7",
+		"vite": "^7.3.0",
 		"vite-bundle-visualizer": "^1.2.1",
-		"vite-plugin-checker": "^0.11.0",
+		"vite-plugin-checker": "^0.12.0",
 		"vite-plugin-svgr": "^4.3.0",
-		"vite-tsconfig-paths": "^5.1.4"
+		"vite-tsconfig-paths": "^6.0.3"
 	}
 }
