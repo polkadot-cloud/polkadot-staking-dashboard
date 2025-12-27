@@ -10,7 +10,6 @@ import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccountSource } from '@w3ux/types'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useWalletConnect } from 'contexts/WalletConnect'
 import { useEffect, useState } from 'react'
@@ -22,14 +21,6 @@ import { Close, useOverlay } from 'ui-overlay'
 export const WalletConnect = () => {
 	const { t } = useTranslation()
 	const {
-		addHardwareAccount,
-		getHardwareAccount,
-		getHardwareAccounts,
-		hardwareAccountExists,
-		renameHardwareAccount,
-		removeHardwareAccount,
-	} = useHardwareAccounts()
-	const {
 		fetchAddresses,
 		wcInitialized,
 		wcSessionActive,
@@ -37,10 +28,15 @@ export const WalletConnect = () => {
 		disconnectWcSession,
 		initializeWcSession,
 	} = useWalletConnect()
+	const {
+		addHardwareAccount,
+		getHardwareAccounts,
+		hardwareAccountExists,
+		renameHardwareAccount,
+		removeHardwareAccount,
+	} = useHardwareAccounts()
 	const { network } = useNetwork()
 	const { setModalResize } = useOverlay().modal
-	const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
-		useOtherAccounts()
 
 	const source: HardwareAccountSource = 'wallet_connect'
 
@@ -55,7 +51,6 @@ export const WalletConnect = () => {
 
 	// Handle renaming an address
 	const handleRename = (address: string, newName: string) => {
-		renameOtherAccount(address, source, newName)
 		renameHardwareAccount(source, network, address, newName)
 	}
 
@@ -71,15 +66,7 @@ export const WalletConnect = () => {
 
 		// Save accounts to local storage
 		filteredAccounts.forEach((address) => {
-			const account = addHardwareAccount(
-				source,
-				network,
-				address,
-				wcAccounts.length,
-			)
-			if (account) {
-				addOtherAccounts([account])
-			}
+			addHardwareAccount(source, network, address, wcAccounts.length)
 		})
 		setImportActive(false)
 	}
@@ -88,10 +75,6 @@ export const WalletConnect = () => {
 	const disconnectWc = async () => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
 			wcAccounts.forEach(({ address }) => {
-				const existingOther = getHardwareAccount(source, network, address)
-				if (existingOther) {
-					forgetOtherAccounts([existingOther])
-				}
 				removeHardwareAccount(source, network, address)
 			})
 			// Disconnect from Wallet Connect session

@@ -7,7 +7,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import {
 	getLocalActiveProxy,
@@ -32,7 +31,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { addExternalAccount } = useExternalAccounts()
-	const { addOrReplaceOtherAccount } = useOtherAccounts()
 	const { activeProxy, activeAccount } = useActiveAccounts()
 	const { accounts, stringifiedAccountsKey } = useImportedAccounts()
 
@@ -107,10 +105,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 			}
 		}
 		if (addDelegatorAsExternal) {
-			const importResult = addExternalAccount(delegator, 'system')
-			if (importResult) {
-				addOrReplaceOtherAccount(importResult.account, importResult.type)
-			}
+			addExternalAccount(delegator, 'system')
 		}
 		return []
 	}
@@ -150,10 +145,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 				const { address, source, proxyType } = localActiveProxy
 				// Add proxy address as external account if not imported
 				if (!accounts.find((a) => a.address === address)) {
-					const importResult = addExternalAccount(address, 'system')
-					if (importResult) {
-						addOrReplaceOtherAccount(importResult.account, importResult.type)
-					}
+					addExternalAccount(address, 'system')
 				}
 				const isActive = (
 					Object.entries(proxies).find(
