@@ -10,4 +10,5 @@ export interface ImportedAccountsContextInterface {
 	accountHasSigner: (activeAccount: ActiveAccount) => boolean
 	requiresManualSign: (activeAccount: ActiveAccount) => boolean
 	stringifiedAccountsKey: string
+	accountsInitialised: boolean
 }
