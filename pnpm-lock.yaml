@@ -70,8 +70,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.3)
       '@ledgerhq/hw-transport-webhid':
-        specifier: ^6.30.10
-        version: 6.30.10
+        specifier: ^6.30.11
+        version: 6.30.11
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -1093,20 +1093,20 @@ packages:
   '@ledgerhq/devices@8.7.0':
     resolution: {integrity: sha512-3pSOULPUhClk2oOxa6UnoyXW8+05FK7r6cpq2WiTey4kyIUjmIraO7AX9lhz9IU73dGVtBMdU+NCPPO2RYJaTQ==}
 
-  '@ledgerhq/devices@8.7.1':
-    resolution: {integrity: sha512-xUtqLp4t7PhVKkMG/mCrSzxGQ25JA06UAIxxq07EwuJKyWaey1gSdvqr0TvbTw/fsJNya4FIBYTrUkjH9XpdBQ==}
+  '@ledgerhq/devices@8.8.0':
+    resolution: {integrity: sha512-ZFRAQQaESxIK/8SYrrHyqb7pQjLPO8f62PI6H16SP0/uC9fdZKR8NqOGMvIf7I6K442SkiQATnC/kxUeUTfuHA==}
 
-  '@ledgerhq/errors@6.27.1':
-    resolution: {integrity: sha512-Q6nXkg63kSjxa8DDBtjSGAuiOP/jQVQM/0f+0R/ovilQKuxMIxEMXPfonvhQ2AIP4bqKOzGV1c9Iqnow22w/Zg==}
+  '@ledgerhq/errors@6.28.0':
+    resolution: {integrity: sha512-Rx6GN801GP/3gCfVmmiXFVZWmiaEGMuXVwjM6WOCX0dzw4v7KcB1nj4vrNC1plDI/xkPt/clYJPG7LgSt0mxlw==}
 
-  '@ledgerhq/hw-transport-webhid@6.30.10':
-    resolution: {integrity: sha512-vPTHhgCNeymlqjcK3VlMCAzEqUC5o6+NTFq2V6ywbKBkT7Wl8jUR2y+Kfba41Pg+DXTUZ4BzgMM6tNNx48ioiA==}
+  '@ledgerhq/hw-transport-webhid@6.30.11':
+    resolution: {integrity: sha512-VIzJsTWsZFmizSMuRjb60qbrm7ETymBQafID93rTFL+TDabrS7WsVzxuOa69LR47CXjf7GpKpDyhzAZQoCbmwA==}
 
   '@ledgerhq/hw-transport@6.31.13':
     resolution: {integrity: sha512-MrJRDk74wY980ofiFPRpTHQBbRw1wDuKbdag1zqlO1xtJglymwwY03K2kvBNvkm1RTSCPUp/nAoNG+WThZuuew==}
 
-  '@ledgerhq/hw-transport@6.31.14':
-    resolution: {integrity: sha512-aTKItTLDCN2aoZv6nX6weMslgzT0mI8Hp2FEt2iTomQ6V5r1/BRDRbz2WB1989dZsgBajPRuUWhTZ/Bt6tiijw==}
+  '@ledgerhq/hw-transport@6.31.15':
+    resolution: {integrity: sha512-I+hzH9XGFPaYq9K+iw+qWJUyVdhN9fdO00Df9zAkOCzju1W5Gc+cDJxbYnZApmY8oMd8mNoXTstEW3Ih5ikaVg==}
 
   '@ledgerhq/hw-transport@6.31.9':
     resolution: {integrity: sha512-HqB2Whl2qbrzyvs9gC/GmLhIy8RO4CWzjqHS4k0bPWDZRqKa8m6H32vjrbXGO//pUL1Mlu87UwvxvLyuICdjwg==}
@@ -4680,52 +4680,52 @@ snapshots:
 
   '@ledgerhq/devices@8.5.0':
     dependencies:
-      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/errors': 6.28.0
       '@ledgerhq/logs': 6.13.0
       rxjs: 7.8.2
       semver: 7.7.3
 
   '@ledgerhq/devices@8.7.0':
     dependencies:
-      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/errors': 6.28.0
       '@ledgerhq/logs': 6.13.0
       rxjs: 7.8.2
       semver: 7.7.3
 
-  '@ledgerhq/devices@8.7.1':
+  '@ledgerhq/devices@8.8.0':
     dependencies:
-      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/errors': 6.28.0
       '@ledgerhq/logs': 6.13.0
       rxjs: 7.8.2
       semver: 7.7.3
 
-  '@ledgerhq/errors@6.27.1': {}
+  '@ledgerhq/errors@6.28.0': {}
 
-  '@ledgerhq/hw-transport-webhid@6.30.10':
+  '@ledgerhq/hw-transport-webhid@6.30.11':
     dependencies:
-      '@ledgerhq/devices': 8.7.1
-      '@ledgerhq/errors': 6.27.1
-      '@ledgerhq/hw-transport': 6.31.14
+      '@ledgerhq/devices': 8.8.0
+      '@ledgerhq/errors': 6.28.0
+      '@ledgerhq/hw-transport': 6.31.15
       '@ledgerhq/logs': 6.13.0
 
   '@ledgerhq/hw-transport@6.31.13':
     dependencies:
       '@ledgerhq/devices': 8.7.0
-      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/errors': 6.28.0
       '@ledgerhq/logs': 6.13.0
       events: 3.3.0
 
-  '@ledgerhq/hw-transport@6.31.14':
+  '@ledgerhq/hw-transport@6.31.15':
     dependencies:
-      '@ledgerhq/devices': 8.7.1
-      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/devices': 8.8.0
+      '@ledgerhq/errors': 6.28.0
       '@ledgerhq/logs': 6.13.0
       events: 3.3.0
 
   '@ledgerhq/hw-transport@6.31.9':
     dependencies:
       '@ledgerhq/devices': 8.5.0
-      '@ledgerhq/errors': 6.27.1
+      '@ledgerhq/errors': 6.28.0
       '@ledgerhq/logs': 6.13.0
       events: 3.3.0
 
