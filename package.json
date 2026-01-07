@@ -35,13 +35,14 @@
 			"unrs-resolver"
 		],
 		"onlyBuiltDependencies": [
-			"@parcel/watcher",
 			"@swc/core",
 			"bufferutil",
 			"esbuild",
 			"keccak",
+			"node-hid",
 			"sharp",
 			"unrs-resolver",
+			"usb",
 			"utf-8-validate"
 		]
 	},
