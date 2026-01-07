@@ -48,12 +48,14 @@ export const Header = ({
 					<HeadTags>
 						<h3>
 							{t('pool', { ns: 'app' })} {bondedPool.id}
-							{['Blocked', 'Destroying'].includes(bondedPool.state) && (
+						</h3>
+						{['Blocked', 'Destroying'].includes(bondedPool.state) && (
+							<h3>
 								<span className={getTagClass(bondedPool.state)}>
 									{t(bondedPool.state.toLowerCase(), { ns: 'app' })}
 								</span>
-							)}
-						</h3>
+							</h3>
+						)}
 						{poolCommission && (
 							<h3>
 								<span>
