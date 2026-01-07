@@ -24,13 +24,13 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
 
 	const popoverRef = useRef<HTMLDivElement>(null)
 
-	// Whether the app is running on mobile.
+	// Whether the app is running on mobile
 	const isMobile = mobileCheck()
 
-	// Whether the app is running in Nova Wallet.
+	// Whether the app is running in Nova Wallet
 	const inNova = !!window?.walletExtension?.isNovaWallet || false
 
-	// Whether the app is running in a SubWallet Mobile.
+	// Whether the app is running in a SubWallet Mobile
 	const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && isMobile
 
 	// Format supported extensions as array.
@@ -39,11 +39,14 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
 			id: key,
 			...value,
 		}))
+		// NOTE: Deprecated support for these wallets/extensions
 		.filter(({ id }) => !id.includes('snap'))
+		.filter(({ id }) => !id.includes('polkagate'))
+		.filter(({ id }) => !id.includes('fearless'))
 
 	// Determine which web extensions to display. Only display Subwallet Mobile or Nova if in one of
 	// those environments. In Nova Wallet's case, fetch `nova-wallet` metadata and overwrite
-	// `polkadot-js` with it. Otherwise, keep all `web-extension` category items.
+	// `polkadot-js` with it. Otherwise, keep all `web-extension` category items
 	const web = inSubWallet
 		? extensionsAsArray.filter((a) => a.id === 'subwallet-js')
 		: inNova
@@ -56,6 +59,11 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
 	const installed = web.filter((a) =>
 		Object.keys(extensionsStatus).find((key) => key === a.id),
 	)
+	// NOTE: Moving `enkrypt` to last item
+	installed.sort((a, b) =>
+		a.id === 'enkrypt' ? 1 : b.id === 'enkrypt' ? -1 : 0,
+	)
+
 	const other = web.filter((a) => !installed.find((b) => b.id === a.id))
 
 	// Close the menu if clicked outside of its container
@@ -72,7 +80,7 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
 		},
 	}
 
-	// Gets framer motion props for a management ui item.
+	// Gets framer motion props for a management ui item
 	const getManageProps = (item: string, initial: 'show' | 'hidden') => ({
 		initial,
 		variants,
