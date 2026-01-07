@@ -33,7 +33,7 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
 	// Whether the app is running in a SubWallet Mobile
 	const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && isMobile
 
-	// Format supported extensions as array.
+	// Format supported extensions as array
 	const extensionsAsArray = Object.entries(extensions)
 		.map(([key, value]) => ({
 			id: key,
