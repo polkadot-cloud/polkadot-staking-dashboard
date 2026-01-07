@@ -79,6 +79,7 @@ export const Wallets = ({
 					title="Wallet Connect"
 					websiteUrl="https://reown.com"
 					websiteText="reown.com"
+					last
 				/>
 			</section>
 			<h4>{t('webExtensions', { ns: 'app' })}</h4>
@@ -86,7 +87,7 @@ export const Wallets = ({
 				<section key={`extension_item_${extension.id}`}>
 					<Extension
 						extension={extension}
-						last={i === extensionItems.length - 1}
+						last={i === otherExtensions.length - 1}
 						setOpen={setOpen}
 					/>
 				</section>
@@ -107,7 +108,7 @@ export const Wallets = ({
 				<section key={`extension_item_${extension.id}`}>
 					<Extension
 						extension={extension}
-						last={i === extensionItems.length - 1}
+						last={i === devTools.length - 1}
 						setOpen={setOpen}
 					/>
 				</section>
