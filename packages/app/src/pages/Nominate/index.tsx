@@ -17,7 +17,7 @@ export const Nominate = () => {
 
 	const [activeTab, setActiveTab] = useState<number>(0)
 
-	// Go back to the first tab if the Polkawatch plugin is disabled.
+	// Go back to the first tab if the Polkawatch plugin is disabled
 	useEffect(() => {
 		if (!pluginEnabled('polkawatch')) {
 			setActiveTab(0)
