@@ -14,7 +14,7 @@ import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 
-export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
+export const UnclaimedPayoutsStatus = () => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { isReady } = useApi()
@@ -37,7 +37,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
 						? '0.00'
 						: minDecimalPlaces(planckToUnit(total, units), 2),
 			}}
-			dimmed={dimmed}
+			dimmed={total === '0'}
 			buttons={
 				total !== '0' &&
 				pluginEnabled('staking_api') &&
