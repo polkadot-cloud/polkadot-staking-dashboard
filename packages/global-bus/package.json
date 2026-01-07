@@ -24,6 +24,6 @@
 	"devDependencies": {
 		"@w3ux/types": "^2.4.1",
 		"types": "workspace:*",
-		"vite": "^7.3.0"
+		"vite": "^7.3.1"
 	}
 }
