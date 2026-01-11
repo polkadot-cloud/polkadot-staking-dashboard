@@ -6,6 +6,7 @@ import { PerbillMultiplier } from 'consts'
 import { usePoolCommission } from 'hooks/usePoolCommission'
 import { useSyncing } from 'hooks/useSyncing'
 import { FavoritePool } from 'library/ListItem/Buttons/FavoritePool'
+import { PoolMembers } from 'library/ListItem/Buttons/PoolMembers'
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded'
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
@@ -13,7 +14,7 @@ import { PoolNominateStatus } from 'library/ListItem/Labels/PoolNominateStatus'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { usePoolsTabs } from 'pages/PoolsList/context'
 import { HeaderButtonRow, LabelRow, Separator } from 'ui-core/list'
-import { More } from '../ListItem/Buttons/More'
+import { PoolMetrics } from '../ListItem/Buttons/PoolMetrics'
 import { Members } from '../ListItem/Labels/Members'
 import { PoolId } from '../ListItem/Labels/PoolId'
 import type { PoolProps } from './types'
@@ -34,7 +35,8 @@ export const Pool = ({ pool }: PoolProps) => {
 					<div>
 						<HeaderButtonRow>
 							<FavoritePool address={addresses.stash} />
-							<More
+							<PoolMembers pool={pool} memberCounter={memberCounter} />
+							<PoolMetrics
 								pool={pool}
 								setActiveTab={setActiveTab}
 								disabled={syncing}

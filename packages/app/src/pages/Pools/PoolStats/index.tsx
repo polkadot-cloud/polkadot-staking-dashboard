@@ -71,7 +71,13 @@ export const PoolStats = () => {
 				? {
 						text: t('browseMembers'),
 						onClick: () => {
-							openCanvas({ key: 'PoolMembers', size: 'xl' })
+							openCanvas({
+								key: 'PoolMembers',
+								options: {
+									poolId,
+								},
+								size: 'xl',
+							})
 						},
 						disabled: [0, undefined].includes(memberCounter),
 					}
