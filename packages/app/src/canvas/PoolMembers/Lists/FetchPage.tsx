@@ -3,7 +3,6 @@
 
 import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePoolMembers } from 'contexts/Pools/PoolMembers'
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
@@ -15,6 +14,7 @@ import { Member } from './Member'
 import type { MembersListProps } from './types'
 
 export const MembersListInner = ({
+	poolId,
 	pagination,
 	memberCount,
 	itemsPerPage,
@@ -27,7 +27,6 @@ export const MembersListInner = ({
 		setFetchedPoolMembersApi,
 	} = usePoolMembers()
 	const { network } = useNetwork()
-	const { activePool } = useActivePool()
 
 	// current page
 	const [page, setPage] = useState<number>(1)
@@ -42,7 +41,6 @@ export const MembersListInner = ({
 
 	const syncMemberList = async () => {
 		try {
-			const poolId = activePool?.id || 0
 			if (poolId > 0 && !fetchingMemberList.current) {
 				fetchingMemberList.current = true
 				// Calculate offset based on page number (1-indexed)
@@ -85,7 +83,7 @@ export const MembersListInner = ({
 	useEffect(() => {
 		setFetchedPoolMembersApi('unsynced')
 		syncMemberList()
-	}, [activePool, page])
+	}, [poolId, page])
 
 	return (
 		<ListWrapper>

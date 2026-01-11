@@ -55,7 +55,7 @@ export const Pool = ({ pool }: PoolProps) => {
 								/>
 							)}
 							<PoolId id={id} />
-							<Members memberCounter={memberCounter} />
+							<Members memberCounter={memberCounter} poolId={id} />
 							<PoolBonded pool={pool} />
 						</LabelRow>
 					</div>

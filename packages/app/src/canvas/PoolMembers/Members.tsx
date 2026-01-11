@@ -3,29 +3,28 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
+import type { BondedPool } from 'types'
 import { MembersList as FetchPageMemberList } from './Lists/FetchPage'
 
-export const Members = () => {
+export const Members = ({ bondedPool }: { bondedPool: BondedPool }) => {
 	const { t } = useTranslation('pages')
 	const { getThemeValue } = useThemeValues()
-	const { activePool, isOwner, isBouncer } = useActivePool()
+	const { activeAddress } = useActiveAccounts()
 
 	const annuncementBorderColor = getThemeValue('--accent-color-secondary')
 
+	const poolId = bondedPool.id
+	const isOwner = bondedPool.roles.depositor === activeAddress
+	const isBouncer = bondedPool.roles.bouncer === activeAddress
+
 	const showBlockedPrompt =
-		activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer())
+		bondedPool?.state === 'Blocked' && (isOwner || isBouncer)
 
-	const memberCount = activePool?.bondedPool?.memberCounter || 0
-
-	const membersListProps = {
-		batchKey: 'active_pool_members',
-		pagination: true,
-		allowMoreCols: true,
-	}
+	const memberCount = bondedPool?.memberCounter || 0
 
 	return (
 		<>
@@ -50,7 +49,7 @@ export const Members = () => {
 			)}
 
 			{/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-			{activePool?.bondedPool?.state === 'Destroying' && (
+			{bondedPool?.state === 'Destroying' && (
 				<CardWrapper
 					className="canvas"
 					style={{
@@ -71,7 +70,8 @@ export const Members = () => {
 
 			<CardWrapper className="transparent">
 				<FetchPageMemberList
-					{...membersListProps}
+					pagination={true}
+					poolId={poolId}
 					memberCount={memberCount}
 					itemsPerPage={50}
 				/>

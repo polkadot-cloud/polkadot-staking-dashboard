@@ -5,6 +5,7 @@ import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import type { PalletNominationPoolsClaimPermission } from 'dedot/chaintypes'
 
 export interface MembersListProps {
+	poolId: number
 	pagination: boolean
 	itemsPerPage: number
 	memberCount: number
