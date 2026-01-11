@@ -17,7 +17,8 @@ export const Members = ({ bondedPool }: { bondedPool: BondedPool }) => {
 
 	const annuncementBorderColor = getThemeValue('--accent-color-secondary')
 
-	const poolId = bondedPool.id
+	const isDepositor = bondedPool.roles.depositor === activeAddress
+	const isRoot = bondedPool.roles.root === activeAddress
 	const isOwner = bondedPool.roles.depositor === activeAddress
 	const isBouncer = bondedPool.roles.bouncer === activeAddress
 
@@ -71,9 +72,13 @@ export const Members = ({ bondedPool }: { bondedPool: BondedPool }) => {
 			<CardWrapper className="transparent">
 				<FetchPageMemberList
 					pagination={true}
-					poolId={poolId}
+					bondedPool={bondedPool}
 					memberCount={memberCount}
 					itemsPerPage={50}
+					isDepositor={isDepositor}
+					isRoot={isRoot}
+					isOwner={isOwner}
+					isBouncer={isBouncer}
 				/>
 			</CardWrapper>
 		</>

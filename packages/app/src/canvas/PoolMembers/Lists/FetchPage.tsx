@@ -14,10 +14,14 @@ import { Member } from './Member'
 import type { MembersListProps } from './types'
 
 export const MembersListInner = ({
-	poolId,
+	bondedPool,
 	pagination,
 	memberCount,
 	itemsPerPage,
+	isDepositor,
+	isRoot,
+	isOwner,
+	isBouncer,
 }: MembersListProps) => {
 	const { t } = useTranslation('pages')
 	const {
@@ -27,6 +31,8 @@ export const MembersListInner = ({
 		setFetchedPoolMembersApi,
 	} = usePoolMembers()
 	const { network } = useNetwork()
+
+	const poolId = bondedPool.id
 
 	// current page
 	const [page, setPage] = useState<number>(1)
@@ -103,7 +109,15 @@ export const MembersListInner = ({
 				) : (
 					<MotionContainer>
 						{listMembers.map((member, index) => (
-							<Member key={`nomination_${index}`} member={member} />
+							<Member
+								key={`nomination_${index}`}
+								member={member}
+								bondedPool={bondedPool}
+								isDepositor={isDepositor}
+								isRoot={isRoot}
+								isOwner={isOwner}
+								isBouncer={isBouncer}
+							/>
 						))}
 					</MotionContainer>
 				)}

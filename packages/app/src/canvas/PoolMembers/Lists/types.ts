@@ -3,16 +3,26 @@
 
 import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import type { PalletNominationPoolsClaimPermission } from 'dedot/chaintypes'
+import type { BondedPool } from 'types'
 
 export interface MembersListProps {
-	poolId: number
+	bondedPool: BondedPool
 	pagination: boolean
 	itemsPerPage: number
 	memberCount: number
+	isDepositor: boolean
+	isRoot: boolean
+	isOwner: boolean
+	isBouncer: boolean
 }
 
 export interface MemberProps {
 	member: Member
+	bondedPool: BondedPool
+	isDepositor: boolean
+	isRoot: boolean
+	isOwner: boolean
+	isBouncer: boolean
 }
 
 export type Member = FetchedPoolMember & {

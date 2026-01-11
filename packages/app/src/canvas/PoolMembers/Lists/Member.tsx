@@ -5,7 +5,6 @@ import { faBars, faShare, faUnlockAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useApi } from 'contexts/Api'
 import { useMenu } from 'contexts/Menu'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePrompt } from 'contexts/Prompt'
 import { ClaimPermission } from 'library/ListItem/Labels/ClaimPermission'
 import { Identity } from 'library/ListItem/Labels/Identity'
@@ -22,27 +21,26 @@ import { UnbondMember } from '../Prompts/UnbondMember'
 import { WithdrawMember } from '../Prompts/WithdrawMember'
 import type { MemberProps } from './types'
 
-export const Member = ({ member }: MemberProps) => {
+export const Member = ({
+	member,
+	bondedPool,
+	isDepositor,
+	isRoot,
+	isOwner,
+	isBouncer,
+}: MemberProps) => {
 	const { t } = useTranslation()
 	const { activeEra } = useApi()
 	const { openMenu, open } = useMenu()
 	const { openPromptWith } = usePrompt()
-	const { activePool, isOwner, isBouncer, getPoolRoles } = useActivePool()
 
 	// Ref for the member container.
 	const memberRef = useRef<HTMLDivElement | null>(null)
 
-	const roles = getPoolRoles()
-	const state = activePool?.bondedPool.state
-	const { bouncer, root, depositor } = roles
-
+	const state = bondedPool.state
 	const canUnbondBlocked =
-		state === 'Blocked' &&
-		(isOwner() || isBouncer()) &&
-		![root, bouncer].includes(member.address)
-
-	const canUnbondDestroying =
-		state === 'Destroying' && member.address !== depositor
+		state === 'Blocked' && (isOwner || isBouncer || isRoot)
+	const canUnbondDestroying = state === 'Destroying' && !isDepositor
 
 	const menuItems: AnyJson[] = []
 
