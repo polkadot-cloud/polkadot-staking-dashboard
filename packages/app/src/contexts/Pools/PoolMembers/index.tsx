@@ -60,7 +60,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 		setPoolMemberData(result)
 	}
 
-	// Reset pool memvber data when canvas is closed
+	// Reset pool member data when canvas is closed
 	useEffectIgnoreInitial(() => {
 		if (canvasStatus === 'closed') {
 			setPoolMemberData(defaultPoolMemberData)
