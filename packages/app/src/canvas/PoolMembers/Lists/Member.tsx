@@ -1,7 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars, faShare, faUnlockAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+	faBars,
+	faCopy,
+	faShare,
+	faUnlockAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useApi } from 'contexts/Api'
 import { useMenu } from 'contexts/Menu'
@@ -43,6 +48,16 @@ export const Member = ({
 	const canUnbondDestroying = state === 'Destroying' && !isDepositor
 
 	const menuItems: AnyJson[] = []
+
+	// Add copy address menu item.
+	menuItems.push({
+		icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
+		wrap: null,
+		title: `${t('copyAddress', { ns: 'app' })}`,
+		cb: () => {
+			navigator.clipboard.writeText(member.address)
+		},
+	})
 
 	if (canUnbondBlocked || canUnbondDestroying) {
 		const { points, unbondingEras } = member
