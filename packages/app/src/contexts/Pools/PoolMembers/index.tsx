@@ -1,11 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { createSafeContext } from '@w3ux/hooks'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
+import { useOverlay } from 'ui-overlay'
 import { useApi } from '../../Api'
+import { defaultPoolMemberData } from './defaults'
 import type { FetchedPoolMembers, PoolMemberContext } from './types'
 
 export const [PoolMembersContext, usePoolMembers] =
@@ -13,16 +15,15 @@ export const [PoolMembersContext, usePoolMembers] =
 
 export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 	const { isReady, serviceApi } = useApi()
+	const { status: canvasStatus } = useOverlay().canvas
 
 	// Store whether pool members from api have been fetched
 	const fetchedPoolMembersApi = useRef<Sync>('unsynced')
 
 	// Stores fetch pool member data
-	const [poolMemberData, setPoolMemberData] = useState<FetchedPoolMembers>({
-		poolMembers: [],
-		addresses: [],
-		claimPermissions: [],
-	})
+	const [poolMemberData, setPoolMemberData] = useState<FetchedPoolMembers>(
+		defaultPoolMemberData,
+	)
 
 	// Update poolMembersApi fetched status
 	const setFetchedPoolMembersApi = (status: Sync) => {
@@ -30,15 +31,14 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const fetchPoolMemberData = async (addresses: string[]) => {
-		if (!isReady || !addresses.length) {
+		if (!isReady) {
 			return
 		}
-		setPoolMemberData({
-			poolMembers: [],
-			addresses: [],
-			claimPermissions: [],
-		})
+		setPoolMemberData(defaultPoolMemberData)
 
+		if (!addresses.length) {
+			return
+		}
 		const [poolMembers, claimPermissions] = await Promise.all([
 			serviceApi.query.poolMembersMulti(addresses),
 			serviceApi.query.claimPermissionsMulti(addresses),
@@ -57,9 +57,16 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 			}),
 			claimPermissions,
 		}
-
 		setPoolMemberData(result)
 	}
+
+	// Reset pool memvber data when canvas is closed
+	useEffectIgnoreInitial(() => {
+		if (canvasStatus === 'closed') {
+			setPoolMemberData(defaultPoolMemberData)
+			fetchedPoolMembersApi.current = 'unsynced'
+		}
+	}, [canvasStatus])
 
 	return (
 		<PoolMembersContext.Provider
