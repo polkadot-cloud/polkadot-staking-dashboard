@@ -34,6 +34,7 @@ export const Members = ({
 					size: 'xl',
 				})
 			}}
+			disabled={memberCounter === 0}
 		>
 			<Label>
 				<TooltipArea
