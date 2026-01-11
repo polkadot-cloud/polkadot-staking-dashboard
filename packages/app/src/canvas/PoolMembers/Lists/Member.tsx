@@ -135,7 +135,7 @@ export const Member = ({
 										disabled={!member}
 										onClick={(ev) => toggleMenu(ev)}
 									>
-										<FontAwesomeIcon icon={faBars} />
+										<FontAwesomeIcon icon={faBars} transform="shrink-3" />
 									</button>
 								)}
 							</HeaderButtonRow>
