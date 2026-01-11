@@ -23,7 +23,10 @@ export const PoolMembers = () => {
 				<CloseCanvas />
 			</Head>
 			<Title>
-				<h1>{t('poolMembers', { ns: 'modals' })}</h1>
+				<h1>
+					{t('pool', { ns: 'modals' })} {poolId}:{' '}
+					{t('members', { ns: 'pages' })}
+				</h1>
 			</Title>
 			{bondedPool && <Members bondedPool={bondedPool} />}
 		</Main>
