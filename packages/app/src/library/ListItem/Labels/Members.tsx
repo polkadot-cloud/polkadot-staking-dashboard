@@ -7,43 +7,21 @@ import { useTooltip } from 'contexts/Tooltip'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'
-import { useOverlay } from 'ui-overlay'
 
-export const Members = ({
-	memberCounter,
-	poolId,
-}: {
-	memberCounter: number
-	poolId: number
-}) => {
+export const Members = ({ memberCounter }: { memberCounter: number }) => {
 	const { t } = useTranslation('app')
-	const { openCanvas } = useOverlay().canvas
 	const { setTooltipTextAndOpen } = useTooltip()
 
 	const tooltipText = t('poolMembers')
 
 	return (
-		<button
-			type="button"
-			onClick={() => {
-				openCanvas({
-					key: 'PoolMembers',
-					options: {
-						poolId,
-					},
-					size: 'xl',
-				})
-			}}
-			disabled={memberCounter === 0}
-		>
-			<Label>
-				<TooltipArea
-					text={tooltipText}
-					onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-				/>
-				<FontAwesomeIcon icon={faUsers} />
-				&nbsp;{memberCounter}
-			</Label>
-		</button>
+		<Label>
+			<TooltipArea
+				text={tooltipText}
+				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+			/>
+			<FontAwesomeIcon icon={faUsers} />
+			&nbsp;{memberCounter}
+		</Label>
 	)
 }
