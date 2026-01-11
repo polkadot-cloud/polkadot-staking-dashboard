@@ -23,9 +23,9 @@ export const Members = ({ bondedPool }: { bondedPool: BondedPool }) => {
 	const isBouncer = bondedPool.roles.bouncer === activeAddress
 
 	const showBlockedPrompt =
-		bondedPool?.state === 'Blocked' && (isOwner || isBouncer)
+		bondedPool.state === 'Blocked' && (isOwner || isBouncer)
 
-	const memberCount = bondedPool?.memberCounter || 0
+	const memberCount = bondedPool.memberCounter || 0
 
 	return (
 		<>
@@ -50,7 +50,7 @@ export const Members = ({ bondedPool }: { bondedPool: BondedPool }) => {
 			)}
 
 			{/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-			{bondedPool?.state === 'Destroying' && (
+			{bondedPool.state === 'Destroying' && (
 				<CardWrapper
 					className="canvas"
 					style={{
