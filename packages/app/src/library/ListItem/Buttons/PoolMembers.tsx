@@ -2,33 +2,39 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next'
+import type { BondedPool } from 'types'
 import { HeaderButton } from 'ui-core/list'
 import { useOverlay } from 'ui-overlay'
-import type { MoreProps } from '../types'
 
-export const More = ({ pool, setActiveTab, disabled, outline }: MoreProps) => {
+export const PoolMembers = ({
+	pool,
+	memberCounter,
+	outline,
+}: {
+	pool: BondedPool
+	memberCounter: number
+	outline?: boolean
+}) => {
 	const { t } = useTranslation('tips')
 	const { openCanvas } = useOverlay().canvas
 	const { id } = pool
+
 	return (
 		<HeaderButton outline={outline} withText>
 			<button
 				type="button"
 				onClick={() => {
 					openCanvas({
-						key: 'Pool',
+						key: 'PoolMembers',
 						options: {
-							providedPool: {
-								id,
-							},
-							onJoinCallback: () => setActiveTab(0),
+							poolId: id,
 						},
 						size: 'xl',
 					})
 				}}
-				disabled={disabled}
+				disabled={memberCounter === 0}
 			>
-				{t('module.more')}
+				{t('members', { ns: 'pages' })}
 			</button>
 		</HeaderButton>
 	)
