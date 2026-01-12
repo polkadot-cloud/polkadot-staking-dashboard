@@ -36,7 +36,7 @@ export const SimpleNominate = () => {
 	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
 	const {
 		balances: {
-			pool: { totalPossibleBond },
+			nominator: { totalPossibleBond },
 		},
 	} = useAccountBalances(activeAddress)
 	const { units } = getStakingChainData(network)
@@ -49,7 +49,7 @@ export const SimpleNominate = () => {
 	// Track whether bond is valid
 	const [bondValid, setBondValid] = useState<boolean>(true)
 
-	// Bond amount to join pool with
+	// Bond amount for nominating
 	const [bond, setBond] = useState<string>(
 		planckToUnit(totalPossibleBond, units),
 	)
