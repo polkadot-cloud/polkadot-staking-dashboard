@@ -91,8 +91,8 @@ importers:
         specifier: ^3.9.1
         version: 3.9.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(rxjs@7.8.2)(typescript@5.9.3)(zod@3.22.4)
       '@w3ux/react-odometer':
-        specifier: 2.2.6
-        version: 2.2.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: 2.3.18
+        version: 2.3.18(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@w3ux/react-polkicon':
         specifier: ^3.3.0
         version: 3.3.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(zod@3.22.4)
@@ -2432,8 +2432,8 @@ packages:
       react-dom: ^19.1.0
       rxjs: ^7.8.2
 
-  '@w3ux/react-odometer@2.2.6':
-    resolution: {integrity: sha512-VS6bFABpDElIlOTmHa1t4FuDm4OnHt1BfEjaxVsxTxuBccHV+QPSpEM2ngvvrvCBb7y7+deRyUzvhnMLNxYMww==}
+  '@w3ux/react-odometer@2.3.18':
+    resolution: {integrity: sha512-OBYiqjaKVH6JWgsSSp9Kp5KMXO+sBAAmSYLsUSFJZXl37/kOe5vOgf/B13psNIOBvdggjWul9cmVNjrMrH4UYQ==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -6443,7 +6443,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@w3ux/react-odometer@2.2.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@w3ux/react-odometer@2.3.18(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
