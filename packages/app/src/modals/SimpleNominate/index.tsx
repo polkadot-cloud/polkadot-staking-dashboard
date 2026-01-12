@@ -48,7 +48,7 @@ export const SimpleNominate = () => {
 	// Track whether bond is valid
 	const [bondValid, setBondValid] = useState<boolean>(true)
 
-	// Bond amount to join pool with
+	// Bond amount for nominating
 	const [bond, setBond] = useState<string>(
 		planckToUnit(totalPossibleBond, units),
 	)
