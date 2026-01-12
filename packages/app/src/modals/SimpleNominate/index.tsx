@@ -35,7 +35,7 @@ export const SimpleNominate = () => {
 	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
 	const {
 		balances: {
-			pool: { totalPossibleBond },
+			nominator: { totalPossibleBond },
 		},
 	} = useAccountBalances(activeAddress)
 	const { units } = getStakingChainData(network)
