@@ -245,6 +245,7 @@ export const AccountDropdown = ({
 					style={{
 						opacity: isInputFocused || !selectedAccount ? 0.25 : 1,
 						transition: 'opacity 0.15s',
+						maxWidth: '2.75rem',
 					}}
 				>
 					<Polkicon
@@ -345,6 +346,7 @@ export const AccountDropdown = ({
 											fontSize="2.25rem"
 											background="transparent"
 										/>
+
 										<AccountInput.InnerLeft>
 											<AccountInput.ListName
 												name={account.name || ellipsisFn(account.address, 6)}
