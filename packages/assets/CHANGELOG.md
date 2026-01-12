@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/assets-v1.3.0...assets-v1.4.0) (2026-01-12)
+
+
+### Features
+
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** Migrate `framer-motion` -&gt; `motion` ([#3062](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3062)) ([e6ebb39](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e6ebb397387c796df5644ad60d358a070b8790d9))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/assets-v1.2.0...assets-v1.3.0) (2025-06-17)
 
 

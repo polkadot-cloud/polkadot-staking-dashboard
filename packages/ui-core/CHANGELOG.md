@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.4.0...ui-core-v1.5.0) (2026-01-12)
+
+
+### Features
+
+* Add `AccountDropdown` component ([#3075](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3075)) ([0e350aa](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0e350aa3fb3964c8afe26ec320e1ed7a5887912c))
+* Display pool member claim permission in member list ([#3151](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3151)) ([c14cd91](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c14cd91c10ccb46e97d250c0fe4959a9e7a071bc))
+* Introduce validator APY to validator and nominator lists ([#3109](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3109)) ([7fbccc3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7fbccc30d4f2bfae5b84aeb609e16d1f82e50c96))
+* Invites -&gt; notifications UI ([#3071](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3071)) ([a0ae3be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a0ae3bef1e07db9ba6d93c29a596bc070d163336))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** Migrate `framer-motion` -&gt; `motion` ([#3062](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3062)) ([e6ebb39](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e6ebb397387c796df5644ad60d358a070b8790d9))
+* **refactor:** mv modal header to ui-core/modal ([#3098](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3098)) ([8f24eaa](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8f24eaa83abc369bf7d66293750a9d1addb37df8))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+* **ux:** Use account dropdown component ([#3086](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3086)) ([a11b9cd](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a11b9cde0fbb19c2e181b34475f92c76b78d6d82))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.3.0...ui-core-v1.4.0) (2025-07-24)
 
 
