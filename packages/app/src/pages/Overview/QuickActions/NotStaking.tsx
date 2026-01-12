@@ -1,5 +1,4 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
-/** biome-ignore-all lint/correctness/noNestedComponentDefinitions: <> */
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
@@ -12,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DiscordSupportUrl, MailSupportAddress } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useUi } from 'contexts/UI'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useTranslation } from 'react-i18next'
@@ -25,57 +25,73 @@ export const NotStaking = () => {
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
 	const { activeAddress } = useActiveAccounts()
+	const { setNominatorSetup, generateOptimalSetup } = useNominatorSetups()
 	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
-	const actions: ButtonQuickActionProps[] = [
-		{
-			onClick: () => {
-				openModal({
-					key: 'Transfer',
-					options: {},
-					size: 'sm',
-				})
-			},
-			disabled: false,
-			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faPaperPlane} />,
-			label: t('send'),
+	const actions: ButtonQuickActionProps[] = []
+
+	// Transfer action
+	actions.push({
+		onClick: () => {
+			openModal({
+				key: 'Transfer',
+				options: {},
+				size: 'sm',
+			})
 		},
-		{
+		disabled: false,
+		Icon: () => <FontAwesomeIcon transform="grow-1" icon={faPaperPlane} />,
+		label: t('send'),
+	})
+
+	// Join Pool action
+	actions.push({
+		onClick: () => {
+			if (!advancedMode) {
+				// On simple mode, open Join Pool modal
+				openModal({ key: 'JoinPool', size: 'xs' })
+			} else {
+				// On advanced mode, open Pool canvas
+				openCanvas({
+					key: 'Pool',
+					options: {},
+					size: 'xl',
+				})
+			}
+		},
+		disabled: false,
+		Icon: () => <FontAwesomeIcon transform="grow-1" icon={faUsers} />,
+		label: t('joinPool'),
+	})
+
+	// Nominate action
+	if (hasEnoughToNominate) {
+		actions.push({
 			onClick: () => {
-				if (!advancedMode) {
-					// On simple mode, open Join Pool modal
-					openModal({ key: 'JoinPool', size: 'xs' })
-				} else {
-					// On advanced mode, open Pool canvas
-					openCanvas({
-						key: 'Pool',
+				if (advancedMode) {
+					openModal({
+						key: 'StakingOptions',
 						options: {},
-						size: 'xl',
+						size: 'xs',
+					})
+				} else {
+					// Set optimal nominator setup here, ready for modal to display submission form
+					setNominatorSetup(generateOptimalSetup(), true, 4)
+					openModal({
+						key: 'SimpleNominate',
+						options: {},
+						size: 'xs',
 					})
 				}
 			},
 			disabled: false,
-			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faUsers} />,
-			label: t('joinPool'),
-		},
-		...(hasEnoughToNominate || advancedMode
-			? [
-					{
-						onClick: () => {
-							openModal({
-								key: 'StakingOptions',
-								options: {},
-								size: 'xs',
-							})
-						},
-						disabled: false,
-						Icon: () => (
-							<FontAwesomeIcon transform="grow-1" icon={faChartLine} />
-						),
-						label: t('nominate'),
-					},
-				]
-			: []),
+			Icon: () => <FontAwesomeIcon transform="grow-1" icon={faChartLine} />,
+			label: t('nominate'),
+		})
+	}
+
+	/// Support actions
+	actions.push(
 		{
 			onClick: () => {
 				window.open(`mailto:${MailSupportAddress}`, '_blank')
@@ -92,7 +108,7 @@ export const NotStaking = () => {
 			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faDiscord} />,
 			label: 'Discord',
 		},
-	]
+	)
 
 	return (
 		<QuickAction.Container>

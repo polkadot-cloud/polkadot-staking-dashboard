@@ -56,12 +56,12 @@ export const Form = ({
 	const { unit, units } = getStakingChainData(network)
 	const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
-	// Bond amount to join pool with.
+	// Bond amount to join pool with
 	const [bond, setBond] = useState<{ bond: string }>({
 		bond: planckToUnit(totalPossibleBond, units),
 	})
 
-	// Whether the bond amount is valid.
+	// Whether the bond amount is valid
 	const [bondValid, setBondValid] = useState<boolean>(false)
 
 	// feedback errors to trigger modal resize
@@ -70,12 +70,12 @@ export const Form = ({
 	// Store the pool balance
 	const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null)
 
-	// Handler to set bond on input change.
+	// Handler to set bond on input change
 	const handleSetBond = ({ value }: { value: BigNumber }) => {
 		setBond({ bond: value.toString() })
 	}
 
-	// Whether the form is ready to submit.
+	// Whether the form is ready to submit
 	const formValid = bondValid && feedbackErrors.length === 0
 
 	const getTx = () => {
@@ -209,7 +209,7 @@ export const Form = ({
 					</div>
 				</JoinFormWrapper>
 			</Padding>
-			<div className="submit">
+			<div>
 				<SubmitTx
 					displayFor="card"
 					submitText={t('joinPool', { ns: 'pages' })}
