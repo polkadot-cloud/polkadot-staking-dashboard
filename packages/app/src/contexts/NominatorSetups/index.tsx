@@ -63,23 +63,17 @@ export const NominatorSetupsProvider = ({
 			setup[address || ''] || {
 				progress: defaultNominatorProgress,
 				section: 1,
-				simple: false,
 			}
 		)
 	}
 
-	const setNominatorSetup = (
-		progress: NominatorProgress,
-		simple?: boolean,
-		section?: number,
-	) => {
+	const setNominatorSetup = (progress: NominatorProgress, section?: number) => {
 		if (activeAddress) {
 			const updatedSetups = updateSetups(
 				{ ...nominatorSetups },
 				progress,
 				activeAddress,
 				section,
-				simple,
 			)
 			setNominatorSetups(updatedSetups)
 		}
@@ -113,17 +107,14 @@ export const NominatorSetupsProvider = ({
 		progress: NominatorProgress,
 		account: string,
 		maybeSection: number | undefined,
-		maybeSimple?: boolean,
 	) => {
 		const current = Object.assign(all[account] || {})
 		const section = maybeSection ?? current.section ?? 1
-		const simple = maybeSimple ?? current.simple ?? false
 
 		all[account] = {
 			...current,
 			progress,
 			section,
-			simple,
 		}
 		return all
 	}

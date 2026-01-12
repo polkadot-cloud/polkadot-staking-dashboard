@@ -14,7 +14,7 @@ import { ItemsWrapper, ItemWrapper } from './Wrappers'
 export const StakingOptions = () => {
 	const { t } = useTranslation()
 	const { openCanvas } = useOverlay().canvas
-	const { closeModal, config } = useOverlay().modal
+	const { openModal, closeModal, config } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { setNominatorSetup, removeNominatorSetup, generateOptimalSetup } =
 		useNominatorSetups()
@@ -39,13 +39,10 @@ export const StakingOptions = () => {
 						onClick={() => {
 							closeModal()
 							// Set optimal nominator setup here, ready for canvas to display summary
-							setNominatorSetup(generateOptimalSetup(), true, 4)
-							openCanvas({
-								key: 'NominatorSetup',
-								options: {
-									simple: true,
-								},
-								size: 'xl',
+							setNominatorSetup(generateOptimalSetup(), 4)
+							openModal({
+								key: 'SimpleNominate',
+								size: 'xs',
 							})
 						}}
 					>
@@ -60,9 +57,6 @@ export const StakingOptions = () => {
 							removeNominatorSetup(activeAddress)
 							openCanvas({
 								key: 'NominatorSetup',
-								options: {
-									simple: false,
-								},
 								size: 'xl',
 							})
 						}}

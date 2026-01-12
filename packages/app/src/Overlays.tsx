@@ -28,6 +28,7 @@ import { RewardCalculator } from 'modals/RewardCalculator'
 import { SelectCurrency } from 'modals/SelectCurrency'
 import { SelectLanguage } from 'modals/SelectLanguage'
 import { SetController } from 'modals/SetController'
+import { SimpleNominate } from 'modals/SimpleNominate'
 import { StakingOptions } from 'modals/StakingOptions'
 import { StopNominations } from 'modals/StopNominations'
 import { Transfer } from 'modals/Transfer'
@@ -65,6 +66,7 @@ export const Overlays = () => {
 				SelectCurrency,
 				SetController,
 				StakingOptions,
+				SimpleNominate,
 				Transfer,
 				Plugins,
 				UnlockChunks,
