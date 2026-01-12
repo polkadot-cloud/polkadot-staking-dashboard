@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.2.1...utils-v1.3.0) (2026-01-12)
+
+
+### Features
+
+* Fast nomination status syncing ([#2937](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2937)) ([a1ddb08](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a1ddb08e4151961a917aa7c93942726b342e8a73))
+* Introduce validator APY to validator and nominator lists ([#3109](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3109)) ([7fbccc3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7fbccc30d4f2bfae5b84aeb609e16d1f82e50c96))
+* nav section from url & hook ([1ed6860](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1ed6860ccbc0445fde9116817a58a9d5667bba51))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **ux:** Help tooltip, resources to docs ([#3087](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3087)) ([0a66b31](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0a66b31427fc50e9a8eed4f1d3414ed4b6eab4ec))
+
 ## [1.2.1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.2.0...utils-v1.2.1) (2025-07-24)
 
 

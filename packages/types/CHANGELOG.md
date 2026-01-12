@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.3.0...types-v1.4.0) (2026-01-12)
+
+
+### Features
+
+* Add `AccountDropdown` component ([#3075](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3075)) ([0e350aa](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0e350aa3fb3964c8afe26ec320e1ed7a5887912c))
+* Display pool member claim permission in member list ([#3151](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3151)) ([c14cd91](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c14cd91c10ccb46e97d250c0fe4959a9e7a071bc))
+* Introduce validator APY to validator and nominator lists ([#3109](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3109)) ([7fbccc3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7fbccc30d4f2bfae5b84aeb609e16d1f82e50c96))
+* Move pools list to advanced `pools` category ([#3124](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3124)) ([781c8c1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/781c8c176d9ddca51bbea73a230baf8ef3e26f02))
+* **refactor:** Kusama asset hub migration ([#3025](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3025)) ([da04a75](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/da04a75b3c4745a9849fa09983657dbda7e4a82e))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** Remove fast unstake support  ([#3135](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3135)) ([1b17230](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1b17230a5cb691219aef94a04280f5b9a6d98463))
+* Replace subscan pool member query with staking api ([#3149](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3149)) ([0a3d8f9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0a3d8f92555073982aef3d64860eae124b12aae7))
+* Support multiple Dedot providers for automatic RPC failover ([#3113](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3113)) ([7063c2a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7063c2a2f5e7106ec2bdf31e553c33f25b13d8a1))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.2.0...types-v1.3.0) (2025-06-17)
 
 
