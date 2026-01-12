@@ -134,11 +134,15 @@ export const JoinForm = ({
 		submitExtrinsic.proxySupported,
 	)
 
+	// In dev mode, allow choosing a new pool even if a poolId is provided
+	const choosePoolEnabled =
+		import.meta.env.MODE === 'development' || providedPoolId === null
+
 	return (
 		<JoinFormWrapper>
 			<div className="head">
 				<h2>{t('joinPool', { ns: 'pages' })}</h2>
-				{providedPoolId === null && (
+				{choosePoolEnabled && (
 					<ButtonPrimaryInvert
 						text={t('chooseAnotherPool', { ns: 'app' })}
 						iconLeft={faArrowsRotate}

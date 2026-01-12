@@ -39,12 +39,10 @@
 			"bufferutil",
 			"esbuild",
 			"keccak",
-			"node-hid",
 			"sharp",
 			"unrs-resolver",
-			"usb",
 			"utf-8-validate"
 		]
 	},
-	"packageManager": "pnpm@10.25.0"
+	"packageManager": "pnpm@10.28.0"
 }
