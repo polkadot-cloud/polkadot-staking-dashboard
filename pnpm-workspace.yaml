@@ -5,6 +5,8 @@ onlyBuiltDependencies:
   - bufferutil
   - esbuild
   - keccak
+  - node-hid
   - sharp
   - utf-8-validate
   - unrs-resolver
+  - usb
