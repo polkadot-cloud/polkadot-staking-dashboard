@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.4.0...locales-v1.5.0) (2026-01-12)
+
+
+### Features
+
+* Display pool member claim permission in member list ([#3151](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3151)) ([c14cd91](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c14cd91c10ccb46e97d250c0fe4959a9e7a071bc))
+* Init `event-tracking` package ([#2987](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2987)) ([98150d8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/98150d89f12406e00ee0c17d7136f74276edd8a5))
+* Invites -&gt; notifications UI ([#3071](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3071)) ([a0ae3be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a0ae3bef1e07db9ba6d93c29a596bc070d163336))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** Migrate `framer-motion` -&gt; `motion` ([#3062](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3062)) ([e6ebb39](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e6ebb397387c796df5644ad60d358a070b8790d9))
+* **refactor:** Remove fast unstake support  ([#3135](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3135)) ([1b17230](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1b17230a5cb691219aef94a04280f5b9a6d98463))
+* Replace subscan pool member query with staking api ([#3149](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3149)) ([0a3d8f9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0a3d8f92555073982aef3d64860eae124b12aae7))
+* Simple mode pool joining + pool joining amendments ([#3066](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3066)) ([86b36d3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/86b36d3d290082fa0abc4abf5ce9d941fc4dbabb))
+* Support multi-source same account import ([#3043](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3043)) ([8cb1b16](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8cb1b1685f013957b335a6a4b5bdf088fce87ada))
+* Support multiple Dedot providers for automatic RPC failover ([#3113](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3113)) ([7063c2a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7063c2a2f5e7106ec2bdf31e553c33f25b13d8a1))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+* **ux:** Help tooltip, resources to docs ([#3087](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3087)) ([0a66b31](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0a66b31427fc50e9a8eed4f1d3414ed4b6eab4ec))
+* **ux:** Pool member list supports any pool ([#3188](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3188)) ([06c2960](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/06c29609072ed83bb3241a8c0e5406bcbb9aeb41))
+* **ux:** Use account dropdown component ([#3086](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3086)) ([a11b9cd](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a11b9cde0fbb19c2e181b34475f92c76b78d6d82))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.3.0...locales-v1.4.0) (2025-07-24)
 
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.3.0...ui-buttons-v1.4.0) (2026-01-12)
+
+
+### Features
+
+* Invites -&gt; notifications UI ([#3071](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3071)) ([a0ae3be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a0ae3bef1e07db9ba6d93c29a596bc070d163336))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **ux:** Header and side menu revisions, new advanced mode menu design ([#2962](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2962)) ([41611be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/41611be616300cbaa93bf6da1adf9e4a096fe97f))
+* **ux:** Help tooltip, resources to docs ([#3087](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3087)) ([0a66b31](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0a66b31427fc50e9a8eed4f1d3414ed4b6eab4ec))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-buttons-v1.2.0...ui-buttons-v1.3.0) (2025-06-17)
 
 
