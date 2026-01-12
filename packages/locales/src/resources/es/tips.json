@@ -48,7 +48,6 @@
 		"module": {
 			"cancel": "Cancelar",
 			"close": "Cerrar",
-			"more": "Más",
 			"of": "de",
 			"oneMoment": "Un momento por favor",
 			"syncingWith": "Sincronizando con {{network}}",

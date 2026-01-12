@@ -48,7 +48,6 @@
 		"module": {
 			"cancel": "取消",
 			"close": "关闭",
-			"more": "更多",
 			"of": "/",
 			"oneMoment": "请稍等",
 			"syncingWith": "同步 {{network}}",

@@ -55,6 +55,7 @@ export const Providers = () => {
 		[
 			ActiveAccountsProvider,
 			UIProvider,
+			OverlayProvider,
 			[APIProvider, { network }],
 			LedgerHardwareProvider,
 			[
@@ -90,7 +91,6 @@ export const Providers = () => {
 			MenuProvider,
 			TooltipProvider,
 			TxMetaProvider,
-			OverlayProvider,
 			PromptProvider,
 			MigrateProvider,
 			FiltersProvider,

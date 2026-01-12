@@ -40,7 +40,7 @@ export const WithdrawMember = ({
 	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 	const { historyDepth } = getConsts(network)
-	const { unbondingEras, points } = member
+	const { unbondingEras } = member
 
 	// calculate total for withdraw
 	let totalWithdrawUnit = new BigNumber(0)
@@ -51,7 +51,6 @@ export const WithdrawMember = ({
 		}
 	})
 
-	const bonded = planckToUnitBn(new BigNumber(points), units)
 	const totalWithdraw = planckToUnitBn(new BigNumber(totalWithdrawUnit), units)
 
 	// valid to submit transaction
@@ -100,7 +99,10 @@ export const WithdrawMember = ({
 				<Notes>
 					<p>
 						<p>
-							{t('amountWillBeWithdrawn', { bond: bonded.toString(), unit })}
+							{t('amountWillBeWithdrawn', {
+								bond: totalWithdraw.toString(),
+								unit,
+							})}
 						</p>{' '}
 					</p>
 					<p>{t('withdrawRemoveNote')}</p>
