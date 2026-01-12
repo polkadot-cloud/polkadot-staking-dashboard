@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.3.0...ui-overlay-v1.4.0) (2026-01-12)
+
+
+### Features
+
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** Migrate `framer-motion` -&gt; `motion` ([#3062](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3062)) ([e6ebb39](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e6ebb397387c796df5644ad60d358a070b8790d9))
+* **ux:** Use `closeModal`, disable body scroll ([#3072](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3072)) ([f97cde6](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f97cde643e41f841cb3f61a6ef7af8c9f0d0e505))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.2.0...ui-overlay-v1.3.0) (2025-06-17)
 
 
