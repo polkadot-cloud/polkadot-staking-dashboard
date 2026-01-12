@@ -90,7 +90,7 @@ export const NotStaking = () => {
 		})
 	}
 
-	/// Support actions
+	// Support actions
 	actions.push(
 		{
 			onClick: () => {
