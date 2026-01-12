@@ -76,7 +76,7 @@ export const NotStaking = () => {
 					})
 				} else {
 					// Set optimal nominator setup here, ready for modal to display submission form
-					setNominatorSetup(generateOptimalSetup(), true, 4)
+					setNominatorSetup(generateOptimalSetup(), 4)
 					openModal({
 						key: 'SimpleNominate',
 						options: {},
