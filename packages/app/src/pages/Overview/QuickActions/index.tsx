@@ -12,7 +12,6 @@ import { CardHeader } from 'ui-core/base'
 import { Disconnected } from './Disconnected'
 import { NotStaking } from './NotStaking'
 import { Staking } from './Staking'
-import type { QuickActionGroup } from './types'
 
 export const QuickActions = ({ height }: { height: number }) => {
 	const { t } = useTranslation('pages')
@@ -24,7 +23,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 	const isStaking = inPool || isBonding
 	const syncing = !accountSynced(activeAddress)
 
-	let actionGroup: QuickActionGroup = 'staking'
+	let actionGroup: 'disconnected' | 'notStaking' | 'staking' = 'staking'
 	if (!activeAddress) {
 		actionGroup = 'disconnected'
 	} else if (!isStaking) {
