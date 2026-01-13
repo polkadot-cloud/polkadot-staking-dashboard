@@ -18,7 +18,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from 'assets/brands/vault.svg?react'
-import { DiscordSupportUrl, MailSupportAddress } from 'consts'
+import { DiscordSupportURL, PlatformSupportEmail } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
@@ -87,7 +87,7 @@ export const useQuickActions = () => {
 		},
 		email: {
 			onClick: () => {
-				window.open(`mailto:${MailSupportAddress}`, '_blank')
+				window.open(`mailto:${PlatformSupportEmail}`, '_blank')
 			},
 			disabled: false,
 			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faEnvelope} />,
@@ -95,7 +95,7 @@ export const useQuickActions = () => {
 		},
 		discord: {
 			onClick: () => {
-				window.open(DiscordSupportUrl, '_blank')
+				window.open(DiscordSupportURL, '_blank')
 			},
 			disabled: false,
 			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faDiscord} />,

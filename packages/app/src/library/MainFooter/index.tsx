@@ -9,9 +9,9 @@ import CloudIconSVG from 'assets/icons/cloud.svg?react'
 import BigNumber from 'bignumber.js'
 import {
 	DappOrganisation,
-	DisclaimerUrl,
-	PlatformUrl,
-	PrivacyPolicyUrl,
+	PlatformDisclaimerURL,
+	PlatformPrivacyURL,
+	PlatformURL,
 } from 'consts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -47,18 +47,18 @@ export const MainFooter = () => {
 				<Summary>
 					<section>
 						<p>
-							<a href={PlatformUrl} target="_blank" rel="noreferrer">
+							<a href={PlatformURL} target="_blank" rel="noreferrer">
 								{capitalizeFirstLetter(DappOrganisation)}
 							</a>
 						</p>
 						<Status />
 						<p>
-							<a href={PrivacyPolicyUrl} target="_blank" rel="noreferrer">
+							<a href={PlatformPrivacyURL} target="_blank" rel="noreferrer">
 								{t('privacy')}
 							</a>
 						</p>
 						<p>
-							<a href={DisclaimerUrl} target="_blank" rel="noreferrer">
+							<a href={PlatformDisclaimerURL} target="_blank" rel="noreferrer">
 								{t('disclaimer')}
 							</a>
 						</p>
