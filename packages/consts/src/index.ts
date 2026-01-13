@@ -3,13 +3,17 @@
 
 // Global Constants
 export const DappName = 'Polkadot Cloud Staking'
+export const DappOrganisation = 'Polkadot Cloud'
 export const PlatformUrl = 'https://polkadot.cloud'
-export const ManualSigners = ['ledger', 'vault', 'wallet_connect']
 export const DiscordSupportUrl = 'https://discord.gg/QY7CSSJm3D'
+export const StakingDocsUrl = 'https://docs.staking.polkadot.cloud'
 export const MailSupportAddress = 'staking@polkadot.cloud'
+export const PrivacyPolicyUrl = 'https://polkadot.cloud/privacy'
+export const DisclaimerUrl = 'https://polkadot.cloud/disclaimer'
+
+export const ManualSigners = ['ledger', 'vault', 'wallet_connect']
 export const GitHubURl =
 	'https://github.com/polkadot-cloud/polkadot-staking-dashboard'
-export const StakingDocsUrl = 'https://docs.staking.polkadot.cloud'
 
 // Analytics
 export const SAEnabled = false
