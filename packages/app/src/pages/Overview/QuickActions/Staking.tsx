@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useQuickActions } from 'hooks/useQuickActions'
 import type { BondFor } from 'types'
 import { QuickAction } from 'ui-buttons'
 import type { ButtonQuickActionProps } from 'ui-buttons/types'
-import { useQuickActions } from './useQuickActions'
 
 export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
 	const { isDepositor } = useActivePool()

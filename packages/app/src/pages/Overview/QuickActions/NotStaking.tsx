@@ -1,9 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useQuickActions } from 'hooks/useQuickActions'
 import { QuickAction } from 'ui-buttons'
 import type { ButtonQuickActionProps } from 'ui-buttons/types'
-import { useQuickActions } from './useQuickActions'
 
 export const NotStaking = () => {
 	const { baseQuickActions } = useQuickActions()
