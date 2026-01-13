@@ -21,7 +21,7 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
-import { GitHubURl, StakingDocsUrl } from 'consts'
+import { PlatformDocsURL, PlatformGitHubURL } from 'consts'
 import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -240,7 +240,7 @@ export const MenuPopover = ({
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
-					window.open(`${StakingDocsUrl}/#/${i18n.language}`, '_blank')
+					window.open(`${PlatformDocsURL}/#/${i18n.language}`, '_blank')
 				}}
 			/>
 			<DefaultButton
@@ -249,7 +249,7 @@ export const MenuPopover = ({
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
-					window.open(GitHubURl, '_blank')
+					window.open(PlatformGitHubURL, '_blank')
 				}}
 			/>
 		</div>
