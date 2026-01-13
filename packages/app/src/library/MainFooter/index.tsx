@@ -4,7 +4,6 @@
 import { faHive } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
-import { capitalizeFirstLetter } from '@w3ux/utils'
 import CloudIconSVG from 'assets/icons/cloud.svg?react'
 import BigNumber from 'bignumber.js'
 import {
@@ -48,7 +47,7 @@ export const MainFooter = () => {
 					<section>
 						<p>
 							<a href={PlatformURL} target="_blank" rel="noreferrer">
-								{capitalizeFirstLetter(DappOrganisation)}
+								{DappOrganisation}
 							</a>
 						</p>
 						<Status />
