@@ -1,22 +1,38 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+.container {
+  display: flex;
+  flex: 1;
+  height: 5.85rem;
+  padding: 0.3rem;
+
+  @media(min-width: 951px) {
+    padding-top: 0;
+
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
 .btnQuickAction {
   background: var(--button-popover-tab-background);
-  border-top: 1px solid var(--border-primary-color);
-  border-left: 0.5px solid var(--border-primary-color);
-  border-right: 0.5px solid var(--border-primary-color);
+  border: 1.25px solid var(--button-hover-background);
+  border-radius: 0.6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem;
-  height: 6.45rem;
+  height: 100%;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s;
   cursor: pointer;
   flex: 1;
+  padding-top: 0.6rem;
 
   &.disabled {
     cursor: default;
@@ -28,25 +44,34 @@
   @media (max-width: 1150px) {
     min-width: 12rem;
   }
-
-  &.active {
-    &:hover {
-      background: var(--button-hover-background);
+ 
+  > .icon {
+    svg  {
+      filter: drop-shadow( 3px 3px 2px var(--border-secondary-color));
+      transition: all 0.3s;
     }
   }
 
   > h4 {
     font-family: Inter, sans-serif;
     color: var(--text-color-secondary);
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
+  }
+
+  &.active {
+    &:hover {
+      background: var(--button-hover-background);
+      > .icon > svg {
+        transform: scale(1.1);
+      }
+    }
   }
 
   &.preloading {
-    border-top: 1px solid var(--border-primary-color);
-    border-right: 0;
-    border-left: 0;
     padding: 0;
-
+    height: 5.5rem;
+    border-radius: 1rem;
+    
     > .inner {
       width: 100%;
       height: 100%;

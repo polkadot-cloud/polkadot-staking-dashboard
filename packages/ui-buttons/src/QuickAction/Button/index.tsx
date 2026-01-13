@@ -17,15 +17,19 @@ export const Button = ({
 	})
 
 	return (
-		<button
-			type="button"
-			className={buttonClasses}
-			onClick={onClick}
-			disabled={disabled}
-		>
-			<Icon className={classes.icon} />
-			<h4>{label}</h4>
-		</button>
+		<div className={classes.container}>
+			<button
+				type="button"
+				className={buttonClasses}
+				onClick={onClick}
+				disabled={disabled}
+			>
+				<span className={classes.icon}>
+					<Icon />
+				</span>
+				<h4>{label}</h4>
+			</button>
+		</div>
 	)
 }
 
