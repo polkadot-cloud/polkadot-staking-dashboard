@@ -37,7 +37,7 @@ export const Status = ({
 		>
 			<MembershipStatus />
 			<Separator />
-			<RewardsStatus dimmed={inPool === null} />
+			<RewardsStatus />
 			{!syncing && activePool && inPool && (
 				<>
 					<Separator />

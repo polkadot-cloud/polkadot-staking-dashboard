@@ -15,11 +15,11 @@ import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 
-export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
+export const RewardsStatus = () => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { isReady } = useApi()
-	const { activePool } = useActivePool()
+	const { activePool, inPool } = useActivePool()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { getPendingPoolRewards } = useBalances()
@@ -74,7 +74,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
 			helpKey="Pool Rewards"
 			type="odometer"
 			stat={{ value: labelRewards }}
-			dimmed={dimmed}
+			dimmed={!inPool || pendingRewards === 0n}
 			buttons={syncing ? [] : buttonsRewards}
 		/>
 	)
