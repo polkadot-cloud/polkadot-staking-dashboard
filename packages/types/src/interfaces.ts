@@ -60,7 +60,6 @@ export interface ServiceInterface {
 		) => Promise<(PalletNominationPoolsPoolMember | undefined)[]>
 		poolMetadataMulti: (ids: number[]) => Promise<HexString[]>
 		proxies: (address: string) => Promise<string[]>
-		sessionValidators: () => Promise<string[]>
 		superOfMulti: (addresses: string[]) => Promise<SuperOf[]>
 		validatorEntries: () => Promise<[string, PalletStakingValidatorPrefs][]>
 		validatorsMulti: (

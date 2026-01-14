@@ -16,7 +16,6 @@ import {
 	resetPoolMemberships,
 	resetPoolsConfig,
 	resetProxies,
-	resetRelayMetrics,
 	resetServiceInterface,
 	resetStakingLedgers,
 	resetStakingMetrics,
@@ -38,7 +37,6 @@ export const onNetworkReset = () => {
 	resetEraRewardPoints()
 
 	resetApiStatus()
-	resetRelayMetrics()
 	resetStakingMetrics()
 	resetPoolsConfig()
 	resetServiceInterface()
