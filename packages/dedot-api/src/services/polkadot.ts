@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PolkadotAssetHubApi } from '@dedot/chaintypes'
-import type { PolkadotApi } from '@dedot/chaintypes/polkadot'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import {
 	type DedotClient,
@@ -25,14 +24,12 @@ import { createPool } from '../tx/createPool'
 
 export class PolkadotService
 	extends BaseService<
-		PolkadotApi, // Relay Chain
 		PolkadotPeopleApi, // People Chain
 		PolkadotAssetHubApi, // Asset Hub Chain
 		PolkadotAssetHubApi // Chain for staking
 	>
 	implements
 		DefaultServiceClass<
-			PolkadotApi, // Relay Chain
 			PolkadotPeopleApi, // People Chain
 			PolkadotAssetHubApi, // Asset Hub Chain
 			PolkadotAssetHubApi // Chain for staking
@@ -44,11 +41,11 @@ export class PolkadotService
 	constructor(
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
-		public apiRelay: DedotClient<PolkadotApi>,
 		public apiHub: DedotClient<PolkadotAssetHubApi>,
+		public providerRelay: WsProvider | SmoldotProvider,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
-		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
+		super(networkConfig, ids, apiHub, apiHub, providerRelay, providerPeople)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {

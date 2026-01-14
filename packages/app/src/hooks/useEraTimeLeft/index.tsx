@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getRelayChainConsts } from 'consts/util/index'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
@@ -8,8 +9,8 @@ import { getUnixTime } from 'date-fns'
 export const useEraTimeLeft = () => {
 	const { network } = useNetwork()
 	const { getConsts, activeEra } = useApi()
-	const { epochDuration, expectedBlockTime, sessionsPerEra } =
-		getConsts(network)
+	const { sessionsPerEra } = getConsts(network)
+	const { epochDuration, expectedBlockTime } = getRelayChainConsts(network)
 
 	// Important to fetch the actual timeleft from when other components ask for it
 	const get = () => {

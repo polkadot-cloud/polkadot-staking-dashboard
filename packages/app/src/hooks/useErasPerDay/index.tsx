@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getRelayChainConsts } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 
 export const useErasPerDay = () => {
 	const { getConsts } = useApi()
 	const { network } = useNetwork()
-	const { epochDuration, expectedBlockTime, sessionsPerEra, historyDepth } =
-		getConsts(network)
+	const { sessionsPerEra, historyDepth } = getConsts(network)
+	const { epochDuration, expectedBlockTime } = getRelayChainConsts(network)
 
 	const DAY_MS = new BigNumber(86400000)
 

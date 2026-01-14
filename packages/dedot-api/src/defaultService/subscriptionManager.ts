@@ -31,7 +31,6 @@ import type {
 	PeopleChain,
 	PoolMemberships,
 	Proxies,
-	RelayChain,
 	StakingChain,
 	StakingLedgers,
 } from '../types'
@@ -47,7 +46,6 @@ import type { AccountBalances } from './types'
 
 // Manages all subscriptions for a default service
 export class SubscriptionManager<
-	RelayApi extends RelayChain,
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
@@ -55,8 +53,7 @@ export class SubscriptionManager<
 	subActiveAddress: Subscription
 	subImportedAccounts: Subscription
 	subActiveEra: Subscription
-	subAccountBalances: AccountBalances<RelayApi, PeopleApi, HubApi> = {
-		relay: {},
+	subAccountBalances: AccountBalances<PeopleApi, HubApi> = {
 		people: {},
 		hub: {},
 	}

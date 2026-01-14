@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { KusamaAssetHubApi } from '@dedot/chaintypes'
-import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import {
 	type DedotClient,
@@ -25,14 +24,12 @@ import { createPool } from '../tx/createPool'
 
 export class KusamaService
 	extends BaseService<
-		KusamaApi, // Relay Chain
 		KusamaPeopleApi, // People Chain
 		KusamaAssetHubApi, // Asset Hub Chain
 		KusamaAssetHubApi // Chain for staking
 	>
 	implements
 		DefaultServiceClass<
-			KusamaApi, // Relay Chain
 			KusamaPeopleApi, // People Chain
 			KusamaAssetHubApi, // Asset Hub Chain
 			KusamaAssetHubApi // Chain for staking
@@ -44,11 +41,11 @@ export class KusamaService
 	constructor(
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
-		public apiRelay: DedotClient<KusamaApi>,
 		public apiHub: DedotClient<KusamaAssetHubApi>,
+		public providerRelay: WsProvider | SmoldotProvider,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
-		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
+		super(networkConfig, ids, apiHub, apiHub, providerRelay, providerPeople)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { useApi } from 'contexts/Api'
+import { getRelayChainConsts } from 'consts/util/chains'
 import { useNetwork } from 'contexts/Network'
 import { intervalToDuration } from 'date-fns'
 import { MinDelayInput } from 'library/Form/MinDelayInput'
@@ -21,11 +21,10 @@ export const ChangeRate = ({
 	invalidMinDelay: boolean
 }) => {
 	const { t } = useTranslation('modals')
-	const { getConsts } = useApi()
 	const { network } = useNetwork()
-	const { expectedBlockTime } = getConsts(network)
 	const { getEnabled, getInitial, getCurrent, setChangeRate } =
 		usePoolCommission()
+	const { expectedBlockTime } = getRelayChainConsts(network)
 
 	// Get the current change rate value.
 	const changeRate = getCurrent('change_rate')
