@@ -42,7 +42,7 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 	]
 
 	let relayProvider
-	let peopleProvider
+	let providerPeople
 	let hubProvider
 
 	if (providerType === 'ws') {
@@ -50,13 +50,13 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 		// specific selected endpoint
 		if (autoRpc) {
 			relayProvider = new WsProvider(Object.values(relayData.endpoints.rpc))
-			peopleProvider = new WsProvider(Object.values(peopleData.endpoints.rpc))
+			providerPeople = new WsProvider(Object.values(peopleData.endpoints.rpc))
 			hubProvider = new WsProvider(Object.values(hubData.endpoints.rpc))
 		} else {
 			relayProvider = new WsProvider(
 				relayData.endpoints.rpc[rpcEndpoints[network]],
 			)
-			peopleProvider = new WsProvider(
+			providerPeople = new WsProvider(
 				peopleData.endpoints.rpc[rpcEndpoints[peopleChainId]],
 			)
 			hubProvider = new WsProvider(
@@ -69,7 +69,7 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 		relayProvider = relaySetup.provider
 
 		// Reuse the relay chain client and chain instance for system chains
-		peopleProvider = await newSystemChainSmProvider(
+		providerPeople = await newSystemChainSmProvider(
 			relaySetup.client,
 			relaySetup.relayChain,
 			peopleData,
@@ -87,10 +87,9 @@ export const getDefaultService = async <T extends DefaultServiceNetworkId>(
 		[hubChainId]: 'connecting',
 	})
 
-	const [apiRelay, apiHub, providerPeople] = await Promise.all([
+	const [apiRelay, apiHub] = await Promise.all([
 		DedotClient.new<Service[T][0]>(relayProvider),
 		DedotClient.new<Service[T][2]>(hubProvider),
-		peopleProvider,
 	])
 
 	setMultiApiStatus({
