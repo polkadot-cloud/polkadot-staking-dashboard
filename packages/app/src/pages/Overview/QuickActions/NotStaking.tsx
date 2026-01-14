@@ -1,18 +1,25 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useQuickActions } from 'hooks/useQuickActions'
 import { QuickAction } from 'ui-buttons'
 import type { ButtonQuickActionProps } from 'ui-buttons/types'
 
 export const NotStaking = () => {
+	const { activeAddress } = useActiveAccounts()
 	const { baseQuickActions } = useQuickActions()
+	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
 	const actions: ButtonQuickActionProps[] = []
 
 	actions.push(baseQuickActions.send)
 	actions.push(baseQuickActions.joinPool)
-	actions.push(baseQuickActions.nominate)
+
+	if (hasEnoughToNominate) {
+		actions.push(baseQuickActions.nominate)
+	}
 
 	actions.push(baseQuickActions.email, baseQuickActions.discord)
 
