@@ -31,7 +31,6 @@ import type {
 	PeopleChain,
 	PoolMemberships,
 	Proxies,
-	RelayChain,
 	StakingChain,
 	StakingLedgers,
 } from '../types'
@@ -47,7 +46,6 @@ import type { AccountBalances } from './types'
 
 // Manages all subscriptions for a default service
 export class SubscriptionManager<
-	RelayApi extends RelayChain,
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
@@ -55,8 +53,7 @@ export class SubscriptionManager<
 	subActiveAddress: Subscription
 	subImportedAccounts: Subscription
 	subActiveEra: Subscription
-	subAccountBalances: AccountBalances<RelayApi, PeopleApi, HubApi> = {
-		relay: {},
+	subAccountBalances: AccountBalances<PeopleApi, HubApi> = {
 		people: {},
 		hub: {},
 	}
@@ -74,7 +71,6 @@ export class SubscriptionManager<
 	eraRewardPoints: EraRewardPointsQuery<StakingApi>
 
 	constructor(
-		private apiRelay: DedotClient<RelayApi>,
 		private apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
 		private ids: [NetworkId, SystemChainId, SystemChainId],
@@ -86,7 +82,7 @@ export class SubscriptionManager<
 	initialize() {
 		// Imported accounts subscription - manages account balances and related subscriptions
 		this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
-			const ss58 = this.apiRelay.consts.system.ss58Prefix
+			const ss58 = this.apiHub.consts.system.ss58Prefix
 			const formattedCur = formatAccountAddresses(cur.flat(), ss58)
 			const { added, removed, remaining } = diffImportedAccounts(
 				prev.flat(),
@@ -123,8 +119,6 @@ export class SubscriptionManager<
 					(a) => a?.address === address,
 				)
 				if (!addressAlreadyAdded && !addressAlreadyPresent) {
-					this.subAccountBalances.relay[getAccountKey(this.ids[0], address)] =
-						new AccountBalanceQuery(this.apiRelay, this.ids[0], address)
 					this.subAccountBalances.hub[getAccountKey(this.ids[2], address)] =
 						new AccountBalanceQuery(this.apiHub, this.ids[2], address)
 

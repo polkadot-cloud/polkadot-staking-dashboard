@@ -11,7 +11,6 @@ import type {
 	SuperOf,
 	SystemChainId,
 } from 'types'
-import type { CoreConsts } from '../consts/core'
 import type { StakingConsts } from '../consts/staking'
 import type { ApiStatus } from '../spec/apiStatus'
 import type { ChainSpecs } from '../spec/chainSpecs'
@@ -20,7 +19,6 @@ import type { ActiveEraQuery } from '../subscribe/activeEra'
 import type { BlockNumberQuery } from '../subscribe/blockNumber'
 import type { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import type { PoolsConfigQuery } from '../subscribe/poolsConfig'
-import type { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 import type {
 	ActivePools,
@@ -29,7 +27,6 @@ import type {
 	PeopleChain,
 	PoolMemberships,
 	Proxies,
-	RelayChain,
 	Service,
 	ServiceType,
 	StakingChain,
@@ -39,36 +36,27 @@ import { ServiceClass } from '../types'
 
 // Required interface for all default services
 export abstract class DefaultServiceClass<
-	RelayApi extends RelayChain,
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
 > extends ServiceClass {
 	constructor(
 		public networkConfig: NetworkConfig,
-		public apiRelay: DedotClient<RelayApi>,
 		public apiHub: DedotClient<HubApi>,
 	) {
 		super()
 	}
 	abstract ids: [NetworkId, SystemChainId, SystemChainId]
 	abstract apiStatus: {
-		relay: ApiStatus<RelayApi>
 		hub: ApiStatus<HubApi>
 	}
-	abstract getLiveApi: (
-		id: string,
-	) => DedotClient<RelayApi> | DedotClient<PeopleApi> | DedotClient<HubApi>
+	abstract getLiveApi: (id: string) => DedotClient<HubApi>
 
-	abstract relayChainSpec: ChainSpecs<RelayApi>
 	abstract hubChainSpec: ChainSpecs<HubApi>
-
-	abstract coreConsts: CoreConsts<RelayApi>
 	abstract stakingConsts: StakingConsts<StakingApi>
 
-	abstract blockNumber: BlockNumberQuery<RelayApi>
+	abstract blockNumber: BlockNumberQuery<HubApi>
 	abstract activeEra: ActiveEraQuery<StakingApi>
-	abstract relayMetrics: RelayMetricsQuery<RelayApi>
 	abstract poolsConfig: PoolsConfigQuery<StakingApi>
 	abstract stakingMetrics: StakingMetricsQuery<StakingApi>
 	abstract eraRewardPoints: EraRewardPointsQuery<StakingApi>
@@ -76,7 +64,7 @@ export abstract class DefaultServiceClass<
 	subActiveAddress: Subscription
 	subImportedAccounts: Subscription
 	subActiveEra: Subscription
-	subAccountBalances: AccountBalances<RelayApi, PeopleApi, HubApi>
+	subAccountBalances: AccountBalances<PeopleApi, HubApi>
 	subBonded: BondedAccounts<StakingApi>
 	subStakingLedgers: StakingLedgers<StakingApi>
 	subActivePoolIds: Subscription
@@ -91,18 +79,17 @@ export abstract class DefaultServiceClass<
 // Default interface a default service factory returns
 export type DefaultService<T extends keyof ServiceType> = {
 	Service: ServiceType[T]
-	apis: [DedotClient<Service[T][0]>, DedotClient<Service[T][2]>]
+	apis: [DedotClient<Service[T][2]>]
 	ids: [NetworkId, SystemChainId, SystemChainId]
+	providerRelay: WsProvider | SmoldotProvider
 	providerPeople: WsProvider | SmoldotProvider
 }
 
 // Account balances record
 export type AccountBalances<
-	RelayApi extends RelayChain,
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 > = {
-	relay: Record<string, AccountBalanceQuery<RelayApi>>
 	people: Record<string, AccountBalanceQuery<PeopleApi>>
 	hub: Record<string, AccountBalanceQuery<HubApi>>
 }

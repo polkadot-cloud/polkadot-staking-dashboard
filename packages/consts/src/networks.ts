@@ -10,8 +10,6 @@ export const DefaultNetwork: NetworkId = 'polkadot'
 export const ProductionDisabledNetworks: NetworkId[] = []
 
 // All supported networks
-//
-// NOTE: Dwellir endpoints currently not connecting; disabled until resolved.
 export const NetworkList: Networks = {
 	polkadot: {
 		name: 'polkadot',
@@ -19,7 +17,7 @@ export const NetworkList: Networks = {
 			getLightClient: async () => await import('@dedot/chain-specs/polkadot'),
 			rpc: {
 				'Automata 1RPC': 'wss://1rpc.io/dot',
-				// Dwellir: 'wss://polkadot-rpc.dwellir.com',
+				Dwellir: 'wss://polkadot-rpc.dwellir.com',
 				IBP1: 'wss://rpc.ibp.network/polkadot',
 				IBP2: 'wss://rpc.dotters.network/polkadot',
 				LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
@@ -31,6 +29,10 @@ export const NetworkList: Networks = {
 		units: 10,
 		ss58: 0,
 		defaultFeeReserve: 1000000000n,
+		consts: {
+			expectedBlockTime: 6000n,
+			epochDuration: 2400n,
+		},
 		meta: {
 			hubChain: 'statemint',
 			peopleChain: 'people-polkadot',
@@ -45,7 +47,7 @@ export const NetworkList: Networks = {
 			getLightClient: async () => await import('@dedot/chain-specs/ksmcc3'),
 			rpc: {
 				'Automata 1RPC': 'wss://1rpc.io/ksm',
-				// Dwellir: 'wss://kusama-rpc.dwellir.com',
+				Dwellir: 'wss://kusama-rpc.dwellir.com',
 				IBP1: 'wss://rpc.ibp.network/kusama',
 				IBP2: 'wss://rpc.dotters.network/kusama',
 				LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
@@ -57,6 +59,10 @@ export const NetworkList: Networks = {
 		units: 12,
 		ss58: 2,
 		defaultFeeReserve: 50000000000n,
+		consts: {
+			expectedBlockTime: 6000n,
+			epochDuration: 600n,
+		},
 		meta: {
 			hubChain: 'statemine',
 			peopleChain: 'people-kusama',
@@ -70,7 +76,7 @@ export const NetworkList: Networks = {
 		endpoints: {
 			getLightClient: async () => await import('@dedot/chain-specs/westend2'),
 			rpc: {
-				// Dwellir: 'wss://westend-rpc.dwellir.com',
+				Dwellir: 'wss://westend-rpc.dwellir.com',
 				IBP1: 'wss://rpc.ibp.network/westend',
 				IBP2: 'wss://rpc.dotters.network/westend',
 				LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
@@ -82,6 +88,10 @@ export const NetworkList: Networks = {
 		units: 12,
 		ss58: 42,
 		defaultFeeReserve: 100000000000n,
+		consts: {
+			expectedBlockTime: 6000n,
+			epochDuration: 600n,
+		},
 		meta: {
 			hubChain: 'westmint',
 			stakingChain: 'westmint',
@@ -162,7 +172,7 @@ export const SystemChainList: Record<string, SystemChain> = {
 				LuckyFriday: 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
 				Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
 				StakeWorld: 'wss://dot-rpc.stakeworld.io/assethub',
-				// Dwellir: 'wss://asset-hub-polkadot-rpc.dwellir.com',
+				Dwellir: 'wss://asset-hub-polkadot-rpc.dwellir.com',
 				IBP1: 'wss://sys.ibp.network/asset-hub-polkadot',
 				IBP2: 'wss://asset-hub-polkadot.dotters.network',
 			},
@@ -198,7 +208,7 @@ export const SystemChainList: Record<string, SystemChain> = {
 				await import('@dedot/chain-specs/westend2_asset_hub'),
 			rpc: {
 				Parity: 'wss://westend-asset-hub-rpc.polkadot.io',
-				// Dwellir: 'wss://asset-hub-westend-rpc.dwellir.com',
+				Dwellir: 'wss://asset-hub-westend-rpc.dwellir.com',
 				IBP1: 'wss://sys.ibp.network/asset-hub-westend',
 				IBP2: 'wss://asset-hub-westend.dotters.network',
 				'Permanence DAO EU': 'wss://asset-hub-westend.rpc.permanence.io',
