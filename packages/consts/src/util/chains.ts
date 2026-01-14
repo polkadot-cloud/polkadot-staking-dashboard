@@ -4,9 +4,14 @@
 import type { ChainId, NetworkId, SystemChainId } from 'types'
 import { NetworkList, SystemChainList } from '../networks'
 
-// Get network data from network list
+// Get relay chain data from network list
 export const getRelayChainData = (network: NetworkId) => NetworkList[network]
 
+// Get relay chain consts
+export const getRelayChainConsts = (network: NetworkId) =>
+	NetworkList[network].consts
+
+// Get system chain data from system chain list
 export const getSystemChainData = (chain: SystemChainId) =>
 	SystemChainList[chain]
 

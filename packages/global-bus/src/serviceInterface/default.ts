@@ -22,7 +22,6 @@ export const defaultServiceInterface: ServiceInterface = {
 		poolMembersMulti: async () => [],
 		poolMetadataMulti: async () => [],
 		proxies: async () => [],
-		sessionValidators: async () => [],
 		superOfMulti: async () => [],
 		validatorEntries: async () => [],
 		validatorsMulti: async () => [],

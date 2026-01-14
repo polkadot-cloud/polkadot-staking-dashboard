@@ -11,7 +11,6 @@ export interface ValidatorsContextInterface {
 	validatorIdentities: Record<string, IdentityOf>
 	validatorSupers: Record<string, AnyJson>
 	avgCommission: number
-	sessionValidators: string[]
 	validatorsFetched: Sync
 	avgRewardRate: number
 	averageEraValidatorReward: AverageEraValidatorReward

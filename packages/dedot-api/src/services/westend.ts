@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { WestendAssetHubApi } from '@dedot/chaintypes'
-import type { WestendApi } from '@dedot/chaintypes/westend'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
 import {
 	type DedotClient,
@@ -25,14 +24,12 @@ import { createPool } from '../tx/createPool'
 
 export class WestendService
 	extends BaseService<
-		WestendApi, // Relay Chain
 		WestendPeopleApi, // People Chain
 		WestendAssetHubApi, // Asset Hub Chain
 		WestendAssetHubApi // Chain for staking
 	>
 	implements
 		DefaultServiceClass<
-			WestendApi, // Relay Chain
 			WestendPeopleApi, // People Chain
 			WestendAssetHubApi, // Asset Hub Chain
 			WestendAssetHubApi // Chain for staking
@@ -44,12 +41,12 @@ export class WestendService
 	constructor(
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
-		public apiRelay: DedotClient<WestendApi>,
 		public apiHub: DedotClient<WestendAssetHubApi>,
+		public providerRelay: WsProvider | SmoldotProvider,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		// For Westend, staking happens on the hub chain
-		super(networkConfig, ids, apiRelay, apiHub, apiHub, providerPeople)
+		super(networkConfig, ids, apiHub, apiHub, providerRelay, providerPeople)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {
@@ -83,8 +80,6 @@ export class WestendService
 				poolMetadataMulti: async (poolIds) =>
 					await query.poolMetadataMulti(this.apiHub, poolIds),
 				proxies: async (address) => await query.proxies(this.apiHub, address),
-				sessionValidators: async () =>
-					await query.sessionValidators(this.apiRelay),
 				identityOfMulti: async (addresses) =>
 					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>

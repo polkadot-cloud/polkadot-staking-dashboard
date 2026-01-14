@@ -11,7 +11,6 @@ import type {
 	NetworkId,
 	PoolsConfig,
 	ProviderType,
-	RelayMetrics,
 	ServiceInterface,
 	StakingMetrics,
 } from 'types'
@@ -29,7 +28,6 @@ export interface APIContextInterface {
 	isReady: boolean
 	providerType: ProviderType
 	autoRpc: boolean
-	relayMetrics: RelayMetrics
 	activeEra: ActiveEra
 	poolsConfig: PoolsConfig
 	stakingMetrics: StakingMetrics

@@ -11,13 +11,11 @@ import {
 	defaultChainSpecs,
 	defaultConsts,
 	defaultPoolsConfig,
-	defaultRelayMetrics,
 	defaultServiceInterface,
 	defaultStakingMetrics,
 	getRpcEndpoints,
 	networkConfig$,
 	poolsConfig$,
-	relayMetrics$,
 	serviceInterface$,
 	stakingMetrics$,
 } from 'global-bus'
@@ -31,7 +29,6 @@ import type {
 	ActiveEra as IActiveEra,
 	PoolsConfig,
 	ProviderType,
-	RelayMetrics,
 	ServiceInterface,
 	StakingMetrics,
 } from 'types'
@@ -61,10 +58,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
 	// Store active era in state
 	const [activeEra, setActiveEra] = useState<IActiveEra>(defaultActiveEra)
-
-	// Store network metrics in state
-	const [relayMetrics, setRelayMetrics] =
-		useState<RelayMetrics>(defaultRelayMetrics)
 
 	// Store pool config in state
 	const [poolsConfig, setPoolsConfig] =
@@ -119,9 +112,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 		const subActiveEra = activeEra$.subscribe((result) => {
 			setActiveEra(result)
 		})
-		const subRelayMetrics = relayMetrics$.subscribe((result) => {
-			setRelayMetrics(result)
-		})
 		const subPoolsConfig = poolsConfig$.subscribe((result) => {
 			setPoolsConfig(result)
 		})
@@ -137,7 +127,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 			subChainSpecs.unsubscribe()
 			subConsts.unsubscribe()
 			subActiveEra.unsubscribe()
-			subRelayMetrics.unsubscribe()
 			subPoolsConfig.unsubscribe()
 			subStakingMetrics.unsubscribe()
 			subServiceInterface.unsubscribe()
@@ -154,7 +143,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 				getRpcEndpoint,
 				isReady: getApiStatus(network) === 'ready',
 				getConsts,
-				relayMetrics,
 				activeEra,
 				poolsConfig,
 				stakingMetrics,

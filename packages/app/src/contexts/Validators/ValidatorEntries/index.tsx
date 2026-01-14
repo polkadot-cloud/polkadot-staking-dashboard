@@ -77,12 +77,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 		Record<string, SuperIdentity>
 	>({})
 
-	// Stores the currently active validator set
-	//
-	// NOTE: This is only used in filtering validator search, and this can be done via the Staking
-	// API.
-	const [sessionValidators, setSessionValidators] = useState<string[]>([])
-
 	// Stores the average network commission rate
 	const [avgCommission, setAvgCommission] = useState<number>(0)
 
@@ -174,15 +168,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 		])
 		setValidatorIdentities({ ...formatIdentities(addresses, identities) })
 		setValidatorSupers({ ...formatSuperIdentities(supers) })
-	}
-
-	// Subscribe to active session validators
-	const fetchSessionValidators = async () => {
-		if (!isReady) {
-			return
-		}
-		const result = await serviceApi.query.sessionValidators()
-		setSessionValidators(result)
 	}
 
 	// Fetches prefs for a list of validators
@@ -354,7 +339,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 			status: 'unsynced',
 			validators: [],
 		})
-		setSessionValidators([])
 		setAvgCommission(0)
 		setValidatorIdentities({})
 		setValidatorSupers({})
@@ -385,10 +369,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 			if (validators.status === 'synced') {
 				setValidatorsFetched('unsynced')
 			}
-
-			// NOTE: Once validator list can be synced via staking api, fetch session validators only if
-			// staking api is disabled
-			fetchSessionValidators()
 			if (!pluginEnabled('staking_api')) {
 				getAverageEraValidatorReward()
 			}
@@ -404,7 +384,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 				validatorIdentities,
 				validatorSupers,
 				avgCommission,
-				sessionValidators,
 				validatorsFetched: validators.status,
 				avgRewardRate,
 				averageEraValidatorReward,

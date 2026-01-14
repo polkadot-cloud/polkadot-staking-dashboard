@@ -57,8 +57,6 @@ export interface ChainConsts {
 	sessionsPerEra: number
 	maxExposurePageSize: number
 	historyDepth: number
-	epochDuration: bigint
-	expectedBlockTime: bigint
 	poolsPalletId: Uint8Array
 }
 
@@ -111,6 +109,10 @@ export interface Network {
 	units: number
 	ss58: number
 	defaultFeeReserve: bigint
+	consts: {
+		expectedBlockTime: bigint
+		epochDuration: bigint
+	}
 	meta: {
 		hubChain: ChainId
 		peopleChain: ChainId
