@@ -22,7 +22,6 @@ import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
-import { RelayMetricsQuery } from '../subscribe/relayMetrics'
 import type {
 	AssetHubChain,
 	PeopleChain,
@@ -56,7 +55,6 @@ export class BaseService<
 	// Query objects
 	blockNumber: BlockNumberQuery<RelayApi>
 	activeEra: ActiveEraQuery<StakingApi>
-	relayMetrics: RelayMetricsQuery<RelayApi>
 	poolsConfig: PoolsConfigQuery<StakingApi>
 
 	// Subscription manager
@@ -122,12 +120,10 @@ export class BaseService<
 		// Initialize query objects
 		this.blockNumber = new BlockNumberQuery(this.apiRelay)
 		this.activeEra = new ActiveEraQuery(this.stakingApi)
-		this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
 		this.poolsConfig = new PoolsConfigQuery(this.stakingApi)
 
 		// Initialize subscription manager
 		this.subscriptionManager = new SubscriptionManager(
-			this.apiRelay,
 			this.apiHub,
 			this.stakingApi,
 			this.ids,
@@ -152,7 +148,6 @@ export class BaseService<
 		await this.subscriptionManager.unsubscribe()
 
 		this.blockNumber?.unsubscribe()
-		this.relayMetrics?.unsubscribe()
 		this.poolsConfig?.unsubscribe()
 		this.activeEra?.unsubscribe()
 
