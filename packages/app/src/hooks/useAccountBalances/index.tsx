@@ -79,8 +79,7 @@ export const useAccountBalances = (address: MaybeString) => {
 	const hasEnoughToNominate = (): boolean => {
 		const allBalances = getBalances()
 		const { minNominatorBond } = stakingMetrics
-		const minNominatorBondBuffer =
-			(minNominatorBond * BigInt(NominateBuffer)) / 100n
+		const minNominatorBondBuffer = (minNominatorBond * NominateBuffer) / 100n
 
 		return (
 			allBalances.freeBalance - feeReserve + allBalances.lockedBalance >

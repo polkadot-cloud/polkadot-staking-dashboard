@@ -4,4 +4,4 @@
 // Recommend users to nominate with a buffer above the minimum bond earn rewards. Prevents
 // situations where bonded amount is less than minimum to earn rewards in volatile network
 // conditions.
-export const NominateBuffer: number = 150 // 150%
+export const NominateBuffer: bigint = 150n // 150%
