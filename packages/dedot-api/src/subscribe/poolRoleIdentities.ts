@@ -16,9 +16,6 @@ export class PoolRoleIdentities {
 		public roleAddresses: string[],
 		public serviceInterface: ServiceInterface,
 	) {
-		this.poolId = poolId
-		this.roleAddresses = roleAddresses
-		this.serviceInterface = serviceInterface
 		this.fetch()
 	}
 
