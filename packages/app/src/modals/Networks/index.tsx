@@ -4,7 +4,7 @@
 import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
-import { getEnabledNetworks } from 'consts/util'
+import { getEnabledNetworks, getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
@@ -13,7 +13,7 @@ import { setAutoRpc, setProviderType } from 'global-bus'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { NetworkId } from 'types'
+import type { ChainId, NetworkId } from 'types'
 import { ButtonTertiary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
 import { Padding } from 'ui-core/modal'
@@ -34,6 +34,7 @@ export const Networks = () => {
 	const { providerType, autoRpc, getRpcEndpoint } = useApi()
 	const { closeModal, setModalResize } = useOverlay().modal
 	const networkKey = network
+	const { name } = getStakingChainData(network)
 
 	const isLightClient = providerType === 'sc'
 
@@ -127,7 +128,7 @@ export const Networks = () => {
 								<div className="provider">
 									<p>{t('provider')}:</p>
 									<ButtonTertiary
-										text={getRpcEndpoint(network)}
+										text={getRpcEndpoint(name as ChainId)}
 										onClick={() => openPromptWith(<ProvidersPrompt />)}
 										marginLeft
 										disabled={autoRpc}
