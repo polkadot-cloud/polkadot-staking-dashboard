@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PerbillMultiplier } from 'consts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -44,11 +43,11 @@ export const PoolCommissionProvider = ({
 		const raw = bondedPool?.commission?.changeRate
 		return raw
 			? {
-					maxIncrease: Number(raw.maxIncrease / PerbillMultiplier),
+					maxIncrease: Number(raw.maxIncrease),
 					minDelay: Number(raw.minDelay),
 				}
 			: {
-					maxIncrease: 100,
+					maxIncrease: 10,
 					minDelay: 0,
 				}
 	})()
