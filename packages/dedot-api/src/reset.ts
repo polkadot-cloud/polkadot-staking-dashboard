@@ -14,6 +14,7 @@ import {
 	resetConsts,
 	resetEraRewardPoints,
 	resetPoolMemberships,
+	resetPoolRoleIdentities,
 	resetPoolsConfig,
 	resetProxies,
 	resetServiceInterface,
@@ -24,6 +25,7 @@ import {
 export const onNetworkReset = () => {
 	resetActivePools()
 	resetActivePoolIds()
+	resetPoolRoleIdentities()
 
 	resetAccountBalances()
 	resetPoolMemberships()

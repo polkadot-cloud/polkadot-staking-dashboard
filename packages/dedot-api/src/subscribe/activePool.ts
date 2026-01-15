@@ -1,17 +1,17 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { withTimeout } from '@w3ux/utils'
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
-import { addActivePool, removeActivePool } from 'global-bus'
-import type { ActivePool, IdentityOf, ServiceInterface, SuperOf } from 'types'
 import {
-	createPoolAccounts,
-	formatIdentities,
-	formatSuperIdentities,
-} from 'utils'
+	addActivePool,
+	removeActivePool,
+	removePoolRoleIdentities,
+} from 'global-bus'
+import type { ActivePool, ServiceInterface } from 'types'
+import { createPoolAccounts } from 'utils'
 import type { StakingChain } from '../types'
+import { PoolRoleIdentities } from './poolRoleIdentites'
 
 export class ActivePoolQuery<T extends StakingChain> {
 	#unsub: Unsub | undefined = undefined
@@ -62,14 +62,12 @@ export class ActivePoolQuery<T extends StakingChain> {
 						role.address(this.api.consts.system.ss58Prefix),
 					)
 
-					// NODE: Ideally be added to a queue for the people chain to fetch asynchronously
-					const identities = (await withTimeout(
-						1000,
-						Promise.all([
-							this.serviceInterface.query.identityOfMulti(roleAddresses),
-							this.serviceInterface.query.superOfMulti(roleAddresses),
-						]),
-					)) as [IdentityOf[], SuperOf[]]
+					// Asynchronously fetch pool role identities without blocking the subscription
+					new PoolRoleIdentities(
+						this.poolId,
+						roleAddresses,
+						this.serviceInterface,
+					)
 
 					const activePool: ActivePool = {
 						id: this.poolId,
@@ -90,13 +88,6 @@ export class ActivePoolQuery<T extends StakingChain> {
 								bouncer: bondedPool.roles.bouncer?.address(
 									this.api.consts.system.ss58Prefix,
 								),
-							},
-							roleIdentities: {
-								identities: formatIdentities(
-									roleAddresses,
-									identities?.[0] || [],
-								),
-								supers: formatSuperIdentities(identities?.[1] || []),
 							},
 							state: bondedPool.state,
 						},
@@ -126,5 +117,6 @@ export class ActivePoolQuery<T extends StakingChain> {
 	unsubscribe() {
 		this.#unsub?.()
 		removeActivePool(this.poolId)
+		removePoolRoleIdentities(this.poolId)
 	}
 }

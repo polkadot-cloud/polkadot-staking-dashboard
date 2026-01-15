@@ -7,7 +7,7 @@ import type {
 } from 'dedot/chaintypes'
 import type { Perbill } from 'dedot/codecs'
 import type { MaybeAddress } from './accounts'
-import type { IdentityOf, SuperIdentity } from './identity'
+import type { RoleIdentities } from './identity'
 
 export type ClaimPermission =
 	| 'Permissioned'
@@ -45,10 +45,7 @@ export interface ActivePool {
 			root: string | undefined
 			bouncer: string | undefined
 		}
-		roleIdentities: {
-			identities: Record<string, IdentityOf>
-			supers: Record<string, SuperIdentity>
-		}
+		roleIdentities?: RoleIdentities
 		state: 'Open' | 'Blocked' | 'Destroying'
 	}
 	rewardPool: {

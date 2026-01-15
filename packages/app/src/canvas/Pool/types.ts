@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Dispatch, SetStateAction } from 'react'
-import type { BondedPool, IdentityOf, SuperIdentity } from 'types'
+import type { BondedPool, RoleIdentities } from 'types'
 
 export interface HeaderProps {
 	activeTab: number
@@ -19,13 +19,8 @@ export interface NominationsProps {
 
 export interface OverviewSectionProps {
 	bondedPool: BondedPool
-	roleIdentities: RoleIdentities
+	roleIdentities: RoleIdentities | undefined
 	poolCandidates: BondedPool[]
 	setSelectedPoolId: Dispatch<SetStateAction<number>>
 	providedPoolId: number
-}
-
-export type RoleIdentities = {
-	identities: Record<string, IdentityOf>
-	supers: Record<string, SuperIdentity>
 }
