@@ -1,19 +1,36 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
+import { poolRoleIdentities$ } from 'global-bus'
 import { ButtonCopy } from 'library/ButtonCopy'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { motion } from 'motion/react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { RoleIdentities } from 'types'
 import type { PoolAccountProps } from '../types'
 import { Wrapper } from './Wrapper'
 
 export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
 	const { t } = useTranslation('pages')
 
-	const roleIdentities = pool?.bondedPool?.roleIdentities
+	const [roleIdentities, setRoleIdentities] = useState<
+		RoleIdentities | undefined
+	>(undefined)
+
+	// Subscribe to pool role identities from global-bus
+	useEffectIgnoreInitial(() => {
+		const sub = poolRoleIdentities$.subscribe((allIdentities) => {
+			if (pool?.id !== undefined) {
+				setRoleIdentities(allIdentities[pool.id])
+			}
+		})
+		return () => sub.unsubscribe()
+	}, [pool?.id])
+
 	const identities = roleIdentities?.identities || {}
 	const supers = roleIdentities?.supers || {}
 	const synced = roleIdentities !== undefined
