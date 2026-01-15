@@ -11,7 +11,7 @@ import {
 import type { ActivePool, ServiceInterface } from 'types'
 import { createPoolAccounts } from 'utils'
 import type { StakingChain } from '../types'
-import { PoolRoleIdentities } from './poolRoleIdentites'
+import { PoolRoleIdentities } from './poolRoleIdentities'
 
 export class ActivePoolQuery<T extends StakingChain> {
 	#unsub: Unsub | undefined = undefined
