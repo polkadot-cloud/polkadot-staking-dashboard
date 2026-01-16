@@ -62,7 +62,7 @@ export const TipsConfigAdvanced: TipConfig[] = [
 	{
 		id: 'recommendedJoinPool',
 		s: 3,
-		page: 'pools',
+		page: 'pool',
 	},
 	{
 		id: 'howToStake',
@@ -76,17 +76,17 @@ export const TipsConfigAdvanced: TipConfig[] = [
 	{
 		id: 'monitoringPool',
 		s: 6,
-		page: 'pools',
+		page: 'pool',
 	},
 	{
 		id: 'joinAnotherPool',
 		s: 6,
-		page: 'pools',
+		page: 'pool',
 	},
 	{
 		id: 'keepPoolNominating',
 		s: 7,
-		page: 'pools',
+		page: 'pool',
 	},
 	{
 		id: 'reviewingPayouts',
