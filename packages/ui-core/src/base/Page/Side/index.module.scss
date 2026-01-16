@@ -12,7 +12,9 @@
 }
 
 .bar {
-  background: var(--accent-color-primary);
+  background: 
+    linear-gradient(to bottom, var(--accent-color-primary), 
+    color-mix(in srgb, var(--accent-color-primary) 95%, black));
   width: $side-bar-width;
   height: inherit;
   display: flex;
