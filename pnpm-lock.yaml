@@ -400,8 +400,8 @@ importers:
   packages/plugin-staking-api:
     dependencies:
       '@apollo/client':
-        specifier: ^4.0.12
-        version: 4.0.12(graphql@16.12.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(rxjs@7.8.2)
+        specifier: ^4.1.0
+        version: 4.1.0(graphql@16.12.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(rxjs@7.8.2)
       graphql:
         specifier: ^16.11.0
         version: 16.12.0
@@ -642,8 +642,8 @@ packages:
   '@adraffy/ens-normalize@1.11.1':
     resolution: {integrity: sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ==}
 
-  '@apollo/client@4.0.12':
-    resolution: {integrity: sha512-CyDR+2A18TFH08rKvH3DaV63eRE0E4pj34gT8UZIQVP64bRRXnQiYuKTf/c6oJNY8+4FrCrcPwWEldnVbh02bA==}
+  '@apollo/client@4.1.0':
+    resolution: {integrity: sha512-N/nZXGNBMoHnshNaHXxHZoC42BcIjRqD4XgpmNBPhueoWIbp17VIJe/sGysFNQo1w7DVD78K6gVsNMO87nfgRQ==}
     peerDependencies:
       graphql: ^16.0.0
       graphql-ws: ^5.5.5 || ^6.0.3
@@ -4396,7 +4396,7 @@ snapshots:
 
   '@adraffy/ens-normalize@1.11.1': {}
 
-  '@apollo/client@4.0.12(graphql@16.12.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(rxjs@7.8.2)':
+  '@apollo/client@4.1.0(graphql@16.12.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(rxjs@7.8.2)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.12.0)
       '@wry/caches': 1.0.1
