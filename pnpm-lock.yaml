@@ -273,8 +273,8 @@ importers:
   packages/consts:
     dependencies:
       '@dedot/chain-specs':
-        specifier: ^0.7.0
-        version: 0.7.0
+        specifier: ^0.8.0
+        version: 0.8.0
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -295,8 +295,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.211.0
-        version: 0.211.0(dedot@1.0.2(typescript@5.9.3))
+        specifier: ^0.214.0
+        version: 0.214.0(dedot@1.0.2(typescript@5.9.3))
       '@w3ux/observables-connect':
         specifier: ^1.0.1
         version: 1.0.1(react@19.2.3)(rxjs@7.8.2)(typescript@5.9.3)(zod@3.22.4)
@@ -446,8 +446,8 @@ importers:
         version: 1.0.2(typescript@5.9.3)(zod@3.22.4)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.211.0
-        version: 0.211.0(dedot@1.0.2(typescript@5.9.3))
+        specifier: ^0.214.0
+        version: 0.214.0(dedot@1.0.2(typescript@5.9.3))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -789,11 +789,11 @@ packages:
     resolution: {integrity: sha512-jzRHIL3CCIQHe0JkZ1FD66MXgktzwBeR2qdqXkqSZrwsXKSqV7Z+7r64KWt10wdaBRFeeV+t4/4v1rqKtoZlkA==}
     engines: {node: '>=18'}
 
-  '@dedot/chain-specs@0.7.0':
-    resolution: {integrity: sha512-tv6Mhb6da/R/bFDAfTJHXzjYwL1uoXa2D8xW796BKDE7JrH0plIFhQdXfqlOkyTGT9l2E+QJiKPgn8wzy4nW7g==}
+  '@dedot/chain-specs@0.8.0':
+    resolution: {integrity: sha512-k+pUJb4bNol29DPYJpUlxa1Jpt8hpM7n99oe9URMLwlPcbzL6XYjlQG6qtIfGjOLv+XAwvShvCzT6v/Pw7atWA==}
 
-  '@dedot/chaintypes@0.211.0':
-    resolution: {integrity: sha512-A0tsJKI/uLyazJC1PUcx658JwDEEpt1jNJtxvzKabT3GJdDBl5ybiIPrMeXo22v4r4BxPqcdLmvw/vodt9XCTg==}
+  '@dedot/chaintypes@0.214.0':
+    resolution: {integrity: sha512-TXCnTQfguht2TR0G2DWZAkAMaQiYvedOafEivEGa8DWSvXW9WUkLi0napD2TCPRGIjBfO3/yVmuZm3Yug8jsSg==}
     peerDependencies:
       dedot: '>=1.0.1'
 
@@ -4545,9 +4545,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/chain-specs@0.7.0': {}
+  '@dedot/chain-specs@0.8.0': {}
 
-  '@dedot/chaintypes@0.211.0(dedot@1.0.2(typescript@5.9.3))':
+  '@dedot/chaintypes@0.214.0(dedot@1.0.2(typescript@5.9.3))':
     dependencies:
       dedot: 1.0.2(typescript@5.9.3)(zod@3.22.4)
 
