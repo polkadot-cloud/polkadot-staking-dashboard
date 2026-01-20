@@ -4,6 +4,13 @@
 import { ellipsisFn } from '@w3ux/utils'
 import type { IdentityOf, SuperIdentity, SuperOf } from 'types'
 
+export interface IdentityCache {
+	address: string
+	display: string | null
+	superDisplay: string | null
+	superValue: string | null
+}
+
 // Format identities into records with addresses as keys
 export const formatIdentities = (
 	addresses: string[],
@@ -26,6 +33,71 @@ export const formatSuperIdentities = (supers: SuperOf[]) =>
 				value: cur.value,
 			},
 			value: cur.value?.value || '',
+		}
+		return acc
+	}, {})
+
+// Format identities from GraphQL cache into records with addresses as keys
+export const formatIdentitiesFromCache = (
+	addresses: string[],
+	identityCache: IdentityCache[],
+) => {
+	const cacheByAddress = identityCache.reduce(
+		(acc: Record<string, IdentityCache>, cacheEntry) => {
+			acc[cacheEntry.address] = cacheEntry
+			return acc
+		},
+		{},
+	)
+
+	return addresses.reduce(
+		(acc: Record<string, IdentityOf | undefined>, address) => {
+			const cacheEntry = cacheByAddress[address]
+			if (cacheEntry && (cacheEntry.display || cacheEntry.superDisplay)) {
+				acc[address] = {
+					info: {
+						display: {
+							type: 'Raw',
+							value: cacheEntry.display || undefined,
+						},
+					},
+					judgements: [[0, { type: 'Unknown' }]],
+					deposit: 0n,
+				}
+			} else {
+				acc[address] = undefined
+			}
+			return acc
+		},
+		{},
+	)
+}
+
+// Format super identities from GraphQL cache into records with addresses as keys
+export const formatSuperIdentitiesFromCache = (
+	identityCache: IdentityCache[],
+) =>
+	identityCache.reduce((acc: Record<string, SuperIdentity>, cacheEntry) => {
+		if (cacheEntry.superDisplay !== null) {
+			acc[cacheEntry.address] = {
+				superOf: {
+					identity: {
+						info: {
+							display: {
+								type: 'Raw',
+								value: cacheEntry.superDisplay || undefined,
+							},
+						},
+						judgements: [[0, { type: 'Unknown' }]],
+						deposit: 0n,
+					},
+					value: {
+						type: 'Raw',
+						value: cacheEntry.superValue || undefined,
+					},
+				},
+				value: cacheEntry.superValue || '',
+			}
 		}
 		return acc
 	}, {})

@@ -28,6 +28,17 @@ export interface TokenPrice {
 	change: number
 }
 
+export interface IdentityCacheData {
+	identityCache: IdentityCache[]
+}
+
+export interface IdentityCache {
+	address: string
+	display: string | null
+	superDisplay: string | null
+	superValue: string | null
+}
+
 export interface AllRewardsData {
 	allRewards: NominatorReward[]
 }
