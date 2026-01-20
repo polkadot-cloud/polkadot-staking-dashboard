@@ -32,15 +32,19 @@
 			"use-sync-external-store>react": "19.1.0"
 		},
 		"ignoredBuiltDependencies": [
+			"@reown/appkit",
 			"unrs-resolver"
 		],
 		"onlyBuiltDependencies": [
 			"@swc/core",
 			"bufferutil",
 			"esbuild",
+			"inotify",
 			"keccak",
+			"node-hid",
 			"sharp",
 			"unrs-resolver",
+			"usb",
 			"utf-8-validate"
 		]
 	},
