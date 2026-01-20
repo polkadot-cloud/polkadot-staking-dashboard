@@ -134,8 +134,6 @@
 			"technicalErrorRuntimeIncompatible": "Versión de runtime incompatible",
 			"technicalErrorRuntimeUnsupported": "Runtime no soportado",
 			"technicalErrorUnknown": "Error técnico desconocido",
-			"technicalErrorWcSessionDisconnected": "Sesión de Wallet Connect desconectada",
-			"technicalErrorWcTimeout": "Tiempo de espera de Wallet Connect agotado",
 			"validationErrorAddressFormat": "Formato de dirección inválido para esta red",
 			"validationErrorInvalidPoolId": "ID de pool inválido",
 			"validationErrorInvalidValidator": "Dirección de validador inválida",

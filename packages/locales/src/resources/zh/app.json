@@ -134,8 +134,6 @@
 			"technicalErrorRuntimeIncompatible": "运行时版本不兼容",
 			"technicalErrorRuntimeUnsupported": "运行时不受支持",
 			"technicalErrorUnknown": "未知技术错误",
-			"technicalErrorWcSessionDisconnected": "Wallet Connect 会话已断开",
-			"technicalErrorWcTimeout": "Wallet Connect 超时",
 			"validationErrorAddressFormat": "此网络的地址格式无效",
 			"validationErrorInvalidPoolId": "无效的提名池ID",
 			"validationErrorInvalidValidator": "无效的验证人地址",

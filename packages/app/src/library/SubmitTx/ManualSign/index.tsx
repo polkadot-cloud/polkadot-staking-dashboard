@@ -6,7 +6,6 @@ import type { ReactNode } from 'react'
 import type { SubmitProps } from '../types'
 import { Ledger } from './Ledger'
 import { Vault } from './Vault'
-import { WalletConnect } from './WalletConnect'
 
 export const ManualSign = (
 	props: SubmitProps & {
@@ -24,8 +23,6 @@ export const ManualSign = (
 	switch (source) {
 		case 'vault':
 			return <Vault {...props} />
-		case 'wallet_connect':
-			return <WalletConnect {...props} />
 		default:
 			return <Ledger {...props} />
 	}

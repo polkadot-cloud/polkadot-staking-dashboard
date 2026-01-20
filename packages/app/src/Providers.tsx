@@ -42,7 +42,6 @@ import { TxMetaProvider } from 'contexts/TxMeta'
 import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
-import { WalletConnectProvider } from 'contexts/WalletConnect'
 import { Tooltip } from 'radix-ui'
 import { OverlayProvider } from 'ui-overlay'
 
@@ -69,7 +68,6 @@ export const Providers = () => {
 			HardwareAccountsProvider,
 			ExternalAccountsProvider,
 			ImportedAccountsProvider,
-			WalletConnectProvider,
 			ProxiesProvider,
 			HelpProvider,
 			PluginsProvider,
