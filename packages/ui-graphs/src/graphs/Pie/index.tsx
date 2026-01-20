@@ -3,7 +3,6 @@
 
 import { memo } from 'react'
 import styled, { keyframes } from 'styled-components'
-import type { Keyframes } from 'styled-components/dist/types'
 import classes from './index.module.scss'
 import type { Props } from './types'
 
@@ -11,7 +10,7 @@ import type { Props } from './types'
 const Wrapper = styled.div<{
 	$inactivecolor: string
 	$activecolor: string
-	$piekeyframes: Keyframes
+	$piekeyframes: ReturnType<typeof keyframes>
 }>`
   > svg {
     > circle {

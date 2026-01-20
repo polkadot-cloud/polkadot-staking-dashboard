@@ -30,10 +30,6 @@
 		"@w3ux/react-polkicon": "^3.3.0",
 		"@w3ux/utils": "^2.3.0",
 		"@w3ux/validator-assets": "^1.2.3",
-		"@walletconnect/ethereum-provider": "~2.23.3",
-		"@walletconnect/modal": "^2.7.0",
-		"@walletconnect/universal-provider": "^2.23.3",
-		"@walletconnect/utils": "^2.23.3",
 		"@zondax/ledger-substrate": "^2.1.2",
 		"assets": "workspace:*",
 		"bignumber.js": "^9.3.1",
@@ -70,8 +66,6 @@
 		"ui-overlay": "workspace:*",
 		"usehooks-ts": "^3.0.2",
 		"utils": "workspace:*",
-		"viem": "^2.44.4",
-		"wagmi": "^3.3.4",
 		"xxhash-wasm": "^1.0.2"
 	},
 	"devDependencies": {

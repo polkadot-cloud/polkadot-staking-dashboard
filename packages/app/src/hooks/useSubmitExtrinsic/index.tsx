@@ -13,7 +13,6 @@ import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
-import { useWalletConnect } from 'contexts/WalletConnect'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
 import { concatU8a, hexToU8a } from 'dedot/utils'
@@ -53,7 +52,6 @@ export const useSubmitExtrinsic = ({
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
-	const { signWcTx } = useWalletConnect()
 	const { getAccountBalance } = useBalances()
 	const { extensionsStatus } = useExtensions()
 	const { isProxySupported } = useProxySupported()
@@ -244,25 +242,6 @@ export const useSubmitExtrinsic = ({
 				}
 			}
 
-			if (source === 'wallet_connect') {
-				const extra = serviceApi.signer.extraSignedExtension(
-					specName,
-					submitAccount.address,
-				)
-				if (!extra) {
-					onError('technical', 'missing_signer')
-					return
-				}
-				await extra.init()
-				const payload = extra.toPayload(tx.callHex)
-				const result = (await signWcTx(payload)).signature
-
-				encodedSig = {
-					address: submitAccount.address,
-					signature: $Signature.tryDecode(result),
-					extra: extra.data,
-				}
-			}
 			// Custom signer
 			//
 			// Submit the transaction with the raw signature
