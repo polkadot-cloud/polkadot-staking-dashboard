@@ -15,7 +15,7 @@ import {
 	getValidatorRanks,
 } from 'global-bus'
 import { useErasPerDay } from 'hooks/useErasPerDay'
-import { fetchValidatorStats } from 'plugin-staking-api'
+import { fetchIdentityCache, fetchValidatorStats } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
@@ -27,7 +27,9 @@ import type {
 } from 'types'
 import {
 	formatIdentities,
+	formatIdentitiesFromCache,
 	formatSuperIdentities,
+	formatSuperIdentitiesFromCache,
 	perbillToPercent,
 } from 'utils'
 import type {
@@ -162,12 +164,21 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
 		const addresses = validatorEntries.map(({ address }) => address)
 
-		const [identities, supers] = await Promise.all([
-			serviceApi.query.identityOfMulti(addresses),
-			serviceApi.query.superOfMulti(addresses),
-		])
-		setValidatorIdentities({ ...formatIdentities(addresses, identities) })
-		setValidatorSupers({ ...formatSuperIdentities(supers) })
+		// Fetch identities - use GraphQL if staking API is enabled, otherwise use dedot API
+		if (pluginEnabled('staking_api')) {
+			const { identityCache } = await fetchIdentityCache(network, addresses)
+			setValidatorIdentities({
+				...formatIdentitiesFromCache(addresses, identityCache),
+			})
+			setValidatorSupers({ ...formatSuperIdentitiesFromCache(identityCache) })
+		} else {
+			const [identities, supers] = await Promise.all([
+				serviceApi.query.identityOfMulti(addresses),
+				serviceApi.query.superOfMulti(addresses),
+			])
+			setValidatorIdentities({ ...formatIdentities(addresses, identities) })
+			setValidatorSupers({ ...formatSuperIdentities(supers) })
+		}
 	}
 
 	// Fetches prefs for a list of validators
