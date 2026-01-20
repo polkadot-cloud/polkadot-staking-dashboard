@@ -2,14 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ellipsisFn } from '@w3ux/utils'
+import type { IdentityCache } from 'plugin-staking-api/types'
 import type { IdentityOf, SuperIdentity, SuperOf } from 'types'
-
-export interface IdentityCache {
-	address: string
-	display: string | null
-	superDisplay: string | null
-	superValue: string | null
-}
 
 // Format identities into records with addresses as keys
 export const formatIdentities = (
