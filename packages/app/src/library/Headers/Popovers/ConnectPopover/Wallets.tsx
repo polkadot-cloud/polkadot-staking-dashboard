@@ -4,7 +4,6 @@
 import extensions from '@w3ux/extension-assets'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
@@ -62,24 +61,6 @@ export const Wallets = ({
 					title="Ledger"
 					websiteUrl="https://ledger.com"
 					websiteText="ledger.com"
-				/>
-			</section>
-			<section>
-				<Hardware
-					active={selectedSection === 'wallet_connect'}
-					onClick={() => {
-						openModal({
-							key: 'ImportAccounts',
-							size: 'sm',
-							options: { source: 'wallet_connect' },
-						})
-						setOpen(false)
-					}}
-					Svg={WalletConnectSVG}
-					title="Wallet Connect"
-					websiteUrl="https://reown.com"
-					websiteText="reown.com"
-					last
 				/>
 			</section>
 			<h4>{t('webExtensions', { ns: 'app' })}</h4>
