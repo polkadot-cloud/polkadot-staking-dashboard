@@ -633,9 +633,6 @@ importers:
         specifier: ^25.7.3
         version: 25.7.4(typescript@5.9.3)
     devDependencies:
-      plugin-staking-api:
-        specifier: workspace:*
-        version: link:../plugin-staking-api
       types:
         specifier: workspace:*
         version: link:../types
