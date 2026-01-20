@@ -35,25 +35,37 @@ export const formatSuperIdentities = (supers: SuperOf[]) =>
 export const formatIdentitiesFromCache = (
 	addresses: string[],
 	identityCache: IdentityCache[],
-) =>
-	addresses.reduce((acc: Record<string, IdentityOf | undefined>, address) => {
-		const cacheEntry = identityCache.find((c) => c.address === address)
-		if (cacheEntry && (cacheEntry.display || cacheEntry.superDisplay)) {
-			acc[address] = {
-				info: {
-					display: {
-						type: 'Raw',
-						value: cacheEntry.display || undefined,
+) => {
+	const cacheByAddress = identityCache.reduce(
+		(acc: Record<string, IdentityCache>, cacheEntry) => {
+			acc[cacheEntry.address] = cacheEntry
+			return acc
+		},
+		{},
+	)
+
+	return addresses.reduce(
+		(acc: Record<string, IdentityOf | undefined>, address) => {
+			const cacheEntry = cacheByAddress[address]
+			if (cacheEntry && (cacheEntry.display || cacheEntry.superDisplay)) {
+				acc[address] = {
+					info: {
+						display: {
+							type: 'Raw',
+							value: cacheEntry.display || undefined,
+						},
 					},
-				},
-				judgements: [[0, { type: 'Unknown' }]],
-				deposit: 0n,
+					judgements: [[0, { type: 'Unknown' }]],
+					deposit: 0n,
+				}
+			} else {
+				acc[address] = undefined
 			}
-		} else {
-			acc[address] = undefined
-		}
-		return acc
-	}, {})
+			return acc
+		},
+		{},
+	)
+}
 
 // Format super identities from GraphQL cache into records with addresses as keys
 export const formatSuperIdentitiesFromCache = (
