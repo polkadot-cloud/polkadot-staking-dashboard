@@ -7,7 +7,7 @@ import type { BondedPool, RoleIdentities } from 'types'
 export interface HeaderProps {
 	activeTab: number
 	bondedPool: BondedPool
-	metadata: string
+	metadata: string | undefined
 	autoSelected: boolean
 	setActiveTab: (tab: number) => void
 }
