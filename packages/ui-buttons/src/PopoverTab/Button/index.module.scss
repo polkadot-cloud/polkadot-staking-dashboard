@@ -14,23 +14,29 @@
 
   &:hover {
     background: var(--bg-body);
+
     &:disabled {
       background: var(--btn-popover-tab-bg);
     }
   }
+
   &:first-child {
     border-left: none;
   }
+
   &:disabled {
     cursor: default;
     opacity: 0.5;
   }
+
   &.grow {
     flex: 1;
   }
+
   &.warning {
     color: var(--status-warning);
   }
+
   &.danger {
     color: var(--status-danger);
   }

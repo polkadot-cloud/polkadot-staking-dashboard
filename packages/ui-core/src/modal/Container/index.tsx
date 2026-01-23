@@ -8,7 +8,7 @@ import type { ContainerProps } from '../types'
 import classes from './index.module.scss'
 
 export const Container = ({ children, onClose, ...rest }: ContainerProps) => {
-	const allClasses = classNames(commonClasses.fixedPosition, classes.container)
+	const allClasses = classNames(commonClasses.fixed, classes.container)
 	return (
 		<motion.div className={allClasses} {...rest}>
 			<div>

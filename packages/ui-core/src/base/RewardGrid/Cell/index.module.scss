@@ -7,12 +7,15 @@
     display: flex;
     align-items: center;
   }
+
   > h4 > svg {
     margin-right: 0.5rem;
     width: 1.5rem;
   }
+
   > h3 {
     font-family: Inter, sans-serif;
+
     svg {
       color: var(--status-success);
       margin-right: 0.6rem;

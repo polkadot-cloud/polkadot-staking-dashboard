@@ -11,7 +11,7 @@
   height: 16rem;
   margin-bottom: 2rem;
   background: linear-gradient(
-    0,
+    to top,
     var(--bg-body) 0%,
     var(--bg-primary) 100%
   );
@@ -23,19 +23,23 @@
 
     &:first-child {
       margin-bottom: 1rem;
+
       > svg {
         width: 5rem;
       }
     }
+
     &:nth-child(2) {
       > h4 > a {
         color: var(--text-tertiary);
         font-family: Inter, sans-serif;
+
         &:hover {
           color: var(--text-secondary);
         }
       }
     }
+
     &:last-child {
       position: absolute;
       bottom: -1.5rem;

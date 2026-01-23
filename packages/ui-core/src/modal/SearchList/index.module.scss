@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-@use 'styles/theme/_variables' as *;
+@use 'styles/theme/variables' as *;
 
 .container {
   display: flex;
@@ -19,8 +19,7 @@
 
 .leftColumn {
   flex: 1;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
   max-height: 50vh;
   min-height: 50vh;
 
@@ -46,12 +45,12 @@
 
 .header {
   color: var(--text-secondary);
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem;
 }
 
 .searchHeader {
   color: var(--text-secondary);
-  margin: 1rem 0 0.5rem 0;
+  margin: 1rem 0 0.5rem;
 }
 
 .loadingWrapper {
@@ -109,7 +108,7 @@
 
 .nominationsCounter {
   padding: 0.75rem 0;
-  margin: 1rem 0 0.5rem 0;
+  margin: 1rem 0 0.5rem;
   border-radius: 0.75rem;
   display: flex;
   justify-content: space-between;

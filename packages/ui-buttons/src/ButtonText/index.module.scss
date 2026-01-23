@@ -5,12 +5,14 @@
   color: var(--text-primary);
   border-radius: var(--btn-lg-radius);
   transition: color var(--transition-duration);
+
   &:hover {
     color: var(--text-secondary);
   }
 
   &.danger {
     color: var(--status-danger);
+
     &:hover {
       color: var(--status-danger);
     }

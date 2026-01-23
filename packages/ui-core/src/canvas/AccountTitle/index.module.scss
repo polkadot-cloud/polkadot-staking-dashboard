@@ -3,11 +3,12 @@
 
 .accountTitle {
   --account-title-height: 2.75rem;
+
   border-bottom: 1px solid var(--border-alt);
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin: 2rem 0 1rem 0;
+  margin: 2rem 0 1rem;
   padding-bottom: 0.1rem;
 
   > div {
@@ -21,6 +22,7 @@
       &:nth-child(1) {
         max-width: 4rem;
       }
+
       &:nth-child(2) {
         padding-left: 1rem;
         flex-direction: column;
@@ -34,6 +36,7 @@
           top: 0;
           left: 0.75rem;
           width: 100%;
+
           > h1 {
             font-family: InterBold, sans-serif;
             position: absolute;

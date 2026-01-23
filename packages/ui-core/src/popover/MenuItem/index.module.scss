@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-@use 'styles/theme/_variables' as *;
+@use 'styles/theme/variables' as *;
 
 $button-padding: 1.3rem 1rem 1.2rem 1rem;
 
@@ -19,6 +19,7 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
   &:last-child {
     border-bottom-left-radius: $popover-border-radius;
     border-bottom-right-radius: $popover-border-radius;
+    border: none;
   }
 
   &.button {
@@ -30,6 +31,7 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
 
     &.disabled {
       cursor: default;
+
       > div {
         opacity: 0.4;
       }
@@ -45,9 +47,11 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
     &:nth-child(2) {
       border-left: 1px solid var(--border);
     }
+
     &:hover {
       background: var(--btn-popover-tab-bg);
     }
+
     &:disabled {
       background: none;
       cursor: default;
@@ -81,6 +85,7 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
 
         > h4 {
           color: var(--text-tertiary);
+
            path {
             fill: var(--text-tertiary);
           }
@@ -91,13 +96,10 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
     > h3 {
       color: var(--text-secondary);
       font-size: 1.2rem;
+
       > svg {
         margin-left: 0.5rem;
       }
     }
-  }
-
-  &:last-child {
-    border: none;
   }
 }

@@ -1,14 +1,14 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-.Root {
+.root {
   box-shadow: var(--shadow);
   all: unset;
   width: 4rem;
   height: 2.15rem;
   border-radius: 9999px;
   position: relative;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
   background-color: var(--border-alt);
 
   &[data-state='checked'] {
@@ -16,7 +16,7 @@
   }
 }
 
-.Thumb {
+.thumb {
   display: block;
   width: 2rem;
   height: 2rem;

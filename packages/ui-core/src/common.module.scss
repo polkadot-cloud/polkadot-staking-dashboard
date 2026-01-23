@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-.fixedPosition {
+.fixed {
   position: fixed;
   top: 0;
   left: 0;
@@ -9,16 +9,19 @@
   width: 100%;
 }
 
-.scrollBar {
+.scroll {
   scrollbar-width: thin;
   scrollbar-color: inherit transparent;
+
   ::-webkit-scrollbar {
     width: 0.1rem;
   }
+
   ::-webkit-scrollbar-track {
     background-color: transparent;
     border: 0;
   }
+
   ::-webkit-scrollbar-thumb {
     background-color: transparent; /* color of the scroll thumb */
     border-radius: 2rem; /* roundness of the scroll thumb */
