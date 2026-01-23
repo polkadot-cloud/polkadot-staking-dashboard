@@ -13,14 +13,14 @@ export const Wrapper = styled.div`
   }
 
   > .inner {
-    background: var(--background-modal-footer);
+    background: var(--bg-modal-footer);
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 1rem;
 
     &.canvas {
-      background: var(--background-canvas-card);
+      background: var(--bg-card-canvas);
     }
 
     &.transparent {
@@ -102,7 +102,7 @@ export const Wrapper = styled.div`
         }
 
         &.msg {
-          border-top: 1px solid var(--border-primary-color);
+          border-top: 1px solid var(--border);
           padding: 0.5rem 0;
           margin-top: 0.25rem;
         }
@@ -119,7 +119,7 @@ export const SignerWrapper = styled.p`
   margin: 0;
 
   .badge {
-    border: 1px solid var(--border-secondary-color);
+    border: 1px solid var(--border-alt);
     border-radius: 0.45rem;
     padding: 0.2rem 0.5rem;
     margin-right: 0.75rem;
@@ -148,7 +148,7 @@ export const SignerWrapper = styled.p`
     gap: 0.4rem;
 
     button {
-      background: var(--background-primary);
+      background: var(--bg-primary);
       border-radius: 0.5rem;
       color: var(--text-color-secondary);
       padding: 0.1rem 0.4rem;

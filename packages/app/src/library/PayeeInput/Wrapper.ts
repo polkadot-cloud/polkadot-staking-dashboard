@@ -10,9 +10,7 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
     flex-flow: column nowrap;
     border-bottom: 1.5px solid
       ${(props) =>
-				props.$activeInput
-					? 'var(--accent-color-primary)'
-					: 'var(--border-primary-color)'};
+				props.$activeInput ? 'var(--accent-color-primary)' : 'var(--border)'};
     padding: 0rem 0 0.4rem 0;
     transition: border var(--transition-duration);
 
@@ -30,7 +28,7 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
       margin-top: 0.2rem;
 
       > .emptyIcon {
-        background: var(--background-list-item);
+        background: var(--bg-list);
         width: 2.5rem;
         height: 2.5rem;
         border-radius: 50%;

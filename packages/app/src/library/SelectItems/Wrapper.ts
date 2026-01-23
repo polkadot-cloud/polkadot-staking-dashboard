@@ -82,12 +82,10 @@ export const Wrapper = styled.div<{
 
   > .inner {
     transition: border var(--transition-duration);
-    background: var(--background-primary);
+    background: var(--bg-primary);
     border: 1.75px solid
       ${(props) =>
-				props.$selected
-					? 'var(--accent-color-primary)'
-					: 'var(--border-primary-color)'};
+				props.$selected ? 'var(--accent-color-primary)' : 'var(--border)'};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -99,7 +97,7 @@ export const Wrapper = styled.div<{
 					? 'var(--accent-color-primary)'
 					: props.$selected
 						? 'var(--accent-color-primary)'
-						: 'var(--border-primary-color)'};
+						: 'var(--border)'};
     }
 
     > button {
@@ -117,7 +115,7 @@ export const Wrapper = styled.div<{
       }
 
       > .icon {
-        background: var(--background-list-item);
+        background: var(--bg-list);
         color: var(--accent-color-primary);
         width: 6rem;
         display: flex;

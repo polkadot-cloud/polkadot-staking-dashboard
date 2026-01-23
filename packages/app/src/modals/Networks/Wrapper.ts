@@ -21,7 +21,7 @@ export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
     color: var(--text-color-secondary);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
@@ -49,7 +49,7 @@ export const ContentWrapper = styled.div`
 `
 
 export const NetworkButton = styled.button<{ $connected: boolean }>`
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
   border: 1px solid var(--status-success-color-transparent);
   padding: 1rem;
   cursor: pointer;
@@ -88,7 +88,7 @@ export const NetworkButton = styled.button<{ $connected: boolean }>`
     justify-content: flex-end;
   }
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--btn-bg-hover);
   }
   .icon {
     margin-right: 0.5rem;
@@ -106,7 +106,7 @@ export const NetworkButton = styled.button<{ $connected: boolean }>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: var(--button-primary-background);
+      background: var(--btn-bg);
     }
   }
 `
@@ -150,7 +150,7 @@ export const ConnectionsWrapper = styled.div`
 `
 
 export const ConnectionButton = styled.button<{ $connected: boolean }>`
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
   border: 1px solid var(--status-success-color-transparent);
   position: relative;
   padding: 1rem 0.75rem;
@@ -168,7 +168,7 @@ export const ConnectionButton = styled.button<{ $connected: boolean }>`
   width: 100%;
 
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--btn-bg-hover);
   }
 
   > h3 {
@@ -185,7 +185,7 @@ export const ConnectionButton = styled.button<{ $connected: boolean }>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: var(--button-primary-background);
+      background: var(--btn-bg);
     }
     &.off {
       h3 {

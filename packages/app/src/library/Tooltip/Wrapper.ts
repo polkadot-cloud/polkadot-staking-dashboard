@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  background: var(--background-invert);
+  background: var(--bg-invert);
   transition: opacity var(--transition-duration);
   display: flex;
   flex-flow: column wrap;

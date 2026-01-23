@@ -14,7 +14,7 @@ export const Wrapper = styled.ul`
   z-index: 12;
 
   li {
-    background: var(--background-primary);
+    background: var(--bg-primary);
     margin: 0.3rem 1.2rem;
     position: relative;
     border-radius: 1.25rem;

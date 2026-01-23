@@ -21,17 +21,17 @@ export const StyledSlider = ({
 			step={step}
 			onChange={(val) => onChange(val)}
 			activeDotStyle={{
-				backgroundColor: 'var(--background-primary)',
+				backgroundColor: 'var(--bg-primary)',
 			}}
 			styles={{
 				track: {
 					backgroundColor: 'var(--accent-color-primary)',
 				},
 				rail: {
-					backgroundColor: 'var(--button-secondary-background)',
+					backgroundColor: 'var(--btn-bg-secondary)',
 				},
 				handle: {
-					backgroundColor: 'var(--background-primary)',
+					backgroundColor: 'var(--bg-primary)',
 					borderColor: 'var(--accent-color-primary)',
 					opacity: 1,
 				},

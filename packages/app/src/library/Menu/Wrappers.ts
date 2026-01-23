@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  background: var(--background-default);
+  background: var(--bg-body);
   width: 250px;
   padding: 0.25rem 0.75rem;
   display: flex;
@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
 `
 
 export const ItemWrapper = styled.button`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   color: var(--text-color-secondary);
   display: flex;
   width: 100%;

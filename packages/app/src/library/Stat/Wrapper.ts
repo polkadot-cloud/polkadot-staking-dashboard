@@ -14,7 +14,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
 
     > .btn {
       color: var(--text-color-secondary);
-      background: var(--background-primary);
+      background: var(--bg-primary);
       display: flex;
       flex-flow: row wrap;
       justify-content: center;

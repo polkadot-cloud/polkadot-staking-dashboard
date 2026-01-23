@@ -15,7 +15,7 @@ export const Wrapper = styled.div<WrapperProps>`
   z-index: 2;
 
   > div {
-    background: var(--background-list-item);
+    background: var(--bg-list);
     min-width: 125px;
     opacity: 0.75;
     padding: 1rem 1.25rem;

@@ -28,7 +28,7 @@ export const HeaderWrapper = styled.div`
 
     > span {
       color: var(--text-color-tertiary);
-      border: 1px solid var(--border-primary-color);
+      border: 1px solid var(--border);
       border-radius: 0.45rem;
       padding: 0.35rem 0.75rem;
       margin: 0.25rem;
@@ -63,7 +63,7 @@ export const JoinFormWrapper = styled.div`
     padding-left: 0.4rem;
 
     &.underline {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--border);
       padding-bottom: 0.5rem;
       margin: 2rem 0 1rem 0;
     }

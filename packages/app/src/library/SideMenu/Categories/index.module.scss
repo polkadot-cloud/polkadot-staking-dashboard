@@ -2,14 +2,14 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 .inner {
-  background: var(--background-default);
+  background: var(--bg-body);
   border-radius: 0.75rem;
   width: 100%;
   padding-left : 0.5rem
 }
 
 .button {
-  background: var(--background-primary);
+  background: var(--bg-primary);
   color: var(--text-color-primary);
   border-radius: 0.75rem;
   width: 100%;

@@ -19,7 +19,7 @@ export const AccountWrapper = styled.div`
   }
 
   > div {
-    background: var(--button-primary-background);
+    background: var(--btn-bg);
     color: var(--text-color-primary);
     font-family: InterSemiBold, sans-serif;
     border: 1px solid transparent;
@@ -42,7 +42,7 @@ export const AccountWrapper = styled.div`
 
       /* Top half of the button, account information */
       &.head {
-        background: var(--button-tertiary-background);
+        background: var(--btn-bg-tertiary);
 
         > button {
           color: var(--text-color-primary);
@@ -87,7 +87,7 @@ export const AccountWrapper = styled.div`
           }
 
           .badge {
-            background-color: var(--background-floating-card);
+            background-color: var(--bg-card-floating);
             color: var(--text-color-secondary);
             margin-left: 1rem;
             padding: 0.25rem 0.5rem;
@@ -150,7 +150,7 @@ export const AccountWrapper = styled.div`
 
       /* Bottom half of the button, account metadata */
       &.foot {
-        border-top: 1px solid var(--border-primary-color);
+        border-top: 1px solid var(--border);
         padding: 0.7rem 1rem;
 
         > .balance {

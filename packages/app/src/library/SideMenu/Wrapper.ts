@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--background-canvas-card-secondary)' : 'none')};
+  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--bg-card-canvas-alt)' : 'none')};
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -139,7 +139,7 @@ export const ToggleWrapper = styled.button`
   }
 
   > .label {
-    background: var(--background-primary);
+    background: var(--bg-primary);
     color: var(--text-color-secondary);
     width: 100%;
     height: 100%;

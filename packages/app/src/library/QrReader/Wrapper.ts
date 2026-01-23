@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   animation: fadeInScale 0.2s cubic-bezier(0, 1, 0, 1) forwards;
 
   > .qrRegion {
-    background: var(--background-default);
+    background: var(--bg-body);
     border-radius: 0.85rem;
     overflow: hidden;
     width: 250px;

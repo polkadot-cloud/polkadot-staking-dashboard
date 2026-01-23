@@ -69,7 +69,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `
 
 export const ContentWrapper = styled.div`
-  background: var(--background-default);
+  background: var(--bg-body);
   width: 100%;
   height: auto;
   overflow: hidden;
@@ -143,10 +143,8 @@ export const FilterListWrapper = styled.div`
 export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
     ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--button-primary-background)'};
-  background: var(--button-primary-background);
+			props.$active ? 'var(--accent-color-stroke)' : 'var(--btn-bg)'};
+  background: var(--btn-bg);
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -183,7 +181,7 @@ export const FooterWrapper = styled.div`
 export const PromptListItem = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
 
   &.inactive {
     opacity: var(--opacity-disabled);
@@ -191,7 +189,7 @@ export const PromptListItem = styled.div`
 `
 
 export const PromptSelectItem = styled.button`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -203,7 +201,7 @@ export const PromptSelectItem = styled.button`
     margin-top: 0.3rem;
   }
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--btn-bg-hover);
   }
   &.inactive {
     h3,

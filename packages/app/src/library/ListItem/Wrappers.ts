@@ -25,16 +25,16 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > .inner {
-    background: var(--background-list-item);
-    border: var(--item-border-width) solid var(--background-list-item);
+    background: var(--bg-list);
+    border: var(--item-border-width) solid var(--bg-list);
 
     &.modal {
-      background: var(--background-modal-card);
-      border: var(--item-border-width) solid var(--background-modal-card);
+      background: var(--bg-card-modal);
+      border: var(--item-border-width) solid var(--bg-card-modal);
     }
     &.canvas {
-      background: var(--background-canvas-card);
-      border: var(--item-border-width) solid var(--background-canvas-card);
+      background: var(--bg-card-canvas);
+      border: var(--item-border-width) solid var(--bg-card-canvas);
     }
     &.modal,
     &.canvas {

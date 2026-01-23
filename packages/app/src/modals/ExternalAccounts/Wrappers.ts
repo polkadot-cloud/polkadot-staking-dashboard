@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const ActionWithButton = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   width: 100%;
   color: var(--text-color-primary);
   display: flex;
@@ -59,7 +59,7 @@ export const ManualAccountsWrapper = styled.div`
 `
 
 export const ManualAccount = styled.div`
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
   width: 100%;
   border-radius: 1rem;
   margin-bottom: 1rem;

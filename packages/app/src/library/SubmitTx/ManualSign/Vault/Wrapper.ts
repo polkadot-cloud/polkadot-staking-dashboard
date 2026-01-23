@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   .progress {
     margin-bottom: 1rem;
     border-radius: 1rem;
-    background: var(--background-menu);
+    background: var(--bg-menu);
     padding: 0.45rem 1.5rem 0.75rem 1.5rem;
 
     span {
