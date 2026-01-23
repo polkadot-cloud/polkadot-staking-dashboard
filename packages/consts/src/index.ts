@@ -23,6 +23,7 @@ export const SideMenuMaximisedWidth = 145
 export const SideMenuMinimisedWidth = 75
 export const SectionFullWidthThreshold = 1000
 export const PageWidthMediumThreshold = 1150
+export const PageWidthLargeThreshold = 1400
 export const SmallFontSizeMaxWidth = 600
 export const TipsThresholdSmall = 750
 export const TipsThresholdMedium = 1200

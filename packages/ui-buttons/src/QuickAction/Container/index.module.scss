@@ -1,20 +1,22 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+@use 'styles/theme/variables' as *;
+
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-flow: row wrap;
-  flex-grow: 1;
   padding: 0 0.75rem 0.5rem;
   
-  @media (width <= 950px) {
+  @media (width <= $row-section-thirds-threshold) {
     flex-wrap: wrap;
   }
 
-  @media(width >= 951px) {
+  @media(width >= $row-section-thirds-threshold) {
     > div {
-      min-width: 33%;
+      min-width: 33.33%;
+      max-width: 33.33%;
     }
   }
 }
