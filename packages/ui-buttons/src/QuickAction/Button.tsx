@@ -37,7 +37,12 @@ export const Button = ({
 export const PreloadingButton = () => {
 	return (
 		<Loader
-			style={{ width: '100%', height: '5.4rem', borderRadius: '0.85rem' }}
+			style={{
+				width: '100%',
+				height: '5.3rem',
+				borderRadius: '0.85rem',
+				marginBottom: '0.45rem',
+			}}
 		/>
 	)
 }

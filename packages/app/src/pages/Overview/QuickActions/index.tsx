@@ -37,7 +37,10 @@ export const QuickActions = ({ height }: { height: number }) => {
 			</CardHeader>
 			{syncing ? (
 				<QuickAction.Container>
-					<QuickAction.PreloadingButton />
+					<section style={{ width: '100%', height }}>
+						<QuickAction.PreloadingButton />
+						<QuickAction.PreloadingButton />
+					</section>
 				</QuickAction.Container>
 			) : (
 				<>

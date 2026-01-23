@@ -6,6 +6,7 @@ import { useStaking } from 'contexts/Staking'
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
 import { MembershipStatus } from 'pages/Pools/Status/MembershipStatus'
 import { Page } from 'ui-core/base'
+import { Tips } from '../Tips'
 import { StatusWrapper } from '../Wrappers'
 
 export const Status = () => {
@@ -18,27 +19,30 @@ export const Status = () => {
 
 	return (
 		<StatusWrapper>
-			{showNominate && (
-				<Page.RowSection
-					secondary={showMembership}
-					standalone={!showMembership}
-				>
-					<section>
-						<NominationStatus />
-					</section>
-				</Page.RowSection>
-			)}
-			{showMembership && (
-				<Page.RowSection
-					hLast={showNominate}
-					vLast={showNominate}
-					standalone={true}
-				>
-					<section>
-						<MembershipStatus showButtons={false} />
-					</section>
-				</Page.RowSection>
-			)}
+			<div className="content">
+				{showNominate && (
+					<Page.RowSection
+						secondary={showMembership}
+						standalone={!showMembership}
+					>
+						<section>
+							<NominationStatus />
+						</section>
+					</Page.RowSection>
+				)}
+				{showMembership && (
+					<Page.RowSection
+						hLast={showNominate}
+						vLast={showNominate}
+						standalone={true}
+					>
+						<section>
+							<MembershipStatus showButtons={false} />
+						</section>
+					</Page.RowSection>
+				)}
+			</div>
+			<Tips />
 		</StatusWrapper>
 	)
 }

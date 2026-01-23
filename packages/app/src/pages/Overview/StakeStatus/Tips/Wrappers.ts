@@ -6,6 +6,7 @@ import { motion } from 'motion/react'
 import styled from 'styled-components'
 
 export const TipsWrapper = styled.div`
+  border-top: 1px solid var(--border);
   width: 100%;
   display: flex;
   position: relative;
@@ -15,7 +16,7 @@ export const ItemsWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   justify-items: center;
-  padding: 0.75rem 1.5rem 0.85rem 1.5rem;
+  padding: 0.75rem 0;
 `
 export const ItemWrapper = styled(motion.div)`
   padding: 0 0.25rem;

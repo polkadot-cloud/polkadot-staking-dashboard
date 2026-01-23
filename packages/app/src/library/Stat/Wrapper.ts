@@ -19,7 +19,6 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       flex-flow: row wrap;
       justify-content: center;
       align-items: center;
-      border-radius: 2rem;
       width: 1.5rem;
       height: 1.5rem;
       margin-left: 0.65rem;

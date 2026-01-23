@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { ButtonSecondary } from 'ui-buttons'
 import { Halving } from './Sections/Halving'
 import { Status } from './Sections/Status'
-import { Tips } from './Tips'
 import { SectionNavigation, SectionSlider } from './Wrappers'
 
 export const StakeStatus = ({ height }: { height: number }) => {
@@ -29,7 +28,6 @@ export const StakeStatus = ({ height }: { height: number }) => {
 					<Halving />
 				</div>
 			</SectionSlider>
-			<Tips />
 		</CardWrapper>
 	)
 }
