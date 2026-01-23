@@ -1,0 +1,80 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+@use 'styles/theme/variables' as *;
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  padding: 0 0.75rem 0.5rem;
+  
+  @media (width <= $row-section-thirds-threshold) {
+    flex-wrap: wrap;
+  }
+
+  @media(width >= $row-section-thirds-threshold) {
+    > div {
+      min-width: 33.33%;
+      max-width: 33.33%;
+    }
+  }
+}
+
+.button {
+  display: flex;
+  flex: 1;
+  height: 5.85rem;
+  padding: 0.3rem;
+
+  .inner {
+    background: var(--btn-popover-tab-bg);
+    border: 1.25px solid var(--btn-bg-hover);
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+    flex: 1;
+    padding-top: 0.6rem;
+
+    &.disabled {
+      cursor: default;
+
+      > * {
+        opacity: 0.4;
+      }
+    }
+
+    @media (width <= 1150px) {
+      min-width: 12rem;
+    }
+  
+    > .icon {
+      svg {
+        filter: drop-shadow(3px 3px 2px var(--border-alt));
+        transition: all 0.3s;
+      }
+    }
+
+    > h4 {
+      font-family: Inter, sans-serif;
+      color: var(--text-secondary);
+      margin-top: 0.85rem;
+    }
+
+    &.active {
+      &:hover {
+        background: var(--btn-bg-hover);
+
+        > .icon > svg {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
