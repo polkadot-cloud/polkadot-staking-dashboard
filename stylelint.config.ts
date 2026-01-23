@@ -18,8 +18,11 @@ export default {
 				ignoreAtRules: ['use'],
 			},
 		],
-		'selector-class-pattern': null,
-		'keyframes-name-pattern': null,
-		'no-descending-specificity': null,
+		'selector-class-pattern': [
+			'^[a-z][a-zA-Z0-9]*$',
+			{
+				message: 'Expected class selector to be camelCase',
+			},
+		],
 	},
 } satisfies Config

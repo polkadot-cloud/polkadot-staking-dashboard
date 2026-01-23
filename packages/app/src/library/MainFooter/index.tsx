@@ -41,7 +41,7 @@ export const MainFooter = () => {
 
 	return (
 		<Page.Footer>
-			<Wrapper className="page-padding container-width">
+			<Wrapper className="pagePadding containerWidth">
 				<CloudIconSVG className="icon" />
 				<Summary>
 					<section>

@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-.Root {
+.root {
   box-shadow: var(--card-shadow);
   all: unset;
   width: 4rem;
@@ -16,7 +16,7 @@
   }
 }
 
-.Thumb {
+.thumb {
   display: block;
   width: 2rem;
   height: 2rem;

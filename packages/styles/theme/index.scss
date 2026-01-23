@@ -132,7 +132,7 @@ label {
   color: var(--text-color-primary);
 }
 
-.page-padding {
+.pagePadding {
   padding-left: 1.25rem;
   padding-right: 1.25rem;  
 
@@ -146,7 +146,7 @@ label {
   }
 }
 
-.container-width {
+.containerWidth {
   max-width: $max-page-width-sm;
 
   @media (min-width: $row-section-thirds-threshold) {
@@ -154,7 +154,7 @@ label {
   }
 }
 
-.disable-body-scroll {
+.disableBodyScroll {
   overflow: hidden;
 }
 

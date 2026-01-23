@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-.fixedPosition {
+.fixed {
   position: fixed;
   top: 0;
   left: 0;
@@ -9,7 +9,7 @@
   width: 100%;
 }
 
-.scrollBar {
+.scroll {
   scrollbar-width: thin;
   scrollbar-color: inherit transparent;
 

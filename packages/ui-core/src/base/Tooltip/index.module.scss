@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-.Content {
+.content {
   color: var(--text-color-invert);
   background: var(--background-invert);
   box-shadow: var(--card-shadow);
@@ -15,32 +15,32 @@
   will-change: transform, opacity;
 
   &[data-state='delayed-open'][data-side='top'] {
-    animation-name: slideDownAndFade;
+    animation-name: slide-down-and-fade;
   }
 
   z-index: 99;
 }
 
 
-.Inverted {
+.inverted {
   background: var(--background-primary);
   color: var(--text-color-secondary);
 }
 
-.FadeIn {
+.fadeIn {
 	transform-origin: var(--radix-tooltip-content-transform-origin);
-	animation: scaleIn 0.1s ease-out;
+	animation: scale-in 0.1s ease-out;
 }
 
-.Arrow {
+.arrow {
   fill: var(--background-invert);
 }
 
-.ArrowInverted {
+.arrowInverted {
   fill: var(--background-primary);
 }
 
-@keyframes slideDownAndFade {
+@keyframes slide-down-and-fade {
   from {
     opacity: 0;
     transform: translateY(-2px);
@@ -52,7 +52,7 @@
   }
 }
 
-@keyframes scaleIn {
+@keyframes scale-in {
 	from {
 		opacity: 0;
 		transform: scale(0.5);

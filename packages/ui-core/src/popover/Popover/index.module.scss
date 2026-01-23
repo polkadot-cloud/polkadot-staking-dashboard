@@ -3,7 +3,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 @use 'styles/theme/variables' as *;
 
-.Content {
+.content {
   background: var(--background-primary);
   box-shadow: var(--card-shadow);
   border-radius: $popover-border-radius;
@@ -15,12 +15,12 @@ SPDX-License-Identifier: GPL-3.0-only */
   transition: height var(--transition-duration);
   
   &[data-state='open'][data-side='bottom'] {
-    animation-name: slideUpAndFade;
+    animation-name: slide-up-and-fade;
   }
 
   z-index: 99;
 
-  &.Transparent {
+  &.transparent {
     box-shadow: none;
     background: transparent;
     border-radius: none;
@@ -31,11 +31,11 @@ SPDX-License-Identifier: GPL-3.0-only */
   }
 }
 
-.Arrow {
+.arrow {
   fill: var(--background-primary);
 }
 
-@keyframes slideUpAndFade {
+@keyframes slide-up-and-fade {
   from {
     opacity: 0;
     transform: translateY(4px);

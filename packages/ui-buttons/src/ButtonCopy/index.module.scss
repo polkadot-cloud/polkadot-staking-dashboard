@@ -16,7 +16,7 @@
     margin-right: 0.4rem;
   }
 
-  > .copyIcon {
+  > .copy {
     position: absolute;
     top: 0;
     right: 0;
@@ -27,7 +27,7 @@
     font-size: inherit;
 
     &.active {
-      animation: fadeOutIn 2s ease-in-out 1;
+      animation: fade-out-in 2s ease-in-out 1;
     }
 
     > .icon {
@@ -37,7 +37,7 @@
     }
   }
 
-  > .checkIcon {
+  > .check {
     color: var(--status-success-color);
     position: absolute;
     top: 0;
@@ -50,7 +50,7 @@
     opacity: 0;
 
     &.active {
-      animation: fadeInOut 2s ease-in-out 1;
+      animation: fade-in-out 2s ease-in-out 1;
     }
 
     > .icon {
@@ -59,7 +59,7 @@
     }
   }
 
-  &.inheritSize {
+  &.inherit {
     > svg {
       width: auto;
       max-height: 100%;
@@ -67,7 +67,7 @@
   }
 
   &:hover {
-    > .copyIcon {
+    > .copy {
       > .icon {
         color: var(--text-color-secondary);
       }
@@ -75,7 +75,7 @@
   }
 
   /* Copy icon fade out followed by fade in */
-  @keyframes fadeOutIn {
+  @keyframes fade-out-in {
     0% {
       opacity: 1;
       transform: scale(1);
@@ -98,7 +98,7 @@
   }
 
   /* Tick icon fade in followed by fade out */
-  @keyframes fadeInOut {
+  @keyframes fade-in-out {
     0% {
       opacity: 0;
       transform: scale(0);
