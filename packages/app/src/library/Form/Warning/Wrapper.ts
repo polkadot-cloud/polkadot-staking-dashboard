@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
   border: 1px solid var(--accent-color-secondary);
   margin: 0.5rem 0;
   padding: 0.6rem 0.9rem;

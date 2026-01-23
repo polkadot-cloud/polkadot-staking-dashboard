@@ -34,7 +34,7 @@ export const HeaderWrapper = styled.div`
     }
 
     @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
-      border-right: 1px solid var(--border-primary-color);
+      border-right: 1px solid var(--border);
       flex-basis: 25%;
       margin-bottom: 0;
       padding-left: 1rem;
@@ -47,7 +47,7 @@ export const HeaderWrapper = styled.div`
     }
 
     > .inner {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--border);
       display: flex;
       flex-flow: column wrap;
       padding: 0.5rem 0.5rem 1rem 0.5rem;
@@ -87,7 +87,7 @@ export const HeaderWrapper = styled.div`
 `
 
 export const Item = styled(motion.div)`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   list-style: none;
   flex: 1;
   margin-bottom: 1rem;

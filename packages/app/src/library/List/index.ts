@@ -15,8 +15,8 @@ export const Wrapper = styled.div`
 export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   border-bottom: ${(props) =>
 		props.$displayFor === 'canvas'
-			? '1px solid var(--border-secondary-color)'
-			: '1px solid var(--border-primary-color)'};
+			? '1px solid var(--border-alt)'
+			: '1px solid var(--border)'};
 
   display: flex;
   flex-flow: row wrap;
@@ -154,7 +154,7 @@ export const SearchInputWrapper = styled.div`
   width: 100%;
 
   > input {
-    border: 1px solid var(--border-primary-color);
+    border: 1px solid var(--border);
     color: var(--text-color-secondary);
     font-family: InterBold, sans-serif;
     border-radius: 1.75rem;
@@ -163,7 +163,7 @@ export const SearchInputWrapper = styled.div`
     width: 100%;
 
     &.secondary {
-      background: var(--background-default);
+      background: var(--bg-body);
       padding: 1.25rem 1.25rem;
       font-size: 1.25rem;
     }

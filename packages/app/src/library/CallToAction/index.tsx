@@ -118,7 +118,7 @@ export const CallToActionWrapper = styled.div`
         }
 
         &.secondary {
-          background-color: var(--button-primary-background);
+          background-color: var(--btn-bg);
           border-top-right-radius: var(--button-border-radius);
           border-bottom-right-radius: var(--button-border-radius);
           color: var(--text-color-primary);

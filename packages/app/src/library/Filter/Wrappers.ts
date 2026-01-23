@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
 `
 
 export const ItemWrapper = styled.div`
-  border: 1px solid var(--border-primary-color);
+  border: 1px solid var(--border);
   font-family: InterSemiBold, sans-serif;
   border-radius: 1.5rem;
   display: flex;
@@ -74,8 +74,8 @@ export const LargeItemWrapper = styled.div`
   justify-content: center;
   padding: 0.5rem;
   > .inner {
-    border: 1.5px solid var(--border-primary-color);
-    background: var(--background-list-item);
+    border: 1.5px solid var(--border);
+    background: var(--bg-list);
     border-radius: 1.25rem;
     display: flex;
     flex-flow: column nowrap;
@@ -126,9 +126,7 @@ export const TabWrapper = styled.button<{ $active?: boolean }>`
   font-family: InterSemiBold, sans-serif;
   border: 1px solid
     ${(props) =>
-			props.$active
-				? 'var(--accent-color-primary)'
-				: 'var(--border-primary-color)'};
+			props.$active ? 'var(--accent-color-primary)' : 'var(--border)'};
   color: ${(props) =>
 		props.$active
 			? 'var(--accent-color-primary)'

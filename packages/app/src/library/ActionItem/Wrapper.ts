@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.h3`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   color: var(--text-color-primary);
   font-family: InterSemiBold, sans-serif;
   font-weight: 600;
@@ -19,8 +19,8 @@ export const Wrapper = styled.h3`
   }
 
   .toggle {
-    background: var(--background-input);
-    border: 1px solid var(--border-primary-color);
+    background: var(--bg-input);
+    border: 1px solid var(--border);
     border-radius: 0.4rem;
     margin-right: 0.65rem;
     width: 1.75rem;

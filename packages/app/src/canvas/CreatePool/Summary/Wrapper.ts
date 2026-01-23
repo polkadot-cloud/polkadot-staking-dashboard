@@ -10,7 +10,7 @@ export const SummaryWrapper = styled.div`
   margin-bottom: 1rem;
 
   > section {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
     flex-basis: 100%;
     display: flex;
     flex-flow: row wrap;

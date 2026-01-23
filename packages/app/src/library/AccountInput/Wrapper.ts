@@ -23,7 +23,7 @@ export const AccountInputWrapper = styled.div`
 
   &.border {
     > .input {
-      border: 1px solid var(--border-primary-color);
+      border: 1px solid var(--border);
     }
   }
 
@@ -36,7 +36,7 @@ export const AccountInputWrapper = styled.div`
     padding: 0.5rem 0.5rem 0.5rem 1rem;
 
     &.disabled {
-      background: var(--background-default);
+      background: var(--bg-body);
     }
     > section {
       display: flex;
@@ -48,7 +48,7 @@ export const AccountInputWrapper = styled.div`
           padding-right: 0.5rem;
 
           .ph {
-            background: var(--background-default);
+            background: var(--bg-body);
             width: 22px;
             height: 22px;
             border-radius: 50%;

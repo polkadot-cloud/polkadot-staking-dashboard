@@ -42,7 +42,7 @@ export const Wrapper = styled.div`
         opacity: 0.75;
       }
       .bar {
-        background: var(--background-list-item);
+        background: var(--bg-list);
         width: 100%;
         padding: 0.65rem 0.75rem;
         overflow: hidden;
