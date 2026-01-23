@@ -7,7 +7,7 @@
   display: flex;
   justify-content: flex-start;
   flex-flow: row wrap;
-  padding: 0 0.75rem 0.5rem;
+  padding: 0 0.5rem 0.5rem;
   
   @media (width <= $row-section-thirds-threshold) {
     flex-wrap: wrap;
