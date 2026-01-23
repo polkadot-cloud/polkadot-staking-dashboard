@@ -91,8 +91,8 @@ importers:
         specifier: ^3.9.1
         version: 3.9.1(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(rxjs@7.8.2)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@w3ux/react-odometer':
-        specifier: 2.3.19
-        version: 2.3.19(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: 2.4.0
+        version: 2.4.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@w3ux/react-polkicon':
         specifier: ^3.4.0
         version: 3.4.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -2344,8 +2344,8 @@ packages:
       react-dom: ^19.1.0
       rxjs: ^7.8.2
 
-  '@w3ux/react-odometer@2.3.19':
-    resolution: {integrity: sha512-UGTWTRt9TtVns0g13bfhXnhgxL7ex1fFlSIyrUonkqvZhhvU6ItF1/FO/uLvPSa1cQDdNLADhaahkromvdhJHQ==}
+  '@w3ux/react-odometer@2.4.0':
+    resolution: {integrity: sha512-pGvRKXSrzVU0gAr/1/aU3lot0yLaa1DhzPm3YZ2GxOYNV55NV4dhGoeixvFc2eWOxJ3sfkzKreQZwL4m1ixEwA==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -5498,7 +5498,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@w3ux/react-odometer@2.3.19(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@w3ux/react-odometer@2.4.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
@@ -6030,7 +6030,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  isows@1.0.7(ws@8.18.3):
+  isows@1.0.7(ws@8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)):
     dependencies:
       ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)
 
@@ -6725,7 +6725,7 @@ snapshots:
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
       abitype: 1.2.3(typescript@5.9.3)(zod@3.25.76)
-      isows: 1.0.7(ws@8.18.3)
+      isows: 1.0.7(ws@8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10))
       ox: 0.11.3(typescript@5.9.3)(zod@3.25.76)
       ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)
     optionalDependencies:
