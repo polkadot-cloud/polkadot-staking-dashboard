@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnHelp {
-  background: var(--button-tertiary-background);
-  color: var(--text-color-secondary);
-  fill: var(--text-color-secondary);
+  background: var(--btn-bg-tertiary);
+  color: var(--text-secondary);
+  fill: var(--text-secondary);
   border-radius: 50%;
   padding: 0;
   width: 1.35rem;
@@ -12,7 +12,7 @@
 }
 
 .btnHelpSecondaryBackground {
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
 }
 
 .btnHelpNoBackground {
@@ -20,18 +20,18 @@
 }
 
 .btnHelpOutline {
-  border: 1px solid var(--text-color-tertiary);
-  color: var(--text-color-tertiary);
-  fill: var(--text-color-tertiary);
+  border: 1px solid var(--text-tertiary);
+  color: var(--text-tertiary);
+  fill: var(--text-tertiary);
 
   &:hover {
-    border: 1px solid var(--accent-color-primary);
-    color: var(--accent-color-primary);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
   }
 }
 
 .btnHelpIcon {
   &:hover {
-    fill: var(--accent-color-primary);
+    fill: var(--accent-primary);
   }
 }

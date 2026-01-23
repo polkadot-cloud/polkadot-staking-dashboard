@@ -13,12 +13,12 @@ export const ThemedRouter = () => {
 	const { network } = useNetwork()
 	const { mode, themeElementRef } = useTheme()
 
-	// Update body background to `--background-default` color upon theme change.
+	// Update body background to `--bg-body` color upon theme change.
 	useEffect(() => {
 		const elem = document.querySelector('.core-entry')
 		if (elem) {
 			document.getElementsByTagName('body')[0].style.backgroundColor =
-				getComputedStyle(elem).getPropertyValue('--background-default')
+				getComputedStyle(elem).getPropertyValue('--bg-body')
 		}
 	}, [mode])
 

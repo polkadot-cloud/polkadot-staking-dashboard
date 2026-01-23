@@ -88,9 +88,7 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
 				</div>
 				<div>
 					<ButtonMonoInvert
-						style={
-							connected ? { color: 'var(--status-danger-color)' } : undefined
-						}
+						style={connected ? { color: 'var(--status-danger)' } : undefined}
 						text={
 							connected
 								? t('disconnect', { ns: 'modals' })

@@ -17,7 +17,7 @@
     font-family: InterSemiBold, sans-serif;
   }
   &.primary {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
   }
   &.text {
     margin-top: 0.15rem;
@@ -34,16 +34,16 @@
     font-size: 1rem;
 
     &.success {
-      color: var(--status-success-color);
+      color: var(--status-success);
     }
     &.warning {
-      color: var(--status-warning-color);
+      color: var(--status-warning);
     }
     &.error {
       color: var(--status-error-color);
     }
     &.danger {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
   }
 }

@@ -99,7 +99,7 @@ export const PayoutListInner = ({
 							icon={faBars}
 							color={
 								listFormat === 'row'
-									? getThemeValue('--accent-color-primary')
+									? getThemeValue('--accent-primary')
 									: 'inherit'
 							}
 						/>
@@ -109,7 +109,7 @@ export const PayoutListInner = ({
 							icon={faGripVertical}
 							color={
 								listFormat === 'col'
-									? getThemeValue('--accent-color-primary')
+									? getThemeValue('--accent-primary')
 									: 'inherit'
 							}
 						/>

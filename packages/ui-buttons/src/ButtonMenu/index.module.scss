@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnMenu {
-  color: var(--accent-color-primary);
+  color: var(--accent-primary);
   font-size: 1.15rem;
   opacity: 0.8;
-  border-right: 1px solid var(--border-secondary-color);
+  border-right: 1px solid var(--border-alt);
   height: 3rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -23,9 +23,9 @@
   }
 
   &.danger {
-    color: var(--status-danger-color);
+    color: var(--status-danger);
     &:hover {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
   }
 }

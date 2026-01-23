@@ -20,8 +20,8 @@
 }
 
 .btnQuickAction {
-  background: var(--button-popover-tab-background);
-  border: 1.25px solid var(--button-hover-background);
+  background: var(--btn-popover-tab-bg);
+  border: 1.25px solid var(--btn-bg-hover);
   border-radius: 0.6rem;
   display: flex;
   flex-direction: column;
@@ -46,20 +46,20 @@
  
   > .icon {
     svg {
-      filter: drop-shadow(3px 3px 2px var(--border-secondary-color));
+      filter: drop-shadow(3px 3px 2px var(--border-alt));
       transition: all 0.3s;
     }
   }
 
   > h4 {
     font-family: Inter, sans-serif;
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin-top: 0.85rem;
   }
 
   &.active {
     &:hover {
-      background: var(--button-hover-background);
+      background: var(--btn-bg-hover);
       > .icon > svg {
         transform: scale(1.1);
       }

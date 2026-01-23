@@ -26,7 +26,7 @@ export const StatWrapper = styled.div`
   }
 
   > .inner {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
     padding-bottom: 0.5rem;
 
     > h2,
@@ -46,7 +46,7 @@ export const StatWrapper = styled.div`
     h2,
     h3,
     h4 {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
     }
   }
 `

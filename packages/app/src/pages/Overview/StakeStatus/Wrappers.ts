@@ -29,7 +29,7 @@ export const StatusWrapper = styled.div`
     }
 
     > section {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--border);
       padding-left: 1.5rem;
       padding-bottom: 0.35rem;
       border-radius: 0;

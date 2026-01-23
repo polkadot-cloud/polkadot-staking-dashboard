@@ -6,7 +6,7 @@
 $button-padding: 1.3rem 1rem 1.2rem 1rem;
 
 .menuItem {
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   width: 100%;
@@ -25,7 +25,7 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
     padding: $button-padding;
 
     &:hover {
-      background: var(--button-popover-tab-background);
+      background: var(--btn-popover-tab-bg);
     }
 
     &.disabled {
@@ -43,10 +43,10 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
     align-items: center;
 
     &:nth-child(2) {
-      border-left: 1px solid var(--border-primary-color);
+      border-left: 1px solid var(--border);
     }
     &:hover {
-      background: var(--button-popover-tab-background);
+      background: var(--btn-popover-tab-bg);
     }
     &:disabled {
       background: none;
@@ -59,13 +59,13 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
     align-items: center;
 
     &:first-child {
-      color: var(--text-color-tertiary);
+      color: var(--text-tertiary);
       margin-right: 0.85rem;
       flex-direction: row;
       justify-content: center;
       
       path {
-        fill: var(--text-color-tertiary);
+        fill: var(--text-tertiary);
         opacity: 0.75;
       }
     }
@@ -80,16 +80,16 @@ $button-padding: 1.3rem 1rem 1.2rem 1rem;
         justify-content: flex-end;
 
         > h4 {
-          color: var(--text-color-tertiary);
+          color: var(--text-tertiary);
            path {
-            fill: var(--text-color-tertiary);
+            fill: var(--text-tertiary);
           }
         }
       }
     }
 
     > h3 {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       font-size: 1.2rem;
       > svg {
         margin-left: 0.5rem;

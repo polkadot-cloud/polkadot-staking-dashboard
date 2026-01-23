@@ -21,7 +21,7 @@ export const ChunkWrapper = styled.div`
   margin-top: 1.25rem;
 
   > div {
-    background: var(--button-primary-background);
+    background: var(--btn-bg);
     display: flex;
     flex-flow: row wrap;
     width: 100%;
@@ -48,7 +48,7 @@ export const ChunkWrapper = styled.div`
   }
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 0.75rem 0 0 0;
   }
 `

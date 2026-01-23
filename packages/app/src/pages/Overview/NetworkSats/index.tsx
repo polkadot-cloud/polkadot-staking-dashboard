@@ -43,7 +43,7 @@ export const NetworkStats = () => {
 	]
 
 	return (
-		<CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
+		<CardWrapper style={{ boxShadow: 'var(--shadow-alt)' }}>
 			<CardHeader margin>
 				<h3>{t('networkStats', { ns: 'pages' })}</h3>
 			</CardHeader>

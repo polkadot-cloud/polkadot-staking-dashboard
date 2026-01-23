@@ -128,7 +128,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 							<h5
 								style={{
 									marginBottom: '0.5rem',
-									color: 'var(--text-color-secondary)',
+									color: 'var(--text-secondary)',
 								}}
 							>
 								{t('maxCommission', { ns: 'modals' })}: {maxCommission}%

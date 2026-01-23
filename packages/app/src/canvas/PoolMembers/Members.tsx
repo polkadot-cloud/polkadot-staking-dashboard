@@ -15,7 +15,7 @@ export const Members = ({ bondedPool }: { bondedPool: BondedPool }) => {
 	const { getThemeValue } = useThemeValues()
 	const { activeAddress } = useActiveAccounts()
 
-	const annuncementBorderColor = getThemeValue('--accent-color-secondary')
+	const annuncementBorderColor = getThemeValue('--accent-secondary')
 
 	const isDepositor = bondedPool.roles.depositor === activeAddress
 	const isRoot = bondedPool.roles.root === activeAddress

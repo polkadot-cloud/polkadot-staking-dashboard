@@ -82,12 +82,10 @@ export const Wrapper = styled.div<{
 
   > .inner {
     transition: border var(--transition-duration);
-    background: var(--background-primary);
+    background: var(--bg-primary);
     border: 1.75px solid
       ${(props) =>
-				props.$selected
-					? 'var(--accent-color-primary)'
-					: 'var(--border-primary-color)'};
+				props.$selected ? 'var(--accent-primary)' : 'var(--border)'};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -96,10 +94,10 @@ export const Wrapper = styled.div<{
     &:hover {
       border-color: ${(props) =>
 				props.$hoverBorder
-					? 'var(--accent-color-primary)'
+					? 'var(--accent-primary)'
 					: props.$selected
-						? 'var(--accent-color-primary)'
-						: 'var(--border-primary-color)'};
+						? 'var(--accent-primary)'
+						: 'var(--border)'};
     }
 
     > button {
@@ -117,8 +115,8 @@ export const Wrapper = styled.div<{
       }
 
       > .icon {
-        background: var(--background-list-item);
-        color: var(--accent-color-primary);
+        background: var(--bg-list);
+        color: var(--accent-primary);
         width: 6rem;
         display: flex;
         align-items: center;
@@ -147,9 +145,7 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-					props.$selected
-						? 'var(--accent-color-primary)'
-						: 'var(--text-color-secondary)'};
+					props.$selected ? 'var(--accent-primary)' : 'var(--text-secondary)'};
         opacity: ${(props) => (props.$selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;
