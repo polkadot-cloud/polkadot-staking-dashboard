@@ -94,8 +94,8 @@ importers:
         specifier: 2.3.19
         version: 2.3.19(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@w3ux/react-polkicon':
-        specifier: ^3.3.0
-        version: 3.3.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+        specifier: ^3.4.0
+        version: 3.4.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@w3ux/utils':
         specifier: ^2.3.0
         version: 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -449,8 +449,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.3)
       '@w3ux/react-polkicon':
-        specifier: ^3.3.0
-        version: 3.3.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+        specifier: ^3.4.0
+        version: 3.4.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@w3ux/utils':
         specifier: 2.3.0
         version: 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -486,8 +486,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.3)
       '@w3ux/react-polkicon':
-        specifier: ^3.3.0
-        version: 3.3.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+        specifier: ^3.4.0
+        version: 3.4.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@w3ux/utils':
         specifier: 2.3.0
         version: 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -2350,8 +2350,8 @@ packages:
       react: ^19.1.0
       react-dom: ^19.1.0
 
-  '@w3ux/react-polkicon@3.3.0':
-    resolution: {integrity: sha512-XLH21tdPnt3H2hE/1JOWPp1H7HHBJC+0rxicJs1K+9NSUrX1iD3pYC19hh6e6BGH3YQq4UeJqT2m4VYIar7JqQ==}
+  '@w3ux/react-polkicon@3.4.0':
+    resolution: {integrity: sha512-9p5mt+Olqf0k+rYlAhZj0fiJnuELbS0AmyfuRj0YzLVQP1bEsLr1QL3m2m4tL0nu+bzMDTIJ+hnwPqaLbuIVtA==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -5503,7 +5503,7 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@w3ux/react-polkicon@3.3.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@w3ux/react-polkicon@3.4.0(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@w3ux/crypto': 1.2.1
       '@w3ux/utils': 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
