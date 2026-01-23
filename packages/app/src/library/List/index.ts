@@ -30,7 +30,7 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   }
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-family: InterSemiBold, sans-serif;
   }
 
@@ -44,7 +44,7 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
     flex: 1;
 
     button {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       font-size: 1.1rem;
       margin: 0 0.5rem 0 0.75rem;
       opacity: 0.6;
@@ -78,17 +78,13 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-					props.$next
-						? 'var(--accent-color-primary)'
-						: 'var(--text-color-secondary)'};
+					props.$next ? 'var(--accent-primary)' : 'var(--text-secondary)'};
         cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-					props.$prev
-						? 'var(--accent-color-primary)'
-						: 'var(--text-color-secondary)'};
+					props.$prev ? 'var(--accent-primary)' : 'var(--text-secondary)'};
         cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$prev ? 1 : 0.4)};
       }
@@ -155,7 +151,7 @@ export const SearchInputWrapper = styled.div`
 
   > input {
     border: 1px solid var(--border);
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-family: InterBold, sans-serif;
     border-radius: 1.75rem;
     padding: 0.9rem 1.25rem;
@@ -187,7 +183,7 @@ export const FilterHeaderWrapper = styled.div`
       flex-shrink: 1;
 
       button {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         font-size: 1.1rem;
         margin: 0 0.5rem 0 0.75rem;
         opacity: 0.6;

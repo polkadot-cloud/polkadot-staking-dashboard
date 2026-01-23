@@ -26,20 +26,20 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
     }
   }
   .d1 {
-    background: var(--accent-color-primary);
+    background: var(--accent-primary);
     color: rgba(255, 255, 255, 0.95);
   }
   .d2 {
-    background: var(--accent-color-secondary);
+    background: var(--accent-secondary);
     color: rgba(255, 255, 255, 0.95);
   }
   .d3 {
-    background: var(--text-color-secondary);
+    background: var(--text-secondary);
     color: rgba(255, 255, 255, 0.95);
   }
   .d4 {
     background: var(--btn-bg-tertiary);
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
   }
 `
 

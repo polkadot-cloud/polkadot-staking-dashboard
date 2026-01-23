@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const PromptWrapper = styled.div`
-  background: var(--overlay-background-color);
+  background: var(--bg-prompt);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -76,7 +76,7 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   a {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
   }
   .header {
     width: 100%;
@@ -107,7 +107,7 @@ export const TitleWrapper = styled.div`
     padding: 0 0.5rem;
 
     path {
-      fill: var(--text-color-primary);
+      fill: var(--text-primary);
     }
 
     &:first-child {
@@ -142,8 +142,7 @@ export const FilterListWrapper = styled.div`
 
 export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
-    ${(props) =>
-			props.$active ? 'var(--accent-color-stroke)' : 'var(--btn-bg)'};
+    ${(props) => (props.$active ? 'var(--accent-stroke)' : 'var(--btn-bg)')};
   background: var(--btn-bg);
   width: 100%;
   display: flex;
@@ -156,17 +155,13 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
 
   h4 {
     color: ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--text-color-secondary)'};
+			props.$active ? 'var(--accent-stroke)' : 'var(--text-secondary)'};
     transition: color var(--transition-duration);
   }
 
   svg {
     color: ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--text-color-secondary)'};
+			props.$active ? 'var(--accent-stroke)' : 'var(--text-secondary)'};
     opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
@@ -206,7 +201,7 @@ export const PromptSelectItem = styled.button`
   &.inactive {
     h3,
     h4 {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
   }
 `

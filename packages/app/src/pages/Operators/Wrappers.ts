@@ -8,7 +8,7 @@ const VERTICAL_THRESHOLD = 800
 
 export const Wrapper = styled.div`
   h2 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
@@ -31,9 +31,9 @@ export const ItemWrapper = styled(motion.div)`
   }
 
   > .inner {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     background: var(--bg-primary);
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--shadow);
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;
@@ -61,7 +61,7 @@ export const ItemWrapper = styled(motion.div)`
         > button {
           font-size: 1.1rem;
           &.active {
-            color: var(--text-color-secondary);
+            color: var(--text-secondary);
             background: var(--bg-list);
             &:hover {
               background: var(--bg-list);
@@ -80,7 +80,7 @@ export const ItemWrapper = styled(motion.div)`
         padding: 0.3rem 1rem;
 
         svg {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
         }
 
         margin: 0.5rem 1rem 0.5rem 0;

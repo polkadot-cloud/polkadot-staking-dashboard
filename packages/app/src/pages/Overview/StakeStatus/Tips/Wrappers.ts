@@ -59,9 +59,9 @@ export const ItemInnerWrapper = styled.div`
 
         &.active {
           h4:hover {
-            color: var(--accent-color-primary);
+            color: var(--accent-primary);
             .more {
-              color: var(--accent-color-primary);
+              color: var(--accent-primary);
               opacity: 1;
             }
           }
@@ -76,7 +76,7 @@ export const ItemInnerWrapper = styled.div`
           width: auto;
 
           > h4 {
-            color: var(--text-color-secondary);
+            color: var(--text-secondary);
             transition: color var(--transition-duration);
             font-family: Inter, sans-serif;
             text-align: left;
@@ -88,7 +88,7 @@ export const ItemInnerWrapper = styled.div`
             width: 100%;
 
             > svg {
-              color: var(--text-color-secondary);
+              color: var(--text-secondary);
               transition: all var(--transition-duration);
               position: absolute;
               right: 0.2rem;
@@ -107,7 +107,7 @@ export const ItemInnerWrapper = styled.div`
 `
 
 export const PageToggleWrapper = styled.div`
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -126,22 +126,22 @@ export const PageToggleWrapper = styled.div`
       padding: 0 1rem;
 
       > svg {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
       }
       &:hover {
         opacity: 1;
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
         background-color: var(--bg-body);
       }
       &:disabled {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         opacity: var(--opacity-disabled);
       }
     }
   }
 
   h4 {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
 
     @media (max-width: ${SmallFontSizeMaxWidth}px) {
       display: none;

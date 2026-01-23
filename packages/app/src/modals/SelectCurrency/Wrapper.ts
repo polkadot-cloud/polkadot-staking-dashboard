@@ -13,7 +13,7 @@ export const SearchInput = styled.div`
 
   input {
     border-bottom: 1px solid var(--border);
-    color: var(--text-color-primary);
+    color: var(--text-primary);
     width: 100%;
     padding: 0.5rem 0;
     font-size: 1.2rem;
@@ -23,11 +23,11 @@ export const SearchInput = styled.div`
       background-color 0.2s;
 
     &:focus {
-      border-color: var(--accent-color-primary);
+      border-color: var(--accent-primary);
     }
 
     &::placeholder {
-      color: var(--text-color-tertiary);
+      color: var(--text-tertiary);
       opacity: 0.7;
     }
   }

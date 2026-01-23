@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .multiButton {
-  background: var(--accent-color-primary);
+  background: var(--accent-primary);
   transition: transform var(--transition-duration);
   border-radius: 1.5rem;
   display: flex;
   padding: 0.1rem 0.25rem;
   &.disabled {
-    background: var(--accent-color-pending);
+    background: var(--accent-pending);
   }
   > span {
-    border-right: 1px solid var(--text-color-invert);
+    border-right: 1px solid var(--text-invert);
     opacity: 0.2;
     margin: 0 0.2rem;
   }

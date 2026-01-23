@@ -46,7 +46,7 @@ export const StatWrapper = styled.div`
     h2,
     h3,
     h4 {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
     }
   }
 `

@@ -48,7 +48,7 @@ export const ItemWrapper = styled.div`
   }
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 0;
   }
 `

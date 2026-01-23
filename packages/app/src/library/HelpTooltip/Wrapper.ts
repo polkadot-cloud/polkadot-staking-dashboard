@@ -49,14 +49,14 @@ export const PopoverContent = styled(Popover.Content)`
 
 	h4 {
 		margin: 0 0 0.75rem 0;
-		color: var(--text-color-primary);
+		color: var(--text-primary);
 		font-size: 1.2rem;
 		font-weight: 600;
 	}
 
 	p {
 		margin: 0;
-		color: var(--text-color-secondary);
+		color: var(--text-secondary);
 		font-size: 1.1rem;
 		line-height: 1.5;
 
@@ -72,7 +72,7 @@ export const CloseButton = styled.button`
 	right: 0.75rem;
 	background: transparent;
 	border: none;
-	color: var(--text-color-tertiary);
+	color: var(--text-tertiary);
 	cursor: pointer;
 	padding: 0.25rem;
 	display: flex;
@@ -83,7 +83,7 @@ export const CloseButton = styled.button`
 	font-size: 1rem;
 
 	&:hover {
-		color: var(--text-color-primary);
+		color: var(--text-primary);
 	}
 
 	&:active {

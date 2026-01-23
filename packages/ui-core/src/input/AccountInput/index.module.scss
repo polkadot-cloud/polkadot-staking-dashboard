@@ -24,7 +24,7 @@ $container-border-radius: 1.25rem;
   }
 
   &:hover {
-    border-color: var(--accent-color-pending);
+    border-color: var(--accent-pending);
   }
 
   &.disabled {
@@ -34,7 +34,7 @@ $container-border-radius: 1.25rem;
 }
 
 .input {
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   font-family: InterSemiBold, sans-serif;
   font-size: 1.2rem;
   flex: 1;
@@ -59,7 +59,7 @@ $container-border-radius: 1.25rem;
 }
 
 .address {
-  color: var(--text-color-tertiary);
+  color: var(--text-tertiary);
   margin-top: 0.5rem;
   font-size: 1rem;
 }
@@ -88,7 +88,7 @@ $container-border-radius: 1.25rem;
   padding-left: 0.5rem;
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-size: 0.95rem;
   }
 
@@ -99,7 +99,7 @@ $container-border-radius: 1.25rem;
 }
 
 .balance {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -130,7 +130,7 @@ $container-border-radius: 1.25rem;
 }
 
 .listName {
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   font-family: InterSemiBold, sans-serif;
   font-size: 1.1rem;
 }
@@ -154,7 +154,7 @@ $container-border-radius: 1.25rem;
 }
 
 .label {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-size: 1.1rem;
   padding-bottom: 0.4rem;
 }

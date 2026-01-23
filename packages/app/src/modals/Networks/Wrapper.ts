@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   padding: 1rem;
 
   h2 {
-    color: var(--text-color-primary);
+    color: var(--text-primary);
     margin-top: 0.5rem;
     margin-bottom: 1rem;
   }
@@ -22,7 +22,7 @@ export const ContentWrapper = styled.div`
 
   > h4 {
     border-bottom: 1px solid var(--border);
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
@@ -50,7 +50,7 @@ export const ContentWrapper = styled.div`
 
 export const NetworkButton = styled.button<{ $connected: boolean }>`
   background: var(--btn-bg);
-  border: 1px solid var(--status-success-color-transparent);
+  border: 1px solid var(--status-success-transparent);
   padding: 1rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -76,7 +76,7 @@ export const NetworkButton = styled.button<{ $connected: boolean }>`
 
   h4 {
     &.selected {
-      color: var(--status-success-color);
+      color: var(--status-success);
       margin-left: 0.75rem;
     }
   }
@@ -95,11 +95,11 @@ export const NetworkButton = styled.button<{ $connected: boolean }>`
   }
 
   svg {
-    color: var(--text-color-secondary);
-    fill: var(--text-color-secondary);
+    color: var(--text-secondary);
+    fill: var(--text-secondary);
   }
   p {
-    color: var(--text-color-primary);
+    color: var(--text-primary);
     font-size: 1rem;
   }
 
@@ -151,7 +151,7 @@ export const ConnectionsWrapper = styled.div`
 
 export const ConnectionButton = styled.button<{ $connected: boolean }>`
   background: var(--btn-bg);
-  border: 1px solid var(--status-success-color-transparent);
+  border: 1px solid var(--status-success-transparent);
   position: relative;
   padding: 1rem 0.75rem;
   margin-bottom: 1rem;
@@ -177,7 +177,7 @@ export const ConnectionButton = styled.button<{ $connected: boolean }>`
   }
   h4 {
     &.selected {
-      color: var(--status-success-color);
+      color: var(--status-success);
       margin: 0 0.75rem 0 0;
     }
   }

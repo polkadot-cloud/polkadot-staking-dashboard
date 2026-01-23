@@ -10,7 +10,7 @@ import type { CardWrapperProps } from './types'
  * Used to separate the main modules throughout the app.
  */
 export const CardWrapper = styled.div<CardWrapperProps>`
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow);
   background: var(--bg-primary);
   border-radius: 1.1rem;
   display: flex;
@@ -49,11 +49,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.warning {
-    border: 1px solid var(--accent-color-secondary);
+    border: 1px solid var(--accent-secondary);
   }
 
   &.prompt {
-    border: 1px solid var(--accent-color-pending);
+    border: 1px solid var(--accent-pending);
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {

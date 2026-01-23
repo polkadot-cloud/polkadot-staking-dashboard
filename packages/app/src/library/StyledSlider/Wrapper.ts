@@ -11,6 +11,6 @@ export const Wrapper = styled.div`
   }
 
   .rc-slider-handle-dragging {
-    box-shadow: 0 0 0 5px var(--accent-color-transparent) !important;
+    box-shadow: 0 0 0 5px var(--accent-transparent) !important;
   }
 `

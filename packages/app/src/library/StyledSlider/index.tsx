@@ -25,14 +25,14 @@ export const StyledSlider = ({
 			}}
 			styles={{
 				track: {
-					backgroundColor: 'var(--accent-color-primary)',
+					backgroundColor: 'var(--accent-primary)',
 				},
 				rail: {
 					backgroundColor: 'var(--btn-bg-secondary)',
 				},
 				handle: {
 					backgroundColor: 'var(--bg-primary)',
-					borderColor: 'var(--accent-color-primary)',
+					borderColor: 'var(--accent-primary)',
 					opacity: 1,
 				},
 			}}

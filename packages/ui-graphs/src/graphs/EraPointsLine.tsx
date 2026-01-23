@@ -45,7 +45,7 @@ export const EraPointsLine = ({
 		: entries.map((entry) => new BigNumber(entry.points).toString())
 
 	// Use primary color for line
-	const color = getThemeValue('--accent-color-primary')
+	const color = getThemeValue('--accent-primary')
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
 		family: "'Inter', 'sans-serif'",
@@ -53,7 +53,7 @@ export const EraPointsLine = ({
 		size: 11,
 	}
 	const titleStyle = {
-		color: getThemeValue('--text-color-secondary'),
+		color: getThemeValue('--text-secondary'),
 		display: true,
 		padding: 6,
 		font: titleFontSpec,
@@ -109,8 +109,8 @@ export const EraPointsLine = ({
 			tooltip: {
 				displayColors: false,
 				backgroundColor: getThemeValue('--bg-invert'),
-				titleColor: getThemeValue('--text-color-invert'),
-				bodyColor: getThemeValue('--text-color-invert'),
+				titleColor: getThemeValue('--text-invert'),
+				bodyColor: getThemeValue('--text-invert'),
 				bodyFont: {
 					weight: 600,
 				},

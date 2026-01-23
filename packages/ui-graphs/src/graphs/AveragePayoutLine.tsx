@@ -81,10 +81,10 @@ export const AveragePayoutLine = ({
 
 	// Determine color for payouts
 	const color = !staking
-		? getThemeValue('--accent-color-primary')
+		? getThemeValue('--accent-primary')
 		: !inPoolOnly
-			? getThemeValue('--accent-color-primary')
-			: getThemeValue('--accent-color-secondary')
+			? getThemeValue('--accent-primary')
+			: getThemeValue('--accent-secondary')
 
 	const options = {
 		responsive: true,
@@ -109,7 +109,7 @@ export const AveragePayoutLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-color-secondary'),
+					color: getThemeValue('--grid-secondary'),
 				},
 			},
 		},
@@ -120,8 +120,8 @@ export const AveragePayoutLine = ({
 			tooltip: {
 				displayColors: false,
 				backgroundColor: getThemeValue('--bg-invert'),
-				titleColor: getThemeValue('--text-color-invert'),
-				bodyColor: getThemeValue('--text-color-invert'),
+				titleColor: getThemeValue('--text-invert'),
+				bodyColor: getThemeValue('--text-invert'),
 				bodyFont: {
 					weight: 600,
 				},

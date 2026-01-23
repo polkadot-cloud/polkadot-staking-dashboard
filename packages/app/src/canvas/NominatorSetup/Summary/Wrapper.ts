@@ -32,7 +32,7 @@ export const SummaryWrapper = styled.div`
         justify-content: center;
 
         > svg {
-          color: var(--accent-color-primary);
+          color: var(--accent-primary);
         }
       }
 
@@ -42,7 +42,7 @@ export const SummaryWrapper = styled.div`
         padding-left: 0.25rem;
 
         > h4 {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
           margin-bottom: 0.3rem;
         }
       }

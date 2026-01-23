@@ -35,6 +35,6 @@ export const ItemWrapper = styled.button`
   }
 
   > h3 {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
   }
 `

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .Content {
-  color: var(--text-color-invert);
+  color: var(--text-invert);
   background: var(--bg-invert);
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   font-size: 1.1rem;
@@ -22,7 +22,7 @@
 
 .Inverted {
   background: var(--bg-primary);
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
 }
 
 .FadeIn {

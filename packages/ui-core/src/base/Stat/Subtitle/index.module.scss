@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .subtitle {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-family: InterSemiBold, sans-serif;
   flex: 1;
   display: flex;
@@ -10,7 +10,7 @@
   align-items: center;
 
   &.primary {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
     > svg {
       margin-left: 0.5rem;
     }

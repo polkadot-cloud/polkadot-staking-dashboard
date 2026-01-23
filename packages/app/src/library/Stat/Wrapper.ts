@@ -13,7 +13,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
     align-items: center;
 
     > .btn {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       background: var(--bg-primary);
       display: flex;
       flex-flow: row wrap;
@@ -25,7 +25,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       margin-left: 0.65rem;
       transition: color var(--transition-duration);
       &:hover {
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
       }
     }
   }
@@ -45,7 +45,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
     .text {
       padding-left: ${(props) => (props.$isAddress ? '3rem' : 0)};
       font-family: InterBold, sans-serif;
-      color: var(--text-color-primary);
+      color: var(--text-primary);
       position: absolute;
       left: 0;
       top: 0;

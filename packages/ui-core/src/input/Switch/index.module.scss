@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .Root {
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow);
   all: unset;
   width: 4rem;
   height: 2.15rem;
@@ -12,7 +12,7 @@
   background-color: var(--border-alt);
 
   &[data-state='checked'] {
-    background-color: var(--accent-color-primary);
+    background-color: var(--accent-primary);
   }
 }
 

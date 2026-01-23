@@ -90,8 +90,8 @@ export const RewardCalculator = () => {
 								icon={showAdjusted ? faToggleOn : faToggleOff}
 								style={{
 									color: showAdjusted
-										? 'var(--accent-color-primary)'
-										: 'var(--text-color-tertiary)',
+										? 'var(--accent-primary)'
+										: 'var(--text-tertiary)',
 									marginRight: '0.8rem',
 								}}
 								transform={'grow-6'}

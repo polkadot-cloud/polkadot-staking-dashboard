@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
       aspect-ratio: 8;
       background: radial-gradient(
           circle closest-side,
-          var(--text-color-primary) 100%,
+          var(--text-primary) 100%,
           #0000
         )
         0 / calc(100% / 3) 100% space;

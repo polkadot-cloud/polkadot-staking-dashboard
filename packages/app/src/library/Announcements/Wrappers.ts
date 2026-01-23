@@ -57,18 +57,18 @@ export const HeaderWrapper = styled.div`
       }
 
       h2 {
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
         display: flex;
         align-items: center;
 
         > button {
-          color: var(--accent-color-primary);
+          color: var(--accent-primary);
           margin-left: 0.75rem;
         }
       }
 
       h4 {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         font-family: Inter, sans-serif;
         display: flex;
         flex-flow: row wrap;
@@ -108,7 +108,7 @@ export const Item = styled(motion.div)`
     padding-bottom: 0.2rem;
 
     &.neutral {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
     &.danger {
       color: #d2545d;
@@ -117,12 +117,12 @@ export const Item = styled(motion.div)`
       color: #b5a200;
     }
     &.pools {
-      color: var(--accent-color-secondary);
+      color: var(--accent-secondary);
     }
   }
 
   p {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.2rem;
   }

@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const MinDelayInputWrapper = styled.div`
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   border: 1px solid var(--border);
   flex: 0 1 auto;
   display: flex;
@@ -43,7 +43,7 @@ export const MinDelayInputWrapper = styled.div`
     width: 1.5rem;
 
     > button {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       height: 1.5rem;
       width: 100%;
       display: flex;

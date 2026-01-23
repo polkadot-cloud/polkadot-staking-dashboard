@@ -82,14 +82,14 @@ export const AccountInputWrapper = styled.div`
   h5 {
     margin: 0.75rem 0.25rem;
     &.neutral {
-      color: var(--text-color-primary);
+      color: var(--text-primary);
       opacity: 0.8;
     }
     &.danger {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
     &.success {
-      color: var(--status-success-color);
+      color: var(--status-success);
     }
   }
 `

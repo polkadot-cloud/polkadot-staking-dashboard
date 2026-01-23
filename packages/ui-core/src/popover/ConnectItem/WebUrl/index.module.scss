@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .webUrl {
-  color: var(--text-color-tertiary);
+  color: var(--text-tertiary);
   font-family: Inter, sans-serif;
   display: flex;
   align-items: center;
 
   > button {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
     font-size: 1.1rem;
     margin-top: 0.2rem;
     text-decoration: none;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnModal {
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   background: var(--btn-bg);
   transition: background-color var(--transition-duration);
   box-sizing: border-box;
@@ -17,7 +17,7 @@
   margin-bottom: 0.6rem;
 
   &.selected {
-    border-color: var(--accent-color-primary);
+    border-color: var(--accent-primary);
   }
   &:disabled {
     opacity: 0.5;
@@ -34,10 +34,10 @@
   h5 {
     &.toggle {
       > .on {
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
       }
       > .off {
-        color: var(--text-color-tertiary);
+        color: var(--text-tertiary);
         opacity: 0.75;
       }
     }

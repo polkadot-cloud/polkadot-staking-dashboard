@@ -16,12 +16,12 @@ $header-button-width: 3.5rem;
 
   &:hover {
     background: var(--btn-bg-hover);
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
   }
 
   > .active {
-    background-color: var(--accent-color-primary);
-    box-shadow: 0 0 0 1px var(--accent-color-primary);
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 0 1px var(--accent-primary);
     position: absolute;
     top: 0;
     right: 0;

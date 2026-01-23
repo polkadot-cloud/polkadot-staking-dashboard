@@ -22,7 +22,7 @@ export const GeoDonut = ({
 	const isZero = data.length === 0
 	const backgroundColor = isZero
 		? getThemeValue('--bg-body')
-		: getThemeValue('--accent-color-primary')
+		: getThemeValue('--accent-primary')
 
 	const total = data.reduce((acc: number, value: number) => acc + value, 0)
 

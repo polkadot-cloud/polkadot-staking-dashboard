@@ -27,7 +27,7 @@
   > div,
   > button {
     background: var(--bg-primary);
-    box-shadow: var(--card-shadow-secondary);
+    box-shadow: var(--shadow-alt);
     border: 1px solid transparent;
     display: flex;
     border-radius: 1rem;
@@ -37,7 +37,7 @@
     flex-flow: row wrap;
 
     @media (max-width: 799px) {
-      box-shadow: var(--card-shadow);
+      box-shadow: var(--shadow);
     }
     > label {
       background: var(--bg-invert);
@@ -52,7 +52,7 @@
       max-width: 250px;
       transition: opacity var(--transition-duration);
       > h3 {
-        color: var(--text-color-invert);
+        color: var(--text-invert);
         font-family: InterSemiBold, sans-serif;
         text-align: center;
         margin: 0;
@@ -77,10 +77,10 @@
   }
 
   > button {
-    border: 1px solid var(--accent-color-pending);
+    border: 1px solid var(--accent-pending);
     transition: border 0.1s;
     &:hover {
-      border: 1px solid var(--accent-color-primary);
+      border: 1px solid var(--accent-primary);
     }
   }
 }

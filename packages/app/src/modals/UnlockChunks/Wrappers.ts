@@ -48,7 +48,7 @@ export const ChunkWrapper = styled.div`
   }
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 0.75rem 0 0 0;
   }
 `

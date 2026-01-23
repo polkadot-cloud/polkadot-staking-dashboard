@@ -75,7 +75,7 @@ export const CallToActionWrapper = styled.div`
         flex-shrink: 1;
 
         &.primary {
-          background-color: var(--accent-color-primary);
+          background-color: var(--accent-primary);
           border-top-left-radius: var(--button-border-radius);
           border-bottom-left-radius: var(--button-border-radius);
           color: white;
@@ -86,7 +86,7 @@ export const CallToActionWrapper = styled.div`
           }
 
           &.disabled {
-            background-color: var(--accent-color-pending);
+            background-color: var(--accent-pending);
 
             &:hover {
               filter: none;
@@ -94,14 +94,14 @@ export const CallToActionWrapper = styled.div`
           }
 
           &.pulse {
-            box-shadow: 0 0 30px 0 var(--accent-color-pending);
+            box-shadow: 0 0 30px 0 var(--accent-pending);
             transform: scale(1);
             animation: pulse 4s infinite;
 
             @keyframes pulse {
               0% {
                 transform: scale(0.98);
-                box-shadow: 0 0 0 0 var(--accent-color-pending);
+                box-shadow: 0 0 0 0 var(--accent-pending);
               }
 
               70% {
@@ -121,7 +121,7 @@ export const CallToActionWrapper = styled.div`
           background-color: var(--btn-bg);
           border-top-right-radius: var(--button-border-radius);
           border-bottom-right-radius: var(--button-border-radius);
-          color: var(--text-color-primary);
+          color: var(--text-primary);
 
           &:hover {
             filter: brightness(95%);

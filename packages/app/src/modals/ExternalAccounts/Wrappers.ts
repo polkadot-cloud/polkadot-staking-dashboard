@@ -6,7 +6,7 @@ import styled from 'styled-components'
 export const ActionWithButton = styled.div`
   border-bottom: 1px solid var(--border);
   width: 100%;
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   margin: 1.25rem 0 0;
@@ -29,7 +29,7 @@ export const ActionWithButton = styled.div`
 `
 
 export const ManualAccountsWrapper = styled.div`
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -70,7 +70,7 @@ export const ManualAccount = styled.div`
   transition: border 0.1s;
 
   > div {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     transition: opacity var(--transition-duration);
 
     &:first-child {
@@ -99,7 +99,7 @@ export const ManualAccount = styled.div`
 
           &.title > span,
           &.subtitle > span {
-            color: var(--text-color-secondary);
+            color: var(--text-secondary);
             opacity: 0.65;
             margin-right: 0.65rem;
           }

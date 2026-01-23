@@ -46,7 +46,7 @@ export const PayoutLine = ({
 		: entries.map((entry) => new BigNumber(entry.reward).toString())
 
 	// Use primary color for line
-	const color = getThemeValue('--accent-color-primary')
+	const color = getThemeValue('--accent-primary')
 
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
@@ -57,7 +57,7 @@ export const PayoutLine = ({
 	const titleStyle = {
 		display: true,
 		...titleFontSpec,
-		color: getThemeValue('--text-color-secondary'),
+		color: getThemeValue('--text-secondary'),
 	}
 
 	const options = {
@@ -107,8 +107,8 @@ export const PayoutLine = ({
 			tooltip: {
 				displayColors: false,
 				backgroundColor: getThemeValue('--bg-invert'),
-				titleColor: getThemeValue('--text-color-invert'),
-				bodyColor: getThemeValue('--text-color-invert'),
+				titleColor: getThemeValue('--text-invert'),
+				bodyColor: getThemeValue('--text-invert'),
 				bodyFont: {
 					weight: 600,
 				},

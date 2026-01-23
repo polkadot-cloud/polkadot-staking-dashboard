@@ -19,19 +19,19 @@ export const SummaryWrapper = styled.div`
     padding: 0.5rem 0 0.75rem 0;
 
     > div:first-child {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       width: 200px;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
 
       svg {
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
       }
     }
 
     > div:last-child {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;

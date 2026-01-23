@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 .Content {
   background: var(--bg-primary);
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow);
   border-radius: $popover-border-radius;
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);

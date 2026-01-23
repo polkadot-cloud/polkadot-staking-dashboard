@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
 
 export const ItemWrapper = styled.button`
   border-bottom: 1px solid var(--border);
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   display: flex;
   width: 100%;
   padding: 0.75rem 0.5rem;
@@ -32,7 +32,7 @@ export const ItemWrapper = styled.button`
   }
 
   .title {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     padding: 0 0 0 0.75rem;
     font-size: 1rem;
   }

@@ -68,7 +68,7 @@ export const Wrapper = styled.div`
             flex-grow: 1;
 
             p {
-              color: var(--text-color-secondary);
+              color: var(--text-secondary);
               display: flex;
               align-items: center;
               font-size: 1rem;
@@ -76,7 +76,7 @@ export const Wrapper = styled.div`
               padding-left: 0.5rem;
 
               &.prompt {
-                color: var(--accent-color-primary);
+                color: var(--accent-primary);
                 font-size: 1.05rem;
                 align-items: flex-start;
 
@@ -133,7 +133,7 @@ export const SignerWrapper = styled.p`
     margin-left: 0.5rem;
 
     > .danger {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
 
     > .icon {
@@ -150,13 +150,13 @@ export const SignerWrapper = styled.p`
     button {
       background: var(--bg-primary);
       border-radius: 0.5rem;
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       padding: 0.1rem 0.4rem;
       font-size: 0.85rem;
       transition: all 0.15s;
 
       &:hover {
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
       }
 
       &:disabled {

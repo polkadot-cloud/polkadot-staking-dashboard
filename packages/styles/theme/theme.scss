@@ -33,6 +33,8 @@ SPDX-License-Identifier: GPL-3.0-only */
   --bg-modal: #f9f7f7;
   --bg-modal-footer: #efefef;
   --bg-menu: #eaeaea;
+  --bg-overlay: rgb(228 226 228 / 80%);
+  --bg-prompt: rgb(200 200 200 / 65%);
   --bg-input: #fdfdfd;
   --border: #e2e2e2;
   --border-alt: #cfcccc;
@@ -46,52 +48,47 @@ SPDX-License-Identifier: GPL-3.0-only */
   --shadow-primary: rgba(27, 19, 19, 0.2);
   --shadow-secondary: #e7e7e7;
   --shadow-tertiary: rgb(158 158 158 / 50%);
-  --accent-color-primary: var(--accent-color-primary-light);
-  --accent-color-secondary: var(--accent-color-secondary-light);
-  --accent-color-tertiary: var(--accent-color-tertiary-light);
-  --accent-color-stroke: var(--accent-color-stroke-light);
-  --accent-color-transparent: var(--accent-color-transparent-light);
-  --accent-color-pending: var(--accent-color-pending-light);
-  --modal-background-color: rgb(228 226 228 / 80%);
-  --overlay-background-color: rgb(200 200 200 / 65%);
-  --shimmer-foreground: #e0e0e0;
-  --shimmer-background: #c4c4c4;
-  --status-success-color: green;
-  --status-success-color-transparent: rgb(0 128 0 / 25%);
-  --status-warning-color: #a78a3a;
-  --status-warning-color-transparent: rgb(236 211 125 / 50%);
-  --status-danger-color: #ae2324;
-  --status-danger-color-transparent: rgb(255 0 0 / 25%);
-  --text-color-primary: #2f2f2f;
-  --text-color-secondary: #585858;
-  --text-color-tertiary: #888;
-  --text-color-invert: #fafafa;
-  --body-background: #efeeee;
-  
-  --gradient-side-menu: linear-gradient(
+  --accent-primary: var(--accent-primary-light);
+  --accent-secondary: var(--accent-secondary-light);
+  --accent-tertiary: var(--accent-tertiary-light);
+  --accent-stroke: var(--accent-stroke-light);
+  --accent-transparent: var(--accent-transparent-light);
+  --accent-pending: var(--accent-pending-light);
+  --shimmer-fg: #e0e0e0;
+  --shimmer-bg: #c4c4c4;
+  --status-success: green;
+  --status-success-transparent: rgb(0 128 0 / 25%);
+  --status-warning: #a78a3a;
+  --status-warning-transparent: rgb(236 211 125 / 50%);
+  --status-danger: #ae2324;
+  --status-danger-transparent: rgb(255 0 0 / 25%);
+  --text-primary: #2f2f2f;
+  --text-secondary: #585858;
+  --text-tertiary: #888;
+  --text-invert: #fafafa;
+  --gradient-menu: linear-gradient(
     180deg,
     rgb(244 242 242 / 93%) 0%,
     rgb(228 225 225 / 93%) 100%
   );
-  --highlight-solid: rgb(0 0 0 / 4%) 0%;
-  --highlight-primary: rgb(224 222 222 / 75%);
-  --highlight-secondary: linear-gradient(
+  --highlight: rgb(0 0 0 / 4%) 0%;
+  --highlight-alt: linear-gradient(
     90deg,
     rgb(0 0 0 / 6%) 0%,
     rgb(0 0 0 / 1%) 95%,
     rgb(0 0 0 / 0%) 100%
   );
-  --grid-color-primary: #e3e3e3;
-  --grid-color-secondary: #e8e8e8;
+  --grid-primary: #e3e3e3;
+  --grid-secondary: #e8e8e8;
   --grid-canvas-axis: #222;
   --grid-canvas: #ccc;
-  --card-shadow:
+  --shadow:
     -1px -2px 12px 1px var(--shadow-secondary),
     0px 0.5px 1px 0px var(--shadow-tertiary),
     0 3.5px 6px -1px var(--shadow-primary),
     0.4px -0.4px 0px 0px var(--shadow-primary),
     -0.4px 0px 0px 0px var(--shadow-primary);
-  --card-shadow-secondary:
+  --shadow-alt:
     0px 1px 1px 0px var(--shadow-secondary),
     0 0.5px 1px -1px var(--shadow-secondary),
     0.4px -0.4px 0px 0px var(--shadow-secondary),
@@ -124,52 +121,49 @@ SPDX-License-Identifier: GPL-3.0-only */
   --shadow-primary: rgb(28 24 28 / 25%);
   --shadow-secondary: rgb(28 24 28 / 25%);
   --shadow-tertiary: rgb(28 24 28 / 50%);
-  --accent-color-primary: var(--accent-color-primary-dark);
-  --accent-color-secondary: var(--accent-color-secondary-dark);
-  --accent-color-tertiary: var(--accent-color-tertiary-dark);
-  --accent-color-stroke: var(--accent-color-stroke-dark);
-  --accent-color-transparent: var(--accent-color-transparent-dark);
-  --accent-color-pending: var(--accent-color-pending-dark);
-  --modal-background-color: rgb(32 28 32 / 80%);
-  --overlay-background-color: rgb(18 14 18 / 70%);
-  --shimmer-background: rgb(57 52 58);
-  --shimmer-foreground: rgb(32 29 33);
-  --status-success-color: #74da77;
-  --status-success-color-transparent: rgb(0 128 0 / 25%);
-  --status-warning-color: rgb(219 161 0 / 100%);
-  --status-warning-color-transparent: rgb(255 165 0 / 50%);
-  --status-danger-color: #d14445;
-  --status-danger-color-transparent: rgb(255 0 0 / 25%);
-  --text-color-primary: #b8b3b9;
-  --text-color-secondary: #938e94;
-  --text-color-tertiary: #817d82;
-  --text-color-invert: #0f0e0f;
-  --body-background:rgb(36 32 36) 0%;
-  --gradient-side-menu: linear-gradient(
+  --accent-primary: var(--accent-primary-dark);
+  --accent-secondary: var(--accent-secondary-dark);
+  --accent-tertiary: var(--accent-tertiary-dark);
+  --accent-stroke: var(--accent-stroke-dark);
+  --accent-transparent: var(--accent-transparent-dark);
+  --accent-pending: var(--accent-pending-dark);
+  --bg-overlay: rgb(32 28 32 / 80%);
+  --bg-prompt: rgb(18 14 18 / 70%);
+  --shimmer-bg: rgb(57 52 58);
+  --shimmer-fg: rgb(32 29 33);
+  --status-success: #74da77;
+  --status-success-transparent: rgb(0 128 0 / 25%);
+  --status-warning: rgb(219 161 0 / 100%);
+  --status-warning-transparent: rgb(255 165 0 / 50%);
+  --status-danger: #d14445;
+  --status-danger-transparent: rgb(255 0 0 / 25%);
+  --text-primary: #b8b3b9;
+  --text-secondary: #938e94;
+  --text-tertiary: #817d82;
+  --text-invert: #0f0e0f;
+  --gradient-menu: linear-gradient(
     180deg,
     rgb(48 41 48) 0%,
     rgb(30 27 30) 100%
   );
-  --highlight-solid: rgb(255 255 255 / 3%);
-  --highlight-primary: rgb(255 255 255 / 8%);
-  --highlight-secondary: linear-gradient(
+  --highlight: rgb(255 255 255 / 3%);
+  --highlight-alt: linear-gradient(
     90deg,
     rgb(255 255 255 / 3%) 0%,
     rgb(255 255 255 / 1%) 100%
   );
-  --grid-color-primary: rgb(51 43 51);
-  --grid-color-secondary: rgb(53 45 53);
+  --grid-primary: rgb(51 43 51);
+  --grid-secondary: rgb(53 45 53);
   --grid-canvas-axis: #eee;
   --grid-canvas: #444;
-  --card-shadow:
+  --shadow:
     -1px -2px 12px 1px var(--shadow-secondary),
     0px 0.75px 1px 0px var(--shadow-tertiary),
     0 3.5px 6px -1px var(--shadow-primary),
     0.4px -0.4px 0px 0px var(--shadow-primary),
     -0.4px 0px 0px 0px var(--shadow-primary);
-  --card-shadow-secondary:
+  --shadow-alt:
     0px 1px 1px 0px var(--shadow-secondary),
-    0 0.5px 1px -1px var(--shadow-secondary),
     0.4px -0.4px 0px 0px var(--shadow-secondary),
     -0.4px 0px 0px 0px var(--shadow-secondary);
 }

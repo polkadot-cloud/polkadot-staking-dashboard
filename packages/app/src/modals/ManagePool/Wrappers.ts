@@ -23,7 +23,7 @@ export const ContentWrapper = styled.div`
     }
 
     .arrow {
-      color: var(--text-color-primary);
+      color: var(--text-primary);
     }
   }
 `
@@ -43,16 +43,16 @@ export const SliderWrapper = styled.div`
     }
     &.neutral,
     .neutral {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
       opacity: 0.8;
     }
     &.danger,
     .danger {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
     &.success,
     .success {
-      color: var(--status-success-color);
+      color: var(--status-success);
     }
   }
 
@@ -85,7 +85,7 @@ export const SliderWrapper = styled.div`
       }
 
       .rc-slider-handle-dragging {
-        box-shadow: 0 0 0 5px var(--accent-color-transparent) !important;
+        box-shadow: 0 0 0 5px var(--accent-transparent) !important;
       }
     }
   }
@@ -134,7 +134,7 @@ export const TaskInnerWrapper = styled.div`
   }
 
   p {
-    color: var(--text-color-primary);
+    color: var(--text-primary);
     font-size: 1rem;
   }
 `

@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnSubmit {
-  border: 1px solid var(--accent-color-primary);
+  border: 1px solid var(--accent-primary);
   border-radius: var(--btn-sm-radius);
-  background: var(--accent-color-primary);
+  background: var(--accent-primary);
   color: white;
 }
 
 .btnSubmitSecondaryColor {
-  border-color: var(--accent-color-secondary);
-  background: var(--accent-color-secondary);
+  border-color: var(--accent-secondary);
+  background: var(--accent-secondary);
 }
 
 .btnSubmitSm {
@@ -24,14 +24,14 @@
 }
 
 .btnSubmitPulse {
-  box-shadow: 0 0 30px 0 var(--accent-color-pending);
+  box-shadow: 0 0 30px 0 var(--accent-pending);
   transform: scale(1);
   animation: pulse 2s infinite;
 
   @keyframes pulse {
     0% {
       transform: scale(0.95);
-      box-shadow: 0 0 0 0 var(--accent-color-pending);
+      box-shadow: 0 0 0 0 var(--accent-pending);
     }
 
     70% {

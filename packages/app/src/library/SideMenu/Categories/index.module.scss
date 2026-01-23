@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 .button {
   background: var(--bg-primary);
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   border-radius: 0.75rem;
   width: 100%;
   padding: 0.75rem 1rem;
@@ -18,15 +18,15 @@ SPDX-License-Identifier: GPL-3.0-only */
   transition: all 0.2s;
   
   &.active {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
   }
 
   &:hover {
-    color: var(--text-color-secondary);
-    box-shadow: var(--card-shadow-secondary);  
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-alt);  
 
     &.active {
-      color: var(--accent-color-primary)
+      color: var(--accent-primary)
     }
   }
 }
