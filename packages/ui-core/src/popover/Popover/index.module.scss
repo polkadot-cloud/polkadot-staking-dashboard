@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   outline: none;
   transition: height var(--transition-duration);
   
