@@ -108,7 +108,7 @@ export const EraPointsLine = ({
 			},
 			tooltip: {
 				displayColors: false,
-				backgroundColor: getThemeValue('--background-invert'),
+				backgroundColor: getThemeValue('--bg-invert'),
 				titleColor: getThemeValue('--text-color-invert'),
 				bodyColor: getThemeValue('--text-color-invert'),
 				bodyFont: {

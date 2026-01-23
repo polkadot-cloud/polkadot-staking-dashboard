@@ -4,8 +4,8 @@
 $container-border-radius: 1.25rem;
 
 .container {
-  background: var(--background-floating-card);
-  border: 1px solid var(--border-primary-color);
+  background: var(--bg-card-floating);
+  border: 1px solid var(--border);
   position: relative;
   padding: 0 0.95rem;
   height: 4.95rem;
@@ -104,8 +104,8 @@ $container-border-radius: 1.25rem;
 }
 
 .listContainer {
-  background: var(--button-popover-tab-background);
-  border: 1px solid var(--border-primary-color);
+  background: var(--btn-popover-tab-bg);
+  border: 1px solid var(--border);
   border-bottom-left-radius: $container-border-radius;
   border-bottom-right-radius: $container-border-radius;
   z-index: 101;
@@ -113,7 +113,7 @@ $container-border-radius: 1.25rem;
 }
 
 .listItem {
-  background: var(--background-floating-card);
+  background: var(--bg-card-floating);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -121,11 +121,11 @@ $container-border-radius: 1.25rem;
   cursor: pointer;
 
   &:hover {
-    background: var(--background-primary);
+    background: var(--bg-primary);
   }
 
   &.selected {
-    background: var(--background-primary);
+    background: var(--bg-primary);
   }
 }
 

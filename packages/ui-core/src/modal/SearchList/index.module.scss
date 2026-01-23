@@ -33,12 +33,12 @@
 .rightColumn {
   flex: 1;
   border-left: none;
-  border-top: 1px solid var(--border-primary-color);
+  border-top: 1px solid var(--border);
   padding-left: 0;
   padding-top: 1rem;
 
   @media (min-width: $page-width-small-threshold) {
-    border-left: 1px solid var(--border-primary-color);
+    border-left: 1px solid var(--border);
     padding-left: 1rem;
     flex: 1;
   }
@@ -66,7 +66,7 @@
 }
 
 .selectedList {
-  border: 1px solid var(--border-secondary-color);
+  border: 1px solid var(--border-alt);
   max-height: 250px;
   overflow-y: auto;
   border-radius: 0.5rem;
@@ -78,7 +78,7 @@
 }
 
 .emptyState {
-  border: 1px dashed var(--border-secondary-color);
+  border: 1px dashed var(--border-alt);
   color: var(--text-color-secondary);
   padding: 2rem 1rem;
   text-align: center;

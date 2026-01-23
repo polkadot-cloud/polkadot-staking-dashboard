@@ -4,7 +4,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 @use 'styles/theme/_variables' as *;
 
 .Content {
-  background: var(--background-primary);
+  background: var(--bg-primary);
   box-shadow: var(--card-shadow);
   border-radius: $popover-border-radius;
   animation-duration: 400ms;
@@ -31,7 +31,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 }
 
 .Arrow {
-  fill: var(--background-primary);
+  fill: var(--bg-primary);
 }
 
 @keyframes slideUpAndFade {
