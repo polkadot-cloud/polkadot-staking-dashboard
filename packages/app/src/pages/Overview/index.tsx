@@ -37,7 +37,7 @@ export const Overview = () => {
 	// Fiat values result in a slightly larger height for Balance & Payouts
 	const showFiat = pluginEnabled('staking_api') && network !== 'westend'
 
-	const STATUS_HEIGHT = 175
+	const STATUS_HEIGHT = 185
 	const PAYOUTS_HEIGHT = showFiat ? 385 : 380
 
 	return (
