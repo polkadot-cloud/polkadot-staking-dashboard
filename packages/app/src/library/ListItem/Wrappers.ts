@@ -25,16 +25,16 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > .inner {
-    background: var(--background-list-item);
-    border: var(--item-border-width) solid var(--background-list-item);
+    background: var(--bg-list);
+    border: var(--item-border-width) solid var(--bg-list);
 
     &.modal {
-      background: var(--background-modal-card);
-      border: var(--item-border-width) solid var(--background-modal-card);
+      background: var(--bg-card-modal);
+      border: var(--item-border-width) solid var(--bg-card-modal);
     }
     &.canvas {
-      background: var(--background-canvas-card);
-      border: var(--item-border-width) solid var(--background-canvas-card);
+      background: var(--bg-card-canvas);
+      border: var(--item-border-width) solid var(--bg-card-canvas);
     }
     &.modal,
     &.canvas {
@@ -55,7 +55,7 @@ export const Wrapper = styled.div`
     transition: border var(--transition-duration) ease;
 
     &.selected {
-      border-color: var(--accent-color-primary);
+      border-color: var(--accent-primary);
     }
 
     .row {
@@ -112,8 +112,8 @@ export const ValidatorStatusWrapper = styled.div<{
   h5 {
     color: ${(props) =>
 			props.$status === 'active'
-				? 'var(--status-success-color)'
-				: 'var(--text-color-secondary)'};
+				? 'var(--status-success)'
+				: 'var(--text-secondary)'};
     opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
@@ -133,7 +133,7 @@ export const PoolStatusWrapper = styled.div<{
     white-space: nowrap;
   }
   h4 {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
     font-size: 1rem;
 
     padding-top: ${(props) =>
@@ -142,14 +142,12 @@ export const PoolStatusWrapper = styled.div<{
     > span {
       color: ${(props) =>
 				props.$status === 'active'
-					? 'var(--status-success-color)'
-					: 'var(--text-color-tertiary)'};
+					? 'var(--status-success)'
+					: 'var(--text-tertiary)'};
 
       border: 0.75px solid
         ${(props) =>
-					props.$status === 'active'
-						? 'var(--status-success-color)'
-						: 'transparent'};
+					props.$status === 'active' ? 'var(--status-success)' : 'transparent'};
 
       padding: ${(props) => (props.$status === 'active' ? '0 0.5rem' : '0')};
       border-radius: 0.3rem;

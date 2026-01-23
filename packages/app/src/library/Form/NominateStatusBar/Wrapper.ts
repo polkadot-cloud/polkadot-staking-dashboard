@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
       }
       h4,
       h5 {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
       }
 
       h4 {
@@ -45,7 +45,7 @@ export const Wrapper = styled.div`
         opacity: 0.75;
       }
       .bar {
-        background: var(--background-list-item);
+        background: var(--bg-list);
         width: 100%;
         padding: 0.65rem 0.75rem;
         overflow: hidden;
@@ -66,14 +66,14 @@ export const Wrapper = styled.div`
 
       &.invert {
         h4 {
-          color: var(--accent-color-primary);
+          color: var(--accent-primary);
         }
         h5 {
           opacity: 1;
-          color: var(--text-color-invert);
+          color: var(--text-invert);
         }
         .bar {
-          background: var(--accent-color-primary);
+          background: var(--accent-primary);
         }
       }
     }

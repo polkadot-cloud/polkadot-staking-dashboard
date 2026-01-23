@@ -105,7 +105,7 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
 						<line
 							key={`grid_coord_${index}`}
 							strokeWidth="3.75"
-							stroke="var(--grid-color-primary)"
+							stroke="var(--grid-primary)"
 							x1={0}
 							y1={y1}
 							x2={vbWidth}
@@ -121,7 +121,7 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
 						key={`line_coord_${index}`}
 						strokeWidth={5}
 						opacity={1}
-						stroke="var(--accent-color-transparent)"
+						stroke="var(--accent-transparent)"
 						x1={x1}
 						y1={y1}
 						x2={x2}
@@ -135,11 +135,7 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
 						key={`line_coord_${index}`}
 						strokeWidth={5}
 						opacity={zero ? 0.5 : 1}
-						stroke={
-							zero
-								? 'var(--text-color-tertiary)'
-								: 'var(--accent-color-primary)'
-						}
+						stroke={zero ? 'var(--text-tertiary)' : 'var(--accent-primary)'}
 						x1={x1}
 						y1={y1}
 						x2={x2}

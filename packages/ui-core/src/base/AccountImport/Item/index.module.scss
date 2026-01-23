@@ -6,7 +6,7 @@
   align-items: center;
   padding: 1.5rem 1.6rem 1.5rem 1.35rem;
   position: relative;
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
 
   &.last {
     padding-bottom: 2rem;
@@ -31,13 +31,13 @@
     padding-right: 0;
 
     > button {
-      color: var(--text-color-tertiary);
+      color: var(--text-tertiary);
       width: 100%;
       margin-top: 1.7rem;
       margin-right: 0.75rem;
 
       &:hover {
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
       }
     }
   }
@@ -66,7 +66,7 @@
         flex-grow: 1;
 
         button {
-          color: var(--accent-color-primary);
+          color: var(--accent-primary);
           margin-left: 0.2rem;
         }
 
@@ -95,9 +95,9 @@
         }
 
         input {
-          background: var(--button-popover-tab-background);
-          border: 1px solid var(--border-primary-color);
-          color: var(--text-color-primary);
+          background: var(--btn-popover-tab-bg);
+          border: 1px solid var(--border);
+          color: var(--text-primary);
           font-family: Inter, sans-serif;
           padding: 1rem 0.85rem;
           border-radius: 0.65rem;
@@ -109,7 +109,7 @@
           transition: all var(--transition-duration);
 
           &:focus {
-            border-color: var(--accent-color-primary);
+            border-color: var(--accent-primary);
           }
 
           &:disabled {
@@ -126,7 +126,7 @@
           margin-bottom: 0.15rem;
 
           > span {
-            color: var(--text-color-tertiary);
+            color: var(--text-tertiary);
             position: absolute;
             top: 0;
             left: 0;
@@ -139,7 +139,7 @@
             max-width: 100%;
 
             > button {
-              color: var(--text-color-tertiary);
+              color: var(--text-tertiary);
               margin-left: 0.25rem;
             }
           }

@@ -32,8 +32,8 @@ const Wrapper = styled.div<{
 // Memoizing component to prevent animation restarts
 export const Pie = memo(({ value = 0, size = '2rem' }: Props) => {
 	const inactive = 100 - value
-	const activeColor = 'var(--accent-color-primary)'
-	const inactiveColor = 'var(--background-default)'
+	const activeColor = 'var(--accent-primary)'
+	const inactiveColor = 'var(--bg-body)'
 
 	// Define the keyframes for the pie
 	const pie1Keyframes = keyframes`

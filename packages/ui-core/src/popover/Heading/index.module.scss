@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .heading {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-size: 1.2rem;
   line-height: 1.6rem;
   padding-bottom: 1rem;
 
   &.border {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
   }
 }

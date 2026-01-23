@@ -10,8 +10,8 @@ import type { CardWrapperProps } from './types'
  * Used to separate the main modules throughout the app.
  */
 export const CardWrapper = styled.div<CardWrapperProps>`
-  box-shadow: var(--card-shadow);
-  background: var(--background-primary);
+  box-shadow: var(--shadow);
+  background: var(--bg-primary);
   border-radius: 1.1rem;
   display: flex;
   flex-direction: column;
@@ -23,18 +23,18 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   transition: border 0.2s;
 
   &.canvas {
-    background: var(--background-canvas-card);
+    background: var(--bg-card-canvas);
     padding: 1.25rem;
 
     &.secondary {
       padding: 1rem;
 
       @media (max-width: 1000px) {
-        background: var(--background-canvas-card);
+        background: var(--bg-card-canvas);
       }
 
       @media (min-width: 1001px) {
-        background: var(--background-canvas-card-secondary);
+        background: var(--bg-card-canvas-alt);
       }
     }
   }
@@ -49,11 +49,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.warning {
-    border: 1px solid var(--accent-color-secondary);
+    border: 1px solid var(--accent-secondary);
   }
 
   &.prompt {
-    border: 1px solid var(--accent-color-pending);
+    border: 1px solid var(--accent-pending);
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {

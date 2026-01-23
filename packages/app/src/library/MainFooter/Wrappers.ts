@@ -6,7 +6,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   --network-bar-font-size: 0.9rem;
 
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-size: var(--network-bar-font-size);
   display: flex;
   flex-flow: row nowrap;
@@ -44,13 +44,13 @@ export const Summary = styled.div`
 
   a,
   button {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-size: var(--network-bar-font-size);
     opacity: 0.75;
   }
   p {
     font-size: var(--network-bar-font-size);
-    border-left: 1px solid var(--text-color-secondary);
+    border-left: 1px solid var(--text-secondary);
     margin: 0.25rem 0.5rem 0.25rem 0.15rem;
     padding-left: 0.5rem;
     line-height: 1.3rem;
@@ -71,7 +71,7 @@ export const Summary = styled.div`
 
   /* left and right sections for each row*/
   > section {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     padding: 0.5rem 0;
 
     /* left section */
@@ -91,7 +91,7 @@ export const Summary = styled.div`
 
       button {
         font-size: var(--network-bar-font-size);
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         border-radius: 0.4rem;
         padding: 0.25rem 0.5rem;
       }
@@ -108,7 +108,7 @@ export const Summary = styled.div`
 `
 
 export const Separator = styled.div`
-  border-left: 1px solid var(--text-color-secondary);
+  border-left: 1px solid var(--text-secondary);
   opacity: 0.2;
   margin: 0 0.3rem;
   width: 1px;

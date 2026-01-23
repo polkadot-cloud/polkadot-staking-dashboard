@@ -33,29 +33,29 @@
 .rightColumn {
   flex: 1;
   border-left: none;
-  border-top: 1px solid var(--border-primary-color);
+  border-top: 1px solid var(--border);
   padding-left: 0;
   padding-top: 1rem;
 
   @media (min-width: $page-width-small-threshold) {
-    border-left: 1px solid var(--border-primary-color);
+    border-left: 1px solid var(--border);
     padding-left: 1rem;
     flex: 1;
   }
 }
 
 .header {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   margin: 0 0 0.5rem 0;
 }
 
 .searchHeader {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   margin: 1rem 0 0.5rem 0;
 }
 
 .loadingWrapper {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   padding: 1rem;
   text-align: center;
 }
@@ -66,7 +66,7 @@
 }
 
 .selectedList {
-  border: 1px solid var(--border-secondary-color);
+  border: 1px solid var(--border-alt);
   max-height: 250px;
   overflow-y: auto;
   border-radius: 0.5rem;
@@ -78,8 +78,8 @@
 }
 
 .emptyState {
-  border: 1px dashed var(--border-secondary-color);
-  color: var(--text-color-secondary);
+  border: 1px dashed var(--border-alt);
+  color: var(--text-secondary);
   padding: 2rem 1rem;
   text-align: center;
   border-radius: 0.5rem;
@@ -92,7 +92,7 @@
 
 .clearButton {
   border: 1px solid var(--status-error-color);
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   margin-top: 0.5rem;
   width: 100%;
   padding: 0.5rem;
@@ -103,7 +103,7 @@
 
   &:hover {
     background: var(--status-error-color);
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
   }
 }
 
@@ -117,16 +117,16 @@
 }
 
 .nominationsText {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-family: InterSemiBold, sans-serif;
 }
 
 .remainingText {
   &.hasRemaining {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
   }
 
   &.noRemaining {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
   }
 }

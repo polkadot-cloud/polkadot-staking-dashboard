@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnTab {
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   transition:
     opacity var(--transition-duration),
     font-size var(--transition-duration);
@@ -33,22 +33,22 @@
 }
 
 .btnTabActive {
-  background: var(--button-tab-background);
+  background: var(--btn-tab);
 }
 
 .btnTabSecondaryColorActive {
-  background: var(--button-tab-canvas-background);
+  background: var(--btn-canvas-tab);
 }
 
 .btnTabSecondaryColor {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
 }
 
 .btnTabBadge {
-  border: 1px solid var(--border-primary-color);
-  color: var(--text-color-tertiary);
-  font-size: var(--button-sm-font-size);
-  margin-left: var(--button-lg-spacing);
+  border: 1px solid var(--border);
+  color: var(--text-tertiary);
+  font-size: var(--btn-sm-font-size);
+  margin-left: var(--btn-lg-spacing);
   display: flex;
   padding: 0.3rem 0.6rem;
   align-items: center;

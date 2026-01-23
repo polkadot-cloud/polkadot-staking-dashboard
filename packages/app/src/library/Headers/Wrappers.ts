@@ -8,7 +8,7 @@ export const MenuWrapper = styled.div`
   display: none;
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     display: flex;
     flex-flow: row wrap;
     align-items: center;

@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   animation: fadeInScale 0.2s cubic-bezier(0, 1, 0, 1) forwards;
 
   > .qrRegion {
-    background: var(--background-default);
+    background: var(--bg-body);
     border-radius: 0.85rem;
     overflow: hidden;
     width: 250px;
@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
       aspect-ratio: 8;
       background: radial-gradient(
           circle closest-side,
-          var(--text-color-primary) 100%,
+          var(--text-primary) 100%,
           #0000
         )
         0 / calc(100% / 3) 100% space;

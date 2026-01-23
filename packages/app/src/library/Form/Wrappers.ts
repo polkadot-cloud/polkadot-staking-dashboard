@@ -32,7 +32,7 @@ export const InputWrapper = styled.div`
   flex-flow: column nowrap;
 
   h3 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 0;
     padding: 0 0.25rem;
   }
@@ -52,7 +52,7 @@ export const InputWrapper = styled.div`
       width: 100%;
 
       .input {
-        border: 1px solid var(--border-primary-color);
+        border: 1px solid var(--border);
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;
@@ -66,7 +66,7 @@ export const InputWrapper = styled.div`
           }
 
           &:last-child {
-            color: var(--text-color-secondary);
+            color: var(--text-secondary);
             padding-left: 0.5rem;
             justify-content: flex-end;
             opacity: 0.5;
@@ -108,7 +108,7 @@ export const InputWrapper = styled.div`
     @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
       display: none;
     }
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     opacity: 0.5;
     padding: 0 0.5rem;
     margin-top: 0;

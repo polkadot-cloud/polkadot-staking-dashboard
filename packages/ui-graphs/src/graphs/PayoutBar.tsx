@@ -66,13 +66,13 @@ export const PayoutBar = ({
 
 	// Determine color for payouts
 	const colorPayouts = !staking
-		? getThemeValue('--accent-color-transparent')
-		: getThemeValue('--accent-color-primary')
+		? getThemeValue('--accent-transparent')
+		: getThemeValue('--accent-primary')
 
 	// Determine color for poolClaims
 	const colorPoolClaims = !staking
-		? getThemeValue('--accent-color-transparent')
-		: getThemeValue('--accent-color-secondary')
+		? getThemeValue('--accent-transparent')
+		: getThemeValue('--accent-secondary')
 
 	const borderRadius = 3.5
 	const pointRadius = 0
@@ -110,7 +110,7 @@ export const PayoutBar = ({
 				),
 				label: labels.unclaimedPayouts,
 				borderColor: colorPayouts,
-				backgroundColor: getThemeValue('--accent-color-pending'),
+				backgroundColor: getThemeValue('--accent-pending'),
 				pointRadius,
 				borderRadius,
 			},
@@ -146,7 +146,7 @@ export const PayoutBar = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-color-secondary'),
+					color: getThemeValue('--grid-secondary'),
 				},
 			},
 		},
@@ -159,9 +159,9 @@ export const PayoutBar = ({
 			},
 			tooltip: {
 				displayColors: false,
-				backgroundColor: getThemeValue('--background-invert'),
-				titleColor: getThemeValue('--text-color-invert'),
-				bodyColor: getThemeValue('--text-color-invert'),
+				backgroundColor: getThemeValue('--bg-invert'),
+				titleColor: getThemeValue('--text-invert'),
+				bodyColor: getThemeValue('--text-invert'),
 				bodyFont: {
 					weight: 600,
 				},

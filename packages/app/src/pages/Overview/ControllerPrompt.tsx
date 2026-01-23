@@ -22,7 +22,7 @@ export const ControllerPrompt = () => {
 		<Page.Row>
 			<CardWrapper
 				style={{
-					border: `1px solid ${getThemeValue('--status-warning-color')}`,
+					border: `1px solid ${getThemeValue('--status-warning')}`,
 				}}
 			>
 				<div className="content">

@@ -30,14 +30,14 @@
       animation: fadeOutIn 2s ease-in-out 1;
     }
     > .icon {
-      color: var(--text-color-tertiary);
+      color: var(--text-tertiary);
       width: 100%;
       height: auto;
     }
   }
 
   > .checkIcon {
-    color: var(--status-success-color);
+    color: var(--status-success);
     position: absolute;
     top: 0;
     right: 0;
@@ -67,7 +67,7 @@
   &:hover {
     > .copyIcon {
       > .icon {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
       }
     }
   }

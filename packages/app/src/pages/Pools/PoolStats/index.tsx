@@ -90,7 +90,7 @@ export const PoolStats = () => {
 	)
 
 	return (
-		<CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
+		<CardWrapper style={{ boxShadow: 'var(--shadow-alt)' }}>
 			<CardHeader margin>
 				<h3>{t('poolStats')}</h3>
 			</CardHeader>

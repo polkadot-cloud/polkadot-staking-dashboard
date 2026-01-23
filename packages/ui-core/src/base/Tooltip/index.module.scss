@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .Content {
-  color: var(--text-color-invert);
-  background: var(--background-invert);
-  box-shadow: var(--card-shadow);
+  color: var(--text-invert);
+  background: var(--bg-invert);
+  box-shadow: var(--shadow);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   font-size: 1.1rem;
@@ -21,8 +21,8 @@
 
 
 .Inverted {
-  background: var(--background-primary);
-  color: var(--text-color-secondary);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
 }
 
 .FadeIn {
@@ -31,10 +31,10 @@
 }
 
 .Arrow {
-  fill: var(--background-invert);
+  fill: var(--bg-invert);
 }
 .ArrowInverted {
-  fill: var(--background-primary);
+  fill: var(--bg-primary);
 }
 
 @keyframes slideDownAndFade {
