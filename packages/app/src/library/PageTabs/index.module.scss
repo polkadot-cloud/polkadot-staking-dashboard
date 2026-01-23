@@ -4,7 +4,7 @@
 @use 'styles/theme/variables' as *;
 
 .pageTitleTabs {
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   overflow: hidden;
   height: 3.2rem;
   margin-top: 0.9rem;

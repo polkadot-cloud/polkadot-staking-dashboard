@@ -110,7 +110,7 @@ export const HelpTooltip = () => {
 								closeHelpTooltip()
 							}}
 							style={{
-								color: 'var(--accent-color-primary)',
+								color: 'var(--accent-primary)',
 							}}
 							size="md"
 						/>

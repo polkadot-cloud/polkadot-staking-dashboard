@@ -4,7 +4,7 @@
 @use 'styles/theme/variables' as *;
 
 .headerButton {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   position: relative;
   display: flex;
   align-items: center;
@@ -25,8 +25,8 @@
 
   > button,
   > span {
-    background: var(--shimmer-foreground);
-    color: var(--text-color-secondary);
+    background: var(--shimmer-fg);
+    color: var(--text-secondary);
     padding: 0 0.1rem;
     font-size: 1rem;
     border-radius: 50%;
@@ -42,7 +42,7 @@
     }
 
     &.active {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
 
     &:disabled {

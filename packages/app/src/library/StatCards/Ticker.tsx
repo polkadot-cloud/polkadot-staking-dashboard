@@ -23,10 +23,10 @@ export const Ticker = ({
 	const { openHelpTooltip } = useHelp()
 	const tickerColor =
 		direction === 'up'
-			? 'var(--status-success-color)'
+			? 'var(--status-success)'
 			: direction === 'down'
-				? 'var(--status-danger-color)'
-				: 'var(--text-color-secondary)'
+				? 'var(--status-danger)'
+				: 'var(--text-secondary)'
 
 	return (
 		<Wrapper isPreloading={isPreloading}>
@@ -36,7 +36,7 @@ export const Ticker = ({
 						<FontAwesomeIcon
 							icon={faArrowUpRightDots}
 							transform="grow-8"
-							color="var(--accent-color-primary)"
+							color="var(--accent-primary)"
 						/>
 					</Stat.Graphic>
 					<Stat.Content>

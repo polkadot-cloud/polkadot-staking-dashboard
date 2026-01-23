@@ -4,8 +4,8 @@
 $container-border-radius: 1.25rem;
 
 .container {
-  background: var(--background-floating-card);
-  border: 1px solid var(--border-primary-color);
+  background: var(--bg-card-floating);
+  border: 1px solid var(--border);
   position: relative;
   padding: 0 0.95rem;
   height: 4.95rem;
@@ -24,7 +24,7 @@ $container-border-radius: 1.25rem;
   }
 
   &:hover {
-    border-color: var(--accent-color-pending);
+    border-color: var(--accent-pending);
   }
 
   &.disabled {
@@ -34,7 +34,7 @@ $container-border-radius: 1.25rem;
 }
 
 .input {
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   font-family: InterSemiBold, sans-serif;
   font-size: 1.2rem;
   flex: 1;
@@ -59,7 +59,7 @@ $container-border-radius: 1.25rem;
 }
 
 .address {
-  color: var(--text-color-tertiary);
+  color: var(--text-tertiary);
   margin-top: 0.5rem;
   font-size: 1rem;
 }
@@ -88,7 +88,7 @@ $container-border-radius: 1.25rem;
   padding-left: 0.5rem;
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-size: 0.95rem;
   }
 
@@ -99,13 +99,13 @@ $container-border-radius: 1.25rem;
 }
 
 .balance {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
 .listContainer {
-  background: var(--button-popover-tab-background);
-  border: 1px solid var(--border-primary-color);
+  background: var(--btn-popover-tab-bg);
+  border: 1px solid var(--border);
   border-bottom-left-radius: $container-border-radius;
   border-bottom-right-radius: $container-border-radius;
   z-index: 101;
@@ -113,7 +113,7 @@ $container-border-radius: 1.25rem;
 }
 
 .listItem {
-  background: var(--background-floating-card);
+  background: var(--bg-card-floating);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -121,16 +121,16 @@ $container-border-radius: 1.25rem;
   cursor: pointer;
 
   &:hover {
-    background: var(--background-primary);
+    background: var(--bg-primary);
   }
 
   &.selected {
-    background: var(--background-primary);
+    background: var(--bg-primary);
   }
 }
 
 .listName {
-  color: var(--text-color-primary);
+  color: var(--text-primary);
   font-family: InterSemiBold, sans-serif;
   font-size: 1.1rem;
 }
@@ -151,7 +151,7 @@ $container-border-radius: 1.25rem;
 }
 
 .label {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   font-size: 1.1rem;
   padding-bottom: 0.4rem;
 }

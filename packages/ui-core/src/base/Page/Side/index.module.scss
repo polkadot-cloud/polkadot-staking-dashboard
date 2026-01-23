@@ -13,8 +13,8 @@
 
 .bar {
   background: 
-    linear-gradient(to bottom, var(--accent-color-primary), 
-    color-mix(in srgb, var(--accent-color-primary) 95%, black));
+    linear-gradient(to bottom, var(--accent-primary), 
+    color-mix(in srgb, var(--accent-primary) 95%, black));
   width: $side-bar-width;
   height: inherit;
   display: flex;
@@ -90,7 +90,7 @@
   align-items: center;
 
   h5 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 1.1rem 0 0.75rem;
     padding: 0 0.5rem;
     opacity: 0.7;

@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnSubmitInvert {
-  border: 1px solid var(--accent-color-primary);
-  border-radius: var(--button-sm-border-radius);
-  color: var(--accent-color-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--btn-sm-radius);
+  color: var(--accent-primary);
 }
 
 .btnSubmitInvertSm {
-  padding: var(--button-lg-padding);
-  font-size: var(--button-sm-font-size);
+  padding: var(--btn-lg-padding);
+  font-size: var(--btn-sm-font-size);
 }
 
 .btnSubmitInvertLg {
-  padding: var(--button-lg-padding);
-  font-size: var(--button-lg-font-size);
+  padding: var(--btn-lg-padding);
+  font-size: var(--btn-lg-font-size);
 }

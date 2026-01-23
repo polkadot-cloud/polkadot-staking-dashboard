@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .heading {
-  background: var(--button-popover-tab-background);
+  background: var(--btn-popover-tab-bg);
   height: 3rem;
   display: flex;
   align-items: center;
   padding: 0 0.75rem;
 
   > h4 {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
     font-family: InterSemiBold, sans-serif;
     overflow: hidden;
     flex-grow: 1;

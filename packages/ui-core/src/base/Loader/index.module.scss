@@ -3,13 +3,13 @@
 
 
 .loader {
-  background: var(--shimmer-foreground);
+  background: var(--shimmer-fg);
   background-image: linear-gradient(
     to right,
-    var(--shimmer-foreground) 0%,
-    var(--shimmer-background) 20%,
-    var(--shimmer-foreground) 70%,
-    var(--shimmer-foreground) 100%
+    var(--shimmer-fg) 0%,
+    var(--shimmer-bg) 20%,
+    var(--shimmer-fg) 70%,
+    var(--shimmer-fg) 100%
   );
   background-repeat: no-repeat;
   background-size: 60% 100%;

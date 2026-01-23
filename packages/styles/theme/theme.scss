@@ -3,173 +3,164 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 /* general styles */
 :root {
-  --button-sm-border-radius: 0.75rem;
-  --button-sm-padding: 0.45rem 1rem;
-  --button-sm-spacing: 0.125rem;
-  --button-sm-font-size: 1rem;
-  --button-md-border-radius: 1rem;
-  --button-md-padding: 0.5rem 1.25rem;
-  --button-md-spacing: 0.125rem;
-  --button-md-font-size: 1.1rem;
-  --button-lg-border-radius: 1.5rem;
-  --button-lg-padding: 0.53rem 1rem;
-  --button-lg-spacing: 0.625rem;
-  --button-lg-font-size: 1.15rem;
+  --btn-sm-radius: 0.75rem;
+  --btn-sm-padding: 0.45rem 1rem;
+  --btn-sm-spacing: 0.125rem;
+  --btn-sm-font-size: 1rem;
+  --btn-md-padding: 0.5rem 1.25rem;
+  --btn-md-font-size: 1.1rem;
+  --btn-lg-radius: 1.5rem;
+  --btn-lg-padding: 0.53rem 1rem;
+  --btn-lg-spacing: 0.625rem;
+  --btn-lg-font-size: 1.15rem;
   --transition-duration: 0.15s;
   --opacity-disabled: 0.3;
 }
 
 /* light theme colors */
 .light {
-  --background-default: #efeeee;
-  --background-primary: #f8f7f7;
-  --background-invert: #333;
-  --background-list-item: rgb(238 238 238 / 100%);
-  --background-modal-card: rgb(237 237 237 / 75%);
-  --background-canvas-card: rgb(245 245 245 / 90%);
-  --background-canvas-card-secondary: rgb(255 255 255 / 35%);
-  --background-floating-card: rgb(255 255 255 / 90%);
-  --background-modal: #f9f7f7;
-  --background-modal-footer: #efefef;
-  --background-status-overlay: rgb(255 255 255 / 85%);
-  --background-menu: #eaeaea;
-  --background-input: #fdfdfd;
-  --border-primary-color: #e2e2e2;
-  --border-secondary-color: #cfcccc;
-  --button-primary-background: #efeeee;
-  --button-secondary-background: #f1f1f1;
-  --button-tertiary-background: #ececec;
-  --button-tab-background: #e4e2e2;
-  --button-tab-canvas-background: #d9d9d9;
-  --button-hover-background: #e9e9e9;
-  --button-popover-tab-background: #f3f3f3;
-  --card-shadow-color: rgb(27 19 19 / 20%);
-  --card-deep-shadow-color: rgb(158 158 158 / 50%);
-  --card-shadow-color-secondary: #e7e7e7;
-  --accent-color-primary: var(--accent-color-primary-light);
-  --accent-color-secondary: var(--accent-color-secondary-light);
-  --accent-color-tertiary: var(--accent-color-tertiary-light);
-  --accent-color-stroke: var(--accent-color-stroke-light);
-  --accent-color-transparent: var(--accent-color-transparent-light);
-  --accent-color-pending: var(--accent-color-pending-light);
-  --modal-background-color: rgb(228 226 228 / 80%);
-  --overlay-background-color: rgb(200 200 200 / 65%);
-  --shimmer-foreground: #e0e0e0;
-  --shimmer-background: #c4c4c4;
-  --status-success-color: green;
-  --status-success-color-transparent: rgb(0 128 0 / 25%);
-  --status-warning-color: #a78a3a;
-  --status-warning-color-transparent: rgb(236 211 125 / 50%);
-  --status-danger-color: #ae2324;
-  --status-danger-color-transparent: rgb(255 0 0 / 25%);
-  --text-color-primary: #2f2f2f;
-  --text-color-secondary: #585858;
-  --text-color-tertiary: #888;
-  --text-color-invert: #fafafa;
-  --body-background: #efeeee;
-  --gradient-side-menu: linear-gradient(
+  --bg-body: #efeeee;
+  --bg-primary: #f8f7f7;
+  --bg-invert: #333;
+  --bg-list: rgb(238 238 238 / 100%);
+  --bg-card-modal: rgb(237 237 237 / 75%);
+  --bg-card-canvas: rgb(245 245 245 / 90%);
+  --bg-card-canvas-alt: rgb(255 255 255 / 35%);
+  --bg-card-floating: rgb(255 255 255 / 90%);
+  --bg-modal: #f9f7f7;
+  --bg-modal-footer: #efefef;
+  --bg-menu: #eaeaea;
+  --bg-overlay: rgb(228 226 228 / 80%);
+  --bg-prompt: rgb(200 200 200 / 65%);
+  --bg-input: #fdfdfd;
+  --border: #e2e2e2;
+  --border-alt: #cfcccc;
+  --btn-bg: #efeeee;
+  --btn-bg-secondary: #f1f1f1;
+  --btn-bg-tertiary: #ececec;
+  --btn-tab: #e4e2e2;
+  --btn-canvas-tab: #d9d9d9;
+  --btn-bg-hover: #e9e9e9;
+  --btn-popover-tab-bg: #f3f3f3;
+  --shadow-primary: rgb(27 19 19 / 20%);
+  --shadow-secondary: #e7e7e7;
+  --shadow-tertiary: rgb(158 158 158 / 50%);
+  --accent-primary: var(--accent-primary-light);
+  --accent-secondary: var(--accent-secondary-light);
+  --accent-tertiary: var(--accent-tertiary-light);
+  --accent-stroke: var(--accent-stroke-light);
+  --accent-transparent: var(--accent-transparent-light);
+  --accent-pending: var(--accent-pending-light);
+  --shimmer-fg: #e0e0e0;
+  --shimmer-bg: #c4c4c4;
+  --status-success: green;
+  --status-success-transparent: rgb(0 128 0 / 25%);
+  --status-warning: #a78a3a;
+  --status-warning-transparent: rgb(236 211 125 / 50%);
+  --status-danger: #ae2324;
+  --status-danger-transparent: rgb(255 0 0 / 25%);
+  --text-primary: #2f2f2f;
+  --text-secondary: #585858;
+  --text-tertiary: #888;
+  --text-invert: #fafafa;
+  --gradient-menu: linear-gradient(
     180deg,
     rgb(244 242 242 / 93%) 0%,
     rgb(228 225 225 / 93%) 100%
   );
-  --highlight-solid: rgb(0 0 0 / 4%) 0%;
-  --highlight-primary: rgb(224 222 222 / 75%);
-  --highlight-secondary: linear-gradient(
+  --highlight: rgb(0 0 0 / 4%) 0%;
+  --highlight-alt: linear-gradient(
     90deg,
     rgb(0 0 0 / 6%) 0%,
     rgb(0 0 0 / 1%) 95%,
     rgb(0 0 0 / 0%) 100%
   );
-  --grid-color-primary: #e3e3e3;
-  --grid-color-secondary: #e8e8e8;
+  --grid-primary: #e3e3e3;
+  --grid-secondary: #e8e8e8;
   --grid-canvas-axis: #222;
   --grid-canvas: #ccc;
-  --card-shadow:
-    -1px -2px 12px 1px var(--card-shadow-color-secondary),
-    0px 0.5px 1px 0px var(--card-deep-shadow-color),
-    0 3.5px 6px -1px var(--card-shadow-color),
-    0.4px -0.4px 0px 0px var(--card-shadow-color),
-    -0.4px 0px 0px 0px var(--card-shadow-color);
-  --card-shadow-secondary:
-    0px 1px 1px 0px var(--card-shadow-color-secondary),
-    0 0.5px 1px -1px var(--card-shadow-color-secondary),
-    0.4px -0.4px 0px 0px var(--card-shadow-color-secondary),
-    -0.4px 0px 0px 0px var(--card-shadow-color-secondary);
+  --shadow:
+    -1px -2px 12px 1px var(--shadow-secondary),
+    0px 0.5px 1px 0px var(--shadow-tertiary),
+    0 3.5px 6px -1px var(--shadow-primary),
+    0.4px -0.4px 0px 0px var(--shadow-primary),
+    -0.4px 0px 0px 0px var(--shadow-primary);
+  --shadow-alt:
+    0px 1px 1px 0px var(--shadow-secondary),
+    0 0.5px 1px -1px var(--shadow-secondary),
+    0.4px -0.4px 0px 0px var(--shadow-secondary),
+    -0.4px 0px 0px 0px var(--shadow-secondary);
 }
 
 /* dark theme colors */
 .dark {
-  --background-default: rgb(36 32 36);
-  --background-primary: rgb(45 41 45);
-  --background-invert: #ddd;
-  --background-list-item: rgb(38 33 38 / 100%);
-  --background-modal-card: rgb(32 26 32 / 50%);
-  --background-canvas-card: rgb(44 40 44 / 90%);
-  --background-canvas-card-secondary: rgb(44 40 44 / 35%);
-  --background-floating-card: rgb(43 38 43 / 95%);
-  --background-modal: rgb(43 38 43);
-  --background-modal-footer: rgb(37 32 37);
-  --background-status-overlay: rgb(43 38 43 / 75%);
-  --background-menu: rgb(57 52 58);
-  --background-input: rgb(72 70 72);
-  --border-primary-color: rgb(58 52 58);
-  --border-secondary-color: rgb(95 90 95);
-  --button-primary-background: rgb(58 52 58);
-  --button-secondary-background: rgb(55 50 55);
-  --button-tertiary-background: rgb(54 49 54);
-  --button-tab-background: rgb(56 51 56);
-  --button-tab-canvas-background: rgb(60 59 60);
-  --button-hover-background: rgb(66 61 68);
-  --button-popover-tab-background: rgb(48 43 48);
-  --card-shadow-color: rgb(28 24 28 / 25%);
-  --card-deep-shadow-color: rgb(28 24 28 / 50%);
-  --card-shadow-color-secondary: rgb(28 24 28 / 25%);
-  --accent-color-primary: var(--accent-color-primary-dark);
-  --accent-color-secondary: var(--accent-color-secondary-dark);
-  --accent-color-tertiary: var(--accent-color-tertiary-dark);
-  --accent-color-stroke: var(--accent-color-stroke-dark);
-  --accent-color-transparent: var(--accent-color-transparent-dark);
-  --accent-color-pending: var(--accent-color-pending-dark);
-  --modal-background-color: rgb(32 28 32 / 80%);
-  --overlay-background-color: rgb(18 14 18 / 70%);
-  --shimmer-background: rgb(57 52 58);
-  --shimmer-foreground: rgb(32 29 33);
-  --status-success-color: #74da77;
-  --status-success-color-transparent: rgb(0 128 0 / 25%);
-  --status-warning-color: rgb(219 161 0 / 100%);
-  --status-warning-color-transparent: rgb(255 165 0 / 50%);
-  --status-danger-color: #d14445;
-  --status-danger-color-transparent: rgb(255 0 0 / 25%);
-  --text-color-primary: #b8b3b9;
-  --text-color-secondary: #938e94;
-  --text-color-tertiary: #817d82;
-  --text-color-invert: #0f0e0f;
-  --body-background:rgb(36 32 36) 0%;
-  --gradient-side-menu: linear-gradient(
+  --bg-body: rgb(36 32 36);
+  --bg-primary: rgb(45 41 45);
+  --bg-invert: #ddd;
+  --bg-list: rgb(38 33 38 / 100%);
+  --bg-card-modal: rgb(32 26 32 / 50%);
+  --bg-card-canvas: rgb(44 40 44 / 90%);
+  --bg-card-canvas-alt: rgb(44 40 44 / 35%);
+  --bg-card-floating: rgb(43 38 43 / 95%);
+  --bg-modal: rgb(43 38 43);
+  --bg-modal-footer: rgb(37 32 37);
+  --bg-menu: rgb(57 52 58);
+  --bg-input: rgb(72 70 72);
+  --border: rgb(58 52 58);
+  --border-alt: rgb(95 90 95);
+  --btn-bg: rgb(58 52 58);
+  --btn-bg-secondary: rgb(55 50 55);
+  --btn-bg-tertiary: rgb(54 49 54);
+  --btn-tab: rgb(56 51 56);
+  --btn-canvas-tab: rgb(60 59 60);
+  --btn-bg-hover: rgb(66 61 68);
+  --btn-popover-tab-bg: rgb(48 43 48);
+  --shadow-primary: rgb(28 24 28 / 25%);
+  --shadow-secondary: rgb(28 24 28 / 25%);
+  --shadow-tertiary: rgb(28 24 28 / 50%);
+  --accent-primary: var(--accent-primary-dark);
+  --accent-secondary: var(--accent-secondary-dark);
+  --accent-tertiary: var(--accent-tertiary-dark);
+  --accent-stroke: var(--accent-stroke-dark);
+  --accent-transparent: var(--accent-transparent-dark);
+  --accent-pending: var(--accent-pending-dark);
+  --bg-overlay: rgb(32 28 32 / 80%);
+  --bg-prompt: rgb(18 14 18 / 70%);
+  --shimmer-bg: rgb(57 52 58);
+  --shimmer-fg: rgb(32 29 33);
+  --status-success: #74da77;
+  --status-success-transparent: rgb(0 128 0 / 25%);
+  --status-warning: rgb(219 161 0 / 100%);
+  --status-warning-transparent: rgb(255 165 0 / 50%);
+  --status-danger: #d14445;
+  --status-danger-transparent: rgb(255 0 0 / 25%);
+  --text-primary: #b8b3b9;
+  --text-secondary: #938e94;
+  --text-tertiary: #817d82;
+  --text-invert: #0f0e0f;
+  --gradient-menu: linear-gradient(
     180deg,
     rgb(48 41 48) 0%,
     rgb(30 27 30) 100%
   );
-  --highlight-solid: rgb(255 255 255 / 3%);
-  --highlight-primary: rgb(255 255 255 / 8%);
-  --highlight-secondary: linear-gradient(
+  --highlight: rgb(255 255 255 / 3%);
+  --highlight-alt: linear-gradient(
     90deg,
     rgb(255 255 255 / 3%) 0%,
     rgb(255 255 255 / 1%) 100%
   );
-  --grid-color-primary: rgb(51 43 51);
-  --grid-color-secondary: rgb(53 45 53);
+  --grid-primary: rgb(51 43 51);
+  --grid-secondary: rgb(53 45 53);
   --grid-canvas-axis: #eee;
   --grid-canvas: #444;
-  --card-shadow:
-    -1px -2px 12px 1px var(--card-shadow-color-secondary),
-    0px 0.75px 1px 0px var(--card-deep-shadow-color),
-    0 3.5px 6px -1px var(--card-shadow-color),
-    0.4px -0.4px 0px 0px var(--card-shadow-color),
-    -0.4px 0px 0px 0px var(--card-shadow-color);
-  --card-shadow-secondary:
-    0px 1px 1px 0px var(--card-shadow-color-secondary),
-    0 0.5px 1px -1px var(--card-shadow-color-secondary),
-    0.4px -0.4px 0px 0px var(--card-shadow-color-secondary),
-    -0.4px 0px 0px 0px var(--card-shadow-color-secondary);
+  --shadow:
+    -1px -2px 12px 1px var(--shadow-secondary),
+    0px 0.75px 1px 0px var(--shadow-tertiary),
+    0 3.5px 6px -1px var(--shadow-primary),
+    0.4px -0.4px 0px 0px var(--shadow-primary),
+    -0.4px 0px 0px 0px var(--shadow-primary);
+  --shadow-alt:
+    0px 1px 1px 0px var(--shadow-secondary),
+    0.4px -0.4px 0px 0px var(--shadow-secondary),
+    -0.4px 0px 0px 0px var(--shadow-secondary);
 }

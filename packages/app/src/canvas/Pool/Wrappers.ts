@@ -4,9 +4,9 @@
 import styled from 'styled-components'
 
 export const JoinFormWrapper = styled.div`
-  background: var(--background-canvas-card);
-  border: 0.75px solid var(--border-primary-color);
-  box-shadow: var(--card-shadow);
+  background: var(--bg-card-canvas);
+  border: 0.75px solid var(--border);
+  box-shadow: var(--shadow);
   border-radius: 1.5rem;
   padding: 1.5rem;
   width: 100%;
@@ -19,7 +19,7 @@ export const JoinFormWrapper = styled.div`
     width: 100%;
 
     > h2 {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       margin: 0.25rem 0;
       width: auto;
     }
@@ -38,24 +38,24 @@ export const JoinFormWrapper = styled.div`
     display: flex;
     align-items: center;
     &.note {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       font-family: Inter, sans-serif;
     }
   }
 
   > h4 {
     margin: 1.5rem 0 0.5rem 0;
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
 
     &.underline {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--border);
       padding-bottom: 0.5rem;
       margin: 2rem 0 1rem 0;
     }
   }
 
   > .input {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
     padding: 0 0.25rem;
     display: flex;
     align-items: flex-end;
@@ -115,11 +115,11 @@ export const InviteHeader = styled.div`
     font-size: 1.8rem;
     margin-bottom: 0.75rem;
     font-family: InterBold, sans-serif;
-    color: var(--text-color-primary);
+    color: var(--text-primary);
   }
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     max-width: 40rem;
     margin: 0 auto;
   }

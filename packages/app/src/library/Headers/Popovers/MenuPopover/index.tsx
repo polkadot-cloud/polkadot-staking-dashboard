@@ -133,9 +133,7 @@ export const MenuPopover = ({
 						<FontAwesomeIcon
 							icon={advancedMode ? faToggleOn : faToggleOff}
 							color={
-								advancedMode
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
+								advancedMode ? 'var(--accent-primary)' : 'var(--text-tertiary)'
 							}
 							transform="grow-8"
 						/>
@@ -155,8 +153,8 @@ export const MenuPopover = ({
 							icon={mode === 'dark' ? faToggleOn : faToggleOff}
 							color={
 								mode === 'dark'
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
+									? 'var(--accent-primary)'
+									: 'var(--text-tertiary)'
 							}
 							transform="grow-8"
 						/>
@@ -175,9 +173,7 @@ export const MenuPopover = ({
 						<FontAwesomeIcon
 							icon={showHelp ? faToggleOn : faToggleOff}
 							color={
-								showHelp
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
+								showHelp ? 'var(--accent-primary)' : 'var(--text-tertiary)'
 							}
 							transform="grow-8"
 						/>

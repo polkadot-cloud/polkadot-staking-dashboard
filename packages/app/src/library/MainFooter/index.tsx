@@ -70,7 +70,7 @@ export const MainFooter = () => {
 								<div className="stat last">
 									<FontAwesomeIcon icon={faHive} />
 									<Odometer
-										wholeColor="var(--text-color-secondary)"
+										wholeColor="var(--text-secondary)"
 										value={new BigNumber(blockNumber || '0').toFormat()}
 										spaceBefore={'0.35rem'}
 									/>

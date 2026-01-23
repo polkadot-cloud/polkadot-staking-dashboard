@@ -7,6 +7,6 @@ export const MenuWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  background: var(--background-default);
+  background: var(--bg-body);
   height: 3.25rem;
 `

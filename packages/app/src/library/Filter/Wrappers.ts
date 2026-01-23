@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
 `
 
 export const ItemWrapper = styled.div`
-  border: 1px solid var(--border-primary-color);
+  border: 1px solid var(--border);
   font-family: InterSemiBold, sans-serif;
   border-radius: 1.5rem;
   display: flex;
@@ -52,7 +52,7 @@ export const ItemWrapper = styled.div`
     margin-right: 0;
   }
   .icon {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -60,7 +60,7 @@ export const ItemWrapper = styled.div`
     margin-right: 0.55rem;
   }
   p {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin: 0;
     text-align: left;
@@ -74,8 +74,8 @@ export const LargeItemWrapper = styled.div`
   justify-content: center;
   padding: 0.5rem;
   > .inner {
-    border: 1.5px solid var(--border-primary-color);
-    background: var(--background-list-item);
+    border: 1.5px solid var(--border);
+    background: var(--bg-list);
     border-radius: 1.25rem;
     display: flex;
     flex-flow: column nowrap;
@@ -94,11 +94,11 @@ export const LargeItemWrapper = styled.div`
       align-items: center;
     }
     svg {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
       margin-right: 0.75rem;
     }
     p {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       margin: 0;
       text-align: left;
       padding: 0.5rem 0 0 0;
@@ -125,14 +125,9 @@ export const TabsWrapper = styled.div`
 export const TabWrapper = styled.button<{ $active?: boolean }>`
   font-family: InterSemiBold, sans-serif;
   border: 1px solid
-    ${(props) =>
-			props.$active
-				? 'var(--accent-color-primary)'
-				: 'var(--border-primary-color)'};
+    ${(props) => (props.$active ? 'var(--accent-primary)' : 'var(--border)')};
   color: ${(props) =>
-		props.$active
-			? 'var(--accent-color-primary)'
-			: 'var(--text-color-secondary)'};
+		props.$active ? 'var(--accent-primary)' : 'var(--text-secondary)'};
   font-size: 0.9rem;
   padding: 0.5rem 1.25rem;
 `

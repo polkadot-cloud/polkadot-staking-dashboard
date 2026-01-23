@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .head {
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   grid-template-columns: repeat(3, 1fr);
   display: grid;
 
   > div > h4 {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
     font-family: InterSemiBold, sans-serif;
   }
 }
