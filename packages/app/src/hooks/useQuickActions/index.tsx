@@ -163,7 +163,7 @@ export const useQuickActions = () => {
 			},
 			disabled: pendingRewards === 0n,
 			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCircleDown} />,
-			label: t('withdraw'),
+			label: t('withdraw', { ns: 'pages' }),
 		},
 		compoundPoolRewards: {
 			onClick: () => {
@@ -175,7 +175,7 @@ export const useQuickActions = () => {
 			},
 			disabled: pendingRewards === 0n,
 			Icon: () => <FontAwesomeIcon transform="grow-2" icon={faCoins} />,
-			label: t('compound'),
+			label: t('compound', { ns: 'pages' }),
 		},
 		claimNominatorPayouts: {
 			onClick: () => {
