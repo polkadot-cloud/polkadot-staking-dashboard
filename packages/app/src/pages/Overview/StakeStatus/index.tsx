@@ -1,48 +1,34 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useStaking } from 'contexts/Staking'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
-import { MembershipStatus } from 'pages/Pools/Status/MembershipStatus'
-import { Page } from 'ui-core/base'
+import { useState } from 'react'
+import { ButtonSecondary } from 'ui-buttons'
+import { Halving } from './Sections/Halving'
+import { Status } from './Sections/Status'
 import { Tips } from './Tips'
-import { StatusWrapper } from './Wrappers'
+import { SectionNavigation, SectionSlider } from './Wrappers'
 
 export const StakeStatus = ({ height }: { height: number }) => {
-	const { inPool } = useActivePool()
-	const { isBonding } = useStaking()
-
-	const notStaking = !inPool && !isBonding
-	const showNominate = notStaking || isBonding
-	const showMembership = notStaking || inPool
+	const [activeSection, setActiveSection] = useState<number>(0)
 
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
-			<StatusWrapper>
-				{showNominate && (
-					<Page.RowSection
-						secondary={showMembership}
-						standalone={!showMembership}
-					>
-						<section>
-							<NominationStatus />
-						</section>
-					</Page.RowSection>
-				)}
-				{showMembership && (
-					<Page.RowSection
-						hLast={showNominate}
-						vLast={showNominate}
-						standalone={true}
-					>
-						<section>
-							<MembershipStatus showButtons={false} />
-						</section>
-					</Page.RowSection>
-				)}
-			</StatusWrapper>
+			<SectionNavigation>
+				<ButtonSecondary text="Status" onClick={() => setActiveSection(0)} />
+				<ButtonSecondary
+					text="Next Halving"
+					onClick={() => setActiveSection(1)}
+				/>
+			</SectionNavigation>
+			<SectionSlider $activeSection={activeSection}>
+				<div className="section">
+					<Status />
+				</div>
+				<div className="section">
+					<Halving />
+				</div>
+			</SectionSlider>
 			<Tips />
 		</CardWrapper>
 	)

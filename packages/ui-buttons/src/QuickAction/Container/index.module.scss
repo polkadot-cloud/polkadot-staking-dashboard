@@ -4,11 +4,17 @@
 .container {
   display: flex;
   justify-content: space-between;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   flex-grow: 1;
   padding: 0 0.75rem 0.5rem;
-
+  
   @media (width <= 950px) {
     flex-wrap: wrap;
+  }
+
+  @media(width >= 951px) {
+    > div {
+      min-width: 33%;
+    }
   }
 }

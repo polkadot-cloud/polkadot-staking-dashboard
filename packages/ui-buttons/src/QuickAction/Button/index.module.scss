@@ -7,17 +7,17 @@
   height: 5.85rem;
   padding: 0.3rem;
 
-  @media (width >= 951px) {
-    padding-top: 0;
+  // @media (width >= 951px) {
+  //   padding-top: 0;
 
-    &:first-child {
-      padding-left: 0;
-    }
+  //   &:first-child {
+  //     padding-left: 0;
+  //   }
 
-    &:last-child {
-      padding-right: 0;
-    }
-  }
+  //   &:last-child {
+  //     padding-right: 0;
+  //   }
+  // }
 }
 
 .btnQuickAction {
