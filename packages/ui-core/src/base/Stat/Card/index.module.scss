@@ -26,7 +26,7 @@
 
   > div,
   > button {
-    background: var(--background-primary);
+    background: var(--bg-primary);
     box-shadow: var(--card-shadow-secondary);
     border: 1px solid transparent;
     display: flex;
@@ -40,7 +40,7 @@
       box-shadow: var(--card-shadow);
     }
     > label {
-      background: var(--background-invert);
+      background: var(--bg-invert);
       opacity: 0;
       position: absolute;
       top: -1rem;

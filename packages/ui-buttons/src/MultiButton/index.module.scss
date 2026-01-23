@@ -17,10 +17,10 @@
   }
   > button {
     color: white;
-    border-radius: var(--button-lg-border-radius);
+    border-radius: var(--btn-lg-radius);
     &.sm {
-      font-size: var(--button-sm-font-size);
-      padding: var(--button-sm-padding);
+      font-size: var(--btn-sm-font-size);
+      padding: var(--btn-sm-padding);
       padding-left: 0.45rem;
       padding-right: 0.45rem;
     }

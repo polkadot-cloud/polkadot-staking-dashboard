@@ -15,7 +15,7 @@ $header-button-width: 3.5rem;
   position: relative;
 
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--btn-bg-hover);
     color: var(--accent-color-primary);
   }
 
@@ -30,7 +30,7 @@ $header-button-width: 3.5rem;
     border-radius: 50%;
 
     &.pulse {
-      border: 1.5px solid var(--background-primary);
+      border: 1.5px solid var(--bg-primary);
       animation: pulse 2s infinite;
       top: 0.6rem;
       right: 0.6rem;

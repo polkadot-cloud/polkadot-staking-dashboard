@@ -18,12 +18,12 @@ export const ItemWrapper = styled.button`
   justify-content: center;
   align-items: center;
   padding: 1.5rem 1rem;
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
   border-radius: 0.75rem;
   transition: background 0.1s ease-in-out;
 
   &:hover {
-    background: var(--button-secondary-background);
+    background: var(--btn-bg-secondary);
   }
 
   > svg {

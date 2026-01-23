@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   margin-top: 0.5rem;
 
   .input {
-    border: 1px solid var(--border-primary-color);
+    border: 1px solid var(--border);
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;

@@ -115,7 +115,7 @@ export const PageToggleWrapper = styled.div`
   height: 3.5rem;
 
   > span {
-    border-left: 1px solid var(--border-primary-color);
+    border-left: 1px solid var(--border);
     height: inherit;
 
     > button {
@@ -131,7 +131,7 @@ export const PageToggleWrapper = styled.div`
       &:hover {
         opacity: 1;
         color: var(--accent-color-primary);
-        background-color: var(--background-default);
+        background-color: var(--bg-body);
       }
       &:disabled {
         color: var(--text-color-secondary);

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnHelp {
-  background: var(--button-tertiary-background);
+  background: var(--btn-bg-tertiary);
   color: var(--text-color-secondary);
   fill: var(--text-color-secondary);
   border-radius: 50%;
@@ -12,7 +12,7 @@
 }
 
 .btnHelpSecondaryBackground {
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
 }
 
 .btnHelpNoBackground {

@@ -3,7 +3,7 @@
 
 .Content {
   color: var(--text-color-invert);
-  background: var(--background-invert);
+  background: var(--bg-invert);
   box-shadow: var(--card-shadow);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
@@ -21,7 +21,7 @@
 
 
 .Inverted {
-  background: var(--background-primary);
+  background: var(--bg-primary);
   color: var(--text-color-secondary);
 }
 
@@ -31,10 +31,10 @@
 }
 
 .Arrow {
-  fill: var(--background-invert);
+  fill: var(--bg-invert);
 }
 .ArrowInverted {
-  fill: var(--background-primary);
+  fill: var(--bg-primary);
 }
 
 @keyframes slideDownAndFade {

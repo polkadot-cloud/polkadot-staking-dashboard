@@ -12,7 +12,7 @@ export const SearchInput = styled.div`
   padding: 0 1rem 0rem 1rem;
 
   input {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
     color: var(--text-color-primary);
     width: 100%;
     padding: 0.5rem 0;

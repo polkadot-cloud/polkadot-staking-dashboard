@@ -13,7 +13,7 @@ export const ItemWrapper = styled.div`
   width: 100%;
 
   > .inner {
-    background: var(--background-list-item);
+    background: var(--bg-list);
     padding: 0 0.75rem;
     flex: 1;
     border-radius: 1rem;
@@ -34,7 +34,7 @@ export const ItemWrapper = styled.div`
       }
 
       &:last-child {
-        border-top: 1px solid var(--border-primary-color);
+        border-top: 1px solid var(--border);
         padding-top: 0rem;
 
         > div {

@@ -32,7 +32,7 @@ export const ItemWrapper = styled(motion.div)`
 
   > .inner {
     color: var(--text-color-secondary);
-    background: var(--background-primary);
+    background: var(--bg-primary);
     box-shadow: var(--card-shadow);
     border-radius: 0.75rem;
     width: 100%;
@@ -62,9 +62,9 @@ export const ItemWrapper = styled(motion.div)`
           font-size: 1.1rem;
           &.active {
             color: var(--text-color-secondary);
-            background: var(--background-list-item);
+            background: var(--bg-list);
             &:hover {
-              background: var(--background-list-item);
+              background: var(--bg-list);
             }
           }
           padding: 0.35rem 0.75rem;
@@ -91,10 +91,10 @@ export const ItemWrapper = styled(motion.div)`
           cursor: default;
         }
         &.active {
-          background: var(--button-secondary-background);
+          background: var(--btn-bg-secondary);
           transition: background var(--transition-duration);
           &:hover {
-            background: var(--button-hover-background);
+            background: var(--btn-bg-hover);
           }
         }
         &:last-child {
@@ -132,7 +132,7 @@ export const ItemWrapper = styled(motion.div)`
         }
       }
       &:last-child {
-        border-top: 1px solid var(--border-primary-color);
+        border-top: 1px solid var(--border);
         border-left: none;
         flex-flow: column wrap;
         justify-content: center;

@@ -3,7 +3,7 @@
 
 .btnModal {
   color: var(--text-color-primary);
-  background: var(--button-primary-background);
+  background: var(--btn-bg);
   transition: background-color var(--transition-duration);
   box-sizing: border-box;
   padding: 0.9rem 1rem;
@@ -24,7 +24,7 @@
     cursor: not-allowed;
   }
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--btn-bg-hover);
   }
   > h3 {
     font-family: Inter, sans-serif;

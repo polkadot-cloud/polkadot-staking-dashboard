@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnPopoverTab {
-  border-left: 1px solid var(--border-primary-color);
-  background: var(--button-popover-tab-background);
+  border-left: 1px solid var(--border);
+  background: var(--btn-popover-tab-bg);
   color: var(--text-color-secondary);
   font-family: InterSemiBold, sans-serif;
   padding: 1.1rem 1.25rem;
@@ -13,9 +13,9 @@
   font-size: 1.15rem;
 
   &:hover {
-    background: var(--background-default);
+    background: var(--bg-body);
     &:disabled {
-      background: var(--button-popover-tab-background);
+      background: var(--btn-popover-tab-bg);
     }
   }
   &:first-child {

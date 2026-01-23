@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .header {
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -12,8 +12,8 @@
   margin-bottom: 2rem;
   background: linear-gradient(
     0,
-    var(--background-default) 0%,
-    var(--background-primary) 100%
+    var(--bg-body) 0%,
+    var(--bg-primary) 100%
   );
 
   > div {
@@ -47,8 +47,8 @@
 
       > span,
       > div {
-        border: 1px solid var(--border-secondary-color);
-        background: var(--background-primary);
+        border: 1px solid var(--border-alt);
+        background: var(--bg-primary);
         padding: 0.25rem 0.5rem;
         border-radius: 0.5rem;
         margin: 0 0.25rem;
