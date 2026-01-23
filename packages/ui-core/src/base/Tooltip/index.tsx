@@ -29,14 +29,14 @@ export const Tooltip = ({
 	fadeIn?: boolean
 	inverted?: boolean
 }) => {
-	const contentClasses = classNames(classes.Content, {
-		[classes.Inverted]: !!inverted,
-		[classes.FadeIn]: fadeIn,
+	const contentClasses = classNames(classes.content, {
+		[classes.inverted]: !!inverted,
+		[classes.fadeIn]: fadeIn,
 	})
 
 	const arrowClasses = classNames({
-		[classes.Arrow]: !inverted,
-		[classes.ArrowInverted]: !!inverted,
+		[classes.arrow]: !inverted,
+		[classes.arrowInverted]: !!inverted,
 	})
 
 	return (

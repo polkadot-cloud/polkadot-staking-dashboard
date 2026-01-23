@@ -7,21 +7,18 @@ SPDX-License-Identifier: GPL-3.0-only */
   --btn-sm-padding: 0.45rem 1rem;
   --btn-sm-spacing: 0.125rem;
   --btn-sm-font-size: 1rem;
-
   --btn-md-padding: 0.5rem 1.25rem;
   --btn-md-font-size: 1.1rem;
-
   --btn-lg-radius: 1.5rem;
   --btn-lg-padding: 0.53rem 1rem;
   --btn-lg-spacing: 0.625rem;
   --btn-lg-font-size: 1.15rem;
-
   --transition-duration: 0.15s;
   --opacity-disabled: 0.3;
 }
 
 /* light theme colors */
-.theme-light {
+.light {
   --bg-body: #efeeee;
   --bg-primary: #f8f7f7;
   --bg-invert: #333;
@@ -45,7 +42,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --btn-canvas-tab: #d9d9d9;
   --btn-bg-hover: #e9e9e9;
   --btn-popover-tab-bg: #f3f3f3;
-  --shadow-primary: rgba(27, 19, 19, 0.2);
+  --shadow-primary: rgb(27 19 19 / 20%);
   --shadow-secondary: #e7e7e7;
   --shadow-tertiary: rgb(158 158 158 / 50%);
   --accent-primary: var(--accent-primary-light);
@@ -96,7 +93,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 }
 
 /* dark theme colors */
-.theme-dark {
+.dark {
   --bg-body: rgb(36 32 36);
   --bg-primary: rgb(45 41 45);
   --bg-invert: #ddd;

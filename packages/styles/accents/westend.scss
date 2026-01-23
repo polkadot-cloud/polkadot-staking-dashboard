@@ -3,9 +3,9 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 @use 'sass:color';
 
-.theme-westend {
-  $base-primary: rgb(218, 78, 113);
-  $base-secondary: rgb(222, 106, 80);
+.westend {
+  $base-primary: rgb(218 78 113);
+  $base-secondary: rgb(222 106 80);
 
   @for $i from 0 through 19 {
     --accent-primary-#{100 - ($i * 5)}: #{hsl(
@@ -22,19 +22,14 @@ SPDX-License-Identifier: GPL-3.0-only */
 
   --accent-primary-light: var(--accent-primary-50);
   --accent-primary-dark: var(--accent-primary-50);
-
   --accent-secondary-light: var(--accent-secondary-50);
   --accent-secondary-dark: var(--accent-secondary-50);
-
-  --accent-tertiary-light: rgb(232, 213, 208);
-  --accent-tertiary-dark: rgb(70, 48, 47);
-
-  --accent-stroke-light: rgb(218, 78, 113);
-  --accent-stroke-dark: rgb(218, 78, 113);
-
+  --accent-tertiary-light: rgb(232 213 208);
+  --accent-tertiary-dark: rgb(70 48 47);
+  --accent-stroke-light: rgb(218 78 113);
+  --accent-stroke-dark: rgb(218 78 113);
   --accent-transparent-light: rgb(218 78 113 / 5%);
   --accent-transparent-dark: rgb(218 78 113 / 5%);
-
   --accent-pending-light: rgb(218 78 113 / 50%);
   --accent-pending-dark: rgb(218 78 113 / 50%);
 }
