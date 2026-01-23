@@ -14,16 +14,19 @@
   width: 1.5rem;
   height: 1.5rem;
   padding: 0;
+
   * {
     cursor: pointer;
     width: 100%;
     padding: 0;
   }
+
   span {
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
   svg {
     color: var(--text-color-primary);
     width: 1.1rem;

@@ -3,6 +3,7 @@
 
 .container {
   z-index: 9;
+
   > div {
     height: 100%;
     display: flex;
@@ -10,6 +11,7 @@
     align-items: center;
     padding: 1rem 2rem;
   }
+
   .close {
     position: fixed;
     width: 100%;

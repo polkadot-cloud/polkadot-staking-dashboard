@@ -12,13 +12,16 @@
 .scrollBar {
   scrollbar-width: thin;
   scrollbar-color: inherit transparent;
+
   ::-webkit-scrollbar {
     width: 0.1rem;
   }
+
   ::-webkit-scrollbar-track {
     background-color: transparent;
     border: 0;
   }
+
   ::-webkit-scrollbar-thumb {
     background-color: transparent; /* color of the scroll thumb */
     border-radius: 2rem; /* roundness of the scroll thumb */

@@ -19,13 +19,16 @@
   &.selected {
     border-color: var(--accent-color-primary);
   }
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
+
   &:hover {
     background: var(--button-hover-background);
   }
+
   > h3 {
     font-family: Inter, sans-serif;
     flex-grow: 1;
@@ -36,6 +39,7 @@
       > .on {
         color: var(--accent-color-primary);
       }
+
       > .off {
         color: var(--text-color-tertiary);
         opacity: 0.75;

@@ -7,12 +7,13 @@
   height: 5.85rem;
   padding: 0.3rem;
 
-  @media (min-width: 951px) {
+  @media (width >= 951px) {
     padding-top: 0;
 
     &:first-child {
       padding-left: 0;
     }
+
     &:last-child {
       padding-right: 0;
     }
@@ -35,12 +36,13 @@
 
   &.disabled {
     cursor: default;
+
     > * {
       opacity: 0.4;
     }
   }
 
-  @media (max-width: 1150px) {
+  @media (width <= 1150px) {
     min-width: 12rem;
   }
  
@@ -60,6 +62,7 @@
   &.active {
     &:hover {
       background: var(--button-hover-background);
+
       > .icon > svg {
         transform: scale(1.1);
       }

@@ -13,18 +13,22 @@
   > svg {
     margin-right: 0.5rem;
   }
+
   &.semibold {
     font-family: InterSemiBold, sans-serif;
   }
+
   &.primary {
     color: var(--accent-color-primary);
   }
+
   &.text {
     margin-top: 0.15rem;
     display: flex;
     align-items: center;
   }
-  @media (min-width: 950px) {
+
+  @media (width >= 950px) {
     font-size: 1.25rem;
   }
 
@@ -36,12 +40,15 @@
     &.success {
       color: var(--status-success-color);
     }
+
     &.warning {
       color: var(--status-warning-color);
     }
+
     &.error {
       color: var(--status-error-color);
     }
+
     &.danger {
       color: var(--status-danger-color);
     }

@@ -1,7 +1,7 @@
 /* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-@use 'styles/theme/_variables' as *;
+@use 'styles/theme/variables' as *;
 
 .btnAccount {
   color: var(--text-color-primary);
@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   &.marginLeft {
     margin-left: 0.8rem;
   }
+
   > .icon {
     margin-left: 0.95rem;
   }

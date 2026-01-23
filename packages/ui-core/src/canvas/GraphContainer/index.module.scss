@@ -5,18 +5,21 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  @media (min-width: 1001px) {
+
+  @media (width >= 1001px) {
     > div:last-child {
       margin-top: 1.25rem;
     }
   }
-  @media (max-width: 1000px) {
+
+  @media (width <= 1000px) {
     > div {
       &:first-child {
         order: 2;
         margin-top: 1.5rem;
         margin-bottom: 0;
       }
+
       &:last-child {
         order: 1;
       }

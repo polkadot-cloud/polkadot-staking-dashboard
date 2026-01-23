@@ -3,17 +3,21 @@
 
 .subheading {
   margin: 0.5rem 0;
+
   > h3,
   > p {
     padding: 0 0.5rem;
   }
+
   > h4 {
     font-size: 1.15rem;
   }
+
   > p {
     color: var(--text-color-tertiary);
-    margin: 0.35rem 0 0 0;
+    margin: 0.35rem 0 0;
   }
+
   > h3,
   > h4 {
     color: var(--text-color-secondary);
@@ -22,7 +26,7 @@
     display: flex;
     align-items: center;
 
-    @media (max-width: 600px) {
+    @media (width <= 600px) {
       flex-wrap: wrap;
     }
   }

@@ -7,17 +7,21 @@
   border-radius: 1.5rem;
   display: flex;
   padding: 0.1rem 0.25rem;
+
   &.disabled {
     background: var(--accent-color-pending);
   }
+
   > span {
     border-right: 1px solid var(--text-color-invert);
     opacity: 0.2;
     margin: 0 0.2rem;
   }
+
   > button {
     color: white;
     border-radius: var(--button-lg-border-radius);
+
     &.sm {
       font-size: var(--button-sm-font-size);
       padding: var(--button-sm-padding);

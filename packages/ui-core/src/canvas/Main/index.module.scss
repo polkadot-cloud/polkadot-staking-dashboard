@@ -1,14 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-@use '../_variables' as *;
+@use '../variables' as *;
 
 .main {
-  padding-top: 3rem;
-  padding-bottom: 5rem;
+  padding: 3rem 1.5rem 5rem;
   width: 100%;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
   min-height: calc(100vh - 12rem);
 
   &.withMenu {
@@ -18,6 +15,7 @@
   &.lg {
     max-width: $canvas-width-lg;
   }
+
   &.xl {
     max-width: $canvas-width-xl;
   }

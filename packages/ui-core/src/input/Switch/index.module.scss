@@ -8,7 +8,7 @@
   height: 2.15rem;
   border-radius: 9999px;
   position: relative;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
   background-color: var(--border-secondary-color);
 
   &[data-state='checked'] {

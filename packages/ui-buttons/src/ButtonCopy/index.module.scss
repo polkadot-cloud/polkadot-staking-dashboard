@@ -29,6 +29,7 @@
     &.active {
       animation: fadeOutIn 2s ease-in-out 1;
     }
+
     > .icon {
       color: var(--text-color-tertiary);
       width: 100%;
@@ -51,6 +52,7 @@
     &.active {
       animation: fadeInOut 2s ease-in-out 1;
     }
+
     > .icon {
       width: inherit;
       height: auto;
@@ -78,14 +80,17 @@
       opacity: 1;
       transform: scale(1);
     }
+
     12.5% {
       opacity: 0;
       transform: scale(0);
     }
+
     87.5% {
       opacity: 0;
       transform: scale(0);
     }
+
     100% {
       opacity: 1;
       transform: scale(1);
@@ -98,14 +103,17 @@
       opacity: 0;
       transform: scale(0);
     }
+
     12.5% {
       opacity: 1;
       transform: scale(1);
     }
+
     87.5% {
       opacity: 1;
       transform: scale(1);
     }
+
     100% {
       opacity: 0;
       transform: scale(0);

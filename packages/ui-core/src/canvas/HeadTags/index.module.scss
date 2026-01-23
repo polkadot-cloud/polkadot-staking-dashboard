@@ -4,6 +4,7 @@
 .headTags {
   display: flex;
   margin: 1.25rem 0;
+
   > h3 {
     color: var(--text-color-secondary);
     font-family: Inter, sans-serif;
@@ -12,15 +13,18 @@
     > svg {
       margin: 0 0.45rem 0 0.25rem;
     }
+
     > span {
       border: 1px solid var(--border-secondary-color);
       border-radius: 0.5rem;
       padding: 0.4rem 0.6rem;
       font-size: 1.1rem;
+
       &.warning {
         color: var(--accent-color-secondary);
         border-color: var(--accent-color-secondary);
       }
+
       &.danger {
         color: var(--status-danger-color);
         border-color: var(--status-danger-color);
