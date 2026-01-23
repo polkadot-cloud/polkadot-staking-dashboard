@@ -12,7 +12,6 @@ export const TipsWrapper = styled.div`
 
   > .inner {
     border: 1px solid var(--btn-bg-hover);
-    background: var(--btn-bg-secondary);
     display: flex;
     flex-flow: row wrap;
     border-radius: 1rem;
