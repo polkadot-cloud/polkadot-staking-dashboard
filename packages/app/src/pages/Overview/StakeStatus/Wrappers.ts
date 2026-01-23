@@ -57,7 +57,6 @@ export const StatusWrapper = styled.div`
         margin-top: 1rem;
       }
 
-      padding-left: 1.5rem;
       @media (max-width: ${PageWidthMediumThreshold}px) {
         padding-left: 0;
       }

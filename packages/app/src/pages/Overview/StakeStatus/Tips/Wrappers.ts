@@ -6,17 +6,32 @@ import { motion } from 'motion/react'
 import styled from 'styled-components'
 
 export const TipsWrapper = styled.div`
-  border-top: 1px solid var(--border);
-  width: 100%;
+  padding: 0.7rem;
   display: flex;
   position: relative;
+
+  > .inner {
+    border: 1px solid var(--btn-bg-hover);
+    background: var(--btn-bg-secondary);
+    display: flex;
+    flex-flow: row wrap;
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+
+    > .items {
+      display: flex;
+      flex-grow: 1;
+    }
+  }
 `
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   justify-items: center;
-  padding: 0.75rem 0;
+  justify-content: center;
 `
 export const ItemWrapper = styled(motion.div)`
   padding: 0 0.25rem;
@@ -30,9 +45,11 @@ export const ItemInnerWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  flex-grow: 1;
+  height: 100%;
 
   > section {
-    height: 100%;
+    padding: 0 0.25rem;
 
     &:nth-child(1) {
       display: flex;
@@ -55,7 +72,7 @@ export const ItemInnerWrapper = styled.div`
         justify-content: flex-start;
         overflow: hidden;
         width: 100%;
-        height: 1.85rem;
+        height: 1.5rem;
         position: relative;
 
         &.active {
@@ -72,7 +89,7 @@ export const ItemInnerWrapper = styled.div`
           position: absolute;
           top: 0;
           left: 0;
-          height: 1.85rem;
+          height: 1.5rem;
           max-width: 100%;
           width: auto;
 
@@ -85,7 +102,7 @@ export const ItemInnerWrapper = styled.div`
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-            padding: 0.15rem 1.75rem 0rem 0;
+            padding: 0 1.75rem 0rem 0;
             width: 100%;
 
             > svg {
@@ -113,7 +130,7 @@ export const PageToggleWrapper = styled.div`
   flex-flow: row wrap;
   align-items: center;
   margin-left: 0.5rem;
-  height: 3.5rem;
+  height: 3rem;
 
   > span {
     border-left: 1px solid var(--border);
@@ -124,7 +141,7 @@ export const PageToggleWrapper = styled.div`
       opacity: 0.75;
       font-size: 1.1rem;
       height: 100%;
-      padding: 0 1rem;
+      padding: 0 0.75rem;
 
       > svg {
         color: var(--text-secondary);

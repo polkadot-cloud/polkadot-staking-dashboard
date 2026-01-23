@@ -160,27 +160,29 @@ export const Tips = () => {
 	}
 	return (
 		<TipsWrapper>
-			<div style={{ flexGrow: 1 }}>
-				{syncing ? (
-					<Syncing />
-				) : (
-					<Items
-						items={itemsDisplay}
-						page={pageRef.current}
-						showTitle={false}
+			<div className="inner">
+				<div className="items">
+					{syncing ? (
+						<Syncing />
+					) : (
+						<Items
+							items={itemsDisplay}
+							page={pageRef.current}
+							showTitle={false}
+						/>
+					)}
+				</div>
+				{items.length > 1 && (
+					<PageToggle
+						start={start}
+						end={end}
+						page={page}
+						itemsPerPage={itemsPerPage}
+						totalItems={items.length}
+						setPageHandler={setPageHandler}
 					/>
 				)}
 			</div>
-			{items.length > 1 && (
-				<PageToggle
-					start={start}
-					end={end}
-					page={page}
-					itemsPerPage={itemsPerPage}
-					totalItems={items.length}
-					setPageHandler={setPageHandler}
-				/>
-			)}
 		</TipsWrapper>
 	)
 }

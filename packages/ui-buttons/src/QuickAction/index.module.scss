@@ -25,8 +25,8 @@
 .button {
   display: flex;
   flex: 1;
-  height: 5.85rem;
-  padding: 0.3rem;
+  height: 5.75rem;
+  padding: 0.35rem;
 
   .inner {
     background: var(--btn-popover-tab-bg);
@@ -64,7 +64,7 @@
     > h4 {
       font-family: Inter, sans-serif;
       color: var(--text-secondary);
-      margin-top: 0.85rem;
+      margin-top: 0.5rem;
     }
 
     &.active {
