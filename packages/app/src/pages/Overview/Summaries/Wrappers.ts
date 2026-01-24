@@ -48,9 +48,6 @@ export const SectionWrapper = styled.div`
       @media (max-width: 1400px) {
         margin-top: 1rem;
       }
-      @media (max-width: ${PageWidthMediumThreshold}px) {
-        padding-left: 0;
-      }
     }
 
     > section {

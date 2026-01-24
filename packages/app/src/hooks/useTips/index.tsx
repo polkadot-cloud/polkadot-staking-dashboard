@@ -79,26 +79,30 @@ export const useTips = () => {
 			navigate(`/${item.page}`)
 		}
 
-		return fillVariables(
+		const filledVars = fillVariables(
 			{
 				...item,
 				title,
 				subtitle,
 				description,
-				onTipClick: () => {
-					openPromptWith(
-						<Tip
-							title={title}
-							description={description}
-							page={item.page}
-							onPromptClick={onPromptClick}
-						/>,
-						'lg',
-					)
-				},
 			},
 			['title', 'subtitle', 'description'],
 		)
+
+		return {
+			...filledVars,
+			onTipClick: () => {
+				openPromptWith(
+					<Tip
+						title={filledVars.title}
+						description={filledVars.description}
+						page={item.page}
+						onPromptClick={onPromptClick}
+					/>,
+					'lg',
+				)
+			},
+		}
 	})
 
 	return { items: itemsDisplay }
