@@ -543,6 +543,9 @@ importers:
       chart.js:
         specifier: ^4.4.9
         version: 4.5.1
+      chartjs-plugin-annotation:
+        specifier: ^3.1.0
+        version: 3.1.0(chart.js@4.5.1)
       chroma-js:
         specifier: ^3.2.0
         version: 3.2.0
@@ -2599,6 +2602,11 @@ packages:
   chart.js@4.5.1:
     resolution: {integrity: sha512-GIjfiT9dbmHRiYi6Nl2yFCq7kkwdkp1W/lp2J99rX0yo9tgJGn3lKQATztIjb5tVtevcBtIdICNWqlq5+E8/Pw==}
     engines: {pnpm: '>=8'}
+
+  chartjs-plugin-annotation@3.1.0:
+    resolution: {integrity: sha512-EkAed6/ycXD/7n0ShrlT1T2Hm3acnbFhgkIEJLa0X+M6S16x0zwj1Fv4suv/2bwayCT3jGPdAtI9uLcAMToaQQ==}
+    peerDependencies:
+      chart.js: '>=4.0.0'
 
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
@@ -6141,6 +6149,10 @@ snapshots:
   chart.js@4.5.1:
     dependencies:
       '@kurkle/color': 0.3.4
+
+  chartjs-plugin-annotation@3.1.0(chart.js@4.5.1):
+    dependencies:
+      chart.js: 4.5.1
 
   chokidar@4.0.3:
     dependencies:

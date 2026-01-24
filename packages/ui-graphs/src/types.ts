@@ -113,6 +113,7 @@ export interface HalvingLineProps {
 	getThemeValue: (key: string) => string
 	label: string
 	tooltipLabel: (value: number) => string
+	millionUnit: string
 }
 
 export interface PayoutDayCursor {

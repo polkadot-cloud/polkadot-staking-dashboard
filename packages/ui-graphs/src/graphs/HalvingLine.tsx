@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FontSpec } from 'chart.js'
+import type { ChartOptions, FontSpec } from 'chart.js'
 import {
 	CategoryScale,
 	Chart as ChartJS,
@@ -13,6 +13,7 @@ import {
 	Title,
 	Tooltip,
 } from 'chart.js'
+import annotationPlugin from 'chartjs-plugin-annotation'
 import { Line } from 'react-chartjs-2'
 import type { HalvingLineProps } from '../types'
 
@@ -25,6 +26,7 @@ ChartJS.register(
 	Tooltip,
 	Legend,
 	Filler,
+	annotationPlugin,
 )
 
 // Hard Pressure Supply Schedule Data
@@ -66,6 +68,7 @@ export const HalvingLine = ({
 	getThemeValue,
 	label,
 	tooltipLabel,
+	millionUnit,
 }: HalvingLineProps) => {
 	const currentYear = 2026
 	const currentDataIndex = HALVING_SCHEDULE.findIndex(
@@ -92,7 +95,7 @@ export const HalvingLine = ({
 		font: titleFontSpec,
 	}
 
-	const options = {
+	const options: ChartOptions<'line'> = {
 		responsive: true,
 		maintainAspectRatio: false,
 		scales: {
@@ -120,7 +123,7 @@ export const HalvingLine = ({
 						size: 10,
 					},
 					callback: (value: number | string) =>
-						`${(Number(value) / 1_000_000).toFixed(1)}M`,
+						`${(Number(value) / 1_000_000).toFixed(1)}M${millionUnit}`,
 				},
 				border: {
 					display: false,
@@ -157,8 +160,20 @@ export const HalvingLine = ({
 					},
 				},
 				intersect: false,
-				interaction: {
-					mode: 'nearest',
+			},
+			annotation: {
+				annotations: {
+					currentYearLine: {
+						type: 'line',
+						xMin: currentDataIndex,
+						xMax: currentDataIndex,
+						borderColor: getThemeValue('--accent-primary'),
+						borderWidth: 2,
+						borderDash: [5, 5],
+						label: {
+							display: false,
+						},
+					},
 				},
 			},
 		},

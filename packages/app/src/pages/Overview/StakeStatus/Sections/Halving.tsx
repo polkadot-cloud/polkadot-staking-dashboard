@@ -46,6 +46,7 @@ export const Halving = () => {
 						getThemeValue={getThemeValue}
 						label={t('issuance', { ns: 'app' })}
 						tooltipLabel={tooltipLabel}
+						millionUnit={t('millionUnit', { ns: 'app' })}
 					/>
 				</div>
 			</div>
