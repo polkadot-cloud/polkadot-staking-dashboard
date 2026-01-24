@@ -64,9 +64,9 @@ export const HalvingLine = ({
 	width,
 	height,
 	getThemeValue,
-	labels,
+	label,
+	tooltipLabel,
 }: HalvingLineProps) => {
-	// Current year (2026)
 	const currentYear = 2026
 	const currentDataIndex = HALVING_SCHEDULE.findIndex(
 		(item) => item.year === currentYear,
@@ -126,11 +126,11 @@ export const HalvingLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-canvas'),
+					color: getThemeValue('--grid-secondary'),
 				},
 				title: {
 					...titleStyle,
-					text: labels.issuance,
+					text: label,
 				},
 			},
 		},
@@ -153,7 +153,7 @@ export const HalvingLine = ({
 					title: () => [],
 					label: (context: { parsed: { y: number | null } }) => {
 						const value = context.parsed.y ?? 0
-						return `${(value / 1_000_000).toFixed(2)}M DOT/year`
+						return tooltipLabel(value)
 					},
 				},
 				intersect: false,
@@ -168,7 +168,7 @@ export const HalvingLine = ({
 		labels: HALVING_SCHEDULE.map((item) => item.year.toString()),
 		datasets: [
 			{
-				label: labels.newIssuance,
+				label,
 				data: HALVING_SCHEDULE.map((item) => item.issuance),
 				borderColor: color,
 				backgroundColor,

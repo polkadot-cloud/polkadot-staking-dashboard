@@ -111,11 +111,8 @@ export interface HalvingLineProps {
 	width: string | number
 	height: string | number
 	getThemeValue: (key: string) => string
-	labels: {
-		year: string
-		issuance: string
-		newIssuance: string
-	}
+	label: string
+	tooltipLabel: (value: number) => string
 }
 
 export interface PayoutDayCursor {

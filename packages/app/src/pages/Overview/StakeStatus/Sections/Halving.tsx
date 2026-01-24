@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getStakingChainData } from 'consts/util'
+import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useHalving } from 'hooks/useHalving'
 import { Countdown } from 'library/Countdown'
@@ -11,8 +13,15 @@ import { StatusWrapper } from '../Wrappers'
 
 export const Halving = () => {
 	const { t } = useTranslation()
+	const { network } = useNetwork()
 	const { getThemeValue } = useThemeValues()
 	const { timeleft } = useHalving()
+	const { unit } = getStakingChainData(network)
+
+	const tooltipLabel = (value: number) => {
+		const millions = (value / 1_000_000).toFixed(2)
+		return `${millions}${t('millionUnit', { ns: 'app' })} ${unit}/${t('year', { ns: 'app' })}`
+	}
 
 	return (
 		<StatusWrapper>
@@ -35,11 +44,8 @@ export const Halving = () => {
 						width="100%"
 						height="100%"
 						getThemeValue={getThemeValue}
-						labels={{
-							year: t('year', { ns: 'app' }),
-							issuance: t('newIssuance', { ns: 'app' }),
-							newIssuance: t('newIssuance', { ns: 'app' }),
-						}}
+						label={t('issuance', { ns: 'app' })}
+						tooltipLabel={tooltipLabel}
 					/>
 				</div>
 			</div>
