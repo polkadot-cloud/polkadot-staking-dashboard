@@ -20,8 +20,8 @@ export const Disconnected = () => {
 
 	actions.push(
 		baseQuickActions.joinPool,
-		baseQuickActions.email,
-		baseQuickActions.discord,
+		baseQuickActions.ledger,
+		baseQuickActions.vault,
 	)
 
 	return (

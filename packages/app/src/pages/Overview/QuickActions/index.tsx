@@ -1,6 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { DiscordSupportURL, PlatformSupportEmail } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
@@ -14,7 +17,7 @@ import { NotStaking } from './NotStaking'
 import { Staking } from './Staking'
 
 export const QuickActions = ({ height }: { height: number }) => {
-	const { t } = useTranslation('pages')
+	const { t } = useTranslation()
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
 	const { accountSynced } = useSyncing()
@@ -33,7 +36,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
 			<CardHeader style={{ padding: '1.25rem 1.25rem 0 1.25rem' }}>
-				<h4>{t('quickActions')}</h4>
+				<h4>{t('quickActions', { ns: 'pages' })}</h4>
 			</CardHeader>
 			{syncing ? (
 				<QuickAction.Container>
@@ -50,7 +53,21 @@ export const QuickActions = ({ height }: { height: number }) => {
 						<Staking bondFor={inPool ? 'pool' : 'nominator'} />
 					)}
 					<QuickAction.Footer>
-						<p>test</p>
+						<h4>{t('supportChannels', { ns: 'app' })}</h4>
+						<section>
+							<QuickAction.FooterButton
+								icon={faDiscord}
+								label="Discord"
+								onClick={() => window.open(DiscordSupportURL, '_blank')}
+							/>
+							<QuickAction.FooterButton
+								icon={faEnvelope}
+								label={t('email', { ns: 'app' })}
+								onClick={() =>
+									window.open(`mailto:${PlatformSupportEmail}`, '_blank')
+								}
+							/>
+						</section>
 					</QuickAction.Footer>
 				</>
 			)}

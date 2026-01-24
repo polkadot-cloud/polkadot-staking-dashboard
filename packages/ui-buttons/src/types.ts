@@ -229,3 +229,10 @@ export type ButtonPopoverTabProps = ComponentBaseWithClassName &
 		disabled?: boolean
 		grow?: boolean
 	}
+
+export interface QuickActionFooterButtonProps
+	extends ComponentBaseWithClassName {
+	icon: IconDefinition
+	label: string
+	onClick: () => void
+}

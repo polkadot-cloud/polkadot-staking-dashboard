@@ -314,6 +314,7 @@
 		"startAgain": "重新开始",
 		"submitTransaction": "准备提交交易",
 		"support": "支持",
+		"supportChannels": "支持渠道",
 		"switchAccount": "切换账户",
 		"syncing": "正在同步",
 		"syncingPoolData": "查找提名池中",

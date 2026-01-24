@@ -13,6 +13,7 @@
   
   @media (width <= $row-section-thirds-threshold) {
     flex-wrap: wrap;
+    padding-bottom: $summary-footer-padding;
   }
 
   @media(width >= $row-section-thirds-threshold) {
@@ -82,9 +83,13 @@
 }
 
 .footer {
-    display: flex;
-    flex-direction: row;
-    padding: $summary-footer-padding;
+  display: flex;
+  flex-direction: row;
+  padding: $summary-footer-padding;
+
+  @media (width <= $row-section-thirds-threshold) {
+    display: none;
+  }
 
   > .inner {
     border: 1px solid var(--btn-bg-hover);
@@ -94,6 +99,35 @@
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    > h4 {
+      margin: 0;
+      color: var(--text-secondary);
+      font-family: Inter, sans-serif;
+      font-size: 1.05rem;
+    }
+
+    > section {
+      display: flex; 
+      align-items: center; 
+      gap: 1.5rem;
+    }
+  }
+}
+
+.footerButton {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  font-size: inherit;
+  transition: color var(--transition-duration);
+
+  &:hover {
+    color: var(--accent-primary);
   }
 }
 

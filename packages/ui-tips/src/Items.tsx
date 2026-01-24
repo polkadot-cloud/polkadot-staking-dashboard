@@ -1,8 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { motion, useAnimate } from 'motion/react'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
@@ -101,13 +99,7 @@ const Item = ({
 				<section>
 					<div className={`${styles.desc} ${styles.active}`}>
 						<button onClick={() => onTipClick()} type="button">
-							<h4>
-								{subtitle}
-								<FontAwesomeIcon
-									icon={faExternalLinkAlt}
-									transform="shrink-2"
-								/>
-							</h4>
+							<h4>{subtitle}</h4>
 						</button>
 					</div>
 				</section>
