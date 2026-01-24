@@ -26,11 +26,12 @@
   display: flex;
   flex: 1;
   height: 6.2rem;
-  padding: 0.35rem;
+  padding: 0.4rem;
 
   .inner {
     background: var(--btn-popover-tab-bg);
-    border: 1.25px solid var(--btn-bg-hover);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px rgb(0 0 0 / 5%);
     border-radius: 0.7rem;
     display: flex;
     flex-direction: column;
@@ -40,7 +41,7 @@
     text-align: center;
     cursor: pointer;
     flex: 1;
-    padding-top: 0.6rem;
+    padding-top: 0.5rem;
 
     &.disabled {
       cursor: default;

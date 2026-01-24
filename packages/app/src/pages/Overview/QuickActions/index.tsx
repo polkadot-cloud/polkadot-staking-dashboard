@@ -32,7 +32,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
-			<CardHeader style={{ padding: '1.25rem 1rem 0.5rem 1.25rem' }}>
+			<CardHeader style={{ padding: '1.25rem 1.25rem 0 1.25rem' }}>
 				<h4>{t('quickActions')}</h4>
 			</CardHeader>
 			{syncing ? (
