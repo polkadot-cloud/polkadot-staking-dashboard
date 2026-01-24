@@ -107,6 +107,17 @@ export interface GeoDonutProps {
 	getThemeValue: (key: string) => string
 }
 
+export interface HalvingLineProps {
+	width: string | number
+	height: string | number
+	getThemeValue: (key: string) => string
+	labels: {
+		year: string
+		issuance: string
+		newIssuance: string
+	}
+}
+
 export interface PayoutDayCursor {
 	reward: BigNumber
 }

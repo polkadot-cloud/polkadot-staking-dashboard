@@ -5,7 +5,7 @@ import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
 export const Countdown = ({ children, style }: ComponentBase) => (
-	<div className={classes.countdown} style={style}>
+	<span className={classes.countdown} style={style}>
 		{children}
-	</div>
+	</span>
 )
