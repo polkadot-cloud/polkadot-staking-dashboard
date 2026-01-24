@@ -3,6 +3,8 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { usePrompt } from 'contexts/Prompt'
+import { Tip } from 'library/Tips/Tip'
 import { useAnimate } from 'motion/react'
 import { useEffect, useState } from 'react'
 import type { TipDisplay, TipItemsProps } from './types'
@@ -43,11 +45,14 @@ export const Items = ({ items, page }: TipItemsProps) => {
 }
 
 const Item = ({
+	title,
 	subtitle,
-	onTipClick,
+	description,
 	index,
 	initial,
+	page,
 }: TipDisplay & { index: number; initial: boolean }) => {
+	const { openPromptWith } = usePrompt()
 	const [scope, animate] = useAnimate()
 	const [isStopped, setIsStopped] = useState<boolean>(true)
 
@@ -92,7 +97,15 @@ const Item = ({
 				<section />
 				<section>
 					<div className="desc active">
-						<button onClick={() => onTipClick()} type="button">
+						<button
+							onClick={() =>
+								openPromptWith(
+									<Tip title={title} description={description} page={page} />,
+									'lg',
+								)
+							}
+							type="button"
+						>
 							<h4>
 								{subtitle}
 								<FontAwesomeIcon

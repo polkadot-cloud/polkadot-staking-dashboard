@@ -1,23 +1,29 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { TipsConfigAdvanced, TipsConfigSimple } from 'config/tips'
+import { TipsConfigAdvanced, TipsConfigSimple } from 'consts/tips'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { usePrompt } from 'contexts/Prompt'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFillVariables } from 'hooks/useFillVariables'
+import { Tip } from 'library/Tips/Tip'
 import { DefaultLocale } from 'locales'
+import type { TipDisplay } from 'pages/Overview/StakeStatus/Tips/types'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 export const useTips = () => {
 	const { i18n, t } = useTranslation()
+	const navigate = useNavigate()
 	const { advancedMode } = useUi()
 	const { isNominating } = useStaking()
 	const { inPool, isOwner } = useActivePool()
 	const { fillVariables } = useFillVariables()
 	const { activeAddress } = useActiveAccounts()
+	const { closePrompt, openPromptWith } = usePrompt()
 	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
 	// Get tips based on app mode
@@ -58,23 +64,42 @@ export const useTips = () => {
 		items = items.filter((i) => i.page !== 'stake')
 	}
 
-	items = items.map((item) => {
+	const itemsDisplay: TipDisplay[] = items.map((item) => {
 		const { id } = item
+		const title = t(`${id}.0`, { ns: 'tips' })
+		const subtitle = t(`${id}.1`, { ns: 'tips' })
+		const description = i18n.getResource(
+			i18n.resolvedLanguage ?? DefaultLocale,
+			'tips',
+			`${id}.2`,
+		)
+
+		const onPromptClick = () => {
+			closePrompt()
+			navigate(`/${item.page}`)
+		}
 
 		return fillVariables(
 			{
 				...item,
-				title: t(`${id}.0`, { ns: 'tips' }),
-				subtitle: t(`${id}.1`, { ns: 'tips' }),
-				description: i18n.getResource(
-					i18n.resolvedLanguage ?? DefaultLocale,
-					'tips',
-					`${id}.2`,
-				),
+				title,
+				subtitle,
+				description,
+				onTipClick: () => {
+					openPromptWith(
+						<Tip
+							title={title}
+							description={description}
+							page={item.page}
+							onPromptClick={onPromptClick}
+						/>,
+						'lg',
+					)
+				},
 			},
 			['title', 'subtitle', 'description'],
 		)
 	})
 
-	return { items }
+	return { items: itemsDisplay }
 }

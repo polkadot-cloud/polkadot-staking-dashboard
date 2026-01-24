@@ -1,11 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-export interface TipConfig {
-	id: string
-	s: number
-	page?: string
-}
+import type { TipConfig } from 'types'
 
 export const TipsConfigSimple: TipConfig[] = [
 	{

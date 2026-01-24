@@ -612,6 +612,79 @@ importers:
         specifier: workspace:*
         version: link:../types
 
+  packages/ui-tips:
+    dependencies:
+      '@fortawesome/fontawesome-svg-core':
+        specifier: ^7.1.0
+        version: 7.1.0
+      '@fortawesome/free-solid-svg-icons':
+        specifier: ^7.1.0
+        version: 7.1.0
+      '@fortawesome/react-fontawesome':
+        specifier: ^3.1.1
+        version: 3.1.1(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.3)
+      '@w3ux/hooks':
+        specifier: ^2.4.0
+        version: 2.4.0(bufferutil@4.1.0)(react@19.2.3)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@w3ux/utils':
+        specifier: ^2.3.0
+        version: 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      bignumber.js:
+        specifier: ^9.3.1
+        version: 9.3.1
+      chart.js:
+        specifier: ^4.4.9
+        version: 4.5.1
+      chartjs-plugin-annotation:
+        specifier: ^3.1.0
+        version: 3.1.0(chart.js@4.5.1)
+      chroma-js:
+        specifier: ^3.2.0
+        version: 3.2.0
+      consts:
+        specifier: workspace:*
+        version: link:../consts
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      locales:
+        specifier: workspace:*
+        version: link:../locales
+      motion:
+        specifier: 12.23.24
+        version: 12.23.24(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      plugin-staking-api:
+        specifier: workspace:*
+        version: link:../plugin-staking-api
+      react:
+        specifier: ^19.2.1
+        version: 19.2.3
+      react-chartjs-2:
+        specifier: ^5.3.1
+        version: 5.3.1(chart.js@4.5.1)(react@19.2.3)
+      react-i18next:
+        specifier: ^16.5.3
+        version: 16.5.3(i18next@25.7.4(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
+      styled-components:
+        specifier: ^6.3.8
+        version: 6.3.8(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      ui-buttons:
+        specifier: workspace:*
+        version: link:../ui-buttons
+      ui-core:
+        specifier: workspace:*
+        version: link:../ui-core
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      '@w3ux/types':
+        specifier: ^2.4.1
+        version: 2.4.1
+      types:
+        specifier: workspace:*
+        version: link:../types
+
   packages/utils:
     dependencies:
       '@w3ux/hooks':
@@ -6614,7 +6687,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  isows@1.0.7(ws@8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)):
+  isows@1.0.7(ws@8.18.3):
     dependencies:
       ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)
 
@@ -7501,7 +7574,7 @@ snapshots:
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
       abitype: 1.2.3(typescript@5.9.3)(zod@3.25.76)
-      isows: 1.0.7(ws@8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10))
+      isows: 1.0.7(ws@8.18.3)
       ox: 0.11.3(typescript@5.9.3)(zod@3.25.76)
       ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)
     optionalDependencies:

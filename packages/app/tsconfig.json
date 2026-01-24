@@ -18,6 +18,6 @@
 		"jsx": "react-jsx",
 		"noEmit": true
 	},
-	"include": ["src", "tests"],
+	"include": ["src", "tests", "../consts/src/tips.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
