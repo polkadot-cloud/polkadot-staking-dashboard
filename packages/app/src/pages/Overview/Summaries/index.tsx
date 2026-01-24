@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { useNetwork } from 'contexts/Network'
 import { useHalving } from 'hooks/useHalving'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useState } from 'react'
@@ -11,9 +12,14 @@ import { Status } from './Sections/Status'
 import { SectionNav, SectionsArea } from './Wrappers'
 
 export const Summaries = ({ height }: { height: number }) => {
+	const { network } = useNetwork()
 	const { daysUntilHalving } = useHalving()
 
+	// State to track active section
 	const [activeSection, setActiveSection] = useState<number>(0)
+
+	// Halving section is only for Polkadot network
+	const showHalving: boolean = network === 'polkadot'
 
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
@@ -28,25 +34,30 @@ export const Summaries = ({ height }: { height: number }) => {
 								: 'var(--text-secondary)',
 					}}
 				/>
-				<ButtonSecondary
-					text="Next Halving"
-					onClick={() => setActiveSection(1)}
-					style={{
-						color:
-							activeSection === 1
-								? 'var(--accent-primary)'
-								: 'var(--text-secondary)',
-					}}
-					iconLeft={daysUntilHalving <= 90 ? faCircleExclamation : undefined}
-				/>
+				{/* NOTE: Only showing halving summary for Polkadot network */}
+				{showHalving && (
+					<ButtonSecondary
+						text="Next Halving"
+						onClick={() => setActiveSection(1)}
+						style={{
+							color:
+								activeSection === 1
+									? 'var(--accent-primary)'
+									: 'var(--text-secondary)',
+						}}
+						iconLeft={daysUntilHalving <= 90 ? faCircleExclamation : undefined}
+					/>
+				)}
 			</SectionNav>
 			<SectionsArea $activeSection={activeSection}>
 				<div className="section">
 					<Status />
 				</div>
-				<div className="section">
-					<Halving />
-				</div>
+				{showHalving && (
+					<div className="section">
+						<Halving />
+					</div>
+				)}
 			</SectionsArea>
 		</CardWrapper>
 	)
