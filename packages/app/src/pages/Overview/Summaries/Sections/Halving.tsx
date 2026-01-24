@@ -9,7 +9,7 @@ import { Countdown } from 'library/Countdown'
 import { useTranslation } from 'react-i18next'
 import { Countdown as CountdownWrapper } from 'ui-core/base'
 import { HalvingLine } from 'ui-graphs'
-import { StatusWrapper } from '../Wrappers'
+import { SectionWrapper } from '../Wrappers'
 
 export const Halving = () => {
 	const { t } = useTranslation()
@@ -24,7 +24,7 @@ export const Halving = () => {
 	}
 
 	return (
-		<StatusWrapper>
+		<SectionWrapper>
 			<div
 				style={{
 					padding: '0 1.25rem 1.25rem 1rem',
@@ -50,6 +50,6 @@ export const Halving = () => {
 					/>
 				</div>
 			</div>
-		</StatusWrapper>
+		</SectionWrapper>
 	)
 }

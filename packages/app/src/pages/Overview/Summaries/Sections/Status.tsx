@@ -12,7 +12,7 @@ import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { Tips } from 'ui-tips'
-import { StatusWrapper } from '../Wrappers'
+import { SectionWrapper } from '../Wrappers'
 
 export const Status = () => {
 	const { network } = useNetwork()
@@ -29,7 +29,7 @@ export const Status = () => {
 	const showMembership = notStaking || inPool
 
 	return (
-		<StatusWrapper>
+		<SectionWrapper>
 			<div className="content">
 				{showNominate ? (
 					<Page.RowSection
@@ -73,6 +73,6 @@ export const Status = () => {
 				syncing={syncing}
 				onPageReset={{ network, activeAddress }}
 			/>
-		</StatusWrapper>
+		</SectionWrapper>
 	)
 }

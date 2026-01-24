@@ -8,16 +8,16 @@ import { useState } from 'react'
 import { ButtonSecondary } from 'ui-buttons'
 import { Halving } from './Sections/Halving'
 import { Status } from './Sections/Status'
-import { SectionNavigation, SectionSlider } from './Wrappers'
+import { SectionNav, SectionsArea } from './Wrappers'
 
-export const StakeStatus = ({ height }: { height: number }) => {
+export const Summaries = ({ height }: { height: number }) => {
 	const { daysUntilHalving } = useHalving()
 
 	const [activeSection, setActiveSection] = useState<number>(0)
 
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
-			<SectionNavigation>
+			<SectionNav>
 				<ButtonSecondary
 					text="Status"
 					onClick={() => setActiveSection(0)}
@@ -39,15 +39,15 @@ export const StakeStatus = ({ height }: { height: number }) => {
 					}}
 					iconLeft={daysUntilHalving <= 90 ? faCircleExclamation : undefined}
 				/>
-			</SectionNavigation>
-			<SectionSlider $activeSection={activeSection}>
+			</SectionNav>
+			<SectionsArea $activeSection={activeSection}>
 				<div className="section">
 					<Status />
 				</div>
 				<div className="section">
 					<Halving />
 				</div>
-			</SectionSlider>
+			</SectionsArea>
 		</CardWrapper>
 	)
 }

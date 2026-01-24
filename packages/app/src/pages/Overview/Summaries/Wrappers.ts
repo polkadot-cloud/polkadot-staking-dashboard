@@ -4,7 +4,7 @@
 import { PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
 
-export const SectionNavigation = styled.div`
+export const SectionNav = styled.div`
   display: flex;
   gap: 0.75rem;
   padding: 1rem;
@@ -13,7 +13,7 @@ export const SectionNavigation = styled.div`
   }
 `
 
-export const SectionSlider = styled.div<{ $activeSection: number }>`
+export const SectionsArea = styled.div<{ $activeSection: number }>`
   display: flex;
   width: 200%;
   overflow: hidden;
@@ -29,7 +29,7 @@ export const SectionSlider = styled.div<{ $activeSection: number }>`
   }
 `
 
-export const StatusWrapper = styled.div`
+export const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;

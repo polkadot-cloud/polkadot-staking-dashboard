@@ -17,10 +17,10 @@ import { ControllerPrompt } from './ControllerPrompt'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { QuickActions } from './QuickActions'
-import { StakeStatus } from './StakeStatus'
 import { AverageRewardRate } from './Stats/AverageRewardRate'
 import { NextRewards } from './Stats/NextRewards'
 import { SupplyStaked } from './Stats/SupplyStaked'
+import { Summaries } from './Summaries'
 
 export const Overview = () => {
 	const { t } = useTranslation('pages')
@@ -55,7 +55,7 @@ export const Overview = () => {
 				!isReadOnlyAccount(activeAddress) && <ControllerPrompt />}
 			<Page.Row>
 				<Page.RowSection>
-					<StakeStatus height={STATUS_HEIGHT} />
+					<Summaries height={STATUS_HEIGHT} />
 				</Page.RowSection>
 				<Page.RowSection secondary hLast vLast>
 					<QuickActions height={STATUS_HEIGHT} />
