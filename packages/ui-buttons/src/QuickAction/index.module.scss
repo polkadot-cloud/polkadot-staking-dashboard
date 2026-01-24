@@ -5,10 +5,10 @@
 
 .container {
   display: flex;
-  justify-content: flex-start;
+  place-content: flex-start flex-start;
+  align-items: flex-start;
   flex-flow: row wrap;
   padding: 0 0.5rem 0.5rem;
-  flex-grow: 1;
   
   @media (width <= $row-section-thirds-threshold) {
     flex-wrap: wrap;

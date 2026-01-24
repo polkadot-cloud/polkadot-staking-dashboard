@@ -122,8 +122,10 @@ export const HalvingLine = ({
 					font: {
 						size: 10,
 					},
+					autoSkip: true,
+					maxTicksLimit: 6,
 					callback: (value: number | string) =>
-						`${(Number(value) / 1_000_000).toFixed(1)}M${millionUnit}`,
+						`${(Number(value) / 1_000_000).toFixed(1)}${millionUnit}`,
 				},
 				border: {
 					display: false,
