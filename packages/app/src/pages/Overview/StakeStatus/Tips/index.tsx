@@ -3,42 +3,24 @@
 
 import { useOnResize } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
-import { TipsConfigAdvanced, TipsConfigSimple } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useStaking } from 'contexts/Staking'
-import { useUi } from 'contexts/UI'
-import { useAccountBalances } from 'hooks/useAccountBalances'
-import { useFillVariables } from 'hooks/useFillVariables'
-import { useSyncing } from 'hooks/useSyncing'
-import { DefaultLocale } from 'locales'
 import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Items } from './Items'
 import { PageToggle } from './PageToggle'
 import { Syncing } from './Syncing'
-import type { TipDisplay } from './types'
+import type { TipDisplay, TipsProps } from './types'
 import { TipsWrapper } from './Wrappers'
 
-export const Tips = () => {
-	const { i18n, t } = useTranslation()
-	const { network } = useNetwork()
-	const { advancedMode } = useUi()
-	const { inPool } = useActivePool()
-	const { isOwner } = useActivePool()
-	const { isNominating } = useStaking()
-	const { activeAddress } = useActiveAccounts()
-	const { fillVariables } = useFillVariables()
-	const { syncing } = useSyncing(['initialization'])
-	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
-
-	// multiple tips per row is currently turned off.
+export const Tips = ({
+	items,
+	syncing,
+	onPageReset: { network, activeAddress },
+}: TipsProps) => {
+	// multiple tips per row is currently turned off
 	const multiTipsPerRow = false
 
-	// helper function to determine the number of items to display per page.
-	// UI displays 1 item by default.
+	// helper function to determine the number of items to display per page. UI displays 1 item by
+	// default.
 	const getItemsPerPage = () => {
 		if (!multiTipsPerRow) {
 			return 1
@@ -55,9 +37,9 @@ export const Tips = () => {
 		return 3
 	}
 
-	// helper function to determine which page we should be on upon page resize.
-	// This function ensures totalPages is never surpassed, but does not guarantee
-	// that the start item will maintain across resizes.
+	// Helper function to determine which page we should be on upon page resize. This function ensures
+	// totalPages is never surpassed, but does not guarantee that the start item will maintain across
+	// resizes
 	const getPage = () => {
 		const totalItmes = syncing ? 1 : items.length
 		const itemsPerPage = getItemsPerPage()
@@ -70,7 +52,7 @@ export const Tips = () => {
 		return Math.ceil(start / itemsPerPage)
 	}
 
-	// Re-sync page and items per page on resize.
+	// Re-sync page and items per page on resize
 	useOnResize(() => {
 		setStateWithRef(getPage(), setPage, pageRef)
 		setStateWithRef(getItemsPerPage(), setItemsPerPageState, itemsPerPageRef)
@@ -90,60 +72,6 @@ export const Tips = () => {
 	// store the current page
 	const [page, setPage] = useState<number>(1)
 	const pageRef = useRef(page)
-
-	// accumulate segments to include in tips
-	const segments: number[] = []
-	if (!activeAddress) {
-		segments.push(1)
-	} else if (!isNominating && !inPool) {
-		if (hasEnoughToNominate) {
-			segments.push(2)
-		} else {
-			segments.push(3)
-		}
-		segments.push(4)
-	} else {
-		if (isNominating) {
-			segments.push(5)
-		}
-		if (inPool) {
-			if (!isOwner()) {
-				segments.push(6)
-			} else {
-				segments.push(7)
-			}
-		}
-		segments.push(8)
-	}
-
-	// filter tips relevant to connected account.
-	const tipsConfig = advancedMode ? TipsConfigAdvanced : TipsConfigSimple
-	let items = tipsConfig.filter((i) => segments.includes(i.s))
-
-	// If user is both nominating and in a pool, and in simple mode, filter out tips that redirect to
-	// 'stake' page as the stake page will not be accessible (pool and nominate pages will be
-	// accessible instead)
-	if (isNominating && inPool && !advancedMode) {
-		items = items.filter((i) => i.page !== 'stake')
-	}
-
-	items = items.map((item) => {
-		const { id } = item
-
-		return fillVariables(
-			{
-				...item,
-				title: t(`${id}.0`, { ns: 'tips' }),
-				subtitle: t(`${id}.1`, { ns: 'tips' }),
-				description: i18n.getResource(
-					i18n.resolvedLanguage ?? DefaultLocale,
-					'tips',
-					`${id}.2`,
-				),
-			},
-			['title', 'subtitle', 'description'],
-		)
-	})
 
 	// determine items to be displayed
 	const end = syncing

@@ -1,8 +1,12 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
+import { useSyncing } from 'hooks/useSyncing'
+import { useTips } from 'hooks/useTips'
 import { Stat } from 'library/Stat'
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
 import { useTranslation } from 'react-i18next'
@@ -11,8 +15,12 @@ import { Tips } from '../Tips'
 import { StatusWrapper } from '../Wrappers'
 
 export const Status = () => {
+	const { network } = useNetwork()
 	const { t } = useTranslation('pages')
+	const { items } = useTips()
 	const { isBonding } = useStaking()
+	const { activeAddress } = useActiveAccounts()
+	const { syncing } = useSyncing(['initialization'])
 	const { inPool, activePool, membershipDisplay, label } =
 		useActiveAccountPool()
 
@@ -60,7 +68,11 @@ export const Status = () => {
 					</Page.RowSection>
 				)}
 			</div>
-			<Tips />
+			<Tips
+				items={items}
+				syncing={syncing}
+				onPageReset={{ network, activeAddress }}
+			/>
 		</StatusWrapper>
 	)
 }

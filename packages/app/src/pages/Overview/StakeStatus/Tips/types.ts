@@ -1,6 +1,19 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { MaybeString } from '@w3ux/types'
+import type { TipConfig } from 'config/tips'
+import type { NetworkId } from 'types'
+
+export interface TipsProps {
+	syncing: boolean
+	items: TipConfig[]
+	onPageReset: {
+		network: NetworkId
+		activeAddress: MaybeString
+	}
+}
+
 export interface PageToggleProps {
 	start: number
 	end: number
