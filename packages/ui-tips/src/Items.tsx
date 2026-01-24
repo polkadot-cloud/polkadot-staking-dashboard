@@ -3,10 +3,10 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useAnimate } from 'motion/react'
+import { motion, useAnimate } from 'motion/react'
 import { useEffect, useState } from 'react'
+import styles from './index.module.scss'
 import type { TipDisplay, TipItemsProps } from './types'
-import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers'
 
 export const Items = ({ items, page }: TipItemsProps) => {
 	const [scope, animate] = useAnimate()
@@ -29,7 +29,11 @@ export const Items = ({ items, page }: TipItemsProps) => {
 	}
 
 	return (
-		<ItemsWrapper ref={scope} initial={{ opacity: 0 }}>
+		<motion.div
+			className={styles.itemsWrapper}
+			ref={scope}
+			initial={{ opacity: 0 }}
+		>
 			{items.map((item, index: number) => (
 				<Item
 					key={`tip_${index}_${page}`}
@@ -38,7 +42,7 @@ export const Items = ({ items, page }: TipItemsProps) => {
 					initial={initial}
 				/>
 			))}
-		</ItemsWrapper>
+		</motion.div>
 	)
 }
 
@@ -87,11 +91,15 @@ const Item = ({
 	}, [initial, index])
 
 	return (
-		<ItemWrapper ref={scope} initial={{ y: 15, opacity: 0 }}>
-			<ItemInnerWrapper>
+		<motion.div
+			className={styles.itemWrapper}
+			ref={scope}
+			initial={{ y: 15, opacity: 0 }}
+		>
+			<div className={styles.itemInner}>
 				<section />
 				<section>
-					<div className="desc active">
+					<div className={`${styles.desc} ${styles.active}`}>
 						<button onClick={() => onTipClick()} type="button">
 							<h4>
 								{subtitle}
@@ -103,7 +111,7 @@ const Item = ({
 						</button>
 					</div>
 				</section>
-			</ItemInnerWrapper>
-		</ItemWrapper>
+			</div>
+		</motion.div>
 	)
 }

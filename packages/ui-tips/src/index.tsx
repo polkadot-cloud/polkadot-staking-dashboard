@@ -6,10 +6,10 @@ import { setStateWithRef } from '@w3ux/utils'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
 import { useEffect, useRef, useState } from 'react'
 import { Items } from './Items'
+import styles from './index.module.scss'
 import { PageToggle } from './PageToggle'
 import { Syncing } from './Syncing'
 import type { TipsProps } from './types'
-import { TipsWrapper } from './Wrappers'
 
 export const Tips = ({
 	items,
@@ -87,9 +87,9 @@ export const Tips = ({
 		setStateWithRef(newPage, setPage, pageRef)
 	}
 	return (
-		<TipsWrapper>
-			<div className="inner">
-				<div className="items">
+		<div className={styles.tipsWrapper}>
+			<div className={styles.inner}>
+				<div className={styles.items}>
 					{syncing ? (
 						<Syncing />
 					) : (
@@ -110,6 +110,6 @@ export const Tips = ({
 					setPageHandler={setPageHandler}
 				/>
 			</div>
-		</TipsWrapper>
+		</div>
 	)
 }

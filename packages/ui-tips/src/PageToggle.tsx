@@ -7,8 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
+import styles from './index.module.scss'
 import type { PageToggleProps } from './types'
-import { PageToggleWrapper } from './Wrappers'
 
 export const PageToggle = ({
 	syncing,
@@ -25,8 +25,8 @@ export const PageToggle = ({
 	const totalPages = Math.ceil(totalItems / itemsPerPage)
 
 	return (
-		<PageToggleWrapper>
-			<h4 className={totalPages === 1 ? `disabled` : undefined}>
+		<div className={styles.pageToggle}>
+			<h4 className={totalPages === 1 ? styles.disabled : undefined}>
 				<span>
 					{start}
 					{itemsPerPage > 1 && totalItems > 1 && start !== end && ` - ${end}`}
@@ -68,6 +68,6 @@ export const PageToggle = ({
 					/>
 				</button>
 			</span>
-		</PageToggleWrapper>
+		</div>
 	)
 }

@@ -632,6 +632,9 @@ importers:
       '@w3ux/utils':
         specifier: ^2.3.0
         version: 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      consts:
+        specifier: workspace:*
+        version: link:../consts
       locales:
         specifier: workspace:*
         version: link:../locales
@@ -644,9 +647,9 @@ importers:
       react-i18next:
         specifier: ^16.5.3
         version: 16.5.3(i18next@25.7.4(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
-      styled-components:
-        specifier: ^6.3.8
-        version: 6.3.8(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      styles:
+        specifier: workspace:*
+        version: link:../styles
     devDependencies:
       '@w3ux/types':
         specifier: ^2.4.1
