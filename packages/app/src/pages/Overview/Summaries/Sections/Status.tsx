@@ -20,7 +20,7 @@ export const Status = () => {
 	const { items } = useTips()
 	const { isBonding } = useStaking()
 	const { activeAddress } = useActiveAccounts()
-	const { syncing } = useSyncing(['initialization'])
+	const { syncing } = useSyncing()
 	const { inPool, activePool, membershipDisplay, label } =
 		useActiveAccountPool()
 
