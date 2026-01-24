@@ -60,6 +60,7 @@
 		"simplebar-react": "3.3.2",
 		"styled-components": "^6.3.8",
 		"styles": "workspace:*",
+		"ui-tips": "workspace:*",
 		"ui-buttons": "workspace:*",
 		"ui-core": "workspace:*",
 		"ui-graphs": "workspace:*",

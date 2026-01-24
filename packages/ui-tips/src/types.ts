@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeString } from '@w3ux/types'
-import type { NetworkId, TipConfig } from 'types'
+import type { NetworkId } from 'types'
 
 export interface TipsProps {
 	syncing: boolean
-	items: TipConfig[]
+	items: TipDisplay[]
 	onPageReset: {
 		network: NetworkId
 		activeAddress: MaybeString
@@ -30,10 +30,10 @@ export interface TipItemsProps {
 }
 
 export interface TipDisplay {
-	description: string[]
 	id: string
-	page: string
+	onTipClick: () => void
 	s: number
-	title: string
 	subtitle: string
+	description: string
+	page: string
 }

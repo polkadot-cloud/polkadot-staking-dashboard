@@ -11,9 +11,9 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { Tip } from 'library/Tips/Tip'
 import { DefaultLocale } from 'locales'
-import type { TipDisplay } from 'pages/Overview/StakeStatus/Tips/types'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import type { TipDisplay } from 'ui-tips/types'
 
 export const useTips = () => {
 	const { i18n, t } = useTranslation()

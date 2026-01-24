@@ -11,7 +11,7 @@ import { Stat } from 'library/Stat'
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
-import { Tips } from '../Tips'
+import { Tips } from 'ui-tips'
 import { StatusWrapper } from '../Wrappers'
 
 export const Status = () => {

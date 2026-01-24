@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Items } from './Items'
 import { PageToggle } from './PageToggle'
 import { Syncing } from './Syncing'
-import type { TipDisplay, TipsProps } from './types'
+import type { TipsProps } from './types'
 import { TipsWrapper } from './Wrappers'
 
 export const Tips = ({
@@ -81,7 +81,7 @@ export const Tips = ({
 		? 1
 		: pageRef.current * itemsPerPageRef.current - (itemsPerPageRef.current - 1)
 
-	const itemsDisplay = items.slice(start - 1, end) as TipDisplay[]
+	const itemsDisplay = items.slice(start - 1, end)
 
 	const setPageHandler = (newPage: number) => {
 		setStateWithRef(newPage, setPage, pageRef)
