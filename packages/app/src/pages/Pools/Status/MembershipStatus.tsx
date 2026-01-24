@@ -5,11 +5,8 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { determinePoolDisplay } from 'contexts/Pools/util'
 import { useStaking } from 'contexts/Staking'
-import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
@@ -25,46 +22,27 @@ export const MembershipStatus = ({
 	const { isBonding } = useStaking()
 	const { label } = useStatusButtons()
 	const { openModal } = useOverlay().modal
-	const { poolsMetaData } = useBondedPools()
 	const { activeAddress } = useActiveAccounts()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { balances } = useAccountBalances(activeAddress)
-	const { activePool, isOwner, isBouncer, isMember } = useActivePool()
-
-	const { active } = balances.pool
-	const poolState = activePool?.bondedPool?.state ?? null
+	const { inPool, canManage, activePool, membershipDisplay } =
+		useActiveAccountPool()
 
 	const membershipButtons = []
-	let membershipDisplay = t('notInPool')
 
-	if (activePool) {
-		// Determine pool membership display.
-		membershipDisplay = determinePoolDisplay(
-			activePool.addresses.stash,
-			poolsMetaData[Number(activePool.id)],
-		)
-
-		// Display manage button if active account is pool owner or bouncer.
-		// Or display manage button if active account is a pool member.
-		if (
-			(poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
-			(isMember() && active > 0n)
-		) {
-			// Display manage button if active account is not a read-only account.
-			if (!isReadOnlyAccount(activeAddress)) {
-				membershipButtons.push({
-					title: t('manage'),
-					icon: faCog,
-					disabled: !isReady,
-					small: true,
-					onClick: () =>
-						openModal({
-							key: 'ManagePool',
-							options: { disableWindowResize: true, disableScroll: true },
-							size: 'sm',
-						}),
-				})
-			}
+	if (inPool && canManage) {
+		if (!isReadOnlyAccount(activeAddress)) {
+			membershipButtons.push({
+				title: t('manage'),
+				icon: faCog,
+				disabled: !isReady,
+				small: true,
+				onClick: () =>
+					openModal({
+						key: 'ManagePool',
+						options: { disableWindowResize: true, disableScroll: true },
+						size: 'sm',
+					}),
+			})
 		}
 	}
 
