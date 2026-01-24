@@ -8,7 +8,8 @@
   place-content: flex-start flex-start;
   align-items: flex-start;
   flex-flow: row wrap;
-  padding: 0 0.5rem 0.5rem;
+  padding: 0 0.5rem;
+  flex-grow: 1;
   
   @media (width <= $row-section-thirds-threshold) {
     flex-wrap: wrap;
@@ -25,7 +26,7 @@
 .button {
   display: flex;
   flex: 1;
-  height: 6.2rem;
+  height: 6rem;
   padding: 0.4rem;
 
   .inner {
@@ -77,6 +78,22 @@
         }
       }
     }
+  }
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    padding: $summary-footer-padding;
+
+  > .inner {
+    border: 1px solid var(--btn-bg-hover);
+    border-radius: 1rem;
+    height: $summary-footer-height;
+    padding: 0.0 1.25rem;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
   }
 }
 

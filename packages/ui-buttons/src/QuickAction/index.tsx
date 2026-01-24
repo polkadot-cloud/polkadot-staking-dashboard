@@ -3,9 +3,11 @@
 
 import { Button, PreloadingButton } from './Button'
 import { Container } from './Container'
+import { Footer } from './Footer'
 
 export const QuickAction = {
 	Button,
 	Container,
+	Footer,
 	PreloadingButton,
 }

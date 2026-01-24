@@ -49,6 +49,9 @@ export const QuickActions = ({ height }: { height: number }) => {
 					{actionGroup === 'staking' && (
 						<Staking bondFor={inPool ? 'pool' : 'nominator'} />
 					)}
+					<QuickAction.Footer>
+						<p>test</p>
+					</QuickAction.Footer>
 				</>
 			)}
 		</CardWrapper>
