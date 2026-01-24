@@ -27,7 +27,7 @@ export const Halving = () => {
 		<SectionWrapper>
 			<div
 				style={{
-					padding: '0 1.25rem 1.25rem 1rem',
+					padding: '0 1.5rem 1.25rem 1.5rem',
 					display: 'flex',
 					flexDirection: 'column',
 					height: '100%',

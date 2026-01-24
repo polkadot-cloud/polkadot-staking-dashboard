@@ -4,8 +4,17 @@
 import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
-export const Countdown = ({ children, style }: ComponentBase) => (
-	<span className={classes.countdown} style={style}>
+export const Countdown = ({
+	children,
+	style,
+	variant = 'primary',
+}: ComponentBase & {
+	variant?: 'primary' | 'secondary'
+}) => (
+	<span
+		className={`${classes.countdown} ${variant ? classes[variant] : ''}`}
+		style={style}
+	>
 		{children}
 	</span>
 )

@@ -39,7 +39,7 @@ export const SectionWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    padding: 1.25rem 1.5rem;
+    padding: 0.75rem 1.5rem 0.25rem 1.5rem;
     flex: 1;
   }
 
@@ -62,5 +62,21 @@ export const SectionWrapper = styled.div`
         padding-top: 0;
       }
     }
+  }
+`
+
+export const StatItem = styled.div`
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  gap: 0.5rem;
+  font-family: Inter, sans-serif;
+  margin-right: 1.25rem;
+
+  &:last-child {
+    margin-right: 0;
   }
 `

@@ -26,7 +26,7 @@ export interface StatProps {
 	type?: string
 	buttons?: StatButtonProps[]
 	dimmed?: boolean
-	helpKey: string
+	helpKey?: string
 	icon?: IconProp
 	buttonType?: string
 }

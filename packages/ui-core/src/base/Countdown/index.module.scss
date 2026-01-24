@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .countdown {
-  color: var(--text-primary);
   font-family: InterBold, sans-serif;
   display: flex;
   font-size: 1.2rem;
@@ -14,5 +13,21 @@
     margin-left: 0.3rem;
     margin-top: 0.1rem;
     margin-right: 0.75rem;
+  }
+
+  &.primary {
+    color: var(--text-primary);
+
+    > span {
+      color: var(--text-primary);
+    }
+  }
+
+  &.secondary {
+    color: var(--text-secondary);
+
+    > span {
+      color: var(--text-secondary);
+    }
   }
 }

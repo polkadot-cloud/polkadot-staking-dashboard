@@ -25,6 +25,7 @@ export const Summaries = ({ height }: { height: number }) => {
 		<CardWrapper style={{ padding: 0 }} height={height}>
 			<SectionNav>
 				<ButtonSecondary
+					size="md"
 					text="Status"
 					onClick={() => setActiveSection(0)}
 					style={{
@@ -37,6 +38,7 @@ export const Summaries = ({ height }: { height: number }) => {
 				{/* NOTE: Only showing halving summary for Polkadot network */}
 				{showHalving && (
 					<ButtonSecondary
+						size="md"
 						text="Next Halving"
 						onClick={() => setActiveSection(1)}
 						style={{

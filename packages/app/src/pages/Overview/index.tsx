@@ -10,16 +10,13 @@ import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
-import { Page, Stat } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
 import { ControllerPrompt } from './ControllerPrompt'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { QuickActions } from './QuickActions'
-import { AverageRewardRate } from './Stats/AverageRewardRate'
-import { NextRewards } from './Stats/NextRewards'
-import { SupplyStaked } from './Stats/SupplyStaked'
 import { Summaries } from './Summaries'
 
 export const Overview = () => {
@@ -43,11 +40,6 @@ export const Overview = () => {
 	return (
 		<>
 			<Page.Title title={t('overview')} />
-			<Stat.Row>
-				<AverageRewardRate />
-				<SupplyStaked />
-				<NextRewards />
-			</Stat.Row>
 			{isBonding &&
 				!syncing &&
 				accountSynced(activeAddress) &&
