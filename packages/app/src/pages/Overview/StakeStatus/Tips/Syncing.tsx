@@ -24,7 +24,8 @@ export const Syncing = () => {
 				<ItemInnerWrapper>
 					<section
 						style={{
-							marginRight: '0.5rem',
+							marginLeft: '0.5rem',
+							marginRight: '0.25rem',
 							width: '1.5rem',
 							height: '1.5rem',
 							display: 'flex',
@@ -32,7 +33,11 @@ export const Syncing = () => {
 							justifyContent: 'center',
 						}}
 					>
-						<FontAwesomeIcon icon={faRefresh} spin />
+						<FontAwesomeIcon
+							icon={faRefresh}
+							spin
+							color="var(--text-secondary)"
+						/>
 					</section>
 					<section>
 						<div className="desc">

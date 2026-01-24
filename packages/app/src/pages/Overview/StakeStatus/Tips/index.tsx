@@ -172,16 +172,14 @@ export const Tips = () => {
 						/>
 					)}
 				</div>
-				{items.length > 1 && (
-					<PageToggle
-						start={start}
-						end={end}
-						page={page}
-						itemsPerPage={itemsPerPage}
-						totalItems={items.length}
-						setPageHandler={setPageHandler}
-					/>
-				)}
+				<PageToggle
+					start={start}
+					end={end}
+					page={page}
+					itemsPerPage={itemsPerPage}
+					totalItems={items.length}
+					setPageHandler={setPageHandler}
+				/>
 			</div>
 		</TipsWrapper>
 	)

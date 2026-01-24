@@ -150,9 +150,16 @@ export const PageToggleWrapper = styled.div`
         color: var(--accent-primary);
         background-color: var(--bg-body);
       }
+
       &:disabled {
         color: var(--text-secondary);
         opacity: var(--opacity-disabled);
+
+        &:hover {
+          cursor: default;
+          background-color: var(--bg-primary);
+
+        }
       }
     }
   }
