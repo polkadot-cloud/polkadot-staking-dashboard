@@ -188,7 +188,6 @@
 		"manual": "手动",
 		"manualSelectionSubtitle": "从头开始添加验证人",
 		"manual_selection": "手动选择",
-		"year": "年",
 		"max": "最高",
 		"member": "成员",
 		"metrics": "指标",
@@ -365,6 +364,7 @@
 		"wallets": "钱包",
 		"webExtensions": "浏览器扩展",
 		"whenActivelyNominating": "当活跃提名时",
-		"wrongTransaction": "错误交易，请重新签名"
+		"wrongTransaction": "错误交易，请重新签名",
+		"year": "年"
 	}
 }
