@@ -176,11 +176,8 @@ export const HalvingLine = ({
 					context.dataIndex === currentDataIndex ? 5 : 0,
 				pointBackgroundColor: (context: { dataIndex: number }) =>
 					context.dataIndex === currentDataIndex ? color : 'transparent',
-				pointBorderColor: (context: { dataIndex: number }) =>
-					context.dataIndex === currentDataIndex
-						? getThemeValue('--background-primary')
-						: 'transparent',
-				pointBorderWidth: 2,
+				pointBorderColor: 'transparent',
+				pointBorderWidth: 0,
 				borderWidth: 2,
 				fill: true,
 				tension: 0.4,
