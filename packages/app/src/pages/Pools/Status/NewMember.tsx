@@ -10,13 +10,13 @@ import {
 	onCreatePoolButtonPressedEvent,
 	onJoinPoolButtonPressedEvent,
 } from 'event-tracking'
+import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
 import type { NewMemberProps } from './types'
-import { useStatusButtons } from './useStatusButtons'
 
 export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { t } = useTranslation()
@@ -26,7 +26,7 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
-	const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
+	const { getJoinDisabled, getCreateDisabled } = useActiveAccountPool()
 
 	// Alias for create button disabled state
 	const createDisabled = getCreateDisabled() || isBonding

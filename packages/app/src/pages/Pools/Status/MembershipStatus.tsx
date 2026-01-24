@@ -11,7 +11,6 @@ import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import type { MembershipStatusProps } from './types'
-import { useStatusButtons } from './useStatusButtons'
 
 export const MembershipStatus = ({
 	showButtons = true,
@@ -20,11 +19,10 @@ export const MembershipStatus = ({
 	const { t } = useTranslation('pages')
 	const { isReady } = useApi()
 	const { isBonding } = useStaking()
-	const { label } = useStatusButtons()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { inPool, canManage, activePool, membershipDisplay } =
+	const { inPool, canManage, activePool, membershipDisplay, label } =
 		useActiveAccountPool()
 
 	const membershipButtons = []

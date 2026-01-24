@@ -1,17 +1,20 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
+import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
+import { Stat } from 'library/Stat'
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
-import { MembershipStatus } from 'pages/Pools/Status/MembershipStatus'
+import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { Tips } from '../Tips'
 import { StatusWrapper } from '../Wrappers'
 
 export const Status = () => {
-	const { inPool } = useActivePool()
+	const { t } = useTranslation('pages')
 	const { isBonding } = useStaking()
+	const { inPool, activePool, membershipDisplay, label } =
+		useActiveAccountPool()
 
 	const notStaking = !inPool && !isBonding
 	const showNominate = notStaking || isBonding
@@ -20,7 +23,7 @@ export const Status = () => {
 	return (
 		<StatusWrapper>
 			<div className="content">
-				{showNominate && (
+				{showNominate ? (
 					<Page.RowSection
 						secondary={showMembership}
 						standalone={!showMembership}
@@ -29,15 +32,30 @@ export const Status = () => {
 							<NominationStatus />
 						</section>
 					</Page.RowSection>
-				)}
-				{showMembership && (
+				) : (
 					<Page.RowSection
 						hLast={showNominate}
 						vLast={showNominate}
 						standalone={true}
 					>
 						<section>
-							<MembershipStatus showButtons={false} />
+							{activePool ? (
+								<Stat
+									label={label}
+									helpKey="Pool Membership"
+									type="address"
+									stat={{
+										address: activePool?.addresses?.stash ?? '',
+										display: membershipDisplay,
+									}}
+								/>
+							) : (
+								<Stat
+									label={t('poolMembership')}
+									helpKey="Pool Membership"
+									stat={isBonding ? t('alreadyNominating') : t('notInPool')}
+								/>
+							)}
 						</section>
 					</Page.RowSection>
 				)}
