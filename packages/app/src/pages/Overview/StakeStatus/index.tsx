@@ -14,10 +14,25 @@ export const StakeStatus = ({ height }: { height: number }) => {
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
 			<SectionNavigation>
-				<ButtonSecondary text="Status" onClick={() => setActiveSection(0)} />
+				<ButtonSecondary
+					text="Status"
+					onClick={() => setActiveSection(0)}
+					style={{
+						color:
+							activeSection === 0
+								? 'var(--accent-primary)'
+								: 'var(--text-secondary)',
+					}}
+				/>
 				<ButtonSecondary
 					text="Next Halving"
 					onClick={() => setActiveSection(1)}
+					style={{
+						color:
+							activeSection === 1
+								? 'var(--accent-primary)'
+								: 'var(--text-secondary)',
+					}}
 				/>
 			</SectionNavigation>
 			<SectionSlider $activeSection={activeSection}>

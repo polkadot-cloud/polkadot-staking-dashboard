@@ -6,8 +6,8 @@ import styled from 'styled-components'
 
 export const SectionNavigation = styled.div`
   display: flex;
-  gap: 0.5rem;
-  padding: 0.85rem 0.85rem;
+  gap: 0.75rem;
+  padding: 1rem;
   @media (max-width: ${PageWidthMediumThreshold}px) {
     padding: 1rem 1rem 0;
   }
@@ -39,24 +39,15 @@ export const StatusWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    padding-top: 1rem;
+    padding: 1.25rem 1.5rem;
     flex: 1;
   }
 
   > div {
-    @media (max-width: ${PageWidthMediumThreshold}px) {
-      margin-top: 1rem;
-    }
-
-    &:first-child {
-      margin-top: 0;
-    }
-
     &:nth-child(2) {
       @media (max-width: 1400px) {
         margin-top: 1rem;
       }
-
       @media (max-width: ${PageWidthMediumThreshold}px) {
         padding-left: 0;
       }
