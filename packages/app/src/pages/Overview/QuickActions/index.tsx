@@ -40,8 +40,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 			</CardHeader>
 			{syncing ? (
 				<QuickAction.Container>
-					<section style={{ width: '100%', height }}>
-						<QuickAction.PreloadingButton />
+					<section style={{ width: '100%', padding: '0.25rem' }}>
 						<QuickAction.PreloadingButton />
 					</section>
 				</QuickAction.Container>
@@ -52,25 +51,25 @@ export const QuickActions = ({ height }: { height: number }) => {
 					{actionGroup === 'staking' && (
 						<Staking bondFor={inPool ? 'pool' : 'nominator'} />
 					)}
-					<QuickAction.Footer>
-						<h4>{t('supportChannels', { ns: 'app' })}</h4>
-						<section>
-							<QuickAction.FooterButton
-								icon={faDiscord}
-								label="Discord"
-								onClick={() => window.open(DiscordSupportURL, '_blank')}
-							/>
-							<QuickAction.FooterButton
-								icon={faEnvelope}
-								label={t('email', { ns: 'app' })}
-								onClick={() =>
-									window.open(`mailto:${PlatformSupportEmail}`, '_blank')
-								}
-							/>
-						</section>
-					</QuickAction.Footer>
 				</>
 			)}
+			<QuickAction.Footer>
+				<h4>{t('supportChannels', { ns: 'app' })}</h4>
+				<section>
+					<QuickAction.FooterButton
+						icon={faDiscord}
+						label="Discord"
+						onClick={() => window.open(DiscordSupportURL, '_blank')}
+					/>
+					<QuickAction.FooterButton
+						icon={faEnvelope}
+						label={t('email', { ns: 'app' })}
+						onClick={() =>
+							window.open(`mailto:${PlatformSupportEmail}`, '_blank')
+						}
+					/>
+				</section>
+			</QuickAction.Footer>
 		</CardWrapper>
 	)
 }
