@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { useHalving } from 'hooks/useHalving'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useState } from 'react'
 import { ButtonSecondary } from 'ui-buttons'
@@ -9,6 +11,8 @@ import { Status } from './Sections/Status'
 import { SectionNavigation, SectionSlider } from './Wrappers'
 
 export const StakeStatus = ({ height }: { height: number }) => {
+	const { daysUntilHalving } = useHalving()
+
 	const [activeSection, setActiveSection] = useState<number>(0)
 
 	return (
@@ -33,6 +37,7 @@ export const StakeStatus = ({ height }: { height: number }) => {
 								? 'var(--accent-primary)'
 								: 'var(--text-secondary)',
 					}}
+					iconLeft={daysUntilHalving <= 90 ? faCircleExclamation : undefined}
 				/>
 			</SectionNavigation>
 			<SectionSlider $activeSection={activeSection}>
