@@ -3,7 +3,6 @@
 
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { DiscordSupportURL, PlatformSupportEmail } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
@@ -13,6 +12,7 @@ import { Preloader } from 'library/StatusPreloader/Preloader'
 import { useTranslation } from 'react-i18next'
 import { QuickAction } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 import { Disconnected } from './Disconnected'
 import { NotStaking } from './NotStaking'
 import { Staking } from './Staking'
@@ -22,6 +22,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
 	const { accountSynced } = useSyncing()
+	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 
 	const isStaking = inPool || isBonding
@@ -60,14 +61,12 @@ export const QuickActions = ({ height }: { height: number }) => {
 					<QuickAction.FooterButton
 						icon={faDiscord}
 						label="Discord"
-						onClick={() => window.open(DiscordSupportURL, '_blank')}
+						onClick={() => openModal({ key: 'DiscordSupport', size: 'sm' })}
 					/>
 					<QuickAction.FooterButton
 						icon={faEnvelope}
 						label={t('email', { ns: 'app' })}
-						onClick={() =>
-							window.open(`mailto:${PlatformSupportEmail}`, '_blank')
-						}
+						onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
 					/>
 				</section>
 			</QuickAction.Footer>
