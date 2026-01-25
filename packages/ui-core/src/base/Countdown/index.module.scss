@@ -13,6 +13,10 @@
     margin-left: 0.3rem;
     margin-top: 0.1rem;
     margin-right: 0.75rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   &.primary {

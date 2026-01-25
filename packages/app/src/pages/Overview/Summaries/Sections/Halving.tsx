@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util'
+import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useHalving } from 'hooks/useHalving'
+import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Countdown } from 'library/Countdown'
 import { useTranslation } from 'react-i18next'
 import { Countdown as CountdownWrapper } from 'ui-core/base'
@@ -14,8 +16,9 @@ import { SectionWrapper } from '../Wrappers'
 export const Halving = () => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
-	const { getThemeValue } = useThemeValues()
 	const { timeleft } = useHalving()
+	const { openHelpTooltip } = useHelp()
+	const { getThemeValue } = useThemeValues()
 	const { unit } = getStakingChainData(network)
 
 	const tooltipLabel = (value: number) => {
@@ -38,6 +41,11 @@ export const Halving = () => {
 					<CountdownWrapper>
 						<Countdown timeleft={timeleft} />
 					</CountdownWrapper>
+					<ButtonHelpTooltip
+						marginLeft
+						definition={'Halving'}
+						openHelp={openHelpTooltip}
+					/>
 				</h3>
 				<div style={{ marginTop: '1rem', flex: 1, minHeight: 0 }}>
 					<HalvingLine
