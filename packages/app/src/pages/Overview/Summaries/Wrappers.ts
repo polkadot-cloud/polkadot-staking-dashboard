@@ -13,15 +13,18 @@ export const SectionNav = styled.div`
   }
 `
 
-export const SectionsArea = styled.div<{ $activeSection: number }>`
+export const SectionsArea = styled.div<{
+	$activeSection: number
+	$sectionWidth: number
+}>`
   display: flex;
   width: 200%;
   overflow: hidden;
   flex: 1;
   
   .section {
-    flex: 0 0 50%;
-    width: 50%;
+    flex: 0 0 ${(props) => props.$sectionWidth}%;
+    width: ${(props) => props.$sectionWidth}%;
     transition: transform 0.5s cubic-bezier(0.2, 1, 0.2, 1);
     transform: translateX(-${(props) => props.$activeSection * 100}%);
     display: flex;

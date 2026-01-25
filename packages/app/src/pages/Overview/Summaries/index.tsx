@@ -1,7 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import {
+	faCircleExclamation,
+	type IconDefinition,
+} from '@fortawesome/free-solid-svg-icons'
 import { useNetwork } from 'contexts/Network'
 import { useHalving } from 'hooks/useHalving'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -23,45 +26,44 @@ export const Summaries = ({ height }: { height: number }) => {
 	// Halving section is only for Polkadot network
 	const showHalving: boolean = network === 'polkadot'
 
+	// Sections to render
+	const sections: [{ label: string; faIcon?: IconDefinition }, React.FC][] = []
+	sections.push([{ label: t('status', { ns: 'app' }) }, Status])
+	if (showHalving) {
+		sections.push([
+			{
+				label: t('nextHalving', { ns: 'app' }),
+				faIcon: daysUntilHalving <= 90 ? faCircleExclamation : undefined,
+			},
+			Halving,
+		])
+	}
+
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
 			<SectionNav>
-				<ButtonSecondary
-					size="md"
-					text={t('status', { ns: 'app' })}
-					onClick={() => setActiveSection(0)}
-					style={{
-						color:
-							activeSection === 0
-								? 'var(--accent-primary)'
-								: 'var(--text-secondary)',
-					}}
-				/>
-				{/* NOTE: Only showing halving summary for Polkadot network */}
-				{showHalving && (
+				{sections.map(([{ label, faIcon }], index) => (
 					<ButtonSecondary
 						size="md"
-						text={t('nextHalving', { ns: 'app' })}
-						onClick={() => setActiveSection(1)}
+						key={label}
+						text={label}
+						onClick={() => setActiveSection(index)}
 						style={{
 							color:
-								activeSection === 1
+								activeSection === index
 									? 'var(--accent-primary)'
 									: 'var(--text-secondary)',
 						}}
-						iconLeft={daysUntilHalving <= 90 ? faCircleExclamation : undefined}
+						iconLeft={faIcon}
 					/>
-				)}
+				))}
 			</SectionNav>
-			<SectionsArea $activeSection={activeSection}>
-				<div className="section">
-					<Status />
-				</div>
-				{showHalving && (
+			<SectionsArea $activeSection={activeSection} $sectionWidth={100 / sections.length}>
+				{sections.map(([, Component]) => (
 					<div className="section">
-						<Halving />
+						<Component />
 					</div>
-				)}
+				))}
 			</SectionsArea>
 		</CardWrapper>
 	)
