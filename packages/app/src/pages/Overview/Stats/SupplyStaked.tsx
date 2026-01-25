@@ -17,7 +17,7 @@ export const SupplyStaked = () => {
 	const { network } = useNetwork()
 	const { unit, units } = getStakingChainData(network)
 
-	// total supply as percent.
+	// Total supply as percent
 	const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))
 	const lastTotalStakeUnit = new BigNumber(planckToUnit(lastTotalStake, units))
 	const supplyAsPercent =

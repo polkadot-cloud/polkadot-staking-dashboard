@@ -1,8 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { Header } from 'library/Announcements/Header'
 import { Wrapper } from 'library/Announcements/Wrappers'
@@ -13,13 +16,27 @@ import { Announcements } from './Announcements'
 
 export const NetworkStats = () => {
 	const { t } = useTranslation()
+	const { network } = useNetwork()
 	const { bondedPools } = useBondedPools()
 	const {
 		poolsConfig: { counterForPoolMembers },
+		stakingMetrics: { lastTotalStake, totalIssuance },
 	} = useApi()
 	const { counterForNominators, counterForValidators } = useApi().stakingMetrics
+	const { unit, units } = getStakingChainData(network)
+	const totalIssuanceUnit = new BigNumber(planckToUnit(totalIssuance, units))
+	const lastTotalStakeUnit = new BigNumber(planckToUnit(lastTotalStake, units))
+	const supplyAsPercent =
+		lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
+			? new BigNumber(0)
+			: lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01))
 
 	const items = [
+		{
+			label: t('supplyStaked', { ns: 'pages', unit }),
+			value: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
+			helpKey: 'Supply Staked',
+		},
 		{
 			label: t('totalValidators', { ns: 'pages' }),
 			value: new BigNumber(counterForValidators).toFormat(0),
