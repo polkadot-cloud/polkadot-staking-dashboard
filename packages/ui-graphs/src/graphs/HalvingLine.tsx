@@ -38,7 +38,7 @@ export const HalvingLine = ({
 	tooltipLabel,
 	millionUnit,
 }: HalvingLineProps) => {
-	const currentYear = 2026
+	const currentYear = new Date().getFullYear()
 	const currentDataIndex = HALVING_SCHEDULE.findIndex(
 		(item) => item.year === currentYear,
 	)
