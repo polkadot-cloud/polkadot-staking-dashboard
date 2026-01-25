@@ -204,6 +204,7 @@
 		"network": "Network",
 		"next": "Next",
 		"nextHalving": "Next Halving",
+		"nextRewardsIn": "Next Rewards In",
 		"noFilters": "No filters",
 		"noFree": "You have no free {{unit}} to bond.",
 		"noMatch": "No pools match this criteria.",

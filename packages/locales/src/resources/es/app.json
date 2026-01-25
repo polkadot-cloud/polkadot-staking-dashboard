@@ -204,6 +204,7 @@
 		"network": "Red",
 		"next": "Siguiente",
 		"nextHalving": "Próxima Reducción a la Mitad",
+		"nextRewardsIn": "Próximas Recompensas En",
 		"noFilters": "Sin filtros",
 		"noFree": "No tienes {{unit}} libre para vincular",
 		"noMatch": "Ningún pool coincide con este criterio.",

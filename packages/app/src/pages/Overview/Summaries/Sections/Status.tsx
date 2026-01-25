@@ -97,7 +97,7 @@ export const Status = () => {
 								</CountdownWrapper>
 							</StatItem>
 							<StatItem>
-								Next Rewards in
+								{t('nextRewardsIn', { ns: 'app' })}
 								<CountdownWrapper variant="secondary">
 									<Countdown timeleft={formatted} />
 								</CountdownWrapper>
