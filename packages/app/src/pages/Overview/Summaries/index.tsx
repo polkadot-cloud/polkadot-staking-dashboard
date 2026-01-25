@@ -6,12 +6,14 @@ import { useNetwork } from 'contexts/Network'
 import { useHalving } from 'hooks/useHalving'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
 import { Halving } from './Sections/Halving'
 import { Status } from './Sections/Status'
 import { SectionNav, SectionsArea } from './Wrappers'
 
 export const Summaries = ({ height }: { height: number }) => {
+	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { daysUntilHalving } = useHalving()
 
@@ -26,7 +28,7 @@ export const Summaries = ({ height }: { height: number }) => {
 			<SectionNav>
 				<ButtonSecondary
 					size="md"
-					text="Status"
+					text={t('status', { ns: 'app' })}
 					onClick={() => setActiveSection(0)}
 					style={{
 						color:
@@ -39,7 +41,7 @@ export const Summaries = ({ height }: { height: number }) => {
 				{showHalving && (
 					<ButtonSecondary
 						size="md"
-						text="Next Halving"
+						text={t('nextHalving', { ns: 'app' })}
 						onClick={() => setActiveSection(1)}
 						style={{
 							color:
