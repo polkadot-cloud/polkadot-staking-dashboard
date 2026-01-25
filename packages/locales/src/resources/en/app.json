@@ -205,6 +205,7 @@
 		"next": "Next",
 		"nextHalving": "Next Halving",
 		"nextRewardsIn": "Next Rewards In",
+		"noAccountSelected": "No Account Selected",
 		"noFilters": "No filters",
 		"noFree": "You have no free {{unit}} to bond.",
 		"noMatch": "No pools match this criteria.",

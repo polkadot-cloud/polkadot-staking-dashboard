@@ -26,18 +26,20 @@ export const PageToggle = ({
 
 	return (
 		<div className={styles.pageToggle}>
-			<h4 className={totalPages === 1 ? styles.disabled : undefined}>
-				<span>
-					{start}
-					{itemsPerPage > 1 && totalItems > 1 && start !== end && ` - ${end}`}
-				</span>
-				{totalPages > 1 && (
-					<>
-						{t('module.of', { ns: 'tips' })}
-						<span>{totalItems}</span>
-					</>
-				)}
-			</h4>
+			{!syncing && (
+				<h4 className={totalPages === 1 ? styles.disabled : undefined}>
+					<span>
+						{start}
+						{itemsPerPage > 1 && totalItems > 1 && start !== end && ` - ${end}`}
+					</span>
+					{totalPages > 1 && (
+						<>
+							{t('module.of', { ns: 'tips' })}
+							<span>{totalItems}</span>
+						</>
+					)}
+				</h4>
+			)}
 			<span>
 				<button
 					type="button"

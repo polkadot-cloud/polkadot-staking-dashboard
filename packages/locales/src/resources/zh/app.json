@@ -203,6 +203,7 @@
 		"next": "下一页",
 		"nextHalving": "下一次减半",
 		"nextRewardsIn": "下一次奖励于",
+		"noAccountSelected": "无账户被选中",
 		"noFilters": "无筛选",
 		"noFree": "您没有可用的 {{unit}} 可质押",
 		"noMatch": "没有符合此条件的池",

@@ -71,6 +71,8 @@ export const Status = () => {
 				display: membershipDisplay,
 			}}
 		/>
+	) : !activeAddress ? (
+		<Stat label={''} stat={t('noAccountSelected', { ns: 'app' })} />
 	) : (
 		<Stat label={''} stat={t('notStaking', { ns: 'pages' })} />
 	)
