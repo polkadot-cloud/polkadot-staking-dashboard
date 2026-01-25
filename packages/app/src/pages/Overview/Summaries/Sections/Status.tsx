@@ -55,10 +55,7 @@ export const Status = () => {
 		setFromNow(dateFrom, dateTo)
 	}, [activeEra, getUnixTime(dateTo)])
 
-	const notStaking = !inPool && !isBonding
-	const showNominate = notStaking || isBonding
-
-	const Status = showNominate ? (
+	const Status = isBonding ? (
 		<Stat
 			label={t('status')}
 			stat={inPool ? t('alreadyInPool') : nominationStatus.message}
