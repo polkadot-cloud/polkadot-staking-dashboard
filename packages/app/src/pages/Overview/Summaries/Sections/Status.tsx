@@ -16,6 +16,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { useTips } from 'hooks/useTips'
 import { Countdown } from 'library/Countdown'
 import { Stat } from 'library/Stat'
+import { Preloader } from 'library/StatusPreloader/Preloader'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonRow, Countdown as CountdownWrapper, Page } from 'ui-core/base'
@@ -83,26 +84,32 @@ export const Status = () => {
 			<div className="content">
 				<Page.RowSection standalone={true}>
 					<section>
-						{Status}
-						<ButtonRow
-							style={{
-								marginTop: '0.5rem',
-								padding: isBonding ? undefined : '0 0.5rem',
-							}}
-						>
-							<StatItem>
-								<CountdownWrapper variant="secondary">
-									{formatRateAsPercent(getAverageRewardRate())}
-									<span>APY</span>
-								</CountdownWrapper>
-							</StatItem>
-							<StatItem>
-								{t('nextRewardsIn', { ns: 'app' })}
-								<CountdownWrapper variant="secondary">
-									<Countdown timeleft={formatted} />
-								</CountdownWrapper>
-							</StatItem>
-						</ButtonRow>
+						{syncing ? (
+							<Preloader />
+						) : (
+							<>
+								{Status}
+								<ButtonRow
+									style={{
+										marginTop: '0.5rem',
+										padding: isBonding ? undefined : '0 0.5rem',
+									}}
+								>
+									<StatItem>
+										<CountdownWrapper variant="secondary">
+											{formatRateAsPercent(getAverageRewardRate())}
+											<span>APY</span>
+										</CountdownWrapper>
+									</StatItem>
+									<StatItem>
+										{t('nextRewardsIn', { ns: 'app' })}
+										<CountdownWrapper variant="secondary">
+											<Countdown timeleft={formatted} />
+										</CountdownWrapper>
+									</StatItem>
+								</ButtonRow>
+							</>
+						)}
 					</section>
 				</Page.RowSection>
 			</div>
