@@ -27,7 +27,7 @@ export const formatTimeleft = (
 	// If there are no days or hours but there are seconds, override with a formatted seconds object
 	const showSeconds = (!days && !hours && seconds) || forceShowSeconds
 
-	if (showSeconds) {
+	if (showSeconds && seconds !== undefined) {
 		formatted.seconds = [
 			seconds,
 			t('time.second', { count: seconds, ns: 'app' }),
