@@ -25,7 +25,7 @@ import { formatTimeleft } from 'utils'
 import { SectionWrapper, StatItem } from '../Wrappers'
 
 export const Status = () => {
-	const { i18n, t } = useTranslation('pages')
+	const { i18n, t } = useTranslation()
 	const { items } = useTips()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
@@ -57,8 +57,10 @@ export const Status = () => {
 
 	const Status = isBonding ? (
 		<Stat
-			label={t('status')}
-			stat={inPool ? t('alreadyInPool') : nominationStatus.message}
+			label={t('status', { ns: 'pages' })}
+			stat={
+				inPool ? t('alreadyInPool', { ns: 'pages' }) : nominationStatus.message
+			}
 		/>
 	) : activePool ? (
 		<Stat
@@ -70,10 +72,7 @@ export const Status = () => {
 			}}
 		/>
 	) : (
-		<Stat
-			label={t('poolMembership')}
-			stat={isBonding ? t('alreadyNominating') : t('notInPool')}
-		/>
+		<Stat label={''} stat={t('notStaking', { ns: 'pages' })} />
 	)
 
 	return (
