@@ -9,6 +9,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { Preloader } from 'library/StatusPreloader/Preloader'
 import { useTranslation } from 'react-i18next'
 import { QuickAction } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
@@ -41,7 +42,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 			{syncing ? (
 				<QuickAction.Container>
 					<section style={{ width: '100%', padding: '0.25rem' }}>
-						<QuickAction.PreloadingButton />
+						<Preloader />
 					</section>
 				</QuickAction.Container>
 			) : (
