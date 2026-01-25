@@ -11,7 +11,12 @@ import type { TFunction } from 'i18next'
 export const formatTimeleft = (
 	t: TFunction,
 	{ days, hours, minutes, seconds }: TimeLeftRaw,
+	config?: {
+		forceShowSeconds?: boolean
+	},
 ): TimeLeftFormatted => {
+	const forceShowSeconds = config?.forceShowSeconds || false
+
 	// Create a default object containing formatted time components for days, hours, and minutes
 	const formatted: TimeLeftFormatted = {
 		days: [days, t('time.day', { count: days, ns: 'app' })],
@@ -20,7 +25,9 @@ export const formatTimeleft = (
 	}
 
 	// If there are no days or hours but there are seconds, override with a formatted seconds object
-	if (!days && !hours && seconds) {
+	const showSeconds = (!days && !hours && seconds) || forceShowSeconds
+
+	if (showSeconds) {
 		formatted.seconds = [
 			seconds,
 			t('time.second', { count: seconds, ns: 'app' }),

@@ -45,7 +45,7 @@ export const Status = () => {
 	})
 
 	const timeleftResult = getEraTimeleft()
-	const formatted = formatTimeleft(t, timeleft.raw)
+	const formatted = formatTimeleft(t, timeleft.raw, { forceShowSeconds: true })
 	const dateFrom = fromUnixTime(Date.now() / 1000)
 	const dateTo = secondsFromNow(timeleftResult.timeleft)
 
