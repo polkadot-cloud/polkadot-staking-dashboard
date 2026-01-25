@@ -41,9 +41,9 @@ export const Tips = ({
 	// totalPages is never surpassed, but does not guarantee that the start item will maintain across
 	// resizes
 	const getPage = () => {
-		const totalItmes = syncing ? 1 : items.length
+		const totalItems = syncing ? 1 : items.length
 		const itemsPerPage = getItemsPerPage()
-		const totalPages = Math.ceil(totalItmes / itemsPerPage)
+		const totalPages = Math.ceil(totalItems / itemsPerPage)
 		if (pageRef.current > totalPages) {
 			return totalPages
 		}
