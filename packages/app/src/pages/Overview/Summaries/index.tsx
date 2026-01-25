@@ -58,7 +58,10 @@ export const Summaries = ({ height }: { height: number }) => {
 					/>
 				))}
 			</SectionNav>
-			<SectionsArea $activeSection={activeSection} $sectionWidth={100 / sections.length}>
+			<SectionsArea
+				$activeSection={activeSection}
+				$sectionWidth={100 / sections.length}
+			>
 				{sections.map(([, Component]) => (
 					<div className="section">
 						<Component />

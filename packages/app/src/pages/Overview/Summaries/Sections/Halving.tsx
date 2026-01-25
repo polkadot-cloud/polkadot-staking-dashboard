@@ -1,22 +1,28 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getStakingChainData } from 'consts/util'
+import { useSize } from '@w3ux/hooks'
+import { getStakingChainData } from 'consts/util/chains'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { useUi } from 'contexts/UI'
 import { useHalving } from 'hooks/useHalving'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Countdown } from 'library/Countdown'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Countdown as CountdownWrapper } from 'ui-core/base'
+import { GraphInner } from 'ui-core/canvas'
 import { HalvingLine } from 'ui-graphs'
+import { formatSize } from 'utils'
 import { SectionWrapper } from '../Wrappers'
 
 export const Halving = () => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { timeleft } = useHalving()
+	const { containerRefs } = useUi()
 	const { openHelpTooltip } = useHelp()
 	const { getThemeValue } = useThemeValues()
 	const { unit } = getStakingChainData(network)
@@ -25,6 +31,12 @@ export const Halving = () => {
 		const millions = (value / 1_000_000).toFixed(2)
 		return `${millions}${t('millionUnit', { ns: 'app' })} ${unit}/${t('year', { ns: 'app' })}`
 	}
+
+	const graphInnerRef = useRef<HTMLDivElement>(null)
+	const size = useSize(graphInnerRef, {
+		outerElement: containerRefs?.mainInterface,
+	})
+	const { width, height } = formatSize(size, 130)
 
 	return (
 		<SectionWrapper>
@@ -47,15 +59,29 @@ export const Halving = () => {
 						openHelp={openHelpTooltip}
 					/>
 				</h3>
-				<div style={{ marginTop: '1rem', flex: 1, minHeight: 0 }}>
-					<HalvingLine
-						width="100%"
-						height="100%"
-						getThemeValue={getThemeValue}
-						label={t('issuance', { ns: 'app' })}
-						tooltipLabel={tooltipLabel}
-						millionUnit={t('millionUnit', { ns: 'app' })}
-					/>
+				<div
+					style={{
+						marginTop: '1rem',
+						flex: 1,
+						minHeight: 0,
+						maxHeight: height,
+					}}
+				>
+					<GraphInner
+						width={width}
+						height={height}
+						noSpacing
+						ref={graphInnerRef}
+					>
+						<HalvingLine
+							width="100%"
+							height="100%"
+							getThemeValue={getThemeValue}
+							label={t('issuance', { ns: 'app' })}
+							tooltipLabel={tooltipLabel}
+							millionUnit={t('millionUnit', { ns: 'app' })}
+						/>
+					</GraphInner>
 				</div>
 			</div>
 		</SectionWrapper>

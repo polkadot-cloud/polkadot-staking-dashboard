@@ -173,9 +173,8 @@ export const HalvingLine = ({
 	return (
 		<div
 			style={{
-				width: width || '100%',
-				height: height || 'auto',
-				position: 'relative',
+				height: '100%',
+				width: '100%',
 			}}
 		>
 			<Line options={options} data={data} />
