@@ -4,7 +4,7 @@
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmitInvert } from 'ui-buttons'
+import { ButtonSubmit } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 import {
 	FooterWrapper,
@@ -33,7 +33,7 @@ export const PoolWarnings = () => {
 			</div>
 			<FooterWrapper>
 				<div>
-					<ButtonSubmitInvert
+					<ButtonSubmit
 						text={t('joinAnotherPool', { ns: 'pages' })}
 						lg
 						onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
