@@ -18,7 +18,7 @@
 		"@w3ux/hooks": "^2.4.0",
 		"@w3ux/utils": "2.3.0",
 		"motion": "12.23.24",
-		"react": "^19.2.1",
+		"react": "^19.2.4",
 		"react-error-boundary": "^6.1.0",
 		"ui-core": "workspace:*"
 	},
