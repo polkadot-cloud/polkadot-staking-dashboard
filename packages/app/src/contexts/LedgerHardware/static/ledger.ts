@@ -58,11 +58,23 @@ export class Ledger {
 
 		const result = await withTimeout(
 			3000,
-			app.getAddress(bip42Path, ss58Prefix, false),
+			app.getAddress(bip42Path, ss58Prefix, true),
 			{
 				onTimeout: () => this.transport?.close(),
 			},
 		)
+
+		// Debug logging for Ledger device address retrieval
+		console.log('[Ledger Debug] Address retrieval:', {
+			device: this.transport?.device?.productName || 'Unknown',
+			path: bip42Path,
+			accountIndex: index,
+			ss58Prefix,
+			pubKey: (result as AnyJson)?.pubKey,
+			address: (result as AnyJson)?.address,
+			returnCode: (result as AnyJson)?.return_code,
+		})
+
 		await this.ensureClosed()
 		return result
 	}
