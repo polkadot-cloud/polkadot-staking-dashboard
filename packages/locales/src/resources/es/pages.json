@@ -17,6 +17,7 @@
 		"analyticsNotAvailable": "Análisis no disponible",
 		"analyticsNotSupported": "Análisis no soportado",
 		"annual": "Anual",
+		"joinAnotherPool": "Unirse a Otro Pool",
 		"assigned": "Asignado",
 		"assignedToAnyAccount": "Tus roles de <b>Root</b>, <b>Nominator</b> y <b>Bouncer</b> pueden ser asignados a cualquier cuenta.",
 		"automaticallyBonded": "Vincular automáticamente los pagos a tu saldo actual en staking.",

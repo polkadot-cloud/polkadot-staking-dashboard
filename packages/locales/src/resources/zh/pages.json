@@ -21,6 +21,7 @@
 		"assignedToAnyAccount": " 您的<b>主理人</b>、<b>提名人</b>和<b>守护人</b>角色可以分配给任何帐户。",
 		"automaticallyBonded": "将自动质押收益到现有的质押余额中",
 		"available": "可用",
+		"joinAnotherPool": "加入另一个提名池",
 		"availableToClaim": "成员可申领的奖励{{unit}}金额",
 		"averageCommission": "平均佣金",
 		"averageRewardRate": "平均奖励率",

@@ -62,7 +62,7 @@ export const ClosurePrompts = () => {
 						<ButtonRow yMargin>
 							<ButtonPrimary
 								marginRight
-								text={t('unbond')}
+								text={t('unstake')}
 								disabled={
 									syncing || (!depositorCanWithdraw && !depositorCanUnbond)
 								}

@@ -15,16 +15,16 @@ export const SectionNav = styled.div`
 
 export const SectionsArea = styled.div<{
 	$activeSection: number
-	$sectionWidth: number
+	$totalSections: number
 }>`
   display: flex;
-  width: 200%;
+  width: ${(props) => props.$totalSections * 100}%;
   overflow: hidden;
   flex: 1;
   
   .section {
-    flex: 0 0 ${(props) => props.$sectionWidth}%;
-    width: ${(props) => props.$sectionWidth}%;
+    flex: 0 0 ${(props) => 100 / props.$totalSections}%;
+    width: ${(props) => 100 / props.$totalSections}%;
     transition: transform 0.5s cubic-bezier(0.2, 1, 0.2, 1);
     transform: translateX(-${(props) => props.$activeSection * 100}%);
     display: flex;
@@ -44,6 +44,13 @@ export const SectionWrapper = styled.div`
     flex-direction: column;
     padding: 0.75rem 1.5rem 0.25rem 1.5rem;
     flex: 1;
+    }
+
+  .graph {
+    padding: 0.1rem 1.5rem 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   > div {
@@ -68,7 +75,13 @@ export const SectionWrapper = styled.div`
   }
 `
 
-export const StatItem = styled.div`
+export const SummaryHeading = styled.h3`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`
+
+export const StatItem = styled.h3`
   border-bottom: 1px solid var(--border);
   padding: 0.75rem 0;
   color: var(--text-secondary);
@@ -81,5 +94,64 @@ export const StatItem = styled.div`
 
   &:last-child {
     margin-right: 0;
+  }
+`
+
+export const FooterWrapper = styled.div`
+  background: var(--btn-popover-tab-bg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  width: 100%;
+  padding: 0.6rem 0;
+
+  > div:first-child {
+    display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     padding-left: 1rem;
+     flex-grow: 1;
+  }
+`
+
+export const ProgressWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 3rem;
+
+  &.border {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    margin: 0 0.6rem;
+  }
+
+  > div {
+    color: var(--text-tertiary);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5rem;
+    gap: 0.5rem;
+    flex-shrink: 0;
+
+    &.inactive {
+      opacity: 0.5;
+    }
+
+   > h4 {
+      color: var(--text-tertiary);
+      margin: 0;
+    }
+
+    > .icon {
+      font-size: 1.25rem;
+    }
+  }
+
+  > .icon {
+    color: var(--text-tertiary);
+    font-size: 1.5rem;
+    opacity: 0.5;
   }
 `

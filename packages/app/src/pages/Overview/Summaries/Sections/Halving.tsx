@@ -16,7 +16,7 @@ import { Countdown as CountdownWrapper } from 'ui-core/base'
 import { GraphInner } from 'ui-core/canvas'
 import { HalvingLine } from 'ui-graphs'
 import { formatSize } from 'utils'
-import { SectionWrapper } from '../Wrappers'
+import { SectionWrapper, SummaryHeading } from '../Wrappers'
 
 export const Halving = () => {
 	const { t } = useTranslation()
@@ -40,15 +40,8 @@ export const Halving = () => {
 
 	return (
 		<SectionWrapper>
-			<div
-				style={{
-					padding: '0 1.5rem 1.25rem 1.5rem',
-					display: 'flex',
-					flexDirection: 'column',
-					height: '100%',
-				}}
-			>
-				<h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+			<div className="graph">
+				<SummaryHeading>
 					{t('nextHalving', { ns: 'app' })}:{' '}
 					<CountdownWrapper>
 						<Countdown timeleft={timeleft} />
@@ -58,7 +51,7 @@ export const Halving = () => {
 						definition={'Halving'}
 						openHelp={openHelpTooltip}
 					/>
-				</h3>
+				</SummaryHeading>
 				<div
 					style={{
 						marginTop: '1rem',

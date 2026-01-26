@@ -208,6 +208,7 @@
 		"unitSupplyStaked": "{{unit}} Supply Staked",
 		"unlocked": "Unlocked",
 		"unlocking": "Unlocking",
+		"joinAnotherPool": "Join Another Pool",
 		"unstake": "Unstake",
 		"unstakePromptInProgress": "Unstake in Progress",
 		"unstakePromptReadyToWithdraw": "Your bonded funds are now unlocked and ready to withdraw.",

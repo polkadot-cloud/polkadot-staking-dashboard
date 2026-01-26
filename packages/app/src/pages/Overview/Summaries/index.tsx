@@ -12,6 +12,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
 import { Halving } from './Sections/Halving'
+import { PoolWarnings } from './Sections/PoolWarnings'
 import { Status } from './Sections/Status'
 import { SectionNav, SectionsArea } from './Wrappers'
 
@@ -39,6 +40,9 @@ export const Summaries = ({ height }: { height: number }) => {
 		])
 	}
 
+	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
+	sections.push([{ label: 'Pool Warnings', faIcon: undefined }, PoolWarnings])
+
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
 			<SectionNav>
@@ -60,7 +64,7 @@ export const Summaries = ({ height }: { height: number }) => {
 			</SectionNav>
 			<SectionsArea
 				$activeSection={activeSection}
-				$sectionWidth={100 / sections.length}
+				$totalSections={sections.length}
 			>
 				{sections.map(([, Component]) => (
 					<div className="section">
