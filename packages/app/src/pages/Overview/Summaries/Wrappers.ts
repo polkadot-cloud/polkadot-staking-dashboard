@@ -99,7 +99,6 @@ export const StatItem = styled.h3`
 
 export const FooterWrapper = styled.div`
   background: var(--btn-popover-tab-bg);
-  border-top: 1px solid var(--border);
   display: flex;
   width: 100%;
   padding: 0.6rem 0;
