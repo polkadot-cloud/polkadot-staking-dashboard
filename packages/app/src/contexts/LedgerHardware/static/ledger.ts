@@ -58,7 +58,7 @@ export class Ledger {
 
 		const result = await withTimeout(
 			3000,
-			app.getAddress(bip42Path, ss58Prefix, true),
+			app.getAddress(bip42Path, ss58Prefix, false),
 			{
 				onTimeout: () => this.transport?.close(),
 			},
@@ -70,11 +70,8 @@ export class Ledger {
 			path: bip42Path,
 			accountIndex: index,
 			ss58Prefix,
-			pubKey: (result as AnyJson)?.pubKey,
-			address: (result as AnyJson)?.address,
-			returnCode: (result as AnyJson)?.return_code,
+			result,
 		})
-
 		await this.ensureClosed()
 		return result
 	}
