@@ -31,8 +31,6 @@ ChartJS.register(
 )
 
 export const HalvingLine = ({
-	width,
-	height,
 	getThemeValue,
 	label,
 	tooltipLabel,

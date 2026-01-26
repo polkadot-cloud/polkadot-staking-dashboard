@@ -108,8 +108,6 @@ export interface GeoDonutProps {
 }
 
 export interface HalvingLineProps {
-	width: string | number
-	height: string | number
 	getThemeValue: (key: string) => string
 	label: string
 	tooltipLabel: (value: number) => string

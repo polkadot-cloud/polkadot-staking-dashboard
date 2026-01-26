@@ -74,8 +74,6 @@ export const Halving = () => {
 						ref={graphInnerRef}
 					>
 						<HalvingLine
-							width="100%"
-							height="100%"
 							getThemeValue={getThemeValue}
 							label={t('issuance', { ns: 'app' })}
 							tooltipLabel={tooltipLabel}
