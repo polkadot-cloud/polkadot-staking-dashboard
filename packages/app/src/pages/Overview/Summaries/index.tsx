@@ -29,7 +29,12 @@ export const Summaries = ({ height }: { height: number }) => {
 
 	// Sections to render
 	const sections: [{ label: string; faIcon?: IconDefinition }, React.FC][] = []
+
+	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
+	sections.push([{ label: 'Pool Warnings', faIcon: undefined }, PoolWarnings])
+
 	sections.push([{ label: t('status', { ns: 'app' }) }, Status])
+
 	if (showHalving) {
 		sections.push([
 			{
@@ -39,9 +44,6 @@ export const Summaries = ({ height }: { height: number }) => {
 			Halving,
 		])
 	}
-
-	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
-	sections.push([{ label: 'Pool Warnings', faIcon: undefined }, PoolWarnings])
 
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
