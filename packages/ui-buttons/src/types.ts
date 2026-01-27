@@ -125,6 +125,7 @@ export type ButtonSecondaryProps = ComponentBaseWithClassName &
 	ButtonCommonProps & {
 		size?: ButtonSize
 		text: string
+		variant?: 'warning' | 'danger'
 	}
 
 export type ButtonSubmitProps = ComponentBaseWithClassName &

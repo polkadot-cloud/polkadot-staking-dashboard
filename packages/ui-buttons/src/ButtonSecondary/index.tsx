@@ -31,11 +31,21 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
 		className,
 		style,
 		text,
+		variant,
 		onClick,
 		onMouseOver,
 		onMouseMove,
 		onMouseOut,
 	} = props
+
+	// Apply variant-specific styles
+	const variantStyles = variant
+		? {
+				background: `var(--status-${variant}-bg)`,
+				color: `var(--status-${variant})`,
+				borderColor: `var(--status-${variant}-bg)`,
+			}
+		: {}
 
 	const buttonClasses = classNames(
 		commonClasses.btnCore,
@@ -57,7 +67,7 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
 	return (
 		<button
 			className={buttonClasses}
-			style={style}
+			style={{ ...style, ...variantStyles }}
 			type="button"
 			disabled={disabled}
 			{...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}

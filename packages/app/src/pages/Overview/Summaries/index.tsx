@@ -29,14 +29,14 @@ export const Summaries = ({ height }: { height: number }) => {
 
 	// Sections to render
 	const sections: [
-		{ label: string; faIcon?: IconDefinition; format?: string },
+		{ label: string; faIcon?: IconDefinition; format?: 'warning' | 'danger' },
 		React.FC,
 	][] = []
 
 	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
 	// TODO: Have warning styled buttons for this section nav item
 	sections.push([
-		{ label: 'Pool Warnings', faIcon: undefined, format: 'warning' },
+		{ label: 'Pool Warnings', faIcon: undefined, format: 'danger' },
 		PoolWarnings,
 	])
 
@@ -55,15 +55,17 @@ export const Summaries = ({ height }: { height: number }) => {
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
 			<SectionNav>
-				{sections.map(([{ label, faIcon }], index) => (
+				{sections.map(([{ label, faIcon, format }], index) => (
 					<ButtonSecondary
 						size="md"
 						key={label}
 						text={label}
+						variant={format}
 						onClick={() => setActiveSection(index)}
 						style={{
-							color:
-								activeSection === index
+							color: format
+								? undefined
+								: activeSection === index
 									? 'var(--accent-primary)'
 									: 'var(--text-secondary)',
 						}}
