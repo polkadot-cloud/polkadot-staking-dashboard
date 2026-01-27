@@ -15,10 +15,7 @@ export interface TipsProps {
 
 export interface PageToggleProps {
 	syncing: boolean
-	start: number
-	end: number
 	page: number
-	itemsPerPage: number
 	totalItems: number
 	setPageHandler: (p: number) => void
 }

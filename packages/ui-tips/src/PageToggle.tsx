@@ -12,28 +12,21 @@ import type { PageToggleProps } from './types'
 
 export const PageToggle = ({
 	syncing,
-	start,
-	end,
 	page,
-	itemsPerPage,
 	totalItems,
 	setPageHandler,
 }: PageToggleProps) => {
 	const { t } = useTranslation()
 
 	totalItems = syncing ? 1 : totalItems
-	const totalPages = Math.ceil(totalItems / itemsPerPage)
 
 	return (
 		<div className={styles.pageToggle}>
 			{!syncing && (
-				<h4 className={totalPages === 1 ? styles.disabled : undefined}>
-					<span>
-						{start}
-						{itemsPerPage > 1 && totalItems > 1 && start !== end && ` - ${end}`}
-					</span>
-					{totalPages > 1 && (
+				<h4 className={totalItems === 1 ? styles.disabled : undefined}>
+					{totalItems > 1 && (
 						<>
+							<span>{page}</span>
 							{t('module.of', { ns: 'tips' })}
 							<span>{totalItems}</span>
 						</>
@@ -43,7 +36,7 @@ export const PageToggle = ({
 			<span>
 				<button
 					type="button"
-					disabled={totalPages === 1 || page === 1}
+					disabled={totalItems === 1 || page === 1}
 					onClick={() => {
 						setPageHandler(page - 1)
 					}}
@@ -58,7 +51,7 @@ export const PageToggle = ({
 			<span>
 				<button
 					type="button"
-					disabled={totalPages === 1 || page === totalPages}
+					disabled={totalItems === 1 || page === totalItems}
 					onClick={() => {
 						setPageHandler(page + 1)
 					}}

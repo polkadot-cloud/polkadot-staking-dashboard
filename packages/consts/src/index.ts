@@ -25,8 +25,6 @@ export const SectionFullWidthThreshold = 1000
 export const PageWidthMediumThreshold = 1150
 export const PageWidthLargeThreshold = 1400
 export const SmallFontSizeMaxWidth = 600
-export const TipsThresholdSmall = 750
-export const TipsThresholdMedium = 1200
 
 // Misc Values
 export const MaxNominations = 16
