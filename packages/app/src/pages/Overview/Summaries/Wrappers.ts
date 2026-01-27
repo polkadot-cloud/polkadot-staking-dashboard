@@ -44,7 +44,7 @@ export const SectionWrapper = styled.div`
     flex-direction: column;
 
     &.top {
-      padding-top: 0.75rem;
+      padding-top: 1rem;
       flex: 1;
     }
     
@@ -100,11 +100,15 @@ export const StatItem = styled.h3`
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
   font-family: Inter, sans-serif;
-  margin-right: 1.25rem;
+  margin-right: 1.75rem;
   display: flex;
 
-  &.smGap {
-    margin-right: 0.75rem;
+   &.warning {
+    border-color: var(--status-warning-transparent);
+  }
+
+  &.danger {
+    border-color: var(--status-danger-transparent);
   }
 
   &:last-child {
@@ -120,19 +124,7 @@ export const StatItem = styled.h3`
     padding: 0.75rem 0;
     font-size: 1.2rem;
 
-    &.warning {
-      background-color: var(--status-warning-bg);
-    }
-
-    &.danger {
-      background-color: var(--status-danger-bg);
-    }
-
     &.withTooltip {
-      border-radius: 0.6rem;
-      margin-bottom: 0.6rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
       transition: transform 0.2s ease-in-out;
       cursor: default;
 

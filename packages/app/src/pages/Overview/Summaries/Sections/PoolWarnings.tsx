@@ -15,7 +15,7 @@ import { useTheme } from 'contexts/Themes'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmit } from 'ui-buttons'
+import { ButtonSubmitInvert } from 'ui-buttons'
 import { ButtonRow, Countdown as CountdownWrapper, Tooltip } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import {
@@ -76,7 +76,7 @@ export const PoolWarnings = () => {
 				<ButtonRow style={{ marginTop: '0.5rem' }}>
 					{warningMessages.map(
 						({ value, label, format, description, faIcon }) => (
-							<StatItem className="smGap" key={value}>
+							<StatItem className={`${format}`} key={value}>
 								<Tooltip
 									text={description}
 									side="bottom"
@@ -99,9 +99,9 @@ export const PoolWarnings = () => {
 			</div>
 			<FooterWrapper>
 				<div>
-					<ButtonSubmit
-						text={t('joinAnotherPool', { ns: 'pages' })}
+					<ButtonSubmitInvert
 						lg
+						text={t('joinAnotherPool', { ns: 'pages' })}
 						onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
 					/>
 				</div>
