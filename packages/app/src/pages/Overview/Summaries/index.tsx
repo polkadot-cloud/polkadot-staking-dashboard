@@ -28,11 +28,17 @@ export const Summaries = ({ height }: { height: number }) => {
 	const showHalving: boolean = network === 'polkadot'
 
 	// Sections to render
-	const sections: [{ label: string; faIcon?: IconDefinition }, React.FC][] = []
+	const sections: [
+		{ label: string; faIcon?: IconDefinition; format?: string },
+		React.FC,
+	][] = []
 
 	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
 	// TODO: Have warning styled buttons for this section nav item
-	sections.push([{ label: 'Pool Warnings', faIcon: undefined }, PoolWarnings])
+	sections.push([
+		{ label: 'Pool Warnings', faIcon: undefined, format: 'warning' },
+		PoolWarnings,
+	])
 
 	sections.push([{ label: t('status', { ns: 'app' }) }, Status])
 
