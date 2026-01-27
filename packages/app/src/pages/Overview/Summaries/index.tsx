@@ -38,7 +38,7 @@ export const Summaries = ({ height }: { height: number }) => {
 	// TODO: Have warning styled buttons for this section nav item
 	sections.push([
 		{
-			label: 'Pool Warnings',
+			label: '3 Pool Warnings',
 			faIcon: faExclamationTriangle,
 			format: 'warning',
 		},

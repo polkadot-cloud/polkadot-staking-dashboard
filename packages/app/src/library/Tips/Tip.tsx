@@ -22,6 +22,7 @@ export const Tip = ({ title, description, page, onPromptClick }: TipProps) => {
 				<div style={{ marginTop: '1.75rem', display: 'flex' }}>
 					{!!page && (
 						<ButtonPrimary
+							size="lg"
 							marginRight
 							text={`${t('goTo', { ns: 'app' })} ${t(page, {
 								ns: 'app',

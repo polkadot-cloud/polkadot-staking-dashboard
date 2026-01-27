@@ -105,12 +105,10 @@ export const StatItem = styled.h3`
 
    &.warning {
     border-color: var(--status-warning-transparent);
-    background-color: var(--status-warning-bg);
   }
 
   &.danger {
     border-color: var(--status-danger-transparent);
-    background-color: var(--status-danger-bg);
   }
 
   &:last-child {
@@ -126,11 +124,21 @@ export const StatItem = styled.h3`
     padding: 0.75rem 0;
     font-size: 1.2rem;
 
+    &.warning {
+      background-color: var(--status-warning-bg);
+    }
+
+    &.danger {
+      background-color: var(--status-danger-bg);
+    }
+
     &.withTooltip {
       transition: transform 0.2s ease-in-out;
+      border-radius: 0.7rem;
       cursor: default;
       padding-left: 1rem;
       padding-right: 1rem;
+      margin-bottom: 0.5rem;
 
       &:hover {
         transform: scale(1.02);

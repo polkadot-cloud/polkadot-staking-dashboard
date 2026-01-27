@@ -99,7 +99,7 @@ export const useTips = () => {
 						page={item.page}
 						onPromptClick={onPromptClick}
 					/>,
-					'lg',
+					'sm',
 				)
 			},
 		}
@@ -143,7 +143,7 @@ export const useTips = () => {
 							page={item.page}
 							onPromptClick={onPromptClick}
 						/>,
-						'lg',
+						'sm',
 					)
 				},
 			}

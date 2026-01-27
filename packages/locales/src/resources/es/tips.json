@@ -87,7 +87,7 @@
 		],
 		"switchPool": [
 			"Cambiar de Pool",
-			"Cambia a un nuevo Pool para evitar estas advertencias.",
+			"Cambia a un nuevo Pool para evitar advertencias de Pool.",
 			[
 				"Tu Pool actual tiene problemas que pueden afectar tus recompensas.",
 				"Considera dejar tu Pool actual y unirte a uno diferente para maximizar tus recompensas de staking."

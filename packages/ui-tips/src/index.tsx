@@ -68,12 +68,14 @@ export const Tips = ({
 						/>
 					)}
 				</div>
-				<PageToggle
-					syncing={syncing}
-					page={page}
-					totalItems={items.length}
-					setPageHandler={setPageHandler}
-				/>
+				{items.length > 1 && (
+					<PageToggle
+						syncing={syncing}
+						page={page}
+						totalItems={items.length}
+						setPageHandler={setPageHandler}
+					/>
+				)}
 			</div>
 		</div>
 	)
