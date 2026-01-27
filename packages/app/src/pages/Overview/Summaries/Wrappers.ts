@@ -32,11 +32,23 @@ export const SectionsArea = styled.div<{
   }
 `
 
-export const SectionWrapper = styled.div`
+export const SectionWrapper = styled.div`  
   display: flex;
   flex-direction: column;
   height: 100%;
   flex: 1;
+  
+  .thin-scrollbar {
+    .simplebar-track.simplebar-horizontal {
+      height: 5px;
+    }
+    
+    .simplebar-scrollbar:before {
+      background: var(--border-alt);
+      height: 5px;
+      border-radius: 2px;
+    }
+  }
   
   .content {
     display: flex;
@@ -119,10 +131,12 @@ export const StatItem = styled.h3`
     display: flex;
     flex-flow: row nowrap;
     flex: 1;
+    flex-shrink: 0;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 0;
     font-size: 1.2rem;
+    white-space: nowrap;
 
     &.warning {
       background-color: var(--status-warning-bg);

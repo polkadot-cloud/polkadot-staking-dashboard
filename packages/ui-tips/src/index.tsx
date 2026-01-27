@@ -14,7 +14,6 @@ export const Tips = ({
 	items,
 	syncing,
 	onPageReset: { network, activeAddress },
-	onUpdate,
 }: TipsProps) => {
 	// Helper function to determine which page we should be on upon page resize. This function ensures
 	// totalPages is never surpassed
@@ -40,11 +39,6 @@ export const Tips = ({
 	// determine items to be displayed - always show 1 item per page
 	const itemsDisplay = syncing ? items.slice(0, 1) : items.slice(page - 1, page)
 
-	// Notify parent component of current item
-	useEffect(() => {
-		onUpdate?.(itemsDisplay[0])
-	}, [page, items, onUpdate])
-
 	const setPageHandler = (newPage: number) => {
 		setStateWithRef(newPage, setPage, pageRef)
 	}
@@ -68,14 +62,12 @@ export const Tips = ({
 						/>
 					)}
 				</div>
-				{items.length > 1 && (
-					<PageToggle
-						syncing={syncing}
-						page={page}
-						totalItems={items.length}
-						setPageHandler={setPageHandler}
-					/>
-				)}
+				<PageToggle
+					syncing={syncing}
+					page={page}
+					totalItems={items.length}
+					setPageHandler={setPageHandler}
+				/>
 			</div>
 		</div>
 	)

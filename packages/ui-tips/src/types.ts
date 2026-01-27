@@ -12,7 +12,6 @@ export interface TipsProps {
 		network: NetworkId
 		activeAddress: MaybeString
 	}
-	onUpdate?: (currentItem: TipDisplay | undefined) => void
 }
 
 export interface PageToggleProps {
