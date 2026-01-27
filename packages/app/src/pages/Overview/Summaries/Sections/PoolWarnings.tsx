@@ -18,15 +18,20 @@ import { FooterWrapper, ProgressWrapper, SectionWrapper } from '../Wrappers'
 
 // TODO: dynamically generate based on Staking API response
 const warningMessages: {
-	msg: string
+	subtitle: string
+	descrition: string
 	format: 'danger' | 'warning'
 }[] = [
 	{
-		msg: 'Your pool is being destroyed and you cannot earn pool rewards. Consider joining another pool.',
+		subtitle: 'Your pool is being destroyed and you cannot earn pool rewards.',
+		descrition:
+			'Your pool is being destroyed and you cannot earn pool rewards. Consider joining another pool.',
 		format: 'danger',
 	},
 	{
-		msg: "Your pool's commission is high. Consider joining a different pool to increase rewards.",
+		subtitle: "Your pool's commission is high.",
+		descrition:
+			"Your pool's commission is high. Consider joining a different pool to increase rewards.",
 		format: 'warning',
 	},
 ]
@@ -52,13 +57,13 @@ export const PoolWarnings = () => {
 
 	// Convert warnings to tip items
 	const warningItems: TipDisplay[] = warningMessages.map(
-		({ msg, format }, index) => ({
+		({ descrition, subtitle, format }, index) => ({
 			id: `pool-warning-${index}`,
 			s: 1,
-			subtitle: msg,
+			subtitle,
 			faTipIcon: faCircle,
 			format,
-			description: msg,
+			description: descrition,
 			page: 'overview',
 		}),
 	)
@@ -70,6 +75,7 @@ export const PoolWarnings = () => {
 					style={{
 						background: getBackgroundColor(),
 						paddingTop: '0.5rem',
+						paddingBottom: '0.1rem',
 						marginTop: '1rem',
 						borderRadius: '1.5rem',
 						transition: 'background 0.2s ease',
