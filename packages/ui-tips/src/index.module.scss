@@ -28,11 +28,11 @@
     }
 
     .items {
-      h4 {
+      .desc h4 {
         color: var(--status-warning);
       }
 
-      svg {
+      section svg {
         color: var(--status-warning);
       }
     }
@@ -41,9 +41,17 @@
       color: var(--status-warning);
     }
 
-    .pageToggle > span > button:hover {
+    .pageToggle > span > button > svg {
+      color: var(--status-warning-transparent);
+    }
+
+    .pageToggle > span > button {
       color: var(--status-warning);
       background-color: transparent;
+
+      > svg {
+        color: var(--status-warning);
+      }
     }
   }
 
@@ -53,11 +61,11 @@
     }
 
     .items {
-      h4 {
+      .desc h4 {
         color: var(--status-danger);
       }
 
-      svg {
+      section svg {
         color: var(--status-danger);
       }
     }
@@ -66,9 +74,17 @@
       color: var(--status-danger);
     }
 
-    .pageToggle > span > button:hover {
+    .pageToggle > span > button > svg {
+      color: var(--status-danger-transparent);
+    }
+
+    .pageToggle > span > button {
       color: var(--status-danger);
       background-color: transparent;
+
+      > svg {
+        color: var(--status-danger);
+      }
     }
   }
 }
@@ -122,36 +138,36 @@
           }
         }
 
-        > button {
+        h4 {
+          color: var(--text-secondary);
+          transition: color var(--transition-duration);
+          font-family: Inter, sans-serif;
+          text-align: left;
+          font-size: 1.05rem;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          padding-right: 1.75rem;
+
+          > svg {
+            color: var(--text-secondary);
+            transition: all var(--transition-duration);
+            position: absolute;
+            right: 0.2rem;
+            top: 0.43rem;
+            font-size: 1rem;
+            opacity: 0.5;
+            margin-left: 0.4rem;
+          }
+        }
+
+        > button, > h4 {
           position: absolute;
           top: 0;
           left: 0;
           height: 1.5rem;
           max-width: 100%;
           width: auto;
-
-          > h4 {
-            color: var(--text-secondary);
-            transition: color var(--transition-duration);
-            font-family: Inter, sans-serif;
-            text-align: left;
-            font-size: 1.05rem;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            padding-right: 1.75rem;
-
-            > svg {
-              color: var(--text-secondary);
-              transition: all var(--transition-duration);
-              position: absolute;
-              right: 0.2rem;
-              top: 0.43rem;
-              font-size: 1rem;
-              opacity: 0.5;
-              margin-left: 0.4rem;
-            }
-          }
         }
       }
     }

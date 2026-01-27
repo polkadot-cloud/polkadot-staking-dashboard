@@ -97,11 +97,11 @@ const Item = ({
 			initial={{ y: 15, opacity: 0 }}
 		>
 			<div className={styles.itemInner}>
-				{faTipIcon && (
-					<section>
+				<section>
+					{faTipIcon && (
 						<FontAwesomeIcon icon={faTipIcon} transform="shrink-1" />
-					</section>
-				)}
+					)}
+				</section>
 				<section>
 					<div className={`${styles.desc} ${styles.active}`}>
 						{onTipClick ? (

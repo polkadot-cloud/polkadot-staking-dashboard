@@ -69,7 +69,8 @@ export const PoolWarnings = () => {
 				<div
 					style={{
 						background: getBackgroundColor(),
-						padding: '0.5rem',
+						paddingTop: '0.5rem',
+						marginTop: '1rem',
 						borderRadius: '1.5rem',
 						transition: 'background 0.2s ease',
 					}}
@@ -83,7 +84,7 @@ export const PoolWarnings = () => {
 							}}
 						/>
 					</div>
-					<div className="content">
+					<div>
 						<Tips
 							items={warningItems}
 							syncing={false}
