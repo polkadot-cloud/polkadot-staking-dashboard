@@ -85,6 +85,14 @@
 				"Go to the Payouts page to get a detailed breakdown of each payout you receive, and by which validator (or pool) the payout came from."
 			]
 		],
+		"switchPool": [
+			"Switch Pool",
+			"Switch to a new pool to avoid these warnings.",
+			[
+				"Your current pool has issues that may affect your rewards.",
+				"Consider leaving your current pool and joining a different one to maximize your staking rewards."
+			]
+		],
 		"understandingValidatorPerformance": [
 			"Measuring Validator Performance",
 			"Various factors affect how much validators are rewarded.",

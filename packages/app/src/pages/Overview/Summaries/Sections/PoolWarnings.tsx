@@ -11,13 +11,17 @@ import {
 	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
+import { useTips } from 'hooks/useTips'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
 import { ButtonRow, Countdown as CountdownWrapper, Tooltip } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import { Tips } from 'ui-tips'
 import {
 	FooterWrapper,
 	ProgressWrapper,
@@ -34,7 +38,7 @@ const warningMessages: {
 	format: 'danger' | 'warning'
 }[] = [
 	{
-		value: 'Destroying',
+		value: 'Pool is Destroying',
 		description:
 			'Your pool is being destroyed and you cannot earn pool rewards.',
 		format: 'danger',
@@ -56,11 +60,19 @@ const warningMessages: {
 	},
 ]
 
+// Whether to show pool switching footer
+const showPoolSwitchingFooter = false
+
 export const PoolWarnings = () => {
 	const { t } = useTranslation()
+	const { network } = useNetwork()
 	const { themeElementRef } = useTheme()
+	const { activeAddress } = useActiveAccounts()
 	const { activePool, membershipDisplay, label } = useActiveAccountPool()
 	const { openModal } = useOverlay().modal
+	const { getPoolWarningTips } = useTips()
+
+	const poolWarningTips = getPoolWarningTips()
 
 	return (
 		<SectionWrapper>
@@ -97,30 +109,37 @@ export const PoolWarnings = () => {
 					)}
 				</ButtonRow>
 			</div>
-			<FooterWrapper>
-				<div>
-					<ButtonSubmitInvert
-						lg
-						text={t('joinAnotherPool', { ns: 'pages' })}
-						onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
-					/>
-				</div>
-				<ProgressWrapper>
-					<ProgressWrapper className="border">
-						<div>
-							<h4>{t('unstake', { ns: 'pages' })}</h4>
-						</div>
-						<FontAwesomeIcon className="icon" icon={faArrowCircleRight} />
-						<div className="inactive">
-							<h4>{t('withdraw', { ns: 'pages' })}</h4>
-						</div>
-						<FontAwesomeIcon className="icon" icon={faArrowCircleRight} />
-						<div className="inactive">
-							<h4>Rejoin</h4>
-						</div>
+			<Tips
+				items={poolWarningTips}
+				syncing={false}
+				onPageReset={{ network, activeAddress }}
+			/>
+			{showPoolSwitchingFooter && (
+				<FooterWrapper>
+					<div>
+						<ButtonSubmitInvert
+							lg
+							text={t('joinAnotherPool', { ns: 'pages' })}
+							onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
+						/>
+					</div>
+					<ProgressWrapper>
+						<ProgressWrapper className="border">
+							<div>
+								<h4>{t('unstake', { ns: 'pages' })}</h4>
+							</div>
+							<FontAwesomeIcon className="icon" icon={faArrowCircleRight} />
+							<div className="inactive">
+								<h4>{t('withdraw', { ns: 'pages' })}</h4>
+							</div>
+							<FontAwesomeIcon className="icon" icon={faArrowCircleRight} />
+							<div className="inactive">
+								<h4>Rejoin</h4>
+							</div>
+						</ProgressWrapper>
 					</ProgressWrapper>
-				</ProgressWrapper>
-			</FooterWrapper>
+				</FooterWrapper>
+			)}
 		</SectionWrapper>
 	)
 }

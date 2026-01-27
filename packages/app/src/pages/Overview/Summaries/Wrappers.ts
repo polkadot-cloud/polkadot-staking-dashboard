@@ -100,15 +100,17 @@ export const StatItem = styled.h3`
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
   font-family: Inter, sans-serif;
-  margin-right: 1.75rem;
+  margin-right: 1.25rem;
   display: flex;
 
    &.warning {
     border-color: var(--status-warning-transparent);
+    background-color: var(--status-warning-bg);
   }
 
   &.danger {
     border-color: var(--status-danger-transparent);
+    background-color: var(--status-danger-bg);
   }
 
   &:last-child {
@@ -127,6 +129,8 @@ export const StatItem = styled.h3`
     &.withTooltip {
       transition: transform 0.2s ease-in-out;
       cursor: default;
+      padding-left: 1rem;
+      padding-right: 1rem;
 
       &:hover {
         transform: scale(1.02);

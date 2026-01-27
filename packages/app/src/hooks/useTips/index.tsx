@@ -105,5 +105,50 @@ export const useTips = () => {
 		}
 	})
 
-	return { items: itemsDisplay }
+	const getPoolWarningTips = (): TipDisplay[] => {
+		const warningItems = config.filter((i) => i.s === 9)
+
+		return warningItems.map((item) => {
+			const { id } = item
+			const title = t(`${id}.0`, { ns: 'tips' })
+			const subtitle = t(`${id}.1`, { ns: 'tips' })
+			const description = i18n.getResource(
+				i18n.resolvedLanguage ?? DefaultLocale,
+				'tips',
+				`${id}.2`,
+			)
+
+			const onPromptClick = () => {
+				closePrompt()
+				navigate(`/${item.page}`)
+			}
+
+			const filledVars = fillVariables(
+				{
+					...item,
+					title,
+					subtitle,
+					description,
+				},
+				['title', 'subtitle', 'description'],
+			)
+
+			return {
+				...filledVars,
+				onTipClick: () => {
+					openPromptWith(
+						<Tip
+							title={filledVars.title}
+							description={filledVars.description}
+							page={item.page}
+							onPromptClick={onPromptClick}
+						/>,
+						'lg',
+					)
+				},
+			}
+		})
+	}
+
+	return { items: itemsDisplay, getPoolWarningTips }
 }

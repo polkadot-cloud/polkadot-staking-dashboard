@@ -85,6 +85,14 @@
 				"Ve a la página de Pagos para obtener un desglose detallado de cada pago que recibes, y de qué validador (o Pool) provino el pago."
 			]
 		],
+		"switchPool": [
+			"Cambiar de Pool",
+			"Cambia a un nuevo Pool para evitar estas advertencias.",
+			[
+				"Tu Pool actual tiene problemas que pueden afectar tus recompensas.",
+				"Considera dejar tu Pool actual y unirte a uno diferente para maximizar tus recompensas de staking."
+			]
+		],
 		"understandingValidatorPerformance": [
 			"Midiendo el rendimiento del validador",
 			"Varios factores afectan cuánto se recompensa a los validadores.",

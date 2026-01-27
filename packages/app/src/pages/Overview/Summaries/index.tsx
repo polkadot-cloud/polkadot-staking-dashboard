@@ -3,6 +3,7 @@
 
 import {
 	faCircleExclamation,
+	faExclamationTriangle,
 	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { useNetwork } from 'contexts/Network'
@@ -36,7 +37,11 @@ export const Summaries = ({ height }: { height: number }) => {
 	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
 	// TODO: Have warning styled buttons for this section nav item
 	sections.push([
-		{ label: 'Pool Warnings', faIcon: undefined, format: 'danger' },
+		{
+			label: 'Pool Warnings',
+			faIcon: faExclamationTriangle,
+			format: 'warning',
+		},
 		PoolWarnings,
 	])
 
