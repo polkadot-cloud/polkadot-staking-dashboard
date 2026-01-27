@@ -3,9 +3,13 @@
 
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNetwork } from 'contexts/Network'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
+import { Tips } from 'ui-tips'
+import type { TipDisplay } from 'ui-tips/types'
 import {
 	FooterWrapper,
 	ProgressWrapper,
@@ -13,22 +17,46 @@ import {
 	SummaryHeading,
 } from '../Wrappers'
 
+// TODO: dynamically generate based on Staking API response
+const warningMessages = [
+	'Your pool is being destroyed and you cannot earn pool rewards. Consider joining another pool.',
+	"Your pool's commission is high. Consider joining a different pool to increase rewards.",
+]
+
 export const PoolWarnings = () => {
 	const { t } = useTranslation()
+	const { network } = useNetwork()
+	const { activeAddress } = useActiveAccounts()
 	const { openModal } = useOverlay().modal
+
+	// Convert warnings to tip items
+	const warningItems: TipDisplay[] = warningMessages.map((message, index) => ({
+		id: `pool-warning-${index}`,
+		onTipClick: () => {},
+		s: 1,
+		subtitle: message,
+		description: message,
+		page: 'overview',
+	}))
+
 	return (
 		<SectionWrapper>
-			<div className="content">
-				<SummaryHeading>2 Pool Warnings</SummaryHeading>
-				<div style={{ padding: '0 1.5rem' }}>
-					<h4>
-						Your pool is being destroyed and you cannot earn pool rewards.
-						Consider joining another pool.
-					</h4>
-					<h4>
-						Your pool's commission is high. Consider joining a different pool to
-						increase rewards.
-					</h4>
+			<div className="content top">
+				<div className="content hPadding vPadding">
+					<SummaryHeading>
+						<span
+							style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+						>
+							Pool Warnings
+						</span>
+					</SummaryHeading>
+				</div>
+				<div className="content">
+					<Tips
+						items={warningItems}
+						syncing={false}
+						onPageReset={{ network, activeAddress }}
+					/>
 				</div>
 			</div>
 			<FooterWrapper>

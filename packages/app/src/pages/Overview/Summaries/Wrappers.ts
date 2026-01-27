@@ -42,9 +42,24 @@ export const SectionWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    padding: 0.75rem 1.5rem 0.25rem 1.5rem;
-    flex: 1;
+
+    &.top {
+      padding-top: 0.75rem;
+      flex: 1;
     }
+    
+    &.vPadding {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+     &.hPadding {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    > h3 {
+      margin-bottom: 0;
+    }
+  }
 
   .graph {
     padding: 0.1rem 1.5rem 1.25rem 1rem;
