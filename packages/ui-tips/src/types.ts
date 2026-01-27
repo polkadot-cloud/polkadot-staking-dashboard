@@ -12,6 +12,7 @@ export interface TipsProps {
 		network: NetworkId
 		activeAddress: MaybeString
 	}
+	onUpdate?: (currentItem: TipDisplay | undefined) => void
 }
 
 export interface PageToggleProps {
@@ -31,6 +32,7 @@ export interface TipDisplay {
 	id: string
 	onTipClick?: () => void
 	faTipIcon?: IconDefinition
+	format?: 'warning' | 'danger'
 	s: number
 	subtitle: string
 	description: string
