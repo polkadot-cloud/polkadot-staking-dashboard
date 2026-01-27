@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { motion, useAnimate } from 'motion/react'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
@@ -47,6 +48,7 @@ export const Items = ({ items, page }: TipItemsProps) => {
 const Item = ({
 	subtitle,
 	onTipClick,
+	faTipIcon,
 	index,
 	initial,
 }: TipDisplay & { index: number; initial: boolean }) => {
@@ -95,7 +97,11 @@ const Item = ({
 			initial={{ y: 15, opacity: 0 }}
 		>
 			<div className={styles.itemInner}>
-				<section />
+				{faTipIcon && (
+					<section>
+						<FontAwesomeIcon icon={faTipIcon} transform="shrink-1" />
+					</section>
+				)}
 				<section>
 					<div className={`${styles.desc} ${styles.active}`}>
 						{onTipClick ? (

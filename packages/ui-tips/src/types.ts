@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import type { MaybeString } from '@w3ux/types'
 import type { NetworkId } from 'types'
 
@@ -29,6 +30,7 @@ export interface TipItemsProps {
 export interface TipDisplay {
 	id: string
 	onTipClick?: () => void
+	faTipIcon?: IconDefinition
 	s: number
 	subtitle: string
 	description: string
