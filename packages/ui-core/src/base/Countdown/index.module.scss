@@ -4,14 +4,19 @@
 .countdown {
   font-family: InterBold, sans-serif;
   display: flex;
+  align-items: center;;
   font-size: 1.2rem;
+
+  > svg {
+    margin-right: 0.6rem;
+  }
 
   > span {
     color: var(--text-primary);
     font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;
     margin-left: 0.3rem;
-    margin-top: 0.1rem;
+    margin-top: 0;
     margin-right: 0.75rem;
 
     &:last-child {
@@ -32,6 +37,24 @@
 
     > span {
       color: var(--text-secondary);
+    }
+  }
+
+  &.warning {
+    color: var(--status-warning);
+    font-family: Inter, sans-serif;
+
+    > span {
+      color: var(--status-warning);
+    }
+  }
+
+  &.danger {
+    color: var(--status-danger);
+    font-family: Inter, sans-serif;
+
+    > span {
+      color: var(--status-danger);
     }
   }
 }

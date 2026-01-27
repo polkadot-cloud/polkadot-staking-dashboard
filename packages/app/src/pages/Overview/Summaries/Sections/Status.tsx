@@ -88,22 +88,26 @@ export const Status = () => {
 							<>
 								{Status}
 								<ButtonRow
+									yMargin
 									style={{
-										marginTop: '0.5rem',
 										padding: isBonding ? undefined : '0 0.5rem',
 									}}
 								>
 									<StatItem>
-										<CountdownWrapper variant="secondary">
-											{formatRateAsPercent(getAverageRewardRate())}
-											<span>APY</span>
-										</CountdownWrapper>
+										<div className="inner">
+											<CountdownWrapper variant="secondary">
+												{formatRateAsPercent(getAverageRewardRate())}
+												<span>APY</span>
+											</CountdownWrapper>
+										</div>
 									</StatItem>
 									<StatItem>
-										{t('nextRewardsIn', { ns: 'app' })}
-										<CountdownWrapper variant="secondary">
-											<Countdown timeleft={formatted} />
-										</CountdownWrapper>
+										<div className="inner">
+											{t('nextRewardsIn', { ns: 'app' })}
+											<CountdownWrapper variant="secondary">
+												<Countdown timeleft={formatted} />
+											</CountdownWrapper>
+										</div>
 									</StatItem>
 								</ButtonRow>
 							</>

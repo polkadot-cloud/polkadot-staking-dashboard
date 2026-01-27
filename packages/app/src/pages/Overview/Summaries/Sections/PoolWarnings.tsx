@@ -1,82 +1,101 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircle } from '@fortawesome/free-regular-svg-icons'
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+import {
+	faCircleUp,
+	faHourglass,
+	faTrashCan,
+} from '@fortawesome/free-regular-svg-icons'
+import {
+	faArrowCircleRight,
+	type IconDefinition,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
+import { useTheme } from 'contexts/Themes'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { Stat } from 'library/Stat'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
+import { ButtonRow, Countdown as CountdownWrapper, Tooltip } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { Tips } from 'ui-tips'
-import type { TipDisplay } from 'ui-tips/types'
-import { FooterWrapper, ProgressWrapper, SectionWrapper } from '../Wrappers'
+import {
+	FooterWrapper,
+	ProgressWrapper,
+	SectionWrapper,
+	StatItem,
+} from '../Wrappers'
 
 // TODO: dynamically generate based on Staking API response
 const warningMessages: {
-	subtitle: string
-	descrition: string
+	value: string
+	label?: string
+	description: string
+	faIcon: IconDefinition
 	format: 'danger' | 'warning'
 }[] = [
 	{
-		subtitle: 'Your pool is being destroyed and you cannot earn pool rewards.',
-		descrition:
-			'Your pool is being destroyed and you cannot earn pool rewards. Consider joining another pool.',
+		value: 'Destroying',
+		description:
+			'Your pool is being destroyed and you cannot earn pool rewards.',
 		format: 'danger',
+		faIcon: faTrashCan,
 	},
 	{
-		subtitle: "Your pool's commission is high.",
-		descrition:
+		value: 'High Commission',
+		faIcon: faCircleUp,
+		description:
 			"Your pool's commission is high. Consider joining a different pool to increase rewards.",
+		format: 'warning',
+	},
+	{
+		value: 'No Change Rate',
+		faIcon: faHourglass,
+		description:
+			'Your pool can increase its commission rate to any value, at any time.',
 		format: 'warning',
 	},
 ]
 
 export const PoolWarnings = () => {
 	const { t } = useTranslation()
-	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccounts()
-	const { activePool, membershipDisplay } = useActiveAccountPool()
+	const { themeElementRef } = useTheme()
+	const { activePool, membershipDisplay, label } = useActiveAccountPool()
 	const { openModal } = useOverlay().modal
-
-	// Track current item format
-	const [, setCurrentFormat] = useState<'warning' | 'danger' | undefined>()
-
-	// Convert warnings to tip items
-	const warningItems: TipDisplay[] = warningMessages.map(
-		({ descrition, subtitle, format }, index) => ({
-			id: `pool-warning-${index}`,
-			s: 1,
-			subtitle,
-			faTipIcon: faCircle,
-			format,
-			description: descrition,
-			page: 'overview',
-		}),
-	)
 
 	return (
 		<SectionWrapper>
 			<div className="content top hPadding vPadding">
 				<Stat
+					label={label}
 					type="address"
 					stat={{
 						address: activePool?.addresses?.stash ?? '',
 						display: membershipDisplay,
 					}}
 				/>
-				<div>
-					<Tips
-						items={warningItems}
-						syncing={false}
-						onPageReset={{ network, activeAddress }}
-						onUpdate={(item) => setCurrentFormat(item?.format)}
-					/>
-				</div>
+				<ButtonRow style={{ marginTop: '0.5rem' }}>
+					{warningMessages.map(
+						({ value, label, format, description, faIcon }) => (
+							<StatItem className="smGap" key={value}>
+								<Tooltip
+									text={description}
+									side="bottom"
+									container={themeElementRef.current || undefined}
+									delayDuration={400}
+									fadeIn
+								>
+									<div className={`inner withTooltip ${format}`}>
+										<CountdownWrapper variant={format}>
+											<FontAwesomeIcon icon={faIcon} />
+											{value}
+											{label && <span>{label}</span>}
+										</CountdownWrapper>
+									</div>
+								</Tooltip>
+							</StatItem>
+						),
+					)}
+				</ButtonRow>
 			</div>
 			<FooterWrapper>
 				<div>

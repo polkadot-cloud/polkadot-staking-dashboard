@@ -98,17 +98,48 @@ export const SummaryHeading = styled.h3`
 
 export const StatItem = styled.h3`
   border-bottom: 1px solid var(--border);
-  padding: 0.75rem 0;
   color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  font-size: 1.2rem;
-  gap: 0.5rem;
   font-family: Inter, sans-serif;
   margin-right: 1.25rem;
+  display: flex;
+
+  &.smGap {
+    margin-right: 0.75rem;
+  }
 
   &:last-child {
     margin-right: 0;
+  }
+
+  .inner {
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 1;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+    font-size: 1.2rem;
+
+    &.warning {
+      background-color: var(--status-warning-bg);
+    }
+
+    &.danger {
+      background-color: var(--status-danger-bg);
+    }
+
+    &.withTooltip {
+      border-radius: 0.6rem;
+      margin-bottom: 0.6rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      transition: transform 0.2s ease-in-out;
+      cursor: default;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
   }
 `
 

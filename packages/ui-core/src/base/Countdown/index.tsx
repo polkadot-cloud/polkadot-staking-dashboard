@@ -9,7 +9,7 @@ export const Countdown = ({
 	style,
 	variant = 'primary',
 }: ComponentBase & {
-	variant?: 'primary' | 'secondary'
+	variant?: 'primary' | 'secondary' | 'warning' | 'danger'
 }) => (
 	<span
 		className={`${classes.countdown} ${variant ? classes[variant] : ''}`}
