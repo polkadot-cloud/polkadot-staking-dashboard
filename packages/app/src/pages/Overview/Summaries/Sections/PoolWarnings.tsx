@@ -32,7 +32,6 @@ export const PoolWarnings = () => {
 	// Convert warnings to tip items
 	const warningItems: TipDisplay[] = warningMessages.map((message, index) => ({
 		id: `pool-warning-${index}`,
-		onTipClick: () => {},
 		s: 1,
 		subtitle: message,
 		description: message,
@@ -43,13 +42,7 @@ export const PoolWarnings = () => {
 		<SectionWrapper>
 			<div className="content top">
 				<div className="content hPadding vPadding">
-					<SummaryHeading>
-						<span
-							style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-						>
-							Pool Warnings
-						</span>
-					</SummaryHeading>
+					<SummaryHeading>Pool Warnings</SummaryHeading>
 				</div>
 				<div className="content">
 					<Tips

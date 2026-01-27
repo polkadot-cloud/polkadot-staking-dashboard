@@ -63,7 +63,7 @@
         height: 1.5rem;
         position: relative;
 
-        &.active h4:hover {
+        &.active > button > h4:hover {
           color: var(--accent-primary);
 
           > svg {

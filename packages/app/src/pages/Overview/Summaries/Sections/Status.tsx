@@ -79,7 +79,7 @@ export const Status = () => {
 
 	return (
 		<SectionWrapper>
-			<div className="content">
+			<div className="content top hPadding vPadding">
 				<Page.RowSection standalone={true}>
 					<section>
 						{syncing ? (

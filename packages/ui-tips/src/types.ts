@@ -28,7 +28,7 @@ export interface TipItemsProps {
 
 export interface TipDisplay {
 	id: string
-	onTipClick: () => void
+	onTipClick?: () => void
 	s: number
 	subtitle: string
 	description: string

@@ -98,9 +98,13 @@ const Item = ({
 				<section />
 				<section>
 					<div className={`${styles.desc} ${styles.active}`}>
-						<button onClick={() => onTipClick()} type="button">
+						{onTipClick ? (
+							<button onClick={() => onTipClick()} type="button">
+								<h4>{subtitle}</h4>
+							</button>
+						) : (
 							<h4>{subtitle}</h4>
-						</button>
+						)}
 					</div>
 				</section>
 			</div>
