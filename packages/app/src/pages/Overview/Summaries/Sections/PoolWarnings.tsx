@@ -44,16 +44,7 @@ export const PoolWarnings = () => {
 	const { openModal } = useOverlay().modal
 
 	// Track current item format
-	const [currentFormat, setCurrentFormat] = useState<
-		'warning' | 'danger' | undefined
-	>()
-
-	// Determine background color based on format
-	const getBackgroundColor = () => {
-		if (currentFormat === 'warning') return 'var(--status-warning-bg)'
-		if (currentFormat === 'danger') return 'var(--status-danger-bg)'
-		return undefined
-	}
+	const [, setCurrentFormat] = useState<'warning' | 'danger' | undefined>()
 
 	// Convert warnings to tip items
 	const warningItems: TipDisplay[] = warningMessages.map(
@@ -71,33 +62,20 @@ export const PoolWarnings = () => {
 	return (
 		<SectionWrapper>
 			<div className="content top hPadding vPadding">
-				<div
-					style={{
-						background: getBackgroundColor(),
-						paddingTop: '0.5rem',
-						paddingBottom: '0.1rem',
-						marginTop: '1rem',
-						borderRadius: '1.5rem',
-						transition: 'background 0.2s ease',
+				<Stat
+					type="address"
+					stat={{
+						address: activePool?.addresses?.stash ?? '',
+						display: membershipDisplay,
 					}}
-				>
-					<div className="content">
-						<Stat
-							type="address"
-							stat={{
-								address: activePool?.addresses?.stash ?? '',
-								display: membershipDisplay,
-							}}
-						/>
-					</div>
-					<div>
-						<Tips
-							items={warningItems}
-							syncing={false}
-							onPageReset={{ network, activeAddress }}
-							onUpdate={(item) => setCurrentFormat(item?.format)}
-						/>
-					</div>
+				/>
+				<div>
+					<Tips
+						items={warningItems}
+						syncing={false}
+						onPageReset={{ network, activeAddress }}
+						onUpdate={(item) => setCurrentFormat(item?.format)}
+					/>
 				</div>
 			</div>
 			<FooterWrapper>
