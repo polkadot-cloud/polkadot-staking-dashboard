@@ -112,10 +112,9 @@ export const StatItem = styled.h3`
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
   font-family: Inter, sans-serif;
-  margin-right: 1.25rem;
   display: flex;
 
-   &.warning {
+  &.warning {
     border-color: var(--status-warning-transparent);
   }
 
@@ -136,7 +135,6 @@ export const StatItem = styled.h3`
     gap: 0.5rem;
     padding: 0.75rem 0;
     font-size: 1.2rem;
-    white-space: nowrap;
 
     &.warning {
       background-color: var(--status-warning-bg);
@@ -146,18 +144,32 @@ export const StatItem = styled.h3`
       background-color: var(--status-danger-bg);
     }
 
-    &.withTooltip {
-      transition: transform 0.2s ease-in-out;
+    &.asBadge {
       border-radius: 0.7rem;
-      cursor: default;
       padding-left: 1rem;
       padding-right: 1rem;
       margin-bottom: 0.5rem;
+    }
+
+    &.activeTransform {
+      transition: transform 0.2s ease-in-out;
+      cursor: default;
 
       &:hover {
         transform: scale(1.02);
       }
     }
+  }
+
+  &.hList {
+    margin-right: 1.25rem;
+    .inner {
+      white-space: nowrap;
+    }
+  }
+  
+  &.vList {
+    margin-bottom: 0.5rem;
   }
 `
 

@@ -2,11 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-	faCircleUp,
-	faHourglassHalf,
-	faTrashCan,
-} from '@fortawesome/free-regular-svg-icons'
-import {
 	faCircleExclamation,
 	faExclamationTriangle,
 	type IconDefinition,
@@ -14,39 +9,14 @@ import {
 import { useNetwork } from 'contexts/Network'
 import { useHalving } from 'hooks/useHalving'
 import { useSyncing } from 'hooks/useSyncing'
+import { useWarnings } from 'hooks/useWarnings'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
 import { Halving } from './Sections/Halving'
 import { Status } from './Sections/Status'
-import type { WarningMessage } from './types'
 import { SectionNav, SectionsArea } from './Wrappers'
-
-// TODO: dynamically generate based on Staking API response
-const warningMessages: WarningMessage[] = [
-	{
-		value: 'Pool is Destroying',
-		description:
-			'Your pool is being destroyed and you cannot earn pool rewards.',
-		format: 'danger',
-		faIcon: faTrashCan,
-	},
-	{
-		value: 'High Commission',
-		faIcon: faCircleUp,
-		description:
-			"Your pool's commission is high. Consider joining a different pool to increase rewards.",
-		format: 'warning',
-	},
-	{
-		value: 'No Change Rate',
-		faIcon: faHourglassHalf,
-		description:
-			'Your pool can increase its commission rate to any value, at any time.',
-		format: 'warning',
-	},
-]
 
 export const Summaries = ({ height }: { height: number }) => {
 	const { t } = useTranslation()
@@ -56,6 +26,7 @@ export const Summaries = ({ height }: { height: number }) => {
 		'active-pools',
 		'era-stakers',
 	])
+	const { warningMessages } = useWarnings()
 	const { daysUntilHalving } = useHalving()
 
 	// State to track active section

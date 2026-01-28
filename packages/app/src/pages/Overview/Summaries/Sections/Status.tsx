@@ -124,7 +124,7 @@ export const Status = ({
 											>
 												{warningMessages.map(
 													({ value, label, format, description, faIcon }) => (
-														<StatItem className={`${format}`} key={value}>
+														<StatItem className={`${format} hList`} key={value}>
 															<Tooltip
 																text={description}
 																side="bottom"
@@ -132,7 +132,9 @@ export const Status = ({
 																delayDuration={400}
 																fadeIn
 															>
-																<div className={`inner withTooltip ${format}`}>
+																<div
+																	className={`inner asBadge activeTransform ${format}`}
+																>
 																	<Badge variant={format}>
 																		<FontAwesomeIcon icon={faIcon} />
 																		{value}

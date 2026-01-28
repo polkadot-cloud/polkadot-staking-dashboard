@@ -4,6 +4,7 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
+import { PageWarnings } from 'library/PageWarnings'
 import { Active } from 'pages/Nominate/Active'
 import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
 import { NextRewards } from 'pages/Overview/Stats/NextRewards'
@@ -33,6 +34,7 @@ export const Stake = () => {
 	return (
 		<>
 			<Page.Title title={t('stake')} />
+			<PageWarnings />
 			{!nominating && (
 				<Stat.Row>
 					<AverageRewardRate isPreloading={isPreloading} />
