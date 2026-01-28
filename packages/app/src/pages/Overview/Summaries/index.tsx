@@ -51,7 +51,11 @@ const warningMessages: WarningMessage[] = [
 export const Summaries = ({ height }: { height: number }) => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
-	const { syncing } = useSyncing()
+	const { syncing } = useSyncing([
+		'initialization',
+		'active-pools',
+		'era-stakers',
+	])
 	const { daysUntilHalving } = useHalving()
 
 	// State to track active section
@@ -66,16 +70,17 @@ export const Summaries = ({ height }: { height: number }) => {
 		React.FC,
 	][] = []
 
+	const showWarning = warningMessages.length && !syncing
+
 	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
 	// If there are warning messages, show them in the Status section with warning styling
-	const statusSectionConfig =
-		warningMessages.length && !syncing
-			? {
-					label: `${warningMessages.length} Pool Warning${warningMessages.length > 1 ? 's' : ''}`,
-					faIcon: faExclamationTriangle,
-					format: 'warning' as const,
-				}
-			: { label: t('status', { ns: 'app' }) }
+	const statusSectionConfig = showWarning
+		? {
+				label: t('status', { ns: 'app' }),
+				faIcon: faExclamationTriangle,
+				format: 'warning' as const,
+			}
+		: { label: t('status', { ns: 'app' }) }
 
 	sections.push([
 		statusSectionConfig,

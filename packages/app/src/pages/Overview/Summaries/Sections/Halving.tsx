@@ -12,7 +12,7 @@ import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Countdown } from 'library/Countdown'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Countdown as CountdownWrapper } from 'ui-core/base'
+import { Badge } from 'ui-core/base'
 import { GraphInner } from 'ui-core/canvas'
 import { HalvingLine } from 'ui-graphs'
 import { formatSize } from 'utils'
@@ -43,9 +43,9 @@ export const Halving = () => {
 			<div className="graph">
 				<SummaryHeading>
 					{t('nextHalving', { ns: 'app' })}:{' '}
-					<CountdownWrapper>
+					<Badge>
 						<Countdown timeleft={timeleft} />
-					</CountdownWrapper>
+					</Badge>
 					<ButtonHelpTooltip
 						marginLeft
 						definition={'Halving'}

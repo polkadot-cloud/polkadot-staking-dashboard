@@ -4,7 +4,7 @@
 import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
-export const Countdown = ({
+export const Badge = ({
 	children,
 	style,
 	variant = 'primary',
@@ -12,7 +12,7 @@ export const Countdown = ({
 	variant?: 'primary' | 'secondary' | 'warning' | 'danger'
 }) => (
 	<span
-		className={`${classes.countdown} ${variant ? classes[variant] : ''}`}
+		className={`${classes.badge} ${variant ? classes[variant] : ''}`}
 		style={style}
 	>
 		{children}

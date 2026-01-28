@@ -13,6 +13,7 @@ import type { TipsProps } from './types'
 export const Tips = ({
 	items,
 	syncing,
+	onUpdate,
 	onPageReset: { network, activeAddress },
 }: TipsProps) => {
 	// Helper function to determine which page we should be on upon page resize. This function ensures
@@ -45,6 +46,11 @@ export const Tips = ({
 
 	// Get format from current item
 	const currentFormat = itemsDisplay[0]?.format
+
+	// Notify parent component of current item
+	useEffect(() => {
+		onUpdate?.(itemsDisplay[0])
+	}, [page, items, onUpdate])
 
 	return (
 		<div

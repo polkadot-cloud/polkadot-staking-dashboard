@@ -22,12 +22,7 @@ import { Preloader } from 'library/StatusPreloader/Preloader'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
-import {
-	ButtonRow,
-	Countdown as CountdownWrapper,
-	Page,
-	Tooltip,
-} from 'ui-core/base'
+import { Badge, ButtonRow, Page, Tooltip } from 'ui-core/base'
 import { Tips } from 'ui-tips'
 import { formatTimeleft } from 'utils'
 import type { WarningMessage } from '../types'
@@ -41,7 +36,11 @@ export const Status = ({
 	const { i18n, t } = useTranslation()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
-	const { syncing } = useSyncing()
+	const { syncing } = useSyncing([
+		'initialization',
+		'active-pools',
+		'era-stakers',
+	])
 	const { isBonding } = useStaking()
 	const { themeElementRef } = useTheme()
 	const { activeAddress } = useActiveAccounts()
@@ -134,11 +133,11 @@ export const Status = ({
 																fadeIn
 															>
 																<div className={`inner withTooltip ${format}`}>
-																	<CountdownWrapper variant={format}>
+																	<Badge variant={format}>
 																		<FontAwesomeIcon icon={faIcon} />
 																		{value}
 																		{label && <span>{label}</span>}
-																	</CountdownWrapper>
+																	</Badge>
 																</div>
 															</Tooltip>
 														</StatItem>
@@ -148,18 +147,18 @@ export const Status = ({
 													<>
 														<StatItem>
 															<div className="inner">
-																<CountdownWrapper variant="secondary">
+																<Badge variant="secondary">
 																	{formatRateAsPercent(getAverageRewardRate())}
 																	<span>APY</span>
-																</CountdownWrapper>
+																</Badge>
 															</div>
 														</StatItem>
 														<StatItem>
 															<div className="inner">
 																{t('nextRewardsIn', { ns: 'app' })}
-																<CountdownWrapper variant="secondary">
+																<Badge variant="secondary">
 																	<Countdown timeleft={formatted} />
-																</CountdownWrapper>
+																</Badge>
 															</div>
 														</StatItem>
 													</>
