@@ -7,8 +7,18 @@
   border-radius: var(--btn-lg-radius);
   color: var(--text-secondary);
 
-  &.active {
-    background: var(--btn-bg-hover);
+  &.asTab {
+    color: var(--text-tertiary);
+    background: transparent;
     border-color: var(--btn-bg-hover);
+  }
+
+  &.active {
+    background: var(--btn-bg-secondary);;
+    border-color: var(--border-alt);
+
+    &.asTab {
+      color: var(--text-secondary);
+    }
   }
 }

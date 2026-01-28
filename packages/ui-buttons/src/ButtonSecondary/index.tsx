@@ -37,13 +37,13 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
 		onMouseMove,
 		onMouseOut,
 		active,
+		asTab,
 	} = props
 
 	// Apply variant-specific styles
 	const variantStyles = variant
 		? {
 				color: `var(--status-${variant})`,
-				borderColor: `var(--status-${variant}-bg)`,
 			}
 		: {}
 
@@ -52,6 +52,7 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
 		classes.btnSecondary,
 		{
 			[classes.active]: !!active,
+			[classes.asTab]: !!asTab,
 			[commonClasses.btnLarge]: size === 'lg',
 			[commonClasses.btnMedium]: size === 'md',
 			[commonClasses.btnSmall]: size === 'sm',
