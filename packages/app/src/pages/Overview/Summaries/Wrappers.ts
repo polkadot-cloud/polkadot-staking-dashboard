@@ -8,9 +8,6 @@ export const SectionNav = styled.div`
   display: flex;
   gap: 0.75rem;
   padding: 1rem;
-  @media (max-width: ${PageWidthMediumThreshold}px) {
-    padding: 1rem 1rem 0;
-  }
 `
 
 export const SectionsArea = styled.div<{
