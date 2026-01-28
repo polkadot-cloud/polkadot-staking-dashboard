@@ -80,6 +80,7 @@ export const Summaries = ({ height }: { height: number }) => {
 						onClick={() => setActiveSection(index)}
 						active={activeSection === index}
 						iconLeft={faIcon}
+						asTab
 					/>
 				))}
 			</SectionNav>
