@@ -147,7 +147,7 @@ export const Status = ({
 												)}
 												{warningMessages.length === 0 && (
 													<>
-														<StatItem>
+														<StatItem className="hList">
 															<div className="inner">
 																<Badge variant="secondary">
 																	{formatRateAsPercent(getAverageRewardRate())}
@@ -155,7 +155,7 @@ export const Status = ({
 																</Badge>
 															</div>
 														</StatItem>
-														<StatItem>
+														<StatItem className="hList">
 															<div className="inner">
 																{t('nextRewardsIn', { ns: 'app' })}
 																<Badge variant="secondary">
