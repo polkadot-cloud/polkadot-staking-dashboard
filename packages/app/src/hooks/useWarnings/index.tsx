@@ -6,8 +6,10 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { poolWarnings$ } from 'global-bus'
 import type { WarningMessage } from 'pages/Overview/Summaries/types'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const useWarnings = () => {
+	const { t } = useTranslation('app')
 	const { activeAddress } = useActiveAccounts()
 	const [warningMessages, setWarningMessages] = useState<WarningMessage[]>([])
 
@@ -24,21 +26,26 @@ export const useWarnings = () => {
 			warnings.forEach((warning) => {
 				if (warning.type === 'destroying') {
 					messages.push({
-						value: 'Pool is Destroying',
-						description:
-							'Your pool is being destroyed and you cannot earn pool rewards.',
+						value: t('warnings.destroyingTitle'),
+						description: t('warnings.destroyingDescription'),
 						format: 'danger',
 						faIcon: faTrashCan,
 					})
 				} else if (warning.type === 'highCommission') {
 					messages.push({
-						value: 'High Commission',
+						value: t('warnings.highCommissionTitle'),
 						faIcon: faCircleUp,
-						description:
-							"Your pool's commission is high. Consider joining a different pool to increase rewards.",
+						description: t('warnings.highCommissionDescription'),
 						format: 'warning',
 					})
 				}
+			})
+
+			messages.push({
+				value: t('warnings.destroyingTitle'),
+				description: t('warnings.destroyingDescription'),
+				format: 'danger',
+				faIcon: faTrashCan,
 			})
 
 			setWarningMessages(messages)

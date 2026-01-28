@@ -370,5 +370,11 @@
 		"whenActivelyNominating": "当活跃提名时",
 		"wrongTransaction": "错误交易，请重新签名",
 		"year": "年"
+	},
+	"warnings": {
+		"destroyingDescription": "您的奖池将被销毁，您将无法获得奖池奖励。",
+		"destroyingtitle": "奖池正在销毁",
+		"highCommissionDescription": "您的奖池佣金较高。考虑加入其他奖池以增加奖励。",
+		"highCommissionTitle": "高佣金"
 	}
 }

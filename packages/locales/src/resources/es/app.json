@@ -375,6 +375,12 @@
 		"waiting": "Esperando",
 		"walletNotFound": "Cartera no encontrada",
 		"wallets": "Carteras",
+		"warnings": {
+			"destroyingDescription": "Tu pool está siendo destruido y no puedes ganar recompensas del pool.",
+			"destroyingTitle": "Pool está siendo destruido",
+			"highCommissionDescription": "La comisión de tu pool es alta. Considera unirte a un pool diferente para aumentar las recompensas.",
+			"highCommissionTitle": "Comisión Alta"
+		},
 		"webExtensions": "Extensión de Navegador",
 		"whenActivelyNominating": "cuando nominas activamente.",
 		"wrongTransaction": "Transacción incorrecta, Por favor firma de nuevo.",

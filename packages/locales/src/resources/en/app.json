@@ -375,6 +375,12 @@
 		"waiting": "Waiting",
 		"walletNotFound": "wallet not found",
 		"wallets": "Wallets",
+		"warnings": {
+			"destroyingDescription": "Your pool is being destroyed and you cannot earn pool rewards.",
+			"destroyingTitle": "Pool is Destroying",
+			"highCommissionDescription": "Your pool's commission is high. Consider joining a different pool to increase rewards.",
+			"highCommissionTitle": "High Commission"
+		},
 		"webExtensions": "Web Extensions",
 		"whenActivelyNominating": "when actively nominating.",
 		"wrongTransaction": "Wrong transaction, please sign again.",
