@@ -108,7 +108,7 @@ export const SummaryHeading = styled.h3`
   gap: 0.5rem;
 `
 
-export const StatItem = styled.h3`
+export const StatItem = styled.div`
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
   font-family: Inter, sans-serif;
@@ -134,7 +134,6 @@ export const StatItem = styled.h3`
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 0;
-    font-size: 1.2rem;
 
     &.warning {
       background-color: var(--status-warning-bg);
