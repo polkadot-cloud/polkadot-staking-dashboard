@@ -95,7 +95,7 @@ export const LeavePool = ({
 	return (
 		<>
 			<Padding>
-				<Title>{t('leavePool')}</Title>
+				<Title>{t('unstake')}</Title>
 				{warnings.length > 0 ? (
 					<Warnings>
 						{warnings.map((text, i) => (

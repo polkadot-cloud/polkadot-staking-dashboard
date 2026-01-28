@@ -2,17 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { usePrompt } from 'contexts/Prompt'
 import { Title } from 'library/Prompt/Title'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'ui-buttons'
 import type { TipProps } from './types'
 
-export const Tip = ({ title, description, page }: TipProps) => {
+export const Tip = ({ title, description, page, onPromptClick }: TipProps) => {
 	const { t } = useTranslation()
-	const navigate = useNavigate()
-	const { closePrompt } = usePrompt()
 
 	return (
 		<>
@@ -26,13 +22,13 @@ export const Tip = ({ title, description, page }: TipProps) => {
 				<div style={{ marginTop: '1.75rem', display: 'flex' }}>
 					{!!page && (
 						<ButtonPrimary
+							size="lg"
 							marginRight
 							text={`${t('goTo', { ns: 'app' })} ${t(page, {
 								ns: 'app',
 							})}`}
 							onClick={() => {
-								closePrompt()
-								navigate(`/${page}`)
+								onPromptClick()
 							}}
 							iconRight={faAngleRight}
 							iconTransform="shrink-1"

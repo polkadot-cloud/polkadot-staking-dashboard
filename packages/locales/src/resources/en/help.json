@@ -86,6 +86,12 @@
 					"The percentage shown is the proportion of rewards payed out to you by this validator in the analytic period."
 				]
 			],
+			"halving": [
+				"Halving",
+				[
+					"A halving is an event that reduces the staking rewards earned by nominators and validators by 50%. Halvings occur every 2 years on Polkadot to control inflation and ensure the long-term sustainability of the network."
+				]
+			],
 			"idealStaked": [
 				"Ideal Staked",
 				["The percentage of staked total supply in ideal network conditions."]

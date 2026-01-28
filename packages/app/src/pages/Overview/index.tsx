@@ -10,17 +10,14 @@ import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
-import { Page, Stat } from 'ui-core/base'
+import { Page } from 'ui-core/base'
 import { BalanceChart } from './AccountBalance/BalanceChart'
 import { BalanceLinks } from './AccountBalance/BalanceLinks'
 import { ControllerPrompt } from './ControllerPrompt'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { QuickActions } from './QuickActions'
-import { StakeStatus } from './StakeStatus'
-import { AverageRewardRate } from './Stats/AverageRewardRate'
-import { NextRewards } from './Stats/NextRewards'
-import { SupplyStaked } from './Stats/SupplyStaked'
+import { Summaries } from './Summaries'
 
 export const Overview = () => {
 	const { t } = useTranslation('pages')
@@ -37,17 +34,12 @@ export const Overview = () => {
 	// Fiat values result in a slightly larger height for Balance & Payouts
 	const showFiat = pluginEnabled('staking_api') && network !== 'westend'
 
-	const STATUS_HEIGHT = 110
+	const STATUS_HEIGHT = 220
 	const PAYOUTS_HEIGHT = showFiat ? 385 : 380
 
 	return (
 		<>
 			<Page.Title title={t('overview')} />
-			<Stat.Row>
-				<AverageRewardRate />
-				<SupplyStaked />
-				<NextRewards />
-			</Stat.Row>
 			{isBonding &&
 				!syncing &&
 				accountSynced(activeAddress) &&
@@ -55,7 +47,7 @@ export const Overview = () => {
 				!isReadOnlyAccount(activeAddress) && <ControllerPrompt />}
 			<Page.Row>
 				<Page.RowSection>
-					<StakeStatus height={STATUS_HEIGHT} />
+					<Summaries height={STATUS_HEIGHT} />
 				</Page.RowSection>
 				<Page.RowSection secondary hLast vLast>
 					<QuickActions height={STATUS_HEIGHT} />

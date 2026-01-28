@@ -175,6 +175,7 @@
 		"invite": "Invite",
 		"inviteDescription": "Once you start staking your invite link will be displayed here to share your pool.",
 		"invitePool": "You've been invited to join a staking pool",
+		"issuance": "Issuance",
 		"join": "Join",
 		"language": "Language",
 		"ledgerAppOutOfDate": "Your Polkadot Ledger app is not configured to the latest runtime version",
@@ -196,11 +197,15 @@
 		"migrateControllerDescription": "Controller accounts are being deprecated. Migrate your controller to your stash account to continue using the Staking Dashboard.",
 		"migrateToStash": "Migrate your controller to your stash account",
 		"migrationRequired": "Controller Migration Required",
+		"millionUnit": "M",
 		"minimumBond": "A minimum bond of {{minBondUnit}} {{unit}} is required",
 		"missingIdentity": "Missing Identity",
 		"moreThanBalance": "Bond amount is more than your free balance.",
 		"network": "Network",
 		"next": "Next",
+		"nextHalving": "Next Halving",
+		"nextRewardsIn": "Next Rewards In",
+		"noAccountSelected": "No Account Selected",
 		"noFilters": "No filters",
 		"noFree": "You have no free {{unit}} to bond.",
 		"noMatch": "No pools match this criteria.",
@@ -311,9 +316,12 @@
 		"signing": "Signing",
 		"stake": "Stake",
 		"stakingOptions": "Other Staking Options",
+		"stakingStats": "Staking Stats",
 		"startAgain": "Start Again",
+		"status": "Status",
 		"submitTransaction": "Ready to submit transaction.",
 		"support": "Support",
+		"supportChannels": "Support Channels",
 		"switchAccount": "Switch Account",
 		"syncing": "Syncing",
 		"syncingPoolData": "Finding Pools to Join",
@@ -368,8 +376,15 @@
 		"waiting": "Waiting",
 		"walletNotFound": "wallet not found",
 		"wallets": "Wallets",
+		"warnings": {
+			"destroyingDescription": "Your pool is being destroyed and you cannot earn pool rewards.",
+			"destroyingTitle": "Pool is Destroying",
+			"highCommissionDescription": "Your pool's commission is high. Consider joining a different pool to increase rewards.",
+			"highCommissionTitle": "High Commission"
+		},
 		"webExtensions": "Web Extensions",
 		"whenActivelyNominating": "when actively nominating.",
-		"wrongTransaction": "Wrong transaction, please sign again."
+		"wrongTransaction": "Wrong transaction, please sign again.",
+		"year": "year"
 	}
 }

@@ -6,43 +6,37 @@ import {
 	faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
+import styles from './index.module.scss'
 import type { PageToggleProps } from './types'
-import { PageToggleWrapper } from './Wrappers'
 
 export const PageToggle = ({
-	start,
-	end,
+	syncing,
 	page,
-	itemsPerPage,
 	totalItems,
 	setPageHandler,
 }: PageToggleProps) => {
 	const { t } = useTranslation()
-	const { syncing } = useSyncing(['initialization'])
 
 	totalItems = syncing ? 1 : totalItems
-	const totalPages = Math.ceil(totalItems / itemsPerPage)
 
 	return (
-		<PageToggleWrapper>
-			<h4 className={totalPages === 1 ? `disabled` : undefined}>
-				<span>
-					{start}
-					{itemsPerPage > 1 && totalItems > 1 && start !== end && ` - ${end}`}
-				</span>
-				{totalPages > 1 && (
-					<>
-						{t('module.of', { ns: 'tips' })}
-						<span>{totalItems}</span>
-					</>
-				)}
-			</h4>
+		<div className={styles.pageToggle}>
+			{!syncing && (
+				<h4 className={totalItems === 1 ? styles.disabled : undefined}>
+					{totalItems > 1 && (
+						<>
+							<span>{page}</span>
+							{t('module.of', { ns: 'tips' })}
+							<span>{totalItems}</span>
+						</>
+					)}
+				</h4>
+			)}
 			<span>
 				<button
 					type="button"
-					disabled={totalPages === 1 || page === 1}
+					disabled={totalItems === 1 || page === 1}
 					onClick={() => {
 						setPageHandler(page - 1)
 					}}
@@ -57,7 +51,7 @@ export const PageToggle = ({
 			<span>
 				<button
 					type="button"
-					disabled={totalPages === 1 || page === totalPages}
+					disabled={totalItems === 1 || page === totalItems}
 					onClick={() => {
 						setPageHandler(page + 1)
 					}}
@@ -69,6 +63,6 @@ export const PageToggle = ({
 					/>
 				</button>
 			</span>
-		</PageToggleWrapper>
+		</div>
 	)
 }

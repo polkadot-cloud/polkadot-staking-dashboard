@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PageWarnings } from 'library/PageWarnings'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 import { PoolOverview } from './Overview'
@@ -14,6 +15,7 @@ export const Pools = () => {
 	return (
 		<>
 			<Page.Title title={t('pool', { ns: 'app' })}></Page.Title>
+			<PageWarnings />
 			<Stat.Row>
 				<ActivePoolCount />
 				<MinJoinBond />

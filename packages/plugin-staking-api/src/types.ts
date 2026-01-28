@@ -259,3 +259,27 @@ export interface ActiveStatusWithNominees {
 		status: string
 	}[]
 }
+
+export interface PoolWarningsData {
+	destroyingPoolMembers: {
+		members: DestroyingPoolMember[]
+	}
+	highCommissionPoolMembers: {
+		members: HighCommissionPoolMember[]
+	}
+}
+
+export interface DestroyingPoolMember {
+	poolId: number
+	address: string
+}
+
+export interface HighCommissionPoolMember {
+	poolId: number
+	address: string
+}
+
+export interface PoolWarningsResult {
+	destroyingPools: DestroyingPoolMember[]
+	highCommissionPools: HighCommissionPoolMember[]
+}

@@ -86,6 +86,12 @@
 					"El porcentaje mostrado es la proporción de recompensas pagadas por este validador en el período de análisis."
 				]
 			],
+			"halving": [
+				"Halving",
+				[
+					"Un halving es un evento que reduce las recompensas de staking ganadas por nominadores y validadores en un 50%. Los halvings ocurren cada 2 años en Polkadot para controlar la inflación y asegurar la sostenibilidad a largo plazo de la red."
+				]
+			],
 			"idealStaked": [
 				"Stake Ideal",
 				[

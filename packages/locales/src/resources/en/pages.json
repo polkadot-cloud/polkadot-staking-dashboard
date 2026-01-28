@@ -76,6 +76,7 @@
 		"inPools": "is currently bonded in pools.",
 		"inactiveNominations": "Inactive Nominations",
 		"inactivePoolNotNominating": "Inactive: Pool Not Nominating",
+		"joinAnotherPool": "Join Another Pool",
 		"joinPool": "Join Pool",
 		"joinPoolHeading": "Join {{totalMembers}} pool members staking a total of {{totalPoolPoints}} {{unit}} on {{network}}.",
 		"last30DayReward": "Last 30 Days Reward",

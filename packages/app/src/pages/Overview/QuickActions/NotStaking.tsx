@@ -15,13 +15,14 @@ export const NotStaking = () => {
 	const actions: ButtonQuickActionProps[] = []
 
 	actions.push(baseQuickActions.send)
+	actions.push(baseQuickActions.accounts)
 	actions.push(baseQuickActions.joinPool)
 
 	if (hasEnoughToNominate) {
 		actions.push(baseQuickActions.nominate)
 	}
 
-	actions.push(baseQuickActions.email, baseQuickActions.discord)
+	actions.push(baseQuickActions.ledger, baseQuickActions.vault)
 
 	return (
 		<QuickAction.Container>

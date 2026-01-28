@@ -1,14 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { usePrompt } from 'contexts/Prompt'
-import { Tip } from 'library/Tips/Tip'
-import { useAnimate } from 'motion/react'
+import { motion, useAnimate } from 'motion/react'
 import { useEffect, useState } from 'react'
+import styles from './index.module.scss'
 import type { TipDisplay, TipItemsProps } from './types'
-import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers'
 
 export const Items = ({ items, page }: TipItemsProps) => {
 	const [scope, animate] = useAnimate()
@@ -31,7 +28,11 @@ export const Items = ({ items, page }: TipItemsProps) => {
 	}
 
 	return (
-		<ItemsWrapper ref={scope} initial={{ opacity: 0 }}>
+		<motion.div
+			className={styles.itemsWrapper}
+			ref={scope}
+			initial={{ opacity: 0 }}
+		>
 			{items.map((item, index: number) => (
 				<Item
 					key={`tip_${index}_${page}`}
@@ -40,19 +41,17 @@ export const Items = ({ items, page }: TipItemsProps) => {
 					initial={initial}
 				/>
 			))}
-		</ItemsWrapper>
+		</motion.div>
 	)
 }
 
 const Item = ({
-	title,
 	subtitle,
-	description,
+	onTipClick,
+	faTipIcon,
 	index,
 	initial,
-	page,
 }: TipDisplay & { index: number; initial: boolean }) => {
-	const { openPromptWith } = usePrompt()
 	const [scope, animate] = useAnimate()
 	const [isStopped, setIsStopped] = useState<boolean>(true)
 
@@ -92,31 +91,29 @@ const Item = ({
 	}, [initial, index])
 
 	return (
-		<ItemWrapper ref={scope} initial={{ y: 15, opacity: 0 }}>
-			<ItemInnerWrapper>
-				<section />
+		<motion.div
+			className={styles.itemWrapper}
+			ref={scope}
+			initial={{ y: 15, opacity: 0 }}
+		>
+			<div className={styles.itemInner}>
 				<section>
-					<div className="desc active">
-						<button
-							onClick={() =>
-								openPromptWith(
-									<Tip title={title} description={description} page={page} />,
-									'lg',
-								)
-							}
-							type="button"
-						>
-							<h4>
-								{subtitle}
-								<FontAwesomeIcon
-									icon={faExternalLinkAlt}
-									transform="shrink-2"
-								/>
-							</h4>
-						</button>
+					{faTipIcon && (
+						<FontAwesomeIcon icon={faTipIcon} transform="shrink-1" />
+					)}
+				</section>
+				<section>
+					<div className={`${styles.desc} ${styles.active}`}>
+						{onTipClick ? (
+							<button onClick={() => onTipClick()} type="button">
+								<h4>{subtitle}</h4>
+							</button>
+						) : (
+							<h4>{subtitle}</h4>
+						)}
 					</div>
 				</section>
-			</ItemInnerWrapper>
-		</ItemWrapper>
+			</div>
+		</motion.div>
 	)
 }

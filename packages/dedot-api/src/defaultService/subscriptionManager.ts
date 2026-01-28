@@ -6,6 +6,7 @@ import type { DedotClient } from 'dedot'
 import {
 	activePoolIds$,
 	bonded$,
+	fetchAndSetPoolWarnings,
 	getActiveAddress,
 	getLocalActiveProxy,
 	getSyncing,
@@ -110,14 +111,15 @@ export class SubscriptionManager<
 			})
 
 			const addedAddresses: string[] = []
-			added.forEach((account) => {
+			for (const account of added) {
 				const address = account.address
 
-				// Only subscribe to address subscriptions if no other occurrence of the address exists
+				// Address individuality checks
 				const addressAlreadyAdded = addedAddresses.some((a) => a === address)
 				const addressAlreadyPresent = remaining.some(
 					(a) => a?.address === address,
 				)
+				// Only subscribe to address subscriptions if no other occurrence of the address exists
 				if (!addressAlreadyAdded && !addressAlreadyPresent) {
 					this.subAccountBalances.hub[getAccountKey(this.ids[2], address)] =
 						new AccountBalanceQuery(this.apiHub, this.ids[2], address)
@@ -130,7 +132,12 @@ export class SubscriptionManager<
 					this.subProxies[address] = new ProxiesQuery(this.stakingApi, address)
 				}
 				addedAddresses.push(address)
-			})
+			}
+
+			// Fetch pool warnings for added addresses
+			if (addedAddresses.length > 0) {
+				fetchAndSetPoolWarnings(this.ids[0], addedAddresses)
+			}
 		})
 
 		// Active bonded subscription - manages staking ledgers

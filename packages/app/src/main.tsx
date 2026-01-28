@@ -17,6 +17,7 @@ import 'styles/theme/theme.scss'
 
 // Package styles
 import '@w3ux/react-odometer/index.css'
+import 'simplebar/dist/simplebar.min.css'
 
 // Global services
 import { initDedotService } from 'dedot-api'

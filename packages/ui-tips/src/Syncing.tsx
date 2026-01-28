@@ -3,14 +3,16 @@
 
 import { faRefresh } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
-import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers'
+import styles from './index.module.scss'
 
 export const Syncing = () => {
 	const { t } = useTranslation('tips')
 
 	return (
-		<ItemsWrapper
+		<motion.div
+			className={styles.itemsWrapper}
 			initial="show"
 			animate={undefined}
 			variants={{
@@ -20,11 +22,12 @@ export const Syncing = () => {
 				},
 			}}
 		>
-			<ItemWrapper>
-				<ItemInnerWrapper>
+			<motion.div className={styles.itemWrapper}>
+				<div className={styles.itemInner}>
 					<section
 						style={{
-							marginRight: '0.5rem',
+							marginLeft: '0.5rem',
+							marginRight: '0.25rem',
 							width: '1.5rem',
 							height: '1.5rem',
 							display: 'flex',
@@ -32,17 +35,21 @@ export const Syncing = () => {
 							justifyContent: 'center',
 						}}
 					>
-						<FontAwesomeIcon icon={faRefresh} spin />
+						<FontAwesomeIcon
+							icon={faRefresh}
+							spin
+							color="var(--text-secondary)"
+						/>
 					</section>
 					<section>
-						<div className="desc">
+						<div className={styles.desc}>
 							<button type="button" disabled>
 								<h4>{t('module.oneMoment')}...</h4>
 							</button>
 						</div>
 					</section>
-				</ItemInnerWrapper>
-			</ItemWrapper>
-		</ItemsWrapper>
+				</div>
+			</motion.div>
+		</motion.div>
 	)
 }

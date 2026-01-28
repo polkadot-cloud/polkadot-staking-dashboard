@@ -3,28 +3,50 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { determinePoolDisplay } from 'contexts/Pools/util'
+import { getPoolMembership } from 'global-bus'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useTranslation } from 'react-i18next'
 
-export const useStatusButtons = () => {
+export const useActiveAccountPool = () => {
 	const { t } = useTranslation('pages')
 	const {
 		isReady,
 		poolsConfig: { maxPools },
 	} = useApi()
 	const { bondedPools } = useBondedPools()
-	const { getPoolMembership } = useBalances()
+	const { poolsMetaData } = useBondedPools()
 	const { activeAddress } = useActiveAccounts()
-	const { isOwner, isDepositor } = useActivePool()
 	const { isReadOnlyAccount } = useImportedAccounts()
-
 	const { balances } = useAccountBalances(activeAddress)
 	const { membership } = getPoolMembership(activeAddress)
+	const { activePool, isOwner, isDepositor, isBouncer, isMember } =
+		useActivePool()
+
 	const { active } = balances.pool
+	const poolState = activePool?.bondedPool?.state ?? null
+
+	const inPool = !!activePool
+	const isActive = inPool && isMember() && active > 0n
+
+	// Display manage button if active account is not a read-only account and active account is
+	// pool owner or bouncer, or if active account is a pool member
+	const canManage =
+		!isReadOnlyAccount(activeAddress) &&
+		(isActive || (poolState !== 'Destroying' && (isOwner() || isBouncer())))
+
+	let membershipDisplay = t('notInPool')
+
+	if (activePool) {
+		// Determine pool membership display.
+		membershipDisplay = determinePoolDisplay(
+			activePool.addresses.stash,
+			poolsMetaData[Number(activePool.id)],
+		)
+	}
 
 	const getCreateDisabled = () => {
 		if (!isReady || isReadOnlyAccount(activeAddress) || !activeAddress) {
@@ -37,7 +59,6 @@ export const useStatusButtons = () => {
 	}
 
 	let label
-
 	const getJoinDisabled = () =>
 		!isReady ||
 		isReadOnlyAccount(activeAddress) ||
@@ -55,5 +76,15 @@ export const useStatusButtons = () => {
 	} else {
 		label = `${t('leavingPool')} ${membership.poolId}`
 	}
-	return { label, getJoinDisabled, getCreateDisabled }
+
+	return {
+		inPool,
+		isActive,
+		canManage,
+		activePool,
+		membershipDisplay,
+		label,
+		getJoinDisabled,
+		getCreateDisabled,
+	}
 }

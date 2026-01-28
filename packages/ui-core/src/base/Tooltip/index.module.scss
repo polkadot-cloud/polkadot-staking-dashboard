@@ -8,11 +8,12 @@
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   font-size: 1.1rem;
-  line-height: 1;
+  line-height: 1.4rem;
   user-select: none;
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
+  max-width: 220px;
 
   &[data-state='delayed-open'][data-side='top'] {
     animation-name: slide-down-and-fade;
