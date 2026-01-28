@@ -63,6 +63,15 @@ export class Ledger {
 				onTimeout: () => this.transport?.close(),
 			},
 		)
+
+		// Debug logging for Ledger device address retrieval
+		console.log('[Ledger Debug] Address retrieval:', {
+			device: this.transport?.device?.productName || 'Unknown',
+			path: bip42Path,
+			accountIndex: index,
+			ss58Prefix,
+			result,
+		})
 		await this.ensureClosed()
 		return result
 	}
