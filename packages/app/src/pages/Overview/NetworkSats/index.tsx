@@ -28,7 +28,7 @@ export const NetworkStats = () => {
 	const items = [
 		{
 			label: t('supplyStaked', { ns: 'pages', unit }),
-			value: supplyString,
+			value: `${supplyString}%`,
 			helpKey: 'Supply Staked',
 		},
 		{

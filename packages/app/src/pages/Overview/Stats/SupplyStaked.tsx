@@ -20,7 +20,7 @@ export const SupplyStaked = () => {
 			unit: '%',
 		},
 		pieValue: supplyNumber,
-		tooltip: supplyString,
+		tooltip: `${supplyString}%`,
 		helpKey: 'Supply Staked',
 	}
 

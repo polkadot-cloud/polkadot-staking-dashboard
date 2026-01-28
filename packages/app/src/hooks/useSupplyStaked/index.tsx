@@ -23,7 +23,7 @@ export const useSupplyStaked = () => {
 			: lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01))
 
 	return {
-		supplyString: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
+		supplyString: supplyAsPercent.decimalPlaces(2).toFormat(),
 		supplyNumber: supplyAsPercent.decimalPlaces(2).toNumber(),
 	}
 }
