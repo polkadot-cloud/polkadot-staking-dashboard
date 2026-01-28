@@ -42,10 +42,10 @@ export const useWarnings = () => {
 			})
 
 			messages.push({
-				value: t('warnings.destroyingTitle'),
-				description: t('warnings.destroyingDescription'),
-				format: 'danger',
-				faIcon: faTrashCan,
+				value: t('warnings.highCommissionTitle'),
+				faIcon: faCircleUp,
+				description: t('warnings.highCommissionDescription'),
+				format: 'warning',
 			})
 
 			setWarningMessages(messages)
@@ -54,5 +54,19 @@ export const useWarnings = () => {
 		return () => subscription.unsubscribe()
 	}, [activeAddress])
 
-	return { warningMessages }
+	const getMostSevereWarningFormat = () => {
+		let format: 'danger' | 'warning' = 'warning'
+
+		warningMessages.forEach((message) => {
+			if (message.format === 'danger') {
+				format = 'danger'
+				return
+			} else if (message.format === 'warning') {
+				format = 'warning'
+			}
+		})
+		return format
+	}
+
+	return { warningMessages, getMostSevereWarningFormat }
 }
