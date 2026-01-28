@@ -36,13 +36,10 @@ export const Summaries = ({ height }: { height: number }) => {
 
 	const showWarning = warningMessages.length && !syncing
 
-	// TODO: Only add if warnings / join another pool flows exist (from Staking API)
-	// If there are warning messages, show them in the Status section with warning styling
 	const statusSectionConfig = showWarning
 		? {
 				label: t('status', { ns: 'app' }),
 				faIcon: faExclamationTriangle,
-				format: 'warning' as const,
 			}
 		: { label: t('status', { ns: 'app' }) }
 

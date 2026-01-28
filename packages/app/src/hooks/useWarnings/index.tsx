@@ -41,6 +41,14 @@ export const useWarnings = () => {
 				}
 			})
 
+			messages.push({
+				value: 'Pool is Destroying',
+				description:
+					'Your pool is being destroyed and you cannot earn pool rewards.',
+				format: 'danger',
+				faIcon: faTrashCan,
+			})
+
 			setWarningMessages(messages)
 		})
 
