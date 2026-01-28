@@ -36,6 +36,7 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
 		onMouseOver,
 		onMouseMove,
 		onMouseOut,
+		active,
 	} = props
 
 	// Apply variant-specific styles
@@ -50,6 +51,7 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
 		commonClasses.btnCore,
 		classes.btnSecondary,
 		{
+			[classes.active]: !!active,
 			[commonClasses.btnLarge]: size === 'lg',
 			[commonClasses.btnMedium]: size === 'md',
 			[commonClasses.btnSmall]: size === 'sm',

@@ -126,6 +126,7 @@ export type ButtonSecondaryProps = ComponentBaseWithClassName &
 		size?: ButtonSize
 		text: string
 		variant?: 'warning' | 'danger'
+		active?: boolean
 	}
 
 export type ButtonSubmitProps = ComponentBaseWithClassName &

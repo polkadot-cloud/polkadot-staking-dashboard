@@ -5,5 +5,10 @@
   background: var(--btn-bg-secondary);
   border: 1px solid var(--btn-bg-secondary);
   border-radius: var(--btn-lg-radius);
-  color: var(--text-primary);
+  color: var(--text-secondary);
+
+  &.active {
+    background: var(--btn-bg-hover);
+    border-color: var(--btn-bg-hover);
+  }
 }

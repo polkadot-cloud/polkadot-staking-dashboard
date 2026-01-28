@@ -102,13 +102,7 @@ export const Summaries = ({ height }: { height: number }) => {
 						text={label}
 						variant={format}
 						onClick={() => setActiveSection(index)}
-						style={{
-							color: format
-								? undefined
-								: activeSection === index
-									? 'var(--accent-primary)'
-									: 'var(--text-secondary)',
-						}}
+						active={activeSection === index}
 						iconLeft={faIcon}
 					/>
 				))}
