@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.4.0...ui-overlay-v1.5.0) (2026-01-28)
+
+
+### Features
+
+* **refactor:** Add latest stylelint setup ([#3215](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3215)) ([a6a33b0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a6a33b0296ef9892b9e44a7fd95199ba07a35ad9))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-overlay-v1.3.0...ui-overlay-v1.4.0) (2026-01-12)
 
 
