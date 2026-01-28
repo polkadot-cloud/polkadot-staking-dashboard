@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-	faCircleExclamation,
 	faExclamationTriangle,
 	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { useNetwork } from 'contexts/Network'
-import { useHalving } from 'hooks/useHalving'
 import { useSyncing } from 'hooks/useSyncing'
 import { useWarnings } from 'hooks/useWarnings'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -27,7 +25,6 @@ export const Summaries = ({ height }: { height: number }) => {
 		'era-stakers',
 	])
 	const { warningMessages } = useWarnings()
-	const { daysUntilHalving } = useHalving()
 
 	// State to track active section
 	const [activeSection, setActiveSection] = useState<number>(0)
@@ -62,7 +59,6 @@ export const Summaries = ({ height }: { height: number }) => {
 		sections.push([
 			{
 				label: t('nextHalving', { ns: 'app' }),
-				faIcon: daysUntilHalving <= 90 ? faCircleExclamation : undefined,
 			},
 			Halving,
 		])

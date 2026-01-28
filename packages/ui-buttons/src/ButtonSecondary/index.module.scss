@@ -8,14 +8,14 @@
   color: var(--text-secondary);
 
   &.asTab {
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     background: transparent;
     border-color: var(--btn-bg-hover);
   }
 
   &.active {
     background: var(--btn-bg-secondary);;
-    border-color: var(--border-alt);
+    border-color: var(--text-tertiary);
 
     &.asTab {
       color: var(--text-secondary);
