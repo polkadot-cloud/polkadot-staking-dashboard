@@ -31,8 +31,8 @@ export const Status = () => {
 	const { i18n, t } = useTranslation()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
-	const { syncing } = useSyncing()
 	const { isBonding } = useStaking()
+	const { accountSynced } = useSyncing()
 	const { warningMessages } = useWarnings()
 	const { activeAddress } = useActiveAccounts()
 	const { items, getPoolWarningTips } = useTips()
@@ -41,6 +41,7 @@ export const Status = () => {
 		useActiveAccountPool()
 	const { getAverageRewardRate, formatRateAsPercent } = useAverageRewardRate()
 
+	const syncing = !accountSynced(activeAddress)
 	const poolWarningTips = getPoolWarningTips()
 	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 
