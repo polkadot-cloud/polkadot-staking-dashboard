@@ -47,7 +47,7 @@ export const fetchAndSetPoolWarnings = async (
 	network: NetworkId,
 	addresses: string[],
 ): Promise<void> => {
-	// NOTE: pool warnings only availale on polkadot
+	// NOTE: pool warnings only available on polkadot
 	if (
 		network !== 'polkadot' ||
 		addresses.length === 0 ||

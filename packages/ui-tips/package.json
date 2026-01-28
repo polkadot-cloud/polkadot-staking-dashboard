@@ -10,8 +10,7 @@
 	},
 	"exports": {
 		".": "./src/index.tsx",
-		"./types": "./src/types.ts",
-		"./util": "./src/util/index.ts"
+		"./types": "./src/types.ts"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^7.1.0",

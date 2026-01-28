@@ -31,8 +31,7 @@ export const SectionsArea = styled.div<{
 
 export const Subheading = styled.h4`
   color: var(--text-secondary);
-  margin-top: 0.5rem;
-  padding: 0 0.5rem;
+  padding: 0.45rem 0.4rem 0 0.4rem;
 `
 
 export const SectionWrapper = styled.div`  

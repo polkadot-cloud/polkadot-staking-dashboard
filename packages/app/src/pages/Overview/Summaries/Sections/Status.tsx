@@ -145,7 +145,12 @@ export const Status = () => {
 													<>
 														{warningMessages.map(
 															({ value, label, format, faIcon }) => (
-																<Badge.Container format={format} hList styled>
+																<Badge.Container
+																	format={format}
+																	hList
+																	styled
+																	key={value}
+																>
 																	<Badge.Inner variant={format}>
 																		<FontAwesomeIcon icon={faIcon} />
 																		{value}

@@ -27,3 +27,5 @@ export const GraphInner = forwardRef(
 		)
 	},
 )
+
+GraphInner.displayName = 'GraphInner'
