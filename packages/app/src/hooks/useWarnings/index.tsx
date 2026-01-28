@@ -41,13 +41,6 @@ export const useWarnings = () => {
 				}
 			})
 
-			messages.push({
-				value: t('warnings.highCommissionTitle'),
-				faIcon: faCircleUp,
-				description: t('warnings.highCommissionDescription'),
-				format: 'warning',
-			})
-
 			setWarningMessages(messages)
 		})
 
