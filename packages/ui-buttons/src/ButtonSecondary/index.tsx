@@ -44,6 +44,7 @@ export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
 	const variantStyles = variant
 		? {
 				color: `var(--status-${variant})`,
+				borderColor: `var(--status-${variant})`,
 			}
 		: {}
 
