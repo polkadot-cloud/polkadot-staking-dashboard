@@ -19,11 +19,7 @@ import { SectionNav, SectionsArea } from './Wrappers'
 export const Summaries = ({ height }: { height: number }) => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
-	const { syncing } = useSyncing([
-		'initialization',
-		'active-pools',
-		'era-stakers',
-	])
+	const { syncing } = useSyncing()
 	const { warningMessages } = useWarnings()
 
 	// State to track active section

@@ -36,11 +36,7 @@ export const Status = ({
 	const { i18n, t } = useTranslation()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
-	const { syncing } = useSyncing([
-		'initialization',
-		'active-pools',
-		'era-stakers',
-	])
+	const { syncing } = useSyncing()
 	const { isBonding } = useStaking()
 	const { themeElementRef } = useTheme()
 	const { activeAddress } = useActiveAccounts()
