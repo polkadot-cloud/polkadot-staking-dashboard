@@ -1,8 +1,4 @@
-import {
-	faCircleUp,
-	faHourglassHalf,
-	faTrashCan,
-} from '@fortawesome/free-regular-svg-icons'
+import { faCircleUp, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import type { WarningMessage } from 'pages/Overview/Summaries/types'
 
 export const useWarnings = () => {
@@ -22,13 +18,14 @@ export const useWarnings = () => {
 				"Your pool's commission is high. Consider joining a different pool to increase rewards.",
 			format: 'warning',
 		},
-		{
-			value: 'No Change Rate',
-			faIcon: faHourglassHalf,
-			description:
-				'Your pool can increase its commission rate to any value, at any time.',
-			format: 'warning',
-		},
+		// NOTE: Currently not active on API side
+		// {
+		// 	value: 'No Change Rate',
+		// 	faIcon: faHourglassHalf,
+		// 	description:
+		// 		'Your pool can increase its commission rate to any value, at any time.',
+		// 	format: 'warning',
+		// },
 	]
 	return { warningMessages }
 }
