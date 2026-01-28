@@ -80,8 +80,8 @@ export const Summaries = ({ height }: { height: number }) => {
 				$activeSection={activeSection}
 				$totalSections={sections.length}
 			>
-				{sections.map(([, Component]) => (
-					<div className="section">
+				{sections.map(([{ label }, Component]) => (
+					<div className="section" key={label}>
 						<Component />
 					</div>
 				))}
