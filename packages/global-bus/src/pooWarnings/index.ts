@@ -47,7 +47,12 @@ export const fetchAndSetPoolWarnings = async (
 	network: NetworkId,
 	addresses: string[],
 ): Promise<void> => {
-	if (addresses.length === 0 || !pluginEnabled('staking_api')) {
+	// NOTE: pool warnings only availale on polkadot
+	if (
+		network !== 'polkadot' ||
+		addresses.length === 0 ||
+		!pluginEnabled('staking_api')
+	) {
 		return
 	}
 
