@@ -8,7 +8,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { useTheme } from 'contexts/Themes'
 import { fromUnixTime, getUnixTime } from 'date-fns'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
@@ -23,10 +22,10 @@ import { Preloader } from 'library/StatusPreloader/Preloader'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
-import { Badge, ButtonRow, Page, Tooltip } from 'ui-core/base'
+import { Badge, ButtonRow, Page } from 'ui-core/base'
 import { Tips } from 'ui-tips'
 import { formatTimeleft } from 'utils'
-import { SectionWrapper, StatItem } from '../Wrappers'
+import { SectionWrapper } from '../Wrappers'
 
 export const Status = () => {
 	const { i18n, t } = useTranslation()
@@ -34,7 +33,6 @@ export const Status = () => {
 	const { network } = useNetwork()
 	const { syncing } = useSyncing()
 	const { isBonding } = useStaking()
-	const { themeElementRef } = useTheme()
 	const { warningMessages } = useWarnings()
 	const { activeAddress } = useActiveAccounts()
 	const { items, getPoolWarningTips } = useTips()
@@ -128,46 +126,30 @@ export const Status = () => {
 												}}
 											>
 												{warningMessages.map(
-													({ value, label, format, description, faIcon }) => (
-														<StatItem className={`${format} hList`} key={value}>
-															<Tooltip
-																text={description}
-																side="bottom"
-																container={themeElementRef.current || undefined}
-																delayDuration={400}
-																fadeIn
-															>
-																<div
-																	className={`inner asBadge activeTransform ${format}`}
-																>
-																	<Badge variant={format}>
-																		<FontAwesomeIcon icon={faIcon} />
-																		{value}
-																		{label && <span>{label}</span>}
-																	</Badge>
-																</div>
-															</Tooltip>
-														</StatItem>
+													({ value, label, format, faIcon }) => (
+														<Badge.Container format={format} hList styled>
+															<Badge.Inner variant={format}>
+																<FontAwesomeIcon icon={faIcon} />
+																{value}
+																{label && <span>{label}</span>}
+															</Badge.Inner>
+														</Badge.Container>
 													),
 												)}
 												{warningMessages.length === 0 && (
 													<>
-														<StatItem className="hList">
-															<div className="inner">
-																<Badge variant="secondary">
-																	{formatRateAsPercent(getAverageRewardRate())}
-																	<span>APY</span>
-																</Badge>
-															</div>
-														</StatItem>
-														<StatItem className="hList">
-															<div className="inner">
-																{t('nextRewardsIn', { ns: 'app' })}
-																<Badge variant="secondary">
-																	<Countdown timeleft={formatted} />
-																</Badge>
-															</div>
-														</StatItem>
+														<Badge.Container hList>
+															<Badge.Inner variant="secondary">
+																{formatRateAsPercent(getAverageRewardRate())}
+																<span>APY</span>
+															</Badge.Inner>
+														</Badge.Container>
+														<Badge.Container hList>
+															{t('nextRewardsIn', { ns: 'app' })}
+															<Badge.Inner variant="secondary">
+																<Countdown timeleft={formatted} />
+															</Badge.Inner>
+														</Badge.Container>
 													</>
 												)}
 											</ButtonRow>

@@ -43,9 +43,9 @@ export const Halving = () => {
 			<div className="graph">
 				<SummaryHeading>
 					{t('nextHalving', { ns: 'app' })}:{' '}
-					<Badge>
+					<Badge.Inner>
 						<Countdown timeleft={timeleft} />
-					</Badge>
+					</Badge.Inner>
 					<ButtonHelpTooltip
 						marginLeft
 						definition={'Halving'}

@@ -3,7 +3,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useWarnings } from 'hooks/useWarnings'
-import { StatItem } from 'pages/Overview/Summaries/Wrappers'
 import { Badge, Page } from 'ui-core/base'
 
 export const PageWarnings = () => {
@@ -16,15 +15,13 @@ export const PageWarnings = () => {
 					<Page.RowSection standalone>
 						{warningMessages.map(
 							({ value, label, description, format, faIcon }) => (
-								<StatItem className={`${format} vList`} key={value}>
-									<div className={`inner asBadge ${format}`}>
-										<Badge variant={format}>
-											<FontAwesomeIcon icon={faIcon} />
-											{description}
-											{label && <span>{label}</span>}
-										</Badge>
-									</div>
-								</StatItem>
+								<Badge.Container format={format} styled vList key={value}>
+									<Badge.Inner variant={format}>
+										<FontAwesomeIcon icon={faIcon} />
+										{description}
+										{label && <span>{label}</span>}
+									</Badge.Inner>
+								</Badge.Container>
 							),
 						)}
 					</Page.RowSection>

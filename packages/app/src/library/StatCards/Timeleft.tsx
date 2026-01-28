@@ -31,9 +31,9 @@ export const Timeleft = ({
 						</label>
 					)}
 					<Stat.Content>
-						<Badge>
+						<Badge.Inner>
 							<Countdown timeleft={timeleft} />
-						</Badge>
+						</Badge.Inner>
 						<Stat.Subtitle>
 							{label}{' '}
 							{helpKey !== undefined ? (
