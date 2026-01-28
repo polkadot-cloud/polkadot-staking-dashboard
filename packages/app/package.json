@@ -21,7 +21,7 @@
 		"@fortawesome/react-fontawesome": "^3.1.1",
 		"@ledgerhq/hw-transport-webhid": "^6.31.0",
 		"@polkawatch/ddp-client": "^3.0.1",
-		"@tanstack/react-query": "^5.90.19",
+		"@tanstack/react-query": "^5.90.20",
 		"@w3ux/extension-assets": "^2.3.1",
 		"@w3ux/factories": "^2.2.1",
 		"@w3ux/hooks": "^2.4.0",
@@ -50,12 +50,12 @@
 		"qrcode-generator": "1.5.0",
 		"radix-ui": "^1.4.2",
 		"rc-slider": "^11.1.6",
-		"react": "^19.2.1",
-		"react-dom": "^19.2.1",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
 		"react-error-boundary": "^6.1.0",
 		"react-helmet-async": "^2.0.5",
 		"react-i18next": "^16.5.3",
-		"react-router-dom": "^7.11.0",
+		"react-router-dom": "^7.13.0",
 		"rxjs": "^7.8.2",
 		"simplebar": "6.3.3",
 		"simplebar-react": "3.3.2",
@@ -77,6 +77,6 @@
 		"vite-bundle-visualizer": "^1.2.1",
 		"vite-plugin-checker": "^0.12.0",
 		"vite-plugin-svgr": "^4.3.0",
-		"vite-tsconfig-paths": "^6.0.3"
+		"vite-tsconfig-paths": "^6.0.5"
 	}
 }
