@@ -21,7 +21,7 @@ export interface StatOdometerData {
 export type StatData = string | StatAddress | StatOdometerData
 
 export interface StatProps {
-	label?: string
+	label: string
 	stat: StatData
 	type?: string
 	buttons?: StatButtonProps[]

@@ -88,18 +88,17 @@ export const Stat = ({
 			$isAddress={type === 'address'}
 			style={dimmed ? { opacity: 0.5 } : undefined}
 		>
-			{label && (
-				<h4>
-					{label}
-					{helpKey !== undefined ? (
-						<ButtonHelpTooltip
-							definition={helpKey}
-							openHelp={openHelpTooltip}
-							marginLeft
-						/>
-					) : null}
-				</h4>
-			)}
+			<h4>
+				{label}
+				{helpKey !== undefined ? (
+					<ButtonHelpTooltip
+						definition={helpKey}
+						openHelp={openHelpTooltip}
+						marginLeft
+					/>
+				) : null}
+			</h4>
+
 			<div className={`content${buttons ? ' withButtons' : ''}`}>
 				<div className="text" ref={containerRef}>
 					{icon ? (
