@@ -16,29 +16,26 @@ import { useEraTimeLeft } from 'hooks/useEraTimeLeft'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTips } from 'hooks/useTips'
+import { useWarnings } from 'hooks/useWarnings'
 import { Countdown } from 'library/Countdown'
 import { Stat } from 'library/Stat'
 import { Preloader } from 'library/StatusPreloader/Preloader'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import { Badge, ButtonRow, Page, Tooltip } from 'ui-core/base'
 import { Tips } from 'ui-tips'
 import { formatTimeleft } from 'utils'
-import type { WarningMessage } from '../types'
 import { SectionWrapper, StatItem } from '../Wrappers'
 
-export const Status = ({
-	warningMessages,
-}: {
-	warningMessages: WarningMessage[]
-}) => {
+export const Status = () => {
 	const { i18n, t } = useTranslation()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { syncing } = useSyncing()
 	const { isBonding } = useStaking()
 	const { themeElementRef } = useTheme()
+	const { warningMessages } = useWarnings()
 	const { activeAddress } = useActiveAccounts()
 	const { items, getPoolWarningTips } = useTips()
 	const { getNominationStatus } = useNominationStatus()
@@ -59,6 +56,18 @@ export const Status = ({
 	const formatted = formatTimeleft(t, timeleft.raw, { forceShowSeconds: true })
 	const dateFrom = fromUnixTime(Date.now() / 1000)
 	const dateTo = secondsFromNow(timeleftResult.timeleft)
+
+	// Memoize the onPageReset object to prevent recreating it on every render
+	const pageResetDeps = useMemo(
+		() => ({ network, activeAddress }),
+		[network, activeAddress],
+	)
+
+	// Memoize the tips items to avoid recalculation
+	const tipsItems = useMemo(
+		() => (warningMessages.length ? poolWarningTips : items),
+		[warningMessages.length, poolWarningTips, items],
+	)
 
 	// Reset timer on era change (also covers network change)
 	useEffect(() => {
@@ -170,11 +179,7 @@ export const Status = ({
 					</section>
 				</Page.RowSection>
 			</div>
-			<Tips
-				items={warningMessages.length ? poolWarningTips : items}
-				syncing={syncing}
-				onPageReset={{ network, activeAddress }}
-			/>
+			<Tips items={tipsItems} syncing={syncing} onPageReset={pageResetDeps} />
 		</SectionWrapper>
 	)
 }

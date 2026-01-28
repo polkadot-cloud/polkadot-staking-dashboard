@@ -46,10 +46,7 @@ export const Summaries = ({ height }: { height: number }) => {
 			}
 		: { label: t('status', { ns: 'app' }) }
 
-	sections.push([
-		statusSectionConfig,
-		() => <Status warningMessages={warningMessages} />,
-	])
+	sections.push([statusSectionConfig, Status])
 
 	if (showHalving) {
 		sections.push([
