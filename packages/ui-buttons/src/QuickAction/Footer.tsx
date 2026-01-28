@@ -4,8 +4,8 @@
 import type { ComponentBase } from 'types'
 import classes from './index.module.scss'
 
-export const Countdown = ({ children, style }: ComponentBase) => (
-	<div className={classes.countdown} style={style}>
-		{children}
+export const Footer = ({ children, style }: ComponentBase) => (
+	<div className={classes.footer} style={style}>
+		<div className={classes.inner}>{children}</div>
 	</div>
 )

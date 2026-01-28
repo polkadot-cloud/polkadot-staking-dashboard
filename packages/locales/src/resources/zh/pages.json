@@ -76,6 +76,7 @@
 		"inPools": "当前质押在提名池中",
 		"inactiveNominations": "非活跃提名人",
 		"inactivePoolNotNominating": "非活跃：提名池未提名任何验证人",
+		"joinAnotherPool": "加入另一个提名池",
 		"joinPool": "加入提名池",
 		"joinPoolHeading": " {{totalMembers}} 个提名池成员在{{network}}上抵押共{{totalPoolPoints}} 个{{unit}} ",
 		"last30DayReward": "过去30天的奖励",

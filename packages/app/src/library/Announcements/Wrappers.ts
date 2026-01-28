@@ -35,7 +35,7 @@ export const HeaderWrapper = styled.div`
 
     @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
       border-right: 1px solid var(--border);
-      flex-basis: 25%;
+      flex-basis: 20%;
       margin-bottom: 0;
       padding-left: 1rem;
       padding-right: 1rem;

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './AccountImport'
+export * from './Badge'
 export * from './ButtonRow'
 export * from './CardHeader'
 export * from './CardLabel'
-export * from './Countdown'
 export * from './Header'
 export * from './Identity'
 export * from './Loader'

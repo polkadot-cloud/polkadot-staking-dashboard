@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageWidthMediumThreshold } from 'consts'
+import { PageWidthLargeThreshold, PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
 import type { CardWrapperProps } from './types'
 
@@ -61,7 +61,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   @media (min-width: ${PageWidthMediumThreshold + 1}px) {
-    height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
+    max-height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
+  }
+
+  @media (min-width: ${PageWidthLargeThreshold + 1}px) {
+    min-height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
   }
 
   .inner {

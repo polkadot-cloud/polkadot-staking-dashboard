@@ -4,5 +4,6 @@
 export interface TipProps {
 	title: string
 	description: string[]
-	page: string
+	page?: string
+	onPromptClick: () => void
 }

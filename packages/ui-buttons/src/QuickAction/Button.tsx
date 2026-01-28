@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
-import { Loader } from 'ui-core/base'
-import type { ButtonQuickActionProps } from '../../types'
+import type { ButtonQuickActionProps } from '../types'
 import classes from './index.module.scss'
 
 export const Button = ({
@@ -12,13 +11,13 @@ export const Button = ({
 	disabled,
 	Icon,
 }: ButtonQuickActionProps) => {
-	const buttonClasses = classNames(classes.btnQuickAction, {
+	const buttonClasses = classNames(classes.inner, {
 		[classes.disabled]: disabled,
 		[classes.active]: !disabled,
 	})
 
 	return (
-		<div className={classes.container}>
+		<div className={classes.button}>
 			<button
 				type="button"
 				className={buttonClasses}
@@ -31,13 +30,5 @@ export const Button = ({
 				<h4>{label}</h4>
 			</button>
 		</div>
-	)
-}
-
-export const PreloadingButton = () => {
-	return (
-		<Loader
-			style={{ width: '100%', height: '5.4rem', borderRadius: '0.85rem' }}
-		/>
 	)
 }

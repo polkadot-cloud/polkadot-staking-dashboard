@@ -175,6 +175,7 @@
 		"invite": "Invitar",
 		"inviteDescription": "Una vez que comiences a apostar, tu enlace de invitación se mostrará aquí para compartir tu pool.",
 		"invitePool": "Has sido invitado a unirte a un pool de staking",
+		"issuance": "Emisión",
 		"join": "Unirse",
 		"language": "Idioma",
 		"ledgerAppOutOfDate": "Tu aplicación Ledger de Polkadot no está configurada con la última versión de runtime",
@@ -196,11 +197,15 @@
 		"migrateControllerDescription": "Las cuentas de controlador están en desuso. Migra tu controlador a tu cuenta de reserva para seguir usando el Panel de Staking.",
 		"migrateToStash": "Migra tu controlador a tu cuenta de almacenamiento",
 		"migrationRequired": "Se requiere migración del controlador",
+		"millionUnit": "M",
 		"minimumBond": "Se requiere un vínculo mínimo de {{minBondUnit}} {{unit}}",
 		"missingIdentity": "Identidad faltante",
 		"moreThanBalance": "El monto vinculado supera tu saldo libre.",
 		"network": "Red",
 		"next": "Siguiente",
+		"nextHalving": "Próxima Reducción a la Mitad",
+		"nextRewardsIn": "Próximas Recompensas En",
+		"noAccountSelected": "No hay cuenta seleccionada",
 		"noFilters": "Sin filtros",
 		"noFree": "No tienes {{unit}} libre para vincular",
 		"noMatch": "Ningún pool coincide con este criterio.",
@@ -311,9 +316,12 @@
 		"signing": "Firmando",
 		"stake": "Stakear",
 		"stakingOptions": "Otras Opciones de Staking",
+		"stakingStats": "Estadísticas de Staking",
 		"startAgain": "Comenzar de nuevo",
+		"status": "Estado",
 		"submitTransaction": "Listo para enviar la Transacción.",
 		"support": "Soporte",
+		"supportChannels": "Canales de Soporte",
 		"switchAccount": "Cambiar Cuenta",
 		"syncing": "Sincronizando",
 		"syncingPoolData": "Encontrando Pools para Unirse",
@@ -368,8 +376,15 @@
 		"waiting": "Esperando",
 		"walletNotFound": "Cartera no encontrada",
 		"wallets": "Carteras",
+		"warnings": {
+			"destroyingDescription": "Tu pool está siendo destruido y no puedes ganar recompensas del pool.",
+			"destroyingTitle": "Pool está siendo destruido",
+			"highCommissionDescription": "La comisión de tu pool es alta. Considera unirte a un pool diferente para aumentar las recompensas.",
+			"highCommissionTitle": "Comisión Alta"
+		},
 		"webExtensions": "Extensión de Navegador",
 		"whenActivelyNominating": "cuando nominas activamente.",
-		"wrongTransaction": "Transacción incorrecta, Por favor firma de nuevo."
+		"wrongTransaction": "Transacción incorrecta, Por favor firma de nuevo.",
+		"year": "año"
 	}
 }

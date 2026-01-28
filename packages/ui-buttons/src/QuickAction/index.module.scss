@@ -1,0 +1,133 @@
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+@use 'styles/theme/variables' as *;
+
+.container {
+  display: flex;
+  place-content: flex-start flex-start;
+  align-items: flex-start;
+  flex-flow: row wrap;
+  padding: 0 0.5rem;
+  flex-grow: 1;
+  
+  @media (width <= $row-section-thirds-threshold) {
+    flex-wrap: wrap;
+    padding-bottom: $summary-footer-padding;
+  }
+
+  @media(width >= $row-section-thirds-threshold) {
+    > div {
+      min-width: 33.33%;
+      max-width: 33.33%;
+    }
+  }
+}
+
+.button {
+  display: flex;
+  flex: 1;
+  height: 6rem;
+  padding: 0.45rem;
+
+  .inner {
+    background: var(--btn-popover-tab-bg);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 2px rgb(0 0 0 / 3%);
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+    flex: 1;
+    padding-top: 0.5rem;
+
+    &.disabled {
+      cursor: default;
+
+      > * {
+        opacity: 0.4;
+      }
+    }
+
+    @media (width <= 1150px) {
+      min-width: 12rem;
+    }
+  
+    > .icon {
+      svg {
+        filter: drop-shadow(3px 3px 2px var(--border-alt));
+        transition: all 0.3s;
+      }
+    }
+
+    > h4 {
+      font-family: Inter, sans-serif;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    &.active {
+      &:hover {
+        background: var(--btn-bg-hover);
+
+        > .icon > svg {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  padding: $summary-footer-padding;
+
+  @media (width <= $row-section-thirds-threshold) {
+    display: none;
+  }
+
+  > .inner {
+    border: 1px solid var(--btn-bg-hover);
+    border-radius: 1rem;
+    height: $summary-footer-height;
+    padding: 0 1.25rem;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    > h4 {
+      margin: 0;
+      color: var(--text-secondary);
+      font-family: Inter, sans-serif;
+      font-size: 1.05rem;
+    }
+
+    > section {
+      display: flex; 
+      align-items: center; 
+      gap: 1.5rem;
+    }
+  }
+}
+
+.footerButton {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  font-size: inherit;
+  transition: color var(--transition-duration);
+
+  &:hover {
+    color: var(--accent-primary);
+  }
+}
+

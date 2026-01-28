@@ -1,11 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-interface TipConfig {
-	id: string
-	s: number
-	page?: string
-}
+import type { TipConfig } from 'types'
 
 export const TipsConfigSimple: TipConfig[] = [
 	{
@@ -35,6 +31,11 @@ export const TipsConfigSimple: TipConfig[] = [
 	{
 		id: 'joinAnotherPool',
 		s: 6,
+		page: 'stake',
+	},
+	{
+		id: 'switchPool',
+		s: 9,
 		page: 'stake',
 	},
 	{
@@ -81,6 +82,11 @@ export const TipsConfigAdvanced: TipConfig[] = [
 	{
 		id: 'joinAnotherPool',
 		s: 6,
+		page: 'pool',
+	},
+	{
+		id: 'switchPool',
+		s: 9,
 		page: 'pool',
 	},
 	{

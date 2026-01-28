@@ -16,6 +16,7 @@ import {
 	resetPoolMemberships,
 	resetPoolRoleIdentities,
 	resetPoolsConfig,
+	resetPoolWarnings,
 	resetProxies,
 	resetServiceInterface,
 	resetStakingLedgers,
@@ -26,6 +27,7 @@ export const onNetworkReset = () => {
 	resetActivePools()
 	resetActivePoolIds()
 	resetPoolRoleIdentities()
+	resetPoolWarnings()
 
 	resetAccountBalances()
 	resetPoolMemberships()

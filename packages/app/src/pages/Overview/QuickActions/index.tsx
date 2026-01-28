@@ -1,23 +1,28 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { Preloader } from 'library/StatusPreloader/Preloader'
 import { useTranslation } from 'react-i18next'
 import { QuickAction } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 import { Disconnected } from './Disconnected'
 import { NotStaking } from './NotStaking'
 import { Staking } from './Staking'
 
 export const QuickActions = ({ height }: { height: number }) => {
-	const { t } = useTranslation('pages')
+	const { t } = useTranslation()
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
 	const { accountSynced } = useSyncing()
+	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 
 	const isStaking = inPool || isBonding
@@ -32,12 +37,14 @@ export const QuickActions = ({ height }: { height: number }) => {
 
 	return (
 		<CardWrapper style={{ padding: 0 }} height={height}>
-			<CardHeader style={{ padding: '1.25rem 1rem 0.5rem 1.25rem' }}>
-				<h4>{t('quickActions')}</h4>
+			<CardHeader style={{ padding: '1.25rem 1.25rem 0 1.25rem' }}>
+				<h4>{t('quickActions', { ns: 'pages' })}</h4>
 			</CardHeader>
 			{syncing ? (
 				<QuickAction.Container>
-					<QuickAction.PreloadingButton />
+					<section style={{ width: '100%', padding: '0.25rem' }}>
+						<Preloader />
+					</section>
 				</QuickAction.Container>
 			) : (
 				<>
@@ -48,6 +55,21 @@ export const QuickActions = ({ height }: { height: number }) => {
 					)}
 				</>
 			)}
+			<QuickAction.Footer>
+				<h4>{t('supportChannels', { ns: 'app' })}</h4>
+				<section>
+					<QuickAction.FooterButton
+						icon={faDiscord}
+						label="Discord"
+						onClick={() => openModal({ key: 'DiscordSupport', size: 'sm' })}
+					/>
+					<QuickAction.FooterButton
+						icon={faEnvelope}
+						label={t('email', { ns: 'app' })}
+						onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
+					/>
+				</section>
+			</QuickAction.Footer>
 		</CardWrapper>
 	)
 }

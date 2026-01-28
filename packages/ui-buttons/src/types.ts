@@ -125,6 +125,9 @@ export type ButtonSecondaryProps = ComponentBaseWithClassName &
 	ButtonCommonProps & {
 		size?: ButtonSize
 		text: string
+		variant?: 'warning' | 'danger'
+		active?: boolean
+		asTab?: boolean
 	}
 
 export type ButtonSubmitProps = ComponentBaseWithClassName &
@@ -229,3 +232,10 @@ export type ButtonPopoverTabProps = ComponentBaseWithClassName &
 		disabled?: boolean
 		grow?: boolean
 	}
+
+export interface QuickActionFooterButtonProps
+	extends ComponentBaseWithClassName {
+	icon: IconDefinition
+	label: string
+	onClick: () => void
+}
