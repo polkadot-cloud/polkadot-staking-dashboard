@@ -29,6 +29,12 @@ export const SectionsArea = styled.div<{
   }
 `
 
+export const Subheading = styled.h4`
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  padding: 0 0.5rem;
+`
+
 export const SectionWrapper = styled.div`  
   display: flex;
   flex-direction: column;

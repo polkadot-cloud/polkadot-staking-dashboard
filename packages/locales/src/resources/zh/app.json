@@ -313,6 +313,7 @@
 		"signing": "签署中",
 		"stake": "抵押",
 		"stakingOptions": "其他质押选项",
+		"stakingStats": "质押统计",
 		"startAgain": "重新开始",
 		"status": "状态",
 		"submitTransaction": "准备提交交易",

@@ -14,7 +14,7 @@ export const Container = ({
 	styled,
 	activeTransform,
 }: ComponentBase & {
-	format?: 'warning' | 'danger'
+	format?: 'warning' | 'danger' | 'button'
 	hList?: boolean
 	vList?: boolean
 	styled?: boolean
@@ -23,6 +23,7 @@ export const Container = ({
 	const allClasses = classNames(classes.container, {
 		[classes.warning]: format === 'warning',
 		[classes.danger]: format === 'danger',
+		[classes.button]: format === 'button',
 		[classes.styled]: !!styled,
 		[classes.hList]: !!hList,
 		[classes.vList]: !!vList,

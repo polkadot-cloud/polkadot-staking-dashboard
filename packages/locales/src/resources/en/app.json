@@ -316,6 +316,7 @@
 		"signing": "Signing",
 		"stake": "Stake",
 		"stakingOptions": "Other Staking Options",
+		"stakingStats": "Staking Stats",
 		"startAgain": "Start Again",
 		"status": "Status",
 		"submitTransaction": "Ready to submit transaction.",

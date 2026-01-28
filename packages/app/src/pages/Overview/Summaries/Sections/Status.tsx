@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTimeLeft } from '@w3ux/hooks'
 import { secondsFromNow } from '@w3ux/hooks/util'
@@ -23,9 +24,10 @@ import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import { Badge, ButtonRow, Page } from 'ui-core/base'
+import { useOverlay } from 'ui-overlay'
 import { Tips } from 'ui-tips'
 import { formatTimeleft } from 'utils'
-import { SectionWrapper } from '../Wrappers'
+import { SectionWrapper, Subheading } from '../Wrappers'
 
 export const Status = () => {
 	const { i18n, t } = useTranslation()
@@ -33,6 +35,7 @@ export const Status = () => {
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
 	const { accountSynced } = useSyncing()
+	const { openModal } = useOverlay().modal
 	const { warningMessages } = useWarnings()
 	const { activeAddress } = useActiveAccounts()
 	const { items, getPoolWarningTips } = useTips()
@@ -44,6 +47,7 @@ export const Status = () => {
 	const syncing = !accountSynced(activeAddress)
 	const poolWarningTips = getPoolWarningTips()
 	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
+	const notStaking = activeAddress && !isBonding && !inPool
 
 	const { get: getEraTimeleft } = useEraTimeLeft()
 	const { timeleft, setFromNow } = useTimeLeft({
@@ -55,12 +59,6 @@ export const Status = () => {
 	const formatted = formatTimeleft(t, timeleft.raw, { forceShowSeconds: true })
 	const dateFrom = fromUnixTime(Date.now() / 1000)
 	const dateTo = secondsFromNow(timeleftResult.timeleft)
-
-	// Memoize the onPageReset object to prevent recreating it on every render
-	const pageResetDeps = useMemo(
-		() => ({ network, activeAddress }),
-		[network, activeAddress],
-	)
 
 	// Memoize the tips items to avoid recalculation
 	const tipsItems = useMemo(
@@ -105,6 +103,9 @@ export const Status = () => {
 						) : (
 							<>
 								{Status}
+								{notStaking && (
+									<Subheading>{t('stakingStats', { ns: 'app' })}</Subheading>
+								)}
 								<div
 									style={{
 										position: 'relative',
@@ -120,37 +121,57 @@ export const Status = () => {
 									>
 										<SimpleBar autoHide={false} className="thin-scrollbar">
 											<ButtonRow
-												yMargin
 												style={{
 													padding: isBonding ? undefined : '0 0.5rem',
 													flexWrap: 'nowrap',
 												}}
 											>
-												{warningMessages.map(
-													({ value, label, format, faIcon }) => (
-														<Badge.Container format={format} hList styled>
-															<Badge.Inner variant={format}>
-																<FontAwesomeIcon icon={faIcon} />
-																{value}
-																{label && <span>{label}</span>}
-															</Badge.Inner>
-														</Badge.Container>
-													),
-												)}
-												{warningMessages.length === 0 && (
+												{!activeAddress ? (
+													<Badge.Container hList format="button">
+														<Badge.Inner>
+															<button
+																type="button"
+																onClick={() => openModal({ key: 'Accounts' })}
+															>
+																{t('selectAccount', { ns: 'app' })}
+																<FontAwesomeIcon
+																	icon={faChevronRight}
+																	transform="shrink-4"
+																/>
+															</button>
+														</Badge.Inner>
+													</Badge.Container>
+												) : (
 													<>
-														<Badge.Container hList>
-															<Badge.Inner variant="secondary">
-																{formatRateAsPercent(getAverageRewardRate())}
-																<span>APY</span>
-															</Badge.Inner>
-														</Badge.Container>
-														<Badge.Container hList>
-															{t('nextRewardsIn', { ns: 'app' })}
-															<Badge.Inner variant="secondary">
-																<Countdown timeleft={formatted} />
-															</Badge.Inner>
-														</Badge.Container>
+														{warningMessages.map(
+															({ value, label, format, faIcon }) => (
+																<Badge.Container format={format} hList styled>
+																	<Badge.Inner variant={format}>
+																		<FontAwesomeIcon icon={faIcon} />
+																		{value}
+																		{label && <span>{label}</span>}
+																	</Badge.Inner>
+																</Badge.Container>
+															),
+														)}
+														{warningMessages.length === 0 && (
+															<>
+																<Badge.Container hList>
+																	<Badge.Inner variant="secondary">
+																		{formatRateAsPercent(
+																			getAverageRewardRate(),
+																		)}
+																		<span>APY</span>
+																	</Badge.Inner>
+																</Badge.Container>
+																<Badge.Container hList>
+																	{t('nextRewardsIn', { ns: 'app' })}
+																	<Badge.Inner variant="secondary">
+																		<Countdown timeleft={formatted} />
+																	</Badge.Inner>
+																</Badge.Container>
+															</>
+														)}
 													</>
 												)}
 											</ButtonRow>
@@ -162,7 +183,11 @@ export const Status = () => {
 					</section>
 				</Page.RowSection>
 			</div>
-			<Tips items={tipsItems} syncing={syncing} onPageReset={pageResetDeps} />
+			<Tips
+				items={tipsItems}
+				syncing={syncing}
+				onPageReset={{ network, activeAddress }}
+			/>
 		</SectionWrapper>
 	)
 }

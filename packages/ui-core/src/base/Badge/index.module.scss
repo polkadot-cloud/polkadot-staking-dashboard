@@ -15,6 +15,10 @@
     border-color: var(--status-danger-transparent);
   }
 
+  &.button {
+    border-color: var(--accent-pending);
+  }
+
   &:last-child {
     margin-right: 0;
   }
@@ -72,6 +76,14 @@
   display: flex;
   align-items: center;;
   font-size: 1.2rem;
+
+  > button {
+    color: var(--accent-primary);
+
+    > svg {
+      margin-left: 0.3rem;
+    }
+  }
 
   > svg {
     margin-right: 0.6rem;
