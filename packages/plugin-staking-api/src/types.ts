@@ -267,6 +267,9 @@ export interface PoolWarningsData {
 	highCommissionPoolMembers: {
 		members: HighCommissionPoolMember[]
 	}
+	noChangeRatePoolMembers: {
+		members: NoChangeRatePoolMember[]
+	}
 }
 
 export interface DestroyingPoolMember {
@@ -279,7 +282,13 @@ export interface HighCommissionPoolMember {
 	address: string
 }
 
+export interface NoChangeRatePoolMember {
+	poolId: number
+	address: string
+}
+
 export interface PoolWarningsResult {
 	destroyingPools: DestroyingPoolMember[]
 	highCommissionPools: HighCommissionPoolMember[]
+	noChangeRatePools: NoChangeRatePoolMember[]
 }
