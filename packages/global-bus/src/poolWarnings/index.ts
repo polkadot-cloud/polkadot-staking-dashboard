@@ -10,7 +10,7 @@ import { _poolWarnings } from './private'
 export interface PoolWarning {
 	poolId: number
 	address: string
-	type: 'destroying' | 'highCommission'
+	type: 'destroying' | 'highCommission' | 'noChangeRate'
 }
 
 export interface PoolWarningsState {
@@ -67,6 +67,9 @@ export const fetchAndSetPoolWarnings = async (
 			...result.highCommissionPools
 				.filter((m) => m.address === address)
 				.map((m) => ({ ...m, type: 'highCommission' as const })),
+			...result.noChangeRatePools
+				.filter((m) => m.address === address)
+				.map((m) => ({ ...m, type: 'noChangeRate' as const })),
 		]
 	})
 
