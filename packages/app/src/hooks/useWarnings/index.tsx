@@ -28,21 +28,21 @@ export const useWarnings = () => {
 			const messages: WarningMessage[] = []
 
 			warnings.forEach((warning) => {
-				if (warning.type === 'destroying') {
+				if (warning.type === 'DESTROYING') {
 					messages.push({
 						value: t('warnings.destroyingTitle'),
 						description: t('warnings.destroyingDescription'),
 						format: 'danger',
 						faIcon: faTrashCan,
 					})
-				} else if (warning.type === 'highCommission') {
+				} else if (warning.type === 'HIGH_COMMISSION') {
 					messages.push({
 						value: t('warnings.highCommissionTitle'),
 						faIcon: faCircleUp,
 						description: t('warnings.highCommissionDescription'),
 						format: 'warning',
 					})
-				} else if (warning.type === 'noChangeRate') {
+				} else if (warning.type === 'NO_CHANGE_RATE') {
 					messages.push({
 						value: t('warnings.noChangeRateTitle'),
 						faIcon: faCalendarXmark,

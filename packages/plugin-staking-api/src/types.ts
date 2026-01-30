@@ -260,35 +260,23 @@ export interface ActiveStatusWithNominees {
 	}[]
 }
 
+export type PoolWarningType =
+	| 'DESTROYING'
+	| 'HIGH_COMMISSION'
+	| 'NO_CHANGE_RATE'
+
 export interface PoolWarningsData {
-	destroyingPoolMembers: {
-		members: DestroyingPoolMember[]
-	}
-	highCommissionPoolMembers: {
-		members: HighCommissionPoolMember[]
-	}
-	noChangeRatePoolMembers: {
-		members: NoChangeRatePoolMember[]
+	poolWarnings: {
+		warnings: ApiPoolWarning[]
 	}
 }
 
-export interface DestroyingPoolMember {
+export interface ApiPoolWarning {
 	poolId: number
 	address: string
-}
-
-export interface HighCommissionPoolMember {
-	poolId: number
-	address: string
-}
-
-export interface NoChangeRatePoolMember {
-	poolId: number
-	address: string
+	warningTypes: PoolWarningType[]
 }
 
 export interface PoolWarningsResult {
-	destroyingPools: DestroyingPoolMember[]
-	highCommissionPools: HighCommissionPoolMember[]
-	noChangeRatePools: NoChangeRatePoolMember[]
+	warnings: ApiPoolWarning[]
 }
