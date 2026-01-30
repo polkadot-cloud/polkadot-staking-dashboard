@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { fetchPoolWarnings } from 'plugin-staking-api'
+import type { PoolWarningType } from 'plugin-staking-api/types'
 import type { NetworkId } from 'types'
 import { pluginEnabled } from '../plugins'
 import { defaultPoolWarnings } from './default'
@@ -10,7 +11,7 @@ import { _poolWarnings } from './private'
 export interface PoolWarning {
 	poolId: number
 	address: string
-	type: 'destroying' | 'highCommission' | 'noChangeRate'
+	type: PoolWarningType
 }
 
 export interface PoolWarningsState {
@@ -60,19 +61,22 @@ export const fetchAndSetPoolWarnings = async (
 	const warningsMap: Record<string, PoolWarning[]> = {}
 
 	addresses.forEach((address) => {
-		warningsMap[address] = [
-			...result.destroyingPools
-				.filter((m) => m.address === address)
-				.map((m) => ({ ...m, type: 'destroying' as const })),
-			...result.highCommissionPools
-				.filter((m) => m.address === address)
-				.map((m) => ({ ...m, type: 'highCommission' as const })),
-			...result.noChangeRatePools
-				.filter((m) => m.address === address)
-				.map((m) => ({ ...m, type: 'noChangeRate' as const })),
-		]
-	})
+		const addressWarnings: PoolWarning[] = []
 
+		result.warnings
+			.filter((w) => w.address === address)
+			.forEach((warning) => {
+				warning.warningTypes.forEach((type) => {
+					addressWarnings.push({
+						poolId: warning.poolId,
+						address: warning.address,
+						type,
+					})
+				})
+			})
+
+		warningsMap[address] = addressWarnings
+	})
 	setPoolWarningsBatch(warningsMap)
 }
 

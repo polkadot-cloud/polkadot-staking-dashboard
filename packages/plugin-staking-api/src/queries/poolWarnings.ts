@@ -7,31 +7,18 @@ import type { PoolWarningsData, PoolWarningsResult } from '../types'
 
 const QUERY = gql`
 	query PoolWarnings($network: String!, $addresses: [String!]!) {
-		destroyingPoolMembers(network: $network, addresses: $addresses) {
-			members {
+		poolWarnings(network: $network, addresses: $addresses) {
+			warnings {
 				poolId
 				address
-			}
-		}
-		highCommissionPoolMembers(network: $network, addresses: $addresses) {
-			members {
-				poolId
-				address
-			}
-		}
-		noChangeRatePoolMembers(network: $network, addresses: $addresses) {
-			members {
-				poolId
-				address
+				warningTypes
 			}
 		}
 	}
 `
 
 const DEFAULT: PoolWarningsResult = {
-	destroyingPools: [],
-	highCommissionPools: [],
-	noChangeRatePools: [],
+	warnings: [],
 }
 
 export const fetchPoolWarnings = async (
@@ -49,10 +36,7 @@ export const fetchPoolWarnings = async (
 		})
 
 		return {
-			destroyingPools: result?.data?.destroyingPoolMembers?.members || [],
-			highCommissionPools:
-				result?.data?.highCommissionPoolMembers?.members || [],
-			noChangeRatePools: result?.data?.noChangeRatePoolMembers?.members || [],
+			warnings: result?.data?.poolWarnings?.warnings || [],
 		}
 	} catch {
 		return DEFAULT
