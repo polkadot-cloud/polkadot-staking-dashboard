@@ -9,6 +9,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
+import { onNodeProviderTypeChangedEvent } from 'event-tracking'
 import { setAutoRpc, setProviderType } from 'global-bus'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
@@ -90,6 +91,7 @@ export const Networks = () => {
 								onClick={() => {
 									setProviderType('sc')
 									switchNetwork(networkKey as NetworkId)
+									onNodeProviderTypeChangedEvent(networkKey, 'light_client')
 									closeModal()
 								}}
 							>
@@ -105,6 +107,7 @@ export const Networks = () => {
 								onClick={() => {
 									setProviderType('ws')
 									switchNetwork(networkKey as NetworkId)
+									onNodeProviderTypeChangedEvent(networkKey, 'rpc')
 									closeModal()
 								}}
 							>
