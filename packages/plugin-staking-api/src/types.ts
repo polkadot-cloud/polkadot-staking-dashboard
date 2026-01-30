@@ -260,7 +260,10 @@ export interface ActiveStatusWithNominees {
 	}[]
 }
 
-export type PoolWarningType = 'destroying' | 'highCommission' | 'noChangeRate'
+export type PoolWarningType =
+	| 'DESTROYING'
+	| 'HIGH_COMMISSION'
+	| 'NO_CHANGE_RATE'
 
 export interface PoolWarningsData {
 	poolWarnings: {

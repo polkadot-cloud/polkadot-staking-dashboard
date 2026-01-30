@@ -77,7 +77,6 @@ export const fetchAndSetPoolWarnings = async (
 
 		warningsMap[address] = addressWarnings
 	})
-
 	setPoolWarningsBatch(warningsMap)
 }
 
