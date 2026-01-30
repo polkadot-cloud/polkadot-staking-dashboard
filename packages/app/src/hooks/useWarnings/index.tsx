@@ -1,7 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircleUp, faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import {
+	faCalendarXmark,
+	faCircleUp,
+	faTrashCan,
+} from '@fortawesome/free-regular-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { poolWarnings$ } from 'global-bus'
 import type { WarningMessage } from 'pages/Overview/Summaries/types'
@@ -38,6 +42,13 @@ export const useWarnings = () => {
 						description: t('warnings.highCommissionDescription'),
 						format: 'warning',
 					})
+				} else if (warning.type === 'noChangeRate') {
+					messages.push({
+						value: t('warnings.noChangeRateTitle'),
+						faIcon: faCalendarXmark,
+						description: t('warnings.noChangeRateDescription'),
+						format: 'warning',
+					})
 				}
 			})
 
@@ -48,17 +59,11 @@ export const useWarnings = () => {
 	}, [activeAddress])
 
 	const getMostSevereWarningFormat = () => {
-		let format: 'danger' | 'warning' = 'warning'
-
-		warningMessages.forEach((message) => {
-			if (message.format === 'danger') {
-				format = 'danger'
-				return
-			} else if (message.format === 'warning') {
-				format = 'warning'
-			}
-		})
-		return format
+		// Danger is more severe than warning, so return danger if any danger messages exist
+		const hasDanger = warningMessages.some(
+			(message) => message.format === 'danger',
+		)
+		return hasDanger ? 'danger' : 'warning'
 	}
 
 	return { warningMessages, getMostSevereWarningFormat }

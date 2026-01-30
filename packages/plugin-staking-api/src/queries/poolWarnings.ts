@@ -19,12 +19,19 @@ const QUERY = gql`
 				address
 			}
 		}
+		noChangeRatePoolMembers(network: $network, addresses: $addresses) {
+			members {
+				poolId
+				address
+			}
+		}
 	}
 `
 
 const DEFAULT: PoolWarningsResult = {
 	destroyingPools: [],
 	highCommissionPools: [],
+	noChangeRatePools: [],
 }
 
 export const fetchPoolWarnings = async (
@@ -45,6 +52,7 @@ export const fetchPoolWarnings = async (
 			destroyingPools: result?.data?.destroyingPoolMembers?.members || [],
 			highCommissionPools:
 				result?.data?.highCommissionPoolMembers?.members || [],
+			noChangeRatePools: result?.data?.noChangeRatePoolMembers?.members || [],
 		}
 	} catch {
 		return DEFAULT
