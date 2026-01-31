@@ -10,7 +10,7 @@
   margin-bottom: 1rem;
 
   > h1 {
-    font-family: InterBold, sans-serif;
+    font-family: Inter, sans-serif;
     line-height: 2.2rem;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -41,6 +41,7 @@
 
     > h1 {
       margin: 0;
+      font-size: 1.75rem;
     }
   }
 }
