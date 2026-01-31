@@ -6,6 +6,6 @@ import classes from './index.module.scss'
 
 export const HeadFullWidth = ({ children, style }: ComponentBase) => (
 	<div className={classes.headFullWidth} style={style}>
-		{children}
+		<div className={classes.inner}>{children}</div>
 	</div>
 )

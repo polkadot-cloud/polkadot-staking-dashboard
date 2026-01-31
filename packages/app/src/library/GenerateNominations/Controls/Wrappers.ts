@@ -7,6 +7,22 @@ export const MenuWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  background: var(--bg-body);
-  height: 3.25rem;
+  background: rgb(from var(--bg-body) r g b / 75%);
+
+  @media (max-width: 1200px) {
+      padding: 0 1.5rem;
+    }
+
+  > .inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    padding: 0.05rem 0;
+    align-items: center;
+
+    > button {
+      margin-right: 2.25rem;
+    }
+  }
 `
