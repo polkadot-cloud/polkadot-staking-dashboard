@@ -9,7 +9,7 @@ export const MenuWrapper = styled.div`
   align-items: center;
   background: rgb(from var(--bg-body) r g b / 75%);
 
-  @media(max-width:1200px) {
+  @media (max-width: 1200px) {
       padding: 0 1.5rem;
     }
 
