@@ -128,7 +128,7 @@ export const Inner = () => {
 				<Title fullWidth>
 					<h1>{t('manageNominations', { ns: 'modals' })}</h1>
 				</Title>
-				<CloseCanvas style={{ position: 'relative', top: '-0.2rem' }} />
+				<CloseCanvas />
 			</HeadFullWidth>
 			{displayFor === 'canvas' && (
 				<MenuControls allowRevert={allowRevert} setters={setters} />
