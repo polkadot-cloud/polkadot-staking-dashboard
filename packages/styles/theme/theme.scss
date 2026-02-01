@@ -96,40 +96,40 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 /* dark theme colors */
 .dark {
-  --bg-body: rgb(36 32 36);
-  --bg-primary: rgb(45 41 45);
+  --bg-body: rgb(21 21 21);
+  --bg-primary: rgb(30 30 30);
   --bg-invert: #ddd;
-  --bg-list: rgb(38 33 38 / 100%);
-  --bg-card-modal: rgb(32 26 32 / 50%);
-  --bg-card-canvas: rgb(44 40 44 / 90%);
-  --bg-card-canvas-alt: rgb(44 40 44 / 35%);
-  --bg-card-floating: rgb(43 38 43 / 95%);
-  --bg-modal: rgb(43 38 43);
-  --bg-modal-footer: rgb(37 32 37);
-  --bg-menu: rgb(57 52 58);
-  --bg-input: rgb(72 70 72);
-  --border: rgb(58 52 58);
-  --border-alt: rgb(95 90 95);
-  --btn-bg: rgb(58 52 58);
-  --btn-bg-secondary: rgb(55 50 55);
-  --btn-bg-tertiary: rgb(54 49 54);
-  --btn-tab: rgb(56 51 56);
-  --btn-canvas-tab: rgb(60 59 60);
-  --btn-bg-hover: rgb(66 61 68);
-  --btn-popover-tab-bg: rgb(48 43 48);
-  --shadow-primary: rgb(28 24 28 / 25%);
-  --shadow-secondary: rgb(28 24 28 / 25%);
-  --shadow-tertiary: rgb(28 24 28 / 50%);
+  --bg-list: rgb(24 24 24 / 100%);
+  --bg-card-modal: rgb(20 20 20 / 50%);
+  --bg-card-canvas: rgb(28 28 28 / 90%);
+  --bg-card-canvas-alt: rgb(28 28 28 / 35%);
+  --bg-card-floating: rgb(27 27 27 / 95%);
+  --bg-modal: rgb(27 27 27);
+  --bg-modal-footer: rgb(22 22 22);
+  --bg-menu: rgb(36 36 36);
+  --bg-input: rgb(45 45 45);
+  --border: rgb(38 38 38);
+  --border-alt: rgb(60 60 60);
+  --btn-bg: rgb(38 38 38);
+  --btn-bg-secondary: rgb(35 35 35);
+  --btn-bg-tertiary: rgb(34 34 34);
+  --btn-tab: rgb(36 36 36);
+  --btn-canvas-tab: rgb(40 40 40);
+  --btn-bg-hover: rgb(44 44 44);
+  --btn-popover-tab-bg: rgb(32 32 32);
+  --shadow-primary: rgb(0 0 0 / 25%);
+  --shadow-secondary: rgb(0 0 0 / 25%);
+  --shadow-tertiary: rgb(0 0 0 / 50%);
   --accent-primary: var(--accent-primary-dark);
   --accent-secondary: var(--accent-secondary-dark);
   --accent-tertiary: var(--accent-tertiary-dark);
   --accent-stroke: var(--accent-stroke-dark);
   --accent-transparent: var(--accent-transparent-dark);
   --accent-pending: var(--accent-pending-dark);
-  --bg-overlay: rgb(32 28 32 / 80%);
-  --bg-prompt: rgb(18 14 18 / 70%);
-  --shimmer-bg: rgb(57 52 58);
-  --shimmer-fg: rgb(32 29 33);
+  --bg-overlay: rgb(16 16 16 / 80%);
+  --bg-prompt: rgb(10 10 10 / 70%);
+  --shimmer-bg: rgb(36 36 36);
+  --shimmer-fg: rgb(20 20 20);
   --status-success: #74da77;
   --status-success-transparent: rgb(0 128 0 / 25%);
   --status-warning: rgb(219 161 0 / 100%);
@@ -138,14 +138,14 @@ SPDX-License-Identifier: GPL-3.0-only */
   --status-danger: #d14445;
   --status-danger-transparent: rgb(255 0 0 / 25%);
   --status-danger-bg: rgb(255 0 0 / 5%);
-  --text-primary: #b8b3b9;
-  --text-secondary: #938e94;
-  --text-tertiary: #817d82;
-  --text-invert: #0f0e0f;
+  --text-primary: #e7e9ea;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --text-invert: #0f0f0f;
   --gradient-menu: linear-gradient(
     180deg,
-    rgb(48 41 48) 0%,
-    rgb(30 27 30) 100%
+    rgb(32 32 32) 0%,
+    rgb(20 20 20) 100%
   );
   --highlight: rgb(255 255 255 / 3%);
   --highlight-alt: linear-gradient(
@@ -153,8 +153,8 @@ SPDX-License-Identifier: GPL-3.0-only */
     rgb(255 255 255 / 3%) 0%,
     rgb(255 255 255 / 1%) 100%
   );
-  --grid-primary: rgb(51 43 51);
-  --grid-secondary: rgb(53 45 53);
+  --grid-primary: rgb(34 34 34);
+  --grid-secondary: rgb(36 36 36);
   --grid-canvas-axis: #eee;
   --grid-canvas: #444;
   --shadow:
