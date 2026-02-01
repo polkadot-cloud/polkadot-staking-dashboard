@@ -44,7 +44,7 @@ export const Wrapper = styled.span`
       border: 1.5px solid var(--accent-pending);
     }
     &.warning {
-      border: 1px solid var(--accent-secondary);
+      border: 1px solid var(--status-warning);
     }
 
     .icon {

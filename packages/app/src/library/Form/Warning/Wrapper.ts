@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   background: var(--btn-bg);
-  border: 1px solid var(--accent-secondary);
+  border: 1px solid var(--status-warning);
   margin: 0.5rem 0;
   padding: 0.6rem 0.9rem;
   border-radius: 0.75rem;
@@ -15,11 +15,11 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: var(--accent-secondary);
+    color: var(--status-warning);
     font-family: Inter, sans-serif;
 
     .icon {
-      color: var(--accent-secondary);
+      color: var(--status-warning);
       margin-right: 0.5rem;
     }
   }

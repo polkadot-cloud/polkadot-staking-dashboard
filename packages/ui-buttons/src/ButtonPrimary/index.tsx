@@ -20,7 +20,6 @@ import classes from './index.module.scss'
 export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
 	const {
 		className,
-		colorSecondary,
 		disabled,
 		grow,
 		iconLeft,
@@ -52,7 +51,6 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
 			[commonClasses.btnMarginX]: marginX,
 			[commonClasses.btnDisabled]: disabled,
 			[commonClasses.btnActiveTransforms]: !disabled,
-			[classes.btnPrimarySecondaryColor]: colorSecondary,
 		},
 		className,
 	)

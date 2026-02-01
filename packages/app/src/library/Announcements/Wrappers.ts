@@ -116,9 +116,6 @@ export const Item = styled(motion.div)`
     &.warning {
       color: #b5a200;
     }
-    &.pools {
-      color: var(--accent-secondary);
-    }
   }
 
   p {

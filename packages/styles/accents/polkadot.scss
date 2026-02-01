@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 .polkadot {
   $base-primary: rgb(211 48 121);
-  $base-secondary: rgb(110 71 207);
+  $base-secondary: rgb(244 193 216);
 
   @for $i from 0 through 19 {
     --accent-primary-#{100 - ($i * 5)}: #{hsl(
@@ -22,8 +22,8 @@ SPDX-License-Identifier: GPL-3.0-only */
 
   --accent-primary-light: var(--accent-primary-50);
   --accent-primary-dark: var(--accent-primary-45);
-  --accent-secondary-light: var(--accent-secondary-50);
-  --accent-secondary-dark: var(--accent-secondary-40);
+  --accent-secondary-light: var(--accent-primary-45);
+  --accent-secondary-dark: var(--accent-primary-60);
   --accent-tertiary-light: rgb(221 217 231);
   --accent-tertiary-dark: rgb(50 38 76);
   --accent-stroke-light: rgb(211 48 121);

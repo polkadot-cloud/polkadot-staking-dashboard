@@ -19,7 +19,7 @@ export const AccountWrapper = styled.div`
   }
 
   > div {
-    background: var(--btn-bg);
+    background: var(--btn-bg-tertiary);
     color: var(--text-primary);
     font-family: InterSemiBold, sans-serif;
     border: 1px solid transparent;
@@ -42,8 +42,6 @@ export const AccountWrapper = styled.div`
 
       /* Top half of the button, account information */
       &.head {
-        background: var(--btn-bg-tertiary);
-
         > button {
           color: var(--text-primary);
           display: flex;

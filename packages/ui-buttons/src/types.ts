@@ -105,7 +105,6 @@ export type ButtonOptionProps = ComponentBaseWithClassName &
 export type ButtonPrimaryProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		size?: ButtonSize
 		text: string
 		asLabel?: boolean
@@ -114,7 +113,6 @@ export type ButtonPrimaryProps = ComponentBaseWithClassName &
 export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		lg?: boolean
 		text: string
 		asLabel?: boolean
@@ -133,7 +131,6 @@ export type ButtonSecondaryProps = ComponentBaseWithClassName &
 export type ButtonSubmitProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		text: string
 		lg?: boolean
 		pulse?: boolean
