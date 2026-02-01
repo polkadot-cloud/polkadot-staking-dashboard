@@ -28,6 +28,11 @@
   &.transparent {
     opacity: 0.2;
   }
+
+  :global(.dark) & {
+    background: linear-gradient(to bottom, rgb(32 32 32), rgb(24 24 24));
+    border-right: 1px solid rgb(38 38 38);
+  }
 }
 
 .nav {
