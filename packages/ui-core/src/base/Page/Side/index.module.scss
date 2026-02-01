@@ -30,8 +30,8 @@
   }
 
   :global(.dark) & {
-    background: linear-gradient(to bottom, rgb(32 32 32), rgb(24 24 24));
-    border-right: 1px solid rgb(38 38 38);
+    background: linear-gradient(to bottom, var(--bg-menu), var(--bg-list));
+    border-right: 1px solid var(--border);
   }
 }
 
