@@ -21,8 +21,8 @@
       font-size: 1.1rem;
 
       &.warning {
-        color: var(--accent-secondary);
-        border-color: var(--accent-secondary);
+        color: var(--status-warning);
+        border-color: var(--status-warning);
       }
 
       &.danger {

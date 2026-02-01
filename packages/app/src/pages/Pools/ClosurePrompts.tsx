@@ -44,7 +44,7 @@ export const ClosurePrompts = () => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-secondary')}`,
+						border: `1px solid ${getThemeValue('--status-warning')}`,
 					}}
 				>
 					<div className="content">

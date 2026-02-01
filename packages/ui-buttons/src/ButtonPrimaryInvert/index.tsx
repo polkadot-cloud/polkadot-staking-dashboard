@@ -21,7 +21,6 @@ export const ButtonPrimaryInvert = (
 	props: ButtonPrimaryInvertProps,
 ): JSX.Element => {
 	const {
-		colorSecondary,
 		disabled,
 		grow,
 		iconLeft,
@@ -53,7 +52,6 @@ export const ButtonPrimaryInvert = (
 			[commonClasses.btnMarginX]: marginX,
 			[commonClasses.btnDisabled]: disabled,
 			[commonClasses.btnActiveTransforms]: !disabled,
-			[classes.secondary]: colorSecondary,
 		},
 		className,
 	)
