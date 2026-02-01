@@ -165,7 +165,6 @@ export const BulletWrapper = styled.div`
       color: var(--accent-primary);
       border: 1px solid var(--accent-primary);
     }
-
     &.warning {
       color: var(--status-warning);
       border: 1px solid var(--status-warning);
