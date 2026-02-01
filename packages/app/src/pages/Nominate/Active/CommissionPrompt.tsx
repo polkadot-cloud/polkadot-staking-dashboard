@@ -37,7 +37,7 @@ export const CommissionPrompt = () => {
 		return null
 	}
 
-	const annuncementBorderColor = getThemeValue('--accent-secondary')
+	const annuncementBorderColor = getThemeValue('--status-warning')
 
 	return (
 		<Page.Row>

@@ -19,7 +19,6 @@ import classes from './index.module.scss'
  */
 export const ButtonSubmit = (props: ButtonSubmitProps): JSX.Element => {
 	const {
-		colorSecondary,
 		disabled,
 		grow,
 		iconLeft,
@@ -51,7 +50,6 @@ export const ButtonSubmit = (props: ButtonSubmitProps): JSX.Element => {
 			[commonClasses.btnActiveTransforms]: !disabled,
 			[classes.btnSubmitLg]: lg,
 			[classes.btnSubmitSm]: !lg,
-			[classes.btnSubmitSecondaryColor]: colorSecondary,
 			[classes.btnSubmitPulse]: pulse,
 		},
 		className,

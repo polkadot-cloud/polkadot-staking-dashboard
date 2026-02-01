@@ -53,7 +53,7 @@ export const ItemWrapper = styled.div`
           color: var(--text-secondary);
           font-family: InterSemiBold, sans-serif;
           &.claim {
-            color: var(--accent-secondary);
+            color: var(--status-warning);
           }
           &.reward {
             color: var(--accent-primary);
@@ -63,8 +63,8 @@ export const ItemWrapper = styled.div`
         h5 {
           color: var(--text-secondary);
           &.claim {
-            color: var(--accent-secondary);
-            border: 1px solid var(--accent-secondary);
+            color: var(--status-warning);
+            border: 1px solid var(--status-warning);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
