@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import type { ValidatorSupportedChains } from '@w3ux/validator-assets'
 import { useApi } from 'contexts/Api'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -20,9 +21,11 @@ export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
 	const { isReady } = useApi()
 	const { getValidators } = useValidators()
 	const { setActiveSection, activeItem } = useOperatorsSections()
+	// Cast to ValidatorSupportedChains for @w3ux/validator-assets lookup
+	const chainKey = network as ValidatorSupportedChains
 
 	const { name, validators: entityAllValidators } = activeItem
-	const validators = entityAllValidators[network] ?? []
+	const validators = entityAllValidators[chainKey] ?? []
 
 	// include validators that exist in validator set
 	const [operatorValidators, setOperatorValidators] = useState<Validator[]>(
