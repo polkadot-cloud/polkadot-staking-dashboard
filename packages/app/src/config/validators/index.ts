@@ -1,7 +1,11 @@
 /* @license Copyright 2024 w3ux authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-export type ValidatorSupportedChains = 'polkadot' | 'kusama' | 'westend'
+export type ValidatorSupportedChains =
+	| 'polkadot'
+	| 'kusama'
+	| 'westend'
+	| 'paseo'
 
 export interface ValidatorEntry {
 	name: string

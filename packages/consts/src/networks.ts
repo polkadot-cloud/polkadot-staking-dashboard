@@ -7,7 +7,7 @@ import type { NetworkId, Networks, SystemChain } from 'types'
 export const DefaultNetwork: NetworkId = 'polkadot'
 
 // Networks that are disabled in production
-export const ProductionDisabledNetworks: NetworkId[] = []
+export const ProductionDisabledNetworks: NetworkId[] = ['westend']
 
 // All supported networks
 export const NetworkList: Networks = {
@@ -97,6 +97,34 @@ export const NetworkList: Networks = {
 			stakingChain: 'westmint',
 			peopleChain: 'people-westend',
 			subscanBalanceChainId: 'assethub-westend',
+			supportOperators: true,
+		},
+	},
+	paseo: {
+		name: 'paseo',
+		endpoints: {
+			getLightClient: async () => await import('@dedot/chain-specs/paseo'),
+			rpc: {
+				IBP1: 'wss://rpc.ibp.network/paseo',
+				IBP2: 'wss://paseo.dotters.network',
+				Amforc: 'wss://paseo.rpc.amforc.com',
+				Dwellir: 'wss://paseo-rpc.dwellir.com',
+				StakeWorld: 'wss://pas-rpc.stakeworld.io',
+			},
+		},
+		unit: 'PAS',
+		units: 10,
+		ss58: 0,
+		defaultFeeReserve: 1000000000n,
+		consts: {
+			expectedBlockTime: 6000n,
+			epochDuration: 600n,
+		},
+		meta: {
+			hubChain: 'paseomint',
+			peopleChain: 'people-paseo',
+			stakingChain: 'paseomint',
+			subscanBalanceChainId: 'assethub-paseo',
 			supportOperators: true,
 		},
 	},
@@ -215,5 +243,40 @@ export const SystemChainList: Record<string, SystemChain> = {
 			},
 		},
 		relayChain: 'westend',
+	},
+	'people-paseo': {
+		name: 'people-paseo',
+		ss58: 0,
+		units: 10,
+		unit: 'PAS',
+		defaultFeeReserve: 1000000000n,
+		endpoints: {
+			getLightClient: async () =>
+				await import('@dedot/chain-specs/paseo_people'),
+			rpc: {
+				IBP2: 'wss://people-paseo.dotters.network',
+				Amforc: 'wss://people-paseo.rpc.amforc.com',
+			},
+		},
+		relayChain: 'paseo',
+	},
+	paseomint: {
+		name: 'paseomint',
+		ss58: 0,
+		units: 10,
+		unit: 'PAS',
+		defaultFeeReserve: 1000000000n,
+		endpoints: {
+			getLightClient: async () =>
+				await import('@dedot/chain-specs/paseo_asset_hub'),
+			rpc: {
+				IBP1: 'wss://sys.ibp.network/asset-hub-paseo',
+				IBP2: 'wss://asset-hub-paseo.dotters.network',
+				Dwellir: 'wss://asset-hub-paseo-rpc.dwellir.com',
+				StakeWorld: 'wss://pas-rpc.stakeworld.io/assethub',
+				TurboFlakes: 'wss://sys.turboflakes.io/asset-hub-paseo',
+			},
+		},
+		relayChain: 'paseo',
 	},
 }
