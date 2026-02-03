@@ -97,7 +97,7 @@ export const NetworkList: Networks = {
 			stakingChain: 'westmint',
 			peopleChain: 'people-westend',
 			subscanBalanceChainId: 'assethub-westend',
-			supportOperators: true,
+			supportOperators: false,
 		},
 	},
 	paseo: {
@@ -125,7 +125,7 @@ export const NetworkList: Networks = {
 			peopleChain: 'people-paseo',
 			stakingChain: 'paseomint',
 			subscanBalanceChainId: 'assethub-paseo',
-			supportOperators: true,
+			supportOperators: false,
 		},
 	},
 }

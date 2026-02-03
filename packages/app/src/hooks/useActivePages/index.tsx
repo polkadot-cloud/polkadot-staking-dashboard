@@ -3,7 +3,12 @@
 
 import { localStorageOrDefault } from '@w3ux/utils'
 import { PageCategories, PagesConfig } from 'config/pages'
+import { getPagesConfig } from 'config/util'
 import { ActivePagesKey } from 'consts'
+import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useStaking } from 'contexts/Staking'
+import { useUi } from 'contexts/UI'
 import type { NavSection } from 'types'
 import type { ActivePagesRecord } from './types'
 
@@ -48,12 +53,34 @@ export const setActivePage = (category: NavSection, route: string): void => {
 }
 
 // Get active page for a specific category
-export const getActivePageForCategory = (category: NavSection): string => {
-	const activePages = getActivePages()
-	const storedPage = activePages[category]
+export const useActivePageForCategory = () => {
+	const { network } = useNetwork()
+	const { advancedMode } = useUi()
+	const { inPool } = useActivePool()
+	const { isBonding } = useStaking()
 
-	// Fall back to default route if stored page doesn't exist
-	const categoryConfig = PageCategories.find((cat) => cat.key === category)
-	const defaultFallback = PageCategories[0]?.defaultRoute || '/overview'
-	return storedPage || categoryConfig?.defaultRoute || defaultFallback
+	const getActivePageForCategory = (category: NavSection): string => {
+		const activePages = getActivePages()
+		const storedPage = activePages[category]
+		const categoryConfig = PageCategories.find((cat) => cat.key === category)
+
+		if (categoryConfig) {
+			const pagesConfig = getPagesConfig(
+				network,
+				categoryConfig.id,
+				advancedMode,
+				{
+					isBonding,
+					inPool,
+				},
+			)
+			// Fall back to category's default route if stored page doesn't exist
+			if (!pagesConfig.find((page) => page.hash === storedPage)) {
+				return categoryConfig.defaultRoute
+			}
+		}
+		return storedPage || '/overview'
+	}
+
+	return { getActivePageForCategory }
 }

@@ -4,7 +4,7 @@
 import { useOutsideAlerter } from '@w3ux/hooks'
 import classNames from 'classnames'
 import { PageCategories } from 'config/pages'
-import { getActivePageForCategory } from 'hooks/useActivePages'
+import { useActivePageForCategory } from 'hooks/useActivePages'
 import { usePageFromHash } from 'hooks/usePageFromHash'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +19,7 @@ export const CategoriesPopover = ({
 	const { t } = useTranslation('app')
 	const navigate = useNavigate()
 	const { categoryKey } = usePageFromHash()
+	const { getActivePageForCategory } = useActivePageForCategory()
 
 	const popoverRef = useRef<HTMLDivElement>(null)
 
