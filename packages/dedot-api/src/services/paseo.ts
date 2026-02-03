@@ -45,7 +45,6 @@ export class PaseoService
 		public providerRelay: WsProvider | SmoldotProvider,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
-		// For Paseo, staking happens on the hub chain
 		super(networkConfig, ids, apiHub, apiHub, providerRelay, providerPeople)
 
 		// Initialize service interface with network-specific routing
@@ -81,13 +80,9 @@ export class PaseoService
 					await query.poolMetadataMulti(this.apiHub, poolIds),
 				proxies: async (address) => await query.proxies(this.apiHub, address),
 				identityOfMulti: async (addresses) =>
-					this.identityManager
-						? await this.identityManager.identityOfMulti(addresses)
-						: [],
+					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>
-					this.identityManager
-						? await this.identityManager.superOfMulti(addresses)
-						: [],
+					await this.identityManager.superOfMulti(addresses),
 				validatorEntries: async () => await query.validatorEntries(this.apiHub),
 				validatorsMulti: async (addresses) =>
 					await query.validatorsMulti(this.apiHub, addresses),
