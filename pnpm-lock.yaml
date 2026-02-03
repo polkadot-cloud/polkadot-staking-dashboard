@@ -31,14 +31,14 @@ importers:
         specifier: ^6.1.11
         version: 6.1.11
       '@vitejs/plugin-react-swc':
-        specifier: ^4.2.2
-        version: 4.2.2(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3))
+        specifier: ^4.2.3
+        version: 4.2.3(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3))
       '@w3ux/types':
         specifier: ^2.4.1
         version: 2.4.1
       globals:
-        specifier: ^17.1.0
-        version: 17.2.0
+        specifier: ^17.3.0
+        version: 17.3.0
       postcss:
         specifier: ^8.5.1
         version: 8.5.6
@@ -55,14 +55,14 @@ importers:
         specifier: ^1.97.3
         version: 1.97.3
       stylelint:
-        specifier: ^17.0.0
-        version: 17.0.0(typescript@5.9.3)
+        specifier: ^17.1.0
+        version: 17.1.0(typescript@5.9.3)
       stylelint-config-standard-scss:
         specifier: ^17.0.0
-        version: 17.0.0(postcss@8.5.6)(stylelint@17.0.0(typescript@5.9.3))
+        version: 17.0.0(postcss@8.5.6)(stylelint@17.1.0(typescript@5.9.3))
       stylelint-order:
         specifier: ^7.0.1
-        version: 7.0.1(stylelint@17.0.0(typescript@5.9.3))
+        version: 7.0.1(stylelint@17.1.0(typescript@5.9.3))
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -249,7 +249,7 @@ importers:
         version: 1.2.1(rollup@4.57.0)
       vite-plugin-checker:
         specifier: ^0.12.0
-        version: 0.12.0(@biomejs/biome@2.3.13)(stylelint@17.0.0(typescript@5.9.3))(typescript@5.9.3)(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3))
+        version: 0.12.0(@biomejs/biome@2.3.13)(stylelint@17.1.0(typescript@5.9.3))(typescript@5.9.3)(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3))
       vite-plugin-svgr:
         specifier: ^4.3.0
         version: 4.5.0(rollup@4.57.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3))
@@ -298,8 +298,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.215.0
-        version: 0.215.0(dedot@1.0.2(typescript@5.9.3))
+        specifier: ^0.222.0
+        version: 0.222.0(dedot@1.0.2(typescript@5.9.3))
       '@w3ux/observables-connect':
         specifier: ^1.0.1
         version: 1.0.1(react@19.2.4)(rxjs@7.8.2)(typescript@5.9.3)
@@ -403,8 +403,8 @@ importers:
   packages/plugin-staking-api:
     dependencies:
       '@apollo/client':
-        specifier: ^4.1.2
-        version: 4.1.2(graphql@16.12.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
+        specifier: ^4.1.3
+        version: 4.1.3(graphql@16.12.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       graphql:
         specifier: ^16.11.0
         version: 16.12.0
@@ -449,8 +449,8 @@ importers:
         version: 1.0.2(typescript@5.9.3)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.215.0
-        version: 0.215.0(dedot@1.0.2(typescript@5.9.3))
+        specifier: ^0.222.0
+        version: 0.222.0(dedot@1.0.2(typescript@5.9.3))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -691,8 +691,8 @@ packages:
   '@adraffy/ens-normalize@1.11.1':
     resolution: {integrity: sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ==}
 
-  '@apollo/client@4.1.2':
-    resolution: {integrity: sha512-MxlWuO94Y6TRf6+d4KfG5bCUXg5NP4s7zPKRA0PDNNa18K86zcbpHUgWKdx6wMT/5KVMeC5rsZkDqZLr/R0mFw==}
+  '@apollo/client@4.1.3':
+    resolution: {integrity: sha512-2D0eN9R0IHj9qp1RwjM1/brKqcBGldlDfY0YiP5ecCj9FtVrhOtXqMj98SZ1CA0YGDY5X+dxx32Ljh7J0VHTfA==}
     peerDependencies:
       graphql: ^16.0.0
       graphql-ws: ^5.5.5 || ^6.0.3
@@ -712,6 +712,10 @@ packages:
 
   '@babel/code-frame@7.28.6':
     resolution: {integrity: sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/code-frame@7.29.0':
+    resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/compat-data@7.28.6':
@@ -879,8 +883,8 @@ packages:
   '@dedot/chain-specs@0.8.0':
     resolution: {integrity: sha512-k+pUJb4bNol29DPYJpUlxa1Jpt8hpM7n99oe9URMLwlPcbzL6XYjlQG6qtIfGjOLv+XAwvShvCzT6v/Pw7atWA==}
 
-  '@dedot/chaintypes@0.215.0':
-    resolution: {integrity: sha512-7elXDV1dpiu4poUs/iR1ZFzN7ihS9Xj+68jkRhXZFuA4lyhWgHTZ4veQ5DLgdwwm1bgzGrqyJ3HXNWZcYyfuaA==}
+  '@dedot/chaintypes@0.222.0':
+    resolution: {integrity: sha512-07P+6xLiHnrHj6192JVh21VGv47EYPJHD9OYkK23nPlIrWnB+GHCBS45D4uCd1h/gmvAUktTpgPfeI+gDfdArg==}
     peerDependencies:
       dedot: '>=1.0.1'
 
@@ -2053,8 +2057,8 @@ packages:
   '@radix-ui/rect@1.1.1':
     resolution: {integrity: sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==}
 
-  '@rolldown/pluginutils@1.0.0-beta.47':
-    resolution: {integrity: sha512-8QagwMH3kNCuzD8EWL8R2YPW5e4OrHNSAHRFDdmFqEwEaD/KcNKjVoumo+gP2vW5eKB2UPbM6vTYiGZX0ixLnw==}
+  '@rolldown/pluginutils@1.0.0-rc.2':
+    resolution: {integrity: sha512-izyXV/v+cHiRfozX62W9htOAvwMo4/bXKDrQ+vom1L1qRuexPock/7VZDAhnpHCLNejd3NJ6hiab+tO0D44Rgw==}
 
   '@rollup/pluginutils@5.3.0':
     resolution: {integrity: sha512-5EdhGZtnu3V88ces7s53hhfK5KSASnJZv8Lulpc04cWO3REESroJXg73DFsOmgbU2BhwV0E20bu2IDZb3VKW4Q==}
@@ -2395,8 +2399,8 @@ packages:
   '@types/w3c-web-usb@1.0.13':
     resolution: {integrity: sha512-N2nSl3Xsx8mRHZBvMSdNGtzMyeleTvtlEw+ujujgXalPqOjIA6UtrqcB6OzyUjkTbDm3J7P1RNK1lgoO7jxtsw==}
 
-  '@vitejs/plugin-react-swc@4.2.2':
-    resolution: {integrity: sha512-x+rE6tsxq/gxrEJN3Nv3dIV60lFflPj94c90b+NNo6n1QV1QQUTLoL0MpaOVasUZ0zqVBn7ead1B5ecx1JAGfA==}
+  '@vitejs/plugin-react-swc@4.2.3':
+    resolution: {integrity: sha512-QIluDil2prhY1gdA3GGwxZzTAmLdi8cQ2CcuMW4PB/Wu4e/1pzqrwhYWVd09LInCRlDUidQjd0B70QWbjWtLxA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       vite: ^4 || ^5 || ^6 || ^7
@@ -2972,8 +2976,8 @@ packages:
     resolution: {integrity: sha512-awConJSVCHVGND6x3tmMaKcQvwXLhjdkmomy2W+Goaui8YPgYgXJZewhg3fWC+DlfqqQuWg8AwqjGTD2nAPVWg==}
     engines: {node: '>=6'}
 
-  globals@17.2.0:
-    resolution: {integrity: sha512-tovnCz/fEq+Ripoq+p/gN1u7l6A7wwkoBT9pRCzTHzsD/LvADIzXZdjmRymh5Ztf0DYC3Rwg5cZRYjxzBmzbWg==}
+  globals@17.3.0:
+    resolution: {integrity: sha512-yMqGUQVVCkD4tqjOJf3TnrvaaHDMYp4VlUSObbkIiuCPe/ofdMBFIAcBbCSRFWOnos6qRiTVStDwqPLUclaxIw==}
     engines: {node: '>=18'}
 
   globby@16.1.0:
@@ -3025,8 +3029,8 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
-  hookified@1.15.0:
-    resolution: {integrity: sha512-51w+ZZGt7Zw5q7rM3nC4t3aLn/xvKDETsXqMczndvwyVQhAHfUmUuFBRFcos8Iyebtk7OAE9dL26wFNzZVVOkw==}
+  hookified@1.15.1:
+    resolution: {integrity: sha512-MvG/clsADq1GPM2KGo2nyfaWVyn9naPiXrqIe4jYjXNZQt238kWyOGrsyc/DmRAQ+Re6yeo6yX/yoNCG5KAEVg==}
 
   html-parse-stringify@3.0.1:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
@@ -3724,8 +3728,8 @@ packages:
     resolution: {integrity: sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ==}
     engines: {node: '>=18'}
 
-  string-width@8.1.0:
-    resolution: {integrity: sha512-Kxl3KJGb/gxkaUMOjRsQ8IrXiGW75O4E3RPjFIINOVH8AMl2SQ/yWdTzWwF3FevIX9LcMAjJW+GRwAlAbTSXdg==}
+  string-width@8.1.1:
+    resolution: {integrity: sha512-KpqHIdDL9KwYk22wEOg/VIqYbrnLeSApsKT/bSj6Ez7pn3CftUiLAv2Lccpq1ALcpLV9UX1Ppn92npZWu2w/aw==}
     engines: {node: '>=20'}
 
   string_decoder@1.3.0:
@@ -3797,8 +3801,8 @@ packages:
     peerDependencies:
       stylelint: ^16.8.2 || ^17.0.0
 
-  stylelint@17.0.0:
-    resolution: {integrity: sha512-saMZ2mqdQre4AfouxcbTdpVglDRcROb4MIucKHvgsDb/0IX7ODhcaz+EOIyfxAsm8Zjl/7j4hJj6MgIYYM8Xwg==}
+  stylelint@17.1.0:
+    resolution: {integrity: sha512-+cUX1FxkkbLX5qJRAPapUv/+v+YU3pGbWu+pHVqTXpiY0mYh3Dxfxa0bLBtVtYgOC8hIWIyX2H/3Y3LWlAevDg==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -4156,7 +4160,7 @@ snapshots:
 
   '@adraffy/ens-normalize@1.11.1': {}
 
-  '@apollo/client@4.1.2(graphql@16.12.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
+  '@apollo/client@4.1.3(graphql@16.12.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.12.0)
       '@wry/caches': 1.0.1
@@ -4172,6 +4176,12 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
 
   '@babel/code-frame@7.28.6':
+    dependencies:
+      '@babel/helper-validator-identifier': 7.28.5
+      js-tokens: 4.0.0
+      picocolors: 1.1.1
+
+  '@babel/code-frame@7.29.0':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
       js-tokens: 4.0.0
@@ -4252,13 +4262,13 @@ snapshots:
 
   '@babel/template@7.28.6':
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       '@babel/parser': 7.28.6
       '@babel/types': 7.28.6
 
   '@babel/traverse@7.28.6':
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       '@babel/generator': 7.28.6
       '@babel/helper-globals': 7.28.0
       '@babel/parser': 7.28.6
@@ -4312,7 +4322,7 @@ snapshots:
     dependencies:
       '@cacheable/utils': 2.3.3
       '@keyv/bigmap': 1.3.1(keyv@5.6.0)
-      hookified: 1.15.0
+      hookified: 1.15.1
       keyv: 5.6.0
 
   '@cacheable/utils@2.3.3':
@@ -4356,7 +4366,7 @@ snapshots:
 
   '@dedot/chain-specs@0.8.0': {}
 
-  '@dedot/chaintypes@0.215.0(dedot@1.0.2(typescript@5.9.3))':
+  '@dedot/chaintypes@0.222.0(dedot@1.0.2(typescript@5.9.3))':
     dependencies:
       dedot: 1.0.2(typescript@5.9.3)
 
@@ -4615,7 +4625,7 @@ snapshots:
   '@keyv/bigmap@1.3.1(keyv@5.6.0)':
     dependencies:
       hashery: 1.4.0
-      hookified: 1.15.0
+      hookified: 1.15.1
       keyv: 5.6.0
 
   '@keyv/serialize@1.1.1': {}
@@ -5590,7 +5600,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.1': {}
 
-  '@rolldown/pluginutils@1.0.0-beta.47': {}
+  '@rolldown/pluginutils@1.0.0-rc.2': {}
 
   '@rollup/pluginutils@5.3.0(rollup@4.57.0)':
     dependencies:
@@ -5859,9 +5869,9 @@ snapshots:
   '@types/w3c-web-usb@1.0.13':
     optional: true
 
-  '@vitejs/plugin-react-swc@4.2.2(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3))':
+  '@vitejs/plugin-react-swc@4.2.3(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3))':
     dependencies:
-      '@rolldown/pluginutils': 1.0.0-beta.47
+      '@rolldown/pluginutils': 1.0.0-rc.2
       '@swc/core': 1.15.11
       vite: 7.3.1(@types/node@25.0.10)(sass@1.97.3)
     transitivePeerDependencies:
@@ -6118,7 +6128,7 @@ snapshots:
     dependencies:
       '@cacheable/memory': 2.0.7
       '@cacheable/utils': 2.3.3
-      hookified: 1.15.0
+      hookified: 1.15.1
       keyv: 5.6.0
       qified: 0.6.0
 
@@ -6402,7 +6412,7 @@ snapshots:
     dependencies:
       cacheable: 2.3.2
       flatted: 3.3.3
-      hookified: 1.15.0
+      hookified: 1.15.1
 
   flatted@3.3.3: {}
 
@@ -6477,7 +6487,7 @@ snapshots:
       kind-of: 6.0.3
       which: 1.3.1
 
-  globals@17.2.0: {}
+  globals@17.3.0: {}
 
   globby@16.1.0:
     dependencies:
@@ -6520,13 +6530,13 @@ snapshots:
 
   hashery@1.4.0:
     dependencies:
-      hookified: 1.15.0
+      hookified: 1.15.1
 
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
 
-  hookified@1.15.0: {}
+  hookified@1.15.1: {}
 
   html-parse-stringify@3.0.1:
     dependencies:
@@ -6816,7 +6826,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       error-ex: 1.3.4
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -6901,7 +6911,7 @@ snapshots:
 
   qified@0.6.0:
     dependencies:
-      hookified: 1.15.0
+      hookified: 1.15.1
 
   qrcode-generator@1.5.0: {}
 
@@ -7235,7 +7245,7 @@ snapshots:
       get-east-asian-width: 1.4.0
       strip-ansi: 7.1.2
 
-  string-width@8.1.0:
+  string-width@8.1.1:
     dependencies:
       get-east-asian-width: 1.4.0
       strip-ansi: 7.1.2
@@ -7271,39 +7281,39 @@ snapshots:
     optionalDependencies:
       react-dom: 19.2.4(react@19.2.4)
 
-  stylelint-config-recommended-scss@17.0.0(postcss@8.5.6)(stylelint@17.0.0(typescript@5.9.3)):
+  stylelint-config-recommended-scss@17.0.0(postcss@8.5.6)(stylelint@17.1.0(typescript@5.9.3)):
     dependencies:
       postcss-scss: 4.0.9(postcss@8.5.6)
-      stylelint: 17.0.0(typescript@5.9.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.0.0(typescript@5.9.3))
-      stylelint-scss: 7.0.0(stylelint@17.0.0(typescript@5.9.3))
+      stylelint: 17.1.0(typescript@5.9.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.1.0(typescript@5.9.3))
+      stylelint-scss: 7.0.0(stylelint@17.1.0(typescript@5.9.3))
     optionalDependencies:
       postcss: 8.5.6
 
-  stylelint-config-recommended@18.0.0(stylelint@17.0.0(typescript@5.9.3)):
+  stylelint-config-recommended@18.0.0(stylelint@17.1.0(typescript@5.9.3)):
     dependencies:
-      stylelint: 17.0.0(typescript@5.9.3)
+      stylelint: 17.1.0(typescript@5.9.3)
 
-  stylelint-config-standard-scss@17.0.0(postcss@8.5.6)(stylelint@17.0.0(typescript@5.9.3)):
+  stylelint-config-standard-scss@17.0.0(postcss@8.5.6)(stylelint@17.1.0(typescript@5.9.3)):
     dependencies:
-      stylelint: 17.0.0(typescript@5.9.3)
-      stylelint-config-recommended-scss: 17.0.0(postcss@8.5.6)(stylelint@17.0.0(typescript@5.9.3))
-      stylelint-config-standard: 40.0.0(stylelint@17.0.0(typescript@5.9.3))
+      stylelint: 17.1.0(typescript@5.9.3)
+      stylelint-config-recommended-scss: 17.0.0(postcss@8.5.6)(stylelint@17.1.0(typescript@5.9.3))
+      stylelint-config-standard: 40.0.0(stylelint@17.1.0(typescript@5.9.3))
     optionalDependencies:
       postcss: 8.5.6
 
-  stylelint-config-standard@40.0.0(stylelint@17.0.0(typescript@5.9.3)):
+  stylelint-config-standard@40.0.0(stylelint@17.1.0(typescript@5.9.3)):
     dependencies:
-      stylelint: 17.0.0(typescript@5.9.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.0.0(typescript@5.9.3))
+      stylelint: 17.1.0(typescript@5.9.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.1.0(typescript@5.9.3))
 
-  stylelint-order@7.0.1(stylelint@17.0.0(typescript@5.9.3)):
+  stylelint-order@7.0.1(stylelint@17.1.0(typescript@5.9.3)):
     dependencies:
       postcss: 8.5.6
       postcss-sorting: 9.1.0(postcss@8.5.6)
-      stylelint: 17.0.0(typescript@5.9.3)
+      stylelint: 17.1.0(typescript@5.9.3)
 
-  stylelint-scss@7.0.0(stylelint@17.0.0(typescript@5.9.3)):
+  stylelint-scss@7.0.0(stylelint@17.1.0(typescript@5.9.3)):
     dependencies:
       css-tree: 3.1.0
       is-plain-object: 5.0.0
@@ -7313,9 +7323,9 @@ snapshots:
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 7.1.1
       postcss-value-parser: 4.2.0
-      stylelint: 17.0.0(typescript@5.9.3)
+      stylelint: 17.1.0(typescript@5.9.3)
 
-  stylelint@17.0.0(typescript@5.9.3):
+  stylelint@17.1.0(typescript@5.9.3):
     dependencies:
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-syntax-patches-for-csstree': 1.0.26
@@ -7350,7 +7360,7 @@ snapshots:
       postcss-safe-parser: 7.0.1(postcss@8.5.6)
       postcss-selector-parser: 7.1.1
       postcss-value-parser: 4.2.0
-      string-width: 8.1.0
+      string-width: 8.1.1
       supports-hyperlinks: 4.4.0
       svg-tags: 1.0.0
       table: 6.9.0
@@ -7507,7 +7517,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-checker@0.12.0(@biomejs/biome@2.3.13)(stylelint@17.0.0(typescript@5.9.3))(typescript@5.9.3)(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3)):
+  vite-plugin-checker@0.12.0(@biomejs/biome@2.3.13)(stylelint@17.1.0(typescript@5.9.3))(typescript@5.9.3)(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3)):
     dependencies:
       '@babel/code-frame': 7.28.6
       chokidar: 4.0.3
@@ -7520,7 +7530,7 @@ snapshots:
       vscode-uri: 3.1.0
     optionalDependencies:
       '@biomejs/biome': 2.3.13
-      stylelint: 17.0.0(typescript@5.9.3)
+      stylelint: 17.1.0(typescript@5.9.3)
       typescript: 5.9.3
 
   vite-plugin-svgr@4.5.0(rollup@4.57.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.0.10)(sass@1.97.3)):
