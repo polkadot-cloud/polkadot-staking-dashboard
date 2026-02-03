@@ -21,6 +21,8 @@ export const CompulsoryPluginsProduction: Plugin[] = [
 export const DisabledPluginsPerNetwork: Partial<Record<NetworkId, Plugin[]>> = {
 	// NOTE: Westend is not supported by the staking API plugin
 	westend: ['staking_api'],
+	// NOTE: Paseo is not supported by the staking API plugin
+	paseo: ['staking_api'],
 }
 
 export const PolkawatchConfig = {

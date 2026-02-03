@@ -3,8 +3,14 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { shuffle } from '@w3ux/utils'
-import type { ValidatorEntry } from '@w3ux/validator-assets'
-import { ValidatorCommunity } from '@w3ux/validator-assets'
+import type {
+	ValidatorEntry,
+	ValidatorSupportedNetwork,
+} from '@w3ux/validator-assets'
+import {
+	ValidatorCommunity,
+	validatorListSupported,
+} from '@w3ux/validator-assets'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import type { OperatorsContextInterface } from './types'
@@ -18,8 +24,20 @@ export const OperatorsProvider = ({ children }: { children: ReactNode }) => {
 		...shuffle(ValidatorCommunity),
 	])
 
+	// Get operators for a network
+	const getNetworkOperators = (network: string) => {
+		if (!validatorListSupported(network)) {
+			return []
+		}
+		return validatorOperators.filter(
+			(v) => v.validators[network as ValidatorSupportedNetwork] !== undefined,
+		)
+	}
+
 	return (
-		<OperatorsContext.Provider value={{ validatorOperators }}>
+		<OperatorsContext.Provider
+			value={{ validatorOperators, getNetworkOperators }}
+		>
 			{children}
 		</OperatorsContext.Provider>
 	)

@@ -1,27 +1,27 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ValidatorEntry } from '@w3ux/validator-assets'
+import type {
+	ValidatorEntry,
+	ValidatorSupportedNetwork,
+} from '@w3ux/validator-assets'
 import { useOperators } from 'contexts/Operators'
 import { useEffect, useState } from 'react'
-import type { DefaultServiceNetworkId } from 'types'
 import { Page } from 'ui-core/base'
 import { useOperatorsSections } from './context'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
 
-export const List = ({ network }: { network: DefaultServiceNetworkId }) => {
+export const List = ({ network }: { network: ValidatorSupportedNetwork }) => {
 	const { scrollPos } = useOperatorsSections()
-	const { validatorOperators } = useOperators()
+	const { getNetworkOperators } = useOperators()
 
 	const [entityItems, setEntityItems] = useState<ValidatorEntry[]>(
-		validatorOperators.filter((v) => v.validators[network] !== undefined),
+		getNetworkOperators(network),
 	)
 
 	useEffect(() => {
-		setEntityItems(
-			validatorOperators.filter((v) => v.validators[network] !== undefined),
-		)
+		setEntityItems(getNetworkOperators(network))
 	}, [network])
 
 	useEffect(() => {

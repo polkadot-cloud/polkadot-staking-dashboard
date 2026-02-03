@@ -8,6 +8,10 @@ import {
 	faServer,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+	type ValidatorSupportedNetwork,
+	validatorListSupported,
+} from '@w3ux/validator-assets'
 import { lazy, Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
@@ -18,7 +22,6 @@ import { ItemWrapper } from './Wrappers'
 export const Item = ({ item, actionable, network }: ItemProps) => {
 	const { t } = useTranslation('pages')
 	const { openModal } = useOverlay().modal
-
 	const {
 		bio,
 		name,
@@ -28,7 +31,12 @@ export const Item = ({ item, actionable, network }: ItemProps) => {
 		icon,
 		validators: entityAllValidators,
 	} = item
-	const validatorCount = entityAllValidators[network]?.length ?? 0
+
+	let validatorCount = 0
+	if (validatorListSupported(network)) {
+		const key = network as ValidatorSupportedNetwork
+		validatorCount = entityAllValidators[key]?.length ?? 0
+	}
 
 	const { setActiveSection, setActiveItem, setScrollPos } =
 		useOperatorsSections()
