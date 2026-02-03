@@ -121,11 +121,16 @@ ellipse.primary {
   fill: var(--text-primary);
 }
 
+path.primaryStroke {
+  stroke: var(--text-primary);
+}
+
 path.accent,
 circle.accent,
 ellipse.accent {
   fill: var(--accent-primary);
 }
+
 
 label {
   color: var(--text-primary);
