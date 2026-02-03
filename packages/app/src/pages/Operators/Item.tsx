@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-	type ValidatorSupportedChain,
+	type ValidatorSupportedNetwork,
 	validatorListSupported,
 } from '@w3ux/validator-assets'
 import { lazy, Suspense, useMemo } from 'react'
@@ -34,7 +34,7 @@ export const Item = ({ item, actionable, network }: ItemProps) => {
 
 	let validatorCount = 0
 	if (validatorListSupported(network)) {
-		const key = network as ValidatorSupportedChain
+		const key = network as ValidatorSupportedNetwork
 		validatorCount = entityAllValidators[key]?.length ?? 0
 	}
 

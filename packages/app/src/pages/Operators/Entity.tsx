@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import {
-	type ValidatorSupportedChain,
+	type ValidatorSupportedNetwork,
 	validatorListSupported,
 } from '@w3ux/validator-assets'
 import { useApi } from 'contexts/Api'
@@ -12,14 +12,14 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { ValidatorList } from 'library/ValidatorList'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { OperatorsSupportedNetwork, Validator } from 'types'
+import type { Validator } from 'types'
 import { ButtonSecondary } from 'ui-buttons'
 import { Page } from 'ui-core/base'
 import { useOperatorsSections } from './context'
 import { Item } from './Item'
 import { ItemsWrapper } from './Wrappers'
 
-export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
+export const Entity = ({ network }: { network: ValidatorSupportedNetwork }) => {
 	const { t } = useTranslation('pages')
 	const { isReady } = useApi()
 	const { getValidators } = useValidators()
@@ -29,7 +29,7 @@ export const Entity = ({ network }: { network: OperatorsSupportedNetwork }) => {
 
 	let validators: string[] = []
 	if (validatorListSupported(network)) {
-		const key = network as ValidatorSupportedChain
+		const key = network as ValidatorSupportedNetwork
 		validators = entityAllValidators?.[key] || []
 	}
 

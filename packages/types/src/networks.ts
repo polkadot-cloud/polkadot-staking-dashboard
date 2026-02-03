@@ -15,12 +15,6 @@ export type DefaultServiceNetworkId =
 	| 'westend'
 	| 'paseo'
 
-export type OperatorsSupportedNetwork =
-	| 'polkadot'
-	| 'kusama'
-	| 'westend'
-	| 'paseo'
-
 export type SystemChainId =
 	| 'people-polkadot'
 	| 'people-kusama'

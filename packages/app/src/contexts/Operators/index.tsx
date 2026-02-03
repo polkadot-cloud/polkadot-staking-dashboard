@@ -5,7 +5,7 @@ import { createSafeContext } from '@w3ux/hooks'
 import { shuffle } from '@w3ux/utils'
 import type {
 	ValidatorEntry,
-	ValidatorSupportedChain,
+	ValidatorSupportedNetwork,
 } from '@w3ux/validator-assets'
 import {
 	ValidatorCommunity,
@@ -30,7 +30,7 @@ export const OperatorsProvider = ({ children }: { children: ReactNode }) => {
 			return []
 		}
 		return validatorOperators.filter(
-			(v) => v.validators[network as ValidatorSupportedChain] !== undefined,
+			(v) => v.validators[network as ValidatorSupportedNetwork] !== undefined,
 		)
 	}
 
