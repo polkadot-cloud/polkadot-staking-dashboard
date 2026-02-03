@@ -298,8 +298,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.215.0
-        version: 0.215.0(dedot@1.0.2(typescript@5.9.3))
+        specifier: ^0.222.0
+        version: 0.222.0(dedot@1.0.2(typescript@5.9.3))
       '@w3ux/observables-connect':
         specifier: ^1.0.1
         version: 1.0.1(react@19.2.4)(rxjs@7.8.2)(typescript@5.9.3)
@@ -449,8 +449,8 @@ importers:
         version: 1.0.2(typescript@5.9.3)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.215.0
-        version: 0.215.0(dedot@1.0.2(typescript@5.9.3))
+        specifier: ^0.222.0
+        version: 0.222.0(dedot@1.0.2(typescript@5.9.3))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -879,8 +879,8 @@ packages:
   '@dedot/chain-specs@0.8.0':
     resolution: {integrity: sha512-k+pUJb4bNol29DPYJpUlxa1Jpt8hpM7n99oe9URMLwlPcbzL6XYjlQG6qtIfGjOLv+XAwvShvCzT6v/Pw7atWA==}
 
-  '@dedot/chaintypes@0.215.0':
-    resolution: {integrity: sha512-7elXDV1dpiu4poUs/iR1ZFzN7ihS9Xj+68jkRhXZFuA4lyhWgHTZ4veQ5DLgdwwm1bgzGrqyJ3HXNWZcYyfuaA==}
+  '@dedot/chaintypes@0.222.0':
+    resolution: {integrity: sha512-07P+6xLiHnrHj6192JVh21VGv47EYPJHD9OYkK23nPlIrWnB+GHCBS45D4uCd1h/gmvAUktTpgPfeI+gDfdArg==}
     peerDependencies:
       dedot: '>=1.0.1'
 
@@ -4356,7 +4356,7 @@ snapshots:
 
   '@dedot/chain-specs@0.8.0': {}
 
-  '@dedot/chaintypes@0.215.0(dedot@1.0.2(typescript@5.9.3))':
+  '@dedot/chaintypes@0.222.0(dedot@1.0.2(typescript@5.9.3))':
     dependencies:
       dedot: 1.0.2(typescript@5.9.3)
 
