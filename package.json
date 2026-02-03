@@ -20,7 +20,7 @@
 		"@types/react-helmet": "^6.1.11",
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"@w3ux/types": "^2.4.1",
-		"globals": "^17.1.0",
+		"globals": "^17.3.0",
 		"postcss": "^8.5.1",
 		"postcss-scss": "^4.0.9",
 		"prettier": "^3.8.1",

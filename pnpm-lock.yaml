@@ -37,8 +37,8 @@ importers:
         specifier: ^2.4.1
         version: 2.4.1
       globals:
-        specifier: ^17.1.0
-        version: 17.2.0
+        specifier: ^17.3.0
+        version: 17.3.0
       postcss:
         specifier: ^8.5.1
         version: 8.5.6
@@ -2972,8 +2972,8 @@ packages:
     resolution: {integrity: sha512-awConJSVCHVGND6x3tmMaKcQvwXLhjdkmomy2W+Goaui8YPgYgXJZewhg3fWC+DlfqqQuWg8AwqjGTD2nAPVWg==}
     engines: {node: '>=6'}
 
-  globals@17.2.0:
-    resolution: {integrity: sha512-tovnCz/fEq+Ripoq+p/gN1u7l6A7wwkoBT9pRCzTHzsD/LvADIzXZdjmRymh5Ztf0DYC3Rwg5cZRYjxzBmzbWg==}
+  globals@17.3.0:
+    resolution: {integrity: sha512-yMqGUQVVCkD4tqjOJf3TnrvaaHDMYp4VlUSObbkIiuCPe/ofdMBFIAcBbCSRFWOnos6qRiTVStDwqPLUclaxIw==}
     engines: {node: '>=18'}
 
   globby@16.1.0:
@@ -6477,7 +6477,7 @@ snapshots:
       kind-of: 6.0.3
       which: 1.3.1
 
-  globals@17.2.0: {}
+  globals@17.3.0: {}
 
   globby@16.1.0:
     dependencies:
