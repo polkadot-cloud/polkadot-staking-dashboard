@@ -1,22 +1,7 @@
 /* @license Copyright 2024 w3ux authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-export type ValidatorSupportedChains =
-	| 'polkadot'
-	| 'kusama'
-	| 'westend'
-	| 'paseo'
-
-export interface ValidatorEntry {
-	name: string
-	icon: string
-	bio: string
-	email?: string
-	x?: string
-	website?: string
-	// NOTE: must have at least one active validator on at least one network.
-	validators: Partial<Record<ValidatorSupportedChains, string[]>>
-}
+import type { ValidatorEntry } from '@w3ux/validator-assets'
 
 export const ValidatorCommunity: ValidatorEntry[] = [
 	{

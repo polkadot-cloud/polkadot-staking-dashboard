@@ -1,10 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type {
-	ValidatorEntry,
-	ValidatorSupportedChains,
-} from '@w3ux/validator-assets'
+import type { ValidatorEntry } from '@w3ux/validator-assets'
 import { useOperators } from 'contexts/Operators'
 import { useEffect, useState } from 'react'
 import type { OperatorsSupportedNetwork } from 'types'
@@ -15,20 +12,15 @@ import { ItemsWrapper } from './Wrappers'
 
 export const List = ({ network }: { network: OperatorsSupportedNetwork }) => {
 	const { scrollPos } = useOperatorsSections()
-	const { validatorOperators } = useOperators()
-	// Cast to ValidatorSupportedChains for @w3ux/validator-assets lookup
-	// Paseo will show no validators until added to the w3ux package
-	const chainKey = network as ValidatorSupportedChains
+	const { getNetworkOperators } = useOperators()
 
 	const [entityItems, setEntityItems] = useState<ValidatorEntry[]>(
-		validatorOperators.filter((v) => v.validators[chainKey] !== undefined),
+		getNetworkOperators(network),
 	)
 
 	useEffect(() => {
-		setEntityItems(
-			validatorOperators.filter((v) => v.validators[chainKey] !== undefined),
-		)
-	}, [network, chainKey])
+		setEntityItems(getNetworkOperators(network))
+	}, [network])
 
 	useEffect(() => {
 		window.scrollTo(0, scrollPos)
