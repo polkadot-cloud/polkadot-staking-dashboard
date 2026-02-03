@@ -14,7 +14,7 @@ import CloudSVG from 'assets/icons/cloud.svg?react'
 import { getCategoryId } from 'config/util'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
-import { getActivePageForCategory } from 'hooks/useActivePages'
+import { useActivePageForCategory } from 'hooks/useActivePages'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -45,6 +45,7 @@ export const DefaultMenu = ({
 	const { themeElementRef } = useTheme()
 	const { status: modalStatus } = useOverlay().modal
 	const { status: canvasStatus } = useOverlay().canvas
+	const { getActivePageForCategory } = useActivePageForCategory()
 
 	const [openCategories, setOpenCategories] = useState<boolean>(false)
 

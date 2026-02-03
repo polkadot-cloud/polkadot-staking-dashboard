@@ -57,6 +57,11 @@ export const initDedotService = async () => {
 					await getDefaultService(network, rest)
 				service = new Service(cur, ids, ...apis, providerRelay, providerPeople)
 			}
+			if (network === 'paseo') {
+				const { Service, apis, ids, providerRelay, providerPeople } =
+					await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis, providerRelay, providerPeople)
+			}
 
 			// Expose service interface
 			setServiceInterface(service.interface)

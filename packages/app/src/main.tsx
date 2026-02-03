@@ -7,6 +7,7 @@ import { version } from '../package.json'
 
 // Network styles
 import 'styles/accents/kusama.scss'
+import 'styles/accents/paseo.scss'
 import 'styles/accents/polkadot.scss'
 import 'styles/accents/westend.scss'
 
