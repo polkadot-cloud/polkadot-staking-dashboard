@@ -23,13 +23,7 @@ pnpm install
 
 # Run the test
 cd packages/test-smoldot
-SEED_PHRASE="your twelve word seed phrase here" pnpm test
-```
-
-Or from the root:
-
-```bash
-pnpm --filter test-smoldot test
+SEED_PHRASE="your twelve word seed phrase here" RECIPIENT_ADDRESS="destination address here" pnpm start
 ```
 
 **⚠️ Important:** Use a test account with minimal funds. The script will attempt to create a transfer transaction.

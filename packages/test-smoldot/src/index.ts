@@ -28,7 +28,7 @@ const main = async () => {
 			'❌ Error: SEED_PHRASE and RECIPIENT_ADDRESS environment variables are required',
 		)
 		console.log(
-			'Usage: SEED_PHRASE="your seed phrase" RECIPIENT_ADDRESS="recipient address" pnpm test',
+			'Usage: SEED_PHRASE="your seed phrase" RECIPIENT_ADDRESS="recipient address" pnpm start',
 		)
 		process.exit(1)
 	}
