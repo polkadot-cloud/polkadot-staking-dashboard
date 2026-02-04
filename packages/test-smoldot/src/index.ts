@@ -9,6 +9,12 @@ import Keyring from '@polkadot/keyring'
 import { DedotClient, SmoldotProvider } from 'dedot'
 import { start } from 'smoldot'
 
+// Initialize smoldot (Node.js compatible - no worker needed)
+const initSmoldotClient = () => {
+	const client = start()
+	return client
+}
+
 // Creates and returns a Keyring account from the provided mnemonic phrase
 const createAccount = (phrase: string) => {
 	const keyring = new Keyring({ type: 'sr25519' })
@@ -40,8 +46,9 @@ const main = async () => {
 		console.log(`✅ Account address: ${signingAccount.address}\n`)
 
 		// Initialize smoldot client
-		console.log('🔌 Initializing smoldot client...')
-		const smoldotClient = start()
+		console.log('🔌 Initializing smoldot client (Node.js mode - no worker)...')
+		const smoldotClient = initSmoldotClient()
+		console.log('✅ Smoldot client initialized:', !!smoldotClient)
 
 		// Add Polkadot relay chain (required for system chains)
 		console.log('⛓️  Adding Polkadot relay chain to smoldot...')
@@ -49,6 +56,7 @@ const main = async () => {
 			chainSpec: polkadotChainSpec,
 		})
 		console.log('✅ Polkadot relay chain added')
+		console.log('✅ Relay chain valid:', !!relayChain)
 
 		// Add Asset Hub (Statemint) as a system chain
 		console.log('⛓️  Adding Asset Hub chain to smoldot...')
@@ -57,6 +65,7 @@ const main = async () => {
 			potentialRelayChains: [relayChain],
 		})
 		console.log('✅ Asset Hub chain added')
+		console.log('✅ Asset Hub chain valid:', !!assetHubChain)
 
 		// Add People chain as a system chain
 		console.log('⛓️  Adding People chain to smoldot...')
@@ -64,7 +73,8 @@ const main = async () => {
 			chainSpec: peopleChainSpec,
 			potentialRelayChains: [relayChain],
 		})
-		console.log('✅ People chain added\n')
+		console.log('✅ People chain added')
+		console.log('✅ People chain valid:', !!peopleChain, '\n')
 
 		// Create Dedot providers for each chain
 		console.log('🔗 Creating Dedot providers...')
