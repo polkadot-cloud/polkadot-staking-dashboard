@@ -70,12 +70,12 @@ const main = async () => {
 		console.log('🔗 Creating Dedot providers...')
 
 		// Mimicking staking dashboard behavior by initialising providers for all chains
-		// biome-ignore lint/correctness/noUnusedVariables: <>
+		// biome-ignore lint/correctness/noUnusedVariables: <mimicking dedot-api initialization>
 		const relayProvider = new SmoldotProvider(relayChain)
 
 		const assetHubProvider = new SmoldotProvider(assetHubChain)
 
-		// biome-ignore lint/correctness/noUnusedVariables: <>
+		// biome-ignore lint/correctness/noUnusedVariables: <mimicking dedot-api initialization>
 		const peopleProvider = new SmoldotProvider(peopleChain)
 		console.log('✅ Providers created')
 
