@@ -2,24 +2,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PageWarnings } from 'library/PageWarnings'
+import { Stats } from 'library/Stats'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 import { PoolOverview } from './Overview'
-import { ActivePoolCount } from './Stats/ActivePoolCount'
-import { MinCreateBond } from './Stats/MinCreateBond'
-import { MinJoinBond } from './Stats/MinJoinBond'
+import { usePoolsStats } from './Stats/usePoolsStats'
 
 export const Pools = () => {
 	const { t } = useTranslation('pages')
+	const poolsStats = usePoolsStats()
 
 	return (
 		<>
 			<Page.Title title={t('pool', { ns: 'app' })}></Page.Title>
 			<PageWarnings />
 			<Stat.Row>
-				<ActivePoolCount />
-				<MinJoinBond />
-				<MinCreateBond />
+				<Stats items={poolsStats} />
 			</Stat.Row>
 			<PoolOverview />
 		</>
