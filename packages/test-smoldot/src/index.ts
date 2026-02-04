@@ -6,6 +6,7 @@ import { chainSpec as assetHubChainSpec } from '@dedot/chain-specs/polkadot_asse
 import { chainSpec as peopleChainSpec } from '@dedot/chain-specs/polkadot_people'
 import type { PolkadotAssetHubApi } from '@dedot/chaintypes'
 import Keyring from '@polkadot/keyring'
+import { cryptoWaitReady } from '@polkadot/util-crypto'
 import { DedotClient, SmoldotProvider } from 'dedot'
 import { start } from 'smoldot'
 
@@ -40,6 +41,11 @@ const main = async () => {
 	}
 
 	try {
+		// Initialize WASM crypto (required for @polkadot/keyring)
+		console.log('🔐 Initializing WASM crypto...')
+		await cryptoWaitReady()
+		console.log('✅ WASM crypto ready\n')
+
 		// Create signing account
 		console.log('🔑 Creating account from seed phrase...')
 		const signingAccount = createAccount(seedPhrase)
