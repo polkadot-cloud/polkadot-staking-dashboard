@@ -5,13 +5,13 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { PageWarnings } from 'library/PageWarnings'
+import { Stats } from 'library/Stats'
 import { Active } from 'pages/Nominate/Active'
-import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
 import { NextRewards } from 'pages/Overview/Stats/NextRewards'
 import { PoolOverview } from 'pages/Pools/Overview'
-import { MinJoinBond } from 'pages/Pools/Stats/MinJoinBond'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
+import { useStakeStats } from './useStakeStats'
 
 export const Stake = () => {
 	const { t } = useTranslation('pages')
@@ -30,6 +30,7 @@ export const Stake = () => {
 	}
 
 	const nominating = nominatorBalance.isGreaterThan(0)
+	const stakeStats = useStakeStats(isPreloading)
 
 	return (
 		<>
@@ -37,8 +38,7 @@ export const Stake = () => {
 			<PageWarnings />
 			{!nominating && (
 				<Stat.Row>
-					<AverageRewardRate isPreloading={isPreloading} />
-					<MinJoinBond isPreloading={isPreloading} />
+					<Stats items={stakeStats} />
 					<NextRewards isPreloading={isPreloading} />
 				</Stat.Row>
 			)}
