@@ -37,11 +37,10 @@ export const newSystemChainSmProvider = async (
 	relayChain: Awaited<ReturnType<Client['addChain']>>,
 	systemChainData: SystemChain,
 ) => {
-	const { chainSpec: paraChainSpec } =
-		await systemChainData.endpoints.getLightClient()
+	const { chainSpec } = await systemChainData.endpoints.getLightClient()
 
 	const chain = await client.addChain({
-		chainSpec: paraChainSpec,
+		chainSpec,
 		potentialRelayChains: [relayChain],
 	})
 	return new SmoldotProvider(chain)
