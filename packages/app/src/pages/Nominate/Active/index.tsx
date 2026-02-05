@@ -9,6 +9,7 @@ import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useStats } from 'hooks/useStats'
 import { useSyncing } from 'hooks/useSyncing'
+import { BondManager } from 'library/BondManager'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
@@ -19,7 +20,6 @@ import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
-import { ManageBond } from './ManageBond'
 import { Status } from './Status'
 import { UnstakePrompts } from './UnstakePrompts'
 
@@ -50,7 +50,7 @@ export const Active = () => {
 			<Page.Row>
 				<Page.RowSection secondary vLast>
 					<CardWrapper height={ROW_HEIGHT}>
-						<ManageBond />
+						<BondManager bondFor="nominator" />
 					</CardWrapper>
 				</Page.RowSection>
 				<Page.RowSection hLast>
