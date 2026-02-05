@@ -6,7 +6,7 @@ import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
-import type { StatConfig } from 'library/Stats/types'
+import { type StatConfig, StatType } from 'library/Stats/types'
 import { useTranslation } from 'react-i18next'
 
 export const useStakeStats = (isPreloading?: boolean): StatConfig[] => {
@@ -18,8 +18,7 @@ export const useStakeStats = (isPreloading?: boolean): StatConfig[] => {
 
 	return [
 		{
-			id: 'average-reward-rate',
-			type: 'text',
+			type: StatType.TEXT,
 			label: t('averageRewardRate'),
 			value: formatRateAsPercent(getAverageRewardRate()),
 			helpKey: 'Average Reward Rate',
@@ -27,8 +26,7 @@ export const useStakeStats = (isPreloading?: boolean): StatConfig[] => {
 			isPreloading,
 		},
 		{
-			id: 'min-join-bond',
-			type: 'number',
+			type: StatType.NUMBER,
 			label: t('minimumToJoinPool'),
 			value: parseFloat(planckToUnit(minJoinBond, units)),
 			decimals: 3,

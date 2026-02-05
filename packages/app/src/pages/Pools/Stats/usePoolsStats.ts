@@ -5,7 +5,7 @@ import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import type { StatConfig } from 'library/Stats/types'
+import { type StatConfig, StatType } from 'library/Stats/types'
 import { useTranslation } from 'react-i18next'
 
 export const usePoolsStats = (): StatConfig[] => {
@@ -17,16 +17,14 @@ export const usePoolsStats = (): StatConfig[] => {
 
 	return [
 		{
-			id: 'active-pools',
-			type: 'number',
+			type: StatType.NUMBER,
 			label: t('activePools'),
 			value: counterForBondedPools,
 			unit: '',
 			helpKey: 'Active Pools',
 		},
 		{
-			id: 'min-join-bond',
-			type: 'number',
+			type: StatType.NUMBER,
 			label: t('minimumToJoinPool'),
 			value: parseFloat(planckToUnit(minJoinBond, units)),
 			decimals: 3,
@@ -34,8 +32,7 @@ export const usePoolsStats = (): StatConfig[] => {
 			helpKey: 'Minimum To Join Pool',
 		},
 		{
-			id: 'min-create-bond',
-			type: 'number',
+			type: StatType.NUMBER,
 			label: t('minimumToCreatePool'),
 			value: parseFloat(planckToUnit(minCreateBond, units)),
 			decimals: 3,

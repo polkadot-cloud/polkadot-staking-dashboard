@@ -4,10 +4,19 @@
 import type { TimeLeftFormatted } from '@w3ux/types'
 
 /**
+ * Enumeration of available stat types
+ */
+export enum StatType {
+	NUMBER = 'number',
+	TEXT = 'text',
+	PIE = 'pie',
+	TIMELEFT = 'timeleft',
+}
+
+/**
  * Base properties shared by all stat configurations
  */
 export interface StatConfigBase {
-	id: string
 	label: string
 	helpKey?: string
 	isPreloading?: boolean
@@ -18,7 +27,7 @@ export interface StatConfigBase {
  * Displays a numeric value with optional decimals and unit
  */
 export interface NumberStatConfig extends StatConfigBase {
-	type: 'number'
+	type: StatType.NUMBER
 	value: number
 	decimals?: number
 	unit?: string
@@ -29,7 +38,7 @@ export interface NumberStatConfig extends StatConfigBase {
  * Displays a text/string value
  */
 export interface TextStatConfig extends StatConfigBase {
-	type: 'text'
+	type: StatType.TEXT
 	value: string
 	primary?: boolean
 }
@@ -39,7 +48,7 @@ export interface TextStatConfig extends StatConfigBase {
  * Displays a pie chart with a value
  */
 export interface PieStatConfig extends StatConfigBase {
-	type: 'pie'
+	type: StatType.PIE
 	value: string | number
 	unit: string
 	total?: string | number
@@ -52,7 +61,7 @@ export interface PieStatConfig extends StatConfigBase {
  * Displays a countdown with progress graph
  */
 export interface TimeleftStatConfig extends StatConfigBase {
-	type: 'timeleft'
+	type: StatType.TIMELEFT
 	timeleft: TimeLeftFormatted
 	graph: {
 		value1: number

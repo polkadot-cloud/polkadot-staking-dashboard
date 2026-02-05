@@ -11,13 +11,13 @@ import type { StatConfig, StatsProps } from './types'
  * Renders a single stat based on its configuration type
  */
 const StatItem = ({ config }: { config: StatConfig }) => {
-	const { type, id, label, helpKey, isPreloading } = config
+	const { type, label, helpKey, isPreloading } = config
 
 	switch (type) {
 		case 'number':
 			return (
 				<Number
-					key={id}
+					key={label}
 					label={label}
 					value={config.value}
 					decimals={config.decimals}
@@ -30,7 +30,7 @@ const StatItem = ({ config }: { config: StatConfig }) => {
 		case 'text':
 			return (
 				<Text
-					key={id}
+					key={label}
 					label={label}
 					value={config.value}
 					primary={config.primary}
@@ -42,7 +42,7 @@ const StatItem = ({ config }: { config: StatConfig }) => {
 		case 'pie':
 			return (
 				<Pie
-					key={id}
+					key={label}
 					label={label}
 					stat={{
 						value: config.value,
@@ -59,7 +59,7 @@ const StatItem = ({ config }: { config: StatConfig }) => {
 		case 'timeleft':
 			return (
 				<Timeleft
-					key={id}
+					key={label}
 					label={label}
 					timeleft={config.timeleft}
 					graph={config.graph}
@@ -90,7 +90,7 @@ const StatItem = ({ config }: { config: StatConfig }) => {
 export const Stats = ({ items }: StatsProps) => (
 	<>
 		{items.map((config) => (
-			<StatItem key={config.id} config={config} />
+			<StatItem key={config.label} config={config} />
 		))}
 	</>
 )
