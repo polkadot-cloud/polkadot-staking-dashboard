@@ -3,12 +3,11 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useAccountBalances } from 'hooks/useAccountBalances'
-import { useStakeStats } from 'hooks/useStakeStats'
+import { useStats } from 'hooks/useStats'
 import { useSyncing } from 'hooks/useSyncing'
 import { PageWarnings } from 'library/PageWarnings'
 import { Stats } from 'library/Stats'
 import { Active } from 'pages/Nominate/Active'
-import { NextRewards } from 'pages/Overview/Stats/NextRewards'
 import { PoolOverview } from 'pages/Pools/Overview'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
@@ -29,7 +28,8 @@ export const Stake = () => {
 		isPreloading = syncing
 	}
 
-	const stakeStats = useStakeStats(isPreloading)
+	const { averageRewardRateStat, minimumToJoinPoolStat, nextRewards } =
+		useStats(isPreloading)
 	const nominating = nominatorBalance.isGreaterThan(0)
 
 	return (
@@ -38,8 +38,9 @@ export const Stake = () => {
 			<PageWarnings />
 			{!nominating && (
 				<Stat.Row>
-					<Stats items={stakeStats} />
-					<NextRewards isPreloading={isPreloading} />
+					<Stats
+						items={[averageRewardRateStat, minimumToJoinPoolStat, nextRewards]}
+					/>
 				</Stat.Row>
 			)}
 			{nominating ? (

@@ -20,10 +20,11 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { useStats } from 'hooks/useStats'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { Stats } from 'library/Stats'
 import { formatFiatCurrency } from 'locales/util'
-import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -47,6 +48,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 	const { pluginEnabled } = usePlugins()
 	const { openModal } = useOverlay().modal
 	const { avgCommission } = useValidators()
+	const { averageRewardRate } = useStats()
 	const { activeAddress } = useActiveAccounts()
 	const { price: tokenPrice } = useTokenPrices()
 	const { getAverageRewardRate } = useAverageRewardRate()
@@ -84,7 +86,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 	return (
 		<>
 			<Stat.Row>
-				<AverageRewardRate />
+				<Stats items={[averageRewardRate]} />
 				{pluginEnabled('staking_api') && <RewardTrend />}
 				<RewardCalculator
 					onClick={() => {
