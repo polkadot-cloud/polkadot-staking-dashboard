@@ -6,7 +6,7 @@ import { Stats } from 'library/Stats'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 import { PoolOverview } from './Overview'
-import { usePoolsStats } from './Stats/usePoolsStats'
+import { usePoolsStats } from '../../hooks/usePoolStats'
 
 export const Pools = () => {
 	const { t } = useTranslation('pages')

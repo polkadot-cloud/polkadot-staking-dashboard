@@ -29,8 +29,8 @@ export const Stake = () => {
 		isPreloading = syncing
 	}
 
-	const nominating = nominatorBalance.isGreaterThan(0)
 	const stakeStats = useStakeStats(isPreloading)
+	const nominating = nominatorBalance.isGreaterThan(0)
 
 	return (
 		<>
