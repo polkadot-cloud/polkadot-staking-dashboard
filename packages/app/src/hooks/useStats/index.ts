@@ -5,12 +5,15 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
+import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { useNextRewards } from 'hooks/useNextRewards'
 import { useSupplyStaked } from 'hooks/useSupplyStaked'
 import { type StatConfig, StatType } from 'library/Stats/types'
 import { useTranslation } from 'react-i18next'
+import { percentageOf } from 'ui-graphs/util'
 
 export const useStats = (
 	isPreloading?: boolean,
@@ -20,6 +23,15 @@ export const useStats = (
 	const { unit, units } = getStakingChainData(network)
 	const { minJoinBond, counterForBondedPools, minCreateBond } =
 		useApi().poolsConfig
+	const {
+		stakingMetrics: {
+			validatorCount,
+			counterForValidators,
+			maxValidatorsCount,
+		},
+	} = useApi()
+	const { activeValidators } = useEraStakers()
+	const { avgCommission } = useValidators()
 	const { supplyString, supplyNumber } = useSupplyStaked()
 	const { formatted, timeleftResult, activeEra } = useNextRewards()
 	const { getAverageRewardRate, formatRateAsPercent } = useAverageRewardRate()
@@ -55,6 +67,51 @@ export const useStats = (
 		},
 		tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
 		isPreloading,
+	}
+
+	// Validator stats
+	stats.activeValidators = {
+		type: StatType.PIE,
+		label: t('activeValidators'),
+		value: activeValidators,
+		total: validatorCount,
+		unit: '',
+		pieValue: percentageOf(activeValidators, validatorCount),
+		tooltip: `${
+			validatorCount > 0
+				? new BigNumber(activeValidators)
+						.dividedBy(validatorCount * 0.01)
+						.decimalPlaces(2)
+						.toFormat()
+				: '0'
+		}%`,
+		helpKey: 'Active Validator',
+	}
+
+	stats.averageCommission = {
+		type: StatType.TEXT,
+		label: t('averageCommission'),
+		value: `${String(avgCommission)}%`,
+		helpKey: 'Average Commission',
+	}
+
+	stats.totalValidators = {
+		type: StatType.PIE,
+		label: t('totalValidators'),
+		value: counterForValidators,
+		total: maxValidatorsCount,
+		unit: '',
+		pieValue: maxValidatorsCount
+			? percentageOf(counterForValidators, maxValidatorsCount)
+			: 0,
+		tooltip: `${
+			maxValidatorsCount && maxValidatorsCount > 0
+				? new BigNumber(counterForValidators / (maxValidatorsCount / 100))
+						.decimalPlaces(2)
+						.toFormat()
+				: '0'
+		}%`,
+		helpKey: 'Validator',
 	}
 
 	stats.minimumToJoinPool = {
