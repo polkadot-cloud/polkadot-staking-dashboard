@@ -14,6 +14,7 @@ import { useSupplyStaked } from 'hooks/useSupplyStaked'
 import { type StatConfig, StatType } from 'library/Stats/types'
 import { useTranslation } from 'react-i18next'
 import { percentageOf } from 'ui-graphs/util'
+import { planckToUnitBn } from 'utils'
 
 export const useStats = (
 	isPreloading?: boolean,
@@ -28,13 +29,17 @@ export const useStats = (
 			validatorCount,
 			counterForValidators,
 			maxValidatorsCount,
+			counterForNominators,
+			minNominatorBond,
+			minimumActiveStake,
 		},
 	} = useApi()
-	const { activeValidators } = useEraStakers()
+	const { activeValidators, activeNominatorsCount } = useEraStakers()
 	const { avgCommission } = useValidators()
 	const { supplyString, supplyNumber } = useSupplyStaked()
 	const { formatted, timeleftResult, activeEra } = useNextRewards()
 	const { getAverageRewardRate, formatRateAsPercent } = useAverageRewardRate()
+	const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
 
 	const stats: Record<string, StatConfig> = {}
 
@@ -148,6 +153,47 @@ export const useStats = (
 		decimals: 3,
 		unit,
 		helpKey: 'Minimum To Create Pool',
+	}
+
+	// Nominator stats
+	stats.activeNominators = {
+		type: StatType.PIE,
+		label: t('activeNominators'),
+		value: activeNominatorsCount,
+		total: counterForNominators,
+		unit: '',
+		pieValue:
+			counterForNominators > 0
+				? percentageOf(activeNominatorsCount, counterForNominators)
+				: 0,
+		tooltip: `${
+			counterForNominators > 0
+				? new BigNumber(
+						percentageOf(activeNominatorsCount, counterForNominators),
+					)
+						.decimalPlaces(2)
+						.toFormat()
+				: '0'
+		}%`,
+		helpKey: 'Active Nominators',
+	}
+
+	stats.minimumNominatorBond = {
+		type: StatType.NUMBER,
+		label: t('minimumToNominate'),
+		value: parseFloat(planckToUnit(minNominatorBond, units)),
+		decimals: 3,
+		unit: `${unit}`,
+		helpKey: 'Bonding',
+	}
+
+	stats.minimumActiveStake = {
+		type: StatType.NUMBER,
+		label: t('minimumToEarnRewards'),
+		value: planckToUnitBn(minToEarnRewards, units).toNumber(),
+		decimals: 3,
+		unit: `${unit}`,
+		helpKey: 'Bonding',
 	}
 
 	return stats
