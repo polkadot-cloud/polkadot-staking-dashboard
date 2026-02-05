@@ -3,6 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useStakeStats } from 'hooks/useStakeStats'
 import { useSyncing } from 'hooks/useSyncing'
 import { PageWarnings } from 'library/PageWarnings'
 import { Stats } from 'library/Stats'
@@ -11,7 +12,6 @@ import { NextRewards } from 'pages/Overview/Stats/NextRewards'
 import { PoolOverview } from 'pages/Pools/Overview'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
-import { useStakeStats } from './useStakeStats'
 
 export const Stake = () => {
 	const { t } = useTranslation('pages')
