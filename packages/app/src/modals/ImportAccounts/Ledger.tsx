@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
-import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
@@ -10,6 +9,7 @@ import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
 import type {
 	LedgerAddress,
 	LedgerResponse,
@@ -32,6 +32,7 @@ export const Ledger = () => {
 		getHardwareAccounts,
 	} = useHardwareAccounts()
 	const {
+		deviceModel,
 		getFeedback,
 		isExecuting,
 		setStatusCode,
@@ -147,11 +148,14 @@ export const Ledger = () => {
 
 	const maybeFeedback = feedback?.message
 
+	// Resolve device-specific icon (falls back to generic Ledger logo)
+	const DeviceIcon = getLedgerDeviceIcon(deviceModel)
+
 	return (
 		<>
 			<Close />
 			<AccountImport.Header
-				Logo={<LedgerSquareSVG />}
+				Logo={<DeviceIcon />}
 				title="Ledger"
 				websiteText="ledger.com"
 				websiteUrl="https://ledger.com"

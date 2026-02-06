@@ -8,6 +8,7 @@ import { appendOrEmpty } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
 import type { LedgerResponse } from 'contexts/LedgerHardware/types'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
@@ -35,6 +36,7 @@ export const Ledger = ({
 }) => {
 	const { t } = useTranslation('app')
 	const {
+		deviceModel,
 		statusCode,
 		setFeedback,
 		getFeedback,
@@ -107,6 +109,9 @@ export const Ledger = ({
 		[],
 	)
 
+	// Resolve device-specific icon (falls back to generic Ledger logo)
+	const DeviceIcon = getLedgerDeviceIcon(deviceModel)
+
 	return (
 		<>
 			<div>
@@ -132,6 +137,16 @@ export const Ledger = ({
 					{valid ? (
 						<p className="prompt">
 							<FontAwesomeIcon icon={faCircleExclamation} className="icon" />
+							{deviceModel !== 'unknown' && (
+								<DeviceIcon
+									style={{
+										width: '1.2rem',
+										height: '1.2rem',
+										marginRight: '0.4rem',
+										verticalAlign: 'middle',
+									}}
+								/>
+							)}
 							{feedback?.message
 								? feedback.message
 								: !integrityChecked
