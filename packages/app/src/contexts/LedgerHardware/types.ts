@@ -4,6 +4,8 @@
 import type { MaybeString } from '@w3ux/types'
 import type { AnyJson, NetworkId } from 'types'
 
+export type { LedgerDeviceModel, LedgerDeviceFamily } from './deviceModel'
+
 export interface LedgerHardwareContextInterface {
 	integrityChecked: boolean
 	setIntegrityChecked: (checked: boolean) => void
