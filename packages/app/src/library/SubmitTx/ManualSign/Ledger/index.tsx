@@ -8,6 +8,10 @@ import { appendOrEmpty } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
+import {
+	getLedgerDeviceName,
+	isTouchscreenDevice,
+} from 'contexts/LedgerHardware/deviceModel'
 import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
 import type { LedgerResponse } from 'contexts/LedgerHardware/types'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
@@ -150,8 +154,18 @@ export const Ledger = ({
 							{feedback?.message
 								? feedback.message
 								: !integrityChecked
-									? t('ledgerConnectAndConfirm')
-									: `${t('deviceVerified')}. ${t('submitTransaction')}`}
+									? deviceModel !== 'unknown'
+										? t('ledgerConnectAndConfirmDevice', {
+												device: getLedgerDeviceName(deviceModel),
+											})
+										: t('ledgerConnectAndConfirm')
+									: `${t('deviceVerified')}. ${
+											isTouchscreenDevice(deviceModel)
+												? t('ledgerApproveTouchscreen')
+												: deviceModel !== 'unknown'
+													? t('ledgerApproveNano')
+													: t('submitTransaction')
+										}`}
 							{feedback?.helpKey && (
 								<ButtonHelpTooltip
 									marginLeft
