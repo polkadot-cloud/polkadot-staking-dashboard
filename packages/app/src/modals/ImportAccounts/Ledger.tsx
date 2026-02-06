@@ -6,9 +6,10 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
-import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
+import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { getLedgerDeviceName } from 'contexts/LedgerHardware/deviceModel'
 import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
 import type {
 	LedgerAddress,
@@ -95,11 +96,16 @@ export const Ledger = () => {
 		setStatusCode({ ack, statusCode })
 
 		if (statusCode === 'ReceivedAddress') {
+			// Generate a device-aware default name (e.g. "Ledger Flex 1")
+			const deviceName = getLedgerDeviceName(deviceModel)
+			const accountNumber = addressesRef.current.length + 1
+			const defaultName = `${deviceName} ${accountNumber}`
+
 			const newAddress = body.map(({ pubKey, address }: LedgerAddress) => ({
 				index: options.accountIndex,
 				pubKey,
 				address,
-				name: ellipsisFn(address),
+				name: defaultName,
 				network,
 			}))
 			setStateWithRef(
@@ -113,6 +119,8 @@ export const Ledger = () => {
 				newAddress[0].address,
 				options.accountIndex,
 			)
+			// Override the default ellipsis name with the device-aware name
+			renameHardwareAccount(source, network, newAddress[0].address, defaultName)
 			resetStatusCode()
 		}
 	}
