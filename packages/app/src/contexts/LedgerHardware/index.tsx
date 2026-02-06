@@ -90,7 +90,7 @@ export const LedgerHardwareProvider = ({
 			}
 			const major = result?.major || 0
 			const minor = result?.minor || 0
-			const patch = result?.major || 0
+			const patch = result?.patch || 0
 
 			// The current version of the Polkadot Ledger app
 			const currentSemVer = `${major}.${minor}.${patch}`
