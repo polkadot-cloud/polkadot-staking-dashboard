@@ -3,10 +3,12 @@
 
 import type { MaybeString } from '@w3ux/types'
 import type { AnyJson, NetworkId } from 'types'
+import type { LedgerDeviceModel } from './deviceModel'
 
 export type { LedgerDeviceFamily, LedgerDeviceModel } from './deviceModel'
 
 export interface LedgerHardwareContextInterface {
+	deviceModel: LedgerDeviceModel
 	integrityChecked: boolean
 	setIntegrityChecked: (checked: boolean) => void
 	checkRuntimeVersion: () => Promise<void>
