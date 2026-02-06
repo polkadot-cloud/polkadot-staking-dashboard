@@ -26,7 +26,7 @@ export type LedgerDeviceFamily = 'nano' | 'touchscreen' | 'unknown'
  * checked before "Nano S" to avoid false matches.
  */
 export const getLedgerDeviceModel = (
-	productName: string
+	productName: string,
 ): LedgerDeviceModel => {
 	if (!productName) {
 		return 'unknown'
@@ -56,7 +56,7 @@ export const getLedgerDeviceModel = (
  * Returns the device family for a given model.
  */
 export const getLedgerDeviceFamily = (
-	model: LedgerDeviceModel
+	model: LedgerDeviceModel,
 ): LedgerDeviceFamily => {
 	switch (model) {
 		case 'nano_s':
