@@ -36,9 +36,13 @@ export const useNominatorBondActions = (): UseNominatorBondActions => {
 	// Unstake actions require basic requirements and active bonding
 	const canUnstake = Boolean(basicRequirements)
 
+	// Whether bond is disabled
+	const bondDisabled = !canBond && !canUnbond
+
 	return {
 		canBond,
 		canUnbond,
 		canUnstake,
+		bondDisabled,
 	}
 }

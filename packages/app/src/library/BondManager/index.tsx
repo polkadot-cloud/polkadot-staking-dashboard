@@ -17,85 +17,81 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useNominatorBondActions } from 'hooks/useNominatorBondActions'
-import { useSyncing } from 'hooks/useSyncing'
+import { usePoolBondActions } from 'hooks/usePoolBondActions'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader, Loader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import type { BondManagerProps } from './types'
+import type { BondConfig, BondManagerProps } from './types'
 
 export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
+	const { getStakingLedger } = useBalances()
 	const { activeAddress } = useActiveAccounts()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { balances } = useAccountBalances(activeAddress)
-
-	// Nominator-specific hooks
-	const { getStakingLedger } = useBalances()
-	const { canBond, canUnbond, canUnstake } = useNominatorBondActions()
-
-	// Pool-specific hooks
-	const { syncing } = useSyncing(['active-pools', 'era-stakers'])
-	const { isBonding, isMember, activePool, isDepositor } = useActivePool()
-
+	const {
+		canBond,
+		canUnbond,
+		canUnstake,
+		bondDisabled: nominatorBondDisabled,
+	} = useNominatorBondActions()
+	const { canLeavePool, bondDisabled: poolBondDisabled } = usePoolBondActions()
 	const { units } = getStakingChainData(network)
 	const Token = getChainIcons(network).token
+	const { ledger } = getStakingLedger(activeAddress)
 
 	const isNominator = bondFor === 'nominator'
 
-	// Get active balance based on bond type
-	const { ledger } = getStakingLedger(activeAddress)
-	const nominatorActive = ledger?.active || 0n
-	const poolActive = balances.pool.active
+	// Determine bond configuration based on bond type
+	const bondConfig: BondConfig = isNominator
+		? {
+				active: ledger?.active || 0n,
+				totalUnlocking: balances.nominator.totalUnlocking,
+				totalUnlocked: balances.nominator.totalUnlocked,
+				bondButtonsDisabled: nominatorBondDisabled,
+				bondDisabled: !canBond,
+				unbondDisabled: !canUnbond,
+				showUnstakeButton: !isReadOnlyAccount(activeAddress),
+				unstakeDisabled: !canUnstake,
+				unstakeModalKey: 'Unstake',
+				unstakeIcon: faSignOutAlt,
+				helpKey: 'Bonding',
+			}
+		: {
+				active: balances.pool.active,
+				totalUnlocking: balances.pool.totalUnlocking,
+				totalUnlocked: balances.pool.totalUnlocked,
+				bondButtonsDisabled: poolBondDisabled,
+				bondDisabled: poolBondDisabled,
+				unbondDisabled: poolBondDisabled,
+				showUnstakeButton: canLeavePool,
+				unstakeDisabled: false,
+				unstakeModalKey: 'LeavePool',
+				unstakeIcon: faSignOut,
+				helpKey: 'Bonded in Pool',
+			}
 
-	// Get unlocking/unlocked balances based on bond type
-	const { totalUnlocking, totalUnlocked } = isNominator
-		? balances.nominator
-		: balances.pool
-
-	const transferableBalance = balances.transferableBalance
-
-	// Determine disabled state for bond/unbond buttons
-	const { state } = activePool?.bondedPool || {}
-	const poolBondDisabled =
-		syncing ||
-		!isBonding ||
-		!isMember() ||
-		isReadOnlyAccount(activeAddress) ||
-		state === 'Destroying'
-
-	const nominatorBondDisabled = !canBond && !canUnbond
-
-	const active = isNominator ? nominatorActive : poolActive
-
-	const bondButtonsDisabled = isNominator
-		? nominatorBondDisabled
-		: poolBondDisabled
-
-	// Individual button disabled states
-	const bondDisabled = isNominator ? !canBond : poolBondDisabled
-	const unbondDisabled = isNominator ? !canUnbond : poolBondDisabled
-
-	// Unstake button logic
-	const canLeavePool = isMember() && !isDepositor() && poolActive > 0n
-	const showUnstakeButton = isNominator
-		? !isReadOnlyAccount(activeAddress)
-		: canLeavePool
-
-	const unstakeDisabled = isNominator ? !canUnstake : false
-	const unstakeModalKey = isNominator ? 'Unstake' : 'LeavePool'
-	const unstakeIcon = isNominator ? faSignOutAlt : faSignOut
-
-	// Help key based on bond type
-	const helpKey = isNominator ? 'Bonding' : 'Bonded in Pool'
+	const {
+		active,
+		totalUnlocking,
+		totalUnlocked,
+		bondButtonsDisabled,
+		bondDisabled,
+		unbondDisabled,
+		showUnstakeButton,
+		unstakeDisabled,
+		unstakeModalKey,
+		unstakeIcon,
+		helpKey,
+	} = bondConfig
 
 	return (
 		<>
@@ -169,7 +165,7 @@ export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 				active={new BigNumber(planckToUnit(active, units))}
 				unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
 				unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-				free={new BigNumber(planckToUnit(transferableBalance, units))}
+				free={new BigNumber(planckToUnit(balances.transferableBalance, units))}
 				inactive={active === 0n}
 			/>
 		</>
