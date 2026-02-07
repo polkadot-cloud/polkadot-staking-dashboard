@@ -47,7 +47,7 @@ export const Ledger = () => {
 	const { ss58 } = getStakingChainData(network)
 	const source: HardwareAccountSource = 'ledger'
 
-	// Store addresses retreived from Ledger device. Defaults to local addresses
+	// Store addresses retrieved from Ledger device. Defaults to local addresses
 	const [addresses, setAddresses] = useState<HardwareAccount[]>(
 		getHardwareAccounts(source, network),
 	)
