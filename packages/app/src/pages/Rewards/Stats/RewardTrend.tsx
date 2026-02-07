@@ -39,10 +39,11 @@ export const RewardTrend = () => {
 	// Fetch the reward trend on account, network changes. Ensure the active era is greater than 0
 	const getRewardTrend = async () => {
 		if (activeAddress && activeEra.index > 0) {
-			const { rewardTrend } = membership
+			const result = membership
 				? await fetchPoolRewardTrend(network, activeAddress, duration)
 				: await fetchNominatorRewardTrend(network, activeAddress, eras)
-			setRewardTrend(rewardTrend)
+
+			setRewardTrend(result)
 		}
 	}
 

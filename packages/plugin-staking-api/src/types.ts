@@ -76,8 +76,12 @@ export interface EraTotalNominatorsData {
 	}
 }
 
-export interface RewardTrendData {
-	rewardTrend: RewardTrend
+export interface NominatorRewardTrendData {
+	nominatorRewardTrend: RewardTrend
+}
+
+export interface PoolRewardTrendData {
+	poolRewardTrend: RewardTrend
 }
 
 export interface RewardTrend {
