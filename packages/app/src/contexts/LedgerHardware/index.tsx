@@ -95,7 +95,7 @@ export const LedgerHardwareProvider = ({
 			}
 			const major = result?.major || 0
 			const minor = result?.minor || 0
-			const patch = result?.major || 0
+			const patch = result?.patch || 0
 
 			// The current version of the Polkadot Ledger app
 			const currentSemVer = `${major}.${minor}.${patch}`
@@ -204,7 +204,7 @@ export const LedgerHardwareProvider = ({
 				setStatusFeedback({
 					message: t('openAppOnLedger'),
 					helpKey: 'Open App On Ledger',
-					code: 'TransactionRejected',
+					code: 'AppNotOpen',
 				})
 				break
 			// Occurs when submitted extrinsic(s) are not supported
@@ -219,7 +219,7 @@ export const LedgerHardwareProvider = ({
 				setStatusFeedback({
 					message: t('transactionRejectedPending'),
 					helpKey: 'Ledger Rejected Transaction',
-					code: 'AppNotOpen',
+					code: 'TransactionRejected',
 				})
 				break
 			// Handle all other errors
