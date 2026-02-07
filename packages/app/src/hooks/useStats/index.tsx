@@ -17,8 +17,8 @@ import { useSupplyStaked } from 'hooks/useSupplyStaked'
 import { type StatConfig, StatType } from 'library/Stats/types'
 import { useTranslation } from 'react-i18next'
 import { percentageOf } from 'ui-graphs/util'
+import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
-import { useOverlay } from '../../../../ui-overlay/src/Provider'
 
 export const useStats = (
 	isPreloading?: boolean,
