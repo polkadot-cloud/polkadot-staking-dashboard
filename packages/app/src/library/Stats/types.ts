@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { TimeLeftFormatted } from '@w3ux/types'
+import type { ReactNode } from 'react'
 
 /**
  * Enumeration of available stat types
@@ -11,6 +12,7 @@ export enum StatType {
 	TEXT = 'text',
 	PIE = 'pie',
 	TIMELEFT = 'timeleft',
+	BUTTON = 'button',
 }
 
 /**
@@ -71,6 +73,18 @@ export interface TimeleftStatConfig extends StatConfigBase {
 }
 
 /**
+ * Configuration for Button stat type
+ * Displays a button card with icon and action
+ */
+export interface ButtonStatConfig extends StatConfigBase {
+	type: StatType.BUTTON
+	Icon: ReactNode
+	label: string
+	title: string
+	onClick: () => void
+}
+
+/**
  * Union type of all stat configurations
  */
 export type StatConfig =
@@ -78,6 +92,7 @@ export type StatConfig =
 	| TextStatConfig
 	| PieStatConfig
 	| TimeleftStatConfig
+	| ButtonStatConfig
 
 /**
  * Props for the Stats component

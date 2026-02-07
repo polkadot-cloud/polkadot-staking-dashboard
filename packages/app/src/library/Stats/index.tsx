@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Button } from 'library/StatCards/Button'
 import { Number } from 'library/StatCards/Number'
 import { Pie } from 'library/StatCards/Pie'
 import { Text } from 'library/StatCards/Text'
@@ -65,6 +66,18 @@ const StatItem = ({ config }: { config: StatConfig }) => {
 					graph={config.graph}
 					tooltip={config.tooltip}
 					helpKey={helpKey}
+					isPreloading={isPreloading}
+				/>
+			)
+
+		case 'button':
+			return (
+				<Button
+					key={label}
+					Icon={config.Icon}
+					label={config.label}
+					title={config.title}
+					onClick={config.onClick}
 					isPreloading={isPreloading}
 				/>
 			)

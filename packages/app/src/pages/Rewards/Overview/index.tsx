@@ -35,23 +35,20 @@ import {
 	Separator,
 	Stat,
 } from 'ui-core/base'
-import { useOverlay } from 'ui-overlay'
-import { RewardCalculator } from '../Stats/RewardCalculator'
-import { RewardTrend } from '../Stats/RewardTrend'
 import type { PayoutHistoryProps } from '../types'
-import { RecentPayouts } from './RecentPayouts'
+import { RecentPayouts } from './PayoutGraph'
+import { RewardTrend } from './RewardTrend'
 
 export const Overview = (props: PayoutHistoryProps) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { currency } = useCurrency()
 	const { pluginEnabled } = usePlugins()
-	const { openModal } = useOverlay().modal
 	const { avgCommission } = useValidators()
-	const { averageRewardRate } = useStats()
 	const { activeAddress } = useActiveAccounts()
 	const { price: tokenPrice } = useTokenPrices()
 	const { getAverageRewardRate } = useAverageRewardRate()
+	const { averageRewardRate, rewardCalculator } = useStats()
 	const { stakedBalance } = useAccountBalances(activeAddress)
 
 	const { unit } = getStakingChainData(network)
@@ -86,19 +83,8 @@ export const Overview = (props: PayoutHistoryProps) => {
 	return (
 		<>
 			<Stat.Row>
-				<Stats items={[averageRewardRate]} />
+				<Stats items={[averageRewardRate, rewardCalculator]} />
 				{pluginEnabled('staking_api') && <RewardTrend />}
-				<RewardCalculator
-					onClick={() => {
-						openModal({
-							key: 'RewardCalculator',
-							size: 'xs',
-							options: {
-								currency,
-							},
-						})
-					}}
-				/>
 			</Stat.Row>
 			<Page.Row>
 				<CardWrapper>

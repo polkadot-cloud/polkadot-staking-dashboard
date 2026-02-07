@@ -1,10 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faCalculator } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
+import { useCurrency } from 'contexts/Currency'
 import { useEraStakers } from 'contexts/EraStakers'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -15,15 +18,16 @@ import { type StatConfig, StatType } from 'library/Stats/types'
 import { useTranslation } from 'react-i18next'
 import { percentageOf } from 'ui-graphs/util'
 import { planckToUnitBn } from 'utils'
+import { useOverlay } from '../../../../ui-overlay/src/Provider'
 
 export const useStats = (
 	isPreloading?: boolean,
 ): Record<string, StatConfig> => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
+	const { currency } = useCurrency()
+	const { openModal } = useOverlay().modal
 	const { unit, units } = getStakingChainData(network)
-	const { minJoinBond, counterForBondedPools, minCreateBond } =
-		useApi().poolsConfig
 	const {
 		stakingMetrics: {
 			validatorCount,
@@ -33,6 +37,7 @@ export const useStats = (
 			minNominatorBond,
 			minimumActiveStake,
 		},
+		poolsConfig: { minJoinBond, counterForBondedPools, minCreateBond },
 	} = useApi()
 	const { activeValidators, activeNominatorsCount } = useEraStakers()
 	const { avgCommission } = useValidators()
@@ -194,6 +199,27 @@ export const useStats = (
 		decimals: 3,
 		unit: `${unit}`,
 		helpKey: 'Bonding',
+	}
+
+	stats.rewardCalculator = {
+		type: StatType.BUTTON,
+		Icon: (
+			<FontAwesomeIcon
+				icon={faCalculator}
+				color="var(--accent-primary"
+				style={{ marginLeft: '0.25rem', height: '2.1rem' }}
+			/>
+		),
+		label: t('useCustomAmount'),
+		title: t('rewardsCalculator'),
+		onClick: () =>
+			openModal({
+				key: 'RewardCalculator',
+				size: 'xs',
+				options: {
+					currency,
+				},
+			}),
 	}
 
 	return stats
