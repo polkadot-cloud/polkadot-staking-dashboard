@@ -19,7 +19,7 @@ import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
-import { useBondActions } from 'hooks/useBondActions'
+import { useNominatorBondActions } from 'hooks/useNominatorBondActions'
 import { useSyncing } from 'hooks/useSyncing'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
@@ -40,7 +40,7 @@ export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 
 	// Nominator-specific hooks
 	const { getStakingLedger } = useBalances()
-	const { canBond, canUnbond, canUnstake } = useBondActions()
+	const { canBond, canUnbond, canUnstake } = useNominatorBondActions()
 
 	// Pool-specific hooks
 	const { syncing } = useSyncing(['active-pools', 'era-stakers'])
@@ -55,8 +55,6 @@ export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 	const { ledger } = getStakingLedger(activeAddress)
 	const nominatorActive = ledger?.active || 0n
 	const poolActive = balances.pool.active
-
-	const active = isNominator ? nominatorActive : poolActive
 
 	// Get unlocking/unlocked balances based on bond type
 	const { totalUnlocking, totalUnlocked } = isNominator
@@ -75,6 +73,8 @@ export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 		state === 'Destroying'
 
 	const nominatorBondDisabled = !canBond && !canUnbond
+
+	const active = isNominator ? nominatorActive : poolActive
 
 	const bondButtonsDisabled = isNominator
 		? nominatorBondDisabled
