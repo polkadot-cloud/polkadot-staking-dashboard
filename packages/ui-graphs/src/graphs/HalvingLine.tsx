@@ -163,7 +163,7 @@ export const HalvingLine = ({
 				pointBorderWidth: 0,
 				borderWidth: 2,
 				fill: true,
-				tension: 0.4,
+				stepped: 'after' as const,
 			},
 		],
 	}
