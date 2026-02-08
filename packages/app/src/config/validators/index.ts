@@ -80,7 +80,7 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 	{
 		name: 'bLd Nodes | ChadStakeKing',
 		icon: 'bLdNodes',
-		bio: 'Independant validator, professionnal Web3 Devops engineer, bLd Nodes is focusing on providing small scale validators and collators with low commission. Proud co-founder of the DOT Validator Alliance',
+		bio: 'Independent validator, professional Web3 Devops engineer, bLd Nodes is focusing on providing small scale validators and collators with low commission. Proud co-founder of the DOT Validator Alliance',
 		email: 'gm@bldnodes.org',
 		website: 'https://bldnodes.org',
 		validators: {
@@ -91,7 +91,7 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 	{
 		name: 'Blockseeker.io',
 		icon: 'Blockseeker',
-		bio: 'Independant validator, software engineer and web3 enthusiast, focusing on providing tools and building for web3 running bare metal/dedicated nodes to help decentralize the network. Only charges a small fee to help maintain nodes and effort in running them.',
+		bio: 'Independent validator, software engineer and web3 enthusiast, focusing on providing tools and building for web3 running bare metal/dedicated nodes to help decentralize the network. Only charges a small fee to help maintain nodes and effort in running them.',
 		email: 'dev@blockseeker.io',
 		x: '@blockseeker_io',
 		website: 'https://blockseeker.io',
