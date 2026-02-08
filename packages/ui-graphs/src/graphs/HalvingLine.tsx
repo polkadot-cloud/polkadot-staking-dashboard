@@ -64,6 +64,10 @@ export const HalvingLine = ({
 	const options: ChartOptions<'line'> = {
 		responsive: true,
 		maintainAspectRatio: false,
+		interaction: {
+			mode: 'nearest',
+			intersect: false,
+		},
 		scales: {
 			x: {
 				grid: {
@@ -113,6 +117,7 @@ export const HalvingLine = ({
 				display: false,
 			},
 			tooltip: {
+				mode: 'nearest',
 				displayColors: false,
 				backgroundColor: getThemeValue('--bg-invert'),
 				titleColor: getThemeValue('--text-invert'),
@@ -127,7 +132,6 @@ export const HalvingLine = ({
 						return tooltipLabel(value)
 					},
 				},
-				intersect: false,
 			},
 			annotation: {
 				annotations: {
@@ -157,10 +161,14 @@ export const HalvingLine = ({
 				backgroundColor,
 				pointRadius: (context: { dataIndex: number }) =>
 					context.dataIndex === currentDataIndex ? 5 : 0,
+				pointHoverRadius: 4,
+				pointHitRadius: 4,
 				pointBackgroundColor: (context: { dataIndex: number }) =>
 					context.dataIndex === currentDataIndex ? color : 'transparent',
+				pointHoverBackgroundColor: color,
 				pointBorderColor: 'transparent',
-				pointBorderWidth: 0,
+				pointHoverBorderColor: color,
+				pointBorderWidth: 2,
 				borderWidth: 2,
 				fill: true,
 				stepped: 'after' as const,
