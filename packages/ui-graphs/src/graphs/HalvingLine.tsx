@@ -43,7 +43,7 @@ export const HalvingLine = ({
 	const yearProgress =
 		(now.getTime() - yearStart.getTime()) /
 		(yearEnd.getTime() - yearStart.getTime())
-	const schedule = HALVING_SCHEDULE.filter((item) => item.year <= 2050)
+	const schedule = HALVING_SCHEDULE.filter((item) => item.year <= 2050.2)
 	const currentDataIndex = schedule.findIndex(
 		(item) => item.year === currentYear,
 	)
