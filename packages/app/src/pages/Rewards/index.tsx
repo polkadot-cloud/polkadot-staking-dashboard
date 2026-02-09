@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { filterAndSortRewards } from 'ui-graphs/util'
 import { Overview } from './Overview'
-import { RecentPayouts } from './RecentPayouts'
+import { RecentPayouts } from './PayoutList'
 import type { PayoutGraphData } from './types'
 import { Wrapper } from './Wrappers'
 

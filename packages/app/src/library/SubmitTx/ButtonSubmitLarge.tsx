@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { appendOrEmpty } from '@w3ux/utils'
-import { CallToActionWrapper } from 'library/CallToAction'
+import { CallToActionWrapper } from 'library/CallToActionButtons/Wrapper'
 import type { ButtonSubmitLargeProps } from './types'
 
 export const ButtonSubmitLarge = ({
