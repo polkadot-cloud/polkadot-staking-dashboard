@@ -15,6 +15,7 @@ export const MenuItem = ({ children }: { children: ReactNode }) => {
 export const MenuItemButton = ({
 	children,
 	style,
+	className,
 	onClick,
 	disabled,
 }: ComponentBaseWithClassName & {
@@ -22,7 +23,7 @@ export const MenuItemButton = ({
 	onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void
 	disabled?: boolean
 }) => {
-	const allClasses = classNames(classes.menuItem, classes.button, {
+	const allClasses = classNames(classes.menuItem, classes.button, className, {
 		[classes.disabled]: disabled,
 	})
 	return (
