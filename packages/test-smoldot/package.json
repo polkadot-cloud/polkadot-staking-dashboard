@@ -15,7 +15,7 @@
 		"@dedot/chaintypes": "^0.222.0",
 		"@polkadot/keyring": "^13.4.1",
 		"@polkadot/util-crypto": "^13.4.1",
-		"dedot": "^1.0.2",
+		"dedot": "^1.0.4",
 		"smoldot": "^2.0.40"
 	},
 	"devDependencies": {
