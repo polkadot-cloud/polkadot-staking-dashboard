@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useStats } from 'hooks/useStats'
+import { usePoolStats } from 'hooks/useStats'
 import { PageWarnings } from 'library/PageWarnings'
 import { Stats } from 'library/Stats'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +10,7 @@ import { PoolOverview } from './Overview'
 
 export const Pools = () => {
 	const { t } = useTranslation('pages')
-	const { activePools, minimumToJoinPool, minimumToCreatePool } = useStats()
+	const { activePools, minimumToJoinPool, minimumToCreatePool } = usePoolStats()
 
 	return (
 		<>

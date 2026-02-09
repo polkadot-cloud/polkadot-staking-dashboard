@@ -7,7 +7,7 @@ import { useBalances } from 'contexts/Balances'
 import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { useStats } from 'hooks/useStats'
+import { useNominatorStats } from 'hooks/useStats'
 import { useSyncing } from 'hooks/useSyncing'
 import { BondManager } from 'library/BondManager'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
@@ -33,7 +33,7 @@ export const Active = () => {
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
 	const { activeNominators, minimumNominatorBond, minimumActiveStake } =
-		useStats()
+		useNominatorStats()
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))
 	const ROW_HEIGHT = 220

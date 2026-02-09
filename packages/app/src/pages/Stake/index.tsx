@@ -3,7 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useAccountBalances } from 'hooks/useAccountBalances'
-import { useStats } from 'hooks/useStats'
+import { useStakeStats } from 'hooks/useStats'
 import { useSyncing } from 'hooks/useSyncing'
 import { PageWarnings } from 'library/PageWarnings'
 import { Stats } from 'library/Stats'
@@ -29,7 +29,7 @@ export const Stake = () => {
 	}
 
 	const { averageRewardRate, minimumToJoinPool, nextReward } =
-		useStats(isPreloading)
+		useStakeStats(isPreloading)
 	const nominating = nominatorBalance.isGreaterThan(0)
 
 	return (

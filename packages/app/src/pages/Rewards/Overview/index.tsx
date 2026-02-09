@@ -20,7 +20,7 @@ import { useTokenPrices } from 'contexts/TokenPrice'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
-import { useStats } from 'hooks/useStats'
+import { useRewardOverviewStats } from 'hooks/useStats'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Stats } from 'library/Stats'
@@ -48,7 +48,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 	const { activeAddress } = useActiveAccounts()
 	const { price: tokenPrice } = useTokenPrices()
 	const { getAverageRewardRate } = useAverageRewardRate()
-	const { averageRewardRate, rewardCalculator } = useStats()
+	const { averageRewardRate, rewardCalculator } = useRewardOverviewStats()
 	const { stakedBalance } = useAccountBalances(activeAddress)
 
 	const { unit } = getStakingChainData(network)

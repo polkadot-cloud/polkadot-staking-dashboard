@@ -21,33 +21,18 @@ import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 import type { StatKey } from './types'
 
-export const useStats = (
+type StatMap = Record<StatKey, StatConfig>
+type StatPick<K extends StatKey> = Pick<StatMap, K>
+
+export const useRewardOverviewStats = (
 	isPreloading?: boolean,
-): Record<StatKey, StatConfig> => {
+): StatPick<'averageRewardRate' | 'rewardCalculator'> => {
 	const { t } = useTranslation('pages')
-	const { network } = useNetwork()
 	const { currency } = useCurrency()
 	const { openModal } = useOverlay().modal
-	const { unit, units } = getStakingChainData(network)
-	const {
-		stakingMetrics: {
-			validatorCount,
-			counterForValidators,
-			maxValidatorsCount,
-			counterForNominators,
-			minNominatorBond,
-			minimumActiveStake,
-		},
-		poolsConfig: { minJoinBond, counterForBondedPools, minCreateBond },
-	} = useApi()
-	const { activeValidators, activeNominatorsCount } = useEraStakers()
-	const { avgCommission } = useValidators()
-	const { supplyString, supplyNumber } = useSupplyStaked()
-	const { formatted, timeleftResult, activeEra } = useNextRewards()
 	const { getAverageRewardRate, formatRateAsPercent } = useAverageRewardRate()
-	const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
 
-	const stats: Record<StatKey, StatConfig> = {
+	return {
 		averageRewardRate: {
 			id: 'averageRewardRate',
 			type: StatType.TEXT,
@@ -57,6 +42,37 @@ export const useStats = (
 			primary: true,
 			isPreloading,
 		},
+		rewardCalculator: {
+			id: 'rewardCalculator',
+			type: StatType.BUTTON,
+			Icon: (
+				<FontAwesomeIcon
+					icon={faCalculator}
+					color="var(--accent-primary)"
+					style={{ marginLeft: '0.25rem', height: '2.1rem' }}
+				/>
+			),
+			label: t('useCustomAmount'),
+			title: t('rewardsCalculator'),
+			onClick: () =>
+				openModal({
+					key: 'RewardCalculator',
+					size: 'xs',
+					options: {
+						currency,
+					},
+				}),
+		},
+	}
+}
+
+export const useSupplyStakedStat = (): StatPick<'supplyStaked'> => {
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { unit } = getStakingChainData(network)
+	const { supplyString, supplyNumber } = useSupplyStaked()
+
+	return {
 		supplyStaked: {
 			id: 'supplyStaked',
 			type: StatType.PIE,
@@ -67,19 +83,24 @@ export const useStats = (
 			tooltip: `${supplyString}%`,
 			helpKey: 'Supply Staked',
 		},
-		nextReward: {
-			id: 'nextReward',
-			type: StatType.TIMELEFT,
-			label: t('nextRewardDistribution'),
-			timeleft: formatted,
-			graph: {
-				value1: activeEra.index === 0 ? 0 : timeleftResult.percentSurpassed,
-				value2: activeEra.index === 0 ? 100 : timeleftResult.percentRemaining,
-			},
-			tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
-			isPreloading,
+	}
+}
+
+export const useValidatorStats = (): StatPick<
+	'activeValidators' | 'totalValidators' | 'averageCommission'
+> => {
+	const { t } = useTranslation('pages')
+	const { activeValidators } = useEraStakers()
+	const { avgCommission } = useValidators()
+	const {
+		stakingMetrics: {
+			validatorCount,
+			counterForValidators,
+			maxValidatorsCount,
 		},
-		// Validator stats
+	} = useApi()
+
+	return {
 		activeValidators: {
 			id: 'activeValidators',
 			type: StatType.PIE,
@@ -97,13 +118,6 @@ export const useStats = (
 					: '0'
 			}%`,
 			helpKey: 'Active Validator',
-		},
-		averageCommission: {
-			id: 'averageCommission',
-			type: StatType.TEXT,
-			label: t('averageCommission'),
-			value: `${String(avgCommission)}%`,
-			helpKey: 'Average Commission',
 		},
 		totalValidators: {
 			id: 'totalValidators',
@@ -124,6 +138,27 @@ export const useStats = (
 			}%`,
 			helpKey: 'Validator',
 		},
+		averageCommission: {
+			id: 'averageCommission',
+			type: StatType.TEXT,
+			label: t('averageCommission'),
+			value: `${String(avgCommission)}%`,
+			helpKey: 'Average Commission',
+		},
+	}
+}
+
+export const usePoolStats = (
+	isPreloading?: boolean,
+): StatPick<'minimumToJoinPool' | 'activePools' | 'minimumToCreatePool'> => {
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { unit, units } = getStakingChainData(network)
+	const {
+		poolsConfig: { minJoinBond, counterForBondedPools, minCreateBond },
+	} = useApi()
+
+	return {
 		minimumToJoinPool: {
 			id: 'minimumToJoinPool',
 			type: StatType.NUMBER,
@@ -151,7 +186,26 @@ export const useStats = (
 			unit,
 			helpKey: 'Minimum To Create Pool',
 		},
-		// Nominator stats
+	}
+}
+
+export const useNominatorStats = (): StatPick<
+	'activeNominators' | 'minimumNominatorBond' | 'minimumActiveStake'
+> => {
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { unit, units } = getStakingChainData(network)
+	const {
+		stakingMetrics: {
+			counterForNominators,
+			minNominatorBond,
+			minimumActiveStake,
+		},
+	} = useApi()
+	const { activeNominatorsCount } = useEraStakers()
+	const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
+
+	return {
 		activeNominators: {
 			id: 'activeNominators',
 			type: StatType.PIE,
@@ -192,28 +246,63 @@ export const useStats = (
 			unit: `${unit}`,
 			helpKey: 'Bonding',
 		},
-		rewardCalculator: {
-			id: 'rewardCalculator',
-			type: StatType.BUTTON,
-			Icon: (
-				<FontAwesomeIcon
-					icon={faCalculator}
-					color="var(--accent-primary)"
-					style={{ marginLeft: '0.25rem', height: '2.1rem' }}
-				/>
-			),
-			label: t('useCustomAmount'),
-			title: t('rewardsCalculator'),
-			onClick: () =>
-				openModal({
-					key: 'RewardCalculator',
-					size: 'xs',
-					options: {
-						currency,
-					},
-				}),
+	}
+}
+
+export const useStakeStats = (
+	isPreloading?: boolean,
+): StatPick<'averageRewardRate' | 'minimumToJoinPool' | 'nextReward'> => {
+	const { t } = useTranslation('pages')
+	const { network } = useNetwork()
+	const { unit, units } = getStakingChainData(network)
+	const {
+		poolsConfig: { minJoinBond },
+	} = useApi()
+	const { formatted, timeleftResult, activeEra } = useNextRewards()
+	const { getAverageRewardRate, formatRateAsPercent } = useAverageRewardRate()
+
+	return {
+		averageRewardRate: {
+			id: 'averageRewardRate',
+			type: StatType.TEXT,
+			label: t('averageRewardRate'),
+			value: formatRateAsPercent(getAverageRewardRate()),
+			helpKey: 'Average Reward Rate',
+			primary: true,
+			isPreloading,
+		},
+		minimumToJoinPool: {
+			id: 'minimumToJoinPool',
+			type: StatType.NUMBER,
+			label: t('minimumToJoinPool'),
+			value: parseFloat(planckToUnit(minJoinBond, units)),
+			decimals: 3,
+			unit: ` ${unit}`,
+			helpKey: 'Minimum To Join Pool',
+			isPreloading,
+		},
+		nextReward: {
+			id: 'nextReward',
+			type: StatType.TIMELEFT,
+			label: t('nextRewardDistribution'),
+			timeleft: formatted,
+			graph: {
+				value1: activeEra.index === 0 ? 0 : timeleftResult.percentSurpassed,
+				value2: activeEra.index === 0 ? 100 : timeleftResult.percentRemaining,
+			},
+			tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
+			isPreloading,
 		},
 	}
-
-	return stats
 }
+
+export const useStats = (
+	isPreloading?: boolean,
+): Record<StatKey, StatConfig> => ({
+	...useRewardOverviewStats(isPreloading),
+	...useSupplyStakedStat(),
+	...useValidatorStats(),
+	...usePoolStats(isPreloading),
+	...useNominatorStats(),
+	...useStakeStats(isPreloading),
+})

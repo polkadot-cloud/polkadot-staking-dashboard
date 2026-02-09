@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { useStats } from 'hooks/useStats'
+import { useValidatorStats } from 'hooks/useStats'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Stats } from 'library/Stats'
 import { ValidatorList } from 'library/ValidatorList'
@@ -15,7 +15,8 @@ export const AllValidators = () => {
 	const { isReady } = useApi()
 	const { getValidators } = useValidators()
 	const validators = getValidators()
-	const { activeValidators, totalValidators, averageCommission } = useStats()
+	const { activeValidators, totalValidators, averageCommission } =
+		useValidatorStats()
 	return (
 		<>
 			<Stat.Row>
