@@ -19,10 +19,11 @@ import { useTranslation } from 'react-i18next'
 import { percentageOf } from 'ui-graphs/util'
 import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
+import type { StatKey } from './types'
 
 export const useStats = (
 	isPreloading?: boolean,
-): Record<string, StatConfig> => {
+): Record<StatKey, StatConfig> => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { currency } = useCurrency()
@@ -46,180 +47,158 @@ export const useStats = (
 	const { getAverageRewardRate, formatRateAsPercent } = useAverageRewardRate()
 	const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
 
-	const stats: Record<string, StatConfig> = {}
-
-	stats.averageRewardRate = {
-		type: StatType.TEXT,
-		label: t('averageRewardRate'),
-		value: formatRateAsPercent(getAverageRewardRate()),
-		helpKey: 'Average Reward Rate',
-		primary: true,
-		isPreloading,
-	}
-
-	stats.supplyStaked = {
-		type: StatType.PIE,
-		label: t('unitSupplyStaked', { unit }),
-		value: supplyString,
-		unit: '%',
-		pieValue: supplyNumber,
-		tooltip: `${supplyString}%`,
-		helpKey: 'Supply Staked',
-	}
-
-	stats.nextReward = {
-		type: StatType.TIMELEFT,
-		label: t('nextRewardDistribution'),
-		timeleft: formatted,
-		graph: {
-			value1: activeEra.index === 0 ? 0 : timeleftResult.percentSurpassed,
-			value2: activeEra.index === 0 ? 100 : timeleftResult.percentRemaining,
+	const stats: Record<StatKey, StatConfig> = {
+		averageRewardRate: {
+			type: StatType.TEXT,
+			label: t('averageRewardRate'),
+			value: formatRateAsPercent(getAverageRewardRate()),
+			helpKey: 'Average Reward Rate',
+			primary: true,
+			isPreloading,
 		},
-		tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
-		isPreloading,
-	}
-
-	// Validator stats
-	stats.activeValidators = {
-		type: StatType.PIE,
-		label: t('activeValidators'),
-		value: activeValidators,
-		total: validatorCount,
-		unit: '',
-		pieValue: percentageOf(activeValidators, validatorCount),
-		tooltip: `${
-			validatorCount > 0
-				? new BigNumber(activeValidators)
-						.dividedBy(validatorCount * 0.01)
-						.decimalPlaces(2)
-						.toFormat()
-				: '0'
-		}%`,
-		helpKey: 'Active Validator',
-	}
-
-	stats.averageCommission = {
-		type: StatType.TEXT,
-		label: t('averageCommission'),
-		value: `${String(avgCommission)}%`,
-		helpKey: 'Average Commission',
-	}
-
-	stats.totalValidators = {
-		type: StatType.PIE,
-		label: t('totalValidators'),
-		value: counterForValidators,
-		total: maxValidatorsCount,
-		unit: '',
-		pieValue: maxValidatorsCount
-			? percentageOf(counterForValidators, maxValidatorsCount)
-			: 0,
-		tooltip: `${
-			maxValidatorsCount && maxValidatorsCount > 0
-				? new BigNumber(counterForValidators / (maxValidatorsCount / 100))
-						.decimalPlaces(2)
-						.toFormat()
-				: '0'
-		}%`,
-		helpKey: 'Validator',
-	}
-
-	stats.minimumToJoinPool = {
-		type: StatType.NUMBER,
-		label: t('minimumToJoinPool'),
-		value: parseFloat(planckToUnit(minJoinBond, units)),
-		decimals: 3,
-		unit: ` ${unit}`,
-		helpKey: 'Minimum To Join Pool',
-		isPreloading,
-	}
-
-	stats.activePools = {
-		type: StatType.NUMBER,
-		label: t('activePools'),
-		value: counterForBondedPools,
-		unit: '',
-		helpKey: 'Active Pools',
-	}
-
-	stats.minimumToJoinPool = {
-		type: StatType.NUMBER,
-		label: t('minimumToJoinPool'),
-		value: parseFloat(planckToUnit(minJoinBond, units)),
-		decimals: 3,
-		unit: ` ${unit}`,
-		helpKey: 'Minimum To Join Pool',
-	}
-
-	stats.minimumToCreatePool = {
-		type: StatType.NUMBER,
-		label: t('minimumToCreatePool'),
-		value: parseFloat(planckToUnit(minCreateBond, units)),
-		decimals: 3,
-		unit,
-		helpKey: 'Minimum To Create Pool',
-	}
-
-	// Nominator stats
-	stats.activeNominators = {
-		type: StatType.PIE,
-		label: t('activeNominators'),
-		value: activeNominatorsCount,
-		total: counterForNominators,
-		unit: '',
-		pieValue:
-			counterForNominators > 0
-				? percentageOf(activeNominatorsCount, counterForNominators)
+		supplyStaked: {
+			type: StatType.PIE,
+			label: t('unitSupplyStaked', { unit }),
+			value: supplyString,
+			unit: '%',
+			pieValue: supplyNumber,
+			tooltip: `${supplyString}%`,
+			helpKey: 'Supply Staked',
+		},
+		nextReward: {
+			type: StatType.TIMELEFT,
+			label: t('nextRewardDistribution'),
+			timeleft: formatted,
+			graph: {
+				value1: activeEra.index === 0 ? 0 : timeleftResult.percentSurpassed,
+				value2: activeEra.index === 0 ? 100 : timeleftResult.percentRemaining,
+			},
+			tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
+			isPreloading,
+		},
+		// Validator stats
+		activeValidators: {
+			type: StatType.PIE,
+			label: t('activeValidators'),
+			value: activeValidators,
+			total: validatorCount,
+			unit: '',
+			pieValue: percentageOf(activeValidators, validatorCount),
+			tooltip: `${
+				validatorCount > 0
+					? new BigNumber(activeValidators)
+							.dividedBy(validatorCount * 0.01)
+							.decimalPlaces(2)
+							.toFormat()
+					: '0'
+			}%`,
+			helpKey: 'Active Validator',
+		},
+		averageCommission: {
+			type: StatType.TEXT,
+			label: t('averageCommission'),
+			value: `${String(avgCommission)}%`,
+			helpKey: 'Average Commission',
+		},
+		totalValidators: {
+			type: StatType.PIE,
+			label: t('totalValidators'),
+			value: counterForValidators,
+			total: maxValidatorsCount,
+			unit: '',
+			pieValue: maxValidatorsCount
+				? percentageOf(counterForValidators, maxValidatorsCount)
 				: 0,
-		tooltip: `${
-			counterForNominators > 0
-				? new BigNumber(
-						percentageOf(activeNominatorsCount, counterForNominators),
-					)
-						.decimalPlaces(2)
-						.toFormat()
-				: '0'
-		}%`,
-		helpKey: 'Active Nominators',
-	}
-
-	stats.minimumNominatorBond = {
-		type: StatType.NUMBER,
-		label: t('minimumToNominate'),
-		value: parseFloat(planckToUnit(minNominatorBond, units)),
-		decimals: 3,
-		unit: `${unit}`,
-		helpKey: 'Bonding',
-	}
-
-	stats.minimumActiveStake = {
-		type: StatType.NUMBER,
-		label: t('minimumToEarnRewards'),
-		value: planckToUnitBn(minToEarnRewards, units).toNumber(),
-		decimals: 3,
-		unit: `${unit}`,
-		helpKey: 'Bonding',
-	}
-
-	stats.rewardCalculator = {
-		type: StatType.BUTTON,
-		Icon: (
-			<FontAwesomeIcon
-				icon={faCalculator}
-				color="var(--accent-primary"
-				style={{ marginLeft: '0.25rem', height: '2.1rem' }}
-			/>
-		),
-		label: t('useCustomAmount'),
-		title: t('rewardsCalculator'),
-		onClick: () =>
-			openModal({
-				key: 'RewardCalculator',
-				size: 'xs',
-				options: {
-					currency,
-				},
-			}),
+			tooltip: `${
+				maxValidatorsCount && maxValidatorsCount > 0
+					? new BigNumber(counterForValidators / (maxValidatorsCount / 100))
+							.decimalPlaces(2)
+							.toFormat()
+					: '0'
+			}%`,
+			helpKey: 'Validator',
+		},
+		minimumToJoinPool: {
+			type: StatType.NUMBER,
+			label: t('minimumToJoinPool'),
+			value: parseFloat(planckToUnit(minJoinBond, units)),
+			decimals: 3,
+			unit: ` ${unit}`,
+			helpKey: 'Minimum To Join Pool',
+		},
+		activePools: {
+			type: StatType.NUMBER,
+			label: t('activePools'),
+			value: counterForBondedPools,
+			unit: '',
+			helpKey: 'Active Pools',
+		},
+		minimumToCreatePool: {
+			type: StatType.NUMBER,
+			label: t('minimumToCreatePool'),
+			value: parseFloat(planckToUnit(minCreateBond, units)),
+			decimals: 3,
+			unit,
+			helpKey: 'Minimum To Create Pool',
+		},
+		// Nominator stats
+		activeNominators: {
+			type: StatType.PIE,
+			label: t('activeNominators'),
+			value: activeNominatorsCount,
+			total: counterForNominators,
+			unit: '',
+			pieValue:
+				counterForNominators > 0
+					? percentageOf(activeNominatorsCount, counterForNominators)
+					: 0,
+			tooltip: `${
+				counterForNominators > 0
+					? new BigNumber(
+							percentageOf(activeNominatorsCount, counterForNominators),
+						)
+							.decimalPlaces(2)
+							.toFormat()
+					: '0'
+			}%`,
+			helpKey: 'Active Nominators',
+		},
+		minimumNominatorBond: {
+			type: StatType.NUMBER,
+			label: t('minimumToNominate'),
+			value: parseFloat(planckToUnit(minNominatorBond, units)),
+			decimals: 3,
+			unit: `${unit}`,
+			helpKey: 'Bonding',
+		},
+		minimumActiveStake: {
+			type: StatType.NUMBER,
+			label: t('minimumToEarnRewards'),
+			value: planckToUnitBn(minToEarnRewards, units).toNumber(),
+			decimals: 3,
+			unit: `${unit}`,
+			helpKey: 'Bonding',
+		},
+		rewardCalculator: {
+			type: StatType.BUTTON,
+			Icon: (
+				<FontAwesomeIcon
+					icon={faCalculator}
+					color="var(--accent-primary"
+					style={{ marginLeft: '0.25rem', height: '2.1rem' }}
+				/>
+			),
+			label: t('useCustomAmount'),
+			title: t('rewardsCalculator'),
+			onClick: () =>
+				openModal({
+					key: 'RewardCalculator',
+					size: 'xs',
+					options: {
+						currency,
+					},
+				}),
+		},
 	}
 
 	return stats
