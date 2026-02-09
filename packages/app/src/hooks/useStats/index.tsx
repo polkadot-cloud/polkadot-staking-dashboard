@@ -185,7 +185,7 @@ export const useStats = (
 			Icon: (
 				<FontAwesomeIcon
 					icon={faCalculator}
-					color="var(--accent-primary"
+					color="var(--accent-primary)"
 					style={{ marginLeft: '0.25rem', height: '2.1rem' }}
 				/>
 			),
