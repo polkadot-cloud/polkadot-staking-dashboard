@@ -19,7 +19,7 @@
     color: var(--accent-primary);
   }
 
-  > div:last-child h4 path {
+  > div:last-child h4 > svg path {
     fill: var(--accent-primary);
   }
 }
