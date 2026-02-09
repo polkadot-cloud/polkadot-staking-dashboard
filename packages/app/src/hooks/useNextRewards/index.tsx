@@ -3,17 +3,16 @@
 
 import { useTimeLeft } from '@w3ux/hooks'
 import { secondsFromNow } from '@w3ux/hooks/util'
-import BigNumber from 'bignumber.js'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { fromUnixTime, getUnixTime } from 'date-fns'
 import { useEraTimeLeft } from 'hooks/useEraTimeLeft'
-import { Timeleft } from 'library/StatCards/Timeleft'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatTimeleft } from 'utils'
+import type { UseNextRewardsReturn } from './types'
 
-export const NextRewards = ({ isPreloading }: { isPreloading?: boolean }) => {
+export const useNextRewards = (): UseNextRewardsReturn => {
 	const { t, i18n } = useTranslation('pages')
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
@@ -32,15 +31,9 @@ export const NextRewards = ({ isPreloading }: { isPreloading?: boolean }) => {
 		setFromNow(dateFrom, dateTo)
 	}, [activeEra, getUnixTime(dateTo)])
 
-	const params = {
-		label: t('nextRewardDistribution'),
-		timeleft: formatted,
-		graph: {
-			value1: activeEra.index === 0 ? 0 : timeleftResult.percentSurpassed,
-			value2: activeEra.index === 0 ? 100 : timeleftResult.percentRemaining,
-		},
-		tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
-		isPreloading,
+	return {
+		formatted,
+		timeleftResult,
+		activeEra,
 	}
-	return <Timeleft {...params} />
 }

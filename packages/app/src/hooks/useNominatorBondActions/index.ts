@@ -6,9 +6,9 @@ import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
-import type { UseBondActions } from './types'
+import type { UseNominatorBondActions } from './types'
 
-export const useBondActions = (): UseBondActions => {
+export const useNominatorBondActions = (): UseNominatorBondActions => {
 	const { isReady } = useApi()
 	const { isBonding } = useStaking()
 	const { activeAddress } = useActiveAccounts()
@@ -36,9 +36,13 @@ export const useBondActions = (): UseBondActions => {
 	// Unstake actions require basic requirements and active bonding
 	const canUnstake = Boolean(basicRequirements)
 
+	// Whether bond is disabled
+	const bondDisabled = !canBond && !canUnbond
+
 	return {
 		canBond,
 		canUnbond,
 		canUnstake,
+		bondDisabled,
 	}
 }
