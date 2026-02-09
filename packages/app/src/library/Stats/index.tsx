@@ -103,7 +103,7 @@ const StatItem = ({ config }: { config: StatConfig }) => {
 export const Stats = ({ items }: StatsProps) => (
 	<>
 		{items.map((config) => (
-			<StatItem key={config.label} config={config} />
+			<StatItem key={config.id} config={config} />
 		))}
 	</>
 )

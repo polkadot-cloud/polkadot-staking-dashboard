@@ -49,6 +49,7 @@ export const useStats = (
 
 	const stats: Record<StatKey, StatConfig> = {
 		averageRewardRate: {
+			id: 'averageRewardRate',
 			type: StatType.TEXT,
 			label: t('averageRewardRate'),
 			value: formatRateAsPercent(getAverageRewardRate()),
@@ -57,6 +58,7 @@ export const useStats = (
 			isPreloading,
 		},
 		supplyStaked: {
+			id: 'supplyStaked',
 			type: StatType.PIE,
 			label: t('unitSupplyStaked', { unit }),
 			value: supplyString,
@@ -66,6 +68,7 @@ export const useStats = (
 			helpKey: 'Supply Staked',
 		},
 		nextReward: {
+			id: 'nextReward',
 			type: StatType.TIMELEFT,
 			label: t('nextRewardDistribution'),
 			timeleft: formatted,
@@ -78,6 +81,7 @@ export const useStats = (
 		},
 		// Validator stats
 		activeValidators: {
+			id: 'activeValidators',
 			type: StatType.PIE,
 			label: t('activeValidators'),
 			value: activeValidators,
@@ -95,12 +99,14 @@ export const useStats = (
 			helpKey: 'Active Validator',
 		},
 		averageCommission: {
+			id: 'averageCommission',
 			type: StatType.TEXT,
 			label: t('averageCommission'),
 			value: `${String(avgCommission)}%`,
 			helpKey: 'Average Commission',
 		},
 		totalValidators: {
+			id: 'totalValidators',
 			type: StatType.PIE,
 			label: t('totalValidators'),
 			value: counterForValidators,
@@ -119,6 +125,7 @@ export const useStats = (
 			helpKey: 'Validator',
 		},
 		minimumToJoinPool: {
+			id: 'minimumToJoinPool',
 			type: StatType.NUMBER,
 			label: t('minimumToJoinPool'),
 			value: parseFloat(planckToUnit(minJoinBond, units)),
@@ -128,6 +135,7 @@ export const useStats = (
 			isPreloading,
 		},
 		activePools: {
+			id: 'activePools',
 			type: StatType.NUMBER,
 			label: t('activePools'),
 			value: counterForBondedPools,
@@ -135,6 +143,7 @@ export const useStats = (
 			helpKey: 'Active Pools',
 		},
 		minimumToCreatePool: {
+			id: 'minimumToCreatePool',
 			type: StatType.NUMBER,
 			label: t('minimumToCreatePool'),
 			value: parseFloat(planckToUnit(minCreateBond, units)),
@@ -144,6 +153,7 @@ export const useStats = (
 		},
 		// Nominator stats
 		activeNominators: {
+			id: 'activeNominators',
 			type: StatType.PIE,
 			label: t('activeNominators'),
 			value: activeNominatorsCount,
@@ -165,6 +175,7 @@ export const useStats = (
 			helpKey: 'Active Nominators',
 		},
 		minimumNominatorBond: {
+			id: 'minimumNominatorBond',
 			type: StatType.NUMBER,
 			label: t('minimumToNominate'),
 			value: parseFloat(planckToUnit(minNominatorBond, units)),
@@ -173,6 +184,7 @@ export const useStats = (
 			helpKey: 'Bonding',
 		},
 		minimumActiveStake: {
+			id: 'minimumActiveStake',
 			type: StatType.NUMBER,
 			label: t('minimumToEarnRewards'),
 			value: planckToUnitBn(minToEarnRewards, units).toNumber(),
@@ -181,6 +193,7 @@ export const useStats = (
 			helpKey: 'Bonding',
 		},
 		rewardCalculator: {
+			id: 'rewardCalculator',
 			type: StatType.BUTTON,
 			Icon: (
 				<FontAwesomeIcon

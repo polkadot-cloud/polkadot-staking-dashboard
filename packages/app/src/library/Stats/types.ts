@@ -19,6 +19,7 @@ export enum StatType {
  * Base properties shared by all stat configurations
  */
 export interface StatConfigBase {
+	id: string
 	label: string
 	helpKey?: string
 	isPreloading?: boolean
