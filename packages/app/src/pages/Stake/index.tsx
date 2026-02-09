@@ -28,7 +28,7 @@ export const Stake = () => {
 		isPreloading = syncing
 	}
 
-	const { averageRewardRateStat, minimumToJoinPoolStat, nextRewards } =
+	const { averageRewardRate, minimumToJoinPool, nextReward } =
 		useStats(isPreloading)
 	const nominating = nominatorBalance.isGreaterThan(0)
 
@@ -38,9 +38,7 @@ export const Stake = () => {
 			<PageWarnings />
 			{!nominating && (
 				<Stat.Row>
-					<Stats
-						items={[averageRewardRateStat, minimumToJoinPoolStat, nextRewards]}
-					/>
+					<Stats items={[averageRewardRate, minimumToJoinPool, nextReward]} />
 				</Stat.Row>
 			)}
 			{nominating ? (
