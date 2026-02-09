@@ -125,6 +125,7 @@ export const useStats = (
 			decimals: 3,
 			unit: ` ${unit}`,
 			helpKey: 'Minimum To Join Pool',
+			isPreloading,
 		},
 		activePools: {
 			type: StatType.NUMBER,
