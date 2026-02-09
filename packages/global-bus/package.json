@@ -13,10 +13,10 @@
 		"./util": "./src/util.ts"
 	},
 	"dependencies": {
-		"@w3ux/observables-connect": "^1.0.1",
-		"@w3ux/utils": "^2.3.0",
+		"@w3ux/observables-connect": "^1.0.2",
+		"@w3ux/utils": "^2.3.2",
 		"consts": "workspace:*",
-		"dedot": "^1.0.2",
+		"dedot": "^1.0.4",
 		"event-tracking": "workspace:*",
 		"plugin-staking-api": "workspace:*",
 		"rxjs": "^7.8.2"
