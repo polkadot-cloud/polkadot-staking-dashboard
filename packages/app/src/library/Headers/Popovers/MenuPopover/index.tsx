@@ -4,6 +4,7 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
 	faBookOpen,
+	faCloud,
 	faCog,
 	faDollarSign,
 	faExternalLinkAlt,
@@ -21,7 +22,7 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
-import { PlatformDocsURL, PlatformGitHubURL } from 'consts'
+import { PlatformDocsURL, PlatformGitHubURL, PlatformURL } from 'consts'
 import { getRelayChainData } from 'consts/util/chains'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
@@ -231,7 +232,7 @@ export const MenuPopover = ({
 				</button>
 			</MenuItem>
 			<DefaultButton
-				text={t('documentation', { ns: 'app' })}
+				text={t('docs', { ns: 'app' })}
 				iconLeft={faBookOpen}
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
@@ -246,6 +247,16 @@ export const MenuPopover = ({
 				onClick={() => {
 					setOpen(false)
 					window.open(PlatformGitHubURL, '_blank')
+				}}
+			/>
+			<DefaultButton
+				text="Polkadot Cloud"
+				iconLeft={faCloud}
+				iconRight={faExternalLinkAlt}
+				accent
+				onClick={() => {
+					setOpen(false)
+					window.open(PlatformURL, '_blank')
 				}}
 			/>
 		</div>
