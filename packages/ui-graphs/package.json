@@ -14,14 +14,13 @@
 		"./util": "./src/util/index.ts"
 	},
 	"dependencies": {
-		"@w3ux/utils": "^3.0.0",
+		"@w3ux/utils": "^3.1.0",
 		"bignumber.js": "^9.3.1",
 		"chart.js": "^4.4.9",
 		"chartjs-plugin-annotation": "^3.1.0",
 		"chroma-js": "^3.2.0",
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
-		"dedot": "^1.0.4",
 		"locales": "workspace:*",
 		"plugin-staking-api": "workspace:*",
 		"react": "^19.2.4",

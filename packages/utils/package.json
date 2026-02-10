@@ -10,8 +10,8 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"@w3ux/hooks": "^2.4.1",
-		"@w3ux/utils": "3.0.0",
+		"@w3ux/hooks": "^2.4.2",
+		"@w3ux/utils": "3.1.0",
 		"bignumber.js": "^9.3.1",
 		"date-fns": "^4.1.0",
 		"dedot": "^1.0.4",
