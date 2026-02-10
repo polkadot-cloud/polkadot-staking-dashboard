@@ -519,6 +519,9 @@ importers:
       '@w3ux/types':
         specifier: ^2.4.1
         version: 2.4.1
+      dedot:
+        specifier: ^1
+        version: 1.0.4(typescript@5.9.3)
       types:
         specifier: workspace:*
         version: link:../types
