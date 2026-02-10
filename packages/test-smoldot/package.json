@@ -11,10 +11,10 @@
 		"start": "tsx src/index.ts"
 	},
 	"dependencies": {
-		"@dedot/chain-specs": "^0.2.0",
+		"@dedot/chain-specs": "^0.9.0",
 		"@dedot/chaintypes": "^0.222.0",
-		"@polkadot/keyring": "^13.4.1",
-		"@polkadot/util-crypto": "^13.4.1",
+		"@polkadot/keyring": "^14.0.1",
+		"@polkadot/util-crypto": "^14.0.1",
 		"dedot": "^1.0.4",
 		"smoldot": "^2.0.40"
 	},
