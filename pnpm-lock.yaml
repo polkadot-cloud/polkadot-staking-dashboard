@@ -109,8 +109,8 @@ importers:
         specifier: 2.4.0
         version: 2.4.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@w3ux/react-polkicon':
-        specifier: ^4.0.0
-        version: 4.0.0(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        specifier: ^4.0.1
+        version: 4.0.1(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@w3ux/utils':
         specifier: ^3.0.0
         version: 3.0.0(dedot@1.0.4(typescript@5.9.3))
@@ -2597,6 +2597,13 @@ packages:
 
   '@w3ux/react-polkicon@4.0.0':
     resolution: {integrity: sha512-Z0wlYsIoDEtkAGnA3XtggqVKk5VRpV7VFaP8rMuP2xzXS13kEr+fzCtZU5wjPr3WygvXEJnWG2jdRlyb/gEUIA==}
+    peerDependencies:
+      dedot: ^1
+      react: ^19.1.0
+      react-dom: ^19.1.0
+
+  '@w3ux/react-polkicon@4.0.1':
+    resolution: {integrity: sha512-v6gsFzQ8r49wJltD3l66lJZzjx5oXxKer9ShEaLmLPVJsreqojEMMWmReutLxeNR//N33/RFpB6YDa3hPe3L3w==}
     peerDependencies:
       dedot: ^1
       react: ^19.1.0
@@ -6221,6 +6228,14 @@ snapshots:
       - typescript
       - utf-8-validate
       - zod
+
+  '@w3ux/react-polkicon@4.0.1(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@w3ux/crypto': 1.2.1
+      '@w3ux/utils': 3.0.0(dedot@1.0.4(typescript@5.9.3))
+      dedot: 1.0.4(typescript@5.9.3)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
 
   '@w3ux/types@2.4.1': {}
 
