@@ -3,15 +3,11 @@
 		"definitions": {
 			"activeNominators": [
 				"Aktive Nominierer",
-				[
-					"Nominierer, die in der aktuellen Sitzung aktiv sind."
-				]
+				["Nominierer, die in der aktuellen Sitzung aktiv sind."]
 			],
 			"activePools": [
 				"Aktive Pools",
-				[
-					"Die aktuelle Anzahl aktiver Nominierungspools auf {NETWORK_NAME}."
-				]
+				["Die aktuelle Anzahl aktiver Nominierungspools auf {NETWORK_NAME}."]
 			],
 			"activeStakeThreshold": [
 				"Aktive Einsatzschwelle",
@@ -190,9 +186,7 @@
 			],
 			"nominationStatus": [
 				"Nominierungsstatus",
-				[
-					"Ob Sie aktiv nominieren und Belohnungen verdienen oder nicht."
-				]
+				["Ob Sie aktiv nominieren und Belohnungen verdienen oder nicht."]
 			],
 			"nominations": [
 				"Nominierungen",
@@ -281,9 +275,7 @@
 			],
 			"proxyAccounts": [
 				"Proxy-Konten",
-				[
-					"Proxy-Konten sind Konten, die im Namen eines anderen Kontos handeln."
-				]
+				["Proxy-Konten sind Konten, die im Namen eines anderen Kontos handeln."]
 			],
 			"readOnlyAccounts": [
 				"Schreibgeschützte Konten",
