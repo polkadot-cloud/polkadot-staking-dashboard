@@ -14,7 +14,7 @@
 		"./util": "./src/util/index.ts"
 	},
 	"dependencies": {
-		"@w3ux/utils": "^2.3.0",
+		"@w3ux/utils": "^3.1.0",
 		"bignumber.js": "^9.3.1",
 		"chart.js": "^4.4.9",
 		"chartjs-plugin-annotation": "^3.1.0",
@@ -25,7 +25,7 @@
 		"plugin-staking-api": "workspace:*",
 		"react": "^19.2.4",
 		"react-chartjs-2": "^5.3.1",
-		"styled-components": "^6.3.8",
+		"styled-components": "^6.3.9",
 		"ui-core": "workspace:*",
 		"utils": "workspace:*"
 	},

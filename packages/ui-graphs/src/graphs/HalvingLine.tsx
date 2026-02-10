@@ -36,10 +36,21 @@ export const HalvingLine = ({
 	tooltipLabel,
 	millionUnit,
 }: HalvingLineProps) => {
-	const currentYear = new Date().getFullYear()
-	const currentDataIndex = HALVING_SCHEDULE.findIndex(
+	const now = new Date()
+	const currentYear = now.getFullYear()
+	const yearStart = new Date(currentYear, 0, 1)
+	const yearEnd = new Date(currentYear + 1, 0, 1)
+	const yearProgress =
+		(now.getTime() - yearStart.getTime()) /
+		(yearEnd.getTime() - yearStart.getTime())
+	const schedule = HALVING_SCHEDULE.filter((item) => item.year <= 2050.2)
+	const currentDataIndex = schedule.findIndex(
 		(item) => item.year === currentYear,
 	)
+	const currentYearValue =
+		schedule[currentDataIndex]?.year !== undefined
+			? schedule[currentDataIndex]?.year + yearProgress
+			: undefined
 
 	// Use primary color for line
 	const color = getThemeValue('--accent-primary')
@@ -64,18 +75,29 @@ export const HalvingLine = ({
 	const options: ChartOptions<'line'> = {
 		responsive: true,
 		maintainAspectRatio: false,
+		interaction: {
+			mode: 'nearest',
+			intersect: false,
+		},
 		scales: {
 			x: {
+				type: 'linear',
 				grid: {
 					display: false,
 				},
+				min: schedule[0]?.year,
+				max: schedule[schedule.length - 1]?.year,
 				ticks: {
 					color: getThemeValue('--text-tertiary'),
 					font: {
 						size: 10,
 					},
-					autoSkip: true,
-					maxTicksLimit: 10,
+					autoSkip: false,
+					maxTicksLimit: 20,
+					stepSize: 2,
+					precision: 0,
+					callback: (value: string | number) =>
+						Math.round(Number(value)).toString(),
 				},
 				title: {
 					display: false,
@@ -113,6 +135,7 @@ export const HalvingLine = ({
 				display: false,
 			},
 			tooltip: {
+				mode: 'nearest',
 				displayColors: false,
 				backgroundColor: getThemeValue('--bg-invert'),
 				titleColor: getThemeValue('--text-invert'),
@@ -122,19 +145,19 @@ export const HalvingLine = ({
 				},
 				callbacks: {
 					title: () => [],
-					label: (context: { parsed: { y: number | null } }) => {
-						const value = context.parsed.y ?? 0
+					label: (context: { dataIndex: number }) => {
+						const value = schedule[context.dataIndex]?.issuance ?? 0
 						return tooltipLabel(value)
 					},
 				},
-				intersect: false,
 			},
 			annotation: {
 				annotations: {
 					currentYearLine: {
 						type: 'line',
-						xMin: currentDataIndex,
-						xMax: currentDataIndex,
+						display: currentYearValue !== undefined,
+						xMin: currentYearValue ?? 0,
+						xMax: currentYearValue ?? 0,
 						borderColor: getThemeValue('--accent-primary'),
 						borderWidth: 2,
 						borderDash: [5, 5],
@@ -148,22 +171,23 @@ export const HalvingLine = ({
 	}
 
 	const data = {
-		labels: HALVING_SCHEDULE.map((item) => item.year.toString()),
 		datasets: [
 			{
 				label,
-				data: HALVING_SCHEDULE.map((item) => item.issuance),
+				data: schedule.map((item) => ({ x: item.year, y: item.issuance })),
 				borderColor: color,
 				backgroundColor,
-				pointRadius: (context: { dataIndex: number }) =>
-					context.dataIndex === currentDataIndex ? 5 : 0,
-				pointBackgroundColor: (context: { dataIndex: number }) =>
-					context.dataIndex === currentDataIndex ? color : 'transparent',
+				pointRadius: 0,
+				pointHoverRadius: 4,
+				pointHitRadius: 4,
+				pointBackgroundColor: 'transparent',
+				pointHoverBackgroundColor: color,
 				pointBorderColor: 'transparent',
-				pointBorderWidth: 0,
+				pointHoverBorderColor: color,
+				pointBorderWidth: 2,
 				borderWidth: 2,
 				fill: true,
-				tension: 0.4,
+				stepped: 'before' as const,
 			},
 		],
 	}

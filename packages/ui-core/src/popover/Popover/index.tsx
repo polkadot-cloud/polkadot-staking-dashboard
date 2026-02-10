@@ -52,9 +52,7 @@ export const Popover = ({
 					side={side}
 					align={align}
 				>
-					<div style={{ display: 'flex', flexDirection: 'column' }}>
-						{content}
-					</div>
+					<div className={classes.contentBody}>{content}</div>
 					{arrow && <RadixPopover.Arrow className={classes.arrow} />}
 				</RadixPopover.Content>
 			</RadixPopover.Portal>

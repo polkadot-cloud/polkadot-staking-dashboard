@@ -4,12 +4,8 @@
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import {
-	ellipsisFn,
-	formatAccountSs58,
-	isValidAddress,
-	planckToUnit,
-} from '@w3ux/utils'
+import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'

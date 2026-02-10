@@ -3,16 +3,12 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useTimeLeft } from '@w3ux/hooks'
-import { secondsFromNow } from '@w3ux/hooks/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
-import { fromUnixTime, getUnixTime } from 'date-fns'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
-import { useEraTimeLeft } from 'hooks/useEraTimeLeft'
+import { useNextRewards } from 'hooks/useNextRewards'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTips } from 'hooks/useTips'
@@ -20,21 +16,20 @@ import { useWarnings } from 'hooks/useWarnings'
 import { Countdown } from 'library/Countdown'
 import { Stat } from 'library/Stat'
 import { Preloader } from 'library/StatusPreloader/Preloader'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import { Badge, ButtonRow, Page } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Tips } from 'ui-tips'
-import { formatTimeleft } from 'utils'
 import { SectionWrapper, Subheading } from '../Wrappers'
 
 export const Status = () => {
-	const { i18n, t } = useTranslation()
-	const { activeEra } = useApi()
+	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
 	const { accountSynced } = useSyncing()
+	const { formatted } = useNextRewards()
 	const { openModal } = useOverlay().modal
 	const { warningMessages } = useWarnings()
 	const { activeAddress } = useActiveAccounts()
@@ -49,27 +44,11 @@ export const Status = () => {
 	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
 	const notStaking = activeAddress && !isBonding && !inPool
 
-	const { get: getEraTimeleft } = useEraTimeLeft()
-	const { timeleft, setFromNow } = useTimeLeft({
-		depsTimeleft: [network],
-		depsFormat: [i18n.resolvedLanguage],
-	})
-
-	const timeleftResult = getEraTimeleft()
-	const formatted = formatTimeleft(t, timeleft.raw, { forceShowSeconds: true })
-	const dateFrom = fromUnixTime(Date.now() / 1000)
-	const dateTo = secondsFromNow(timeleftResult.timeleft)
-
 	// Memoize the tips items to avoid recalculation
 	const tipsItems = useMemo(
 		() => (warningMessages.length ? poolWarningTips : items),
 		[warningMessages.length, poolWarningTips, items],
 	)
-
-	// Reset timer on era change (also covers network change)
-	useEffect(() => {
-		setFromNow(dateFrom, dateTo)
-	}, [activeEra, getUnixTime(dateTo)])
 
 	const Status = isBonding ? (
 		<Stat

@@ -21,9 +21,9 @@
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^7.1.0",
 		"@fortawesome/free-solid-svg-icons": "^7.1.0",
-		"@fortawesome/react-fontawesome": "^3.1.1",
-		"@w3ux/react-polkicon": "^3.4.0",
-		"@w3ux/utils": "2.3.0",
+		"@fortawesome/react-fontawesome": "^3.2.0",
+		"@w3ux/react-polkicon": "^4.0.2",
+		"@w3ux/utils": "3.1.0",
 		"classnames": "^2.5.1",
 		"motion": "12.23.24",
 		"radix-ui": "^1.4.2",
@@ -34,5 +34,8 @@
 	},
 	"devDependencies": {
 		"types": "workspace:*"
+	},
+	"peerDependencies": {
+		"dedot": "^1"
 	}
 }
