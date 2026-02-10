@@ -1,53 +1,97 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faMinus, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons'
+import {
+	faMinus,
+	faPlus,
+	faSignOut,
+	faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
-import { useSyncing } from 'hooks/useSyncing'
+import { useNominatorBondActions } from 'hooks/useNominatorBondActions'
+import { usePoolBondActions } from 'hooks/usePoolBondActions'
 import { BondedChart } from 'library/BarChart/BondedChart'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, MultiButton } from 'ui-buttons'
 import { ButtonRow, CardHeader, Loader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
+import type { BondConfig, BondManagerProps } from './types'
 
-export const ManageBond = ({ isPreloading }: { isPreloading?: boolean }) => {
+export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 	const { t } = useTranslation('pages')
-
 	const { network } = useNetwork()
 	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
+	const { getStakingLedger } = useBalances()
 	const { activeAddress } = useActiveAccounts()
-	const { syncing } = useSyncing(['active-pools', 'era-stakers'])
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { balances } = useAccountBalances(activeAddress)
-	const { isBonding, isMember, activePool, isDepositor } = useActivePool()
-
+	const {
+		canBond,
+		canUnbond,
+		canUnstake,
+		bondDisabled: nominatorBondDisabled,
+	} = useNominatorBondActions()
+	const { canLeavePool, bondDisabled: poolBondDisabled } = usePoolBondActions()
 	const { units } = getStakingChainData(network)
 	const Token = getChainIcons(network).token
-	const {
-		pool: { active, totalUnlocking, totalUnlocked },
-		transferableBalance,
-	} = balances
-	const { state } = activePool?.bondedPool || {}
+	const { ledger } = getStakingLedger(activeAddress)
 
-	const bondDisabled =
-		syncing ||
-		!isBonding ||
-		!isMember() ||
-		isReadOnlyAccount(activeAddress) ||
-		state === 'Destroying'
-	const canLeavePool = isMember() && !isDepositor() && active > 0n
+	const isNominator = bondFor === 'nominator'
+
+	// Determine bond configuration based on bond type
+	const bondConfig: BondConfig = isNominator
+		? {
+				active: ledger?.active || 0n,
+				totalUnlocking: balances.nominator.totalUnlocking,
+				totalUnlocked: balances.nominator.totalUnlocked,
+				bondButtonsDisabled: nominatorBondDisabled,
+				bondDisabled: !canBond,
+				unbondDisabled: !canUnbond,
+				showUnstakeButton: !isReadOnlyAccount(activeAddress),
+				unstakeDisabled: !canUnstake,
+				unstakeModalKey: 'Unstake',
+				unstakeIcon: faSignOutAlt,
+				helpKey: 'Bonding',
+			}
+		: {
+				active: balances.pool.active,
+				totalUnlocking: balances.pool.totalUnlocking,
+				totalUnlocked: balances.pool.totalUnlocked,
+				bondButtonsDisabled: poolBondDisabled,
+				bondDisabled: poolBondDisabled,
+				unbondDisabled: poolBondDisabled,
+				showUnstakeButton: canLeavePool,
+				unstakeDisabled: false,
+				unstakeModalKey: 'LeavePool',
+				unstakeIcon: faSignOut,
+				helpKey: 'Bonded in Pool',
+			}
+
+	const {
+		active,
+		totalUnlocking,
+		totalUnlocked,
+		bondButtonsDisabled,
+		bondDisabled,
+		unbondDisabled,
+		showUnstakeButton,
+		unstakeDisabled,
+		unstakeModalKey,
+		unstakeIcon,
+		helpKey,
+	} = bondConfig
 
 	return (
 		<>
@@ -56,7 +100,7 @@ export const ManageBond = ({ isPreloading }: { isPreloading?: boolean }) => {
 					{t('bondedFunds')}
 					<ButtonHelpTooltip
 						marginLeft
-						definition="Bonded in Pool"
+						definition={helpKey}
 						openHelp={openHelpTooltip}
 					/>
 				</h4>
@@ -74,7 +118,7 @@ export const ManageBond = ({ isPreloading }: { isPreloading?: boolean }) => {
 					<Loader style={{ height: '2.5rem', width: '10rem' }} />
 				) : (
 					<ButtonRow>
-						<MultiButton.Container marginRight disabled={bondDisabled}>
+						<MultiButton.Container marginRight disabled={bondButtonsDisabled}>
 							<MultiButton.Button
 								size="md"
 								disabled={bondDisabled}
@@ -82,21 +126,22 @@ export const ManageBond = ({ isPreloading }: { isPreloading?: boolean }) => {
 								onClick={() =>
 									openModal({
 										key: 'Bond',
-										options: { bondFor: 'pool' },
+										options: { bondFor },
 										size: 'sm',
 									})
 								}
 								iconLeft={faPlus}
 								text=""
 							/>
+							{isNominator && <span />}
 							<MultiButton.Button
 								size="md"
-								disabled={bondDisabled}
+								disabled={unbondDisabled}
 								marginRight
 								onClick={() =>
 									openModal({
 										key: 'Unbond',
-										options: { bondFor: 'pool' },
+										options: { bondFor },
 										size: 'sm',
 									})
 								}
@@ -104,12 +149,13 @@ export const ManageBond = ({ isPreloading }: { isPreloading?: boolean }) => {
 								text=""
 							/>
 						</MultiButton.Container>
-						{canLeavePool && (
+						{showUnstakeButton && (
 							<ButtonPrimary
 								size="md"
 								text={t('unstake')}
-								iconLeft={faSignOut}
-								onClick={() => openModal({ key: 'LeavePool', size: 'sm' })}
+								iconLeft={unstakeIcon}
+								disabled={unstakeDisabled}
+								onClick={() => openModal({ key: unstakeModalKey, size: 'sm' })}
 							/>
 						)}
 					</ButtonRow>
@@ -119,7 +165,7 @@ export const ManageBond = ({ isPreloading }: { isPreloading?: boolean }) => {
 				active={new BigNumber(planckToUnit(active, units))}
 				unlocking={new BigNumber(planckToUnit(totalUnlocking, units))}
 				unlocked={new BigNumber(planckToUnit(totalUnlocked, units))}
-				free={new BigNumber(planckToUnit(transferableBalance, units))}
+				free={new BigNumber(planckToUnit(balances.transferableBalance, units))}
 				inactive={active === 0n}
 			/>
 		</>
