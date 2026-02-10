@@ -34,5 +34,8 @@
 	},
 	"devDependencies": {
 		"types": "workspace:*"
+	},
+	"peerDependencies": {
+		"dedot": "^1"
 	}
 }

@@ -546,6 +546,9 @@ importers:
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
+      dedot:
+        specifier: ^1
+        version: 1.0.4(typescript@5.9.3)
       motion:
         specifier: 12.23.24
         version: 12.23.24(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
