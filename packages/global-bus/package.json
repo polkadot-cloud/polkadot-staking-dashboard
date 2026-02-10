@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@w3ux/observables-connect": "^1.0.2",
-		"@w3ux/utils": "^2.3.2",
+		"@w3ux/utils": "^3.0.0",
 		"consts": "workspace:*",
 		"dedot": "^1.0.4",
 		"event-tracking": "workspace:*",

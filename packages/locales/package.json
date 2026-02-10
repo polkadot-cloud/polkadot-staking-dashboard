@@ -15,7 +15,8 @@
 		"validate": "node ./.scripts/localeValidate.cjs"
 	},
 	"dependencies": {
-		"@w3ux/utils": "2.3.2",
+		"@w3ux/utils": "3.0.0",
+		"dedot": "^1.0.4",
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
 		"event-tracking": "workspace:*",
