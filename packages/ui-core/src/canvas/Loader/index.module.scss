@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .loader {
-  background: var(--shimmer-foreground);
+  background: var(--shimmer-fg);
   background-image: linear-gradient(
     to right,
-    var(--shimmer-foreground) 0%,
-    var(--shimmer-background) 40%,
-    var(--shimmer-foreground) 80%,
-    var(--shimmer-foreground) 350%
+    var(--shimmer-fg) 0%,
+    var(--shimmer-bg) 40%,
+    var(--shimmer-fg) 80%,
+    var(--shimmer-fg) 350%
   );
   background-size: 200% 100%;
   animation: l1 1.5s infinite linear;
@@ -16,10 +16,12 @@
   width: 100%;
   height: 0.7rem;
 }
+
 @keyframes l1 {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: 0% 0;
   }

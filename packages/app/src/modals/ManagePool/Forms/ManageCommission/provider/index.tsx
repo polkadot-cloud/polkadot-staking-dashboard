@@ -48,7 +48,7 @@ export const PoolCommissionProvider = ({
 					minDelay: Number(raw.minDelay),
 				}
 			: {
-					maxIncrease: 100,
+					maxIncrease: 10,
 					minDelay: 0,
 				}
 	})()

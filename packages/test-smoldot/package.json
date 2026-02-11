@@ -1,0 +1,24 @@
+{
+	"name": "test-smoldot",
+	"version": "1.0.0",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
+		"check": "biome check .",
+		"lint": "biome check --write .",
+		"start": "tsx src/index.ts"
+	},
+	"dependencies": {
+		"@dedot/chain-specs": "^0.2.0",
+		"@dedot/chaintypes": "^0.222.0",
+		"@polkadot/keyring": "^13.4.1",
+		"@polkadot/util-crypto": "^13.4.1",
+		"dedot": "^1.0.4",
+		"smoldot": "^2.0.40"
+	},
+	"devDependencies": {
+		"tsx": "^4.7.0"
+	}
+}

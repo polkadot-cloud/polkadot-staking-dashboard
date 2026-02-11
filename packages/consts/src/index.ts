@@ -3,13 +3,16 @@
 
 // Global Constants
 export const DappName = 'Polkadot Cloud Staking'
-export const PlatformUrl = 'https://polkadot.cloud'
-export const ManualSigners = ['ledger', 'vault', 'wallet_connect']
-export const DiscordSupportUrl = 'https://discord.gg/QY7CSSJm3D'
-export const MailSupportAddress = 'staking@polkadot.cloud'
-export const GitHubURl =
+export const DappOrganisation = 'Polkadot Cloud'
+export const PlatformURL = 'https://polkadot.cloud'
+export const PlatformDocsURL = 'https://docs.staking.polkadot.cloud'
+export const PlatformPrivacyURL = 'https://polkadot.cloud/privacy'
+export const PlatformDisclaimerURL = 'https://polkadot.cloud/disclaimer'
+export const PlatformSupportEmail = 'staking@polkadot.cloud'
+export const PlatformGitHubURL =
 	'https://github.com/polkadot-cloud/polkadot-staking-dashboard'
-export const StakingDocsUrl = 'https://docs.staking.polkadot.cloud'
+export const DiscordSupportURL = 'https://discord.gg/QY7CSSJm3D'
+export const ManualSigners = ['ledger', 'vault', 'wallet_connect']
 
 // Analytics
 export const SAEnabled = false
@@ -20,9 +23,8 @@ export const SideMenuMaximisedWidth = 145
 export const SideMenuMinimisedWidth = 75
 export const SectionFullWidthThreshold = 1000
 export const PageWidthMediumThreshold = 1150
+export const PageWidthLargeThreshold = 1400
 export const SmallFontSizeMaxWidth = 600
-export const TipsThresholdSmall = 750
-export const TipsThresholdMedium = 1200
 
 // Misc Values
 export const MaxNominations = 16

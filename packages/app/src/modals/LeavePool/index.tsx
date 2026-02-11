@@ -14,6 +14,7 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -38,7 +39,7 @@ export const LeavePool = ({
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { closeModal } = useOverlay().modal
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPoolMembership, getPendingPoolRewards } = useBalances()
@@ -72,7 +73,7 @@ export const LeavePool = ({
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: paramsValid,
 		callbackSubmit: () => {
 			closeModal()
@@ -94,7 +95,7 @@ export const LeavePool = ({
 	return (
 		<>
 			<Padding>
-				<Title>{t('leavePool')}</Title>
+				<Title>{t('unstake')}</Title>
 				{warnings.length > 0 ? (
 					<Warnings>
 						{warnings.map((text, i) => (

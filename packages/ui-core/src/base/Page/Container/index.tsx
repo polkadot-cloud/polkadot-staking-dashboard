@@ -10,7 +10,7 @@ import classes from './index.module.scss'
  * @summary Page container.
  */
 export const Container = ({ children, style }: ComponentBase) => {
-	const allClasses = classNames(classes.container, 'container-width')
+	const allClasses = classNames(classes.container, 'containerWidth')
 	return (
 		<div className={allClasses} style={{ ...style }}>
 			{children}

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +12,6 @@ import { Padding } from 'ui-core/modal'
 export const Add = () => {
 	const { t } = useTranslation('modals')
 	const { addExternalAccount } = useExternalAccounts()
-	const { addOrReplaceOtherAccount } = useOtherAccounts()
 
 	const [selectedAccount, setSelectedAccount] =
 		useState<ImportedAccount | null>(null)
@@ -21,10 +19,6 @@ export const Add = () => {
 	const handleSubmit = async () => {
 		if (selectedAccount) {
 			const result = addExternalAccount(selectedAccount.address, 'user')
-			if (result) {
-				addOrReplaceOtherAccount(result.account, result.type)
-			}
-
 			// Reset state on successful import
 			if (result) {
 				setSelectedAccount(null)
@@ -36,7 +30,7 @@ export const Add = () => {
 			<AccountDropdown
 				accounts={[]}
 				placeholder={t('inputAddress')}
-				label={t('address')}
+				label={t('address', { ns: 'app' })}
 				initialAccount={selectedAccount}
 				onSelect={(account) => {
 					setSelectedAccount(account)

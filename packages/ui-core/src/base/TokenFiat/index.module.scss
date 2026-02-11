@@ -12,19 +12,22 @@
       width: 3rem;
       max-width: 3rem;
     }
+
     &:last-child {
       padding-left: 0.8rem;
       flex: 1;
+
       > h1 {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         font-family: InterBold, sans-serif;
         font-size: 1.4rem;
         margin-bottom: 0.3rem;
         display: flex;
         align-items: center;
       }
+
       > h3 {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         font-family: Inter, sans-serif;
         font-size: 1.2rem;
       }

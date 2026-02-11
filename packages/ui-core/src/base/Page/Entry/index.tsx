@@ -22,7 +22,7 @@ export const Entry = forwardRef(
 	) => (
 		<div
 			ref={ref}
-			className={`${classes.entry} theme-${mode} theme-${theme}`}
+			className={`${classes.entry} ${mode} ${theme}`}
 			style={style}
 		>
 			{children}

@@ -48,7 +48,6 @@
 		"module": {
 			"cancel": "Cancel",
 			"close": "Close",
-			"more": "More",
 			"of": "of",
 			"oneMoment": "One moment please",
 			"syncingWith": "Syncing with {{network}}",
@@ -84,6 +83,14 @@
 			[
 				"Regularly reviewing your payouts is a good way to gauge how well your nominations are performing.",
 				"Go to the Payouts page to get a detailed breakdown of each payout you receive, and by which validator (or pool) the payout came from."
+			]
+		],
+		"switchPool": [
+			"Switch Pool",
+			"Switch to a new pool to avoid pool warnings.",
+			[
+				"Your current pool has issues that may affect your rewards.",
+				"Consider leaving your current pool and joining a different one to maximize your staking rewards."
 			]
 		],
 		"understandingValidatorPerformance": [

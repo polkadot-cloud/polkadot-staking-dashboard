@@ -8,6 +8,7 @@ export const defaultServiceInterface: ServiceInterface = {
 		accountBalance: {
 			hub: async () => undefined,
 		},
+		claimPermissionsMulti: async () => [],
 		erasStakersOverview: async () => undefined,
 		erasRewardPoints: async () => undefined,
 		erasValidatorReward: async () => BigInt(0),
@@ -21,7 +22,6 @@ export const defaultServiceInterface: ServiceInterface = {
 		poolMembersMulti: async () => [],
 		poolMetadataMulti: async () => [],
 		proxies: async () => [],
-		sessionValidators: async () => [],
 		superOfMulti: async () => [],
 		validatorEntries: async () => [],
 		validatorsMulti: async () => [],
@@ -34,8 +34,6 @@ export const defaultServiceInterface: ServiceInterface = {
 	tx: {
 		batch: () => undefined,
 		createPool: () => undefined,
-		fastUnstakeDeregister: () => undefined,
-		fastUnstakeRegister: () => undefined,
 		joinPool: () => undefined,
 		newNominator: () => undefined,
 		payoutStakersByPage: () => undefined,

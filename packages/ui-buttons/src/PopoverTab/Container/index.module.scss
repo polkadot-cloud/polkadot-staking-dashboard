@@ -10,7 +10,8 @@
   width: 100%;
 
   &.top {
-    border-bottom: var(--border-width) solid var(--border-secondary-color);
+    border-bottom: var(--border-width) solid var(--border-alt);
+
     &.yMargin {
       margin-bottom: var(--vertical-spacing);
     }
@@ -19,6 +20,7 @@
       &:first-child {
         border-top-left-radius: 1rem;
       }
+
       &:last-child {
         border-top-right-radius: 1rem;
       }
@@ -26,7 +28,8 @@
   }
 
   &.bottom {
-    border-top: var(--border-width) solid var(--border-secondary-color);
+    border-top: var(--border-width) solid var(--border-alt);
+
     &.yMargin {
       margin-top: var(--vertical-spacing);
     }
@@ -35,6 +38,7 @@
       &:first-child {
         border-bottom-left-radius: 1rem;
       }
+
       &:last-child {
         border-bottom-right-radius: 1rem;
       }

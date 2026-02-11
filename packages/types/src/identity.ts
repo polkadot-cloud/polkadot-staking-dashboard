@@ -39,3 +39,8 @@ export interface SuperIdentity {
 	}
 	value: string
 }
+
+export interface RoleIdentities {
+	identities: Record<string, IdentityOf>
+	supers: Record<string, SuperIdentity>
+}

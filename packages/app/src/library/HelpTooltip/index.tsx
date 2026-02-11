@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { camelize } from '@w3ux/utils'
 import { HelpNoDocs } from 'config/help'
-import { StakingDocsUrl } from 'consts'
+import { PlatformDocsURL } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useFillVariables } from 'hooks/useFillVariables'
@@ -104,13 +104,13 @@ export const HelpTooltip = () => {
 							iconTransform="shrink-2"
 							onClick={() => {
 								window.open(
-									`${StakingDocsUrl}/#/${i18n.language}/glossary?a=${docsKey}`,
+									`${PlatformDocsURL}/#/${i18n.language}/glossary?a=${docsKey}`,
 									'_blank',
 								)
 								closeHelpTooltip()
 							}}
 							style={{
-								color: 'var(--accent-color-primary)',
+								color: 'var(--accent-primary)',
 							}}
 							size="md"
 						/>

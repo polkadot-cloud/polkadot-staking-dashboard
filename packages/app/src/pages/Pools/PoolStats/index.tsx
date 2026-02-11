@@ -67,11 +67,17 @@ export const PoolStats = () => {
 		{
 			label: t('poolMembers'),
 			value: `${memberCounter}`,
-			button: pluginEnabled('subscan')
+			button: pluginEnabled('staking_api')
 				? {
 						text: t('browseMembers'),
 						onClick: () => {
-							openCanvas({ key: 'PoolMembers', size: 'xl' })
+							openCanvas({
+								key: 'PoolMembers',
+								options: {
+									poolId,
+								},
+								size: 'xl',
+							})
 						},
 						disabled: [0, undefined].includes(memberCounter),
 					}
@@ -84,7 +90,7 @@ export const PoolStats = () => {
 	)
 
 	return (
-		<CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
+		<CardWrapper style={{ boxShadow: 'var(--shadow-alt)' }}>
 			<CardHeader margin>
 				<h3>{t('poolStats')}</h3>
 			</CardHeader>

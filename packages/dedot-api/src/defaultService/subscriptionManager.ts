@@ -4,9 +4,9 @@
 import { reconnectSync$ } from '@w3ux/observables-connect'
 import type { DedotClient } from 'dedot'
 import {
-	activeAddress$,
 	activePoolIds$,
 	bonded$,
+	fetchAndSetPoolWarnings,
 	getActiveAddress,
 	getLocalActiveProxy,
 	getSyncing,
@@ -21,7 +21,6 @@ import { AccountBalanceQuery } from '../subscribe/accountBalance'
 import { ActivePoolQuery } from '../subscribe/activePool'
 import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
-import { FastUnstakeQueueQuery } from '../subscribe/fastUnstakeQueue'
 import { PoolMembershipQuery } from '../subscribe/poolMembership'
 import { ProxiesQuery } from '../subscribe/proxies'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
@@ -30,11 +29,9 @@ import type {
 	ActivePools,
 	AssetHubChain,
 	BondedAccounts,
-	FastUnstakeChain,
 	PeopleChain,
 	PoolMemberships,
 	Proxies,
-	RelayChain,
 	StakingChain,
 	StakingLedgers,
 } from '../types'
@@ -50,17 +47,14 @@ import type { AccountBalances } from './types'
 
 // Manages all subscriptions for a default service
 export class SubscriptionManager<
-	RelayApi extends RelayChain,
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
-	FastUnstakeApi extends FastUnstakeChain,
 > {
 	subActiveAddress: Subscription
 	subImportedAccounts: Subscription
 	subActiveEra: Subscription
-	subAccountBalances: AccountBalances<RelayApi, PeopleApi, HubApi> = {
-		relay: {},
+	subAccountBalances: AccountBalances<PeopleApi, HubApi> = {
 		people: {},
 		hub: {},
 	}
@@ -76,13 +70,10 @@ export class SubscriptionManager<
 	// Query objects that may need to be recreated
 	stakingMetrics: StakingMetricsQuery<StakingApi>
 	eraRewardPoints: EraRewardPointsQuery<StakingApi>
-	fastUnstakeQueue: FastUnstakeQueueQuery<FastUnstakeApi>
 
 	constructor(
-		private apiRelay: DedotClient<RelayApi>,
 		private apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
-		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
 		private ids: [NetworkId, SystemChainId, SystemChainId],
 		private stakingConsts: { poolsPalletId: Uint8Array },
 		private serviceInterface: ServiceInterface,
@@ -90,20 +81,9 @@ export class SubscriptionManager<
 
 	// Initialize default service subscriptions
 	initialize() {
-		// Active address subscription - recreates fast unstake queue
-		this.subActiveAddress = activeAddress$.subscribe((activeAddress) => {
-			if (activeAddress) {
-				this.fastUnstakeQueue?.unsubscribe()
-				this.fastUnstakeQueue = new FastUnstakeQueueQuery(
-					this.fastUnstakeApi,
-					activeAddress,
-				)
-			}
-		})
-
 		// Imported accounts subscription - manages account balances and related subscriptions
 		this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
-			const ss58 = this.apiRelay.consts.system.ss58Prefix
+			const ss58 = this.apiHub.consts.system.ss58Prefix
 			const formattedCur = formatAccountAddresses(cur.flat(), ss58)
 			const { added, removed, remaining } = diffImportedAccounts(
 				prev.flat(),
@@ -131,17 +111,16 @@ export class SubscriptionManager<
 			})
 
 			const addedAddresses: string[] = []
-			added.forEach((account) => {
+			for (const account of added) {
 				const address = account.address
 
-				// Only subscribe to address subscriptions if no other occurrence of the address exists
+				// Address individuality checks
 				const addressAlreadyAdded = addedAddresses.some((a) => a === address)
 				const addressAlreadyPresent = remaining.some(
 					(a) => a?.address === address,
 				)
+				// Only subscribe to address subscriptions if no other occurrence of the address exists
 				if (!addressAlreadyAdded && !addressAlreadyPresent) {
-					this.subAccountBalances.relay[getAccountKey(this.ids[0], address)] =
-						new AccountBalanceQuery(this.apiRelay, this.ids[0], address)
 					this.subAccountBalances.hub[getAccountKey(this.ids[2], address)] =
 						new AccountBalanceQuery(this.apiHub, this.ids[2], address)
 
@@ -153,7 +132,12 @@ export class SubscriptionManager<
 					this.subProxies[address] = new ProxiesQuery(this.stakingApi, address)
 				}
 				addedAddresses.push(address)
-			})
+			}
+
+			// Fetch pool warnings for added addresses
+			if (addedAddresses.length > 0) {
+				fetchAndSetPoolWarnings(this.ids[0], addedAddresses)
+			}
 		})
 
 		// Active bonded subscription - manages staking ledgers
@@ -274,6 +258,5 @@ export class SubscriptionManager<
 
 		this.stakingMetrics?.unsubscribe()
 		this.eraRewardPoints?.unsubscribe()
-		this.fastUnstakeQueue?.unsubscribe()
 	}
 }

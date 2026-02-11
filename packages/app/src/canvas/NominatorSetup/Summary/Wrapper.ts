@@ -10,7 +10,7 @@ export const SummaryWrapper = styled.div`
   margin-bottom: 1rem;
 
   > section {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
     flex-basis: 100%;
     display: flex;
     flex-flow: row wrap;
@@ -32,7 +32,7 @@ export const SummaryWrapper = styled.div`
         justify-content: center;
 
         > svg {
-          color: var(--accent-color-primary);
+          color: var(--accent-primary);
         }
       }
 
@@ -42,7 +42,7 @@ export const SummaryWrapper = styled.div`
         padding-left: 0.25rem;
 
         > h4 {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
           margin-bottom: 0.3rem;
         }
       }

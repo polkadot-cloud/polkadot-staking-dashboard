@@ -8,7 +8,7 @@ const VERTICAL_THRESHOLD = 800
 
 export const Wrapper = styled.div`
   h2 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
@@ -31,9 +31,9 @@ export const ItemWrapper = styled(motion.div)`
   }
 
   > .inner {
-    color: var(--text-color-secondary);
-    background: var(--background-primary);
-    box-shadow: var(--card-shadow);
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    box-shadow: var(--shadow);
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;
@@ -61,10 +61,10 @@ export const ItemWrapper = styled(motion.div)`
         > button {
           font-size: 1.1rem;
           &.active {
-            color: var(--text-color-secondary);
-            background: var(--background-list-item);
+            color: var(--text-secondary);
+            background: var(--bg-list);
             &:hover {
-              background: var(--background-list-item);
+              background: var(--bg-list);
             }
           }
           padding: 0.35rem 0.75rem;
@@ -80,7 +80,7 @@ export const ItemWrapper = styled(motion.div)`
         padding: 0.3rem 1rem;
 
         svg {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
         }
 
         margin: 0.5rem 1rem 0.5rem 0;
@@ -91,10 +91,10 @@ export const ItemWrapper = styled(motion.div)`
           cursor: default;
         }
         &.active {
-          background: var(--button-secondary-background);
+          background: var(--btn-bg-secondary);
           transition: background var(--transition-duration);
           &:hover {
-            background: var(--button-hover-background);
+            background: var(--btn-bg-hover);
           }
         }
         &:last-child {
@@ -132,7 +132,7 @@ export const ItemWrapper = styled(motion.div)`
         }
       }
       &:last-child {
-        border-top: 1px solid var(--border-primary-color);
+        border-top: 1px solid var(--border);
         border-left: none;
         flex-flow: column wrap;
         justify-content: center;

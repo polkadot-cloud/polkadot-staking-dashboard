@@ -1,6 +1,6 @@
 {
 	"name": "ui-graphs",
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"license": "GPL-3.0-only",
 	"type": "module",
 	"scripts": {
@@ -14,17 +14,18 @@
 		"./util": "./src/util/index.ts"
 	},
 	"dependencies": {
-		"@w3ux/utils": "^2.2.3",
+		"@w3ux/utils": "^3.1.0",
 		"bignumber.js": "^9.3.1",
 		"chart.js": "^4.4.9",
+		"chartjs-plugin-annotation": "^3.1.0",
 		"chroma-js": "^3.2.0",
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
 		"locales": "workspace:*",
 		"plugin-staking-api": "workspace:*",
-		"react": "^19.1.0",
+		"react": "^19.2.4",
 		"react-chartjs-2": "^5.3.1",
-		"styled-components": "^6.1.19",
+		"styled-components": "^6.3.9",
 		"ui-core": "workspace:*",
 		"utils": "workspace:*"
 	},

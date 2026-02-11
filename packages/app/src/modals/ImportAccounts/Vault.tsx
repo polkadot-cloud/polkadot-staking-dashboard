@@ -7,7 +7,6 @@ import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccountSource } from '@w3ux/types'
 import { getStakingChainData } from 'consts/util'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
 import type { CSSProperties } from 'react'
@@ -21,15 +20,12 @@ export const Vault = () => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const {
-		getHardwareAccount,
 		getHardwareAccounts,
 		hardwareAccountExists,
 		renameHardwareAccount,
 		removeHardwareAccount,
 	} = useHardwareAccounts()
 	const { setModalResize } = useOverlay().modal
-	const { renameOtherAccount, addOtherAccounts, forgetOtherAccounts } =
-		useOtherAccounts()
 	const { ss58 } = getStakingChainData(network)
 	const source: HardwareAccountSource = 'vault'
 
@@ -45,17 +41,12 @@ export const Vault = () => {
 
 	// Handle renaming a vault address
 	const handleRename = (address: string, newName: string) => {
-		renameOtherAccount(address, source, newName)
 		renameHardwareAccount(source, network, address, newName)
 	}
 
 	// Handle removing a vault address
 	const handleRemove = (address: string): void => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
-			const existingOther = getHardwareAccount(source, network, address)
-			if (existingOther) {
-				forgetOtherAccounts([existingOther])
-			}
 			removeHardwareAccount(source, network, address)
 		}
 	}
@@ -132,10 +123,7 @@ export const Vault = () => {
 					<QrReader
 						network={network}
 						ss58={ss58}
-						onSuccess={(account) => {
-							addOtherAccounts([account])
-							setImportActive(false)
-						}}
+						onSuccess={(_account) => setImportActive(false)}
 					/>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<ButtonSubmitInvert

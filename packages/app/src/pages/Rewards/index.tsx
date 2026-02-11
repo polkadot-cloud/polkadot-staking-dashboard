@@ -6,7 +6,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { getUnixTime } from 'date-fns'
+import { getUnixTime, startOfToday, subDays } from 'date-fns'
+import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
 import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
@@ -15,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { filterAndSortRewards } from 'ui-graphs/util'
 import { Overview } from './Overview'
-import { RecentPayouts } from './RecentPayouts'
+import { RecentPayouts } from './PayoutList'
 import type { PayoutGraphData } from './types'
 import { Wrapper } from './Wrappers'
 
@@ -50,11 +51,9 @@ export const Rewards = () => {
 
 	// Get payout data on account or staking api toggle
 	const getPayoutData = async () => {
-		const fromDate = new Date()
-		fromDate.setDate(fromDate.getDate() - MaxPayoutDays)
-		fromDate.setHours(0, 0, 0, 0)
+		const fromDate = subDays(startOfToday(), MaxPayoutDays)
 
-		const [allRewards, poolRewards] = await Promise.all([
+		const [{ allRewards }, { poolRewards }] = await Promise.all([
 			fetchRewards(
 				network,
 				activeAddress || '',
@@ -65,8 +64,10 @@ export const Rewards = () => {
 
 		const payouts =
 			allRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
+
 		const unclaimedPayouts =
 			allRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
+
 		const poolClaims = poolRewards ?? []
 
 		// Filter zero rewards and order via timestamp, most recent first
@@ -107,12 +108,18 @@ export const Rewards = () => {
 						{
 							title: t('overview', { ns: 'app' }),
 							active: activeTab === 0,
-							onClick: () => setActiveTab(0),
+							onClick: () => {
+								onTabVisitEvent('rewards', 'overview')
+								setActiveTab(0)
+							},
 						},
 						{
 							title: t('recentPayouts', { ns: 'pages' }),
 							active: activeTab === 1,
-							onClick: () => setActiveTab(1),
+							onClick: () => {
+								onTabVisitEvent('rewards', 'recent_payouts')
+								setActiveTab(1)
+							},
 						},
 					]}
 				/>

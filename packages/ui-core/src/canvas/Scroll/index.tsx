@@ -4,7 +4,6 @@
 import { motion } from 'motion/react'
 import { forwardRef } from 'react'
 import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
 import type { ScrollProps } from '../types'
 import classes from './index.module.scss'
 

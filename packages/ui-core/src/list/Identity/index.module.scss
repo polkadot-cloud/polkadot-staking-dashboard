@@ -20,7 +20,7 @@
       flex-grow: 1;
 
       > h4 {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         font-family: InterSemiBold, sans-serif;
         position: absolute;
         top: 0;
@@ -35,7 +35,7 @@
         width: 100%;
 
         > span {
-          color: var(--text-color-tertiary);
+          color: var(--text-tertiary);
           font-size: 0.8rem;
           position: relative;
           top: -0.1rem;

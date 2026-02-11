@@ -32,14 +32,14 @@ export const ButtonCopy = ({
 		[classes.withChildren]: children !== undefined,
 	})
 
-	const copyClasses = classNames(classes.copyIcon, {
+	const copyClasses = classNames(classes.copy, {
 		[classes.active]: active,
-		[classes.inheritSize]: size === undefined,
+		[classes.inherit]: size === undefined,
 	})
 
-	const checkClasses = classNames(classes.checkIcon, {
+	const checkClasses = classNames(classes.check, {
 		[classes.active]: active,
-		[classes.inheritSize]: size === undefined,
+		[classes.inherit]: size === undefined,
 	})
 
 	const text = active ? tooltipText.copied : tooltipText.copy

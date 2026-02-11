@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--background-canvas-card-secondary)' : 'none')};
+  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--bg-card-canvas-alt)' : 'none')};
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -38,7 +38,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   scrollbar-width: none;
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
-    background: var(--gradient-side-menu);
+    background: var(--gradient-menu);
     transition: all var(--transition-duration);
     border-radius: 0.75rem;
   }
@@ -64,8 +64,8 @@ export const Wrapper = styled.div<MinimisedProps>`
 `
 
 export const CategoryHeader = styled.h3`
-  color: var(--accent-color-primary);
-  border-bottom: 1px solid var(--accent-color-primary);
+  color: var(--accent-primary);
+  border-bottom: 1px solid var(--accent-primary);
   font-family: InterSemiBold, sans-serif;
   margin: 1.12rem 0.75rem 0.75rem 0.25rem;
   padding-bottom: 0.78rem;
@@ -111,7 +111,7 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   }
 
   > h3 {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
     margin-left: 0.75rem;
     background-clip: text;
     display: flex;
@@ -139,8 +139,8 @@ export const ToggleWrapper = styled.button`
   }
 
   > .label {
-    background: var(--background-primary);
-    color: var(--text-color-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
     width: 100%;
     height: 100%;
     display: flex;
@@ -151,7 +151,7 @@ export const ToggleWrapper = styled.button`
 `
 
 export const BulletWrapper = styled.div`
-  color: var(--status-success-color);
+  color: var(--status-success);
   display: flex;
   flex: 1;
   font-size: 0.88rem;
@@ -162,12 +162,12 @@ export const BulletWrapper = styled.div`
 
   > span {
     &.success {
-      color: var(--accent-color-primary);
-      border: 1px solid var(--accent-color-primary);
+      color: var(--accent-primary);
+      border: 1px solid var(--accent-primary);
     }
     &.warning {
-      color: var(--accent-color-secondary);
-      border: 1px solid var(--accent-color-secondary);
+      color: var(--status-warning);
+      border: 1px solid var(--status-warning);
     }
     border-radius: 0.5rem;
     padding: 0.15rem 0.5rem;
@@ -175,22 +175,22 @@ export const BulletWrapper = styled.div`
 
   &.accent {
     svg {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
   }
   &.success {
     svg {
-      color: var(--status-success-color);
+      color: var(--status-success);
     }
   }
   &.warning {
     svg {
-      color: var(--status-warning-color);
+      color: var(--status-warning);
     }
   }
   &.danger {
     svg {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
   }
   &.minimised {

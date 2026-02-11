@@ -15,10 +15,8 @@ import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
-import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
-import { FastUnstakeProvider } from 'contexts/FastUnstake'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
 import { InvitesProvider } from 'contexts/Invites'
@@ -44,7 +42,6 @@ import { TxMetaProvider } from 'contexts/TxMeta'
 import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
-import { WalletConnectProvider } from 'contexts/WalletConnect'
 import { Tooltip } from 'radix-ui'
 import { OverlayProvider } from 'ui-overlay'
 
@@ -57,6 +54,7 @@ export const Providers = () => {
 		[
 			ActiveAccountsProvider,
 			UIProvider,
+			OverlayProvider,
 			[APIProvider, { network }],
 			LedgerHardwareProvider,
 			[
@@ -69,9 +67,7 @@ export const Providers = () => {
 			],
 			HardwareAccountsProvider,
 			ExternalAccountsProvider,
-			OtherAccountsProvider,
 			ImportedAccountsProvider,
-			WalletConnectProvider,
 			ProxiesProvider,
 			HelpProvider,
 			PluginsProvider,
@@ -86,7 +82,6 @@ export const Providers = () => {
 			ActivePoolProvider,
 			ValidatorsProvider,
 			FavoriteValidatorsProvider,
-			FastUnstakeProvider,
 			PayoutsProvider,
 			PoolSetupsProvider,
 			NominatorSetupsProvider,
@@ -94,7 +89,6 @@ export const Providers = () => {
 			MenuProvider,
 			TooltipProvider,
 			TxMetaProvider,
-			OverlayProvider,
 			PromptProvider,
 			MigrateProvider,
 			FiltersProvider,

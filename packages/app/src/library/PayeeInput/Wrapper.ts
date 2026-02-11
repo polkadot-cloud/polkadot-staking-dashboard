@@ -10,14 +10,12 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
     flex-flow: column nowrap;
     border-bottom: 1.5px solid
       ${(props) =>
-				props.$activeInput
-					? 'var(--accent-color-primary)'
-					: 'var(--border-primary-color)'};
+				props.$activeInput ? 'var(--accent-primary)' : 'var(--border)'};
     padding: 0rem 0 0.4rem 0;
     transition: border var(--transition-duration);
 
     > h4 {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       margin-top: 1.25rem;
       margin-bottom: 0.5rem;
     }
@@ -30,14 +28,14 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
       margin-top: 0.2rem;
 
       > .emptyIcon {
-        background: var(--background-list-item);
+        background: var(--bg-list);
         width: 2.5rem;
         height: 2.5rem;
         border-radius: 50%;
       }
 
       > .input {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         display: flex;
         flex-flow: column nowrap;
         margin-left: 0.75rem;
@@ -45,7 +43,7 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
         max-width: 100%;
 
         > input {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
           font-size: 1.25rem;
           z-index: 1;
           opacity: 1;
@@ -76,7 +74,7 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
     font-size: 0.85rem;
 
     h5 {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       position: absolute;
       top: 0;
       left: 0;

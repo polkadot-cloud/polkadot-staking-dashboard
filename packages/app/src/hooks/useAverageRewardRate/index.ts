@@ -86,7 +86,12 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
 		return rate
 	}
 
+	const formatRateAsPercent = (rate: number) => {
+		return `${new BigNumber(rate).decimalPlaces(2).toFormat()}%`
+	}
+
 	return {
 		getAverageRewardRate,
+		formatRateAsPercent,
 	}
 }

@@ -6,11 +6,7 @@ import type { MaybeAddress, Validator } from 'types'
 
 export interface NominatorSetupsContextInterface {
 	getNominatorSetup: (address: MaybeAddress) => NominatorSetup
-	setNominatorSetup: (
-		progress: NominatorProgress,
-		simple?: boolean,
-		section?: number,
-	) => void
+	setNominatorSetup: (progress: NominatorProgress, section?: number) => void
 	removeNominatorSetup: (address: MaybeAddress) => void
 	getNominatorSetupPercent: (address: MaybeAddress) => number
 	setNominatorSetupSection: (section: number) => void
@@ -23,7 +19,6 @@ export type NominatorSetups = Record<string, NominatorSetup>
 
 export interface NominatorSetup {
 	section: number
-	simple: boolean
 	progress: NominatorProgress
 }
 

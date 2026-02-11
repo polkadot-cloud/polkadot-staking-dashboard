@@ -5,8 +5,8 @@
   overflow: hidden;
 
   .label {
-    color: var(--text-color-secondary);
-    margin: 0.25rem 0 0.75rem 0;
+    color: var(--text-secondary);
+    margin: 0.25rem 0 0.75rem;
   }
 
   .roleChange {
@@ -16,23 +16,23 @@
     margin-bottom: 1rem;
 
     > .arrow {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       margin: 0 0.75rem;
       opacity: 0.5;
     }
   }
 
   .inputWrap {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--border);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    padding: 0.25rem 0 0 0;
-    margin: 0.25rem 0.7rem 0 0.7rem;
+    padding: 0.25rem 0 0;
+    margin: 0.25rem 0.7rem 0;
     flex: 1;
 
     &.selected {
-      border: 1px solid var(--border-primary-color);
+      border: 1px solid var(--border);
       border-radius: 1rem;
       margin: 0;
       padding: 0.1rem 0.75rem;

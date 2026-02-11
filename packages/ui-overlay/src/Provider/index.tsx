@@ -76,7 +76,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const closeModal = () => {
-		document.body.classList.remove('disable-body-scroll')
+		document.body.classList.remove('disableBodyScroll')
 		setModalStatus('closing')
 	}
 
@@ -85,7 +85,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 			return
 		}
 
-		document.body.classList.add('disable-body-scroll')
+		document.body.classList.add('disableBodyScroll')
 		setModalConfig({ key, size, options })
 		setModalStatus('opening')
 		if (!options?.replacing) {
@@ -172,7 +172,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 
 	// Open the canvas
 	const openCanvas = ({ key, size, scroll = true, options }: CanvasConfig) => {
-		document.body.classList.add('disable-body-scroll')
+		document.body.classList.add('disableBodyScroll')
 		setCanvasStatus('open')
 		setOpenOverlayInstances('inc', 'canvas')
 		setCanvasConfig({
@@ -185,7 +185,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 
 	// Close the canvas
 	const closeCanvas = () => {
-		document.body.classList.remove('disable-body-scroll')
+		document.body.classList.remove('disableBodyScroll')
 		setCanvasStatus('closing')
 	}
 

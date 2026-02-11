@@ -24,40 +24,40 @@
 }
 
 .btnSpacingLeft {
-  margin-left: var(--button-lg-spacing);
+  margin-left: var(--btn-lg-spacing);
 }
 
 .btnSpacingRight {
-  margin-right: var(--button-lg-spacing);
+  margin-right: var(--btn-lg-spacing);
 }
 
 .btnMarginX {
-  margin: 0 var(--button-lg-spacing);
+  margin: 0 var(--btn-lg-spacing);
 }
 
 .btnSmall {
-  padding: var(--button-sm-padding);
-  font-size: var(--button-sm-font-size);
+  padding: var(--btn-sm-padding);
+  font-size: var(--btn-sm-font-size);
 }
 
 .btnMedium {
-  padding: var(--button-md-padding);
-  font-size: var(--button-md-font-size);
+  padding: var(--btn-md-padding);
+  font-size: var(--btn-md-font-size);
 }
 
 .btnLarge {
-  padding: var(--button-lg-padding);
-  font-size: var(--button-lg-font-size);
+  padding: var(--btn-lg-padding);
+  font-size: var(--btn-lg-font-size);
 }
 
 .btnIconLeftSpacing {
-  margin-left: var(--button-sm-spacing);
-  margin-right: var(--button-lg-spacing);
+  margin-left: var(--btn-sm-spacing);
+  margin-right: var(--btn-lg-spacing);
 }
 
 .btnIconRightSpacing {
-  margin-left: var(--button-lg-spacing);
-  margin-right: var(--button-sm-spacing);
+  margin-left: var(--btn-lg-spacing);
+  margin-right: var(--btn-sm-spacing);
 }
 
 .btnDisabled {
@@ -74,6 +74,7 @@
   &:hover {
     transform: scale(1.02);
   }
+
   &:active {
     transform: scale(0.98);
   }

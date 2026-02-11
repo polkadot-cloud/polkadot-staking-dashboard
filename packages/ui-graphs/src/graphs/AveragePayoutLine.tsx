@@ -13,6 +13,7 @@ import {
 	Title,
 	Tooltip,
 } from 'chart.js'
+import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import type { AveragePayoutLineProps } from '../types'
 import {
@@ -47,8 +48,8 @@ export const AveragePayoutLine = ({
 	const staking = nominating || inPool
 	const inPoolOnly = !nominating && inPool
 
-	// Define the most recent date that we will show on the graph
-	const fromDate = new Date()
+	// Memoize current date for the component's lifetime
+	const fromDate = useMemo(() => new Date(), [])
 
 	const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
 		fromDate,
@@ -80,10 +81,10 @@ export const AveragePayoutLine = ({
 
 	// Determine color for payouts
 	const color = !staking
-		? getThemeValue('--accent-color-primary')
+		? getThemeValue('--accent-primary')
 		: !inPoolOnly
-			? getThemeValue('--accent-color-primary')
-			: getThemeValue('--accent-color-secondary')
+			? getThemeValue('--accent-primary')
+			: getThemeValue('--accent-secondary')
 
 	const options = {
 		responsive: true,
@@ -108,7 +109,7 @@ export const AveragePayoutLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-color-secondary'),
+					color: getThemeValue('--grid-secondary'),
 				},
 			},
 		},
@@ -118,9 +119,9 @@ export const AveragePayoutLine = ({
 			},
 			tooltip: {
 				displayColors: false,
-				backgroundColor: getThemeValue('--background-invert'),
-				titleColor: getThemeValue('--text-color-invert'),
-				bodyColor: getThemeValue('--text-color-invert'),
+				backgroundColor: getThemeValue('--bg-invert'),
+				titleColor: getThemeValue('--text-invert'),
+				bodyColor: getThemeValue('--text-invert'),
 				bodyFont: {
 					weight: 600,
 				},

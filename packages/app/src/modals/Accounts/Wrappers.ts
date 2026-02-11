@@ -10,7 +10,7 @@ export const AccountWrapper = styled.div`
 
   &.active {
     > div {
-      border: 1px solid var(--accent-color-primary);
+      border: 1px solid var(--accent-primary);
     }
   }
 
@@ -19,8 +19,8 @@ export const AccountWrapper = styled.div`
   }
 
   > div {
-    background: var(--button-primary-background);
-    color: var(--text-color-primary);
+    background: var(--btn-bg-tertiary);
+    color: var(--text-primary);
     font-family: InterSemiBold, sans-serif;
     border: 1px solid transparent;
     display: flex;
@@ -42,10 +42,8 @@ export const AccountWrapper = styled.div`
 
       /* Top half of the button, account information */
       &.head {
-        background: var(--button-tertiary-background);
-
         > button {
-          color: var(--text-color-primary);
+          color: var(--text-primary);
           display: flex;
           align-items: center;
           justify-content: flex-start;
@@ -57,7 +55,7 @@ export const AccountWrapper = styled.div`
 
           &:hover {
             .name {
-              color: var(--accent-color-primary);
+              color: var(--accent-primary);
             }
           }
 
@@ -87,8 +85,8 @@ export const AccountWrapper = styled.div`
           }
 
           .badge {
-            background-color: var(--background-floating-card);
-            color: var(--text-color-secondary);
+            background-color: var(--bg-card-floating);
+            color: var(--text-secondary);
             margin-left: 1rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.45rem;
@@ -111,10 +109,10 @@ export const AccountWrapper = styled.div`
           /* svg theming */
           svg {
             .light {
-              fill: var(--text-color-invert);
+              fill: var(--text-invert);
             }
             .dark {
-              fill: var(--text-color-secondary);
+              fill: var(--text-secondary);
             }
           }
 
@@ -125,13 +123,13 @@ export const AccountWrapper = styled.div`
 
             &.neutral {
               h5 {
-                color: var(--text-color-secondary);
+                color: var(--text-secondary);
                 opacity: 0.75;
               }
             }
             &.danger {
               h5 {
-                color: var(--status-danger-color);
+                color: var(--status-danger);
               }
             }
             .icon {
@@ -150,11 +148,11 @@ export const AccountWrapper = styled.div`
 
       /* Bottom half of the button, account metadata */
       &.foot {
-        border-top: 1px solid var(--border-primary-color);
+        border-top: 1px solid var(--border);
         padding: 0.7rem 1rem;
 
         > .balance {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
           font-size: 0.9rem;
           opacity: 0.6;
         }

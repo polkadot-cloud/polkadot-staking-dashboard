@@ -1,40 +1,40 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePoolMembers } from 'contexts/Pools/PoolMembers'
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
-import { Subscan } from 'library/Subscan'
+import { fetchPoolMembers } from 'plugin-staking-api'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { PoolMember } from 'types'
 import { Member } from './Member'
 import type { MembersListProps } from './types'
 
 export const MembersListInner = ({
+	bondedPool,
 	pagination,
 	memberCount,
 	itemsPerPage,
+	isDepositor,
+	isRoot,
+	isOwner,
+	isBouncer,
 }: MembersListProps) => {
 	const { t } = useTranslation('pages')
-	const { network } = useNetwork()
-	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
-	const { activePool } = useActivePool()
 	const {
 		meta,
 		fetchPoolMemberData,
 		fetchedPoolMembersApi,
 		setFetchedPoolMembersApi,
 	} = usePoolMembers()
+	const { network } = useNetwork()
 
-	// current page.
+	const poolId = bondedPool.id
+
+	// current page
 	const [page, setPage] = useState<number>(1)
 
 	// pagination
@@ -45,47 +45,51 @@ export const MembersListInner = ({
 	// handle validator list bootstrapping
 	const fetchingMemberList = useRef<boolean>(false)
 
-	const setupMembersList = async () => {
-		const poolId = activePool?.id || 0
-
-		if (poolId > 0 && !fetchingMemberList.current) {
-			fetchingMemberList.current = true
-
-			const newMembers = (await Subscan.handleFetchPoolMembers(
-				poolId,
-				page,
-				itemsPerPage,
-			)) as PoolMember[]
-
+	const syncMemberList = async () => {
+		try {
+			if (poolId > 0 && !fetchingMemberList.current) {
+				fetchingMemberList.current = true
+				// Calculate offset based on page number (1-indexed)
+				const offset = (page - 1) * itemsPerPage
+				const { poolMembers } = await fetchPoolMembers(
+					network,
+					poolId,
+					itemsPerPage,
+					offset,
+				)
+				fetchingMemberList.current = false
+				if (poolMembers.members.length > 0) {
+					fetchPoolMemberData(poolMembers.members.map(({ address }) => address))
+				}
+				setFetchedPoolMembersApi('synced')
+			}
+		} catch {
 			fetchingMemberList.current = false
-			fetchPoolMemberData(newMembers.map(({ who }) => who))
-			setFetchedPoolMembersApi('synced')
+			setFetchedPoolMembersApi('unsynced')
 		}
 	}
 
-	// get throttled subset or entire list
-	const members = meta.poolMembers.filter((m) => m !== undefined)
+	// Merge member data with claim permissions to have all member data in one object
+	const members = meta.poolMembers
+		.map((member, index) => {
+			if (!member) {
+				return undefined
+			}
+			return {
+				...member,
+				claimPermission: meta.claimPermissions[index],
+			}
+		})
+		.filter((m) => m !== undefined)
+
+	// Get paginated subset of members
 	const listMembers = members.slice(pageStart).slice(0, itemsPerPage)
 
-	// Refetch list when page changes.
-	useEffect(() => {
-		if (pluginEnabled('subscan')) {
-			setFetchedPoolMembersApi('unsynced')
-		}
-	}, [page, activeAddress, pluginEnabled('subscan')])
-
-	// Refetch list when network changes.
+	// Configure list when network is ready to fetch
 	useEffect(() => {
 		setFetchedPoolMembersApi('unsynced')
-		setPage(1)
-	}, [network])
-
-	// Configure list when network is ready to fetch.
-	useEffect(() => {
-		if (fetchedPoolMembersApi === 'unsynced') {
-			setupMembersList()
-		}
-	}, [fetchedPoolMembersApi, activePool])
+		syncMemberList()
+	}, [poolId, page])
 
 	return (
 		<ListWrapper>
@@ -105,7 +109,15 @@ export const MembersListInner = ({
 				) : (
 					<MotionContainer>
 						{listMembers.map((member, index) => (
-							<Member key={`nomination_${index}`} member={member} />
+							<Member
+								key={`nomination_${index}`}
+								member={member}
+								bondedPool={bondedPool}
+								isDepositor={isDepositor}
+								isRoot={isRoot}
+								isOwner={isOwner}
+								isBouncer={isBouncer}
+							/>
 						))}
 					</MotionContainer>
 				)}

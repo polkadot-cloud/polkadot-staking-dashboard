@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
 
   h1,
   h2 {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
   }
 
   h2 {
@@ -33,12 +33,12 @@ export const Wrapper = styled.div`
     }
     margin-bottom: 3rem;
     svg {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
     }
   }
 
   button {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-size: 1.25rem;
 
     &:hover {

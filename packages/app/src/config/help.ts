@@ -20,4 +20,5 @@ export const HelpNoDocs = [
 	'totalPayoutsAnalysed',
 	'validatorRewardHistory',
 	'yourBalance',
+	'halving',
 ]

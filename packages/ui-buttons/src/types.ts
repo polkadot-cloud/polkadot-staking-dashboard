@@ -105,7 +105,6 @@ export type ButtonOptionProps = ComponentBaseWithClassName &
 export type ButtonPrimaryProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		size?: ButtonSize
 		text: string
 		asLabel?: boolean
@@ -114,7 +113,6 @@ export type ButtonPrimaryProps = ComponentBaseWithClassName &
 export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		lg?: boolean
 		text: string
 		asLabel?: boolean
@@ -125,12 +123,14 @@ export type ButtonSecondaryProps = ComponentBaseWithClassName &
 	ButtonCommonProps & {
 		size?: ButtonSize
 		text: string
+		variant?: 'warning' | 'danger'
+		active?: boolean
+		asTab?: boolean
 	}
 
 export type ButtonSubmitProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		text: string
 		lg?: boolean
 		pulse?: boolean
@@ -229,3 +229,10 @@ export type ButtonPopoverTabProps = ComponentBaseWithClassName &
 		disabled?: boolean
 		grow?: boolean
 	}
+
+export interface QuickActionFooterButtonProps
+	extends ComponentBaseWithClassName {
+	icon: IconDefinition
+	label: string
+	onClick: () => void
+}

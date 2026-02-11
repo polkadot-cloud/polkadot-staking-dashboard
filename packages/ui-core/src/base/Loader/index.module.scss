@@ -3,13 +3,13 @@
 
 
 .loader {
-  background: var(--shimmer-foreground);
+  background: var(--shimmer-fg);
   background-image: linear-gradient(
     to right,
-    var(--shimmer-foreground) 0%,
-    var(--shimmer-background) 20%,
-    var(--shimmer-foreground) 70%,
-    var(--shimmer-foreground) 100%
+    var(--shimmer-fg) 0%,
+    var(--shimmer-bg) 20%,
+    var(--shimmer-fg) 70%,
+    var(--shimmer-fg) 100%
   );
   background-repeat: no-repeat;
   background-size: 60% 100%;
@@ -18,7 +18,6 @@
   animation-iteration-count: infinite;
   animation-name: shimmer-loader;
   animation-timing-function: linear;
-
   opacity: 0.4;
   border-radius: 1.5rem;
   display: inline-block;
@@ -26,8 +25,9 @@
 
   @keyframes shimmer-loader {
     0% {
-      background-position: 0px 0;
+      background-position: 0 0;
     }
+
     100% {
       background-position: 290% 0;
     }

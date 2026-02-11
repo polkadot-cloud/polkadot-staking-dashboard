@@ -3,7 +3,7 @@
 
 import type { NetworkId, Plugin } from 'types'
 
-export const PluginsList: Plugin[] = ['staking_api', 'subscan', 'polkawatch']
+export const PluginsList: Plugin[] = ['staking_api', 'polkawatch']
 
 // Force plugins to be enabled in production environment
 //
@@ -11,7 +11,6 @@ export const PluginsList: Plugin[] = ['staking_api', 'subscan', 'polkawatch']
 // you can remove it from this list
 export const CompulsoryPluginsProduction: Plugin[] = [
 	'staking_api',
-	'subscan',
 	'polkawatch',
 ]
 
@@ -22,6 +21,8 @@ export const CompulsoryPluginsProduction: Plugin[] = [
 export const DisabledPluginsPerNetwork: Partial<Record<NetworkId, Plugin[]>> = {
 	// NOTE: Westend is not supported by the staking API plugin
 	westend: ['staking_api'],
+	// NOTE: Paseo is not supported by the staking API plugin
+	paseo: ['staking_api'],
 }
 
 export const PolkawatchConfig = {

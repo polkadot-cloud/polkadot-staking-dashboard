@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEraStakers } from 'contexts/EraStakers'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import type { AnyFilter } from 'library/Filter/types'
 import { useTranslation } from 'react-i18next'
@@ -8,12 +9,11 @@ import type { AnyFunction, AnyJson } from 'types'
 
 export const useValidatorFilters = () => {
 	const { t } = useTranslation('app')
-	const {
-		validatorSupers,
-		getValidatorRank,
-		sessionValidators,
-		validatorIdentities,
-	} = useValidators()
+	const { validatorSupers, getValidatorRank, validatorIdentities } =
+		useValidators()
+	const { eraStakers } = useEraStakers()
+	const eraValidators = eraStakers.stakers.map((staker) => staker.address)
+
 	/*
 	 * filterMissingIdentity: Iterates through the supplied list and filters those with missing
 	 * identities. Returns the updated filtered list.
@@ -61,11 +61,11 @@ export const useValidatorFilters = () => {
 	 */
 	const filterActive = (list: AnyFilter) => {
 		// if list has not yet been populated, return original list
-		if (sessionValidators.length === 0) {
+		if (eraStakers.stakers.length === 0) {
 			return list
 		}
 		return list.filter((validator: AnyFilter) =>
-			sessionValidators.includes(validator.address),
+			eraValidators.includes(validator.address),
 		)
 	}
 
@@ -75,11 +75,11 @@ export const useValidatorFilters = () => {
 	 */
 	const filterInSession = (list: AnyFilter) => {
 		// if list has not yet been populated, return original list
-		if (sessionValidators.length === 0) {
+		if (eraStakers.stakers.length === 0) {
 			return list
 		}
 		return list.filter(
-			(validator: AnyFilter) => !sessionValidators.includes(validator.address),
+			(validator: AnyFilter) => !eraValidators.includes(validator.address),
 		)
 	}
 

@@ -52,15 +52,15 @@ export const Bond = ({
 	}
 
 	// handler for updating bond
-	const handleSetBond = (value: { bond: BigNumber }) => {
-		// set this form's bond value.
+	const handleSetBond = ({ value }: { value: BigNumber }) => {
+		// set this form's bond value
 		setBond({
-			bond: value.bond.toString() || '0',
+			bond: value.toString(),
 		})
-		// set nominator progress bond value.
+		// set nominator progress bond value
 		setNominatorSetup({
 			...progress,
-			bond: value.bond.toString(),
+			bond: value.toString(),
 		})
 	}
 

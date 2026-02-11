@@ -1,25 +1,24 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { getNetworkKnownPoolIds } from 'consts/util/pools'
-import { useApi } from 'contexts/Api'
 import { useInvites } from 'contexts/Invites'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { poolRoleIdentities$ } from 'global-bus'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { fetchPoolCandidates } from 'plugin-staking-api'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { BondedPool } from 'types'
+import type { BondedPool, RoleIdentities } from 'types'
 import { Head, Main } from 'ui-core/canvas'
 import { CloseCanvas, useOverlay } from 'ui-overlay'
-import { formatIdentities, formatSuperIdentities } from 'utils'
 import { Header } from './Header'
 import { Nominations } from './Nominations'
 import { Overview } from './Overview'
 import { Preloader } from './Preloader'
-import type { RoleIdentities } from './types'
 import { InviteHeader } from './Wrappers'
 
 export const Pool = () => {
@@ -27,7 +26,6 @@ export const Pool = () => {
 	const {
 		config: { options },
 	} = useOverlay().canvas
-	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { inviteConfig } = useInvites()
 	const { pluginEnabled } = usePlugins()
@@ -46,18 +44,17 @@ export const Pool = () => {
 	// The active canvas tab.
 	const [activeTab, setActiveTab] = useState<number>(0)
 
-	// Store any identity data for pool roles
-	const [roleIdentities, setRoleIdentities] = useState<RoleIdentities>({
-		identities: {},
-		supers: {},
-	})
+	// Store any identity data for pool roles from global-bus
+	const [roleIdentities, setRoleIdentities] = useState<
+		RoleIdentities | undefined
+	>(undefined)
 
 	// Gets pool candidates for joining pool. If Staking API is disabled, fall back to subset of open
 	// pools
 	const getPoolCandidates = async () => {
 		if (pluginEnabled('staking_api')) {
-			const result = await fetchPoolCandidates(network)
-			return result?.poolCandidates || []
+			const { poolCandidates } = await fetchPoolCandidates(network)
+			return poolCandidates
 		} else {
 			return bondedPools
 				.filter(({ state }) => state === 'Open')
@@ -125,25 +122,15 @@ export const Pool = () => {
 		}
 	}, [])
 
-	// Fetch pool role identities when bonded pool changes
-	const handleRoleIdentities = async (addresses: string[]) => {
-		const [identitiesResult, supersResult] = await Promise.all([
-			serviceApi.query.identityOfMulti(addresses),
-			serviceApi.query.superOfMulti(addresses),
-		])
-
-		const identities = formatIdentities(addresses, identitiesResult)
-		const supers = formatSuperIdentities(supersResult)
-
-		setRoleIdentities({ identities, supers })
-	}
-
-	useEffect(() => {
-		if (bondedPool) {
-			const roles = Object.values(bondedPool.roles)
-			handleRoleIdentities([...new Set(roles)])
-		}
-	}, [bondedPool])
+	// Subscribe to pool role identities from global-bus
+	useEffectIgnoreInitial(() => {
+		const sub = poolRoleIdentities$.subscribe((allIdentities) => {
+			if (selectedPoolId) {
+				setRoleIdentities(allIdentities[selectedPoolId])
+			}
+		})
+		return () => sub.unsubscribe()
+	}, [selectedPoolId])
 
 	return (
 		<Main>

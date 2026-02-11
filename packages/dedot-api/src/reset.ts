@@ -13,12 +13,11 @@ import {
 	resetChainSpecs,
 	resetConsts,
 	resetEraRewardPoints,
-	resetFastUnstakeConfig,
-	resetFastUnstakeQueue,
 	resetPoolMemberships,
+	resetPoolRoleIdentities,
 	resetPoolsConfig,
+	resetPoolWarnings,
 	resetProxies,
-	resetRelayMetrics,
 	resetServiceInterface,
 	resetStakingLedgers,
 	resetStakingMetrics,
@@ -27,6 +26,8 @@ import {
 export const onNetworkReset = () => {
 	resetActivePools()
 	resetActivePoolIds()
+	resetPoolRoleIdentities()
+	resetPoolWarnings()
 
 	resetAccountBalances()
 	resetPoolMemberships()
@@ -37,12 +38,9 @@ export const onNetworkReset = () => {
 
 	resetBlockNumber()
 	resetActiveEra()
-	resetFastUnstakeConfig()
-	resetFastUnstakeQueue()
 	resetEraRewardPoints()
 
 	resetApiStatus()
-	resetRelayMetrics()
 	resetStakingMetrics()
 	resetPoolsConfig()
 	resetServiceInterface()

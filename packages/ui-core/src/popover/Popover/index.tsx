@@ -33,8 +33,8 @@ export const Popover = ({
 }) => {
 	width = width || '310px'
 
-	const contentClasses = classNames(classes.Content, {
-		[classes.Transparent]: !!transparent,
+	const contentClasses = classNames(classes.content, {
+		[classes.transparent]: !!transparent,
 	})
 
 	return (
@@ -52,10 +52,8 @@ export const Popover = ({
 					side={side}
 					align={align}
 				>
-					<div style={{ display: 'flex', flexDirection: 'column' }}>
-						{content}
-					</div>
-					{arrow && <RadixPopover.Arrow className={classes.Arrow} />}
+					<div className={classes.contentBody}>{content}</div>
+					{arrow && <RadixPopover.Arrow className={classes.arrow} />}
 				</RadixPopover.Content>
 			</RadixPopover.Portal>
 		</RadixPopover.Root>

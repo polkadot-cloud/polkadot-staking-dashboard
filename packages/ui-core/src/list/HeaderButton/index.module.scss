@@ -1,10 +1,10 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-@use 'styles/theme/_variables' as *;
+@use 'styles/theme/variables' as *;
 
 .headerButton {
-  color: var(--text-color-secondary);
+  color: var(--text-secondary);
   position: relative;
   display: flex;
   align-items: center;
@@ -25,13 +25,14 @@
 
   > button,
   > span {
-    background: var(--shimmer-foreground);
-    color: var(--text-color-secondary);
+    background: var(--shimmer-fg);
+    color: var(--text-secondary);
     padding: 0 0.1rem;
     font-size: 1rem;
     border-radius: 50%;
     width: 1.9rem;
     height: 1.9rem;
+
     @media (min-width: $page-width-small-threshold) {
       padding: 0 0.2rem;
     }
@@ -39,9 +40,11 @@
     &:hover {
       opacity: 0.75;
     }
+
     &.active {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
+
     &:disabled {
       opacity: var(--opacity-disabled);
     }
@@ -63,19 +66,13 @@
     height: auto;
     border-radius: 0.75rem;
     padding: 0.4rem 0.75rem;
+
     &:disabled {
       &:hover {
         opacity: var(--opacity-disabled);
       }
     }
-    > svg {
-      margin-left: 0.2rem;
-      margin-right: 0.5rem;
-    }
-  }
 
-  &.text > button,
-  &.outline > span {
     > svg {
       margin: 0;
     }
@@ -83,6 +80,7 @@
 
   &.noMargin {
     margin: 0;
+
     > svg {
       margin: 0;
     }

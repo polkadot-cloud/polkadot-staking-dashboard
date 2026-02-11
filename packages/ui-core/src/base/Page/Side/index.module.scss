@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-@use 'styles/theme/_variables' as *;
+@use 'styles/theme/variables' as *;
 
 .container {
   display: flex;
@@ -12,7 +12,9 @@
 }
 
 .bar {
-  background: var(--accent-color-primary);
+  background: 
+    linear-gradient(to bottom, var(--accent-primary), 
+    color-mix(in srgb, var(--accent-primary) 95%, black));
   width: $side-bar-width;
   height: inherit;
   display: flex;
@@ -25,6 +27,11 @@
 
   &.transparent {
     opacity: 0.2;
+  }
+
+  :global(.dark) & {
+    background: linear-gradient(to bottom, var(--bg-menu), var(--bg-list));
+    border-right: 1px solid var(--border);
   }
 }
 
@@ -41,6 +48,7 @@
     @media (max-width: $page-width-medium-threshold) {
       display: none;
     }
+
     &.minimised {
       @media (min-width: ($page-width-medium-threshold + 1px)) {
         min-width: $side-nav-minimised-width;
@@ -66,9 +74,11 @@
       top: 0;
       left: 0;
     }
+
     @media (min-width: ($page-width-medium-threshold + 1px)) {
       display: none;
     }
+
     &.hidden {
       @media (max-width: $page-width-medium-threshold) {
         left: calc($side-menu-floating-width * -1);
@@ -85,8 +95,8 @@
   align-items: center;
 
   h5 {
-    color: var(--text-color-secondary);
-    margin: 1.1rem 0 0.75rem 0;
+    color: var(--text-secondary);
+    margin: 1.1rem 0 0.75rem;
     padding: 0 0.5rem;
     opacity: 0.7;
   }

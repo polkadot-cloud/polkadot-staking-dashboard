@@ -34,8 +34,8 @@ export const HeaderWrapper = styled.div`
     }
 
     @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
-      border-right: 1px solid var(--border-primary-color);
-      flex-basis: 25%;
+      border-right: 1px solid var(--border);
+      flex-basis: 20%;
       margin-bottom: 0;
       padding-left: 1rem;
       padding-right: 1rem;
@@ -47,7 +47,7 @@ export const HeaderWrapper = styled.div`
     }
 
     > .inner {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--border);
       display: flex;
       flex-flow: column wrap;
       padding: 0.5rem 0.5rem 1rem 0.5rem;
@@ -57,18 +57,18 @@ export const HeaderWrapper = styled.div`
       }
 
       h2 {
-        color: var(--accent-color-primary);
+        color: var(--accent-primary);
         display: flex;
         align-items: center;
 
         > button {
-          color: var(--accent-color-primary);
+          color: var(--accent-primary);
           margin-left: 0.75rem;
         }
       }
 
       h4 {
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         font-family: Inter, sans-serif;
         display: flex;
         flex-flow: row wrap;
@@ -87,7 +87,7 @@ export const HeaderWrapper = styled.div`
 `
 
 export const Item = styled(motion.div)`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   list-style: none;
   flex: 1;
   margin-bottom: 1rem;
@@ -108,7 +108,7 @@ export const Item = styled(motion.div)`
     padding-bottom: 0.2rem;
 
     &.neutral {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
     &.danger {
       color: #d2545d;
@@ -116,13 +116,10 @@ export const Item = styled(motion.div)`
     &.warning {
       color: #b5a200;
     }
-    &.pools {
-      color: var(--accent-color-secondary);
-    }
   }
 
   p {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.2rem;
   }

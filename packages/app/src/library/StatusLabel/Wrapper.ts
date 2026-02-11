@@ -15,7 +15,7 @@ export const Wrapper = styled.div<WrapperProps>`
   z-index: 2;
 
   > div {
-    background: var(--background-list-item);
+    background: var(--bg-list);
     min-width: 125px;
     opacity: 0.75;
     padding: 1rem 1.25rem;
@@ -25,7 +25,7 @@ export const Wrapper = styled.div<WrapperProps>`
     justify-content: center;
 
     > svg {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
     }
     h2 {
       padding: 0;

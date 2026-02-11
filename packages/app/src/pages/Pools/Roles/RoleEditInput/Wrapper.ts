@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   margin-top: 0.5rem;
 
   .input {
-    border: 1px solid var(--border-primary-color);
+    border: 1px solid var(--border);
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
@@ -34,14 +34,14 @@ export const Wrapper = styled.div`
   h5 {
     margin: 0.75rem 0.25rem;
     &.neutral {
-      color: var(--text-color-secondary);
+      color: var(--text-secondary);
       opacity: 0.8;
     }
     &.danger {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
     &.success {
-      color: var(--status-success-color);
+      color: var(--status-success);
     }
   }
 `

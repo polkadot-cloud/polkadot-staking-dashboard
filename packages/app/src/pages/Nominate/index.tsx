@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { usePlugins } from 'contexts/Plugins'
+import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +17,7 @@ export const Nominate = () => {
 
 	const [activeTab, setActiveTab] = useState<number>(0)
 
-	// Go back to the first tab if the Polkawatch plugin is disabled.
+	// Go back to the first tab if the Polkawatch plugin is disabled
 	useEffect(() => {
 		if (!pluginEnabled('polkawatch')) {
 			setActiveTab(0)
@@ -33,12 +34,18 @@ export const Nominate = () => {
 									{
 										title: t('overview', { ns: 'app' }),
 										active: activeTab === 0,
-										onClick: () => setActiveTab(0),
+										onClick: () => {
+											onTabVisitEvent('nominate', 'overview')
+											setActiveTab(0)
+										},
 									},
 									{
 										title: t('decentralization', { ns: 'app' }),
 										active: activeTab === 1,
-										onClick: () => setActiveTab(1),
+										onClick: () => {
+											onTabVisitEvent('nominate', 'decentralization')
+											setActiveTab(1)
+										},
 									},
 								]
 							: undefined

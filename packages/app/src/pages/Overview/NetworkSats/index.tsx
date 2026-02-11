@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
+import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useSupplyStaked } from 'hooks/useSupplyStaked'
 import { Header } from 'library/Announcements/Header'
 import { Wrapper } from 'library/Announcements/Wrappers'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -13,13 +16,21 @@ import { Announcements } from './Announcements'
 
 export const NetworkStats = () => {
 	const { t } = useTranslation()
+	const { network } = useNetwork()
 	const { bondedPools } = useBondedPools()
 	const {
 		poolsConfig: { counterForPoolMembers },
 	} = useApi()
+	const { supplyString } = useSupplyStaked()
 	const { counterForNominators, counterForValidators } = useApi().stakingMetrics
+	const { unit } = getStakingChainData(network)
 
 	const items = [
+		{
+			label: t('supplyStaked', { ns: 'pages', unit }),
+			value: `${supplyString}%`,
+			helpKey: 'Supply Staked',
+		},
 		{
 			label: t('totalValidators', { ns: 'pages' }),
 			value: new BigNumber(counterForValidators).toFormat(0),
@@ -43,7 +54,7 @@ export const NetworkStats = () => {
 	]
 
 	return (
-		<CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
+		<CardWrapper style={{ boxShadow: 'var(--shadow-alt)' }}>
 			<CardHeader margin>
 				<h3>{t('networkStats', { ns: 'pages' })}</h3>
 			</CardHeader>

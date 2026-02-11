@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useState } from 'react'
@@ -31,7 +30,6 @@ export const ReadOnly = () => {
 	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
-	const { forgetOtherAccounts } = useOtherAccounts()
 	const { forgetExternalAccounts } = useExternalAccounts()
 
 	const [inputOpen, setInputOpen] = useState<boolean>(false)
@@ -46,11 +44,10 @@ export const ReadOnly = () => {
 		({ addedBy }) => addedBy === 'user',
 	)
 
-	const handleForgetExternalAccount = (account: ExternalAccount) => {
-		forgetExternalAccounts([account])
-		// forget the account from state only if it has not replaced by a `system` external account.
+	// Forget the account from state only if it has not been replaced by a `system` external account
+	const handleForgetUserAccount = (account: ExternalAccount) => {
 		if (account.addedBy === 'user') {
-			forgetOtherAccounts([account])
+			forgetExternalAccounts([account])
 		}
 		setModalResize()
 	}
@@ -99,7 +96,7 @@ export const ReadOnly = () => {
 										</div>
 										<ButtonSecondary
 											text={t('forget')}
-											onClick={() => handleForgetExternalAccount(a)}
+											onClick={() => handleForgetUserAccount(a)}
 										/>
 									</ManualAccount>
 								))}

@@ -15,6 +15,7 @@ import {
 	Tooltip,
 } from 'chart.js'
 import { format, fromUnixTime } from 'date-fns'
+import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from '../types'
@@ -46,10 +47,13 @@ export const PayoutBar = ({
 }: PayoutBarProps) => {
 	const staking = nominating || inPool
 
+	// Memoize current date, updating daily when the day changes
+	const currentDate = useMemo(() => new Date(), [])
+
 	// Get formatted rewards data
 	const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
 		formatRewardsForGraphs(
-			new Date(),
+			currentDate,
 			days,
 			units,
 			payouts,
@@ -62,13 +66,13 @@ export const PayoutBar = ({
 
 	// Determine color for payouts
 	const colorPayouts = !staking
-		? getThemeValue('--accent-color-transparent')
-		: getThemeValue('--accent-color-primary')
+		? getThemeValue('--accent-transparent')
+		: getThemeValue('--accent-primary')
 
 	// Determine color for poolClaims
 	const colorPoolClaims = !staking
-		? getThemeValue('--accent-color-transparent')
-		: getThemeValue('--accent-color-secondary')
+		? getThemeValue('--accent-transparent')
+		: getThemeValue('--accent-secondary')
 
 	const borderRadius = 3.5
 	const pointRadius = 0
@@ -106,7 +110,7 @@ export const PayoutBar = ({
 				),
 				label: labels.unclaimedPayouts,
 				borderColor: colorPayouts,
-				backgroundColor: getThemeValue('--accent-color-pending'),
+				backgroundColor: getThemeValue('--accent-pending'),
 				pointRadius,
 				borderRadius,
 			},
@@ -142,7 +146,7 @@ export const PayoutBar = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-color-secondary'),
+					color: getThemeValue('--grid-secondary'),
 				},
 			},
 		},
@@ -155,9 +159,9 @@ export const PayoutBar = ({
 			},
 			tooltip: {
 				displayColors: false,
-				backgroundColor: getThemeValue('--background-invert'),
-				titleColor: getThemeValue('--text-color-invert'),
-				bodyColor: getThemeValue('--text-color-invert'),
+				backgroundColor: getThemeValue('--bg-invert'),
+				titleColor: getThemeValue('--text-invert'),
+				bodyColor: getThemeValue('--text-invert'),
 				bodyFont: {
 					weight: 600,
 				},

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
-import { NetworkList } from 'consts/networks'
+import { SystemChainList } from 'consts/networks'
+import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
@@ -17,7 +18,9 @@ export const ProvidersPrompt = () => {
 	const { closePrompt } = usePrompt()
 	const { getRpcEndpoint } = useApi()
 
-	const rpcProviders = NetworkList[network].endpoints.rpc
+	const { name } = getStakingChainData(network)
+	const rpcProviders = SystemChainList[name].endpoints.rpc
+
 	return (
 		<>
 			<Title title={t('rpcProviders', { ns: 'modals' })} />
@@ -40,7 +43,7 @@ export const ProvidersPrompt = () => {
 								// NOTE: Currently, we can only update the relay chain RPC endpoint
 								setRpcEndpoints(network, {
 									...getRpcEndpoints(),
-									[network]: key,
+									[name]: key,
 								})
 							}}
 						>

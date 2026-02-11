@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
 import { PerbillMultiplier } from 'consts'
+import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
 import { useTranslation } from 'react-i18next'
 import type { PoolState } from 'types'
@@ -16,7 +18,7 @@ export const Header = ({
 	setActiveTab,
 }: HeaderProps) => {
 	const { t } = useTranslation()
-	const poolCommission = bondedPool?.commission?.current?.[0]
+	const poolCommission = bondedPool.commission?.current?.[0]
 
 	// Pool state to tag class
 	const getTagClass = (state: PoolState) => {
@@ -30,29 +32,34 @@ export const Header = ({
 		}
 	}
 
+	// Render title as metadata, or fallback to clipped stash address
+	const title = metadata || ellipsisFn(bondedPool.addresses.stash)
+
 	return (
 		<AccountTitle>
 			<div>
 				<div>
 					<Polkicon
-						address={bondedPool?.addresses.stash || ''}
+						address={bondedPool.addresses.stash || ''}
 						background="transparent"
 						fontSize="4rem"
 					/>
 				</div>
 				<div>
 					<div className="title">
-						<h1>{metadata}</h1>
+						<h1>{title}</h1>
 					</div>
 					<HeadTags>
 						<h3>
 							{t('pool', { ns: 'app' })} {bondedPool.id}
-							{['Blocked', 'Destroying'].includes(bondedPool.state) && (
+						</h3>
+						{['Blocked', 'Destroying'].includes(bondedPool.state) && (
+							<h3>
 								<span className={getTagClass(bondedPool.state)}>
 									{t(bondedPool.state.toLowerCase(), { ns: 'app' })}
 								</span>
-							)}
-						</h3>
+							</h3>
+						)}
 						{poolCommission && (
 							<h3>
 								<span>
@@ -75,12 +82,18 @@ export const Header = ({
 					{
 						title: t('overview', { ns: 'pages' }),
 						active: activeTab === 0,
-						onClick: () => setActiveTab(0),
+						onClick: () => {
+							onTabVisitEvent('pool_canvas', 'overview')
+							setActiveTab(0)
+						},
 					},
 					{
 						title: t('nominations', { ns: 'pages' }),
 						active: activeTab === 1,
-						onClick: () => setActiveTab(1),
+						onClick: () => {
+							onTabVisitEvent('pool_canvas', 'nominations')
+							setActiveTab(1)
+						},
 					},
 				]}
 				tabClassName="canvas"

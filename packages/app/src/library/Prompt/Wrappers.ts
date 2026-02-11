@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const PromptWrapper = styled.div`
-  background: var(--overlay-background-color);
+  background: var(--bg-prompt);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -69,14 +69,14 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `
 
 export const ContentWrapper = styled.div`
-  background: var(--background-default);
+  background: var(--bg-body);
   width: 100%;
   height: auto;
   overflow: hidden;
   position: relative;
 
   a {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
   }
   .header {
     width: 100%;
@@ -107,7 +107,7 @@ export const TitleWrapper = styled.div`
     padding: 0 0.5rem;
 
     path {
-      fill: var(--text-color-primary);
+      fill: var(--text-primary);
     }
 
     &:first-child {
@@ -142,11 +142,8 @@ export const FilterListWrapper = styled.div`
 
 export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
-    ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--button-primary-background)'};
-  background: var(--button-primary-background);
+    ${(props) => (props.$active ? 'var(--accent-stroke)' : 'var(--btn-bg)')};
+  background: var(--btn-bg);
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -158,17 +155,13 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
 
   h4 {
     color: ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--text-color-secondary)'};
+			props.$active ? 'var(--accent-stroke)' : 'var(--text-secondary)'};
     transition: color var(--transition-duration);
   }
 
   svg {
     color: ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--text-color-secondary)'};
+			props.$active ? 'var(--accent-stroke)' : 'var(--text-secondary)'};
     opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
@@ -183,7 +176,7 @@ export const FooterWrapper = styled.div`
 export const PromptListItem = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
 
   &.inactive {
     opacity: var(--opacity-disabled);
@@ -191,7 +184,7 @@ export const PromptListItem = styled.div`
 `
 
 export const PromptSelectItem = styled.button`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -203,12 +196,12 @@ export const PromptSelectItem = styled.button`
     margin-top: 0.3rem;
   }
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--btn-bg-hover);
   }
   &.inactive {
     h3,
     h4 {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
   }
 `

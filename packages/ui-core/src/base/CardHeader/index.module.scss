@@ -1,13 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-@use 'styles/theme/_variables' as *;
+@use 'styles/theme/variables' as *;
 
 .cardHeader {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  padding: 0rem 0.25rem;
+  padding: 0 0.25rem;
   width: 100%;
 
   &.action {
@@ -19,18 +19,21 @@
   &.margin {
     margin-bottom: 1rem;
   }
+
   > h2 {
     font-family: InterBold, sans-serif;
     margin-bottom: 1rem;
+
     > svg {
       width: 2.2rem;
       height: 2.2rem;
       margin-right: 0.55rem;
     }
   }
+
   > h2,
   > h3 {
-    color: var(--text-color-primary);
+    color: var(--text-primary);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -40,10 +43,12 @@
       margin-top: 0.5rem;
     }
   }
+
   > h3,
   > h4 {
     font-family: InterSemiBold, sans-serif;
   }
+
   > h4 {
     margin-top: 0;
     margin-bottom: 0.4rem;

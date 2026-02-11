@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .graph {
-  border: 1px solid var(--grid-color-primary);
+  border: 1px solid var(--grid-primary);
   border-radius: 0.4rem;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
   position: relative;
 
    &.canvas {
-    border: 1px solid var(--grid-color-secondary);
+    border: 1px solid var(--grid-secondary);
   }
 
   .inner {
@@ -32,13 +32,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: var(--shimmer-foreground);
+    background: var(--shimmer-fg);
     background-image: linear-gradient(
       to left,
-      var(--shimmer-foreground) 0%,
-      var(--shimmer-background) 20%,
-      var(--shimmer-foreground) 40%,
-      var(--shimmer-foreground) 100%
+      var(--shimmer-fg) 0%,
+      var(--shimmer-bg) 20%,
+      var(--shimmer-fg) 40%,
+      var(--shimmer-fg) 100%
     );
     background-repeat: no-repeat;
     background-size: 500px 104px;
@@ -56,6 +56,7 @@
       0% {
         background-position: 200% 0;
       }
+
       100% {
         background-position: -50% 0;
       }

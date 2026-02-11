@@ -30,14 +30,14 @@ export const TokenPricesProvider = ({ children }: { children: ReactNode }) => {
 		useState<TokenPricesContextInterface>(defaultTokenPrice)
 
 	const getTokenPrice = async () => {
-		const result = await fetchTokenPrice(
+		const { tokenPrice } = await fetchTokenPrice(
 			`${unit}${currency}${currency === 'USD' ? 'T' : ''}`,
 		)
-		setTokenPrice(result || defaultTokenPrice)
+		setTokenPrice(tokenPrice || defaultTokenPrice)
 	}
 
 	useEffect(() => {
-		let interval: NodeJS.Timeout
+		let interval: ReturnType<typeof setTimeout>
 
 		if (pluginEnabled('staking_api') && !IGNORE_NETWORKS.includes(network)) {
 			getTokenPrice()

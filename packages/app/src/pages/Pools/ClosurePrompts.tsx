@@ -44,7 +44,7 @@ export const ClosurePrompts = () => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
+						border: `1px solid ${getThemeValue('--status-warning')}`,
 					}}
 				>
 					<div className="content">
@@ -62,14 +62,13 @@ export const ClosurePrompts = () => {
 						<ButtonRow yMargin>
 							<ButtonPrimary
 								marginRight
-								text={t('unbond')}
+								text={t('unstake')}
 								disabled={
 									syncing || (!depositorCanWithdraw && !depositorCanUnbond)
 								}
 								onClick={() =>
 									openModal({
 										key: 'LeavePool',
-										options: { bondFor: 'pool' },
 										size: 'sm',
 									})
 								}

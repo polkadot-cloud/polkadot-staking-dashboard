@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
@@ -10,13 +9,13 @@ import {
 	onCreatePoolButtonPressedEvent,
 	onJoinPoolButtonPressedEvent,
 } from 'event-tracking'
-import { CallToActionWrapper } from 'library/CallToAction'
-import { CallToActionLoader } from 'library/Loader/CallToAction'
+import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
+import { CallToActionButtons } from 'library/CallToActionButtons'
+import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
 import type { NewMemberProps } from './types'
-import { useStatusButtons } from './useStatusButtons'
 
 export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { t } = useTranslation()
@@ -26,7 +25,7 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
-	const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
+	const { getJoinDisabled, getCreateDisabled } = useActiveAccountPool()
 
 	// Alias for create button disabled state
 	const createDisabled = getCreateDisabled() || isBonding
@@ -50,79 +49,69 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 		}
 	}
 
+	const sections: CallToActionSection[] = [
+		{
+			buttons: [
+				{
+					label: t('joinPool', { ns: 'pages' }),
+					onClick: handleOnJoinPool,
+					disabled: joinButtonDisabled,
+					kind: 'primary',
+					pulse: !joinButtonDisabled,
+					icon: faUserPlus,
+					iconPosition: 'after',
+				},
+			],
+		},
+	]
+
+	if (advancedMode && !showOtherOptions) {
+		sections.push({
+			buttons: [
+				{
+					label: t('createPool', { ns: 'pages' }),
+					onClick: () => {
+						onCreatePoolButtonPressedEvent(network)
+						openCanvas({
+							key: 'CreatePool',
+							options: {},
+							size: 'xl',
+						})
+					},
+					disabled: createDisabled,
+					kind: 'secondary',
+				},
+				{
+					label: t('browsePools', { ns: 'pages' }),
+					onClick: () => navigate('/pools'),
+					kind: 'secondary',
+				},
+			],
+		})
+	}
+
+	if (showOtherOptions) {
+		sections.push({
+			buttons: [
+				{
+					label: t('otherOptions', { ns: 'app' }),
+					onClick: () =>
+						openModal({
+							key: 'StakingOptions',
+							size: 'xs',
+							options: { context: 'simple_other_options' },
+						}),
+					kind: 'secondary',
+				},
+			],
+		})
+	}
+
 	return (
-		<CallToActionWrapper style={{ marginTop: '1rem' }}>
-			{syncing ? (
-				<CallToActionLoader />
-			) : (
-				<>
-					<section>
-						<div className="buttons">
-							<div
-								className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${!joinButtonDisabled ? ` pulse` : ``}`}
-							>
-								<button
-									type="button"
-									onClick={handleOnJoinPool}
-									disabled={joinButtonDisabled}
-								>
-									{t('joinPool', { ns: 'pages' })}
-									<FontAwesomeIcon icon={faUserPlus} />
-								</button>
-							</div>
-						</div>
-					</section>
-					{advancedMode && !showOtherOptions && (
-						<section>
-							<div className="buttons">
-								<div
-									className={`button standalone secondary ${createDisabled ? ` disabled` : ``}`}
-								>
-									<button
-										type="button"
-										onClick={() => {
-											onCreatePoolButtonPressedEvent(network)
-											openCanvas({
-												key: 'CreatePool',
-												options: {},
-												size: 'xl',
-											})
-										}}
-										disabled={createDisabled}
-									>
-										{t('createPool', { ns: 'pages' })}
-									</button>
-								</div>
-								<div className={`button standalone secondary`}>
-									<button type="button" onClick={() => navigate('/pools')}>
-										{t('browsePools', { ns: 'pages' })}
-									</button>
-								</div>
-							</div>
-						</section>
-					)}
-					{showOtherOptions && (
-						<section>
-							<div className="buttons">
-								<div className={`button standalone secondary`}>
-									<button
-										type="button"
-										onClick={() =>
-											openModal({
-												key: 'StakingOptions',
-												size: 'xs',
-												options: { context: 'simple_other_options' },
-											})
-										}
-									>
-										{t('otherOptions', { ns: 'app' })}
-									</button>
-								</div>
-							</div>
-						</section>
-					)}
-				</>
-			)}
-		</CallToActionWrapper>
+		<CallToActionButtons
+			syncing={syncing}
+			style={{ marginTop: '1rem' }}
+			sections={sections}
+		/>
 	)
 }

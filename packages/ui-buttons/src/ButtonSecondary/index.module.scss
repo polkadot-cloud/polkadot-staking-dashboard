@@ -2,8 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnSecondary {
-  background: var(--button-secondary-background);
-  border: 1px solid var(--button-secondary-background);
-  border-radius: var(--button-lg-border-radius);
-  color: var(--text-color-primary);
+  background: var(--btn-bg-secondary);
+  border: 1px solid var(--btn-bg-secondary);
+  border-radius: var(--btn-lg-radius);
+  color: var(--text-secondary);
+
+  &.asTab {
+    color: var(--text-secondary);
+    background: transparent;
+    border-color: var(--btn-bg-hover);
+  }
+
+  &.active {
+    background: var(--btn-bg-secondary);
+    border-color: var(--text-tertiary);
+
+    &.asTab {
+      color: var(--text-secondary);
+    }
+  }
 }

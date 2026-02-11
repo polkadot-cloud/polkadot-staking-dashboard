@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { isValidAddress } from '@w3ux/utils'
+import { isValidAddress } from '@w3ux/util-dedot'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -11,6 +11,7 @@ import { AccountId32 } from 'dedot/codecs'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { Title } from 'library/Modal/Title'
 import { PayeeInput } from 'library/PayeeInput'
@@ -30,7 +31,7 @@ export const UpdatePayee = () => {
 	const { getPayeeItems } = usePayeeConfig()
 	const { closeModal } = useOverlay().modal
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const payee = getStakingLedger(activeAddress).payee
 
@@ -87,7 +88,7 @@ export const UpdatePayee = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: isComplete(),
 		callbackSubmit: () => {
 			closeModal()

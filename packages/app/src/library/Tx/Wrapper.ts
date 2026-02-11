@@ -13,14 +13,14 @@ export const Wrapper = styled.div`
   }
 
   > .inner {
-    background: var(--background-modal-footer);
+    background: var(--bg-modal-footer);
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 1rem;
 
     &.canvas {
-      background: var(--background-canvas-card);
+      background: var(--bg-card-canvas);
     }
 
     &.transparent {
@@ -68,7 +68,7 @@ export const Wrapper = styled.div`
             flex-grow: 1;
 
             p {
-              color: var(--text-color-secondary);
+              color: var(--text-secondary);
               display: flex;
               align-items: center;
               font-size: 1rem;
@@ -76,7 +76,7 @@ export const Wrapper = styled.div`
               padding-left: 0.5rem;
 
               &.prompt {
-                color: var(--accent-color-primary);
+                color: var(--accent-primary);
                 font-size: 1.05rem;
                 align-items: flex-start;
 
@@ -102,7 +102,7 @@ export const Wrapper = styled.div`
         }
 
         &.msg {
-          border-top: 1px solid var(--border-primary-color);
+          border-top: 1px solid var(--border);
           padding: 0.5rem 0;
           margin-top: 0.25rem;
         }
@@ -119,7 +119,7 @@ export const SignerWrapper = styled.p`
   margin: 0;
 
   .badge {
-    border: 1px solid var(--border-secondary-color);
+    border: 1px solid var(--border-alt);
     border-radius: 0.45rem;
     padding: 0.2rem 0.5rem;
     margin-right: 0.75rem;
@@ -133,11 +133,35 @@ export const SignerWrapper = styled.p`
     margin-left: 0.5rem;
 
     > .danger {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
 
     > .icon {
       margin-right: 0.3rem;
+    }
+  }
+
+  .proxy-switcher {
+    display: flex;
+    align-items: center;
+    margin-left: 0.75rem;
+    gap: 0.4rem;
+
+    button {
+      background: var(--bg-primary);
+      border-radius: 0.5rem;
+      color: var(--text-secondary);
+      padding: 0.1rem 0.4rem;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+
+      &:hover {
+        color: var(--accent-primary);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+      }
     }
   }
 `

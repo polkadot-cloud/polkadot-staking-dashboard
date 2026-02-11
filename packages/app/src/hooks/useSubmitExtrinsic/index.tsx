@@ -6,7 +6,6 @@ import type { HardwareAccount } from '@w3ux/types'
 import { DappName, ManualSigners } from 'consts'
 import { TxErrorKeyMap } from 'consts/tx'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -14,7 +13,6 @@ import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
-import { useWalletConnect } from 'contexts/WalletConnect'
 import { compactU32 } from 'dedot/shape'
 import type { InjectedSigner } from 'dedot/types'
 import { concatU8a, hexToU8a } from 'dedot/utils'
@@ -54,53 +52,58 @@ export const useSubmitExtrinsic = ({
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
-	const { signWcTx } = useWalletConnect()
 	const { getAccountBalance } = useBalances()
 	const { extensionsStatus } = useExtensions()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
 	const { handleResetLedgerTask } = useLedgerHardware()
 	const { getExtensionAccount } = useExtensionAccounts()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
+	const { address: fromAddress, source, proxy } = from
 	const {
 		balances: { balanceTxFees },
-	} = useAccountBalances(from)
+	} = useAccountBalances(fromAddress)
 	const { unit, units } = getStakingChainData(network)
 
 	// Store the uid for this transaction
 	const [uid, setUid] = useState<number>(0)
 
-	// If the `from` address matches the active account, use that as the submit account
-	let submitAccount: ActiveAccount = null
-	if (activeAccount && from === activeAccount.address) {
-		submitAccount = activeAccount
-	}
+	// Get the imported account for the `from` address
+	const fromAccount =
+		fromAddress && source
+			? getAccount({
+					address: fromAddress,
+					source: source,
+				})
+			: null
+
+	// Use fromAccount as the submit account if it exists
+	let submitAccount: ActiveAccount = fromAccount
+		? { address: fromAccount.address, source: fromAccount.source }
+		: null
 
 	// If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
-	// already wrapped, update `from` and address and `submitAccount` to the proxy account
+	// already wrapped, update submitAccount to the proxy account
 	let proxySupported = false
-	if (tx) {
-		proxySupported = isProxySupported(tx, from)
+	if (tx && submitAccount) {
+		proxySupported = isProxySupported(tx, submitAccount.address, proxy)
 		if (tx.call.pallet === 'Proxy' && tx.call.palletCall.name === 'Proxy') {
-			if (activeProxy) {
-				from = activeProxy.address
+			if (proxy) {
 				submitAccount = {
-					address: activeProxy.address,
-					source: activeProxy.source,
+					address: proxy.address,
+					source: proxy.source,
 				}
 			}
 		} else {
-			if (activeProxy && proxySupported) {
+			if (proxy && proxySupported) {
 				// Update submit address to active proxy account
-				const real = from
-				from = activeProxy.address
+				const real = submitAccount.address
 				submitAccount = {
-					address: activeProxy.address,
-					source: activeProxy.source,
+					address: proxy.address,
+					source: proxy.source,
 				}
 
-				// Check not a batch transactions
+				// Check not a batch transaction
 				if (
 					real &&
 					!(tx.call.pallet === 'Utility' && tx.call.palletCall.name === 'Batch')
@@ -121,7 +124,7 @@ export const useSubmitExtrinsic = ({
 		if (!tx || getUid(uid)?.submitted) {
 			return
 		}
-		if (from === null || !submitAccount) {
+		if (!submitAccount) {
 			return
 		}
 		const account = getAccount(submitAccount)
@@ -179,7 +182,7 @@ export const useSubmitExtrinsic = ({
 				const metadata = await serviceApi.signer.metadata(specName)
 				const result = await signLedgerPayload(
 					specName,
-					from,
+					submitAccount.address,
 					serviceApi.signer.extraSignedExtension,
 					tx,
 					metadata || '0x',
@@ -188,7 +191,7 @@ export const useSubmitExtrinsic = ({
 				)
 				if (result) {
 					encodedSig = {
-						address: from,
+						address: submitAccount.address,
 						signature: $Signature.tryDecode(result.signature),
 						extra: result.data,
 					}
@@ -196,7 +199,10 @@ export const useSubmitExtrinsic = ({
 			}
 
 			if (source === 'vault') {
-				const extra = serviceApi.signer.extraSignedExtension(specName, from)
+				const extra = serviceApi.signer.extraSignedExtension(
+					specName,
+					submitAccount.address,
+				)
 				if (!extra) {
 					onError('technical', 'missing_signer')
 					return
@@ -217,7 +223,7 @@ export const useSubmitExtrinsic = ({
 					) => {
 						openPromptWith(
 							<SignPrompt
-								submitAddress={from}
+								submitAddress={submitAccount.address}
 								onComplete={onComplete}
 								toSign={toSign}
 							/>,
@@ -230,28 +236,12 @@ export const useSubmitExtrinsic = ({
 				}).sign(prefixedPayload)
 
 				encodedSig = {
-					address: from,
+					address: submitAccount.address,
 					signature: $Signature.tryDecode(result),
 					extra: extra.data,
 				}
 			}
 
-			if (source === 'wallet_connect') {
-				const extra = serviceApi.signer.extraSignedExtension(specName, from)
-				if (!extra) {
-					onError('technical', 'missing_signer')
-					return
-				}
-				await extra.init()
-				const payload = extra.toPayload(tx.callHex)
-				const result = (await signWcTx(payload)).signature
-
-				encodedSig = {
-					address: from,
-					signature: $Signature.tryDecode(result),
-					extra: extra.data,
-				}
-			}
 			// Custom signer
 			//
 			// Submit the transaction with the raw signature
@@ -264,9 +254,8 @@ export const useSubmitExtrinsic = ({
 			// Extension signer
 			//
 			// Get the signer for this account and submit the transaction
-			signer = getExtensionAccount(from, submitAccount.source)?.signer as
-				| InjectedSigner
-				| undefined
+			signer = getExtensionAccount(submitAccount.address, submitAccount.source)
+				?.signer as InjectedSigner | undefined
 			if (!signer) {
 				onError('technical', 'missing_signer')
 				return
@@ -274,23 +263,15 @@ export const useSubmitExtrinsic = ({
 			addSignAndSend(
 				network,
 				uid,
-				from,
+				submitAccount.address,
 				tx,
 				signer as InjectedSigner,
-				getAccountBalance(from).nonce + pendingTxCount(from),
+				getAccountBalance(submitAccount.address).nonce +
+					pendingTxCount(submitAccount.address),
 				handlers,
 			)
 		}
 	}
-
-	// Initialise tx submission
-	useEffect(() => {
-		// Add a new uid for this transaction
-		if (uid === 0) {
-			const newUid = addUid({ from, tag })
-			setUid(newUid)
-		}
-	}, [])
 
 	const onReady = () => {
 		emitNotification({
@@ -394,22 +375,33 @@ export const useSubmitExtrinsic = ({
 
 	// Re-fetch tx fee if tx changes
 	const fetchTxFee = async () => {
-		if (tx && from) {
-			const { partialFee } = await tx.paymentInfo(from)
+		if (tx && submitAccount?.address) {
+			const { partialFee } = await tx.paymentInfo(submitAccount.address)
 			updateFee(uid, partialFee)
 		}
 	}
+
+	// Initialise tx submission
+	useEffect(() => {
+		// Add a new uid for this transaction
+		if (uid === 0) {
+			const newUid = addUid({ from: submitAccount?.address || null, tag })
+			setUid(newUid)
+		}
+	}, [])
+
 	useEffect(() => {
 		if (uid > 0) {
 			fetchTxFee()
 		}
-	}, [uid, JSON.stringify(tx?.toHex())])
+	}, [JSON.stringify(submitAccount), uid, JSON.stringify(tx?.toHex())])
 
 	return {
 		txInitiated: !!tx,
 		uid,
 		onSubmit,
 		submitAccount,
+		proxyAccount: proxy,
 		proxySupported,
 	}
 }

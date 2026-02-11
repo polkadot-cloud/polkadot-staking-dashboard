@@ -4,12 +4,8 @@
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import {
-	ellipsisFn,
-	formatAccountSs58,
-	isValidAddress,
-	planckToUnit,
-} from '@w3ux/utils'
+import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
@@ -245,6 +241,7 @@ export const AccountDropdown = ({
 					style={{
 						opacity: isInputFocused || !selectedAccount ? 0.25 : 1,
 						transition: 'opacity 0.15s',
+						maxWidth: '2.75rem',
 					}}
 				>
 					<Polkicon
@@ -345,6 +342,7 @@ export const AccountDropdown = ({
 											fontSize="2.25rem"
 											background="transparent"
 										/>
+
 										<AccountInput.InnerLeft>
 											<AccountInput.ListName
 												name={account.name || ellipsisFn(account.address, 6)}

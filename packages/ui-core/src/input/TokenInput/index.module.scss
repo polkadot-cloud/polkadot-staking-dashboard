@@ -3,24 +3,26 @@
 
 .tokenInput {
   &.marginY {
-    margin: 1rem 0 1.25rem 0;
+    margin: 1rem 0 1.25rem;
   }
 
   &:focus-within label {
-    color: var(--accent-color-primary);
+    color: var(--accent-primary);
   }
 
   > label {
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     font-family: InterSemiBold, sans-serif;
+
     &:focus {
-      color: var(--accent-color-primary);
+      color: var(--accent-primary);
     }
   }
+
   > input {
-    border: 1px solid var(--border-primary-color);
-    background: var(--background-default);
-    color: var(--text-color-primary);
+    border: 1px solid var(--border);
+    background: var(--bg-body);
+    color: var(--text-primary);
     border-radius: 1.5rem;
     padding: 1rem 1.25rem;
     width: 100%;
@@ -28,7 +30,7 @@
     margin-top: 0.5rem;
 
     &:focus {
-      border-color: var(--accent-color-pending);
+      border-color: var(--accent-pending);
     }
   }
 }

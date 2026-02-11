@@ -16,6 +16,7 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -33,7 +34,7 @@ export const Unbond = () => {
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getPendingPoolRewards } = useBalances()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isDepositor, activePool } = useActivePool()
 	const {
@@ -84,15 +85,15 @@ export const Unbond = () => {
 	const [bondValid, setBondValid] = useState<boolean>(false)
 
 	// handler to set bond as a string
-	const handleSetBond = async (newBond: { bond: BigNumber }) => {
+	const handleSetBond = async ({ value }: { value: BigNumber }) => {
 		if (isPooling && activePool) {
 			const balancePoints = await serviceApi.runtimeApi.balanceToPoints(
 				activePool.id,
-				unitToPlanck(newBond.bond.toString(), units),
+				unitToPlanck(value.toString(), units),
 			)
 			setPoints(balancePoints)
 		}
-		setBond({ bond: newBond.bond.toString() })
+		setBond({ bond: value.toString() })
 	}
 
 	// feedback errors to trigger modal resize
@@ -121,7 +122,7 @@ export const Unbond = () => {
 
 	const submitExtrinsic = useSubmitExtrinsic({
 		tx: getTx(),
-		from: activeAddress,
+		from: formatFromProp(activeAccount, activeProxy),
 		shouldSubmit: bondValid,
 		callbackSubmit: () => {
 			closeModal()
@@ -168,7 +169,7 @@ export const Unbond = () => {
 
 	// Update bond value on task change
 	useEffect(() => {
-		handleSetBond({ bond: unbondToMin })
+		handleSetBond({ value: unbondToMin })
 	}, [freeToUnbond.toString()])
 
 	// Modal resize on form update.

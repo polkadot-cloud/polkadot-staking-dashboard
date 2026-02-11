@@ -27,7 +27,7 @@ export class ApiStatus<T extends Chain> {
 		this.api.on('ready', () => {
 			setApiStatus(this.chainId, 'ready')
 		})
-		this.api.on('error', (err: Error) => {
+		this.api.on('error', (err?: Error) => {
 			setApiStatus(this.chainId, 'disconnected')
 			console.debug(err)
 		})

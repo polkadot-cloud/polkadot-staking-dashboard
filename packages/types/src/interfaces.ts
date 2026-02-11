@@ -4,6 +4,7 @@
 import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
 import type {
 	PalletBalancesAccountData,
+	PalletNominationPoolsClaimPermission,
 	PalletNominationPoolsPoolMember,
 	PalletNominationPoolsPoolState,
 	PalletStakingRewardDestination,
@@ -27,6 +28,9 @@ export interface ServiceInterface {
 		accountBalance: {
 			hub: (address: string) => Promise<PalletBalancesAccountData | undefined>
 		}
+		claimPermissionsMulti: (
+			addresses: string[],
+		) => Promise<(PalletNominationPoolsClaimPermission | undefined)[]>
 		erasStakersOverview: (
 			era: number,
 			address: string,
@@ -56,7 +60,6 @@ export interface ServiceInterface {
 		) => Promise<(PalletNominationPoolsPoolMember | undefined)[]>
 		poolMetadataMulti: (ids: number[]) => Promise<HexString[]>
 		proxies: (address: string) => Promise<string[]>
-		sessionValidators: () => Promise<string[]>
 		superOfMulti: (addresses: string[]) => Promise<SuperOf[]>
 		validatorEntries: () => Promise<[string, PalletStakingValidatorPrefs][]>
 		validatorsMulti: (
@@ -78,8 +81,6 @@ export interface ServiceInterface {
 			nominees: string[],
 			roles: PoolRoles | null,
 		) => SubmittableExtrinsic[] | undefined
-		fastUnstakeDeregister: () => SubmittableExtrinsic | undefined
-		fastUnstakeRegister: () => SubmittableExtrinsic | undefined
 		joinPool: (
 			poolId: number,
 			bond: bigint,

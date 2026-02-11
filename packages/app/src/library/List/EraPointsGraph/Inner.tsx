@@ -72,8 +72,8 @@ export const Inner = ({
 						strokeWidth={4}
 						stroke={
 							displayFor === 'canvas'
-								? 'var(--grid-color-secondary)'
-								: 'var(--grid-color-primary)'
+								? 'var(--grid-secondary)'
+								: 'var(--grid-primary)'
 						}
 						x1={x1}
 						y1={0}
@@ -91,8 +91,8 @@ export const Inner = ({
 							strokeWidth={4}
 							stroke={
 								displayFor === 'canvas'
-									? 'var(--grid-color-secondary)'
-									: 'var(--grid-color-primary)'
+									? 'var(--grid-secondary)'
+									: 'var(--grid-primary)'
 							}
 							x1={0}
 							y1={y1}
@@ -112,11 +112,7 @@ export const Inner = ({
 							key={`line_coord_${index}`}
 							strokeWidth={5.5}
 							opacity={opacity}
-							stroke={
-								zero
-									? 'var(--text-color-tertiary)'
-									: 'var(--accent-color-primary)'
-							}
+							stroke={zero ? 'var(--text-tertiary)' : 'var(--accent-primary)'}
 							x1={x1}
 							y1={y1}
 							x2={x2}

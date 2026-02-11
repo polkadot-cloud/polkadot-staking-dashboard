@@ -4,6 +4,7 @@
 import { accountBalance } from './accountBalance'
 import { bondedPool } from './bondedPool'
 import { bondedPoolEntries } from './bondedPoolEntries'
+import { claimPermissionsMulti } from './claimPermissionsMulti'
 import { erasRewardPoints } from './erasRewardPoints'
 import { erasStakersOverview } from './erasStakersOverview'
 import { erasStakersOverviewEntries } from './erasStakersOverviewEntries'
@@ -15,7 +16,6 @@ import { nominatorsMulti } from './nominatorsMulti'
 import { poolMembersMulti } from './poolMembersMulti'
 import { poolMetadataMulti } from './poolMetadataMulti'
 import { proxies } from './proxies'
-import { sessionValidators } from './sessionValidators'
 import { superOfMulti } from './superOfMulti'
 import { validatorEntries } from './validatorEntries'
 import { validatorsMulti } from './validatorsMulti'
@@ -24,6 +24,7 @@ export const query = {
 	accountBalance,
 	bondedPool,
 	bondedPoolEntries,
+	claimPermissionsMulti,
 	erasStakersOverviewEntries,
 	erasStakersPagedEntries,
 	erasStakersOverview,
@@ -35,7 +36,6 @@ export const query = {
 	poolMembersMulti,
 	poolMetadataMulti,
 	proxies,
-	sessionValidators,
 	superOfMulti,
 	validatorEntries,
 	validatorsMulti,

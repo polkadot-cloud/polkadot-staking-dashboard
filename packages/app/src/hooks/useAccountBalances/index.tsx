@@ -4,6 +4,7 @@
 import type { MaybeString } from '@w3ux/types'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { NominateBuffer } from 'consts/nominate'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -73,19 +74,37 @@ export const useAccountBalances = (address: MaybeString) => {
 	}
 
 	// Check if user has enough balance to nominate (including locked balance that can be used for
-	// staking)
+	// staking). Implements a buffer to ensure bond is always above minimum to earn rewards in
+	// volatile conditions.
 	const hasEnoughToNominate = (): boolean => {
 		const allBalances = getBalances()
 		const { minNominatorBond } = stakingMetrics
+		const minNominatorBondBuffer = (minNominatorBond * NominateBuffer) / 100n
+
 		return (
 			allBalances.freeBalance - feeReserve + allBalances.lockedBalance >
-			minNominatorBond
+			minNominatorBondBuffer
 		)
+	}
+
+	// Check if the user has a nominating balance
+	const getNominatorBalance = () => {
+		const allTransferOptions = getBalances()
+
+		// Total funds nominating
+		const nominating = planckToUnit(
+			allTransferOptions.nominator.active +
+				allTransferOptions.nominator.totalUnlocking +
+				allTransferOptions.nominator.totalUnlocked,
+			units,
+		)
+		return new BigNumber(nominating)
 	}
 
 	return {
 		balances: getBalances(),
 		stakedBalance: getStakedBalance(),
+		nominatorBalance: getNominatorBalance(),
 		hasEnoughToNominate: hasEnoughToNominate(),
 	}
 }

@@ -48,21 +48,22 @@ export const ActiveGraph = ({
 	fromDate.setDate(fromDate.getDate() - days)
 	fromDate.setHours(0, 0, 0, 0)
 
-	const { data: poolRewardsData, loading: poolRewardsLoading } = usePoolRewards(
-		{
-			network,
-			who: activeAddress || '',
-			from: getUnixTime(fromDate),
-		},
-	)
+	const {
+		data: { poolRewards },
+		loading: poolRewardsLoading,
+	} = usePoolRewards({
+		network,
+		who: activeAddress || '',
+		from: getUnixTime(fromDate),
+	})
 
-	const nominatorRewards = nominatorRewardData?.allRewards ?? []
+	const nominatorRewards = nominatorRewardData.allRewards
 	const payouts =
 		nominatorRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
 	const unclaimedPayouts =
 		nominatorRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
 
-	const poolClaims = poolRewardsData?.poolRewards ?? []
+	const poolClaims = poolRewards ?? []
 	const allRewards = (nominatorRewards as RewardResults)
 		.concat(poolClaims)
 		.sort((a, b) => b.timestamp - a.timestamp)

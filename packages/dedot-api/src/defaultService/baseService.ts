@@ -15,64 +15,40 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
-import { CoreConsts } from '../consts/core'
-import type { FastUnstakeConsts } from '../consts/fastUnstake'
 import { StakingConsts } from '../consts/staking'
 import { ApiStatus } from '../spec/apiStatus'
 import { ChainSpecs } from '../spec/chainSpecs'
 import { ActiveEraQuery } from '../subscribe/activeEra'
 import { BlockNumberQuery } from '../subscribe/blockNumber'
-import type { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { PoolsConfigQuery } from '../subscribe/poolsConfig'
-import { RelayMetricsQuery } from '../subscribe/relayMetrics'
-import type {
-	AssetHubChain,
-	FastUnstakeChain,
-	PeopleChain,
-	RelayChain,
-	StakingChain,
-} from '../types'
+import type { AssetHubChain, PeopleChain, StakingChain } from '../types'
 import { IdentityManager } from './identityManager'
 import { SubscriptionManager } from './subscriptionManager'
 
 // Base service utility that handles common initialization and management
 export class BaseService<
-	RelayApi extends RelayChain,
 	PeopleApi extends PeopleChain,
 	HubApi extends AssetHubChain,
 	StakingApi extends StakingChain,
-	FastUnstakeApi extends FastUnstakeChain,
 > {
 	// Chain specs of live apis
-	relayChainSpec: ChainSpecs<RelayApi>
 	hubChainSpec: ChainSpecs<HubApi>
 
 	// API status of live apis
 	apiStatus: {
-		relay: ApiStatus<RelayApi>
 		hub: ApiStatus<HubApi>
 	}
 
 	// Constants
-	coreConsts: CoreConsts<RelayApi>
 	stakingConsts: StakingConsts<StakingApi>
-	fastUnstakeConsts: FastUnstakeConsts<FastUnstakeApi>
 
 	// Query objects
-	blockNumber: BlockNumberQuery<RelayApi>
+	blockNumber: BlockNumberQuery<HubApi>
 	activeEra: ActiveEraQuery<StakingApi>
-	relayMetrics: RelayMetricsQuery<RelayApi>
 	poolsConfig: PoolsConfigQuery<StakingApi>
-	fastUnstakeConfig: FastUnstakeConfigQuery<FastUnstakeApi>
 
 	// Subscription manager
-	subscriptionManager: SubscriptionManager<
-		RelayApi,
-		PeopleApi,
-		HubApi,
-		StakingApi,
-		FastUnstakeApi
-	>
+	subscriptionManager: SubscriptionManager<PeopleApi, HubApi, StakingApi>
 
 	// Identity manager
 	identityManager: IdentityManager<PeopleApi>
@@ -80,66 +56,52 @@ export class BaseService<
 	constructor(
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
-		public apiRelay: DedotClient<RelayApi>,
 		public apiHub: DedotClient<HubApi>,
 		private stakingApi: DedotClient<StakingApi>,
-		private fastUnstakeApi: DedotClient<FastUnstakeApi>,
+		public providerRelay: WsProvider | SmoldotProvider,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
 		this.apiStatus = {
-			relay: new ApiStatus(this.apiRelay, ids[0], networkConfig),
 			hub: new ApiStatus(this.apiHub, ids[2], networkConfig),
 		}
 	}
 
-	// Standard getLiveApi implementation used by all services
-	getLiveApi = (id: string) => {
-		if (id === this.ids[0]) {
-			return this.apiRelay
-		} else {
-			return this.apiHub
-		}
+	// Standard getLiveApi implementation used by all services. Currently only supporting hub api.
+	getLiveApi = (_id: string) => {
+		return this.apiHub
 	}
 
 	// Initialize the service with common setup logic
 	async start(serviceInterface: ServiceInterface) {
 		// Initialize chain specs
-		this.relayChainSpec = new ChainSpecs(this.apiRelay)
 		this.hubChainSpec = new ChainSpecs(this.apiHub)
 
 		// Initialize constants
-		this.coreConsts = new CoreConsts(this.apiRelay)
 		this.stakingConsts = new StakingConsts(this.stakingApi)
 
 		// Set default sync status
 		setSyncingMulti(defaultSyncStatus)
 
 		// Fetch chain specs
-		await Promise.all([this.relayChainSpec.fetch(), this.hubChainSpec.fetch()])
+		await this.hubChainSpec.fetch()
 
-		// Set multi-chain specs and constants
+		// Set chain specs and constants
 		setMultiChainSpecs({
-			[this.ids[0]]: this.relayChainSpec.get(),
 			[this.ids[2]]: this.hubChainSpec.get(),
 		})
 		setConsts(this.ids[0], {
-			...this.coreConsts.get(),
 			...this.stakingConsts.get(),
-			...this.fastUnstakeConsts.get(),
 		})
 
 		// Initialize query objects
-		this.blockNumber = new BlockNumberQuery(this.apiRelay)
+		this.blockNumber = new BlockNumberQuery(this.apiHub)
 		this.activeEra = new ActiveEraQuery(this.stakingApi)
-		this.relayMetrics = new RelayMetricsQuery(this.apiRelay)
 		this.poolsConfig = new PoolsConfigQuery(this.stakingApi)
 
 		// Initialize subscription manager
 		this.subscriptionManager = new SubscriptionManager(
-			this.apiRelay,
 			this.apiHub,
 			this.stakingApi,
-			this.fastUnstakeApi,
 			this.ids,
 			{ poolsPalletId: this.stakingConsts.poolsPalletId },
 			serviceInterface,
@@ -162,14 +124,11 @@ export class BaseService<
 		await this.subscriptionManager.unsubscribe()
 
 		this.blockNumber?.unsubscribe()
-		this.relayMetrics?.unsubscribe()
 		this.poolsConfig?.unsubscribe()
-		this.fastUnstakeConfig?.unsubscribe()
 		this.activeEra?.unsubscribe()
 
 		try {
 			await Promise.all([
-				this.apiRelay.disconnect(),
 				this.identityManager.api
 					? this.identityManager.api.disconnect()
 					: Promise.resolve(),
@@ -235,9 +194,5 @@ export class BaseService<
 
 	get eraRewardPoints() {
 		return this.subscriptionManager.eraRewardPoints
-	}
-
-	get fastUnstakeQueue() {
-		return this.subscriptionManager.fastUnstakeQueue
 	}
 }

@@ -2,16 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
+import { formatAccountSs58 } from '@w3ux/util-dedot'
+import { ellipsisFn } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import {
 	addExternalAccount as addExternalAccountBus,
 	externalAccountExists,
+	externalAccounts$,
 	removeExternalAccounts,
 } from 'global-bus'
-import type { ReactNode } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import type { AccountAddedBy, ExternalAccount } from 'types'
 import type {
 	AddExternalAccountResult,
@@ -30,6 +32,11 @@ export const ExternalAccountsProvider = ({
 	const { network } = useNetwork()
 	const { activeAddress, setActiveAccount } = useActiveAccounts()
 	const { ss58 } = getStakingChainData(network)
+
+	// Store external accounts in state
+	const [externalAccounts, setExternalAccounts] = useState<ExternalAccount[]>(
+		[],
+	)
 
 	// Adds an external account to imported accounts
 	const addExternalAccount = (
@@ -94,9 +101,27 @@ export const ExternalAccountsProvider = ({
 		}
 	}
 
+	// Gets all accounts for a network
+	const getExternalAccounts = (network: string) =>
+		externalAccounts.filter((a) => a.network === network)
+
+	// Subscribe to global bus
+	useEffect(() => {
+		const sub = externalAccounts$.subscribe((result) => {
+			setExternalAccounts(result)
+		})
+		return () => {
+			sub.unsubscribe()
+		}
+	}, [])
+
 	return (
 		<ExternalAccountsContext.Provider
-			value={{ addExternalAccount, forgetExternalAccounts }}
+			value={{
+				getExternalAccounts,
+				addExternalAccount,
+				forgetExternalAccounts,
+			}}
 		>
 			{children}
 		</ExternalAccountsContext.Provider>

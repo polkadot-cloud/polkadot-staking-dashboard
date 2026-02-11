@@ -3,4 +3,5 @@
 
 export interface UseAverageRewardRate {
 	getAverageRewardRate: (compounded?: boolean) => number
+	formatRateAsPercent: (rate: number) => string
 }

@@ -21,7 +21,6 @@ import { Invite } from 'modals/Invite'
 import { JoinPool } from 'modals/JoinPool'
 import { LeavePool } from 'modals/LeavePool'
 import { MailSupport } from 'modals/MailSupport'
-import { ManageFastUnstake } from 'modals/ManageFastUnstake'
 import { ManagePool } from 'modals/ManagePool'
 import { Networks } from 'modals/Networks'
 import { Plugins } from 'modals/Plugins'
@@ -29,8 +28,10 @@ import { RewardCalculator } from 'modals/RewardCalculator'
 import { SelectCurrency } from 'modals/SelectCurrency'
 import { SelectLanguage } from 'modals/SelectLanguage'
 import { SetController } from 'modals/SetController'
+import { SimpleNominate } from 'modals/SimpleNominate'
 import { StakingOptions } from 'modals/StakingOptions'
 import { StopNominations } from 'modals/StopNominations'
+import { Transfer } from 'modals/Transfer'
 import { Unbond } from 'modals/Unbond'
 import { UnlockChunks } from 'modals/UnlockChunks'
 import { Unstake } from 'modals/Unstake'
@@ -60,12 +61,13 @@ export const Overlays = () => {
 				ImportAccounts,
 				Invite,
 				ManagePool,
-				ManageFastUnstake,
 				Networks,
 				RewardCalculator,
 				SelectCurrency,
 				SetController,
 				StakingOptions,
+				SimpleNominate,
+				Transfer,
 				Plugins,
 				UnlockChunks,
 				Unstake,

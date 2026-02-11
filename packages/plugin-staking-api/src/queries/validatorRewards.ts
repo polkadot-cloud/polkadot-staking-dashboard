@@ -1,8 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { gql, useQuery } from '@apollo/client'
-import type { ValidatorRewardsResult } from '../types'
+import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/client/react'
+import type { QueryReturn, ValidatorRewardsData } from '../types'
 
 const QUERY = gql`
   query ValidatorRewards(
@@ -24,6 +25,10 @@ const QUERY = gql`
   }
 `
 
+const DEFAULT: ValidatorRewardsData = {
+	validatorRewards: [],
+}
+
 export const useValidatorRewards = ({
 	network,
 	validator,
@@ -34,9 +39,12 @@ export const useValidatorRewards = ({
 	validator: string
 	fromEra: number
 	depth?: number
-}): ValidatorRewardsResult => {
-	const { loading, error, data, refetch } = useQuery(QUERY, {
-		variables: { network, validator, fromEra, depth },
-	})
-	return { loading, error, data, refetch }
+}): QueryReturn<ValidatorRewardsData> => {
+	const { loading, error, data, refetch } = useQuery<ValidatorRewardsData>(
+		QUERY,
+		{
+			variables: { network, validator, fromEra, depth },
+		},
+	)
+	return { loading, error, data: data || DEFAULT, refetch }
 }

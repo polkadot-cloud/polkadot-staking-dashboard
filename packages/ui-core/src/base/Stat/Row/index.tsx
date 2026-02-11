@@ -10,7 +10,7 @@ import classes from './index.module.scss'
  * @summary Used to house a row of `StatBox` items.
  */
 export const Row = ({ children, style }: ComponentBase) => {
-	const allClasses = classNames('page-padding', classes.row)
+	const allClasses = classNames('pagePadding', classes.row)
 
 	return (
 		<div className={allClasses} style={style}>

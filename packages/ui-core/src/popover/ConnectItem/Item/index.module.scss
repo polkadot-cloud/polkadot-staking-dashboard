@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .item {
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border);
   flex: 1;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
 
   &.asButton {
     &:hover {
-      background: var(--button-popover-tab-background);
+      background: var(--btn-popover-tab-bg);
       cursor: pointer;
     }
   }
@@ -35,6 +35,7 @@
     &:last-child {
       flex-grow: 1;
       display: flex;
+
       > div {
         &:first-child {
           flex-grow: 1;

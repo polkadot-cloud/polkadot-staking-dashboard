@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnPopoverTab {
-  border-left: 1px solid var(--border-primary-color);
-  background: var(--button-popover-tab-background);
-  color: var(--text-color-secondary);
+  border-left: 1px solid var(--border);
+  background: var(--btn-popover-tab-bg);
+  color: var(--text-secondary);
   font-family: InterSemiBold, sans-serif;
   padding: 1.1rem 1.25rem;
   display: flex;
@@ -13,25 +13,31 @@
   font-size: 1.15rem;
 
   &:hover {
-    background: var(--background-default);
+    background: var(--bg-body);
+
     &:disabled {
-      background: var(--button-popover-tab-background);
+      background: var(--btn-popover-tab-bg);
     }
   }
+
   &:first-child {
     border-left: none;
   }
+
   &:disabled {
     cursor: default;
     opacity: 0.5;
   }
+
   &.grow {
     flex: 1;
   }
+
   &.warning {
-    color: var(--status-warning-color);
+    color: var(--status-warning);
   }
+
   &.danger {
-    color: var(--status-danger-color);
+    color: var(--status-danger);
   }
 }

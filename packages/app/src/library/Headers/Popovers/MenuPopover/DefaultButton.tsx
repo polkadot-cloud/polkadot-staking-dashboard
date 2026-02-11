@@ -4,6 +4,7 @@
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { MenuItemButton } from 'ui-core/popover'
+import classes from './DefaultButton.module.scss'
 
 export const DefaultButton = ({
 	text,
@@ -12,6 +13,7 @@ export const DefaultButton = ({
 	note,
 	onClick,
 	disabled,
+	accent,
 }: {
 	text: string
 	iconLeft: IconProp
@@ -19,9 +21,14 @@ export const DefaultButton = ({
 	note?: string
 	onClick: () => void
 	disabled?: boolean
+	accent?: boolean
 }) => {
 	return (
-		<MenuItemButton onClick={onClick} disabled={disabled}>
+		<MenuItemButton
+			onClick={onClick}
+			disabled={disabled}
+			className={accent ? classes.accent : undefined}
+		>
 			<div>
 				<FontAwesomeIcon icon={iconLeft} />
 			</div>

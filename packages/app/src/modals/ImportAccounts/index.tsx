@@ -4,7 +4,6 @@
 import { useOverlay } from 'ui-overlay'
 import { Ledger } from './Ledger'
 import { Vault } from './Vault'
-import { WalletConnect } from './WalletConnect'
 
 export const ImportAccounts = () => {
 	const { config } = useOverlay().modal
@@ -15,8 +14,6 @@ export const ImportAccounts = () => {
 			return <Vault />
 		case 'ledger':
 			return <Ledger />
-		case 'wallet_connect':
-			return <WalletConnect />
 		default:
 			return null
 	}

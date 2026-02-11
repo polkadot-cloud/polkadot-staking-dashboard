@@ -8,7 +8,7 @@ import commonClasses from '../../common.module.scss'
 import classes from './index.module.scss'
 
 export const Multi = ({ children, style }: ComponentBase) => {
-	const allClasses = classNames(commonClasses.scrollBar, classes.multi)
+	const allClasses = classNames(commonClasses.scroll, classes.multi)
 	return (
 		<motion.div className={allClasses} style={style}>
 			{children}

@@ -12,7 +12,7 @@ export const Container = ({
 	children,
 	...rest
 }: ComponentBase & HTMLMotionProps<'div'>) => {
-	const allClasses = classNames(commonClasses.fixedPosition, classes.container)
+	const allClasses = classNames(commonClasses.fixed, classes.container)
 	return (
 		<motion.div className={allClasses} {...rest}>
 			{children}

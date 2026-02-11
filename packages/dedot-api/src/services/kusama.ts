@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { KusamaAssetHubApi } from '@dedot/chaintypes'
-import type { KusamaApi } from '@dedot/chaintypes/kusama'
 import type { KusamaPeopleApi } from '@dedot/chaintypes/kusama-people'
 import {
 	type DedotClient,
@@ -16,30 +15,24 @@ import type {
 	ServiceInterface,
 	SystemChainId,
 } from 'types'
-import { FastUnstakeConsts } from '../consts/fastUnstake'
 import { BaseService } from '../defaultService/baseService'
 import type { DefaultServiceClass } from '../defaultService/types'
 import { query } from '../query'
 import { runtimeApi } from '../runtimeApi'
-import { FastUnstakeConfigQuery } from '../subscribe/fastUnstakeConfig'
 import { tx } from '../tx'
 import { createPool } from '../tx/createPool'
 
 export class KusamaService
 	extends BaseService<
-		KusamaApi, // Relay Chain
 		KusamaPeopleApi, // People Chain
 		KusamaAssetHubApi, // Asset Hub Chain
-		KusamaAssetHubApi, // Chain for staking
-		KusamaApi // Chain for fast unstake
+		KusamaAssetHubApi // Chain for staking
 	>
 	implements
 		DefaultServiceClass<
-			KusamaApi, // Relay Chain
 			KusamaPeopleApi, // People Chain
 			KusamaAssetHubApi, // Asset Hub Chain
-			KusamaAssetHubApi, // Chain for staking
-			KusamaApi // Chain for fast unstake
+			KusamaAssetHubApi // Chain for staking
 		>
 {
 	// Service interface
@@ -48,24 +41,11 @@ export class KusamaService
 	constructor(
 		public networkConfig: NetworkConfig,
 		public ids: [NetworkId, SystemChainId, SystemChainId],
-		public apiRelay: DedotClient<KusamaApi>,
 		public apiHub: DedotClient<KusamaAssetHubApi>,
+		public providerRelay: WsProvider | SmoldotProvider,
 		public providerPeople: WsProvider | SmoldotProvider,
 	) {
-		// For Kusama, staking happens on the hub chain, and fast unstake on the relay chain
-		super(
-			networkConfig,
-			ids,
-			apiRelay,
-			apiHub,
-			apiHub,
-			apiRelay,
-			providerPeople,
-		)
-
-		// For Kusama, fast unstake happens on the relay chain
-		this.fastUnstakeConsts = new FastUnstakeConsts(this.apiRelay)
-		this.fastUnstakeConfig = new FastUnstakeConfigQuery(this.apiRelay)
+		super(networkConfig, ids, apiHub, apiHub, providerRelay, providerPeople)
 
 		// Initialize service interface with network-specific routing
 		this.interface = {
@@ -74,6 +54,8 @@ export class KusamaService
 					hub: async (address) =>
 						await query.accountBalance(this.apiHub, address),
 				},
+				claimPermissionsMulti: async (addresses) =>
+					await query.claimPermissionsMulti(this.apiHub, addresses),
 				erasStakersOverview: async (era, address) =>
 					await query.erasStakersOverview(this.apiHub, era, address),
 				erasRewardPoints: async (era) =>
@@ -97,8 +79,6 @@ export class KusamaService
 				poolMetadataMulti: async (poolIds) =>
 					await query.poolMetadataMulti(this.apiHub, poolIds),
 				proxies: async (address) => await query.proxies(this.apiHub, address),
-				sessionValidators: async () =>
-					await query.sessionValidators(this.apiRelay),
 				identityOfMulti: async (addresses) =>
 					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>
@@ -127,8 +107,6 @@ export class KusamaService
 						nominees,
 						roles,
 					),
-				fastUnstakeDeregister: () => tx.fastUnstakeDeregister(this.apiRelay),
-				fastUnstakeRegister: () => tx.fastUnstakeRegister(this.apiRelay),
 				joinPool: (poolId, bond, claimPermission) =>
 					tx.joinPool(this.apiHub, poolId, bond, claimPermission),
 				newNominator: (bond, payee, nominees) =>

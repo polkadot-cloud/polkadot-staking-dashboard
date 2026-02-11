@@ -10,7 +10,9 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
+import { useWarnings } from 'hooks/useWarnings'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -45,7 +47,10 @@ export const Main = ({
 	const { activeAddress } = useActiveAccounts()
 	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
+	const { warningMessages, getMostSevereWarningFormat } = useWarnings()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
+	const { balances, nominatorBalance } = useAccountBalances(activeAddress)
+	const { totalUnlockChunks } = balances.nominator
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))
 	const fullCommissionNominees = nominated.filter(
@@ -74,7 +79,7 @@ export const Main = ({
 				}
 			}
 			if (uri === `${import.meta.env.BASE_URL}nominate`) {
-				if (isBonding) {
+				if (isBonding || totalUnlockChunks > 0) {
 					pages[i].bullet = 'accent'
 					return true
 				}
@@ -88,12 +93,20 @@ export const Main = ({
 			}
 			if (uri === `${import.meta.env.BASE_URL}pool`) {
 				if (inPool) {
+					if (warningMessages.length > 0) {
+						pages[i].bullet = getMostSevereWarningFormat()
+						return true
+					}
 					pages[i].bullet = 'accent'
 					return true
 				}
 			}
 			if (uri === `${import.meta.env.BASE_URL}stake`) {
-				if (inPool || isBonding) {
+				if (inPool || nominatorBalance.isGreaterThan(0)) {
+					if (warningMessages.length > 0) {
+						pages[i].bullet = getMostSevereWarningFormat()
+						return true
+					}
 					pages[i].bullet = 'accent'
 					return true
 				}

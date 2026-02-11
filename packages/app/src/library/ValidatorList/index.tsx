@@ -345,7 +345,7 @@ export const ValidatorListInner = ({
 										icon={faBars}
 										color={
 											listFormat === 'row'
-												? getThemeValue('--accent-color-primary')
+												? getThemeValue('--accent-primary')
 												: 'inherit'
 										}
 									/>
@@ -355,7 +355,7 @@ export const ValidatorListInner = ({
 										icon={faGripVertical}
 										color={
 											listFormat === 'col'
-												? getThemeValue('--accent-color-primary')
+												? getThemeValue('--accent-primary')
 												: 'inherit'
 										}
 									/>

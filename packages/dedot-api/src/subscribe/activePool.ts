@@ -3,14 +3,15 @@
 
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
-import { addActivePool, removeActivePool } from 'global-bus'
-import type { ActivePool, ServiceInterface } from 'types'
 import {
-	createPoolAccounts,
-	formatIdentities,
-	formatSuperIdentities,
-} from 'utils'
+	addActivePool,
+	removeActivePool,
+	removePoolRoleIdentities,
+} from 'global-bus'
+import type { ActivePool, ServiceInterface } from 'types'
+import { createPoolAccounts } from 'utils'
 import type { StakingChain } from '../types'
+import { PoolRoleIdentities } from './poolRoleIdentities'
 
 export class ActivePoolQuery<T extends StakingChain> {
 	#unsub: Unsub | undefined = undefined
@@ -61,10 +62,12 @@ export class ActivePoolQuery<T extends StakingChain> {
 						role.address(this.api.consts.system.ss58Prefix),
 					)
 
-					const [identities, supers] = await Promise.all([
-						this.serviceInterface.query.identityOfMulti(roleAddresses),
-						this.serviceInterface.query.superOfMulti(roleAddresses),
-					])
+					// Asynchronously fetch pool role identities without blocking the subscription
+					new PoolRoleIdentities(
+						this.poolId,
+						roleAddresses,
+						this.serviceInterface,
+					)
 
 					const activePool: ActivePool = {
 						id: this.poolId,
@@ -85,10 +88,6 @@ export class ActivePoolQuery<T extends StakingChain> {
 								bouncer: bondedPool.roles.bouncer?.address(
 									this.api.consts.system.ss58Prefix,
 								),
-							},
-							roleIdentities: {
-								identities: formatIdentities(roleAddresses, identities),
-								supers: formatSuperIdentities(supers),
 							},
 							state: bondedPool.state,
 						},
@@ -118,5 +117,6 @@ export class ActivePoolQuery<T extends StakingChain> {
 	unsubscribe() {
 		this.#unsub?.()
 		removeActivePool(this.poolId)
+		removePoolRoleIdentities(this.poolId)
 	}
 }

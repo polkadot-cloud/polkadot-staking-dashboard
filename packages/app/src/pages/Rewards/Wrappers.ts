@@ -13,7 +13,7 @@ export const ItemWrapper = styled.div`
   width: 100%;
 
   > .inner {
-    background: var(--background-list-item);
+    background: var(--bg-list);
     padding: 0 0.75rem;
     flex: 1;
     border-radius: 1rem;
@@ -34,7 +34,7 @@ export const ItemWrapper = styled.div`
       }
 
       &:last-child {
-        border-top: 1px solid var(--border-primary-color);
+        border-top: 1px solid var(--border);
         padding-top: 0rem;
 
         > div {
@@ -50,27 +50,27 @@ export const ItemWrapper = styled.div`
         max-width: 100%;
 
         h4 {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
           font-family: InterSemiBold, sans-serif;
           &.claim {
-            color: var(--accent-color-secondary);
+            color: var(--accent-primary);
           }
           &.reward {
-            color: var(--accent-color-primary);
+            color: var(--accent-primary);
           }
         }
 
         h5 {
-          color: var(--text-color-secondary);
+          color: var(--text-secondary);
           &.claim {
-            color: var(--accent-color-secondary);
-            border: 1px solid var(--accent-color-secondary);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
           &.reward {
-            color: var(--accent-color-primary);
-            border: 1px solid var(--accent-color-primary);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
@@ -89,7 +89,7 @@ export const ItemWrapper = styled.div`
           justify-content: flex-end;
 
           > h4 {
-            color: var(--text-color-secondary);
+            color: var(--text-secondary);
             opacity: 0.8;
           }
         }

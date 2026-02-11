@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnMono {
-  background: var(--text-color-primary);
-  border: 1px solid var(--text-color-primary);
-  border-radius: var(--button-lg-border-radius);
-  color: var(--text-color-invert);
+  background: var(--text-primary);
+  border: 1px solid var(--text-primary);
+  border-radius: var(--btn-lg-radius);
+  color: var(--text-invert);
 }

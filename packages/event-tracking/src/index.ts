@@ -30,6 +30,11 @@ export const onPageNavigationEvent = (network: string, name: string) => {
 	onSaEvent(`${network.toLowerCase()}_${name}_page_visit`)
 }
 
+// Record tab navigation
+export const onTabVisitEvent = (pageKey: string, tabKey: string) => {
+	onSaEvent(`${pageKey.toLowerCase()}_${tabKey.toLowerCase()}_tab_visit`)
+}
+
 // New nominator button pressed
 export const onNewNominatorButtonPressedEvent = (network: string) => {
 	onSaEvent(`${network.toLowerCase()}_nominate_setup_button_pressed`)
@@ -61,4 +66,12 @@ export const onTransactionSubmittedEvent = (
 	txLabel: string,
 ) => {
 	onSaEvent(`${network.toLowerCase()}_tx_submitted_${txLabel}`)
+}
+
+// Node provider type changed
+export const onNodeProviderTypeChangedEvent = (
+	network: string,
+	method: string,
+) => {
+	onSaEvent(`${network.toLowerCase()}_node_provider_type_changed_${method}`)
 }

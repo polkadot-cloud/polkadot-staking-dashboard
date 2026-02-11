@@ -4,6 +4,7 @@
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
 import { withTimeout } from '@w3ux/utils'
 import { PolkadotGenericApp } from '@zondax/ledger-substrate'
+import { Buffer } from 'buffer'
 import type { AnyJson } from 'types'
 
 export class Ledger {
@@ -62,6 +63,7 @@ export class Ledger {
 				onTimeout: () => this.transport?.close(),
 			},
 		)
+
 		await this.ensureClosed()
 		return result
 	}

@@ -9,6 +9,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useEraStakers } from 'contexts/EraStakers'
 import { useManageNominations } from 'contexts/ManageNominations'
 import { usePrompt } from 'contexts/Prompt'
+import { useUi } from 'contexts/UI'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { pluginEnabled } from 'global-bus'
@@ -45,6 +46,7 @@ export const GenerateNominations = ({
 		available: availableToNominate,
 	} = useFetchMethods()
 	const { isReady } = useApi()
+	const { advancedMode } = useUi()
 	const { activeAddress } = useActiveAccounts()
 	const { favoritesList } = useFavoriteValidators()
 	const { openPromptWith, closePrompt } = usePrompt()
@@ -133,8 +135,10 @@ export const GenerateNominations = ({
 		},
 	}
 
-	const filterHandlers: FilterHandlers = {
-		addFromFavorites: {
+	let filterHandlers: FilterHandlers = {}
+
+	if (!advancedMode) {
+		filterHandlers.addFromFavorites = {
 			title: t('addFromFavorites', { ns: 'app' }),
 			onClick: () => {
 				const updateList = (newNominations: Validator[]) => {
@@ -150,7 +154,11 @@ export const GenerateNominations = ({
 			onSelected: false,
 			isDisabled: () =>
 				!favoritesList?.length || MaxNominations <= nominations?.length,
-		},
+		}
+	}
+
+	filterHandlers = {
+		...filterHandlers,
 		highPerformance: {
 			title: t('highPerformanceValidator', { ns: 'app' }),
 			onClick: () => addNominationByType('High Performance Validator'),

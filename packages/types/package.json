@@ -1,6 +1,6 @@
 {
 	"name": "types",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"license": "GPL-3.0-only",
 	"type": "module",
 	"exports": {
@@ -13,10 +13,10 @@
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^7.1.0",
-		"dedot": "^0.18.7"
+		"dedot": "^1.0.4"
 	},
 	"devDependencies": {
-		"@dedot/chaintypes": "^0.190.0",
+		"@dedot/chaintypes": "^0.222.0",
 		"bignumber.js": "^9.3.1"
 	}
 }
