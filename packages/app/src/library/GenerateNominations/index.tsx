@@ -1,7 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
+import {
+	faHeart,
+	faMagnifyingGlass,
+	faPlus,
+} from '@fortawesome/free-solid-svg-icons'
 import { MaxNominations } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
@@ -149,6 +153,24 @@ export const GenerateNominations = ({
 
 	filterHandlers = {
 		...filterHandlers,
+		favoriteValidator: {
+			title: t('favoriteValidator', { ns: 'app' }),
+			onClick: () => {
+				const updateList = (newNominations: Validator[]) => {
+					setNominations([...newNominations])
+					updateSetters(setters, newNominations)
+					closePrompt()
+				}
+				openPromptWith(
+					<SelectFavorites callback={updateList} nominations={nominations} />,
+					'lg',
+				)
+			},
+			onSelected: false,
+			icon: faHeart,
+			isDisabled: () =>
+				!favoritesList?.length || MaxNominations <= nominations?.length,
+		},
 		highPerformance: {
 			title: t('highPerformanceValidator', { ns: 'app' }),
 			onClick: () => addNominationByType('High Performance Validator'),
