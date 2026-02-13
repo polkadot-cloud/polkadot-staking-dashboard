@@ -97,17 +97,64 @@ pnpm --filter locale-cli add-locale \
 ## How It Works
 
 1. The CLI accepts a key, text, and optional parameters
-2. It provides context about Polkadot and the staking dashboard to OpenAI
-3. OpenAI translates the text to Spanish and Chinese
+2. It provides comprehensive context about Polkadot and the staking dashboard to OpenAI:
+   - Explanation of Polkadot's blockchain platform
+   - Details about the Nominated Proof-of-Stake (NPoS) consensus
+   - Description of the staking dashboard's features
+   - Key staking concepts (validators, nominators, nomination pools, etc.)
+3. OpenAI translates the text to Spanish and Chinese using GPT-4o-mini
 4. The translations are added to the appropriate locale JSON files
-5. `pnpm order` alphabetically sorts the keys in all locale files
-6. `pnpm validate` checks that all locale files have consistent keys
+5. Protection against prototype pollution ensures security
+6. `pnpm order` alphabetically sorts the keys in all locale files
+7. `pnpm validate` checks that all locale files have consistent keys
+
+## LLM Context
+
+The CLI provides the following context to the LLM for accurate translations:
+
+- **Polkadot Platform**: Blockchain platform enabling multiple specialized blockchains to interoperate
+- **Consensus Mechanism**: Nominated Proof-of-Stake (NPoS)
+- **Dashboard Purpose**: Web application for staking DOT tokens, joining pools, and monitoring rewards
+- **Key Concepts**: Validators, nominators, nomination pools, commission, bonding, eras
+- **Translation Requirements**: Technical accuracy for blockchain terms while maintaining accessibility
+
+This context ensures translations are both technically accurate and user-friendly.
+
+## Security
+
+The package includes comprehensive protection against prototype pollution attacks:
+
+- Validates all keys against dangerous property names (`__proto__`, `constructor`, `prototype`)
+- Uses `Object.defineProperty` for safer property assignment
+- Includes additional validation before property traversal
+- Tested to successfully reject prototype pollution attempts
 
 ## Supported Languages
 
 - English (en)
 - Spanish (es)
 - Chinese Simplified (zh)
+
+## Testing
+
+To see examples of CLI usage without making actual API calls:
+
+```bash
+node packages/locale-cli/demo.js
+```
+
+To test the CLI with help command:
+
+```bash
+node packages/locale-cli/bin/add-locale.js --help
+```
+
+To verify prototype pollution protection:
+
+```bash
+# This should fail with an error about invalid keys
+node packages/locale-cli/bin/add-locale.js --key "__proto__.test" --text "Test"
+```
 
 ## Development
 
