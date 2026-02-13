@@ -9,7 +9,8 @@
 	"scripts": {
 		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
 		"check": "biome check .",
-		"lint": "biome check --write ."
+		"lint": "biome check --write .",
+		"add-locale": "tsx ./src/cli.ts"
 	},
 	"dependencies": {
 		"commander": "^13.0.0",

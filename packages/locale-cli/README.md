@@ -36,16 +36,16 @@ Or pass the API key directly via the `--api-key` option.
 
 ## Usage
 
-From the root of the repository:
+From the root of the repository, use pnpm to run the CLI:
 
 ```bash
 pnpm --filter locale-cli add-locale --key <key> --text <text> [options]
 ```
 
-Or from within the `packages/locale-cli` directory:
+Or using the full path:
 
 ```bash
-pnpm add-locale --key <key> --text <text> [options]
+node packages/locale-cli/bin/add-locale.js --key <key> --text <text> [options]
 ```
 
 ### Options
