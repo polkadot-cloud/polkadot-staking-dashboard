@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 // Test script to demonstrate CLI functionality without making actual API calls
 // This shows the structure and flow of the CLI
 
