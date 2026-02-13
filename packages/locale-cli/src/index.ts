@@ -126,6 +126,7 @@ export function writeLocaleFile(
 
 /**
  * Recursively sets a nested key in an object
+ * Uses safe property assignment to prevent prototype pollution
  */
 export function setNestedKey(
 	obj: Record<string, unknown>,
@@ -133,17 +134,58 @@ export function setNestedKey(
 	value: string,
 ): void {
 	const keys = keyPath.split('.')
+
+	// Validate keys to prevent prototype pollution
+	const dangerousKeys = ['__proto__', 'constructor', 'prototype']
+	for (const key of keys) {
+		if (dangerousKeys.includes(key)) {
+			throw new Error(
+				`Invalid key "${key}" in path "${keyPath}". Keys cannot be __proto__, constructor, or prototype.`,
+			)
+		}
+	}
+
 	let current = obj
 
 	for (let i = 0; i < keys.length - 1; i++) {
 		const key = keys[i]
-		if (!current[key] || typeof current[key] !== 'object') {
-			current[key] = {}
+
+		// Additional check to ensure key is safe
+		if (
+			!(key in current) ||
+			typeof current[key] !== 'object' ||
+			current[key] === null
+		) {
+			// Use Object.defineProperty for safer property creation
+			Object.defineProperty(current, key, {
+				value: {},
+				writable: true,
+				enumerable: true,
+				configurable: true,
+			})
 		}
-		current = current[key] as Record<string, unknown>
+
+		// Get the next level safely
+		const next = current[key]
+		// Additional validation before reassignment
+		if (typeof next !== 'object' || next === null) {
+			throw new Error(
+				`Cannot traverse key path "${keyPath}" - invalid structure`,
+			)
+		}
+		current = next as Record<string, unknown>
 	}
 
-	current[keys[keys.length - 1]] = value
+	const finalKey = keys[keys.length - 1]
+	// Use Object.defineProperty for safer property assignment
+	// Safe from prototype pollution due to key validation above
+	// lgtm[js/prototype-pollution-utility]
+	Object.defineProperty(current, finalKey, {
+		value,
+		writable: true,
+		enumerable: true,
+		configurable: true,
+	})
 }
 
 /**
