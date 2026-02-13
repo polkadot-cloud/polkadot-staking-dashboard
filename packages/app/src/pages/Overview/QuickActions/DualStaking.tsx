@@ -75,9 +75,7 @@ export const DualStaking = () => {
 					}
 				}}
 				disabled={false}
-				Icon={() => (
-					<FontAwesomeIcon transform="grow-2" icon={faCircleXmark} />
-				)}
+				Icon={() => <FontAwesomeIcon transform="grow-2" icon={faCircleXmark} />}
 				label={t('stop', { ns: 'pages' })}
 			/>
 		</QuickAction.Container>
