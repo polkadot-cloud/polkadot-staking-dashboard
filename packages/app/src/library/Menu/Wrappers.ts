@@ -3,8 +3,11 @@
 
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
-  background: var(--bg-body);
+export const Wrapper = styled.div<{ $secondaryBg?: boolean }>`
+  background: ${({ $secondaryBg }) =>
+		$secondaryBg ? 'var(--bg-primary)' : 'var(--bg-body)'};
+  border: 1px solid
+    ${({ $secondaryBg }) => ($secondaryBg ? 'var(--border)' : 'secondaryBg')};
   width: 250px;
   padding: 0.25rem 0.75rem;
   display: flex;
@@ -17,8 +20,10 @@ export const Wrapper = styled.div`
   }
 `
 
-export const ItemWrapper = styled.button`
+export const ItemWrapper = styled.button<{ $secondaryBg?: boolean }>`
   border-bottom: 1px solid var(--border);
+  background-color: ${({ $secondaryBg }) =>
+		$secondaryBg ? 'var(--bg-primary)' : 'var(--bg-body)'};
   color: var(--text-secondary);
   display: flex;
   width: 100%;

@@ -76,7 +76,7 @@ export const Groups = ({
 				clientY: rect.bottom - bodyRect.top + 3,
 			} as ReactMouseEvent<HTMLButtonElement, MouseEvent>
 
-			openMenu(syntheticEvent, <MenuList items={groupMenuItems} />)
+			openMenu(syntheticEvent, <MenuList items={groupMenuItems} secondaryBg />)
 		}
 	}
 
