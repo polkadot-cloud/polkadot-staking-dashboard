@@ -142,7 +142,7 @@
 		"ledgerAccounts": "正在显示Ledger帐户",
 		"ledgerDeviceBusy": "Ledger设备当前正被用于其他用途",
 		"ledgerFetchedAccount": "己获得Ledger账户 {{account}}",
-		"ledgerGroup": "Ledger {{group}}",
+		"ledgerDevice": "Ledger 设备 {{group}}",
 		"ledgerImportedAccount": "已导入Ledger账户 {{account}}",
 		"ledgerRemovedAccount": "已删除Ledger账户 {{account}}",
 		"ledgerRequestTimeout": "Ledger 请求超时.请再试一次",

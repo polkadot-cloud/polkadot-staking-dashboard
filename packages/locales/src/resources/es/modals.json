@@ -149,7 +149,7 @@
 		"ledgerAccounts_other": "Mostrando {{count}} cuentas Ledger",
 		"ledgerDeviceBusy": "El dispositivo Ledger está siendo utilizado para otra cosa.",
 		"ledgerFetchedAccount": "Cuenta Ledger {{account}} obtenida",
-		"ledgerGroup": "Ledger {{group}}",
+		"ledgerDevice": "Dispositivo Ledger {{group}}",
 		"ledgerImportedAccount": "Cuenta Ledger {{account}} importada",
 		"ledgerRemovedAccount": "Cuenta Ledger {{account}} eliminada",
 		"ledgerRequestTimeout": "La solicitud a Ledger ha expirado. Por favor, inténtalo de nuevo.",

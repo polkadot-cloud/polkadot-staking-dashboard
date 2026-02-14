@@ -34,11 +34,8 @@ export const Groups = ({
 	const { openMenu, open } = useMenu()
 	const dropdownButtonRef = useRef<HTMLDivElement>(null)
 
-	const activeGroupCount = groupedAddresses[activeGroup]?.length ?? 0
-
 	const groupMenuItems = useMemo((): MenuItem[] => {
 		const items: MenuItem[] = addressGroups.map((group) => {
-			const groupCount = groupedAddresses[group]?.length ?? 0
 			return {
 				icon: (
 					<FontAwesomeIcon
@@ -46,7 +43,7 @@ export const Groups = ({
 						transform="shrink-3"
 					/>
 				),
-				title: `${t('ledgerGroup', { ns: 'modals', group })} (${groupCount})`,
+				title: `${t('ledgerDevice', { ns: 'modals', group })}`,
 				cb: () => onGroupChange(group),
 			}
 		})
@@ -75,7 +72,7 @@ export const Groups = ({
 			// Create a synthetic event with coordinates at the bottom-left corner of the button
 			const syntheticEvent = {
 				clientX: rect.left - bodyRect.left,
-				clientY: rect.bottom - bodyRect.top,
+				clientY: rect.bottom - bodyRect.top + 3,
 			} as ReactMouseEvent<HTMLButtonElement, MouseEvent>
 
 			openMenu(syntheticEvent, <MenuList items={groupMenuItems} />)
@@ -85,7 +82,7 @@ export const Groups = ({
 	return (
 		<div
 			style={{
-				padding: '0.5rem 0.5rem 0 1rem',
+				padding: '1rem 0.5rem 0 1rem',
 				display: 'flex',
 				alignItems: 'center',
 				gap: '0.5rem',
@@ -97,11 +94,11 @@ export const Groups = ({
 				style={{
 					background: 'var(--btn-popover-tab-bg)',
 					borderRadius: '0.75rem',
-					padding: '0rem 01rem',
+					padding: '0.25rem 01rem',
 				}}
 			>
 				<ButtonMenu
-					text={`${t('ledgerGroup', { ns: 'modals', group: activeGroup })} (${activeGroupCount})`}
+					text={`${t('ledgerDevice', { ns: 'modals', group: activeGroup })}`}
 					iconRight={faChevronDown}
 					iconTransform="shrink-3"
 					onClick={handleOpenGroupMenu}

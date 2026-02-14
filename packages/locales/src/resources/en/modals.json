@@ -149,7 +149,7 @@
 		"ledgerAccounts_other": "Displaying {{count}} Ledger Accounts",
 		"ledgerDeviceBusy": "The Ledger device is currently being used for something else.",
 		"ledgerFetchedAccount": "Fetched Ledger Account {{account}}",
-		"ledgerGroup": "Ledger {{group}}",
+		"ledgerDevice": "Ledger Device {{group}}",
 		"ledgerImportedAccount": "Imported Ledger Account {{account}}",
 		"ledgerRemovedAccount": "Removed Ledger Account {{account}}",
 		"ledgerRequestTimeout": "The Ledger request timed out. Please try again.",
