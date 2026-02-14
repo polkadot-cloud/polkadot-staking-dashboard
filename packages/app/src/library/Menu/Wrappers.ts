@@ -7,7 +7,7 @@ export const Wrapper = styled.div<{ $secondaryBg?: boolean }>`
   background: ${({ $secondaryBg }) =>
 		$secondaryBg ? 'var(--bg-primary)' : 'var(--bg-body)'};
   border: 1px solid
-    ${({ $secondaryBg }) => ($secondaryBg ? 'var(--border)' : 'secondaryBg')};
+    ${({ $secondaryBg }) => ($secondaryBg ? 'var(--border)' : 'var(--border)')};
   width: 250px;
   padding: 0.25rem 0.75rem;
   display: flex;
