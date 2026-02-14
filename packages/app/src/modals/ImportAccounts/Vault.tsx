@@ -94,6 +94,8 @@ export const Vault = () => {
 				title="Polkadot Vault"
 				websiteText="vault.novasama.io"
 				websiteUrl="https://vault.novasama.io"
+				offsetChildren
+				marginY
 			>
 				<span>
 					<ButtonText

@@ -34,8 +34,8 @@ importers:
         specifier: ^4.2.3
         version: 4.2.3(vite@7.3.1(@types/node@25.2.2)(sass@1.97.3)(tsx@4.21.0))
       '@w3ux/types':
-        specifier: ^2.4.1
-        version: 2.4.1
+        specifier: ^2.4.2
+        version: 2.4.2
       globals:
         specifier: ^17.3.0
         version: 17.3.0
@@ -97,17 +97,17 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(react@19.2.4)
       '@w3ux/factories':
-        specifier: ^2.2.1
-        version: 2.2.1(react@19.2.4)
+        specifier: ^2.2.2
+        version: 2.2.2(react@19.2.4)
       '@w3ux/hooks':
-        specifier: ^2.4.2
-        version: 2.4.2(react@19.2.4)
+        specifier: ^2.4.3
+        version: 2.4.3(react@19.2.4)
       '@w3ux/react-connect-kit':
-        specifier: ^4.0.0
-        version: 4.0.0(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
+        specifier: ^4.0.2
+        version: 4.0.2(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/react-odometer':
-        specifier: 2.4.0
-        version: 2.4.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: 2.4.5
+        version: 2.4.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@w3ux/react-polkicon':
         specifier: ^4.0.2
         version: 4.0.2(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -279,8 +279,8 @@ importers:
   packages/consts:
     dependencies:
       '@dedot/chain-specs':
-        specifier: ^0.8.0
-        version: 0.8.0
+        specifier: ^0.9.0
+        version: 0.9.0
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -304,8 +304,8 @@ importers:
         specifier: ^0.222.0
         version: 0.222.0(dedot@1.0.4(typescript@5.9.3))
       '@w3ux/observables-connect':
-        specifier: ^1.0.3
-        version: 1.0.3(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
+        specifier: ^1.0.5
+        version: 1.0.5(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/util-dedot':
         specifier: ^1.0.0
         version: 1.0.0(dedot@1.0.4(typescript@5.9.3))
@@ -332,8 +332,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.4.1
-        version: 2.4.1
+        specifier: ^2.4.2
+        version: 2.4.2
       types:
         specifier: workspace:*
         version: link:../types
@@ -347,8 +347,8 @@ importers:
   packages/global-bus:
     dependencies:
       '@w3ux/observables-connect':
-        specifier: ^1.0.3
-        version: 1.0.3(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
+        specifier: ^1.0.5
+        version: 1.0.5(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/utils':
         specifier: ^3.1.0
         version: 3.1.0
@@ -369,8 +369,8 @@ importers:
         version: 7.8.2
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.4.1
-        version: 2.4.1
+        specifier: ^2.4.2
+        version: 2.4.2
       types:
         specifier: workspace:*
         version: link:../types
@@ -423,17 +423,17 @@ importers:
   packages/test-smoldot:
     dependencies:
       '@dedot/chain-specs':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.9.0
+        version: 0.9.0
       '@dedot/chaintypes':
         specifier: ^0.222.0
         version: 0.222.0(dedot@1.0.4(typescript@5.9.3))
       '@polkadot/keyring':
-        specifier: ^13.4.1
-        version: 13.5.9(@polkadot/util-crypto@13.5.9(@polkadot/util@14.0.1))(@polkadot/util@14.0.1)
+        specifier: ^14.0.1
+        version: 14.0.1(@polkadot/util-crypto@14.0.1(@polkadot/util@14.0.1))(@polkadot/util@14.0.1)
       '@polkadot/util-crypto':
-        specifier: ^13.4.1
-        version: 13.5.9(@polkadot/util@14.0.1)
+        specifier: ^14.0.1
+        version: 14.0.1(@polkadot/util@14.0.1)
       dedot:
         specifier: ^1.0.4
         version: 1.0.4(typescript@5.9.3)
@@ -517,8 +517,8 @@ importers:
         version: link:../ui-core
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.4.1
-        version: 2.4.1
+        specifier: ^2.4.2
+        version: 2.4.2
       dedot:
         specifier: ^1
         version: 1.0.4(typescript@5.9.3)
@@ -630,8 +630,8 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
       '@w3ux/hooks':
-        specifier: ^2.4.2
-        version: 2.4.2(react@19.2.4)
+        specifier: ^2.4.3
+        version: 2.4.3(react@19.2.4)
       '@w3ux/utils':
         specifier: 3.1.0
         version: 3.1.0
@@ -664,8 +664,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.4)
       '@w3ux/hooks':
-        specifier: ^2.4.2
-        version: 2.4.2(react@19.2.4)
+        specifier: ^2.4.3
+        version: 2.4.3(react@19.2.4)
       '@w3ux/utils':
         specifier: ^3.1.0
         version: 3.1.0
@@ -689,8 +689,8 @@ importers:
         version: link:../styles
     devDependencies:
       '@w3ux/types':
-        specifier: ^2.4.1
-        version: 2.4.1
+        specifier: ^2.4.2
+        version: 2.4.2
       types:
         specifier: workspace:*
         version: link:../types
@@ -698,8 +698,8 @@ importers:
   packages/utils:
     dependencies:
       '@w3ux/hooks':
-        specifier: ^2.4.2
-        version: 2.4.2(react@19.2.4)
+        specifier: ^2.4.3
+        version: 2.4.3(react@19.2.4)
       '@w3ux/utils':
         specifier: 3.1.0
         version: 3.1.0
@@ -910,11 +910,8 @@ packages:
     resolution: {integrity: sha512-Gp4XJZ00QIvuhZeoKAAIYEBE7Ht9DNUIxbQWaH39k9b4jXtsKcudnVuV3h7mfMx9E/afHIvbUQsZIshkGL+oXw==}
     engines: {node: '>=18'}
 
-  '@dedot/chain-specs@0.2.0':
-    resolution: {integrity: sha512-0GOJbWRuOeeZIei468VZpJrk94E3x9Xfsx9Df/2PB6zNODqMrykYQJHIquHqDwNt9k3b3b7eUZkBSvDMa+CxcA==}
-
-  '@dedot/chain-specs@0.8.0':
-    resolution: {integrity: sha512-k+pUJb4bNol29DPYJpUlxa1Jpt8hpM7n99oe9URMLwlPcbzL6XYjlQG6qtIfGjOLv+XAwvShvCzT6v/Pw7atWA==}
+  '@dedot/chain-specs@0.9.0':
+    resolution: {integrity: sha512-e2embSQdu8lcMmsBsu2vp/LG3TzfV0BrqfoRzKCms/hXtokej1WJKXPNnYgr4Vwiwjwubms59alUNje73lzaYg==}
 
   '@dedot/chaintypes@0.222.0':
     resolution: {integrity: sha512-07P+6xLiHnrHj6192JVh21VGv47EYPJHD9OYkK23nPlIrWnB+GHCBS45D4uCd1h/gmvAUktTpgPfeI+gDfdArg==}
@@ -1369,30 +1366,26 @@ packages:
     resolution: {integrity: sha512-tmmZ3lQxAe/k/+rNnXQRawJ4NjxO2hqiOLTHvWchtGZULp4RyFeh6aU4XdOYBFe2KE1oShQTv4AblOs2iOrNnQ==}
     engines: {node: '>= 10.0.0'}
 
-  '@polkadot/keyring@13.5.9':
-    resolution: {integrity: sha512-bMCpHDN7U8ytxawjBZ89/he5s3AmEZuOdkM/ABcorh/flXNPfyghjFK27Gy4OKoFxX52yJ2sTHR4NxM87GuFXQ==}
+  '@polkadot/keyring@14.0.1':
+    resolution: {integrity: sha512-kHydQPCeTvJrMC9VQO8LPhAhTUxzxfNF1HEknhZDBPPsxP/XpkYsEy/Ln1QzJmQqD5VsgwzLDE6cExbJ2CT9CA==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@polkadot/util': 13.5.9
-      '@polkadot/util-crypto': 13.5.9
+      '@polkadot/util': 14.0.1
+      '@polkadot/util-crypto': 14.0.1
 
-  '@polkadot/networks@13.5.9':
-    resolution: {integrity: sha512-nmKUKJjiLgcih0MkdlJNMnhEYdwEml2rv/h59ll2+rAvpsVWMTLCb6Cq6q7UC44+8kiWK2UUJMkFU+3PFFxndA==}
+  '@polkadot/networks@14.0.1':
+    resolution: {integrity: sha512-wGlBtXDkusRAj4P7uxfPz80gLO1+j99MLBaQi3bEym2xrFrFhgIWVHOZlBit/1PfaBjhX2Z8XjRxaM2w1p7w2w==}
     engines: {node: '>=18'}
 
   '@polkadot/types-support@16.5.4':
     resolution: {integrity: sha512-Ra6keCaO73ibxN6MzA56jFq9EReje7jjE4JQfzV5IpyDZdXcmPyJiEfa2Yps/YSP13Gc2e38t9FFyVau0V+SFQ==}
     engines: {node: '>=18'}
 
-  '@polkadot/util-crypto@13.5.9':
-    resolution: {integrity: sha512-foUesMhxkTk8CZ0/XEcfvHk6I0O+aICqqVJllhOpyp/ZVnrTBKBf59T6RpsXx2pCtBlMsLRvg/6Mw7RND1HqDg==}
+  '@polkadot/util-crypto@14.0.1':
+    resolution: {integrity: sha512-Cu7AKUzBTsUkbOtyuNzXcTpDjR9QW0fVR56o3gBmzfUCmvO1vlsuGzmmPzqpHymQQ3rrfqV78CPs62EGhw0R+A==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@polkadot/util': 13.5.9
-
-  '@polkadot/util@13.5.9':
-    resolution: {integrity: sha512-pIK3XYXo7DKeFRkEBNYhf3GbCHg6dKQisSvdzZwuyzA6m7YxQq4DFw4IE464ve4Z7WsJFt3a6C9uII36hl9EWw==}
-    engines: {node: '>=18'}
+      '@polkadot/util': 14.0.1
 
   '@polkadot/util@14.0.1':
     resolution: {integrity: sha512-764HhxkPV3x5rM0/p6QdynC2dw26n+SaE+jisjx556ViCd4E28Ke4xSPef6C0Spy4aoXf2gt0PuLEcBvd6fVZg==}
@@ -1437,39 +1430,23 @@ packages:
     peerDependencies:
       '@polkadot/util': '*'
 
-  '@polkadot/x-bigint@13.5.9':
-    resolution: {integrity: sha512-JVW6vw3e8fkcRyN9eoc6JIl63MRxNQCP/tuLdHWZts1tcAYao0hpWUzteqJY93AgvmQ91KPsC1Kf3iuuZCi74g==}
-    engines: {node: '>=18'}
-
   '@polkadot/x-bigint@14.0.1':
     resolution: {integrity: sha512-gfozjGnebr2rqURs31KtaWumbW4rRZpbiluhlmai6luCNrf5u8pB+oLA35kPEntrsLk9PnIG9OsC/n4hEtx4OQ==}
-    engines: {node: '>=18'}
-
-  '@polkadot/x-global@13.5.9':
-    resolution: {integrity: sha512-zSRWvELHd3Q+bFkkI1h2cWIqLo1ETm+MxkNXLec3lB56iyq/MjWBxfXnAFFYFayvlEVneo7CLHcp+YTFd9aVSA==}
     engines: {node: '>=18'}
 
   '@polkadot/x-global@14.0.1':
     resolution: {integrity: sha512-aCI44DJU4fU0XXqrrSGIpi7JrZXK2kpe0jaQ2p6oDVXOOYEnZYXnMhTTmBE1lF/xtxzX50MnZrrU87jziU0qbA==}
     engines: {node: '>=18'}
 
-  '@polkadot/x-randomvalues@13.5.9':
-    resolution: {integrity: sha512-Uuuz3oubf1JCCK97fsnVUnHvk4BGp/W91mQWJlgl5TIOUSSTIRr+lb5GurCfl4kgnQq53Zi5fJV+qR9YumbnZw==}
+  '@polkadot/x-randomvalues@14.0.1':
+    resolution: {integrity: sha512-/XkQcvshzJLHITuPrN3zmQKuFIPdKWoaiHhhVLD6rQWV60lTXA3ajw3ocju8ZN7xRxnweMS9Ce0kMPYa0NhRMg==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@polkadot/util': 13.5.9
+      '@polkadot/util': 14.0.1
       '@polkadot/wasm-util': '*'
-
-  '@polkadot/x-textdecoder@13.5.9':
-    resolution: {integrity: sha512-W2HhVNUbC/tuFdzNMbnXAWsIHSg9SC9QWDNmFD3nXdSzlXNgL8NmuiwN2fkYvCQBtp/XSoy0gDLx0C+Fo19cfw==}
-    engines: {node: '>=18'}
 
   '@polkadot/x-textdecoder@14.0.1':
     resolution: {integrity: sha512-CcWiPCuPVJsNk4Vq43lgFHqLRBQHb4r9RD7ZIYgmwoebES8TNm4g2ew9ToCzakFKSpzKu6I07Ne9wv/dt5zLuw==}
-    engines: {node: '>=18'}
-
-  '@polkadot/x-textencoder@13.5.9':
-    resolution: {integrity: sha512-SG0MHnLUgn1ZxFdm0KzMdTHJ47SfqFhdIPMcGA0Mg/jt2rwrfrP3jtEIJMsHfQpHvfsNPfv55XOMmoPWuQnP/Q==}
     engines: {node: '>=18'}
 
   '@polkadot/x-textencoder@14.0.1':
@@ -2319,6 +2296,9 @@ packages:
   '@scure/bip39@1.6.0':
     resolution: {integrity: sha512-+lF0BbLiJNwVlev4eKelw1WWLaiKXw7sSl8T6FvBlWkdX+94aGJ4o8XjUdlyhTCjd8c+B3KT3JfS8P0bLRNU6A==}
 
+  '@scure/sr25519@0.2.0':
+    resolution: {integrity: sha512-uUuLP7Z126XdSizKtrCGqYyR3b3hYtJ6Fg/XFUXmc2//k2aXHDLqZwFeXxL97gg4XydPROPVnuaHGF2+xriSKg==}
+
   '@sindresorhus/merge-streams@4.0.0':
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
@@ -2561,32 +2541,32 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/factories@2.2.1':
-    resolution: {integrity: sha512-sPhbRq+v3SvdShXQ5NIoppXxkzjaWGozrw9FUyw7lgNZnJ96xLgKEMTzEJhnuTlmpCU4jxDohqc7/CAI7RhuEg==}
+  '@w3ux/factories@2.2.2':
+    resolution: {integrity: sha512-5Ed1XOAFB7fJwdj3eIkymbdRnHDFePa0qcBoFOn3ZGzZKbP0W+iUQQ5hPQyMZWUSuHtuq0tFMY1D2qqEqZ/1DQ==}
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/hooks@2.4.2':
-    resolution: {integrity: sha512-W7apyVXnBOY20jJAFgJ/W+eGHzCDx1f9XHxh9KXWNRPERflvmT06eoxPMfYdaO7Ai7B0LclI7EY9HXvopvb6Hw==}
+  '@w3ux/hooks@2.4.3':
+    resolution: {integrity: sha512-m4GtTibjFJcoX3zgxnwWVBGRVQpWq71iiYNVIJGEcK0Rm+yCxNHTPirH2gdUpoZsjtuhSdc8lvsQ7v7e63xxqw==}
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/observables-connect@1.0.3':
-    resolution: {integrity: sha512-UIazRVKgRT20GwYhpBoik6nVFJjBzEu6bhzhBNKQwrZmEVq/GtCcemUi9qXWZGdfoTdMq5XpUNR697KUb4x+Qg==}
+  '@w3ux/observables-connect@1.0.5':
+    resolution: {integrity: sha512-mFaSR7eGGed6TaisiaDcbVsumvIASoHOgB2IOEJ1W2lBoXJv/l1hCXZ6q3kpe1e+DirYwjso8u4SK9N6eRhR0Q==}
     peerDependencies:
       dedot: ^1
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@4.0.0':
-    resolution: {integrity: sha512-P2ocFO/pMdT9CbwE9q0wU38r6DI064oFD0UwNgLYt4w8yNh7wfZdjVKIqI/ZoM2b+lviXecpOShzRRZH+dac5A==}
+  '@w3ux/react-connect-kit@4.0.2':
+    resolution: {integrity: sha512-fOGwabMfASzIrZiGf91PgasGVkteFX0r9+i0mwmnl2jX3QXgUzZMDtuT59GIvuhlcDB4lFR3atsugN55ihJODw==}
     peerDependencies:
       dedot: ^1
       react: ^19.1.0
       react-dom: ^19.1.0
       rxjs: ^7.8.2
 
-  '@w3ux/react-odometer@2.4.0':
-    resolution: {integrity: sha512-pGvRKXSrzVU0gAr/1/aU3lot0yLaa1DhzPm3YZ2GxOYNV55NV4dhGoeixvFc2eWOxJ3sfkzKreQZwL4m1ixEwA==}
+  '@w3ux/react-odometer@2.4.5':
+    resolution: {integrity: sha512-dfaSR3Qtqo9FYYmiE2vCPDms+KZp6YZwT2e/1m+gB6l0WzkAJYVJwCxRS+naKCQoM0NUt0fPkZtMgnME30hE8Q==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -2598,8 +2578,8 @@ packages:
       react: ^19.1.0
       react-dom: ^19.1.0
 
-  '@w3ux/types@2.4.1':
-    resolution: {integrity: sha512-vqKVJ9NH71fPcaOVM3xuRLJeasOOPDvVdsRvghaDF/e9Zq4OOrMRF7a9KqtwtGX17utzo9Y2GjIcJpNbSjAuzA==}
+  '@w3ux/types@2.4.2':
+    resolution: {integrity: sha512-nZnDmx3kMHeDWqq5gX5zS5WvVG7KqDhoOJ1pyBmJi4dMhcuDv7IntuyKQOsob7o7kBWsSc9VSOQ/kEyKKAtCJA==}
 
   '@w3ux/util-dedot@1.0.0':
     resolution: {integrity: sha512-/SEoja+VKoWZzGBU0qln89kgeidBc/9KXGMH1LWAdQhc73IMTN2eKQJ9NPK72W1GrxfH0bJM0zgKWZPjYL3+qA==}
@@ -4494,9 +4474,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/chain-specs@0.2.0': {}
-
-  '@dedot/chain-specs@0.8.0': {}
+  '@dedot/chain-specs@0.9.0': {}
 
   '@dedot/chaintypes@0.222.0(dedot@1.0.4(typescript@5.9.3))':
     dependencies:
@@ -4936,15 +4914,15 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
 
-  '@polkadot/keyring@13.5.9(@polkadot/util-crypto@13.5.9(@polkadot/util@14.0.1))(@polkadot/util@14.0.1)':
+  '@polkadot/keyring@14.0.1(@polkadot/util-crypto@14.0.1(@polkadot/util@14.0.1))(@polkadot/util@14.0.1)':
     dependencies:
       '@polkadot/util': 14.0.1
-      '@polkadot/util-crypto': 13.5.9(@polkadot/util@14.0.1)
+      '@polkadot/util-crypto': 14.0.1(@polkadot/util@14.0.1)
       tslib: 2.8.1
 
-  '@polkadot/networks@13.5.9':
+  '@polkadot/networks@14.0.1':
     dependencies:
-      '@polkadot/util': 13.5.9
+      '@polkadot/util': 14.0.1
       '@substrate/ss58-registry': 1.51.0
       tslib: 2.8.1
 
@@ -4953,27 +4931,18 @@ snapshots:
       '@polkadot/util': 14.0.1
       tslib: 2.8.1
 
-  '@polkadot/util-crypto@13.5.9(@polkadot/util@14.0.1)':
+  '@polkadot/util-crypto@14.0.1(@polkadot/util@14.0.1)':
     dependencies:
       '@noble/curves': 1.9.7
       '@noble/hashes': 1.8.0
-      '@polkadot/networks': 13.5.9
+      '@polkadot/networks': 14.0.1
       '@polkadot/util': 14.0.1
-      '@polkadot/wasm-crypto': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
+      '@polkadot/wasm-crypto': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
       '@polkadot/wasm-util': 7.5.4(@polkadot/util@14.0.1)
-      '@polkadot/x-bigint': 13.5.9
-      '@polkadot/x-randomvalues': 13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
+      '@polkadot/x-bigint': 14.0.1
+      '@polkadot/x-randomvalues': 14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
       '@scure/base': 1.2.6
-      tslib: 2.8.1
-
-  '@polkadot/util@13.5.9':
-    dependencies:
-      '@polkadot/x-bigint': 13.5.9
-      '@polkadot/x-global': 13.5.9
-      '@polkadot/x-textdecoder': 13.5.9
-      '@polkadot/x-textencoder': 13.5.9
-      '@types/bn.js': 5.2.0
-      bn.js: 5.2.2
+      '@scure/sr25519': 0.2.0
       tslib: 2.8.1
 
   '@polkadot/util@14.0.1':
@@ -4986,11 +4955,11 @@ snapshots:
       bn.js: 5.2.2
       tslib: 2.8.1
 
-  '@polkadot/wasm-bridge@7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))':
+  '@polkadot/wasm-bridge@7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))':
     dependencies:
       '@polkadot/util': 14.0.1
       '@polkadot/wasm-util': 7.5.4(@polkadot/util@14.0.1)
-      '@polkadot/x-randomvalues': 13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
+      '@polkadot/x-randomvalues': 14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
       tslib: 2.8.1
 
   '@polkadot/wasm-crypto-asmjs@7.5.4(@polkadot/util@14.0.1)':
@@ -4998,14 +4967,14 @@ snapshots:
       '@polkadot/util': 14.0.1
       tslib: 2.8.1
 
-  '@polkadot/wasm-crypto-init@7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))':
+  '@polkadot/wasm-crypto-init@7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))':
     dependencies:
       '@polkadot/util': 14.0.1
-      '@polkadot/wasm-bridge': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
+      '@polkadot/wasm-bridge': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
       '@polkadot/wasm-crypto-asmjs': 7.5.4(@polkadot/util@14.0.1)
       '@polkadot/wasm-crypto-wasm': 7.5.4(@polkadot/util@14.0.1)
       '@polkadot/wasm-util': 7.5.4(@polkadot/util@14.0.1)
-      '@polkadot/x-randomvalues': 13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
+      '@polkadot/x-randomvalues': 14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
       tslib: 2.8.1
 
   '@polkadot/wasm-crypto-wasm@7.5.4(@polkadot/util@14.0.1)':
@@ -5014,15 +4983,15 @@ snapshots:
       '@polkadot/wasm-util': 7.5.4(@polkadot/util@14.0.1)
       tslib: 2.8.1
 
-  '@polkadot/wasm-crypto@7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))':
+  '@polkadot/wasm-crypto@7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))':
     dependencies:
       '@polkadot/util': 14.0.1
-      '@polkadot/wasm-bridge': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
+      '@polkadot/wasm-bridge': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
       '@polkadot/wasm-crypto-asmjs': 7.5.4(@polkadot/util@14.0.1)
-      '@polkadot/wasm-crypto-init': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
+      '@polkadot/wasm-crypto-init': 7.5.4(@polkadot/util@14.0.1)(@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)))
       '@polkadot/wasm-crypto-wasm': 7.5.4(@polkadot/util@14.0.1)
       '@polkadot/wasm-util': 7.5.4(@polkadot/util@14.0.1)
-      '@polkadot/x-randomvalues': 13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
+      '@polkadot/x-randomvalues': 14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))
       tslib: 2.8.1
 
   '@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1)':
@@ -5030,44 +4999,25 @@ snapshots:
       '@polkadot/util': 14.0.1
       tslib: 2.8.1
 
-  '@polkadot/x-bigint@13.5.9':
-    dependencies:
-      '@polkadot/x-global': 13.5.9
-      tslib: 2.8.1
-
   '@polkadot/x-bigint@14.0.1':
     dependencies:
       '@polkadot/x-global': 14.0.1
-      tslib: 2.8.1
-
-  '@polkadot/x-global@13.5.9':
-    dependencies:
       tslib: 2.8.1
 
   '@polkadot/x-global@14.0.1':
     dependencies:
       tslib: 2.8.1
 
-  '@polkadot/x-randomvalues@13.5.9(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))':
+  '@polkadot/x-randomvalues@14.0.1(@polkadot/util@14.0.1)(@polkadot/wasm-util@7.5.4(@polkadot/util@14.0.1))':
     dependencies:
       '@polkadot/util': 14.0.1
       '@polkadot/wasm-util': 7.5.4(@polkadot/util@14.0.1)
-      '@polkadot/x-global': 13.5.9
-      tslib: 2.8.1
-
-  '@polkadot/x-textdecoder@13.5.9':
-    dependencies:
-      '@polkadot/x-global': 13.5.9
+      '@polkadot/x-global': 14.0.1
       tslib: 2.8.1
 
   '@polkadot/x-textdecoder@14.0.1':
     dependencies:
       '@polkadot/x-global': 14.0.1
-      tslib: 2.8.1
-
-  '@polkadot/x-textencoder@13.5.9':
-    dependencies:
-      '@polkadot/x-global': 13.5.9
       tslib: 2.8.1
 
   '@polkadot/x-textencoder@14.0.1':
@@ -5926,7 +5876,7 @@ snapshots:
 
   '@scure/bip32@1.7.0':
     dependencies:
-      '@noble/curves': 1.9.1
+      '@noble/curves': 1.9.7
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
 
@@ -5934,6 +5884,11 @@ snapshots:
     dependencies:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
+
+  '@scure/sr25519@0.2.0':
+    dependencies:
+      '@noble/curves': 1.9.7
+      '@noble/hashes': 1.8.0
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
@@ -6163,17 +6118,17 @@ snapshots:
     dependencies:
       react: 19.2.4
 
-  '@w3ux/factories@2.2.1(react@19.2.4)':
+  '@w3ux/factories@2.2.2(react@19.2.4)':
     dependencies:
       react: 19.2.4
 
-  '@w3ux/hooks@2.4.2(react@19.2.4)':
+  '@w3ux/hooks@2.4.3(react@19.2.4)':
     dependencies:
       '@w3ux/utils': 3.1.0
       date-fns: 4.1.0
       react: 19.2.4
 
-  '@w3ux/observables-connect@1.0.3(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)':
+  '@w3ux/observables-connect@1.0.5(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
       '@mimirdev/apps-inject': 3.2.0
       '@w3ux/extension-assets': 2.3.1(react@19.2.4)
@@ -6184,10 +6139,10 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@w3ux/react-connect-kit@4.0.0(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
+  '@w3ux/react-connect-kit@4.0.2(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
-      '@w3ux/hooks': 2.4.2(react@19.2.4)
-      '@w3ux/observables-connect': 1.0.3(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
+      '@w3ux/hooks': 2.4.3(react@19.2.4)
+      '@w3ux/observables-connect': 1.0.5(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/util-dedot': 1.0.0(dedot@1.0.4(typescript@5.9.3))
       '@w3ux/utils': 3.1.0
       dedot: 1.0.4(typescript@5.9.3)
@@ -6195,7 +6150,7 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       rxjs: 7.8.2
 
-  '@w3ux/react-odometer@2.4.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@w3ux/react-odometer@2.4.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -6208,7 +6163,7 @@ snapshots:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
-  '@w3ux/types@2.4.1': {}
+  '@w3ux/types@2.4.2': {}
 
   '@w3ux/util-dedot@1.0.0(dedot@1.0.4(typescript@5.9.3))':
     dependencies:
