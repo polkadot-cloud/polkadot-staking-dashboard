@@ -12,8 +12,6 @@
 		"afterCommission": "after commission",
 		"allPools": "All Pools",
 		"allValidators": "All Validators",
-		"alreadyInPool": "Cannot Nominate: Already in Pool",
-		"alreadyNominating": "Cannot Join Pool: Already Nominating",
 		"analyticsNotAvailable": "Analytics Not Available",
 		"analyticsNotSupported": "Analytics Not Supported",
 		"annual": "Annual",

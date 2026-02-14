@@ -3,7 +3,6 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useStaking } from 'contexts/Staking'
 import { GraphContainer, Interface } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
 import { Addresses } from './Addresses'
@@ -14,13 +13,11 @@ import { Stats } from './Stats'
 
 export const Overview = (props: OverviewSectionProps) => {
 	const { inPool } = useActivePool()
-	const { isBonding } = useStaking()
 	const { activeAddress } = useActiveAccounts()
 	const {
 		bondedPool: { state },
 	} = props
-	const showJoinForm =
-		activeAddress !== null && state === 'Open' && !inPool && !isBonding
+	const showJoinForm = activeAddress !== null && state === 'Open' && !inPool
 
 	return (
 		<Interface

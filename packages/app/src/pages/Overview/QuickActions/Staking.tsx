@@ -8,7 +8,7 @@ import type { BondFor } from 'types'
 import { QuickAction } from 'ui-buttons'
 import type { ButtonQuickActionProps } from 'ui-buttons/types'
 
-export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
+export const Staking = ({ bondFor }: { bondFor: BondFor[] }) => {
 	const { isDepositor } = useActivePool()
 	const { baseQuickActions, getBondQuickAction, getUnbondQuickAction } =
 		useQuickActions()
@@ -17,22 +17,34 @@ export const Staking = ({ bondFor }: { bondFor: BondFor }) => {
 
 	actions.push(baseQuickActions.send)
 
-	if (bondFor === 'pool') {
+	if (bondFor.includes('pool')) {
 		actions.push(
 			baseQuickActions.withdrawPoolRewards,
 			baseQuickActions.compoundPoolRewards,
 		)
-	} else {
+	}
+
+	if (bondFor.includes('nominator')) {
 		actions.push(baseQuickActions.claimNominatorPayouts)
 	}
 
-	actions.push(getBondQuickAction(bondFor), getUnbondQuickAction(bondFor))
-
-	if (bondFor === 'nominator') {
+	// Do not include bond/unbond actions for dual stakers
+	if (bondFor.length === 1) {
 		actions.push(
-			...[baseQuickActions.updatePayee, baseQuickActions.nominatorUnstake],
+			getBondQuickAction(bondFor[0]!),
+			getUnbondQuickAction(bondFor[0]!),
 		)
-	} else {
+	}
+
+	if (bondFor.includes('nominator')) {
+		actions.push(baseQuickActions.updatePayee)
+	}
+
+	if (bondFor.length === 1 && bondFor[0] === 'nominator') {
+		actions.push(baseQuickActions.nominatorUnstake)
+	}
+
+	if (bondFor.length === 1 && bondFor[0] === 'pool') {
 		if (!isDepositor()) {
 			actions.push(baseQuickActions.leavePool)
 		}
