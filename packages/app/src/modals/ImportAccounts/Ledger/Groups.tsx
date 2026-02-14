@@ -12,6 +12,7 @@ import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonMenu } from 'ui-buttons'
+import { ButtonWrapper, GroupWrapper } from './Wrappers'
 
 interface GroupsProps {
 	activeGroup: number
@@ -80,30 +81,15 @@ export const Groups = ({
 	}
 
 	return (
-		<div
-			style={{
-				padding: '1rem 0.5rem 0 1rem',
-				display: 'flex',
-				alignItems: 'center',
-				gap: '0.5rem',
-				maxWidth: '100%',
-			}}
-		>
-			<div
-				ref={dropdownButtonRef}
-				style={{
-					background: 'var(--btn-popover-tab-bg)',
-					borderRadius: '0.75rem',
-					padding: '0.25rem 01rem',
-				}}
-			>
+		<GroupWrapper>
+			<ButtonWrapper ref={dropdownButtonRef}>
 				<ButtonMenu
 					text={`${t('ledgerDevice', { ns: 'modals', group: activeGroup })}`}
 					iconRight={faChevronDown}
 					iconTransform="shrink-3"
 					onClick={handleOpenGroupMenu}
 				/>
-			</div>
-		</div>
+			</ButtonWrapper>
+		</GroupWrapper>
 	)
 }
