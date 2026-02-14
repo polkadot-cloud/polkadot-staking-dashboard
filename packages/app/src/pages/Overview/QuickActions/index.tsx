@@ -14,7 +14,6 @@ import { QuickAction } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { Disconnected } from './Disconnected'
-import { DualStaking } from './DualStaking'
 import { NotStaking } from './NotStaking'
 import { Staking } from './Staking'
 
@@ -27,6 +26,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 	const { activeAddress } = useActiveAccounts()
 
 	const isStaking = inPool || isBonding
+	const dualStaking = inPool && isBonding
 	const syncing = !accountSynced(activeAddress)
 
 	let actionGroup: 'disconnected' | 'notStaking' | 'staking' = 'staking'
@@ -51,12 +51,9 @@ export const QuickActions = ({ height }: { height: number }) => {
 				<>
 					{actionGroup === 'disconnected' && <Disconnected />}
 					{actionGroup === 'notStaking' && <NotStaking />}
-					{actionGroup === 'staking' &&
-						(inPool && isBonding ? (
-							<DualStaking />
-						) : (
-							<Staking bondFor={inPool ? 'pool' : 'nominator'} />
-						))}
+					<Staking
+						bondFor={dualStaking ? 'dual' : inPool ? 'pool' : 'nominator'}
+					/>
 				</>
 			)}
 			<QuickAction.Footer>

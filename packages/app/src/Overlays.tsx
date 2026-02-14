@@ -15,7 +15,6 @@ import { ChangePoolRoles } from 'modals/ChangePoolRoles'
 import { ClaimPayouts } from 'modals/ClaimPayouts'
 import { ClaimReward } from 'modals/ClaimReward'
 import { DiscordSupport } from 'modals/DiscordSupport'
-import { DualStakeAction } from 'modals/DualStakeAction'
 import { ExternalAccounts } from 'modals/ExternalAccounts'
 import { ImportAccounts } from 'modals/ImportAccounts'
 import { Invite } from 'modals/Invite'
@@ -56,7 +55,6 @@ export const Overlays = () => {
 				ClaimReward,
 				Accounts,
 				DiscordSupport,
-				DualStakeAction,
 				JoinPool,
 				LeavePool,
 				MailSupport,
