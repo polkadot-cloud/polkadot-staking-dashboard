@@ -26,7 +26,6 @@ export const QuickActions = ({ height }: { height: number }) => {
 	const { activeAddress } = useActiveAccounts()
 
 	const isStaking = inPool || isBonding
-	const dualStaking = inPool && isBonding
 	const syncing = !accountSynced(activeAddress)
 
 	let actionGroup: 'disconnected' | 'notStaking' | 'staking' = 'staking'
@@ -53,7 +52,10 @@ export const QuickActions = ({ height }: { height: number }) => {
 					{actionGroup === 'notStaking' && <NotStaking />}
 					{actionGroup === 'staking' && (
 						<Staking
-							bondFor={dualStaking ? 'dual' : inPool ? 'pool' : 'nominator'}
+							bondFor={[
+								...(inPool ? (['pool'] as const) : []),
+								...(isBonding ? (['nominator'] as const) : []),
+							]}
 						/>
 					)}
 				</>
