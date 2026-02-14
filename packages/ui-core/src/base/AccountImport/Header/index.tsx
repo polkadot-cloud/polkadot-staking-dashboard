@@ -34,7 +34,7 @@ export const Header = ({
 			<div>
 				<h3>{title}</h3>
 				<h4>
-					<a href={websiteUrl} target="blank" rel="noreferrer">
+					<a href={websiteUrl} target="_blank" rel="noopener noreferrer">
 						{websiteText}
 					</a>
 				</h4>
