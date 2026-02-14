@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { formatAccountSs58 } from '@w3ux/utils'
+import { formatAccountSs58 } from '@w3ux/util-dedot'
 import type { SubmittableExtrinsic } from 'dedot'
 import type { Bonded, ChainId, ImportedAccount } from 'types'
 

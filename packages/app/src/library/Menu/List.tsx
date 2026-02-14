@@ -5,18 +5,29 @@ import { useMenu } from 'contexts/Menu'
 import type { MenuItem } from 'contexts/Menu/types'
 import { ItemWrapper } from './Wrappers'
 
-export const MenuList = ({ items }: { items: MenuItem[] }) => {
+export const MenuList = ({
+	items,
+	secondaryBg = false,
+}: {
+	items: MenuItem[]
+	secondaryBg?: boolean
+}) => {
 	const { closeMenu } = useMenu()
 
 	return (
 		<>
 			{items.map((item, i: number) => {
-				const { icon, title, cb } = item
+				const { icon, title, cb, disabled } = item
 
 				return (
 					<ItemWrapper
 						key={`menu_item_${i}`}
+						$secondaryBg={secondaryBg}
+						disabled={disabled}
 						onClick={() => {
+							if (disabled) {
+								return
+							}
 							cb()
 							closeMenu()
 						}}

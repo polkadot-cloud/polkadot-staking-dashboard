@@ -8,8 +8,8 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { onNewNominatorButtonPressedEvent } from 'event-tracking'
-import { CallToActionWrapper } from 'library/CallToAction'
-import { CallToActionLoader } from 'library/Loader/CallToAction'
+import { CallToActionButtons } from 'library/CallToActionButtons'
+import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
@@ -34,45 +34,36 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 		isNominating ||
 		isReadOnlyAccount(activeAddress)
 
-	return (
-		<CallToActionWrapper>
-			{syncing ? (
-				<CallToActionLoader />
-			) : (
-				<>
-					<section className="standalone">
-						<div className="buttons">
-							<div
-								className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ` pulse`}`}
-							>
-								<button
-									type="button"
-									onClick={() => {
-										onNewNominatorButtonPressedEvent(network)
-										openModal({
-											key: 'StakingOptions',
-											options: {},
-											size: 'xs',
-										})
-									}}
-									disabled={nominateButtonDisabled}
-								>
-									{t('startNominating', { ns: 'pages' })}
-								</button>
-							</div>
-						</div>
-					</section>
-					<section>
-						<div className="buttons">
-							<div className={`button secondary standalone`}>
-								<button type="button" onClick={() => navigate('/validators')}>
-									{t('browseValidators', { ns: 'app' })}
-								</button>
-							</div>
-						</div>
-					</section>
-				</>
-			)}
-		</CallToActionWrapper>
-	)
+	const sections: CallToActionSection[] = [
+		{
+			className: 'standalone',
+			buttons: [
+				{
+					label: t('startNominating', { ns: 'pages' }),
+					onClick: () => {
+						onNewNominatorButtonPressedEvent(network)
+						openModal({
+							key: 'StakingOptions',
+							options: {},
+							size: 'xs',
+						})
+					},
+					disabled: nominateButtonDisabled,
+					kind: 'primary',
+					pulse: !nominateButtonDisabled,
+				},
+			],
+		},
+		{
+			buttons: [
+				{
+					label: t('browseValidators', { ns: 'app' }),
+					onClick: () => navigate('/validators'),
+					kind: 'secondary',
+				},
+			],
+		},
+	]
+
+	return <CallToActionButtons syncing={syncing} sections={sections} />
 }

@@ -5,7 +5,7 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import type { PageProps } from '../types'
-import { PayoutList } from './PayoutList'
+import { Inner } from './Inner'
 
 export const RecentPayouts = (props: PageProps) => {
 	const { payoutsList } = props
@@ -14,7 +14,7 @@ export const RecentPayouts = (props: PageProps) => {
 	return (
 		<Page.Row>
 			<CardWrapper>
-				<PayoutList
+				<Inner
 					title={t('recentPayouts')}
 					payouts={payoutsList}
 					pagination

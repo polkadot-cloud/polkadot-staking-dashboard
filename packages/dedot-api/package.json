@@ -13,17 +13,18 @@
 	},
 	"dependencies": {
 		"@dedot/chaintypes": "^0.222.0",
-		"@w3ux/observables-connect": "^1.0.1",
-		"@w3ux/utils": "^2.3.0",
+		"@w3ux/observables-connect": "^1.0.5",
+		"@w3ux/util-dedot": "^1.0.0",
+		"@w3ux/utils": "^3.1.0",
 		"consts": "workspace:*",
-		"dedot": "^1.0.2",
+		"dedot": "^1.0.4",
 		"global-bus": "workspace:*",
 		"rxjs": "^7.8.2",
 		"smoldot": "^2.0.40",
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
-		"@w3ux/types": "^2.4.1",
+		"@w3ux/types": "^2.4.2",
 		"types": "workspace:*"
 	}
 }

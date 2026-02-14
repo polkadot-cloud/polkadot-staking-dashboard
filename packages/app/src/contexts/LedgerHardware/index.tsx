@@ -18,6 +18,7 @@ import { Ledger } from './static/ledger'
 import type {
 	FeedbackMessage,
 	HandleErrorFeedback,
+	LedgerDeviceAddress,
 	LedgerHardwareContextInterface,
 	LedgerResponse,
 } from './types'
@@ -144,6 +145,28 @@ export const LedgerHardwareProvider = ({
 		}
 	}
 
+	// Gets an address from Ledger device without updating transport response
+	const fetchLedgerAddress = async (
+		accountIndex: number,
+		ss58Prefix: number,
+	): Promise<LedgerDeviceAddress | null> => {
+		try {
+			setIsExecuting(true)
+			const { app } = await Ledger.initialise()
+			const result = (await Ledger.getAddress(
+				app,
+				accountIndex,
+				ss58Prefix,
+			)) as LedgerDeviceAddress
+			return result
+		} catch (err) {
+			handleErrors(err)
+			return null
+		} finally {
+			setIsExecuting(false)
+		}
+	}
+
 	// Handles errors that occur during device calls
 	const handleErrors = (err: unknown) => {
 		// Update feedback and status code state based on error received
@@ -267,6 +290,7 @@ export const LedgerHardwareProvider = ({
 				setFeedback,
 				resetFeedback,
 				handleGetAddress,
+				fetchLedgerAddress,
 				handleResetLedgerTask,
 				handleErrors,
 				handleUnmount,

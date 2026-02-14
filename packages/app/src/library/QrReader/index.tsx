@@ -3,7 +3,7 @@
 
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import type { HardwareAccountSource } from '@w3ux/types'
-import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
+import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
 import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -39,6 +39,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
 			const account = addHardwareAccount(
 				source,
 				network,
+				1,
 				qrData,
 				vaultAccounts.length,
 			)

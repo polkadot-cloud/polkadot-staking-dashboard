@@ -88,7 +88,7 @@
 		"dismiss": "Descartar",
 		"displayingValidators_one": "Mostrando {{count}} Validador",
 		"displayingValidators_other": "Mostrando {{count}} Validadores",
-		"documentation": "Documentación",
+		"docs": "Docs",
 		"done": "Hecho",
 		"email": "Correo",
 		"enablePermissionlessClaiming": "Habilitar reclamación sin permisos",

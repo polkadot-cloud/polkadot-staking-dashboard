@@ -33,7 +33,7 @@ import { planckToUnitBn } from 'utils'
 import type { PayoutListProps } from '../types'
 import { ItemWrapper } from '../Wrappers'
 
-export const PayoutListInner = ({
+export const PayoutList = ({
 	allowMoreCols,
 	pagination,
 	title,
@@ -225,9 +225,9 @@ export const PayoutListInner = ({
 	)
 }
 
-export const PayoutList = (props: PayoutListProps) => (
+export const Inner = (props: PayoutListProps) => (
 	<ListProvider>
-		<PayoutListInner {...props} />
+		<PayoutList {...props} />
 	</ListProvider>
 )
 

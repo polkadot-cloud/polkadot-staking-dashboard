@@ -7,20 +7,19 @@ import { useBalances } from 'contexts/Balances'
 import { useHelp } from 'contexts/Help'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useNominatorStats } from 'hooks/useStats'
 import { useSyncing } from 'hooks/useSyncing'
+import { BondManager } from 'library/BondManager'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { Nominations } from 'library/Nominations'
+import { Stats } from 'library/Stats'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader, Page, Stat } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
 import { CommissionPrompt } from './CommissionPrompt'
-import { ManageBond } from './ManageBond'
-import { ActiveNominators } from './Stats/ActiveNominators'
-import { MinimumActiveStake } from './Stats/MinimumActiveStake'
-import { MinimumNominatorBond } from './Stats/MinimumNominatorBond'
 import { Status } from './Status'
 import { UnstakePrompts } from './UnstakePrompts'
 
@@ -33,6 +32,8 @@ export const Active = () => {
 	const { openCanvas } = useOverlay().canvas
 	const { formatWithPrefs } = useValidators()
 	const { activeAddress } = useActiveAccounts()
+	const { activeNominators, minimumNominatorBond, minimumActiveStake } =
+		useNominatorStats()
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))
 	const ROW_HEIGHT = 220
@@ -40,16 +41,16 @@ export const Active = () => {
 	return (
 		<>
 			<Stat.Row>
-				<ActiveNominators />
-				<MinimumNominatorBond />
-				<MinimumActiveStake />
+				<Stats
+					items={[activeNominators, minimumNominatorBond, minimumActiveStake]}
+				/>
 			</Stat.Row>
 			<CommissionPrompt />
 			<UnstakePrompts />
 			<Page.Row>
 				<Page.RowSection secondary vLast>
 					<CardWrapper height={ROW_HEIGHT}>
-						<ManageBond />
+						<BondManager bondFor="nominator" />
 					</CardWrapper>
 				</Page.RowSection>
 				<Page.RowSection hLast>

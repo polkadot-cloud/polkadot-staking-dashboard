@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
+import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import type { FormEvent } from 'react'

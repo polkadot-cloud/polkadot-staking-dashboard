@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
+import { formatAccountSs58 } from '@w3ux/util-dedot'
+import { ellipsisFn } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
