@@ -336,7 +336,6 @@ export const Ledger = () => {
 				<Groups
 					activeGroup={activeGroup}
 					addressGroups={addressGroups}
-					groupedAddresses={groupedAddresses}
 					canAddGroup={canAddGroup}
 					onGroupChange={setActiveGroup}
 					onAddGroup={handleAddGroup}

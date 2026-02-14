@@ -4,7 +4,6 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { HardwareAccount } from '@w3ux/types'
 import { useMenu } from 'contexts/Menu'
 import type { MenuItem } from 'contexts/Menu/types'
 import { MenuList } from 'library/Menu/List'
@@ -17,7 +16,6 @@ import { ButtonWrapper, GroupWrapper } from './Wrappers'
 interface GroupsProps {
 	activeGroup: number
 	addressGroups: number[]
-	groupedAddresses: Record<number, HardwareAccount[]>
 	canAddGroup: boolean
 	onGroupChange: (group: number) => void
 	onAddGroup: () => void
@@ -26,7 +24,6 @@ interface GroupsProps {
 export const Groups = ({
 	activeGroup,
 	addressGroups,
-	groupedAddresses,
 	canAddGroup,
 	onGroupChange,
 	onAddGroup,
@@ -55,15 +52,7 @@ export const Groups = ({
 			disabled: !canAddGroup,
 		})
 		return items
-	}, [
-		addressGroups,
-		groupedAddresses,
-		activeGroup,
-		t,
-		onGroupChange,
-		onAddGroup,
-		canAddGroup,
-	])
+	}, [addressGroups, activeGroup, t, onGroupChange, onAddGroup, canAddGroup])
 
 	const handleOpenGroupMenu = () => {
 		if (!open && dropdownButtonRef.current) {
