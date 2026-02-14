@@ -40,7 +40,7 @@ export const Groups = ({
 		})
 		items.push({
 			icon: <FontAwesomeIcon icon={faPlus} transform="shrink-3" />,
-			title: t('newGroup', { ns: 'modals' }),
+			title: t('newDevice', { ns: 'modals' }),
 			cb: onAddGroup,
 			disabled: !canAddGroup,
 		})
