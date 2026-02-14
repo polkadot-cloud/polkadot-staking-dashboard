@@ -31,6 +31,15 @@ export const ItemWrapper = styled.button`
     opacity: 0.75;
   }
 
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &:disabled:hover {
+    opacity: 0.4;
+  }
+
   .title {
     color: var(--text-secondary);
     padding: 0 0 0 0.75rem;

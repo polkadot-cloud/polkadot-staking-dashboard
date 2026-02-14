@@ -11,12 +11,16 @@ export const MenuList = ({ items }: { items: MenuItem[] }) => {
 	return (
 		<>
 			{items.map((item, i: number) => {
-				const { icon, title, cb } = item
+				const { icon, title, cb, disabled } = item
 
 				return (
 					<ItemWrapper
 						key={`menu_item_${i}`}
+						disabled={disabled}
 						onClick={() => {
+							if (disabled) {
+								return
+							}
 							cb()
 							closeMenu()
 						}}

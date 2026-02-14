@@ -140,6 +140,8 @@
 		"ledgerAccountImported": "已导入Ledger账户",
 		"ledgerAccountRemoved": "已删除Ledger账户",
 		"ledgerAccounts": "正在显示Ledger帐户",
+		"ledgerGroup": "Ledger {{group}}",
+		"newGroup": "新建分组",
 		"ledgerDeviceBusy": "Ledger设备当前正被用于其他用途",
 		"ledgerFetchedAccount": "己获得Ledger账户 {{account}}",
 		"ledgerImportedAccount": "已导入Ledger账户 {{account}}",

@@ -1,32 +1,45 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import classNames from 'classnames'
 import type { ReactNode } from 'react'
 import classes from './index.module.scss'
 
 export const Header = ({
 	Logo,
 	title,
+	offsetChildren,
 	websiteText,
 	websiteUrl,
 	children,
+	marginY,
 }: {
 	Logo: ReactNode
 	title: string
 	websiteText: string
 	websiteUrl: string
+	offsetChildren?: boolean
+	marginY?: boolean
 	children: ReactNode
-}) => (
-	<div className={classes.header}>
-		<div>{Logo}</div>
-		<div>
-			<h3>{title}</h3>
-			<h4>
-				<a href={websiteUrl} target="blank" rel="noreferrer">
-					{websiteText}
-				</a>
-			</h4>
+}) => {
+	const headerClasses = classNames(classes.header, {
+		[classes.marginY]: marginY,
+	})
+
+	const offsetClass = offsetChildren ? classes.offset : undefined
+
+	return (
+		<div className={headerClasses}>
+			<div>{Logo}</div>
+			<div>
+				<h3>{title}</h3>
+				<h4>
+					<a href={websiteUrl} target="blank" rel="noreferrer">
+						{websiteText}
+					</a>
+				</h4>
+			</div>
+			<div className={offsetClass}>{children}</div>
 		</div>
-		<div>{children}</div>
-	</div>
-)
+	)
+}

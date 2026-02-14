@@ -147,6 +147,8 @@
 		"ledgerAccountRemoved": "Cuenta Ledger Eliminada",
 		"ledgerAccounts_one": "Mostrando {{count}} cuenta Ledger",
 		"ledgerAccounts_other": "Mostrando {{count}} cuentas Ledger",
+		"ledgerGroup": "Ledger {{group}}",
+		"newGroup": "Nuevo grupo",
 		"ledgerDeviceBusy": "El dispositivo Ledger está siendo utilizado para otra cosa.",
 		"ledgerFetchedAccount": "Cuenta Ledger {{account}} obtenida",
 		"ledgerImportedAccount": "Cuenta Ledger {{account}} importada",

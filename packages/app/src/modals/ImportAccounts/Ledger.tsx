@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
+import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
@@ -14,10 +17,14 @@ import type {
 	LedgerAddress,
 	LedgerResponse,
 } from 'contexts/LedgerHardware/types'
+import { useMenu } from 'contexts/Menu'
+import type { MenuItem } from 'contexts/Menu/types'
 import { useNetwork } from 'contexts/Network'
-import { useEffect, useRef, useState } from 'react'
+import { MenuList } from 'library/Menu/List'
+import type { MouseEvent as ReactMouseEvent } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonText } from 'ui-buttons'
+import { ButtonMenu, ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
 
@@ -41,15 +48,47 @@ export const Ledger = () => {
 		transportResponse,
 		handleResetLedgerTask,
 	} = useLedgerHardware()
+	const { openMenu, open } = useMenu()
 	const { setModalResize } = useOverlay().modal
 	const { ss58 } = getStakingChainData(network)
 	const source: HardwareAccountSource = 'ledger'
 
+	const initialAddresses = getHardwareAccounts(source, network)
+
 	// Store addresses retrieved from Ledger device. Defaults to local addresses
-	const [addresses, setAddresses] = useState<HardwareAccount[]>(
-		getHardwareAccounts(source, network),
-	)
+	const [addresses, setAddresses] =
+		useState<HardwareAccount[]>(initialAddresses)
 	const addressesRef = useRef(addresses)
+	const dropdownButtonRef = useRef<HTMLDivElement>(null)
+	const [activeGroup, setActiveGroup] = useState<number>(1)
+	const [groups, setGroups] = useState<number[]>(() => {
+		const initialGroups = Array.from(
+			new Set(initialAddresses.map((account) => account.group ?? 1)),
+		)
+		return initialGroups.length > 0 ? initialGroups.sort((a, b) => a - b) : [1]
+	})
+
+	const groupedAddresses = useMemo(() => {
+		const grouped: Record<number, HardwareAccount[]> = {}
+		addresses.forEach((account) => {
+			const group = account.group ?? 1
+			if (!grouped[group]) {
+				grouped[group] = []
+			}
+			grouped[group].push(account)
+		})
+		return grouped
+	}, [addresses])
+
+	const addressGroups = useMemo(
+		() => [...groups].sort((a, b) => a - b),
+		[groups],
+	)
+
+	const activeAddresses = groupedAddresses[activeGroup] ?? []
+	const latestGroup = addressGroups[addressGroups.length - 1] ?? 1
+	const latestGroupIsEmpty = (groupedAddresses[latestGroup]?.length ?? 0) === 0
+	const canAddGroup = !latestGroupIsEmpty
 
 	// Handle exist check for a ledger address
 	const handleExists = (address: string) =>
@@ -74,10 +113,10 @@ export const Ledger = () => {
 
 	// Gets the next non-imported ledger address index
 	const getNextAddressIndex = () => {
-		if (!addressesRef.current.length) {
+		if (!activeAddresses.length) {
 			return 0
 		}
-		return addressesRef.current[addressesRef.current.length - 1].index + 1
+		return activeAddresses[activeAddresses.length - 1].index + 1
 	}
 
 	// Ledger address getter
@@ -100,6 +139,7 @@ export const Ledger = () => {
 				address,
 				name: ellipsisFn(address),
 				network,
+				group: activeGroup,
 			}))
 			setStateWithRef(
 				[...addressesRef.current, ...newAddress],
@@ -109,7 +149,7 @@ export const Ledger = () => {
 			addHardwareAccount(
 				source,
 				network,
-				1,
+				activeGroup,
 				newAddress[0].address,
 				options.accountIndex,
 			)
@@ -133,6 +173,38 @@ export const Ledger = () => {
 		handleLedgerStatusResponse(transportResponse)
 	}, [transportResponse])
 
+	// Sync group list with any new groups found on addresses
+	useEffect(() => {
+		const derivedGroups = Array.from(
+			new Set(addresses.map((account) => account.group ?? 1)),
+		)
+		if (derivedGroups.length === 0) {
+			return
+		}
+		setGroups((prev) => {
+			const merged = Array.from(new Set([...prev, ...derivedGroups])).sort(
+				(a, b) => a - b,
+			)
+			const unchanged =
+				merged.length === prev.length &&
+				merged.every((value, index) => value === prev[index])
+			return unchanged ? prev : merged
+		})
+	}, [addresses])
+
+	// Keep the active group aligned with available groups
+	useEffect(() => {
+		if (addressGroups.length === 0) {
+			if (activeGroup !== 1) {
+				setActiveGroup(1)
+			}
+			return
+		}
+		if (!addressGroups.includes(activeGroup)) {
+			setActiveGroup(addressGroups[0])
+		}
+	}, [addressGroups, activeGroup])
+
 	// Tidy up context state when this component is no longer mounted
 	useEffect(
 		() => () => {
@@ -144,13 +216,98 @@ export const Ledger = () => {
 	// Resize modal on account length / feedback change
 	useEffect(() => {
 		setModalResize()
-	}, [addresses.length, feedback?.message])
+	}, [activeAddresses.length, activeGroup, feedback?.message])
 
 	const maybeFeedback = feedback?.message
+	const minListHeight = '20rem'
+	const activeGroupCount = groupedAddresses[activeGroup]?.length ?? 0
+
+	const handleAddGroup = () => {
+		if (!canAddGroup) {
+			return
+		}
+		setGroups((prev) => {
+			const next = (prev.length ? Math.max(...prev) : 0) + 1
+			setActiveGroup(next)
+			return [...prev, next]
+		})
+	}
+
+	const groupMenuItems = useMemo((): MenuItem[] => {
+		const items: MenuItem[] = addressGroups.map((group) => {
+			const groupCount = groupedAddresses[group]?.length ?? 0
+			return {
+				icon: (
+					<FontAwesomeIcon
+						icon={group === activeGroup ? faCheckCircle : faCircle}
+						transform="shrink-3"
+					/>
+				),
+				title: `${t('ledgerGroup', { ns: 'modals', group })} (${groupCount})`,
+				cb: () => setActiveGroup(group),
+			}
+		})
+		items.push({
+			icon: <FontAwesomeIcon icon={faPlus} transform="shrink-3" />,
+			title: t('newGroup', { ns: 'modals' }),
+			cb: handleAddGroup,
+			disabled: !canAddGroup,
+		})
+		return items
+	}, [
+		addressGroups,
+		groupedAddresses,
+		activeGroup,
+		t,
+		handleAddGroup,
+		canAddGroup,
+	])
+
+	const handleOpenGroupMenu = () => {
+		if (!open && dropdownButtonRef.current) {
+			const rect = dropdownButtonRef.current.getBoundingClientRect()
+			const bodyRect = document.body.getBoundingClientRect()
+
+			// Create a synthetic event with coordinates at the bottom-left corner of the button
+			const syntheticEvent = {
+				clientX: rect.left - bodyRect.left,
+				clientY: rect.bottom - bodyRect.top,
+			} as ReactMouseEvent<HTMLButtonElement, MouseEvent>
+
+			openMenu(syntheticEvent, <MenuList items={groupMenuItems} />)
+		}
+	}
 
 	return (
 		<>
 			<Close />
+			{addressGroups.length >= 1 && (
+				<div
+					style={{
+						padding: '0.5rem 0.5rem 0 1rem',
+						display: 'flex',
+						alignItems: 'center',
+						gap: '0.5rem',
+						maxWidth: '100%',
+					}}
+				>
+					<div
+						ref={dropdownButtonRef}
+						style={{
+							background: 'var(--btn-popover-tab-bg)',
+							borderRadius: '0.75rem',
+							padding: '0rem 01rem',
+						}}
+					>
+						<ButtonMenu
+							text={`${t('ledgerGroup', { ns: 'modals', group: activeGroup })} (${activeGroupCount})`}
+							iconRight={faChevronDown}
+							iconTransform="shrink-3"
+							onClick={handleOpenGroupMenu}
+						/>
+					</div>
+				</div>
+			)}
 			<AccountImport.Header
 				Logo={<LedgerSquareSVG />}
 				title="Ledger"
@@ -192,34 +349,25 @@ export const Ledger = () => {
 					<h3 style={{ padding: '1rem 0 2rem 0' }}>{feedback?.message}</h3>
 				</div>
 			)}
-			<div>
-				{addresses.length === 0 && !maybeFeedback && (
+			<div style={{ minHeight: minListHeight }}>
+				{activeAddresses.length === 0 && !maybeFeedback && (
 					<AccountImport.Empty>
 						<h3>{t('importedAccount', { count: 0, ns: 'modals' })}</h3>
 					</AccountImport.Empty>
 				)}
-				{addresses.length > 0 && (
-					<>
-						<AccountImport.SubHeading
-							text={t('importedAccount', {
-								count: addresses.length,
-								ns: 'modals',
-							})}
+				{activeAddresses.length > 0 &&
+					activeAddresses.map(({ name, address }, i) => (
+						<AccountImport.Item
+							key={`ledger_imported_${i}`}
+							address={address}
+							last={i === activeAddresses.length - 1}
+							initial={name}
+							Identicon={<Polkicon address={address} fontSize="3.3rem" />}
+							existsHandler={handleExists}
+							renameHandler={handleRename}
+							onRemove={handleRemove}
 						/>
-						{addresses.map(({ name, address }, i) => (
-							<AccountImport.Item
-								key={`ledger_imported_${i}`}
-								address={address}
-								last={i === addresses.length - 1}
-								initial={name}
-								Identicon={<Polkicon address={address} fontSize="3.3rem" />}
-								existsHandler={handleExists}
-								renameHandler={handleRename}
-								onRemove={handleRemove}
-							/>
-						))}
-					</>
-				)}
+					))}
 			</div>
 		</>
 	)
