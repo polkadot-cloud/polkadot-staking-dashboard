@@ -347,6 +347,8 @@ export const Ledger = () => {
 				title="Ledger"
 				websiteText="ledger.com"
 				websiteUrl="https://ledger.com"
+				offsetChildren
+				marginY
 			>
 				{addressesRef.current.length > 0 && (
 					<span>
