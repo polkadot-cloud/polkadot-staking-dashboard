@@ -34,6 +34,7 @@ export const Ledger = () => {
 	} = useHardwareAccounts()
 	const {
 		getFeedback,
+		setFeedback,
 		isExecuting,
 		setStatusCode,
 		handleUnmount,
@@ -125,26 +126,42 @@ export const Ledger = () => {
 		setStatusCode({ ack, statusCode })
 
 		if (statusCode === 'ReceivedAddress') {
-			const newAddress = body.map(({ pubKey, address }: LedgerAddress) => ({
-				index: options.accountIndex,
-				pubKey,
-				address,
-				name: ellipsisFn(address),
-				network,
-				group: activeGroup,
-			}))
-			setStateWithRef(
-				[...addressesRef.current, ...newAddress],
-				setAddresses,
-				addressesRef,
+			const existingAddresses = new Set(
+				addressesRef.current.map((account) => account.address),
 			)
-			addHardwareAccount(
-				source,
-				network,
-				activeGroup,
-				newAddress[0].address,
-				options.accountIndex,
-			)
+			const newAddress = body
+				.filter((item: LedgerAddress) => {
+					const { address } = item
+					if (existingAddresses.has(address)) {
+						return false
+					}
+					return !hardwareAccountExists(source, network, address)
+				})
+				.map(({ pubKey, address }: LedgerAddress) => ({
+					index: options.accountIndex,
+					pubKey,
+					address,
+					name: ellipsisFn(address),
+					network,
+					group: activeGroup,
+				}))
+
+			if (newAddress.length > 0) {
+				setStateWithRef(
+					[...addressesRef.current, ...newAddress],
+					setAddresses,
+					addressesRef,
+				)
+				addHardwareAccount(
+					source,
+					network,
+					activeGroup,
+					newAddress[0].address,
+					options.accountIndex,
+				)
+			} else if (body.length > 0) {
+				setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
+			}
 			resetStatusCode()
 		}
 	}
@@ -195,6 +212,8 @@ export const Ledger = () => {
 		if (!addressGroups.includes(activeGroup)) {
 			setActiveGroup(addressGroups[0])
 		}
+
+		setFeedback(null)
 	}, [addressGroups, activeGroup])
 
 	// Tidy up context state when this component is no longer mounted
