@@ -390,11 +390,13 @@ export const Ledger = () => {
 					</AccountImport.Empty>
 				)}
 				{activeAddresses.length > 0 &&
-					activeAddresses.map(({ name, address }, i) => (
+					activeAddresses.map(({ name, address }) => (
 						<AccountImport.Item
-							key={`ledger_imported_${i}`}
+							key={`ledger_imported_${address}`}
 							address={address}
-							last={i === activeAddresses.length - 1}
+							last={
+								address === activeAddresses[activeAddresses.length - 1]?.address
+							}
 							initial={name}
 							Identicon={<Polkicon address={address} fontSize="3.3rem" />}
 							existsHandler={handleExists}
