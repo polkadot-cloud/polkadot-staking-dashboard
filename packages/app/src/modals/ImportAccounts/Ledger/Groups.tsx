@@ -68,12 +68,11 @@ export const Groups = ({
 	const handleOpenGroupMenu = () => {
 		if (!open && dropdownButtonRef.current) {
 			const rect = dropdownButtonRef.current.getBoundingClientRect()
-			const bodyRect = document.body.getBoundingClientRect()
 
 			// Create a synthetic event with coordinates at the bottom-left corner of the button
 			const syntheticEvent = {
-				clientX: rect.left - bodyRect.left,
-				clientY: rect.bottom - bodyRect.top + 3,
+				clientX: rect.left,
+				clientY: rect.bottom + 3,
 			} as ReactMouseEvent<HTMLButtonElement, MouseEvent>
 
 			openMenu(syntheticEvent, <MenuList items={groupMenuItems} secondaryBg />)
