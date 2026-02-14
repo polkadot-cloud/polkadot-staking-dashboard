@@ -40,6 +40,7 @@ export const Ledger = () => {
 		handleUnmount,
 		resetStatusCode,
 		handleGetAddress,
+		fetchLedgerAddress,
 		transportResponse,
 		handleResetLedgerTask,
 	} = useLedgerHardware()
@@ -53,6 +54,9 @@ export const Ledger = () => {
 	const [addresses, setAddresses] =
 		useState<HardwareAccount[]>(initialAddresses)
 	const addressesRef = useRef(addresses)
+	const groupAnchorsRef = useRef<
+		Record<number, { index: number; address: string }>
+	>({})
 	const [activeGroup, setActiveGroup] = useState<number>(1)
 	const [groups, setGroups] = useState<number[]>(() => {
 		const initialGroups = Array.from(
@@ -112,8 +116,53 @@ export const Ledger = () => {
 		return activeAddresses[activeAddresses.length - 1].index + 1
 	}
 
+	const ensureGroupMatchesDevice = async () => {
+		const groupAccounts = groupedAddresses[activeGroup] ?? []
+		const cachedAnchor = groupAnchorsRef.current[activeGroup] ?? null
+
+		if (!cachedAnchor && groupAccounts.length === 0) {
+			const anchorResult = await fetchLedgerAddress(0, ss58)
+			if (!anchorResult?.address) {
+				return false
+			}
+			groupAnchorsRef.current[activeGroup] = {
+				index: 0,
+				address: anchorResult.address,
+			}
+			return true
+		}
+
+		let anchor = cachedAnchor
+		if (!anchor) {
+			const [firstAccount, ...rest] = groupAccounts
+			const anchorAccount = rest.reduce(
+				(min, account) => (account.index < min.index ? account : min),
+				firstAccount,
+			)
+			anchor = {
+				index: anchorAccount.index,
+				address: anchorAccount.address,
+			}
+			groupAnchorsRef.current[activeGroup] = anchor
+		}
+
+		const anchorResult = await fetchLedgerAddress(anchor.index, ss58)
+		if (!anchorResult?.address) {
+			return false
+		}
+		if (anchorResult.address !== anchor.address) {
+			setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
+			return false
+		}
+		return true
+	}
+
 	// Ledger address getter
 	const onGetAddress = async () => {
+		const matchesGroup = await ensureGroupMatchesDevice()
+		if (!matchesGroup) {
+			return
+		}
 		await handleGetAddress(getNextAddressIndex(), ss58)
 	}
 
@@ -159,6 +208,12 @@ export const Ledger = () => {
 					newAddress[0].address,
 					options.accountIndex,
 				)
+				if (!groupAnchorsRef.current[activeGroup]) {
+					groupAnchorsRef.current[activeGroup] = {
+						index: options.accountIndex,
+						address: newAddress[0].address,
+					}
+				}
 			} else if (body.length > 0) {
 				setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
 			}
@@ -200,6 +255,37 @@ export const Ledger = () => {
 			return unchanged ? prev : merged
 		})
 	}, [addresses])
+
+	useEffect(() => {
+		Object.entries(groupedAddresses).forEach(([groupKey, accounts]) => {
+			if (accounts.length === 0) {
+				return
+			}
+			const group = Number(groupKey)
+			if (groupAnchorsRef.current[group]) {
+				return
+			}
+			const [firstAccount, ...rest] = accounts
+			const anchorAccount = rest.reduce(
+				(min, account) => (account.index < min.index ? account : min),
+				firstAccount,
+			)
+			groupAnchorsRef.current[group] = {
+				index: anchorAccount.index,
+				address: anchorAccount.address,
+			}
+		})
+	}, [groupedAddresses])
+
+	useEffect(() => {
+		Object.keys(groupAnchorsRef.current).forEach((groupKey) => {
+			const group = Number(groupKey)
+			const count = groupedAddresses[group]?.length ?? 0
+			if (count === 0) {
+				delete groupAnchorsRef.current[group]
+			}
+		})
+	}, [groupedAddresses])
 
 	// Keep the active group aligned with available groups
 	useEffect(() => {

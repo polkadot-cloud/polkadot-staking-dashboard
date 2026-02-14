@@ -5,7 +5,7 @@
 		"aboveMax": "Above Max",
 		"account": "Account",
 		"accountAlreadyImported": "Account Already Imported",
-		"accountAlreadyImportedOtherDevice": "Account has been imported on another device",
+		"accountAlreadyImportedOtherDevice": "Account belongs to another device",
 		"accounts": "Accounts",
 		"activeRoles_one": "Active Roles in {{count}} Pool",
 		"activeRoles_other": "Active Roles in {{count}} Pools",

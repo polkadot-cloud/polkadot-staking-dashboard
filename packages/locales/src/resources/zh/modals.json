@@ -5,7 +5,7 @@
 		"aboveMax": "高于最大值",
 		"account": "账户",
 		"accountAlreadyImported": "帐户已导入",
-		"accountAlreadyImportedOtherDevice": "账户已在另一台设备上导入",
+		"accountAlreadyImportedOtherDevice": "账户属于另一台设备",
 		"accounts": "账户",
 		"activeRoles": "有活跃角色在 {{count}} 个提名池",
 		"activeRoles_zero": "无活跃角色在提名池",
