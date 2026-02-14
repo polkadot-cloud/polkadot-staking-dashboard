@@ -51,9 +51,11 @@ export const QuickActions = ({ height }: { height: number }) => {
 				<>
 					{actionGroup === 'disconnected' && <Disconnected />}
 					{actionGroup === 'notStaking' && <NotStaking />}
-					<Staking
-						bondFor={dualStaking ? 'dual' : inPool ? 'pool' : 'nominator'}
-					/>
+					{actionGroup === 'staking' && (
+						<Staking
+							bondFor={dualStaking ? 'dual' : inPool ? 'pool' : 'nominator'}
+						/>
+					)}
 				</>
 			)}
 			<QuickAction.Footer>
