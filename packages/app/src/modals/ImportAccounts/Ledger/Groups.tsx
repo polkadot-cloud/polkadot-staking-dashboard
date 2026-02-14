@@ -11,15 +11,8 @@ import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonMenu } from 'ui-buttons'
+import type { GroupsProps } from './types'
 import { ButtonWrapper, GroupWrapper } from './Wrappers'
-
-interface GroupsProps {
-	activeGroup: number
-	addressGroups: number[]
-	canAddGroup: boolean
-	onGroupChange: (group: number) => void
-	onAddGroup: () => void
-}
 
 export const Groups = ({
 	activeGroup,
