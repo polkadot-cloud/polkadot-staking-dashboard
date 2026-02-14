@@ -5,7 +5,6 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useStaking } from 'contexts/Staking'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +17,6 @@ export const MembershipStatus = ({
 }: MembershipStatusProps) => {
 	const { t } = useTranslation('pages')
 	const { isReady } = useApi()
-	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { isReadOnlyAccount } = useImportedAccounts()
@@ -59,7 +57,7 @@ export const MembershipStatus = ({
 		<Stat
 			label={t('poolMembership')}
 			helpKey="Pool Membership"
-			stat={isBonding ? t('alreadyNominating') : t('notInPool')}
+			stat={t('notInPool')}
 			buttonType={buttonType}
 		/>
 	)

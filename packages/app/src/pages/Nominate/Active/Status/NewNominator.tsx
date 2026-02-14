@@ -5,7 +5,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { onNewNominatorButtonPressedEvent } from 'event-tracking'
 import { CallToActionButtons } from 'library/CallToActionButtons'
@@ -20,7 +19,6 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { isReady } = useApi()
 	const navigate = useNavigate()
 	const { network } = useNetwork()
-	const { inPool } = useActivePool()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
 	const { isBonding, isNominating } = useStaking()
@@ -29,9 +27,8 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const nominateButtonDisabled =
 		!isReady ||
 		!activeAddress ||
-		inPool ||
-		isBonding ||
 		isNominating ||
+		isBonding ||
 		isReadOnlyAccount(activeAddress)
 
 	const sections: CallToActionSection[] = [
