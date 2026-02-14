@@ -2,9 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
-import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
@@ -17,16 +14,13 @@ import type {
 	LedgerAddress,
 	LedgerResponse,
 } from 'contexts/LedgerHardware/types'
-import { useMenu } from 'contexts/Menu'
-import type { MenuItem } from 'contexts/Menu/types'
 import { useNetwork } from 'contexts/Network'
-import { MenuList } from 'library/Menu/List'
-import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonMenu, ButtonText } from 'ui-buttons'
+import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
+import { Groups } from './Groups'
 
 export const Ledger = () => {
 	const { t } = useTranslation()
@@ -48,7 +42,6 @@ export const Ledger = () => {
 		transportResponse,
 		handleResetLedgerTask,
 	} = useLedgerHardware()
-	const { openMenu, open } = useMenu()
 	const { setModalResize } = useOverlay().modal
 	const { ss58 } = getStakingChainData(network)
 	const source: HardwareAccountSource = 'ledger'
@@ -59,7 +52,6 @@ export const Ledger = () => {
 	const [addresses, setAddresses] =
 		useState<HardwareAccount[]>(initialAddresses)
 	const addressesRef = useRef(addresses)
-	const dropdownButtonRef = useRef<HTMLDivElement>(null)
 	const [activeGroup, setActiveGroup] = useState<number>(1)
 	const [groups, setGroups] = useState<number[]>(() => {
 		const initialGroups = Array.from(
@@ -220,7 +212,6 @@ export const Ledger = () => {
 
 	const maybeFeedback = feedback?.message
 	const minListHeight = '20rem'
-	const activeGroupCount = groupedAddresses[activeGroup]?.length ?? 0
 
 	const handleAddGroup = () => {
 		if (!canAddGroup) {
@@ -233,80 +224,18 @@ export const Ledger = () => {
 		})
 	}
 
-	const groupMenuItems = useMemo((): MenuItem[] => {
-		const items: MenuItem[] = addressGroups.map((group) => {
-			const groupCount = groupedAddresses[group]?.length ?? 0
-			return {
-				icon: (
-					<FontAwesomeIcon
-						icon={group === activeGroup ? faCheckCircle : faCircle}
-						transform="shrink-3"
-					/>
-				),
-				title: `${t('ledgerGroup', { ns: 'modals', group })} (${groupCount})`,
-				cb: () => setActiveGroup(group),
-			}
-		})
-		items.push({
-			icon: <FontAwesomeIcon icon={faPlus} transform="shrink-3" />,
-			title: t('newGroup', { ns: 'modals' }),
-			cb: handleAddGroup,
-			disabled: !canAddGroup,
-		})
-		return items
-	}, [
-		addressGroups,
-		groupedAddresses,
-		activeGroup,
-		t,
-		handleAddGroup,
-		canAddGroup,
-	])
-
-	const handleOpenGroupMenu = () => {
-		if (!open && dropdownButtonRef.current) {
-			const rect = dropdownButtonRef.current.getBoundingClientRect()
-			const bodyRect = document.body.getBoundingClientRect()
-
-			// Create a synthetic event with coordinates at the bottom-left corner of the button
-			const syntheticEvent = {
-				clientX: rect.left - bodyRect.left,
-				clientY: rect.bottom - bodyRect.top,
-			} as ReactMouseEvent<HTMLButtonElement, MouseEvent>
-
-			openMenu(syntheticEvent, <MenuList items={groupMenuItems} />)
-		}
-	}
-
 	return (
 		<>
 			<Close />
 			{addressGroups.length >= 1 && (
-				<div
-					style={{
-						padding: '0.5rem 0.5rem 0 1rem',
-						display: 'flex',
-						alignItems: 'center',
-						gap: '0.5rem',
-						maxWidth: '100%',
-					}}
-				>
-					<div
-						ref={dropdownButtonRef}
-						style={{
-							background: 'var(--btn-popover-tab-bg)',
-							borderRadius: '0.75rem',
-							padding: '0rem 01rem',
-						}}
-					>
-						<ButtonMenu
-							text={`${t('ledgerGroup', { ns: 'modals', group: activeGroup })} (${activeGroupCount})`}
-							iconRight={faChevronDown}
-							iconTransform="shrink-3"
-							onClick={handleOpenGroupMenu}
-						/>
-					</div>
-				</div>
+				<Groups
+					activeGroup={activeGroup}
+					addressGroups={addressGroups}
+					groupedAddresses={groupedAddresses}
+					canAddGroup={canAddGroup}
+					onGroupChange={setActiveGroup}
+					onAddGroup={handleAddGroup}
+				/>
 			)}
 			<AccountImport.Header
 				Logo={<LedgerSquareSVG />}
