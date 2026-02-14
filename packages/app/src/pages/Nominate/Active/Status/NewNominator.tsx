@@ -21,13 +21,14 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
-	const { isNominating } = useStaking()
+	const { isBonding, isNominating } = useStaking()
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	const nominateButtonDisabled =
 		!isReady ||
 		!activeAddress ||
 		isNominating ||
+		isBonding ||
 		isReadOnlyAccount(activeAddress)
 
 	const sections: CallToActionSection[] = [
