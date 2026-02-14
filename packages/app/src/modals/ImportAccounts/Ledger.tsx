@@ -109,6 +109,7 @@ export const Ledger = () => {
 			addHardwareAccount(
 				source,
 				network,
+				1,
 				newAddress[0].address,
 				options.accountIndex,
 			)
