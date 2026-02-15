@@ -64,7 +64,7 @@ export function registerAddLocaleCommand(program: Command): void {
 						options.apiKey,
 					)
 
-					// Run pnpm order and pnpm validate
+					// Run pnpm order
 					console.log('\nRunning pnpm order...')
 					try {
 						execSync('pnpm order', {
@@ -74,18 +74,6 @@ export function registerAddLocaleCommand(program: Command): void {
 						console.log('✓ pnpm order completed')
 					} catch (error) {
 						console.error('Error running pnpm order:', error)
-						process.exit(1)
-					}
-
-					console.log('\nRunning pnpm validate...')
-					try {
-						execSync('pnpm validate', {
-							cwd: join(WORKSPACE_ROOT, 'packages/locales'),
-							stdio: 'inherit',
-						})
-						console.log('✓ pnpm validate completed')
-					} catch (error) {
-						console.error('Error running pnpm validate:', error)
 						process.exit(1)
 					}
 
