@@ -5,6 +5,7 @@
 		"aboveMax": "최대값 초과",
 		"account": "계정",
 		"accountAlreadyImported": "이미 가져온 계정",
+		"accountAlreadyImportedOtherDevice": "계정이 다른 장치에 속해 있습니다",
 		"accounts": "계정들",
 		"activeRoles_one": "{{count}}개 풀의 활성 역할",
 		"activeRoles_other": "{{count}}개 풀의 활성 역할",
@@ -66,87 +67,33 @@
 		"continue": "계속",
 		"controllerNotMigrated": "컨트롤러 계정이 마이그레이션되지 않았습니다.",
 		"currencies": {
-			"ARS": {
-				"name": "아르헨티나 페소"
-			},
-			"AUD": {
-				"name": "호주 달러"
-			},
-			"BGN": {
-				"name": "불가리아 레프"
-			},
-			"BRL": {
-				"name": "브라질 레알"
-			},
-			"CAD": {
-				"name": "캐나다 달러"
-			},
-			"CHF": {
-				"name": "스위스 프랑"
-			},
-			"CNY": {
-				"name": "중국 위안"
-			},
-			"COP": {
-				"name": "콜롬비아 페소"
-			},
-			"CZK": {
-				"name": "체코 코루나"
-			},
-			"EUR": {
-				"name": "유로"
-			},
-			"GBP": {
-				"name": "영국 파운드"
-			},
-			"IDR": {
-				"name": "인도네시아 루피아"
-			},
-			"INR": {
-				"name": "인도 루피"
-			},
-			"JPY": {
-				"name": "일본 엔"
-			},
-			"KRW": {
-				"name": "한국 원"
-			},
-			"MXN": {
-				"name": "멕시코 페소"
-			},
-			"MYR": {
-				"name": "말레이시아 링깃"
-			},
-			"NZD": {
-				"name": "뉴질랜드 달러"
-			},
-			"PHP": {
-				"name": "필리핀 페소"
-			},
-			"PLN": {
-				"name": "폴란드 즈워티"
-			},
-			"RON": {
-				"name": "루마니아 레우"
-			},
-			"SGD": {
-				"name": "싱가포르 달러"
-			},
-			"THB": {
-				"name": "태국 바트"
-			},
-			"TRY": {
-				"name": "터키 리라"
-			},
-			"UAH": {
-				"name": "우크라이나 흐리브냐"
-			},
-			"USD": {
-				"name": "미국 달러"
-			},
-			"ZAR": {
-				"name": "남아프리카 란드"
-			}
+			"ARS": { "name": "아르헨티나 페소" },
+			"AUD": { "name": "호주 달러" },
+			"BGN": { "name": "불가리아 레프" },
+			"BRL": { "name": "브라질 레알" },
+			"CAD": { "name": "캐나다 달러" },
+			"CHF": { "name": "스위스 프랑" },
+			"CNY": { "name": "중국 위안" },
+			"COP": { "name": "콜롬비아 페소" },
+			"CZK": { "name": "체코 코루나" },
+			"EUR": { "name": "유로" },
+			"GBP": { "name": "영국 파운드" },
+			"IDR": { "name": "인도네시아 루피아" },
+			"INR": { "name": "인도 루피" },
+			"JPY": { "name": "일본 엔" },
+			"KRW": { "name": "한국 원" },
+			"MXN": { "name": "멕시코 페소" },
+			"MYR": { "name": "말레이시아 링깃" },
+			"NZD": { "name": "뉴질랜드 달러" },
+			"PHP": { "name": "필리핀 페소" },
+			"PLN": { "name": "폴란드 즈워티" },
+			"RON": { "name": "루마니아 레우" },
+			"SGD": { "name": "싱가포르 달러" },
+			"THB": { "name": "태국 바트" },
+			"TRY": { "name": "터키 리라" },
+			"UAH": { "name": "우크라이나 흐리브냐" },
+			"USD": { "name": "미국 달러" },
+			"ZAR": { "name": "남아프리카 란드" }
 		},
 		"days": "일",
 		"decentralizationAnalyticsNotAvailable": "탈중앙화 분석을 사용할 수 없습니다",
@@ -201,6 +148,7 @@
 		"ledgerAccountRemoved": "Ledger 계정 제거됨",
 		"ledgerAccounts_one": "{{count}}개의 Ledger 계정 표시 중",
 		"ledgerAccounts_other": "{{count}}개의 Ledger 계정 표시 중",
+		"ledgerDevice": "레저 장치",
 		"ledgerDeviceBusy": "Ledger 기기가 현재 다른 작업에 사용 중입니다.",
 		"ledgerFetchedAccount": "Ledger 계정 {{account}} 가져오기 완료",
 		"ledgerImportedAccount": "Ledger 계정 {{account}} 가져오기 완료",
@@ -223,6 +171,7 @@
 		"months": "개월",
 		"moreFavoritesSurpassLimit": "더 많은 선호 검증인을 추가하면 {{max}}명의 지정을 초과합니다.",
 		"networks": "네트워크",
+		"newDevice": "새 장치",
 		"newTotalBond": "새로운 총 본딩액:",
 		"newlyBondedFunds": "새로 본딩된 자금은 다음 에라 시작부터 활성 지정을 지원합니다.",
 		"noActiveAccount": "활성 계정 없음",
